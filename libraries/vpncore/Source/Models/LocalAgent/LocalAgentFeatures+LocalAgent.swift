@@ -27,6 +27,7 @@ enum LocalAgentFeaturesKeys: String {
     case vpnAccelerator = "split-tcp"
     case netShield = "netshield-level"
     case jailed = "jail"
+    case natType = "randomized-nat"
     case bouncing
 }
 
@@ -90,6 +91,14 @@ extension LocalAgentFeatures {
     var bouncing: String? {
         return getString(key: .bouncing)
     }
+
+    var natType: NATType? {
+        guard let value = getBool(key: .natType) else {
+            return nil
+        }
+
+        return NATType(flag: value)
+    }
     
     // MARK: -
 
@@ -115,10 +124,16 @@ extension LocalAgentFeatures {
         return self
     }
 
+    func with(natType: NATType) -> LocalAgentFeatures {
+        set(.natType, value: natType.flag)
+        return self
+    }
+
     func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
         return self
             .with(netshield: configuration.features.netshield)
             .with(vpnAccelerator: configuration.features.vpnAccelerator)
             .with(bouncing: configuration.features.bouncing)
+            .with(natType: configuration.features.natType)
     }
 }

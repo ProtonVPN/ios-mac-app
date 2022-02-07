@@ -69,6 +69,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var netShieldType: NetShieldType? = .off
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false
+    public var natType: NATType = .strictNAT
     public var killSwitch: Bool = false
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false {

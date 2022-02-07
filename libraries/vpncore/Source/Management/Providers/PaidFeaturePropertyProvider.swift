@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-09.
+//  Created on 07.02.2022.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,14 +17,26 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Crypto_VPN
 
-extension LocalAgentFeatures {   
-    var vpnFeatures: VPNConnectionFeatures? {
-        guard let netshield = self.netshield, let vpnAccelerator = self.vpnAccelerator, let natType = self.natType else {
-            return nil
-        }
-        return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType)
+public protocol PaidFeaturePropertyProvider {
+    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory
+    var factory: Factory { get }
+    var propertiesManager: PropertiesManagerProtocol { get }
+    var currentUserTier: Int { get }
+
+    init(_ factory: Factory)
+}
+
+extension PaidFeaturePropertyProvider {
+    var userTierProvider: UserTierProvider {
+        return factory.makeUserTierProvider()
     }
-    
+
+    public var propertiesManager: PropertiesManagerProtocol {
+        factory.makePropertiesManager()
+    }
+
+    public var currentUserTier: Int {
+        return userTierProvider.currentUserTier
+    }
 }

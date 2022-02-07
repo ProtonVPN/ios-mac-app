@@ -16,6 +16,7 @@ public enum VpnManagerClientConfiguration {
     case netShieldLevel2
     case vpnAccelerator
     case label(String)
+    case moderateNAT
 
     var usernameSuffix: String {
         switch self {
@@ -31,6 +32,8 @@ public enum VpnManagerClientConfiguration {
             return "f2"
         case let .label(label):
             return "b:\(label)"
+        case .moderateNAT:
+            return "nr"
         }
     }
 }
@@ -53,8 +56,9 @@ public struct VpnManagerConfiguration {
     public let vpnAccelerator: Bool
     public let bouncing: String?
     public let serverPublicKey: String?
+    public let natType: NATType
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, ports: [Int], serverPublicKey: String?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, ports: [Int], serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -68,6 +72,7 @@ public struct VpnManagerConfiguration {
         self.vpnAccelerator = vpnAccelerator
         self.ports = ports
         self.bouncing = bouncing
+        self.natType = natType
         self.serverPublicKey = serverPublicKey
     }
 }
@@ -108,6 +113,7 @@ public class VpnManagerConfigurationPreparer {
                                            netShield: connectionConfig.netShieldType,
                                            vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                                            bouncing: connectionConfig.serverIp.label,
+                                           natType: connectionConfig.natType,
                                            ports: connectionConfig.ports,
                                            serverPublicKey: connectionConfig.serverIp.x25519PublicKey
             )
@@ -139,6 +145,10 @@ public class VpnManagerConfigurationPreparer {
         
         if let label = connectionConfig.serverIp.label, !label.isEmpty {
             extraConfiguration += [.label(label)]
+        }
+
+        if propertiesManager.featureFlags.moderateNAT, connectionConfig.natType == .moderateNAT {
+            extraConfiguration += [.moderateNAT]
         }
         
         return extraConfiguration.reduce("") {

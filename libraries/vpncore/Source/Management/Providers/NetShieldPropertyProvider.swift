@@ -22,9 +22,10 @@
 
 import Foundation
 
-public protocol NetShieldPropertyProvider {
+public protocol NetShieldPropertyProvider: PaidFeaturePropertyProvider {
     /// Current NetShield type
     var netShieldType: NetShieldType { get set }
+
     /// Check if current user can use NetShield
     var isUserEligibleForNetShield: Bool { get }
 }
@@ -34,14 +35,9 @@ public protocol NetShieldPropertyProviderFactory {
 }
 
 public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider {
+    public let factory: Factory
     
-    public typealias Factory = PropertiesManagerFactory & UserTierProviderFactory
-    private let factory: Factory
-    
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
-    
-    public init(_ factory: Factory) {
+    public required init(_ factory: Factory) {
         self.factory = factory
     }
     
@@ -70,10 +66,6 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             }
         }
         return false
-    }
-    
-    private var currentUserTier: Int {
-        return userTierProvider.currentUserTier
     }
     
     private var defaultNetShieldType: NetShieldType {

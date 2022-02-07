@@ -26,15 +26,15 @@ public struct LocalAgentConfiguration {
     let hostname: String
     let features: VPNConnectionFeatures
 
-    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?) {
+    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType) {
         self.hostname = hostname
-        self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing)
+        self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType)
     }
 }
 
 extension LocalAgentConfiguration {
     init(configuration: VpnManagerConfiguration) {
-        self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing)
+        self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing, natType: configuration.natType)
     }
 
     init?(propertiesManager: PropertiesManagerProtocol, vpnProtocol: VpnProtocol?) {
@@ -45,7 +45,8 @@ extension LocalAgentConfiguration {
         self.init(hostname: connectionConfiguration.serverIp.domain,
                   netshield: propertiesManager.netShieldType ?? .off,
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
-                  bouncing: connectionConfiguration.serverIp.label)
+                  bouncing: connectionConfiguration.serverIp.label,
+                  natType: propertiesManager.natType)
     }
 }
 
@@ -60,7 +61,8 @@ extension VPNConnectionFeatures {
 
         self.init(netshield: propertiesManager.netShieldType ?? .off,
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
-                  bouncing: connectionConfiguration.serverIp.label)
+                  bouncing: connectionConfiguration.serverIp.label,
+                  natType: propertiesManager.natType)
     }
 }
 

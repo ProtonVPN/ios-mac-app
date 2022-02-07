@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-09.
+//  Created on 07.02.2022.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,14 +17,34 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Crypto_VPN
 
-extension LocalAgentFeatures {   
-    var vpnFeatures: VPNConnectionFeatures? {
-        guard let netshield = self.netshield, let vpnAccelerator = self.vpnAccelerator, let natType = self.natType else {
-            return nil
-        }
-        return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType)
+public enum NATType: Codable {
+    case strictNAT
+    case moderateNAT
+
+    init(flag: Bool) {
+        self = flag ? .strictNAT : .moderateNAT
     }
-    
+
+    var flag: Bool {
+        switch self {
+        case .strictNAT:
+            return true
+        case .moderateNAT:
+            return false
+        }
+    }
+
+    static let defaultValue: NATType = .strictNAT
+}
+
+extension NATType: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .strictNAT:
+            return "Strict NAT"
+        case .moderateNAT:
+            return "Moderate NAT"
+        }
+    }
 }

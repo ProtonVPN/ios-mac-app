@@ -154,15 +154,21 @@ public class VpnGateway: VpnGatewayProtocol {
     private var netShieldType: NetShieldType {
         return netShieldPropertyProvider.netShieldType
     }
+
+    private let natTypePropertyProvider: NATTypePropertyProvider
+    private var natType: NATType {
+        return natTypePropertyProvider.natType
+    }
     
     // FUTUREDO: Use factory
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager) {
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.natTypePropertyProvider = natTypePropertyProvider
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
@@ -226,27 +232,27 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public func quickConnectConnectionRequest() -> ConnectionRequest {
         if let quickConnectProfileId = propertiesManager.quickConnect, let profile = profileManager.profile(withId: quickConnectProfileId) {
-            return profile.connectionRequest(withDefaultNetshield: netShieldType)
+            return profile.connectionRequest(withDefaultNetshield: netShieldType, withDefaultNATType: natType)
         } else {
-            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
+            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, profileId: nil)
         }
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, profileId: nil)
         
         connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, profileId: nil)
         
         connect(with: connectionRequest)
     }
     
     public func connectTo(profile: Profile) {
-        connect(with: profile.connectionRequest(withDefaultNetshield: netShieldType))
+        connect(with: profile.connectionRequest(withDefaultNetshield: netShieldType, withDefaultNATType: natType))
     }
     
     public func retryConnection() {
@@ -270,11 +276,11 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastConnectionRequest = request
         
         guard let request = request else {
-            connect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType)
+            connect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType)
             return
         }
         
-        connect(with: request.connectionProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType)
+        connect(with: request.connectionProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType)
     }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -350,7 +356,7 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
     
-    private func connect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType) {
+    private func connect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType) {
         guard let server = server else {
             return
         }
@@ -367,9 +373,9 @@ public class VpnGateway: VpnGatewayProtocol {
                     log.debug("WireGuard + KillSwitch on Catalina detected. Asking user to change one or another.", category: .connectionConnect, event: .scan)
                     alertService?.push(alert: WireguardKSOnCatalinaAlert(killswiftOffHandler: {
                         self.propertiesManager.killSwitch = false
-                        self.connect(with: connectionProtocol, server: server, netShieldType: netShieldType)
+                        self.connect(with: connectionProtocol, server: server, netShieldType: netShieldType, natType: natType)
                     }, openVpnHandler: {
-                        self.connect(with: .vpnProtocol(.openVpn(.tcp)), server: server, netShieldType: netShieldType)
+                        self.connect(with: .vpnProtocol(.openVpn(.tcp)), server: server, netShieldType: netShieldType, natType: natType)
                     }))
                     return
                     
@@ -390,7 +396,7 @@ public class VpnGateway: VpnGatewayProtocol {
         
         connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain, smartProtocolConfig: smartProtocolConfig, openVpnConfig: propertiesManager.openVpnConfig, wireguardConfig: propertiesManager.wireguardConfig)
 
-        connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType)
+        connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType)
     }
     
     private func appStateChanged(_ notification: Notification) {
@@ -472,11 +478,12 @@ fileprivate extension VpnGateway {
             connectionType: .fastest,
             connectionProtocol: globalConnectionProtocol,
             netShieldType: propertiesManager.netShieldType ?? .off,
+            natType: propertiesManager.natType,
             profileId: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
-        self.connect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType)
+        self.connect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType, natType: request.natType)
         return (previousServer, toServer)
     }
 }
