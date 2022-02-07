@@ -69,22 +69,6 @@ protocol ProtocolService {
     func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController
 }
 
-// MARK: Netshield Service
-
-protocol NetshieldService {
-    func makeNetshieldSelectionViewController(selectedType: NetShieldType, approve: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) -> NetshieldSelectionViewController
-}
-
-protocol NetshieldServiceFactory {
-    func makeNetshieldService() -> NetshieldService
-}
-
-extension DependencyContainer: NetshieldServiceFactory {
-    func makeNetshieldService() -> NetshieldService {
-        return makeNavigationService()
-    }
-}
-
 // MARK: Connection status Service
 
 protocol ConnectionStatusServiceFactory {
@@ -347,12 +331,6 @@ extension NavigationService: SettingsService {
 extension NavigationService: ProtocolService {
     func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController {
         return VpnProtocolViewController(viewModel: viewModel)
-    }
-}
-
-extension NavigationService: NetshieldService {
-    func makeNetshieldSelectionViewController(selectedType: NetShieldType, approve: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) -> NetshieldSelectionViewController {
-        return NetshieldSelectionViewController(viewModel: NetshieldSelectionViewModel(selectedType: selectedType, factory: factory, shouldSelectNewValue: approve, onTypeChange: onChange))
     }
 }
 

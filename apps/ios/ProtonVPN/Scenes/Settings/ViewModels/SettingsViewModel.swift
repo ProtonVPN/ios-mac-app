@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & NetshieldServiceFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & PaidFeatureServiceFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -33,10 +33,11 @@ final class SettingsViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
-    private lazy var netshieldService: NetshieldService = factory.makeNetshieldService()
+    private lazy var paidFeatureService: PaidFeatureService = factory.makePaidFeatureService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -69,7 +70,7 @@ final class SettingsViewModel {
         sections.append(accountSection)
         sections.append(securitySection)
         
-        if propertiesManager.featureFlags.vpnAccelerator {
+        if !connectionSection.cells.isEmpty {
             sections.append(connectionSection)
         }
         sections.append(extensionsSection)
@@ -132,6 +133,8 @@ final class SettingsViewModel {
                                                name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: appSessionManager.dataReloaded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+                                               name: type(of: propertiesManager).natTypeNotification, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -287,34 +290,67 @@ final class SettingsViewModel {
     }
     
     private var connectionSection: TableViewSection {
-        var cells: [TableViewCellModel] = [
-            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
-                self.vpnStateConfiguration.getInfo { info in
-                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                    case .withConnectionUpdate:
-                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                        self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
-                        callback(self.propertiesManager.vpnAcceleratorEnabled)
-                    case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+        var cells: [TableViewCellModel] = []
+
+        if propertiesManager.featureFlags.vpnAccelerator {
+            cells.append(contentsOf: [
+                .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
+                    self.vpnStateConfiguration.getInfo { info in
+                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                        case .withConnectionUpdate:
+                            self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                            self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
+                            callback(self.propertiesManager.vpnAcceleratorEnabled)
+                        case .withReconnect:
+                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                                self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                                callback(self.propertiesManager.vpnAcceleratorEnabled)
+                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
+                                self.vpnGateway?.retryConnection()
+                            }))
+                        case .immediately:
                             self.propertiesManager.vpnAcceleratorEnabled.toggle()
                             callback(self.propertiesManager.vpnAcceleratorEnabled)
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
-                            self.vpnGateway?.retryConnection()
-                        }))
-                    case .immediately:
-                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+                        }
                     }
-                }
-            })
-        ]
-
-        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator)))
+                }),
+                .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
+            ])
+        }
         
         if #available(iOS 14.2, *) {
-            cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()))
-            cells.append(.tooltip(text: LocalizedString.allowLanInfo))
+            cells.append(contentsOf: [
+                .toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()),
+                .tooltip(text: LocalizedString.allowLanInfo)
+            ])
+        }
+
+        if true /* propertiesManager.featureFlags.moderateNAT */ {
+            cells.append(contentsOf: [
+                .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [pushNATTypeSelectionViewController] in
+                    pushNATTypeSelectionViewController(self.natTypePropertyProvider.natType, { type, approve in
+                        self.vpnStateConfiguration.getInfo { info in
+                            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                            case .withConnectionUpdate:
+                                approve()
+                                self.vpnManager.set(natType: type)
+                            case .withReconnect:
+                                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: "XX", confirmHandler: {
+                                    approve()
+                                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
+                                    self.vpnGateway?.reconnect(with: type)
+                                    self.connectionStatusService.presentStatusViewController()
+                                }))
+                            case .immediately:
+                                approve()
+                            }
+                        }
+                    }, { type in
+                        self.propertiesManager.natType = type
+                    })
+                }),
+                .tooltip(text: LocalizedString.natTypeExplanation)
+            ])
         }
         
         return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
@@ -511,8 +547,12 @@ final class SettingsViewModel {
         pushHandler?(settingsService.makeCustomServerViewController())
     }
     
-    private func pushNetshieldSelectionViewController(selectedType: NetShieldType, callback: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) {
-        pushHandler?(netshieldService.makeNetshieldSelectionViewController(selectedType: selectedType, approve: callback, onChange: onChange))
+    private func pushNetshieldSelectionViewController(selectedFeature: NetShieldType, callback: @escaping PaidFeatureSelectionViewModel<NetShieldType>.ApproveCallback, onChange: @escaping PaidFeatureSelectionViewModel<NetShieldType>.FeatureChangeCallback) {
+        pushHandler?(paidFeatureService.makePaidFeatureSelectionViewController(selectedFeature: selectedFeature, allFeatures: NetShieldType.allCases, title: LocalizedString.netshieldTitle, callback: callback, onChange: onChange))
+    }
+
+    private func pushNATTypeSelectionViewController(selectedFeature: NATType, callback: @escaping PaidFeatureSelectionViewModel<NATType>.ApproveCallback, onChange: @escaping PaidFeatureSelectionViewModel<NATType>.FeatureChangeCallback) {
+        pushHandler?(paidFeatureService.makePaidFeatureSelectionViewController(selectedFeature: selectedFeature, allFeatures: NATType.allCases, title: LocalizedString.natTypeTitle, callback: callback, onChange: onChange))
     }
 
     private func reportBug() {

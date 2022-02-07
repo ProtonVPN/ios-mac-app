@@ -1,10 +1,7 @@
 //
-//  NetshieldSelectionViewController.swift
-//  ProtonVPN - Created on 2020-09-09.
+//  Created on 07.02.2022.
 //
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,33 +15,30 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
+import Foundation
 import UIKit
 import vpncore
 
-class NetshieldSelectionViewController: UIViewController {
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-    private var viewModel: NetshieldSelectionViewModel
+final class PaidFeatureSelectionViewController<T>: UITableViewController where T: PaidFeature {
+    private let viewModel: PaidFeatureSelectionViewModel<T>
     private var genericDataSource: GenericTableViewDataSource?
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    init(viewModel: PaidFeatureSelectionViewModel<T>) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    init(viewModel: NetshieldSelectionViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: "NetshieldSelectionViewController", bundle: nil)
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
         setupTableView()
-        
+
         viewModel.onDataChange = { [weak self] in
             self?.updateTableView()
             self?.tableView.reloadData()
@@ -53,31 +47,31 @@ class NetshieldSelectionViewController: UIViewController {
             self?.navigationController?.popViewController(animated: true)
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         tableView.reloadData()
     }
-    
+
     private func setupView() {
-        navigationItem.title = LocalizedString.netshieldTitle
+        navigationItem.title = viewModel.title
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-    
+
     private func setupTableView() {
         updateTableView()
-        
+
         tableView.separatorColor = .normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
+        tableView.tableFooterView = UIView()
     }
-    
+
     private func updateTableView() {
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }
-    
 }
