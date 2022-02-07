@@ -18,7 +18,7 @@
 
 import Foundation
 
-public enum NATType: Codable {
+public enum NATType: Int, Codable, CaseIterable {
     case strictNAT
     case moderateNAT
 

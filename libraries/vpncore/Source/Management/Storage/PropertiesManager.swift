@@ -496,10 +496,14 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public var natType: NATType {
         get {
-            return storage.defaults.object(forKey: Keys.natType.rawValue) as? NATType ?? .default
+            if let value = storage.defaults.object(forKey: Keys.natType.rawValue) as? Int, let natType = NATType(rawValue: value) {
+                return natType
+            }
+
+            return .default
         }
         set {
-            storage.setValue(newValue, forKey: Keys.natType.rawValue)
+            storage.setValue(newValue.rawValue, forKey: Keys.natType.rawValue)
             postNotificationOnUIThread(type(of: self).natTypeNotification, object: newValue)
         }
     }
