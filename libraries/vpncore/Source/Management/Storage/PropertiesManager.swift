@@ -36,6 +36,7 @@ public protocol PropertiesManagerProtocol: class {
     static var vpnAcceleratorNotification: Notification.Name { get }
     static var killSwitchNotification: Notification.Name { get }
     static var smartProtocolNotification: Notification.Name { get }
+    static var natTypeNotification: Notification.Name { get }
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     

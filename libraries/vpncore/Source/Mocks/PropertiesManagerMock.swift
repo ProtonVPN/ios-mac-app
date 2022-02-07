@@ -33,6 +33,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("")
     public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("")
     public static var smartProtocolNotification: Notification.Name = Notification.Name("")
+    public static var natTypeNotification: Notification.Name = Notification.Name("")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
