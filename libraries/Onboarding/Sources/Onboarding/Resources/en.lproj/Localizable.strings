@@ -11,7 +11,6 @@
 "onboarding_next" = "Next";
 "onboarding_plus_only" = "AVAILABLE WITH PLUS";
 "onboarding_establish_title" = "Establish your first connection";
-"onboarding_establish_subtitle" = "FREE subscription offers 23 servers in 3 countries";
 "onboarding_establish_note" = "We will connect you to the fastest and most stable server depending on your location.";
 "onboarding_establish_connect_now" = "Connect now";
 "onboarding_establish_access_all" = "Access all countries with PLUS";
@@ -22,15 +21,12 @@
 "onboarding_connected_connected_to" = "Connected to:";
 "onboarding_connected_connect_to_plus" = "Connect to a PLUS server";
 "onboarding_congratulations" = "Congratulations";
-"onboarding_purchased_subtitle" = "You now have access to 1300+ secure servers and other premium features.";
 "onboarding_purchased_note" = "Enjoy the world of privacy.";
 "onboarding_get_plus" = "Get Plus";
-"onboarding_upsell_title" = "Access all 1300+ servers in 61 countries with Plus";
 "onboarding_upsell_subtitle" = "Take advantage of advanced features now!";
 "onboarding_upsell_stay_free" = "Use limited FREE plan";
 "onboarding_upsell_features_footer" = "and more premium features...";
 "onboarding_upsell_feature_streaming" = "Access streaming services globally";
-"onboarding_upsell_feature_multipleDevices" = "Connect 10 devices simultaneously";
 "onboarding_upsell_feature_highSpeed" = "Built-in adblocker (NetShield)";
 "onboarding_upsell_feature_netshield" = "Highest speed (10 Gbps)";
 "onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
