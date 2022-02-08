@@ -154,6 +154,28 @@ public enum AccountPlan: String {
             return 1
         }
     }
+
+    public var countriesCount: Int {
+        switch self {
+        case .plus:
+            return 61
+        case .basic:
+            return 40
+        default:
+            return 3
+        }
+    }
+
+    public var serversCount: Int {
+        switch self {
+        case .plus:
+            return 1600
+        case .basic:
+            return 400
+        default:
+            return 24
+        }
+    }
     
     public var speed: String {
         switch self {
