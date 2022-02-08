@@ -131,3 +131,7 @@ let notificationTextStyle: (UILabel) -> Void = {
     $0.textColor = colors.textInverted
     $0.numberOfLines = 0
 }
+
+let featureTextStyle = concat(baseTextStyle, and: {
+    $0.font = .systemFont(ofSize: 14, weight: .semibold)
+})
