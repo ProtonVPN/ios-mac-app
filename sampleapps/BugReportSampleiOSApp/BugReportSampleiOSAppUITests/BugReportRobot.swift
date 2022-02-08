@@ -22,6 +22,7 @@ let app = XCUIApplication()
 
 fileprivate let bugReportHeading = "Report an issue"
 fileprivate let backButton = "Back"
+fileprivate let showBugReportButton = "Show bug report"
 // Step 1
 fileprivate let stepOneTitle = "What's the issue?"
 fileprivate let browsingSpeedIssue = "Browsing speed_"
@@ -55,7 +56,11 @@ fileprivate let statusLabel = "Troubleshooting"
 
 
 class BugReportRobot {
-    
+    func openBugReport() -> BugReportRobot {
+        app.buttons[showBugReportButton].tap()
+        return BugReportRobot()
+    }
+
     func reportSomethingElseIssue() -> BugReportRobot {
         app.buttons[somethingElseIssue].tap()
         return BugReportRobot()

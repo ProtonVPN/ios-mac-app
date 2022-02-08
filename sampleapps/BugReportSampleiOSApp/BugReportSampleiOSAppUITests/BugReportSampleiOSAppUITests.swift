@@ -45,6 +45,7 @@ class BugReportSampleiOSAppUITests: XCTestCase {
          let description = "Description"
               
          bugReportRobot
+             .openBugReport()
              .verify.reportAnIssueScreenIsShown()
              .reportSomethingElseIssue()
              .verify.bugReportFormIsShown()
@@ -60,6 +61,7 @@ class BugReportSampleiOSAppUITests: XCTestCase {
          let text = "Description"
          
          bugReportRobot
+             .openBugReport()
              .verify.reportAnIssueScreenIsShown()
              .reportBrowsingSpeedIssue()
              .verify.browsingSpeedScreenIsShown()
@@ -78,6 +80,7 @@ class BugReportSampleiOSAppUITests: XCTestCase {
          let description = "Description"
          
          bugReportRobot
+             .openBugReport()
              .verify.reportAnIssueScreenIsShown()
              .reportSomethingElseIssue()
              .verify.bugReportFormIsShown()
@@ -93,6 +96,7 @@ class BugReportSampleiOSAppUITests: XCTestCase {
      func testBugReportBackButton() {
          
          bugReportRobot
+             .openBugReport()
              .verify.reportAnIssueScreenIsShown()
              .reportUsingTheAppIssue()
              .verify.usingTheAppScreenIsShown()
@@ -106,6 +110,7 @@ class BugReportSampleiOSAppUITests: XCTestCase {
      
      func testCanelBugReport() {
          bugReportRobot
+             .openBugReport()
              .verify.reportAnIssueScreenIsShown()
              .reportUsingTheAppIssue()
              .verify.usingTheAppScreenIsShown()
