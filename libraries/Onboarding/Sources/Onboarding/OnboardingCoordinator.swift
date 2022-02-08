@@ -74,6 +74,7 @@ public final class OnboardingCoordinator {
         }
 
         let connectionViewController = storyboard.instantiate(controllerType: ConnectionViewController.self)
+        connectionViewController.constants = configuration.constants
         connectionViewController.delegate = self
         navigationController.pushViewController(connectionViewController, animated: animated)
     }
@@ -87,6 +88,7 @@ public final class OnboardingCoordinator {
 
     private func showUpsell() {
         let upsellViewController = storyboard.instantiate(controllerType: UpsellViewController.self)
+        upsellViewController.constants = configuration.constants
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
         navigationStyle(popOverNavigationController)
@@ -118,6 +120,7 @@ public final class OnboardingCoordinator {
 
     private func showConnectToPlusServer() {
         let connectToPlusServerViewController = storyboard.instantiate(controllerType: ConnectToPlusServerViewController.self)
+        connectToPlusServerViewController.constants = configuration.constants
         connectToPlusServerViewController.delegate = self
         navigationController.pushViewController(connectToPlusServerViewController, animated: false)
         popOverNavigationController?.dismiss(animated: true)

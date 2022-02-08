@@ -28,10 +28,16 @@ final class FeatureView: UIView {
 
     // MARK: Properties
 
+    var constants: Constants? {
+        didSet {
+            setTitle()
+        }
+    }
+
     var feature: Feature? {
         didSet {
-            titleLabel.text = feature?.title
             iconImageView.image = feature?.image
+            setTitle()
         }
     }
 
@@ -39,5 +45,13 @@ final class FeatureView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+
+    private func setTitle() {
+        guard let constants = constants, let feature = feature else {
+            return
+        }
+
+        titleLabel.text = feature.title(constants: constants)
     }
 }

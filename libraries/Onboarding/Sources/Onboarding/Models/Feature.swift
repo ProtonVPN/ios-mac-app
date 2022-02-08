@@ -27,12 +27,12 @@ enum Feature {
 }
 
 extension Feature: CaseIterable {
-    var title: String {
+    func title(constants: Constants) -> String {
         switch self {
         case .streaming:
             return LocalizedString.onboardingUpsellFeatureStreaming
         case .multipleDevices:
-            return LocalizedString.onboardingUpsellFeatureMultipleDevices
+            return LocalizedString.onboardingUpsellFeatureMultipleDevices(constants.numberOfDevices)
         case .netshield:
             return LocalizedString.onboardingUpsellFeatureNetshield
         case .highSpeed:

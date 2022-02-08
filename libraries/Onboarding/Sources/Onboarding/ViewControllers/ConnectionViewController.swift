@@ -39,6 +39,7 @@ final class ConnectionViewController: UIViewController {
     // MARK: Properties
 
     weak var delegate: ConnectionViewControllerDelegate?
+    var constants: Constants!
 
     private lazy var activityView: UIActivityIndicatorView = {
         let activityView = UIActivityIndicatorView()
@@ -66,7 +67,7 @@ final class ConnectionViewController: UIViewController {
         textButtonStyle(skipButton)
 
         titleLabel.text = LocalizedString.onboardingEstablishTitle
-        subtitleLabel.text = LocalizedString.onboardingEstablishSubtitle
+        subtitleLabel.text = LocalizedString.onboardingEstablishSubtitle(constants.numberOfFreeServers, constants.numberOfFreeCountries)
         noteLabel.text = LocalizedString.onboardingEstablishNote
         connectButton.setTitle(LocalizedString.onboardingEstablishConnectNow, for: .normal)
         purchaseButon.setTitle(LocalizedString.onboardingEstablishAccessAll, for: .normal)

@@ -41,12 +41,30 @@ public struct Colors {
     }
 }
 
+public struct Constants {
+    let numberOfDevices: Int
+    let numberOfServers: Int
+    let numberOfFreeServers: Int
+    let numberOfFreeCountries: Int
+    let numberOfCountries: Int
+
+    public init(numberOfDevices: Int, numberOfServers: Int, numberOfFreeServers: Int, numberOfFreeCountries: Int, numberOfCountries: Int) {
+        self.numberOfDevices = numberOfDevices
+        self.numberOfServers = numberOfServers
+        self.numberOfFreeServers = numberOfFreeServers
+        self.numberOfFreeCountries = numberOfFreeCountries
+        self.numberOfCountries = numberOfCountries
+    }
+}
+
 public struct Configuration {
     let variant: OnboardingVariant
     let colors: Colors
+    let constants: Constants
 
-    public init(variant: OnboardingVariant, colors: Colors) {
+    public init(variant: OnboardingVariant, colors: Colors, constants: Constants) {
         self.colors = colors
         self.variant = variant
+        self.constants = constants
     }
 }

@@ -37,6 +37,7 @@ final class UpsellViewController: UIViewController {
     // MARK: Properties
 
     weak var delegate: UpsellViewControllerDelegate?
+    var constants: Constants!
 
     // MARK: Setup
 
@@ -55,7 +56,7 @@ final class UpsellViewController: UIViewController {
 
         getPlusButton.setTitle(LocalizedString.onboardingGetPlus, for: .normal)
         useFreeButton.setTitle(LocalizedString.onboardingUpsellStayFree, for: .normal)
-        titleLabel.text = LocalizedString.onboardingUpsellTitle
+        titleLabel.text = LocalizedString.onboardingUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
         featuresFooterLabel.text = LocalizedString.onboardingUpsellFeaturesFooter
 
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
@@ -72,6 +73,7 @@ final class UpsellViewController: UIViewController {
 
         for feature in Feature.allCases {
             let view = Bundle.module.loadNibNamed("FeatureView", owner: self, options: nil)?.first as! FeatureView
+            view.constants = constants
             view.feature = feature
             featuresStackView.addArrangedSubview(view)
         }

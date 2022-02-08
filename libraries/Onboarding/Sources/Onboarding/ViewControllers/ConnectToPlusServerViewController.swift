@@ -37,6 +37,7 @@ final class ConnectToPlusServerViewController: UIViewController {
     // MARK: Properties
 
     weak var delegate: ConnectToPlusServerViewControllerDelegate?
+    var constants: Constants!
 
     // MARK: Setup
 
@@ -55,7 +56,7 @@ final class ConnectToPlusServerViewController: UIViewController {
         textButtonStyle(skipButton)
 
         titleLabel.text = LocalizedString.onboardingCongratulations
-        subtitleLabel.text = LocalizedString.onboardingPurchasedSubtitle
+        subtitleLabel.text = LocalizedString.onboardingPurchasedSubtitle(constants.numberOfServers)
         noteLabel.text = LocalizedString.onboardingPurchasedNote
         connectButton.setTitle(LocalizedString.onboardingConnectedConnectToPlus, for: .normal)
         skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
