@@ -24,8 +24,8 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct BugReportiOSView: View {
 
-    private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
-    @StateObject var updateViewModel: IOSUpdateViewModel = Current.iOSUpdateViewModel
+    private weak var delegate: BugReportDelegate? = CurrentEnv.bugReportDelegate
+    @StateObject var updateViewModel: IOSUpdateViewModel = CurrentEnv.iOSUpdateViewModel
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
@@ -76,8 +76,8 @@ struct BugReportView_Previews: PreviewProvider {
     private static let bugReport = MockBugReportDelegate(model: .mock)
 
     static var previews: some View {
-        Current.bugReportDelegate = bugReport
-        Current.iOSUpdateViewModel.updateIsAvailable = true
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.iOSUpdateViewModel.updateIsAvailable = true
         return Group {
             BugReportiOSView()
         }

@@ -46,7 +46,7 @@ final class FormViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
         let vm = FormViewModel(fields: [
             InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil),
             InputField.init(label: "1", submitLabel: "", type: .switch, isMandatory: false, placeholder: nil),
@@ -65,7 +65,7 @@ final class FormViewModelTests: XCTestCase {
         delegate.sendCallback = { _, _ in
             expectationNotSent.fulfill()
         }
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
         
         let vm = FormViewModel(fields: [
             InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: true, placeholder: nil),
@@ -93,7 +93,7 @@ final class FormViewModelTests: XCTestCase {
         delegate.sendCallback = { _, callback in
             callback(.failure(NSError(domain: "test-error", code: 789, userInfo: nil)))
         }
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
         
         let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)])
         vm.fields[0].stringValue = emailValue
@@ -118,7 +118,7 @@ final class FormViewModelTests: XCTestCase {
         delegate.finishedCallback = {
             expectationFinish.fulfill()
         }
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
         
         let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)])
         vm.fields[0].stringValue = emailValue
@@ -134,7 +134,7 @@ final class FormViewModelTests: XCTestCase {
         delegate.sendCallback = { _, callback in
             callback(.success(Void()))
         }
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
         
         let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)])
         vm.fields[0].stringValue = emailValue

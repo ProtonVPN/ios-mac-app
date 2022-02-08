@@ -31,11 +31,11 @@ public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:
 
     @available(iOS 14.0, *)
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController? {
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
 
         delegate.updateAvailabilityChanged = { available in
             withAnimation {
-                Current.iOSUpdateViewModel.updateIsAvailable = available
+                CurrentEnv.iOSUpdateViewModel.updateIsAvailable = available
             }
         }
         delegate.checkUpdateAvailability()

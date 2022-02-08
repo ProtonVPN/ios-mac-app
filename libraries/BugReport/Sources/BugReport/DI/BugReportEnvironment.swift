@@ -28,4 +28,4 @@ struct BugReportEnvironment {
 }
 
 @available(iOS 14.0, *)
-var Current = BugReportEnvironment()
+var CurrentEnv = BugReportEnvironment()

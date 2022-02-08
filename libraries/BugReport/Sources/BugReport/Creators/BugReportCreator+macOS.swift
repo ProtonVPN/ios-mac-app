@@ -33,7 +33,7 @@ public final class MacOSBugReportCreator: BugReportCreator {
             return nil
         }
 
-        Current.bugReportDelegate = delegate
+        CurrentEnv.bugReportDelegate = delegate
 
         let viewModel = MacBugReportViewModel(model: delegate.model)
         delegate.updateAvailabilityChanged = { available in

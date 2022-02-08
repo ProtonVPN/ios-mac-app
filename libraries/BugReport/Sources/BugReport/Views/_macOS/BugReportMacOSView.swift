@@ -24,7 +24,6 @@ import SwiftUI
 @available(macOS 11, *)
 public struct BugReportMacOSView: View {
 
-//    private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
     var categories: [Category]
     var categorySelected: (Category) -> Void
 
@@ -65,7 +64,7 @@ struct BugReportView_Previews: PreviewProvider {
     static var previews: some View {
 
         return Group {
-            BugReportMacOSView(categories: Current.bugReportDelegate!.model.categories, categorySelected: { _ in })
+            BugReportMacOSView(categories: CurrentEnv.bugReportDelegate!.model.categories, categorySelected: { _ in })
                 .frame(width: 400.0)
         }
         .preferredColorScheme(.dark)

@@ -90,7 +90,7 @@ final class FormViewModel: ObservableObject {
 
     // MARK: - Other
 
-    private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
+    private weak var delegate: BugReportDelegate? = CurrentEnv.bugReportDelegate
     private let emailFieldName = "_email"
     private let logsFieldName = "_logs"
 

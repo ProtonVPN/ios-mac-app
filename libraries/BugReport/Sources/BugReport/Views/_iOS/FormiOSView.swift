@@ -25,7 +25,7 @@ import SwiftUI
 struct FormiOSView: View {
 
     @StateObject var viewModel: FormViewModel
-    @StateObject var updateViewModel: IOSUpdateViewModel = Current.iOSUpdateViewModel
+    @StateObject var updateViewModel: IOSUpdateViewModel = CurrentEnv.iOSUpdateViewModel
 
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
