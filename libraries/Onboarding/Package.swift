@@ -13,17 +13,19 @@ let package = Package(
             targets: ["Onboarding"])
     ],
     dependencies: [
-        .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0"))
+        .package(name: "Overture",
+                 url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
+        .package(path: "../Modals")
     ],
     targets: [
         .target(
             name: "Onboarding",
-            dependencies: ["Overture"],
-        resources: [
-            .process("Storyboard.storyboard"),
-            .process("Views/TourStepView.xib"),
-            .process("Views/FeatureView.xib"),
-            .process("Resources")
-        ])
+            dependencies: ["Overture", "Modals"],
+            resources: [
+                .process("Storyboard.storyboard"),
+                .process("Views/TourStepView.xib"),
+                .process("Views/FeatureView.xib"),
+                .process("Resources")
+            ])
     ]
 )

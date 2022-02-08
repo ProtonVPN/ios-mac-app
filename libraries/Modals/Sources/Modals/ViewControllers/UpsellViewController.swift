@@ -19,12 +19,12 @@
 import Foundation
 import UIKit
 
-protocol UpsellViewControllerDelegate: AnyObject {
+public protocol UpsellViewControllerDelegate: AnyObject {
     func userDidRequestPlus()
     func userDidDismissUpsell()
 }
 
-final class UpsellViewController: UIViewController {
+final public class UpsellViewController: UIViewController {
 
     // MARK: Outlets
 
@@ -36,12 +36,11 @@ final class UpsellViewController: UIViewController {
 
     // MARK: Properties
 
-    weak var delegate: UpsellViewControllerDelegate?
-    var constants: Constants!
+    weak public var delegate: UpsellViewControllerDelegate?
 
     // MARK: Setup
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         setupUI()

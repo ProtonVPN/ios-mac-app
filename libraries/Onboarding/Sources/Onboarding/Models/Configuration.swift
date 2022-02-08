@@ -60,7 +60,7 @@ public struct Constants {
 public struct Configuration {
     let variant: OnboardingVariant
     let colors: Colors
-    let constants: Constants
+    public let constants: Constants
 
     public init(variant: OnboardingVariant, colors: Colors, constants: Constants) {
         self.colors = colors

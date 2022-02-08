@@ -21,13 +21,6 @@
 "onboarding_connected_connect_to_plus" = "Connect to a PLUS server";
 "onboarding_congratulations" = "Congratulations";
 "onboarding_purchased_note" = "Enjoy the world of privacy.";
-"onboarding_get_plus" = "Get Plus";
-"onboarding_upsell_subtitle" = "Take advantage of advanced features now!";
-"onboarding_upsell_stay_free" = "Use limited FREE plan";
-"onboarding_upsell_features_footer" = "and more premium features...";
-"onboarding_upsell_feature_streaming" = "Access streaming services globally";
-"onboarding_upsell_feature_highSpeed" = "Built-in adblocker (NetShield)";
-"onboarding_upsell_feature_netshield" = "Highest speed (10 Gbps)";
 "onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
 "onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
 "onboarding_continue" = "Continue";
