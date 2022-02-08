@@ -1,5 +1,5 @@
 //
-//  Created on 04.01.2022.
+//  Created on 2/8/22.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,29 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
-
-public struct Colors {
-    let background: UIColor
-    let text: UIColor
-    let brand: UIColor
-    let weakText: UIColor
-    let activeBrandButton: UIColor
-    let secondaryBackground: UIColor
-    let textInverted: UIColor
-    let notification: UIColor
-
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor) {
-        self.background = background
-        self.text = text
-        self.brand = brand
-        self.weakText = weakText
-        self.activeBrandButton = activeBrandButton
-        self.secondaryBackground = secondaryBackground
-        self.textInverted = textInverted
-        self.notification = notification
-    }
-}
 
 public struct Constants {
     let numberOfDevices: Int
@@ -54,17 +31,5 @@ public struct Constants {
         self.numberOfFreeServers = numberOfFreeServers
         self.numberOfFreeCountries = numberOfFreeCountries
         self.numberOfCountries = numberOfCountries
-    }
-}
-
-public struct Configuration {
-    let variant: OnboardingVariant
-    let colors: Colors
-    public let constants: Constants
-
-    public init(variant: OnboardingVariant, colors: Colors, constants: Constants) {
-        self.colors = colors
-        self.variant = variant
-        self.constants = constants
     }
 }

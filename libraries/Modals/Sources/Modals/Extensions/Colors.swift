@@ -1,5 +1,5 @@
 //
-//  Created on 04.01.2022.
+//  Created on 2/8/22.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import UIKit
 
 public struct Colors {
@@ -38,33 +37,5 @@ public struct Colors {
         self.secondaryBackground = secondaryBackground
         self.textInverted = textInverted
         self.notification = notification
-    }
-}
-
-public struct Constants {
-    let numberOfDevices: Int
-    let numberOfServers: Int
-    let numberOfFreeServers: Int
-    let numberOfFreeCountries: Int
-    let numberOfCountries: Int
-
-    public init(numberOfDevices: Int, numberOfServers: Int, numberOfFreeServers: Int, numberOfFreeCountries: Int, numberOfCountries: Int) {
-        self.numberOfDevices = numberOfDevices
-        self.numberOfServers = numberOfServers
-        self.numberOfFreeServers = numberOfFreeServers
-        self.numberOfFreeCountries = numberOfFreeCountries
-        self.numberOfCountries = numberOfCountries
-    }
-}
-
-public struct Configuration {
-    let variant: OnboardingVariant
-    let colors: Colors
-    public let constants: Constants
-
-    public init(variant: OnboardingVariant, colors: Colors, constants: Constants) {
-        self.colors = colors
-        self.variant = variant
-        self.constants = constants
     }
 }

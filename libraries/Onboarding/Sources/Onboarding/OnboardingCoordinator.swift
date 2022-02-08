@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Modals
 import UIKit
 
 public typealias OnboardingConnectionRequestCompletion = (Country?) -> Void
@@ -87,8 +88,8 @@ public final class OnboardingCoordinator {
     }
 
     private func showUpsell() {
-        let upsellViewController = storyboard.instantiate(controllerType: UpsellViewController.self)
-        upsellViewController.constants = configuration.constants
+        let upsellViewController = Modals().upsellViewController()
+//        upsellViewController.constants = configuration.constants
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
         navigationStyle(popOverNavigationController)
@@ -188,7 +189,7 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 // MARK: Upsell screen delegate
 
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
-    func userDidDismissUpsell() {
+    public func userDidDismissUpsell() {
         switch configuration.variant {
         case .A:
             if onboardingFinished {
@@ -203,7 +204,7 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
         }
     }
 
-    func userDidRequestPlus() {
+    public func userDidRequestPlus() {
         showGetPlus()
     }
 }
