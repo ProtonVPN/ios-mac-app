@@ -18,9 +18,10 @@
 
 import Foundation
 import Onboarding
+import vpncore
 
 extension Configuration {
     init(showFirstConnection: Bool) {
-        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .activeBrandColor(), secondaryBackground: .secondaryBackgroundColor(), textInverted: .backgroundColor(), notification: .normalTextColor()))
+        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .activeBrandColor(), secondaryBackground: .secondaryBackgroundColor(), textInverted: .backgroundColor(), notification: .normalTextColor()), constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount, numberOfServers: AccountPlan.plus.serversCount, numberOfFreeServers: AccountPlan.free.serversCount, numberOfFreeCountries: AccountPlan.free.countriesCount, numberOfCountries: AccountPlan.plus.countriesCount))
     }
 }
