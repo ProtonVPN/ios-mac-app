@@ -25,7 +25,7 @@ final class MacBugReportViewModelTests: XCTestCase {
     func testSequence() throws {
         let model = BugReportModel.mock
         let bugReportDelegate = MockBugReportDelegate(model: model)
-        Current.bugReportDelegate = bugReportDelegate
+        CurrentEnv.bugReportDelegate = bugReportDelegate
         
         // Categories
         let viewModel = MacBugReportViewModel(model: model)
@@ -72,7 +72,7 @@ final class MacBugReportViewModelTests: XCTestCase {
     func testSequenceWithoutSuggestions() throws {
         let model = BugReportModel.mock
         let bugReportDelegate = MockBugReportDelegate(model: model)
-        Current.bugReportDelegate = bugReportDelegate
+        CurrentEnv.bugReportDelegate = bugReportDelegate
                 
         // Categories
         let viewModel = MacBugReportViewModel(model: model)

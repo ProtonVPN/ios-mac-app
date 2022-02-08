@@ -24,7 +24,7 @@ struct QuickFixesMacOSList: View {
     let category: Category
     let finished: () -> Void
 
-    let assetsBundle = Current.assetsBundle
+    let assetsBundle = CurrentEnv.assetsBundle
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 

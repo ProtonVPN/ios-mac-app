@@ -55,7 +55,7 @@ struct UpdateAvailableView: View {
 
                 Spacer()
 
-                Button(LocalizedString.updateViewButton, action: { Current.bugReportDelegate?.updateApp() })
+                Button(LocalizedString.updateViewButton, action: { CurrentEnv.bugReportDelegate?.updateApp() })
                     .buttonStyle(UpdateButtonStyle())
                     .accessibilityIdentifier("Update app button")
 

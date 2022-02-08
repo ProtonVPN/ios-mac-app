@@ -25,8 +25,8 @@ struct QuickFixesiOSList: View {
 
     let category: Category
 
-    @StateObject var updateViewModel: IOSUpdateViewModel = Current.iOSUpdateViewModel
-    let assetsBundle = Current.assetsBundle
+    @StateObject var updateViewModel: IOSUpdateViewModel = CurrentEnv.iOSUpdateViewModel
+    let assetsBundle = CurrentEnv.assetsBundle
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
