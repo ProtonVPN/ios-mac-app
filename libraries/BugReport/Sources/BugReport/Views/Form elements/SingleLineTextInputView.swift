@@ -31,17 +31,22 @@ struct SingleLineTextInputView: View {
                 .font(.system(size: 13))
                 .padding(.bottom, 8)
 
-            TextField(
-                field.placeholder ?? "",
-                text: $value
-            )
-                .accessibilityIdentifier("Single line input \(field.submitLabel)")
-                .textFieldStyle(.plain)
-                .foregroundColor(.white)
-                .padding(.vertical, 6)
-                .padding(.horizontal)
-                .background(RoundedRectangle(cornerRadius: 8))
-                .foregroundColor(colors.backgroundSecondary)
+            ZStack(alignment: .topLeading) {
+                if value.isEmpty {
+                    Text(field.placeholder ?? "")
+                        .lineLimit(1)
+                        .foregroundColor(colors.textSecondary)
+                }
+                
+                TextField("", text: $value)
+                    .accessibilityIdentifier("Single line input \(field.submitLabel)")
+                    .textFieldStyle(.plain)
+                    .foregroundColor(colors.textPrimary)
+            }
+            .padding(.vertical, 6)
+            .padding(.horizontal)
+            .background(RoundedRectangle(cornerRadius: 8).foregroundColor(colors.backgroundSecondary))
+
         }
         .padding(.horizontal)
     }
