@@ -45,6 +45,8 @@ final class FeatureView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        featureTextStyle(titleLabel)
     }
 
     private func setTitle() {
