@@ -21,9 +21,6 @@
       location = "group:libraries/BugReport">
    </FileRef>
    <FileRef
-      location = "group:libraries/Modals">
-   </FileRef>
-   <FileRef
       location = "group:apps/iOS/iOS.xcodeproj">
    </FileRef>
    <FileRef
