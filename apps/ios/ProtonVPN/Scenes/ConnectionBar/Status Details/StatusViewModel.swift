@@ -56,7 +56,7 @@ class StatusViewModel {
     private var userTier: Int {
         let tier: Int
         do {
-            tier = try vpnKeychain.fetch().maxTier
+            tier = try vpnKeychain.fetchCached().maxTier
         } catch {
             tier = CoreAppConstants.VpnTiers.free
         }

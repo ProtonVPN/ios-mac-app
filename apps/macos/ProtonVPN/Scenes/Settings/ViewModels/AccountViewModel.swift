@@ -33,7 +33,7 @@ class AccountViewModel {
         if let authCredentials = AuthKeychain.fetch() {
             username = authCredentials.username
             do {
-                let vpnCredentials = try vpnKeychain.fetch()
+                let vpnCredentials = try vpnKeychain.fetchCached()
                 accountType = vpnCredentials.serviceName
                 accountPlan = vpnCredentials.accountPlan
             } catch {

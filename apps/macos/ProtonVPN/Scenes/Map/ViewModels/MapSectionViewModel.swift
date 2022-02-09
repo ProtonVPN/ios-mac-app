@@ -147,8 +147,7 @@ class MapSectionViewModel {
     
     private func annotations(forView viewType: ServerType) -> [CountryAnnotationViewModel] {
         do {
-            let vpnCredentials = try vpnKeychain.fetch()
-            let userTier = vpnCredentials.maxTier
+            let userTier = try vpnKeychain.fetchCached().maxTier
             
             let annotations: [CountryAnnotationViewModel]
             switch viewType {

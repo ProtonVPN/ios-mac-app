@@ -96,7 +96,7 @@ class CreateOrEditProfileViewModel: NSObject {
             self.isDefaultProfile = profile == quickConnectProfile
         }
         
-        if let vpnCredentials = try? vpnKeychain.fetch() {
+        if let vpnCredentials = try? vpnKeychain.fetchCached() {
             userTier = vpnCredentials.maxTier
         }
         

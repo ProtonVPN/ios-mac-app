@@ -710,8 +710,8 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(userCurrentCredentials: VpnCredentials) {
-        switch userCurrentCredentials.accountPlan {
+    public init(accountPlan: AccountPlan) {
+        switch accountPlan {
         case .free, .basic:
             message = LocalizedString.maximumDeviceDescription(AccountPlan.plus.name, AccountPlan.plus.devicesCount)
         default:

@@ -102,8 +102,7 @@ class CreateNewProfileViewModel {
     
     private func setupUserTier() {
         do {
-            let vpnCredentials = try vpnKeychain.fetch()
-            userTier = vpnCredentials.maxTier
+            userTier = try vpnKeychain.fetchCached().maxTier
         } catch {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
         }

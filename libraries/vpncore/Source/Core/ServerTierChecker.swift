@@ -61,7 +61,7 @@ class ServerTierChecker {
     }
     
     private func userTier() throws -> Int {
-        let tier = try vpnKeychain.fetch().maxTier
+        let tier = try vpnKeychain.fetchCached().maxTier
         return tier
     }
 }

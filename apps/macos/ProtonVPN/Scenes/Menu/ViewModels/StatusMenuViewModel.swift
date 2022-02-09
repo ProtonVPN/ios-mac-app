@@ -289,7 +289,7 @@ class StatusMenuViewModel {
         
         let tier: Int
         do {
-            tier = try vpnKeychain.fetch().maxTier
+            tier = try vpnKeychain.fetchCached().maxTier
         } catch {
             tier = CoreAppConstants.VpnTiers.free
         }
@@ -309,7 +309,7 @@ class StatusMenuViewModel {
         serverType = propertiesManager.serverTypeToggle
         
         do {
-            let tier = try vpnKeychain.fetch().maxTier
+            let tier = try vpnKeychain.fetchCached().maxTier
 
             serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
             profileManager = factory.makeProfileManager()

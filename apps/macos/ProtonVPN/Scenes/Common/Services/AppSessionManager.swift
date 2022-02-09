@@ -230,7 +230,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     private func checkForSubuserWithoutSessions(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        guard let credentials = try? self.vpnKeychain.fetch() else {
+        guard let credentials = try? self.vpnKeychain.fetchCached() else {
             success()
             return
         }

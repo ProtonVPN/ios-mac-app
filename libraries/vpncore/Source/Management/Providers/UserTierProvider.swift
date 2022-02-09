@@ -43,7 +43,7 @@ public class UserTierProviderImplementation: UserTierProvider {
     
     /// Tier of current user
     public var currentUserTier: Int {
-        let tier = try? vpnKeychain.fetch().maxTier
+        let tier = try? vpnKeychain.fetchCached().maxTier
         return tier ?? CoreAppConstants.VpnTiers.free
     }
     

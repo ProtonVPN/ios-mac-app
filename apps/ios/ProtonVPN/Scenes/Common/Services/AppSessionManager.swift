@@ -121,7 +121,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         
         // swiftlint:disable unused_optional_binding
-        if let _ = try? vpnKeychain.fetch() {
+        if let _ = try? vpnKeychain.fetchCached() {
             setAndNotify(for: .established)
         } else {
             setAndNotify(for: .notEstablished)
@@ -298,7 +298,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     private func checkForSubuserWithoutSessions(completion: @escaping (Result<(), Error>) -> Void) {
-        guard let credentials = try? self.vpnKeychain.fetch() else {
+        guard let credentials = try? self.vpnKeychain.fetchCached() else {
             completion(.success)
             return
         }

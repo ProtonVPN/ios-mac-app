@@ -327,7 +327,7 @@ extension NavigationService: SettingsService {
             let manager = factory.makeDynamicBugReportManager()
             if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: nil) {
                 manager.username = AuthKeychain.fetch()?.username ?? ""
-                manager.planname = (try? vpnKeychain.fetch().accountPlan.name) ?? ""
+                manager.planname = (try? vpnKeychain.fetchCached().accountPlan.name) ?? ""
                 manager.closeBugReportHandler = {
                     self.windowService.dismissModal()
                 }

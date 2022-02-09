@@ -147,7 +147,7 @@ final class SettingsViewModel {
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
         
-        guard let tier = try? vpnKeychain.fetch().maxTier else { return }
+        guard let tier = try? vpnKeychain.fetchCached().maxTier else { return }
 
         serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
         profileManager = factory.makeProfileManager()
@@ -191,7 +191,7 @@ final class SettingsViewModel {
         let allowPlanManagement: Bool
         
         if let authCredentials = AuthKeychain.fetch(),
-            let vpnCredentials = try? vpnKeychain.fetch() {
+            let vpnCredentials = try? vpnKeychain.fetchCached() {
 
             let accountPlan = vpnCredentials.accountPlan
             username = authCredentials.username

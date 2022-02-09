@@ -213,7 +213,7 @@ public class AppStateManagerImplementation: AppStateManager {
         }
         
         do {
-            let vpnCredentials = try vpnKeychain.fetch()
+            let vpnCredentials = try vpnKeychain.fetchCached()
             if vpnCredentials.isDelinquent {
                 let alert = UserBecameDelinquentAlert(reconnectionInfo: nil)
                 alertService?.push(alert: alert)
@@ -493,11 +493,10 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
-        let dispatchGroup = DispatchGroup()
-        
         var rSessionCount: Int?
         var rVpnCredentials: VpnCredentials?
-        
+
+        let dispatchGroup = DispatchGroup()
         let failureClosure: (Error) -> Void = { error in
             dispatchGroup.leave()
         }
@@ -528,13 +527,8 @@ public class AppStateManagerImplementation: AppStateManager {
             guard let `self` = self, self.state.isDisconnected else { return }
             
             if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
-                #if canImport(AppKit)
-                let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
-                NotificationCenter.default.post(notification)
-                #endif
-                let alert = MaxSessionsAlert(userCurrentCredentials: rVpnCredentials ?? vpnCredentials)
-                self.alertService?.push(alert: alert)
-                self.connectionFailed()
+                let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
+                self.maxSessionsReached(accountPlan: accountPlan)
             } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
                 self.vpnKeychain.store(vpnCredentials: newVpnCredentials)
                 guard let lastConfiguration = self.lastAttemptedConfiguration else {
@@ -549,6 +543,16 @@ public class AppStateManagerImplementation: AppStateManager {
                 }
             }
         }
+    }
+
+    private func maxSessionsReached(accountPlan: AccountPlan) {
+        #if canImport(AppKit)
+        let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
+        NotificationCenter.default.post(notification)
+        #endif
+        let alert = MaxSessionsAlert(accountPlan: accountPlan)
+        self.alertService?.push(alert: alert)
+        self.connectionFailed()
     }
     
     private func notifyObservers() {

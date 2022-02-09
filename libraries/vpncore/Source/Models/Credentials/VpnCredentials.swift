@@ -51,17 +51,7 @@ public class VpnCredentials: NSObject, NSCoding {
             "Delinquent: \(delinquent)\n" +
             "Has Payment Method: \(hasPaymentMethod)"
     }
-    
-    public var serviceName: String {
-        var name = LocalizedString.unavailable
-        if services & 0b001 != 0 {
-            name = "ProtonMail"
-        } else if services & 0b100 != 0 {
-            name = "ProtonVPN"
-        }
-        return name
-    }
-    
+
     public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool, planName: String?) {
         self.status = status
         self.expirationTime = expirationTime
@@ -161,19 +151,66 @@ public class VpnCredentials: NSObject, NSCoding {
     }
 }
 
-// MARK: - Checks performed on VpnCredentials
-
 extension VpnCredentials {
-    
-    public var hasExpired: Bool {
-        return Date().compare(expirationTime) != .orderedAscending
-    }
-    
     public var isDelinquent: Bool {
         return delinquent > 2
     }
-    
+}
+
+/// Contains everything that VpnCredentials has, minus the username, password, and group ID.
+/// This lets us avoid querying the keychain unnecessarily, since every query results in a synchronous
+/// roundtrip to securityd.
+public struct CachedVpnCredentials {
+    public let status: Int
+    public let expirationTime: Date
+    public let accountPlan: AccountPlan
+    public let planName: String?
+    public let maxConnect: Int
+    public let maxTier: Int
+    public let services: Int
+    public let delinquent: Int
+    public let credit: Int
+    public let currency: String
+    public let hasPaymentMethod: Bool
+}
+
+extension CachedVpnCredentials {
+    init(credentials: VpnCredentials) {
+        self.init(status: credentials.status,
+                  expirationTime: credentials.expirationTime,
+                  accountPlan: credentials.accountPlan,
+                  planName: credentials.planName,
+                  maxConnect: credentials.maxConnect,
+                  maxTier: credentials.maxTier,
+                  services: credentials.services,
+                  delinquent: credentials.delinquent,
+                  credit: credentials.credit,
+                  currency: credentials.currency,
+                  hasPaymentMethod: credentials.hasPaymentMethod)
+    }
+}
+
+// MARK: - Checks performed on CachedVpnCredentials
+extension CachedVpnCredentials {
+    public var hasExpired: Bool {
+        return Date().compare(expirationTime) != .orderedAscending
+    }
+
+    public var isDelinquent: Bool {
+        return delinquent > 2
+    }
+
     public var isSubuserWithoutSessions: Bool {
         return planName == nil && maxConnect <= 1
+    }
+
+    public var serviceName: String {
+        var name = LocalizedString.unavailable
+        if services & 0b001 != 0 {
+            name = "ProtonMail"
+        } else if services & 0b100 != 0 {
+            name = "ProtonVPN"
+        }
+        return name
     }
 }
