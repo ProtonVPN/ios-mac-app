@@ -64,7 +64,13 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var allowLANButton: SwitchButton!
     @IBOutlet private weak var allowLANSeparator: NSBox!
     @IBOutlet private weak var allowLANIcon: NSImageView!
-    
+
+    @IBOutlet private weak var natTypeView: NSView!
+    @IBOutlet private weak var natTypeLabel: PVPNTextField!
+    @IBOutlet private weak var natTypeSeparator: NSBox!
+    @IBOutlet private weak var natTypeInfoIcon: NSImageView!
+    @IBOutlet private weak var natTypeList: HoverDetectionPopUpButton!
+
     private var viewModel: ConnectionSettingsViewModel
     
     required init?(coder: NSCoder) {
@@ -182,6 +188,20 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         allowLANSeparator.fillColor = .protonLightGrey()
     }
+
+    private func setupNatTypeItem() {
+        natTypeView.isHidden = !viewModel.isNATTypeEnabled
+        natTypeLabel.attributedStringValue = LocalizedString
+            .natTypeTitle
+            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        natTypeList.isBordered = false
+        natTypeList.target = self
+        natTypeList.action = #selector(natTypeItemSelected)
+        natTypeInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
+        natTypeInfoIcon.toolTip = LocalizedString.natTypeExplanation
+        natTypeSeparator.fillColor = .protonLightGrey()
+        refreshNATType()
+    }
     
     private func refreshAutoConnect() {
         autoConnectList.removeAllItems()
@@ -219,6 +239,18 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
         protocolList.selectItem(at: viewModel.protocolProfileIndex)
     }
+
+    private func refreshNATType() {
+        natTypeList.removeAllItems()
+        (0..<NATType.allCases.count).forEach { index in
+            let menuItem = NSMenuItem()
+            let (text, canBeSelected) = viewModel.natTypeItem(for: index)
+            menuItem.attributedTitle = text
+            menuItem.isEnabled = canBeSelected
+            natTypeList.menu?.addItem(menuItem)
+        }
+        natTypeList.selectItem(at: viewModel.natTypeIndex)
+    }
     
     // MARK: - ReloadableViewController
     
@@ -231,6 +263,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
         setupAllowLANItem()
+        setupNatTypeItem()
     }
     
     // MARK: - Actions
@@ -253,6 +286,10 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     @objc private func protocolItemSelected() {
         viewModel.setProtocol(protocolList.indexOfSelectedItem)
+    }
+
+    @objc private func natTypeItemSelected() {
+        viewModel.setNatType(natTypeList.indexOfSelectedItem)
     }
 }
 
