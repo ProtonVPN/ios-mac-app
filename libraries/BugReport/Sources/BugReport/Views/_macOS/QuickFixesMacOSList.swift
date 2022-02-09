@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+#if os(macOS)
 import SwiftUI
 
 @available(iOS 14.0, macOS 11, *)
@@ -59,6 +60,13 @@ struct QuickFixesMacOSList: View {
                                     .frame(width: 310) // Magic number that that prevents button to be too wide. Should be changed in case we change the width of ReportBug window.
                                 }
                                 .padding(.horizontal)
+                                .onHover { inside in
+                                    if inside {
+                                        NSCursor.pointingHand.push()
+                                    } else {
+                                        NSCursor.pop()
+                                    }
+                                }
                             } else {
                                 HStack(alignment: .top) {
                                     Image(Asset.lightbulb.name, bundle: assetsBundle)
@@ -114,3 +122,4 @@ struct QuickFixesMacOSList_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
+#endif

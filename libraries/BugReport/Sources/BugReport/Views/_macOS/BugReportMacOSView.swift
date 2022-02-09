@@ -42,6 +42,13 @@ public struct BugReportMacOSView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(categories) { category in
                         Button(category.label, action: { self.categorySelected(category) })
+                        .onHover { inside in
+                            if inside {
+                                NSCursor.pointingHand.push()
+                            } else {
+                                NSCursor.pop()
+                            }
+                        }
                     }
                 }
                 .buttonStyle(CategoryButtonStyle())
@@ -61,10 +68,11 @@ public struct BugReportMacOSView: View {
 
 @available(macOS 11, *)
 struct BugReportView_Previews: PreviewProvider {
-    static var previews: some View {
 
+    static var previews: some View {
+        
         return Group {
-            BugReportMacOSView(categories: CurrentEnv.bugReportDelegate!.model.categories, categorySelected: { _ in })
+            BugReportMacOSView(categories: BugReportModel.mock.categories, categorySelected: { _ in })
                 .frame(width: 400.0)
         }
         .preferredColorScheme(.dark)
