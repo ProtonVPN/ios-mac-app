@@ -348,7 +348,7 @@ final class SettingsViewModel {
                         self.propertiesManager.natType = type
                     })
                 }),
-                .tooltip(text: LocalizedString.natTypeExplanation)
+                .tooltip(text: LocalizedString.natTypeExplanation.replacingOccurrences(of: "\n\n", with: " "))
             ])
         }
         
