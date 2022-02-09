@@ -6,7 +6,9 @@ import PackageDescription
 let package = Package(
     name: "Modals",
     defaultLocalization: "en",
-    platforms: [.iOS("12.1")],
+    platforms: [
+        .iOS(.v12),
+        .macOS(.v10_15)],
     products: [
         .library(
             name: "Modals",
@@ -19,9 +21,8 @@ let package = Package(
         .target(
             name: "Modals",
             dependencies: ["Overture"],
-            resources: [
-                .process("UpsellViewController.storyboard")
-            ]),
+            resources: []
+        ),
         .testTarget(
             name: "ModalsTests",
             dependencies: ["Modals"])

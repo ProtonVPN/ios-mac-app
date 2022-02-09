@@ -38,7 +38,7 @@ public final class OnboardingCoordinator {
     private let configuration: Configuration
     private var popOverNavigationController: UINavigationController?
     private var onboardingFinished = false
-    private let modals: Modals
+    private let modals: ModalsFactory
 
     public weak var delegate: OnboardingCoordinatorDelegate?
 
@@ -46,7 +46,7 @@ public final class OnboardingCoordinator {
 
     public init(configuration: Configuration) {
         self.configuration = configuration
-        self.modals = Modals(configuration: .init(colors: configuration.colors))
+        self.modals = ModalsFactory(colors: configuration.colors)
 
         colors = configuration.colors
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)

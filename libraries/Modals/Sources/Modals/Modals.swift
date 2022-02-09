@@ -1,14 +1,14 @@
 import UIKit
 
-public struct Modals {
+public struct ModalsFactory {
 
     // MARK: Properties
 
     private let storyboard: UIStoryboard
 
-    public init(configuration: Configuration) {
+    public init(colors: ModalsColors) {
         storyboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
-        colors = configuration.colors
+        Modals.colors = colors
     }
 
     public func upsellViewController(constants: UpsellConstantsProtocol) -> UpsellViewController {
@@ -23,13 +23,5 @@ extension UIStoryboard {
         let name = "\(controllerType)".replacingOccurrences(of: "ViewController", with: "")
         let viewController = instantiateViewController(withIdentifier: name) as! T
         return viewController
-    }
-}
-
-public struct Configuration {
-    let colors: ModalsColors
-
-    public init(colors: ModalsColors) {
-        self.colors = colors
     }
 }
