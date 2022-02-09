@@ -26,13 +26,4 @@ protocol PaidFeature: Equatable {
 
 extension NetShieldType: PaidFeature { }
 
-extension NATType: PaidFeature {
-    func isUserTierTooLow(_ userTier: Int) -> Bool {
-        switch self {
-        case .strictNAT:
-            return false
-        case .moderateNAT:
-            return userTier < CoreAppConstants.VpnTiers.plus
-        }
-    }
-}
+extension NATType: PaidFeature { }

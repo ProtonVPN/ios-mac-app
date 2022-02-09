@@ -27,4 +27,13 @@ extension NATType {
             return LocalizedString.natTypeModerate
         }
     }
+
+    public func isUserTierTooLow(_ userTier: Int) -> Bool {
+        switch self {
+        case .strictNAT:
+            return false
+        case .moderateNAT:
+            return userTier < CoreAppConstants.VpnTiers.plus
+        }
+    }
 }
