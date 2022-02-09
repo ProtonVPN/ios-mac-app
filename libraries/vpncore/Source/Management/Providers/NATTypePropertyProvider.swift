@@ -21,9 +21,6 @@ import Foundation
 public protocol NATTypePropertyProvider: PaidFeaturePropertyProvider {
     /// Current NAT type
     var natType: NATType { get set }
-
-    /// Check if current user can change NAT type
-    var isUserEligibleForNATTypeChange: Bool { get }
 }
 
 public protocol NATTypePropertyProviderFactory {
@@ -39,17 +36,14 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
 
     public var natType: NATType {
         get {
-            guard isUserEligibleForNATTypeChange else {
+            if propertiesManager.natType.isUserTierTooLow(currentUserTier) {
                 return .default
             }
+
             return propertiesManager.natType
         }
         set {
             propertiesManager.natType = newValue
         }
-    }
-
-    public var isUserEligibleForNATTypeChange: Bool {
-        return currentUserTier >= CoreAppConstants.VpnTiers.plus
     }
 }
