@@ -45,7 +45,7 @@ public final class TroubleshootViewModel {
     private let urlTor = "https://www.torproject.org"
     private let urlProtonStatus = "http://protonstatus.com"
     private let urlSupportForm = "https://protonmail.com/support-form"
-    private let urlTwitter = "https://twitter.com/ProtonMail"
+    private let urlTwitter = "https://twitter.com/ProtonVPN"
 
     public init(propertiesManager: PropertiesManagerProtocol) {
         items = [
