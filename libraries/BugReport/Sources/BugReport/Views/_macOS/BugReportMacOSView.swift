@@ -70,7 +70,7 @@ public struct BugReportMacOSView: View {
 struct BugReportView_Previews: PreviewProvider {
 
     static var previews: some View {
-        
+
         return Group {
             BugReportMacOSView(categories: BugReportModel.mock.categories, categorySelected: { _ in })
                 .frame(width: 400.0)

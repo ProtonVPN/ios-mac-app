@@ -37,7 +37,7 @@ struct SingleLineTextInputView: View {
                         .lineLimit(1)
                         .foregroundColor(colors.textSecondary)
                 }
-                
+
                 TextField("", text: $value)
                     .accessibilityIdentifier("Single line input \(field.submitLabel)")
                     .textFieldStyle(.plain)

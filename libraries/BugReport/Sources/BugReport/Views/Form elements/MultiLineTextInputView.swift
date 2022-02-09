@@ -138,6 +138,9 @@ struct TextView: NSViewRepresentable {
         value.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: NSRange(location: 0, length: length))
 
         textView.textStorage?.setAttributedString(value)
+        if !context.coordinator.selectedRanges.isEmpty {
+            textView.selectedRanges = context.coordinator.selectedRanges
+        }
     }
 
     private var textColor: NSColor {
@@ -154,15 +157,33 @@ struct TextView: NSViewRepresentable {
 
     class Coordinator: NSObject, NSTextViewDelegate {
         var text: Binding<String>
+        var selectedRanges: [NSValue] = []
 
         init(_ text: Binding<String>) {
             self.text = text
         }
 
+        func textDidBeginEditing(_ notification: Notification) {
+            guard let textView = notification.object as? NSTextView else { return }
+
+            self.text.wrappedValue = textView.string
+            self.selectedRanges = textView.selectedRanges
+        }
+
         func textDidChange(_ notification: Notification) {
             guard let textView = notification.object as? NSTextView else { return }
+
             self.text.wrappedValue = textView.string
+            self.selectedRanges = textView.selectedRanges
         }
+
+        func textDidEndEditing(_ notification: Notification) {
+            guard let textView = notification.object as? NSTextView else { return }
+
+            self.text.wrappedValue = textView.string
+            self.selectedRanges = textView.selectedRanges
+        }
+
     }
 }
 #endif
