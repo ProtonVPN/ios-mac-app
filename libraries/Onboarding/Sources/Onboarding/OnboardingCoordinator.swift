@@ -38,6 +38,7 @@ public final class OnboardingCoordinator {
     private let configuration: Configuration
     private var popOverNavigationController: UINavigationController?
     private var onboardingFinished = false
+    private let modals: Modals
 
     public weak var delegate: OnboardingCoordinatorDelegate?
 
@@ -45,6 +46,7 @@ public final class OnboardingCoordinator {
 
     public init(configuration: Configuration) {
         self.configuration = configuration
+        self.modals = Modals(configuration: .init(colors: configuration.colors))
 
         colors = configuration.colors
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
@@ -88,8 +90,7 @@ public final class OnboardingCoordinator {
     }
 
     private func showUpsell() {
-        let upsellViewController = Modals().upsellViewController()
-//        upsellViewController.constants = configuration.constants
+        let upsellViewController = modals.upsellViewController(constants: configuration.constants)
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
         navigationStyle(popOverNavigationController)
@@ -127,6 +128,14 @@ public final class OnboardingCoordinator {
         popOverNavigationController?.dismiss(animated: true)
     }
 }
+
+// MARK: Modals Colors
+
+extension Colors: ModalsColors { }
+
+// MARK: Upsell Constants
+
+extension Constants: UpsellConstantsProtocol { }
 
 // MARK: Welcome screen delegate
 

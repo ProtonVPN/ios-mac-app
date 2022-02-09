@@ -27,7 +27,7 @@ enum Feature {
 }
 
 extension Feature: CaseIterable {
-    func title(constants: Constants) -> String {
+    func title(constants: UpsellConstantsProtocol) -> String {
         switch self {
         case .streaming:
             return LocalizedString.onboardingUpsellFeatureStreaming

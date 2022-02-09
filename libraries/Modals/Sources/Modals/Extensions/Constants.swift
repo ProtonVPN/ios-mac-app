@@ -18,10 +18,16 @@
 
 import Foundation
 
-public struct Constants {
-    let numberOfDevices: Int
-    let numberOfServers: Int
-    let numberOfCountries: Int
+public protocol UpsellConstantsProtocol {
+    var numberOfDevices: Int { get }
+    var numberOfServers: Int { get }
+    var numberOfCountries: Int { get }
+}
+
+public struct UpsellConstants {
+    public let numberOfDevices: Int
+    public let numberOfServers: Int
+    public let numberOfCountries: Int
 
     public init(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int) {
         self.numberOfDevices = numberOfDevices
@@ -29,3 +35,5 @@ public struct Constants {
         self.numberOfCountries = numberOfCountries
     }
 }
+
+extension UpsellConstants: UpsellConstantsProtocol { }

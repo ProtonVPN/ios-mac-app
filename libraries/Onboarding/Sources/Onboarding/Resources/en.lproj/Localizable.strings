@@ -21,6 +21,7 @@
 "onboarding_connected_connect_to_plus" = "Connect to a PLUS server";
 "onboarding_congratulations" = "Congratulations";
 "onboarding_purchased_note" = "Enjoy the world of privacy.";
+"onboarding_get_plus" = "Get Plus";
 "onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
 "onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
 "onboarding_continue" = "Continue";

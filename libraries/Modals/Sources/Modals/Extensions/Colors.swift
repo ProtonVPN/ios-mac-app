@@ -18,11 +18,18 @@
 
 import UIKit
 
+public protocol ModalsColors {
+    var background: UIColor { get }
+    var text: UIColor { get }
+    var brand: UIColor { get }
+    var weakText: UIColor { get }
+}
+
 public struct Colors {
-    let background: UIColor
-    let text: UIColor
-    let brand: UIColor
-    let weakText: UIColor
+    public let background: UIColor
+    public let text: UIColor
+    public let brand: UIColor
+    public let weakText: UIColor
 
     public init(background: UIColor,
                 text: UIColor,
@@ -34,3 +41,5 @@ public struct Colors {
         self.weakText = weakText
     }
 }
+
+extension Colors: ModalsColors { }
