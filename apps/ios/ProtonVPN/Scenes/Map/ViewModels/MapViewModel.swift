@@ -139,7 +139,7 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     private func refreshAnnotations(forView viewType: ServerType) {
-        let vpnCredentials = try? vpnKeychain.fetch()
+        let vpnCredentials = try? vpnKeychain.fetchCached()
         let userTier = vpnCredentials?.maxTier ?? CoreAppConstants.VpnTiers.plus
         
         countryExitAnnotations = exitAnnotations(type: viewType, userTier: userTier)

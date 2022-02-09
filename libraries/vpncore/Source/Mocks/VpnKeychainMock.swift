@@ -48,6 +48,10 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         }
         return credentials
     }
+
+    public func fetchCached() throws -> CachedVpnCredentials {
+        try CachedVpnCredentials(credentials: fetch())
+    }
     
     public func fetchOpenVpnPassword() throws -> Data {
         return Data()

@@ -117,7 +117,7 @@ class NavigationService {
                 showSidebar()
 
                 do {
-                    let vpnCredentials = try vpnKeychain.fetch()
+                    let vpnCredentials = try vpnKeychain.fetchCached()
                     // show upsell advert 15% of launches if no other models have been shown and account is free tier
                     if vpnCredentials.accountPlan == .free && !upsellPresented && arc4random() % 100 < 15 {
                         showUpsell()

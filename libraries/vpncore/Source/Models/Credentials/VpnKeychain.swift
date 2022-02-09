@@ -32,8 +32,9 @@ public protocol VpnKeychainProtocol {
     static var vpnPlanChanged: Notification.Name { get }
     static var vpnMaxDevicesReached: Notification.Name { get }
     static var vpnUserDelinquent: Notification.Name { get }
-    
+
     func fetch() throws -> VpnCredentials
+    func fetchCached() throws -> CachedVpnCredentials
     func fetchOpenVpnPassword() throws -> Data
     func store(vpnCredentials: VpnCredentials)
     func getServerCertificate() throws -> SecCertificate
@@ -73,12 +74,14 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let log = Logger.instance(withCategory: .keychain)
     
     public init() {}
+
+    private var cached: CachedVpnCredentials?
     
     public func fetch() throws -> VpnCredentials {
-        
         do {
             if let data = try appKeychain.getData(StorageKey.vpnCredentials) {
                 if let vpnCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? VpnCredentials {
+                    cached = CachedVpnCredentials(credentials: vpnCredentials)
                     return vpnCredentials
                 }
             }
@@ -90,10 +93,14 @@ public class VpnKeychain: VpnKeychainProtocol {
         log.error("Error while fetching open vpn credentials from the keychain", metadata: ["error": "\(error)"])
         throw error
     }
+
+    public func fetchCached() throws -> CachedVpnCredentials {
+        return try cached ?? CachedVpnCredentials(credentials: fetch())
+    }
     
     public func fetchOpenVpnPassword() throws -> Data {
         do {
-            let password = try getPasswordRefference(forKey: StorageKey.vpnServerPassword)
+            let password = try getPasswordReference(forKey: StorageKey.vpnServerPassword)
             return password
         } catch let error {
             log.error("Error while fetching open vpn password from the keychain", metadata: ["error": "\(error)"])
@@ -102,7 +109,6 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func store(vpnCredentials: VpnCredentials) {
-        
         if let currentCredentials = try? fetch() {
             DispatchQueue.main.async {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
@@ -118,6 +124,7 @@ public class VpnKeychain: VpnKeychainProtocol {
 
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials), key: StorageKey.vpnCredentials)
+            cached = CachedVpnCredentials(credentials: vpnCredentials)
         } catch let error {
             log.error("Keychain (vpn) write error", metadata: ["error": "\(error)"])
         }
@@ -132,6 +139,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func clear() {
+        cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
         deleteServerCertificate()
         do {
@@ -144,7 +152,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     // Password is set and retrieved without using the library because NEVPNProtocol reuquires it to be
     // a "persistent keychain reference to a keychain item containing the password component of the
     // tunneling protocol authentication credential".
-    public func getPasswordRefference(forKey key: String) throws -> Data {
+    public func getPasswordReference(forKey key: String) throws -> Data {
         var query = formBaseQuery(forKey: key)
         query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
         query[kSecReturnPersistentRef as AnyHashable] = kCFBooleanTrue
@@ -292,7 +300,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func fetchWireguardConfigurationReference() throws -> Data {
-        return try getPasswordRefference(forKey: StorageKey.wireguardSettings)
+        return try getPasswordReference(forKey: StorageKey.wireguardSettings)
     }
     
     public func fetchWireguardConfiguration() throws -> String? {

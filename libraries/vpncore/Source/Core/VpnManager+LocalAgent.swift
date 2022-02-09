@@ -134,11 +134,11 @@ extension VpnManager: LocalAgentDelegate {
             reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
             disconnect { }
-            guard let credentials = try? vpnKeychain.fetch() else {
+            guard let credentials = try? vpnKeychain.fetchCached() else {
                 log.error("Cannot show max session alert because getting credentials failed", category: .localAgent, event: .error)
                 return
             }
-            alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
+            alertService?.push(alert: MaxSessionsAlert(accountPlan: credentials.accountPlan))
         case .serverError:
             log.error("Server error occured, showing the user an alert and disconnecting", category: .localAgent, event: .error)
             disconnectWithAlert(alert: VpnServerErrorAlert())
