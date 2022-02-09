@@ -62,8 +62,10 @@ final class ConnectToPlusServerViewController: UIViewController {
         skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
 
         skipButton.accessibilityIdentifier = "SkipButton"
-
         connectButton.accessibilityIdentifier = "ConnectToPlusServerButton"
+        titleLabel.accessibilityIdentifier = "CongratulationsTitle"
+        subtitleLabel.accessibilityIdentifier = "SubtitleLabel"
+
     }
 
     // MARK: Actions

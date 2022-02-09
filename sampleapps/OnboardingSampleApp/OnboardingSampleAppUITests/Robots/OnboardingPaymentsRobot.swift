@@ -18,13 +18,13 @@
 
 import XCTest
 
-fileprivate let plusFeature = "Access all 1300+ servers in 61 countries with Plus"
+fileprivate let plusFeature = "TitleLabel"
 fileprivate let getPlusButton = "GetPlusButton"
 fileprivate let useFreePlanButton = "UseFreeButton"
 fileprivate let closeButton = "CloseButton"
 fileprivate let plusPurchased = "PlanPurchaseButton"
-fileprivate let congratulationsTitle = "Congratulations"
-fileprivate let congratulationsDescription = "You now have access to 1300+ secure servers and other premium features."
+fileprivate let congratulationsTitle = "CongratulationsTitle"
+fileprivate let congratulationsDescription = "SubtitleLabel"
 fileprivate let connectButton = "ConnectToPlusServerButton"
 fileprivate let skipButton = "SkipButton"
 
