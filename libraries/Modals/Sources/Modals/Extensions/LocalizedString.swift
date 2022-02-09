@@ -20,13 +20,13 @@ public enum LocalizedString {
   public static func modalsPurchasedSubtitle(_ p1: Int) -> String {
     return LocalizedString.tr("Localizable", "modals_purchased_subtitle", p1)
   }
-  /// Built-in adblocker (NetShield)
+  /// Highest speed (10 Gbps)
   public static var modalsUpsellFeatureHighSpeed: String { return LocalizedString.tr("Localizable", "modals_upsell_feature_highSpeed") }
   /// Plural format key: "%#@VARIABLE@"
   public static func modalsUpsellFeatureMultipleDevices(_ p1: Int) -> String {
     return LocalizedString.tr("Localizable", "modals_upsell_feature_multipleDevices", p1)
   }
-  /// Highest speed (10 Gbps)
+  /// Built-in adblocker (NetShield)
   public static var modalsUpsellFeatureNetshield: String { return LocalizedString.tr("Localizable", "modals_upsell_feature_netshield") }
   /// Access streaming services globally
   public static var modalsUpsellFeatureStreaming: String { return LocalizedString.tr("Localizable", "modals_upsell_feature_streaming") }

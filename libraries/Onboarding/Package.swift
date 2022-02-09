@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Onboarding",
     defaultLocalization: "en",
-    platforms: [.iOS("12.1")],
+    platforms: [.iOS(.v12)],
     products: [
         .library(
             name: "Onboarding",
@@ -24,7 +24,6 @@ let package = Package(
             resources: [
                 .process("Storyboard.storyboard"),
                 .process("Views/TourStepView.xib"),
-                .process("Views/FeatureView.xib"),
                 .process("Resources")
             ])
     ]
