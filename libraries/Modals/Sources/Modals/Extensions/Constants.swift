@@ -21,15 +21,11 @@ import Foundation
 public struct Constants {
     let numberOfDevices: Int
     let numberOfServers: Int
-    let numberOfFreeServers: Int
-    let numberOfFreeCountries: Int
     let numberOfCountries: Int
 
-    public init(numberOfDevices: Int, numberOfServers: Int, numberOfFreeServers: Int, numberOfFreeCountries: Int, numberOfCountries: Int) {
+    public init(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int) {
         self.numberOfDevices = numberOfDevices
         self.numberOfServers = numberOfServers
-        self.numberOfFreeServers = numberOfFreeServers
-        self.numberOfFreeCountries = numberOfFreeCountries
         self.numberOfCountries = numberOfCountries
     }
 }

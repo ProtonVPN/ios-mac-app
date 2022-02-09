@@ -23,16 +23,10 @@ import UIKit
 var colors: Colors = Colors(background: .black,
                             text: .white,
                             brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1),
-                            weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1),
-                            activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1),
-                            secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1),
-                            textInverted: .black,
-                            notification: .white)
+                            weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1))
 
 var constants: Constants = Constants(numberOfDevices: 10,
                                      numberOfServers: 1300,
-                                     numberOfFreeServers: 23,
-                                     numberOfFreeCountries: 3,
                                      numberOfCountries: 61)
 
 let baseButtonStyle: (UIButton) -> Void = {
