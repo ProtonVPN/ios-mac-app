@@ -20,14 +20,7 @@ import Foundation
 import Overture
 import UIKit
 
-var colors: Colors = Colors(background: .black,
-                            text: .white,
-                            brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1),
-                            weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1))
-
-var constants: Constants = Constants(numberOfDevices: 10,
-                                     numberOfServers: 1300,
-                                     numberOfCountries: 61)
+var colors: ModalsColors!
 
 let baseButtonStyle: (UIButton) -> Void = {
     $0.layer.cornerRadius = 8

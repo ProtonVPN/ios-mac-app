@@ -20,10 +20,10 @@ import Foundation
 import UIKit
 
 public struct Colors {
-    let background: UIColor
-    let text: UIColor
-    let brand: UIColor
-    let weakText: UIColor
+    public let background: UIColor
+    public let text: UIColor
+    public let brand: UIColor
+    public let weakText: UIColor
     let activeBrandButton: UIColor
     let secondaryBackground: UIColor
     let textInverted: UIColor
@@ -42,11 +42,11 @@ public struct Colors {
 }
 
 public struct Constants {
-    let numberOfDevices: Int
-    let numberOfServers: Int
+    public let numberOfDevices: Int
+    public let numberOfServers: Int
     let numberOfFreeServers: Int
     let numberOfFreeCountries: Int
-    let numberOfCountries: Int
+    public let numberOfCountries: Int
 
     public init(numberOfDevices: Int, numberOfServers: Int, numberOfFreeServers: Int, numberOfFreeCountries: Int, numberOfCountries: Int) {
         self.numberOfDevices = numberOfDevices
@@ -60,7 +60,7 @@ public struct Constants {
 public struct Configuration {
     let variant: OnboardingVariant
     let colors: Colors
-    public let constants: Constants
+    let constants: Constants
 
     public init(variant: OnboardingVariant, colors: Colors, constants: Constants) {
         self.colors = colors

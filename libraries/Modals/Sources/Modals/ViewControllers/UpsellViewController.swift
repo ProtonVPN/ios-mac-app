@@ -37,6 +37,7 @@ final public class UpsellViewController: UIViewController {
     // MARK: Properties
 
     weak public var delegate: UpsellViewControllerDelegate?
+    var constants: UpsellConstantsProtocol!
 
     // MARK: Setup
 

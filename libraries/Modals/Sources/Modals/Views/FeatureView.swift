@@ -28,7 +28,7 @@ final class FeatureView: UIView {
 
     // MARK: Properties
 
-    var constants: Constants? {
+    var constants: UpsellConstantsProtocol? {
         didSet {
             setTitle()
         }
