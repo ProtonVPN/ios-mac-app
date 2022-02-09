@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>onboarding_establish_subtitle</key>
+	<key>modals_establish_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>FREE subscription offers %#@num_servers@ in %#@num_countries@</string>
@@ -25,7 +25,7 @@
 			<string>%d servers</string>
 		</dict>
 	</dict>
-	<key>onboarding_upsell_title</key>
+	<key>modals_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>Access all %#@num_servers@ in %#@num_countries@ with Plus</string>
@@ -48,7 +48,7 @@
 			<string>%d servers</string>
 		</dict>
 	</dict>
-	<key>onboarding_purchased_subtitle</key>
+	<key>modals_purchased_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@VARIABLE@</string>
@@ -62,7 +62,7 @@
 			<string>You now have access to %d secure servers and other premium features.</string>
 		</dict>
 	</dict>
-	<key>onboarding_upsell_feature_multipleDevices</key>
+	<key>modals_upsell_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@VARIABLE@</string>

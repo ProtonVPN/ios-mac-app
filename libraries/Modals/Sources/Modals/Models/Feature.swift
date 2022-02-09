@@ -30,13 +30,13 @@ extension Feature: CaseIterable {
     func title(constants: UpsellConstantsProtocol) -> String {
         switch self {
         case .streaming:
-            return LocalizedString.onboardingUpsellFeatureStreaming
+            return LocalizedString.modalsUpsellFeatureStreaming
         case .multipleDevices:
-            return LocalizedString.onboardingUpsellFeatureMultipleDevices(constants.numberOfDevices)
+            return LocalizedString.modalsUpsellFeatureMultipleDevices(constants.numberOfDevices)
         case .netshield:
-            return LocalizedString.onboardingUpsellFeatureNetshield
+            return LocalizedString.modalsUpsellFeatureNetshield
         case .highSpeed:
-            return LocalizedString.onboardingUpsellFeatureHighSpeed
+            return LocalizedString.modalsUpsellFeatureHighSpeed
         }
     }
 

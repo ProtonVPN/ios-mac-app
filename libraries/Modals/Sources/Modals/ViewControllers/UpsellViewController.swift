@@ -54,10 +54,10 @@ final public class UpsellViewController: UIViewController {
         titleStyle(titleLabel)
         footerStyle(featuresFooterLabel)
 
-        getPlusButton.setTitle(LocalizedString.onboardingGetPlus, for: .normal)
-        useFreeButton.setTitle(LocalizedString.onboardingUpsellStayFree, for: .normal)
-        titleLabel.text = LocalizedString.onboardingUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
-        featuresFooterLabel.text = LocalizedString.onboardingUpsellFeaturesFooter
+        getPlusButton.setTitle(LocalizedString.modalsGetPlus, for: .normal)
+        useFreeButton.setTitle(LocalizedString.modalsUpsellStayFree, for: .normal)
+        titleLabel.text = LocalizedString.modalsUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
+        featuresFooterLabel.text = LocalizedString.modalsUpsellFeaturesFooter
 
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
