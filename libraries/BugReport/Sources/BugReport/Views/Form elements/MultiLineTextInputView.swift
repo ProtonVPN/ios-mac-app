@@ -122,7 +122,7 @@ struct TextView: NSViewRepresentable {
         textView.isRichText = false
         textView.font = font
         textView.textColor = textColor
-        textView.textContainerInset = .zero
+        textView.textContainerInset = NSSize(width: -5, height: 0) // -5 is magic number that aligns input text with placeholder
         textView.delegate = context.coordinator
 
         return scrollView
