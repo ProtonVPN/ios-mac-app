@@ -21,9 +21,9 @@ import XCTest
 
 fileprivate let onboardingA = "StartAButton"
 fileprivate let onboardingB = "StartBButton"
-fileprivate let takeATourButton = "Take a tour"
-fileprivate let welcomeTitle = "Welcome to ProtonVPN"
-fileprivate let welcomeDescription = "Learn how to get the most out of ProtonVPN in just a few seconds"
+fileprivate let takeATourButton = "TakeATourButton"
+fileprivate let welcomeTitle = "WelcomeTitle"
+fileprivate let welcomeDescription = "WelcomeSubtitle"
 fileprivate let skipButton = "SkipButton"
 
 class OnboardingMainRobot {

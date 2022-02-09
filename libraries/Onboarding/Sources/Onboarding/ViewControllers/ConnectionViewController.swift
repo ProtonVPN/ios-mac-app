@@ -75,6 +75,9 @@ final class ConnectionViewController: UIViewController {
 
         skipButton.accessibilityIdentifier = "SkipButton"
         purchaseButon.accessibilityIdentifier = "PurchasePlusButton"
+        titleLabel.accessibilityIdentifier = "OnboardingEstablishTitle"
+        subtitleLabel.accessibilityIdentifier = "OnboardingEstablishSubtitle"
+        noteLabel.accessibilityIdentifier = "OnboardingEstablishNote"
 
         connectButton.addSubview(activityView)
         NSLayoutConstraint.activate([

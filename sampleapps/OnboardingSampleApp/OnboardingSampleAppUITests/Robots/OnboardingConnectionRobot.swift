@@ -18,14 +18,15 @@
 
 import XCTest
 
-fileprivate let establishConnectionTitle = "Establish your first connection"
-fileprivate let establishConnectionDescription = "We will connect you to the fastest and most stable server depending on your location."
+fileprivate let establishConnectionTitle = "OnboardingEstablishTitle"
+fileprivate let establishConnectionSubtitle = "OnboardingEstablishSubtitle"
+fileprivate let establishConnectionDescription = "OnboardingEstablishNote"
 fileprivate let connectNowButton = "Connect now"
 fileprivate let purchasePlusButton = "PurchasePlusButton"
 fileprivate let skipButton = "SkipButton"
-fileprivate let connectionTitle = "Congratulations"
-fileprivate let connectionDescription = "Your connection is protected and you’re ready to browse the web."
-fileprivate let connectedTo = "Connected to:"
+fileprivate let connectionTitle = "CongratulationsTitle"
+fileprivate let connectionDescription = "CongratulationsSubtitle"
+fileprivate let connectedTo = "ConnectedToLabel"
 fileprivate let continueButton = "DoneButton"
 fileprivate let getPlusButton = "GetPlusButton"
 
@@ -67,6 +68,7 @@ class OnboardingConnectionRobot {
 
         func establichConnectionScreenIsShown() -> OnboardingConnectionRobot {
             XCTAssert(app.staticTexts[establishConnectionTitle].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.staticTexts[establishConnectionSubtitle].exists)
             XCTAssertTrue(app.staticTexts[establishConnectionDescription].exists)
             XCTAssertTrue(app.buttons[connectNowButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
