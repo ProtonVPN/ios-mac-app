@@ -33,7 +33,6 @@ final class ConnectionViewController: UIViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var noteLabel: UILabel!
     @IBOutlet private weak var connectButton: UIButton!
-    @IBOutlet private weak var purchaseButon: UIButton!
     @IBOutlet private weak var skipButton: UIButton!
 
     // MARK: Properties
@@ -63,18 +62,15 @@ final class ConnectionViewController: UIViewController {
         centeredTextStyle(subtitleLabel)
         textNoteStyle(noteLabel)
         actionButtonStyle(connectButton)
-        actionTextButtonStyle(purchaseButon)
         textButtonStyle(skipButton)
 
         titleLabel.text = LocalizedString.onboardingEstablishTitle
         subtitleLabel.text = LocalizedString.onboardingEstablishSubtitle(constants.numberOfFreeServers, constants.numberOfFreeCountries)
         noteLabel.text = LocalizedString.onboardingEstablishNote
         connectButton.setTitle(LocalizedString.onboardingEstablishConnectNow, for: .normal)
-        purchaseButon.setTitle(LocalizedString.onboardingEstablishAccessAll, for: .normal)
         skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
 
         skipButton.accessibilityIdentifier = "SkipButton"
-        purchaseButon.accessibilityIdentifier = "PurchasePlusButton"
         titleLabel.accessibilityIdentifier = "OnboardingEstablishTitle"
         subtitleLabel.accessibilityIdentifier = "OnboardingEstablishSubtitle"
         noteLabel.accessibilityIdentifier = "OnboardingEstablishNote"

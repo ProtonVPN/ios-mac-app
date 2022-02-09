@@ -30,8 +30,6 @@ public enum LocalizedString {
   public static var onboardingContinue: String { return LocalizedString.tr("Localizable", "onboarding_continue") }
   /// Done
   public static var onboardingDone: String { return LocalizedString.tr("Localizable", "onboarding_done") }
-  /// Access all countries with PLUS
-  public static var onboardingEstablishAccessAll: String { return LocalizedString.tr("Localizable", "onboarding_establish_access_all") }
   /// Connect now
   public static var onboardingEstablishConnectNow: String { return LocalizedString.tr("Localizable", "onboarding_establish_connect_now") }
   /// We will connect you to the fastest and most stable server depending on your location.

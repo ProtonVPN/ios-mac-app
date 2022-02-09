@@ -22,7 +22,6 @@ fileprivate let establishConnectionTitle = "OnboardingEstablishTitle"
 fileprivate let establishConnectionSubtitle = "OnboardingEstablishSubtitle"
 fileprivate let establishConnectionDescription = "OnboardingEstablishNote"
 fileprivate let connectNowButton = "Connect now"
-fileprivate let purchasePlusButton = "PurchasePlusButton"
 fileprivate let skipButton = "SkipButton"
 fileprivate let connectionTitle = "CongratulationsTitle"
 fileprivate let connectionDescription = "CongratulationsSubtitle"
@@ -41,11 +40,6 @@ class OnboardingConnectionRobot {
     
     func connectNow() -> OnboardingConnectionRobot {
         app.buttons[connectNowButton].tap()
-        return OnboardingConnectionRobot(app: app)
-    }
-
-    func accessAllCountries() -> OnboardingConnectionRobot {
-        app.buttons[purchasePlusButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
     
@@ -72,7 +66,6 @@ class OnboardingConnectionRobot {
             XCTAssertTrue(app.staticTexts[establishConnectionDescription].exists)
             XCTAssertTrue(app.buttons[connectNowButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
-            XCTAssertTrue(app.buttons[purchasePlusButton].isEnabled)
             return OnboardingConnectionRobot(app: app)
         }
         
