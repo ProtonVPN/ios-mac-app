@@ -28,8 +28,8 @@
 	<key>onboarding_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Access all %#@num_servers@ in %#@num_countries@ with Plus</string>
-		<key>num_countries</key>
+		<string>Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus</string>
+		<key>NUM_COUNTRIES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -37,8 +37,10 @@
 			<string>d</string>
 			<key>other</key>
 			<string>%d countries</string>
+			<key>one</key>
+			<string>%d country</string>
 		</dict>
-		<key>num_servers</key>
+		<key>NUM_SERVERS</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -46,34 +48,40 @@
 			<string>d</string>
 			<key>other</key>
 			<string>%d servers</string>
+			<key>one</key>
+			<string>%d server</string>
 		</dict>
 	</dict>
 	<key>onboarding_purchased_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
+		<string>You now have access to %#@NUM_SEC_SERVERS@ and other premium features.</string>
+		<key>NUM_SEC_SERVERS</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>You now have access to %d secure servers and other premium features.</string>
+			<string>%d secure servers</string>
+			<key>one</key>
+			<string>%d secure server</string>
 		</dict>
 	</dict>
 	<key>onboarding_upsell_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
+		<string>Connect %#@NUM_DEVICES@ simultaneously</string>
+		<key>NUM_DEVICES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Connect %d devices simultaneously</string>
+			<string>%d devices</string>
+			<key>one</key>
+			<string>%d device</string>
 		</dict>
 	</dict>
 </dict>
