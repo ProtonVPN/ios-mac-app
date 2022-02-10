@@ -12,7 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "Modals",
-            targets: ["Modals"]),
+            targets: ["Modals"])
     ],
     dependencies: [
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0"))
@@ -21,10 +21,11 @@ let package = Package(
         .target(
             name: "Modals",
             dependencies: ["Overture"],
-            resources: []
-        ),
-        .testTarget(
-            name: "ModalsTests",
-            dependencies: ["Modals"])
+            resources: [
+                .process("Views/FeatureView.xib"),
+                .process("ViewControllers/UpsellViewController.storyboard"),
+                .process("Assets.xcassets")
+            ]
+        )
     ]
 )

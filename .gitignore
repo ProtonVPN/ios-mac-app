@@ -21,3 +21,6 @@ sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj/xcuserdata
 libraries/BugReport/BugReport.xcodeproj/xcuserdata
 sampleapps/BugReportSampleMacOSApp/BugReportSampleMacOSApp.xcodeproj/xcuserdata
 sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj/xcuserdata
+
+# Directory created by gitlab-runner
+builds
