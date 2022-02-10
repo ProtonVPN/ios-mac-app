@@ -389,6 +389,7 @@ i18n-crowdin-upload:
   stage: bot
   variables:
       I18N_SYNC_CROWDIN_PROJECT: 'apple-vpn'
+      I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals'
   extends: .i18n-sync-crowdin-shared-apple
   before_script:
     - sh fastlane/adjust-for-strings-export.sh
@@ -398,6 +399,7 @@ i18n-crowdin-download:
   stage: bot
   variables:
       I18N_COMMIT_CROWDIN_PROJECT: 'apple-vpn'
+      I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals'
   extends: .i18n-commit-locales-shared-apple
   before_script:
     - sh fastlane/adjust-for-strings-export.sh
