@@ -399,8 +399,9 @@ i18n-crowdin-download:
   variables:
       I18N_COMMIT_CROWDIN_PROJECT: 'apple-vpn'
   extends: .i18n-commit-locales-shared-apple
-
-
+  before_script:
+    - sh fastlane/adjust-for-strings-export.sh
+    - !reference [.i18n-commit-locales-shared-apple, before_script]
 
 # --- Open Source GitHub related tasks ---
 github-push-commits:
