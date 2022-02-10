@@ -148,6 +148,19 @@ lane :onboarding_test do
     )
 end
 
+desc "Run Modals module tests"
+lane :modals_test do
+    simulator_name = ENV["CI_JOB_ID"]
+    scan(
+      scheme: "ModalsSampleApp",
+      derived_data_path: $derived_data_path,
+      clean: true,
+      result_bundle: true,
+      skip_slack: true,
+      devices: [simulator_name]
+    )
+end
+
 lane :ios_internal_beta do |options|
   if !options[:changelog]
       abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")

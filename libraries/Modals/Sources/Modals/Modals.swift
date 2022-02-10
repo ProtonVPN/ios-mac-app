@@ -21,6 +21,7 @@ public struct ModalsFactory {
 extension UIStoryboard {
     func instantiate<T: UIViewController>(controllerType: T.Type) -> T {
         let name = "\(controllerType)".replacingOccurrences(of: "ViewController", with: "")
+        // swiftlint:disable force_cast
         let viewController = instantiateViewController(withIdentifier: name) as! T
         return viewController
     }
