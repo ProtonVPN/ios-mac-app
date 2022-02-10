@@ -50,7 +50,7 @@ class ShadowView: NSView {
     }
     
     func shadow(for height: CGFloat) {
-        darkness = NSColor(red: 0, green: 0, blue: 0, alpha: height < bounds.height ? (0.25 * height) / bounds.height : 0.25)
+        darkness = NSColor(red: 0, green: 0, blue: 0, alpha: height < bounds.height ? abs((0.25 * height) / bounds.height) : 0.25)
         needsDisplay = true
     }
 }

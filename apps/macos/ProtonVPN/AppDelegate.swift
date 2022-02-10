@@ -26,6 +26,7 @@ import ServiceManagement
 import vpncore
 import ProtonCore_Services
 import ProtonCore_Log
+import ProtonCore_UIFoundations
 import Logging
 
 @NSApplicationMain
@@ -238,6 +239,8 @@ extension AppDelegate {
 
 extension AppDelegate {
     private func setupCoreIntegration() {
+        ColorProvider.brand = .vpn
+        
         let trusKitHelper = container.makeTrustKitHelper()
         PMAPIService.trustKit = trusKitHelper?.trustKit
         PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil

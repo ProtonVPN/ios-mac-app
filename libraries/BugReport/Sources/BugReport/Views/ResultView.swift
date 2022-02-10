@@ -25,6 +25,8 @@ struct ResultView: View {
     var retryCallback: (() -> Void)?
     var troubleshootCallback: (() -> Void)?
 
+    @Environment(\.colors) var colors: Colors
+
     var body: some View {
         guard let error = error else {
             return AnyView(successBody)
@@ -33,57 +35,65 @@ struct ResultView: View {
                 #endif
         }
 
-        return AnyView(VStack {
-            VStack(spacing: 8) {
-                FinalIcon(state: .failure)
+        return AnyView(
+            ZStack {
+                colors.background.ignoresSafeArea()
+
+                VStack {
+                    VStack(spacing: 8) {
+                        FinalIcon(state: .failure)
+                            .padding(.bottom, 32)
+                        Text(LocalizedString.brFailureTitle)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text(error.localizedDescription)
+                            .font(.body)
+                    }
+                    .foregroundColor(colors.textPrimary)
+                    .frame(maxHeight: .infinity, alignment: .center)
+
+                    Spacer()
+
+                    VStack {
+                        Button(action: { retryCallback?() }, label: { Text(LocalizedString.brFailureButtonRetry) })
+                            .buttonStyle(PrimaryButtonStyle())
+
+                        Button(action: { troubleshootCallback?() }, label: { Text(LocalizedString.brFailureButtonTroubleshoot) })
+                            .buttonStyle(SecondaryButtonStyle())
+                    }
+                    .padding(.horizontal)
                     .padding(.bottom, 32)
-                Text(LocalizedString.brFailureTitle)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Text(error.localizedDescription)
-                    .font(.body)
-            }
-            .frame(maxHeight: .infinity, alignment: .center)
 
-            Spacer()
-
-            VStack {
-                Button(action: { retryCallback?() }, label: { Text(LocalizedString.brFailureButtonRetry) })
-                    .buttonStyle(PrimaryButtonStyle())
-
-                Button(action: { troubleshootCallback?() }, label: { Text(LocalizedString.brFailureButtonTroubleshoot) })
-                    .buttonStyle(SecondaryButtonStyle())
-            }
-            .padding(.horizontal)
-            .padding(.bottom, 32)
-
-        })
+                }
+            })
             #if os(iOS)
             .navigationBarBackButtonHidden(true)
             #endif
     }
 
     var successBody: some View {
-        VStack {
-            VStack(spacing: 8) {
-                FinalIcon(state: .success)
+        ZStack {
+            colors.background.ignoresSafeArea()
+            VStack {
+                VStack(spacing: 8) {
+                    FinalIcon(state: .success)
+                        .padding(.bottom, 32)
+                    Text(LocalizedString.brSuccessTitle)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    Text(LocalizedString.brSuccessSubtitle)
+                        .font(.body)
+                }
+                .foregroundColor(colors.textPrimary)
+                .frame(maxHeight: .infinity, alignment: .center)
+
+                Button(action: { finishCallback?() }, label: { Text(LocalizedString.brSuccessButton) })
+                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(.horizontal)
                     .padding(.bottom, 32)
-                Text(LocalizedString.brSuccessTitle)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                Text(LocalizedString.brSuccessSubtitle)
-                    .font(.body)
             }
-            .frame(maxHeight: .infinity, alignment: .center)
-
-            Button(action: { finishCallback?() }, label: { Text(LocalizedString.brSuccessButton) })
-                .buttonStyle(PrimaryButtonStyle())
-                .padding(.horizontal)
-                .padding(.bottom, 32)
         }
-
     }
-
 }
 
 // MARK: - Preview
@@ -91,6 +101,8 @@ struct ResultView: View {
 @available(iOS 14.0, macOS 11, *)
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
+        ResultView(error: nil)
+            .preferredColorScheme(.dark)
         ResultView(error: NSError(domain: "abc", code: 123, userInfo: nil))
             .preferredColorScheme(.dark)
     }

@@ -28,8 +28,14 @@ struct SwitchInputView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Toggle(field.label, isOn: $value)
-                    .accessibilityIdentifier("Toggle \(field.submitLabel)")
+                if #available(iOS 15.0, macOS 12, *) {
+                    Toggle(field.label, isOn: $value)
+                        .accessibilityIdentifier("Toggle \(field.submitLabel)")
+                        .tint(colors.brand)
+                } else {
+                    Toggle(field.label, isOn: $value)
+                        .accessibilityIdentifier("Toggle \(field.submitLabel)")
+                }
             }
             .padding()
             #if os(iOS)
@@ -50,7 +56,7 @@ struct SwitchInputView: View {
 
 @available(iOS 14.0, macOS 11, *)
 struct SwitchInputView_Previews: PreviewProvider {
-    @State private static var text: Bool = false
+    @State private static var text: Bool = true
 
     static var previews: some View {
         SwitchInputView(

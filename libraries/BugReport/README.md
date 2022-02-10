@@ -16,7 +16,7 @@ This package contains all translations that it needs. If you add new translation
 
 This package contains all assets that it needs. If you add new translation, you should regenerate `Assets.swift` file by going to this libs folder and running swiftgen: `../../Pods/SwiftGen/bin/swiftgen`.
 
-Colors contained in the assets are only used for previews but are valid for the app at the time this lib is written. If you ever have to change the colors please provide them to `BugReportCreator`.
+Colors contained in the assets are only used for previews (but are valid for the app at the time this lib is written). Apps should always provide colors to `BugReportCreator`.
 
 
 ## Dependency injection

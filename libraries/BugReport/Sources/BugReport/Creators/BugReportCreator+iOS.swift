@@ -23,14 +23,14 @@ import SwiftUI
 
 public protocol BugReportCreator {
     @available(iOS 14.0, *)
-    func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController?
+    func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> UIViewController?
 }
 
 public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:this type_name
     public init() { }
 
     @available(iOS 14.0, *)
-    public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController? {
+    public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> UIViewController? {
         CurrentEnv.bugReportDelegate = delegate
 
         delegate.updateAvailabilityChanged = { available in
@@ -42,7 +42,7 @@ public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:
 
         let controller = UIHostingController(
             rootView: BugReportiOSView()
-                .environment(\.colors, colors ?? Colors())
+                .environment(\.colors, colors)
                 .preferredColorScheme(.dark)
         )
 

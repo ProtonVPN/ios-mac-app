@@ -156,6 +156,8 @@ target 'ProtonVPN-mac' do
   project 'apps/macOS/macOS.xcodeproj'
 
   vpn_core
+  
+  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
 
   # Third party pods
   pod 'SDWebImage', '5.10.0'
