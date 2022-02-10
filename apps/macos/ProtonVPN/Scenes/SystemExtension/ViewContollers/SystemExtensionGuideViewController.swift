@@ -53,7 +53,8 @@ final class SystemExtensionGuideViewController: NSViewController {
     private lazy var numbers: [NSView] = [step1number, step2number, step3number, step4number, step5number]
     
     var viewModel: SystemExtensionGuideViewModelProtocol
-    
+    weak var windowService: WindowService?
+
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -69,6 +70,10 @@ final class SystemExtensionGuideViewController: NSViewController {
             self?.closeSelf()
         }
     }
+
+    deinit {
+        log.debug("SystemExtensionGuideViewController deinit")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +84,10 @@ final class SystemExtensionGuideViewController: NSViewController {
         super.viewWillAppear()
         view.window?.applyModalAppearance(withTitle: LocalizedString.sysexWizardWindowTitle)
         viewModel.viewWillAppear()
+    }
+
+    func userWillCloseWindow() {
+        viewModel.tourCancelled()
     }
     
     private func setupViews() {
@@ -157,4 +166,15 @@ final class SystemExtensionGuideViewController: NSViewController {
         view.window?.close()
     }
     
+}
+
+extension SystemExtensionGuideViewController: WindowControllerDelegate {
+    func windowCloseRequested(_ sender: WindowController) {
+        windowService?.windowCloseRequested(sender)
+    }
+
+    func windowWillClose(_ sender: WindowController) {
+        self.userWillCloseWindow()
+        windowService?.windowWillClose(sender)
+    }
 }

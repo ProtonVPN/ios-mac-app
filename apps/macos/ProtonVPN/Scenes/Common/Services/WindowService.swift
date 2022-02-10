@@ -30,7 +30,7 @@ protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
 }
 
-protocol WindowService: class {
+protocol WindowService: WindowControllerDelegate {
 
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController)
     
@@ -49,7 +49,7 @@ protocol WindowService: class {
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol)
     func openSubuserAlertWindow()
     
-    func bringWindowsToForground() -> Bool
+    func bringWindowsToForeground() -> Bool
     func closeActiveWindows(except: [NSWindowController.Type])
     
     func presentKeyModal(viewController: NSViewController)
@@ -97,7 +97,7 @@ class WindowServiceImplementation: WindowService {
     
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
-    fileprivate var activeWindowControllers: [WindowController] = []
+    fileprivate var activeWindowControllers = Set<WindowController>()
 
     fileprivate var tourController: TourController?
     
@@ -106,6 +106,7 @@ class WindowServiceImplementation: WindowService {
     }
     
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {
+        controller.windowService = self
         statusMenuWindowController = controller
     }
     
@@ -179,14 +180,14 @@ class WindowServiceImplementation: WindowService {
         controller.factory = factory
         let windowController = AboutWindowController(viewController: controller)
         windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
     func openAcknowledgements() {
         let windowController = AcknowledgementsWindowController(viewController: AcknowledgementsViewController())
         windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
@@ -196,7 +197,7 @@ class WindowServiceImplementation: WindowService {
         let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel)
         let windowController = SettingsWindowController(viewController: viewController)
         windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
@@ -206,7 +207,7 @@ class WindowServiceImplementation: WindowService {
         let viewController = ProfilesContainerViewController(factory: factory, viewModel: viewModel)
         let windowController = ProfilesWindowController(viewController: viewController)
         windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
@@ -228,15 +229,17 @@ class WindowServiceImplementation: WindowService {
         }
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
         let controller = SystemExtensionGuideViewController(viewModel: viewModel)
+        controller.windowService = self
+
         let windowController = SysexGuideWindowController(viewController: controller)
-        windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        windowController.delegate = controller
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
@@ -245,11 +248,11 @@ class WindowServiceImplementation: WindowService {
         controller.safariServiceFactory = factory
         let windowController = SubuserAlertWindowController(viewController: controller)
         windowController.delegate = self
-        activeWindowControllers.append(windowController)
+        activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
     
-    func bringWindowsToForground() -> Bool {
+    func bringWindowsToForeground() -> Bool {
         guard let mainWindowController = mainWindowController else {
             return false
         }
@@ -266,7 +269,9 @@ class WindowServiceImplementation: WindowService {
         activeWindowControllers
             .filter { vc in vc.isKind(of: controllerType) }
             .forEach { $0.close() }
-        activeWindowControllers.removeAll(where: { vc in vc.isKind(of: controllerType) })
+        activeWindowControllers = activeWindowControllers.filter { vc in
+            !vc.isKind(of: controllerType)
+        }
     }
     
     func closeActiveWindows(except: [NSWindowController.Type]) {
@@ -312,7 +317,6 @@ class WindowServiceImplementation: WindowService {
 }
 
 extension WindowServiceImplementation: WindowControllerDelegate {
-    
     func windowCloseRequested(_ sender: WindowController) {
         if let mainWindowController = mainWindowController, sender == mainWindowController {
             closeActiveWindows()
@@ -324,6 +328,6 @@ extension WindowServiceImplementation: WindowControllerDelegate {
     }
     
     func windowWillClose(_ sender: WindowController) {
-        activeWindowControllers = activeWindowControllers.filter { $0 != sender }
+        activeWindowControllers.remove(sender)
     }
 }

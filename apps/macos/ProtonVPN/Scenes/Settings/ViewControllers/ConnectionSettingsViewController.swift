@@ -43,6 +43,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
     @IBOutlet private weak var protocolSeparator: NSBox!
     @IBOutlet private weak var protocolInfoIcon: NSImageView!
+    @IBOutlet private weak var protocolEnablementProgress: NSProgressIndicator!
     
     @IBOutlet private weak var vpnAcceleratorView: NSView!
     @IBOutlet private weak var vpnAcceleratorLabel: PVPNTextField!
@@ -133,6 +134,8 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         protocolInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
         protocolInfoIcon.toolTip = LocalizedString.smartProtocolDescription
         protocolSeparator.fillColor = .protonLightGrey()
+        protocolEnablementProgress.isDisplayedWhenStopped = false
+        protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
         refreshProtocol()
     }
     
@@ -234,10 +237,19 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         let count = viewModel.protocolItemCount
         (0..<count).forEach { index in
             let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.protocolItem(for: index)
+            menuItem.attributedTitle = viewModel.protocolString(for: viewModel.protocolItem(for: index) ?? .vpnProtocol(.ike))
             protocolList.menu?.addItem(menuItem)
         }
         protocolList.selectItem(at: viewModel.protocolProfileIndex)
+        refreshPendingEnablement()
+    }
+
+    private func refreshPendingEnablement() {
+        if viewModel.requiresSysexTour(for: protocolList.indexOfSelectedItem) {
+            protocolEnablementProgress.startAnimation(nil)
+        } else {
+            protocolEnablementProgress.stopAnimation(nil)
+        }
     }
     
     // MARK: - ReloadableViewController
@@ -273,12 +285,15 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     @objc private func protocolItemSelected() {
-        viewModel.setProtocol(protocolList.indexOfSelectedItem)
+        refreshPendingEnablement()
+
+        viewModel.setProtocol(protocolList.indexOfSelectedItem) { [weak self] result in
+            self?.refreshProtocol()
+        }
     }
 }
 
 extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    
     public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
         switch button.superview {
         
@@ -299,7 +314,7 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
     func switchButtonClicked(_ button: NSButton) {
         switch button.superview {
         case alternativeRoutingButton:
-            viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
+            viewModel.setAlternativeRouting(alternativeRoutingButton.currentButtonState == .on)
             
         default:
             break // Do nothing

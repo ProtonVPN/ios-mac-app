@@ -28,6 +28,8 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     func didTapPrevious()
     func didTapAccept()
     func viewWillAppear()
+    func tourCancelled()
+
     var extensionsCount: Int { get set }
     var isNextButtonVisible: Bool { get }
     var isPrevButtonVisible: Bool { get }
@@ -68,16 +70,18 @@ class SystemExtensionGuideViewModel: NSObject {
     private let propertiesManager: PropertiesManagerProtocol
     var extensionsCount: Int
     var acceptedHandler: () -> Void
+    var cancelledHandler: () -> Void
     var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback
     
     var contentChanged: (() -> Void)?
     var close: (() -> Void)?
     
-    init(extensionsCount: Int, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void) {
+    init(extensionsCount: Int, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void, cancelledHandler: @escaping () -> Void) {
         self.alertService = alertService
         self.extensionsCount = extensionsCount
         self.isTimeToClose = isTimeToClose
         self.acceptedHandler = acceptedHandler
+        self.cancelledHandler = cancelledHandler
         self.propertiesManager = propertiesManager
     }
     
@@ -111,6 +115,10 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
         
         currentStep = 0
         updateView()
+    }
+
+    func tourCancelled() {
+        cancelledHandler()
     }
     
     func didTapNext() {

@@ -95,15 +95,11 @@ final class ConnectionSettingsViewModel {
     }
     
     var protocolProfileIndex: Int {
-        if propertiesManager.smartProtocol { return 0 }
-        switch propertiesManager.vpnProtocol {
-        case .openVpn(let transport):
-            return transport == .tcp ? 1 : 2
-        case .wireGuard:
-            return 3
-        default:
-            return 4
+        guard propertiesManager.smartProtocol else {
+            return protocolIndex(for: .vpnProtocol(propertiesManager.vpnProtocol))
         }
+
+        return protocolIndex(for: .smartProtocol)
     }
     
     var alternativeRouting: Bool {
@@ -174,34 +170,52 @@ final class ConnectionSettingsViewModel {
         propertiesManager.quickConnect = selectedProfile.id
         log.debug("Quick connect profiles changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
     }
-    
-    func setProtocol(_ index: Int) {
-        
-        var connectionProtocol: ConnectionProtocol
 
-        switch index {
-        case 0: connectionProtocol = .smartProtocol
-        case 1: connectionProtocol = .vpnProtocol(.openVpn(.tcp))
-        case 2: connectionProtocol = .vpnProtocol(.openVpn(.udp))
-        case 3: connectionProtocol = .vpnProtocol(.wireGuard)
-        default:
-            connectionProtocol = .vpnProtocol(.ike)
-        }
-        
-        switch connectionProtocol {
+    func protocolIndex(for vpnProtocol: ConnectionProtocol) -> Int {
+        switch vpnProtocol {
         case .smartProtocol:
-            self.enableSmartProtocol(nil)
-            return
-        case .vpnProtocol(let transportProtocol):
-            propertiesManager.smartProtocol = false
-            vpnProtocolChangeManager.change(toProcol: transportProtocol)
+            return 0
+        case .vpnProtocol(let vpnProtocol):
+            switch vpnProtocol {
+            case .openVpn(let transport):
+                return transport == .tcp ? 1 : 2
+            case .wireGuard:
+                return 3
+            case .ike:
+                return 4
+            }
         }
-        
-        // If user has to go to settings to enable sysex, let's change back to original protocol. Value will be updated if/when user approves sysex installation.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.viewController?.reloadView()
-        })
-        
+    }
+
+    func protocolItem(for index: Int) -> ConnectionProtocol? {
+        switch index {
+        case 0: return .smartProtocol
+        case 1: return .vpnProtocol(.openVpn(.tcp))
+        case 2: return .vpnProtocol(.openVpn(.udp))
+        case 3: return .vpnProtocol(.wireGuard)
+        case 4: return .vpnProtocol(.ike)
+        default: return nil
+        }
+    }
+    
+    func setProtocol(_ index: Int, completion: @escaping (Result<(), Error>) -> Void) {
+        switch protocolItem(for: index) {
+        case .smartProtocol:
+            self.enableSmartProtocol(completion)
+        case .vpnProtocol(let transportProtocol):
+            vpnProtocolChangeManager.change(toProtocol: transportProtocol) { [weak self] result in
+                if case .success = result {
+                    self?.propertiesManager.smartProtocol = false
+                }
+                completion(result)
+            }
+        default:
+            return
+        }
+    }
+
+    func requiresSysexTour(for index: Int) -> Bool {
+        protocolItem(for: index)?.requiresSystemExtension == true && !propertiesManager.sysexSuccessWasShown
     }
 
     func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
@@ -238,24 +252,24 @@ final class ConnectionSettingsViewModel {
         self.viewController?.reloadView()
     }
     
-    func setAlternatveRouting(_ enabled: Bool) {
+    func setAlternativeRouting(_ enabled: Bool) {
         propertiesManager.alternativeRouting = enabled
     }
     
-    func enableSmartProtocol(_ completion: ((Bool) -> Void)?) {
+    func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         let update = { (shouldReconnect: Bool) in
             self.systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:
                         self.propertiesManager.smartProtocol = true
-                        completion?(true)
+                        completion(.success)
                         if shouldReconnect {
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
                             self.vpnGateway.retryConnection()
                         }
-                    case .failure:
-                        completion?(false)
+                    case let .failure(error):
+                        completion(.failure(error))
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
@@ -270,7 +284,7 @@ final class ConnectionSettingsViewModel {
             alertService.push(alert: ReconnectOnSmartProtocolChangeAlert(confirmHandler: {
                 update(true)
             }, cancelHandler: {
-                completion?(false)
+                completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
             }))
         default:
             update(false)
@@ -353,20 +367,22 @@ final class ConnectionSettingsViewModel {
         return profileString(for: index)
     }
         
-    func protocolItem(for index: Int) -> NSAttributedString {
-        var transport = ""
+    func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
+        let transport: String
         
-        switch index {
-        case 0:
+        switch vpnProtocol {
+        case .smartProtocol:
             return LocalizedString.smartTitle.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
-        case 1:
+        case .vpnProtocol(.openVpn(.tcp)):
             transport = " (" + LocalizedString.tcp + ")"
-        case 2:
+        case .vpnProtocol(.openVpn(.udp)):
             transport = " (" + LocalizedString.udp + ")"
-        case 3:
+        case .vpnProtocol(.wireGuard):
             return LocalizedString.wireguard.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
-        default:
+        case .vpnProtocol(.ike):
             return LocalizedString.ikev2.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+        default:
+            return LocalizedString.notConnected.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         }
         return (LocalizedString.openvpn + transport).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
     }

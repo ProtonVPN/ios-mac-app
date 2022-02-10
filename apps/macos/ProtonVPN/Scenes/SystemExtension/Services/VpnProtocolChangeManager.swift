@@ -36,7 +36,7 @@ extension DependencyContainer: VpnProtocolChangeManagerFactory {
 /// Class to request VPN protocol change.
 /// Takes care of checking if user is currently connected, if sysex is installed, etc.
 protocol VpnProtocolChangeManager {
-    func change(toProcol: VpnProtocol)
+    func change(toProtocol: VpnProtocol, completion: @escaping (Result<(), Error>) -> Void)
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
@@ -56,18 +56,18 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         self.factory = factory
     }
     
-    func change(toProcol vpnProtocol: VpnProtocol) {
+    func change(toProtocol vpnProtocol: VpnProtocol, completion: @escaping (Result<(), Error>) -> Void) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            set(vpnProtocol: vpnProtocol, reconnect: false)
+            set(vpnProtocol: vpnProtocol, reconnect: false, completion: completion)
             return
         }
         
         alertService.push(alert: ReconnectOnSettingsChangeAlert { [weak self] in
-            self?.set(vpnProtocol: vpnProtocol, reconnect: true)
+            self?.set(vpnProtocol: vpnProtocol, reconnect: true, completion: completion)
         })
     }
     
-    private func set(vpnProtocol: VpnProtocol, reconnect: Bool) {
+    private func set(vpnProtocol: VpnProtocol, reconnect: Bool, completion: @escaping (Result<(), Error>) -> Void) {
         let reconnectIfNeeded = { [weak self] in
             if reconnect {
                 log.info("New protocol set to \(vpnProtocol). VPN will reconnect.", category: .connectionConnect, event: .trigger)
@@ -78,6 +78,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         guard vpnProtocol.requiresSystemExtension else {
             propertiesManager.vpnProtocol = vpnProtocol
             reconnectIfNeeded()
+            completion(.success)
             return
         }
 
@@ -86,9 +87,11 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             case .success:
                 self.propertiesManager.vpnProtocol = vpnProtocol
                 reconnectIfNeeded()
+                completion(.success)
 
-            case .failure:
-                log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed", category: .connectionConnect)
+            case let .failure(error):
+                log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)", category: .connectionConnect)
+                completion(.failure(error))
             }
         }
     }

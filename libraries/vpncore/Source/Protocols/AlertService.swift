@@ -360,6 +360,11 @@ public class AllowLANConnectionsAlert: SystemAlert {
 }
 
 public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
+    public struct UserCancelledReconnect: Error, CustomStringConvertible {
+        public let description = "User selected smart protocol, but cancelled reconnecting."
+    }
+    public static let userCancelled = UserCancelledReconnect()
+
     public var title: String? = LocalizedString.smartProtocolReconnectModalTitle
     public var message: String? = LocalizedString.smartProtocolReconnectModalBody
     public var actions = [AlertAction]()
@@ -645,14 +650,16 @@ public class SystemExtensionTourAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     public var continueHandler: () -> Void
+    public var cancelHandler: () -> Void
     public typealias CloseConditionCallback = (@escaping (Bool) -> Void) -> Void
     public var isTimeToClose: CloseConditionCallback
     public var extensionsCount: Int
     
-    public init(extensionsCount: Int, isTimeToClose: @escaping CloseConditionCallback, continueHandler: @escaping () -> Void) {
+    public init(extensionsCount: Int, isTimeToClose: @escaping CloseConditionCallback, continueHandler: @escaping () -> Void, cancelHandler: @escaping() -> Void) {
         self.extensionsCount = extensionsCount
         self.isTimeToClose = isTimeToClose
         self.continueHandler = continueHandler
+        self.cancelHandler = cancelHandler
     }
 }
 
