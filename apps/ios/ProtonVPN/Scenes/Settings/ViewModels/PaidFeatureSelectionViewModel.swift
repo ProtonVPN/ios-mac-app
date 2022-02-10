@@ -22,7 +22,7 @@ import vpncore
 
 final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
 
-    typealias Factory = VpnKeychainFactory & PlanServiceFactory
+    typealias Factory = VpnKeychainFactory & PlanServiceFactory & AppSessionManagerFactory
     private var factory: Factory
 
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
@@ -57,6 +57,8 @@ final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
         self.onFeatureChange = onFeatureChange
         self.allFeatures = allFeatures
         self.title = title
+
+        NotificationCenter.default.addObserver(self, selector: #selector(reload), name: factory.makeAppSessionManager().dataReloaded, object: nil)
     }
 
     var tableViewData: [TableViewSection] {
@@ -91,4 +93,7 @@ final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
         return tier
     }
 
+    @objc private func reload() {
+        onDataChange?()
+    }
 }
