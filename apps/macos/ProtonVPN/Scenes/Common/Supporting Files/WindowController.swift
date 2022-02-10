@@ -23,13 +23,11 @@
 import Cocoa
 
 protocol WindowControllerDelegate: class {
- 
     func windowCloseRequested(_ sender: WindowController)
     func windowWillClose(_ sender: WindowController)
 }
 
 class WindowController: NSWindowController {
-    
     private var eventMonitor: Any?
     
     var monitorsKeyEvents: Bool? {
@@ -93,13 +91,18 @@ class WindowController: NSWindowController {
 
 // MARK: - Handling action on 'X' window button press
 extension WindowController: NSWindowDelegate {
-    
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         if let delegate = delegate {
             delegate.windowCloseRequested(self)
             return false
         } else {
             return true
+        }
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        if let delegate = delegate {
+            delegate.windowWillClose(self)
         }
     }
 }

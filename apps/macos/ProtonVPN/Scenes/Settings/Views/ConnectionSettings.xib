@@ -29,6 +29,7 @@
                 <outlet property="natTypeLabel" destination="xau-An-JcF" id="uJy-1Q-qMn"/>
                 <outlet property="natTypeSeparator" destination="W4z-tH-gVw" id="6dh-iK-aVS"/>
                 <outlet property="natTypeView" destination="9Gr-fc-Rjk" id="qY8-Tz-3PG"/>
+                <outlet property="protocolEnablementProgress" destination="kmf-hU-xTU" id="7ZZ-8z-rdc"/>
                 <outlet property="protocolInfoIcon" destination="aLO-su-KqV" id="EEq-Bk-eMD"/>
                 <outlet property="protocolLabel" destination="VyN-C7-RJs" id="KJ3-Cf-3vO"/>
                 <outlet property="protocolList" destination="QNh-jH-qdA" id="7vD-WP-F1O"/>
@@ -219,6 +220,10 @@
                                         </menu>
                                     </popUpButtonCell>
                                 </popUpButton>
+                                <progressIndicator fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="kmf-hU-xTU">
+                                    <rect key="frame" x="226" y="17" width="16" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                </progressIndicator>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="hhN-6A-ZEd" firstAttribute="trailing" secondItem="QNh-jH-qdA" secondAttribute="trailing" id="447-7W-QFu"/>
@@ -530,5 +535,10 @@
             </constraints>
             <point key="canvasLocation" x="121" y="378.5"/>
         </customView>
+        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" id="Spq-Wi-2a1">
+            <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <point key="canvasLocation" x="42" y="290"/>
+        </progressIndicator>
     </objects>
 </document>

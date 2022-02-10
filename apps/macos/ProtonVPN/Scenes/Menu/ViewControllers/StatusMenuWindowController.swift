@@ -40,8 +40,9 @@ class StatusMenuWindowController: WindowController {
     private let iconManager: StatusBarIconBlinker
     
     var lastOpenApplication: NSRunningApplication?
-    
     var localMouseDownEventMonitor: Any?
+
+    weak var windowService: WindowService?
     
     override var contentViewController: NSViewController? {
         didSet {
@@ -165,8 +166,8 @@ class StatusMenuWindowController: WindowController {
 }
 
 extension StatusMenuWindowController {
-    
-    func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_ notification: Notification) {
+        windowService?.windowWillClose(self)
         dismissPopover()
     }
     

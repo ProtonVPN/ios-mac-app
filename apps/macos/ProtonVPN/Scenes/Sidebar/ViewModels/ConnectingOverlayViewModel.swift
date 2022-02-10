@@ -312,7 +312,14 @@ class ConnectingOverlayViewModel {
             self?.retryConnection(withProtocol: newProtocol)
         }
         
-        vpnProtocolChangeManager.change(toProcol: transportProtocol)
+        vpnProtocolChangeManager.change(toProtocol: transportProtocol) { result in
+            switch result {
+            case .success:
+                log.info("\(#function): reconnect succeeded", category: .connectionConnect)
+            case let .failure(error):
+                log.error("\(#function): reconnect failed (\(error))", category: .connectionConnect)
+            }
+        }
     }
     
     // MARK: - Notification handlers

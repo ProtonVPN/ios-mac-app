@@ -26,6 +26,10 @@ class SystemExtensionsStateCheck {
         case installed // At least one sysex had to be installed
         case updated   // At least one sysex had to be updated, and NONE had to be installed
     }
+
+    public struct UserCancelledInstall: Error, CustomStringConvertible {
+        public let description = "The install was cancelled by the user."
+    }
     
     private let systemExtensionManager: SystemExtensionManager
     private let alertService: CoreAlertService
@@ -80,7 +84,6 @@ class SystemExtensionsStateCheck {
             
             self.alertService.push(alert: SystemExtensionTourAlert(extensionsCount: installNeeded.count, isTimeToClose: { [weak self] completion in
                 self?.areAllExtensionsInstalled(completion: completion)
-                
             }, continueHandler: {
                 let dispatchGroup = DispatchGroup()
                 var errors = [Error]()
@@ -112,6 +115,9 @@ class SystemExtensionsStateCheck {
                     resultHandler(.success(.installed))
                 }
                 
+            }, cancelHandler: {
+                log.debug("User cancelled system extension install", category: .sysex)
+                resultHandler(.failure(UserCancelledInstall()))
             }))
         }
     }

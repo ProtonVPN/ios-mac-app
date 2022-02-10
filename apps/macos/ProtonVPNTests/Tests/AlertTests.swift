@@ -90,7 +90,6 @@ class AlertTests: XCTestCase {
 }
 
 fileprivate class WindowServiceMock: WindowService {
-   
     var displayCount = 0
     
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
@@ -109,7 +108,7 @@ fileprivate class WindowServiceMock: WindowService {
     func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
     
-    func bringWindowsToForground() -> Bool {
+    func bringWindowsToForeground() -> Bool {
         return false
     }
     
@@ -128,6 +127,12 @@ fileprivate class WindowServiceMock: WindowService {
     }
     
     func openSubuserAlertWindow() {
+    }
+
+    func windowCloseRequested(_ sender: WindowController) {
+    }
+
+    func windowWillClose(_ sender: WindowController) {
     }
 }
 
