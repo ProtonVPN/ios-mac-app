@@ -216,7 +216,7 @@ class WindowServiceImplementation: WindowService {
         let viewController: NSViewController
         let manager = factory.makeDynamicBugReportManager()
         
-        if #available(macOS 11, *), let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: nil) {
+        if #available(macOS 11, *), let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
             manager.username = AuthKeychain.fetch()?.username ?? ""
             manager.planname = (try? vpnKeychain.fetchCached().accountPlan.name) ?? ""
             manager.closeBugReportHandler = { [weak self] in

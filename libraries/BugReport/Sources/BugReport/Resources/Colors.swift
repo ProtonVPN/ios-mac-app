@@ -19,31 +19,59 @@
 import Foundation
 import SwiftUI
 
+/// All the colors used through this module. Colors.testColors is for testing purposes only. Apps should provide their own set of colors.
 @available(iOS 14.0, *)
 public struct Colors {
 
-    public init() { }
+    public init(brand: Color, brandLight20: Color, brandLight40: Color, brandDark40: Color, textPrimary: Color, textSecondary: Color, background: Color, backgroundSecondary: Color, backgroundUpdateButton: Color, separator: Color, qfIcon: Color) {
+        self.brand = brand
+        self.brandLight20 = brandLight20
+        self.brandLight40 = brandLight40
+        self.brandDark40 = brandDark40
+        self.textPrimary = textPrimary
+        self.textSecondary = textSecondary
+        self.background = background
+        self.backgroundSecondary = backgroundSecondary
+        self.backgroundUpdateButton = backgroundUpdateButton
+        self.separator = separator
+        self.qfIcon = qfIcon
+    }
 
-    public var brand: Color = Color("brand", bundle: Bundle.module)
-    public var brandLight20: Color = Color("brand-lighten20", bundle: Bundle.module)
-    public var brandLight40: Color = Color("brand-lighten40", bundle: Bundle.module)
-    public var brandDark40: Color = Color("brand-darken40", bundle: Bundle.module)
+    public var brand: Color
+    public var brandLight20: Color
+    public var brandLight40: Color
+    public var brandDark40: Color
 
-    public var textPrimary: Color = Color.white
-    public var textSecondary: Color = Color("text-weak", bundle: Bundle.module)
+    public var textPrimary: Color
+    public var textSecondary: Color
 
-    public var background: Color = Color("background-norm", bundle: Bundle.module)
-    public var backgroundSecondary: Color = Color("background-secondary", bundle: Bundle.module)
-    public var backgroundUpdateButton: Color = Color("interaction-weak", bundle: Bundle.module)
-    public var separator: Color = Color("separator", bundle: Bundle.module)
+    public var background: Color
+    public var backgroundSecondary: Color
+    public var backgroundUpdateButton: Color
+    public var separator: Color
 
-    public var qfIcon: Color = Color("notification-warning", bundle: Bundle.module)
+    public var qfIcon: Color
+
+    /// Default color set for testing and previews
+    public static let testColors = Colors(
+        brand: Color("brand", bundle: Bundle.module),
+        brandLight20: Color("brand-lighten20", bundle: Bundle.module),
+        brandLight40: Color("brand-lighten40", bundle: Bundle.module),
+        brandDark40: Color("brand-darken40", bundle: Bundle.module),
+        textPrimary: Color.white,
+        textSecondary: Color("text-weak", bundle: Bundle.module),
+        background: Color("background-norm", bundle: Bundle.module),
+        backgroundSecondary: Color("background-secondary", bundle: Bundle.module),
+        backgroundUpdateButton: Color("interaction-weak", bundle: Bundle.module),
+        separator: Color("separator", bundle: Bundle.module),
+        qfIcon: Color("notification-warning", bundle: Bundle.module)
+    )
 
 }
 
 @available(iOS 14.0, *)
 struct ColorsEnvironmentKey: EnvironmentKey {
-    static var defaultValue = Colors()
+    static var defaultValue = Colors.testColors
 }
 
 @available(iOS 14.0, *)

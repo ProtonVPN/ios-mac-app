@@ -30,38 +30,42 @@ public struct BugReportiOSView: View {
 
     public var body: some View {
         NavigationView {
-            VStack(alignment: .leading, spacing: 0) {
+            ZStack {
+                colors.background.ignoresSafeArea()
 
-                UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+                VStack(alignment: .leading, spacing: 0) {
 
-                StepProgress(step: 1, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
-                    .padding(.bottom)
+                    UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-                Text(LocalizedString.br1Title)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(colors.textPrimary)
-                    .padding(.horizontal)
+                    StepProgress(step: 1, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
+                        .padding(.bottom)
 
-                List(delegate?.model.categories ?? []) { category in
-                    if category.suggestions?.isEmpty ?? true { // If no suggestions found skip directly to the form
-                        NavigationLink(destination: {
-                            FormiOSView(viewModel: FormViewModel(fields: category.inputFields))
-                                .navigationTitle(Text(LocalizedString.brWindowTitle))
-                        }, label: { Text(category.label) })
+                    Text(LocalizedString.br1Title)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(colors.textPrimary)
+                        .padding(.horizontal)
 
-                    } else {
-                        NavigationLink(destination: {
-                            QuickFixesiOSList(category: category)
-                                .navigationTitle(Text(LocalizedString.brWindowTitle))
-                        }, label: { Text(category.label) })
+                    List(delegate?.model.categories ?? []) { category in
+                        if category.suggestions?.isEmpty ?? true { // If no suggestions found skip directly to the form
+                            NavigationLink(destination: {
+                                FormiOSView(viewModel: FormViewModel(fields: category.inputFields))
+                                    .navigationTitle(Text(LocalizedString.brWindowTitle))
+                            }, label: { Text(category.label) })
+
+                        } else {
+                            NavigationLink(destination: {
+                                QuickFixesiOSList(category: category)
+                                    .navigationTitle(Text(LocalizedString.brWindowTitle))
+                            }, label: { Text(category.label) })
+                        }
                     }
+                    .listStyle(.plain)
+                    .foregroundColor(colors.textPrimary)
                 }
-                .listStyle(.plain)
+                .navigationTitle(Text(LocalizedString.brWindowTitle))
+                .navigationBarTitleDisplayMode(.inline)
             }
-            .navigationTitle(Text(LocalizedString.brWindowTitle))
-            .navigationBarTitleDisplayMode(.inline)
-
         }
         .navigationViewStyle(.stack)
         .preferredColorScheme(.dark)

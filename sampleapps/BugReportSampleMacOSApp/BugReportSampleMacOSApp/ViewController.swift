@@ -74,7 +74,7 @@ class ViewController: NSViewController {
 
     @IBAction func buttonClicked(_ sender: Any) {
         let bugReportCreator = MacOSBugReportCreator()
-        guard let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: nil) else {
+        guard let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors) else {
             return
         }
         let windowController = ReportBugWindowController(viewController: viewController)

@@ -119,7 +119,7 @@ struct BugReportNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             VStack {
-                BugReportNavigationView(viewModel: MacBugReportViewModel(model: CurrentEnv.bugReportDelegate!.model))
+                BugReportNavigationView(viewModel: MacBugReportViewModel(model: .mock))
             }
             VStack {
                 BugReportNavigationView(viewModel: step2)
@@ -135,21 +135,21 @@ struct BugReportNavigationView_Previews: PreviewProvider {
     }
 
     private static var step2: MacBugReportViewModel {
-        let step2 = MacBugReportViewModel(model: CurrentEnv.bugReportDelegate!.model)
-        step2.categorySelected(CurrentEnv.bugReportDelegate!.model.categories.first!)
+        let step2 = MacBugReportViewModel(model: .mock)
+        step2.categorySelected(BugReportModel.mock.categories.first!)
         return step2
     }
 
     private static var step3: MacBugReportViewModel {
-        let step3 = MacBugReportViewModel(model: CurrentEnv.bugReportDelegate!.model)
-        step3.categorySelected(CurrentEnv.bugReportDelegate!.model.categories.first!)
+        let step3 = MacBugReportViewModel(model: .mock)
+        step3.categorySelected(BugReportModel.mock.categories.first!)
         step3.suggestionsFinished()
         return step3
     }
 
     private static var stepResult: MacBugReportViewModel {
-        let step = MacBugReportViewModel(model: CurrentEnv.bugReportDelegate!.model)
-        step.categorySelected(CurrentEnv.bugReportDelegate!.model.categories.first!)
+        let step = MacBugReportViewModel(model: .mock)
+        step.categorySelected(BugReportModel.mock.categories.first!)
         step.suggestionsFinished()
         step.form?.sendResult = .success(Void())
         step.resultReceived()

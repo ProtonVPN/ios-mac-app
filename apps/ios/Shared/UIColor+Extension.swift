@@ -43,9 +43,17 @@ extension UIColor {
     class func brandColor() -> UIColor {
         return ColorProvider.BrandNorm
     }
-
-    class func activeBrandColor() -> UIColor {
-        return #colorLiteral(red: 0.5215686275, green: 0.7098039216, blue: 0.4745098039, alpha: 1)
+    
+    class func brandLighten20Color() -> UIColor {
+        return ColorProvider.BrandLighten20
+    }
+    
+    class func brandLighten40Color() -> UIColor {
+        return ColorProvider.BrandLighten40
+    }
+    
+    class func brandDarken40Color() -> UIColor {
+        return ColorProvider.BrandDarken40
     }
 
     class func secondaryBackgroundColor() -> UIColor {
@@ -65,15 +73,15 @@ extension UIColor {
     }
     
     class func normalSeparatorColor() -> UIColor {
-        return UIColor.black
+        return ColorProvider.SeparatorNorm
     }
     
     class func notificationWarningColor() -> UIColor {
-        return #colorLiteral(red: 1, green: 0.6, blue: 0, alpha: 1)
+        return ColorProvider.NotificationWarning
     }
     
     class func notificationOKColor() -> UIColor {
-        return #colorLiteral(red: 0.1176470588, green: 0.6588235294, blue: 0.5215686275, alpha: 1)
+        return ColorProvider.NotificationSuccess
     }
     
     class func normalTextColor() -> UIColor {
@@ -81,6 +89,6 @@ extension UIColor {
     }
     
     class func notificationErrorColor() -> UIColor {
-        return #colorLiteral(red: 0.862745098, green: 0.1960784314, blue: 0.3176470588, alpha: 1)
+        return ColorProvider.NotificationError
     }
 }

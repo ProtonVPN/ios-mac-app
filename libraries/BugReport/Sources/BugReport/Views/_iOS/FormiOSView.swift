@@ -31,73 +31,77 @@ struct FormiOSView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            colors.background.ignoresSafeArea()
+            VStack(spacing: 0) {
 
-            UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+                UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-            StepProgress(step: 3, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
-                .padding(.bottom)
+                StepProgress(step: 3, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
+                    .padding(.bottom)
 
-            ScrollView {
-                VStack(spacing: 20) {
+                ScrollView {
+                    VStack(spacing: 20) {
 
-                    ForEach($viewModel.fields) { $field in
-                        switch field.inputField.type {
-                        case .textSingleLine:
-                            SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
-                        case .textMultiLine:
-                            #if os(iOS)
-                            MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
-                                .frame(height: 155, alignment: .top)
-                            #endif
-                        case .switch:
-                            SwitchInputView(field: field.inputField, value: $field.boolValue)
+                        ForEach($viewModel.fields) { $field in
+                            switch field.inputField.type {
+                            case .textSingleLine:
+                                SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
+                            case .textMultiLine:
+#if os(iOS)
+                                MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
+                                    .frame(height: 155, alignment: .top)
+#endif
+                            case .switch:
+                                SwitchInputView(field: field.inputField, value: $field.boolValue)
+                            }
                         }
-                    }
 
-                    if viewModel.showLogsInfo {
-                        HStack(alignment: .top, spacing: 0) {
-                            Image(Asset.icInfoCircle.name, bundle: Bundle.module)
-                                .padding(0)
+                        if viewModel.showLogsInfo {
+                            HStack(alignment: .top, spacing: 0) {
+                                Image(Asset.icInfoCircle.name, bundle: Bundle.module)
+                                    .padding(0)
 
-                            Text(LocalizedString.br3LogsDisabled)
-                                .font(.footnote)
-                                .foregroundColor(colors.textSecondary)
-                                .padding(.leading, 8)
+                                Text(LocalizedString.br3LogsDisabled)
+                                    .font(.footnote)
+                                    .foregroundColor(colors.textSecondary)
+                                    .padding(.leading, 8)
 
+                            }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
-                    }
 
-                    Button(action: {
-                        viewModel.sendTapped()
-                    }, label: { Text(viewModel.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) })
-                        .disabled(!viewModel.canBeSent)
-                        .buttonStyle(PrimaryButtonStyle())
-                        .padding(.horizontal)
+                        Button(action: {
+                            viewModel.sendTapped()
+                        }, label: { Text(viewModel.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) })
+                            .disabled(!viewModel.canBeSent)
+                            .buttonStyle(PrimaryButtonStyle())
+                            .padding(.horizontal)
+                    }
                 }
-            }
 
-            NavigationLink(
-                destination: ResultView(
-                    error: viewModel.sendResultError,
-                    finishCallback: { self.viewModel.finished() },
-                    retryCallback: { self.viewModel.sendResult = nil },
-                    troubleshootCallback: { self.viewModel.troubleshootingTapped() }
-                ),
-                isActive: $viewModel.shouldShowResultView) { EmptyView() }
+                NavigationLink(
+                    destination: ResultView(
+                        error: viewModel.sendResultError,
+                        finishCallback: { self.viewModel.finished() },
+                        retryCallback: { self.viewModel.sendResult = nil },
+                        troubleshootCallback: { self.viewModel.troubleshootingTapped() }
+                    ),
+                    isActive: $viewModel.shouldShowResultView) { EmptyView() }
+            }
+            .foregroundColor(colors.textPrimary)
+#if os(iOS)
+            // Custom Back button
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }, label: {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(colors.textPrimary)
+            }))
+#endif
+            .environment(\.isLoading, viewModel.isSending)
         }
-        #if os(iOS)
-        // Custom Back button
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }, label: {
-            Image(systemName: "chevron.left")
-                .foregroundColor(colors.textPrimary)
-        }))
-        #endif
-        .environment(\.isLoading, viewModel.isSending)
     }
 }
 
