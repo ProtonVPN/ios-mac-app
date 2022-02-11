@@ -33,7 +33,7 @@ end
 
 def vpn_core
     use_frameworks!        
-    pod 'Sentry', '5.2.2'
+    pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.9.0'
     pod 'ReachabilitySwift', '5.0.0'
     keychain_access
     
