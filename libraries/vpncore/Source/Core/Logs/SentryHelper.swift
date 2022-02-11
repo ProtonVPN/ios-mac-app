@@ -16,6 +16,15 @@ public final class SentryHelper {
         SentrySDK.start { (options) in
             options.dsn = dsn
             options.debug = false
+            options.enableAutoSessionTracking = false
+            options.attachStacktrace = false
+            options.maxBreadcrumbs = 25
+
+            options.beforeSend = { event in
+                // Remove heaviest part of event to make sure event doesn't reach max request size. Can be removed after the issue is fixed on the infra side (INFSUP-682).
+                event.debugMeta = nil
+                return event
+            }
         }
         #endif
     }
