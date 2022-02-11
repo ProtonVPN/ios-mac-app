@@ -10,16 +10,8 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum LocalizedString {
-  /// Plural format key: "FREE subscription offers %#@num_servers@ in %#@num_countries@"
-  public static func modalsEstablishSubtitle(_ p1: Int, _ p2: Int) -> String {
-    return LocalizedString.tr("Localizable", "modals_establish_subtitle", p1, p2)
-  }
   /// Get Plus
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
-  /// Plural format key: "%#@VARIABLE@"
-  public static func modalsPurchasedSubtitle(_ p1: Int) -> String {
-    return LocalizedString.tr("Localizable", "modals_purchased_subtitle", p1)
-  }
   /// Highest speed (10 Gbps)
   public static var modalsUpsellFeatureHighSpeed: String { return LocalizedString.tr("Localizable", "modals_upsell_feature_highSpeed") }
   /// Plural format key: "%#@VARIABLE@"
