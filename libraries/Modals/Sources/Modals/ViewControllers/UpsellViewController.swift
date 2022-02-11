@@ -38,6 +38,22 @@ public final class UpsellViewController: UIViewController {
 
     public weak var delegate: UpsellViewControllerDelegate?
     var constants: UpsellConstantsProtocol!
+    lazy var upsellFeature: UpsellFeature = {
+        let title = LocalizedString.modalsUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
+        let features: [Feature] = [.streaming, .multipleDevices, .netshield, .highSpeed]
+        return UpsellFeature(title: title, features: features)
+    }()
+    
+    enum UpsellType {
+        case netShield
+        case secureCore
+        case allCountries
+    }
+    
+    struct UpsellFeature {
+        let title: String
+        let features: [Feature]
+    }
 
     // MARK: Setup
 
@@ -56,7 +72,7 @@ public final class UpsellViewController: UIViewController {
 
         getPlusButton.setTitle(LocalizedString.modalsGetPlus, for: .normal)
         useFreeButton.setTitle(LocalizedString.modalsUpsellStayFree, for: .normal)
-        titleLabel.text = LocalizedString.modalsUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
+        titleLabel.text = upsellFeature.title // LocalizedString.modalsUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
         featuresFooterLabel.text = LocalizedString.modalsUpsellFeaturesFooter
 
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
@@ -73,7 +89,7 @@ public final class UpsellViewController: UIViewController {
             featuresStackView.removeArrangedSubview(view)
         }
 
-        for feature in Feature.allCases {
+        for feature in upsellFeature.features {
             if let view = Bundle.module.loadNibNamed("FeatureView", owner: self, options: nil)?.first as? FeatureView {
                 view.constants = constants
                 view.feature = feature
