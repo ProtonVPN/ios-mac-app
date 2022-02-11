@@ -141,6 +141,9 @@ public class DynamicBugReportManager {
 extension DynamicBugReportManager: BugReportDelegate {
         
     public func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
+        if form.logs {
+            propertiesManager.logCurrentState()
+        }
         let report = fillReportBug(withData: form)
         api.report(bug: report) { requestResult in
             switch requestResult {
