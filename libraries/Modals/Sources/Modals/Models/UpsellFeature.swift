@@ -1,5 +1,5 @@
 //
-//  Created on 11.01.2022.
+//  Created on 11/02/2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,26 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import UIKit
 
-final class FeatureView: UIView {
-
-    // MARK: Outlets
-
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel! {
-        didSet {
-            featureTextStyle(titleLabel)
-        }
-    }
-
-    // MARK: Properties
-
-    var feature: Feature? {
-        didSet {
-            iconImageView.image = feature?.image
-            titleLabel.text = feature?.title()
-        }
-    }
+struct UpsellFeature {
+    let title: String
+    let features: [Feature]
+    let artImage: UIImage
+    let footer: String?
 }

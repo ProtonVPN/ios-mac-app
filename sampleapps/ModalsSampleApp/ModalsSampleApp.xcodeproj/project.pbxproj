@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E5BBE32427B6BA69007CFFF4 /* ModalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BBE32327B6BA68007CFFF4 /* ModalTableViewCell.swift */; };
 		E5DD64BF27B54E9100A282F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD64BE27B54E9100A282F2 /* AppDelegate.swift */; };
 		E5DD64C127B54E9100A282F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD64C027B54E9100A282F2 /* SceneDelegate.swift */; };
 		E5DD64C327B54E9100A282F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DD64C227B54E9100A282F2 /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E5BBE32327B6BA68007CFFF4 /* ModalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTableViewCell.swift; sourceTree = "<group>"; };
 		E5DD64BB27B54E9100A282F2 /* ModalsSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModalsSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5DD64BE27B54E9100A282F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5DD64C027B54E9100A282F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				E5DD64BE27B54E9100A282F2 /* AppDelegate.swift */,
 				E5DD64C027B54E9100A282F2 /* SceneDelegate.swift */,
 				E5DD64C227B54E9100A282F2 /* ViewController.swift */,
+				E5BBE32327B6BA68007CFFF4 /* ModalTableViewCell.swift */,
 				E5DD64C427B54E9100A282F2 /* Main.storyboard */,
 				E5DD64C727B54E9200A282F2 /* Assets.xcassets */,
 				E5DD64C927B54E9200A282F2 /* LaunchScreen.storyboard */,
@@ -214,6 +217,7 @@
 				E5DD64C327B54E9100A282F2 /* ViewController.swift in Sources */,
 				E5DD64BF27B54E9100A282F2 /* AppDelegate.swift in Sources */,
 				E5DD64C127B54E9100A282F2 /* SceneDelegate.swift in Sources */,
+				E5BBE32427B6BA69007CFFF4 /* ModalTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

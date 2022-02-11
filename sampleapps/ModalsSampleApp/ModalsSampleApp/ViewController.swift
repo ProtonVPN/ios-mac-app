@@ -19,26 +19,54 @@
 import Modals
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
+    
+    let upsells: [(type: UpsellType, title: String)] = [(.allCountries(Constants()), "All countries"),
+                                                        (.secureCore, "Secure Core"),
+                                                        (.netShield, "Net Shield")]
 
+    let modalsFactory = ModalsFactory(colors: Colors())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let modalsFactory = ModalsFactory(colors: Colors())
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        upsells.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ModalTableViewCell", for: indexPath)
+        let upsell = upsells[indexPath.row]
         
-        let upsellViewController = modalsFactory.upsellViewController(constants: Constants())
+        if let modalCell = cell as? ModalTableViewCell {
+            modalCell.modalTitle.text = upsell.title
+        }
+        
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsells[indexPath.row].type)
+        upsellViewController.delegate = self
         present(upsellViewController, animated: true, completion: nil)
+    }
+}
+
+extension ViewController: UpsellViewControllerDelegate {
+    func userDidRequestPlus() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func userDidDismissUpsell() {
+        dismiss(animated: true, completion: nil)
     }
 }
 
 struct Constants: UpsellConstantsProtocol {
     var numberOfDevices: Int = 10
     var numberOfServers: Int = 1300
-    var numberOfCountries: Int = 23
+    var numberOfCountries: Int = 61
 }
 
 struct Colors: ModalsColors {
@@ -48,7 +76,7 @@ struct Colors: ModalsColors {
     var weakText: UIColor
     
     init() {
-        background = .black
+        background = UIColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1)
         text = .white
         brand = UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1)
         weakText = UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)

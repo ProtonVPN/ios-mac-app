@@ -11,9 +11,9 @@ public struct ModalsFactory {
         Modals.colors = colors
     }
 
-    public func upsellViewController(constants: UpsellConstantsProtocol) -> UpsellViewController {
+    public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {
         let upsell = storyboard.instantiate(controllerType: UpsellViewController.self)
-        upsell.constants = constants
+        upsell.upsellType = upsellType
         return upsell
     }
 }
@@ -21,7 +21,6 @@ public struct ModalsFactory {
 extension UIStoryboard {
     func instantiate<T: UIViewController>(controllerType: T.Type) -> T {
         let name = "\(controllerType)".replacingOccurrences(of: "ViewController", with: "")
-        // swiftlint:disable force_cast
         let viewController = instantiateViewController(withIdentifier: name) as! T
         return viewController
     }

@@ -21,35 +21,67 @@ import UIKit
 
 enum Feature {
     case streaming
-    case multipleDevices
+    case multipleDevices(Int)
     case netshield
     case highSpeed
+    case blockAds
+    case protectFromMalware
+    case highSpeedNetshield
+    case routeSecureServers
+    case addLayer
+    case protectFromAttacks
 }
 
-extension Feature: CaseIterable {
-    func title(constants: UpsellConstantsProtocol) -> String {
+extension Feature {
+    func title() -> String {
         switch self {
         case .streaming:
-            return LocalizedString.modalsUpsellFeatureStreaming
-        case .multipleDevices:
-            return LocalizedString.modalsUpsellFeatureMultipleDevices(constants.numberOfDevices)
+            return LocalizedString.modalsUpsellAllCountriesFeatureStreaming
+        case .multipleDevices(let numberOfDevices):
+            return LocalizedString.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
         case .netshield:
-            return LocalizedString.modalsUpsellFeatureNetshield
+            return LocalizedString.modalsUpsellAllCountriesFeatureNetshield
         case .highSpeed:
-            return LocalizedString.modalsUpsellFeatureHighSpeed
+            return LocalizedString.modalsUpsellAllCountriesFeatureHighSpeed
+        case .blockAds:
+            return LocalizedString.modalsUpsellNetShieldAds
+        case .protectFromMalware:
+            return LocalizedString.modalsUpsellNetShieldMalware
+        case .highSpeedNetshield:
+            return LocalizedString.modalsUpsellNetShieldHighSpeed
+        case .routeSecureServers:
+            return LocalizedString.modalsUpsellSecureCoreRoute
+        case .addLayer:
+            return LocalizedString.modalsUpsellSecureCoreLayer
+        case .protectFromAttacks:
+            return LocalizedString.modalsUpsellSecureCoreAttacks
         }
     }
 
     var image: UIImage {
+        let imageName: String
         switch self {
         case .streaming:
-            return UIImage(named: "StreamingIcon", in: Bundle.module, compatibleWith: nil)!
+            imageName = "StreamingIcon"
         case .multipleDevices:
-            return UIImage(named: "MultipleDevicesIcon", in: Bundle.module, compatibleWith: nil)!
+            imageName = "MultipleDevicesIcon"
         case .netshield:
-            return UIImage(named: "NetshieldIcon", in: Bundle.module, compatibleWith: nil)!
+            imageName = "NetshieldIcon"
         case .highSpeed:
-            return UIImage(named: "HighSpeedIcon", in: Bundle.module, compatibleWith: nil)!
+            imageName = "HighSpeedIcon"
+        case .blockAds:
+            imageName = "BlockAds"
+        case .protectFromMalware:
+            imageName = "NetshieldIcon"
+        case .highSpeedNetshield:
+            imageName = "HighSpeedIcon"
+        case .routeSecureServers:
+            imageName = "RouteSecureServers"
+        case .addLayer:
+            imageName = "AddLayer"
+        case .protectFromAttacks:
+            imageName = "ProtectFromAttacks"
         }
+        return UIImage(named: imageName, in: Bundle.module, compatibleWith: nil)!
     }
 }
