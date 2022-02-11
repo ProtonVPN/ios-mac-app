@@ -246,26 +246,30 @@ final class SettingsViewModel {
 
         let netShieldAvailable = propertiesManager.featureFlags.netShield
         if netShieldAvailable {
-            cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
-                pushNetshieldSelectionViewController(self.netShieldPropertyProvider.netShieldType, { type, approve in
-                    self.vpnStateConfiguration.getInfo { info in
+            cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.pushNetshieldSelectionViewController(selectedFeature: self.netShieldPropertyProvider.netShieldType, shouldSelectNewValue: { [weak self] type, approve in
+                    self?.vpnStateConfiguration.getInfo { [weak self] info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
                             approve()
-                            self.vpnManager.set(netShieldType: type)
+                            self?.vpnManager.set(netShieldType: type)
                         case .withReconnect:
-                            self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
+                            self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: { [weak self] in
                                 approve()
                                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                                self.vpnGateway?.reconnect(with: type)
-                                self.connectionStatusService.presentStatusViewController()
+                                self?.vpnGateway?.reconnect(with: type)
+                                self?.connectionStatusService.presentStatusViewController()
                             }))
                         case .immediately:
                             approve()
                         }
                     }
-                }, { type in
-                    self.netShieldPropertyProvider.netShieldType = type
+                }, onFeatureChange: { [weak self] type in
+                    self?.netShieldPropertyProvider.netShieldType = type
                 })
             }))
             cells.append(.tooltip(text: LocalizedString.netshieldTitleTooltip))
@@ -326,26 +330,30 @@ final class SettingsViewModel {
 
         if propertiesManager.featureFlags.moderateNAT {
             cells.append(contentsOf: [
-                .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [pushNATTypeSelectionViewController] in
-                    pushNATTypeSelectionViewController(self.natTypePropertyProvider.natType, { type, approve in
-                        self.vpnStateConfiguration.getInfo { info in
+                .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+
+                    self.pushNATTypeSelectionViewController(selectedFeature: self.natTypePropertyProvider.natType, shouldSelectNewValue: { [weak self] type, approve in
+                        self?.vpnStateConfiguration.getInfo { [weak self] info in
                             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                             case .withConnectionUpdate:
                                 approve()
-                                self.vpnManager.set(natType: type)
+                                self?.vpnManager.set(natType: type)
                             case .withReconnect:
-                                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.natTypeChangeTitle, confirmHandler: {
+                                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.natTypeChangeTitle, confirmHandler: { [weak self] in
                                     approve()
                                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                                    self.vpnGateway?.reconnect(with: type)
-                                    self.connectionStatusService.presentStatusViewController()
+                                    self?.vpnGateway?.reconnect(with: type)
+                                    self?.connectionStatusService.presentStatusViewController()
                                 }))
                             case .immediately:
                                 approve()
                             }
                         }
-                    }, { type in
-                        self.propertiesManager.natType = type
+                    }, onFeatureChange: { [weak self] type in
+                        self?.propertiesManager.natType = type
                     })
                 }),
                 .tooltip(text: LocalizedString.natTypeExplanation.replacingOccurrences(of: "\n\n", with: " "))
