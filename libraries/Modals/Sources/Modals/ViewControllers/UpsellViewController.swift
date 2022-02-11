@@ -28,39 +28,34 @@ public final class UpsellViewController: UIViewController {
 
     // MARK: Outlets
 
+    @IBOutlet private weak var featureView: UIView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var getPlusButton: UIButton!
     @IBOutlet private weak var useFreeButton: UIButton!
     @IBOutlet private weak var featuresStackView: UIStackView!
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var featuresFooterLabel: UILabel!
+    @IBOutlet private weak var featureArtImageView: UIImageView!
 
     // MARK: Properties
 
     public weak var delegate: UpsellViewControllerDelegate?
-    var constants: UpsellConstantsProtocol!
-    lazy var upsellFeature: UpsellFeature = {
-        let title = LocalizedString.modalsUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
-        let features: [Feature] = [.streaming, .multipleDevices, .netshield, .highSpeed]
-        return UpsellFeature(title: title, features: features)
-    }()
-    
-    enum UpsellType {
-        case netShield
-        case secureCore
-        case allCountries
-    }
-    
-    struct UpsellFeature {
-        let title: String
-        let features: [Feature]
-    }
+
+    var upsellType: UpsellType?
 
     // MARK: Setup
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
+        setupFeatures()
+    }
+
+    override public func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let topInset = (scrollView.bounds.height - featureView.bounds.height) / 2
+        scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
     }
 
     private func setupUI() {
@@ -68,12 +63,10 @@ public final class UpsellViewController: UIViewController {
         actionButtonStyle(getPlusButton)
         actionTextButtonStyle(useFreeButton)
         titleStyle(titleLabel)
+        subtitleStyle(subtitleLabel)
         footerStyle(featuresFooterLabel)
-
         getPlusButton.setTitle(LocalizedString.modalsGetPlus, for: .normal)
         useFreeButton.setTitle(LocalizedString.modalsUpsellStayFree, for: .normal)
-        titleLabel.text = upsellFeature.title // LocalizedString.modalsUpsellTitle(constants.numberOfServers, constants.numberOfCountries)
-        featuresFooterLabel.text = LocalizedString.modalsUpsellFeaturesFooter
 
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
@@ -83,6 +76,14 @@ public final class UpsellViewController: UIViewController {
         let closeButton = UIBarButtonItem(image: closeButtonImage, style: .plain, target: self, action: #selector(closeTapped))
         closeButton.accessibilityIdentifier = "CloseButton"
         navigationItem.leftBarButtonItem = closeButton
+    }
+
+    func setupFeatures() {
+        guard let upsellType = upsellType else { return }
+        let upsellFeature = upsellType.upsellFeature()
+        titleLabel.text = upsellFeature.title
+        featuresFooterLabel.text = upsellFeature.footer
+        featureArtImageView.image = upsellFeature.artImage
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
@@ -91,7 +92,6 @@ public final class UpsellViewController: UIViewController {
 
         for feature in upsellFeature.features {
             if let view = Bundle.module.loadNibNamed("FeatureView", owner: self, options: nil)?.first as? FeatureView {
-                view.constants = constants
                 view.feature = feature
                 featuresStackView.addArrangedSubview(view)
             }

@@ -24,36 +24,18 @@ final class FeatureView: UIView {
     // MARK: Outlets
 
     @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-
-    // MARK: Properties
-
-    var constants: UpsellConstantsProtocol? {
+    @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
-            setTitle()
+            featureTextStyle(titleLabel)
         }
     }
+
+    // MARK: Properties
 
     var feature: Feature? {
         didSet {
             iconImageView.image = feature?.image
-            setTitle()
+            titleLabel.text = feature?.title()
         }
-    }
-
-    // MARK: Setup
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        featureTextStyle(titleLabel)
-    }
-
-    private func setTitle() {
-        guard let constants = constants, let feature = feature else {
-            return
-        }
-
-        titleLabel.text = feature.title(constants: constants)
     }
 }

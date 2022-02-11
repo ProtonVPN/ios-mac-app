@@ -90,7 +90,7 @@ public final class OnboardingCoordinator {
     }
 
     private func showUpsell() {
-        let upsellViewController = modals.upsellViewController(constants: configuration.constants)
+        let upsellViewController = modals.upsellViewController(upsellType: .allCountries(configuration.constants))
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
         navigationStyle(popOverNavigationController)

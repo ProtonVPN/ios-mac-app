@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>modals_upsell_title</key>
+	<key>modals_upsell_all_countries_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Access all %#@num_servers@ in %#@num_countries@ with Plus</string>
+		<string>Access over %#@num_servers@ in %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -22,10 +22,10 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>%d servers</string>
+			<string>%d secure servers</string>
 		</dict>
 	</dict>
-	<key>modals_upsell_feature_multipleDevices</key>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
 		<string>%#@VARIABLE@</string>
@@ -36,7 +36,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Connect %d devices simultaneously</string>
+			<string>Connect up to %d devices at once</string>
 		</dict>
 	</dict>
 </dict>

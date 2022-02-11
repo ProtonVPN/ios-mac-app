@@ -1,6 +1,16 @@
-"modals_get_plus" = "Get Plus";
-"modals_upsell_stay_free" = "Use limited FREE plan";
-"modals_upsell_features_footer" = "and more premium features...";
-"modals_upsell_feature_streaming" = "Access streaming services globally";
-"modals_upsell_feature_highSpeed" = "Highest speed (10 Gbps)";
-"modals_upsell_feature_netshield" = "Built-in adblocker (NetShield)";
+"modals_get_plus" = "Upgrade";
+"modals_upsell_stay_free" = "Not now";
+"modals_upsell_features_footer" = "And many more premium features";
+"modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
+"modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
+"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with Netshield";
+
+"modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";
+"modals_upsell_net_shield_ads" = "Block ads and trackers";
+"modals_upsell_net_shield_malware" = "Protect your device from malware";
+"modals_upsell_net_shield_highSpeed" = "Browse at the highest speeds";
+
+"modals_upsell_secure_core_title" = "Double the encryption with Secure Core";
+"modals_upsell_secure_core_route" = "Route through ultra secure servers in Switzerland, Sweden, and Iceland";
+"modals_upsell_secure_core_layer" = "Add another layer of encryption to your VPN connection";
+"modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";

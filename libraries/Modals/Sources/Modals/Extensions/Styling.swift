@@ -63,11 +63,15 @@ let titleStyle = concat(centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 22, weight: .bold)
 })
 
+let subtitleStyle = concat(centeredTextStyle, and: {
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
+})
+
 let footerStyle = concat(baseTextStyle, and: {
     $0.textColor = colors.weakText
     $0.font = .systemFont(ofSize: 13)
 })
 
 let featureTextStyle = concat(baseTextStyle, and: {
-    $0.font = .systemFont(ofSize: 14, weight: .semibold)
+    $0.font = .systemFont(ofSize: 15, weight: .semibold)
 })
