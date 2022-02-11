@@ -309,7 +309,7 @@ public class VpnManager: VpnManagerProtocol {
 
     public func set(natType: NATType) {
         guard let localAgent = localAgent else {
-            log.error("Trying to change netshield via local agent when local agent instance does not exist", category: .settings)
+            log.error("Trying to change NAT type via local agent when local agent instance does not exist", category: .settings)
             return
         }
 
