@@ -1863,8 +1863,13 @@
 
 // NAT Type
 
+/* NAT Type feature title in Settings */
 "_nat_type_title" = "NAT Type";
+/* Strict NAT option title for NAT Type selection  */
 "_nat_type_strict" = "Strict NAT";
+/* Moderate NAT option title for NAT Type selection  */
 "_nat_type_moderate" = "Moderate NAT";
+/* Explanation for the NAT Type feature shown netx to the feature in Settings */
 "_nat_type_explanation" = "NAT translates the various private addresses of your network to a single public IP address.\n\nStrict NAT is extremelv secure as it restricts almost every packet being received by your device.\n\nModerate NAT is slightly less secure but can prevent lags on applications and video games.";
+/* Title for alert shown when changing NAT Type requires reconnection */
 "_nat_type_change_title" = "Change NAT Type";
