@@ -1,0 +1,66 @@
+/* ReportBug 1st step title */
+"_br_1_title" = "Quel est le problème ?";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Annuler";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Contactez-nous";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Cela n'a pas fonctionné ?";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Ces conseils pourraient vous aider à résoudre votre problème plus rapidement.";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Solutions rapides";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Envoyer le rapport";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Envoi en cours";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "Adresse e-mail";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Un journal est un type de fichier qui nous montre les actions que vous avez effectuées et qui ont conduit à une erreur. Nous ne les utiliserons que pour aider nos ingénieurs à corriger des bugs.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Les journaux d'erreurs nous aident à aller au fond de votre problème. Si vous ne les incluez pas, il se peut que nous ne soyons pas en mesure de mener une enquête approfondie.";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Envoyer les journaux d'erreurs";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Réessayer";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Dépannage";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Votre rapport n'a pas été envoyé";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Compris";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Nous vous répondrons dès que possible.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Merci pour vos commentaires";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Signaler un problème";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Ajuster";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Vous avez plus de chance d'avoir des problèmes sur les anciennes versions de ProtonVPN.";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Mettre à jour ProtonVPN";
+

@@ -98,7 +98,7 @@
 "_auto_assigned" = "Asignado automáticamente";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Conexión automática";
+"_auto_connect" = "Conectar Automáticamente";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Al iniciar la app, estarás conectado al perfil seleccionado";
@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Nombre de usuario, dirección de correo electrónico";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "El botón \"Conexión rápida\" utiliza el perfil por defecto.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 
 /* Common word */
 "_delete" = "Borrar";
@@ -302,7 +302,7 @@
 "_dns_leak_protection_tooltip" = "Evita que se filtren detalles de consultas DNS a terceros. Siempre habilitada.";
 
 /* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "¿Deseas activar la suscripción comprada para ";
+"_do_you_want_to_activate_subscription_for" = "Do you want to activate the purchased subscription for ";
 
 /* Common word */
 "_done" = "Completado";
@@ -362,7 +362,7 @@
 "_error_apply_payment_failed_retry" = "Reintentar";
 
 /* (No Comment) */
-"_error_apply_payment_failed_title" = "Fallo en el pago";
+"_error_apply_payment_failed_title" = "Pago fallido";
 
 /* (No Comment) */
 "_error_credit_applied" = "Póngase en contacto con support@protonvpn.com para completar su compra.";
@@ -2068,7 +2068,7 @@
 "_welcome_headline" = "Protégete en línea";
 
 /* MacOS welcome screen: title */
-"_welcome_title" = "¡BIENVENIDO/A A BORDO!";
+"_welcome_title" = "¡BIENVENIDO A BORDO!";
 
 /* (No Comment) */
 "_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
@@ -2077,7 +2077,7 @@
 "_wgks_ks_off" = "Deshabilitar Kill Switch";
 
 /* (No Comment) */
-"_wgks_ovpn" = "Switch to OpenVPN";
+"_wgks_ovpn" = "Cambiar a OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
 "_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
@@ -2101,5 +2101,5 @@
 "login_fetch_vpn_data" = "Configuring your VPN access";
 
 /* (No Comment) */
-"login_summary_button" = "Start using ProtonVPN";
+"login_summary_button" = "Empieza a utilizar ProtonVPN";
 

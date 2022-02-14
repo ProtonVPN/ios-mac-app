@@ -1,0 +1,66 @@
+/* ReportBug 1st step title */
+"_br_1_title" = "Sorun neydi?";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "İptal";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Bize ulaşın";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "İşe yaramadı mı?";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Bu ipuçları sorununuzun daha hızlı çözülmesine yardımcı olabilir.";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Hızlı çözümler";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Raporu gönder";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Gönderiliyor";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "E-posta adresi";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları düzeltmesine yardımcı olmaları için kullanacağız.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "Hata günlükleri, sorununuzun temeline inmemize yardımcı olur. Bunları göndermezeniz, sorunu tam olarak araştıramayabiliriz.";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Hata kayıtlarını gönder";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Yeniden dene";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Sorunu gider";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "Raporunuz gönderilmedi";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Anladım";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Olabilecek en kısa sürede size döneceğiz.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Geri bildiriminiz için teşekkürler";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Bir sorun bildirin";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Güncelle";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Eski ProtonVPN sürümlerinde sorun yaşamanız daha olasıdır.";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "ProtonVPN uygulamasını güncelle";
+

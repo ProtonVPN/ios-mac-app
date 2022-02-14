@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Utilizador, endereço electrónico";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "O botão \"Ligação rápida\" usa o perfil predefinido.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 
 /* Common word */
 "_delete" = "Eliminar";

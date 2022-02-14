@@ -302,7 +302,7 @@
 "_dns_leak_protection_tooltip" = "DNS sorgularının üçüncü taraflara sızdırılmasını önleyin. Her zaman açık.";
 
 /* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "\t\nŞunun için satın alınmış aboneliği etkinleştirmek istiyor musunuz ";
+"_do_you_want_to_activate_subscription_for" = "\t\nSatın alınmış şu aboneliği etkinleştirmek istiyor musunuz ";
 
 /* Common word */
 "_done" = "Tamam";
@@ -551,7 +551,7 @@
 "_failed_to_access_vpn_credentials_title" = "VPN kimlik doğrulama bilgileri eksik";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "En Hızlı";
+"_fastest" = "En hızlı";
 
 /* Profile create/change form */
 "_fastest_available_server" = "Kullanılabilecek en hızlı sunucu";
@@ -563,7 +563,7 @@
 "_feature" = "Özellik";
 
 /* iOS plan feature */
-"_feature_blocked_content" = "Engellenen içeriğe erişin";
+"_feature_blocked_content" = "Engellenmiş içeriğe erişin";
 
 /* (No Comment) */
 "_feature_bt" = "BitTorrent/dosya paylaşımı desteği";
@@ -1025,7 +1025,7 @@
 "_news_title" = "Haberler";
 
 /* iOS onboarding next item button */
-"_next" = "Sonraki";
+"_next" = "İleri";
 
 /* MacOS app tour: next tip button */
 "_next_tip" = "Sonraki ipucu";
@@ -1148,7 +1148,7 @@
 "_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini yaptıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrimiçi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
+"_plus" = "PLUS";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus sunucuları\nSecure Core\nTor sunucuları";
@@ -1382,7 +1382,7 @@
 "_report_send" = "Raporu gönder";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "Rapor gönderdiğiniz için teşekkürler";
+"_report_success" = "Raporunuz için teşekkürler";
 
 /* iOS: human verification option select button */
 "_request_invitation" = "El ile etkinleştirme isteği";
@@ -1445,7 +1445,7 @@
 "_select_phone_country_code" = "Ülke kodunu seçin";
 
 /* Button in plan selection */
-"_select_plan" = "Tarifeyi seçin";
+"_select_plan" = "Tarife seçin";
 
 /* iOS: new profile screen */
 "_select_profile_color" = "Profil rengini seçin";
@@ -1511,7 +1511,7 @@
 "_show_protonvpn" = "ProtonVPN'i göster";
 
 /* iOS: button in login and onboarding screens */
-"_sign_up" = "Hesap aç";
+"_sign_up" = "Hesap açın";
 
 /* MacOS welcome screen: skip button */
 "_skip" = "Atla";
@@ -1565,13 +1565,13 @@
 "_submit_verification_code" = "Gönder";
 
 /* (No Comment) */
-"_subscription_button" = "Planı 1 yıl uzat\n%@.";
+"_subscription_button" = "Tarifeyi 1 yıl uzat\n%@.";
 
 /* (No Comment) */
 "_subscription_description" = "Geçerli tarifenizi otomatik olarak uzatmak için daha fazla kredi satın alabilirsiniz. Bu krediler, geçerli abonelik döneminizin sonunda tarifenizi sürdürmek için kullanılır.";
 
 /* (No Comment) */
-"_subscription_expired_description" = "Abonelik tarifeniz düşürüldü.";
+"_subscription_expired_description" = "Aboneliğiniz düşürüldü.";
 
 /* (No Comment) */
 "_subscription_expired_reconnection_description" = "Abonelik tarifeniz düşürüldü. Bu nedenle kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
@@ -1730,10 +1730,10 @@
 "_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "Free";
+"_tier_free" = "FREE";
 
 /* (No Comment) */
-"_tier_plus" = "Plus";
+"_tier_plus" = "PLUS";
 
 /* (No Comment) */
 "_tier_visionary" = "Visionary";
@@ -1909,7 +1909,7 @@
 "_unsecure_wifi" = "Güvenli olmayan Wi-Fi bağlantısı algılandı";
 
 /* (No Comment) */
-"_unsecure_wifi_learn_more" = "Ayrıntılı bilgi alın";
+"_unsecure_wifi_learn_more" = "Ayrıntlı bilgi alın";
 
 /* (No Comment) */
 "_unsecure_wifi_title" = "Güvenli olmayan Wi-Fi algılandı";
@@ -1999,7 +1999,7 @@
 "_version_current" = "Geçerli sürüm:";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "üzerinden";
+"_via" = "şu ülkeden";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "%@ üzerinden";

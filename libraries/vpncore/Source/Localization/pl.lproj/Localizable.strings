@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Nazwa użytkownika, adres e-mail";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Przycisk \"Szybkie połączenie\" używa domyślnego profilu.\n";
+"_default_profile_tooltip" = "Przycisk \"Szybkie połączenie\" używa domyślnego profilu.";
 
 /* Common word */
 "_delete" = "Usuń";

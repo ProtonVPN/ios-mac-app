@@ -584,19 +584,19 @@
 "_feature_server_count" = "Verbinden met servers in";
 
 /* (No Comment) */
-"_feature_smart_routing_description" = "Met deze technologie kan ProtonVPN hogere snelheid en beveiliging bieden in landen waar de  toegang tot VPNs beperkt is.";
+"_feature_smart_routing_description" = "Met deze technologie kan ProtonVPN hogere snelheid en beveiliging bieden in moeilijkheids-tot-dienstlanden.";
 
 /* iOS plan feature */
 "_feature_speed" = "Snelheid";
 
 /* (No Comment) */
-"_feature_streaming_description" = "PLUS-servers ondersteunen mediastreaming (Netflix, Disney+, enz.) wereldwijd.";
+"_feature_streaming_description" = "PLUS servers ondersteunen streaming (Netflix, Disney+, enz.) van overal in de wereld.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Stuur uw internetverkeer over het Tor-netwerk. Langzamer, maar meer privé.";
+"_feature_tor_description" = "Routeer uw internetverkeer via het Tor-netwerk. Langer, maar meer privé.";
 
 /* (No Comment) */
 "_features_title" = "Mogelijkheden";

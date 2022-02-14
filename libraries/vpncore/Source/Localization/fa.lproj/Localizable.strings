@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "نام کاربری، آدرس ایمیل";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "دکمه‌ی «اتصال سریع» از پروفایل پیشفرض استفاده می‌کند.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 
 /* Common word */
 "_delete" = "حذف";
@@ -356,13 +356,13 @@
 "_error_apply_payment_failed_on_upgrade_message" = "شما با موفقیت پرداخته‌اید ولی خرید شما پردازش نشد. برای ارسال دوباره اطلاعات پرداخت شما، مجدد را بزنید. از شما تنها یکبار کسر خواهد شد. اگر مشکل پافشاری کرد، لطفاً با پشتیبانی مشتری تماس بگیرید.";
 
 /* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "پرداخت ناموفق بود";
+"_error_apply_payment_failed_on_upgrade_title" = "پرداخت ناموفق";
 
 /* (No Comment) */
 "_error_apply_payment_failed_retry" = "تلاش مجدد";
 
 /* (No Comment) */
-"_error_apply_payment_failed_title" = "پرداخت ناموفق بود";
+"_error_apply_payment_failed_title" = "پرداخت ناموفق";
 
 /* (No Comment) */
 "_error_credit_applied" = "برای تکمیل خرید خود با support@protonvpn.com تماس بگیرید.";
@@ -932,7 +932,7 @@
 "_menu_window" = "پنجره";
 
 /* Label in several trial screens on MacOS */
-"_money_back_guarantee" = "۳۰ روز ضمانت بازگشت پول";
+"_money_back_guarantee" = "با ضمانت برگشت 30 روزه پول";
 
 /* Display more information */
 "_more_info" = "اطلاعات بیشتر";

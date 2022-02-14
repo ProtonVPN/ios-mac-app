@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Benutzername und E‐Mail‐Adresse";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Die Schaltfläche „Schnellverbinden“ nutzt das Standardprofil.\n";
+"_default_profile_tooltip" = "Die Schaltfläche „Schnellverbindung“ nutzt das Standardprofil.";
 
 /* Common word */
 "_delete" = "Löschen";
@@ -275,7 +275,7 @@
 "_delinquent_user_title" = "Unbezahlte Rechnung";
 
 /* Profile create/change form */
-"_different_server_each_time" = "Jedes Mal ein anderer Server";
+"_different_server_each_time" = "Jedes Mal anderer Server";
 
 /* Button in some alerts */
 "_disable" = "Deaktivieren";
@@ -1532,7 +1532,7 @@
 "_smart_routing_title" = "Intelligentes Routing";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Intelligent";
+"_smart_title" = "Automatisch";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ Geschwindigkeit";
@@ -2065,7 +2065,7 @@
 "_welcome_gift_description" = "Als Willkommensgeschenk erhalten Sie einen 7-tägigen Zugang zu einem %@-Abonnement, welches Folgendes bietet:";
 
 /* Shown on the Welcome screen as the screen headline */
-"_welcome_headline" = "Schütze dich online";
+"_welcome_headline" = "Schützen Sie sich online";
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WILLKOMMEN AN BOARD!";

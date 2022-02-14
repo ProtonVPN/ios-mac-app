@@ -383,7 +383,7 @@
 "_error_field_email_wrong_format" = "La dirección de correo electrónico no es válida";
 
 /* (No Comment) */
-"_error_field_passwords_dont_match" = "Las contraseñas no coinciden";
+"_error_field_passwords_dont_match" = "Las contraseñas no coinciden entre sí";
 
 /* Form validation error */
 "_error_field_required" = "Este campo es obligatorio";
@@ -602,10 +602,10 @@
 "_features_title" = "Características";
 
 /* (No Comment) */
-"_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";
+"_force_upgrade_message" = "La versión de la aplicación ProtonVPN que está usando ya no es compatible. Actualice a la última versión.";
 
 /* (No Comment) */
-"_force_upgrade_title" = "Application upgrade needed";
+"_force_upgrade_title" = "Actualización de la aplicación necesaria";
 
 /* iOS: button in login screen */
 "_forgot_password" = "¿Olvidó su contraseña?";
@@ -1607,7 +1607,7 @@
 "_subuser_alert_assign_connections_button" = "Asignar conexiones VPN";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "Para comenzar su viaje en ProtonVPN, asigne conexiones VPN a su cuenta o cualquier otra subcuenta.";
+"_subuser_alert_description1" = "Para empezar su viaje en ProtonVPN, asigne conexiones VPN a su cuenta o cualquier otra subcuenta.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Este paso tomará solo unos minutos. Después será capaz de iniciar sesión y proteger todos sus dispositivos.";
@@ -2092,14 +2092,14 @@
 "_wireguard_logs" = "Registros de WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "El servidor de este perfil aún no soporta WireGuard. Para conectarlo, pruebe con otro protocolo o un servidor compatible con WireGuard.";
+"_wireguard_profile_warning_text" = "El servidor de este perfil aún no es compatible con WireGuard. Para conectarse, pruebe con otro protocolo o un servidor que admita WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "No está conectado";
 
 /* (No Comment) */
-"login_fetch_vpn_data" = "Configuring your VPN access";
+"login_fetch_vpn_data" = "Configurando su acceso VPN";
 
 /* (No Comment) */
-"login_summary_button" = "Start using ProtonVPN";
+"login_summary_button" = "Comience a usar ProtonVPN";
 
