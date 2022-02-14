@@ -14,4 +14,4 @@ xcassets:
   inputs: Sources/BugReport/Resources/Media.xcassets
   outputs:
     templateName: swift5
-    output: Sources/BugReport/Resources/Assets.swift
+    output: Sources/BugReport/Assets/Assets.swift
