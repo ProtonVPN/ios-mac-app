@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>modals_establish_subtitle</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>L'abbonamento GRATUITO offre %#@num_servers@ in %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d paesi</string>
+			<key>other</key>
+			<string>%d paesi</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d server</string>
+			<key>other</key>
+			<string>%d server</string>
+		</dict>
+	</dict>
+	<key>modals_purchased_subtitle</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ora hai accesso a %d server sicuri e altre funzionalità premium.</string>
+			<key>other</key>
+			<string>Ora hai accesso a %d server sicuri e altre funzionalità premium.</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Collega %d dispositivi contemporaneamente</string>
+			<key>other</key>
+			<string>Collega %d dispositivi contemporaneamente</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Accedi a tutti %#@num_servers@ in %#@num_countries@ con Plus</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d paesi</string>
+			<key>other</key>
+			<string>%d paesi</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d server</string>
+			<key>other</key>
+			<string>%d server</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

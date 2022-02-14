@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Nome de usuário ou endereço de e-mail";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "O botão \"Conexão rápida\" utiliza o perfil padrão.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 
 /* Common word */
 "_delete" = "Excluir";
@@ -572,7 +572,7 @@
 "_feature_connections" = "Conexões VPN simultâneas";
 
 /* (No Comment) */
-"_feature_p2p_description" = "Esses servidores dão o melhor desempenho para BitTorrent e compartilhamento de arquivos.";
+"_feature_p2p_description" = "Esses servidores oferecem o melhor desempenho para BitTorrent e compartilhamento de arquivos.";
 
 /* iOS plan feature */
 "_feature_secure_core" = "Seguro Core";
@@ -584,19 +584,19 @@
 "_feature_server_count" = "Conecte-se aos servidores em";
 
 /* (No Comment) */
-"_feature_smart_routing_description" = "Esta tecnologia permite que o ProtonVPN ofereça maior velocidade e segurança em países com acesso restrito.";
+"_feature_smart_routing_description" = "Essa tecnologia permite que o ProtonVPN forneça maior velocidade e segurança em países de difícil atendimento.";
 
 /* iOS plan feature */
 "_feature_speed" = "Velocidade";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Servidores PLUS suportam streaming (Netflix, Disney+, etc) de qualquer lugar do mundo.";
+"_feature_streaming_description" = "Os servidores PLUS suportam streaming (Netflix, Disney+, etc) de qualquer lugar do mundo.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor com VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Roteie seus tráfego de internet através da rede Tor. Mais lento, porém mais privado.";
+"_feature_tor_description" = "Roteie seu tráfego de Internet pela rede Tor. Mais lento, mas mais privado.";
 
 /* (No Comment) */
 "_features_title" = "Recursos";
@@ -1529,7 +1529,7 @@
 "_smart_protocol_title" = "Protocolo inteligente";
 
 /* (No Comment) */
-"_smart_routing_title" = "Smart Routing";
+"_smart_routing_title" = "Roteamento Inteligente";
 
 /* Shortened title for Smart Protocol on Settings configuration */
 "_smart_title" = "Inteligente";
@@ -1559,7 +1559,7 @@
 "_streaming_servers_note" = "Nota: Desative o Serviço de Localização e limpe o cache dos aplicativos de transmissão para garantir que o novo conteúdo apareça.";
 
 /* (No Comment) */
-"_streaming_title" = "Streaming";
+"_streaming_title" = "Transmissão";
 
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Enviar";
@@ -2056,7 +2056,7 @@
 "_warning_vpn_session_is_active" = "A sessão do ProtonVPN de outro usuário está ativa neste dispositivo. Deseja continuar com o processo de início de sessão, finalizando a sessão atual. Deseja continuar?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.";
+"_welcome_body" = "VPN suiça de alta velocidade que protege sua privacidade criptografando sua conexão à internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Obrigado por usar o ProtonVPN. Confira os \nrecursos principais do aplicativo.";
@@ -2092,7 +2092,7 @@
 "_wireguard_logs" = "Logs do WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não suporta WireGuard. Para conectar-se, tente outro protocolo ou um servidor que suporte WireGuard.";
+"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não oferece suporte ao WireGuard. Para se conectar, tente outro protocolo ou um servidor que o suporte.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Você não está conectado";

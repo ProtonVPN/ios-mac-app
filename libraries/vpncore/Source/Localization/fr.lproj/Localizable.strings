@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Nom d'utilisateur, adresse électronique";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Le bouton \"Connexion rapide\" utilise le profil par défaut.\n";
+"_default_profile_tooltip" = "Le bouton « Connexion rapide » utilise le profil par défaut.\n";
 
 /* Common word */
 "_delete" = "Supprimer";
@@ -299,7 +299,7 @@
 "_dns_leak_protection" = "Protection contre les fuites DNS";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Permet d’empêcher les fuites d’information lors de requêtes DNS à des tiers. Toujours activé.";
+"_dns_leak_protection_tooltip" = "Permet d’empêcher les fuites d’information lors de requêtes DNS à des tiers. Toujours Activé.";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Souhaitez-vous activer l'abonnement acheté pour ";
@@ -662,7 +662,7 @@
 "_hide" = "MASQUER";
 
 /* Value of speed in _speed */
-"_high" = "élevée";
+"_high" = "Élevée";
 
 /* Value of speed in _speed */
 "_highest" = "très élevée";
@@ -725,7 +725,7 @@
 "_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Désactiver kill switch";
+"_kill_switch_disable" = "Désactiver Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Fermez ces applications pour résoudre le problème.\nPour continuer à naviguer sans kill switch, cliquez sur Continuer.";
@@ -842,7 +842,7 @@
 "_log_out_warning" = "La déconnexion mettra fin à votre session VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Se déconnecter de l'application mettra fin à la connexion VPN active. Souhaitez-vous continuer ?";
+"_log_out_warning_long" = "Se déconnecter de l'application mettra fin à la connexion VPN active. Voulez-vous continuer ?";
 
 /* MacOS: Login button */
 "_login" = "Connexion";
@@ -899,7 +899,7 @@
 "_maybe_later" = "Peut-être plus tard";
 
 /* Value of speed in _speed */
-"_medium" = "moyenne";
+"_medium" = "Moyenne";
 
 /* Main mac app menu item */
 "_menu_about" = "À propos de ProtonVPN";
@@ -1106,7 +1106,7 @@
 "_password" = "Mot de passe";
 
 /* Sign-up form */
-"_password_confirm" = "Confirmez le mot de passe";
+"_password_confirm" = "Confirmer le mot de passe";
 
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/an";
@@ -1115,13 +1115,13 @@
 "_performance_load_description" = "Les serveurs avec une charge élevée sont plus lents que les serveurs avec une faible charge.";
 
 /* (No Comment) */
-"_performance_load_high" = "élevée";
+"_performance_load_high" = "Élevée";
 
 /* (No Comment) */
-"_performance_load_low" = "faible";
+"_performance_load_low" = "Faible";
 
 /* (No Comment) */
-"_performance_load_medium" = "moyenne";
+"_performance_load_medium" = "Moyenne";
 
 /* (No Comment) */
 "_performance_title" = "Performance";
@@ -1730,7 +1730,7 @@
 "_tier_basic" = "BASIC";
 
 /* (No Comment) */
-"_tier_free" = "FREE";
+"_tier_free" = "GRATUIT";
 
 /* (No Comment) */
 "_tier_plus" = "PLUS";
@@ -1819,7 +1819,7 @@
 "_troubleshoot_item_antivirus_description" = "Désactivez ou supprimez temporairement votre logiciel antivirus.";
 
 /* (No Comment) */
-"_troubleshoot_item_antivirus_title" = "Interférences avec l’antivirus";
+"_troubleshoot_item_antivirus_title" = "Interférence avec l’antivirus";
 
 /* (No Comment) */
 "_troubleshoot_item_gov_description" = "Votre pays bloque peut-être l'accès à Proton. Essayez d'utiliser Tor pour accéder à Proton.";
@@ -1843,7 +1843,7 @@
 "_troubleshoot_item_nointernet_description" = "Veuillez vérifier que votre connexion Internet fonctionne.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Aucune connexion Internet";
+"_troubleshoot_item_nointernet_title" = "Aucune connexion internet";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Contactez-nous directement via notre formulaire d'assistance, par e-mail (%@) ou via Twitter.";
@@ -1873,7 +1873,7 @@
 "_troubleshoot_item_proxy_description" = "Désactivez tout proxy ou pare-feu, ou contactez votre administrateur réseau.";
 
 /* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Interférences avec le proxy/pare-feu";
+"_troubleshoot_item_proxy_title" = "Interférence avec le proxy/pare-feu";
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Dépannage";
@@ -1939,7 +1939,7 @@
 "_upgrade_for_secure_core" = "pour utiliser Secure Core";
 
 /* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Améliorer mon abonnement";
+"_upgrade_my_plan" = "S’abonner";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
 "_upgrade_now" = "Passer à l'offre suppérieure maintenant";

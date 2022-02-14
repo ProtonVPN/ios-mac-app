@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>onboarding_establish_subtitle</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Gratis abonnement biedt %#@num_servers@ servers aan in %#@num_countries@ landen</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d landen</string>
+			<key>other</key>
+			<string>%d landen</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d server</string>
+			<key>other</key>
+			<string>%d servers</string>
+		</dict>
+	</dict>
+	<key>onboarding_purchased_subtitle</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>U heeft nu toegang tot %#@NUM_SEC_SERVERS@ en andere premium functies.</string>
+		<key>NUM_SEC_SERVERS</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d beveiligde server</string>
+			<key>other</key>
+			<string>%d beveiligde servers</string>
+		</dict>
+	</dict>
+	<key>onboarding_upsell_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Connect %#@NUM_DEVICES@ simultaneously</string>
+		<key>NUM_DEVICES</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d apparaat</string>
+			<key>other</key>
+			<string>%d apparaten</string>
+		</dict>
+	</dict>
+	<key>onboarding_upsell_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus</string>
+		<key>NUM_COUNTRIES</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d land</string>
+			<key>other</key>
+			<string>%d landen</string>
+		</dict>
+		<key>NUM_SERVERS</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d server</string>
+			<key>other</key>
+			<string>%d servers</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

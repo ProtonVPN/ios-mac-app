@@ -1,23 +1,23 @@
 /* (No Comment) */
-"_5_connections" = "5 connessioni";
+"_5_connections" = "5 Connessioni";
 
 /* (No Comment) */
-"_5_connections_description" = "Connetti fino a 5 dispositivi\nallo stesso tempo";
+"_5_connections_description" = "Connetti fino a 5 dispositivi\nin contemporanea";
 
 /* MacOS: About window title */
 "_about" = "Info";
 
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
-"_account" = "Account";
+"_account" = "Profilo";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_plan" = "Piano dell'account";
+"_account_plan" = "Piano del profilo";
 
 /* MacOS: Settings -> Account: name of field. */
-"_account_type" = "Tipo di account";
+"_account_type" = "Tipo di profilo";
 
 /* MacOS: About window */
-"_acknowledgements" = "Ringraziamenti";
+"_acknowledgements" = "Riconoscimenti";
 
 /* MacOS Profiles Overview: Table header for buttons column */
 "_action" = "Azione";
@@ -26,16 +26,16 @@
 "_action_requires_reconnect" = "La tua connessione dev'essere riavviata per applicare questa modifica";
 
 /* iOS widget help screen: title */
-"_activate_widget" = "Attiva widget";
+"_activate_widget" = "Attiva Widget";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Dalla schermata iniziale, scorri verso sinistra per accedere ai widget.";
+"_activate_widget_step_1" = "Dalla tua schermata home, scorri alla schermata più a sinistra per accedere ai tuoi widget.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Scorri verso il basso e tocca il pulsante di modifica.";
+"_activate_widget_step_2" = "Scorri fino in fondo e tocca il pulsante di modifica.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Aggiungi il widget ProtonVPN all'elenco dei widget attivi.";
+"_activate_widget_step_3" = "Aggiungi il widget di ProtonVPN all'elenco dei widget attivi.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Adblocker (NetShield)";
@@ -44,61 +44,61 @@
 "_advanced_features" = "+ Funzionalità avanzate";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Impossibile ottenere informazioni vpn";
+"_ae_vpn_info_not_received" = "Impossibile ottenere le informazioni sulla vpn";
 
 /* API error */
-"_ae_wrong_login_credentials" = "Nome utente o password sbagliati";
+"_ae_wrong_login_credentials" = "Nome utente o password errati";
 
 /* Account plan description */
-"_all_countries" = "50+ paesi";
+"_all_countries" = "Oltre 50 paesi";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Tutti i server in questo paese sono in manutenzione. Per favore connettiti ad un altro paese.";
+"_all_servers_in_country_under_maintenance" = "Tutti i server in questo paese sono in manutenzione. Sei pregato di connetterti a un altro paese.";
 
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Server del profilo in manutenzione";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Tutti i server sono in manutenzione. Di solito questo significa che vi sono difficoltà tecniche da parte di ProtonVPN, o la tua rete è limitata.";
+"_all_servers_under_maintenance" = "Tutti i server sono in manutenzione. Solitamente ciò significa che vi sono difficoltà tecniche dal lato di ProtonVPN o che la tua rete è limitata.";
 
 /* (No Comment) */
 "_allow" = "Consenti";
 
 /* (No Comment) */
-"_allow_lan_description" = "Per consentire l'accesso LAN, Kill Switch dev'essere disattivato.\n\nContinuare?";
+"_allow_lan_description" = "Per consentire l'accesso LAN, il Kill Switch dev'esser disattivato.\n\nContinuare?";
 
 /* (No Comment) */
-"_allow_lan_info" = "Permette di bypassare la VPN e connettersi ai dispositivi della rete locale, come la stampante.";
+"_allow_lan_info" = "Consente di bypassare la VPN e connettersi ai dispositivi sulla tua rete locale, come la tua stampante.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Nota che la tua connessione dev'essere riavviata per applicare questa modifica";
+"_allow_lan_note" = "Nota che la tua connessione dev'esser riavviata per applicare questa modifica";
 
 /* (No Comment) */
-"_allow_lan_title" = "Consenti connessioni LAN";
+"_allow_lan_title" = "Consenti le connessioni LAN";
 
 /* iOS: button for switching from sign-up to sign-in screen */
-"_already_have_account" = "Ho già un account";
+"_already_have_account" = "Ho già un profilo";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN sempre attiva";
+"_always_on_vpn" = "VPN Sempre Attiva";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "La VPN sempre attiva ripristina una connessione VPN sicura in modo rapido e automatico. Per la tua sicurezza, questa funzionalità è sempre attiva.";
+"_always_on_vpn_tooltip_ios" = "La VPN Sempre Attiva ristabilisce una connessione VPN sicura rapidamente e automaticamente. Per la tua sicurezza, questa funzionalità è sempre attiva.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "VPN Sempre Attiva ti riconnetterà automaticamente";
+"_always_on_will_reconnect" = "La VPN Sempre Attiva ti riconnetterà automaticamente";
 
 /* iOS Settings: applications logs row */
-"_application_logs" = "Log applicazione";
+"_application_logs" = "Registri dell'applicazione";
 
 /* (No Comment) */
-"_applying_settings_" = "Applicazione impostazioni";
+"_applying_settings_" = "Applicando le impostazioni";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_auto_assigned" = "Assegnato automaticamente";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Connessione automatica";
+"_auto_connect" = "Connessione Automatica";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "All'avvio dell'app, sei connesso al profilo selezionato";
@@ -107,7 +107,7 @@
 "_basic_servers" = "Server di BASE";
 
 /* Battery usages screen description */
-"_battery_description" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'utilizzo della batteria di altre app a ProtonVPN.";
+"_battery_description" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'uso della batteria di altre app a ProtonVPN.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Vuoi saperne di più?";
@@ -239,7 +239,7 @@
 "_data_disclaimer_user_details" = "Nome utente, indirizzo email";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Il pulsante \"Connessione Rapida\" utilizza il profilo predefinito.\n";
+"_default_profile_tooltip" = "Il pulsante \"Connessione Rapida\" usa il profilo predefinito.\n";
 
 /* Common word */
 "_delete" = "Elimina";
@@ -302,7 +302,7 @@
 "_dns_leak_protection_tooltip" = "Impedire la perdita di dettagli delle query DNS a terzi. Sempre attivo.";
 
 /* Alert message during In App Purchase */
-"_do_you_want_to_activate_subscription_for" = "Vuoi attivare l'abbonamento acquistato per ";
+"_do_you_want_to_activate_subscription_for" = "Desideri attivare l'abbonamento acquistato per ";
 
 /* Common word */
 "_done" = "Completato";
@@ -356,7 +356,7 @@
 "_error_apply_payment_failed_on_upgrade_message" = "Hai pagato correttamente ma il tuo acquisto non è stato elaborato. Per inviare nuovamente i dati di pagamento, fai clic su Riprova. Ti verrà addebitato solo una volta. Se il problema persiste, contattare l'assistenza clienti.";
 
 /* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Pagamento fallito";
+"_error_apply_payment_failed_on_upgrade_title" = "Pagamento non riuscito";
 
 /* (No Comment) */
 "_error_apply_payment_failed_retry" = "Riprova";
