@@ -69,8 +69,8 @@ class WindowController: NSWindowController {
             if event.window != self.window {
                 return event
             }
-            
-            if event.modifierFlags.contains(.command) && !event.modifierFlags.contains(.shift) && event.keyCode == 13 {
+
+            if event.modifierFlags.contains(.command) && !event.modifierFlags.contains(.shift) && event.characters == "w" {
                 if let delegate = self.delegate {
                     delegate.windowCloseRequested(self)
                 } else {
