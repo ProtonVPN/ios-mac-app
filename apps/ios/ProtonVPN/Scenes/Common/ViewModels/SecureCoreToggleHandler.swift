@@ -25,6 +25,8 @@ import vpncore
 
 protocol SecureCoreToggleHandler: AnyObject {
     
+    var upsell: Upsell { get }
+    
     var alertService: AlertService { get }
     var vpnGateway: VpnGatewayProtocol? { get }
     var activeView: ServerType { get }
@@ -67,9 +69,8 @@ extension SecureCoreToggleHandler {
             userTier = CoreAppConstants.VpnTiers.plus // not logged in
         }
         if activeView == .standard && userTier < CoreAppConstants.VpnTiers.plus {
-            alertService.push(alert: UpgradeRequiredAlert(tier: CoreAppConstants.VpnTiers.plus, serverType: .secureCore, forSpecificCountry: false, confirmHandler: {
-                completionWrapper(false)
-            }))
+            completionWrapper(false)
+            upsell.presentSecureCoreUpsell()
         } else if vpnGateway.connection != .connected {
             completionWrapper(true)
         } else {

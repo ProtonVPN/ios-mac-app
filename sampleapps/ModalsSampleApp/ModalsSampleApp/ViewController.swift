@@ -27,10 +27,6 @@ class ViewController: UITableViewController {
 
     let modalsFactory = ModalsFactory(colors: Colors())
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         upsells.count
     }

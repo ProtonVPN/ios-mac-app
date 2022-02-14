@@ -35,6 +35,7 @@ class ProfilesViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let planService: PlanService
+    private let upsell: Upsell
     
     private let sectionTitles = [LocalizedString.recommended, LocalizedString.myProfiles]
         
@@ -50,7 +51,7 @@ class ProfilesViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
+    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, planService: PlanService, profileManager: ProfileManager, upsell: Upsell) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
@@ -59,6 +60,7 @@ class ProfilesViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.planService = planService
+        self.upsell = upsell
         
         if vpnGateway != nil {
             self.profileManager = profileManager
@@ -108,7 +110,7 @@ class ProfilesViewModel {
     
     func cellModel(for index: Int) -> ProfileItemViewModel? {
         if let profile = profileManager?.customProfiles[index] {
-            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, connectionStatusService: connectionStatusService, planService: planService)
+            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, connectionStatusService: connectionStatusService, planService: planService, upsell: upsell)
         }
         return nil
     }

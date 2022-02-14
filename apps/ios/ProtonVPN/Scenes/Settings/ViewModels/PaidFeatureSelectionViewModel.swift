@@ -22,11 +22,12 @@ import vpncore
 
 final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
 
-    typealias Factory = VpnKeychainFactory & PlanServiceFactory & AppSessionManagerFactory
+    typealias Factory = VpnKeychainFactory & PlanServiceFactory & AppSessionManagerFactory & UpsellFactory
     private var factory: Factory
 
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var upsell: Upsell = factory.makeUpsell()
 
     var selectedFeature: T {
         didSet {
@@ -65,7 +66,11 @@ final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
         let cells: [TableViewCellModel] = allFeatures.map { feature in
             if feature.isUserTierTooLow(userTier) {
                 return .attributedKeyValue(key: feature.name.attributed(withColor: .normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-                    self?.planService.presentPlanSelection()
+                    if feature is NetShieldType {
+                        self?.upsell.presentNetShieldUpsell()
+                    } else {
+                        self?.planService.presentPlanSelection()
+                    }
                 })
             }
             return .checkmarkStandard(title: feature.name, checked: feature == selectedFeature, handler: { [weak self] in

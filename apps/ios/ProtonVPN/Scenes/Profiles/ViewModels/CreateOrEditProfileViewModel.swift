@@ -42,6 +42,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private let vpnKeychain: VpnKeychainProtocol
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
+    private let upsell: Upsell
     
     private var state: ModelState = .standard {
         didSet {
@@ -76,7 +77,7 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
     
-    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
+    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol, upsell: Upsell) {
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
@@ -87,6 +88,7 @@ class CreateOrEditProfileViewModel: NSObject {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
+        self.upsell = upsell
         
         self.vpnProtocol = propertiesManager.vpnProtocol
         
@@ -298,7 +300,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case ModelState.standard = state {
             guard userTier >= CoreAppConstants.VpnTiers.plus else {
-                alertService.push(alert: UpgradeRequiredAlert(tier: CoreAppConstants.VpnTiers.plus, serverType: .secureCore, forSpecificCountry: false, confirmHandler: { completion(false) }))
+                upsell.presentSecureCoreUpsell()
                 return
             }
             
