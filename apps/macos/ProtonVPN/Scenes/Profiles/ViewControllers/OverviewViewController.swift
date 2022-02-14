@@ -92,6 +92,8 @@ class OverviewViewController: NSViewController {
         createNewProfileButton.title = LocalizedString.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
+        
+        createNewProfileButton.setAccessibilityIdentifier("CreateProfile")
     }
     
     private func contentChanged() {

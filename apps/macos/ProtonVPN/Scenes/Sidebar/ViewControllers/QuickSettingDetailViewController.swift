@@ -71,6 +71,11 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         super.viewDidLoad()
         presenter.viewDidLoad()
         
+        dropdownTitle.setAccessibilityIdentifier("QSTitle")
+        dropdownDescription.setAccessibilityIdentifier("QSDescription")
+        dropdownUgradeButton.setAccessibilityIdentifier("UpgradeButton")
+        dropdownLearnMore.setAccessibilityIdentifier("LearnMoreButton")
+        
         view.wantsLayer = true
         
         let shadow = NSShadow()

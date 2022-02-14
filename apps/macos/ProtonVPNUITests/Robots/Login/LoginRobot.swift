@@ -19,9 +19,9 @@
 import Foundation
 import XCTest
 
-fileprivate let fieldUsername = "Username"
-fileprivate let fieldPassword = "Password"
-fileprivate let loginButton = "Login"
+fileprivate let fieldUsername = "UsernameTextField"
+fileprivate let fieldPassword = "PasswordTextField"
+fileprivate let loginButton = "LoginButton"
 fileprivate let modalTitle = "Thanks for upgrading to PROFESSIONAL/VISIONARY"
 fileprivate let modalSubtitle = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account."
 fileprivate let modalText = "This step will take just a few minutes. After that you will be able to log in and protect all your devices."

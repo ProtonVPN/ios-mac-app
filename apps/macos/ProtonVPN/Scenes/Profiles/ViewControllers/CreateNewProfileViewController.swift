@@ -122,6 +122,8 @@ final class CreateNewProfileViewController: NSViewController {
         nameTextField.focusDelegate = self
         
         nameTextFieldHorizontalLine.fillColor = .protonLightGrey()
+        
+        nameTextField.setAccessibilityIdentifier("NameTextField")
     }
 
     private func setupProtocolSection() {
@@ -165,6 +167,8 @@ final class CreateNewProfileViewController: NSViewController {
         countryList.target = self
         countryList.action = #selector(countrySelected)
         
+        countryList.setAccessibilityIdentifier("CountryList")
+
         countryListHorizontalLine.fillColor = .protonLightGrey()
     }
     
@@ -176,6 +180,8 @@ final class CreateNewProfileViewController: NSViewController {
         serverList.target = self
         serverList.action = #selector(serverSelected)
         
+        serverList.setAccessibilityIdentifier("ServerList")
+
         serverListHorizontalLine.fillColor = .protonLightGrey()
     }
         
@@ -184,6 +190,8 @@ final class CreateNewProfileViewController: NSViewController {
         
         warningLabelHorizontalLine.fillColor = .protonRed()
         warningLabelHorizontalLine.isHidden = true
+        
+        warningLabel.setAccessibilityIdentifier("ErrorMessage")
     }
     
     private func setupFooterView() {
@@ -194,6 +202,9 @@ final class CreateNewProfileViewController: NSViewController {
         saveButton.title = LocalizedString.save
         saveButton.target = self
         saveButton.action = #selector(saveButtonAction)
+        
+        cancelButton.setAccessibilityIdentifier("CancelButton")
+        saveButton.setAccessibilityIdentifier("SaveButton")
         
         footerView.wantsLayer = true
         footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
