@@ -241,6 +241,7 @@ class ConnectingOverlayViewModel {
     
     private var retryWithOpenVpnButton: ButtonInfo {
         return (LocalizedString.timeoutKsIkeSwitchProtocol, .colorGreen, {
+            log.info("Reconnecting with OpenVPN as suggested to user", category: .connectionConnect)
             self.reconnectWithOvpn()
         })
     }
@@ -312,14 +313,7 @@ class ConnectingOverlayViewModel {
             self?.retryConnection(withProtocol: newProtocol)
         }
         
-        vpnProtocolChangeManager.change(toProtocol: transportProtocol) { result in
-            switch result {
-            case .success:
-                log.info("\(#function): reconnect succeeded", category: .connectionConnect)
-            case let .failure(error):
-                log.error("\(#function): reconnect failed (\(error))", category: .connectionConnect)
-            }
-        }
+        vpnProtocolChangeManager.change(toProtocol: transportProtocol) { _ in }
     }
     
     // MARK: - Notification handlers

@@ -245,7 +245,11 @@ class CreateNewProfileViewModel {
         return title.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
     }
 
-    func vpnProtocol(for vpnProtocol: VpnProtocol) -> NSAttributedString {
+    func vpnProtocolIndex(for vpnProtocol: VpnProtocol) -> Int? {
+        availableVpnProtocols.firstIndex(of: vpnProtocol)
+    }
+
+    func vpnProtocolString(for vpnProtocol: VpnProtocol) -> NSAttributedString {
         let title: String
         switch vpnProtocol {
         case .ike:
@@ -295,7 +299,13 @@ class CreateNewProfileViewModel {
         return true
     }
 
-    func checkSysexInstallation(vpnProtocolIndex: Int) {
+    func requiresSysexTour(for vpnProtocolIndex: Int) -> Bool {
+        vpnProtocolIndex < availableVpnProtocols.count &&
+        availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension &&
+        !propertiesManager.sysexSuccessWasShown
+    }
+
+    func checkSysexInstallation(vpnProtocolIndex: Int, completion: @escaping (Result<(), Error>) -> Void) {
         let vpnProtocol = availableVpnProtocols[vpnProtocolIndex]
         guard vpnProtocol.requiresSystemExtension else {
             return
@@ -310,11 +320,13 @@ class CreateNewProfileViewModel {
                 log.info("System extension installation succeeded while creating profile",
                          category: .sysex,
                          metadata: ["vpnProtocol": "\(vpnProtocol.localizedString)"])
+                completion(.success)
             case .failure(let error):
                 log.info("System extension installation failed while creating profile",
                          category: .sysex,
                          metadata: ["vpnProtocol": "\(vpnProtocol.localizedString)",
                                     "error": "\(String(describing: error))"])
+                completion(.failure(error))
             }
         }
     }
