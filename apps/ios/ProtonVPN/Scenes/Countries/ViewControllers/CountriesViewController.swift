@@ -171,7 +171,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if viewModel?.isTierTooLow(for: indexPath.section) ?? true { // Premium countries
-            viewModel?.presentPlanSelection()
+            viewModel?.presentAllCountriesUpsell()
             return
         }
         

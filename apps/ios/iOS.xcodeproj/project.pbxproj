@@ -285,7 +285,7 @@
 		D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12A229D28E400EA839A /* Credentials.swift */; };
-		D5AAA12E229D337300EA839A /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		D5AAA12E229D337300EA839A /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5BCDD2925307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
@@ -307,7 +307,7 @@
 		D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
 		D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
-		D92A295D47C56CEE2650AA70 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		D92A295D47C56CEE2650AA70 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DA0FAF1A5F1E32A1ABAEEA4C /* SubuserAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9637CD83510D2FCE5F039 /* SubuserAlertViewController.swift */; };
 		DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2087AA9678CFB84779ED67E7 /* Environments.storyboard */; };
 		E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
@@ -395,6 +395,9 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
+		E593B96F27BA7DB100AFCA8C /* UpsellConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */; };
+		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -430,7 +433,7 @@
 		E98630A5269889DD00F56B87 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E986305C269835E500F56B87 /* Localizable.strings */; };
 		E98630A6269889E200F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
 		E98630A7269889E200F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
-		E98EE34E2671EDD200B86BA0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */; };
+		E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* WireGuardKit */; };
 		E997998226A6FA870083D61E /* VpnKeys+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997C26A6FA870083D61E /* VpnKeys+init.swift */; };
 		E997998326A6FA870083D61E /* CertificateRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997D26A6FA870083D61E /* CertificateRefreshManager.swift */; };
 		E997998426A6FA870083D61E /* CertificateRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997E26A6FA870083D61E /* CertificateRefreshRequest.swift */; };
@@ -500,7 +503,7 @@
 		F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */; };
 		F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F326E6428C006768A8 /* SignupRobot.swift */; };
 		F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F426E6428C006768A8 /* LoginRobot.swift */; };
-		F3BC534B278598CE009E49B4 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F3BC534A278598CE009E49B4 /* SwiftPackageProductDependency */; };
+		F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = F3BC534A278598CE009E49B4 /* Onboarding */; };
 		F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534C278598E4009E49B4 /* OnboardingService.swift */; };
 		F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
 		F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
@@ -901,6 +904,9 @@
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
 		E297CD5417EBE288B62F3B9A /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.debug.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
+		E593B96B27BA4D3000AFCA8C /* Upsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upsell.swift; sourceTree = "<group>"; };
+		E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellConstants.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellConstants.swift; sourceTree = "<group>"; };
+		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E9200ED62660CC0F00BBAB9C /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WireGuardiOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1046,7 +1052,7 @@
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
-				F3BC534B278598CE009E49B4 /* BuildFile in Frameworks */,
+				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
 			);
@@ -1103,7 +1109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E98EE34E2671EDD200B86BA0 /* BuildFile in Frameworks */,
+				E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
 				F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */,
 			);
@@ -1605,6 +1611,7 @@
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E593B96D27BA7DA100AFCA8C /* Upsell */,
 				F3BC5348278598A5009E49B4 /* LoginAndSignup */,
 				F3F36CE026DFAAA4008AD48B /* Payments */,
 				791DE5E2208DDA3000A29EA5 /* Main.storyboard */,
@@ -1785,6 +1792,16 @@
 				E14C2AA421E4E71200E8578E /* Views */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		E593B96D27BA7DA100AFCA8C /* Upsell */ = {
+			isa = PBXGroup;
+			children = (
+				E593B96B27BA4D3000AFCA8C /* Upsell.swift */,
+				E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */,
+				E593B97027BA7DC100AFCA8C /* UpsellColors.swift */,
+			);
+			path = Upsell;
 			sourceTree = "<group>";
 		};
 		E93FA881FDA6B22F74CCE93F /* Subuser alert */ = {
@@ -2526,7 +2543,7 @@
 			);
 			name = "WireGuardiOS Extension";
 			packageProductDependencies = (
-				E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */,
+				E98EE34D2671EDD200B86BA0 /* WireGuardKit */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -2654,7 +2671,7 @@
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
-				E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */,
+				E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -3142,6 +3159,7 @@
 				D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
 				E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */,
+				E593B96F27BA7DB100AFCA8C /* UpsellConstants.swift in Sources */,
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,
 				F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
@@ -3160,6 +3178,7 @@
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
+				E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */,
 				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */,
@@ -3213,6 +3232,7 @@
 				79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */,
 				E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */,
 				79312B7C2118852D00E79D09 /* DrillInTableViewCell.swift in Sources */,
+				E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */,
 				791DE5E1208DDA3000A29EA5 /* MapViewController.swift in Sources */,
 				E13EDF7121F0C53F00030CE7 /* InstructionStepView.swift in Sources */,
 				D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */,
@@ -3478,10 +3498,10 @@
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
-				D5AAA12E229D337300EA839A /* BuildFile in Sources */,
+				D5AAA12E229D337300EA839A /* (null) in Sources */,
 				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
 				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
-				D92A295D47C56CEE2650AA70 /* BuildFile in Sources */,
+				D92A295D47C56CEE2650AA70 /* (null) in Sources */,
 				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
 				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
 				67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */,
@@ -4673,7 +4693,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */ = {
+		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4684,12 +4704,12 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */ = {
+		E98EE34D2671EDD200B86BA0 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */;
+			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
-		F3BC534A278598CE009E49B4 /* SwiftPackageProductDependency */ = {
+		F3BC534A278598CE009E49B4 /* Onboarding */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Onboarding;
 		};

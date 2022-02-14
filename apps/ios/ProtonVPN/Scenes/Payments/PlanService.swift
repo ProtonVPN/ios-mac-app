@@ -30,6 +30,10 @@ protocol PlanServiceFactory {
     func makePlanService() -> PlanService
 }
 
+protocol UpsellFactory {
+    func makeUpsell() -> Upsell
+}
+
 protocol PlanServiceDelegate: AnyObject {
     func paymentTransactionDidFinish()
 }
