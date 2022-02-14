@@ -1,16 +1,41 @@
+/* Upgrade plan button title */
 "modals_get_plus" = "Upgrade";
+
+/* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Not now";
+
+/* Footer of the All Countries upsell screen */
 "modals_upsell_features_footer" = "And many more premium features";
+
+/* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
+
+/* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_netshield" = "Block ads and malware with Netshield";
 
+/* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";
+
+/* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_ads" = "Block ads and trackers";
+
+/* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_malware" = "Protect your device from malware";
+
+/* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_highSpeed" = "Browse at the highest speeds";
 
+/* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_title" = "Double the encryption with Secure Core";
+
+/* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_route" = "Route through ultra secure servers in Switzerland, Sweden, and Iceland";
+
+/* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_layer" = "Add another layer of encryption to your VPN connection";
+
+/* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
