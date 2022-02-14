@@ -54,17 +54,17 @@ public struct Colors {
 
     /// Default color set for testing and previews
     public static let testColors = Colors(
-        brand: Color("brand", bundle: Bundle.module),
-        brandLight20: Color("brand-lighten20", bundle: Bundle.module),
-        brandLight40: Color("brand-lighten40", bundle: Bundle.module),
-        brandDark40: Color("brand-darken40", bundle: Bundle.module),
+        brand: Color(rgbValue: 0x4DA358),
+        brandLight20: Color(rgbValue: 0x71B579),
+        brandLight40: Color(rgbValue: 0x94C89B),
+        brandDark40: Color(rgbValue: 0x2F6336),
         textPrimary: Color.white,
-        textSecondary: Color("text-weak", bundle: Bundle.module),
-        background: Color("background-norm", bundle: Bundle.module),
-        backgroundSecondary: Color("background-secondary", bundle: Bundle.module),
-        backgroundUpdateButton: Color("interaction-weak", bundle: Bundle.module),
-        separator: Color("separator", bundle: Bundle.module),
-        qfIcon: Color("notification-warning", bundle: Bundle.module)
+        textSecondary: Color(rgbValue: 0xA7A4B5),
+        background: Color(rgbValue: 0x17181C),
+        backgroundSecondary: Color(rgbValue: 0x25272C),
+        backgroundUpdateButton: Color(rgbValue: 0x303239),
+        separator: Color(rgbValue: 0x303238),
+        qfIcon: Color(rgbValue: 0xFAC530)
     )
 
 }
@@ -79,5 +79,15 @@ extension EnvironmentValues {
     var colors: Colors {
         get { self[ColorsEnvironmentKey.self] }
         set { self[ColorsEnvironmentKey.self] = newValue }
+    }
+}
+
+@available(iOS 14.0, *)
+fileprivate extension Color {
+    init(rgbValue: UInt) {
+        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0
+        )
     }
 }
