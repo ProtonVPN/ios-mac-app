@@ -79,7 +79,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
     private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var upsell: Upsell = factory.makeUpsell()
+    lazy var upsell: Upsell = factory.makeUpsell()
     
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol?

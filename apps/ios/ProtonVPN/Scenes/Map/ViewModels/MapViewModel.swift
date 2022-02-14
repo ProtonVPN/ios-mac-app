@@ -56,6 +56,7 @@ class MapViewModel: SecureCoreToggleHandler {
     private var secureCoreConnections: [ConnectionViewModel] = []
     private var activeConnection: ConnectionViewModel?
     private let connectionStatusService: ConnectionStatusService
+    internal let upsell: Upsell
     
     var secureCoreOn: Bool {
         return activeView == .secureCore
@@ -92,7 +93,7 @@ class MapViewModel: SecureCoreToggleHandler {
     var connectionStateChanged: (() -> Void)?
     var reorderAnnotations: (() -> Void)?
 
-    init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
+    init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, upsell: Upsell) {
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
@@ -102,6 +103,7 @@ class MapViewModel: SecureCoreToggleHandler {
         self.connectionStatusService = connectionStatusService
         
         self.secureCoreConnections = []
+        self.upsell = upsell
         
         setStateOf(type: propertiesManager.serverTypeToggle)
         

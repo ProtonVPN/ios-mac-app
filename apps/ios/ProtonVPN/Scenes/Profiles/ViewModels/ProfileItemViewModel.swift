@@ -33,6 +33,7 @@ final class ProfileItemViewModel {
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
+    private let upsell: Upsell
     
     private let userTier: Int
     private let lowestSeverTier: Int
@@ -104,7 +105,7 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, upsell: Upsell) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -113,7 +114,8 @@ final class ProfileItemViewModel {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService
-                
+        self.upsell = upsell
+
         switch profile.serverOffering {
         case .custom(let serverWrapper):
             self.lowestSeverTier = serverWrapper.server.tier
@@ -163,7 +165,7 @@ final class ProfileItemViewModel {
         
         if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            planService.presentPlanSelection()
+            upsell.presentAllCountriesUpsell()
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert())

@@ -32,10 +32,24 @@ final class Upsell {
     }
     
     func presentAllCountriesUpsell() {
-        let allCountriesUpsellViewController = factory.upsellViewController(upsellType: .allCountries(UpsellConstants()))
-        allCountriesUpsellViewController.delegate = self
-        presentedUpsellViewController = allCountriesUpsellViewController
-        topViewController()?.present(allCountriesUpsellViewController, animated: true, completion: nil)
+        let upsellViewController = factory.upsellViewController(upsellType: .allCountries(UpsellConstants()))
+        presentUpsell(upsellViewController)
+    }
+    
+    func presentNetShieldUpsell() {
+        let upsellViewController = factory.upsellViewController(upsellType: .netShield)
+        presentUpsell(upsellViewController)
+    }
+    
+    func presentSecureCoreUpsell() {
+        let upsellViewController = factory.upsellViewController(upsellType: .secureCore)
+        presentUpsell(upsellViewController)
+    }
+    
+    private func presentUpsell(_ upsellViewController: UpsellViewController) {
+        upsellViewController.delegate = self
+        presentedUpsellViewController = upsellViewController
+        topViewController()?.present(upsellViewController, animated: true, completion: nil)
     }
     
     private func topViewController() -> UIViewController? {

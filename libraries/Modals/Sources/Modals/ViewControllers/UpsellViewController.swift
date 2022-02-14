@@ -54,7 +54,7 @@ public final class UpsellViewController: UIViewController {
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let topInset = (scrollView.bounds.height - featureView.bounds.height) / 2
+        let topInset = max(0, (scrollView.bounds.height - featureView.bounds.height) / 2)
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
     }
 

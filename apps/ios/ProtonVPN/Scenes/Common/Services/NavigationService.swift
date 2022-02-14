@@ -120,6 +120,7 @@ final class NavigationService {
     }()
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var upsell: Upsell = factory.makeUpsell()
     private lazy var profileManager = factory.makeProfileManager()
     private lazy var onboardingService: OnboardingService = {
         let onboardingService = factory.makeOnboardingService()
@@ -245,7 +246,7 @@ extension NavigationService: CountryService {
 extension NavigationService: MapService {
     func makeMapViewController() -> MapViewController {
         let mapViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: MapViewController.self)) as! MapViewController
-        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, serverStorage: ServerStorageConcrete(), vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self)
+        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, serverStorage: ServerStorageConcrete(), vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self, upsell: upsell)
         mapViewController.connectionBarViewController = makeConnectionBarViewController()
         return mapViewController
     }
@@ -254,14 +255,14 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), natTypePropertyProvider: factory.makeNATTypePropertyProvider(), planService: planService, profileManager: profileManager)
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), natTypePropertyProvider: factory.makeNATTypePropertyProvider(), planService: planService, profileManager: profileManager, upsell: upsell)
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         if let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController {
-            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete()), appStateManager: appStateManager, vpnGateway: vpnGateway!, profileManager: profileManager, propertiesManager: propertiesManager)
+            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete()), appStateManager: appStateManager, vpnGateway: vpnGateway!, profileManager: profileManager, propertiesManager: propertiesManager, upsell: upsell)
             return createProfileViewController
         }
         return nil
