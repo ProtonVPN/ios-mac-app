@@ -62,26 +62,25 @@ extension Feature {
         let imageName: String
         switch self {
         case .streaming:
-            imageName = "StreamingIcon"
+            return Asset.streamingIcon.image
         case .multipleDevices:
-            imageName = "MultipleDevicesIcon"
+            return Asset.multipleDevicesIcon.image
         case .netshield:
-            imageName = "NetshieldIcon"
+            return Asset.netshieldIcon.image
         case .highSpeed:
-            imageName = "HighSpeedIcon"
+            return Asset.highSpeedIcon.image
         case .blockAds:
-            imageName = "BlockAds"
+            return Asset.blockAds.image
         case .protectFromMalware:
-            imageName = "NetshieldIcon"
+            return Asset.netshieldIcon.image
         case .highSpeedNetshield:
-            imageName = "HighSpeedIcon"
+            return Asset.highSpeedIcon.image
         case .routeSecureServers:
-            imageName = "RouteSecureServers"
+            return Asset.routeSecureServers.image
         case .addLayer:
-            imageName = "AddLayer"
+            return Asset.addLayer.image
         case .protectFromAttacks:
-            imageName = "ProtectFromAttacks"
+            return Asset.protectFromAttacks.image
         }
-        return UIImage(named: imageName, in: Bundle.module, compatibleWith: nil)!
     }
 }

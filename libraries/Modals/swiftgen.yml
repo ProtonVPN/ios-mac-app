@@ -9,3 +9,9 @@ strings:
       lookupFunction: localizeStringAndFallbackToEn
     templateName: structured-swift5
     output: Sources/Modals/Extensions/LocalizedString.swift
+
+xcassets:
+  inputs: Sources/Modals/Resources/Media.xcassets
+  outputs:
+    templateName: swift5
+    output: Sources/Modals/Assets/Assets.swift

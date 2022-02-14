@@ -28,17 +28,17 @@ public enum UpsellType {
         case .netShield:
             let title = LocalizedString.modalsUpsellNetShieldTitle
             let features: [Feature] = [.blockAds, .protectFromMalware, .highSpeedNetshield]
-            let artImage = UIImage(named: "NetShield", in: Bundle.module, compatibleWith: nil)!
+            let artImage = Asset.netshield.image
             return UpsellFeature(title: title, features: features, artImage: artImage, footer: nil)
         case .secureCore:
             let title = LocalizedString.modalsUpsellSecureCoreTitle
             let features: [Feature] = [.routeSecureServers, .addLayer, .protectFromAttacks]
-            let artImage = UIImage(named: "SecureCore", in: Bundle.module, compatibleWith: nil)!
+            let artImage = Asset.secureCore.image
             return UpsellFeature(title: title, features: features, artImage: artImage, footer: nil)
         case .allCountries(let constants):
             let title = LocalizedString.modalsUpsellAllCountriesTitle(constants.numberOfServers, constants.numberOfCountries)
             let features: [Feature] = [.streaming, .multipleDevices(constants.numberOfDevices), .netshield, .highSpeed]
-            let artImage = UIImage(named: "PlusCountries", in: Bundle.module, compatibleWith: nil)!
+            let artImage = Asset.plusCountries.image
             let footer = LocalizedString.modalsUpsellFeaturesFooter
             return UpsellFeature(title: title, features: features, artImage: artImage, footer: footer)
         }
