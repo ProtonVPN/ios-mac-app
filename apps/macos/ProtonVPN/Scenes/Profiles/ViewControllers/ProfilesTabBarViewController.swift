@@ -74,6 +74,9 @@ class ProfilesTabBarViewController: NSViewController {
         createNewProfileButton.title = LocalizedString.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
+        
+        overviewButton.setAccessibilityIdentifier("OverviewButton")
+        createNewProfileButton.setAccessibilityIdentifier("CreateNewProfileButton")
     }
     
     private func new(tab: ProfilesTab, externalSource: Bool = false) {

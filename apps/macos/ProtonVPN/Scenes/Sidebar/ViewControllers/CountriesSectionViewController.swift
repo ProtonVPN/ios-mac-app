@@ -151,6 +151,9 @@ class CountriesSectionViewController: NSViewController {
         searchTextField.font = NSFont.systemFont(ofSize: 16)
         searchTextField.alignment = .left
         searchTextField.placeholderAttributedString = LocalizedString.searchForCountry.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+        
+        searchTextField.setAccessibilityIdentifier("SearchTextField")
+        clearSearchBtn.setAccessibilityIdentifier("ClearSearchButton")
     }
     
     private func setupTableView() {
@@ -263,6 +266,10 @@ class CountriesSectionViewController: NSViewController {
         
         serverListScrollView.block = appear
         quickSettingDetailDisplayed = appear
+        
+        secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
+        netShieldBtn.setAccessibilityIdentifier("NetShieldButton")
+        killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
 
         serverListTableView.reloadData()
     }
