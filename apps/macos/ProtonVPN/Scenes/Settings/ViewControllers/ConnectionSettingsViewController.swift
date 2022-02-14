@@ -136,6 +136,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         protocolSeparator.fillColor = .protonLightGrey()
         protocolEnablementProgress.isDisplayedWhenStopped = false
         protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
+        protocolEnablementProgress.toolTip = LocalizedString.sysexSettingsDescription
         refreshProtocol()
     }
     

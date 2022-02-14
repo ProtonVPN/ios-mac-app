@@ -45,6 +45,7 @@ final class CreateNewProfileViewController: NSViewController {
     @IBOutlet private weak var protocolLabel: PVPNTextField!
     @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
     @IBOutlet private weak var protocolListHorizontalLine: NSBox!
+    @IBOutlet private weak var protocolEnablementProgress: NSProgressIndicator!
 
     @IBOutlet private weak var warningLabel: PVPNTextField!
     @IBOutlet private weak var warningLabelHorizontalLine: NSBox!
@@ -131,6 +132,10 @@ final class CreateNewProfileViewController: NSViewController {
         protocolList.target = self
         protocolList.action = #selector(protocolSelected)
 
+        protocolEnablementProgress.isDisplayedWhenStopped = false
+        protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
+        protocolEnablementProgress.toolTip = LocalizedString.sysexSettingsDescription
+
         protocolListHorizontalLine.fillColor = .protonLightGrey()
     }
     
@@ -214,16 +219,25 @@ final class CreateNewProfileViewController: NSViewController {
         typeList.select(typeList.menu?.item(at: selectedIndex))
     }
 
+    private func refreshPendingEnablement() {
+        if viewModel.requiresSysexTour(for: protocolList.indexOfSelectedItem) {
+            protocolEnablementProgress.startAnimation(nil)
+        } else {
+            protocolEnablementProgress.stopAnimation(nil)
+        }
+    }
+
     private func refreshProtocolList(withSelectionAt selectedIndex: Int) {
         protocolList.removeAllItems()
         
         for vpnProtocol in viewModel.availableVpnProtocols {
             let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.vpnProtocol(for: vpnProtocol)
+            menuItem.attributedTitle = viewModel.vpnProtocolString(for: vpnProtocol)
             protocolList.menu?.addItem(menuItem)
         }
 
         protocolList.select(protocolList.menu?.item(at: selectedIndex))
+        refreshPendingEnablement()
     }
 
     private func refreshCountryList(for typeIndex: Int, withSelectionAt selectedIndex: Int) {
@@ -271,7 +285,17 @@ final class CreateNewProfileViewController: NSViewController {
 
     @objc private func protocolSelected() {
         refreshProtocolList(withSelectionAt: protocolList.indexOfSelectedItem)
-        viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem)
+        viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem) { [weak self] result in
+            switch result {
+            case .success:
+                self?.refreshPendingEnablement()
+            case .failure:
+                guard let ikeIndex = self?.viewModel.vpnProtocolIndex(for: .ike) else {
+                    return
+                }
+                self?.refreshProtocolList(withSelectionAt: ikeIndex)
+            }
+        }
     }
     
     @objc private func countrySelected() {

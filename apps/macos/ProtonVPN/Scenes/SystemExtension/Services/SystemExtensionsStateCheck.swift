@@ -116,6 +116,8 @@ class SystemExtensionsStateCheck {
                 }
                 
             }, cancelHandler: {
+                // Note: This doesn't display an error to the user as above, as the user is probably aware
+                // that they closed the window.
                 log.debug("User cancelled system extension install", category: .sysex)
                 resultHandler(.failure(UserCancelledInstall()))
             }))

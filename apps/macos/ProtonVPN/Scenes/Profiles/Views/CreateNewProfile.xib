@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,6 +20,7 @@
                 <outlet property="nameTextField" destination="rVj-Ub-X2f" id="BWB-Bv-VaQ"/>
                 <outlet property="nameTextFieldHorizontalLine" destination="2Av-tx-fMt" id="iws-oq-KYJ"/>
                 <outlet property="profileSettingsLabel" destination="njs-1o-jnp" id="nXv-B6-Lcw"/>
+                <outlet property="protocolEnablementProgress" destination="QKc-vM-Wk0" id="BI4-A2-SrL"/>
                 <outlet property="protocolLabel" destination="0L7-YK-IMv" id="4LZ-Ie-LYm"/>
                 <outlet property="protocolList" destination="L0N-my-I9p" id="8eR-GN-mZv"/>
                 <outlet property="protocolListHorizontalLine" destination="m1f-5O-xVe" id="TwN-td-OlL"/>
@@ -291,6 +292,9 @@
                         <constraint firstAttribute="height" constant="1" id="8fX-MG-RD3"/>
                     </constraints>
                 </box>
+                <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="QKc-vM-Wk0">
+                    <rect key="frame" x="584" y="149" width="16" height="16"/>
+                </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstItem="Q7F-4A-CvQ" firstAttribute="leading" secondItem="2ue-uR-ZZQ" secondAttribute="leading" id="2yv-yR-kep"/>
@@ -305,6 +309,8 @@
                 <constraint firstAttribute="trailing" secondItem="pql-Bu-2na" secondAttribute="trailing" constant="42" id="Dil-vv-tpx"/>
                 <constraint firstItem="t9x-nT-TtE" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="DyX-Qw-pi0"/>
                 <constraint firstItem="meN-iu-7gi" firstAttribute="top" secondItem="0L7-YK-IMv" secondAttribute="bottom" constant="36" id="EoC-bY-WHC"/>
+                <constraint firstItem="L0N-my-I9p" firstAttribute="leading" secondItem="QKc-vM-Wk0" secondAttribute="trailing" constant="8" symbolic="YES" id="FdR-q8-Zhl"/>
+                <constraint firstItem="QKc-vM-Wk0" firstAttribute="centerY" secondItem="L0N-my-I9p" secondAttribute="centerY" id="GIb-AI-SOj"/>
                 <constraint firstItem="0L7-YK-IMv" firstAttribute="leading" secondItem="Sk1-39-Mzh" secondAttribute="leading" id="JoZ-v6-4bL"/>
                 <constraint firstItem="Q7F-4A-CvQ" firstAttribute="trailing" secondItem="2ue-uR-ZZQ" secondAttribute="trailing" id="Kqu-f6-cbS"/>
                 <constraint firstItem="4hm-1b-MMH" firstAttribute="centerY" secondItem="nfq-Sc-kkp" secondAttribute="centerY" id="LUP-ub-tEU"/>

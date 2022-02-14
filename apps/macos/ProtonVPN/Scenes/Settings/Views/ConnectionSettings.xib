@@ -220,16 +220,22 @@
                                         </menu>
                                     </popUpButtonCell>
                                 </popUpButton>
-                                <progressIndicator fixedFrame="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="kmf-hU-xTU">
-                                    <rect key="frame" x="226" y="17" width="16" height="16"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="kmf-hU-xTU">
+                                    <rect key="frame" x="227" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="Iau-4X-ysy"/>
+                                        <constraint firstAttribute="width" constant="15" id="V4h-oj-tjh"/>
+                                    </constraints>
                                 </progressIndicator>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="kmf-hU-xTU" firstAttribute="bottom" secondItem="aLO-su-KqV" secondAttribute="bottom" id="2Fa-ha-df8"/>
                                 <constraint firstItem="hhN-6A-ZEd" firstAttribute="trailing" secondItem="QNh-jH-qdA" secondAttribute="trailing" id="447-7W-QFu"/>
                                 <constraint firstItem="hhN-6A-ZEd" firstAttribute="leading" secondItem="VyN-C7-RJs" secondAttribute="leading" id="Ho3-6I-1Db"/>
+                                <constraint firstItem="QNh-jH-qdA" firstAttribute="leading" secondItem="kmf-hU-xTU" secondAttribute="trailing" constant="8" symbolic="YES" id="Iml-Ue-bGW"/>
                                 <constraint firstAttribute="height" constant="50" id="Mci-ga-hpU"/>
                                 <constraint firstItem="QNh-jH-qdA" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="Ogw-Id-R6W"/>
+                                <constraint firstItem="kmf-hU-xTU" firstAttribute="centerY" secondItem="aLO-su-KqV" secondAttribute="centerY" id="PlU-kw-jsS"/>
                                 <constraint firstItem="VyN-C7-RJs" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="bKT-YT-reV"/>
                                 <constraint firstItem="aLO-su-KqV" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="onb-ch-IdL"/>
                                 <constraint firstAttribute="bottom" secondItem="hhN-6A-ZEd" secondAttribute="bottom" id="sRN-RQ-Myr"/>
@@ -535,10 +541,5 @@
             </constraints>
             <point key="canvasLocation" x="121" y="378.5"/>
         </customView>
-        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" id="Spq-Wi-2a1">
-            <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <point key="canvasLocation" x="42" y="290"/>
-        </progressIndicator>
     </objects>
 </document>

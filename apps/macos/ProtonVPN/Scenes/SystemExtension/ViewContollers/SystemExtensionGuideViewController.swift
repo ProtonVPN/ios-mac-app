@@ -70,10 +70,6 @@ final class SystemExtensionGuideViewController: NSViewController {
             self?.closeSelf()
         }
     }
-
-    deinit {
-        log.debug("SystemExtensionGuideViewController deinit")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
