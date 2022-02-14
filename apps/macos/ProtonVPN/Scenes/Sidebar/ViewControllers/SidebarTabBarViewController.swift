@@ -64,6 +64,10 @@ class SidebarTabBarViewController: NSViewController {
         profilesButton.title = LocalizedString.profiles
         profilesButton.target = self
         profilesButton.action = #selector(profilesTabAction(_:))
+        
+        countriesButton.setAccessibilityIdentifier("CountriesButton")
+        profilesButton.setAccessibilityIdentifier("ProfilesButton")
+
     }
     
     private func new(tab: SidebarTab) {

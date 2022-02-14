@@ -143,6 +143,8 @@ class LoginViewController: NSViewController {
         usernameTextField.delegate = self
         usernameTextField.focusDelegate = self
         
+        usernameTextField.setAccessibilityIdentifier("UsernameTextField")
+        
         usernameHorizontalLine.fillColor = .protonLightGrey()
     }
     
@@ -162,6 +164,8 @@ class LoginViewController: NSViewController {
         passwordTextField.tag = TextField.password.rawValue
         passwordTextField.delegate = self
         passwordTextField.focusDelegate = self
+        
+        passwordSecureTextField.setAccessibilityIdentifier("PasswordTextField")
         
         passwordSecureTextField.placeholderAttributedString = LocalizedString.password.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
         passwordTextField.placeholderAttributedString = LocalizedString.password.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
@@ -200,6 +204,8 @@ class LoginViewController: NSViewController {
         needHelpButton.title = LocalizedString.needHelp
         needHelpButton.target = self
         needHelpButton.action = #selector(needHelpButtonAction)
+        
+        loginButton.setAccessibilityIdentifier("LoginButton")
     }
     
     private func setupCallbacks() {
