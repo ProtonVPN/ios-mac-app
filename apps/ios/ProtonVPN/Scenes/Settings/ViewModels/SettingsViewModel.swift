@@ -69,7 +69,7 @@ final class SettingsViewModel {
         sections.append(accountSection)
         sections.append(securitySection)
         
-        if !connectionSection.cells.isEmpty {
+        if let connectionSection = connectionSection {
             sections.append(connectionSection)
         }
         sections.append(extensionsSection)
@@ -291,76 +291,88 @@ final class SettingsViewModel {
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }
-    
-    private var connectionSection: TableViewSection {
+
+    private var vpnAcceleratorSection: [TableViewCellModel] {
+        return [
+            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
+                self.vpnStateConfiguration.getInfo { info in
+                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                    case .withConnectionUpdate:
+                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                        self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
+                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    case .withReconnect:
+                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                            self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                            callback(self.propertiesManager.vpnAcceleratorEnabled)
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
+                            self.vpnGateway?.retryConnection()
+                        }))
+                    case .immediately:
+                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    }
+                }
+            }),
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
+        ]
+    }
+
+    private var allowLanSection: [TableViewCellModel] {
+        return [
+            .toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()),
+            .tooltip(text: LocalizedString.allowLanInfo)
+        ]
+    }
+
+    private var natTypeSection: [TableViewCellModel] {
+        return [
+            .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.pushNATTypeSelectionViewController(selectedFeature: self.natTypePropertyProvider.natType, shouldSelectNewValue: { [weak self] type, approve in
+                    self?.vpnStateConfiguration.getInfo { [weak self] info in
+                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                        case .withConnectionUpdate:
+                            approve()
+                            self?.vpnManager.set(natType: type)
+                        case .withReconnect:
+                            self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.natTypeChangeTitle, confirmHandler: { [weak self] in
+                                approve()
+                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
+                                self?.vpnGateway?.reconnect(with: type)
+                                self?.connectionStatusService.presentStatusViewController()
+                            }))
+                        case .immediately:
+                            approve()
+                        }
+                    }
+                }, onFeatureChange: { [weak self] type in
+                    self?.propertiesManager.natType = type
+                })
+            }),
+            .tooltip(text: LocalizedString.natTypeExplanation.replacingOccurrences(of: "\n\n", with: " "))
+        ]
+    }
+
+    private var connectionSection: TableViewSection? {
         var cells: [TableViewCellModel] = []
 
         if propertiesManager.featureFlags.vpnAccelerator {
-            cells.append(contentsOf: [
-                .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
-                    self.vpnStateConfiguration.getInfo { info in
-                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                        case .withConnectionUpdate:
-                            self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                            self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
-                            callback(self.propertiesManager.vpnAcceleratorEnabled)
-                        case .withReconnect:
-                            self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
-                                self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                                callback(self.propertiesManager.vpnAcceleratorEnabled)
-                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
-                                self.vpnGateway?.retryConnection()
-                            }))
-                        case .immediately:
-                            self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                            callback(self.propertiesManager.vpnAcceleratorEnabled)
-                        }
-                    }
-                }),
-                .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator))
-            ])
+            cells.append(contentsOf: vpnAcceleratorSection)
         }
-        
+
         if #available(iOS 14.2, *) {
-            cells.append(contentsOf: [
-                .toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()),
-                .tooltip(text: LocalizedString.allowLanInfo)
-            ])
+            cells.append(contentsOf: allowLanSection)
         }
 
         if propertiesManager.featureFlags.moderateNAT {
-            cells.append(contentsOf: [
-                .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [weak self] in
-                    guard let self = self else {
-                        return
-                    }
-
-                    self.pushNATTypeSelectionViewController(selectedFeature: self.natTypePropertyProvider.natType, shouldSelectNewValue: { [weak self] type, approve in
-                        self?.vpnStateConfiguration.getInfo { [weak self] info in
-                            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                            case .withConnectionUpdate:
-                                approve()
-                                self?.vpnManager.set(natType: type)
-                            case .withReconnect:
-                                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.natTypeChangeTitle, confirmHandler: { [weak self] in
-                                    approve()
-                                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                                    self?.vpnGateway?.reconnect(with: type)
-                                    self?.connectionStatusService.presentStatusViewController()
-                                }))
-                            case .immediately:
-                                approve()
-                            }
-                        }
-                    }, onFeatureChange: { [weak self] type in
-                        self?.propertiesManager.natType = type
-                    })
-                }),
-                .tooltip(text: LocalizedString.natTypeExplanation.replacingOccurrences(of: "\n\n", with: " "))
-            ])
+            cells.append(contentsOf: natTypeSection)
         }
-        
-        return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
+
+        return cells.isEmpty ? nil : TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
     }
     
     private func switchLANCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {

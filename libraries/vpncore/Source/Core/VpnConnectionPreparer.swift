@@ -63,10 +63,12 @@ class VpnConnectionPreparer {
 
     // swiftlint:disable:next function_parameter_count
     private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, ports: [Int]) {
-        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, ports: ports) {
-            DispatchQueue.main.async { [weak self] in
-                self?.appStateManager.connect(withConfiguration: configuration)
-            }
+        guard let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, ports: ports) else {
+            return
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            self?.appStateManager.connect(withConfiguration: configuration)
         }
     }
 
