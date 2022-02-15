@@ -403,6 +403,18 @@
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E51C6079AB893075B8713F74 /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC8D5390AD2CD74301D6C54 /* Logger+Categories.swift */; };
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
+		E91201F627BB96260058BE94 /* FolderLogFilesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */; };
+		E91201F727BB96260058BE94 /* FolderLogFilesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */; };
+		E91201FA27BBA6F80058BE94 /* DefaultLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */; };
+		E91201FB27BBA6F80058BE94 /* DefaultLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */; };
+		E91201FD27BBA7100058BE94 /* FolderLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */; };
+		E91201FE27BBA7100058BE94 /* FolderLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */; };
+		E912020027BBA9340058BE94 /* MergeLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201FF27BBA9340058BE94 /* MergeLogFilesProvider.swift */; };
+		E912020127BBA9340058BE94 /* MergeLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201FF27BBA9340058BE94 /* MergeLogFilesProvider.swift */; };
+		E912020327BBB05B0058BE94 /* MergeLogFilesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E912020227BBB05B0058BE94 /* MergeLogFilesProviderTests.swift */; };
+		E912020427BBB05B0058BE94 /* MergeLogFilesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E912020227BBB05B0058BE94 /* MergeLogFilesProviderTests.swift */; };
+		E912020627BBB0E50058BE94 /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E912020527BBB0E50058BE94 /* MockLogFilesProvider.swift */; };
+		E912020727BBB0E50058BE94 /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E912020527BBB0E50058BE94 /* MockLogFilesProvider.swift */; };
 		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E939EEE827954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
@@ -862,6 +874,12 @@
 		E1E892B92369EEB9001A436E /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
 		E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
+		E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProviderTests.swift; sourceTree = "<group>"; };
+		E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLogFilesProvider.swift; sourceTree = "<group>"; };
+		E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProvider.swift; sourceTree = "<group>"; };
+		E91201FF27BBA9340058BE94 /* MergeLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLogFilesProvider.swift; sourceTree = "<group>"; };
+		E912020227BBB05B0058BE94 /* MergeLogFilesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLogFilesProviderTests.swift; sourceTree = "<group>"; };
+		E912020527BBB0E50058BE94 /* MockLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLogFilesProvider.swift; sourceTree = "<group>"; };
 		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
 		E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportStorage.swift; sourceTree = "<group>"; };
 		E939EEEA27955317006E4305 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
@@ -1000,12 +1018,12 @@
 		15625170A69D95C5DBA7C332 /* Logs */ = {
 			isa = PBXGroup;
 			children = (
-				1690F8DE128B31DEF327B7AE /* SentryHelper.swift */,
 				2032684F8562E577BD8AFFD3 /* Extensions */,
 				0B60E66576AACCECC5083884 /* Formatters */,
 				C62E1E091E727BC144AE7C6C /* Handlers */,
 				BD5E8F046B70B8228E1F4ED6 /* LogFileManager.swift */,
-				EC5BDBF780DDE67E0CA552B9 /* LogFilesProvider.swift */,
+				E91201F827BBA6CD0058BE94 /* Providers */,
+				1690F8DE128B31DEF327B7AE /* SentryHelper.swift */,
 			);
 			path = Logs;
 			sourceTree = "<group>";
@@ -1151,6 +1169,7 @@
 				D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */,
 				F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */,
 				F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */,
+				E912020527BBB0E50058BE94 /* MockLogFilesProvider.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1292,8 +1311,21 @@
 			isa = PBXGroup;
 			children = (
 				E9B32EAFAF2F48F27AE34B86 /* FileLogHandlerTests.swift */,
+				E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */,
+				E912020227BBB05B0058BE94 /* MergeLogFilesProviderTests.swift */,
 			);
 			path = Logs;
+			sourceTree = "<group>";
+		};
+		E91201F827BBA6CD0058BE94 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				EC5BDBF780DDE67E0CA552B9 /* LogFilesProvider.swift */,
+				E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */,
+				E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */,
+				E91201FF27BBA9340058BE94 /* MergeLogFilesProvider.swift */,
+			);
+			path = Providers;
 			sourceTree = "<group>";
 		};
 		E935183D2617535600AB4C7C /* Protocols */ = {
@@ -2452,6 +2484,7 @@
 				D523F11124B7543C007DB086 /* String+Url.swift in Sources */,
 				F3256AC426B993C2003F073C /* SmartProtocol+Priority.swift in Sources */,
 				F331EA2A2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
+				E91201FD27BBA7100058BE94 /* FolderLogFilesProvider.swift in Sources */,
 				E1B5F66921B81F8500B558B0 /* Dictionary+Extension.swift in Sources */,
 				E1616BB321C7BCD100F42D79 /* KeychainError.swift in Sources */,
 				D5BCDC9525303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
@@ -2468,6 +2501,7 @@
 				E96B765F27AC010F00079B04 /* UpdateChecker.swift in Sources */,
 				F30B9D8926281F840094C65E /* VpnCertificate.swift in Sources */,
 				E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
+				E912020027BBA9340058BE94 /* MergeLogFilesProvider.swift in Sources */,
 				F30B9D8E26281F990094C65E /* VpnKeys.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
 				4257B21224EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
@@ -2477,6 +2511,7 @@
 				F349B1F42680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */,
 				E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */,
 				E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */,
+				E912020627BBB0E50058BE94 /* MockLogFilesProvider.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
@@ -2511,6 +2546,7 @@
 				4242B02E2465A41A0042145A /* VPNSessionsCountRequest.swift in Sources */,
 				423705E1262D9E8100A920CF /* VPNStreamingRequest.swift in Sources */,
 				F387A26C267B550D00F0C3D8 /* VpnStateConfiguration.swift in Sources */,
+				E91201FA27BBA6F80058BE94 /* DefaultLogFilesProvider.swift in Sources */,
 				E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */,
 				F31E91222758F9E900140B2E /* LogFilesProvider.swift in Sources */,
 				4242B0762465A48B0042145A /* ReportsApiService.swift in Sources */,
@@ -2632,8 +2668,10 @@
 				D5967208253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
 				D5ADFBD023A0D09600C28CFF /* URLArrayTests.swift in Sources */,
 				D5C204242486646F004FB58B /* VpnServerSelectorTests.swift in Sources */,
+				E912020327BBB05B0058BE94 /* MergeLogFilesProviderTests.swift in Sources */,
 				08D99AC826BEE6B2BC66F9C5 /* Result+Extensions.swift in Sources */,
 				8137B3D333109A17DEEA1041 /* ReportsBugResponse.swift in Sources */,
+				E91201F627BB96260058BE94 /* FolderLogFilesProviderTests.swift in Sources */,
 				590F5B4C08E37C6D88C49389 /* FileLogHandlerTests.swift in Sources */,
 				8AD0F93EFD27305B0D9C90E5 /* LogFileManagerImplementationTests.swift in Sources */,
 			);
@@ -2739,12 +2777,14 @@
 				E1B5F67021B8205100B558B0 /* ServerLocation.swift in Sources */,
 				E151126C22F07D3100C9A41F /* VpnManagerConfiguration.swift in Sources */,
 				E1B5F63421B6B19200B558B0 /* VpnState.swift in Sources */,
+				E912020127BBA9340058BE94 /* MergeLogFilesProvider.swift in Sources */,
 				F30B9E87262886D90094C65E /* VpnCertificate.swift in Sources */,
 				E129C6C422A90E6600D8437E /* PropertiesManagerMock.swift in Sources */,
 				D5B53ADA25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 				E1B5F67421B8241B00B558B0 /* MapConstants.swift in Sources */,
 				4257B21324EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
 				424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
+				E91201FB27BBA6F80058BE94 /* DefaultLogFilesProvider.swift in Sources */,
 				F389188E26C3D673006214A8 /* WireguardConfig.swift in Sources */,
 				E95E8E762696F76F001AE3FA /* CertificateConstants.swift in Sources */,
 				4242B0A52465A7E20042145A /* Data+JSONDictionary.swift in Sources */,
@@ -2764,6 +2804,7 @@
 				F31A46FB26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */,
 				E992F27F26675C3300169C6B /* VpnKeychainMock.swift in Sources */,
 				4242B0312465A41A0042145A /* VPNClientCredentialsRequest.swift in Sources */,
+				E912020727BBB0E50058BE94 /* MockLogFilesProvider.swift in Sources */,
 				E12485962243D62F0049B57D /* ConnectionRequest.swift in Sources */,
 				4242B0862465A4D10042145A /* VpnProperties.swift in Sources */,
 				E1616BE621C9392600F42D79 /* VpnGateway.swift in Sources */,
@@ -2845,6 +2886,7 @@
 				CFE4A175A862CAB417AE5C4F /* LogFileManager.swift in Sources */,
 				2F36B2AB3CBF1764D7E766C8 /* FileLogFormatter.swift in Sources */,
 				021468D1606599C5393E4F1F /* Logger+Callers.swift in Sources */,
+				E91201FE27BBA7100058BE94 /* FolderLogFilesProvider.swift in Sources */,
 				2D1D48B7BD7C604C2FBD7F1F /* LogHandler+Metadata.swift in Sources */,
 				8527DAA95348977F75A7452E /* Logger+Main.swift in Sources */,
 				77BF10C45A2119E8240BF3E9 /* FileLogHandler.swift in Sources */,
@@ -2895,8 +2937,10 @@
 				D5C204252486646F004FB58B /* VpnServerSelectorTests.swift in Sources */,
 				D59671FE253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
 				F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */,
+				E912020427BBB05B0058BE94 /* MergeLogFilesProviderTests.swift in Sources */,
 				66835CD1375221C55BF4610B /* Result+Extensions.swift in Sources */,
 				C7F903A31EAFDB6A5376E625 /* ReportsBugResponse.swift in Sources */,
+				E91201F727BB96260058BE94 /* FolderLogFilesProviderTests.swift in Sources */,
 				55B9F973FB318A0CCFA92178 /* FileLogHandlerTests.swift in Sources */,
 				D502A3141B3D33E4A3595748 /* LogFileManagerImplementationTests.swift in Sources */,
 			);

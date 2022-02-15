@@ -85,7 +85,7 @@ final class DependencyContainer {
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesProvider(), updateChecker: makeUpdateManager())
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesIncludingRotatedProvider(), updateChecker: makeUpdateManager())
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -432,6 +432,11 @@ extension DependencyContainer: LogFileManagerFactory {
 extension DependencyContainer: LogFilesProviderFactory {
     func makeLogFilesProvider() -> LogFilesProvider {
         return DefaultLogFilesProvider(vpnManager: makeVpnManager(), logFileManager: makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)
+    }
+
+    // This provider includes rotated logfiles
+    func makeLogFilesIncludingRotatedProvider() -> LogFilesProvider {
+        return MergeLogFilesProvider(providers: makeLogFilesProvider(), FolderLogFilesProvider(appLogFilename: makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename).path))
     }
 }
 

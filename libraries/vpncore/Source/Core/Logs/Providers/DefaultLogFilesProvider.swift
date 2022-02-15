@@ -1,26 +1,27 @@
 //
-//  LogFilesProvider.swift
-//  Core
+//  Created on 2022-02-15.
 //
-//  Created by Jaroslav on 2021-06-04.
-//  Copyright © 2021 Proton Technologies AG. All rights reserved.
+//  Copyright (c) 2022 Proton AG
 //
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
-/// Provides all available log files together with their names
-public protocol LogFilesProvider {
-    var logFiles: [(String, URL?)] { get }
-}
-
-public protocol LogFilesProviderFactory {
-    func makeLogFilesProvider() -> LogFilesProvider
-}
 
 /// Default implementation that lists all possible log files
 public class DefaultLogFilesProvider: LogFilesProvider {
     public var logFiles: [(String, URL?)]
-    
+
     public init(vpnManager: VpnManagerProtocol, logFileManager: LogFileManager, appLogFilename: String) {
         logFiles = [
             (LocalizedString.applicationLogs, logFileManager.getFileUrl(named: appLogFilename)), // Application logs
