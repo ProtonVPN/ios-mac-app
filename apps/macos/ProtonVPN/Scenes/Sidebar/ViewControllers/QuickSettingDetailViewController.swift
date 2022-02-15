@@ -75,6 +75,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         dropdownDescription.setAccessibilityIdentifier("QSDescription")
         dropdownUgradeButton.setAccessibilityIdentifier("UpgradeButton")
         dropdownLearnMore.setAccessibilityIdentifier("LearnMoreButton")
+        dropdownNote.setAccessibilityIdentifier("QSNote")
         
         view.wantsLayer = true
         
