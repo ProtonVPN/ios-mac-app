@@ -17,7 +17,7 @@ public enum VpnManagerClientConfiguration {
     case vpnAccelerator
     case label(String)
     case moderateNAT
-    case safeMode
+    case safeMode(Bool)
 
     var usernameSuffix: String {
         switch self {
@@ -35,8 +35,8 @@ public enum VpnManagerClientConfiguration {
             return "b:\(label)"
         case .moderateNAT:
             return "nr"
-        case .safeMode:
-            return "sm"
+        case let .safeMode(enabled):
+            return enabled ? "sm" : "nsm"
         }
     }
 }
@@ -157,8 +157,8 @@ public class VpnManagerConfigurationPreparer {
             extraConfiguration += [.moderateNAT]
         }
 
-        if propertiesManager.featureFlags.safeMode, connectionConfig.safeMode {
-            extraConfiguration += [.safeMode]
+        if propertiesManager.featureFlags.safeMode {
+            extraConfiguration += [.safeMode(connectionConfig.safeMode)]
         }
         
         return extraConfiguration.reduce("") {
