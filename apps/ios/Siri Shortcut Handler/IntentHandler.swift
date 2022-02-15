@@ -40,8 +40,10 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
-        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider), storage: storage, userInfoProvider: AuthKeychain())
-        let natTypePropertyProvider = NATTypePropertyProviderImplementation(PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider), storage: storage, userInfoProvider: AuthKeychain())
+        let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider)
+        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
+        let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
+        let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
         let ikeFactory = IkeProtocolFactory()
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
@@ -65,6 +67,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     propertiesManager: propertiesManager,
                                                     netShieldPropertyProvider: netShieldPropertyProvider,
                                                     natTypePropertyProvider: natTypePropertyProvider,
+                                                    safeModePropertyProvider: safeModePropertyProvider,
                                                     profileManager: ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager),
                                                     doh: doh)
         

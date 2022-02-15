@@ -205,6 +205,7 @@ extension DependencyContainer: VpnGatewayFactory {
                           siriHelper: SiriHelper(),
                           netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                           natTypePropertyProvider: makeNATTypePropertyProvider(),
+                          safeModePropertyProvider: makeSafeModePropertyProvider(),
                           propertiesManager: makePropertiesManager(),
                           profileManager: makeProfileManager())
     }
@@ -448,5 +449,12 @@ extension DependencyContainer: DynamicBugReportManagerFactory {
 extension DependencyContainer: NATTypePropertyProviderFactory {
     func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
         return NATTypePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
+    }
+}
+
+// MARK: SafeModePropertyProviderFactory
+extension DependencyContainer: SafeModePropertyProviderFactory {
+    func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
+        return SafeModePropertyProviderImplementation(self)
     }
 }
