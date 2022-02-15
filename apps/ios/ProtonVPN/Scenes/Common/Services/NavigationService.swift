@@ -292,7 +292,7 @@ extension NavigationService: SettingsService {
     }
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: DefaultLogFilesProvider(vpnManager: vpnManager, logFileManager: factory.makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)), settingsService: self)
+        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: factory.makeLogFilesProvider()), settingsService: self)
     }
     
     func makeBatteryUsageViewController() -> BatteryUsageViewController {
