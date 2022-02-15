@@ -4086,6 +4086,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PATH = "${PATH}:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WG_BUILD_PATH = "${BUILD_DIR}/../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
@@ -4105,6 +4106,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PATH = "${PATH}:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
@@ -4124,6 +4126,7 @@
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
+				PATH = "${PATH}:/opt/homebrew/opt/go/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};

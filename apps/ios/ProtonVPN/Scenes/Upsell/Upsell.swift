@@ -20,7 +20,7 @@ import Foundation
 import Modals
 import UIKit
 
-final class Upsell {
+class Upsell {
     
     private let planService: PlanService
     private let factory = ModalsFactory(colors: UpsellColors())
