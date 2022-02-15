@@ -23,12 +23,14 @@ public struct VPNConnectionFeatures: Equatable {
     let vpnAccelerator: Bool
     let bouncing: String?
     let natType: NATType
+    let safeMode: Bool
 
-    init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType) {
+    init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool) {
         self.netshield = netshield
         self.vpnAccelerator = vpnAccelerator
         self.bouncing = bouncing
         self.natType = natType
+        self.safeMode = safeMode
     }
     
     /// Default features
@@ -37,6 +39,7 @@ public struct VPNConnectionFeatures: Equatable {
         self.vpnAccelerator = true
         self.bouncing = nil
         self.natType = .default
+        self.safeMode = false
     }
     
     var asDict: [String: Any] {
@@ -47,6 +50,7 @@ public struct VPNConnectionFeatures: Equatable {
             result[CodingKeys.bouncing.rawValue] = bouncing
         }
         result[CodingKeys.natType.rawValue] = natType.flag
+        result[CodingKeys.safeMode.rawValue] = safeMode
         return result
     }
 }
@@ -57,6 +61,7 @@ extension VPNConnectionFeatures: Codable {
         case vpnAccelerator = "SplitTCP"
         case bouncing = "Bouncing"
         case natType = "RandomNAT"
+        case safeMode = "SafeMode"
     }
 
     public init(from decoder: Decoder) throws {
@@ -69,5 +74,6 @@ extension VPNConnectionFeatures: Codable {
         } else {
             natType = .default
         }
+        safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode) ?? false
     }
 }

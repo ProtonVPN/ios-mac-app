@@ -108,6 +108,11 @@ final class LocalAgentImplementation: LocalAgent {
         let features = LocalAgentNewFeatures()?.with(natType: natType)
         agent?.setFeatures(features)
     }
+
+    func update(safeMode: Bool) {
+        let features = LocalAgentNewFeatures()?.with(safeMode: safeMode)
+        agent?.setFeatures(features)
+    }
 }
 
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {

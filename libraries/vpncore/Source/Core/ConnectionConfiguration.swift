@@ -18,22 +18,28 @@ public struct ConnectionConfiguration: Codable {
     public let vpnProtocol: VpnProtocol
     public let netShieldType: NetShieldType
     public let natType: NATType
+    public let safeMode: Bool
     public let ports: [Int]
     
-    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, natType: NATType, ports: [Int]) {
+    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool, ports: [Int]) {
         self.server = server
         self.serverIp = serverIp
         self.vpnProtocol = vpnProtocol
         self.netShieldType = netShieldType
         self.ports = ports
         self.natType = natType
+        self.safeMode = safeMode
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionConfiguration {
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, ports: ports)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
     }
 
     public func withChanged(natType: NATType) -> ConnectionConfiguration {
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, ports: ports)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+    }
+
+    public func withChanged(safeMode: Bool) -> ConnectionConfiguration {
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
     }
 }
