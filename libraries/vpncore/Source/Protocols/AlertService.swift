@@ -304,6 +304,11 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
 }
 
 public class ReconnectOnSettingsChangeAlert: SystemAlert {
+    public struct UserCancelledReconnect: Error, CustomStringConvertible {
+        public let description = "User was changing settings, but cancelled reconnecting."
+    }
+    public static let userCancelled = UserCancelledReconnect()
+
     public var title: String? = LocalizedString.changeSettings
     public var message: String? = LocalizedString.reconnectOnSettingsChangeBody
     public var actions = [AlertAction]()

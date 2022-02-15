@@ -61,10 +61,12 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             set(vpnProtocol: vpnProtocol, reconnect: false, completion: completion)
             return
         }
-        
-        alertService.push(alert: ReconnectOnSettingsChangeAlert { [weak self] in
+
+        alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: { [weak self] in
             self?.set(vpnProtocol: vpnProtocol, reconnect: true, completion: completion)
-        })
+        }, cancelHandler: {
+            completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
+        }))
     }
     
     private func set(vpnProtocol: VpnProtocol, reconnect: Bool, completion: @escaping (Result<(), Error>) -> Void) {
