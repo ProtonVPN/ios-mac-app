@@ -198,7 +198,7 @@ class StatusViewModel {
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
         // same condition as on the Profiles screen to be consistent
-        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType) == vpnGateway?.lastConnectionRequest }) != nil {
+        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: propertiesManager.safeMode) == vpnGateway?.lastConnectionRequest }) != nil {
             cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .notificationErrorColor(), handler: { [deleteProfile] in
                 deleteProfile()
             })

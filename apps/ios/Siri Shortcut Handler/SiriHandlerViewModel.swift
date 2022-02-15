@@ -34,6 +34,7 @@ class SiriHandlerViewModel {
     private let configurationPreparer: VpnManagerConfigurationPreparer
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
+    private let safeModePropertyProvider: SafeModePropertyProvider
     private let profileManager: ProfileManager
     private let doh: DoHVPN
     
@@ -52,12 +53,12 @@ class SiriHandlerViewModel {
             return nil
         }
         if _vpnGateway == nil {
-            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper(), netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, propertiesManager: propertiesManager, profileManager: profileManager)
+            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper(), netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, safeModePropertyProvider: safeModePropertyProvider, propertiesManager: propertiesManager, profileManager: profileManager)
         }
         return _vpnGateway
     }
     
-    init(networking: Networking, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, profileManager: ProfileManager, doh: DoHVPN) {
+    init(networking: Networking, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, profileManager: ProfileManager, doh: DoHVPN) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
@@ -70,6 +71,7 @@ class SiriHandlerViewModel {
         self.propertiesManager = propertiesManager
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
+        self.safeModePropertyProvider = safeModePropertyProvider
         self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
         
         self.alertService.delegate = self

@@ -255,7 +255,7 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), natTypePropertyProvider: factory.makeNATTypePropertyProvider(), planService: planService, profileManager: profileManager, upsell: upsell)
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), natTypePropertyProvider: factory.makeNATTypePropertyProvider(), safeModePropertyProvider: factory.makeSafeModePropertyProvider(), planService: planService, profileManager: profileManager, upsell: upsell)
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }

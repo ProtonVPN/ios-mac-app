@@ -31,6 +31,7 @@ final class ProfileItemViewModel {
     private let alertService: AlertService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
+    private let safeModePropertyProvider: SafeModePropertyProvider
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
     private let upsell: Upsell
@@ -41,14 +42,14 @@ final class ProfileItemViewModel {
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
         return false
     }
     
     private var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
         return false
     }
@@ -105,13 +106,14 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, upsell: Upsell) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, upsell: Upsell) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.userTier = userTier
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
+        self.safeModePropertyProvider = safeModePropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService
         self.upsell = upsell
