@@ -192,6 +192,7 @@ extension VpnManager: LocalAgentDelegate {
         didReceiveFeature(netshield: features.netshield)
         didReceiveFeature(vpnAccelerator: features.vpnAccelerator)
         didReceiveFeature(natType: features.natType)
+        didReceiveFeature(safeMode: features.safeMode)
 
         // Try refreshing certificate in case features are different from the ones we have in current certificate
         vpnAuthentication.refreshCertificates(features: features, completion: { result in
@@ -205,6 +206,15 @@ extension VpnManager: LocalAgentDelegate {
                 break
             }
         })
+    }
+
+    private func didReceiveFeature(safeMode: Bool) {
+        guard propertiesManager.safeMode != safeMode else {
+            return
+        }
+
+        log.debug("Safe Mode was set to \(propertiesManager.safeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
+        propertiesManager.safeMode = safeMode
     }
     
     private func didReceiveFeature(vpnAccelerator: Bool) {

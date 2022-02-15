@@ -70,27 +70,33 @@ public struct ConnectionRequest: Codable {
     public let connectionProtocol: ConnectionProtocol
     public let netShieldType: NetShieldType
     public let natType: NATType
+    public let safeMode: Bool
     public let profileId: String?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, profileId: String?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool, profileId: String?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
         self.netShieldType = netShieldType
         self.profileId = profileId
         self.natType = natType
+        self.safeMode = safeMode
     }
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId)
     }
 
     public func withChanged(natType: NATType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId)
+    }
+
+    public func withChanged(safeMode: Bool) -> ConnectionRequest {
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId)
     }
 
     private enum Keys: CodingKey {
@@ -101,6 +107,7 @@ public struct ConnectionRequest: Codable {
         case profileId
         case vpnProtocol
         case natType
+        case safeMode
     }
 
     public init(from decoder: Decoder) throws {
@@ -121,6 +128,7 @@ public struct ConnectionRequest: Codable {
         } else {
             natType = .default
         }
+        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode) ?? false
     }
 }
 

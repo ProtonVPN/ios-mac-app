@@ -17,6 +17,7 @@ public enum VpnManagerClientConfiguration {
     case vpnAccelerator
     case label(String)
     case moderateNAT
+    case safeMode
 
     var usernameSuffix: String {
         switch self {
@@ -34,6 +35,8 @@ public enum VpnManagerClientConfiguration {
             return "b:\(label)"
         case .moderateNAT:
             return "nr"
+        case .safeMode:
+            return "sm"
         }
     }
 }
@@ -57,8 +60,9 @@ public struct VpnManagerConfiguration {
     public let bouncing: String?
     public let serverPublicKey: String?
     public let natType: NATType
+    public let safeMode: Bool
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, ports: [Int], serverPublicKey: String?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool, ports: [Int], serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -73,6 +77,7 @@ public struct VpnManagerConfiguration {
         self.ports = ports
         self.bouncing = bouncing
         self.natType = natType
+        self.safeMode = safeMode
         self.serverPublicKey = serverPublicKey
     }
 }
@@ -114,6 +119,7 @@ public class VpnManagerConfigurationPreparer {
                                            vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                                            bouncing: connectionConfig.serverIp.label,
                                            natType: connectionConfig.natType,
+                                           safeMode: connectionConfig.safeMode,
                                            ports: connectionConfig.ports,
                                            serverPublicKey: connectionConfig.serverIp.x25519PublicKey
             )
@@ -149,6 +155,10 @@ public class VpnManagerConfigurationPreparer {
 
         if propertiesManager.featureFlags.moderateNAT, connectionConfig.natType == .moderateNAT {
             extraConfiguration += [.moderateNAT]
+        }
+
+        if propertiesManager.featureFlags.safeMode, connectionConfig.safeMode {
+            extraConfiguration += [.safeMode]
         }
         
         return extraConfiguration.reduce("") {

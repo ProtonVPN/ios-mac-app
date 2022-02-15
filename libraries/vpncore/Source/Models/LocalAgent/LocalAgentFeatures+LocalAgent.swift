@@ -29,6 +29,7 @@ enum LocalAgentFeaturesKeys: String {
     case jailed = "jail"
     case natType = "randomized-nat"
     case bouncing
+    case safeMode = "safe-mode"
 }
 
 extension LocalAgentFeatures {
@@ -99,8 +100,12 @@ extension LocalAgentFeatures {
 
         return NATType(flag: value)
     }
+
+    var safeMode: Bool? {
+        return getBool(key: .safeMode)
+    }
     
-    // MARK: -
+    // MARK: - Setters
 
     func with(netshield: NetShieldType) -> LocalAgentFeatures {
         set(.netShield, value: netshield.rawValue)
@@ -129,11 +134,17 @@ extension LocalAgentFeatures {
         return self
     }
 
+    func with(safeMode: Bool) -> LocalAgentFeatures {
+        set(.safeMode, value: safeMode)
+        return self
+    }
+
     func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
         return self
             .with(netshield: configuration.features.netshield)
             .with(vpnAccelerator: configuration.features.vpnAccelerator)
             .with(bouncing: configuration.features.bouncing)
             .with(natType: configuration.features.natType)
+            .with(safeMode: configuration.features.safeMode)
     }
 }

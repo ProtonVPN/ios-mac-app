@@ -26,15 +26,15 @@ public struct LocalAgentConfiguration {
     let hostname: String
     let features: VPNConnectionFeatures
 
-    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType) {
+    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool) {
         self.hostname = hostname
-        self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType)
+        self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
     }
 }
 
 extension LocalAgentConfiguration {
     init(configuration: VpnManagerConfiguration) {
-        self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing, natType: configuration.natType)
+        self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing, natType: configuration.natType, safeMode: configuration.safeMode)
     }
 
     init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, vpnProtocol: VpnProtocol?) {
@@ -46,7 +46,8 @@ extension LocalAgentConfiguration {
                   netshield: netShieldPropertyProvider.netShieldType,
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                   bouncing: connectionConfiguration.serverIp.label,
-                  natType: natTypePropertyProvider.natType)
+                  natType: natTypePropertyProvider.natType,
+                  safeMode: propertiesManager.safeMode)
     }
 }
 
@@ -62,14 +63,14 @@ extension VPNConnectionFeatures {
         self.init(netshield: netShieldPropertyProvider.netShieldType,
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                   bouncing: connectionConfiguration.serverIp.label,
-                  natType: natTypePropertyProvider.natType)
+                  natType: natTypePropertyProvider.natType,
+                  safeMode: propertiesManager.safeMode)
     }
 }
 
 // MARK: - PropertiesManagerProtocol
 
 private extension PropertiesManagerProtocol {
-    
     func currentConnectionConfiguration(for vpnProtocol: VpnProtocol) -> ConnectionConfiguration? {
         let configuration: ConnectionConfiguration?
         switch vpnProtocol {
