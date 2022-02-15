@@ -69,6 +69,7 @@ final class SettingsViewModel {
         
         sections.append(accountSection)
         sections.append(securitySection)
+        sections.append(advancedSection)
         
         if let connectionSection = connectionSection {
             sections.append(connectionSection)
@@ -284,12 +285,6 @@ final class SettingsViewModel {
             cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
         }
         
-        cells.append(.toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
-            self.propertiesManager.alternativeRouting.toggle()
-            callback(self.propertiesManager.alternativeRouting)
-        })
-        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
-        
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }
 
@@ -358,6 +353,22 @@ final class SettingsViewModel {
             }),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.moderateNatExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.moderateNatExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT))
         ]
+    }
+
+    private var advancedSection: TableViewSection {
+        var cells: [TableViewCellModel] = [
+            .toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
+                self.propertiesManager.alternativeRouting.toggle()
+                callback(self.propertiesManager.alternativeRouting)
+            },
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
+        ]
+
+        if propertiesManager.featureFlags.moderateNAT {
+            cells.append(contentsOf: natTypeSection)
+        }
+
+        return TableViewSection(title: LocalizedString.advanced.uppercased(), cells: cells)
     }
 
     private var connectionSection: TableViewSection? {
