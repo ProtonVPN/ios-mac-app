@@ -446,6 +446,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public var safeMode: Bool {
         get {
+            // default to false when the feature is not enabled
+            guard featureFlags.safeMode else {
+                return false
+            }
+
             return storage.defaults.bool(forKey: Keys.safeMode.rawValue)
         }
         set {
