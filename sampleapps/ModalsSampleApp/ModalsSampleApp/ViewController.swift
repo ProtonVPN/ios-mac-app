@@ -23,7 +23,9 @@ class ViewController: UITableViewController {
     
     let upsells: [(type: UpsellType, title: String)] = [(.allCountries(Constants()), "All countries"),
                                                         (.secureCore, "Secure Core"),
-                                                        (.netShield, "Net Shield")]
+                                                        (.netShield, "Net Shield"),
+                                                        (.safeMode, "Safe Mode"),
+                                                        (.moderateNAT, "Moderate NAT")]
 
     let modalsFactory = ModalsFactory(colors: Colors())
     

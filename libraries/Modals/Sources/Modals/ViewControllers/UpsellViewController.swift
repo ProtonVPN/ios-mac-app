@@ -82,6 +82,7 @@ public final class UpsellViewController: UIViewController {
         guard let upsellType = upsellType else { return }
         let upsellFeature = upsellType.upsellFeature()
         titleLabel.text = upsellFeature.title
+        subtitleLabel.text = upsellFeature.subtitle
         featuresFooterLabel.text = upsellFeature.footer
         featureArtImageView.image = upsellFeature.artImage
 
