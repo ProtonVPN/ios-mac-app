@@ -388,9 +388,9 @@ public class VpnGateway: VpnGatewayProtocol {
                     log.debug("WireGuard + KillSwitch on Catalina detected. Asking user to change one or another.", category: .connectionConnect, event: .scan)
                     alertService?.push(alert: WireguardKSOnCatalinaAlert(killswiftOffHandler: {
                         self.propertiesManager.killSwitch = false
-                        self.connect(with: connectionProtocol, server: server, netShieldType: netShieldType, natType: natType)
+                        self.connect(with: connectionProtocol, server: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
                     }, openVpnHandler: {
-                        self.connect(with: .vpnProtocol(.openVpn(.tcp)), server: server, netShieldType: netShieldType, natType: natType)
+                        self.connect(with: .vpnProtocol(.openVpn(.tcp)), server: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
                     }))
                     return
                     
