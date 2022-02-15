@@ -68,6 +68,8 @@ final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
                 return .attributedKeyValue(key: feature.name.attributed(withColor: .normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
                     if feature is NetShieldType {
                         self?.upsell.presentNetShieldUpsell()
+                    } else if feature is NATType {
+                        self?.upsell.presentNATUpsell()
                     } else {
                         self?.planService.presentPlanSelection()
                     }
