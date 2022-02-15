@@ -47,6 +47,7 @@ public protocol VpnManagerProtocol {
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
     func set(natType: NATType)
+    func set(safeMode: Bool)
 }
 
 public protocol VpnManagerFactory {
@@ -320,6 +321,16 @@ public class VpnManager: VpnManagerProtocol {
         // also update the last connection request and active connection for retries and reconnections
         updateActiveConnection(natType: natType)
         localAgent.update(natType: natType)
+    }
+
+    public func set(safeMode: Bool) {
+        guard let localAgent = localAgent else {
+            log.error("Trying to change Safe Mode via local agent when local agent instance does not exist", category: .settings)
+            return
+        }
+
+        updateActiveConnection(safeMode: safeMode)
+        localAgent.update(safeMode: safeMode)
     }
     
     // MARK: - Private functions

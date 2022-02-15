@@ -82,6 +82,10 @@ public class VpnManagerMock: VpnManagerProtocol {
         
     }
 
+    public func set(safeMode: Bool) {
+        
+    }
+
     public private(set) var isLocalAgentConnected: Bool?
     public var localAgentStateChanged: (() -> Void)?
 }
