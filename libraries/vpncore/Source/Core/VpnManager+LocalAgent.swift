@@ -127,6 +127,20 @@ extension VpnManager {
             break
         }
     }
+
+    func updateActiveConnection(safeMode: Bool) {
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(safeMode: safeMode)
+        switch currentVpnProtocol {
+        case .ike:
+            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(safeMode: safeMode)
+        case .openVpn:
+            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(safeMode: safeMode)
+        case .wireGuard:
+            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(safeMode: safeMode)
+        case nil:
+            break
+        }
+    }
 }
 
 extension VpnManager: LocalAgentDelegate {

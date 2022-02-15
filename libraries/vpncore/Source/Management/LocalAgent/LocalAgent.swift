@@ -39,6 +39,7 @@ protocol LocalAgent {
     func update(netshield: NetShieldType)
     func update(vpnAccelerator: Bool)
     func update(natType: NATType)
+    func update(safeMode: Bool)
     func unjail()
 }
 
