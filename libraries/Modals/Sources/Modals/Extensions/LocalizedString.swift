@@ -28,6 +28,16 @@ public enum LocalizedString {
   }
   /// And many more premium features
   public static var modalsUpsellFeaturesFooter: String { return LocalizedString.tr("Localizable", "modals_upsell_features_footer") }
+  /// Moderate NAT (also known as Nat Type 2) can improve your online experience with various applications and online video games.
+  /// 
+  /// Unlock this and other features with a Plus plan.
+  public static var modalsUpsellFeaturesModerateNatSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_moderate_nat_subtitle") }
+  /// Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network. Unlock this and other features with a Plus plan.
+  public static var modalsUpsellFeaturesSafeModeSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_safe_mode_subtitle") }
+  /// When you upgrade to Plus
+  public static var modalsUpsellFeaturesSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_subtitle") }
+  /// Enable Moderate NAT
+  public static var modalsUpsellModerateNatTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_moderate_nat_title") }
   /// Block ads and trackers
   public static var modalsUpsellNetShieldAds: String { return LocalizedString.tr("Localizable", "modals_upsell_net_shield_ads") }
   /// Browse at the highest speeds
@@ -36,6 +46,8 @@ public enum LocalizedString {
   public static var modalsUpsellNetShieldMalware: String { return LocalizedString.tr("Localizable", "modals_upsell_net_shield_malware") }
   /// Enjoy ad-free browsing with NetShield
   public static var modalsUpsellNetShieldTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_net_shield_title") }
+  /// Allow traffic to non-standard ports
+  public static var modalsUpsellSafeModeTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_safe_mode_title") }
   /// Protect yourself from network attacks
   public static var modalsUpsellSecureCoreAttacks: String { return LocalizedString.tr("Localizable", "modals_upsell_secure_core_attacks") }
   /// Add another layer of encryption to your VPN connection

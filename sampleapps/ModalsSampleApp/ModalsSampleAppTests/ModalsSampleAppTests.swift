@@ -25,6 +25,8 @@ final class ModalsSampleAppTests: XCTestCase {
         XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .secureCore))
         XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .netShield))
         XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .allCountries(Constants())))
+        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .safeMode))
+        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .moderateNAT))
     }
 }
 

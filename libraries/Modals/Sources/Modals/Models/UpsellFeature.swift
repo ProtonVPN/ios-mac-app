@@ -20,6 +20,7 @@ import UIKit
 
 struct UpsellFeature {
     let title: String
+    let subtitle: String
     let features: [Feature]
     let artImage: UIImage
     let footer: String?
