@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & UpsellFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & UpsellFactory & SafeModePropertyProviderFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -37,6 +37,7 @@ final class SettingsViewModel {
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
+    private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -357,14 +358,48 @@ final class SettingsViewModel {
         ]
     }
 
-    private var advancedSection: TableViewSection {
-        var cells: [TableViewCellModel] = [
+    private var safeModeSection: [TableViewCellModel] {
+        return [
+            .toggle(title: LocalizedString.nonStandardPortsTitle, on: !propertiesManager.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
+                self.vpnStateConfiguration.getInfo { info in
+                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                    case .withConnectionUpdate:
+                        self.propertiesManager.safeMode.toggle()
+                        self.vpnManager.set(safeMode: self.propertiesManager.safeMode)
+                        callback(!self.propertiesManager.safeMode)
+                    case .withReconnect:
+                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                            self.propertiesManager.safeMode.toggle()
+                            callback(self.propertiesManager.vpnAcceleratorEnabled)
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "Safe Mode"])
+                            self.vpnGateway?.retryConnection()
+                        }))
+                    case .immediately:
+                        self.propertiesManager.safeMode.toggle()
+                        callback(!self.propertiesManager.safeMode)
+                    }
+                }
+            },
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))
+        ]
+    }
+
+    private var alternativeRoutingSection: [TableViewCellModel] {
+        return [
             .toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
                 self.propertiesManager.alternativeRouting.toggle()
                 callback(self.propertiesManager.alternativeRouting)
             },
             .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
         ]
+    }
+
+    private var advancedSection: TableViewSection {
+        var cells: [TableViewCellModel] = alternativeRoutingSection
+
+        if propertiesManager.featureFlags.safeMode {
+            cells.append(contentsOf: safeModeSection)
+        }
 
         if propertiesManager.featureFlags.moderateNAT {
             cells.append(contentsOf: natTypeSection)
