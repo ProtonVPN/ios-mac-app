@@ -33,8 +33,9 @@ public protocol PropertiesManagerProtocol: class {
     static var vpnProtocolNotification: Notification.Name { get }
     static var excludeLocalNetworksNotification: Notification.Name { get }
     static var vpnAcceleratorNotification: Notification.Name { get }
-    static var killSwitchNotification: Notification.Name { get }
+    static var killSwitchNotification: Notification.Name { get }        
     static var smartProtocolNotification: Notification.Name { get }    
+    static var featureFlagsNotification: Notification.Name { get }
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
