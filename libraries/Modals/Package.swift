@@ -24,7 +24,7 @@ let package = Package(
             resources: [
                 .process("Views/FeatureView.xib"),
                 .process("ViewControllers/UpsellViewController.storyboard"),
-                .process("Assets.xcassets")
+                .process("Resources/Media.xcassets")
             ]
         )
     ]

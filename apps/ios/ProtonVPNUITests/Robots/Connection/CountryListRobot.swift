@@ -49,11 +49,5 @@ class CountryListRobot: CoreElements {
             staticText(HeadTitle).wait().checkExists()
             return CountryListRobot()
         }
-        
-        @discardableResult
-        func subscribtionRequired() -> CountryListRobot {
-            staticText(warningMessage).checkExists()
-            return CountryListRobot()
-        }
     }
 }

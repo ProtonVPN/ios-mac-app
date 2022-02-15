@@ -79,7 +79,7 @@ class ProfilesTests: ProtonVPNUITests {
             .goToProfilesTab()
             .addNewProfile()
             .setSecureCoreProfile(profileName)
-            .verify.subscribtionRequiredMessage()
+            .verify.upsellMessage()
     }
     
     func testBasicUserCannotCreateProfileWithSecureCore() {
@@ -93,7 +93,7 @@ class ProfilesTests: ProtonVPNUITests {
             .goToProfilesTab()
             .addNewProfile()
             .setSecureCoreProfile(profileName)
-            .verify.subscribtionRequiredMessage()
+            .verify.upsellMessage()
     }
     
     func testMakeDefaultAndSecureCoreProfilePlusUser() {

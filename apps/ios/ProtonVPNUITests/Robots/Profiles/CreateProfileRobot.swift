@@ -18,7 +18,7 @@ fileprivate let saveProfileButton = "Save"
 fileprivate let tabBars = "Profiles"
 fileprivate let secureCoreToggle = "Secure Core"
 fileprivate let defaultprofileToggle = "Make Default Profile"
-fileprivate let subscribtionRequired = "Plus or Visionary subscription required"
+fileprivate let upsellSecureCore = "Double the encryption with Secure Core"
 fileprivate let okButton = "OK"
 
 class CreateProfileRobot: CoreElements {
@@ -130,8 +130,8 @@ class CreateProfileRobot: CoreElements {
         }
         
         @discardableResult
-        func subscribtionRequiredMessage() -> CreateProfileRobot{
-            staticText(subscribtionRequired).checkExists()
+        func upsellMessage() -> CreateProfileRobot {
+            staticText(upsellSecureCore).checkExists()
             return CreateProfileRobot()
         }
     }

@@ -22,7 +22,9 @@ import XCTest
 
 final class ModalsSampleAppTests: XCTestCase {
     func testUpsellViewControllerCreation() throws {
-        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(constants: Constants()))
+        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .secureCore))
+        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .netShield))
+        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .allCountries(Constants())))
     }
 }
 
