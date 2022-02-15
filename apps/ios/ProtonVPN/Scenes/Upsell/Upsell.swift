@@ -46,6 +46,16 @@ class Upsell {
         presentUpsell(upsellViewController)
     }
     
+    func presentSafeModeUpsell() {
+        let upsellViewController = factory.upsellViewController(upsellType: .safeMode)
+        presentUpsell(upsellViewController)
+    }
+    
+    func presentNATUpsell() {
+        let upsellViewController = factory.upsellViewController(upsellType: .moderateNAT)
+        presentUpsell(upsellViewController)
+    }
+    
     private func presentUpsell(_ upsellViewController: UpsellViewController) {
         upsellViewController.delegate = self
         presentedUpsellViewController = upsellViewController
