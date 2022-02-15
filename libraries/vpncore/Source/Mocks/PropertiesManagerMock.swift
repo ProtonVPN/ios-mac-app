@@ -34,6 +34,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var smartProtocolNotification: Notification.Name = Notification.Name("")
     public static var natTypeNotification: Notification.Name = Notification.Name("")
     public static let featureFlagsNotification: Notification.Name = Notification.Name("")
+    public static let safeModeNotification: Notification.Name = Notification.Name("")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
@@ -85,6 +86,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var connectionProtocol: ConnectionProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
+    public var safeMode: Bool = false
     
     private var customBools: [String: Bool] = [:]
     private var defaultCustomBoolValue = false

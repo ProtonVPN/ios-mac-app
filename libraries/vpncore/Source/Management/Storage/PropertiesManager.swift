@@ -36,6 +36,7 @@ public protocol PropertiesManagerProtocol: class {
     static var killSwitchNotification: Notification.Name { get }        
     static var smartProtocolNotification: Notification.Name { get }    
     static var featureFlagsNotification: Notification.Name { get }
+    static var safeModeNotification: Notification.Name { get }
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
@@ -92,6 +93,8 @@ public protocol PropertiesManagerProtocol: class {
     var wireguardConfig: WireguardConfig { get set }
 
     var smartProtocolConfig: SmartProtocolConfig { get set }
+
+    var safeMode: Bool { get set }
     
     func logoutCleanup()
     
@@ -154,7 +157,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         // Features
         case featureFlags = "FeatureFlags"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
-        case vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
+        case vpnAcceleratorEnabled = "VpnAcceleratorEnabled"        
+        case safeMode = "SafeMode"
         
         case humanValidationFailed = "humanValidationFailed"
         case alternativeRouting = "alternativeRouting"
@@ -176,6 +180,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")    
     public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
+    public static let safeModeNotification: Notification.Name = Notification.Name("SafeModeChanged")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
@@ -438,6 +443,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground.rawValue)
         }
     }
+
+    public var safeMode: Bool {
+        get {
+            return storage.defaults.bool(forKey: Keys.safeMode.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.safeMode.rawValue)
+            postNotificationOnUIThread(PropertiesManager.safeModeNotification, object: newValue)
+        }
+    }
     
     public var featureFlags: FeatureFlags {
         get {
@@ -567,7 +582,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         storage.defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
-            Keys.smartProtocol.rawValue: defaultSmartProtocol
+            Keys.smartProtocol.rawValue: defaultSmartProtocol,
+            Keys.safeMode.rawValue: false
         ])
     }
     
@@ -586,6 +602,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
         killSwitch = false
+        safeMode = false
+        natType = .default
     }
     
     func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {
