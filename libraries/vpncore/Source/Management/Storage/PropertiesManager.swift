@@ -583,7 +583,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
             Keys.smartProtocol.rawValue: defaultSmartProtocol,
-            Keys.safeMode.rawValue: false
+            Keys.safeMode.rawValue: true
         ])
     }
     
@@ -602,7 +602,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
         killSwitch = false
-        safeMode = false
+        safeMode = true
         natType = .default
     }
     
