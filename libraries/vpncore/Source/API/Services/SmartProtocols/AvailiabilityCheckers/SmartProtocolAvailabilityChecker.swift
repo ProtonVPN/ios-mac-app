@@ -44,25 +44,30 @@ extension SmartProtocolAvailabilityChecker {
     }
 
     func checkAvailability(server: ServerIp, ports: [Int], completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        let group = DispatchGroup()
-        var availablePorts: [Int] = []
-        let lockQueue = DispatchQueue(label: "\(protocolName)AvailabilityCheckerQueue")
-
         log.debug("Checking \(protocolName) availability for \(server.entryIp)", category: .connectionConnect, event: .scan)
 
-        for port in ports {
-            group.enter()
-            ping(protocolName: protocolName, server: server, port: port, timeout: timeout) { result in
-                lockQueue.async {
-                    if result {
+        DispatchQueue.global().async { [weak self] in
+            guard let `self` = self else { return }
+            let group = DispatchGroup()
+            var availablePorts: [Int] = []
+            let lockQueue = DispatchQueue(label: "ch.proton.availability_checker.\(self.protocolName)")
+
+            for port in ports {
+                group.enter()
+                self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { receivedResponse in
+                    lockQueue.sync {
+                        guard receivedResponse else {
+                            return
+                        }
                         availablePorts.append(port)
                     }
                     group.leave()
                 }
             }
-        }
 
-        group.notify(queue: .global()) {
+            // don't use group.notify here - the dispatch group in this block will be freed
+            // when execution leaves this scope
+            group.wait()
             completion(availablePorts.isEmpty ? .unavailable : .available(ports: availablePorts))
         }
     }

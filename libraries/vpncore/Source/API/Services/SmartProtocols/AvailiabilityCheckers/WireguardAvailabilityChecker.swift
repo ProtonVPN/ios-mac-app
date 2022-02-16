@@ -30,29 +30,38 @@ final class WireguardAvailabilityChecker {
     }
     
     /// Pings all the ports and returns on the first successfull try.
-    func getFirtToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
+    func getFirstToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
         log.debug("Getting best port for \(server.entryIp) on Wireguard", category: .connectionConnect, event: .scan)
-        
-        let group = DispatchGroup()
-        let lockQueue = DispatchQueue(label: "\(protocolName)PortCheckerQueue")
-        var portAlreadyFound = false // Prevents several calls to completion closure
-        
-        for port in config.defaultPorts.shuffled() {
-            group.enter()
-            ping(protocolName: protocolName, server: server, port: port, timeout: timeout) { success in
-                lockQueue.async {
-                    guard success && !portAlreadyFound else {
-                        group.leave()
-                        return
+
+        DispatchQueue.global().async { [weak self] in
+            guard let `self` = self else { return }
+
+            let group = DispatchGroup()
+            let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(self.protocolName)")
+            var portAlreadyFound = false // Prevents several calls to completion closure
+
+            for port in self.config.defaultPorts.shuffled() {
+                group.enter()
+                self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { success in
+                    defer { group.leave() }
+
+                    let go = lockQueue.sync { () -> Bool in
+                        guard success && !portAlreadyFound else {
+                            return false
+                        }
+                        portAlreadyFound = true
+                        log.debug("First port to respond is \(port). Returning this port to be used on Wireguard.", category: .connectionConnect, event: .scan)
+                        return true
                     }
-                    portAlreadyFound = true
-                    log.debug("First port to respond is \(port). Returning this port to be used on Wireguard.", category: .connectionConnect, event: .scan)
+
+                    guard go else { return }
                     completion(port)
-                    group.leave()
                 }
             }
-        }
-        group.notify(queue: .global()) {
+
+            // don't use group.notify here - the dispatch group in this block will be freed
+            // when execution leaves this scope
+            group.wait()
             if !portAlreadyFound {
                 log.error("No working port found on Wireguard", category: .connectionConnect, event: .scan)
                 completion(nil)

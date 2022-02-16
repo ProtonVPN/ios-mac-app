@@ -28,7 +28,7 @@ final class SmartPortSelectorImplementation {
         switch vpnProtocol {
         case .wireGuard: // Ping all the ports to determine which are available
             let checker = WireguardAvailabilityChecker(config: wireguardConfig)
-            checker.getFirtToRespondPort(server: serverIp) { result in
+            checker.getFirstToRespondPort(server: serverIp) { result in
                 if let port = result {
                     completion([port])
                 } else {
