@@ -64,9 +64,23 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return ips.count > 1
     }
     
-    public var isFree: Bool {
+    public lazy var isFree: Bool = {
         return name.lowercased().contains("free")
-    }
+    }()
+
+    /// The server name, split into the name prefix and sequence number (if it exists).
+    public lazy var splitName: (serverName: String, sequenceNumber: Int?) = {
+        let nameArray = name.split(separator: "#")
+        guard nameArray.count == 2 else {
+            return (name, nil)
+        }
+        let serverName = String(nameArray[0])
+        // some of the server sequence numbers might have the trailing "-TOR" - we strip it
+        guard let numberString = nameArray[1].split(separator: "-").first, let number = Int(String(numberString)) else {
+            return (serverName, 0)
+        }
+        return (serverName, number)
+    }()
     
     public var isSecureCore: Bool {
         return self.feature.contains(.secureCore)
@@ -332,8 +346,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
         // Servers whose name contains word FREE come
         // first in the ordering.
-        let lhsIsFree = lhs.name.contains("FREE")
-        let rhsIsFree = rhs.name.contains("FREE")
+        let lhsIsFree = lhs.isFree
+        let rhsIsFree = rhs.isFree
         if lhsIsFree, rhsIsFree {
             return lhs.name < rhs.name
         }
@@ -343,23 +357,15 @@ public class ServerModel: NSObject, NSCoding, Codable {
         if !lhsIsFree, rhsIsFree {
             return false
         }
-        
-        // we split the name into the server name and the sequence number
-        let serverModel1Array = lhs.name.split(separator: "#")
-        let serverModel2Array = rhs.name.split(separator: "#")
 
-        // if server names don't have the sequence numbers, it's enough to compare the names
-        if serverModel1Array.count == 2 && serverModel2Array.count == 2 {
-            if serverModel1Array[0] != serverModel2Array[0] {
-                return serverModel1Array[0] < serverModel2Array[0]
-            } else {
-                // some of the server sequence numbers might have the trailing "-TOR" - we strip it
-                let number1 = Int(String(serverModel1Array[1]).split(separator: "-")[0]) ?? 0
-                let number2 = Int(String(serverModel2Array[1]).split(separator: "-")[0]) ?? 0
-                return number1 < number2
-            }
-        } else {
+        let (lhsSplitName, rhsSplitName) = (lhs.splitName, rhs.splitName)
+        guard let lhsSeqNum = lhsSplitName.sequenceNumber, let rhsSeqNum = rhsSplitName.sequenceNumber else {
+            // if server names don't have the sequence numbers, it's enough to compare the names
             return lhs.name < rhs.name
         }
+        guard lhsSplitName.serverName == rhsSplitName.serverName else {
+            return lhsSplitName.serverName < rhsSplitName.serverName
+        }
+        return lhsSeqNum < rhsSeqNum
     }
 }
