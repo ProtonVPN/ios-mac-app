@@ -35,7 +35,7 @@ public class LocalizationUtility {
     
     public func countryName(forCode countryCode: String) -> String? {
         let locale: Locale
-        if let language = Locale.preferredLanguages[0].components(separatedBy: "-").first {
+        if let language = Locale.preferredLanguages.first?.components(separatedBy: "-").first {
             locale = Locale(identifier: language)
         } else {
             locale = Locale.current
