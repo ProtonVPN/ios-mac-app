@@ -25,5 +25,3 @@ protocol PaidFeature: Equatable {
 }
 
 extension NetShieldType: PaidFeature { }
-
-extension NATType: PaidFeature { }

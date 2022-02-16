@@ -41,6 +41,7 @@ final class SettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
+    private lazy var upsell: Upsell = factory.makeUpsell()
     private let protocolService: ProtocolService
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
@@ -325,35 +326,37 @@ final class SettingsViewModel {
         ]
     }
 
-    private var natTypeSection: [TableViewCellModel] {
+    private var moderateNATSection: [TableViewCellModel] {
         return [
-            .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [weak self] in
-                guard let self = self else {
+            .toggle(title: LocalizedString.moderateNatTitle, on: natTypePropertyProvider.natType == .moderateNAT, enabled: true, handler: { [weak self] (toggleOn, callback) in
+                guard let self = self, self.natTypePropertyProvider.isUserEligibleForNATTypeChange else {
+                    callback(self?.natTypePropertyProvider.natType == .moderateNAT)
+                    self?.upsell.presentNATUpsell()
                     return
                 }
 
-                self.pushNATTypeSelectionViewController(selectedFeature: self.natTypePropertyProvider.natType, shouldSelectNewValue: { [weak self] type, approve in
-                    self?.vpnStateConfiguration.getInfo { [weak self] info in
-                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                        case .withConnectionUpdate:
-                            approve()
-                            self?.vpnManager.set(natType: type)
-                        case .withReconnect:
-                            self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.natTypeChangeTitle, confirmHandler: { [weak self] in
-                                approve()
-                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                                self?.vpnGateway?.reconnect(with: type)
-                                self?.connectionStatusService.presentStatusViewController()
-                            }))
-                        case .immediately:
-                            approve()
-                        }
+                let type = toggleOn ? NATType.moderateNAT: NATType.strictNAT
+
+                self.vpnStateConfiguration.getInfo { [weak self] info in
+                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                    case .withConnectionUpdate:
+                        self?.propertiesManager.natType = type
+                        self?.vpnManager.set(natType: type)
+                        callback(toggleOn)
+                    case .withReconnect:
+                        self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.moderateNatChangeTitle, confirmHandler: { [weak self] in
+                            self?.propertiesManager.natType = type
+                            callback(toggleOn)
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
+                            self?.vpnGateway?.retryConnection()
+                        }))
+                    case .immediately:
+                        self?.propertiesManager.natType = type
+                        callback(toggleOn)
                     }
-                }, onFeatureChange: { [weak self] type in
-                    self?.propertiesManager.natType = type
-                })
+                }
             }),
-            .tooltip(text: LocalizedString.natTypeExplanation.replacingOccurrences(of: "\n\n", with: " "))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.moderateNatExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.moderateNatExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.moderateNAT))
         ]
     }
 
@@ -369,7 +372,7 @@ final class SettingsViewModel {
         }
 
         if propertiesManager.featureFlags.moderateNAT {
-            cells.append(contentsOf: natTypeSection)
+            cells.append(contentsOf: moderateNATSection)
         }
 
         return cells.isEmpty ? nil : TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
@@ -568,10 +571,6 @@ final class SettingsViewModel {
     
     private func pushNetshieldSelectionViewController(selectedFeature: NetShieldType, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<NetShieldType>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<NetShieldType>.FeatureChangeCallback) {
         pushHandler?(makePaidFeatureSelectionViewController(title: LocalizedString.netshieldTitle, allFeatures: NetShieldType.allCases, selectedFeature: selectedFeature, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange))
-    }
-
-    private func pushNATTypeSelectionViewController(selectedFeature: NATType, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<NATType>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<NATType>.FeatureChangeCallback) {
-        pushHandler?(makePaidFeatureSelectionViewController(title: LocalizedString.natTypeTitle, allFeatures: NATType.allCases, selectedFeature: selectedFeature, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange))
     }
 
     private func makePaidFeatureSelectionViewController<T>(title: String, allFeatures: [T], selectedFeature: T, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<T>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<T>.FeatureChangeCallback) -> PaidFeatureSelectionViewController<T> where T: PaidFeature {
