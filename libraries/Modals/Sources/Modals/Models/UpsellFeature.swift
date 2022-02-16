@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
-
-struct UpsellFeature {
-    let title: String
-    let subtitle: String
-    let features: [Feature]
-    let artImage: UIImage
-    let footer: String?
+public struct UpsellFeature {
+    public let title: String
+    public let subtitle: String
+    public let features: [Feature]
+    public let artImage: ImageAsset.Image
+    public let footer: String?
 }

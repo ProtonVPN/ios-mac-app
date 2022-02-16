@@ -26,7 +26,7 @@ import AppKit
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory
+    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory
     
     private let factory: Factory
     
@@ -41,10 +41,14 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.netshieldSupport
     }
+
+    override var alert: UpsellAlert {
+        NetShieldUpsellAlert()
+    }
     
     init( _ factory: Factory ) {
         self.factory = factory
-        super.init( factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager() )
+        super.init( factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
@@ -61,11 +65,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {
-        return QuickSettingNetshieldOption(level: level, vpnGateway: vpnGateway, vpnManager: vpnManager, netShieldPropertyProvider: netShieldPropertyProvider, vpnStateConfiguration: vpnStateConfiguration, isActive: netShieldPropertyProvider.netShieldType == level, currentUserTier: currentUserTier, openUpgradeLink: openUpgradeLink)
+        return QuickSettingNetshieldOption(level: level, vpnGateway: vpnGateway, vpnManager: vpnManager, netShieldPropertyProvider: netShieldPropertyProvider, vpnStateConfiguration: vpnStateConfiguration, isActive: netShieldPropertyProvider.netShieldType == level, currentUserTier: currentUserTier, openUpgradeLink: presentUpsellAlert)
     }
     
     private var currentUserTier: Int {
         return(try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
     }
-    
 }

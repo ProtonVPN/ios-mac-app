@@ -49,12 +49,14 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     
     let vpnGateway: VpnGatewayProtocol
     let appStateManager: AppStateManager
+    let alertService: CoreAlertService
     
     var dismiss: (() -> Void)?
     
-    init( _ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager ) {
+    init( _ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
+        self.alertService = alertService
         super.init()
     }
     
@@ -65,7 +67,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     func viewDidLoad() {
         viewController?.dropdownTitle.attributedStringValue = title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         viewController?.dropdownUgradeButton.target = self
-        viewController?.dropdownUgradeButton.action = #selector(openUpgradeLink)
+        viewController?.dropdownUgradeButton.action = #selector(presentUpsellAlert)
         viewController?.dropdownLearnMore.target = self
         viewController?.dropdownLearnMore.action = #selector(didTapLearnMore)
     }
@@ -91,8 +93,17 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     @objc private func didTapLearnMore() {
         SafariService.openLink(url: learnLink )
     }
+
+    var alert: UpsellAlert {
+        assertionFailure("This variable should not be used directly. Please inherit and provide your own implementation of `alert`")
+        return UpsellAlert()
+    }
     
-    @objc func openUpgradeLink() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade )
+    @objc func presentUpsellAlert() {
+        let alert = alert
+        alert.upgradeAction = {
+            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+        }
+        alertService.push(alert: alert)
     }
 }

@@ -41,7 +41,7 @@ extension NSWindow {
         backgroundColor = .protonGreyShade()
     }
     
-    // For windows without any boarders such as the welcome window
+    // For windows without any borders such as the welcome window
     func applyInfoAppearance() {
         styleMask = [.titled, .fullSizeContentView]
         isOpaque = false

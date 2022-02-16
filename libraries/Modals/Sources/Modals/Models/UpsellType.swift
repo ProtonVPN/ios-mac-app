@@ -16,22 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
-
 public enum UpsellType {
     case netShield
     case secureCore
-    case allCountries(UpsellConstantsProtocol)
+    case allCountries(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int)
     case safeMode
     case moderateNAT
 
-    func upsellFeature() -> UpsellFeature {
+    public func upsellFeature() -> UpsellFeature {
         switch self {
         case .netShield:
             let title = LocalizedString.modalsUpsellNetShieldTitle
             let subtitle = LocalizedString.modalsUpsellFeaturesSubtitle
             let features: [Feature] = [.blockAds, .protectFromMalware, .highSpeedNetshield]
-            let artImage = Asset.netshield.image
+#if os(iOS)
+            let artImage = Asset.netshieldIOS.image
+#else
+            let artImage = Asset.netshieldMacOS.image
+#endif
             return UpsellFeature(title: title, subtitle: subtitle, features: features, artImage: artImage, footer: nil)
         case .secureCore:
             let title = LocalizedString.modalsUpsellSecureCoreTitle
@@ -39,17 +41,21 @@ public enum UpsellType {
             let features: [Feature] = [.routeSecureServers, .addLayer, .protectFromAttacks]
             let artImage = Asset.secureCore.image
             return UpsellFeature(title: title, subtitle: subtitle, features: features, artImage: artImage, footer: nil)
-        case .allCountries(let constants):
-            let title = LocalizedString.modalsUpsellAllCountriesTitle(constants.numberOfServers, constants.numberOfCountries)
+        case .allCountries(let numberOfDevices, let numberOfServers, let numberOfCountries):
+            let title = LocalizedString.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
             let subtitle = LocalizedString.modalsUpsellFeaturesSubtitle
-            let features: [Feature] = [.streaming, .multipleDevices(constants.numberOfDevices), .netshield, .highSpeed]
+            let features: [Feature] = [.streaming, .multipleDevices(numberOfDevices), .netshield, .highSpeed]
             let artImage = Asset.plusCountries.image
             let footer = LocalizedString.modalsUpsellFeaturesFooter
             return UpsellFeature(title: title, subtitle: subtitle, features: features, artImage: artImage, footer: footer)
         case .safeMode:
             let title = LocalizedString.modalsUpsellSafeModeTitle
             let subtitle = LocalizedString.modalsUpsellFeaturesSafeModeSubtitle
-            let artImage = Asset.safeMode.image
+#if os(iOS)
+            let artImage = Asset.safeModeIOS.image
+#else
+            let artImage = Asset.safeModeMacOS.image
+#endif
             return UpsellFeature(title: title, subtitle: subtitle, features: [], artImage: artImage, footer: nil)
         case .moderateNAT:
             let title = LocalizedString.modalsUpsellModerateNatTitle

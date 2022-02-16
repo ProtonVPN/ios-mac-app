@@ -17,11 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Modals
+import Modals_iOS
 import UIKit
 
 class ViewController: UITableViewController {
     
-    let upsells: [(type: UpsellType, title: String)] = [(.allCountries(Constants()), "All countries"),
+    let upsells: [(type: UpsellType, title: String)] = [(.allCountries(numberOfDevices: 10, numberOfServers: 1300, numberOfCountries: 61), "All countries"),
                                                         (.secureCore, "Secure Core"),
                                                         (.netShield, "Net Shield"),
                                                         (.safeMode, "Safe Mode"),
@@ -59,12 +60,6 @@ extension ViewController: UpsellViewControllerDelegate {
     func userDidDismissUpsell() {
         dismiss(animated: true, completion: nil)
     }
-}
-
-struct Constants: UpsellConstantsProtocol {
-    var numberOfDevices: Int = 10
-    var numberOfServers: Int = 1300
-    var numberOfCountries: Int = 61
 }
 
 struct Colors: ModalsColors {

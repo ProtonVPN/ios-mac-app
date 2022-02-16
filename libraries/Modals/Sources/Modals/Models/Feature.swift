@@ -17,9 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 
-enum Feature {
+public enum Feature {
     case streaming
     case multipleDevices(Int)
     case netshield
@@ -33,7 +32,7 @@ enum Feature {
 }
 
 extension Feature {
-    func title() -> String {
+    public func title() -> String {
         switch self {
         case .streaming:
             return LocalizedString.modalsUpsellAllCountriesFeatureStreaming
@@ -58,8 +57,7 @@ extension Feature {
         }
     }
 
-    var image: UIImage {
-        let imageName: String
+    public var image: ImageAsset.Image {
         switch self {
         case .streaming:
             return Asset.streamingIcon.image

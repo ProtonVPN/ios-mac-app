@@ -26,11 +26,15 @@ import AppKit
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory
+    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory
     
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    
+    override var alert: UpsellAlert {
+        SecureCoreUpsellAlert()
+    }
     
     override var title: String! {
         return LocalizedString.secureCore
@@ -42,7 +46,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     init( _ factory: Factory ) {
         self.factory = factory
-        super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager())
+        super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
@@ -78,7 +82,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_securecore_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: true), selectCallback: {
             guard !self.requiresUpdate(secureCore: true) else {
-                self.openUpgradeLink()
+                self.presentUpsellAlert()
                 return
             }
             self.vpnGateway.changeActiveServerType(.secureCore)

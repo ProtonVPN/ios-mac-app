@@ -23,6 +23,8 @@
 import Foundation
 import vpncore
 import AppKit
+import Modals
+import Modals_macOS
 
 class MacAlertService {
     
@@ -84,7 +86,22 @@ extension MacAlertService: CoreAlertService {
             
         case let upgradeRequiredAlert as UpgradeRequiredAlert:
             show(upgradeRequiredAlert)
-            
+
+        case let alert as AllCountriesUpsellAlert:
+            show(alert: alert, upsellType: .allCountries(numberOfDevices: alert.numberOfDevices, numberOfServers: alert.numberOfServers, numberOfCountries: alert.numberOfCountries))
+
+        case let alert as ModerateNATUpsellAlert:
+            show(alert: alert, upsellType: .moderateNAT)
+
+        case let alert as SafeModeUpsellAlert:
+            show(alert: alert, upsellType: .safeMode)
+
+        case let alert as SecureCoreUpsellAlert:
+            show(alert: alert, upsellType: .secureCore)
+
+        case let alert as NetShieldUpsellAlert:
+            show(alert: alert, upsellType: .netShield)
+
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
             
@@ -330,6 +347,13 @@ extension MacAlertService: CoreAlertService {
             alert.failure(alert.error)
         }))
         showDefaultSystemAlert(alert)
+    }
+    
+    private func show(alert: UpsellAlert, upsellType: UpsellType) {
+        let factory = ModalsFactory(colors: UpsellColors())
+
+        let upsellViewController = factory.upsellViewController(upsellType: upsellType, upgradeAction: alert.upgradeAction)
+        windowService.presentKeyModal(viewController: upsellViewController)
     }
 
     private func show(_ alert: AnnouncmentOfferAlert) {
