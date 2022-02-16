@@ -359,8 +359,16 @@ final class SettingsViewModel {
     }
 
     private var safeModeSection: [TableViewCellModel] {
+        // the UI shows the "opposite" value of the safe mode flag
+        // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [
             .toggle(title: LocalizedString.nonStandardPortsTitle, on: !propertiesManager.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
+                guard self.safeModePropertyProvider.isUserEligibleForSafeModeDisabling else {
+                    callback(!self.propertiesManager.safeMode)
+                    self.upsell.presentSafeModeUpsell()
+                    return
+                }
+
                 self.vpnStateConfiguration.getInfo { info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                     case .withConnectionUpdate:
