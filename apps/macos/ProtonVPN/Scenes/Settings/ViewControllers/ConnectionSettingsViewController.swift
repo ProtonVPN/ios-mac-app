@@ -69,7 +69,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var natTypeLabel: PVPNTextField!
     @IBOutlet private weak var natTypeSeparator: NSBox!
     @IBOutlet private weak var natTypeInfoIcon: NSImageView!
-    @IBOutlet private weak var natTypeList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var natTypeButton: SwitchButton!
 
     private var viewModel: ConnectionSettingsViewModel
     
@@ -190,17 +190,17 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
 
     private func setupNatTypeItem() {
-        natTypeView.isHidden = !viewModel.isNATTypeEnabled
-        natTypeLabel.attributedStringValue = LocalizedString
-            .natTypeTitle
-            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        natTypeList.isBordered = false
-        natTypeList.target = self
-        natTypeList.action = #selector(natTypeItemSelected)
+        natTypeView.isHidden = !viewModel.isNATTypeFeatureEnabled
+        natTypeLabel.attributedStringValue = LocalizedString.moderateNatTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         natTypeInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        natTypeInfoIcon.toolTip = LocalizedString.natTypeExplanation
+        let tooltip = LocalizedString.moderateNatExplanation
+            .replacingOccurrences(of: LocalizedString.moderateNatExplanationLink, with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        natTypeInfoIcon.toolTip = String(tooltip)
         natTypeSeparator.fillColor = .protonLightGrey()
-        refreshNATType()
+
+        natTypeButton.setState(viewModel.natType == .moderateNAT ? .on : .off)
+        natTypeButton.delegate = self
     }
     
     private func refreshAutoConnect() {
@@ -239,18 +239,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
         protocolList.selectItem(at: viewModel.protocolProfileIndex)
     }
-
-    private func refreshNATType() {
-        natTypeList.removeAllItems()
-        (0..<NATType.allCases.count).forEach { index in
-            let menuItem = NSMenuItem()
-            let (text, canBeSelected) = viewModel.natTypeItem(for: index)
-            menuItem.attributedTitle = text
-            menuItem.isEnabled = canBeSelected
-            natTypeList.menu?.addItem(menuItem)
-        }
-        natTypeList.selectItem(at: viewModel.natTypeIndex)
-    }
     
     // MARK: - ReloadableViewController
     
@@ -287,10 +275,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @objc private func protocolItemSelected() {
         viewModel.setProtocol(protocolList.indexOfSelectedItem)
     }
-
-    @objc private func natTypeItemSelected() {
-        viewModel.setNatType(natTypeList.indexOfSelectedItem)
-    }
 }
 
 extension ConnectionSettingsViewController: SwitchButtonDelegate {
@@ -303,6 +287,9 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
             
         case vpnAcceleratorButton:
             viewModel.setVpnAccelerator(value == .on, completion: completion)
+
+        case natTypeButton:
+            viewModel.setNatType(natType: value == .on ? .moderateNAT : .strictNAT, completion: completion)
             
         default:
             completion(true)

@@ -34,6 +34,7 @@ final class ConnectionSettingsViewModel {
         & VpnManagerFactory
         & VpnStateConfigurationFactory
         & UserTierProviderFactory
+        & NATTypePropertyProviderFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -45,6 +46,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
+    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
@@ -103,10 +105,6 @@ final class ConnectionSettingsViewModel {
             return 4
         }
     }
-
-    var natTypeIndex: Int {
-        return NATType.allCases.firstIndex(of: propertiesManager.natType) ?? 0
-    }
     
     var alternativeRouting: Bool {
         return propertiesManager.alternativeRouting
@@ -124,8 +122,12 @@ final class ConnectionSettingsViewModel {
         return propertiesManager.vpnAcceleratorEnabled
     }
 
-    var isNATTypeEnabled: Bool {
+    var isNATTypeFeatureEnabled: Bool {
         return featureFlags.moderateNAT
+    }
+
+    var natType: NATType {
+        return propertiesManager.natType
     }
     
     // MARK: - Item counts
@@ -202,11 +204,10 @@ final class ConnectionSettingsViewModel {
         
     }
 
-    func setNatType(_ index: Int) {
-        let type = NATType.allCases[index]
-        guard !type.isUserTierTooLow(userTierProvider.currentUserTier) else {
+    func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
+        guard natTypePropertyProvider.isUserEligibleForNATTypeChange else {
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade)
-            viewController?.reloadView()
+            completion(false)
             return
         }
 
@@ -214,18 +215,21 @@ final class ConnectionSettingsViewModel {
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
-                self?.vpnManager.set(natType: type)
-                self?.propertiesManager.natType = type
+                self?.vpnManager.set(natType: natType)
+                self?.propertiesManager.natType = natType
+                completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: { [weak self] in
-                    self?.propertiesManager.natType = type
+                    self?.propertiesManager.natType = natType
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                     self?.vpnGateway.retryConnection()
-                }, cancelHandler: { [weak self] in
-                    self?.viewController?.reloadView()
+                    completion(true)
+                }, cancelHandler: {
+                    completion(false)
                 }))
             case .immediately:
-                self?.propertiesManager.natType = type
+                self?.propertiesManager.natType = natType
+                completion(true)
             }
         }
     }
@@ -365,14 +369,6 @@ final class ConnectionSettingsViewModel {
             return LocalizedString.ikev2.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         }
         return (LocalizedString.openvpn + transport).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
-    }
-
-    func natTypeItem(for index: Int) -> (NSAttributedString, Bool) {
-        let type = NATType.allCases[index]
-        let canBeSelected = !type.isUserTierTooLow(userTierProvider.currentUserTier)
-        let color = canBeSelected ? NSColor.dropDownWhiteColor() : NSColor.protonGreyUnselectedWhite()
-        let text = canBeSelected ? type.name : "\(type.name) (\(LocalizedString.upgrade.uppercased()))"
-        return (text.attributed(withColor: color, fontSize: 16, alignment: .left), canBeSelected)
     }
     
     // MARK: - Values
