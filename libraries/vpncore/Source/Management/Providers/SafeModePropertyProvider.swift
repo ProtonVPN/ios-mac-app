@@ -21,6 +21,9 @@ import Foundation
 public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
     /// Current Safe Mdde
     var safeMode: Bool { get set }
+
+    /// If the user can disable Safe Mode
+    var isUserEligibleForSafeModeDisabling: Bool { get }
 }
 
 public protocol SafeModePropertyProviderFactory {
@@ -45,5 +48,9 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
         set {
             propertiesManager.safeMode = newValue
         }
+    }
+
+    public var isUserEligibleForSafeModeDisabling: Bool {
+        return currentUserTier >= CoreAppConstants.VpnTiers.plus
     }
 }
