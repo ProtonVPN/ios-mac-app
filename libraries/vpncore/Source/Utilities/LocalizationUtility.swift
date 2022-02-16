@@ -22,9 +22,10 @@
 import Foundation
 
 public class LocalizationUtility {
-    
     public static let `default` = LocalizationUtility()
-    
+
+    private var countryNameCache: [String: String] = [:]
+
     public init() {
         loadShortNames()
     }
@@ -32,8 +33,12 @@ public class LocalizationUtility {
     public func shortenIfNeeded(_ name: String) -> String {
         return namesToShorten[name] ?? name
     }
-    
+
     public func countryName(forCode countryCode: String) -> String? {
+        if let name = countryNameCache[countryCode] {
+            return name
+        }
+
         let locale: Locale
         if let language = Locale.preferredLanguages.first?.components(separatedBy: "-").first {
             locale = Locale(identifier: language)
@@ -44,7 +49,10 @@ public class LocalizationUtility {
         guard let name = locale.localizedString(forRegionCode: countryCode) else {
             return nil
         }
-        return shortenIfNeeded(name)
+
+        let shortened = shortenIfNeeded(name)
+        countryNameCache[countryCode] = shortened
+        return shortened
     }
     
     // MARK: - Name shortening
