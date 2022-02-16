@@ -806,6 +806,38 @@ public class AnnouncmentOfferAlert: SystemAlert {
     }
 }
 
+public class UpsellAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError = false
+    public var dismiss: (() -> Void)?
+    public var upgradeAction: (() -> Void)?
+
+    public init() { }
+
+}
+
+public class AllCountriesUpsellAlert: UpsellAlert {
+    public let numberOfDevices: Int
+    public let numberOfServers: Int
+    public let numberOfCountries: Int
+    
+    public init(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int) {
+        self.numberOfDevices = numberOfDevices
+        self.numberOfServers = numberOfServers
+        self.numberOfCountries = numberOfCountries
+    }
+}
+
+public class NetShieldUpsellAlert: UpsellAlert { }
+
+public class SecureCoreUpsellAlert: UpsellAlert { }
+
+public class SafeModeUpsellAlert: UpsellAlert { }
+
+public class ModerateNATUpsellAlert: UpsellAlert { }
+
 public class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?
     public var message: String?

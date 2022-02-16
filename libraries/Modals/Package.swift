@@ -12,7 +12,13 @@ let package = Package(
     products: [
         .library(
             name: "Modals",
-            targets: ["Modals"])
+            targets: ["Modals"]),
+        .library(
+            name: "Modals-macOS",
+            targets: ["Modals-macOS"]),
+        .library(
+            name: "Modals-iOS",
+            targets: ["Modals-iOS"])
     ],
     dependencies: [
         .package(name: "Overture", url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0"))
@@ -22,10 +28,18 @@ let package = Package(
             name: "Modals",
             dependencies: ["Overture"],
             resources: [
-                .process("Views/FeatureView.xib"),
-                .process("ViewControllers/UpsellViewController.storyboard"),
                 .process("Resources/Media.xcassets")
             ]
+        ),
+        .target(
+            name: "Modals-iOS",
+            dependencies: ["Modals"],
+            resources: []
+        ),
+        .target(
+            name: "Modals-macOS",
+            dependencies: ["Modals"],
+            resources: []
         )
     ]
 )

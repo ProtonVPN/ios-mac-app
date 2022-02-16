@@ -12,7 +12,7 @@
         <!--Upsell View Controller-->
         <scene sceneID="L6f-7N-qhx">
             <objects>
-                <viewController storyboardIdentifier="Upsell" id="k5o-6U-yBH" customClass="UpsellViewController" customModule="Modals" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Upsell" id="k5o-6U-yBH" customClass="UpsellViewController" customModule="Modals_iOS" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n0X-8h-XkL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,7 +23,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBb-Hz-STb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="374"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlusCountries" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="184" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
                                                 <rect key="frame" x="16" y="0.0" width="382" height="184"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enjoy ad-free browsing with NetShield" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYH-pg-w4G">
@@ -140,7 +140,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="PlusCountries" width="328" height="184"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Modals_iOS
 import Modals
 import UIKit
 
@@ -90,7 +91,9 @@ public final class OnboardingCoordinator {
     }
 
     private func showUpsell() {
-        let upsellViewController = modals.upsellViewController(upsellType: .allCountries(configuration.constants))
+        let const = configuration.constants
+        let upsell = UpsellType.allCountries(numberOfDevices: const.numberOfDevices, numberOfServers: const.numberOfServers, numberOfCountries: const.numberOfCountries)
+        let upsellViewController = modals.upsellViewController(upsellType: upsell)
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
         navigationStyle(popOverNavigationController)
@@ -132,10 +135,6 @@ public final class OnboardingCoordinator {
 // MARK: Modals Colors
 
 extension Colors: ModalsColors { }
-
-// MARK: Upsell Constants
-
-extension Constants: UpsellConstantsProtocol { }
 
 // MARK: Welcome screen delegate
 

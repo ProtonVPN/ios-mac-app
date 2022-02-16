@@ -31,7 +31,6 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
@@ -43,7 +42,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     init( _ factory: Factory ) {
         self.factory = factory
-        super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager())
+        super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {

@@ -200,6 +200,9 @@
 		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E57CD12027BF81D800AA4144 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* Modals */; };
+		E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD12127BF81D800AA4144 /* Modals-macOS */; };
+		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
 		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
@@ -795,6 +798,7 @@
 		E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewModel.swift; sourceTree = "<group>"; };
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
+		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -1076,7 +1080,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */,
 				D5FD4C1E264C1B3A001F26CE /* vpncore.framework in Frameworks */,
+				E57CD12027BF81D800AA4144 /* Modals in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
@@ -1446,6 +1452,14 @@
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
 		};
+		E5E27AAE27C3741400C2B6C0 /* Upsell */ = {
+			isa = PBXGroup;
+			children = (
+				E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */,
+			);
+			path = Upsell;
+			sourceTree = "<group>";
+		};
 		E9036B3D26C1042E00EDFDA4 /* IPC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1699,6 +1713,7 @@
 		F320E02326F08D7A00336F7A /* Upsell & Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				E5E27AAE27C3741400C2B6C0 /* Upsell */,
 				F320E02426F08D7A00336F7A /* ViewControllers */,
 				F320E02826F08D7A00336F7A /* Windows */,
 				F320E02B26F08D7A00336F7A /* Views */,
@@ -2716,6 +2731,10 @@
 				42EF09E5257A713F00E2EDCA /* PBXTargetDependency */,
 			);
 			name = "ProtonVPN-mac";
+			packageProductDependencies = (
+				E57CD11F27BF81D800AA4144 /* Modals */,
+				E57CD12127BF81D800AA4144 /* Modals-macOS */,
+			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
 			productType = "com.apple.product-type.application";
@@ -3524,6 +3543,7 @@
 				EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
+				E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
 				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
@@ -4597,6 +4617,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
+		};
+		E57CD11F27BF81D800AA4144 /* Modals */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Modals;
+		};
+		E57CD12127BF81D800AA4144 /* Modals-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Modals-macOS";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

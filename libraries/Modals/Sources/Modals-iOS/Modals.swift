@@ -1,3 +1,4 @@
+import Modals
 import UIKit
 
 public struct ModalsFactory {
@@ -8,7 +9,7 @@ public struct ModalsFactory {
 
     public init(colors: ModalsColors) {
         storyboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
-        Modals.colors = colors
+        Modals_iOS.colors = colors
     }
 
     public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {

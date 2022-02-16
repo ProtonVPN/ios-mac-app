@@ -18,7 +18,9 @@
 
 import Foundation
 import Modals
+import Modals_iOS
 import UIKit
+import vpncore
 
 class Upsell {
     
@@ -32,31 +34,29 @@ class Upsell {
     }
     
     func presentAllCountriesUpsell() {
-        let upsellViewController = factory.upsellViewController(upsellType: .allCountries(UpsellConstants()))
-        presentUpsell(upsellViewController)
+        let plus = AccountPlan.plus
+        let upsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
+        presentUpsell(upsell)
     }
     
     func presentNetShieldUpsell() {
-        let upsellViewController = factory.upsellViewController(upsellType: .netShield)
-        presentUpsell(upsellViewController)
+        presentUpsell(.netShield)
     }
     
     func presentSecureCoreUpsell() {
-        let upsellViewController = factory.upsellViewController(upsellType: .secureCore)
-        presentUpsell(upsellViewController)
+        presentUpsell(.secureCore)
     }
     
     func presentSafeModeUpsell() {
-        let upsellViewController = factory.upsellViewController(upsellType: .safeMode)
-        presentUpsell(upsellViewController)
+        presentUpsell(.safeMode)
     }
     
     func presentNATUpsell() {
-        let upsellViewController = factory.upsellViewController(upsellType: .moderateNAT)
-        presentUpsell(upsellViewController)
+        presentUpsell(.moderateNAT)
     }
     
-    private func presentUpsell(_ upsellViewController: UpsellViewController) {
+    private func presentUpsell(_ upsellType: UpsellType) {
+        let upsellViewController = factory.upsellViewController(upsellType: upsellType)
         upsellViewController.delegate = self
         presentedUpsellViewController = upsellViewController
         topViewController()?.present(upsellViewController, animated: true, completion: nil)

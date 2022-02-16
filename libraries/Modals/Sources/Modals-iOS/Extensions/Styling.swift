@@ -20,8 +20,6 @@ import Foundation
 import Overture
 import UIKit
 
-var colors: ModalsColors!
-
 let baseButtonStyle: (UIButton) -> Void = {
     $0.layer.cornerRadius = 8
     $0.titleLabel?.font = .systemFont(ofSize: 17)

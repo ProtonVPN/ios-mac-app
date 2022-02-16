@@ -1,5 +1,5 @@
 //
-//  Created on 14/02/2022.
+//  Created on 2/8/22.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,19 +16,29 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Modals
-import ProtonCore_Payments
-import vpncore
+import UIKit
 
-struct UpsellConstants: UpsellConstantsProtocol {
-    var numberOfDevices: Int
-    var numberOfServers: Int
-    var numberOfCountries: Int
-    
-    init() {
-        numberOfDevices = AccountPlan.plus.devicesCount
-        numberOfServers = AccountPlan.plus.serversCount
-        numberOfCountries = AccountPlan.plus.countriesCount
+var colors: ModalsColors!
+
+public protocol ModalsColors {
+    var background: UIColor { get }
+    var text: UIColor { get }
+    var brand: UIColor { get }
+    var weakText: UIColor { get }
+}
+
+public struct Colors {
+    public let background: UIColor
+    public let text: UIColor
+    public let brand: UIColor
+    public let weakText: UIColor
+
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
+        self.background = background
+        self.text = text
+        self.brand = brand
+        self.weakText = weakText
     }
 }
+
+extension Colors: ModalsColors { }

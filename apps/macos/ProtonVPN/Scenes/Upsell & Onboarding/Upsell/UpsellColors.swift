@@ -1,5 +1,5 @@
 //
-//  Created on 2/8/22.
+//  Created on 21/02/2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,24 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import AppKit
+import Modals
+import Modals_macOS
 
-public protocol UpsellConstantsProtocol {
-    var numberOfDevices: Int { get }
-    var numberOfServers: Int { get }
-    var numberOfCountries: Int { get }
-}
+struct UpsellColors: ModalsColors {
+    public let background: NSColor
+    public let text: NSColor
+    public let brand: NSColor
+    public let hoverBrand: NSColor
+    public let weakText: NSColor
 
-public struct UpsellConstants {
-    public let numberOfDevices: Int
-    public let numberOfServers: Int
-    public let numberOfCountries: Int
-
-    public init(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int) {
-        self.numberOfDevices = numberOfDevices
-        self.numberOfServers = numberOfServers
-        self.numberOfCountries = numberOfCountries
+    public init() {
+        background = .protonDarkGrey()
+        text = .normalTextColor()
+        brand = .protonGreen()
+        hoverBrand = .protonGreenShade()
+        weakText = .weakTextColor()
     }
 }
-
-extension UpsellConstants: UpsellConstantsProtocol { }

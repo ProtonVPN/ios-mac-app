@@ -5,6 +5,9 @@
       location = "container:"
       name = "SampleApps">
       <FileRef
+         location = "group:sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:sampleapps/ModalsSampleApp/ModalsSampleApp.xcodeproj">
       </FileRef>
       <FileRef

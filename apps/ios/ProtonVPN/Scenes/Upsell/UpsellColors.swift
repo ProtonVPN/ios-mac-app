@@ -18,6 +18,7 @@
 
 import UIKit
 import Modals
+import Modals_iOS
 
 struct UpsellColors: ModalsColors {
     var background: UIColor

@@ -16,6 +16,8 @@ swiftlint.xml
 libraries/vpncore/Source/LocalizedString.swift
 
 sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj/xcuserdata
+sampleapps/ModalsSampleApp/ModalsSampleApp.xcodeproj/xcuserdata
+sampleapps/ModalsSampleMacOSApp/ModalsSampleApp.xcodeproj/xcuserdata
 
 # Dynamic bug report lib and examples
 libraries/BugReport/BugReport.xcodeproj/xcuserdata

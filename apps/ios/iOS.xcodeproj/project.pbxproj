@@ -396,11 +396,9 @@
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
-		E593B96F27BA7DB100AFCA8C /* UpsellConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5C035B227BAA8EF003196F5 /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
-		E5C035B427BAA8EF003196F5 /* UpsellConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */; };
 		E5C035B627BAA930003196F5 /* UpsellMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C035B527BAA930003196F5 /* UpsellMock.swift */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
@@ -909,7 +907,6 @@
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
 		E297CD5417EBE288B62F3B9A /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.debug.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
 		E593B96B27BA4D3000AFCA8C /* Upsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upsell.swift; sourceTree = "<group>"; };
-		E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellConstants.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellConstants.swift; sourceTree = "<group>"; };
 		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
 		E5C035B527BAA930003196F5 /* UpsellMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellMock.swift; path = ../../../ios/ProtonVPNTests/Mocks/UpsellMock.swift; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -1804,7 +1801,6 @@
 			isa = PBXGroup;
 			children = (
 				E593B96B27BA4D3000AFCA8C /* Upsell.swift */,
-				E593B96E27BA7DB100AFCA8C /* UpsellConstants.swift */,
 				E593B97027BA7DC100AFCA8C /* UpsellColors.swift */,
 			);
 			path = Upsell;
@@ -3165,7 +3161,6 @@
 				D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
 				E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */,
-				E593B96F27BA7DB100AFCA8C /* UpsellConstants.swift in Sources */,
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,
 				F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
@@ -3397,7 +3392,6 @@
 				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
 				D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */,
 				D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */,
-				E5C035B427BAA8EF003196F5 /* UpsellConstants.swift in Sources */,
 				D5136C6D228592E80002C095 /* CountryAnnotation.swift in Sources */,
 				D5136C6E228592E80002C095 /* ConnectionView.swift in Sources */,
 				D5136C6F228592E80002C095 /* SecureCoreEntryAnnotation.swift in Sources */,

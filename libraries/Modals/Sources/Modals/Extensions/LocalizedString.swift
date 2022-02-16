@@ -28,11 +28,13 @@ public enum LocalizedString {
   }
   /// And many more premium features
   public static var modalsUpsellFeaturesFooter: String { return LocalizedString.tr("Localizable", "modals_upsell_features_footer") }
-  /// Moderate NAT (also known as Nat Type 2) can improve your online experience with various applications and online video games.
+  /// Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.
   /// 
   /// Unlock this and other features with a Plus plan.
   public static var modalsUpsellFeaturesModerateNatSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_moderate_nat_subtitle") }
-  /// Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network. Unlock this and other features with a Plus plan.
+  /// Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network.
+  /// 
+  /// Unlock this and other features with a Plus plan.
   public static var modalsUpsellFeaturesSafeModeSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_safe_mode_subtitle") }
   /// When you upgrade to Plus
   public static var modalsUpsellFeaturesSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_subtitle") }

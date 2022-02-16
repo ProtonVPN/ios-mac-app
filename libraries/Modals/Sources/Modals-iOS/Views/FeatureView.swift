@@ -1,5 +1,5 @@
 //
-//  Created on 2/8/22.
+//  Created on 11.01.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,27 +16,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Modals
+import Foundation
 import UIKit
 
-public protocol ModalsColors {
-    var background: UIColor { get }
-    var text: UIColor { get }
-    var brand: UIColor { get }
-    var weakText: UIColor { get }
-}
+final class FeatureView: UIView {
 
-public struct Colors {
-    public let background: UIColor
-    public let text: UIColor
-    public let brand: UIColor
-    public let weakText: UIColor
+    // MARK: Outlets
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
-        self.background = background
-        self.text = text
-        self.brand = brand
-        self.weakText = weakText
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel! {
+        didSet {
+            featureTextStyle(titleLabel)
+        }
+    }
+
+    // MARK: Properties
+
+    var feature: Feature? {
+        didSet {
+            iconImageView.image = feature?.image
+            titleLabel.text = feature?.title()
+        }
     }
 }
-
-extension Colors: ModalsColors { }
