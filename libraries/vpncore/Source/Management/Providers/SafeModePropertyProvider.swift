@@ -40,7 +40,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
     public var safeMode: Bool {
         get {
             if currentUserTier < CoreAppConstants.VpnTiers.plus {
-                return false
+                return true
             }
 
             return propertiesManager.safeMode
