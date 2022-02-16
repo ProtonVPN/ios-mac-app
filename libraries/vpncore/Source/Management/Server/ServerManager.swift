@@ -34,14 +34,14 @@ public protocol ServerManager: AnyObject {
 
 public class ServerManagerImplementation: ServerManager {
     private static var managers: [Weak<ServerManagerImplementation>] = []
-    internal let queue = DispatchQueue(label: "ch.proton.servermanager.server_groups")
+    private let queue = DispatchQueue(label: "ch.proton.servermanager.server_groups")
     
     private let userTier: Int
     private let serverStorage: ServerStorage
     public let contentChanged: Notification.Name
 
-    /// Storage variable for the server list.
-    internal var _servers: [ServerModel] = []
+    /// Storage variable for the server list. Use `servers` instead to access the server list.
+    private var _servers: [ServerModel] = []
     /// This value automatically populates `_servers` in an unsynchronized way if it is
     /// empty, and returns it.
     private var serversNoSync: [ServerModel] {
@@ -57,8 +57,9 @@ public class ServerManagerImplementation: ServerManager {
     }
 
     /// Servers that have been grouped by type, but have not yet been sorted. Once they get sorted
-    /// in the `grouping(for:)` method, they are removed from this list to save memory.
-    internal var _unsortedGroups: [ServerType: [ServerModel]] = [:]
+    /// in the `grouping(for:)` method, they are removed from this list to save memory. Use
+    /// `unsortedGroupsNoSync` to access these values rather than using this property directly.
+    private var _unsortedGroups: [ServerType: [ServerModel]] = [:]
     /// This value automatically populates `_unsortedGroups` in an unsynchronized way if it is
     /// empty, and returns it.
     private var unsortedGroupsNoSync: [ServerType: [ServerModel]] {

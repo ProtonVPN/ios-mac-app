@@ -19,6 +19,8 @@
 import Foundation
 
 public extension Array {
+    /// Two-way filter: get the values that did not match the filter, in addition to the ones that did.
+    /// - Returns: A tuple containing two arrays: the first with elements matching the filter, the second with non-matches.
     func filter2(_ isIncluded: (Element) throws -> Bool) rethrows -> ([Element], [Element]) {
         var yes = [Element]()
         var no = [Element]()
