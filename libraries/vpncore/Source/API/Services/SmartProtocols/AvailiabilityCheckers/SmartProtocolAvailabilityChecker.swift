@@ -46,8 +46,7 @@ extension SmartProtocolAvailabilityChecker {
     func checkAvailability(server: ServerIp, ports: [Int], completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         log.debug("Checking \(protocolName) availability for \(server.entryIp)", category: .connectionConnect, event: .scan)
 
-        DispatchQueue.global().async { [weak self] in
-            guard let `self` = self else { return }
+        DispatchQueue.global().async {
             let group = DispatchGroup()
             var availablePorts: [Int] = []
             let lockQueue = DispatchQueue(label: "ch.proton.availability_checker.\(self.protocolName)")
