@@ -465,18 +465,16 @@ final class SettingsViewModel {
     }
     
     private var batterySection: TableViewSection? {
-        let vpnProtocol = propertiesManager.vpnProtocol
-        guard case VpnProtocol.openVpn = vpnProtocol else {
+        switch propertiesManager.connectionProtocol {
+        case .vpnProtocol(.ike):
             return nil
+        default:
+            return TableViewSection(title: "", cells: [
+                .pushStandard(title: LocalizedString.batteryTitle, handler: { [pushBatteryViewController] in
+                    pushBatteryViewController()
+                })
+            ])
         }
-        
-        let cells: [TableViewCellModel] = [
-            .pushStandard(title: LocalizedString.batteryTitle, handler: { [pushBatteryViewController] in
-                pushBatteryViewController()
-            })
-        ]
-        
-        return TableViewSection(title: "", cells: cells)
     }
     
     private var logSection: TableViewSection {
