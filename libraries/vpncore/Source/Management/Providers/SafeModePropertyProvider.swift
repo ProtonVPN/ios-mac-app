@@ -23,7 +23,7 @@ public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
     var safeMode: Bool { get set }
 
     /// If the user can disable Safe Mode
-    var isUserEligibleForSafeModeDisabling: Bool { get }
+    var isUserEligibleForSafeModeChange: Bool { get }
 }
 
 public protocol SafeModePropertyProviderFactory {
@@ -39,18 +39,28 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
     public var safeMode: Bool {
         get {
-            if currentUserTier < CoreAppConstants.VpnTiers.plus {
+            // default to false when the feature is not enabled
+            guard propertiesManager.featureFlags.safeMode else {
+                return false
+            }
+
+            // true is the default value
+            guard isUserEligibleForSafeModeChange else {
                 return true
             }
 
             return propertiesManager.safeMode
         }
         set {
+            guard isUserEligibleForSafeModeChange else {
+                return
+            }
+
             propertiesManager.safeMode = newValue
         }
     }
 
-    public var isUserEligibleForSafeModeDisabling: Bool {
+    public var isUserEligibleForSafeModeChange: Bool {
         return currentUserTier >= CoreAppConstants.VpnTiers.plus
     }
 }

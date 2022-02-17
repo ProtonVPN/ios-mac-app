@@ -363,7 +363,7 @@ final class SettingsViewModel {
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [
             .toggle(title: LocalizedString.nonStandardPortsTitle, on: !safeModePropertyProvider.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
-                guard self.safeModePropertyProvider.isUserEligibleForSafeModeDisabling else {
+                guard self.safeModePropertyProvider.isUserEligibleForSafeModeChange else {
                     callback(!self.safeModePropertyProvider.safeMode)
                     self.upsell.presentSafeModeUpsell()
                     return

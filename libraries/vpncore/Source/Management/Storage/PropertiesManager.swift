@@ -588,7 +588,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
             Keys.smartProtocol.rawValue: defaultSmartProtocol,
-            Keys.safeMode.rawValue: true
+            Keys.safeMode.rawValue: true // true is the default, but getter returns false when disabled by feature flag
         ])
     }
     
