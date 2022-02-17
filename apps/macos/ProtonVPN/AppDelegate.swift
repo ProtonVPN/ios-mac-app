@@ -171,7 +171,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
-        systemExtensionStateCheck.startCheckAndInstallIfNeeded { result in
+        systemExtensionStateCheck.startCheckAndInstallIfNeeded(userInitiated: false) { result in
             if case .failure = result {
                 self.propertiesManager.vpnProtocol = .ike
                 self.propertiesManager.smartProtocol = false

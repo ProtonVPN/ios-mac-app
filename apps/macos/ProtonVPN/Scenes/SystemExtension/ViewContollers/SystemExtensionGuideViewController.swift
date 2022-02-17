@@ -83,7 +83,9 @@ final class SystemExtensionGuideViewController: NSViewController {
     }
 
     func userWillCloseWindow() {
-        viewModel.tourCancelled()
+        if !viewModel.finishedTour {
+            viewModel.tourCancelled()
+        }
     }
     
     private func setupViews() {

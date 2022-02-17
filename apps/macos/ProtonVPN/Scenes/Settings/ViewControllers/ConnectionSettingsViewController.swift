@@ -246,7 +246,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
 
     private func refreshPendingEnablement() {
-        if viewModel.requiresSysexTour(for: protocolList.indexOfSelectedItem) {
+        if viewModel.shouldShowSysexProgress(for: protocolList.indexOfSelectedItem) {
             protocolEnablementProgress.startAnimation(nil)
         } else {
             protocolEnablementProgress.stopAnimation(nil)
@@ -286,9 +286,14 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     @objc private func protocolItemSelected() {
+        guard let protocolItem = viewModel.protocolItem(for: protocolList.indexOfSelectedItem) else {
+            return
+        }
+
+        viewModel.refreshSysexPending(for: protocolItem)
         refreshPendingEnablement()
 
-        viewModel.setProtocol(protocolList.indexOfSelectedItem) { [weak self] result in
+        viewModel.setProtocol(protocolItem) { [weak self] result in
             self?.refreshProtocol()
         }
     }

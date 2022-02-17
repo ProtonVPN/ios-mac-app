@@ -96,34 +96,44 @@ class HelpMenuViewModel {
         
         // System Extension
         propertiesManager.sysexSuccessWasShown = false
-        
-        systemExtensionManager.requestExtensionUninstall(forType: .openVPN) { error in
-            self.systemExtensionManager.requestExtensionUninstall(forType: .wireGuard) { error in
-                // keychain
-                self.vpnKeychain.clear()
-                AuthKeychain.clear()
 
-                // app data
-                if let bundleIdentifier = Bundle.main.bundleIdentifier {
-                    Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
-                    Storage.userDefaults().synchronize()
-                }
+        DispatchQueue.main.async {
+            let group = DispatchGroup()
 
-                do {
-                    try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
-                } catch {}
-                do {
-                    try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
-                } catch {}
+            SystemExtensionType.allCases.forEach { type in
+                group.enter()
+                self.systemExtensionManager.request(.uninstall(type: type, userInitiated: true, completion: { _ in
+                    group.leave()
+                }))
+            }
 
-                // vpn profile
-                self.vpnManager.removeConfigurations(completionHandler: nil)
+            if group.wait(timeout: .now() + 5) == .timedOut {
+                log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
+            }
 
-                // quit
-                DispatchQueue.main.async {
-                    NSApplication.shared.terminate(self)
-                }
-                    
+            // keychain
+            self.vpnKeychain.clear()
+            AuthKeychain.clear()
+
+            // app data
+            if let bundleIdentifier = Bundle.main.bundleIdentifier {
+                Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
+                Storage.userDefaults().synchronize()
+            }
+
+            do {
+                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
+            } catch {}
+            do {
+                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
+            } catch {}
+
+            // vpn profile
+            self.vpnManager.removeConfigurations(completionHandler: nil)
+
+            // quit
+            DispatchQueue.main.async {
+                NSApplication.shared.terminate(self)
             }
         }
     }

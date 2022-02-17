@@ -313,7 +313,7 @@ class ConnectingOverlayViewModel {
             self?.retryConnection(withProtocol: newProtocol)
         }
         
-        vpnProtocolChangeManager.change(toProtocol: transportProtocol) { _ in }
+        vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { _ in }
     }
     
     // MARK: - Notification handlers

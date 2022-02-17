@@ -82,7 +82,8 @@ class CreateNewProfileViewModel {
 
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
-    
+
+    var sysexPending = false
     private var state = ModelState(serverType: .standard, editedProfile: nil)
     internal var userTier: Int = 0
     
@@ -299,34 +300,33 @@ class CreateNewProfileViewModel {
         return true
     }
 
-    func requiresSysexTour(for vpnProtocolIndex: Int) -> Bool {
-        vpnProtocolIndex < availableVpnProtocols.count &&
-        availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension &&
-        !propertiesManager.sysexSuccessWasShown
+    func refreshSysexPending(for vpnProtocolIndex: Int) {
+        sysexPending = vpnProtocolIndex < availableVpnProtocols.count &&
+            availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension &&
+            !propertiesManager.sysexSuccessWasShown
     }
 
-    func checkSysexInstallation(vpnProtocolIndex: Int, completion: @escaping (Result<(), Error>) -> Void) {
+    func shouldShowSysexProgress(for vpnProtocolIndex: Int) -> Bool {
+        vpnProtocolIndex < availableVpnProtocols.count &&
+        availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension &&
+        sysexPending
+    }
+
+    func checkSysexInstallation(vpnProtocolIndex: Int, completion: @escaping (Result<SystemExtensionsStateCheck.SuccessResultType, Error>) -> Void) {
         let vpnProtocol = availableVpnProtocols[vpnProtocolIndex]
         guard vpnProtocol.requiresSystemExtension else {
             return
         }
 
-        // Just log success/failure in the continuation. User will get an error alert
+        // Before the callback is called, user will get an error alert
         // if installation failed, and will be re-prompted for installation if they try
         // to connect from the profile overview after failure/while installation is pending.
-        sysexStateCheck.startCheckAndInstallIfNeeded { result in
-            switch result {
-            case .success:
-                log.info("System extension installation succeeded while creating profile",
-                         category: .sysex,
-                         metadata: ["vpnProtocol": "\(vpnProtocol.localizedString)"])
-                completion(.success)
-            case .failure(let error):
-                log.info("System extension installation failed while creating profile",
-                         category: .sysex,
-                         metadata: ["vpnProtocol": "\(vpnProtocol.localizedString)",
-                                    "error": "\(String(describing: error))"])
-                completion(.failure(error))
+        // Note that this callback can be called twice if the user closes the sysex tour window
+        // before going to system preferences!
+        sysexStateCheck.startCheckAndInstallIfNeeded(userInitiated: true) { result in
+            DispatchQueue.main.async {
+                self.sysexPending = false
+                completion(result)
             }
         }
     }

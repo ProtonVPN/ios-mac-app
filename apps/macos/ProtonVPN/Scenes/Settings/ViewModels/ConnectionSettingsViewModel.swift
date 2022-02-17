@@ -47,7 +47,8 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
-    
+
+    private var sysexPending = false
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
     }
@@ -197,25 +198,30 @@ final class ConnectionSettingsViewModel {
         default: return nil
         }
     }
-    
-    func setProtocol(_ index: Int, completion: @escaping (Result<(), Error>) -> Void) {
-        switch protocolItem(for: index) {
+
+    func refreshSysexPending(for connectionProtocol: ConnectionProtocol) {
+        sysexPending = connectionProtocol.requiresSystemExtension == true &&
+                        !propertiesManager.sysexSuccessWasShown
+    }
+
+    func shouldShowSysexProgress(for protocolIndex: Int) -> Bool {
+        protocolItem(for: protocolIndex)?.requiresSystemExtension == true && sysexPending
+    }
+
+    func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<(), Error>) -> Void) {
+        switch connectionProtocol {
         case .smartProtocol:
             self.enableSmartProtocol(completion)
         case .vpnProtocol(let transportProtocol):
-            vpnProtocolChangeManager.change(toProtocol: transportProtocol) { [weak self] result in
+            vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { [weak self] result in
+                self?.sysexPending = false
+
                 if case .success = result {
                     self?.propertiesManager.smartProtocol = false
                 }
                 completion(result)
             }
-        default:
-            return
         }
-    }
-
-    func requiresSysexTour(for index: Int) -> Bool {
-        protocolItem(for: index)?.requiresSystemExtension == true && !propertiesManager.sysexSuccessWasShown
     }
 
     func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
@@ -258,8 +264,10 @@ final class ConnectionSettingsViewModel {
     
     func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         let update = { (shouldReconnect: Bool) in
-            self.systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
+            self.systemExtensionsStateCheck.startCheckAndInstallIfNeeded(userInitiated: true) { result in
                 DispatchQueue.main.async {
+                    self.sysexPending = false
+
                     switch result {
                     case .success:
                         self.propertiesManager.smartProtocol = true

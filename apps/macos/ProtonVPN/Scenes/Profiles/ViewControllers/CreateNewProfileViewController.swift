@@ -54,7 +54,7 @@ final class CreateNewProfileViewController: NSViewController {
     @IBOutlet private weak var cancelButton: WhiteCancelationButton!
     
     fileprivate var viewModel: CreateNewProfileViewModel!
-    
+
     private var colorPickerViewController: ColorPickerViewController!
     
     private var isSessionUnderway: Bool {
@@ -220,7 +220,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
 
     private func refreshPendingEnablement() {
-        if viewModel.requiresSysexTour(for: protocolList.indexOfSelectedItem) {
+        if viewModel.shouldShowSysexProgress(for: protocolList.indexOfSelectedItem) {
             protocolEnablementProgress.startAnimation(nil)
         } else {
             protocolEnablementProgress.stopAnimation(nil)
@@ -236,7 +236,7 @@ final class CreateNewProfileViewController: NSViewController {
             protocolList.menu?.addItem(menuItem)
         }
 
-        protocolList.select(protocolList.menu?.item(at: selectedIndex))
+        protocolList.selectItem(at: selectedIndex)
         refreshPendingEnablement()
     }
 
@@ -284,11 +284,22 @@ final class CreateNewProfileViewController: NSViewController {
     }
 
     @objc private func protocolSelected() {
-        refreshProtocolList(withSelectionAt: protocolList.indexOfSelectedItem)
+        let originalIndex = protocolList.indexOfSelectedItem
+        viewModel.refreshSysexPending(for: originalIndex)
+        refreshProtocolList(withSelectionAt: originalIndex)
+
         viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem) { [weak self] result in
             switch result {
-            case .success:
-                self?.refreshPendingEnablement()
+            case let .success(result):
+                guard case .installed = result else {
+                    break
+                }
+                
+                if self?.protocolList.indexOfSelectedItem != originalIndex {
+                    self?.refreshProtocolList(withSelectionAt: originalIndex)
+                } else {
+                    self?.refreshPendingEnablement()
+                }
             case .failure:
                 guard let ikeIndex = self?.viewModel.vpnProtocolIndex(for: .ike) else {
                     return
