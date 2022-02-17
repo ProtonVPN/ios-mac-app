@@ -1877,7 +1877,7 @@
 /* Section title in Settings */
 "_advanced" = "Advanced";
 
-// Non-srandard ports
+// Non-standard ports
 
 /* Non-standard ports feature title in Settings */
 "_non_standard_ports_title" = "Non-standard ports";
