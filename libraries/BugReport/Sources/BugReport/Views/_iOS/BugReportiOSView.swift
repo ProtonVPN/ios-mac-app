@@ -52,12 +52,13 @@ public struct BugReportiOSView: View {
                                 FormiOSView(viewModel: FormViewModel(fields: category.inputFields))
                                     .navigationTitle(Text(LocalizedString.brWindowTitle))
                             }, label: { Text(category.label) })
-
+                            .listRowBackground(colors.background)
                         } else {
                             NavigationLink(destination: {
                                 QuickFixesiOSList(category: category)
                                     .navigationTitle(Text(LocalizedString.brWindowTitle))
                             }, label: { Text(category.label) })
+                            .listRowBackground(colors.background)
                         }
                     }
                     .listStyle(.plain)
