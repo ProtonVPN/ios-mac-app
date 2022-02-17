@@ -119,7 +119,7 @@ final class CorePlanService: PlanService {
 
     func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void) {
         paymentsUI = createPaymentsUI(onlyPlusPlan: true)
-        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true, updateCredits: false) { response in
+        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true, updateCredits: false) { [weak self] response in
             switch response {
             case let .open(vc: viewController, opened: false):
                 completion(.planPurchaseViewControllerCreated(viewController))
@@ -132,6 +132,9 @@ final class CorePlanService: PlanService {
             case let .purchasedPlan(accountPlan: plan):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion(.planPurchased)
+                DispatchQueue.main.async { [weak self] in
+                    self?.delegate?.paymentTransactionDidFinish()
+                }
             case let .planPurchaseProcessingInProgress(accountPlan: plan):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
             }
