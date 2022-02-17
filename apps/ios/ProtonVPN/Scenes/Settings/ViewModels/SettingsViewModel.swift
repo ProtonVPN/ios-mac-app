@@ -362,9 +362,9 @@ final class SettingsViewModel {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [
-            .toggle(title: LocalizedString.nonStandardPortsTitle, on: !propertiesManager.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
+            .toggle(title: LocalizedString.nonStandardPortsTitle, on: !safeModePropertyProvider.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
                 guard self.safeModePropertyProvider.isUserEligibleForSafeModeDisabling else {
-                    callback(!self.propertiesManager.safeMode)
+                    callback(!self.safeModePropertyProvider.safeMode)
                     self.upsell.presentSafeModeUpsell()
                     return
                 }
@@ -372,19 +372,19 @@ final class SettingsViewModel {
                 self.vpnStateConfiguration.getInfo { info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                     case .withConnectionUpdate:
-                        self.propertiesManager.safeMode.toggle()
-                        self.vpnManager.set(safeMode: self.propertiesManager.safeMode)
-                        callback(!self.propertiesManager.safeMode)
+                        self.safeModePropertyProvider.safeMode.toggle()
+                        self.vpnManager.set(safeMode: self.safeModePropertyProvider.safeMode)
+                        callback(!self.safeModePropertyProvider.safeMode)
                     case .withReconnect:
                         self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
-                            self.propertiesManager.safeMode.toggle()
-                            callback(self.propertiesManager.vpnAcceleratorEnabled)
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "Safe Mode"])
+                            self.safeModePropertyProvider.safeMode.toggle()
+                            callback(self.safeModePropertyProvider.safeMode)
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                             self.vpnGateway?.retryConnection()
                         }))
                     case .immediately:
-                        self.propertiesManager.safeMode.toggle()
-                        callback(!self.propertiesManager.safeMode)
+                        self.safeModePropertyProvider.safeMode.toggle()
+                        callback(!self.safeModePropertyProvider.safeMode)
                     }
                 }
             },
