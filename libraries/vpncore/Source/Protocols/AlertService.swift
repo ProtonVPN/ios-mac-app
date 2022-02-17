@@ -656,13 +656,10 @@ public class SystemExtensionTourAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     public var continueHandler: () -> Void
     public var cancelHandler: () -> Void
-    public typealias CloseConditionCallback = (@escaping (Bool) -> Void) -> Void
-    public var isTimeToClose: CloseConditionCallback
     public var extensionsCount: Int
     
-    public init(extensionsCount: Int, isTimeToClose: @escaping CloseConditionCallback, continueHandler: @escaping () -> Void, cancelHandler: @escaping() -> Void) {
+    public init(extensionsCount: Int, continueHandler: @escaping () -> Void, cancelHandler: @escaping() -> Void) {
         self.extensionsCount = extensionsCount
-        self.isTimeToClose = isTimeToClose
         self.continueHandler = continueHandler
         self.cancelHandler = cancelHandler
     }

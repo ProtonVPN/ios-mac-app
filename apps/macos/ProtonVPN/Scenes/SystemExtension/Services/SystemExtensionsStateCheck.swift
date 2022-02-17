@@ -36,22 +36,18 @@ class SystemExtensionsStateCheck {
     private let propertiesManager: PropertiesManagerProtocol
     
     init(systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
-        log.debug("SystemExtensionsStateCheck init", category: .sysex)
-
         self.systemExtensionManager = systemExtensionManager
         self.alertService = alertService
         self.propertiesManager = propertiesManager
     }
 
-    deinit {
-        log.debug("SystemExtensionsStateCheck deinit", category: .sysex)
-    }
-
     // swiftlint:disable function_body_length
-    func startCheckAndInstallIfNeeded(resultHandler: @escaping (Result<SuccessResultType, Error>) -> Void) {
+    /// Caller beware: `actionHandler` can be called twice here: once if the user cancels the sysext flow, and
+    /// a second time if the user then decides to go to system preferences and enable manually.
+    func startCheckAndInstallIfNeeded(userInitiated: Bool, actionHandler: @escaping (Result<SuccessResultType, Error>) -> Void) {
         log.debug("Checking status of system extensions...", category: .sysex)
 
-        fetchExtensionStatuses { statuses in
+        systemExtensionManager.extensionStatuses { statuses in
             var updateWasNeeded = false
             var installNeeded = [SystemExtensionType]()
             statuses.forEach { type, status in
@@ -63,7 +59,7 @@ class SystemExtensionsStateCheck {
                 case .outdated:
                     log.info("SysEx \(type) is outdated. Requesting install update.", category: .sysex)
                     updateWasNeeded = true
-                    self.systemExtensionManager.requestExtensionInstall(forType: type, completion: { _ in })
+                    self.systemExtensionManager.request(.install(type: type, userInitiated: userInitiated, completion: { _ in }))
                     
                 case .ok:
                     log.info("SysEx \(type) is up to date", category: .sysex)
@@ -72,7 +68,7 @@ class SystemExtensionsStateCheck {
             
             guard !installNeeded.isEmpty else {
                 log.debug("No initial install needed, bailing.", category: .sysex)
-                resultHandler(.success(updateWasNeeded ? .updated : .nothing))
+                actionHandler(.success(updateWasNeeded ? .updated : .nothing))
                 return
             }
             
@@ -82,73 +78,43 @@ class SystemExtensionsStateCheck {
                 return // Dirty workaround for a problem where after restart macos doesn't want to give us XPC connection on the first try and app thinks sysex is not yet installed.
             }
             
-            self.alertService.push(alert: SystemExtensionTourAlert(extensionsCount: installNeeded.count, isTimeToClose: { [weak self] completion in
-                self?.areAllExtensionsInstalled(completion: completion)
-            }, continueHandler: {
-                let dispatchGroup = DispatchGroup()
-                var errors = [Error]()
-                
-                installNeeded.forEach { type in
-                    dispatchGroup.enter()
-                    log.debug("Requesting sysex install for \(type.rawValue)", category: .sysex)
+            self.alertService.push(alert: SystemExtensionTourAlert(extensionsCount: installNeeded.count, continueHandler: {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    let dispatchGroup = DispatchGroup()
+                    var errors = [Error]()
 
-                    self.systemExtensionManager.requestExtensionInstall(forType: type, completion: { result in
-                        switch result {
-                        case .success():
-                            break
-                            
-                        case .failure(let error):
-                            errors.append(error)
-                        }
-                        dispatchGroup.leave()
-                    })
-                }
-                
-                dispatchGroup.notify(queue: DispatchQueue.global(qos: .background)) {
+                    installNeeded.forEach { type in
+                        dispatchGroup.enter()
+                        log.debug("Requesting sysex install for \(type.rawValue)", category: .sysex)
+
+                        self.systemExtensionManager.request(.install(type: type, userInitiated: userInitiated, completion: { result in
+                            switch result {
+                            case .success:
+                                break
+
+                            case .failure(let error):
+                                errors.append(error)
+                            }
+                            dispatchGroup.leave()
+                        }))
+                    }
+
+                    dispatchGroup.wait()
                     guard errors.isEmpty else {
                         log.debug("Encountered errors in sysex install: \(String(describing: errors))", category: .sysex)
 
                         self.alertService.push(alert: SysexInstallingErrorAlert())
-                        resultHandler(.failure(errors.first!))
+                        actionHandler(.failure(errors.first!))
                         return
                     }
-                    resultHandler(.success(.installed))
+                    actionHandler(.success(.installed))
                 }
-                
             }, cancelHandler: {
                 // Note: This doesn't display an error to the user as above, as the user is probably aware
                 // that they closed the window.
                 log.debug("User cancelled system extension install", category: .sysex)
-                resultHandler(.failure(UserCancelledInstall()))
+                actionHandler(.failure(UserCancelledInstall()))
             }))
         }
     }
-    
-    // Queue for writing into one array from different threads. Prevents crashes in some cases.
-    private let queue = DispatchQueue(label: "ExtensionsStatusesQueue")
-    
-    private func fetchExtensionStatuses(resultHandler: @escaping ([SystemExtensionType: SystemExtensionStatus]) -> Void) {
-        let dispatchGroup = DispatchGroup()
-        var results = [SystemExtensionType: SystemExtensionStatus]()
-        let extensions = SystemExtensionType.allCases
-        extensions.forEach { type in
-            dispatchGroup.enter()
-            systemExtensionManager.extenstionStatus(forType: type, completion: { status in
-                self.queue.async {
-                    results[type] = status
-                    dispatchGroup.leave()
-                }
-            })
-        }
-        dispatchGroup.notify(queue: DispatchQueue.global(qos: .background)) {
-            resultHandler(results)
-        }
-    }
-    
-    private func areAllExtensionsInstalled(completion: @escaping (Bool) -> Void) {
-        fetchExtensionStatuses { statuses in
-            completion(!statuses.contains { key, value in value != .ok })
-        }
-    }
-    
 }

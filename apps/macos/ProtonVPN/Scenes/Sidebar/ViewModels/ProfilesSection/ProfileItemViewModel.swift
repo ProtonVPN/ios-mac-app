@@ -91,7 +91,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        stateCheck.startCheckAndInstallIfNeeded { result in
+        stateCheck.startCheckAndInstallIfNeeded(userInitiated: true) { result in
             switch result {
             case .success:
                 performConnection()

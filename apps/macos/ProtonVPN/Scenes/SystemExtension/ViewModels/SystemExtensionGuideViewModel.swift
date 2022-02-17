@@ -31,12 +31,12 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     func tourCancelled()
 
     var extensionsCount: Int { get set }
+    var finishedTour: Bool { get }
     var isNextButtonVisible: Bool { get }
     var isPrevButtonVisible: Bool { get }
     var steps: [SystemExtensionGuideViewModel.Step] { get }
     var step: (Int, SystemExtensionGuideViewModel.Step) { get }
     /// Callback to allow window to close itself after all sysexes are installed
-    var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback { get set }
     var close: (() -> Void)? { get set }
     var contentChanged: (() -> Void)? { get set }
 }
@@ -68,18 +68,17 @@ class SystemExtensionGuideViewModel: NSObject {
     
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
+    var finishedTour = false
     var extensionsCount: Int
     var acceptedHandler: () -> Void
     var cancelledHandler: () -> Void
-    var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback
-    
+
     var contentChanged: (() -> Void)?
     var close: (() -> Void)?
     
-    init(extensionsCount: Int, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void, cancelledHandler: @escaping () -> Void) {
+    init(extensionsCount: Int, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, acceptedHandler: @escaping () -> Void, cancelledHandler: @escaping () -> Void) {
         self.alertService = alertService
         self.extensionsCount = extensionsCount
-        self.isTimeToClose = isTimeToClose
         self.acceptedHandler = acceptedHandler
         self.cancelledHandler = cancelledHandler
         self.propertiesManager = propertiesManager
@@ -91,16 +90,14 @@ class SystemExtensionGuideViewModel: NSObject {
         contentChanged?()
     }
     
-    @objc private func finish() {
-        isTimeToClose { [weak self] itsTime in
-            if itsTime {
-                self?.alertService.push(alert: SysexEnabledAlert())
-                self?.propertiesManager.sysexSuccessWasShown = true
-                DispatchQueue.main.async {
-                    self?.close?()
-                }
-            }
+    private func finish(_ notification: Notification) {
+        guard let request = notification.object as? SystemExtensionRequest, request.userInitiated else {
+            return
         }
+
+        finishedTour = true
+        alertService.push(alert: SysexEnabledAlert())
+        close?()
     }
 }
 
@@ -110,8 +107,7 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     
     func viewWillAppear() {
         // Autoclose this window after installation finishes
-        NotificationCenter.default.addObserver(self, selector: #selector(finish), name: SystemExtensionManagerNotification.installationSuccess, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(finish), name: SystemExtensionManagerNotification.installationError, object: nil)
+        NotificationCenter.default.addObserver(forName: SystemExtensionManagerNotification.allExtensionsInstalled, object: nil, queue: nil, using: finish)
         
         currentStep = 0
         updateView()
@@ -146,5 +142,4 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     var step: (Int, Step) {
         return (currentStep, steps[currentStep])
     }
-    
 }
