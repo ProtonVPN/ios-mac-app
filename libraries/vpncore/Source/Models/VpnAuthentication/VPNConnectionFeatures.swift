@@ -33,15 +33,6 @@ public struct VPNConnectionFeatures: Equatable {
         self.safeMode = safeMode
     }
     
-    /// Default features
-    init() {
-        self.netshield = .level1
-        self.vpnAccelerator = true
-        self.bouncing = nil
-        self.natType = .default
-        self.safeMode = false
-    }
-    
     var asDict: [String: Any] {
         var result = [String: Any]()
         result[CodingKeys.netshield.rawValue] = netshield.rawValue
