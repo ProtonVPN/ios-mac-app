@@ -33,9 +33,7 @@ final class WireguardAvailabilityChecker {
     func getFirstToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
         log.debug("Getting best port for \(server.entryIp) on Wireguard", category: .connectionConnect, event: .scan)
 
-        DispatchQueue.global().async { [weak self] in
-            guard let `self` = self else { return }
-
+        DispatchQueue.global().async {
             let group = DispatchGroup()
             let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(self.protocolName)")
             var portAlreadyFound = false // Prevents several calls to completion closure
