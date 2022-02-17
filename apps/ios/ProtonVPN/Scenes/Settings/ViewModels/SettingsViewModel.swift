@@ -410,7 +410,7 @@ final class SettingsViewModel {
         }
 
         if propertiesManager.featureFlags.moderateNAT {
-            cells.append(contentsOf: natTypeSection)
+            cells.append(contentsOf: moderateNATSection)
         }
 
         return TableViewSection(title: LocalizedString.advanced.uppercased(), cells: cells)
