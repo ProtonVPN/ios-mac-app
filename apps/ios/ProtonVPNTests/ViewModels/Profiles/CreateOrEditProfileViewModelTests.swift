@@ -53,7 +53,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         propertiesManager: propertiesManager)
     
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock)
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock())
     }
 
     lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager)

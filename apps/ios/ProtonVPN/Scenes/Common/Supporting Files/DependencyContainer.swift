@@ -43,7 +43,9 @@ final class DependencyContainer {
                                                                      propertiesManager: makePropertiesManager(),
                                                                      vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                      alertService: iosAlertService,
-                                                                     vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()))
+                                                                     vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()),
+                                                                     natTypePropertyProvider: makeNATTypePropertyProvider(),
+                                                                     netShieldPropertyProvider: makeNetShieldPropertyProvider())
     private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var ikeFactory = IkeProtocolFactory()
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager())
@@ -59,7 +61,9 @@ final class DependencyContainer {
                                                                         vpnKeychain: makeVpnKeychain(),
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer(),
                                                                         vpnAuthentication: makeVpnAuthentication(),
-                                                                        doh: makeDoHVPN())
+                                                                        doh: makeDoHVPN(),
+                                                                        natTypePropertyProvider: makeNATTypePropertyProvider(),
+                                                                        netShieldPropertyProvider: makeNetShieldPropertyProvider())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)

@@ -432,7 +432,7 @@ fileprivate extension VpnGateway {
         }
         
         if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
-            propertiesManager.netShieldType = .off
+            netShieldPropertyProvider.netShieldType = .default
         }
         
         guard downgradeInfo.to.maxTier < downgradeInfo.from.maxTier else { return }
@@ -482,8 +482,8 @@ fileprivate extension VpnGateway {
             serverType: serverTypeToggle,
             connectionType: .fastest,
             connectionProtocol: globalConnectionProtocol,
-            netShieldType: propertiesManager.netShieldType ?? .off,
-            natType: propertiesManager.natType,
+            netShieldType: netShieldPropertyProvider.netShieldType,
+            natType: natTypePropertyProvider.natType,
             profileId: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }

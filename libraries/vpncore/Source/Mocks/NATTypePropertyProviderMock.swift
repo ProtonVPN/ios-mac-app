@@ -1,5 +1,5 @@
 //
-//  Created on 07.02.2022.
+//  Created on 18.02.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,26 +17,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import vpncore
 
-public protocol PaidFeaturePropertyProvider: AnyObject {
-    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory
-    var factory: Factory { get }
-    var propertiesManager: PropertiesManagerProtocol { get }
-    var currentUserTier: Int { get }
+public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
+    public var factory: Factory
 
-    init(_ factory: Factory)
-}
-
-extension PaidFeaturePropertyProvider {
-    var userTierProvider: UserTierProvider {
-        return factory.makeUserTierProvider()
+    public required init(_ factory: Factory) {
+        self.factory = factory
     }
 
-    public var propertiesManager: PropertiesManagerProtocol {
-        factory.makePropertiesManager()
+    public convenience init() {
+        self.init(PaidFeaturePropertyProviderFactoryMock())
     }
 
-    public var currentUserTier: Int {
-        return userTierProvider.currentUserTier
-    }
+    public var natType: NATType = .default
+
+    public var isUserEligibleForNATTypeChange = true
 }

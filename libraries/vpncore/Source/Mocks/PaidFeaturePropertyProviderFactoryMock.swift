@@ -1,5 +1,5 @@
 //
-//  Created on 07.02.2022.
+//  Created on 18.02.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,26 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import vpncore
 
-public protocol PaidFeaturePropertyProvider: AnyObject {
-    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory
-    var factory: Factory { get }
-    var propertiesManager: PropertiesManagerProtocol { get }
-    var currentUserTier: Int { get }
-
-    init(_ factory: Factory)
-}
-
-extension PaidFeaturePropertyProvider {
-    var userTierProvider: UserTierProvider {
-        return factory.makeUserTierProvider()
+final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.Factory {
+    func makePropertiesManager() -> PropertiesManagerProtocol {
+        return PropertiesManagerMock()
     }
 
-    public var propertiesManager: PropertiesManagerProtocol {
-        factory.makePropertiesManager()
-    }
-
-    public var currentUserTier: Int {
-        return userTierProvider.currentUserTier
+    func makeUserTierProvider() -> UserTierProvider {
+        return UserTierProviderMock(CoreAppConstants.VpnTiers.basic)
     }
 }

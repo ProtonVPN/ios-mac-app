@@ -122,6 +122,8 @@ public class VpnManager: VpnManagerProtocol {
 
     private let vpnStateConfiguration: VpnStateConfiguration
 
+    let natTypePropertyProvider: NATTypePropertyProvider
+    let netShieldPropertyProvider: NetShieldPropertyProvider
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
@@ -134,7 +136,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider) {
         readyGroup?.enter()
 
         self.ikeProtocolFactory = ikeFactory
@@ -147,6 +149,8 @@ public class VpnManager: VpnManagerProtocol {
         self.propertiesManager = propertiesManager
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
+        self.natTypePropertyProvider = natTypePropertyProvider
+        self.netShieldPropertyProvider = netShieldPropertyProvider
         
         prepareManagers(forSetup: true)
     }
