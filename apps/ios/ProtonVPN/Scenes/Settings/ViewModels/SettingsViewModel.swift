@@ -335,23 +335,23 @@ final class SettingsViewModel {
                     return
                 }
 
-                let type = toggleOn ? NATType.moderateNAT: NATType.strictNAT
+                let natType = toggleOn ? NATType.moderateNAT: NATType.strictNAT
 
                 self.vpnStateConfiguration.getInfo { [weak self] info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                     case .withConnectionUpdate:
-                        self?.propertiesManager.natType = type
-                        self?.vpnManager.set(natType: type)
+                        self?.natTypePropertyProvider.natType = natType
+                        self?.vpnManager.set(natType: natType)
                         callback(toggleOn)
                     case .withReconnect:
                         self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.moderateNatChangeTitle, confirmHandler: { [weak self] in
-                            self?.propertiesManager.natType = type
+                            self?.natTypePropertyProvider.natType = natType
                             callback(toggleOn)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                             self?.vpnGateway?.retryConnection()
                         }))
                     case .immediately:
-                        self?.propertiesManager.natType = type
+                        self?.natTypePropertyProvider.natType = natType
                         callback(toggleOn)
                     }
                 }
