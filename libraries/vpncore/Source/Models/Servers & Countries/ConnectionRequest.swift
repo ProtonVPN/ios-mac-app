@@ -119,7 +119,7 @@ public struct ConnectionRequest: Codable {
         if let natTypeValue = try container.decodeIfPresent(NATType.self, forKey: .natType) {
             natType = natTypeValue
         } else {
-            natType = .strictNAT
+            natType = .default
         }
     }
 }

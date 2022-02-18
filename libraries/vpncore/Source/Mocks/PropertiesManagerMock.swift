@@ -67,10 +67,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastAppVersion = "0.0.0"
     public var lastTimeForeground: Date?
     public var featureFlags: FeatureFlags = FeatureFlags()
-    public var netShieldType: NetShieldType? = .off
+    public var netShieldType: NetShieldType? = .default
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false
-    public var natType: NATType = .strictNAT
+    public var natType: NATType = .default
     public var killSwitch: Bool = false
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false {

@@ -37,16 +37,16 @@ extension LocalAgentConfiguration {
         self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing, natType: configuration.natType)
     }
 
-    init?(propertiesManager: PropertiesManagerProtocol, vpnProtocol: VpnProtocol?) {
+    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, vpnProtocol: VpnProtocol?) {
         guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
         self.init(hostname: connectionConfiguration.serverIp.domain,
-                  netshield: propertiesManager.netShieldType ?? .off,
+                  netshield: netShieldPropertyProvider.netShieldType,
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                   bouncing: connectionConfiguration.serverIp.label,
-                  natType: propertiesManager.natType)
+                  natType: natTypePropertyProvider.natType)
     }
 }
 
@@ -54,15 +54,15 @@ extension LocalAgentConfiguration {
 
 extension VPNConnectionFeatures {
     
-    init?(propertiesManager: PropertiesManagerProtocol, vpnProtocol: VpnProtocol?) {
+    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, vpnProtocol: VpnProtocol?) {
         guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
-        self.init(netshield: propertiesManager.netShieldType ?? .off,
+        self.init(netshield: netShieldPropertyProvider.netShieldType,
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                   bouncing: connectionConfiguration.serverIp.label,
-                  natType: propertiesManager.natType)
+                  natType: natTypePropertyProvider.natType)
     }
 }
 

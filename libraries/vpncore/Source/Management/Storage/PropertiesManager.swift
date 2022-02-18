@@ -457,7 +457,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             guard let authCredentials = AuthKeychain.fetch() else { return }
             storage.setValue(newValue?.rawValue, forKey: Keys.netshield.rawValue + authCredentials.username)
-            postNotificationOnUIThread(PropertiesManager.netShieldNotification, object: newValue)
+            postNotificationOnUIThread(type(of: self).netShieldNotification, object: newValue)
         }
     }
     

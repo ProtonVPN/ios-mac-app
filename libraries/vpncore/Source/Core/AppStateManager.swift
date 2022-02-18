@@ -130,8 +130,11 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private let vpnAuthentication: VpnAuthentication
     private let doh: DoHVPN
+
+    private let natTypePropertyProvider: NATTypePropertyProvider
+    private let netShieldPropertyProvider: NetShieldPropertyProvider
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.networking = networking
@@ -142,6 +145,8 @@ public class AppStateManagerImplementation: AppStateManager {
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
         self.doh = doh
+        self.natTypePropertyProvider = natTypePropertyProvider
+        self.netShieldPropertyProvider = netShieldPropertyProvider
         
         handleVpnStateChange(vpnManager.state)
         reachability = try? Reachability()
@@ -241,7 +246,7 @@ public class AppStateManagerImplementation: AppStateManager {
             makeConnection(configuration)
         case .certificate:
             log.info("Checking vpn auth keys and certificates", category: .connectionConnect)
-            vpnAuthentication.loadAuthenticationData(features: VPNConnectionFeatures(propertiesManager: propertiesManager, vpnProtocol: configuration.vpnProtocol)) { result in
+            vpnAuthentication.loadAuthenticationData(features: VPNConnectionFeatures(propertiesManager: propertiesManager, natTypePropertyProvider: natTypePropertyProvider, netShieldPropertyProvider: netShieldPropertyProvider, vpnProtocol: configuration.vpnProtocol)) { result in
                 switch result {
                 case let .success(data):
                     log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])

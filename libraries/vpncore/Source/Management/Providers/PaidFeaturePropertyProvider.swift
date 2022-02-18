@@ -18,7 +18,7 @@
 
 import Foundation
 
-public protocol PaidFeaturePropertyProvider {
+public protocol PaidFeaturePropertyProvider: AnyObject {
     typealias Factory = PropertiesManagerFactory & UserTierProviderFactory
     var factory: Factory { get }
     var propertiesManager: PropertiesManagerProtocol { get }

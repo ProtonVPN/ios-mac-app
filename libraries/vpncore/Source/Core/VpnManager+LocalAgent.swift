@@ -29,7 +29,7 @@ extension VpnManager {
         }
 
         let connect = { (data: VpnAuthenticationData) in
-            guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, vpnProtocol: self.currentVpnProtocol) else {
+            guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
                 log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                 return
             }
@@ -217,22 +217,21 @@ extension VpnManager: LocalAgentDelegate {
     }
 
     private func didReceiveFeature(netshield: NetShieldType) {
-        let currentNetshield = propertiesManager.netShieldType ?? NetShieldType.off
-        guard currentNetshield != netshield else {
+        guard netShieldPropertyProvider.netShieldType != netshield else {
             return
         }
 
-        log.debug("Netshield was set to \(currentNetshield), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
+        log.debug("Netshield was set to \(netShieldPropertyProvider.netShieldType), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
         updateActiveConnection(netShieldType: netshield)
-        propertiesManager.netShieldType = netshield
+        netShieldPropertyProvider.netShieldType = netshield
     }
 
     private func didReceiveFeature(natType: NATType) {
-        guard propertiesManager.natType != natType else {
+        guard natTypePropertyProvider.natType != natType else {
             return
         }
 
-        log.debug("NAT type was set to \(propertiesManager.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
-        propertiesManager.natType = natType
+        log.debug("NAT type was set to \(natTypePropertyProvider.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
+        natTypePropertyProvider.natType = natType
     }
 }
