@@ -26,6 +26,4 @@ public enum NetShieldType: Int, CaseIterable, Codable {
     case off = 0
     case level1
     case level2
-
-    public static let `default`: NetShieldType = .off
 }

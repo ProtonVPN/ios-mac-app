@@ -82,4 +82,6 @@ public class AuthKeychain {
             NotificationCenter.default.post(name: clearNotification, object: nil, userInfo: nil)
         }
     }
+
+    public init() { }
 }

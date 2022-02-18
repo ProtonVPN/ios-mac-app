@@ -28,6 +28,8 @@ public protocol NetShieldPropertyProvider: PaidFeaturePropertyProvider {
 
     /// Check if current user can use NetShield
     var isUserEligibleForNetShield: Bool { get }
+
+    static var netShieldNotification: Notification.Name { get }
 }
 
 public protocol NetShieldPropertyProviderFactory {
@@ -36,23 +38,44 @@ public protocol NetShieldPropertyProviderFactory {
 
 public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider {
     public let factory: Factory
-    
-    public required init(_ factory: Factory) {
+
+    public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
+
+    private let storage: Storage
+    private let key = "NetShield"
+    private let userInfoProvider: UserInfoProvider
+
+    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
+        self.storage = storage
+        self.userInfoProvider = userInfoProvider
     }
     
     public var netShieldType: NetShieldType {
         get {
-            guard let type = propertiesManager.netShieldType else {
+            guard let username = type(of: userInfoProvider).username else {
                 return defaultNetShieldType
             }
+
+            guard let current = storage.defaults.value(forKey: key + username) as? Int, let type = NetShieldType.init(rawValue: current) else {
+                return defaultNetShieldType
+            }
+
             if type.isUserTierTooLow(currentUserTier) {
                 return defaultNetShieldType
             }
+
             return type
         }
         set {
-            propertiesManager.netShieldType = newValue
+            guard let username = type(of: userInfoProvider).username else {
+                return
+            }
+
+            storage.setValue(newValue.rawValue, forKey: key + username)
+            executeOnUIThread {
+                NotificationCenter.default.post(name: type(of: self).netShieldNotification, object: newValue, userInfo: nil)
+            }
         }
     }
     

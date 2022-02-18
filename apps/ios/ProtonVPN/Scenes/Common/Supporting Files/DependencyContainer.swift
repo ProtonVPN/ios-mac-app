@@ -330,7 +330,7 @@ extension DependencyContainer: UserTierProviderFactory {
 // MARK: - NetShieldPropertyProviderFactory
 extension DependencyContainer: NetShieldPropertyProviderFactory {
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        return NetShieldPropertyProviderImplementation(self)
+        return NetShieldPropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
     }
 }
 
@@ -447,6 +447,6 @@ extension DependencyContainer: DynamicBugReportManagerFactory {
 // MARK: NATTypePropertyProviderFactory
 extension DependencyContainer: NATTypePropertyProviderFactory {
     func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
-        return NATTypePropertyProviderImplementation(self)
+        return NATTypePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
     }
 }

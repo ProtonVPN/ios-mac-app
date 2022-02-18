@@ -25,6 +25,7 @@ public protocol NATTypePropertyProvider: PaidFeaturePropertyProvider {
     /// If the user can change NAT Type
     var isUserEligibleForNATTypeChange: Bool { get }
 
+    static var natTypeNotification: Notification.Name { get }
 }
 
 public protocol NATTypePropertyProviderFactory {
@@ -34,8 +35,14 @@ public protocol NATTypePropertyProviderFactory {
 public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
     public let factory: Factory
 
-    public required init(_ factory: Factory) {
+    public static let natTypeNotification: Notification.Name = Notification.Name("NATTypeChanged")
+
+    private let storage: Storage
+    private let key = "NATType"
+
+    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
+        self.storage = storage
     }
 
     public var natType: NATType {
@@ -44,14 +51,17 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
                 return .default
             }
 
-            return propertiesManager.natType
-        }
-        set {
-            guard isUserEligibleForNATTypeChange else {
-                return
+            if let value = storage.defaults.object(forKey: key) as? Int, let natType = NATType(rawValue: value) {
+                return natType
             }
 
-            propertiesManager.natType = newValue
+            return .default
+        }
+        set {
+            storage.setValue(newValue.rawValue, forKey: key)
+            executeOnUIThread {
+                NotificationCenter.default.post(name: type(of: self).natTypeNotification, object: newValue, userInfo: nil)
+            }
         }
     }
 

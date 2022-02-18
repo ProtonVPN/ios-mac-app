@@ -22,15 +22,17 @@ import Foundation
 public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
     public var factory: Factory
 
-    public required init(_ factory: Factory) {
+    public static var netShieldNotification: Notification.Name = Notification.Name("")
+
+    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
     }
 
     public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock())
+        self.init(PaidFeaturePropertyProviderFactoryMock(), storage: Storage(), userInfoProvider: AuthKeychain())
     }
 
-    public var netShieldType: NetShieldType = .default
+    public var netShieldType: NetShieldType = .off    
 
     public var isUserEligibleForNetShield: Bool = true
 }
