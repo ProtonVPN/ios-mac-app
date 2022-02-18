@@ -262,7 +262,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var lastConnectionRequest: ConnectionRequest? {
         get {
-            return storage.getDecodableValue(ConnectionRequest.self, forKey: Keys.lastConnectionRequest.rawValue)
+            guard let data = storage.defaults.data(forKey: Keys.lastConnectionRequest.rawValue) else {
+                return nil
+            }
+            let decoder = JSONDecoder()
+            decoder.userInfo[ConnectionRequest.safeModeDefaultValueUserInfoKey] = safeModeDefaltValue
+            return try? decoder.decode(ConnectionRequest.self, from: data)
         }
         set {
             storage.setEncodableValue(newValue, forKey: Keys.lastConnectionRequest.rawValue)
@@ -448,7 +453,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         get {
             // default to false when the feature is not enabled
             guard featureFlags.safeMode else {
-                return false
+                return safeModeDefaltValue
             }
 
             return storage.defaults.bool(forKey: Keys.safeMode.rawValue)
@@ -607,8 +612,17 @@ public class PropertiesManager: PropertiesManagerProtocol {
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
         killSwitch = false
-        safeMode = true
+        safeMode = true // true is the default, but getter returns false when disabled by feature flag
         natType = .default
+    }
+
+    private var safeModeDefaltValue: Bool {
+        // default to false when the feature is not enabled
+        guard featureFlags.safeMode else {
+            return false
+        }
+
+        return true
     }
     
     func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {
