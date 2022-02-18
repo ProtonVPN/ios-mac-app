@@ -47,6 +47,10 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
             return propertiesManager.natType
         }
         set {
+            guard isUserEligibleForNATTypeChange else {
+                return
+            }
+
             propertiesManager.natType = newValue
         }
     }
