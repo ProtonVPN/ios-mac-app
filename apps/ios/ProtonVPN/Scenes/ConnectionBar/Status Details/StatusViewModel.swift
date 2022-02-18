@@ -28,7 +28,7 @@ import UIKit
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & UpsellFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & UpsellFactory & NATTypePropertyProviderFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -39,6 +39,7 @@ class StatusViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -197,7 +198,7 @@ class StatusViewModel {
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
         // same condition as on the Profiles screen to be consistent
-        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType ?? .off, withDefaultNATType: propertiesManager.natType) == vpnGateway?.lastConnectionRequest }) != nil {
+        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType) == vpnGateway?.lastConnectionRequest }) != nil {
             cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .notificationErrorColor(), handler: { [deleteProfile] in
                 deleteProfile()
             })
