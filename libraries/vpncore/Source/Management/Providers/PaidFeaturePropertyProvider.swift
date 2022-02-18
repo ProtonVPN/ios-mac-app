@@ -24,7 +24,7 @@ public protocol PaidFeaturePropertyProvider: AnyObject {
     var propertiesManager: PropertiesManagerProtocol { get }
     var currentUserTier: Int { get }
 
-    init(_ factory: Factory)
+    init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider)
 }
 
 extension PaidFeaturePropertyProvider {
@@ -38,5 +38,15 @@ extension PaidFeaturePropertyProvider {
 
     public var currentUserTier: Int {
         return userTierProvider.currentUserTier
+    }
+}
+
+public protocol UserInfoProvider: AnyObject {
+    static var username: String? { get }
+}
+
+extension AuthKeychain: UserInfoProvider {
+    public static var username: String? {
+        return AuthKeychain.fetch()?.username
     }
 }

@@ -27,13 +27,11 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var killSwitchNotification: Notification.Name = Notification.Name("")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("")
     public static var userIpNotification: Notification.Name = Notification.Name("")
-    public static var netShieldNotification: Notification.Name = Notification.Name("")
     public static var earlyAccessNotification: Notification.Name = Notification.Name("")
     public static var vpnProtocolNotification: Notification.Name = Notification.Name("")
     public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("")
     public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("")
     public static var smartProtocolNotification: Notification.Name = Notification.Name("")
-    public static var natTypeNotification: Notification.Name = Notification.Name("")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
@@ -67,10 +65,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastAppVersion = "0.0.0"
     public var lastTimeForeground: Date?
     public var featureFlags: FeatureFlags = FeatureFlags()
-    public var netShieldType: NetShieldType? = .default
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false
-    public var natType: NATType = .default
     public var killSwitch: Bool = false
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false {

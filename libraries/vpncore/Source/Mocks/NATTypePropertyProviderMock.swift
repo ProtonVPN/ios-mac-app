@@ -20,14 +20,16 @@ import Foundation
 @testable import vpncore
 
 public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
+    public static var natTypeNotification: Notification.Name = NSNotification.Name("")
+
     public var factory: Factory
 
-    public required init(_ factory: Factory) {
+    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
     }
 
     public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock())
+        self.init(PaidFeaturePropertyProviderFactoryMock(), storage: Storage(), userInfoProvider: AuthKeychain())
     }
 
     public var natType: NATType = .default

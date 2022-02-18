@@ -269,7 +269,8 @@ class StatusViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: appStateManager.stateChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: appStateManager.displayStateChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: propertiesManager).netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
     }
     
     private func stopObserving() {

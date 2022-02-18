@@ -29,14 +29,12 @@ public protocol PropertiesManagerProtocol: class {
     
     static var hasConnectedNotification: Notification.Name { get }
     static var userIpNotification: Notification.Name { get }
-    static var netShieldNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
     static var vpnProtocolNotification: Notification.Name { get }
     static var excludeLocalNetworksNotification: Notification.Name { get }
     static var vpnAcceleratorNotification: Notification.Name { get }
     static var killSwitchNotification: Notification.Name { get }
-    static var smartProtocolNotification: Notification.Name { get }
-    static var natTypeNotification: Notification.Name { get }
+    static var smartProtocolNotification: Notification.Name { get }    
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
@@ -67,12 +65,10 @@ public protocol PropertiesManagerProtocol: class {
     var vpnProtocol: VpnProtocol { get set }
 
     var featureFlags: FeatureFlags { get set }
-    var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
     var excludeLocalNetworks: Bool { get set }
     var vpnAcceleratorEnabled: Bool { get set }
-    var natType: NATType { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -156,10 +152,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         // Features
         case featureFlags = "FeatureFlags"
-        case netshield = "NetShield"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
         case vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
-        case natType = "NATType"
         
         case humanValidationFailed = "humanValidationFailed"
         case alternativeRouting = "alternativeRouting"
@@ -175,12 +169,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
-    public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
     public static let earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
     public static let vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
     public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
-    public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")
-    public static let natTypeNotification: Notification.Name = Notification.Name("NATTypeChanged")
+    public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")    
     public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
 
@@ -446,21 +438,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var netShieldType: NetShieldType? {
-        get {
-            guard let authCredentials = AuthKeychain.fetch() else { return nil }
-            guard let current = storage.defaults.value(forKey: Keys.netshield.rawValue + authCredentials.username) as? Int, let type = NetShieldType.init(rawValue: current) else {
-                return nil
-            }
-            return type
-        }
-        set {
-            guard let authCredentials = AuthKeychain.fetch() else { return }
-            storage.setValue(newValue?.rawValue, forKey: Keys.netshield.rawValue + authCredentials.username)
-            postNotificationOnUIThread(type(of: self).netShieldNotification, object: newValue)
-        }
-    }
-    
     public var featureFlags: FeatureFlags {
         get {
             return storage.getDecodableValue(FeatureFlags.self, forKey: Keys.featureFlags.rawValue) ?? FeatureFlags()
@@ -491,20 +468,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled.rawValue)
             postNotificationOnUIThread(type(of: self).vpnAcceleratorNotification, object: newValue)
-        }
-    }
-
-    public var natType: NATType {
-        get {
-            if let value = storage.defaults.object(forKey: Keys.natType.rawValue) as? Int, let natType = NATType(rawValue: value) {
-                return natType
-            }
-
-            return .default
-        }
-        set {
-            storage.setValue(newValue.rawValue, forKey: Keys.natType.rawValue)
-            postNotificationOnUIThread(type(of: self).natTypeNotification, object: newValue)
         }
     }
     

@@ -50,8 +50,8 @@ public class Storage {
         }
     }
     
-    public init() {
-        
+    public init(defaults: UserDefaults = UserDefaults.standard) {
+        Storage.specifiedDefaults = defaults
     }
     
     public var defaults: UserDefaults {

@@ -128,13 +128,13 @@ final class SettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
                                                name: appSessionManager.sessionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
-                                               name: type(of: propertiesManager).netShieldNotification, object: nil)
+                                               name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: appSessionManager.dataReloaded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
-                                               name: type(of: propertiesManager).natTypeNotification, object: nil)
+                                               name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
