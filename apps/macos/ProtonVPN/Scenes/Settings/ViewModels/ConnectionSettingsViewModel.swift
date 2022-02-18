@@ -127,7 +127,7 @@ final class ConnectionSettingsViewModel {
     }
 
     var natType: NATType {
-        return propertiesManager.natType
+        return natTypePropertyProvider.natType
     }
     
     // MARK: - Item counts
@@ -216,11 +216,11 @@ final class ConnectionSettingsViewModel {
             case .withConnectionUpdate:
                 // in-place change when connected and using local agent
                 self?.vpnManager.set(natType: natType)
-                self?.propertiesManager.natType = natType
+                self?.natTypePropertyProvider.natType = natType
                 completion(true)
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: { [weak self] in
-                    self?.propertiesManager.natType = natType
+                    self?.natTypePropertyProvider.natType = natType
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
@@ -228,7 +228,7 @@ final class ConnectionSettingsViewModel {
                     completion(false)
                 }))
             case .immediately:
-                self?.propertiesManager.natType = natType
+                self?.natTypePropertyProvider.natType = natType
                 completion(true)
             }
         }
