@@ -931,6 +931,21 @@
 /* Main mac app menu item */
 "_menu_window" = "Venster";
 
+/* Title for alert shown when enabling Moderate NATe requires reconnection */
+"_moderate_nat_change_title" = "Schakel Gemiddelde NAT in";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Schakel Gemiddelde NAT in";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Moderate NAT schakelt de randomisatie van de lokale adressen mapping uit, wat uw veiligheid enigszins kan verminderen, maar laat technieken toe zoals rechtstreekse verbindingen voor toepassingen zoals online games. \nMeer informatie";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Meer informatie";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Gemiddelde NAT";
+
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30 dagen geld-terug-garantie";
 
@@ -1652,7 +1667,7 @@
 "_sysex_wizard_step1_description" = "Klik op \"Begin configuratie\". Er verschijnen twee dialoogvensters, klik dan op \"Open Security Preferences\".\nAls alternatief kunt u hier klikken om dezelfde instellingen te openen. uration.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Klik op \"Begin configuratie\". Dialoog zal verschijnen, klik dan op \"Open Security Preferences\".\nU kunt ook hier klikken om dezelfde instellingen te openen.";
+"_sysex_wizard_step1_description_1" = "Klik op \"Begin configuratie\". Dialoog zal verschijnen, klik dan op \"Open Veiligheid Voorkeuren\".\nU kunt ook hier klikken om dezelfde instellingen te openen.";
 
 /* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
 "_sysex_wizard_step1_description_link" = "hier";

@@ -386,7 +386,7 @@
 "_error_field_passwords_dont_match" = "Sandi tidak sama";
 
 /* Form validation error */
-"_error_field_required" = "Bagian ini diperlukan";
+"_error_field_required" = "Kolom ini wajib diisi";
 
 /* Form validation error */
 "_error_field_unknown" = "Harap periksa kolom ini";
@@ -930,6 +930,21 @@
 
 /* Main mac app menu item */
 "_menu_window" = "Jendela";
+
+/* Title for alert shown when enabling Moderate NATe requires reconnection */
+"_moderate_nat_change_title" = "Aktifkan NAT Moderat";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Aktifkan NAT Moderat";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Pengaturan NAT moderat akan menonaktifkan pengacakan alamat IP lokal, yang dapat membuat Anda lebih rentan namun memungkinkan Anda untuk dapat terhubung langsung dengan para pengguna lainnya pada berbagai aplikasi dan permainan online. \nPelajari lebih lanjut";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Pelajari lebih lanjut";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "NAT Moderat";
 
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Jaminan 30 hari uang kembali";
@@ -1607,7 +1622,7 @@
 "_subuser_alert_assign_connections_button" = "Tetapkan koneksi VPN";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "Untuk memulai perjalanan ProtonVPN Anda, harap tetapkan koneksi VPN pada akun Anda atau sub-akun lainnya.";
+"_subuser_alert_description1" = "Untuk dapat mulai menggunakan ProtonVPN, harap tetapkan koneksi VPN pada akun Anda atau sub-akun lainnya.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Langkah ini akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";

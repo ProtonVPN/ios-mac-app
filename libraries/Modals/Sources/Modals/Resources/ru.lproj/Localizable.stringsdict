@@ -2,10 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>modals_establish_subtitle</key>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Подписка FREE предлагает %#@num_servers@ в %#@num_countries@</string>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Подключайте до %d устройств одновременно</string>
+			<key>many</key>
+			<string>Подключайте до %d устройств одновременно</string>
+			<key>one</key>
+			<string>Подключайте до %d устройства одновременно</string>
+			<key>other</key>
+			<string>Подключайте до %d устройств одновременно</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Получите доступ к %#@num_servers@ в %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -28,88 +48,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d сервера</string>
+			<string>%d безопасных сервера</string>
 			<key>many</key>
-			<string>%d серверов</string>
+			<string>%d безопасных серверов</string>
 			<key>one</key>
-			<string>%d сервер</string>
+			<string>%d безопасный сервер</string>
 			<key>other</key>
-			<string>%d серверов</string>
-		</dict>
-	</dict>
-	<key>modals_purchased_subtitle</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>Теперь у вас есть доступ к %d защищенным серверам и другим платным функциям.</string>
-			<key>many</key>
-			<string>Теперь у вас есть доступ к %d защищенным серверам и другим платным функциям.</string>
-			<key>one</key>
-			<string>Теперь у вас есть доступ к %d защищенному серверу и другим платным функциям.</string>
-			<key>other</key>
-			<string>Теперь у вас есть доступ к %d защищенным серверам и другим платным функциям.</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>Подключайте %d устройства одновременно</string>
-			<key>many</key>
-			<string>Подключайте %d устройств одновременно</string>
-			<key>one</key>
-			<string>Подключайте %d устройство одновременно</string>
-			<key>other</key>
-			<string>Подключайте %d устройств одновременно</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Получите доступ ко всем %#@num_servers@ в %#@num_countries@ с тарифом Plus</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d страны</string>
-			<key>many</key>
-			<string>%d стран</string>
-			<key>one</key>
-			<string>%d страна</string>
-			<key>other</key>
-			<string>%d стран</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d сервера</string>
-			<key>many</key>
-			<string>%d серверов</string>
-			<key>one</key>
-			<string>%d сервер</string>
-			<key>other</key>
-			<string>%d серверов</string>
+			<string>%d безопасных серверов</string>
 		</dict>
 	</dict>
 </dict>

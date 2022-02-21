@@ -1,21 +1,57 @@
-/* (No Comment) */
-"modals_get_plus" = "Получить Plus";
+/* Upgrade plan button title */
+"modals_get_plus" = "Улучшить";
 
-/* (No Comment) */
-"modals_upsell_feature_highSpeed" = "Наивысшая скорость (10 Гбит/с)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Просматривайте сайты на самых высоких скоростях (10 Gbps)";
 
-/* (No Comment) */
-"modals_upsell_feature_multipleDevices" = "Подключите 10 устройств одновременно";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Блокируйте рекламу и вредоносные программы с помощью NetShield";
 
-/* (No Comment) */
-"modals_upsell_feature_netshield" = "Встроенный блокировщик рекламы (NetShield)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Получите доступ к глобальным службам трансляции";
 
-/* (No Comment) */
-"modals_upsell_feature_streaming" = "Доступ к службам трансляции по всему миру";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "И много других платных функций";
 
-/* (No Comment) */
-"modals_upsell_features_footer" = "и другие платные функции...";
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Умеренный NAT (также известный как Nat Type 2) может повысить удобство работы в Интернете с различными приложениями и сетевыми видеоиграми.\n\nРазблокируйте эту и другие функции на тарифе Plus.";
 
-/* (No Comment) */
-"modals_upsell_stay_free" = "Используйте ограниченный план FREE";
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Используйте ProtonVPN для любых особых нужд, разрешая трафик через VPN на нестандартные порты. Разблокируйте эту и другие возможности с помощью тарифа Plus.";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Когда вы улучшите до Plus";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Включить умеренное NAT";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Блокируйте рекламу и трекеры";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Просматривайте сайты на самых высоких скоростях";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Защитите свое устройство от вредоносных программ";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Воспользуйтесь просмотром веб-страниц без рекламы с помощью NetShield";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Разрешить трафик на нестандартные порты";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Защитите себя от сетевых атак";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Добавьте еще один уровень шифрования к вашему подключению VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Направляйте свой трафик через сверхзащищенные серверы в Швейцарии, Швеции и Исландии";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Двойное шифрование с Secure Core";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Не сейчас";
 

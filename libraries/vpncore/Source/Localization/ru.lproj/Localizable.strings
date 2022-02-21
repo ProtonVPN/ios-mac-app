@@ -931,6 +931,21 @@
 /* Main mac app menu item */
 "_menu_window" = "Окно";
 
+/* Title for alert shown when enabling Moderate NATe requires reconnection */
+"_moderate_nat_change_title" = "Включить умеренное NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Включить умеренное NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Умеренное NAT выключает рандомизацию переназначений локальных адресов, что может слегка уменьшить безопасность, но позволит работать таким функциям, как прямое подключение для приложений, например, для онлайн игр. \nПодробнее";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Узнать больше";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Умеренное NAT";
+
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30-дневная гарантия возврата денег";
 
@@ -1574,7 +1589,7 @@
 "_subscription_expired_description" = "Ваша подписка была понижена.";
 
 /* (No Comment) */
-"_subscription_expired_reconnection_description" = "Ваша подписка была понижена, поэтому мы переподключаемся к самому быстрому доступному серверу.";
+"_subscription_expired_reconnection_description" = "Вы перешли на более дешевую подписку, поэтому мы переподключаемся к самому быстрому доступному серверу.";
 
 /* (No Comment) */
 "_subscription_expired_title" = "Срок вашей подписки на VPN истек";

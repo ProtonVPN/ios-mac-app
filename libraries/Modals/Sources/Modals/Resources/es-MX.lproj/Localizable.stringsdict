@@ -2,10 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>modals_establish_subtitle</key>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>La suscripción gratuita ofrece %#@num_servers@ en %#@num_countries@</string>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Conecte hasta %d dispositivos a la vez</string>
+			<key>other</key>
+			<string>Conecte hasta %d dispositivos a la vez</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Acceda a más de %#@num_servers@ en %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -24,68 +40,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d servidores</string>
+			<string>%d servidores seguros</string>
 			<key>other</key>
-			<string>%d servidores</string>
-		</dict>
-	</dict>
-	<key>modals_purchased_subtitle</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Ahora tiene acceso a %d servidores seguros y otras funciones premium.</string>
-			<key>other</key>
-			<string>Ahora tiene acceso a %d servidores seguros y otras funciones premium.</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Conecte %d dispositivos simultáneamente</string>
-			<key>other</key>
-			<string>Conecte %d dispositivos simultáneamente</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Acceda a %#@num_servers@ en %#@num_countries@ con Plus</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d países</string>
-			<key>other</key>
-			<string>%d países</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d servidores</string>
-			<key>other</key>
-			<string>%d servidores</string>
+			<string>%d servidores seguros</string>
 		</dict>
 	</dict>
 </dict>

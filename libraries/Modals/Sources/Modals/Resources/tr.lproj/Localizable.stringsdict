@@ -2,10 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>modals_establish_subtitle</key>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Free aboneliğinde %#@num_countries@ ülkeden %#@num_servers@ sunucu bulunur</string>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Aynı anda %d aygıta kadar bağlanın</string>
+			<key>other</key>
+			<string>Aynı anda %d aygıta kadar bağlanın</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Plus tarifesi ile %#@num_countries@ ülkedeki %#@num_servers@ üzerindeki sunucuya erişin</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -24,68 +40,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d sunucu</string>
+			<string>%d güvenli sunucu</string>
 			<key>other</key>
-			<string>%d sunucu</string>
-		</dict>
-	</dict>
-	<key>modals_purchased_subtitle</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Artık %d güvenli sunucuya ve diğer ücretli özelliklere erişebilirsiniz.</string>
-			<key>other</key>
-			<string>Artık %d güvenli sunucuya ve diğer ücretli özelliklere erişebilirsiniz.</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>Aynı anda %d aygıt bağlayın</string>
-			<key>other</key>
-			<string>Aynı anda %d aygıt bağlayın</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Plus tarifesi ile %#@num_countries@ ülkedeki %#@num_servers@ sunucunun tamamına erişin</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d ülke</string>
-			<key>other</key>
-			<string>%d ülke</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d sunucu</string>
-			<key>other</key>
-			<string>%d sunucu</string>
+			<string>%d güvenli sunucu</string>
 		</dict>
 	</dict>
 </dict>
