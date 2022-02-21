@@ -1,21 +1,57 @@
-/* (No Comment) */
-"modals_get_plus" = "Pilih Plus";
+/* Upgrade plan button title */
+"modals_get_plus" = "Tingkatkan";
 
-/* (No Comment) */
-"modals_upsell_feature_highSpeed" = "Server tercepat (10 Gbps)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Jelajahi internet pada kecepatan tertinggi (10 Gbps)";
 
-/* (No Comment) */
-"modals_upsell_feature_multipleDevices" = "Connect 10 devices simultaneously";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Blokir iklan dan malware dengan NetShield";
 
-/* (No Comment) */
-"modals_upsell_feature_netshield" = "Adblocker yang tersedia secara bawaan (NetShield)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Akses berbagai layanan streaming global";
 
-/* (No Comment) */
-"modals_upsell_feature_streaming" = "Akses berbagai layanan streaming di manapun Anda berada";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "Dan berbagai fitur premium lainnya";
 
-/* (No Comment) */
-"modals_upsell_features_footer" = "and more premium features...";
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat (yang dikenal juga dengan nama Nat Type 2) dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
-/* (No Comment) */
-"modals_upsell_stay_free" = "Gunakan akun GRATIS dengan fitur-fitur yang terbatas";
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Alihkan lalu lintas data yang tertuju pada port-port non-standar melalui jaringan VPN. Dapatkan fitur ini dan berbagai fitur lainnya dengan paket Plus.";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke Plus";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Aktifkan NAT Moderat";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Blokir iklan dan program pelacak";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Jelajahi internet pada kecepatan tertinggi";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Lindungi perangkat Anda dari malware";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Nikmati penjelajahan tanpa iklan dengan NetShield";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Izinkan lalu lintas data melalui port non-standar";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Lindungi diri Anda dari serangan berbasis jaringan";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Terapkan lapisan perlindungan tambahan pada koneksi VPN Anda";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Alihkan lalu lintas jaringan Anda melalui server-server super aman di Swiss, Swedia, dan Islandia";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Enkripsi berganda dengan Secure Core";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Tidak sekarang";
 

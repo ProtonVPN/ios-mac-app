@@ -1,21 +1,57 @@
-/* (No Comment) */
-"modals_get_plus" = "Plus edinin";
+/* Upgrade plan button title */
+"modals_get_plus" = "Yükselt";
 
-/* (No Comment) */
-"modals_upsell_feature_highSpeed" = "En yüksek hız (10 Gb/sn)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "En yüksek hızlarda gezinin (10 Gb/sn)";
 
-/* (No Comment) */
-"modals_upsell_feature_multipleDevices" = "Aynı anda 10 aygıt bağlayın";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Netshield ile reklam ve kötü amaçlı yazılımları engelleyin";
 
-/* (No Comment) */
-"modals_upsell_feature_netshield" = "Yerleşik reklam engelleyici (NetShield)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Tüm dünyaradaki yayın akışı hizmetlerine erişin";
 
-/* (No Comment) */
-"modals_upsell_feature_streaming" = "Tüm dünyadaki yayın akışı hizmetlerine erişin";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "Ve pek çok diğer ücretli özellikler";
 
-/* (No Comment) */
-"modals_upsell_features_footer" = "ve diğer ücretli özellikler...";
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT (2. tür Nat olarak da bilinir), çeşitli uygulamalar ve çevrimiçi video oyunlarıyla ilgili çevrimiçi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
 
-/* (No Comment) */
-"modals_upsell_stay_free" = "Sınırlı Free tarifesini kullanın";
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "VPN ağı üzerinden standart olmayan kapı numaralarından trafik akışına izin vererek herhangi bir özel gereksinim için ProtonVPN kullanabilirsiniz. Plus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Plus tarifesine yükselttiğinizde";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Ilımlı NAT özelliğini etkinleştirebilirsiniz";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Reklam ve etkinlik izleyicileri engelleyebilirsiniz";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "En yüksek hızlarda gezinebilirsiniz";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Aygıtınızı kötü amaçlı yazılımlardan koruyabilirsiniz";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "NetShield ile reklamlar olmadan gezinebilirsiniz";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Standart olmayan kapı numaralarından trafik akabilsin";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Kendinizi ağ saldırılarından koruyabilirsiniz";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "VPN bağlantınıze ek bir şifreleme düzeyi ekleyebilirsiniz";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "İsviçre, İsveç ve İzlanda'daki çok yüksek güvenlikli sunucuları kullanabilirsiniz";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Secure Core ile şifrelemeyi iki katına çıkarabilirsiniz";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Şimdi değil";
 

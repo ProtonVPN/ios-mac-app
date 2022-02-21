@@ -931,6 +931,21 @@
 /* Main mac app menu item */
 "_menu_window" = "Fenêtre";
 
+/* Title for alert shown when enabling Moderate NATe requires reconnection */
+"_moderate_nat_change_title" = "Activer le NAT modéré";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Activer le NAT modéré";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Le NAT modéré désactive la distribution aléatoire des adresses locales, ce qui peut réduire légèrement votre sécurité, mais permet des utilisations telles que les connexions directes pour des applications comme les jeux en ligne. \nEn savoir plus";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "En savoir plus";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "NAT modéré";
+
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Remboursement garanti pendant 30 jours";
 

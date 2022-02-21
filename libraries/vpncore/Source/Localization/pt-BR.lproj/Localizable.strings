@@ -931,6 +931,21 @@
 /* Main mac app menu item */
 "_menu_window" = "Janela";
 
+/* Title for alert shown when enabling Moderate NATe requires reconnection */
+"_moderate_nat_change_title" = "Enable Moderate NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Enable Moderate NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Moderate NAT disables randomization of the local addresses mapping, which can reduces slightly your security, but allows techniques such as direct connections for applications like online games. \nLearn more";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Saiba mais";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Moderate NAT";
+
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Garantia de devolução do seu dinheiro por até 30 dias";
 
@@ -1673,7 +1688,7 @@
 "_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
 
 /* System exetnsion wizard in mac: Step nr.3 title */
-"_sysex_wizard_step3_title" = "Enter credentials";
+"_sysex_wizard_step3_title" = "Inserir credenciais";
 
 /* System exetnsion wizard in mac: Step nr.4 description (for case with more than one system extension) */
 "_sysex_wizard_step4_description" = "Click the “Details...” button";
@@ -1685,7 +1700,7 @@
 "_sysex_wizard_step4_title" = "“Details...” button";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "“Allow” button";
+"_sysex_wizard_step4_title_1" = "Botão \"Permitir\"";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
 "_sysex_wizard_step5_description" = "Select both ProtonVPN items to enable custom protocols and click “OK”";
@@ -2077,7 +2092,7 @@
 "_wgks_ks_off" = "Desativar Kill Switch";
 
 /* (No Comment) */
-"_wgks_ovpn" = "Switch to OpenVPN";
+"_wgks_ovpn" = "Mudar para OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
 "_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
@@ -2098,8 +2113,8 @@
 "_you_are_not_connected" = "Você não está conectado";
 
 /* (No Comment) */
-"login_fetch_vpn_data" = "Configuring your VPN access";
+"login_fetch_vpn_data" = "Configurando seu acesso ao VPN";
 
 /* (No Comment) */
-"login_summary_button" = "Start using ProtonVPN";
+"login_summary_button" = "Iniciar usando o ProtonVPN";
 

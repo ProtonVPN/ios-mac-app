@@ -2,10 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>modals_establish_subtitle</key>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Plan FREE oferuje %#@num_servers@ w %#@num_countries@</string>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Połącz do %d urządzeń jednocześnie</string>
+			<key>many</key>
+			<string>Połącz do %d urządzeń jednocześnie</string>
+			<key>one</key>
+			<string>Połącz do %d urządzenia jednocześnie</string>
+			<key>other</key>
+			<string>Połącz do %d urządzeń jednocześnie</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Dostęp do ponad %#@num_servers@ w %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -28,88 +48,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d serwery</string>
+			<string>%d bezpiecznych serwerów</string>
 			<key>many</key>
-			<string>%d serwerów</string>
+			<string>%d bezpiecznych serwerów</string>
 			<key>one</key>
-			<string>%d serwer</string>
+			<string>%d bezpiecznego serweru</string>
 			<key>other</key>
-			<string>%d serwerów</string>
-		</dict>
-	</dict>
-	<key>modals_purchased_subtitle</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>Otrzymujesz dostęp do %d bezpiecznych serwerów i innych funkcji premium.</string>
-			<key>many</key>
-			<string>Otrzymujesz dostęp do %d bezpiecznych serwerów i innych funkcji premium.</string>
-			<key>one</key>
-			<string>Otrzymujesz dostęp do %d bezpiecznego serwera i innych funkcji premium.</string>
-			<key>other</key>
-			<string>Otrzymujesz dostęp do %d bezpiecznych serwerów i innych funkcji premium.</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_feature_multipleDevices</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>Połącz %d urządzenia jednocześnie</string>
-			<key>many</key>
-			<string>Połącz %d urządzeń jednocześnie</string>
-			<key>one</key>
-			<string>Połącz %d urządzenie jednocześnie</string>
-			<key>other</key>
-			<string>Połącz %d urządzeń jednocześnie</string>
-		</dict>
-	</dict>
-	<key>modals_upsell_title</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>Dostęp do %#@num_servers@ w %#@num_countries@ z planem Plus</string>
-		<key>num_countries</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d krajach</string>
-			<key>many</key>
-			<string>%d krajach</string>
-			<key>one</key>
-			<string>%d kraju</string>
-			<key>other</key>
-			<string>%d krajach</string>
-		</dict>
-		<key>num_servers</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d serwery</string>
-			<key>many</key>
-			<string>%d serwerów</string>
-			<key>one</key>
-			<string>%d serwer</string>
-			<key>other</key>
-			<string>%d serwerów</string>
+			<string>%d bezpiecznych serwerów</string>
 		</dict>
 	</dict>
 </dict>

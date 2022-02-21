@@ -1,21 +1,57 @@
-/* (No Comment) */
-"modals_get_plus" = "Ottieni Plus";
+/* Upgrade plan button title */
+"modals_get_plus" = "Effettua l'upgrade";
 
-/* (No Comment) */
-"modals_upsell_feature_highSpeed" = "Massima velocità (10 Gbps)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
 
-/* (No Comment) */
-"modals_upsell_feature_multipleDevices" = "Connetti 10 dispositivi contemporaneamente";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with Netshield";
 
-/* (No Comment) */
-"modals_upsell_feature_netshield" = "Adblocker Integrato (NetShield)";
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
 
-/* (No Comment) */
-"modals_upsell_feature_streaming" = "Accedi ai servizi di streaming in tutto il mondo";
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "And many more premium features";
 
-/* (No Comment) */
-"modals_upsell_features_footer" = "e altre funzioni premium...";
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Moderate NAT (also known as Nat Type 2) can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.";
 
-/* (No Comment) */
-"modals_upsell_stay_free" = "Usa un piano GRATUITO limitato";
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Usa ProtonVPN per qualsiasi esigenza speciale consentendo il traffico verso porte non standard attraverso la rete VPN. Sblocca questa e altre funzionalità con un piano Plus.";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "When you upgrade to Plus";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Enable Moderate NAT";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Block ads and trackers";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Browse at the highest speeds";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Protect your device from malware";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Consenti il ​​traffico verso porte non standard";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Add another layer of encryption to your VPN connection";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Route through ultra secure servers in Switzerland, Sweden, and Iceland";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Double the encryption with Secure Core";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Non ora";
 

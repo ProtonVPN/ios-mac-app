@@ -29,13 +29,13 @@
 "_activate_widget" = "Ekran bileşenini etkinleştir";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Ekran araçlarınıza erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
+"_activate_widget_step_1" = "Ekran bileşenlerinize erişmek için ana ekranınızı en soldaki sayfaya kaydırın.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "Tamamen aşağı kaydırın ve düzenle düğmesine dokunun.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "ProtonVPN ekran aracını etkin ekran bileşenleri listesine ekleyin.";
+"_activate_widget_step_3" = "ProtonVPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Reklam engelleyici (NetShield)";
@@ -230,7 +230,7 @@
 "_data_disclaimer_device_details" = "Aygıtınızın modeli ve işletim sistemi sürümü";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "ProtonVPN, kişisel gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme raporları ve hatalar için.\n\nProtonVPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler ProtonVPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
+"_data_disclaimer_text" = "ProtonVPN, kişisel gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme bildirimleri ve hatalar için.\n\nProtonVPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler ProtonVPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Çevrimiçi ortamda kendinizi koruyun";
@@ -401,7 +401,7 @@
 "_error_internal_error" = "İç API hatası";
 
 /* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Yeni bir doğrulama kodu almak veya alternatif bir doğrulama yöntemi kullanmak ister misiniz?";
+"_error_invalid_human_verification_code_message" = "Yeni bir doğrulama kodu almak ya da alternatif bir doğrulama yöntemi kullanmak ister misiniz?";
 
 /* Invalid human verification code alert button */
 "_error_invalid_human_verification_code_resend" = "Yeniden gönder";
@@ -614,7 +614,7 @@
 "_forgot_username" = "Kullanıcı adımı unuttum";
 
 /* Used instead of price for free plans. */
-"_free" = "Ücretsiz";
+"_free" = "Free";
 
 /* Account plan description */
 "_free_countries" = "3 ülke";
@@ -629,7 +629,7 @@
 "_free_trial_about_to_expire_title" = "Ücretsiz deneme süreniz sona ermek üzere!";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Hesabınız Ücretsiz ProtonVPN sürümüne geçirildi.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
+"_free_trial_expired_description" = "Hesabınız ProtonVPN FREE tarifesine geçirildi.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "ÜCRETSİZ DENEME SÜRÜMÜNÜZ %@";
@@ -854,7 +854,7 @@
 "_mac_password" = "Mac parolası";
 
 /* Server status in many places in iOS and MacOS apps */
-"_maintenance" = "Bakımda";
+"_maintenance" = "Bakım yapılıyor";
 
 /* (No Comment) */
 "_maintenance_on_server_detected_description" = "Kullanılabilecek en hızlı sunucuya yeniden bağlanılıyor.";
@@ -931,6 +931,21 @@
 /* Main mac app menu item */
 "_menu_window" = "Pencere";
 
+/* Title for alert shown when enabling Moderate NATe requires reconnection */
+"_moderate_nat_change_title" = "Ilımlı NAT kullanılsın";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Ilımlı NAT kullanılsın";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Ilımlı NAT, güvenliğinizi biraz azaltabilir. Ancak çevrimiçi oyunlar gibi uygulamalar için doğrudan bağlantı kurma gibi tekniklere izin veren yerel adres eşlemelerinin rastgeleleştirilmesi özelliğini devre dışı bırakır. \nAyrıntrılı bilgi alın";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Ayrıntılı bilgi alın";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Ilımlı NAT";
+
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30 gün ücret iade garantisi";
 
@@ -968,7 +983,7 @@
 "_ne_request_timed_out" = "Ağ isteği zaman aşımına uğradı";
 
 /* Button on alert after a problem with internet connection */
-"_ne_troubleshoot" = "Sorunu gider";
+"_ne_troubleshoot" = "Sorun gider";
 
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Hizmete erişilemiyor";
@@ -1367,7 +1382,7 @@
 "_report_logs" = "VPN günlüğü kayıtları";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Bu seçenek etkinleştirildiğinde, istemci tarafı VPN günlüğü kayıtlarınız bu rapora eklenir";
+"_report_logs_description" = "Bu seçenek etkinleştirildiğinde, istemci tarafı VPN günlüğü kayıtlarınız bu bildirime eklenir";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "İletişim e-posta adresi";
@@ -1379,10 +1394,10 @@
 "_report_report" = "Hata bildirimi iletisi";
 
 /* Bug report: Send report button text */
-"_report_send" = "Raporu gönder";
+"_report_send" = "Bildirimi gönder";
 
 /* Bug report: Success message after report was sent */
-"_report_success" = "Raporunuz için teşekkürler";
+"_report_success" = "Bildiriminiz için teşekkür ederiz";
 
 /* iOS: human verification option select button */
 "_request_invitation" = "El ile etkinleştirme isteği";
@@ -1445,7 +1460,7 @@
 "_select_phone_country_code" = "Ülke kodunu seçin";
 
 /* Button in plan selection */
-"_select_plan" = "Tarife seçin";
+"_select_plan" = "Tarifeyi seçin";
 
 /* iOS: new profile screen */
 "_select_profile_color" = "Profil rengini seçin";

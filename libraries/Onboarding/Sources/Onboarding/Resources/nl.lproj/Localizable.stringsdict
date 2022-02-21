@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d landen</string>
+			<string>%d land</string>
 			<key>other</key>
 			<string>%d landen</string>
 		</dict>
@@ -48,7 +48,7 @@
 	<key>onboarding_upsell_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Connect %#@NUM_DEVICES@ simultaneously</string>
+		<string>Verbind %#@NUM_DEVICES@ simultaan</string>
 		<key>NUM_DEVICES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -64,7 +64,7 @@
 	<key>onboarding_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus</string>
+		<string>Verkrijg toegang tot alle %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ met Plus</string>
 		<key>NUM_COUNTRIES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
