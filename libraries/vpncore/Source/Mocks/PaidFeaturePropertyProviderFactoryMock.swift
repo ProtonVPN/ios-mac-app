@@ -20,11 +20,19 @@ import Foundation
 @testable import vpncore
 
 final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.Factory {
+    let propertiesManager: PropertiesManagerMock
+    let userTierProviderMock: UserTierProviderMock
+
+    init(propertiesManager: PropertiesManagerMock = PropertiesManagerMock(), userTierProviderMock: UserTierProviderMock = UserTierProviderMock(CoreAppConstants.VpnTiers.basic)) {
+        self.propertiesManager = propertiesManager
+        self.userTierProviderMock = userTierProviderMock
+    }
+
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManagerMock()
+        return propertiesManager
     }
 
     func makeUserTierProvider() -> UserTierProvider {
-        return UserTierProviderMock(CoreAppConstants.VpnTiers.basic)
+        return userTierProviderMock
     }
 }
