@@ -96,11 +96,9 @@ final class ConnectionSettingsViewModel {
     }
     
     var protocolProfileIndex: Int {
-        guard propertiesManager.smartProtocol else {
-            return protocolIndex(for: .vpnProtocol(propertiesManager.vpnProtocol))
-        }
-
-        return protocolIndex(for: .smartProtocol)
+        return propertiesManager.smartProtocol 
+            ? protocolIndex(for: .smartProtocol)
+            : protocolIndex(for: .vpnProtocol(propertiesManager.vpnProtocol))
     }
     
     var alternativeRouting: Bool {
