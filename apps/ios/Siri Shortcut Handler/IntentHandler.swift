@@ -58,7 +58,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     vpnStateConfiguration: vpnStateConfiguration,
                                     vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: propertiesManager),
                                     natTypePropertyProvider: natTypePropertyProvider,
-                                    netShieldPropertyProvider: netShieldPropertyProvider)
+                                    netShieldPropertyProvider: netShieldPropertyProvider,
+                                    safeModePropertyProvider: safeModePropertyProvider)
         
         siriHandlerViewModel = SiriHandlerViewModel(networking: networking,
                                                     vpnApiService: VpnApiService(networking: networking),

@@ -29,7 +29,7 @@ extension VpnManager {
         }
 
         let connect = { (data: VpnAuthenticationData) in
-            guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
+            guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, safeModePropertyProvider: self.safeModePropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
                 log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                 return
             }
@@ -223,12 +223,12 @@ extension VpnManager: LocalAgentDelegate {
     }
 
     private func didReceiveFeature(safeMode: Bool) {
-        guard propertiesManager.safeMode != safeMode else {
+        guard safeModePropertyProvider.safeMode != safeMode else {
             return
         }
 
-        log.debug("Safe Mode was set to \(propertiesManager.safeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
-        propertiesManager.safeMode = safeMode
+        log.debug("Safe Mode was set to \(safeModePropertyProvider.safeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
+        safeModePropertyProvider.safeMode = safeMode
     }
     
     private func didReceiveFeature(vpnAccelerator: Bool) {

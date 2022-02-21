@@ -37,7 +37,7 @@ extension LocalAgentConfiguration {
         self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing, natType: configuration.natType, safeMode: configuration.safeMode)
     }
 
-    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, vpnProtocol: VpnProtocol?) {
+    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
         guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
@@ -47,7 +47,7 @@ extension LocalAgentConfiguration {
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                   bouncing: connectionConfiguration.serverIp.label,
                   natType: natTypePropertyProvider.natType,
-                  safeMode: propertiesManager.safeMode)
+                  safeMode: safeModePropertyProvider.safeMode)
     }
 }
 
@@ -55,7 +55,7 @@ extension LocalAgentConfiguration {
 
 extension VPNConnectionFeatures {
     
-    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, vpnProtocol: VpnProtocol?) {
+    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
         guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
@@ -64,7 +64,7 @@ extension VPNConnectionFeatures {
                   vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                   bouncing: connectionConfiguration.serverIp.label,
                   natType: natTypePropertyProvider.natType,
-                  safeMode: propertiesManager.safeMode)
+                  safeMode: safeModePropertyProvider.safeMode)
     }
 }
 

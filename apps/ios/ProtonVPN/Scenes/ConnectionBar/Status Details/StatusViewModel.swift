@@ -28,7 +28,7 @@ import UIKit
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & UpsellFactory & NATTypePropertyProviderFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & UpsellFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -43,6 +43,7 @@ class StatusViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var upsell: Upsell = factory.makeUpsell()
     
     // Used to send GSMessages to a view controller
@@ -198,7 +199,7 @@ class StatusViewModel {
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
         // same condition as on the Profiles screen to be consistent
-        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: propertiesManager.safeMode) == vpnGateway?.lastConnectionRequest }) != nil {
+        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode) == vpnGateway?.lastConnectionRequest }) != nil {
             cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .notificationErrorColor(), handler: { [deleteProfile] in
                 deleteProfile()
             })

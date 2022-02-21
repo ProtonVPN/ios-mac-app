@@ -110,10 +110,6 @@ public struct ConnectionRequest: Codable {
         case safeMode
     }
 
-    static var safeModeDefaultValueUserInfoKey: CodingUserInfoKey {
-        return CodingUserInfoKey(rawValue: "safeModeDefaultValue")!
-    }
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         serverType = try container.decode(ServerType.self, forKey: .serverType)
@@ -135,12 +131,8 @@ public struct ConnectionRequest: Codable {
             natType = .default
         }
 
-        guard let safeModeDefaultValue = decoder.userInfo[Self.safeModeDefaultValueUserInfoKey] as? Bool else {
-            fatalError("Invalid decode usage")
-        }
-
         // compatiblity with previous format
-        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode) ?? safeModeDefaultValue
+        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode) ?? false
     }
 }
 

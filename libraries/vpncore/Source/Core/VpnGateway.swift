@@ -498,7 +498,7 @@ fileprivate extension VpnGateway {
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldPropertyProvider.netShieldType,
             natType: natTypePropertyProvider.natType,
-            safeMode: propertiesManager.safeMode,
+            safeMode: safeModePropertyProvider.safeMode,
             profileId: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
