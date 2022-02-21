@@ -24,6 +24,8 @@ public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
 
     /// If the user can disable Safe Mode
     var isUserEligibleForSafeModeChange: Bool { get }
+
+    static var safeModeNotification: Notification.Name { get }
 }
 
 public protocol SafeModePropertyProviderFactory {
@@ -33,8 +35,14 @@ public protocol SafeModePropertyProviderFactory {
 public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
     public let factory: Factory
 
-    public required init(_ factory: Factory) {
+    public static let safeModeNotification: Notification.Name = Notification.Name("SafeModeChanged")
+
+    private let storage: Storage
+    private let key = "SafeMode"
+
+    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
+        self.storage = storage
     }
 
     public var safeMode: Bool {
@@ -49,14 +57,17 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
                 return true
             }
 
-            return propertiesManager.safeMode
-        }
-        set {
-            guard isUserEligibleForSafeModeChange else {
-                return
+            guard let current = storage.defaults.value(forKey: key) as? Bool else {
+                return true // true is the default value
             }
 
-            propertiesManager.safeMode = newValue
+            return current
+        }
+        set {
+            storage.setValue(newValue, forKey: key)
+            executeOnUIThread {
+                NotificationCenter.default.post(name: type(of: self).safeModeNotification, object: newValue, userInfo: nil)
+            }
         }
     }
 

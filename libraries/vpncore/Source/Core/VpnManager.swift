@@ -125,6 +125,8 @@ public class VpnManager: VpnManagerProtocol {
 
     let natTypePropertyProvider: NATTypePropertyProvider
     let netShieldPropertyProvider: NetShieldPropertyProvider
+    let safeModePropertyProvider: SafeModePropertyProvider
+
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
@@ -137,7 +139,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         readyGroup?.enter()
 
         self.ikeProtocolFactory = ikeFactory
@@ -152,6 +154,7 @@ public class VpnManager: VpnManagerProtocol {
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.safeModePropertyProvider = safeModePropertyProvider
         
         prepareManagers(forSetup: true)
     }

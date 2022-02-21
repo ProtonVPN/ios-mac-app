@@ -51,7 +51,8 @@ final class DependencyContainer {
                                                                  alertService: macAlertService,
                                                                  vpnCredentialsConfiguratorFactory: MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()),
                                                                  natTypePropertyProvider: makeNATTypePropertyProvider(),
-                                                                 netShieldPropertyProvider: makeNetShieldPropertyProvider())
+                                                                 netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                                                                 safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager(), xpcConnectionsRepository: makeXPCConnectionsRepository())
     private lazy var ikeFactory = IkeProtocolFactory()
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
@@ -69,7 +70,8 @@ final class DependencyContainer {
         vpnAuthentication: vpnAuthentication,
         doh: makeDoHVPN(),
         natTypePropertyProvider: makeNATTypePropertyProvider(),
-        netShieldPropertyProvider: makeNetShieldPropertyProvider())
+        netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+        safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
    
@@ -482,6 +484,6 @@ extension DependencyContainer: NATTypePropertyProviderFactory {
 // MARK: SafeModePropertyProviderFactory
 extension DependencyContainer: SafeModePropertyProviderFactory {
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
-        return SafeModePropertyProviderImplementation(self)
+        return SafeModePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
     }
 }
