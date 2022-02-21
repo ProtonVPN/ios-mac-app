@@ -138,7 +138,9 @@ final class SettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
-                                               name: type(of: propertiesManager).featureFlagsNotification, object: nil)                                               
+                                               name: type(of: propertiesManager).featureFlagsNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+                                               name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
