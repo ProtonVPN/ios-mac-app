@@ -20,7 +20,8 @@ extension DependencyContainer: SystemExtensionsStateCheckFactory {
 }
 
 class SystemExtensionsStateCheck {
-    
+    public static let userAlreadyRequestedExtension = Notification.Name("UserAlreadyRequestedExtension")
+
     enum SuccessResultType {
         case nothing
         case installed // At least one sysex had to be installed
@@ -102,6 +103,17 @@ class SystemExtensionsStateCheck {
                     dispatchGroup.wait()
                     guard errors.isEmpty else {
                         log.debug("Encountered errors in sysex install: \(String(describing: errors))", category: .sysex)
+
+                        // Don't pop an alert if the user tries to spam sysex install. Instead post a notification so the
+                        // sysex view can take more informative action.
+                        guard !errors.contains(where: { $0 is SystemExtensionRequest.RequestAlreadyWaitingError }) else {
+                            if userInitiated {
+                                DispatchQueue.main.async {
+                                    NotificationCenter.default.post(name: SystemExtensionsStateCheck.userAlreadyRequestedExtension, object: nil)
+                                }
+                            }
+                            return
+                        }
 
                         self.alertService.push(alert: SysexInstallingErrorAlert())
                         actionHandler(.failure(errors.first!))

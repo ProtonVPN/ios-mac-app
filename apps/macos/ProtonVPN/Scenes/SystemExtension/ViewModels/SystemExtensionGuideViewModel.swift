@@ -42,7 +42,8 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
 }
 
 class SystemExtensionGuideViewModel: NSObject {
- 
+    static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.preference.security"
+
     struct Step {
         let title: String
         let description: String
@@ -99,6 +100,11 @@ class SystemExtensionGuideViewModel: NSObject {
         alertService.push(alert: SysexEnabledAlert())
         close?()
     }
+
+    private func userTriedToSupersedeRequest(_ notification: Notification) {
+        SafariService.openLink(url: Self.securityPreferencesUrlString)
+        didTapNext()
+    }
 }
 
 // MARK: - SystemExtensionGuideViewModelProtocol
@@ -108,6 +114,7 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     func viewWillAppear() {
         // Autoclose this window after installation finishes
         NotificationCenter.default.addObserver(forName: SystemExtensionManagerNotification.allExtensionsInstalled, object: nil, queue: nil, using: finish)
+        NotificationCenter.default.addObserver(forName: SystemExtensionsStateCheck.userAlreadyRequestedExtension, object: nil, queue: nil, using: userTriedToSupersedeRequest)
         
         currentStep = 0
         updateView()

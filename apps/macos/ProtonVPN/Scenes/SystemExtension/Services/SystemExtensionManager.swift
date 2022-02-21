@@ -64,6 +64,10 @@ enum SystemExtensionStatus {
 /// track of individual sysext requests, and determine which requests are initiated by the user vs. started
 /// in the background.
 class SystemExtensionRequest: NSObject {
+    struct RequestAlreadyWaitingError: Error, CustomStringConvertible {
+        let description = "Already waiting for user approval for this extension type."
+    }
+
     enum Action: String {
         case install
         case uninstall
@@ -230,6 +234,16 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     func request(_ request: SystemExtensionRequest) {
         request.delegate = self
         log.info("Request extension \(request.action.rawValue) for \(request.type.rawValue)")
+
+        // If we've already submitted a request for this type, call the completion early without
+        // acting on the request.
+        guard !(request.action == .install &&
+            activeRequests.contains(where: { $0.type == request.type && $0.state == .userActionRequired }))
+        else {
+            request.state = .failed
+            request.completion(.failure(SystemExtensionRequest.RequestAlreadyWaitingError()))
+            return
+        }
 
         activeRequests.insert(request)
         OSSystemExtensionManager.shared.submitRequest(request.asDaemonRequest)
