@@ -49,10 +49,8 @@ public class Storage {
             return Storage.standardDefaults
         }
     }
-    
-    public init(defaults: UserDefaults = UserDefaults.standard) {
-        Storage.specifiedDefaults = defaults
-    }
+
+    public init() { }
     
     public var defaults: UserDefaults {
         return Self.userDefaults()
