@@ -157,7 +157,7 @@ final class SystemExtensionGuideViewController: NSViewController {
         }
         
         imageView.image = NSImage(named: step.imageName)
-        imageDescription.hyperLink(originalText: step.description, hyperLink: "here", urlString: "x-apple.systempreferences:com.apple.preference.security")
+        imageDescription.hyperLink(originalText: step.description, hyperLink: "here", urlString: SystemExtensionGuideViewModel.securityPreferencesUrlString)
     }
     
     func closeSelf() {

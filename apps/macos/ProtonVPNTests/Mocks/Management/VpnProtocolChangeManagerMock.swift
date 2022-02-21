@@ -26,9 +26,10 @@ import Foundation
 
 class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
     var protocolChanged: ((VpnProtocol) -> Void)?
-    
-    func change(toProtocol: VpnProtocol, completion: @escaping (Result<(), Error>) -> Void) {
+
+    func change(toProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void) {
         protocolChanged?(toProtocol)
         completion(.success)
     }
 }
+
