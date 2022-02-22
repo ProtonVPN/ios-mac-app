@@ -66,6 +66,6 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
     }
 
     public var isUserEligibleForNATTypeChange: Bool {
-        return currentUserTier >= CoreAppConstants.VpnTiers.plus
+        return currentUserTier >= CoreAppConstants.VpnTiers.basic
     }
 }
