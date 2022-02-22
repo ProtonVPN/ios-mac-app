@@ -67,7 +67,9 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testPaidUserCanTurnModerateNATOn() throws {
-        var (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
+        var (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.basic)
+        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
+        (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
         XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
         (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.visionary)
         XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
