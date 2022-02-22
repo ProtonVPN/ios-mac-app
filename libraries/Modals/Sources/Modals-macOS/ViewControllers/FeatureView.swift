@@ -24,7 +24,7 @@ final class FeatureView: NSView {
 
     // MARK: Outlets
 
-    @IBOutlet weak var titleLabel: NSTextField! {
+    @IBOutlet private weak var titleLabel: NSTextField! {
         didSet {
             titleLabel.textColor = colors.text
         }

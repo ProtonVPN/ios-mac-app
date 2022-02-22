@@ -329,7 +329,7 @@ extension MacAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, upsellType: UpsellType) {
         let factory = ModalsFactory(colors: UpsellColors())
 
-        let upsellViewController = factory.upsellViewController(upsellType: upsellType, upgradeAction: alert.upgradeAction)
+        let upsellViewController = factory.upsellViewController(upsellType: upsellType, upgradeAction: alert.upgradeAction, learnMoreAction: alert.learnMore)
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 

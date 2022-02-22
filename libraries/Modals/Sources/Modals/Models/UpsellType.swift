@@ -25,7 +25,7 @@ public enum UpsellType {
     case profile
 
     public func upsellFeature() -> UpsellFeature {
-        UpsellFeature(title: title(), subtitle: subtitle(), features: features(), artImage: artImage(), footer: footer())
+        UpsellFeature(title: title(), subtitle: subtitle(), features: features(), artImage: artImage(), footer: footer(), learnMore: learnMore())
     }
 
     private func title() -> String {
@@ -104,6 +104,17 @@ public enum UpsellType {
         switch self {
         case .allCountries:
             return LocalizedString.modalsUpsellFeaturesFooter
+        default:
+            return nil
+        }
+    }
+
+    private func learnMore() -> String? {
+        switch self {
+        case .moderateNAT:
+            return LocalizedString.modalsUpsellModerateNatLearnMore
+        case .safeMode:
+            return LocalizedString.modalsUpsellSafeModeLearnMore
         default:
             return nil
         }

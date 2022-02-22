@@ -12,21 +12,12 @@
 		E50EDDD627BD0CD9009601C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50EDDD527BD0CD9009601C8 /* Assets.xcassets */; };
 		E50EDDD927BD0CD9009601C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50EDDD727BD0CD9009601C8 /* Main.storyboard */; };
 		E50EDDE427BD0CD9009601C8 /* ModalsSampleMacOSAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50EDDE327BD0CD9009601C8 /* ModalsSampleMacOSAppTests.swift */; };
-		E50EDDEE27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50EDDED27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.swift */; };
-		E50EDDF027BD0CD9009601C8 /* ModalsSampleMacOSAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50EDDEF27BD0CD9009601C8 /* ModalsSampleMacOSAppUITestsLaunchTests.swift */; };
 		E50EDE0827BD3AF2009601C8 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E50EDE0727BD3AF2009601C8 /* Modals */; };
 		E5C2983C27BD4AF400A0FCC3 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E5C2983B27BD4AF400A0FCC3 /* Modals-macOS */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		E50EDDE027BD0CD9009601C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E50EDDC627BD0CD8009601C8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E50EDDCD27BD0CD8009601C8;
-			remoteInfo = ModalsSampleMacOSApp;
-		};
-		E50EDDEA27BD0CD9009601C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E50EDDC627BD0CD8009601C8 /* Project object */;
 			proxyType = 1;
@@ -44,9 +35,6 @@
 		E50EDDDA27BD0CD9009601C8 /* ModalsSampleMacOSApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ModalsSampleMacOSApp.entitlements; sourceTree = "<group>"; };
 		E50EDDDF27BD0CD9009601C8 /* ModalsSampleMacOSAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModalsSampleMacOSAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50EDDE327BD0CD9009601C8 /* ModalsSampleMacOSAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsSampleMacOSAppTests.swift; sourceTree = "<group>"; };
-		E50EDDE927BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModalsSampleMacOSAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E50EDDED27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsSampleMacOSAppUITests.swift; sourceTree = "<group>"; };
-		E50EDDEF27BD0CD9009601C8 /* ModalsSampleMacOSAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalsSampleMacOSAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,13 +54,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E50EDDE627BD0CD9009601C8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -81,7 +62,6 @@
 			children = (
 				E50EDDD027BD0CD8009601C8 /* ModalsSampleMacOSApp */,
 				E50EDDE227BD0CD9009601C8 /* ModalsSampleMacOSAppTests */,
-				E50EDDEC27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests */,
 				E50EDDCF27BD0CD8009601C8 /* Products */,
 				E50EDDFC27BD1DB2009601C8 /* Frameworks */,
 			);
@@ -92,7 +72,6 @@
 			children = (
 				E50EDDCE27BD0CD8009601C8 /* ModalsSampleMacOSApp.app */,
 				E50EDDDF27BD0CD9009601C8 /* ModalsSampleMacOSAppTests.xctest */,
-				E50EDDE927BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,15 +94,6 @@
 				E50EDDE327BD0CD9009601C8 /* ModalsSampleMacOSAppTests.swift */,
 			);
 			path = ModalsSampleMacOSAppTests;
-			sourceTree = "<group>";
-		};
-		E50EDDEC27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E50EDDED27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.swift */,
-				E50EDDEF27BD0CD9009601C8 /* ModalsSampleMacOSAppUITestsLaunchTests.swift */,
-			);
-			path = ModalsSampleMacOSAppUITests;
 			sourceTree = "<group>";
 		};
 		E50EDDFC27BD1DB2009601C8 /* Frameworks */ = {
@@ -175,24 +145,6 @@
 			productReference = E50EDDDF27BD0CD9009601C8 /* ModalsSampleMacOSAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E50EDDE827BD0CD9009601C8 /* ModalsSampleMacOSAppUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E50EDDF927BD0CD9009601C8 /* Build configuration list for PBXNativeTarget "ModalsSampleMacOSAppUITests" */;
-			buildPhases = (
-				E50EDDE527BD0CD9009601C8 /* Sources */,
-				E50EDDE627BD0CD9009601C8 /* Frameworks */,
-				E50EDDE727BD0CD9009601C8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E50EDDEB27BD0CD9009601C8 /* PBXTargetDependency */,
-			);
-			name = ModalsSampleMacOSAppUITests;
-			productName = ModalsSampleMacOSAppUITests;
-			productReference = E50EDDE927BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -207,10 +159,6 @@
 						CreatedOnToolsVersion = 13.2.1;
 					};
 					E50EDDDE27BD0CD9009601C8 = {
-						CreatedOnToolsVersion = 13.2.1;
-						TestTargetID = E50EDDCD27BD0CD8009601C8;
-					};
-					E50EDDE827BD0CD9009601C8 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = E50EDDCD27BD0CD8009601C8;
 					};
@@ -231,7 +179,6 @@
 			targets = (
 				E50EDDCD27BD0CD8009601C8 /* ModalsSampleMacOSApp */,
 				E50EDDDE27BD0CD9009601C8 /* ModalsSampleMacOSAppTests */,
-				E50EDDE827BD0CD9009601C8 /* ModalsSampleMacOSAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -247,13 +194,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E50EDDDD27BD0CD9009601C8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E50EDDE727BD0CD9009601C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -280,15 +220,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E50EDDE527BD0CD9009601C8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E50EDDF027BD0CD9009601C8 /* ModalsSampleMacOSAppUITestsLaunchTests.swift in Sources */,
-				E50EDDEE27BD0CD9009601C8 /* ModalsSampleMacOSAppUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -296,11 +227,6 @@
 			isa = PBXTargetDependency;
 			target = E50EDDCD27BD0CD8009601C8 /* ModalsSampleMacOSApp */;
 			targetProxy = E50EDDE027BD0CD9009601C8 /* PBXContainerItemProxy */;
-		};
-		E50EDDEB27BD0CD9009601C8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E50EDDCD27BD0CD8009601C8 /* ModalsSampleMacOSApp */;
-			targetProxy = E50EDDEA27BD0CD9009601C8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -523,40 +449,6 @@
 			};
 			name = Release;
 		};
-		E50EDDFA27BD0CD9009601C8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.-ModalsSampleMacOSApp.ModalsSampleMacOSAppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = ModalsSampleMacOSApp;
-			};
-			name = Debug;
-		};
-		E50EDDFB27BD0CD9009601C8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.-ModalsSampleMacOSApp.ModalsSampleMacOSAppUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = ModalsSampleMacOSApp;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -583,15 +475,6 @@
 			buildConfigurations = (
 				E50EDDF727BD0CD9009601C8 /* Debug */,
 				E50EDDF827BD0CD9009601C8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E50EDDF927BD0CD9009601C8 /* Build configuration list for PBXNativeTarget "ModalsSampleMacOSAppUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E50EDDFA27BD0CD9009601C8 /* Debug */,
-				E50EDDFB27BD0CD9009601C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

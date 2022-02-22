@@ -26,32 +26,17 @@ import Modals
 public final class UpsellViewController: NSViewController {
 
     @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var titleLabel: NSTextField! {
-        didSet {
-            titleLabel.textColor = colors.text
-        }
-    }
-    @IBOutlet private weak var footerLabel: NSTextField! {
-        didSet {
-            if case .allCountries = upsellType {
-                footerLabel.textColor = colors.weakText
-                footerLabel.font = .systemFont(ofSize: 12)
-            } else {
-                footerLabel.removeFromSuperview()
-            }
-        }
-    }
-    @IBOutlet private weak var descriptionLabel: NSTextField! {
-        didSet {
-            descriptionLabel.textColor = colors.text
-        }
-    }
+    @IBOutlet private weak var titleLabel: NSTextField!
+    @IBOutlet private weak var learnMoreButton: NSButton!
+    @IBOutlet private weak var footerLabel: NSTextField!
+    @IBOutlet private weak var descriptionLabel: NSTextField!
     @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
     @IBOutlet private weak var featuresStackView: NSStackView!
 
     var upsellType: UpsellType?
 
     var upgradeAction: (() -> Void)?
+    var learnMoreAction: (() -> Void)?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -70,7 +55,20 @@ public final class UpsellViewController: NSViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         upgradeButton.title = LocalizedString.modalsGetPlus
+        setupSubviews()
         setupFeatures()
+    }
+
+    func setupSubviews() {
+        titleLabel.textColor = colors.text
+        descriptionLabel.textColor = colors.text
+
+        if case .allCountries = upsellType {
+            footerLabel.textColor = colors.weakText
+            footerLabel.font = .systemFont(ofSize: 12)
+        } else {
+            footerLabel.removeFromSuperview()
+        }
     }
 
     func setupFeatures() {
@@ -80,6 +78,12 @@ public final class UpsellViewController: NSViewController {
         descriptionLabel.stringValue = upsellFeature.subtitle
         footerLabel?.stringValue = upsellFeature.footer ?? ""
         imageView.image = upsellFeature.artImage
+
+        if let learnMore = upsellFeature.learnMore {
+            learnMoreButton.attributedTitle = NSAttributedString(string: learnMore, attributes: [.foregroundColor: colors.brand, .font: NSFont.systemFont(ofSize: 12)])
+        } else {
+            learnMoreButton.removeFromSuperview()
+        }
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
@@ -105,5 +109,9 @@ public final class UpsellViewController: NSViewController {
     @IBAction private func upgrade(_ sender: Any) {
         upgradeAction?()
         dismiss(nil)
+    }
+
+    @IBAction private func learnMore(_ sender: Any) {
+        learnMoreAction?()
     }
 }

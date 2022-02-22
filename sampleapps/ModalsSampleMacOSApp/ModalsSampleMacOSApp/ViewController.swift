@@ -41,7 +41,7 @@ class ViewController: NSViewController {
 extension ViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         let upsell = upsells[row]
-        let upsellViewController = factory.upsellViewController(upsellType: upsell.type, upgradeAction: { })
+        let upsellViewController = factory.upsellViewController(upsellType: upsell.type, upgradeAction: { }, learnMoreAction: { })
         presentAsModalWindow(upsellViewController)
         return true
     }

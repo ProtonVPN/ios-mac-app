@@ -28,10 +28,11 @@ public struct ModalsFactory {
         Modals_macOS.colors = colors
     }
 
-    public func upsellViewController(upsellType: UpsellType, upgradeAction: (() -> Void)?) -> NSViewController {
+    public func upsellViewController(upsellType: UpsellType, upgradeAction: (() -> Void)?, learnMoreAction: (() -> Void)?) -> NSViewController {
         let upsell = UpsellViewController()
         upsell.upsellType = upsellType
         upsell.upgradeAction = upgradeAction
+        upsell.learnMoreAction = learnMoreAction
         return upsell
     }
 }

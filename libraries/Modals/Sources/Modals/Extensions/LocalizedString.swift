@@ -38,6 +38,8 @@ public enum LocalizedString {
   public static var modalsUpsellFeaturesSafeModeSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_safe_mode_subtitle") }
   /// When you upgrade to Plus
   public static var modalsUpsellFeaturesSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_subtitle") }
+  /// What is Moderate NAT?
+  public static var modalsUpsellModerateNatLearnMore: String { return LocalizedString.tr("Localizable", "modals_upsell_moderate_nat_learn_more") }
   /// Enable Moderate NAT
   public static var modalsUpsellModerateNatTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_moderate_nat_title") }
   /// Block ads and trackers
@@ -48,6 +50,8 @@ public enum LocalizedString {
   public static var modalsUpsellNetShieldMalware: String { return LocalizedString.tr("Localizable", "modals_upsell_net_shield_malware") }
   /// Enjoy ad-free browsing with NetShield
   public static var modalsUpsellNetShieldTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_net_shield_title") }
+  /// Learn More
+  public static var modalsUpsellSafeModeLearnMore: String { return LocalizedString.tr("Localizable", "modals_upsell_safe_mode_learn_more") }
   /// Allow traffic to non-standard ports
   public static var modalsUpsellSafeModeTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_safe_mode_title") }
   /// Protect yourself from network attacks

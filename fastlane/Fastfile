@@ -148,8 +148,8 @@ lane :onboarding_test do
     )
 end
 
-desc "Run Modals module tests"
-lane :modals_test do
+desc "Run iOS Modals module tests"
+lane :modals_ios_test do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "ModalsSampleApp",
@@ -158,6 +158,18 @@ lane :modals_test do
       result_bundle: true,
       skip_slack: true,
       devices: [simulator_name]
+    )
+end
+
+desc "Run macOS Modals module tests"
+lane :modals_macos_test do
+    simulator_name = ENV["CI_JOB_ID"]
+    scan(
+      scheme: "ModalsSampleMacOSApp",
+      derived_data_path: $derived_data_path,
+      clean: true,
+      result_bundle: true,
+      skip_slack: true
     )
 end
 

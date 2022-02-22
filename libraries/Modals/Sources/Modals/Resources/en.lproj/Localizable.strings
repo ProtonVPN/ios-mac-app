@@ -13,6 +13,9 @@
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network.\n\nUnlock this and other features with a Plus plan.";
 
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Learn More";
+
 /* Subtitle of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_subtitle" = "Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.";
 
@@ -21,6 +24,9 @@
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Enable Moderate NAT";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "What is Moderate NAT?";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
