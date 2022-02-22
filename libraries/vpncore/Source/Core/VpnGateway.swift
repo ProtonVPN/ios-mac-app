@@ -435,7 +435,7 @@ fileprivate extension VpnGateway {
             netShieldPropertyProvider.netShieldType = .off
         }
 
-        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.plus {
+        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
             natTypePropertyProvider.natType = .default
         }
         
