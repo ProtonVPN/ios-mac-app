@@ -18,7 +18,7 @@
 
 import Cocoa
 
-class UpsellPrimaryActionButton: HoverDetectionButton {
+final class UpsellPrimaryActionButton: HoverDetectionButton {
 
     override var title: String {
         didSet {

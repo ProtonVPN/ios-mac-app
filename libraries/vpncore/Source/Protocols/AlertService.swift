@@ -791,6 +791,7 @@ public class UpsellAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError = false
     public var dismiss: (() -> Void)?
+    public func learnMore() { }
     public func upgradeAction() {
         SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
     }
@@ -816,9 +817,17 @@ public class NetShieldUpsellAlert: UpsellAlert { }
 
 public class SecureCoreUpsellAlert: UpsellAlert { }
 
-public class SafeModeUpsellAlert: UpsellAlert { }
+public class SafeModeUpsellAlert: UpsellAlert {
+    override public func learnMore() {
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.moderateNAT)
+    }
+}
 
-public class ModerateNATUpsellAlert: UpsellAlert { }
+public class ModerateNATUpsellAlert: UpsellAlert {
+    override public func learnMore() {
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.moderateNAT)
+    }
+}
 
 public class ProfileUpsellAlert: UpsellAlert { }
 

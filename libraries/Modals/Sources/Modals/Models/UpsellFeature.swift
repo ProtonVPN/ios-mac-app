@@ -22,4 +22,5 @@ public struct UpsellFeature {
     public let features: [Feature]
     public let artImage: Image
     public let footer: String?
+    public let learnMore: String?
 }
