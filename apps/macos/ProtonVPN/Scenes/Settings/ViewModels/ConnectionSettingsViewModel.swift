@@ -206,7 +206,7 @@ final class ConnectionSettingsViewModel {
 
     func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
         guard natTypePropertyProvider.isUserEligibleForNATTypeChange else {
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade)
+            alertService.push(alert: ModerateNATUpsellAlert())
             completion(false)
             return
         }

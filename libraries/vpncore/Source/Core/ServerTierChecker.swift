@@ -50,8 +50,8 @@ class ServerTierChecker {
     func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
         DispatchQueue.main.async { [weak self] in
             switch reason {
-            case .upgrade(let tier):
-                self?.alertService?.push(alert: UpgradeRequiredAlert(tier: tier, serverType: type, forSpecificCountry: forSpecificCountry, confirmHandler: nil))
+            case .upgrade:
+                self?.alertService?.push(alert: AllCountriesUpsellAlert())
             case .existingConnection:
                 self?.alertService?.push(alert: ExistingConnectionAlert())
             case .maintenance:

@@ -151,7 +151,7 @@ class CountriesSectionViewModel {
     }
         
     func displayUpgradeMessage( _ serverModel: ServerModel? ) {
-        alertService.push(alert: UpgradeRequiredAlert(tier: userTier, serverType: serverModel?.serverType ?? .unspecified, forSpecificCountry: true, confirmHandler: nil))
+        alertService.push(alert: AllCountriesUpsellAlert())
     }
     
     func toggleCell(for countryCode: String) {

@@ -69,8 +69,6 @@ public final class UpsellViewController: NSViewController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = Asset.plusCountries.image
-
         upgradeButton.title = LocalizedString.modalsGetPlus
         setupFeatures()
     }

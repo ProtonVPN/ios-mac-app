@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Modals_macOS
 
 class ProfileItemViewModel: AbstractProfileViewModel {
     
@@ -73,7 +74,8 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
         guard !isUsersTierTooLow else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            alertService.push(alert: ProfileUpsellAlert())
+
             return
         }
 

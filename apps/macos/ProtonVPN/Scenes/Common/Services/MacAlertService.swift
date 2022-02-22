@@ -83,9 +83,6 @@ extension MacAlertService: CoreAlertService {
             
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
-            
-        case let upgradeRequiredAlert as UpgradeRequiredAlert:
-            show(upgradeRequiredAlert)
 
         case let alert as AllCountriesUpsellAlert:
             show(alert: alert, upsellType: .allCountries(numberOfDevices: alert.numberOfDevices, numberOfServers: alert.numberOfServers, numberOfCountries: alert.numberOfCountries))
@@ -101,6 +98,9 @@ extension MacAlertService: CoreAlertService {
 
         case let alert as NetShieldUpsellAlert:
             show(alert: alert, upsellType: .netShield)
+
+        case let alert as ProfileUpsellAlert:
+            show(alert: alert, upsellType: .profile)
 
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
@@ -298,30 +298,7 @@ extension MacAlertService: CoreAlertService {
             
         uiAlertService.displayAlert(alert)
     }
-    
-    private func show(_ alert: UpgradeRequiredAlert) {
-        let buttonPressed = alert.actions.first?.handler ?? {}
-        switch alert.serverType {
-        case .secureCore:
-            let upgradeViewModel = SCUpgradePopUpViewModel(buttonPressed: buttonPressed)
-            windowService.presentKeyModal(viewController: SCUpgradePopupViewController(viewModel: upgradeViewModel))
-        default:
-            alert.message = alert.forSpecificCountry ? LocalizedString.upgradePlanToAccessCountry : LocalizedString.upgradePlanToAccessServer
-            presentStandardUpgradePopUp(alert, buttonPressed: buttonPressed)
-        }
-    }
-    
-    private func presentStandardUpgradePopUp(_ alert: UpgradeRequiredAlert, buttonPressed: (() -> Void)?) {
-        let upgradeAction = AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: {
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-            buttonPressed?()
-        })
-        alert.title = LocalizedString.upgradeRequired
-        alert.actions.append(upgradeAction)
-        
-        uiAlertService.displayAlert(alert)
-    }
-    
+
     private func show( _ alert: KillSwitchRequiresSwift5Alert ) {
         let killSwitch5ViewController = KillSwitchSwift5Popup()
         killSwitch5ViewController.alert = alert

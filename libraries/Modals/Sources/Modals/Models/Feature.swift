@@ -18,6 +18,14 @@
 
 import Foundation
 
+#if os(macOS)
+import AppKit
+public typealias Image = NSImage
+#elseif os(iOS) || os(tvOS) || os(watchOS)
+import UIKit
+public typealias Image = UIImage
+#endif
+
 public enum Feature {
     case streaming
     case multipleDevices(Int)
@@ -57,7 +65,7 @@ extension Feature {
         }
     }
 
-    public var image: ImageAsset.Image {
+    public var image: Image {
         switch self {
         case .streaming:
             return Asset.streamingIcon.image

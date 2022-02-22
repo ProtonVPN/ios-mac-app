@@ -100,10 +100,6 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     }
     
     @objc func presentUpsellAlert() {
-        let alert = alert
-        alert.upgradeAction = {
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-        }
         alertService.push(alert: alert)
     }
 }

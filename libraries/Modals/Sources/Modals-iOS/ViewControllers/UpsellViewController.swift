@@ -72,11 +72,6 @@ public final class UpsellViewController: UIViewController {
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
         titleLabel.accessibilityIdentifier = "TitleLabel"
-
-        let closeButtonImage = Asset.closeButton.image
-        let closeButton = UIBarButtonItem(image: closeButtonImage, style: .plain, target: self, action: #selector(closeTapped))
-        closeButton.accessibilityIdentifier = "CloseButton"
-        navigationItem.leftBarButtonItem = closeButton
     }
 
     func setupFeatures() {
