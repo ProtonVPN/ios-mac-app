@@ -11,46 +11,46 @@
 
 // Deprecated typealiases
 @available(*, deprecated, renamed: "ImageAsset.Image", message: "This typealias will be removed in SwiftGen 7.0")
-public typealias AssetImageTypeAlias = ImageAsset.Image
+internal typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable superfluous_disable_command file_length implicit_return
 
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-public enum Asset {
-  public static let addLayer = ImageAsset(name: "AddLayer")
-  public static let blockAds = ImageAsset(name: "BlockAds")
-  public static let closeButton = ImageAsset(name: "CloseButton")
-  public static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
-  public static let moderateNAT = ImageAsset(name: "ModerateNAT")
-  public static let multipleDevicesIcon = ImageAsset(name: "MultipleDevicesIcon")
-  public static let netshieldIcon = ImageAsset(name: "NetshieldIcon")
-  public static let plusCountries = ImageAsset(name: "PlusCountries")
-  public static let protectFromAttacks = ImageAsset(name: "ProtectFromAttacks")
-  public static let routeSecureServers = ImageAsset(name: "RouteSecureServers")
-  public static let safeModeIOS = ImageAsset(name: "SafeMode-iOS")
-  public static let safeModeMacOS = ImageAsset(name: "SafeMode-macOS")
-  public static let secureCore = ImageAsset(name: "SecureCore")
-  public static let streamingIcon = ImageAsset(name: "StreamingIcon")
-  public static let netshieldIOS = ImageAsset(name: "netshield-iOS")
-  public static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
+internal enum Asset {
+  internal static let addLayer = ImageAsset(name: "AddLayer")
+  internal static let blockAds = ImageAsset(name: "BlockAds")
+  internal static let closeButton = ImageAsset(name: "CloseButton")
+  internal static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
+  internal static let moderateNAT = ImageAsset(name: "ModerateNAT")
+  internal static let multipleDevicesIcon = ImageAsset(name: "MultipleDevicesIcon")
+  internal static let netshieldIcon = ImageAsset(name: "NetshieldIcon")
+  internal static let plusCountries = ImageAsset(name: "PlusCountries")
+  internal static let protectFromAttacks = ImageAsset(name: "ProtectFromAttacks")
+  internal static let routeSecureServers = ImageAsset(name: "RouteSecureServers")
+  internal static let safeModeIOS = ImageAsset(name: "SafeMode-iOS")
+  internal static let safeModeMacOS = ImageAsset(name: "SafeMode-macOS")
+  internal static let secureCore = ImageAsset(name: "SecureCore")
+  internal static let streamingIcon = ImageAsset(name: "StreamingIcon")
+  internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
+  internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
 
-public struct ImageAsset {
-  public fileprivate(set) var name: String
+internal struct ImageAsset {
+  internal fileprivate(set) var name: String
 
   #if os(macOS)
-  public typealias Image = NSImage
+  internal typealias Image = NSImage
   #elseif os(iOS) || os(tvOS) || os(watchOS)
-  public typealias Image = UIImage
+  internal typealias Image = UIImage
   #endif
 
   @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.7, *)
-  public var image: Image {
+  internal var image: Image {
     let bundle = BundleToken.bundle
     #if os(iOS) || os(tvOS)
     let image = Image(named: name, in: bundle, compatibleWith: nil)
@@ -68,7 +68,7 @@ public struct ImageAsset {
 
   #if os(iOS) || os(tvOS)
   @available(iOS 8.0, tvOS 9.0, *)
-  public func image(compatibleWith traitCollection: UITraitCollection) -> Image {
+  internal func image(compatibleWith traitCollection: UITraitCollection) -> Image {
     let bundle = BundleToken.bundle
     guard let result = Image(named: name, in: bundle, compatibleWith: traitCollection) else {
       fatalError("Unable to load image asset named \(name).")
@@ -78,7 +78,7 @@ public struct ImageAsset {
   #endif
 }
 
-public extension ImageAsset.Image {
+internal extension ImageAsset.Image {
   @available(iOS 8.0, tvOS 9.0, watchOS 2.0, *)
   @available(macOS, deprecated,
     message: "This initializer is unsafe on macOS, please use the ImageAsset.image property")

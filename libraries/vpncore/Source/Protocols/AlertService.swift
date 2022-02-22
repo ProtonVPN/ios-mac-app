@@ -165,27 +165,6 @@ public class RefreshTokenExpiredAlert: SystemAlert {
     public init() { }
 }
 
-public class UpgradeRequiredAlert: SystemAlert {
-    public let tier: Int
-    public let serverType: ServerType
-    public let forSpecificCountry: Bool
-    
-    public init(tier: Int, serverType: ServerType, forSpecificCountry: Bool, confirmHandler: (() -> Void)?) {
-        self.tier = tier
-        self.serverType = serverType
-        self.forSpecificCountry = forSpecificCountry
-        self.title = tier == CoreAppConstants.VpnTiers.basic
-        ? LocalizedString.paidRequired : LocalizedString.plusRequired
-        self.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { confirmHandler?() }))
-    }
-    
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-}
-
 public class UpgradeUnavailableAlert: SystemAlert {
     public var title: String? = LocalizedString.upgradeUnavailableTitle
     public var message: String? = LocalizedString.upgradeUnavailableBody
@@ -812,7 +791,9 @@ public class UpsellAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError = false
     public var dismiss: (() -> Void)?
-    public var upgradeAction: (() -> Void)?
+    public func upgradeAction() {
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+    }
 
     public init() { }
 
@@ -823,10 +804,11 @@ public class AllCountriesUpsellAlert: UpsellAlert {
     public let numberOfServers: Int
     public let numberOfCountries: Int
     
-    public init(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int) {
-        self.numberOfDevices = numberOfDevices
-        self.numberOfServers = numberOfServers
-        self.numberOfCountries = numberOfCountries
+    override public init() {
+        let plus = AccountPlan.plus
+        self.numberOfDevices = plus.devicesCount
+        self.numberOfServers = plus.serversCount
+        self.numberOfCountries = plus.countriesCount
     }
 }
 
@@ -837,6 +819,8 @@ public class SecureCoreUpsellAlert: UpsellAlert { }
 public class SafeModeUpsellAlert: UpsellAlert { }
 
 public class ModerateNATUpsellAlert: UpsellAlert { }
+
+public class ProfileUpsellAlert: UpsellAlert { }
 
 public class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?

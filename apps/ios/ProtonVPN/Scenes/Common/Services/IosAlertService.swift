@@ -65,9 +65,6 @@ extension IosAlertService: CoreAlertService {
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
             
-        case is UpgradeRequiredAlert:
-            showDefaultSystemAlert(alert)
-            
         case is UpgradeUnavailableAlert:
             showDefaultSystemAlert(alert)
             

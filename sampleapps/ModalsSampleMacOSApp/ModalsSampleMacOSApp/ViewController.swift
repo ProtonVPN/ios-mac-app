@@ -26,7 +26,8 @@ class ViewController: NSViewController {
                                                         (.secureCore, "Secure Core"),
                                                         (.netShield, "Net Shield"),
                                                         (.safeMode, "Safe Mode"),
-                                                        (.moderateNAT, "Moderate NAT")]
+                                                        (.moderateNAT, "Moderate NAT"),
+                                                        (.profile, "Profile")]
     let factory = ModalsFactory(colors: Colors())
 
     @IBOutlet weak var tableView: NSTableView! {

@@ -22,46 +22,90 @@ public enum UpsellType {
     case allCountries(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int)
     case safeMode
     case moderateNAT
+    case profile
 
     public func upsellFeature() -> UpsellFeature {
+        UpsellFeature(title: title(), subtitle: subtitle(), features: features(), artImage: artImage(), footer: footer())
+    }
+
+    private func title() -> String {
         switch self {
         case .netShield:
-            let title = LocalizedString.modalsUpsellNetShieldTitle
-            let subtitle = LocalizedString.modalsUpsellFeaturesSubtitle
-            let features: [Feature] = [.blockAds, .protectFromMalware, .highSpeedNetshield]
-#if os(iOS)
-            let artImage = Asset.netshieldIOS.image
-#else
-            let artImage = Asset.netshieldMacOS.image
-#endif
-            return UpsellFeature(title: title, subtitle: subtitle, features: features, artImage: artImage, footer: nil)
+            return LocalizedString.modalsUpsellNetShieldTitle
         case .secureCore:
-            let title = LocalizedString.modalsUpsellSecureCoreTitle
-            let subtitle = LocalizedString.modalsUpsellFeaturesSubtitle
-            let features: [Feature] = [.routeSecureServers, .addLayer, .protectFromAttacks]
-            let artImage = Asset.secureCore.image
-            return UpsellFeature(title: title, subtitle: subtitle, features: features, artImage: artImage, footer: nil)
-        case .allCountries(let numberOfDevices, let numberOfServers, let numberOfCountries):
-            let title = LocalizedString.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
-            let subtitle = LocalizedString.modalsUpsellFeaturesSubtitle
-            let features: [Feature] = [.streaming, .multipleDevices(numberOfDevices), .netshield, .highSpeed]
-            let artImage = Asset.plusCountries.image
-            let footer = LocalizedString.modalsUpsellFeaturesFooter
-            return UpsellFeature(title: title, subtitle: subtitle, features: features, artImage: artImage, footer: footer)
+            return LocalizedString.modalsUpsellSecureCoreTitle
+        case .allCountries(_, let numberOfServers, let numberOfCountries):
+            return LocalizedString.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries)
         case .safeMode:
-            let title = LocalizedString.modalsUpsellSafeModeTitle
-            let subtitle = LocalizedString.modalsUpsellFeaturesSafeModeSubtitle
-#if os(iOS)
-            let artImage = Asset.safeModeIOS.image
-#else
-            let artImage = Asset.safeModeMacOS.image
-#endif
-            return UpsellFeature(title: title, subtitle: subtitle, features: [], artImage: artImage, footer: nil)
+            return LocalizedString.modalsUpsellSafeModeTitle
         case .moderateNAT:
-            let title = LocalizedString.modalsUpsellModerateNatTitle
-            let subtitle = LocalizedString.modalsUpsellFeaturesModerateNatSubtitle
-            let artImage = Asset.moderateNAT.image
-            return UpsellFeature(title: title, subtitle: subtitle, features: [], artImage: artImage, footer: nil)
+            return LocalizedString.modalsUpsellModerateNatTitle
+        case .profile:
+            return "Profile XXX uses paid features"
+        }
+    }
+
+    private func subtitle() -> String {
+        switch self {
+        case .netShield:
+            return LocalizedString.modalsUpsellFeaturesSubtitle
+        case .secureCore:
+            return LocalizedString.modalsUpsellFeaturesSubtitle
+        case .allCountries:
+            return LocalizedString.modalsUpsellFeaturesSubtitle
+        case .safeMode:
+            return LocalizedString.modalsUpsellFeaturesSafeModeSubtitle
+        case .moderateNAT:
+            return LocalizedString.modalsUpsellFeaturesModerateNatSubtitle
+        case .profile:
+            return "Upgrade your subscription to connect with it."
+        }
+    }
+
+    private func features() -> [Feature] {
+        switch self {
+        case .netShield:
+            return [.blockAds, .protectFromMalware, .highSpeedNetshield]
+        case .secureCore:
+            return [.routeSecureServers, .addLayer, .protectFromAttacks]
+        case .allCountries(let numberOfDevices, _, _):
+            return [.streaming, .multipleDevices(numberOfDevices), .netshield, .highSpeed]
+        case .safeMode, .moderateNAT, .profile:
+            return []
+        }
+    }
+
+    private func artImage() -> Image {
+        switch self {
+        case .netShield:
+#if os(iOS)
+            return Asset.netshieldIOS.image
+#else
+            return Asset.netshieldMacOS.image
+#endif
+        case .secureCore:
+            return Asset.secureCore.image
+        case .allCountries:
+            return Asset.plusCountries.image
+        case .safeMode:
+#if os(iOS)
+            return Asset.safeModeIOS.image
+#else
+            return Asset.safeModeMacOS.image
+#endif
+        case .moderateNAT:
+            return Asset.moderateNAT.image
+        case .profile:
+            return Asset.moderateNAT.image
+        }
+    }
+
+    private func footer() -> String? {
+        switch self {
+        case .allCountries:
+            return LocalizedString.modalsUpsellFeaturesFooter
+        default:
+            return nil
         }
     }
 }

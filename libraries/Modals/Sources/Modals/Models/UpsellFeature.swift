@@ -20,6 +20,6 @@ public struct UpsellFeature {
     public let title: String
     public let subtitle: String
     public let features: [Feature]
-    public let artImage: ImageAsset.Image
+    public let artImage: Image
     public let footer: String?
 }
