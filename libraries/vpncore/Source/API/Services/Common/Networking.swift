@@ -26,6 +26,12 @@ public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func onLogout()
 }
 
+extension NetworkingDelegate {
+    public var version: HumanVerificationVersion {
+        return .v2
+    }
+}
+
 public protocol NetworkingDelegateFactory {
     func makeNetworkingDelegate() -> NetworkingDelegate
 }
@@ -187,21 +193,30 @@ public final class CoreNetworking: Networking {
 
 // MARK: APIServiceDelegate
 extension CoreNetworking: APIServiceDelegate {
+    public var additionalHeaders: [String: String]? {
+        return nil
+    }
+
     public var locale: String {
         return NSLocale.current.languageCode ?? "en_US"
     }
+
     public var appVersion: String {
         return appInfo.appVersion
     }
+
     public var userAgent: String? {
         return appInfo.userAgent
     }
+
     public func onUpdate(serverTime: Int64) {
         CryptoUpdateTime(serverTime)
     }
+
     public func isReachable() -> Bool {
         return true
     }
+
     public func onDohTroubleshot() { }
 }
 
