@@ -26,7 +26,7 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func set(apiService: APIService) {
-        humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL(), clientApp: ClientApp.vpn)
+        humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL(), clientApp: ClientApp.vpn, versionToBeUsed: version)
     }
 
     func onLogout() {

@@ -43,6 +43,9 @@ final class NetworkingMock: Networking {
 }
 
 extension NetworkingMock: APIServiceDelegate {
+    public var additionalHeaders: [String: String]? {
+        return nil
+    }
     public var locale: String {
         return NSLocale.current.languageCode ?? "en_US"
     }
