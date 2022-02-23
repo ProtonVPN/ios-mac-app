@@ -36,7 +36,7 @@ protocol WindowService: AnyObject {
     var navigationStackAvailable: Bool { get }
     
     func present(modal: UIViewController)
-    func dismissModal()
+    func dismissModal(_ completion: (() -> Void)?)
     
     func present(alert: UIAlertController)
     func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?)
@@ -138,13 +138,13 @@ class WindowServiceImplementation: WindowService {
         topmostPresentedViewController?.present(modal, animated: true, completion: nil)
     }
     
-    func dismissModal() {
+    func dismissModal(_ completion: (() -> Void)? = nil) {
         DispatchQueue.main.async {
             if let rootViewController = self.window.rootViewController {
                 if let topViewController = rootViewController.presentedViewController {
-                    topViewController.dismiss(animated: true)
+                    topViewController.dismiss(animated: true, completion: completion)
                 } else {
-                    rootViewController.dismiss(animated: true)
+                    rootViewController.dismiss(animated: true, completion: completion)
                 }
             }
         }
