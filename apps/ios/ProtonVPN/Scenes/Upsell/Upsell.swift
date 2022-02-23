@@ -23,66 +23,50 @@ import UIKit
 import vpncore
 
 class Upsell {
-    
-    private let planService: PlanService
-    private let factory = ModalsFactory(colors: UpsellColors())
-    
-    private weak var presentedUpsellViewController: UIViewController?
-    
-    init(planService: PlanService) {
-        self.planService = planService
+
+    typealias Factory = PlanServiceFactory
+    private let factory: Factory
+
+    private lazy var planService: PlanService = factory.makePlanService()
+    private let modalsFactory = ModalsFactory(colors: UpsellColors())
+
+    init(_ factory: Factory) {
+        self.factory = factory
     }
     
-    func presentAllCountriesUpsell() {
+    func allCountriesUpsell() -> UIViewController {
         let plus = AccountPlan.plus
-        let upsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
-        presentUpsell(upsell)
+        let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
+        return upsell(allCountriesUpsell)
     }
     
-    func presentNetShieldUpsell() {
-        presentUpsell(.netShield)
+    func netShieldUpsell() -> UIViewController {
+        return upsell(.netShield)
     }
     
-    func presentSecureCoreUpsell() {
-        presentUpsell(.secureCore)
+    func secureCoreUpsell() -> UIViewController {
+        return upsell(.secureCore)
     }
     
-    func presentSafeModeUpsell() {
-        presentUpsell(.safeMode)
+    func safeModeUpsell() -> UIViewController {
+        return upsell(.safeMode)
     }
     
-    func presentNATUpsell() {
-        presentUpsell(.moderateNAT)
+    func natUpsell() -> UIViewController {
+        return upsell(.moderateNAT)
     }
     
-    private func presentUpsell(_ upsellType: UpsellType) {
-        let upsellViewController = factory.upsellViewController(upsellType: upsellType)
+    private func upsell(_ upsellType: UpsellType) -> UIViewController {
+        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
         upsellViewController.delegate = self
-        presentedUpsellViewController = upsellViewController
-        topViewController()?.present(upsellViewController, animated: true, completion: nil)
-    }
-    
-    private func topViewController() -> UIViewController? {
-        var topViewController: UIViewController?
-        let keyWindow = UIApplication.getInstance()?.windows.filter { $0.isKeyWindow }.first
-        if var top = keyWindow?.rootViewController {
-            while let presentedViewController = top.presentedViewController {
-                top = presentedViewController
-            }
-            topViewController = top
-        }
-        return topViewController
+        return upsellViewController
     }
 }
 
 extension Upsell: UpsellViewControllerDelegate {
     func userDidRequestPlus() {
-        presentedUpsellViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.planService.presentPlanSelection()
-        })
+        planService.presentPlanSelection()
     }
     
-    func userDidDismissUpsell() {
-        presentedUpsellViewController?.dismiss(animated: true, completion: nil)
-    }
+    func userDidDismissUpsell() { }
 }

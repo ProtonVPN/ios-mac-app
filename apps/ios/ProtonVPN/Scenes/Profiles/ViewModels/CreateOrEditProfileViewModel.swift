@@ -42,7 +42,6 @@ class CreateOrEditProfileViewModel: NSObject {
     private let vpnKeychain: VpnKeychainProtocol
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
-    private let upsell: Upsell
     
     private var state: ModelState = .standard {
         didSet {
@@ -77,7 +76,7 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
     
-    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol, upsell: Upsell) {
+    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
@@ -88,7 +87,6 @@ class CreateOrEditProfileViewModel: NSObject {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
-        self.upsell = upsell
         
         self.vpnProtocol = propertiesManager.vpnProtocol
         
@@ -300,7 +298,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case ModelState.standard = state {
             guard userTier >= CoreAppConstants.VpnTiers.plus else {
-                upsell.presentSecureCoreUpsell()
+                alertService.push(alert: SecureCoreUpsellAlert())
                 return
             }
             

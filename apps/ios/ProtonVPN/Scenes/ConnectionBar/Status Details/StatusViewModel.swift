@@ -28,7 +28,7 @@ import UIKit
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & UpsellFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -44,7 +44,6 @@ class StatusViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
-    private lazy var upsell: Upsell = factory.makeUpsell()
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
@@ -321,7 +320,7 @@ class StatusViewModel {
             [NetShieldType.level1, NetShieldType.level2].forEach { type in
                 guard !type.isUserTierTooLow(userTier) else {
                     cells.append(.invertedKeyValue(key: type.name, value: LocalizedString.upgrade, handler: { [weak self] in
-                        self?.upsell.presentNetShieldUpsell()
+                        self?.alertService.push(alert: NetShieldUpsellAlert())
                     }))
                     return
                 }
@@ -339,12 +338,12 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
         
         cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-            self?.upsell.presentNetShieldUpsell()
+            self?.alertService.push(alert: NetShieldUpsellAlert())
         }))
         
         [NetShieldType.level1, NetShieldType.level2].forEach { type in
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
-                self?.upsell.presentNetShieldUpsell()
+                self?.alertService.push(alert: NetShieldUpsellAlert())
             }))
         }
         

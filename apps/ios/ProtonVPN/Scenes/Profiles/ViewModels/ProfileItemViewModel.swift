@@ -34,7 +34,6 @@ final class ProfileItemViewModel {
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    private let upsell: Upsell
     
     private let userTier: Int
     private let lowestSeverTier: Int
@@ -106,7 +105,7 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, upsell: Upsell) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -116,7 +115,6 @@ final class ProfileItemViewModel {
         self.safeModePropertyProvider = safeModePropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService
-        self.upsell = upsell
 
         switch profile.serverOffering {
         case .custom(let serverWrapper):
@@ -167,7 +165,7 @@ final class ProfileItemViewModel {
         
         if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            upsell.presentAllCountriesUpsell()
+            alertService.push(alert: AllCountriesUpsellAlert())
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert())
