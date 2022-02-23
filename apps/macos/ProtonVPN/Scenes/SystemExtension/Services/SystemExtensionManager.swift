@@ -250,6 +250,30 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     }
 }
 
+extension SystemExtensionManager {
+    func uninstallAll(userInitiated: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
+        if let impl = self as? SystemExtensionManagerImplementation {
+            impl.propertiesManager.sysexSuccessWasShown = false
+        }
+
+        let group = DispatchGroup()
+
+        SystemExtensionType.allCases.forEach { type in
+            group.enter()
+            self.request(.uninstall(type: type, userInitiated: userInitiated, completion: { _ in
+                group.leave()
+            }))
+        }
+
+        guard let timeout = timeout else {
+            group.wait()
+            return .success
+        }
+
+        return group.wait(timeout: timeout)
+    }
+}
+
 extension SystemExtensionManagerImplementation: SystemExtensionRequestDelegate {
     func requestFinished(_ request: SystemExtensionRequest) {
         if request.action == .install {

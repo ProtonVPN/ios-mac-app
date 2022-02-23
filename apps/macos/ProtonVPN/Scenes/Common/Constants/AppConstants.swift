@@ -46,6 +46,7 @@ class AppConstants {
         static let warnedTrialExpiring = "WarnedTrialExpiring"
         static let warnedTrialExpired = "WarnedTrialExpired"
         static let sysexSuccessWasShown = "SysexSuccessWasShown"
+        static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
     }
     
     struct FilePaths {

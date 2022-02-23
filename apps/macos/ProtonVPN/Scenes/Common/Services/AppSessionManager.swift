@@ -50,7 +50,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & ProfileManagerFactory & AppCertificateRefreshManagerFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & ProfileManagerFactory & AppCertificateRefreshManagerFactory & SystemExtensionManagerFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -64,6 +64,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
+    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished
@@ -317,6 +318,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // MARK: - AppDelegate quit behaviour
     
     func replyToApplicationShouldTerminate() {
+        if propertiesManager.uninstallSysexesOnTerminate {
+            _ = sysexManager.uninstallAll(userInitiated: false)
+        }
+
         guard sessionStatus == .established && !appStateManager.state.isSafeToEnd && !propertiesManager.rememberLoginAfterUpdate else {
             NSApp.reply(toApplicationShouldTerminate: true)
             return
