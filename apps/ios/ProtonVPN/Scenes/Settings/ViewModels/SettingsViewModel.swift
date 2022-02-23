@@ -281,11 +281,11 @@ final class SettingsViewModel {
             cells.append(.tooltip(text: LocalizedString.netshieldTitleTooltip))
         }
         
-        cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil))
+        cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: { true }, enabled: false, handler: nil))
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
         if #available(iOS 14, *) {
-            cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true, handler: ksSwitchCallback()))
+            cells.append(.toggle(title: LocalizedString.killSwitch, on: { [unowned self] in self.propertiesManager.killSwitch }, enabled: true, handler: ksSwitchCallback()))
             cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
         }
         
@@ -294,7 +294,7 @@ final class SettingsViewModel {
 
     private var vpnAcceleratorSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
+            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: { [unowned self] in self.propertiesManager.vpnAcceleratorEnabled }, enabled: true, handler: { (toggleOn, callback)  in
                 self.vpnStateConfiguration.getInfo { info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                     case .withConnectionUpdate:
@@ -320,14 +320,14 @@ final class SettingsViewModel {
 
     private var allowLanSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()),
+            .toggle(title: LocalizedString.allowLanTitle, on: { [unowned self] in self.propertiesManager.excludeLocalNetworks }, enabled: true, handler: self.switchLANCallback()),
             .tooltip(text: LocalizedString.allowLanInfo)
         ]
     }
 
     private var moderateNATSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.moderateNatTitle, on: natTypePropertyProvider.natType == .moderateNAT, enabled: true, handler: { [weak self] (toggleOn, callback) in
+            .toggle(title: LocalizedString.moderateNatTitle, on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT }, enabled: true, handler: { [weak self] (toggleOn, callback) in
                 guard let self = self, self.natTypePropertyProvider.isUserEligibleForNATTypeChange else {
                     callback(self?.natTypePropertyProvider.natType == .moderateNAT)
                     self?.alertService.push(alert: ModerateNATUpsellAlert())
@@ -363,7 +363,7 @@ final class SettingsViewModel {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [
-            .toggle(title: LocalizedString.nonStandardPortsTitle, on: !safeModePropertyProvider.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
+            .toggle(title: LocalizedString.nonStandardPortsTitle, on: { [unowned self] in !self.safeModePropertyProvider.safeMode }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
                 guard self.safeModePropertyProvider.isUserEligibleForSafeModeChange else {
                     callback(!self.safeModePropertyProvider.safeMode)
                     self.alertService.push(alert: SafeModeUpsellAlert())
@@ -388,17 +388,17 @@ final class SettingsViewModel {
                         callback(!self.safeModePropertyProvider.safeMode)
                     }
                 }
-            },
+            }),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.nonStandardPortsExplanation.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.nonStandardPortsExplanationLink, withUrl: CoreAppConstants.ProtonVpnLinks.safeMode))
         ]
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
         return [
-            .toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
+            .toggle(title: LocalizedString.troubleshootItemAltTitle, on: { [unowned self] in self.propertiesManager.alternativeRouting }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
                 self.propertiesManager.alternativeRouting.toggle()
                 callback(self.propertiesManager.alternativeRouting)
-            },
+            }),
             .attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting))
         ]
     }
