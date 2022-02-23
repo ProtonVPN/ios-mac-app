@@ -56,10 +56,12 @@ public final class CoreNetworking: Networking {
     public private(set) var apiService: PMAPIService    
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let appInfo: AppInfo
+    private let doh: DoHVPN
 
     public init(delegate: NetworkingDelegate, appInfo: AppInfo, doh: DoHVPN) {
         self.delegate = delegate
         self.appInfo = appInfo
+        self.doh = doh
 
         apiService = PMAPIService(doh: doh)
         apiService.authDelegate = self
@@ -194,6 +196,10 @@ public final class CoreNetworking: Networking {
 // MARK: APIServiceDelegate
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
+        if doh.isAtlasRequest, let atlasSecret = doh.atlasSecret {
+            return ["x-atlas-secret": atlasSecret]
+        }
+
         return nil
     }
 

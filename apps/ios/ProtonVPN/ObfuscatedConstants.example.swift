@@ -52,4 +52,6 @@ class ObfuscatedConstants {
     static let blackAccountHost = ""
     static let blackApiHost: String = ""
     static let blackDefaultPath: String = ""
+
+    static let atlasSecret: String = ""
 }

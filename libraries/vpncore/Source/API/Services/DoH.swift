@@ -85,10 +85,17 @@ public class DoHVPN: DoH, ServerConfig {
     private let verifyHost: String
     private let customHost: String?
 
-    public init(apiHost: String, verifyHost: String, alternativeRouting: Bool, customHost: String? = nil) {
+    public let atlasSecret: String?
+
+    public var isAtlasRequest: Bool {
+        return defaultHost != liveURL
+    }
+
+    public init(apiHost: String, verifyHost: String, alternativeRouting: Bool, customHost: String? = nil, atlasSecret: String? = nil) {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
+        self.atlasSecret = atlasSecret
         super.init()
 
         status = alternativeRouting ? .on : .off
