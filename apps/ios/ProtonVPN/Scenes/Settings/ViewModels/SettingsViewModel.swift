@@ -378,7 +378,7 @@ final class SettingsViewModel {
                         self.vpnManager.set(safeMode: self.safeModePropertyProvider.safeMode)
                         callback(!self.safeModePropertyProvider.safeMode)
                     case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.nonStandardPortsChangeTitle, confirmHandler: {
                             self.safeModePropertyProvider.safeMode.toggle()
                             callback(self.safeModePropertyProvider.safeMode)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
