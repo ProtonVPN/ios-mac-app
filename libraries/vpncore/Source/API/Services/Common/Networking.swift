@@ -196,7 +196,7 @@ public final class CoreNetworking: Networking {
 // MARK: APIServiceDelegate
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
-        if doh.isAtlasRequest, let atlasSecret = doh.atlasSecret {
+        if doh.isAtlasRequest, let atlasSecret = doh.atlasSecret, !atlasSecret.isEmpty {
             return ["x-atlas-secret": atlasSecret]
         }
 
