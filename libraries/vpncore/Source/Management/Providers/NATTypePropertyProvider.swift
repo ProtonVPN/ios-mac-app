@@ -68,4 +68,8 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
     public var isUserEligibleForNATTypeChange: Bool {
         return currentUserTier >= CoreAppConstants.VpnTiers.basic
     }
+
+    public func resetForIneligibleUser() {
+        natType = .default
+    }
 }

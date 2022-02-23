@@ -25,6 +25,8 @@ public protocol PaidFeaturePropertyProvider: AnyObject {
     var currentUserTier: Int { get }
 
     init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider)
+
+    func resetForIneligibleUser()
 }
 
 extension PaidFeaturePropertyProvider {
