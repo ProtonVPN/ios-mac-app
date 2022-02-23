@@ -32,7 +32,6 @@ public protocol AppStateManagerFactory {
 public protocol AppStateManager {
     var stateChange: Notification.Name { get }
     var displayStateChange: Notification.Name { get }
-    var wake: Notification.Name { get }
     
     var state: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
@@ -61,7 +60,6 @@ public protocol AppStateManager {
 extension AppStateManager {
     public var stateChange: Notification.Name { Notification.Name("AppStateManagerStateChange") }
     public var displayStateChange: Notification.Name { Notification.Name("AppStateManagerDisplayStateChange") }
-    public var wake: Notification.Name { Notification.Name("AppStateManagerWake") }
 }
 
 public class AppStateManagerImplementation: AppStateManager {
