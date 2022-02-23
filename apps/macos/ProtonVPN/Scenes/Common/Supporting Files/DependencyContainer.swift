@@ -114,7 +114,12 @@ final class DependencyContainer {
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
     private lazy var appInfo = AppInfoImplementation()
     private lazy var doh: DoHVPN = {
-        let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host, alternativeRouting: propertiesManager.alternativeRouting, customHost: propertiesManager.apiEndpoint)
+        #if !RELEASE
+        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
+        #else
+        let atlasSecret: String? = nil
+        #endif
+        let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host, alternativeRouting: propertiesManager.alternativeRouting, customHost: propertiesManager.apiEndpoint, atlasSecret: atlasSecret)
         propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
         }
