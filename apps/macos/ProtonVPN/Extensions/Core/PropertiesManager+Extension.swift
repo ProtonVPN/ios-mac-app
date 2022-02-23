@@ -91,6 +91,15 @@ extension PropertiesManagerProtocol {
             setValue(newValue, forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
         }
     }
+
+    var uninstallSysexesOnTerminate: Bool {
+        get {
+            return getValue(forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
+        }
+        set {
+            setValue(newValue, forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
+        }
+    }
     
     func restoreStartOnBootStatus() {
         let enabled = self.startOnBoot

@@ -261,7 +261,7 @@ extension NavigationService {
         // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
         
         guard let vpnGateway = self.vpnGateway, vpnGateway.connection != .disconnected else {
-            return.terminateNow
+            return .terminateNow
         }
         
         vpnGateway.disconnect {

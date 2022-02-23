@@ -93,21 +93,8 @@ class HelpMenuViewModel {
     }
     
     private func clearAllDataAndTerminate() {
-        
-        // System Extension
-        propertiesManager.sysexSuccessWasShown = false
-
         DispatchQueue.main.async {
-            let group = DispatchGroup()
-
-            SystemExtensionType.allCases.forEach { type in
-                group.enter()
-                self.systemExtensionManager.request(.uninstall(type: type, userInitiated: true, completion: { _ in
-                    group.leave()
-                }))
-            }
-
-            if group.wait(timeout: .now() + 5) == .timedOut {
+            if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: .now() + 5) == .timedOut {
                 log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
             }
 
