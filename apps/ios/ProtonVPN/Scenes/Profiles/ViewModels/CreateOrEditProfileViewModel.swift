@@ -211,12 +211,12 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var secureCoreCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: LocalizedString.featureSecureCore, on: isSecureCore, enabled: true) { [weak self] (_, callback) in
+        return TableViewCellModel.toggle(title: LocalizedString.featureSecureCore, on: { [unowned self] in self.isSecureCore }, enabled: true, handler: { [weak self] (_, callback) in
             self?.toggleState(completion: { [weak self] on in
                 callback(on)
                 self?.contentChanged?()
             })
-        }
+        })
     }
     
     private var countryCell: TableViewCellModel {
@@ -252,10 +252,10 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var quickConnectCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: isDefaultProfile, enabled: true) { [weak self] (_, callback) in
+        return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: { [unowned self] in self.isDefaultProfile }, enabled: true, handler: { [weak self] (_, callback) in
             self?.toggleDefault()
             callback(self?.isDefaultProfile == true)
-        }
+        })
     }
     
     private var footerCell: TableViewCellModel {

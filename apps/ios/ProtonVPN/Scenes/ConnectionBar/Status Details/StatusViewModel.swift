@@ -312,7 +312,7 @@ class StatusViewModel {
         
         var cells = [TableViewCellModel]()
         
-        cells.append(.toggle(title: LocalizedString.netshieldTitle, on: isNetshieldOn, enabled: true, handler: { (toggleOn, _) in
+        cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetshieldOn }, enabled: true, handler: { (toggleOn, _) in
             self.changeNetshield(to: toggleOn ? .level1 : .off)
         }))
         
