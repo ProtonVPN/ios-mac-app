@@ -90,6 +90,10 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         }
         return false
     }
+
+    public func resetForIneligibleUser() {
+        netShieldType = .off
+    }
     
     private var defaultNetShieldType: NetShieldType {
         // Select default value: off for free users, f1 for paying users.

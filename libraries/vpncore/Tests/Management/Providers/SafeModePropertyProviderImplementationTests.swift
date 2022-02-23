@@ -86,7 +86,9 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testPaidUserCanTurnOffSafeMode() throws {
-        var (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.plus)
+        var (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.basic)
+        XCTAssertTrue(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForSafeModeChange)
+        (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.plus)
         XCTAssertTrue(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForSafeModeChange)
         (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.visionary)
         XCTAssertTrue(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForSafeModeChange)

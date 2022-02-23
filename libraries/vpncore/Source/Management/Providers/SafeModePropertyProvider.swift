@@ -72,6 +72,10 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
     }
 
     public var isUserEligibleForSafeModeChange: Bool {
-        return currentUserTier >= CoreAppConstants.VpnTiers.plus
+        return currentUserTier >= CoreAppConstants.VpnTiers.basic
+    }
+
+    public func resetForIneligibleUser() {
+        safeMode = true
     }
 }

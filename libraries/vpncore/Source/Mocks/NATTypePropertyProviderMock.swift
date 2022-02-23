@@ -35,4 +35,8 @@ public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
     public var natType: NATType = .default
 
     public var isUserEligibleForNATTypeChange = true
+
+    public func resetForIneligibleUser() {
+        natType = .default
+    }
 }

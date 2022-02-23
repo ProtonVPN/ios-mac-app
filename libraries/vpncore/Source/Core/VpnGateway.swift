@@ -442,11 +442,9 @@ fileprivate extension VpnGateway {
         }
         
         if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
-            netShieldPropertyProvider.netShieldType = .off
-        }
-
-        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
-            natTypePropertyProvider.natType = .default
+            netShieldPropertyProvider.resetForIneligibleUser()
+            natTypePropertyProvider.resetForIneligibleUser()
+            safeModePropertyProvider.resetForIneligibleUser()
         }
         
         guard downgradeInfo.to.maxTier < downgradeInfo.from.maxTier else { return }

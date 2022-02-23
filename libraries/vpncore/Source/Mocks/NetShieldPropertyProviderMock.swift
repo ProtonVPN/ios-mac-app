@@ -35,4 +35,8 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
     public var netShieldType: NetShieldType = .off    
 
     public var isUserEligibleForNetShield: Bool = true
+
+    public func resetForIneligibleUser() {
+        netShieldType = .off
+    }
 }
