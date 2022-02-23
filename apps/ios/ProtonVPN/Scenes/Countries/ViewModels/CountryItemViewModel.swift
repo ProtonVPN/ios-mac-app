@@ -33,7 +33,6 @@ class CountryItemViewModel {
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    private let upsell: Upsell
     
     private var userTier: Int = CoreAppConstants.VpnTiers.plus
     
@@ -198,7 +197,7 @@ class CountryItemViewModel {
         return serverTypes
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService, upsell: Upsell) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
         self.appStateManager = appStateManager
@@ -208,7 +207,6 @@ class CountryItemViewModel {
         self.connectionStatusService = connectionStatusService
         self.propertiesManager = propertiesManager
         self.planService = planService
-        self.upsell = upsell
         startObserving()
     }
     
@@ -244,7 +242,7 @@ class CountryItemViewModel {
         
         if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            upsell.presentAllCountriesUpsell()
+            alertService.push(alert: AllCountriesUpsellAlert())
         } else if underMaintenance {
             log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(countryName: countryName))

@@ -98,7 +98,6 @@ final class DependencyContainer {
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
     private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), storage: storage)
-    private lazy var upsell = Upsell(planService: planService)
     private lazy var appInfo = AppInfoImplementation()
     private lazy var doh: DoHVPN = {
         let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host, alternativeRouting: propertiesManager.alternativeRouting, customHost: propertiesManager.apiEndpoint)
@@ -376,13 +375,6 @@ extension DependencyContainer: NetworkingFactory {
 extension DependencyContainer: NetworkingDelegateFactory {
     func makeNetworkingDelegate() -> NetworkingDelegate {
         return networkingDelegate
-    }
-}
-
-// MARK: UpsellFactory
-extension DependencyContainer: UpsellFactory {
-    func makeUpsell() -> Upsell {
-        return upsell
     }
 }
 

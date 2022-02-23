@@ -22,10 +22,11 @@
 
 import Foundation
 import vpncore
+import UIKit
 
 class IosAlertService {
         
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory & SafariServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory & SafariServiceFactory & PlanServiceFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -33,6 +34,7 @@ class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
+    private lazy var upsell: Upsell = Upsell(factory)
     
     init(_ factory: Factory) {
         self.factory = factory
@@ -172,6 +174,21 @@ extension IosAlertService: CoreAlertService {
             
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
+
+        case is SafeModeUpsellAlert:
+            windowService.present(modal: upsell.safeModeUpsell())
+
+        case is NetShieldUpsellAlert:
+            windowService.present(modal: upsell.netShieldUpsell())
+
+        case is SecureCoreUpsellAlert:
+            windowService.present(modal: upsell.secureCoreUpsell())
+
+        case is ModerateNATUpsellAlert:
+            windowService.present(modal: upsell.safeModeUpsell())
+
+        case is AllCountriesUpsellAlert:
+            windowService.present(modal: upsell.allCountriesUpsell())
             
         default:
             #if DEBUG
@@ -250,7 +267,7 @@ extension IosAlertService: CoreAlertService {
         }
         windowService.present(modal: vc)
     }
-    
+
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
         let controller = SubuserAlertViewController()
         controller.safariServiceFactory = factory

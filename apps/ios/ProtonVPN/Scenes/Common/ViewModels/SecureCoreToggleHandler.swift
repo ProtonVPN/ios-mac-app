@@ -24,9 +24,7 @@ import Foundation
 import vpncore
 
 protocol SecureCoreToggleHandler: AnyObject {
-    
-    var upsell: Upsell { get }
-    
+
     var alertService: AlertService { get }
     var vpnGateway: VpnGatewayProtocol? { get }
     var activeView: ServerType { get }
@@ -70,7 +68,7 @@ extension SecureCoreToggleHandler {
         }
         if activeView == .standard && userTier < CoreAppConstants.VpnTiers.plus {
             completionWrapper(false)
-            upsell.presentSecureCoreUpsell()
+            alertService.push(alert: SecureCoreUpsellAlert())
         } else if vpnGateway.connection != .connected {
             completionWrapper(true)
         } else {

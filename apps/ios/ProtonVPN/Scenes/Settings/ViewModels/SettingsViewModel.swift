@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & UpsellFactory & SafeModePropertyProviderFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -42,7 +42,6 @@ final class SettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
-    private lazy var upsell: Upsell = factory.makeUpsell()
     private let protocolService: ProtocolService
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
@@ -331,7 +330,7 @@ final class SettingsViewModel {
             .toggle(title: LocalizedString.moderateNatTitle, on: natTypePropertyProvider.natType == .moderateNAT, enabled: true, handler: { [weak self] (toggleOn, callback) in
                 guard let self = self, self.natTypePropertyProvider.isUserEligibleForNATTypeChange else {
                     callback(self?.natTypePropertyProvider.natType == .moderateNAT)
-                    self?.upsell.presentNATUpsell()
+                    self?.alertService.push(alert: ModerateNATUpsellAlert())
                     return
                 }
 
@@ -367,7 +366,7 @@ final class SettingsViewModel {
             .toggle(title: LocalizedString.nonStandardPortsTitle, on: !safeModePropertyProvider.safeMode, enabled: true) { [unowned self] (toggleOn, callback) in
                 guard self.safeModePropertyProvider.isUserEligibleForSafeModeChange else {
                     callback(!self.safeModePropertyProvider.safeMode)
-                    self.upsell.presentSafeModeUpsell()
+                    self.alertService.push(alert: SafeModeUpsellAlert())
                     return
                 }
 
