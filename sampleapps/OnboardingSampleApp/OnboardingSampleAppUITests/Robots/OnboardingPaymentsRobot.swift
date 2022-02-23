@@ -21,7 +21,6 @@ import XCTest
 fileprivate let plusFeature = "TitleLabel"
 fileprivate let getPlusButton = "GetPlusButton"
 fileprivate let useFreePlanButton = "UseFreeButton"
-fileprivate let closeButton = "CloseButton"
 fileprivate let plusPurchased = "PlanPurchaseButton"
 fileprivate let congratulationsTitle = "CongratulationsTitle"
 fileprivate let congratulationsDescription = "SubtitleLabel"
@@ -79,7 +78,6 @@ class OnboardingPaymentRobot {
             XCTAssert(app.staticTexts[plusFeature].waitForExistence(timeout: 5))
             XCTAssertTrue(app.buttons[getPlusButton].isEnabled)
             XCTAssertTrue(app.buttons[useFreePlanButton].isEnabled)
-            XCTAssertTrue(app.buttons[closeButton].isEnabled)
             return OnboardingPaymentRobot(app: app)
         }
         

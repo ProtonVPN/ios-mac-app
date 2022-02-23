@@ -24,3 +24,9 @@ public struct UpsellFeature {
     public let footer: String?
     public let learnMore: String?
 }
+
+public extension UpsellFeature {
+    static func closeButton() -> Image {
+        Asset.closeButton.image
+    }
+}

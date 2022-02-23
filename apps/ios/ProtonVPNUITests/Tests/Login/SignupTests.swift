@@ -79,7 +79,7 @@ class SignupTests: ProtonVPNUITests {
             .performEmailVerification(email: randomEmail, code: code, to: CreatingAccountRobot.self)
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
-        skipOnboarding()
+        _ = skipOnboarding()
         mainRobot
             .goToSettingsTab()
             .verify.userIsCreated(email, plan)
