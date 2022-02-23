@@ -1871,7 +1871,7 @@
 "_moderate_nat_explanation_link" = "Learn more";
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_enable_title" = "Enable Moderate NAT";
-/* Title for alert shown when enabling Moderate NATe requires reconnection */
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Enable Moderate NAT";
 
 /* Section title in Settings */
@@ -1885,3 +1885,5 @@
 "_non_standard_ports_explanation" = "Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network. \nLearn more";
 /* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
 "_non_standard_ports_explanation_link" = "Learn more";
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Enable Non-standard ports";
