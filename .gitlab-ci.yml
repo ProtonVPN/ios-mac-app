@@ -242,7 +242,7 @@ modals_ui_tests:
     - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
-    - fastlane modals_test
+    - fastlane modals_ios_test
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   when: manual
