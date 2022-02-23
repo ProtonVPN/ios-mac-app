@@ -429,10 +429,6 @@ final class SettingsViewModel {
             cells.append(contentsOf: allowLanSection)
         }
 
-        if propertiesManager.featureFlags.moderateNAT {
-            cells.append(contentsOf: moderateNATSection)
-        }
-
         return cells.isEmpty ? nil : TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
     }
     
