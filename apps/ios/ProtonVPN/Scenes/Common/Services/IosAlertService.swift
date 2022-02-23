@@ -22,7 +22,8 @@
 
 import Foundation
 import vpncore
-import UIKit
+import Modals
+import Modals_iOS
 
 class IosAlertService {
         
@@ -35,6 +36,9 @@ class IosAlertService {
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     private lazy var upsell: Upsell = Upsell(factory)
+
+    private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var modalsFactory: ModalsFactory = ModalsFactory(colors: UpsellColors())
     
     init(_ factory: Factory) {
         self.factory = factory
@@ -176,19 +180,21 @@ extension IosAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is SafeModeUpsellAlert:
-            windowService.present(modal: upsell.safeModeUpsell())
+            show(upsellType: .safeMode)
 
         case is NetShieldUpsellAlert:
-            windowService.present(modal: upsell.netShieldUpsell())
+            show(upsellType: .netShield)
 
         case is SecureCoreUpsellAlert:
-            windowService.present(modal: upsell.secureCoreUpsell())
+            show(upsellType: .secureCore)
 
         case is ModerateNATUpsellAlert:
-            windowService.present(modal: upsell.safeModeUpsell())
+            show(upsellType: .moderateNAT)
 
         case is AllCountriesUpsellAlert:
-            windowService.present(modal: upsell.allCountriesUpsell())
+            let plus = AccountPlan.plus
+            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
+            show(upsellType: allCountriesUpsell)
             
         default:
             #if DEBUG
@@ -199,6 +205,12 @@ extension IosAlertService: CoreAlertService {
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
+
+    private func show(upsellType: Modals.UpsellType) {
+        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
+        upsellViewController.delegate = self
+        windowService.present(modal: upsellViewController)
+    }
     
     private func show(_ alert: AppUpdateRequiredAlert) {
         alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
@@ -260,7 +272,7 @@ extension IosAlertService: CoreAlertService {
         let vc = AnnouncementDetailViewController(alert.data)
         vc.modalPresentationStyle = .fullScreen
         vc.cancelled = { [weak self] in
-            self?.windowService.dismissModal()
+            self?.windowService.dismissModal { }
         }
         vc.urlRequested = { [weak self] url in
             self?.safariService.open(url: url)
@@ -272,5 +284,17 @@ extension IosAlertService: CoreAlertService {
         let controller = SubuserAlertViewController()
         controller.safariServiceFactory = factory
         windowService.present(modal: controller)
+    }
+}
+
+extension IosAlertService: UpsellViewControllerDelegate {
+    func userDidRequestPlus() {
+        windowService.dismissModal { [weak self] in
+            self?.planService.presentPlanSelection()
+        }
+    }
+
+    func userDidDismissUpsell() {
+        windowService.dismissModal { }
     }
 }

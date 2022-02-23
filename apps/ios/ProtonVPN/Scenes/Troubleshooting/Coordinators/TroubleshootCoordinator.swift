@@ -52,7 +52,7 @@ class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
         troubleshootViewModel.cancelled = {
             // *Strong* self, but as view model is released together with a view controller, this object is released too.
             // Has to be strong, because this coordinator is started from iOSAlertService which does not retain it.
-            self.windowService.dismissModal()
+            self.windowService.dismissModal { }
         }
         let controller = TroubleshootViewController(troubleshootViewModel)
         windowService.present(modal: controller)

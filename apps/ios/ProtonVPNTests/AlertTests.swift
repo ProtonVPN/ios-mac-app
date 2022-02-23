@@ -95,7 +95,7 @@ fileprivate class WindowServiceMock: WindowService {
     func show(viewController: UIViewController) {}
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
     func present(modal: UIViewController) {}
-    func dismissModal() {}
+    func dismissModal(_ completion: (() -> Void)?) {}
     
     func present(alert: UIAlertController) {
         displayCount += 1
@@ -135,6 +135,10 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
 
     func makeSafariService() -> SafariServiceProtocol {
         return SafariService()
+    }
+
+    func makePlanService() -> PlanService {
+        return PlanServiceMock()
     }
 }
 

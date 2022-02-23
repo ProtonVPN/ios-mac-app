@@ -313,7 +313,7 @@ extension NavigationService: SettingsService {
                 manager.username = AuthKeychain.fetch()?.username ?? ""
                 manager.planname = (try? vpnKeychain.fetchCached().accountPlan.name) ?? ""
                 manager.closeBugReportHandler = {
-                    self.windowService.dismissModal()
+                    self.windowService.dismissModal { }
                 }
                 windowService.present(modal: viewController)
                 return

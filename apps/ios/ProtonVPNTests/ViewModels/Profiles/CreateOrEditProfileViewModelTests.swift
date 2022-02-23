@@ -58,7 +58,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager)
     lazy var propertiesManager = PropertiesManagerMock()
-    lazy var upsellMock = UpsellMock(planService: PlanServiceMock())
     
     lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,
                                                               profileService: profileService,
@@ -69,8 +68,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                                                               profileManager: profileManager,
-                                                              propertiesManager: propertiesManager,
-                                                              upsell: upsellMock)
+                                                              propertiesManager: propertiesManager)
     lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
@@ -80,8 +78,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                                                               profileManager: profileManager,
-                                                              propertiesManager: propertiesManager,
-                                                              upsell: upsellMock)
+                                                              propertiesManager: propertiesManager)
     
     var profileService: ProfileServiceMock!
     

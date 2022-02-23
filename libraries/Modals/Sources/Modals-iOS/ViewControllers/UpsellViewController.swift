@@ -103,9 +103,7 @@ public final class UpsellViewController: UIViewController {
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
-        presentingViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.delegate?.userDidRequestPlus()
-        })
+        delegate?.userDidRequestPlus()
     }
 
     @IBAction private func useFreeTapped(_ sender: Any) {
