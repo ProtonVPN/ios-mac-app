@@ -103,9 +103,10 @@ final class DependencyContainer {
     private lazy var updateManager = UpdateManager(self)
 
     private lazy var vpnAuthentication: VpnAuthentication = {
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos", storage: storage)
-        return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain)
+        return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthenticationKeychain)
     }()
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos", storage: storage)
+    private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: vpnAuthenticationKeychain)
 
     private lazy var storage = Storage()
     private lazy var propertiesManager = PropertiesManager(storage: storage)
@@ -485,5 +486,12 @@ extension DependencyContainer: NATTypePropertyProviderFactory {
 extension DependencyContainer: SafeModePropertyProviderFactory {
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
         return SafeModePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
+    }
+}
+
+// MARK: AppCertificateRefreshManagerFactory
+extension DependencyContainer: AppCertificateRefreshManagerFactory {
+    func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
+        return appCertificateRefreshManager
     }
 }
