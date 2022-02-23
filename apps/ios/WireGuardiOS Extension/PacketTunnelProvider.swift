@@ -13,7 +13,7 @@ import WireGuardKit
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
-    private let certificateRefreshManager = CertificateRefreshManager()
+    private let certificateRefreshManager = ExtensionCertificateRefreshManager()
     
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")

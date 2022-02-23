@@ -10,7 +10,7 @@ import Foundation
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `planNextRefresh()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
-final class CertificateRefreshManager {
+final class ExtensionCertificateRefreshManager {
     
     /// Last time interval that was waited before retry on API error. Will be increased by `nextRetryBackoff()`.
     private var lastRetryInterval: TimeInterval = 10
