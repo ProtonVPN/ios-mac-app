@@ -25,7 +25,7 @@ import Foundation
 public struct VpnCertificate: Codable {
     let certificate: String
     let validUntil: Date
-    let refreshTime: Date
+    public let refreshTime: Date
 
     var isExpired: Bool {
         return Date() > validUntil

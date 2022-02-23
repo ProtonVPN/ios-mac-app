@@ -32,6 +32,12 @@ public protocol VpnAuthenticationStorage {
     func getStoredKeys() -> VpnKeys?
     func store(keys: VpnKeys)
     func store(certificate: VpnCertificateWithFeatures)
+    var delegate: VpnAuthenticationStorageDelegate? { get set }
+}
+
+public protocol VpnAuthenticationStorageDelegate: AnyObject {
+    func certificateDeleted()
+    func certificateStored(_ certificate: VpnCertificateWithFeatures)
 }
 
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
@@ -46,6 +52,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
 
     private let appKeychain: KeychainAccess.Keychain
     private var storage: Storage
+    public weak var delegate: VpnAuthenticationStorageDelegate?
 
     public init(accessGroup: String, storage: Storage) {
         appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
@@ -61,6 +68,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     public func deleteCertificate() {
         log.info("Deleting existing vpn authentication certificate", category: .userCert)
         appKeychain[KeychainStorageKey.vpnCertificate] = nil
+        delegate?.certificateDeleted()
     }
 
     public func getKeys() -> VpnKeys {
@@ -127,6 +135,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
             storage.setEncodableValue(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
             log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
+            delegate?.certificateStored(certificate)
         } catch {
             log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
         }
