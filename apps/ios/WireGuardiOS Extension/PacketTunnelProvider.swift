@@ -32,6 +32,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         // Use shared defaults to get cert features that were set in the app
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
+        #if FREQUENT_AUTH_CERT_REFRESH
+        CertificateConstants.certificateDuration = "15 minutes"
+        #endif
+
         setupLogging()
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
