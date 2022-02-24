@@ -10,6 +10,7 @@ import Foundation
 import NetworkExtension
 import os
 import WireGuardKit
+import Logging
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
@@ -129,6 +130,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     private func setupLogging() {
+        // Our logger
+        LoggingSystem.bootstrap { _ in
+            return WGLogHandler(formatter: WGLogFormatter())
+        }
+        // WG logger
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
     }
     

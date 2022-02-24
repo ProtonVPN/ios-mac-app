@@ -32,7 +32,7 @@ public struct WGLogHandler: LogHandler {
     
     public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) { // swiftlint:disable:this function_parameter_count
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
-        print(text) // swiftlint:disable:this no_print
+        wg_log(.info, message: text)
     }
     
     private func convert(metadata: Logging.Logger.Metadata?) -> [String: String] {
