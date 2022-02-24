@@ -601,19 +601,6 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
     }
 }
 
-public class SecureCoreRequiresUpgradeAlert: SystemAlert {
-    public var title: String? = LocalizedString.upgradeRequired
-    public var message: String? = LocalizedString.upgradeRequiredSecurecoreDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
-    }
-}
-
 public class SysexInstallationRequiredAlert: SystemAlert {
     public var title: String? = LocalizedString.sysexSettingsTitle
     public var message: String? = LocalizedString.sysexSettingsDescription
