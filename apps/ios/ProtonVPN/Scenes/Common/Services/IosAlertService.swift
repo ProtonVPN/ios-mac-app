@@ -24,6 +24,7 @@ import Foundation
 import vpncore
 import Modals
 import Modals_iOS
+import UIKit
 
 class IosAlertService {
         
@@ -281,7 +282,8 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
-        let controller = SubuserAlertViewController()
+        let storyboard = UIStoryboard(name: "SubuserAlertViewController", bundle: Bundle.main)
+        guard let controller = storyboard.instantiateInitialViewController() as? SubuserAlertViewController else { return }
         controller.safariServiceFactory = factory
         windowService.present(modal: controller)
     }
