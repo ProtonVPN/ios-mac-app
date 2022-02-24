@@ -23,14 +23,15 @@
 import Cocoa
 import vpncore
 
-class SettingsTabBarViewController: NSViewController {
+final class SettingsTabBarViewController: NSViewController {
     
-    @IBOutlet weak var headerLabel: NSTextField!
-    @IBOutlet weak var tabBarView: TabBarView!
-    @IBOutlet weak var generalButton: TabBarButton!
-    @IBOutlet weak var connectionButton: TabBarButton!
-    @IBOutlet weak var accountButton: TabBarButton!
-    
+    @IBOutlet private weak var headerLabel: NSTextField!
+    @IBOutlet private weak var tabBarView: TabBarView!
+    @IBOutlet private weak var generalButton: TabBarButton!
+    @IBOutlet private weak var connectionButton: TabBarButton!
+    @IBOutlet private weak var accountButton: TabBarButton!
+    @IBOutlet private weak var advancedButon: TabBarButton!
+
     private var viewModel: SettingsTabBarViewModel!
     
     required init?(coder: NSCoder) {
@@ -57,7 +58,7 @@ class SettingsTabBarViewController: NSViewController {
         
         tabBarView.tabWidth = accountButton.bounds.width
         tabBarView.tabHeight = accountButton.bounds.height
-        tabBarView.tabCount = 3
+        tabBarView.tabCount = SettingsTab.allCases.count
         tabBarView.focusedTabIndex = viewModel.activeTab.rawValue
     }
     
@@ -78,6 +79,11 @@ class SettingsTabBarViewController: NSViewController {
         accountButton.target = self
         accountButton.action = #selector(accountButtonAction)
         accountButton.isFocused = viewModel.activeTab == .account
+
+        advancedButon.title = LocalizedString.advanced
+        advancedButon.target = self
+        advancedButon.action = #selector(advancedButtonAction)
+        advancedButon.isFocused = viewModel.activeTab == .advanced
     }
     
     @objc private func generalButtonAction() {
@@ -91,6 +97,10 @@ class SettingsTabBarViewController: NSViewController {
     @objc private func accountButtonAction() {
         viewModel.accountAction()
     }
+
+    @objc private func advancedButtonAction() {
+        viewModel.advancedAction()
+    }
     
     @objc private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? SettingsTab {
@@ -98,6 +108,7 @@ class SettingsTabBarViewController: NSViewController {
             generalButton.isFocused = tab == .general
             connectionButton.isFocused = tab == .connection
             accountButton.isFocused = tab == .account
+            advancedButon.isFocused = tab == .advanced
         }
     }
 }

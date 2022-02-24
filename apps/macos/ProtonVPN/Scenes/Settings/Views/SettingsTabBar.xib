@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SettingsTabBarViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="accountButton" destination="7XQ-En-Ong" id="lCN-vJ-iGy"/>
+                <outlet property="advancedButon" destination="5gA-b2-7hx" id="WOX-0u-f6B"/>
                 <outlet property="connectionButton" destination="dVx-Mt-eNR" id="VxW-4m-bNe"/>
                 <outlet property="generalButton" destination="fqE-or-95S" id="TgY-Op-oSS"/>
                 <outlet property="headerLabel" destination="glc-99-b6K" id="l5Q-T3-xTI"/>
@@ -19,11 +20,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="125"/>
+            <rect key="frame" x="0.0" y="0.0" width="650" height="125"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="5pA-sx-MtK">
-                    <rect key="frame" x="0.0" y="40" width="500" height="85"/>
+                    <rect key="frame" x="0.0" y="40" width="650" height="85"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="glc-99-b6K">
                             <rect key="frame" x="40" y="21" width="247" height="43"/>
@@ -38,11 +39,11 @@
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="85" id="6kE-uY-mXz"/>
                         <constraint firstItem="glc-99-b6K" firstAttribute="leading" secondItem="5pA-sx-MtK" secondAttribute="leading" constant="42" id="89H-fr-k1w"/>
                         <constraint firstItem="glc-99-b6K" firstAttribute="centerY" secondItem="5pA-sx-MtK" secondAttribute="centerY" id="GZI-GU-bfH"/>
-                        <constraint firstAttribute="width" constant="500" id="cxg-LN-a7W"/>
+                        <constraint firstAttribute="width" constant="650" id="cxg-LN-a7W"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="NQ8-0j-JaE" customClass="TabBarView" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+                    <rect key="frame" x="0.0" y="0.0" width="650" height="40"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fqE-or-95S" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="25" y="0.0" width="150" height="40"/>
@@ -50,6 +51,16 @@
                                 <constraint firstAttribute="width" constant="150" id="KAs-XC-3sd"/>
                             </constraints>
                             <buttonCell key="cell" type="bevel" title="General button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2GG-IA-NYE">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5gA-b2-7hx" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="325" y="0.0" width="150" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="AJA-rO-yBP"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Advanced button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="p5G-jY-sOf">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -65,7 +76,7 @@
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7XQ-En-Ong" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="325" y="0.0" width="150" height="40"/>
+                            <rect key="frame" x="475" y="0.0" width="150" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="BKN-UZ-ZHJ"/>
                             </constraints>
@@ -81,8 +92,11 @@
                         <constraint firstAttribute="bottom" secondItem="fqE-or-95S" secondAttribute="bottom" id="ERr-Dk-dnP"/>
                         <constraint firstItem="7XQ-En-Ong" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="FAu-af-Tji"/>
                         <constraint firstAttribute="height" constant="40" id="GKL-Ka-0lE"/>
-                        <constraint firstItem="dVx-Mt-eNR" firstAttribute="trailing" secondItem="7XQ-En-Ong" secondAttribute="leading" id="MWi-qV-bGl"/>
+                        <constraint firstItem="5gA-b2-7hx" firstAttribute="trailing" secondItem="7XQ-En-Ong" secondAttribute="leading" id="MWi-qV-bGl"/>
+                        <constraint firstItem="5gA-b2-7hx" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="N5d-Jh-g8l"/>
+                        <constraint firstItem="5gA-b2-7hx" firstAttribute="leading" secondItem="dVx-Mt-eNR" secondAttribute="trailing" id="PZB-Aj-Pqd"/>
                         <constraint firstItem="fqE-or-95S" firstAttribute="leading" secondItem="NQ8-0j-JaE" secondAttribute="leading" constant="25" id="Tb9-nI-DjI"/>
+                        <constraint firstAttribute="bottom" secondItem="5gA-b2-7hx" secondAttribute="bottom" id="U24-rT-sfc"/>
                         <constraint firstAttribute="bottom" secondItem="7XQ-En-Ong" secondAttribute="bottom" id="Upb-4S-wBF"/>
                         <constraint firstItem="dVx-Mt-eNR" firstAttribute="leading" secondItem="fqE-or-95S" secondAttribute="trailing" id="WAt-mM-nRp"/>
                         <constraint firstItem="dVx-Mt-eNR" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="nNr-0e-53v"/>

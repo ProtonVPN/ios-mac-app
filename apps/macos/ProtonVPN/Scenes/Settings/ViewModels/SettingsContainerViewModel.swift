@@ -27,6 +27,7 @@ final class SettingsContainerViewModel {
 
     typealias Factory = PropertiesManagerFactory
         & ConnectionSettingsViewModel.Factory
+        & AdvancedSettingsViewModel.Factory
     private let factory: Factory
     
     init(factory: Factory) {
@@ -40,5 +41,8 @@ final class SettingsContainerViewModel {
     var connectionSettingsViewModel: ConnectionSettingsViewModel {
         return ConnectionSettingsViewModel(factory: factory)
     }
-    
+
+    var advancedSettingsViewModel: AdvancedSettingsViewModel {
+        return AdvancedSettingsViewModel(factory: factory)
+    }
 }

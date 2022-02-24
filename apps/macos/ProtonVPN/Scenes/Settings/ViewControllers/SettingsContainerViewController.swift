@@ -40,6 +40,10 @@ final class SettingsContainerViewController: NSViewController {
     private lazy var connectionViewController: ConnectionSettingsViewController = { [unowned self] in
         return ConnectionSettingsViewController(viewModel: viewModel.connectionSettingsViewModel)
     }()
+
+    private lazy var advancedSettingsViewController: AdvancedSettingsViewController = { [unowned self] in
+        return AdvancedSettingsViewController(viewModel: viewModel.advancedSettingsViewModel)
+    }()
     
     lazy var accountViewController: AccountViewController = {
         return AccountViewController()
@@ -91,6 +95,8 @@ final class SettingsContainerViewController: NSViewController {
                 set(viewController: generalViewController)
             case .connection:
                 set(viewController: connectionViewController)
+            case .advanced:
+                set(viewController: advancedSettingsViewController)
             case .account:
                 set(viewController: accountViewController)
             }

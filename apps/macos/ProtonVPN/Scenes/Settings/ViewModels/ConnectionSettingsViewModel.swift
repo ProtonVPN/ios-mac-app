@@ -34,7 +34,6 @@ final class ConnectionSettingsViewModel {
         & VpnManagerFactory
         & VpnStateConfigurationFactory
         & UserTierProviderFactory
-        & NATTypePropertyProviderFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -46,7 +45,6 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
-    private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
 
     private var sysexPending = false
     private var featureFlags: FeatureFlags {
@@ -100,10 +98,6 @@ final class ConnectionSettingsViewModel {
             ? protocolIndex(for: .smartProtocol)
             : protocolIndex(for: .vpnProtocol(propertiesManager.vpnProtocol))
     }
-    
-    var alternativeRouting: Bool {
-        return propertiesManager.alternativeRouting
-    }
 
     var allowLAN: Bool {
         return propertiesManager.excludeLocalNetworks
@@ -115,14 +109,6 @@ final class ConnectionSettingsViewModel {
     
     var vpnAcceleratorEnabled: Bool {
         return propertiesManager.vpnAcceleratorEnabled
-    }
-
-    var isNATTypeFeatureEnabled: Bool {
-        return featureFlags.moderateNAT
-    }
-
-    var natType: NATType {
-        return natTypePropertyProvider.natType
     }
     
     // MARK: - Item counts
@@ -220,45 +206,17 @@ final class ConnectionSettingsViewModel {
                 completion(result)
             }
         }
-    }
-
-    func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
-        guard natTypePropertyProvider.isUserEligibleForNATTypeChange else {
-            alertService.push(alert: ModerateNATUpsellAlert())
-            completion(false)
-            return
-        }
-
-        vpnStateConfiguration.getInfo { [weak self] info in
-            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-            case .withConnectionUpdate:
-                // in-place change when connected and using local agent
-                self?.vpnManager.set(natType: natType)
-                self?.natTypePropertyProvider.natType = natType
-                completion(true)
-            case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: { [weak self] in
-                    self?.natTypePropertyProvider.natType = natType
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                    self?.vpnGateway.retryConnection()
-                    completion(true)
-                }, cancelHandler: {
-                    completion(false)
-                }))
-            case .immediately:
-                self?.natTypePropertyProvider.natType = natType
-                completion(true)
-            }
-        }
-    }
+        
+        // If user has to go to settings to enable sysex, let's change back to original protocol. Value will be updated if/when user approves sysex installation.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.viewController?.reloadView()
+        })
+        
+    }    
         
     @objc func settingsChanged() {
         self.viewController?.reloadView()
-    }
-    
-    func setAlternativeRouting(_ enabled: Bool) {
-        propertiesManager.alternativeRouting = enabled
-    }
+    }    
     
     func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         let update = { (shouldReconnect: Bool) in

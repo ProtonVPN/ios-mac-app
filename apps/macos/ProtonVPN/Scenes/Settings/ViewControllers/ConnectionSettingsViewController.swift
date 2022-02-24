@@ -54,23 +54,12 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var dnsLeakProtectionLabel: PVPNTextField!
     @IBOutlet private weak var dnsLeakProtectionButton: SwitchButton!
     @IBOutlet private weak var dnsLeakProtectionSeparator: NSBox!
-    @IBOutlet private weak var dnsLeakProtectionInfoIcon: NSImageView!
-    
-    @IBOutlet private weak var alternativeRoutingLabel: PVPNTextField!
-    @IBOutlet private weak var alternativeRoutingButton: SwitchButton!
-    @IBOutlet private weak var alternativeRoutingSeparator: NSBox!
-    @IBOutlet private weak var alternativeRoutingInfoIcon: NSImageView!
+    @IBOutlet private weak var dnsLeakProtectionInfoIcon: NSImageView!       
     
     @IBOutlet private weak var allowLANLabel: PVPNTextField!
     @IBOutlet private weak var allowLANButton: SwitchButton!
     @IBOutlet private weak var allowLANSeparator: NSBox!
-    @IBOutlet private weak var allowLANIcon: NSImageView!
-
-    @IBOutlet private weak var natTypeView: NSView!
-    @IBOutlet private weak var natTypeLabel: PVPNTextField!
-    @IBOutlet private weak var natTypeSeparator: NSBox!
-    @IBOutlet private weak var natTypeInfoIcon: NSImageView!
-    @IBOutlet private weak var natTypeButton: SwitchButton!
+    @IBOutlet private weak var allowLANIcon: NSImageView!    
 
     private var viewModel: ConnectionSettingsViewModel
     
@@ -167,20 +156,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         dnsLeakProtectionSeparator.fillColor = .protonLightGrey()
     }
     
-    private func setupAlternativeRoutingItem() {
-        alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemAltTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        alternativeRoutingInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        let tooltip = LocalizedString.troubleshootItemAltDescription
-            .replacingOccurrences(of: LocalizedString.troubleshootItemAltLink1, with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        alternativeRoutingInfoIcon.toolTip = String(tooltip)
-
-        alternativeRoutingButton.setState(viewModel.alternativeRouting ? .on : .off)
-        alternativeRoutingButton.delegate = self
-
-        alternativeRoutingSeparator.fillColor = .protonLightGrey()
-    }
-    
     private func setupAllowLANItem() {
         allowLANLabel.attributedStringValue = LocalizedString.allowLanTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
 
@@ -191,21 +166,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         allowLANButton.delegate = self
 
         allowLANSeparator.fillColor = .protonLightGrey()
-    }
-
-    private func setupNatTypeItem() {
-        natTypeView.isHidden = !viewModel.isNATTypeFeatureEnabled
-        natTypeLabel.attributedStringValue = LocalizedString.moderateNatTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        natTypeInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        let tooltip = LocalizedString.moderateNatExplanation
-            .replacingOccurrences(of: LocalizedString.moderateNatExplanationLink, with: "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        natTypeInfoIcon.toolTip = String(tooltip)
-        natTypeSeparator.fillColor = .protonLightGrey()
-
-        natTypeButton.setState(viewModel.natType == .moderateNAT ? .on : .off)
-        natTypeButton.delegate = self
-    }
+    }    
     
     private func refreshAutoConnect() {
         autoConnectList.removeAllItems()
@@ -262,9 +223,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupVpnAcceleratorItem()
         setupProtocolItem()
         setupDnsLeakProtectionItem()
-        setupAlternativeRoutingItem()
         setupAllowLANItem()
-        setupNatTypeItem()
     }
     
     // MARK: - Actions
@@ -300,30 +259,14 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 }
 
 extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
+    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
         switch button.superview {
-        
         case allowLANButton:
             viewModel.setAllowLANAccess(value == .on, completion: completion)
-            
-        case vpnAcceleratorButton:
-            viewModel.setVpnAccelerator(value == .on, completion: completion)
-
-        case natTypeButton:
-            viewModel.setNatType(natType: value == .on ? .moderateNAT : .strictNAT, completion: completion)
-            
         default:
             completion(true)
         }
     }
-    
-    func switchButtonClicked(_ button: NSButton) {
-        switch button.superview {
-        case alternativeRoutingButton:
-            viewModel.setAlternativeRouting(alternativeRoutingButton.currentButtonState == .on)
-            
-        default:
-            break // Do nothing
-        }
-    }
+
+    func switchButtonClicked(_ button: NSButton) { }
 }
