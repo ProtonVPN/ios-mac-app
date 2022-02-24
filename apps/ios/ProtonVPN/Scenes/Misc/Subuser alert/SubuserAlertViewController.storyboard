@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Subuser Alert View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController id="Y6W-OH-hqX" customClass="SubuserAlertViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VSB-BW-3HN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nwU-ae-Rgo" userLabel="Upper part">
+                                <rect key="frame" x="16" y="44" width="382" height="686"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4yf-vp-qvu" userLabel="Floating part">
+                                        <rect key="frame" x="0.0" y="181.5" width="382" height="323.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="139" placeholderIntrinsicHeight="149" translatesAutoresizingMaskIntoConstraints="NO" id="l4f-uP-N4p">
+                                                <rect key="frame" x="121.5" y="0.0" width="139" height="149"/>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Thanks for updating to PROFESSIONS/VISIONARY_" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfO-pQ-crh">
+                                                <rect key="frame" x="0.0" y="181" width="382" height="19.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_To start your yourney in ProtonVPN please assign VPN sessions to your account or any other sub-account_" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnT-G4-QlO">
+                                                <rect key="frame" x="0.0" y="208.5" width="382" height="57.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_This step will take just a few minutes. After that you will be able to log in and protect all your devices._" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itX-Fn-Epj">
+                                                <rect key="frame" x="0.0" y="290" width="382" height="33.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="itX-Fn-Epj" firstAttribute="leading" secondItem="4yf-vp-qvu" secondAttribute="leading" id="25R-oZ-beR"/>
+                                            <constraint firstItem="WnT-G4-QlO" firstAttribute="top" secondItem="ZfO-pQ-crh" secondAttribute="bottom" constant="8" id="36Y-xD-0WI"/>
+                                            <constraint firstItem="itX-Fn-Epj" firstAttribute="top" secondItem="WnT-G4-QlO" secondAttribute="bottom" constant="24" id="6UZ-ba-rte"/>
+                                            <constraint firstAttribute="bottom" secondItem="itX-Fn-Epj" secondAttribute="bottom" id="A7Z-bP-I8V"/>
+                                            <constraint firstItem="WnT-G4-QlO" firstAttribute="leading" secondItem="4yf-vp-qvu" secondAttribute="leading" id="HGp-Rh-PwF"/>
+                                            <constraint firstItem="l4f-uP-N4p" firstAttribute="centerX" secondItem="4yf-vp-qvu" secondAttribute="centerX" id="Mlm-uH-6wt"/>
+                                            <constraint firstAttribute="trailing" secondItem="itX-Fn-Epj" secondAttribute="trailing" id="dhG-Ie-5eQ"/>
+                                            <constraint firstAttribute="trailing" secondItem="WnT-G4-QlO" secondAttribute="trailing" id="ehs-UY-ags"/>
+                                            <constraint firstItem="l4f-uP-N4p" firstAttribute="top" secondItem="4yf-vp-qvu" secondAttribute="top" id="fGN-I2-fr9"/>
+                                            <constraint firstItem="ZfO-pQ-crh" firstAttribute="top" secondItem="l4f-uP-N4p" secondAttribute="bottom" constant="32" id="lxZ-Gb-On1"/>
+                                            <constraint firstItem="ZfO-pQ-crh" firstAttribute="leading" secondItem="4yf-vp-qvu" secondAttribute="leading" id="tmw-JY-JkI"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZfO-pQ-crh" secondAttribute="trailing" id="zcH-15-Oea"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="4yf-vp-qvu" firstAttribute="centerY" secondItem="nwU-ae-Rgo" secondAttribute="centerY" id="Br6-T4-d29"/>
+                                    <constraint firstItem="4yf-vp-qvu" firstAttribute="leading" secondItem="nwU-ae-Rgo" secondAttribute="leading" id="a4A-97-nJa"/>
+                                    <constraint firstAttribute="trailing" secondItem="4yf-vp-qvu" secondAttribute="trailing" id="hNE-yB-HZJ"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GaQ-MV-2vc" userLabel="Buttons">
+                                <rect key="frame" x="16" y="730" width="382" height="108"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rqr-Ki-lby" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Log In"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="9Fu-7Y-UwW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="_Assign vpn connections_">
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="assignConnectionsTapped" destination="Y6W-OH-hqX" eventType="touchUpInside" id="KNL-ZH-BFF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MO5-E4-9PL" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="58" width="382" height="50"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="Log In"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="ibw-gU-Tdm"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="_Log In again_">
+                                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="loginTapped" destination="Y6W-OH-hqX" eventType="touchUpInside" id="bNx-7c-PzM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Rqr-Ki-lby" secondAttribute="trailing" id="5wK-zt-4Qn"/>
+                                    <constraint firstItem="MO5-E4-9PL" firstAttribute="top" secondItem="Rqr-Ki-lby" secondAttribute="bottom" constant="8" id="AcM-2X-nw6"/>
+                                    <constraint firstItem="Rqr-Ki-lby" firstAttribute="leading" secondItem="GaQ-MV-2vc" secondAttribute="leading" id="DTP-WZ-yBf"/>
+                                    <constraint firstItem="Rqr-Ki-lby" firstAttribute="top" secondItem="GaQ-MV-2vc" secondAttribute="top" id="VEC-aQ-Ikk"/>
+                                    <constraint firstAttribute="trailing" secondItem="MO5-E4-9PL" secondAttribute="trailing" id="aHT-SM-Ahe"/>
+                                    <constraint firstItem="MO5-E4-9PL" firstAttribute="leading" secondItem="GaQ-MV-2vc" secondAttribute="leading" id="ofd-iy-fGZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="MO5-E4-9PL" secondAttribute="bottom" id="seb-OR-HJH"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="aXT-0J-Miq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nwU-ae-Rgo" firstAttribute="leading" secondItem="aXT-0J-Miq" secondAttribute="leading" constant="16" id="H1X-3x-I5U"/>
+                            <constraint firstItem="aXT-0J-Miq" firstAttribute="trailing" secondItem="GaQ-MV-2vc" secondAttribute="trailing" constant="16" id="Jhq-7d-EzW"/>
+                            <constraint firstItem="nwU-ae-Rgo" firstAttribute="top" secondItem="aXT-0J-Miq" secondAttribute="top" id="MP2-vj-XrF"/>
+                            <constraint firstItem="GaQ-MV-2vc" firstAttribute="leading" secondItem="aXT-0J-Miq" secondAttribute="leading" constant="16" id="PGO-ql-2hB"/>
+                            <constraint firstItem="GaQ-MV-2vc" firstAttribute="top" secondItem="nwU-ae-Rgo" secondAttribute="bottom" id="gVi-Qf-EAx"/>
+                            <constraint firstItem="GaQ-MV-2vc" firstAttribute="bottom" secondItem="aXT-0J-Miq" secondAttribute="bottom" constant="-24" id="s3G-dJ-mwg"/>
+                            <constraint firstItem="aXT-0J-Miq" firstAttribute="trailing" secondItem="nwU-ae-Rgo" secondAttribute="trailing" constant="16" id="vqF-jO-0cQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="assignConnectionsButton" destination="Rqr-Ki-lby" id="HeC-9F-FJr"/>
+                        <outlet property="description1Label" destination="WnT-G4-QlO" id="2uC-gF-Ze6"/>
+                        <outlet property="description2Label" destination="itX-Fn-Epj" id="gDE-ZB-5c2"/>
+                        <outlet property="imageView" destination="l4f-uP-N4p" id="1J4-vO-OVJ"/>
+                        <outlet property="loginButton" destination="MO5-E4-9PL" id="317-7Y-CFB"/>
+                        <outlet property="titleLabel" destination="ZfO-pQ-crh" id="1Ic-W4-rpF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
