@@ -572,8 +572,6 @@
 		F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
 		F3EF4ECC2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
-		F3F36C4926D669BA008AD48B /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F36C4826D669BA008AD48B /* Hash.swift */; };
-		F3F36C4B26D669DA008AD48B /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F36C4826D669BA008AD48B /* Hash.swift */; };
 		F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 		F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 		FEDA0212F8DF7B00D9D4B9ED /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */; };
@@ -978,7 +976,6 @@
 		F3B2AB1427622CCC0081D65F /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		F3C1413027BBF6C9009B881E /* SafeModePropertyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeModePropertyProvider.swift; sourceTree = "<group>"; };
 		F3EF4ECB2670C22300109CA3 /* Threading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threading.swift; sourceTree = "<group>"; };
-		F3F36C4826D669BA008AD48B /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConfiguration.swift; sourceTree = "<group>"; };
 		F7DD6EB6DCFD2331D821683A /* Optional+stringForLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+stringForLog.swift"; sourceTree = "<group>"; };
 		F973511943D701511CC59CC4 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
@@ -1305,7 +1302,6 @@
 				E1144D4B22E857D60087A685 /* Scripts */,
 				E1B5F63721B6B1A800B558B0 /* Supporting Files */,
 				F36ECB692610A8AC0089B898 /* Utilities */,
-				F3F36C4726D669BA008AD48B /* Encryption */,
 				F36ECB8F2610A9D00089B898 /* ViewModels */,
 			);
 			path = Source;
@@ -1998,14 +1994,6 @@
 			path = Announcements;
 			sourceTree = "<group>";
 		};
-		F3F36C4726D669BA008AD48B /* Encryption */ = {
-			isa = PBXGroup;
-			children = (
-				F3F36C4826D669BA008AD48B /* Hash.swift */,
-			);
-			path = Encryption;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2642,7 +2630,6 @@
 				E1616BC721C7D53D00F42D79 /* PropertiesManager.swift in Sources */,
 				4C4D898327BD0BE800548523 /* Array+Extension.swift in Sources */,
 				F38F7BE92795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
-				F3F36C4926D669BA008AD48B /* Hash.swift in Sources */,
 				E1B5F66C21B8203200B558B0 /* ServerType.swift in Sources */,
 				F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
 				E1B5F65D21B81E5800B558B0 /* LocalizationUtility.swift in Sources */,
@@ -2772,7 +2759,6 @@
 				F30B9EA92629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
 				D5906F1E22D46714001BC074 /* AttachmentRowViewModel.swift in Sources */,
 				E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
-				F3F36C4B26D669DA008AD48B /* Hash.swift in Sources */,
 				E1616C0721C95DD200F42D79 /* ProfileUtility.swift in Sources */,
 				D5DC52C5252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				F38F7BEA2795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
