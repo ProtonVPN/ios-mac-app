@@ -27,8 +27,6 @@ import NotificationCenter
 import ProtonCore_UIFoundations
 
 final class TodayViewController: UIViewController {
-        
-
     @IBOutlet private weak var connectionLabel: UILabel!
     @IBOutlet private weak var countryLabel: UILabel!
     @IBOutlet private weak var ipLabel: UILabel!
@@ -48,6 +46,14 @@ final class TodayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor()
+        setupBackgroundColors()
+    }
+
+    private func setupBackgroundColors() {
+        connectionLabel.backgroundColor = .clear
+        countryLabel.backgroundColor = .clear
+        ipLabel.backgroundColor = .clear
+        buttonContainerView.backgroundColor = .clear
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,10 +82,10 @@ final class TodayViewController: UIViewController {
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden
         setConnectButtonTitle(buttonTitle)
-        countryLabel.attributedText = country?.attributed(withColor: .normalTextColor(), fontSize: 14, lineSpacing: -2)
-        ipLabel.attributedText = ipAddress?.attributed(withColor: .weakTextColor(), fontSize: 14)
+        countryLabel.attributedText = country?.attributed(withColor: .normalTextColor(), fontSize: 14, alignment: .center, lineSpacing: -2)
+        ipLabel.attributedText = ipAddress?.attributed(withColor: .weakTextColor(), fontSize: 14, alignment: .center)
         connectionLabel.attributedText = connectionString
-            .attributed(withColor: connectionLabelTint, font: .systemFont(ofSize: 16, weight: .bold))
+            .attributed(withColor: connectionLabelTint, font: .systemFont(ofSize: 16, weight: .bold), alignment: .center)
     }
 }
 
