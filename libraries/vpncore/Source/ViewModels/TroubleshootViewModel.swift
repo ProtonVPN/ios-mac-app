@@ -41,10 +41,10 @@ public final class TroubleshootViewModel {
 
     // MARK: - Data
 
-    private let supportEmail = "support@protonmail.com"
+    private let supportEmail = "support@protonvpn.com"
     private let urlTor = "https://www.torproject.org"
     private let urlProtonStatus = "http://protonstatus.com"
-    private let urlSupportForm = "https://protonmail.com/support-form"
+    private let urlSupportForm = "https://protonvpn.com/support-form"
     private let urlTwitter = "https://twitter.com/ProtonVPN"
 
     public init(propertiesManager: PropertiesManagerProtocol) {
