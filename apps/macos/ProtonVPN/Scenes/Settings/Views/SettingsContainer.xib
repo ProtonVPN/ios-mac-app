@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,19 +16,19 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="545"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="445"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZTI-wq-S18">
-                    <rect key="frame" x="0.0" y="420" width="500" height="125"/>
+                    <rect key="frame" x="0.0" y="320" width="500" height="125"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="125" id="0af-8g-NW3"/>
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="mNQ-BX-yge">
-                    <rect key="frame" x="0.0" y="0.0" width="500" height="420"/>
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="320"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="420" id="r7C-J0-Rpl"/>
+                        <constraint firstAttribute="height" constant="320" id="r7C-J0-Rpl"/>
                     </constraints>
                 </customView>
             </subviews>

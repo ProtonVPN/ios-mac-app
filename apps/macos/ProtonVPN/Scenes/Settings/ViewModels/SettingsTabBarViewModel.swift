@@ -22,9 +22,10 @@
 
 import Foundation
 
-enum SettingsTab: Int {
+enum SettingsTab: Int, CaseIterable {
     case general
     case connection
+    case advanced
     case account
 }
 
@@ -57,6 +58,12 @@ class SettingsTabBarViewModel {
     func accountAction() {
         if activeTab != .account {
             activeTab = .account
+        }
+    }
+
+    func advancedAction() {
+        if activeTab != .advanced {
+            activeTab = .advanced
         }
     }
 }

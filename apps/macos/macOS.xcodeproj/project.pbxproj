@@ -416,6 +416,9 @@
 		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
 		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
 		F314141127B12443007424E9 /* NATType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141027B12443007424E9 /* NATType.swift */; };
+		F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */; };
+		F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = F315847627C793BE00D1F6CC /* AdvancedSettings.xib */; };
+		F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */; };
 		F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02526F08D7A00336F7A /* WelcomeViewController.swift */; };
 		F320E02E26F08D7A00336F7A /* TourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02626F08D7A00336F7A /* TourViewController.swift */; };
 		F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02726F08D7A00336F7A /* TourNumberViewController.swift */; };
@@ -1017,6 +1020,9 @@
 		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
 		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
 		F314141027B12443007424E9 /* NATType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NATType.swift; path = ../../../../libraries/vpncore/Source/Models/VPN/NATType.swift; sourceTree = "<group>"; };
+		F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvancedSettingsViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/AdvancedSettingsViewController.swift; sourceTree = "<group>"; };
+		F315847627C793BE00D1F6CC /* AdvancedSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AdvancedSettings.xib; path = ../../../../../macos/ProtonVPN/Scenes/Settings/Views/AdvancedSettings.xib; sourceTree = "<group>"; };
+		F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AdvancedSettingsViewModel.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewModels/AdvancedSettingsViewModel.swift; sourceTree = "<group>"; };
 		F320E02526F08D7A00336F7A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F320E02626F08D7A00336F7A /* TourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourViewController.swift; sourceTree = "<group>"; };
 		F320E02726F08D7A00336F7A /* TourNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberViewController.swift; sourceTree = "<group>"; };
@@ -1949,6 +1955,7 @@
 			isa = PBXGroup;
 			children = (
 				EE27DB461F47095300D2FF2B /* AccountViewController.swift */,
+				F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */,
 				E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */,
 				EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */,
 				EE27DB3A1F4706E400D2FF2B /* SettingsContainerViewController.swift */,
@@ -1961,8 +1968,9 @@
 			isa = PBXGroup;
 			children = (
 				EE27DB4A1F470EF700D2FF2B /* AccountViewModel.swift */,
-				EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */,
+				F315847827C795A100D1F6CC /* AdvancedSettingsViewModel.swift */,
 				E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */,
+				EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */,
 				EE4E7E021F62B197000F7D5E /* SettingsContainerViewModel.swift */,
 				E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */,
 			);
@@ -2337,6 +2345,7 @@
 			isa = PBXGroup;
 			children = (
 				EE27DB471F47095300D2FF2B /* Account.xib */,
+				F315847627C793BE00D1F6CC /* AdvancedSettings.xib */,
 				E1420A72209B57B100697461 /* ConnectionSettings.xib */,
 				EE98CFD11F14E247000D6688 /* GeneralSettings.xib */,
 				EE27DB3B1F4706E400D2FF2B /* SettingsContainer.xib */,
@@ -2959,6 +2968,7 @@
 				EE27DB491F47095300D2FF2B /* Account.xib in Resources */,
 				EE74FCB21F5DD9E500E266BC /* PopUp.xib in Resources */,
 				42918CF9263836530065992E /* CountriesSectionHeaderView.xib in Resources */,
+				F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */,
 				E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */,
 				EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */,
 				D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */,
@@ -3421,6 +3431,7 @@
 				E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
+				F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */,
 				EE24A3AB1F1BDDEF00B70949 /* ProfilesSectionViewController.swift in Sources */,
 				EEB493D31F2145CE00A979DC /* CreateNewProfileViewModel.swift in Sources */,
 				42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */,
@@ -3569,6 +3580,7 @@
 				F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */,
 				EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */,
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
+				F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
 				E187022220E27801000521AC /* StatusMenuProfilesListViewModel.swift in Sources */,
