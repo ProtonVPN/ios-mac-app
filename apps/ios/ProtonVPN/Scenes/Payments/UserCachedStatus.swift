@@ -67,7 +67,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
             return storage.getDecodableValue([PaymentMethod].self, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
+            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
         }
     }
 
