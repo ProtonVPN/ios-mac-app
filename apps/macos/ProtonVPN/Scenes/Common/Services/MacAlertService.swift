@@ -158,9 +158,6 @@ extension MacAlertService: CoreAlertService {
             
         case is NetShieldRequiresUpgradeAlert:
             showDefaultSystemAlert(alert)
-            
-        case is SecureCoreRequiresUpgradeAlert:
-            showDefaultSystemAlert(alert)
 
         case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
             show(connectionTroubleshootingAlert)
