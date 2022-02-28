@@ -29,13 +29,15 @@ enum CertificateRefreshError: Error {
 final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
+    private let safeModePropertyProvider: SafeModePropertyProvider
     private let completion: CertificateRefreshCompletion?
     private let features: VPNConnectionFeatures?
     private var isRetry = false
 
-    init(storage: VpnAuthenticationStorage, features: VPNConnectionFeatures?, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
+    init(storage: VpnAuthenticationStorage, features: VPNConnectionFeatures?, networking: Networking, safeModePropertyProvider: SafeModePropertyProvider, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
         self.networking = networking
+        self.safeModePropertyProvider = safeModePropertyProvider
         self.completion = completion
         
         // On macOS this will effectively disable creation of new certificates on each feature change because those are set in LocalAgent
@@ -85,7 +87,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         let currentFeatures = storage.getStoredCertificateFeatures()
 
         var needsRefresh: Bool = false
-        if features != nil, currentFeatures != features {
+        if features != nil, features?.equals(other: currentFeatures, safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) != true {
             log.debug("Stored certificate has different set of features. New certificate is needed.", category: .userCert, metadata: ["current": "\(String(describing: currentFeatures))", "new": "\(String(describing: features))"])
             needsRefresh = true
         }

@@ -36,6 +36,8 @@ public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
 
     public var isUserEligibleForSafeModeChange: Bool = true
 
+    public var safeModeFeatureEnabled: Bool = true
+
     public func resetForIneligibleUser() {
         safeMode = true
     }

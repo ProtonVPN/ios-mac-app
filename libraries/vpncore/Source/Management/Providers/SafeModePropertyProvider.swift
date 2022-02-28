@@ -25,6 +25,8 @@ public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
     /// If the user can disable Safe Mode
     var isUserEligibleForSafeModeChange: Bool { get }
 
+    var safeModeFeatureEnabled: Bool { get }
+
     static var safeModeNotification: Notification.Name { get }
 }
 
@@ -48,7 +50,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
     public var safeMode: Bool? {
         get {
             // default to nil when the feature is not enabled
-            guard propertiesManager.featureFlags.safeMode else {
+            guard safeModeFeatureEnabled else {
                 return nil
             }
 
@@ -73,6 +75,10 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
     public var isUserEligibleForSafeModeChange: Bool {
         return currentUserTier >= CoreAppConstants.VpnTiers.basic
+    }
+
+    public var safeModeFeatureEnabled: Bool {
+        return propertiesManager.featureFlags.safeMode
     }
 
     public func resetForIneligibleUser() {

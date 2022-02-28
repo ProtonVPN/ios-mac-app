@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct VPNConnectionFeatures: Equatable {
+public struct VPNConnectionFeatures {
     let netshield: NetShieldType
     let vpnAccelerator: Bool
     let bouncing: String?
@@ -68,5 +68,16 @@ extension VPNConnectionFeatures: Codable {
             natType = .default
         }
         safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
+    }
+}
+
+extension VPNConnectionFeatures {
+    func equals(other: VPNConnectionFeatures?, safeModeEnabled: Bool) -> Bool {
+        let equalsWithoutSafeMode = self.netshield == other?.netshield && self.vpnAccelerator == other?.vpnAccelerator && self.bouncing == other?.bouncing && self.natType == other?.natType
+        guard safeModeEnabled else {
+            return equalsWithoutSafeMode
+        }
+
+        return equalsWithoutSafeMode && self.safeMode == other?.safeMode
     }
 }
