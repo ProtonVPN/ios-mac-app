@@ -329,7 +329,7 @@ final class SettingsViewModel {
         return [
             .toggle(title: LocalizedString.moderateNatTitle, on: { [unowned self] in self.natTypePropertyProvider.natType == .moderateNAT }, enabled: true, handler: { [weak self] (toggleOn, callback) in
                 guard let self = self, self.natTypePropertyProvider.isUserEligibleForNATTypeChange else {
-                    callback(self?.natTypePropertyProvider.natType == .moderateNAT)
+                    callback(!toggleOn)
                     self?.alertService.push(alert: ModerateNATUpsellAlert())
                     return
                 }
@@ -363,29 +363,33 @@ final class SettingsViewModel {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
         return [
-            .toggle(title: LocalizedString.nonStandardPortsTitle, on: { [unowned self] in !self.safeModePropertyProvider.safeMode }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
+            .toggle(title: LocalizedString.nonStandardPortsTitle, on: { [unowned self] in self.safeModePropertyProvider.safeMode == false }, enabled: true, handler: { [unowned self] (toggleOn, callback) in
+
                 guard self.safeModePropertyProvider.isUserEligibleForSafeModeChange else {
-                    callback(!self.safeModePropertyProvider.safeMode)
+                    callback(!toggleOn)
                     self.alertService.push(alert: SafeModeUpsellAlert())
                     return
                 }
 
+                let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
+                let newSafeMode = !currentSafeMode
+
                 self.vpnStateConfiguration.getInfo { info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                     case .withConnectionUpdate:
-                        self.safeModePropertyProvider.safeMode.toggle()
-                        self.vpnManager.set(safeMode: self.safeModePropertyProvider.safeMode)
-                        callback(!self.safeModePropertyProvider.safeMode)
+                        self.safeModePropertyProvider.safeMode = newSafeMode
+                        self.vpnManager.set(safeMode: newSafeMode)
+                        callback(toggleOn)
                     case .withReconnect:
                         self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.nonStandardPortsChangeTitle, confirmHandler: {
-                            self.safeModePropertyProvider.safeMode.toggle()
-                            callback(self.safeModePropertyProvider.safeMode)
+                            self.safeModePropertyProvider.safeMode = newSafeMode
+                            callback(toggleOn)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
                             self.vpnGateway?.retryConnection()
                         }))
                     case .immediately:
-                        self.safeModePropertyProvider.safeMode.toggle()
-                        callback(!self.safeModePropertyProvider.safeMode)
+                        self.safeModePropertyProvider.safeMode = newSafeMode
+                        callback(toggleOn)
                     }
                 }
             }),
@@ -406,7 +410,7 @@ final class SettingsViewModel {
     private var advancedSection: TableViewSection {
         var cells: [TableViewCellModel] = alternativeRoutingSection
 
-        if propertiesManager.featureFlags.safeMode {
+        if safeModePropertyProvider.safeModeFeatureEnabled {
             cells.append(contentsOf: safeModeSection)
         }
 

@@ -74,6 +74,10 @@ extension VPNConnectionFeatures: Codable {
 extension VPNConnectionFeatures {
     func equals(other: VPNConnectionFeatures?, safeModeEnabled: Bool) -> Bool {
         let equalsWithoutSafeMode = self.netshield == other?.netshield && self.vpnAccelerator == other?.vpnAccelerator && self.bouncing == other?.bouncing && self.natType == other?.natType
+
+        // if Safe Mode is disabled by feature flag ignore it when doing the comparison
+        // this is needed for the situation when Safe Mode is set to nil because of the feature flag but the Local Agent sends back false (the default value),
+        // without this check it would cause the certificate to be regenerated for no good reason
         guard safeModeEnabled else {
             return equalsWithoutSafeMode
         }

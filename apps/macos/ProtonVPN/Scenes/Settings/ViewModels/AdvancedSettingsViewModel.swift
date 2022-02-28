@@ -71,7 +71,7 @@ final class AdvancedSettingsViewModel {
     }
 
     var safeMode: Bool {
-        return safeModePropertyProvider.safeMode
+        return safeModePropertyProvider.safeMode ?? true
     }
 
     // MARK: - Setters
