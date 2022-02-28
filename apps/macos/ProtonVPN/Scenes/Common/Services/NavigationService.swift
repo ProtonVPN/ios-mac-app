@@ -51,6 +51,7 @@ class NavigationService {
         & LogFileManagerFactory
         & UserTierProviderFactory
         & NATTypePropertyProviderFactory
+        & AuthApiServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()

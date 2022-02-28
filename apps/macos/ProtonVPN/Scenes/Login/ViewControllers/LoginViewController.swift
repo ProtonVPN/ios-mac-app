@@ -94,6 +94,8 @@ class LoginViewController: NSViewController {
         setupLoadingView()
         setupOnboardingView()
         setupCallbacks()
+
+        viewModel.updateAvailableDomains()
     }
     
     override func viewDidAppear() {
