@@ -52,7 +52,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     openVpnFactory: openVpnFactory,
                                     wireguardProtocolFactory: wireguardVpnFactory,
                                     appGroup: appGroup,
-                                    vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain),
+                                    vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain, safeModePropertyProvider: safeModePropertyProvider),
                                     vpnKeychain: vpnKeychain,
                                     propertiesManager: propertiesManager,
                                     vpnStateConfiguration: vpnStateConfiguration,

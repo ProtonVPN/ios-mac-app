@@ -67,10 +67,12 @@ public final class VpnAuthenticationManager {
     private let queue = OperationQueue()
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
+    private let safeModePropertyProvider: SafeModePropertyProvider
 
-    public init(networking: Networking, storage: VpnAuthenticationStorage) {
+    public init(networking: Networking, storage: VpnAuthenticationStorage, safeModePropertyProvider: SafeModePropertyProvider) {
         self.networking = networking
         self.storage = storage
+        self.safeModePropertyProvider = safeModePropertyProvider
         queue.maxConcurrentOperationCount = 1
 
         NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnPlanChanged, object: nil)
@@ -90,7 +92,7 @@ public final class VpnAuthenticationManager {
         clearEverything()
 
         // and get new certificates
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: features, networking: networking))
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: features, networking: networking, safeModePropertyProvider: safeModePropertyProvider))
     }
 }
 
@@ -116,14 +118,14 @@ extension VpnAuthenticationManager: VpnAuthentication {
         // If new ferature set is given, use it, otherwise try to get certificate with the same features as previous
         let newFeatures = features ?? storage.getStoredCertificateFeatures()
 
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, completion: { result in
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, safeModePropertyProvider: safeModePropertyProvider, completion: { result in
             executeOnUIThread { completion(result) }
         }))
     }
 
     public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored, use it
-        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features == storage.getStoredCertificateFeatures() {
+        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features?.equals(other: storage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
             log.debug("Loading stored vpn authentication data", category: .userCert)
             if existingCertificate.isExpired {
                 log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
