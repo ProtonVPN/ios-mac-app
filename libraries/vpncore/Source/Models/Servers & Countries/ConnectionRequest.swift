@@ -70,10 +70,10 @@ public struct ConnectionRequest: Codable {
     public let connectionProtocol: ConnectionProtocol
     public let netShieldType: NetShieldType
     public let natType: NATType
-    public let safeMode: Bool
+    public let safeMode: Bool?
     public let profileId: String?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool, profileId: String?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
@@ -131,8 +131,7 @@ public struct ConnectionRequest: Codable {
             natType = .default
         }
 
-        // compatiblity with previous format
-        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode) ?? false
+        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
     }
 }
 

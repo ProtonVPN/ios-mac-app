@@ -134,8 +134,10 @@ extension LocalAgentFeatures {
         return self
     }
 
-    func with(safeMode: Bool) -> LocalAgentFeatures {
-        set(.safeMode, value: safeMode)
+    func with(safeMode: Bool?) -> LocalAgentFeatures {
+        if let safeMode = safeMode {
+            set(.safeMode, value: safeMode)
+        }
         return self
     }
 

@@ -26,7 +26,7 @@ public struct LocalAgentConfiguration {
     let hostname: String
     let features: VPNConnectionFeatures
 
-    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool) {
+    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
         self.hostname = hostname
         self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
     }
@@ -54,7 +54,6 @@ extension LocalAgentConfiguration {
 // MARK: - LocalAgentConfiguration.Features
 
 extension VPNConnectionFeatures {
-    
     init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
         guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil

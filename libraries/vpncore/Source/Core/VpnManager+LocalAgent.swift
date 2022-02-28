@@ -222,12 +222,13 @@ extension VpnManager: LocalAgentDelegate {
         })
     }
 
-    private func didReceiveFeature(safeMode: Bool) {
-        guard safeModePropertyProvider.safeMode != safeMode else {
+    private func didReceiveFeature(safeMode: Bool?) {
+        // ignore nil value received from the Local Agent and also nil value from the provider because it means the feature is not enabled and values should not be used
+        guard let currentSafeMode = safeModePropertyProvider.safeMode, let safeMode = safeMode, currentSafeMode != safeMode else {
             return
         }
 
-        log.debug("Safe Mode was set to \(safeModePropertyProvider.safeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
+        log.debug("Safe Mode was set to \(currentSafeMode), changing to \(safeMode) received from local agent", category: .localAgent, event: .stateChange)
         safeModePropertyProvider.safeMode = safeMode
     }
     

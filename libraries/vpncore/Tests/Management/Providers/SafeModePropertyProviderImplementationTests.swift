@@ -43,7 +43,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
         for type in variants {
             let (factory, storage) = getFactory(safeMode: type, tier: CoreAppConstants.VpnTiers.plus, safeModeFeatureFlag: false)
-            XCTAssertEqual(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode, false)
+            XCTAssertNil(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode)
         }
     }
 
@@ -58,11 +58,11 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
     func testWhenNothingIsSetReturnsFalseWhenDisabledByFeatureFlag() throws {
         var (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.basic, safeModeFeatureFlag: false)
-        XCTAssertEqual(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode, false)
+        XCTAssertNil(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode)
         (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.plus, safeModeFeatureFlag: false)
-        XCTAssertEqual(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode, false)
+        XCTAssertNil(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode)
         (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.visionary, safeModeFeatureFlag: false)
-        XCTAssertEqual(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode, false)
+        XCTAssertNil(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).safeMode)
     }
 
     func testSavesValueToStorage() {

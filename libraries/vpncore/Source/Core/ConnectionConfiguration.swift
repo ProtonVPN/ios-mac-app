@@ -18,10 +18,10 @@ public struct ConnectionConfiguration: Codable {
     public let vpnProtocol: VpnProtocol
     public let netShieldType: NetShieldType
     public let natType: NATType
-    public let safeMode: Bool
+    public let safeMode: Bool?
     public let ports: [Int]
     
-    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool, ports: [Int]) {
+    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, ports: [Int]) {
         self.server = server
         self.serverIp = serverIp
         self.vpnProtocol = vpnProtocol
