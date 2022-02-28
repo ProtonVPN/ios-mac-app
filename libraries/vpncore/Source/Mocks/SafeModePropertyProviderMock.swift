@@ -32,7 +32,7 @@ public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
         self.init(PaidFeaturePropertyProviderFactoryMock(), storage: Storage(), userInfoProvider: AuthKeychain())
     }
 
-    public var safeMode: Bool = false
+    public var safeMode: Bool? = false
 
     public var isUserEligibleForSafeModeChange: Bool = true
 

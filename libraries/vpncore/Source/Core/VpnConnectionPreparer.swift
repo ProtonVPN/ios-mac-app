@@ -48,7 +48,7 @@ class VpnConnectionPreparer {
         self.wireguardConfig = wireguardConfig
     }
     
-    func connect(with connectionProtocol: ConnectionProtocol, to server: ServerModel, netShieldType: NetShieldType, natType: NATType, safeMode: Bool) {
+    func connect(with connectionProtocol: ConnectionProtocol, to server: ServerModel, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
         guard let serverIp = selectServerIp(server: server) else {
             return
         }
@@ -62,7 +62,7 @@ class VpnConnectionPreparer {
     // MARK: - Private functions
 
     // swiftlint:disable:next function_parameter_count
-    private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, safeMode: Bool, ports: [Int]) {
+    private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, ports: [Int]) {
         guard let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports) else {
             return
         }
@@ -102,7 +102,7 @@ class VpnConnectionPreparer {
     }
 
     // swiftlint:disable:next function_parameter_count
-    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, safeMode: Bool, ports: [Int]) -> ConnectionConfiguration? {
+    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, ports: [Int]) -> ConnectionConfiguration? {
         
         if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
             return nil

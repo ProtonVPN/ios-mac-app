@@ -23,9 +23,9 @@ public struct VPNConnectionFeatures: Equatable {
     let vpnAccelerator: Bool
     let bouncing: String?
     let natType: NATType
-    let safeMode: Bool
+    let safeMode: Bool?
 
-    init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool) {
+    init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
         self.netshield = netshield
         self.vpnAccelerator = vpnAccelerator
         self.bouncing = bouncing
@@ -41,7 +41,9 @@ public struct VPNConnectionFeatures: Equatable {
             result[CodingKeys.bouncing.rawValue] = bouncing
         }
         result[CodingKeys.natType.rawValue] = natType.flag
-        result[CodingKeys.safeMode.rawValue] = safeMode
+        if let safeMode = safeMode {
+            result[CodingKeys.safeMode.rawValue] = safeMode
+        }
         return result
     }
 }
@@ -65,6 +67,6 @@ extension VPNConnectionFeatures: Codable {
         } else {
             natType = .default
         }
-        safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode) ?? false
+        safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
     }
 }

@@ -20,7 +20,7 @@ import Foundation
 
 public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
     /// Current Safe Mdde
-    var safeMode: Bool { get set }
+    var safeMode: Bool? { get set }
 
     /// If the user can disable Safe Mode
     var isUserEligibleForSafeModeChange: Bool { get }
@@ -45,11 +45,11 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
         self.storage = storage
     }
 
-    public var safeMode: Bool {
+    public var safeMode: Bool? {
         get {
-            // default to false when the feature is not enabled
+            // default to nil when the feature is not enabled
             guard propertiesManager.featureFlags.safeMode else {
-                return false
+                return nil
             }
 
             // true is the default value

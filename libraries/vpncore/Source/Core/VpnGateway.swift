@@ -162,7 +162,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     private let safeModePropertyProvider: SafeModePropertyProvider
-    private var safeMode: Bool {
+    private var safeMode: Bool? {
         return safeModePropertyProvider.safeMode
     }
     
@@ -371,7 +371,7 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
     
-    private func connect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType, safeMode: Bool) {
+    private func connect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
         guard let server = server else {
             return
         }

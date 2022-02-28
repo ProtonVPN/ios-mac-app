@@ -60,9 +60,9 @@ public struct VpnManagerConfiguration {
     public let bouncing: String?
     public let serverPublicKey: String?
     public let natType: NATType
-    public let safeMode: Bool
+    public let safeMode: Bool?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool, ports: [Int], serverPublicKey: String?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, ports: [Int], serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -157,8 +157,8 @@ public class VpnManagerConfigurationPreparer {
             extraConfiguration += [.moderateNAT]
         }
 
-        if propertiesManager.featureFlags.safeMode {
-            extraConfiguration += [.safeMode(connectionConfig.safeMode)]
+        if propertiesManager.featureFlags.safeMode, let safeMode = connectionConfig.safeMode {
+            extraConfiguration += [.safeMode(safeMode)]
         }
         
         return extraConfiguration.reduce("") {
