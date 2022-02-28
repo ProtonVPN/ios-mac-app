@@ -24,9 +24,9 @@ import AppKit
 import Foundation
 import vpncore
 
-class LoginViewModel {
+final class LoginViewModel {
     
-    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & AuthApiServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -34,6 +34,7 @@ class LoginViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
+    private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
@@ -102,6 +103,10 @@ class LoginViewModel {
                 self.logInFailure?(error.localizedDescription)
             }
         })
+    }
+
+    func updateAvailableDomains() {
+        authApiService.getAvailableDomains { _ in }
     }
     
     private func specialErrorCaseNotification(_ error: Error) {
