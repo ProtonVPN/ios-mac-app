@@ -30,6 +30,7 @@ public protocol AuthApiServiceFactory {
 
 public protocol AuthApiService {    
     func authenticate(username: String, password: String, completion: @escaping (Result<AuthCredentials, Error>) -> Void)
+    func getAvailableDomains(completion: @escaping (Result<[String], Error>) -> Void)
 }
 
 public class AuthApiServiceImplementation: AuthApiService {
@@ -54,6 +55,17 @@ public class AuthApiServiceImplementation: AuthApiService {
                 }
             case let .failure(error):
                 completion(.failure(error.underlyingError))
+            }
+        }
+    }
+
+    public func getAvailableDomains(completion: @escaping (Result<[String], Error>) -> Void) {
+        networking.request(AvailableDomainsRequest()) { (result: Result<AvailableDomainResponse, Error>) in
+            switch result {
+            case let .success(response):
+                completion(.success(response.domains))
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
