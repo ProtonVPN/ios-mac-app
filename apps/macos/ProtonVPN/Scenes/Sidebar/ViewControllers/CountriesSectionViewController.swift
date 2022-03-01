@@ -22,6 +22,18 @@
 
 import Cocoa
 import vpncore
+import AppKit
+
+class QuickSettingsStack: NSStackView {
+
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .toolbar
+    }
+}
 
 class CountriesSectionViewController: NSViewController {
 
@@ -53,7 +65,7 @@ class CountriesSectionViewController: NSViewController {
     @IBOutlet weak var shadowView: ShadowView!
     @IBOutlet weak var clearSearchBtn: NSButton!
     
-    @IBOutlet weak var quickSettingsStack: NSStackView!
+    @IBOutlet weak var quickSettingsStack: QuickSettingsStack!
     @IBOutlet weak var secureCoreSectionView: NSView!
     @IBOutlet weak var netShieldSectionView: NSView!
     @IBOutlet weak var killSwitchSectionView: NSView!
@@ -95,6 +107,10 @@ class CountriesSectionViewController: NSViewController {
         setupSearchSection()
         setupTableView()
         setupQuickSettings()
+
+        secureCoreBtn.setAccessibilityChildren([secureCoreContainer])
+        netShieldBtn.setAccessibilityChildren([netshieldContainer])
+        killSwitchBtn.setAccessibilityChildren([killSwitchContainer])
         
         guard #available(OSX 11, *) else {
             // quickfix for older versions than big sur
@@ -131,7 +147,6 @@ class CountriesSectionViewController: NSViewController {
         searchTextField.delegate = self
         searchTextField.usesSingleLineMode = true
         searchTextField.focusRingType = .none
-        searchTextField.refusesFirstResponder = true
         searchTextField.textColor = .protonWhite()
         searchTextField.font = NSFont.systemFont(ofSize: 16)
         searchTextField.alignment = .left

@@ -8,19 +8,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AdvancedSettingsViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
-                <outlet property="alternativeRoutingButton" destination="tbo-M6-BCA" id="w18-hL-Gdb"/>
-                <outlet property="alternativeRoutingInfoIcon" destination="e8E-HE-ri2" id="ub9-fr-3w6"/>
-                <outlet property="alternativeRoutingLabel" destination="nDV-Be-qy1" id="cHr-Qb-x7F"/>
-                <outlet property="alternativeRoutingSeparator" destination="hAw-ib-0f5" id="M1S-tf-xkO"/>
-                <outlet property="natTypeButton" destination="XYp-dt-ai5" id="lpv-39-eD5"/>
-                <outlet property="natTypeInfoIcon" destination="5vz-D4-DLw" id="TVf-cL-8HF"/>
-                <outlet property="natTypeLabel" destination="7eV-97-rsO" id="F1e-pE-xuc"/>
-                <outlet property="natTypeSeparator" destination="jxh-61-PaD" id="gVa-XS-zbX"/>
+                <outlet property="alternativeRoutingView" destination="AJA-PJ-rZL" id="DEJ-OE-jJv"/>
                 <outlet property="natTypeView" destination="hVw-co-WZ4" id="JZr-XB-INi"/>
-                <outlet property="safeModeButton" destination="7s2-Hh-Q3c" id="aTn-LM-hNS"/>
-                <outlet property="safeModeInfoIcon" destination="e9V-6G-Haw" id="BAD-1y-khG"/>
-                <outlet property="safeModeLabel" destination="oLy-FT-Szm" id="f1e-7V-oNE"/>
-                <outlet property="safeModeSeparator" destination="1tp-ed-xbw" id="6Af-RT-JPm"/>
                 <outlet property="safeModeView" destination="Qcl-6z-lpZ" id="OlN-ko-UgW"/>
                 <outlet property="view" destination="c22-O7-iKe" id="eU2-AI-fxv"/>
             </connections>
@@ -33,7 +22,7 @@
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jZ4-BP-FvJ">
                     <rect key="frame" x="0.0" y="0.0" width="500" height="190"/>
                     <subviews>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="AJA-PJ-rZL" userLabel="Alternative routing">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="AJA-PJ-rZL" userLabel="Alternative routing" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="130" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nDV-Be-qy1" userLabel="Dns Leak Protection Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -82,8 +71,14 @@
                                 <constraint firstItem="e8E-HE-ri2" firstAttribute="centerY" secondItem="AJA-PJ-rZL" secondAttribute="centerY" id="xw2-5y-GVE"/>
                                 <constraint firstAttribute="bottom" secondItem="hAw-ib-0f5" secondAttribute="bottom" id="yzQ-bC-gcT"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="e8E-HE-ri2" id="7mL-jx-h8q"/>
+                                <outlet property="label" destination="nDV-Be-qy1" id="wsz-iU-kkL"/>
+                                <outlet property="separator" destination="hAw-ib-0f5" id="qkw-ad-ClN"/>
+                                <outlet property="switchButton" destination="tbo-M6-BCA" id="WB6-ks-6Ae"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hVw-co-WZ4" userLabel="Moderate NAT">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="hVw-co-WZ4" userLabel="Moderate NAT" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="80" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7eV-97-rsO" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -130,8 +125,14 @@
                                 <constraint firstAttribute="height" constant="50" id="pmd-bN-1hx"/>
                                 <constraint firstItem="jxh-61-PaD" firstAttribute="leading" secondItem="7eV-97-rsO" secondAttribute="leading" id="wXt-tP-lhQ"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="5vz-D4-DLw" id="Nmr-bU-EDA"/>
+                                <outlet property="label" destination="7eV-97-rsO" id="4f5-UB-ufL"/>
+                                <outlet property="separator" destination="jxh-61-PaD" id="2h7-Gv-UkB"/>
+                                <outlet property="switchButton" destination="XYp-dt-ai5" id="dsb-M9-oFH"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qcl-6z-lpZ" userLabel="Safe Mode">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Qcl-6z-lpZ" userLabel="Safe Mode" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="30" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oLy-FT-Szm" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -178,6 +179,12 @@
                                 <constraint firstItem="1tp-ed-xbw" firstAttribute="leading" secondItem="oLy-FT-Szm" secondAttribute="leading" id="UaR-ec-5g5"/>
                                 <constraint firstItem="e9V-6G-Haw" firstAttribute="leading" secondItem="oLy-FT-Szm" secondAttribute="trailing" constant="5" id="yAL-6Z-7zm"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="e9V-6G-Haw" id="L9V-wI-8Wn"/>
+                                <outlet property="label" destination="oLy-FT-Szm" id="HAk-ui-vFF"/>
+                                <outlet property="separator" destination="1tp-ed-xbw" id="MQX-J3-NR8"/>
+                                <outlet property="switchButton" destination="7s2-Hh-Q3c" id="Dah-fn-G4d"/>
+                            </connections>
                         </customView>
                     </subviews>
                     <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>

@@ -21,22 +21,9 @@ import vpncore
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
 
-    @IBOutlet private weak var alternativeRoutingLabel: PVPNTextField!
-    @IBOutlet private weak var alternativeRoutingButton: SwitchButton!
-    @IBOutlet private weak var alternativeRoutingSeparator: NSBox!
-    @IBOutlet private weak var alternativeRoutingInfoIcon: NSImageView!
-
-    @IBOutlet private weak var natTypeView: NSView!
-    @IBOutlet private weak var natTypeLabel: PVPNTextField!
-    @IBOutlet private weak var natTypeSeparator: NSBox!
-    @IBOutlet private weak var natTypeInfoIcon: NSImageView!
-    @IBOutlet private weak var natTypeButton: SwitchButton!
-
-    @IBOutlet private weak var safeModeView: NSView!
-    @IBOutlet private weak var safeModeLabel: PVPNTextField!
-    @IBOutlet private weak var safeModeSeparator: NSBox!
-    @IBOutlet private weak var safeModeInfoIcon: NSImageView!
-    @IBOutlet private weak var safeModeButton: SwitchButton!
+    @IBOutlet private weak var alternativeRoutingView: SettingsTickboxView!
+    @IBOutlet private weak var natTypeView: SettingsTickboxView!
+    @IBOutlet private weak var safeModeView: SettingsTickboxView!
 
     private var viewModel: AdvancedSettingsViewModel
 
@@ -63,45 +50,35 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupAlternativeRoutingItem() {
-        alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemAltTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        alternativeRoutingInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
         let tooltip = LocalizedString.troubleshootItemAltDescription
             .replacingOccurrences(of: LocalizedString.troubleshootItemAltLink1, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        alternativeRoutingInfoIcon.toolTip = String(tooltip)
 
-        alternativeRoutingButton.setState(viewModel.alternativeRouting ? .on : .off)
-        alternativeRoutingButton.delegate = self
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.troubleshootItemAltTitle, buttonState: viewModel.alternativeRouting, toolTip: String(tooltip))
 
-        alternativeRoutingSeparator.fillColor = .protonLightGrey()
+        alternativeRoutingView.setupItem(model: model, delegate: self)
     }
 
     private func setupNatTypeItem() {
         natTypeView.isHidden = !viewModel.isNATTypeFeatureEnabled
-        natTypeLabel.attributedStringValue = LocalizedString.moderateNatTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        natTypeInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
         let tooltip = LocalizedString.moderateNatExplanation
             .replacingOccurrences(of: LocalizedString.moderateNatExplanationLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        natTypeInfoIcon.toolTip = String(tooltip)
-        natTypeSeparator.fillColor = .protonLightGrey()
 
-        natTypeButton.setState(viewModel.natType == .moderateNAT ? .on : .off)
-        natTypeButton.delegate = self
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.moderateNatTitle, buttonState: viewModel.natType == .moderateNAT, toolTip: String(tooltip))
+
+        natTypeView.setupItem(model: model, delegate: self)
     }
 
     private func setupSafeModeItem() {
         safeModeView.isHidden = !viewModel.isSafeModeFeatureEnabled
-        safeModeLabel.attributedStringValue = LocalizedString.nonStandardPortsTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        safeModeInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
         let tooltip = LocalizedString.nonStandardPortsExplanation
             .replacingOccurrences(of: LocalizedString.nonStandardPortsExplanationLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        safeModeInfoIcon.toolTip = String(tooltip)
-        safeModeSeparator.fillColor = .protonLightGrey()
 
-        safeModeButton.setState(viewModel.safeMode ? .off : .on)
-        safeModeButton.delegate = self
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.nonStandardPortsTitle, buttonState: viewModel.safeMode, toolTip: String(tooltip))
+
+        safeModeView.setupItem(model: model, delegate: self)
     }
 
     // MARK: - ReloadableViewController
@@ -114,25 +91,22 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 }
 
-extension AdvancedSettingsViewController: SwitchButtonDelegate {
-    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
-        switch button.superview {
-        case natTypeButton:
-            viewModel.setNatType(natType: value == .on ? .moderateNAT : .strictNAT, completion: completion)
-        case safeModeButton:
-            viewModel.setSafeMode(safeMode: value == .off, completion: completion)
+extension AdvancedSettingsViewController: TickboxViewDelegate {
+    func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState) {
+        switch tickboxView {
+        case natTypeView:
+            viewModel.setNatType(natType: value == .on ? .moderateNAT : .strictNAT) { [weak self] _ in
+                self?.setupNatTypeItem()
+            }
+        case safeModeView:
+            viewModel.setSafeMode(safeMode: value == .off) { [weak self] _ in
+                self?.setupSafeModeItem()
+            }
+        case alternativeRoutingView:
+            viewModel.setAlternatveRouting(value == .on)
+            setupAlternativeRoutingItem()
         default:
-            completion(true)
-        }
-    }
-
-    func switchButtonClicked(_ button: NSButton) {
-        switch button.superview {
-        case alternativeRoutingButton:
-            viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
-
-        default:
-            break // Do nothing
+            break
         }
     }
 }

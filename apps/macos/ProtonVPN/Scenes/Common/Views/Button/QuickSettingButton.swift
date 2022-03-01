@@ -48,6 +48,14 @@ class QuickSettingButton: NSButton {
         shadow?.shadowBlurRadius = 8
         
     }
+
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .button
+    }
     
     override func updateLayer() {
         layer?.shadowRadius = 3

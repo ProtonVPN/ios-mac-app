@@ -203,6 +203,8 @@
 		E57CD12027BF81D800AA4144 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* Modals */; };
 		E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD12127BF81D800AA4144 /* Modals-macOS */; };
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
+		E5F1112C27CE184A007DEC0D /* SettingsTickboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */; };
+		E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
 		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
@@ -803,6 +805,8 @@
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
+		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
+		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -1958,6 +1962,8 @@
 				F315847427C7939400D1F6CC /* AdvancedSettingsViewController.swift */,
 				E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */,
 				EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */,
+				E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */,
+				E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */,
 				EE27DB3A1F4706E400D2FF2B /* SettingsContainerViewController.swift */,
 				EE27DB4C1F47187600D2FF2B /* SettingsTabBarViewController.swift */,
 			);
@@ -2849,7 +2855,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -3478,6 +3484,7 @@
 				F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */,
+				E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */,
 				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,
 				D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */,
 				E1B5F67F21B8295700B558B0 /* CocoaString+Extension.swift in Sources */,
@@ -3541,6 +3548,7 @@
 				E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */,
 				427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */,
 				EEFE81DD1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift in Sources */,
+				E5F1112C27CE184A007DEC0D /* SettingsTickboxView.swift in Sources */,
 				E1616BE021C91B9700F42D79 /* PropertiesManager+Extension.swift in Sources */,
 				EEA5563A1F1F59690061F43F /* DisabledScrollView.swift in Sources */,
 				42BEF94826317670009180A7 /* FeaturesOverlayViewController.swift in Sources */,
@@ -4618,7 +4626,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4631,7 +4639,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 		E57CD11F27BF81D800AA4144 /* Modals */ = {

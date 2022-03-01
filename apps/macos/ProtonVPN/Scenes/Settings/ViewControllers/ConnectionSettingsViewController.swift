@@ -27,39 +27,14 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     fileprivate enum SwitchButtonOption: Int {
         case killSwitch
     }
-    
-    @IBOutlet private weak var autoConnectLabel: PVPNTextField!
-    @IBOutlet private weak var autoConnectList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var autoConnectSeparator: NSBox!
-    @IBOutlet private weak var autoConnectInfoIcon: NSImageView!
-    
-    @IBOutlet private weak var quickConnectLabel: PVPNTextField!
-    @IBOutlet private weak var quickConnectList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var quickConnectSeparator: NSBox!
-    @IBOutlet private weak var quickConnectInfoIcon: NSImageView!
-    
-    @IBOutlet private weak var protocolView: NSView!
-    @IBOutlet private weak var protocolLabel: PVPNTextField!
-    @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var protocolSeparator: NSBox!
-    @IBOutlet private weak var protocolInfoIcon: NSImageView!
-    @IBOutlet private weak var protocolEnablementProgress: NSProgressIndicator!
-    
-    @IBOutlet private weak var vpnAcceleratorView: NSView!
-    @IBOutlet private weak var vpnAcceleratorLabel: PVPNTextField!
-    @IBOutlet private weak var vpnAcceleratorButton: SwitchButton!
-    @IBOutlet private weak var vpnAcceleratorSeparator: NSBox!
-    @IBOutlet private weak var vpnAcceleratorInfoIcon: NSImageView!
-    
-    @IBOutlet private weak var dnsLeakProtectionLabel: PVPNTextField!
-    @IBOutlet private weak var dnsLeakProtectionButton: SwitchButton!
-    @IBOutlet private weak var dnsLeakProtectionSeparator: NSBox!
-    @IBOutlet private weak var dnsLeakProtectionInfoIcon: NSImageView!       
-    
-    @IBOutlet private weak var allowLANLabel: PVPNTextField!
-    @IBOutlet private weak var allowLANButton: SwitchButton!
-    @IBOutlet private weak var allowLANSeparator: NSBox!
-    @IBOutlet private weak var allowLANIcon: NSImageView!    
+
+    @IBOutlet private weak var autoConnectView: SettingsDropDownView!
+    @IBOutlet private weak var quickConnectView: SettingsDropDownView!
+    @IBOutlet private weak var protocolView: SettingsDropDownView!
+
+    @IBOutlet private weak var vpnAcceleratorView: SettingsTickboxView!
+    @IBOutlet private weak var dnsLeakProtectionView: SettingsTickboxView!
+    @IBOutlet private weak var allowLANView: SettingsTickboxView!
 
     private var viewModel: ConnectionSettingsViewModel
     
@@ -86,133 +61,71 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     private func setupAutoConnectItem() {
-        autoConnectLabel.attributedStringValue = LocalizedString.autoConnect.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        autoConnectList.isBordered = false
-        autoConnectList.target = self
-        autoConnectList.action = #selector(autoConnectItemSelected)
-        
-        refreshAutoConnect()
-        
-        autoConnectInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        autoConnectInfoIcon.toolTip = LocalizedString.autoConnectTooltip
-        
-        autoConnectSeparator.fillColor = .protonLightGrey()
+        let count = viewModel.autoConnectItemCount
+        let menuItems: [NSMenuItem] = (0..<count).map { index in
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.autoConnectItem(for: index)
+            return menuItem
+        }
+
+        let model = SettingsDropDownView.ViewModel(labelText: LocalizedString.autoConnect, toolTip: LocalizedString.autoConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.autoConnectProfileIndex)
+
+        autoConnectView.setupItem(model: model, target: self, action: #selector(autoConnectItemSelected))
     }
     
     private func setupQuickConnectItem() {
-        quickConnectLabel.attributedStringValue = LocalizedString.quickConnect.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        quickConnectList.isBordered = false
-        quickConnectList.target = self
-        quickConnectList.action = #selector(quickConnectItemSelected)
-        
-        refreshQuickConnect()
-        
-        quickConnectInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        quickConnectInfoIcon.toolTip = LocalizedString.quickConnectTooltip
-        
-        quickConnectSeparator.fillColor = .protonLightGrey()
+        let count = viewModel.quickConnectItemCount
+        let menuItems: [NSMenuItem] = (0..<count).map { index in
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.quickConnectItem(for: index)
+            return menuItem
+        }
+
+        let model = SettingsDropDownView.ViewModel(labelText: LocalizedString.quickConnect, toolTip: LocalizedString.quickConnectTooltip, progressIndicatorToolTip: nil, menuItems: menuItems, selectedIndex: viewModel.quickConnectProfileIndex)
+
+        quickConnectView.setupItem(model: model, target: self, action: #selector(quickConnectItemSelected))
     }
     
     private func setupProtocolItem() {
-        protocolLabel.attributedStringValue = LocalizedString
-            .protocol
-            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        protocolList.isBordered = false
-        protocolList.target = self
-        protocolList.action = #selector(protocolItemSelected)
-        protocolInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        protocolInfoIcon.toolTip = LocalizedString.smartProtocolDescription
-        protocolSeparator.fillColor = .protonLightGrey()
-        protocolEnablementProgress.isDisplayedWhenStopped = false
-        protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
-        protocolEnablementProgress.toolTip = LocalizedString.sysexSettingsDescription
-        refreshProtocol()
+        let count = viewModel.protocolItemCount
+        let menuItems: [NSMenuItem] = (0..<count).map { index in
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.protocolString(for: viewModel.protocolItem(for: index) ?? .vpnProtocol(.ike))
+            return menuItem
+        }
+
+        let model = SettingsDropDownView.ViewModel(labelText: LocalizedString.protocol, toolTip: LocalizedString.smartProtocolDescription, progressIndicatorToolTip: LocalizedString.sysexSettingsDescription, menuItems: menuItems, selectedIndex: viewModel.protocolProfileIndex)
+
+        protocolView.setupItem(model: model, target: self, action: #selector(protocolItemSelected))
+
+        refreshPendingEnablement()
     }
     
     private func setupVpnAcceleratorItem() {
         vpnAcceleratorView.isHidden = !viewModel.isAcceleratorFeatureEnabled
-        vpnAcceleratorLabel.attributedStringValue = LocalizedString
-            .vpnAcceleratorTitle
-            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        vpnAcceleratorInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        vpnAcceleratorInfoIcon.toolTip = LocalizedString.vpnAcceleratorDescription
+        let toolTip = LocalizedString.vpnAcceleratorDescription
             .replacingOccurrences(of: LocalizedString.vpnAcceleratorDescriptionAltLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        vpnAcceleratorButton.setState(viewModel.vpnAcceleratorEnabled ? .on : .off)
-        vpnAcceleratorButton.delegate = self
-        vpnAcceleratorSeparator.fillColor = .protonLightGrey()
-        
+
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.vpnAcceleratorTitle, buttonState: viewModel.vpnAcceleratorEnabled, toolTip: String(toolTip))
+        vpnAcceleratorView.setupItem(model: model, delegate: self)
     }
     
     private func setupDnsLeakProtectionItem() {
-        dnsLeakProtectionLabel.attributedStringValue = LocalizedString.dnsLeakProtection.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        dnsLeakProtectionInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        dnsLeakProtectionInfoIcon.toolTip = LocalizedString.dnsLeakProtectionTooltip
-        
-        dnsLeakProtectionButton.setState(.on)
-        dnsLeakProtectionButton.enabled = false
-        
-        dnsLeakProtectionSeparator.fillColor = .protonLightGrey()
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.dnsLeakProtection, buttonState: true, buttonEnabled: false, toolTip: LocalizedString.dnsLeakProtectionTooltip)
+        dnsLeakProtectionView.setupItem(model: model, delegate: self)
     }
-    
+
     private func setupAllowLANItem() {
-        allowLANLabel.attributedStringValue = LocalizedString.allowLanTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-
-        allowLANIcon.image = NSImage(named: NSImage.Name("info_green"))
-        allowLANIcon.toolTip = LocalizedString.allowLanInfo
-
-        allowLANButton.setState(viewModel.allowLAN ? .on : .off)
-        allowLANButton.delegate = self
-
-        allowLANSeparator.fillColor = .protonLightGrey()
-    }    
-    
-    private func refreshAutoConnect() {
-        autoConnectList.removeAllItems()
-        
-        let count = viewModel.autoConnectItemCount
-        for index in 0..<count {
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.autoConnectItem(for: index)
-            autoConnectList.menu?.addItem(menuItem)
-        }
-        
-        autoConnectList.selectItem(at: viewModel.autoConnectProfileIndex)
-    }
-    
-    private func refreshQuickConnect() {
-        quickConnectList.removeAllItems()
-        
-        let count = viewModel.quickConnectItemCount
-        for index in 0..<count {
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.quickConnectItem(for: index)
-            quickConnectList.menu?.addItem(menuItem)
-        }
-        
-        quickConnectList.selectItem(at: viewModel.quickConnectProfileIndex)
-    }
-    
-    private func refreshProtocol() {
-        protocolList.removeAllItems()
-        let count = viewModel.protocolItemCount
-        (0..<count).forEach { index in
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.protocolString(for: viewModel.protocolItem(for: index) ?? .vpnProtocol(.ike))
-            protocolList.menu?.addItem(menuItem)
-        }
-        protocolList.selectItem(at: viewModel.protocolProfileIndex)
-        refreshPendingEnablement()
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.allowLanTitle, buttonState: viewModel.allowLAN, toolTip: LocalizedString.allowLanInfo)
+        allowLANView.setupItem(model: model, delegate: self)
     }
 
     private func refreshPendingEnablement() {
-        if viewModel.shouldShowSysexProgress(for: protocolList.indexOfSelectedItem) {
-            protocolEnablementProgress.startAnimation(nil)
+        if viewModel.shouldShowSysexProgress(for: protocolView.indexOfSelectedItem()) {
+            protocolView.startProgressIndicatorAnimation()
         } else {
-            protocolEnablementProgress.stopAnimation(nil)
+            protocolView.stopProgressIndicatorAnimation()
         }
     }
     
@@ -232,22 +145,22 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     @objc private func autoConnectItemSelected() {
         do {
-            try viewModel.setAutoConnect(autoConnectList.indexOfSelectedItem)
+            try viewModel.setAutoConnect(autoConnectView.indexOfSelectedItem())
         } catch {
-            refreshAutoConnect()
+            setupAutoConnectItem()
         }
     }
     
     @objc private func quickConnectItemSelected() {
         do {
-            try viewModel.setQuickConnect(quickConnectList.indexOfSelectedItem)
+            try viewModel.setQuickConnect(quickConnectView.indexOfSelectedItem())
         } catch {
-            refreshQuickConnect()
+            setupQuickConnectItem()
         }
     }
     
     @objc private func protocolItemSelected() {
-        guard let protocolItem = viewModel.protocolItem(for: protocolList.indexOfSelectedItem) else {
+        guard let protocolItem = viewModel.protocolItem(for: protocolView.indexOfSelectedItem()) else {
             return
         }
 
@@ -255,20 +168,24 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         refreshPendingEnablement()
 
         viewModel.setProtocol(protocolItem) { [weak self] result in
-            self?.refreshProtocol()
+            self?.setupProtocolItem()
         }
     }
 }
 
-extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
-        switch button.superview {
-        case allowLANButton:
-            viewModel.setAllowLANAccess(value == .on, completion: completion)
+extension ConnectionSettingsViewController: TickboxViewDelegate {
+    func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState) {
+        switch tickboxView {
+        case allowLANView:
+            viewModel.setAllowLANAccess(value == .on, completion: { [weak self] _ in
+                self?.setupAllowLANItem()
+            })
+        case vpnAcceleratorView:
+            viewModel.setVpnAccelerator(value == .on, completion: { [weak self] _ in
+                self?.setupVpnAcceleratorItem()
+            })
         default:
-            completion(true)
+            break
         }
     }
-
-    func switchButtonClicked(_ button: NSButton) { }
 }
