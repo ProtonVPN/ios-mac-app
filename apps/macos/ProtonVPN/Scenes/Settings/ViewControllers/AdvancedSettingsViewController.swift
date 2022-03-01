@@ -51,7 +51,9 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.setViewController(self)
+        viewModel.reloadNeeded = { [weak self] in
+            self?.reloadView()
+        }
         reloadView()
     }
 
