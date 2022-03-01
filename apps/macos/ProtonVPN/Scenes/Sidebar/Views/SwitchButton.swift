@@ -164,7 +164,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
     }
     
     @objc func buttonClicked(_ button: NSButton) {
-        guard let delegate = self.delegate else {
+        guard let delegate = self.delegate, enabled else {
             return
         }
         

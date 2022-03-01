@@ -54,6 +54,8 @@ class QuickSettingsDropdownOption: NSView {
     
         plusText.stringValue = LocalizedString.upgrade.uppercased()
         plusAndTitleConstraint.isActive = false
+
+        optionIconIV.cell?.setAccessibilityElement(false)
     }
     
     // MARK: - Styles

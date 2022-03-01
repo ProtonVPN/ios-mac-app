@@ -111,7 +111,7 @@
                         <constraint firstAttribute="height" constant="1" id="dea-iY-hWS"/>
                     </constraints>
                 </box>
-                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62O-3H-Vui" userLabel="Quick Settings">
+                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="62O-3H-Vui" userLabel="Quick Settings" customClass="QuickSettingsStack" customModule="ProtonVPN" customModuleProvider="target">
                     <rect key="frame" x="14" y="445" width="486" height="54"/>
                     <subviews>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="ouP-mR-rPp" userLabel="Secure Core">

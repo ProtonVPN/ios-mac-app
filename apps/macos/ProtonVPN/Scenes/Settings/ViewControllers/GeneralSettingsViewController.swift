@@ -22,42 +22,19 @@
 
 import Cocoa
 import vpncore
+import AppKit
 
 public protocol ReloadableViewController: class {
     func reloadView()
 }
 
 final class GeneralSettingsViewController: NSViewController, ReloadableViewController {
-    
-    private enum SwitchButtonOption: Int {
-        case startOnBoot
-        case startMinimized
-        case systemNotifications
-        case earlyAccess
-        case unprotectedNetworkNotifications
-    }
-    
-    @IBOutlet weak var startOnBootLabel: PVPNTextField!
-    @IBOutlet weak var startOnBootButton: SwitchButton!
-    @IBOutlet weak var startOnBootSeparator: NSBox!
-    
-    @IBOutlet weak var startMinimizedLabel: PVPNTextField!
-    @IBOutlet weak var startMinimizedButton: SwitchButton!
-    @IBOutlet weak var startMinimizedSeperator: NSBox!
-    
-    @IBOutlet weak var systemNotificationsLabel: PVPNTextField!
-    @IBOutlet weak var systemNotificationsButton: SwitchButton!
-    @IBOutlet weak var systemNotificationsSeparator: NSBox!
-    
-    @IBOutlet weak var earlyAccessLabel: PVPNTextField!
-    @IBOutlet weak var earlyAccessButton: SwitchButton!
-    @IBOutlet weak var earlyAccessSeparator: NSBox!
-    @IBOutlet weak var earlyAccessInfoIcon: NSImageView!
 
-    @IBOutlet weak var unprotectedNetworkLabel: PVPNTextField!
-    @IBOutlet weak var unprotectedNetworkInfoIcon: NSImageView!
-    @IBOutlet weak var unprotectedNetworkSeparator: NSBox!
-    @IBOutlet weak var unprotectedNetworkButton: SwitchButton!
+    @IBOutlet weak var startOnBootView: SettingsTickboxView!
+    @IBOutlet weak var startMinimizedView: SettingsTickboxView!
+    @IBOutlet weak var systemNotificationsView: SettingsTickboxView!
+    @IBOutlet weak var earlyAccessView: SettingsTickboxView!
+    @IBOutlet weak var unprotectedNetworkView: SettingsTickboxView!
 
     private var viewModel: GeneralSettingsViewModel
     
@@ -81,56 +58,28 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     }
     
     private func setupStartOnBootItem() {
-        startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        startOnBootButton.setState(viewModel.startOnBoot ? .on : .off)
-        startOnBootButton.buttonView?.tag = SwitchButtonOption.startOnBoot.rawValue
-        startOnBootButton.delegate = self
-        
-        startOnBootSeparator.fillColor = .protonLightGrey()
+        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.startOnBoot, buttonState: viewModel.startOnBoot)
+        startOnBootView.setupItem(model: viewModel, delegate: self)
     }
     
     private func setupStartMinimizedItem() {
-        startMinimizedLabel.attributedStringValue = LocalizedString.startMinimized.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        startMinimizedButton.setState(viewModel.startMinimized ? .on : .off)
-        startMinimizedButton.buttonView?.tag = SwitchButtonOption.startMinimized.rawValue
-        startMinimizedButton.delegate = self
-        
-        startMinimizedSeperator.fillColor = .protonLightGrey()
+        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.startMinimized, buttonState: viewModel.startMinimized)
+        startMinimizedView.setupItem(model: viewModel, delegate: self)
     }
     
     private func setupSystemNotificationsItem() {
-        systemNotificationsLabel.attributedStringValue = LocalizedString.systemNotifications.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        systemNotificationsButton.setState(viewModel.systemNotifications ? .on : .off)
-        systemNotificationsButton.buttonView?.tag = SwitchButtonOption.systemNotifications.rawValue
-        systemNotificationsButton.delegate = self
-        
-        systemNotificationsSeparator.fillColor = .protonLightGrey()
+        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.systemNotifications, buttonState: viewModel.systemNotifications)
+        systemNotificationsView.setupItem(model: viewModel, delegate: self)
     }
     
     private func setupEarlyAccessItem() {
-        earlyAccessLabel.attributedStringValue = LocalizedString.earlyAccess.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        earlyAccessButton.setState(viewModel.earlyAccess ? .on : .off)
-        earlyAccessButton.buttonView?.tag = SwitchButtonOption.earlyAccess.rawValue
-        earlyAccessButton.delegate = self
-        
-        earlyAccessInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        earlyAccessInfoIcon.toolTip = LocalizedString.earlyAccessTooltip
-        
-        earlyAccessSeparator.fillColor = .protonLightGrey()
+        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.earlyAccess, buttonState: viewModel.earlyAccess, toolTip: LocalizedString.earlyAccessTooltip)
+        earlyAccessView.setupItem(model: viewModel, delegate: self)
     }
 
     private func setupUnprotectedNetworkItem() {
-        unprotectedNetworkLabel.attributedStringValue = LocalizedString.unprotectedNetwork.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        unprotectedNetworkButton.setState(viewModel.unprotectedNetworkNotifications ? .on : .off)
-        unprotectedNetworkButton.buttonView?.tag = SwitchButtonOption.unprotectedNetworkNotifications.rawValue
-        unprotectedNetworkButton.delegate = self
-        unprotectedNetworkInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        unprotectedNetworkInfoIcon.toolTip = LocalizedString.unprotectedNetworkTooltip
-        unprotectedNetworkSeparator.fillColor = .protonLightGrey()
+        let viewModel = SettingsTickboxView.ViewModel(labelText: LocalizedString.unprotectedNetwork, buttonState: viewModel.unprotectedNetworkNotifications, toolTip: LocalizedString.unprotectedNetworkTooltip)
+        unprotectedNetworkView.setupItem(model: viewModel, delegate: self)
     }
     
     // MARK: - ReloadableView
@@ -145,19 +94,24 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     }
 }
 
-extension GeneralSettingsViewController: SwitchButtonDelegate {
-    func switchButtonClicked(_ button: NSButton) {
-        switch button.tag {
-        case SwitchButtonOption.startOnBoot.rawValue:
-            viewModel.setStartOnBoot(startOnBootButton.currentButtonState == .on)
-        case SwitchButtonOption.startMinimized.rawValue:
-            viewModel.setStartMinimized(startMinimizedButton.currentButtonState == .on)
-        case SwitchButtonOption.systemNotifications.rawValue:
-            viewModel.setSystemNotifications(systemNotificationsButton.currentButtonState == .on)
-        case SwitchButtonOption.earlyAccess.rawValue:
-            viewModel.setEarlyAccess(earlyAccessButton.currentButtonState == .on)
-        case SwitchButtonOption.unprotectedNetworkNotifications.rawValue:
-            viewModel.setUnprotectedNetworkNotifications(unprotectedNetworkButton.currentButtonState == .on)
+extension GeneralSettingsViewController: TickboxViewDelegate {
+    func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState) {
+        switch tickboxView {
+        case startOnBootView:
+            viewModel.setStartOnBoot(value == .on)
+            setupStartOnBootItem()
+        case startMinimizedView:
+            viewModel.setStartMinimized(value == .on)
+            setupStartMinimizedItem()
+        case systemNotificationsView:
+            viewModel.setSystemNotifications(value == .on)
+            setupSystemNotificationsItem()
+        case earlyAccessView:
+            viewModel.setEarlyAccess(value == .on)
+            setupEarlyAccessItem()
+        case unprotectedNetworkView:
+            viewModel.setUnprotectedNetworkNotifications(value == .on)
+            setupUnprotectedNetworkItem()
         default:
             break
         }

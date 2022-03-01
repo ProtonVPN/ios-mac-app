@@ -8,33 +8,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConnectionSettingsViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
-                <outlet property="allowLANButton" destination="pKc-xg-lrk" id="Ulf-YU-LpH"/>
-                <outlet property="allowLANIcon" destination="o0S-pj-mzL" id="yBP-Dl-XmB"/>
-                <outlet property="allowLANLabel" destination="fo8-UF-TQq" id="cOi-Qr-uNO"/>
-                <outlet property="allowLANSeparator" destination="VA6-tF-8uQ" id="ZRS-H0-exr"/>
-                <outlet property="autoConnectInfoIcon" destination="KvR-3z-ZQJ" id="361-W6-dfU"/>
-                <outlet property="autoConnectLabel" destination="koN-do-dR6" id="zi2-va-TKt"/>
-                <outlet property="autoConnectList" destination="kkM-EL-YsG" id="SDU-5u-YOW"/>
-                <outlet property="autoConnectSeparator" destination="JTb-Px-r8q" id="J4W-1i-veZ"/>
-                <outlet property="dnsLeakProtectionButton" destination="KlO-7n-dB1" id="8K4-fq-9GL"/>
-                <outlet property="dnsLeakProtectionInfoIcon" destination="Zmq-AW-D49" id="rVj-Pu-pGJ"/>
-                <outlet property="dnsLeakProtectionLabel" destination="QNa-CH-077" id="GCw-EY-YdT"/>
-                <outlet property="dnsLeakProtectionSeparator" destination="M35-Jw-Qju" id="vQC-xY-LZf"/>                
-                <outlet property="protocolEnablementProgress" destination="kmf-hU-xTU" id="7ZZ-8z-rdc"/>
-                <outlet property="protocolInfoIcon" destination="aLO-su-KqV" id="EEq-Bk-eMD"/>
-                <outlet property="protocolLabel" destination="VyN-C7-RJs" id="KJ3-Cf-3vO"/>
-                <outlet property="protocolList" destination="QNh-jH-qdA" id="7vD-WP-F1O"/>
-                <outlet property="protocolSeparator" destination="hhN-6A-ZEd" id="hNf-00-MeN"/>
+                <outlet property="allowLANView" destination="J4X-wa-j7j" id="ld8-et-BGO"/>
+                <outlet property="autoConnectView" destination="ebY-r7-unO" id="rli-h2-egF"/>
+                <outlet property="dnsLeakProtectionView" destination="6Da-Ut-fXw" id="NWQ-q8-MUi"/>
                 <outlet property="protocolView" destination="MAN-k2-pDp" id="4Ml-hz-coW"/>
-                <outlet property="quickConnectInfoIcon" destination="ZTJ-dJ-CnK" id="lfF-Lf-il9"/>
-                <outlet property="quickConnectLabel" destination="oot-M1-Qpj" id="rxz-fv-rpY"/>
-                <outlet property="quickConnectList" destination="VNa-Jv-QSm" id="cqk-i6-6OZ"/>
-                <outlet property="quickConnectSeparator" destination="uJy-8l-bfE" id="Xex-RU-zhH"/>
+                <outlet property="quickConnectView" destination="n39-Af-5V1" id="KAM-bJ-MXx"/>
                 <outlet property="view" destination="XBX-SA-q2x" id="Ukw-Ua-dco"/>
-                <outlet property="vpnAcceleratorButton" destination="TtT-gy-HmN" id="WbQ-N7-iIy"/>
-                <outlet property="vpnAcceleratorInfoIcon" destination="5IR-tj-bQx" id="Dtz-UD-WJ7"/>
-                <outlet property="vpnAcceleratorLabel" destination="cCQ-Z4-WdI" id="YIw-EC-kqF"/>
-                <outlet property="vpnAcceleratorSeparator" destination="hbw-eF-9Ju" id="DtC-Bn-fhj"/>
                 <outlet property="vpnAcceleratorView" destination="4Ov-kj-b9p" id="Cib-MG-dRV"/>
             </connections>
         </customObject>
@@ -46,7 +25,7 @@
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hW-yr-SCJ">
                     <rect key="frame" x="0.0" y="108" width="500" height="340"/>
                     <subviews>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ebY-r7-unO" userLabel="Auto connect">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ebY-r7-unO" userLabel="Auto connect" customClass="SettingsDropDownView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="280" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="koN-do-dR6" userLabel="Auto Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -106,8 +85,14 @@
                                 <constraint firstItem="koN-do-dR6" firstAttribute="leading" secondItem="ebY-r7-unO" secondAttribute="leading" constant="42" id="v3U-Xi-lLh"/>
                                 <constraint firstItem="JTb-Px-r8q" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="xbC-3p-dx7"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="KvR-3z-ZQJ" id="rq7-VK-pIW"/>
+                                <outlet property="label" destination="koN-do-dR6" id="XHr-VD-TRD"/>
+                                <outlet property="popupButton" destination="kkM-EL-YsG" id="CqN-nx-TRX"/>
+                                <outlet property="separator" destination="JTb-Px-r8q" id="jLN-97-EjD"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="n39-Af-5V1" userLabel="Quick connect">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="n39-Af-5V1" userLabel="Quick connect" customClass="SettingsDropDownView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="230" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oot-M1-Qpj" userLabel="Quick Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -164,8 +149,14 @@
                                 <constraint firstAttribute="height" constant="50" id="X7q-cj-Jkd"/>
                                 <constraint firstItem="ZTJ-dJ-CnK" firstAttribute="centerY" secondItem="n39-Af-5V1" secondAttribute="centerY" id="iXZ-CG-QZY"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="ZTJ-dJ-CnK" id="fQb-Zg-wVl"/>
+                                <outlet property="label" destination="oot-M1-Qpj" id="2Fp-g6-nQW"/>
+                                <outlet property="popupButton" destination="VNa-Jv-QSm" id="9fO-vC-Kg6"/>
+                                <outlet property="separator" destination="uJy-8l-bfE" id="BTK-50-rzi"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="MAN-k2-pDp" userLabel="Protocol">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="MAN-k2-pDp" userLabel="Protocol" customClass="SettingsDropDownView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="180" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VyN-C7-RJs" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -232,8 +223,15 @@
                                 <constraint firstAttribute="bottom" secondItem="hhN-6A-ZEd" secondAttribute="bottom" id="sRN-RQ-Myr"/>
                                 <constraint firstItem="aLO-su-KqV" firstAttribute="leading" secondItem="VyN-C7-RJs" secondAttribute="trailing" constant="5" id="yb0-Iz-f1C"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="aLO-su-KqV" id="nwU-2z-bl3"/>
+                                <outlet property="label" destination="VyN-C7-RJs" id="d9E-pL-sxG"/>
+                                <outlet property="popupButton" destination="QNh-jH-qdA" id="vAu-c3-5zJ"/>
+                                <outlet property="progressIndicator" destination="kmf-hU-xTU" id="5Ez-Dn-APn"/>
+                                <outlet property="separator" destination="hhN-6A-ZEd" id="xCp-fp-2Kc"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="4Ov-kj-b9p" userLabel="Vpn Accelerator">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="4Ov-kj-b9p" userLabel="Vpn Accelerator" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="130" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cCQ-Z4-WdI" userLabel="VPN Accelerator Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -280,8 +278,14 @@
                                 <constraint firstItem="5IR-tj-bQx" firstAttribute="centerY" secondItem="4Ov-kj-b9p" secondAttribute="centerY" id="wyb-qF-alg"/>
                                 <constraint firstItem="cCQ-Z4-WdI" firstAttribute="centerY" secondItem="4Ov-kj-b9p" secondAttribute="centerY" id="zjg-Bh-M5M"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="5IR-tj-bQx" id="NYv-Ja-6eh"/>
+                                <outlet property="label" destination="cCQ-Z4-WdI" id="jpd-kA-Yyb"/>
+                                <outlet property="separator" destination="hbw-eF-9Ju" id="bZv-le-yjB"/>
+                                <outlet property="switchButton" destination="TtT-gy-HmN" id="iRu-Bg-80S"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="J4X-wa-j7j" userLabel="Allow LAN">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="J4X-wa-j7j" userLabel="Allow LAN" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="80" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-UF-TQq" userLabel="AllowLAN Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -328,8 +332,14 @@
                                 <constraint firstItem="o0S-pj-mzL" firstAttribute="leading" secondItem="fo8-UF-TQq" secondAttribute="trailing" constant="5" id="tBM-wE-vGC"/>
                                 <constraint firstAttribute="bottom" secondItem="VA6-tF-8uQ" secondAttribute="bottom" id="zg8-5H-Wi5"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="o0S-pj-mzL" id="QXz-vc-HWB"/>
+                                <outlet property="label" destination="fo8-UF-TQq" id="SAD-FW-jHH"/>
+                                <outlet property="separator" destination="VA6-tF-8uQ" id="ENa-PQ-XHq"/>
+                                <outlet property="switchButton" destination="pKc-xg-lrk" id="Gkf-ly-cIP"/>
+                            </connections>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Da-Ut-fXw" userLabel="DNS leak">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Da-Ut-fXw" userLabel="DNS leak" customClass="SettingsTickboxView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="30" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNa-CH-077" userLabel="Dns Leak Protection Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
@@ -376,6 +386,12 @@
                                 <constraint firstItem="QNa-CH-077" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="uJq-U2-IOE"/>
                                 <constraint firstItem="KlO-7n-dB1" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="zud-ZS-bBZ"/>
                             </constraints>
+                            <connections>
+                                <outlet property="infoIcon" destination="Zmq-AW-D49" id="2Is-27-8A9"/>
+                                <outlet property="label" destination="QNa-CH-077" id="I2t-Ew-NcO"/>
+                                <outlet property="separator" destination="M35-Jw-Qju" id="bB6-63-KGa"/>
+                                <outlet property="switchButton" destination="KlO-7n-dB1" id="I6h-Nx-Acz"/>
+                            </connections>
                         </customView>
                     </subviews>
                     <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>
@@ -398,7 +414,6 @@
                         <constraint firstItem="n39-Af-5V1" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="o14-1A-Bpe"/>
                         <constraint firstAttribute="trailing" secondItem="ebY-r7-unO" secondAttribute="trailing" id="oK1-Ia-JQl"/>
                         <constraint firstItem="6Da-Ut-fXw" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="qdI-23-sur"/>
-                        <constraint firstAttribute="width" constant="500" id="s2t-SO-KaO"/>
                         <constraint firstAttribute="trailing" secondItem="6Da-Ut-fXw" secondAttribute="trailing" id="yP5-Qv-HYO"/>
                     </constraints>
                     <visibilityPriorities>

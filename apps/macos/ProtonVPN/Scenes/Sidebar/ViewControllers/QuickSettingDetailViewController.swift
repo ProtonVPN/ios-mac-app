@@ -79,6 +79,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         view.shadow = shadow
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
+
+        arrowIV.cell?.setAccessibilityElement(false)
         
         dropdownUgradeButton.attributedTitle = LocalizedString.upgrade.uppercased().attributed(withColor: .white, fontSize: 12)
         
