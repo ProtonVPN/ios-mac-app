@@ -16,7 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
 import vpncore
 
 final class AdvancedSettingsViewModel {
@@ -41,10 +40,18 @@ final class AdvancedSettingsViewModel {
         return propertiesManager.featureFlags
     }
 
-    private weak var viewController: ReloadableViewController?
+    var reloadNeeded: (() -> Void)?
 
     init(factory: Factory) {
         self.factory = factory
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).featureFlagsNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     var alternativeRouting: Bool {
@@ -68,10 +75,6 @@ final class AdvancedSettingsViewModel {
     }
 
     // MARK: - Setters
-
-    func setViewController(_ vc: ReloadableViewController) {
-        self.viewController = vc
-    }
 
     func setNatType(natType: NATType, completion: @escaping ((Bool) -> Void)) {
         guard natTypePropertyProvider.isUserEligibleForNATTypeChange else {
@@ -136,4 +139,8 @@ final class AdvancedSettingsViewModel {
     func setAlternatveRouting(_ enabled: Bool) {
         propertiesManager.alternativeRouting = enabled
     }
+
+    @objc private func settingsChanged() {
+        reloadNeeded?()
+    } 
 }

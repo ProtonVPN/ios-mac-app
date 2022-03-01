@@ -74,7 +74,9 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.setViewController(self)
+        viewModel.reloadNeeded = { [weak self] in
+            self?.reloadView()
+        }
         reloadView()
     }
     

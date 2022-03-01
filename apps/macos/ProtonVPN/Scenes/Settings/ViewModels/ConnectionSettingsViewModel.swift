@@ -51,12 +51,13 @@ final class ConnectionSettingsViewModel {
         return propertiesManager.featureFlags
     }
 
-    private weak var viewController: ReloadableViewController?
+    var reloadNeeded: (() -> Void)?
     
     init(factory: Factory) {
         self.factory = factory
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: PropertiesManager.vpnProtocolNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: PropertiesManager.excludeLocalNetworksNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
     }
     
     deinit {
@@ -126,10 +127,6 @@ final class ConnectionSettingsViewModel {
     }
         
     // MARK: - Setters
-    
-    func setViewController(_ vc: ReloadableViewController) {
-        self.viewController = vc
-    }
     
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
@@ -206,16 +203,10 @@ final class ConnectionSettingsViewModel {
                 completion(result)
             }
         }
-        
-        // If user has to go to settings to enable sysex, let's change back to original protocol. Value will be updated if/when user approves sysex installation.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            self.viewController?.reloadView()
-        })
-        
     }    
         
-    @objc func settingsChanged() {
-        self.viewController?.reloadView()
+    @objc private func settingsChanged() {
+        reloadNeeded?()
     }    
     
     func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
@@ -237,7 +228,7 @@ final class ConnectionSettingsViewModel {
                     }
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                        self?.viewController?.reloadView()
+                        self?.reloadNeeded?()
                     }
                 }
             }
