@@ -8,3 +8,5 @@
 "search_servers_sample" = "JP#50, CA#3, IT#14...";
 "search_us_regions_sample" = "California, Florida, Colorado...";
 "search_us_regions" = "US regions";
+"search_no_results_title" = "No results found";
+"search_no_results_subtitle" = "Please try a different keyword";

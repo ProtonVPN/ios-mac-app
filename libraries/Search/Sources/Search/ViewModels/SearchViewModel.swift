@@ -32,6 +32,6 @@ final class SearchViewModel {
     weak var delegate: SearchViewModelDelegate?
 
     init() {
-        status = .placeholder
+        status = .noResults
     }
 }

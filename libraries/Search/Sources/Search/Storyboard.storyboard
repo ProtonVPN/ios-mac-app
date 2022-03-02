@@ -29,12 +29,21 @@
                                 <rect key="frame" x="0.0" y="95" width="414" height="767"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="gMc-6y-NcH">
+                                <rect key="frame" x="197" y="443" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXY-uS-0GL" customClass="NoResultsView" customModule="Search">
+                                <rect key="frame" x="0.0" y="95" width="414" height="767"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="pXY-uS-0GL" secondAttribute="trailing" id="1re-eE-hIu"/>
                             <constraint firstItem="sg3-V9-Zii" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="3It-kI-Lh2"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="pXY-uS-0GL" secondAttribute="bottom" id="8Is-lH-mST"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="4ob-HA-9u9" secondAttribute="bottom" id="C0l-VX-W3O"/>
+                            <constraint firstItem="gMc-6y-NcH" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="D6b-cl-zPR"/>
                             <constraint firstItem="4ob-HA-9u9" firstAttribute="top" secondItem="sg3-V9-Zii" secondAttribute="bottom" id="HW9-3d-Tfx"/>
                             <constraint firstItem="W5x-SX-owJ" firstAttribute="top" secondItem="sg3-V9-Zii" secondAttribute="bottom" id="KXd-Gh-Gna"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="W5x-SX-owJ" secondAttribute="bottom" id="UNu-qE-hia"/>
@@ -42,11 +51,16 @@
                             <constraint firstItem="sg3-V9-Zii" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="cRj-Kt-Z5s"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="W5x-SX-owJ" secondAttribute="trailing" id="dbb-Pj-mEB"/>
                             <constraint firstItem="4ob-HA-9u9" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="dcy-Zp-6Ld"/>
+                            <constraint firstItem="pXY-uS-0GL" firstAttribute="top" secondItem="sg3-V9-Zii" secondAttribute="bottom" id="gyr-wY-Our"/>
+                            <constraint firstItem="gMc-6y-NcH" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="hVI-mh-KKp"/>
                             <constraint firstItem="W5x-SX-owJ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="kqd-Ws-QXX"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="4ob-HA-9u9" secondAttribute="trailing" id="nfN-db-LfH"/>
+                            <constraint firstItem="pXY-uS-0GL" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="rGH-sv-9hN"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="gMc-6y-NcH" id="6oN-tC-Mwh"/>
+                        <outlet property="noResultsView" destination="pXY-uS-0GL" id="2KB-5h-h1a"/>
                         <outlet property="placeholderView" destination="4ob-HA-9u9" id="Y8p-Sp-3wB"/>
                         <outlet property="searchBar" destination="sg3-V9-Zii" id="BWJ-1r-D7U"/>
                         <outlet property="tableView" destination="W5x-SX-owJ" id="Ehn-f3-djD"/>

@@ -31,13 +31,7 @@ final class PlaceholderView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
-        guard let view = UINib(nibName: "PlaceholderView", bundle: Bundle.module).instantiate(withOwner: self, options: nil).first as? UIView else {
-            return
-        }
-        view.frame = self.bounds
-        self.addSubview(view)
-        contentView = view
+        contentView = loadFromNib(name: "PlaceholderView")
 
         setupUI()
     }

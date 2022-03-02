@@ -18,6 +18,10 @@ public enum LocalizedString {
   public static var searchCountries: String { return LocalizedString.tr("Localizable", "search_countries") }
   /// Switzerland, United States, Italy...
   public static var searchCountriesSample: String { return LocalizedString.tr("Localizable", "search_countries_sample") }
+  /// Please try a different keyword
+  public static var searchNoResultsSubtitle: String { return LocalizedString.tr("Localizable", "search_no_results_subtitle") }
+  /// No results found
+  public static var searchNoResultsTitle: String { return LocalizedString.tr("Localizable", "search_no_results_title") }
   /// Servers
   public static var searchServers: String { return LocalizedString.tr("Localizable", "search_servers") }
   /// JP#50, CA#3, IT#14...

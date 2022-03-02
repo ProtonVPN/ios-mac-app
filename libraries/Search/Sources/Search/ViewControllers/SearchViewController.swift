@@ -25,6 +25,8 @@ final class SearchViewController: UIViewController {
 
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var noResultsView: NoResultsView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var placeholderView: PlaceholderView!
 
     // MARK: Properties
@@ -55,8 +57,12 @@ final class SearchViewController: UIViewController {
     }
 }
 
+// MARK: Delegate
+
 extension SearchViewController: SearchViewModelDelegate {
     func statusDidChange(status: SearchStatus) {
         placeholderView.isHidden = status != .placeholder
+        activityIndicator.isHidden = status != .searching
+        noResultsView.isHidden = status != .noResults
     }
 }
