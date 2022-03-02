@@ -84,6 +84,8 @@
 		B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2CB27BBAC7900EC7B53 /* QuickSettingsTests.swift */; };
 		B270C2D927BE984400EC7B53 /* SearchRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2D727BE953100EC7B53 /* SearchRobot.swift */; };
 		B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2D527BE952400EC7B53 /* SearchTests.swift */; };
+		B2AA47D027CE6FE40021E632 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AA47CF27CE6FE40021E632 /* MapTests.swift */; };
+		B2AA47D227CE6FF80021E632 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AA47D127CE6FF80021E632 /* MapRobot.swift */; };
 		BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */; };
 		CCEFA9F416993B0624BEE7E5 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */; };
 		D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */; };
@@ -631,6 +633,8 @@
 		B270C2CB27BBAC7900EC7B53 /* QuickSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuickSettingsTests.swift; path = ../../../../macos/ProtonVPNUITests/Tests/Settings/QuickSettingsTests.swift; sourceTree = "<group>"; };
 		B270C2D527BE952400EC7B53 /* SearchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTests.swift; sourceTree = "<group>"; };
 		B270C2D727BE953100EC7B53 /* SearchRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRobot.swift; sourceTree = "<group>"; };
+		B2AA47CF27CE6FE40021E632 /* MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTests.swift; path = ../../../../macos/ProtonVPNUITests/Tests/Components/MapTests.swift; sourceTree = "<group>"; };
+		B2AA47D127CE6FF80021E632 /* MapRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapRobot.swift; path = ../../../../macos/ProtonVPNUITests/Robots/Components/MapRobot.swift; sourceTree = "<group>"; };
 		C331B0EA32CEDA55E73C5228 /* Pods-ProtonVPNmacOSTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNmacOSTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNmacOSTests/Pods-ProtonVPNmacOSTests.staging.xcconfig"; sourceTree = "<group>"; };
 		C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN_OpenVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77BDD50C752FDC9115636D8 /* NetShieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetShieldType.swift; path = ../../../../libraries/vpncore/Source/Models/Profiles/NetShieldType.swift; sourceTree = "<group>"; };
@@ -1325,6 +1329,7 @@
 			isa = PBXGroup;
 			children = (
 				B270C2D727BE953100EC7B53 /* SearchRobot.swift */,
+				B2AA47D127CE6FF80021E632 /* MapRobot.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1333,6 +1338,7 @@
 			isa = PBXGroup;
 			children = (
 				B270C2D527BE952400EC7B53 /* SearchTests.swift */,
+				B2AA47CF27CE6FE40021E632 /* MapTests.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3275,8 +3281,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2AA47D227CE6FF80021E632 /* MapRobot.swift in Sources */,
 				B22F32FC278DC1C000DBB8CA /* LoginRobot.swift in Sources */,
 				B22F3312278EC8B700DBB8CA /* SettingsRobot.swift in Sources */,
+				B2AA47D027CE6FE40021E632 /* MapTests.swift in Sources */,
 				B22F3304278DC76C00DBB8CA /* MainRobot.swift in Sources */,
 				B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */,
 				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
