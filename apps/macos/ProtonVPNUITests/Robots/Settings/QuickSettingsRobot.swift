@@ -30,6 +30,9 @@ fileprivate let upgradeButton = "UpgradeButton"
 fileprivate let killSwitchModalTitle = "Turn Kill Switch on?"
 fileprivate let notNowButton = "Not now"
 fileprivate let continueButton = "Continue"
+fileprivate let modalUpgradeButton = "modalUpgradeButton"
+fileprivate let modalTitle = "titleLabel"
+fileprivate let modalDescription = "descriptionLabel"
 
 class QuickSettingsRobot {
     
@@ -58,6 +61,16 @@ class QuickSettingsRobot {
         return QuickSettingsRobot()
     }
     
+    func upgradeFeature() -> QuickSettingsRobot {
+        app.buttons[upgradeButton].click()
+        return QuickSettingsRobot()
+    }
+    
+    func closeUpsellModal() -> QuickSettingsRobot {
+        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].click()
+        return QuickSettingsRobot()
+    }
+    
     let verify = Verify()
     
     class Verify {
@@ -82,6 +95,14 @@ class QuickSettingsRobot {
             XCTAssertTrue(app.staticTexts["By activating Kill Switch, you won't be able to access devices on your local network. "].exists)
             XCTAssertTrue(app.buttons[notNowButton].exists)
             XCTAssertTrue(app.buttons[continueButton].exists)
+            return QuickSettingsRobot()
+        }
+        
+        @discardableResult
+        func checkUpsellModalIsOpen() -> QuickSettingsRobot {
+            XCTAssertTrue(app.staticTexts[modalTitle].exists)
+            XCTAssertTrue(app.staticTexts[modalDescription].exists)
+            XCTAssertTrue(app.buttons[modalUpgradeButton].isEnabled)
             return QuickSettingsRobot()
         }
     }

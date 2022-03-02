@@ -41,7 +41,14 @@ class SearchRobot {
     class Verify {
         
         @discardableResult
-        func checkButtonExists() -> SearchRobot {
+        func checkCountryExists(_ name: String) -> SearchRobot {
+            XCTAssertTrue(app.tableRows.cells[name].exists)
+            return SearchRobot()
+        }
+        
+        @discardableResult
+        func checkAnotherCountryExists(_ name: String) -> SearchRobot {
+            XCTAssertTrue(app.tableRows.cells[name].exists)
             return SearchRobot()
         }
     }
