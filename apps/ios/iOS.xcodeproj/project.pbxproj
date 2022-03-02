@@ -499,6 +499,7 @@
 		F37EC5B2272FF2B7002A5B8E /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */; };
 		F37F741B27CF7E8C00F1C621 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F37F741A27CF7E8C00F1C621 /* Search */; };
 		F37F741E27CF877A00F1C621 /* Search+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F741D27CF877A00F1C621 /* Search+Configuration.swift */; };
+		F37F741F27CFBD4D00F1C621 /* Search+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F741D27CF877A00F1C621 /* Search+Configuration.swift */; };
 		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
 		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
 		F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E826E6428C006768A8 /* ReportBugRobot.swift */; };
@@ -3382,6 +3383,7 @@
 				D5136C42228592E80002C095 /* CreateProfileViewController.swift in Sources */,
 				F314142427B19B66007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */,
 				D5136C43228592E80002C095 /* SelectionViewController.swift in Sources */,
+				F37F741F27CFBD4D00F1C621 /* Search+Configuration.swift in Sources */,
 				D5136C45228592E80002C095 /* SettingsViewController.swift in Sources */,
 				F3F36C4126D64CC4008AD48B /* iOSNetworkingDelegate.swift in Sources */,
 				42066FDA263049C5001F86DB /* ServersStreamingFeaturesVC.swift in Sources */,
