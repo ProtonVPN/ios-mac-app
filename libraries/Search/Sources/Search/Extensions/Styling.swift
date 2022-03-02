@@ -39,3 +39,8 @@ let centeredTextStyle = concat(baseTextStyle, and: {
 let titleStyle = concat(centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 22, weight: .bold)
 })
+
+let subtitleStyle = concat(centeredTextStyle, and: {
+    $0.font = .systemFont(ofSize: 15)
+    $0.textColor = colors.weakText
+})

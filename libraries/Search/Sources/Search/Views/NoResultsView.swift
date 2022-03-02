@@ -19,19 +19,20 @@
 import Foundation
 import UIKit
 
-final class PlaceholderView: UIView {
+final class NoResultsView: UIView {
 
     // MARK: Outlets
 
-    @IBOutlet private weak var itemsStackView: UIStackView!
-    @IBOutlet private var contentView: UIView!
+    @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var contentView: UIView!
 
     // MARK: Setup
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        contentView = loadFromNib(name: "PlaceholderView")
+
+        contentView = loadFromNib(name: "NoResultsView")
 
         setupUI()
     }
@@ -39,17 +40,9 @@ final class PlaceholderView: UIView {
     private func setupUI() {
         baseViewStyle(contentView)
         titleStyle(titleLabel)
+        subtitleStyle(subtitleLabel)
 
-        titleLabel.text = LocalizedString.searchSubtitle
-
-        let items = PlaceholderItem.allCases.map { item -> UIView in
-            let view = Bundle.module.loadNibNamed("PlaceholderItemView", owner: self, options: nil)?.first as! PlaceholderItemView
-            view.item = item
-            return view
-        }
-
-        items.forEach {
-            itemsStackView.addArrangedSubview($0)
-        }
+        titleLabel.text = LocalizedString.searchNoResultsTitle
+        subtitleLabel.text = LocalizedString.searchNoResultsSubtitle
     }
 }

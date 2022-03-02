@@ -17,21 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import UIKit
 
-protocol SearchViewModelDelegate: AnyObject {
-    func statusDidChange(status: SearchStatus)
-}
-
-final class SearchViewModel {
-    private(set) var status: SearchStatus {
-        didSet {
-            delegate?.statusDidChange(status: status)
+extension UIView {
+    func loadFromNib(name: String) -> UIView {
+        guard let view = UINib(nibName: name, bundle: Bundle.module).instantiate(withOwner: self, options: nil).first as? UIView else {
+            fatalError()
         }
-    }
-
-    weak var delegate: SearchViewModelDelegate?
-
-    init() {
-        status = .noResults
+        view.frame = self.bounds
+        self.addSubview(view)
+        return view
     }
 }
