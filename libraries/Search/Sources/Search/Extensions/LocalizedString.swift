@@ -22,6 +22,10 @@ public enum LocalizedString {
   public static var searchNoResultsSubtitle: String { return LocalizedString.tr("Localizable", "search_no_results_subtitle") }
   /// No results found
   public static var searchNoResultsTitle: String { return LocalizedString.tr("Localizable", "search_no_results_title") }
+  /// Recently viewed (%@)
+  public static func searchRecentHeader(_ p1: Any) -> String {
+    return LocalizedString.tr("Localizable", "search_recent_header", String(describing: p1))
+  }
   /// Servers
   public static var searchServers: String { return LocalizedString.tr("Localizable", "search_servers") }
   /// JP#50, CA#3, IT#14...

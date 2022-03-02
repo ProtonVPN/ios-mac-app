@@ -23,7 +23,18 @@ protocol SearchViewModelDelegate: AnyObject {
 }
 
 final class SearchViewModel {
+
+    // MARK: Properties
+
+    private let recentSearchesService: RecentSearchesService
+
     private(set) var status: SearchStatus {
+        didSet {
+            delegate?.statusDidChange(status: status)
+        }
+    }
+
+    private(set) var recentSearches: [String] {
         didSet {
             delegate?.statusDidChange(status: status)
         }
@@ -31,7 +42,18 @@ final class SearchViewModel {
 
     weak var delegate: SearchViewModelDelegate?
 
-    init() {
-        status = .noResults
+    init(recentSearchesService: RecentSearchesService) {
+        self.recentSearchesService = recentSearchesService
+
+        let recent = recentSearchesService.get()
+        status = recent.isEmpty ? .placeholder : .recentSearches
+        recentSearches = recent
+    }
+
+    // MARK: Actions
+
+    func clearRecentSearches() {
+        recentSearchesService.clear()
+        recentSearches = recentSearchesService.get()
     }
 }

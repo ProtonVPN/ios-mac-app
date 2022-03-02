@@ -17,11 +17,22 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import UIKit
 
-enum SearchStatus {
-    case placeholder
-    case searching
-    case noResults
-    case results
-    case recentSearches
+final class RecentSearchesHeaderView: UIView {
+
+    @IBOutlet private weak var titleLabel: UILabel!
+
+    var count: Int = 0 {
+        didSet {
+            titleLabel.text = LocalizedString.searchRecentHeader("\(count)")
+        }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        baseViewStyle(self)
+        subtitleStyle(titleLabel)
+    }
 }

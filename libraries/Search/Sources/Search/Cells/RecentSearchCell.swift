@@ -16,12 +16,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import UIKit
 
-enum SearchStatus {
-    case placeholder
-    case searching
-    case noResults
-    case results
-    case recentSearches
+final class RecentSearchCell: UITableViewCell {
+    static var reuseIdentifier = "RecentSearchCell"
+
+    // MARK: Outlets
+
+    @IBOutlet private weak var titleLabel: UILabel!
+
+    // MARK: Properties
+
+    var title: String? {
+        didSet {
+            titleLabel.text = title
+        }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        baseViewStyle(self)
+        baseTextStyle(titleLabel)
+    }
 }

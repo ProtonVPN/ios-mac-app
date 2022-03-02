@@ -23,7 +23,7 @@ final class ViewController: UIViewController {
     private var coordinator: SearchCoordinator?
 
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
 
         navigationController?.navigationBar.barTintColor = UIColor.black
         navigationController?.navigationBar.tintColor = UIColor.white

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="sg3-V9-Zii">
-                                <rect key="frame" x="0.0" y="44" width="414" height="51"/>
+                                <rect key="frame" x="6" y="44" width="402" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="W5x-SX-owJ">
@@ -40,7 +40,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="pXY-uS-0GL" secondAttribute="trailing" id="1re-eE-hIu"/>
-                            <constraint firstItem="sg3-V9-Zii" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="3It-kI-Lh2"/>
+                            <constraint firstItem="sg3-V9-Zii" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" constant="-6" id="3It-kI-Lh2"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="pXY-uS-0GL" secondAttribute="bottom" id="8Is-lH-mST"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="4ob-HA-9u9" secondAttribute="bottom" id="C0l-VX-W3O"/>
                             <constraint firstItem="gMc-6y-NcH" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="D6b-cl-zPR"/>
@@ -48,7 +48,7 @@
                             <constraint firstItem="W5x-SX-owJ" firstAttribute="top" secondItem="sg3-V9-Zii" secondAttribute="bottom" id="KXd-Gh-Gna"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="W5x-SX-owJ" secondAttribute="bottom" id="UNu-qE-hia"/>
                             <constraint firstItem="sg3-V9-Zii" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Yen-BP-rPU"/>
-                            <constraint firstItem="sg3-V9-Zii" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="cRj-Kt-Z5s"/>
+                            <constraint firstItem="sg3-V9-Zii" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="6" id="cRj-Kt-Z5s"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="W5x-SX-owJ" secondAttribute="trailing" id="dbb-Pj-mEB"/>
                             <constraint firstItem="4ob-HA-9u9" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="dcy-Zp-6Ld"/>
                             <constraint firstItem="pXY-uS-0GL" firstAttribute="top" secondItem="sg3-V9-Zii" secondAttribute="bottom" id="gyr-wY-Our"/>

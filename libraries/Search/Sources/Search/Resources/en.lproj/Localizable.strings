@@ -10,3 +10,4 @@
 "search_us_regions" = "US regions";
 "search_no_results_title" = "No results found";
 "search_no_results_subtitle" = "Please try a different keyword";
+"search_recent_header" = "Recently viewed (%@)";
