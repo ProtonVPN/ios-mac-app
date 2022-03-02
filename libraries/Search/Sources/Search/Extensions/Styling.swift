@@ -45,6 +45,15 @@ let subtitleStyle = concat(centeredTextStyle, and: {
     $0.textColor = colors.weakText
 })
 
-let baseIndicatorStyle: (UIActivityIndicatorView) -> Void = {
+let indicatorStyle: (UIActivityIndicatorView) -> Void = {
     $0.color = colors.weakText
+}
+
+let searchBarStyle: (UISearchBar) -> Void = {
+    $0.backgroundImage = UIImage()
+    if #available(iOS 13.0, *) {
+        $0.searchTextField.textColor = colors.weakText
+    } else {
+        ($0.value(forKey: "searchField") as? UITextField)?.textColor = colors.weakText
+    }
 }

@@ -49,8 +49,8 @@ final class SearchViewController: UIViewController {
     private func setupUI() {
         baseViewStyle(view)
         baseViewStyle(tableView)
-        baseViewStyle(searchBar)
-        baseIndicatorStyle(activityIndicator)
+        searchBarStyle(searchBar)
+        indicatorStyle(activityIndicator)
 
         title = LocalizedString.searchTitle
     }
