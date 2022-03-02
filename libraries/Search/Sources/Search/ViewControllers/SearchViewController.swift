@@ -26,7 +26,10 @@ final class SearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var noResultsView: NoResultsView!
+    @IBOutlet private weak var noResultsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var placeholderViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicatorCenterYConstraint: NSLayoutConstraint!
     @IBOutlet private weak var placeholderView: PlaceholderView!
 
     // MARK: Properties
@@ -40,6 +43,7 @@ final class SearchViewController: UIViewController {
 
         setupUI()
         setupData()
+        setupNotifications()
     }
 
     private func setupUI() {
@@ -54,6 +58,36 @@ final class SearchViewController: UIViewController {
         viewModel.delegate = self
 
         statusDidChange(status: viewModel.status)
+    }
+
+    // MARK: Keyboard
+
+    private func setupNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+
+        adjustForKeyboard(height: keyboardSize.height)
+    }
+
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        adjustForKeyboard(height: 0)
+    }
+
+    private func adjustForKeyboard(height: CGFloat) {
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        noResultsBottomConstraint.constant = height
+        placeholderViewBottomConstraint.constant = height
+        activityIndicatorCenterYConstraint.constant = height
+
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
     }
 }
 
