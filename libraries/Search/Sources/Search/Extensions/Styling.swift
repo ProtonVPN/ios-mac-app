@@ -18,22 +18,24 @@
 
 import Foundation
 import UIKit
+import Overture
 
-public final class SearchCoordinator {
-    private let storyboard: UIStoryboard
+var colors: Colors!
 
-    // MARK: Setup
-
-    public init(configuration: Configuration) {
-        colors = configuration.colors
-        storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
-    }
-
-    // MARK: Actions
-
-    public func start(navigationController: UINavigationController) {
-        let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
-        searchViewController.viewModel = SearchViewModel()
-        navigationController.pushViewController(searchViewController, animated: true)
-    }
+let baseTextStyle: (UILabel) -> Void = {
+    $0.font = .systemFont(ofSize: 17)
+    $0.textColor = colors.text
+    $0.numberOfLines = 0
 }
+
+let baseViewStyle: (UIView) -> Void = {
+    $0.backgroundColor = colors.background
+}
+
+let centeredTextStyle = concat(baseTextStyle, and: {
+    $0.textAlignment = .center
+})
+
+let titleStyle = concat(centeredTextStyle, and: {
+    $0.font = .systemFont(ofSize: 22, weight: .bold)
+})

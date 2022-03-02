@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Search
 
 final class CountriesViewController: UIViewController {
     
@@ -35,6 +36,8 @@ final class CountriesViewController: UIViewController {
     var connectionBarViewController: ConnectionBarViewController?
     
     var countryControllers: [Weak<CountryViewController>] = []
+
+    private var coordinator: SearchCoordinator?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -112,9 +115,9 @@ final class CountriesViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let image = #imageLiteral(resourceName: "ic-info-circle")
-        let rightItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(displayServicesInfo))
-        navigationItem.rightBarButtonItem = rightItem
+        let infoButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-info-circle"), style: .plain, target: self, action: #selector(displayServicesInfo))
+        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-search"), style: .plain, target: self, action: #selector(showSearch))
+        navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
     
     @objc private func displayServicesInfo() {
@@ -129,7 +132,11 @@ final class CountriesViewController: UIViewController {
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
     }
-    
+
+    @objc private func showSearch() {
+        coordinator = SearchCoordinator(configuration: Configuration())
+        coordinator?.start(navigationController: self.navigationController!)
+    }
 }
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {

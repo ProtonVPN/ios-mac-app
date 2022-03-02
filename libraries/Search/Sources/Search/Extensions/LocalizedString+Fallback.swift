@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 03.01.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,23 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 
-public final class SearchCoordinator {
-    private let storyboard: UIStoryboard
-
-    // MARK: Setup
-
-    public init(configuration: Configuration) {
-        colors = configuration.colors
-        storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
+func localizeStringAndFallbackToEn(_ key: String, _ table: String) -> String {
+    let format = NSLocalizedString(key, tableName: table, bundle: Bundle.module, comment: "")
+    if format != key || NSLocale.preferredLanguages.first == "en" {
+        return format
     }
 
-    // MARK: Actions
-
-    public func start(navigationController: UINavigationController) {
-        let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
-        searchViewController.viewModel = SearchViewModel()
-        navigationController.pushViewController(searchViewController, animated: true)
+    // Fall back to en
+    guard let path = Bundle.module.path(forResource: "en", ofType: "lproj"), let bundle = Bundle(path: path) else {
+        return format
     }
+    return NSLocalizedString(key, bundle: bundle, comment: "")
 }

@@ -17,23 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
+import Search
+import vpncore
 
-public final class SearchCoordinator {
-    private let storyboard: UIStoryboard
-
-    // MARK: Setup
-
-    public init(configuration: Configuration) {
-        colors = configuration.colors
-        storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
-    }
-
-    // MARK: Actions
-
-    public func start(navigationController: UINavigationController) {
-        let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
-        searchViewController.viewModel = SearchViewModel()
-        navigationController.pushViewController(searchViewController, animated: true)
+extension Configuration {
+    init() {
+        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()))
     }
 }

@@ -17,23 +17,21 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 
-public final class SearchCoordinator {
-    private let storyboard: UIStoryboard
+protocol SearchViewModelDelegate: AnyObject {
+    func statusDidChange(status: SearchStatus)
+}
 
-    // MARK: Setup
-
-    public init(configuration: Configuration) {
-        colors = configuration.colors
-        storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
+final class SearchViewModel {
+    private(set) var status: SearchStatus {
+        didSet {
+            delegate?.statusDidChange(status: status)
+        }
     }
 
-    // MARK: Actions
+    weak var delegate: SearchViewModelDelegate?
 
-    public func start(navigationController: UINavigationController) {
-        let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
-        searchViewController.viewModel = SearchViewModel()
-        navigationController.pushViewController(searchViewController, animated: true)
+    init() {
+        status = .placeholder
     }
 }
