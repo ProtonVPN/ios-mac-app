@@ -60,8 +60,11 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="gMc-6y-NcH" id="6oN-tC-Mwh"/>
+                        <outlet property="activityIndicatorCenterYConstraint" destination="hVI-mh-KKp" id="kY5-Vi-DwU"/>
+                        <outlet property="noResultsBottomConstraint" destination="8Is-lH-mST" id="Gky-LP-Ivr"/>
                         <outlet property="noResultsView" destination="pXY-uS-0GL" id="2KB-5h-h1a"/>
                         <outlet property="placeholderView" destination="4ob-HA-9u9" id="Y8p-Sp-3wB"/>
+                        <outlet property="placeholderViewBottomConstraint" destination="C0l-VX-W3O" id="ppV-8V-j0k"/>
                         <outlet property="searchBar" destination="sg3-V9-Zii" id="BWJ-1r-D7U"/>
                         <outlet property="tableView" destination="W5x-SX-owJ" id="Ehn-f3-djD"/>
                     </connections>
