@@ -67,6 +67,11 @@
                BlueprintName = "ProtonVPNmacOSUITests"
                ReferencedContainer = "container:macOS.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ProfileTests/testQuickConnectToAServerViaUnavailableProfile()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

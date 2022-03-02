@@ -30,9 +30,12 @@ class SearchTests: ProtonVPNUITests {
     func testSearchCountry() {
         
         let countryName = "Japan"
+        let otherCountryName = "Netherlands"
 
         searchRobot
             .typeCountry(countryName)
+            .verify.checkCountryExists(countryName)
             .clearSearch()
+            .verify.checkAnotherCountryExists(otherCountryName)
     }
 }

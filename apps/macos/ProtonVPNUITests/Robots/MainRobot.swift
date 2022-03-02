@@ -32,8 +32,19 @@ class MainRobot {
         return ManageProfilesRobot()
     }
     
+    func closeProfilesOverview() -> MainRobot {
+        let preferencesWindow = app.windows["Profiles Overview"]
+        preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
+        return MainRobot()
+    }
+    
     func openAppSettings() -> SettingsRobot {
         app.menuBars.menuItems[preferencesTitle].click()
+        return SettingsRobot()
+    }
+    
+    func quickConnectToAServer() -> SettingsRobot {
+        app.buttons[qcButton].click()
         return SettingsRobot()
     }
     
