@@ -17,7 +17,26 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import UIKit
+
+public struct Colors {
+    public let background: UIColor
+    public let text: UIColor
+    public let brand: UIColor
+    public let weakText: UIColor
+
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
+        self.background = background
+        self.text = text
+        self.brand = brand
+        self.weakText = weakText
+    }
+}
 
 public struct Configuration {
-    public init() { }
+    let colors: Colors
+
+    public init(colors: Colors) {
+        self.colors = colors
+    }
 }

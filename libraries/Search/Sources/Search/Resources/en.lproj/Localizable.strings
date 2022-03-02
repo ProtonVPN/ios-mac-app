@@ -1,0 +1,10 @@
+"search_title" = "Search";
+"search_subtitle" = "Search for any location";
+"search_countries" = "Countries";
+"search_countries_sample" = "Switzerland, United States, Italy...";
+"search_cities" = "Cities";
+"search_cities_sample" = "New York, London, Tokyo...";
+"search_servers" = "Servers";
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+"search_us_regions_sample" = "California, Florida, Colorado...";
+"search_us_regions" = "US regions";

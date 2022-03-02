@@ -20,5 +20,43 @@ import Foundation
 import UIKit
 
 final class SearchViewController: UIViewController {
-    
+
+    // MARK: Outlets
+
+    @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var placeholderView: PlaceholderView!
+
+    // MARK: Properties
+
+    var viewModel: SearchViewModel!
+
+    // MARK: Setup
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupUI()
+        setupData()
+    }
+
+    private func setupUI() {
+        baseViewStyle(view)
+        baseViewStyle(tableView)
+        baseViewStyle(searchBar)
+
+        title = LocalizedString.searchTitle
+    }
+
+    private func setupData() {
+        viewModel.delegate = self
+
+        statusDidChange(status: viewModel.status)
+    }
+}
+
+extension SearchViewController: SearchViewModelDelegate {
+    func statusDidChange(status: SearchStatus) {
+        placeholderView.isHidden = status != .placeholder
+    }
 }

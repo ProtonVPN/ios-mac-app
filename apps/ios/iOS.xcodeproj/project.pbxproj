@@ -497,6 +497,8 @@
 		F377837026E644BC00392958 /* SignupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836926E644BC00392958 /* SignupTests.swift */; };
 		F37EC5B1272FF2AD002A5B8E /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */; };
 		F37EC5B2272FF2B7002A5B8E /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */; };
+		F37F741B27CF7E8C00F1C621 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F37F741A27CF7E8C00F1C621 /* Search */; };
+		F37F741E27CF877A00F1C621 /* Search+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F741D27CF877A00F1C621 /* Search+Configuration.swift */; };
 		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
 		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
 		F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E826E6428C006768A8 /* ReportBugRobot.swift */; };
@@ -1032,6 +1034,7 @@
 		F377836826E644BC00392958 /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		F377836926E644BC00392958 /* SignupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupTests.swift; sourceTree = "<group>"; };
 		F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TokenStorage.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/TokenStorage.swift; sourceTree = "<group>"; };
+		F37F741D27CF877A00F1C621 /* Search+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Search+Configuration.swift"; path = "../../../../../ios/ProtonVPN/Scenes/Countries/Extensions/Search+Configuration.swift"; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 		F3B783E526E6428C006768A8 /* MainRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRobot.swift; sourceTree = "<group>"; };
 		F3B783E726E6428C006768A8 /* SettingsRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
@@ -2037,6 +2040,7 @@
 			isa = PBXGroup;
 			children = (
 				7995FAAA209080E70030E1EB /* Countries.storyboard */,
+				F37F741C27CF876E00F1C621 /* Extensions */,
 				F36ECCFE2611C8F80089B898 /* Utilities */,
 				F36ECC852611C4E20089B898 /* ViewControllers */,
 				79C5598A20AC309C00E6D3F6 /* ViewModels */,
@@ -2322,6 +2326,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		F37F741C27CF876E00F1C621 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F37F741D27CF877A00F1C621 /* Search+Configuration.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F3B783E426E6428C006768A8 /* Robots */ = {
 			isa = PBXGroup;
 			children = (
@@ -2454,6 +2466,9 @@
 				E9445D6626528A790075FD31 /* PBXTargetDependency */,
 			);
 			name = ProtonVPN;
+			packageProductDependencies = (
+				F37F741A27CF7E8C00F1C621 /* Search */,
+			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
 			productType = "com.apple.product-type.application";
@@ -3199,6 +3214,7 @@
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
 				7904DA4920E6BA3E008A4FCB /* ColorPickerViewModel.swift in Sources */,
+				F37F741E27CF877A00F1C621 /* Search+Configuration.swift in Sources */,
 				D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */,
 				E1EB9E7622FF096A009E704F /* LogSelectionViewController.swift in Sources */,
 				E14EE2DD217F1EE8004AF568 /* ConnectionView.swift in Sources */,

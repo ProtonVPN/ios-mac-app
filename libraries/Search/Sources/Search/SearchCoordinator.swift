@@ -25,6 +25,7 @@ public final class SearchCoordinator {
     // MARK: Setup
 
     public init(configuration: Configuration) {
+        colors = configuration.colors
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
     }
 
@@ -32,6 +33,7 @@ public final class SearchCoordinator {
 
     public func start(navigationController: UINavigationController) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
+        searchViewController.viewModel = SearchViewModel()
         navigationController.pushViewController(searchViewController, animated: true)
     }
 }
