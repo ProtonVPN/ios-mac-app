@@ -44,3 +44,7 @@ let subtitleStyle = concat(centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 15)
     $0.textColor = colors.weakText
 })
+
+let baseIndicatorStyle: (UIActivityIndicatorView) -> Void = {
+    $0.color = colors.weakText
+}
