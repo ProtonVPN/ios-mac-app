@@ -1,5 +1,5 @@
 //
-//  Created on 2022-02-17.
+//  Created on 2022-03-01.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,26 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 import XCTest
 
-class SearchTests: ProtonVPNUITests {
+class MapTests: ProtonVPNUITests {
     
-    private let searchRobot = SearchRobot()
+    private let mapRobot = MapRobot()
     
     override func setUp() {
         super.setUp()
         logInIfNeeded()
     }
     
-    func testSearchCountry() {
-        
-        let countryName = "Japan"
-        let otherCountryName = "Netherlands"
-
-        searchRobot
-            .typeCountry(countryName)
-            .verify.checkCountryExists(countryName)
-            .clearSearch()
-            .verify.checkAnotherCountryExists(otherCountryName)
+    func testOpenAndHideMap() {
+        mapRobot
+            .showMapClick()
+            .verify.checkMapIsOpen()
+            .hideMapClick()
+            .verify.checkMapIsHidden()
     }
 }

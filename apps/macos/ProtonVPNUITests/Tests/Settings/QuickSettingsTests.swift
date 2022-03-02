@@ -48,9 +48,11 @@ class QuickSettingsTests: ProtonVPNUITests {
             .secureCoreDropdown()
             .verify.checkDropdownIsOpen()
             .verify.checkUpgradeRequired()
+            .upgradeFeature()
+            .verify.checkUpsellModalIsOpen()
     }
     
-    func testScAndNsNotAvailableForFreeUser() {
+    func testSecureCoreAndNetshieldAreNotAvailableForFreeUser() {
         
         logoutIfNeeded()
         loginAsFreeUser()
@@ -58,8 +60,13 @@ class QuickSettingsTests: ProtonVPNUITests {
             .secureCoreDropdown()
             .verify.checkDropdownIsOpen()
             .verify.checkUpgradeRequired()
+            .upgradeFeature()
+            .verify.checkUpsellModalIsOpen()
+            .closeUpsellModal()
             .netShiedlDropdown()
             .verify.checkDropdownIsOpen()
             .verify.checkUpgradeRequired()
+            .upgradeFeature()
+            .verify.checkUpsellModalIsOpen()
     }
 }

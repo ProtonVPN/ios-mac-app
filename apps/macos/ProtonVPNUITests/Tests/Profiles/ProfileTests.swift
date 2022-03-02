@@ -29,14 +29,14 @@ class ProfileTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
-        logInIfNeeded()
     }
     
     func testCreateEmptyProfile() {
         
         let name = StringUtils().randomAlphanumericString(length: 8)
         let country = "￼  Austria"
-
+        
+        logInIfNeeded()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -60,6 +60,7 @@ class ProfileTests: ProtonVPNUITests {
         
         let country = "￼  Austria"
 
+        logInIfNeeded()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -77,6 +78,7 @@ class ProfileTests: ProtonVPNUITests {
         let name = StringUtils().randomAlphanumericString(length: 8)
         let country = "￼  Austria"
 
+        logInIfNeeded()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -98,6 +100,7 @@ class ProfileTests: ProtonVPNUITests {
         let autoConnectDisabled = "￼  Disabled"
         let qcFastest = "￼  Fastest"
 
+        logInIfNeeded()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -114,5 +117,34 @@ class ProfileTests: ProtonVPNUITests {
             .verify.checkProfileIsCreated("￼  " + name)
             .selectAutoConnect(autoConnectDisabled)
             .verify.checkProfileIsCreated("￼  " + name)
+    }
+    
+    func testQuickConnectToAServerViaUnavailableProfile() {
+        
+        let name = StringUtils().randomAlphanumericString(length: 8)
+        let country = "￼  Austria (Upgrade Required)"
+        let qcFastest = "￼  Fastest"
+        
+        logoutIfNeeded()
+        loginAsFreeUser()
+        mainRobot
+            .openProfiles()
+            .verify.checkProfileOverViewIsOpen()
+            .createProfile()
+            .verify.checkButtonExists()
+            .setProfileDetails(name, country)
+            .saveProfileSuccessfully()
+        mainRobot
+            .openAppSettings()
+            .verify.checkSettingsIsOpen()
+            .connectionTabClick()
+            .verify.checkConnectionTabIsOpen()
+            .selectQuickConnect(qcFastest)
+            .verify.checkProfileIsCreated("￼  " + name)
+            .selectProfile("￼  " + name)
+            .closeSettings()
+            .closeProfilesOverview()
+            .quickConnectToAServer()
+            .verify.checkUpsellModalIsOpen()
     }
 }

@@ -30,11 +30,9 @@ fileprivate let autoConnectFastest = "  Fastest"
 fileprivate let notNowButton = "Not now"
 fileprivate let continueButton = "Continue"
 fileprivate let modalDescribtion = "In order to allow LAN access, Kill Switch must be turned off.\n\nContinue?"
-// Map
-fileprivate let showMapButton = "Show map"
-fileprivate let hideMapButton = "Hide map"
-fileprivate let statusDisconnected = "DISCONNECTED"
-fileprivate let homeImage = "home"
+fileprivate let modalUpgradeButton = "modalUpgradeButton"
+fileprivate let upsellModalTitle = "titleLabel"
+fileprivate let modalDescription = "descriptionLabel"
 
 class SettingsRobot {
     
@@ -84,14 +82,8 @@ class SettingsRobot {
         return SettingsRobot()
     }
     
-    // Map
-    func showMapClick() -> SettingsRobot {
-        app.buttons[showMapButton].click()
-        return SettingsRobot()
-    }
-    
-    func hideMapClick() -> SettingsRobot {
-        app.buttons[hideMapButton].click()
+    func selectProfile(_ name: String) -> SettingsRobot {
+        app.menuItems[name].click()
         return SettingsRobot()
     }
     
@@ -146,21 +138,12 @@ class SettingsRobot {
             return SettingsRobot()
         }
         
-        // Map
         @discardableResult
-        func checkMapIsOpen() -> SettingsRobot {
-            XCTAssertTrue(app.buttons[hideMapButton].exists)
-            XCTAssertTrue(app.staticTexts[statusDisconnected].waitForExistence(timeout: 2))
-            XCTAssertTrue(app.images[homeImage].exists)
-            return SettingsRobot()
-        }
-        
-        @discardableResult
-        func checkMapIsHidden() -> SettingsRobot {
-            XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: 2))
-            XCTAssertFalse(app.staticTexts[statusDisconnected].waitForExistence(timeout: 2))
-            XCTAssertFalse(app.images[homeImage].exists)
-            return SettingsRobot()
+        func checkUpsellModalIsOpen() -> QuickSettingsRobot {
+            XCTAssertTrue(app.staticTexts[upsellModalTitle].exists)
+            XCTAssertTrue(app.staticTexts[modalDescription].exists)
+            XCTAssertTrue(app.buttons[modalUpgradeButton].isEnabled)
+            return QuickSettingsRobot()
         }
     }
 }

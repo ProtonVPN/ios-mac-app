@@ -65,10 +65,14 @@ class MapHeaderViewController: NSViewController {
     
     private func setupPersistentView() {
         connectImage.image = NSImage(named: NSImage.Name("home"))
+        
+        connectImage.setAccessibilityIdentifier("ConnectImage")
     }
     
     private func setupEphemeralView() {
         backgroundView.isConnected = viewModel.isConnected
         connectLabel.attributedStringValue = viewModel.description
+        
+        connectLabel.setAccessibilityIdentifier("ConnectionStatus")
     }
 }

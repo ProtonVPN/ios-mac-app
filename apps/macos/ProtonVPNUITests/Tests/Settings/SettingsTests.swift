@@ -26,11 +26,11 @@ class SettingsTests: ProtonVPNUITests {
     
     override func setUp() {
          super.setUp()
-         logInIfNeeded()
      }
     
     func testNavigateThrouthSettings() {
         
+        logInIfNeeded()
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()
@@ -42,14 +42,5 @@ class SettingsTests: ProtonVPNUITests {
             .verify.checkAccountTabIsOpen()
             .closeSettings()
             .verify.checkSettingsModalIsClosed()
-    }
-    
-    // Map
-    func testOpenAndHideMap() {
-        settingsRobot
-            .showMapClick()
-            .verify.checkMapIsOpen()
-            .hideMapClick()
-            .verify.checkMapIsHidden()
     }
 }

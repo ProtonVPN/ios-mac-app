@@ -57,6 +57,8 @@ public final class UpsellViewController: NSViewController {
         upgradeButton.title = LocalizedString.modalsGetPlus
         setupSubviews()
         setupFeatures()
+        
+        upgradeButton.setAccessibilityIdentifier("modalUpgradeButton")
     }
 
     func setupSubviews() {
@@ -69,6 +71,10 @@ public final class UpsellViewController: NSViewController {
         } else {
             footerLabel.removeFromSuperview()
         }
+        
+        titleLabel.setAccessibilityIdentifier("titleLabel")
+        descriptionLabel.setAccessibilityIdentifier("descriptionLabel")
+
     }
 
     func setupFeatures() {
