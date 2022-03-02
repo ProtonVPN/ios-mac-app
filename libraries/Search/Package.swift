@@ -24,6 +24,8 @@ let package = Package(
                 .process("Storyboard.storyboard"),
                 .process("Views/PlaceholderView.xib"),
                 .process("Views/PlaceholderItemView.xib"),
+                .process("Views/RecentSearchesHeaderView.xib"),
+                .process("Cells/RecentSearchCell.xib"),
                 .process("Resources")
             ])
     ]

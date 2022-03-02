@@ -36,6 +36,11 @@ final class SearchViewController: UIViewController {
 
     var viewModel: SearchViewModel!
 
+    private lazy var recentSearchesHeaderView: RecentSearchesHeaderView = {
+        let view = Bundle.module.loadNibNamed("RecentSearchesHeaderView", owner: self, options: nil)?.first as! RecentSearchesHeaderView
+        return view
+    }()
+
     // MARK: Setup
 
     override func viewDidLoad() {
@@ -57,6 +62,10 @@ final class SearchViewController: UIViewController {
 
     private func setupData() {
         viewModel.delegate = self
+
+        tableView.register(UINib(nibName: "RecentSearchCell", bundle: Bundle.module), forCellReuseIdentifier: RecentSearchCell.reuseIdentifier)
+        tableView.dataSource = self
+        tableView.delegate = self
 
         statusDidChange(status: viewModel.status)
     }
@@ -92,12 +101,59 @@ final class SearchViewController: UIViewController {
     }
 }
 
-// MARK: Delegate
+// MARK: View Model delegate
 
 extension SearchViewController: SearchViewModelDelegate {
     func statusDidChange(status: SearchStatus) {
         placeholderView.isHidden = status != .placeholder
         activityIndicator.isHidden = status != .searching
         noResultsView.isHidden = status != .noResults
+
+        tableView.reloadData()
+    }
+}
+
+// MARK: Table view delegate
+
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .results:
+            return 0
+        case .recentSearches:
+            return viewModel.recentSearches.count
+        }
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .results:
+            fatalError("Invalid usage")
+        case .recentSearches:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.reuseIdentifier)  as? RecentSearchCell else {
+                fatalError("Invalid configuration")
+            }
+            cell.title = viewModel.recentSearches[indexPath.row]
+            return cell
+        }
+    }
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .results:
+            return 0
+        case .recentSearches:
+            return 1
+        }
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .results:
+            return nil
+        case .recentSearches:
+            recentSearchesHeaderView.count = viewModel.recentSearches.count
+            return recentSearchesHeaderView
+        }
     }
 }

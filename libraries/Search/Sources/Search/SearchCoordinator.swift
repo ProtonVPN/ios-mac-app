@@ -21,11 +21,13 @@ import UIKit
 
 public final class SearchCoordinator {
     private let storyboard: UIStoryboard
+    private let recentSearchesService: RecentSearchesService
 
     // MARK: Setup
 
     public init(configuration: Configuration) {
         colors = configuration.colors
+        recentSearchesService = RecentSearchesService()
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
     }
 
@@ -33,7 +35,7 @@ public final class SearchCoordinator {
 
     public func start(navigationController: UINavigationController) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
-        searchViewController.viewModel = SearchViewModel()
+        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService)
         navigationController.pushViewController(searchViewController, animated: true)
     }
 }

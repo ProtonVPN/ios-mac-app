@@ -23,4 +23,5 @@ enum SearchStatus {
     case searching
     case noResults
     case results
+    case recentSearches
 }
