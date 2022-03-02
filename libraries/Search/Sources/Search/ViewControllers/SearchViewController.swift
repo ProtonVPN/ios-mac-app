@@ -50,6 +50,7 @@ final class SearchViewController: UIViewController {
         baseViewStyle(view)
         baseViewStyle(tableView)
         baseViewStyle(searchBar)
+        baseIndicatorStyle(activityIndicator)
 
         title = LocalizedString.searchTitle
     }
@@ -83,7 +84,7 @@ final class SearchViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         noResultsBottomConstraint.constant = height
         placeholderViewBottomConstraint.constant = height
-        activityIndicatorCenterYConstraint.constant = height
+        activityIndicatorCenterYConstraint.constant = -height / 2
 
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
