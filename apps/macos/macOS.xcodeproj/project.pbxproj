@@ -206,6 +206,7 @@
 		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
 		E57CD12027BF81D800AA4144 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* Modals */; };
 		E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD12127BF81D800AA4144 /* Modals-macOS */; };
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
@@ -816,6 +817,7 @@
 		E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewModel.swift; sourceTree = "<group>"; };
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
+		E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "XCUIElement+forceClick.swift"; path = "../../../macos/ProtonVPNUITests/Other classes/XCUIElement+forceClick.swift"; sourceTree = "<group>"; };
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
@@ -1375,6 +1377,7 @@
 			children = (
 				D5204E6C22A138C900FFAB99 /* Credentials.swift */,
 				B22F32F7278DC07800DBB8CA /* StringUtils.swift */,
+				E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */,
 			);
 			path = "Other classes";
 			sourceTree = "<group>";
@@ -3287,6 +3290,7 @@
 				B2AA47D027CE6FE40021E632 /* MapTests.swift in Sources */,
 				B22F3304278DC76C00DBB8CA /* MainRobot.swift in Sources */,
 				B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */,
+				E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */,
 				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
 				D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */,
 				B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */,
