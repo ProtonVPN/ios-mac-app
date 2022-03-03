@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 import vpncore
+import Search
 
 enum ServerItemModel {
     case server(ServerItemViewModel)
@@ -227,5 +228,20 @@ class CountriesViewModel: SecureCoreToggleHandler {
         setTier()
         setStateOf(type: propertiesManager.serverTypeToggle)
         contentChanged?()
+    }
+}
+
+extension CountriesViewModel {
+    var searchData: SearchData {
+        switch state {
+        case let .standard(data):
+            return SearchData.standard(data.map { (country, servers) in
+                return (country, servers)
+            })
+        case let .secureCore(data):
+            return SearchData.standard(data.map { (country, servers) in
+                return (country, servers)
+            })
+        }
     }
 }

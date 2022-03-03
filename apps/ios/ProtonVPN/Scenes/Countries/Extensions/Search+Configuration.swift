@@ -25,3 +25,11 @@ extension Configuration {
         self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()))
     }
 }
+
+extension CountryModel: Country {
+    public var name: String {
+        return country
+    }
+}
+
+extension ServerModel: Server { }

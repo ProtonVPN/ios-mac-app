@@ -38,7 +38,7 @@ final class SearchViewModel {
 
     weak var delegate: SearchViewModelDelegate?
 
-    init(recentSearchesService: RecentSearchesService) {
+    init(recentSearchesService: RecentSearchesService, data: SearchData) {
         self.recentSearchesService = recentSearchesService
 
         let recent = recentSearchesService.get()

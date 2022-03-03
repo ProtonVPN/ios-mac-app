@@ -22,6 +22,19 @@ import Search
 final class ViewController: UIViewController {
     private var coordinator: SearchCoordinator?
 
+    private let data = SearchData.standard([
+        (CountryModel(name: "Switzerland"), [
+            ServerModel(name: "CH#1"),
+            ServerModel(name: "CH#1"),
+            ServerModel(name: "CH#3")
+        ]),
+        (CountryModel(name: "United States"), [
+            ServerModel(name: "NY#1"),
+            ServerModel(name: "WA#1"),
+            ServerModel(name: "OR#1")
+        ])
+    ])
+
     override func viewDidLoad() {
         super.viewDidLoad()        
 
@@ -35,7 +48,7 @@ final class ViewController: UIViewController {
 
     @IBAction private func searchTapped(_ sender: Any) {
         coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1))))
-        coordinator?.start(navigationController: self.navigationController!)
+        coordinator?.start(navigationController: self.navigationController!, data: data)
     }
 }
 

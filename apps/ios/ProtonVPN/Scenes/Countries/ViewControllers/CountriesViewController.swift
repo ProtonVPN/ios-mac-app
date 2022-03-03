@@ -134,8 +134,12 @@ final class CountriesViewController: UIViewController {
     }
 
     @objc private func showSearch() {
+        guard let viewModel = viewModel, let navigationController = navigationController else {
+            return
+        }
+
         coordinator = SearchCoordinator(configuration: Configuration())
-        coordinator?.start(navigationController: self.navigationController!)
+        coordinator?.start(navigationController: navigationController, data: viewModel.searchData)
     }
 }
 
