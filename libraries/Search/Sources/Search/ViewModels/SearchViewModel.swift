@@ -34,11 +34,7 @@ final class SearchViewModel {
         }
     }
 
-    private(set) var recentSearches: [String] {
-        didSet {
-            delegate?.statusDidChange(status: status)
-        }
-    }
+    private(set) var recentSearches: [String]
 
     weak var delegate: SearchViewModelDelegate?
 
@@ -46,8 +42,8 @@ final class SearchViewModel {
         self.recentSearchesService = recentSearchesService
 
         let recent = recentSearchesService.get()
-        status = recent.isEmpty ? .placeholder : .recentSearches
         recentSearches = recent
+        status = recent.isEmpty ? .placeholder : .recentSearches
     }
 
     // MARK: Actions
@@ -55,5 +51,6 @@ final class SearchViewModel {
     func clearRecentSearches() {
         recentSearchesService.clear()
         recentSearches = recentSearchesService.get()
+        status = .placeholder
     }
 }

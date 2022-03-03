@@ -57,3 +57,8 @@ let searchBarStyle: (UISearchBar) -> Void = {
         ($0.value(forKey: "searchField") as? UITextField)?.textColor = colors.weakText
     }
 }
+
+let textButtonStyle: (UIButton) -> Void = {
+    $0.titleLabel?.font = .systemFont(ofSize: 15)
+    $0.setTitleColor(colors.brand, for: .normal)
+}

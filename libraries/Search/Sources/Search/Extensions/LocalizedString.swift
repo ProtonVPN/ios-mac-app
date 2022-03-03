@@ -22,6 +22,14 @@ public enum LocalizedString {
   public static var searchNoResultsSubtitle: String { return LocalizedString.tr("Localizable", "search_no_results_subtitle") }
   /// No results found
   public static var searchNoResultsTitle: String { return LocalizedString.tr("Localizable", "search_no_results_title") }
+  /// Clear
+  public static var searchRecentClear: String { return LocalizedString.tr("Localizable", "search_recent_clear") }
+  /// Cancel
+  public static var searchRecentClearCancel: String { return LocalizedString.tr("Localizable", "search_recent_clear_cancel") }
+  /// Continue
+  public static var searchRecentClearContinue: String { return LocalizedString.tr("Localizable", "search_recent_clear_continue") }
+  /// Your search history will be lost. Continue?
+  public static var searchRecentClearTitle: String { return LocalizedString.tr("Localizable", "search_recent_clear_title") }
   /// Recently viewed (%@)
   public static func searchRecentHeader(_ p1: Any) -> String {
     return LocalizedString.tr("Localizable", "search_recent_header", String(describing: p1))

@@ -21,16 +21,24 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWj-QO-CmU">
+                    <rect key="frame" x="528" y="139" width="46" height="30"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gCb-tc-A0L" secondAttribute="bottom" constant="4" id="2Ye-d1-Ssc"/>
+                <constraint firstItem="TWj-QO-CmU" firstAttribute="centerY" secondItem="gCb-tc-A0L" secondAttribute="centerY" id="6h9-4H-dAd"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="TWj-QO-CmU" secondAttribute="trailing" constant="16" id="8Fg-XN-Pt0"/>
                 <constraint firstItem="gCb-tc-A0L" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="4" id="vSy-0V-ZEM"/>
                 <constraint firstItem="gCb-tc-A0L" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="vfM-hc-MNp"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="clearButton" destination="TWj-QO-CmU" id="6la-FJ-Bs8"/>
                 <outlet property="titleLabel" destination="gCb-tc-A0L" id="aq1-fF-0cJ"/>
             </connections>
             <point key="canvasLocation" x="259.4202898550725" y="-85.714285714285708"/>
