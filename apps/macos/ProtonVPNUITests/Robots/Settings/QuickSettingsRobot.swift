@@ -37,37 +37,37 @@ fileprivate let modalDescription = "descriptionLabel"
 class QuickSettingsRobot {
     
     func secureCoreDropdown() -> QuickSettingsRobot {
-        app.buttons[secureCoreButton].click()
+        app.buttons[secureCoreButton].forceClick()
         return QuickSettingsRobot()
     }
     
     func netShiedlDropdown() -> QuickSettingsRobot {
-        app.buttons[netShieldButton].click()
+        app.buttons[netShieldButton].forceClick()
         return QuickSettingsRobot()
     }
     
     func killSwitchDropdown() -> QuickSettingsRobot {
-        app.buttons[killSwitchButton].click()
+        app.buttons[killSwitchButton].forceClick()
         return QuickSettingsRobot()
     }
     
     func continueEnable() -> QuickSettingsRobot {
-        app.buttons[continueButton].click()
+        app.buttons[continueButton].forceClick()
         return QuickSettingsRobot()
     }
     
     func enableNotNow() -> QuickSettingsRobot {
-        app.buttons[notNowButton].click()
+        app.buttons[notNowButton].forceClick()
         return QuickSettingsRobot()
     }
     
     func upgradeFeature() -> QuickSettingsRobot {
-        app.buttons[upgradeButton].click()
+        app.buttons[upgradeButton].forceClick()
         return QuickSettingsRobot()
     }
     
     func closeUpsellModal() -> QuickSettingsRobot {
-        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].click()
+        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].forceClick()
         return QuickSettingsRobot()
     }
     
