@@ -1,5 +1,5 @@
 //
-//  CountryViewCell.swift
+//  CountryCell.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,39 +21,47 @@
 //
 
 import UIKit
-import vpncore
 
-class CountryViewCell: UITableViewCell {
+public final class CountryCell: UITableViewCell {
 
-    @IBOutlet weak var flagIcon: UIImageView!
-    @IBOutlet weak var countryName: UILabel!
+    public static var identifier: String {
+        return String(describing: self)
+    }
+
+    public static var nib: UINib {
+        return UINib(nibName: identifier, bundle: Bundle.module)
+    }
+
+    @IBOutlet private weak var flagIcon: UIImageView!
+    @IBOutlet private weak var countryName: UILabel!
     
-    @IBOutlet weak var p2pIV: UIImageView!
-    @IBOutlet weak var smartIV: UIImageView!
-    @IBOutlet weak var torIV: UIImageView!
+    @IBOutlet private weak var p2pIV: UIImageView!
+    @IBOutlet private weak var smartIV: UIImageView!
+    @IBOutlet private weak var torIV: UIImageView!
     
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet var rightMarginConstraint: NSLayoutConstraint!
-    @IBOutlet var rightNoMarginConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var connectButton: UIButton!
+    @IBOutlet private var rightMarginConstraint: NSLayoutConstraint!
+    @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!    
     
-    var section: Int = 0
-    
-    var viewModel: CountryItemViewModel? {
+    public var viewModel: CountryCellViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
+            guard let viewModel = viewModel else {
+                return
+            }
+
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             countryName.text = viewModel.description
             countryName.numberOfLines = 2
             countryName.lineBreakMode = .byTruncatingTail
-            countryName.tintColor = .normalTextColor()
+            countryName.tintColor = viewModel.textColor
             
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.isSmartAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable
             
-            backgroundColor = viewModel.backgroundColor
-            flagIcon.image = UIImage(named: viewModel.countryCode.lowercased() + "-plain")
+            backgroundColor = .clear
+            flagIcon.image = viewModel.flag
             [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
@@ -61,14 +69,12 @@ class CountryViewCell: UITableViewCell {
             stateChanged()
         }
     }
-    
-    var servers: [ServerModel]?
-    
-    @IBAction func connectTapped(_ sender: Any) {
+
+    @IBAction private func connectTapped(_ sender: Any) {
         viewModel?.connectAction()
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
     }
@@ -78,9 +84,7 @@ class CountryViewCell: UITableViewCell {
     }
     
     private func renderConnectButton() {
-        let isConnected = viewModel?.isCurrentlyConnected ?? false
-        let maintenance = viewModel?.underMaintenance ?? false
-        connectButton.backgroundColor = isConnected ? .brandColor() : (maintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
+        connectButton.backgroundColor = viewModel?.connectButtonColor
 
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)

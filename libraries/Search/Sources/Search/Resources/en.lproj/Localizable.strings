@@ -16,3 +16,4 @@
 "search_recent_clear_cancel" = "Cancel";
 "search_recent_clear_continue" = "Continue";
 "search_bar_placeholder" = "Country, City, or Server";
+"search_results_countries" = "Countries (%@)";

@@ -19,6 +19,11 @@
 import Foundation
 import UIKit
 
+protocol SearchViewControllerDelegate: AnyObject {
+    func userDidSelectCountry(model: CountryCellViewModel)
+    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel?
+}
+
 final class SearchViewController: UIViewController {
 
     // MARK: Outlets
@@ -35,6 +40,7 @@ final class SearchViewController: UIViewController {
     // MARK: Properties
 
     var viewModel: SearchViewModel!
+    weak var delegate: SearchViewControllerDelegate?
 
     private lazy var recentSearchesHeaderView: RecentSearchesHeaderView = {
         let view = Bundle.module.loadNibNamed("RecentSearchesHeaderView", owner: self, options: nil)?.first as! RecentSearchesHeaderView
@@ -66,7 +72,8 @@ final class SearchViewController: UIViewController {
         viewModel.delegate = self
         searchBar.delegate = self
 
-        tableView.register(UINib(nibName: "RecentSearchCell", bundle: Bundle.module), forCellReuseIdentifier: RecentSearchCell.reuseIdentifier)
+        tableView.register(RecentSearchCell.nib, forCellReuseIdentifier: RecentSearchCell.identifier)
+        tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
 
@@ -112,11 +119,25 @@ final class SearchViewController: UIViewController {
 
 extension SearchViewController: SearchViewModelDelegate {
     func statusDidChange(status: SearchStatus) {
-        placeholderView.isHidden = status != .placeholder
-        activityIndicator.isHidden = status != .searching
-        noResultsView.isHidden = status != .noResults
+        tableView.isHidden = true
+        placeholderView.isHidden = true
+        activityIndicator.isHidden = true
+        noResultsView.isHidden = true
 
-        tableView.reloadData()
+        switch status {
+        case .placeholder:
+            placeholderView.isHidden = false
+        case .searching:
+            activityIndicator.isHidden = false
+        case .noResults:
+            noResultsView.isHidden = false
+        case .results:
+            tableView.isHidden = false
+            tableView.reloadData()
+        case .recentSearches:
+            tableView.isHidden = false
+            tableView.reloadData()
+        }
     }
 }
 
@@ -125,32 +146,47 @@ extension SearchViewController: SearchViewModelDelegate {
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .results:
+        case .searching, .noResults, .placeholder:
             return 0
-        case .recentSearches:
-            return viewModel.recentSearches.count
+        case let .recentSearches(data):
+            return data.count
+        case let .results(data):
+            return data[section].count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .results:
+        case .searching, .noResults, .placeholder:
             fatalError("Invalid usage")
-        case .recentSearches:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.reuseIdentifier)  as? RecentSearchCell else {
+        case let .recentSearches(data):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.identifier)  as? RecentSearchCell else {
                 fatalError("Invalid configuration")
             }
-            cell.title = viewModel.recentSearches[indexPath.row]
+            cell.title = data[indexPath.row]
             return cell
+        case let .results(data):
+            let item = data[indexPath.section]
+            switch item {
+            case let .countries(tupples):
+                let (country, servers) = tupples[indexPath.row]
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier)  as? CountryCell else {
+                    fatalError("Invalid configuration")
+                }
+                cell.viewModel = delegate?.createCountryCellViewModel(country: country, servers: servers)
+                return cell
+            }
         }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .results:
+        case .searching, .noResults, .placeholder:
             return 0
         case .recentSearches:
             return 1
+        case let .results(data):
+            return data.count
         }
     }
 
@@ -158,20 +194,39 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         switch viewModel.status {
         case .searching, .noResults, .placeholder, .results:
             return nil
-        case .recentSearches:
-            recentSearchesHeaderView.count = viewModel.recentSearches.count
+        case let .recentSearches(data):
+            recentSearchesHeaderView.count = data.count
             return recentSearchesHeaderView
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .results:
+        case .searching, .noResults, .placeholder:
             break
-        case .recentSearches:
-            tableView.deselectRow(at: indexPath, animated: true)
-            searchBar.text = viewModel.recentSearches[indexPath.row]
-            viewModel.search(searchText: viewModel.recentSearches[indexPath.row])
+        case let .recentSearches(data):
+            searchBar.text = data[indexPath.row]
+            viewModel.search(searchText: data[indexPath.row])
+        case let .results(data):
+            let item = data[indexPath.section]
+            switch item {
+            case let .countries(items):
+                let (country, servers) = items[indexPath.row]
+                if let model = delegate?.createCountryCellViewModel(country: country, servers: servers) {
+                    delegate?.userDidSelectCountry(model: model)
+                }
+            }
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .recentSearches:
+            return UITableView.automaticDimension
+        case .results:
+            return 72
         }
     }
 }

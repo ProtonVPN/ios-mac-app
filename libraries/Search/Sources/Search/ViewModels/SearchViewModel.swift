@@ -34,40 +34,43 @@ final class SearchViewModel {
         }
     }
 
-    private(set) var recentSearches: [String]
+    private let data: SearchData
 
     weak var delegate: SearchViewModelDelegate?
 
     init(recentSearchesService: RecentSearchesService, data: SearchData) {
+        self.data = data
         self.recentSearchesService = recentSearchesService
 
         let recent = recentSearchesService.get()
-        recentSearches = recent
-        status = recent.isEmpty ? .placeholder : .recentSearches
+        status = recent.isEmpty ? .placeholder : .recentSearches(recent)
     }
 
     // MARK: Actions
 
     func clearRecentSearches() {
         recentSearchesService.clear()
-        recentSearches = recentSearchesService.get()
         status = .placeholder
     }
 
     func search(searchText: String) {
         guard !searchText.isEmpty else {
-            status = recentSearches.isEmpty ? .placeholder : .recentSearches
+            let recent = recentSearchesService.get()
+            status = recent.isEmpty ? .placeholder : .recentSearches(recent)
             return
         }        
 
         status = .searching
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.status = .noResults
+
+        let results: [(Country, [Server])]
+        switch data {
+        case let .standard(data):
+            results = data.filter({ $0.0.name.lowercased().contains(searchText.lowercased()) })
         }
+        status = results.isEmpty ? .noResults : .results([SearchResult.countries(results)])
     }
 
     func saveSearch(searchText: String) {
         recentSearchesService.add(searchText: searchText)
-        recentSearches = recentSearchesService.get()
     }
 }

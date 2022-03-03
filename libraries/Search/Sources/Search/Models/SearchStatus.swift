@@ -22,6 +22,6 @@ enum SearchStatus {
     case placeholder
     case searching
     case noResults
-    case results
-    case recentSearches
+    case results([SearchResult])
+    case recentSearches([String])
 }

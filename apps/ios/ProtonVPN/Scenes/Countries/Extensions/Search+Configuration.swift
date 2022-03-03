@@ -19,6 +19,7 @@
 import Foundation
 import Search
 import vpncore
+import UIKit
 
 extension Configuration {
     init() {
@@ -33,3 +34,17 @@ extension CountryModel: Country {
 }
 
 extension ServerModel: Server { }
+
+extension CountryItemViewModel: CountryCellViewModel {
+    var flag: UIImage? {
+        return UIImage(named: countryCode.lowercased() + "-plain")
+    }
+
+    var connectButtonColor: UIColor {
+        return isCurrentlyConnected ? UIColor.brandColor() : (underMaintenance ? UIColor.weakInteractionColor() : UIColor.secondaryBackgroundColor())
+    }
+
+    var textColor: UIColor {
+        return UIColor.normalTextColor()
+    }
+}

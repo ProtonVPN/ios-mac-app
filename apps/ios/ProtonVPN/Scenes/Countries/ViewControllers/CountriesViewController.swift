@@ -110,7 +110,7 @@ final class CountriesViewController: UIViewController {
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.rowHeight = viewModel?.cellHeight ?? 61
         tableView.backgroundColor = .backgroundColor()
-        tableView.register(CountryViewCell.nib, forCellReuseIdentifier: CountryViewCell.identifier)
+        tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
     
@@ -139,7 +139,15 @@ final class CountriesViewController: UIViewController {
         }
 
         coordinator = SearchCoordinator(configuration: Configuration())
+        coordinator?.delegate = self
         coordinator?.start(navigationController: navigationController, data: viewModel.searchData)
+    }
+
+    private func showCountry(cellModel: CountryItemViewModel) {
+        if let countryViewController = viewModel?.countryViewController(viewModel: cellModel) {
+            countryControllers.append(Weak(value: countryViewController))
+            self.navigationController?.pushViewController(countryViewController, animated: true)
+        }
     }
 }
 
@@ -169,7 +177,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section), let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryViewCell.identifier) as? CountryViewCell else {
+        guard let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section), let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
             return UITableViewCell()
         }
 
@@ -187,13 +195,29 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        if let countryViewController = viewModel?.countryViewController(viewModel: cellModel) {
-            countryControllers.append(Weak(value: countryViewController))
-            self.navigationController?.pushViewController(countryViewController, animated: true)
-        }
+        showCountry(cellModel: cellModel)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1
+    }
+}
+
+extension CountriesViewController: SearchCoordinatorDelegate {
+    func userDidSelectCountry(model: CountryCellViewModel) {
+        guard let cellModel = model as? CountryItemViewModel else {
+            return
+        }
+
+        showCountry(cellModel: cellModel)
+    }
+
+    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel? {
+        guard let countryModel = country as? CountryModel else {
+            return nil
+        }
+        let serverModels = servers.compactMap({ $0 as? ServerModel })
+
+        return viewModel?.cellModel(countryGroup: (countryModel, serverModels))
     }
 }

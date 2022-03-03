@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 03.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,34 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 import UIKit
 
-final class RecentSearchCell: UITableViewCell {
-    static var identifier: String {
-        return String(describing: self)
-    }
+public protocol CountryCellViewModel: AnyObject {
+    var description: String { get }
+    var isSmartAvailable: Bool { get }
+    var torAvailable: Bool { get }
+    var p2pAvailable: Bool { get }
+    var connectIcon: UIImage? { get }
+    var textInPlaceOfConnectIcon: String? { get }
+    var connectionChanged: (() -> Void)? { get set }
+    var alphaOfMainElements: CGFloat { get }
+    var flag: UIImage? { get }
+    var connectButtonColor: UIColor { get }
+    var textColor: UIColor { get }
 
-    static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
-    }
-
-    // MARK: Outlets
-
-    @IBOutlet private weak var titleLabel: UILabel!
-
-    // MARK: Properties
-
-    var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        selectionStyle = .none
-        baseViewStyle(self)
-        baseTextStyle(titleLabel)
-    }
+    func updateTier()
+    func connectAction()
 }

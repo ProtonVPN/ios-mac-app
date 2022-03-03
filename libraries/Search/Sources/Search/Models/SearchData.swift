@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 03.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,34 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
+import Foundation
 
-final class RecentSearchCell: UITableViewCell {
-    static var identifier: String {
-        return String(describing: self)
-    }
-
-    static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
-    }
-
-    // MARK: Outlets
-
-    @IBOutlet private weak var titleLabel: UILabel!
-
-    // MARK: Properties
-
-    var title: String? {
-        didSet {
-            titleLabel.text = title
-        }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        selectionStyle = .none
-        baseViewStyle(self)
-        baseTextStyle(titleLabel)
-    }
+public enum SearchData {
+    case standard([(Country, [Server])])
 }
