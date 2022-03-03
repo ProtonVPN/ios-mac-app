@@ -38,6 +38,7 @@ final class SearchViewController: UIViewController {
 
     private lazy var recentSearchesHeaderView: RecentSearchesHeaderView = {
         let view = Bundle.module.loadNibNamed("RecentSearchesHeaderView", owner: self, options: nil)?.first as! RecentSearchesHeaderView
+        view.delegate = self
         return view
     }()
 
@@ -155,5 +156,19 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             recentSearchesHeaderView.count = viewModel.recentSearches.count
             return recentSearchesHeaderView
         }
+    }
+}
+
+// MARK: Recent searches delegate
+
+extension SearchViewController: RecentSearchesHeaderViewDelegate {
+    func userDidRequestClear() {
+        let alert = UIAlertController(title: nil, message: LocalizedString.searchRecentClearTitle, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: LocalizedString.searchRecentClearCancel, style: .default))
+        alert.addAction(UIAlertAction(title: LocalizedString.searchRecentClearContinue, style: .default) { [weak self] _ in
+            self?.viewModel.clearRecentSearches()
+        })
+
+        present(alert, animated: true, completion: nil)
     }
 }

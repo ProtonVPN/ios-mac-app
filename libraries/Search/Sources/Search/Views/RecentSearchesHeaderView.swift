@@ -19,9 +19,20 @@
 import Foundation
 import UIKit
 
+protocol RecentSearchesHeaderViewDelegate: AnyObject {
+    func userDidRequestClear()
+}
+
 final class RecentSearchesHeaderView: UIView {
 
+    // MARK: Outlets
+
+    @IBOutlet private weak var clearButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
+
+    // MARK: Properties
+
+    weak var delegate: RecentSearchesHeaderViewDelegate?
 
     var count: Int = 0 {
         didSet {
@@ -29,10 +40,22 @@ final class RecentSearchesHeaderView: UIView {
         }
     }
 
+    // MARK: Setup
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
         baseViewStyle(self)
         subtitleStyle(titleLabel)
+        textButtonStyle(clearButton)
+
+        clearButton.setTitle(LocalizedString.searchRecentClear, for: .normal)
+        clearButton.addTarget(self, action: #selector(clearPressed), for: .touchUpInside)
+    }
+
+    // MARK: Actions
+
+    @objc private func clearPressed() {
+        delegate?.userDidRequestClear()
     }
 }
