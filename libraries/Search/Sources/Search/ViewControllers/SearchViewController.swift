@@ -28,21 +28,21 @@ final class SearchViewController: UIViewController {
 
     // MARK: Outlets
 
-    @IBOutlet private weak var searchBar: UISearchBar!
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var noResultsView: NoResultsView!
-    @IBOutlet private weak var noResultsBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var placeholderViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet private weak var activityIndicatorCenterYConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var placeholderView: PlaceholderView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noResultsView: NoResultsView!
+    @IBOutlet weak var noResultsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var placeholderViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicatorCenterYConstraint: NSLayoutConstraint!
+    @IBOutlet weak var placeholderView: PlaceholderView!
 
     // MARK: Properties
 
     var viewModel: SearchViewModel!
     weak var delegate: SearchViewControllerDelegate?
 
-    private lazy var recentSearchesHeaderView: RecentSearchesHeaderView = {
+    lazy var recentSearchesHeaderView: RecentSearchesHeaderView = {
         let view = Bundle.module.loadNibNamed("RecentSearchesHeaderView", owner: self, options: nil)?.first as! RecentSearchesHeaderView
         view.delegate = self
         return view
@@ -138,130 +138,5 @@ extension SearchViewController: SearchViewModelDelegate {
             tableView.isHidden = false
             tableView.reloadData()
         }
-    }
-}
-
-// MARK: Table view delegate
-
-extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch viewModel.status {
-        case .searching, .noResults, .placeholder:
-            return 0
-        case let .recentSearches(data):
-            return data.count
-        case let .results(data):
-            return data[section].count
-        }
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch viewModel.status {
-        case .searching, .noResults, .placeholder:
-            fatalError("Invalid usage")
-        case let .recentSearches(data):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.identifier)  as? RecentSearchCell else {
-                fatalError("Invalid configuration")
-            }
-            cell.title = data[indexPath.row]
-            return cell
-        case let .results(data):
-            let item = data[indexPath.section]
-            switch item {
-            case let .countries(tupples):
-                let (country, servers) = tupples[indexPath.row]
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier)  as? CountryCell else {
-                    fatalError("Invalid configuration")
-                }
-                cell.viewModel = delegate?.createCountryCellViewModel(country: country, servers: servers)
-                return cell
-            }
-        }
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        switch viewModel.status {
-        case .searching, .noResults, .placeholder:
-            return 0
-        case .recentSearches:
-            return 1
-        case let .results(data):
-            return data.count
-        }
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch viewModel.status {
-        case .searching, .noResults, .placeholder, .results:
-            return nil
-        case let .recentSearches(data):
-            recentSearchesHeaderView.count = data.count
-            return recentSearchesHeaderView
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        switch viewModel.status {
-        case .searching, .noResults, .placeholder:
-            break
-        case let .recentSearches(data):
-            searchBar.text = data[indexPath.row]
-            viewModel.search(searchText: data[indexPath.row])
-        case let .results(data):
-            let item = data[indexPath.section]
-            switch item {
-            case let .countries(items):
-                let (country, servers) = items[indexPath.row]
-                if let model = delegate?.createCountryCellViewModel(country: country, servers: servers) {
-                    delegate?.userDidSelectCountry(model: model)
-                }
-            }
-        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch viewModel.status {
-        case .searching, .noResults, .placeholder, .recentSearches:
-            return UITableView.automaticDimension
-        case .results:
-            return 72
-        }
-    }
-}
-
-// MARK: Recent searches delegate
-
-extension SearchViewController: RecentSearchesHeaderViewDelegate {
-    func userDidRequestClear() {
-        let alert = UIAlertController(title: nil, message: LocalizedString.searchRecentClearTitle, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: LocalizedString.searchRecentClearCancel, style: .default))
-        alert.addAction(UIAlertAction(title: LocalizedString.searchRecentClearContinue, style: .default) { [weak self] _ in
-            self?.viewModel.clearRecentSearches()
-        })
-
-        present(alert, animated: true, completion: nil)
-    }
-}
-
-// MARK: Search bar delegate
-
-extension SearchViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        viewModel.search(searchText: searchText)
-    }
-
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = true
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        _ = searchBar.resignFirstResponder()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        _ = searchBar.resignFirstResponder()
     }
 }
