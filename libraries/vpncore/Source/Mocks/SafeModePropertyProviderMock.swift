@@ -41,4 +41,6 @@ public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
     public func resetForIneligibleUser() {
         safeMode = true
     }
+
+    public func logoutCleanup() { }
 }

@@ -75,6 +75,16 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
     }
 
+    func testValuesResetAfterLogout() throws {
+        let (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.visionary)
+        let provider = NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self)
+        XCTAssertEqual(provider.natType, NATType.strictNAT)
+        provider.natType = .moderateNAT
+        XCTAssertEqual(provider.natType, NATType.moderateNAT)
+        provider.logoutCleanup()
+        XCTAssertEqual(provider.natType, NATType.strictNAT)
+    }
+
     // MARK: -
 
     private func getFactory(natType: NATType?, tier: Int) -> (PaidFeaturePropertyProviderFactoryMock, Storage) {
