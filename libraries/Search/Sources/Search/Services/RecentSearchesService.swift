@@ -35,12 +35,14 @@ final class RecentSearchesService {
         return data
     }
 
-    func add(search: String) {
+    func add(searchText: String) {
+        data.removeAll(where: { $0 == searchText })
+
         if data.count >= maxCount {
             data = data.dropLast()
         }
 
-        data.insert(search, at: 0)
+        data.insert(searchText, at: 0)
         save()
     }
 

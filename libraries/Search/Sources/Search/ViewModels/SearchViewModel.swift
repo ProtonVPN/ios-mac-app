@@ -53,4 +53,21 @@ final class SearchViewModel {
         recentSearches = recentSearchesService.get()
         status = .placeholder
     }
+
+    func search(searchText: String) {
+        guard !searchText.isEmpty else {
+            status = recentSearches.isEmpty ? .placeholder : .recentSearches
+            return
+        }        
+
+        status = .searching
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.status = .noResults
+        }
+    }
+
+    func saveSearch(searchText: String) {
+        recentSearchesService.add(searchText: searchText)
+        recentSearches = recentSearchesService.get()
+    }
 }

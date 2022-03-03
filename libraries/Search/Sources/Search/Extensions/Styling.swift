@@ -51,6 +51,7 @@ let indicatorStyle: (UIActivityIndicatorView) -> Void = {
 
 let searchBarStyle: (UISearchBar) -> Void = {
     $0.backgroundImage = UIImage()
+    $0.tintColor = colors.weakText
     if #available(iOS 13.0, *) {
         $0.searchTextField.textColor = colors.weakText
     } else {
