@@ -59,10 +59,12 @@ final class SearchViewController: UIViewController {
         indicatorStyle(activityIndicator)
 
         title = LocalizedString.searchTitle
+        searchBar.placeholder = LocalizedString.searchBarPlaceholder
     }
 
     private func setupData() {
         viewModel.delegate = self
+        searchBar.delegate = self
 
         tableView.register(UINib(nibName: "RecentSearchCell", bundle: Bundle.module), forCellReuseIdentifier: RecentSearchCell.reuseIdentifier)
         tableView.dataSource = self
@@ -87,6 +89,10 @@ final class SearchViewController: UIViewController {
     }
 
     @objc private func keyboardWillHide(notification: NSNotification) {
+        if let searchText = searchBar.text, !searchText.isEmpty {
+            viewModel.saveSearch(searchText: searchText)
+        }
+
         adjustForKeyboard(height: 0)
     }
 
@@ -157,6 +163,17 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             return recentSearchesHeaderView
         }
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .results:
+            break
+        case .recentSearches:
+            tableView.deselectRow(at: indexPath, animated: true)
+            searchBar.text = viewModel.recentSearches[indexPath.row]
+            viewModel.search(searchText: viewModel.recentSearches[indexPath.row])
+        }
+    }
 }
 
 // MARK: Recent searches delegate
@@ -170,5 +187,26 @@ extension SearchViewController: RecentSearchesHeaderViewDelegate {
         })
 
         present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: Search bar delegate
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.search(searchText: searchText)
+    }
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        _ = searchBar.resignFirstResponder()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        _ = searchBar.resignFirstResponder()
     }
 }
