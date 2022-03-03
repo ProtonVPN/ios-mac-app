@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 03.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,18 +18,11 @@
 
 import Foundation
 import Search
-import vpncore
 
-extension Configuration {
-    init() {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()))
-    }
+struct CountryModel: Country {
+    let name: String
 }
 
-extension CountryModel: Country {
-    public var name: String {
-        return country
-    }
+struct ServerModel: Server {
+    let name: String
 }
-
-extension ServerModel: Server { }

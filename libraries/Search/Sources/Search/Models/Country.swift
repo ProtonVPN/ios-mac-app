@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 03.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,19 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Search
-import vpncore
 
-extension Configuration {
-    init() {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()))
-    }
+public protocol Country {
+    var name: String { get }
 }
-
-extension CountryModel: Country {
-    public var name: String {
-        return country
-    }
-}
-
-extension ServerModel: Server { }

@@ -33,9 +33,9 @@ public final class SearchCoordinator {
 
     // MARK: Actions
 
-    public func start(navigationController: UINavigationController) {
+    public func start(navigationController: UINavigationController, data: SearchData) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
-        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService)
+        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data)
         navigationController.pushViewController(searchViewController, animated: true)
     }
 }
