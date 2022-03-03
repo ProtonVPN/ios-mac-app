@@ -106,7 +106,7 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.isHidden = !viewModel.underMaintenance
         connectButton.isHovered = false
         configureFeatures()
-        setupAccessibility()
+        setupAccessibilityCustomActions()
     }
     // MARK: - Actions
     
@@ -114,6 +114,7 @@ final class CountryItemCellView: NSView {
         if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
         viewModel.changeCellState()
         expandButton.image = viewModel.isOpened ? #imageLiteral(resourceName: "ic_section_arrow_up") : #imageLiteral(resourceName: "ic_section_arrow_down")
+        setupAccessibilityCustomActions()
     }
     
     @IBAction private func didTapUpgradeBtn(_ sender: Any) {
@@ -134,14 +135,29 @@ final class CountryItemCellView: NSView {
     
     // MARK: - Accessibility
 
-    private func setupAccessibility() {
-        setAccessibilityLabel(viewModel.accessibilityLabel)
+    override func accessibilityLabel() -> String? {
+        viewModel.accessibilityLabel
+    }
+
+    private func setupAccessibilityCustomActions() {
         connectButton.nameForAccessibility = viewModel.countryName
-        connectButton.setAccessibilityElement(true)
-        expandButton.setAccessibilityElement(true)
+        var actions = [NSAccessibilityCustomAction]()
+
+        if !expandButton.isHidden {
+            let name = viewModel.isOpened ? LocalizedString.collapseListOfServers : LocalizedString.expandListOfServers
+            actions.append(NSAccessibilityCustomAction(name: name, target: self, selector: #selector(didTapExpandBtn(_:))))
+        }
+        if upgradeBtn.isHidden {
+            let name = connectButton.isConnected ? LocalizedString.disconnect : LocalizedString.connect
+            actions.append(NSAccessibilityCustomAction(name: name, target: self, selector: #selector(didTapConnectBtn(_:))))
+        } else {
+            actions.append(NSAccessibilityCustomAction(name: LocalizedString.upgrade, target: self, selector: #selector(didTapUpgradeBtn(_:))))
+        }
+
+        setAccessibilityCustomActions(actions)
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return [connectButton]
+        return []
     }
 }

@@ -36,10 +36,14 @@
 /* Common word */
 "_unavailable" = "Unavailable";
 
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Expand list of servers";
+"_collapse_list_of_servers" = "Collapse list of servers";
+
 /* Used as a title in alerts/modals */
 "_warning" = "Warning";
 
-/* Button in many placen in both iOS and MacOS apps */
+/* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Upgrade";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */

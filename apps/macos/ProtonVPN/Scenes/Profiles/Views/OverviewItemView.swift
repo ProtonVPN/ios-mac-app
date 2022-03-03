@@ -37,6 +37,19 @@ class OverviewItemView: NSTableRowView {
     @IBOutlet weak var rowSeparator: NSBox!
     
     fileprivate var viewModel: OverviewItemViewModel!
+
+    private lazy var accessibilityConnectAction: NSAccessibilityCustomAction = {
+        let connectActionName = viewModel.isUsersTierTooLow ? LocalizedString.upgrade : LocalizedString.connect
+        return NSAccessibilityCustomAction(name: connectActionName, target: self, selector: #selector(connectButtonAction(_:)))
+    }()
+
+    private lazy var accessibilityEditAction: NSAccessibilityCustomAction = {
+        NSAccessibilityCustomAction(name: LocalizedString.edit, target: self, selector: #selector(editButtonAction(_:)))
+    }()
+
+    private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = {
+        NSAccessibilityCustomAction(name: LocalizedString.delete, target: self, selector: #selector(deleteButtonAction(_:)))
+    }()
     
     func updateView(withModel viewModel: OverviewItemViewModel) {
         self.viewModel = viewModel
@@ -45,6 +58,7 @@ class OverviewItemView: NSTableRowView {
         setupLabels()
         setupButtons()
         setupAvailability()
+        setupAccessibilityCustomActions()
     }
     
     override func viewWillDraw() {
@@ -71,37 +85,46 @@ class OverviewItemView: NSTableRowView {
         profileNameField.attributedStringValue = viewModel.name
         connectionDescriptionField.attributedStringValue = viewModel.description
     }
-    
+
     private func setupButtons() {
         actionButtonStackView.distribution = viewModel.isSystemProfile ? .gravityAreas : .equalSpacing
-        
-        connectButton.title = viewModel.connectButtonTitle
+
+        setupConnectButton(action: accessibilityConnectAction)
+        setupEditButton(action: accessibilityEditAction)
+        setupDeleteButton(action: accessibilityDeleteAction)
+
+        rowSeparator.fillColor = NSColor.protonLightGrey()
+    }
+
+    private func setupConnectButton(action: NSAccessibilityCustomAction) {
+        connectButton.title = action.name
         connectButton.fontSize = 16.0
-        connectButton.target = self
-        connectButton.action = #selector(connectButtonAction(_:))
+        connectButton.target = action.target
+        connectButton.action = action.selector
         (connectButton.cell as! NSButtonCell).imageDimsWhenDisabled = false
         connectButton.isEnabled = viewModel.canConnect
-        
-        editButton.title = LocalizedString.edit
+    }
+
+    private func setupEditButton(action: NSAccessibilityCustomAction) {
+        editButton.title = action.name
         editButton.fontSize = 16.0
         editButton.isHidden = viewModel.isSystemProfile
-        editButton.target = self
-        editButton.action = #selector(editButtonAction(_:))
-        
-        deleteButton.title = LocalizedString.delete
+        editButton.target = action.target
+        editButton.action = action.selector
+    }
+
+    private func setupDeleteButton(action: NSAccessibilityCustomAction) {
+        deleteButton.title = action.name
         deleteButton.fontSize = 16.0
         deleteButton.isHidden = viewModel.isSystemProfile
-        deleteButton.target = self
-        deleteButton.action = #selector(deleteButtonAction(_:))
-        
-        rowSeparator.fillColor = NSColor.protonLightGrey()
+        deleteButton.target = action.target
+        deleteButton.action = action.selector
     }
     
     private func setupAvailability() {
         [profileImage, profileCircle, profileNameField, connectionDescriptionField].forEach { view in
             view?.alphaValue = viewModel.alphaOfMainElements
         }
-        connectButton.title = viewModel.isUsersTierTooLow ? LocalizedString.upgrade : LocalizedString.connect
     }
     
     @objc private func connectButtonAction(_ sender: Any) {
@@ -116,5 +139,23 @@ class OverviewItemView: NSTableRowView {
     
     @objc private func deleteButtonAction(_ sender: Any) {
         viewModel.deleteAction()
+    }
+
+// MARK: - Accessibility
+
+    override func accessibilityLabel() -> String? {
+        return viewModel.name.string
+    }
+
+    private func setupAccessibilityCustomActions() {
+        var actions = [NSAccessibilityCustomAction]()
+        if !viewModel.isSystemProfile {
+            actions.append(accessibilityDeleteAction)
+            actions.append(accessibilityEditAction)
+        }
+        if viewModel.canConnect {
+            actions.append(accessibilityConnectAction)
+        }
+        setAccessibilityCustomActions(actions)
     }
 }

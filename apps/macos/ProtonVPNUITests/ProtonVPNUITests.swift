@@ -89,7 +89,7 @@ class ProtonVPNUITests: XCTestCase {
         window.typeKey(",", modifierFlags:.command)
         
         let preferencesWindow = app.windows["Preferences"]
-        let accountTabButton = app.buttons["Account"]
+        let accountTabButton = app.tabGroups["Account"]
         
         XCTAssert(accountTabButton.waitForExistence(timeout: 5))
         XCTAssert(accountTabButton.isHittable)

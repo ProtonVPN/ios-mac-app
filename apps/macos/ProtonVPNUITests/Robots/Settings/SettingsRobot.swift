@@ -39,19 +39,19 @@ fileprivate let homeImage = "home"
 class SettingsRobot {
     
     func generalTabClick() -> SettingsRobot {
-        app.buttons[generalTab].click()
+        app.tabGroups[generalTab].click()
         return SettingsRobot()
     }
     
     @discardableResult
     func connectionTabClick() -> SettingsRobot {
-        app.buttons[connectionTab].click()
+        app.tabGroups[connectionTab].click()
         return SettingsRobot()
     }
     
     @discardableResult
     func accountTabClick() -> SettingsRobot {
-        app.buttons[accountTab].click()
+        app.tabGroups[accountTab].click()
         return SettingsRobot()
     }
     
