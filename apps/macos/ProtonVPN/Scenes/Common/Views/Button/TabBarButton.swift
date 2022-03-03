@@ -43,6 +43,10 @@ class TabBarButton: NSButton {
             }
         }
     }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        return .tabGroup
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

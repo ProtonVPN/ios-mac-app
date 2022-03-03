@@ -35,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="407"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="vHT-FC-Dgo" customClass="InaccessibleImageView" customModule="ProtonVPN" customModuleProvider="target">
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="vHT-FC-Dgo">
                                 <rect key="frame" x="199" y="393" width="30" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Bkr-lG-bsr"/>
