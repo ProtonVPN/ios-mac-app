@@ -76,7 +76,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
             .replacingOccurrences(of: LocalizedString.nonStandardPortsExplanationLink, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.nonStandardPortsTitle, buttonState: viewModel.safeMode, toolTip: String(tooltip))
+        // Non-standars ports are enabled when Safe Mode is disabled
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.nonStandardPortsTitle, buttonState: !viewModel.safeMode, toolTip: String(tooltip))
 
         safeModeView.setupItem(model: model, delegate: self)
     }
