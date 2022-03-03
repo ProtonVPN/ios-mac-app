@@ -152,9 +152,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return section == 1
     }
     
-    func cellModel(for row: Int, in section: Int) -> CountryItemViewModel? {
+    func cellModel(for row: Int, in section: Int) -> CountryItemViewModel {
         let countryGroup = content(for: section)[row]
-        
+        return cellModel(countryGroup: countryGroup)
+    }
+
+    func cellModel(countryGroup: CountryGroup) -> CountryItemViewModel {
         return CountryItemViewModel(countryGroup: countryGroup,
                                     serverType: state.serverType,
                                     appStateManager: appStateManager,

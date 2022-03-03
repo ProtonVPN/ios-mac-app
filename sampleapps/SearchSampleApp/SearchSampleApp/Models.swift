@@ -18,6 +18,7 @@
 
 import Foundation
 import Search
+import UIKit
 
 struct CountryModel: Country {
     let name: String
@@ -25,4 +26,40 @@ struct CountryModel: Country {
 
 struct ServerModel: Server {
     let name: String
+}
+
+final class CountryItemViewModel: CountryCellViewModel {
+    let description: String
+
+    let isSmartAvailable: Bool = false
+
+    let torAvailable: Bool = false
+
+    let p2pAvailable: Bool = false
+
+    let connectIcon: UIImage? = UIImage(named: "con-available")
+
+    let textInPlaceOfConnectIcon: String? = nil
+
+    var connectionChanged: (() -> Void)?
+
+    let alphaOfMainElements: CGFloat = 1
+
+    let flag: UIImage? = UIImage(named: "ch-plain")
+
+    let connectButtonColor: UIColor = .darkGray
+
+    let textColor: UIColor = .white
+
+    func updateTier() {
+
+    }
+
+    func connectAction() {
+
+    }
+
+    init(country: Country) {
+        description = country.name
+    }
 }

@@ -20,10 +20,10 @@ import Foundation
 import UIKit
 
 public struct Colors {
-    public let background: UIColor
-    public let text: UIColor
-    public let brand: UIColor
-    public let weakText: UIColor
+    let background: UIColor
+    let text: UIColor
+    let brand: UIColor
+    let weakText: UIColor
 
     public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
         self.background = background

@@ -36,6 +36,10 @@ public enum LocalizedString {
   public static func searchRecentHeader(_ p1: Any) -> String {
     return LocalizedString.tr("Localizable", "search_recent_header", String(describing: p1))
   }
+  /// Countries (%@)
+  public static func searchResultsCountries(_ p1: Any) -> String {
+    return LocalizedString.tr("Localizable", "search_results_countries", String(describing: p1))
+  }
   /// Servers
   public static var searchServers: String { return LocalizedString.tr("Localizable", "search_servers") }
   /// JP#50, CA#3, IT#14...

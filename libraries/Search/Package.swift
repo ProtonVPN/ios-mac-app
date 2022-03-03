@@ -26,6 +26,7 @@ let package = Package(
                 .process("Views/PlaceholderItemView.xib"),
                 .process("Views/RecentSearchesHeaderView.xib"),
                 .process("Cells/RecentSearchCell.xib"),
+                .process("Cells/CountryCell.xib"),
                 .process("Resources")
             ])
     ]

@@ -48,7 +48,17 @@ final class ViewController: UIViewController {
 
     @IBAction private func searchTapped(_ sender: Any) {
         coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1))))
+        coordinator?.delegate = self
         coordinator?.start(navigationController: self.navigationController!, data: data)
     }
 }
 
+extension ViewController: SearchCoordinatorDelegate {
+    func userDidSelectCountry(model: CountryCellViewModel) {
+
+    }
+
+    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel? {
+        return CountryItemViewModel(country: country)
+    }
+}

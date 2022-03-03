@@ -19,9 +19,16 @@
 import Foundation
 import UIKit
 
+public protocol SearchCoordinatorDelegate: AnyObject {
+    func userDidSelectCountry(model: CountryCellViewModel)
+    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel?
+}
+
 public final class SearchCoordinator {
     private let storyboard: UIStoryboard
     private let recentSearchesService: RecentSearchesService
+
+    public weak var delegate: SearchCoordinatorDelegate?
 
     // MARK: Setup
 
@@ -35,7 +42,18 @@ public final class SearchCoordinator {
 
     public func start(navigationController: UINavigationController, data: SearchData) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
+        searchViewController.delegate = self
         searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data)
         navigationController.pushViewController(searchViewController, animated: true)
+    }
+}
+
+extension SearchCoordinator: SearchViewControllerDelegate {
+    public func userDidSelectCountry(model: CountryCellViewModel) {
+        delegate?.userDidSelectCountry(model: model)
+    }
+
+    public func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel? {
+        return delegate?.createCountryCellViewModel(country: country, servers: servers)
     }
 }
