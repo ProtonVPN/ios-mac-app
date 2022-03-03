@@ -34,15 +34,15 @@ public final class CountryCell: UITableViewCell {
 
     @IBOutlet private weak var flagIcon: UIImageView!
     @IBOutlet private weak var countryName: UILabel!
-    
+
     @IBOutlet private weak var p2pIV: UIImageView!
     @IBOutlet private weak var smartIV: UIImageView!
     @IBOutlet private weak var torIV: UIImageView!
-    
+
     @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private var rightMarginConstraint: NSLayoutConstraint!
-    @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!    
-    
+    @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!
+
     public var viewModel: CountryCellViewModel? {
         didSet {
             guard let viewModel = viewModel else {
@@ -55,17 +55,17 @@ public final class CountryCell: UITableViewCell {
             countryName.numberOfLines = 2
             countryName.lineBreakMode = .byTruncatingTail
             countryName.tintColor = viewModel.textColor
-            
+
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.isSmartAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable
-            
+
             backgroundColor = .clear
             flagIcon.image = viewModel.flag
             [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
-            
+
             stateChanged()
         }
     }
@@ -73,16 +73,16 @@ public final class CountryCell: UITableViewCell {
     @IBAction private func connectTapped(_ sender: Any) {
         viewModel?.connectAction()
     }
-    
-    public override func awakeFromNib() {
+
+    override public func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
     }
-    
+
     private func stateChanged() {
         renderConnectButton()
     }
-    
+
     private func renderConnectButton() {
         connectButton.backgroundColor = viewModel?.connectButtonColor
 
