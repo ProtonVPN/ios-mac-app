@@ -39,4 +39,6 @@ public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
     public func resetForIneligibleUser() {
         natType = .default
     }
+
+    public func logoutCleanup() { }
 }
