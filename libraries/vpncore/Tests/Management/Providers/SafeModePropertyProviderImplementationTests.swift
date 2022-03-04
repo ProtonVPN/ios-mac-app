@@ -94,16 +94,6 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         XCTAssertTrue(SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForSafeModeChange)
     }
 
-    func testValuesResetAfterLogout() throws {
-        let (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        let provider = SafeModePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self)
-        XCTAssertEqual(provider.safeMode, true)
-        provider.safeMode = false
-        XCTAssertEqual(provider.safeMode, false)
-        provider.logoutCleanup()
-        XCTAssertEqual(provider.safeMode, true)
-    }
-
     // MARK: -
 
     private func getFactory(safeMode: Bool?, tier: Int, safeModeFeatureFlag: Bool = true) -> (PaidFeaturePropertyProviderFactoryMock, Storage) {

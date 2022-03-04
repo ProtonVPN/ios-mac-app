@@ -28,8 +28,6 @@ public protocol SafeModePropertyProvider: PaidFeaturePropertyProvider {
     var safeModeFeatureEnabled: Bool { get }
 
     static var safeModeNotification: Notification.Name { get }
-
-    func logoutCleanup()
 }
 
 public protocol SafeModePropertyProviderFactory {
@@ -85,9 +83,5 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
     public func resetForIneligibleUser() {
         safeMode = true
-    }
-
-    public func logoutCleanup() {
-        storage.defaults.removeObject(forKey: key)
     }
 }

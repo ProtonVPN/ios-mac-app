@@ -26,8 +26,6 @@ public protocol NATTypePropertyProvider: PaidFeaturePropertyProvider {
     var isUserEligibleForNATTypeChange: Bool { get }
 
     static var natTypeNotification: Notification.Name { get }
-
-    func logoutCleanup()
 }
 
 public protocol NATTypePropertyProviderFactory {
@@ -73,9 +71,5 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
 
     public func resetForIneligibleUser() {
         natType = .default
-    }
-
-    public func logoutCleanup() {
-        storage.defaults.removeObject(forKey: key)
     }
 }
