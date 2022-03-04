@@ -40,6 +40,12 @@ public struct VpnCertificate: Codable {
         validUntil = try dict.unixTimestampOrThrow(key: "ExpirationTime")
         refreshTime = try dict.unixTimestampOrThrow(key: "RefreshTime")
     }
+
+    enum CodingKeys: String, CodingKey {
+        case certificate = "Certificate"
+        case validUntil = "ExpirationTime"
+        case refreshTime = "RefreshTime"
+    }
 }
 
 public struct VpnCertificateWithFeatures {
