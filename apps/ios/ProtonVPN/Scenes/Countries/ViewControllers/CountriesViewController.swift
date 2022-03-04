@@ -37,7 +37,11 @@ final class CountriesViewController: UIViewController {
     
     var countryControllers: [Weak<CountryViewController>] = []
 
-    private var coordinator: SearchCoordinator?
+    private lazy var coordinator: SearchCoordinator = {
+        let coordinator = SearchCoordinator(configuration: Configuration())
+        coordinator.delegate = self
+        return coordinator
+    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -138,9 +142,7 @@ final class CountriesViewController: UIViewController {
             return
         }
 
-        coordinator = SearchCoordinator(configuration: Configuration())
-        coordinator?.delegate = self
-        coordinator?.start(navigationController: navigationController, data: viewModel.searchData)
+        coordinator.start(navigationController: navigationController, data: viewModel.searchData)
     }
 
     private func showCountry(cellModel: CountryItemViewModel) {
@@ -204,20 +206,11 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension CountriesViewController: SearchCoordinatorDelegate {
-    func userDidSelectCountry(model: CountryCellViewModel) {
+    func userDidSelectCountry(model: CountryViewModel) {
         guard let cellModel = model as? CountryItemViewModel else {
             return
         }
 
         showCountry(cellModel: cellModel)
-    }
-
-    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel? {
-        guard let countryModel = country as? CountryModel else {
-            return nil
-        }
-        let serverModels = servers.compactMap({ $0 as? ServerModel })
-
-        return viewModel?.cellModel(countryGroup: (countryModel, serverModels))
     }
 }

@@ -235,16 +235,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
 }
 
 extension CountriesViewModel {
-    var searchData: SearchData {
+    var searchData: [CountryViewModel] {
         switch state {
         case let .standard(data):
-            return SearchData.standard(data.map { (country, servers) in
-                return (country, servers)
-            })
+            return data.map({ cellModel(countryGroup: $0) })
         case let .secureCore(data):
-            return SearchData.standard(data.map { (country, servers) in
-                return (country, servers)
-            })
+            return data.map({ cellModel(countryGroup: $0) })
         }
     }
 }

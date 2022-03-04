@@ -21,13 +21,19 @@
 //
 
 import UIKit
-import vpncore
 
-protocol ServerViewCellDelegate: AnyObject {
+public protocol ServerCellDelegate: AnyObject {
     func userDidRequestStreamingInfo()
 }
 
-final class ServerViewCell: UITableViewCell {
+public final class ServerCell: UITableViewCell {
+    public static var identifier: String {
+        return String(describing: self)
+    }
+
+    public static var nib: UINib {
+        return UINib(nibName: identifier, bundle: Bundle.module)
+    }
 
     @IBOutlet private weak var serverNameLabel: UILabel!
     @IBOutlet private weak var cityNameLabel: UILabel!
@@ -45,13 +51,15 @@ final class ServerViewCell: UITableViewCell {
     @IBOutlet private weak var secureCoreIV: UIImageView!
     @IBOutlet private weak var connectButton: UIButton!
 
-    weak var delegate: ServerViewCellDelegate?
-    
-    var viewModel: ServerItemViewModel? {
+    public weak var delegate: ServerCellDelegate?
+
+    public var viewModel: ServerViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
-            
-            backgroundColor = viewModel.backgroundColor
+            guard let viewModel = viewModel else {
+                return
+            }
+
+            backgroundColor = .clear
             selectionStyle = .none
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
@@ -60,34 +68,34 @@ final class ServerViewCell: UITableViewCell {
             cityNameLabel.text = viewModel.city
             cityNameLabel.isHidden = viewModel.viaCountry != nil
             secureView.isHidden = viewModel.viaCountry == nil
-            
+
             smartIV.isHidden = !viewModel.isSmartAvailable
             torIV.isHidden = !viewModel.torAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable
             streamingIV.isHidden = !viewModel.streamingAvailable
             loadContainingView.isHidden = viewModel.underMaintenance || viewModel.isUsersTierTooLow
-            
+
             loadLbl.text = viewModel.loadValue
             loadColorView.backgroundColor = viewModel.loadColor
             [serverNameLabel, cityNameLabel, torIV, p2pIV, smartIV, streamingIV, secureView].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
-            
+
             if let viaCountry = viewModel.viaCountry {
                 setupSecureCore(country: viaCountry.name, countryCode: viaCountry.code)
             }
-            
+
             DispatchQueue.main.async { [weak self] in
                 self?.stateChanged()
             }
         }
     }
-    
+
     func connect() {
         viewModel?.connectAction()
         stateChanged()
     }
-    
+
     @IBAction func rowTapped(_ sender: Any, forEvent event: UIEvent) {
         guard let button = sender as? UIButton, let touches = event.touches(for: button), let touch = touches.first, let convertedStreamingView = streamingIV.superview?.convert(streamingIV.frame, to: nil) else {
             connect()
@@ -103,19 +111,18 @@ final class ServerViewCell: UITableViewCell {
 
         delegate?.userDidRequestStreamingInfo()
     }
+
     @IBAction func connectButtonTap(_ sender: Any) {
         connect()
     }
-    
+
     private func stateChanged() {
         renderConnectButton()
     }
-    
+
     private func renderConnectButton() {
-        let isConnected = viewModel?.connectedUiState ?? false
-        let maintenance = viewModel?.underMaintenance ?? false
-        connectButton.backgroundColor = isConnected ? .brandColor() : (maintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
-        
+        connectButton.backgroundColor = viewModel?.connectButtonColor
+
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)
             connectButton.setTitle(text, for: .normal)
@@ -124,7 +131,7 @@ final class ServerViewCell: UITableViewCell {
             connectButton.setTitle(nil, for: .normal)
         }
     }
-    
+
     private func setupSecureCore( country: String, countryCode: String ) {
         secureCountryLbl.text = LocalizedString.via + " " + country.uppercased()
         secureCoreIV.image = UIImage(named: countryCode.lowercased() + "-plain")

@@ -1,5 +1,5 @@
 //
-//  Created on 03.03.2022.
+//  Created on 04.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -19,18 +19,23 @@
 import Foundation
 import UIKit
 
-public protocol CountryCellViewModel: AnyObject {
+public protocol ServerViewModel: AnyObject {
     var description: String { get }
     var isSmartAvailable: Bool { get }
     var torAvailable: Bool { get }
     var p2pAvailable: Bool { get }
+    var streamingAvailable: Bool { get }
     var connectIcon: UIImage? { get }
     var textInPlaceOfConnectIcon: String? { get }
     var connectionChanged: (() -> Void)? { get set }
     var alphaOfMainElements: CGFloat { get }
-    var flag: UIImage? { get }
+    var isUsersTierTooLow: Bool { get }
+    var underMaintenance: Bool { get }
     var connectButtonColor: UIColor { get }
-    var textColor: UIColor { get }
+    var loadValue: String { get }
+    var loadColor: UIColor { get }
+    var city: String { get }
+    var viaCountry: (name: String, code: String)? { get }
 
     func updateTier()
     func connectAction()

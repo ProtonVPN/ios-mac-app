@@ -22,18 +22,26 @@ import Search
 final class ViewController: UIViewController {
     private var coordinator: SearchCoordinator?
 
-    private let data = SearchData.standard([
-        (CountryModel(name: "Switzerland"), [
-            ServerModel(name: "CH#1"),
-            ServerModel(name: "CH#1"),
-            ServerModel(name: "CH#3")
+    private let data: [CountryItemViewModel] = [
+        CountryItemViewModel(country: "Switzerland", servers: [
+            ServerTier.basic: [
+                ServerItemViewModel(server: "CH#1", city: "Geneva"),
+                ServerItemViewModel(server: "CH#2", city: "Geneva")
+            ],
+            ServerTier.plus: [
+                ServerItemViewModel(server: "CH#3", city: "Zurich")
+            ]
         ]),
-        (CountryModel(name: "United States"), [
-            ServerModel(name: "NY#1"),
-            ServerModel(name: "WA#1"),
-            ServerModel(name: "OR#1")
-        ])
-    ])
+        CountryItemViewModel(country: "United States", servers: [
+            ServerTier.basic: [
+                ServerItemViewModel(server: "NY#1", city: "New York"),
+                ServerItemViewModel(server: "NY#2", city: "New York")
+            ],
+            ServerTier.plus: [
+                ServerItemViewModel(server: "WA#3", city: "Seatle")
+            ]
+        ]),
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()        
@@ -54,11 +62,7 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: SearchCoordinatorDelegate {
-    func userDidSelectCountry(model: CountryCellViewModel) {
+    func userDidSelectCountry(model: CountryViewModel) {
 
-    }
-
-    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel? {
-        return CountryItemViewModel(country: country)
     }
 }

@@ -17,7 +17,22 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import UIKit
 
-public protocol Server {
-    var name: String { get }
+public protocol CountryViewModel: AnyObject {
+    var description: String { get }
+    var isSmartAvailable: Bool { get }
+    var torAvailable: Bool { get }
+    var p2pAvailable: Bool { get }
+    var connectIcon: UIImage? { get }
+    var textInPlaceOfConnectIcon: String? { get }
+    var connectionChanged: (() -> Void)? { get set }
+    var alphaOfMainElements: CGFloat { get }
+    var flag: UIImage? { get }
+    var connectButtonColor: UIColor { get }
+    var textColor: UIColor { get }
+
+    func updateTier()
+    func connectAction()
+    func getServers() -> [ServerTier: [ServerViewModel]]
 }

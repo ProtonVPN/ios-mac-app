@@ -18,8 +18,28 @@
 
 import Foundation
 
+public enum ServerTier: CaseIterable {
+    case plus
+    case basic
+    case free
+}
+
+extension ServerTier {
+    var title: String {
+        switch self {
+        case .basic:
+            return LocalizedString.basicServers
+        case .plus:
+            return LocalizedString.plusServers
+        case .free:
+            return LocalizedString.freeServers
+        }
+    }
+}
+
 enum SearchResult {
-    case countries([(Country, [Server])])
+    case countries([CountryViewModel])
+    case servers(tier: ServerTier, servers: [ServerViewModel])
 }
 
 extension SearchResult {
@@ -27,12 +47,16 @@ extension SearchResult {
         switch self {
         case let .countries(data):
             return LocalizedString.searchResultsCountries("\(data.count)")
+        case let .servers(tier: tier, servers: data):
+            return "\(tier.title) (\(data.count))"
         }
     }
 
     var count: Int {
         switch self {
         case let .countries(data):
+            return data.count
+        case let .servers(tier: _, servers: data):
             return data.count
         }
     }

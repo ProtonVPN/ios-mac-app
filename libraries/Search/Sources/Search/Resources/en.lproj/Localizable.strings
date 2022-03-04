@@ -17,3 +17,14 @@
 "search_recent_clear_continue" = "Continue";
 "search_bar_placeholder" = "Country, City, or Server";
 "search_results_countries" = "Countries (%@)";
+
+"_via" = "via";
+
+/* iOS: section header in countries list */
+"_free_servers" = "FREE Servers";
+
+/* iOS: section header in countries list */
+"_basic_servers" = "BASIC Servers";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "PLUS Servers";
