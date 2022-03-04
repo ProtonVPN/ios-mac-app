@@ -111,7 +111,7 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
-		D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* WireGuardKit */; };
+		D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */; };
 		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
@@ -200,8 +200,8 @@
 		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
-		E57CD12027BF81D800AA4144 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* Modals */; };
-		E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD12127BF81D800AA4144 /* Modals-macOS */; };
+		E57CD12027BF81D800AA4144 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* SwiftPackageProductDependency */; };
+		E57CD12227BF81D800AA4144 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD12127BF81D800AA4144 /* SwiftPackageProductDependency */; };
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
 		E5F1112C27CE184A007DEC0D /* SettingsTickboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */; };
 		E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
@@ -1076,7 +1076,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
-				D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */,
+				D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */,
 				AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1092,9 +1092,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */,
+				E57CD12227BF81D800AA4144 /* BuildFile in Frameworks */,
 				D5FD4C1E264C1B3A001F26CE /* vpncore.framework in Frameworks */,
-				E57CD12027BF81D800AA4144 /* Modals in Frameworks */,
+				E57CD12027BF81D800AA4144 /* BuildFile in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
@@ -2700,7 +2700,7 @@
 			);
 			name = "ProtonVPN WireGuard";
 			packageProductDependencies = (
-				D5CA559526A59A9A001E9284 /* WireGuardKit */,
+				D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
@@ -2750,8 +2750,8 @@
 			);
 			name = "ProtonVPN-mac";
 			packageProductDependencies = (
-				E57CD11F27BF81D800AA4144 /* Modals */,
-				E57CD12127BF81D800AA4144 /* Modals-macOS */,
+				E57CD11F27BF81D800AA4144 /* SwiftPackageProductDependency */,
+				E57CD12127BF81D800AA4144 /* SwiftPackageProductDependency */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -2855,7 +2855,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -4626,7 +4626,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+		D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4637,16 +4637,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
+		D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			package = D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */;
 			productName = WireGuardKit;
 		};
-		E57CD11F27BF81D800AA4144 /* Modals */ = {
+		E57CD11F27BF81D800AA4144 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;
 		};
-		E57CD12127BF81D800AA4144 /* Modals-macOS */ = {
+		E57CD12127BF81D800AA4144 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-macOS";
 		};
