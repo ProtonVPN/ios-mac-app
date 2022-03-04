@@ -46,12 +46,17 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         case let .results(data):
             let item = data[indexPath.section]
             switch item {
-            case let .countries(tupples):
-                let (country, servers) = tupples[indexPath.row]
+            case let .countries(countries):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier)  as? CountryCell else {
                     fatalError("Invalid configuration")
                 }
-                cell.viewModel = delegate?.createCountryCellViewModel(country: country, servers: servers)
+                cell.viewModel = countries[indexPath.row]
+                return cell
+            case let .servers(tier: _, servers: servers):
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier)  as? ServerCell else {
+                    fatalError("Invalid configuration")
+                }
+                cell.viewModel = servers[indexPath.row]
                 return cell
             }
         }
@@ -90,11 +95,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         case let .results(data):
             let item = data[indexPath.section]
             switch item {
-            case let .countries(items):
-                let (country, servers) = items[indexPath.row]
-                if let model = delegate?.createCountryCellViewModel(country: country, servers: servers) {
-                    delegate?.userDidSelectCountry(model: model)
-                }
+            case let .countries(countries):
+                delegate?.userDidSelectCountry(model: countries[indexPath.row])
+            case .servers:
+                break
             }
         }
     }
@@ -103,8 +107,14 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         switch viewModel.status {
         case .searching, .noResults, .placeholder, .recentSearches:
             return UITableView.automaticDimension
-        case .results:
-            return 72
+        case let .results(data):
+            let item = data[indexPath.section]
+            switch item {
+            case .countries:
+                return 72
+            case .servers:
+                return 60
+            }
         }
     }
 }

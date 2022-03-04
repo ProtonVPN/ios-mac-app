@@ -20,8 +20,7 @@ import Foundation
 import UIKit
 
 public protocol SearchCoordinatorDelegate: AnyObject {
-    func userDidSelectCountry(model: CountryCellViewModel)
-    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel?
+    func userDidSelectCountry(model: CountryViewModel)
 }
 
 public final class SearchCoordinator {
@@ -40,7 +39,7 @@ public final class SearchCoordinator {
 
     // MARK: Actions
 
-    public func start(navigationController: UINavigationController, data: SearchData) {
+    public func start(navigationController: UINavigationController, data: [CountryViewModel]) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
         searchViewController.delegate = self
         searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data)
@@ -49,11 +48,7 @@ public final class SearchCoordinator {
 }
 
 extension SearchCoordinator: SearchViewControllerDelegate {
-    public func userDidSelectCountry(model: CountryCellViewModel) {
+    public func userDidSelectCountry(model: CountryViewModel) {
         delegate?.userDidSelectCountry(model: model)
-    }
-
-    public func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel? {
-        return delegate?.createCountryCellViewModel(country: country, servers: servers)
     }
 }

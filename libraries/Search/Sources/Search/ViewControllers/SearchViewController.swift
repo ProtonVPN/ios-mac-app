@@ -20,8 +20,7 @@ import Foundation
 import UIKit
 
 protocol SearchViewControllerDelegate: AnyObject {
-    func userDidSelectCountry(model: CountryCellViewModel)
-    func createCountryCellViewModel(country: Country, servers: [Server]) -> CountryCellViewModel?
+    func userDidSelectCountry(model: CountryViewModel)
 }
 
 final class SearchViewController: UIViewController {
@@ -74,6 +73,7 @@ final class SearchViewController: UIViewController {
 
         tableView.register(RecentSearchCell.nib, forCellReuseIdentifier: RecentSearchCell.identifier)
         tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
+        tableView.register(ServerCell.nib, forCellReuseIdentifier: ServerCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
 

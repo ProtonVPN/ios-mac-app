@@ -27,15 +27,28 @@ extension Configuration {
     }
 }
 
-extension CountryModel: Country {
-    public var name: String {
-        return country
+extension CountryItemViewModel: CountryViewModel {
+    func getServers() -> [ServerTier: [ServerViewModel]] {
+        var data: [ServerTier: [ServerViewModel]] = [:]
+        for tier in ServerTier.allCases {
+            data[tier] = []
+        }
+
+        for (tier, servers) in serverViewModels {
+            let serverTier: ServerTier
+            switch tier {
+            case CoreAppConstants.VpnTiers.free:
+                serverTier = .free
+            case CoreAppConstants.VpnTiers.plus:
+                serverTier = .plus
+            default:
+                serverTier = .basic
+            }
+            data[serverTier]?.append(contentsOf: servers)
+        }
+        return data
     }
-}
 
-extension ServerModel: Server { }
-
-extension CountryItemViewModel: CountryCellViewModel {
     var flag: UIImage? {
         return UIImage(named: countryCode.lowercased() + "-plain")
     }
@@ -46,5 +59,11 @@ extension CountryItemViewModel: CountryCellViewModel {
 
     var textColor: UIColor {
         return UIColor.normalTextColor()
+    }
+}
+
+extension ServerItemViewModel: ServerViewModel {
+    var connectButtonColor: UIColor {
+        return connectedUiState ? .brandColor() : (underMaintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
     }
 }

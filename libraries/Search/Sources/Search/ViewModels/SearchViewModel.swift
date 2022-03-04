@@ -34,11 +34,11 @@ final class SearchViewModel {
         }
     }
 
-    private let data: SearchData
+    private let data: [CountryViewModel]
 
     weak var delegate: SearchViewModelDelegate?
 
-    init(recentSearchesService: RecentSearchesService, data: SearchData) {
+    init(recentSearchesService: RecentSearchesService, data: [CountryViewModel]) {
         self.data = data
         self.recentSearchesService = recentSearchesService
 
@@ -58,16 +58,38 @@ final class SearchViewModel {
             let recent = recentSearchesService.get()
             status = recent.isEmpty ? .placeholder : .recentSearches(recent)
             return
-        }        
+        }
 
         status = .searching
 
-        let results: [(Country, [Server])]
-        switch data {
-        case let .standard(data):
-            results = data.filter({ $0.0.name.lowercased().contains(searchText.lowercased()) })
+        let filter = { (name: String) -> Bool in
+            let normalizedSearchText = searchText.normalized
+            let normalizedParts = name.components(separatedBy: CharacterSet.whitespaces).map({ $0.normalized })
+            return normalizedParts.contains(where: { $0.starts(with: normalizedSearchText) })
         }
-        status = results.isEmpty ? .noResults : .results([SearchResult.countries(results)])
+
+        var results: [SearchResult] = []
+        let countries = data.filter({ filter($0.description) })
+        if !countries.isEmpty {
+            results.append(SearchResult.countries(countries))
+        }
+        var servers: [ServerTier: [ServerViewModel]] = [:]
+        for tier in ServerTier.allCases {
+            servers[tier] = []
+        }
+        for country in data {
+            let groups = country.getServers()
+            for (key, values) in groups {
+                servers[key]?.append(contentsOf: values)
+            }
+        }
+        for tier in servers.keys {
+            let tierServers = servers[tier]?.filter({ filter($0.description) }) ?? []
+            if !tierServers.isEmpty {
+                results.append(SearchResult.servers(tier: tier, servers: tierServers))
+            }
+        }
+        status = results.isEmpty ? .noResults : .results(results)
     }
 
     func saveSearch(searchText: String) {

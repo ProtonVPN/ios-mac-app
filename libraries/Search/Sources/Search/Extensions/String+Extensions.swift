@@ -1,5 +1,5 @@
 //
-//  Created on 03.03.2022.
+//  Created on 04.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,6 +18,8 @@
 
 import Foundation
 
-public protocol Country {
-    var name: String { get }
+extension String {
+    var normalized: String {
+        return folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+    }
 }

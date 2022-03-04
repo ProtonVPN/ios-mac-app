@@ -21,14 +21,15 @@
 //
 
 import UIKit
+import Search
 
-class CountryViewController: UIViewController {
+final class CountryViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var connectionBarContainerView: UIView!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var connectionBarContainerView: UIView!
     
     var viewModel: CountryItemViewModel?
-    public var connectionBarViewController: ConnectionBarViewController?
+    var connectionBarViewController: ConnectionBarViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +58,7 @@ class CountryViewController: UIViewController {
         tableView.rowHeight = viewModel?.cellHeight ?? 61
         tableView.separatorColor = UIColor.normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
-        tableView.register(ServerViewCell.nib, forCellReuseIdentifier: ServerViewCell.identifier)
+        tableView.register(ServerCell.nib, forCellReuseIdentifier: ServerCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
     
@@ -101,7 +102,7 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellModel = viewModel?.cellModel(for: indexPath.row, section: indexPath.section), let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerViewCell.identifier) as? ServerViewCell else {
+        guard let cellModel = viewModel?.cellModel(for: indexPath.row, section: indexPath.section), let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
             return UITableViewCell()
         }
 
@@ -120,7 +121,7 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension CountryViewController: ServerViewCellDelegate {
+extension CountryViewController: ServerCellDelegate {
     func userDidRequestStreamingInfo() {
         displayStreamingServices()
     }

@@ -20,15 +20,8 @@ import Foundation
 import Search
 import UIKit
 
-struct CountryModel: Country {
-    let name: String
-}
 
-struct ServerModel: Server {
-    let name: String
-}
-
-final class CountryItemViewModel: CountryCellViewModel {
+final class CountryItemViewModel: CountryViewModel {
     let description: String
 
     let isSmartAvailable: Bool = false
@@ -51,6 +44,8 @@ final class CountryItemViewModel: CountryCellViewModel {
 
     let textColor: UIColor = .white
 
+    let servers: [ServerTier: [ServerViewModel]]
+
     func updateTier() {
 
     }
@@ -59,7 +54,59 @@ final class CountryItemViewModel: CountryCellViewModel {
 
     }
 
-    init(country: Country) {
-        description = country.name
+    init(country: String, servers: [ServerTier: [ServerViewModel]]) {
+        description = country
+        self.servers = servers
+    }
+
+    func getServers() -> [ServerTier: [ServerViewModel]] {
+        return servers
+    }
+}
+
+final class ServerItemViewModel: ServerViewModel {
+    let description: String
+
+    let isSmartAvailable: Bool = false
+
+    let torAvailable: Bool = false
+
+    let p2pAvailable: Bool = false
+
+    let streamingAvailable: Bool = false
+
+    let connectIcon: UIImage? = UIImage(named: "con-available")
+
+    let textInPlaceOfConnectIcon: String? = nil
+
+    var connectionChanged: (() -> Void)?
+
+    let alphaOfMainElements: CGFloat = 1
+
+    let isUsersTierTooLow: Bool = false
+
+    let underMaintenance: Bool = false
+
+    let connectButtonColor: UIColor = .darkGray
+
+    let loadValue: String = "56%"
+
+    let loadColor: UIColor = .green
+
+    let city: String
+
+    let viaCountry: (name: String, code: String)? = nil
+
+    func updateTier() {
+
+    }
+
+    func connectAction() {
+
+    }
+
+    init(server: String, city: String) {
+        description = server
+        self.city = city
     }
 }

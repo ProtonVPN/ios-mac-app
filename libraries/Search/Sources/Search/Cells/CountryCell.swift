@@ -23,7 +23,6 @@
 import UIKit
 
 public final class CountryCell: UITableViewCell {
-
     public static var identifier: String {
         return String(describing: self)
     }
@@ -43,7 +42,7 @@ public final class CountryCell: UITableViewCell {
     @IBOutlet private var rightMarginConstraint: NSLayoutConstraint!
     @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!
 
-    public var viewModel: CountryCellViewModel? {
+    public var viewModel: CountryViewModel? {
         didSet {
             guard let viewModel = viewModel else {
                 return
