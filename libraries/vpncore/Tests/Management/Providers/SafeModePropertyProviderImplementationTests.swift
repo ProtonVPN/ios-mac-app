@@ -25,7 +25,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        testDefauls.removeObject(forKey: "SafeMode")
+        testDefauls.removeObject(forKey: "SafeMode\(Self.username!)")
         Storage.setSpecificDefaults(defaults: testDefauls)
     }
 
@@ -75,7 +75,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
         for type in [true, false] {
             provider.safeMode = type
-            XCTAssertEqual(testDefauls.object(forKey: "SafeMode") as? Bool, type)
+            XCTAssertEqual(testDefauls.object(forKey: "SafeMode\(Self.username!)") as? Bool, type)
             XCTAssertEqual(provider.safeMode, type)
         }
     }
@@ -100,14 +100,14 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag)
         let userTierProvider = UserTierProviderMock(tier)
-        testDefauls.set(safeMode, forKey: "SafeMode")
+        testDefauls.set(safeMode, forKey: "SafeMode\(Self.username!)")
         return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider), Storage())
     }
 }
 
 extension SafeModePropertyProviderImplementationTests: UserInfoProvider {
     static var username: String? {
-        return nil
+        return "user1"
     }
 }
 
