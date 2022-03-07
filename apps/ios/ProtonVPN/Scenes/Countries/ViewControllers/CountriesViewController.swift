@@ -146,10 +146,17 @@ final class CountriesViewController: UIViewController {
     }
 
     private func showCountry(cellModel: CountryItemViewModel) {
-        if let countryViewController = viewModel?.countryViewController(viewModel: cellModel) {
-            countryControllers.append(Weak(value: countryViewController))
-            self.navigationController?.pushViewController(countryViewController, animated: true)
+        if cellModel.isUsersTierTooLow {
+            viewModel?.presentAllCountriesUpsell()
+            return
         }
+
+        guard let countryViewController = viewModel?.countryViewController(viewModel: cellModel) else {
+            return
+        }
+
+        countryControllers.append(Weak(value: countryViewController))
+        self.navigationController?.pushViewController(countryViewController, animated: true)
     }
 }
 
@@ -190,12 +197,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section) else {
             return
-        }
-        
-        if viewModel?.isTierTooLow(for: indexPath.section) ?? true { // Premium countries
-            viewModel?.presentAllCountriesUpsell()
-            return
-        }
+        }                
         
         showCountry(cellModel: cellModel)
     }
