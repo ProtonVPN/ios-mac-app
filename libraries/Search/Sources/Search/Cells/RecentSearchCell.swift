@@ -44,6 +44,6 @@ final class RecentSearchCell: UITableViewCell {
 
         selectionStyle = .none
         baseViewStyle(self)
-        baseTextStyle(titleLabel)
+        cellHeaderStyle(titleLabel)
     }
 }

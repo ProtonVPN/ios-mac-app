@@ -63,3 +63,7 @@ let textButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.font = .systemFont(ofSize: 15)
     $0.setTitleColor(colors.brand, for: .normal)
 }
+
+let cellHeaderStyle = concat(subtitleStyle, and: {
+    $0.textAlignment = .left
+})
