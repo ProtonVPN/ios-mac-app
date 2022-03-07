@@ -688,7 +688,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public init(accountPlan: AccountPlan) {
         switch accountPlan {
         case .free, .basic:
-            message = LocalizedString.maximumDeviceDescription(AccountPlan.plus.name, AccountPlan.plus.devicesCount)
+            message = LocalizedString.maximumDeviceDescription(LocalizedString.tierPlus, AccountPlan.plus.devicesCount)
         default:
             message = LocalizedString.maximumDeviceReachedDescription
         }

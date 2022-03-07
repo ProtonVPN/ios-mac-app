@@ -219,7 +219,7 @@ class WindowServiceImplementation: WindowService {
         
         if #available(macOS 11, *), let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
             manager.username = AuthKeychain.fetch()?.username ?? ""
-            manager.planname = (try? vpnKeychain.fetchCached().accountPlan.name) ?? ""
+            manager.planname = (try? vpnKeychain.fetchCached().accountPlan.description) ?? ""
             manager.closeBugReportHandler = { [weak self] in
                 self?.closeWindow(withController: ReportBugWindowController.self)
             }
