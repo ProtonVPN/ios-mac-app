@@ -145,12 +145,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
             return LocalizedString.locationsAll + totalCountries
         }
     }
-
-    func isTierTooLow( for section: Int ) -> Bool {
-        if userTier > 1 { return false }
-        if userTier == 0 { return section > 0 }
-        return section == 1
-    }
     
     func cellModel(for row: Int, in section: Int) -> CountryItemViewModel {
         let countryGroup = content(for: section)[row]

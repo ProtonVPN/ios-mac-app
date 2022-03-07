@@ -37,7 +37,7 @@ class CountryItemViewModel {
     
     private var userTier: Int = CoreAppConstants.VpnTiers.plus
     
-    private var isUsersTierTooLow: Bool {
+    var isUsersTierTooLow: Bool {
         return userTier < countryModel.lowestTier
     }
     
