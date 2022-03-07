@@ -30,9 +30,9 @@ fileprivate let autoConnectFastest = "  Fastest"
 fileprivate let notNowButton = "Not now"
 fileprivate let continueButton = "Continue"
 fileprivate let modalDescribtion = "In order to allow LAN access, Kill Switch must be turned off.\n\nContinue?"
-fileprivate let modalUpgradeButton = "modalUpgradeButton"
-fileprivate let upsellModalTitle = "titleLabel"
-fileprivate let modalDescription = "descriptionLabel"
+fileprivate let modalUpgradeButton = "ModalUpgradeButton"
+fileprivate let upsellModalTitle = "TitleLabel"
+fileprivate let modalDescription = "DescriptionLabel"
 
 class SettingsRobot {
     
