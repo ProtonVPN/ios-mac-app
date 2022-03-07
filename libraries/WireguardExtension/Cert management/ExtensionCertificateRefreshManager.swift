@@ -19,7 +19,7 @@ final class ExtensionCertificateRefreshManager {
     private var refreshEarlierBy: TimeInterval = -60
     
     private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup, storage: Storage())
-    private let apiService = ExtensionAPIService()
+    private let apiService = ExtensionAPIService(storage: Storage())
     private var timer: BackgroundTimer?
     
     func planNextRefresh() {
