@@ -40,6 +40,9 @@
 /* Plan information */
 "_adblocker_netshield_feature" = "Bloqueur de publicités (NetShield)";
 
+/* Section title in Settings */
+"_advanced" = "Avancé";
+
 /* Plan information */
 "_advanced_features" = "+ Fonctionnalités avancées";
 
@@ -931,7 +934,7 @@
 /* Main mac app menu item */
 "_menu_window" = "Fenêtre";
 
-/* Title for alert shown when enabling Moderate NATe requires reconnection */
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Activer le NAT modéré";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
@@ -1053,6 +1056,18 @@
 
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "Non merci";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Activer les ports non standards";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Utilisez ProtonVPN pour tout besoin particulier en autorisant le trafic vers les ports non standards à travers le réseau VPN. \nEn savoir plus";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "En savoir plus";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Ports non standards";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Non connecté";
@@ -1944,7 +1959,7 @@
 /* (No Comment) */
 "_update_required_update" = "Ajuster";
 
-/* Button in many placen in both iOS and MacOS apps */
+/* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Changer d'offre";
 
 /* (No Comment) */

@@ -14,13 +14,16 @@
 "modals_upsell_features_footer" = "Ve pek çok diğer ücretli özellikler";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT (2. tür Nat olarak da bilinir), çeşitli uygulamalar ve çevrimiçi video oyunlarıyla ilgili çevrimiçi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
+"modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT, 2. tür Nat olarak da bilinir ve çeşitli uygulamalar ve çevrimiçi video oyunlarıyla ilgili çevrimiçi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "VPN ağı üzerinden standart olmayan kapı numaralarından trafik akışına izin vererek herhangi bir özel gereksinim için ProtonVPN kullanabilirsiniz. Plus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
+"modals_upsell_features_safe_mode_subtitle" = "ProtonVPN ile özel durumlar için VPN ağında standart dışı kapı numaralarından trafik akışına izin verebilirsiniz. \n\nPlus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Plus tarifesine yükselttiğinizde";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Ilımlı NAT nedir?";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Ilımlı NAT özelliğini etkinleştirebilirsiniz";
@@ -36,6 +39,9 @@
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "NetShield ile reklamlar olmadan gezinebilirsiniz";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Ayrıntlı bilgi alın";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Standart olmayan kapı numaralarından trafik akabilsin";

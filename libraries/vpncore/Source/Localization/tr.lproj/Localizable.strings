@@ -40,6 +40,9 @@
 /* Plan information */
 "_adblocker_netshield_feature" = "Reklam engelleyici (NetShield)";
 
+/* Section title in Settings */
+"_advanced" = "Gelişmiş";
+
 /* Plan information */
 "_advanced_features" = "+ Gelişmiş özellikler";
 
@@ -392,7 +395,7 @@
 "_error_field_unknown" = "Lütfen bu alanı denetleyin";
 
 /* Error when generate srp clint */
-"_error_generate_srp" = "SRP üretilemedi";
+"_error_generate_srp" = "SRP oluşturulamadı";
 
 /* Error when try to hash password */
 "_error_hash_password" = "Kullanıcı parolası karılamadı";
@@ -931,7 +934,7 @@
 /* Main mac app menu item */
 "_menu_window" = "Pencere";
 
-/* Title for alert shown when enabling Moderate NATe requires reconnection */
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Ilımlı NAT kullanılsın";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
@@ -1053,6 +1056,18 @@
 
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "Hayır, teşekkürler";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Standart olmayan kapı numaralarını etkinleştir";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "VPN ağı üzerinden standart olmayan kapı numaralarından trafik akışına izin vererek herhangi bir özel gereksinim için ProtonVPN kullanabilirsiniz. \nAyrıntılı bilgi alın";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Ayrıntılı bilgi alın";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Standart olmayan kapı numaraları";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Bağlı değil";
@@ -1944,7 +1959,7 @@
 /* (No Comment) */
 "_update_required_update" = "Güncelle";
 
-/* Button in many placen in both iOS and MacOS apps */
+/* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Yükselt";
 
 /* (No Comment) */

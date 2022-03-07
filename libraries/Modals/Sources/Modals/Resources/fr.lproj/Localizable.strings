@@ -14,13 +14,16 @@
 "modals_upsell_features_footer" = "Et bien plus de fonctionnalités premium";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Le NAT modéré (aussi connu comme NAT Type 2) peut améliorer votre expérience en ligne avec différentes applications et jeux vidéos en ligne.\n\nDéverrouillez cette fonctionnalité et d'autres avec un abonnement Plus.";
+"modals_upsell_features_moderate_nat_subtitle" = "Le NAT modéré, aussi connu comme NAT Type 2, peut améliorer votre expérience en ligne avec différentes applications et jeux vidéos en ligne.\n\nDéverrouillez cette fonctionnalité et d'autres avec un abonnement Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Utilisez ProtonVPN pour tout besoin particulier en autorisant le trafic vers les ports non-standards à travers le réseau VPN. Débloquez cette fonctionnalité et d'autres avec le forfait Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Utilisez ProtonVPN pour tout besoin particulier en autorisant le trafic vers les ports non standards à travers le réseau VPN.\n\nDébloquez cette fonctionnalité et d'autres avec le forfait Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Lorsque vous mettez à niveau vers Plus";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Qu'est-ce que le NAT modéré ?";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Activer le NAT modéré";
@@ -36,6 +39,9 @@
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Profitez d'une navigation sans publicités avec NetShield";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "En savoir plus";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Autoriser le trafic vers les ports non-standards";
