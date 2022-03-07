@@ -20,7 +20,13 @@ import Foundation
 import UIKit
 
 final class PlaceholderItemView: UIView {
+
+    // MARK: - Outlets
+
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var iconImageView: UIImageView!
+
+    // MARK: - Properties
 
     var item: PlaceholderItem? {
         didSet {
@@ -36,5 +42,13 @@ final class PlaceholderItemView: UIView {
 
             titleLabel.attributedText = text
         }
+    }
+
+    // MARK: - Setup
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        iconImageView.tintColor = colors.brand
     }
 }

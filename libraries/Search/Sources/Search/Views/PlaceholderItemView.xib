@@ -39,12 +39,13 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="iconImageView" destination="KGg-yF-zgW" id="f6h-xr-d0E"/>
                 <outlet property="titleLabel" destination="5Av-nD-ZYr" id="PC1-4w-zXo"/>
             </connections>
             <point key="canvasLocation" x="193.47826086956522" y="-21.428571428571427"/>
         </view>
     </objects>
     <resources>
-        <image name="ic-search" width="16" height="16"/>
+        <image name="ic-search" width="24" height="24"/>
     </resources>
 </document>
