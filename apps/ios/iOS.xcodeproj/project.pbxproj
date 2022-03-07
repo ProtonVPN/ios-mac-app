@@ -109,8 +109,6 @@
 		79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */; };
 		79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C559A320B1BD1600E6D3F6 /* WindowService.swift */; };
 		79DEE9092111A5E100C354EF /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEE9082111A5E100C354EF /* TabBar.swift */; };
-		79DEE90B2111E5C600C354EF /* ServerTypeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEE90A2111E5C600C354EF /* ServerTypeHeader.swift */; };
-		79DEE90D2111E5EA00C354EF /* ServerTypeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79DEE90C2111E5EA00C354EF /* ServerTypeHeader.xib */; };
 		79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */; };
 		79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F986F220D838D90064C1C7 /* SettingsViewModel.swift */; };
 		79FD80E221107378003B16E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79FD80E121107377003B16E2 /* Assets.xcassets */; };
@@ -189,7 +187,6 @@
 		D5136C60228592E80002C095 /* WidgetSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */; };
 		D5136C61228592E80002C095 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F986F220D838D90064C1C7 /* SettingsViewModel.swift */; };
 		D5136C65228592E80002C095 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEE9082111A5E100C354EF /* TabBar.swift */; };
-		D5136C68228592E80002C095 /* ServerTypeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEE90A2111E5C600C354EF /* ServerTypeHeader.swift */; };
 		D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796BD1D021144D49003D6B8D /* ServersHeaderView.swift */; };
 		D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D21AB021831039000C389B /* AnnotationView.swift */; };
 		D5136C6D228592E80002C095 /* CountryAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E119AF722170B8E800255F7E /* CountryAnnotation.swift */; };
@@ -737,8 +734,6 @@
 		79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerItemViewModel.swift; sourceTree = "<group>"; };
 		79C559A320B1BD1600E6D3F6 /* WindowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowService.swift; sourceTree = "<group>"; };
 		79DEE9082111A5E100C354EF /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		79DEE90A2111E5C600C354EF /* ServerTypeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTypeHeader.swift; sourceTree = "<group>"; };
-		79DEE90C2111E5EA00C354EF /* ServerTypeHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerTypeHeader.xib; sourceTree = "<group>"; };
 		79F17EBC20A30AC1004D2696 /* SwiftObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftObjC-Bridging-Header.h"; sourceTree = "<group>"; };
 		79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryItemViewModel.swift; sourceTree = "<group>"; };
 		79F986F220D838D90064C1C7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -2054,8 +2049,6 @@
 			children = (
 				796BD1D021144D49003D6B8D /* ServersHeaderView.swift */,
 				796BD1D221144D63003D6B8D /* ServersHeaderView.xib */,
-				79DEE90A2111E5C600C354EF /* ServerTypeHeader.swift */,
-				79DEE90C2111E5EA00C354EF /* ServerTypeHeader.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2748,7 +2741,6 @@
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
 				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
 				42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */,
-				79DEE90D2111E5EA00C354EF /* ServerTypeHeader.xib in Resources */,
 				D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */,
 				796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
@@ -3186,7 +3178,6 @@
 				E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				42066E8626301BF8001F86DB /* FeatureTableViewCell.swift in Sources */,
 				D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */,
-				79DEE90B2111E5C600C354EF /* ServerTypeHeader.swift in Sources */,
 				7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */,
 				E98630A0269863C200F56B87 /* Intents.intentdefinition in Sources */,
 				D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
@@ -3415,7 +3406,6 @@
 				D5136C61228592E80002C095 /* SettingsViewModel.swift in Sources */,
 				D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */,
 				D5136C65228592E80002C095 /* TabBar.swift in Sources */,
-				D5136C68228592E80002C095 /* ServerTypeHeader.swift in Sources */,
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
 				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
