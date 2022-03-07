@@ -40,6 +40,9 @@
 /* Plan information */
 "_adblocker_netshield_feature" = "Adblocker (NetShield)";
 
+/* Section title in Settings */
+"_advanced" = "Geavanceerd";
+
 /* Plan information */
 "_advanced_features" = "+ Geavanceerde mogelijkheden";
 
@@ -931,14 +934,14 @@
 /* Main mac app menu item */
 "_menu_window" = "Venster";
 
-/* Title for alert shown when enabling Moderate NATe requires reconnection */
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Schakel Gemiddelde NAT in";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_enable_title" = "Schakel Gemiddelde NAT in";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT schakelt de randomisatie van de lokale adressen mapping uit, wat uw veiligheid enigszins kan verminderen, maar laat technieken toe zoals rechtstreekse verbindingen voor toepassingen zoals online games. \nMeer informatie";
+"_moderate_nat_explanation" = "Moderate NAT disables randomization of the local addresses mapping, which can reduces slightly your security, but allows techniques such as direct connections for applications like online games.\nLearn more";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Meer informatie";
@@ -1053,6 +1056,18 @@
 
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "Nee, bedankt";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Niet-standaard poorten inschakelen";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network.\nLearn more";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Meer informatie";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Niet-standaard poorten";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Niet verbonden";
@@ -1944,7 +1959,7 @@
 /* (No Comment) */
 "_update_required_update" = "Update";
 
-/* Button in many placen in both iOS and MacOS apps */
+/* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Upgraden";
 
 /* (No Comment) */

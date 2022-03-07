@@ -25,7 +25,7 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        testDefauls.removeObject(forKey: "NATType")
+        testDefauls.removeObject(forKey: "NATType\(Self.username!)")
         Storage.setSpecificDefaults(defaults: testDefauls)
     }
 
@@ -56,7 +56,7 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
 
         for type in NATType.allCases {
             provider.natType = type
-            XCTAssertEqual(testDefauls.integer(forKey: "NATType"), type.rawValue)
+            XCTAssertEqual(testDefauls.integer(forKey: "NATType\(Self.username!)"), type.rawValue)
             XCTAssertEqual(provider.natType, type)
         }
     }
@@ -80,13 +80,13 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     private func getFactory(natType: NATType?, tier: Int) -> (PaidFeaturePropertyProviderFactoryMock, Storage) {
         let propertiesManager = PropertiesManagerMock()
         let userTierProvider = UserTierProviderMock(tier)
-        testDefauls.set(natType?.rawValue, forKey: "NATType")
+        testDefauls.set(natType?.rawValue, forKey: "NATType\(Self.username!)")
         return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider), Storage())
     }
 }
 
 extension NATTypePropertyProviderImplementationTests: UserInfoProvider {
     static var username: String? {
-        return nil
+        return "user1"
     }
 }

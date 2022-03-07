@@ -39,10 +39,12 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
 
     private let storage: Storage
     private let key = "NATType"
+    private let userInfoProvider: UserInfoProvider
 
     public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
         self.storage = storage
+        self.userInfoProvider = userInfoProvider
     }
 
     public var natType: NATType {
@@ -51,14 +53,22 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
                 return .default
             }
 
-            if let value = storage.defaults.object(forKey: key) as? Int, let natType = NATType(rawValue: value) {
+            guard let username = type(of: userInfoProvider).username else {
+                return .default
+            }
+
+            if let value = storage.defaults.object(forKey: key + username) as? Int, let natType = NATType(rawValue: value) {
                 return natType
             }
 
             return .default
         }
         set {
-            storage.setValue(newValue.rawValue, forKey: key)
+            guard let username = type(of: userInfoProvider).username else {
+                return
+            }
+
+            storage.setValue(newValue.rawValue, forKey: key + username)
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).natTypeNotification, object: newValue, userInfo: nil)
             }

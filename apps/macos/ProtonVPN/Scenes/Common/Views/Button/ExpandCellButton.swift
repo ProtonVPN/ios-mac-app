@@ -23,13 +23,6 @@
 import Cocoa
 
 class ExpandCellButton: HoverDetectionButton {
-    
-    var cellExpanded: Bool = false {
-        didSet {
-            needsDisplay = true
-        }
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         configureButton()

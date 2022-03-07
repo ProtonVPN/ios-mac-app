@@ -102,7 +102,6 @@ class LoginViewController: NSViewController {
         super.viewDidAppear()
         
         viewModel.logInApperared()
-        _ = usernameTextField.becomeFirstResponder()
     }
     
     // MARK: - Private functions
@@ -116,7 +115,7 @@ class LoginViewController: NSViewController {
     }
     
     private func setupOnboardingView() {
-        onboardingView.isHidden = false
+        onboardingView.isHidden = true
         
         setupWarningSection()
         setupUsernameSection()
@@ -241,7 +240,8 @@ class LoginViewController: NSViewController {
             warningLabel.attributedStringValue = description.attributed(withColor: .protonRed(), fontSize: 14)
             warningLabel.isHidden = false
         }
-        
+
+        _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false
         loadingView.isHidden = true
         loadingSymbol.animate(false)

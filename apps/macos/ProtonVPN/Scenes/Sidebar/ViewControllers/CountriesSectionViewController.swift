@@ -30,6 +30,10 @@ class QuickSettingsStack: NSStackView {
         true
     }
 
+    override func accessibilityLabel() -> String? {
+        LocalizedString.quickSettingsTourTitle
+    }
+
     override func accessibilityRole() -> NSAccessibility.Role? {
         .toolbar
     }
@@ -140,9 +144,11 @@ class CountriesSectionViewController: NSViewController {
         bottomHorizontalLine.fillColor = .protonLightGrey()
         
         searchIcon.image = NSImage(named: NSImage.Name("search"))
+        searchIcon.cell?.setAccessibilityElement(false)
         
         clearSearchBtn.target = self
         clearSearchBtn.action = #selector(clearSearch)
+        clearSearchBtn.cell?.setAccessibilityElement(false)
         
         searchTextField.delegate = self
         searchTextField.usesSingleLineMode = true

@@ -35,7 +35,7 @@ class QuickSettingsDropdownOption: NSView {
     var action: SuccessCallback?
     
     private var state: State = .blocked
-    
+
     @IBAction func didTapActionBtn(_ sender: Any) {
         action?()
     }
@@ -149,5 +149,28 @@ class QuickSettingsDropdownOption: NSView {
     override func mouseExited(with event: NSEvent) {
         removeCursorRect(bounds, cursor: .pointingHand)
         containerView.layer?.backgroundColor = state.color
+    }
+
+    // MARK: - Accessibility
+
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityChildren() -> [Any]? {
+        []
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .button
+    }
+
+    override func accessibilityLabel() -> String? {
+        titleLabel.stringValue
+    }
+
+    override func accessibilityPerformPress() -> Bool {
+        action?()
+        return true
     }
 }

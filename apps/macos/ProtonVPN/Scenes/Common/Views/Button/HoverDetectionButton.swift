@@ -95,4 +95,8 @@ class HoverDetectionButton: NSButton {
         removeCursorRect(bounds, cursor: .pointingHand)
         isHovered = false
     }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        .button
+    }
 }

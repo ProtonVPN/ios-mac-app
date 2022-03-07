@@ -14,13 +14,16 @@
 "modals_upsell_features_footer" = "Y mucho más funciones premium";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "La NAT moderada (también conocida como NAT Tipo 2) puede mejorar su experiencia en línea con varias aplicaciones y videojuegos en línea.\n\nDesbloquee esta y otras funciones con un plan Plus.";
+"modals_upsell_features_moderate_nat_subtitle" = "La NAT moderada, también conocida como NAT Tipo 2, puede mejorar su experiencia en línea con varias aplicaciones y videojuegos en línea.\n\nDesbloquee esta y otras funciones con un plan Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Use ProtonVPN para cualquier necesidad permitiendo el tráfico a puertos no estándar mediante la red VPN. Desbloquee ésta y otras funciones con un plan Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Use ProtonVPN para cualquier necesidad permitiendo el tráfico a puertos no estándar mediante la red VPN.\n\nDesbloquee ésta y otras funciones con un plan Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Cuando actualice a Plus";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "¿Qué es NAT moderada?";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Habilitar NAT moderada";
@@ -36,6 +39,9 @@
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Disfrute la navegación sin anuncios con NetShield";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Más información";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Permitir el tráfico a puertos no estándar";

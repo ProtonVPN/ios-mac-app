@@ -114,6 +114,18 @@ final class HeaderViewModel {
 
         return name.attributed(withColor: NSColor.protonWhite(), fontSize: 12)
     }
+
+    var isVisible: Bool = false {
+        didSet {
+            guard isVisible else {
+                statistics?.stopGathering()
+                statistics = nil
+                return
+            }
+
+            startBitrateStatistics()
+        }
+    }
     
     func quickConnectAction() {
         if isConnected {
@@ -160,7 +172,11 @@ final class HeaderViewModel {
     }
     
     @objc private func vpnConnectionChanged() {
-        if vpnGateway.connection == .connected {
+        guard isVisible else {
+            return
+        }
+
+        if isConnected {
             startBitrateStatistics()
         } else {
             statistics?.stopGathering()
