@@ -13,15 +13,15 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Connect up to %d devices at once</string>
+			<string>Verbinde %d Gerät</string>
 			<key>other</key>
-			<string>Connect up to %d devices at once</string>
+			<string>Verbinde bis zu %d Geräte gleichzeitig</string>
 		</dict>
 	</dict>
 	<key>modals_upsell_all_countries_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Access over %#@num_servers@ in %#@num_countries@</string>
+		<string>Greife auf über %#@num_servers@ in %#@num_countries@ zu</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -40,9 +40,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d secure servers</string>
+			<string>%d sicherer Server</string>
 			<key>other</key>
-			<string>%d secure servers</string>
+			<string>%d sichere Server</string>
 		</dict>
 	</dict>
 </dict>

@@ -14,13 +14,16 @@
 "modals_upsell_features_footer" = "И много других платных функций";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Умеренный NAT (также известный как Nat Type 2) может повысить удобство работы в Интернете с различными приложениями и сетевыми видеоиграми.\n\nРазблокируйте эту и другие функции на тарифе Plus.";
+"modals_upsell_features_moderate_nat_subtitle" = "Умеренное NAT, также известное как Nat Type 2, может повысить удобство работы в Интернете с различными приложениями и сетевыми видеоиграми.\n\nРазблокируйте эту и другие функции на тарифе Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Используйте ProtonVPN для любых особых нужд, разрешая трафик через VPN на нестандартные порты. Разблокируйте эту и другие возможности с помощью тарифа Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Используйте ProtonVPN для любых особых нужд, разрешая трафик на нестандартные порты через сеть VPN.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Когда вы улучшите до Plus";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Что такое Умеренное NAT?";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Включить умеренное NAT";
@@ -36,6 +39,9 @@
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Воспользуйтесь просмотром веб-страниц без рекламы с помощью NetShield";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Узнать больше";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Разрешить трафик на нестандартные порты";

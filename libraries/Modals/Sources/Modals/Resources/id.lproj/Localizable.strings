@@ -14,13 +14,16 @@
 "modals_upsell_features_footer" = "Dan berbagai fitur premium lainnya";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat (yang dikenal juga dengan nama Nat Type 2) dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
+"modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat, yang juga dikenal sebagai NAT Type 2, merupakan sebuah fitur yang dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Alihkan lalu lintas data yang tertuju pada port-port non-standar melalui jaringan VPN. Dapatkan fitur ini dan berbagai fitur lainnya dengan paket Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Gunakan ProtonVPN untuk berbagai keperluan khusus yang memerlukan Anda untuk mengalihkan koneksi VPN melalui port-port non-standar.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke Plus";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Apa itu NAT Moderat?";
 
 /* Title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_title" = "Aktifkan NAT Moderat";
@@ -36,6 +39,9 @@
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Nikmati penjelajahan tanpa iklan dengan NetShield";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Pelajari Lebih Lanjut";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Izinkan lalu lintas data melalui port non-standar";

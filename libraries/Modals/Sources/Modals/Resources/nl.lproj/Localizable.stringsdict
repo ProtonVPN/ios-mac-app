@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Verbind tot %d apparaten tegelijkertijd</string>
+			<string>Verbind tot %d apparaat tegelijkertijd</string>
 			<key>other</key>
 			<string>Verbind tot %d apparaten tegelijkertijd</string>
 		</dict>
@@ -40,7 +40,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d beveiligde servers</string>
+			<string>%d beveiligde server</string>
 			<key>other</key>
 			<string>%d beveiligde servers</string>
 		</dict>
