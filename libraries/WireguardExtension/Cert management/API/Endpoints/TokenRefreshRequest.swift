@@ -22,7 +22,7 @@ struct TokenRefreshRequest: APIRequest {
     let endpointUrl = "auth/refresh"
     let httpMethod = "POST"
 
-    var params: Params
+    let params: Params
 
     struct Params: Codable {
         let responseType: String

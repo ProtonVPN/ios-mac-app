@@ -28,9 +28,24 @@ final class ExtensionAPIService {
         refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
     }
 
+    init(storage: Storage) {
+        self.storage = storage
+    }
+
     // MARK: -
 
-    private let apiUrl = "https://api.protonvpn.ch/"
+    private var apiUrl: String {
+        #if !RELEASE
+        if storage.contains(apiEndpointStorageKey), let url = storage.getValue(forKey: apiEndpointStorageKey) as? String {
+            log.debug("Using API: \(url) ", category: .api)
+            return url
+        }
+        #endif
+
+        return "https://api.protonvpn.ch"
+    }
+    private let apiEndpointStorageKey = "ApiEndpoint"
+    private let storage: Storage
     private let config = URLSessionConfiguration.default
     private lazy var session = URLSession(configuration: config)
 
@@ -112,7 +127,7 @@ final class ExtensionAPIService {
     }
 
     private func makeUrlRequest(_ apiRequest: APIRequest) -> URLRequest {
-        var request = URLRequest(url: URL(string: "\(apiUrl)\(apiRequest.endpointUrl)")!)
+        var request = URLRequest(url: URL(string: "\(apiUrl)/\(apiRequest.endpointUrl)")!)
         request.httpMethod = apiRequest.httpMethod
 
         // Headers
