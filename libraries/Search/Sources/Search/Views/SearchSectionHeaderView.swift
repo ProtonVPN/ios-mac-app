@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 07.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,14 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 import UIKit
 
-final class RecentSearchCell: UITableViewCell {
-    static var identifier: String {
+final class SearchSectionHeaderView: UITableViewHeaderFooterView {
+    public static var identifier: String {
         return String(describing: self)
     }
 
-    static var nib: UINib {
+    public static var nib: UINib {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
@@ -33,17 +34,19 @@ final class RecentSearchCell: UITableViewCell {
 
     // MARK: Properties
 
-    var title: String? {
+    var item: SearchResult? {
         didSet {
-            titleLabel.text = title
+            titleLabel.text = item?.title
         }
     }
+
+    // MARK: Setup
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        selectionStyle = .none
         baseViewStyle(self)
+        baseViewStyle(contentView)
         cellHeaderStyle(titleLabel)
     }
 }

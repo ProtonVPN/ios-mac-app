@@ -74,6 +74,7 @@ final class SearchViewController: UIViewController {
         tableView.register(RecentSearchCell.nib, forCellReuseIdentifier: RecentSearchCell.identifier)
         tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ServerCell.nib, forCellReuseIdentifier: ServerCell.identifier)
+        tableView.register(SearchSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: SearchSectionHeaderView.identifier)
         tableView.dataSource = self
         tableView.delegate = self
 

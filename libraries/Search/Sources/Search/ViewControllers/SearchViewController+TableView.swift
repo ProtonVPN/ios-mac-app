@@ -75,11 +75,17 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .results:
+        case .searching, .noResults, .placeholder:
             return nil
         case let .recentSearches(data):
             recentSearchesHeaderView.count = data.count
             return recentSearchesHeaderView
+        case let .results(data):
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SearchSectionHeaderView.identifier) as? SearchSectionHeaderView else {
+                fatalError("Invalid configuration")
+            }
+            headerView.item = data[section]
+            return headerView
         }
     }
 
@@ -111,7 +117,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             let item = data[indexPath.section]
             switch item {
             case .countries:
-                return 72
+                return 64
             case .servers:
                 return 60
             }

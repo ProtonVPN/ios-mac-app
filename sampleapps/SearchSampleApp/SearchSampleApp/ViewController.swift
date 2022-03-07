@@ -41,6 +41,15 @@ final class ViewController: UIViewController {
                 ServerItemViewModel(server: "WA#3", city: "Seatle")
             ]
         ]),
+        CountryItemViewModel(country: "Czechia", servers: [
+            ServerTier.basic: [
+                ServerItemViewModel(server: "CZ#1", city: "Prague"),
+                ServerItemViewModel(server: "CZ#2", city: "Brno")
+            ],
+            ServerTier.plus: [
+                ServerItemViewModel(server: "CZ#3", city: "Prague")
+            ]
+        ])
     ]
 
     override func viewDidLoad() {
