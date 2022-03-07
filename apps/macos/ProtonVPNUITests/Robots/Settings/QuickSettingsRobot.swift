@@ -30,9 +30,9 @@ fileprivate let upgradeButton = "UpgradeButton"
 fileprivate let killSwitchModalTitle = "Turn Kill Switch on?"
 fileprivate let notNowButton = "Not now"
 fileprivate let continueButton = "Continue"
-fileprivate let modalUpgradeButton = "modalUpgradeButton"
-fileprivate let modalTitle = "titleLabel"
-fileprivate let modalDescription = "descriptionLabel"
+fileprivate let modalUpgradeButton = "ModalUpgradeButton"
+fileprivate let modalTitle = "TitleLabel"
+fileprivate let modalDescription = "DescriptionLabel"
 
 class QuickSettingsRobot {
     
@@ -67,7 +67,7 @@ class QuickSettingsRobot {
     }
     
     func closeUpsellModal() -> QuickSettingsRobot {
-        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].forceClick()
+        app.dialogs.firstMatch.buttons["_XCUI:CloseWindow"].click()
         return QuickSettingsRobot()
     }
     
