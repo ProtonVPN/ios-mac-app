@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Search
 
 class ServerItemViewModel {
     
@@ -229,5 +230,13 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
     override fileprivate func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
+    }
+}
+
+// MARK: - Search
+
+extension ServerItemViewModel: ServerViewModel {
+    var connectButtonColor: UIColor {
+        return connectedUiState ? .brandColor() : (underMaintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
     }
 }
