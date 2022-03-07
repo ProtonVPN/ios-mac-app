@@ -40,6 +40,9 @@
 /* Plan information */
 "_adblocker_netshield_feature" = "Blokada reklam (NetShield)";
 
+/* Section title in Settings */
+"_advanced" = "Zaawansowane";
+
 /* Plan information */
 "_advanced_features" = "+ zaawansowane funkcje";
 
@@ -788,7 +791,7 @@
 "_less_info" = "Mniej informacji";
 
 /* Server load. Used together with actual server load in percents. */
-"_load" = "Wczytaj";
+"_load" = "Obciążenie";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Ładowanie informacji o połączeniu";
@@ -931,14 +934,14 @@
 /* Main mac app menu item */
 "_menu_window" = "Okno";
 
-/* Title for alert shown when enabling Moderate NATe requires reconnection */
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Włącz umiarkowany NAT";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_enable_title" = "Włącz umiarkowany NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT disables randomization of the local addresses mapping, which can reduces slightly your security, but allows techniques such as direct connections for applications like online games. \nLearn more";
+"_moderate_nat_explanation" = "Umiarkowany NAT wyłącza losowe mapowanie adresów lokalnych, co może nieco zmniejszyć bezpieczeństwo, ale umożliwia stosowanie technik takich, jak bezpośrednie połączenia aplikacji, np. gier online.\nDowiedz się więcej";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Dowiedz się więcej";
@@ -1053,6 +1056,18 @@
 
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "Nie, dziękuję";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Włącz niestandardowe porty";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Używaj aplikacji ProtonVPN do wszelkich specjalnych potrzeb, zezwalając na ruch do niestandardowych portów przez sieć VPN.\nDowiedz się więcej";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Dowiedz się więcej";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Niestandardowe porty";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Nie połączono";
@@ -1944,7 +1959,7 @@
 /* (No Comment) */
 "_update_required_update" = "Zaktualizuj";
 
-/* Button in many placen in both iOS and MacOS apps */
+/* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Ulepsz";
 
 /* (No Comment) */

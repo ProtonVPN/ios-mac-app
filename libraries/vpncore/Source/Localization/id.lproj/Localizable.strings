@@ -40,6 +40,9 @@
 /* Plan information */
 "_adblocker_netshield_feature" = "Adblocker (NetShield)";
 
+/* Section title in Settings */
+"_advanced" = "Lanjutan";
+
 /* Plan information */
 "_advanced_features" = "+ Fitur-fitur canggih";
 
@@ -71,7 +74,7 @@
 "_allow_lan_info" = "Izinkan untuk lewati VPN dan menyambungkan ke perangkat di jaringan lokal Anda, seperti printer Anda.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Harap diperhatikan bahwa koneksi VPN yang ada harus terlebih dahulu disambungkan ulang agar perubahan ini dapat berlaku";
+"_allow_lan_note" = "Harap diperhatikan bahwa koneksi VPN Anda harus terlebih dahulu disambungkan ulang agar perubahan ini dapat berlaku";
 
 /* (No Comment) */
 "_allow_lan_title" = "Izinkan sambungan LAN";
@@ -248,7 +251,7 @@
 "_delete_application_data_popup_body" = "Seluruh data ProtonVPN akan dihapus dan aplikasi akan ditutup. Apakah Anda ingin melanjutkan?";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_title" = "Bersihkan data-data aplikasi";
+"_delete_application_data_popup_title" = "Bersihkan data aplikasi";
 
 /* Button */
 "_delete_profile" = "Hapus Profil";
@@ -434,7 +437,7 @@
 "_error_modulus_signature" = "Modulus tanda tangan kosong";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Mohon masuk dengan akun yang akan Anda tingkatkan paket layanan agar kami dapat menyelesaikan pembelian Anda.";
+"_error_no_active_username" = "Mohon masuk dengan akun yang hendak Anda tingkatkan agar kami dapat menyelesaikan pembelian Anda.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Peningkatan paket langganan Anda berhasil. Silahkan luncurkan ulang aplikasi untuk mendapatkan manfaat dari paket layanan baru Anda.";
@@ -785,7 +788,7 @@
 "_learn_more_about_secure_core" = "Pelajari lebih lanjut tentang Secure Core";
 
 /* Display less information */
-"_less_info" = "Sedikit info";
+"_less_info" = "Lebih sedikit";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Beban";
@@ -926,12 +929,12 @@
 "_menu_quit" = "Keluar ProtonVPN";
 
 /* Main mac app menu item */
-"_menu_show_all" = "Tampilkan semua";
+"_menu_show_all" = "Tampilkan Semua";
 
 /* Main mac app menu item */
 "_menu_window" = "Jendela";
 
-/* Title for alert shown when enabling Moderate NATe requires reconnection */
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Aktifkan NAT Moderat";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
@@ -1019,7 +1022,7 @@
 "_netshield_level1" = "Blokir malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Blokir malware, iklan, & pelacak";
+"_netshield_level2" = "Blokir malware, iklan, & program pelacak";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Nonaktifkan";
@@ -1054,6 +1057,18 @@
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "Tidak, terima kasih";
 
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Aktifkan port non-standar";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Alihkan lalu lintas data yang tertuju pada port-port non standar melalui jaringan VPN. \nPelajari lebih lanjut";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Pelajari lebih lanjut";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Port non-standar";
+
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Tidak Terhubung";
 
@@ -1073,7 +1088,7 @@
 "_open_app_to_log_in" = "Tampilkan ProtonVPN untuk masuk...";
 
 /* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Catatan OpenVPN";
+"_open_vpn_logs" = "Log OpenVPN";
 
 /* (No Comment) */
 "_openvpn" = "OpenVPN";
@@ -1280,7 +1295,7 @@
 "_quick_settings_netshield_option_level1" = "Blokir malware saja";
 
 /* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Blokir malware, iklan, & pelacak";
+"_quick_settings_netshield_option_level2" = "Blokir malware, iklan, & program pelacak";
 
 /* (No Comment) */
 "_quick_settings_netshield_option_off" = "Jangan blokir";
@@ -1944,7 +1959,7 @@
 /* (No Comment) */
 "_update_required_update" = "Perbarui";
 
-/* Button in many placen in both iOS and MacOS apps */
+/* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Tingkatkan";
 
 /* (No Comment) */
@@ -2017,7 +2032,7 @@
 "_via" = "via";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "melalui %@";
+"_via_country" = "via %@";
 
 /* MacOS menu item; iOS setting screen item */
 "_view_logs" = "Lihat Log";
@@ -2050,7 +2065,7 @@
 "_vpn_stuck_disconnecting_title" = "Sambungan bermasalah";
 
 /* (No Comment) */
-"_vpnauth_certfail_description" = "Gagal menyegarkan sertifikat VPN. Mohon periksa koneksi Anda";
+"_vpnauth_certfail_description" = "Gagal memuat ulang sertifikat VPN. Mohon periksa koneksi Anda";
 
 /* Cert based auth */
 "_vpnauth_certfail_title" = "Kesalahan autentikasi";
@@ -2086,7 +2101,7 @@
 "_welcome_title" = "SELAMAT DATANG!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill Switch mencegah VPN untuk dapat terhubung ke Internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan Kill Switch.";
+"_wgks_description" = "Kill Switch mencegah VPN untuk dapat terhubung ke Internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk dapat menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan Kill Switch.";
 
 /* (No Comment) */
 "_wgks_ks_off" = "Nonaktifkan Kill Switch";

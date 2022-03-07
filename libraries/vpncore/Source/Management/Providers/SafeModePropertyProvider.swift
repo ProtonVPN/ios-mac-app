@@ -41,10 +41,12 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
     private let storage: Storage
     private let key = "SafeMode"
+    private let userInfoProvider: UserInfoProvider
 
     public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
         self.factory = factory
         self.storage = storage
+        self.userInfoProvider = userInfoProvider
     }
 
     public var safeMode: Bool? {
@@ -54,19 +56,27 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
                 return nil
             }
 
+            guard let username = type(of: userInfoProvider).username else {
+                return nil
+            }
+
             // true is the default value
             guard isUserEligibleForSafeModeChange else {
                 return true
             }
 
-            guard let current = storage.defaults.value(forKey: key) as? Bool else {
+            guard let current = storage.defaults.value(forKey: key + username) as? Bool else {
                 return true // true is the default value
             }
 
             return current
         }
         set {
-            storage.setValue(newValue, forKey: key)
+            guard let username = type(of: userInfoProvider).username else {
+                return
+            }
+
+            storage.setValue(newValue, forKey: key + username)
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).safeModeNotification, object: newValue, userInfo: nil)
             }

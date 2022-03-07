@@ -32,7 +32,7 @@
 "_br_3_logs_disabled" = "Os logs de erros nos ajudam a resolver seu problema. Se você não os incluir, talvez não possamos investigar completamente.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Enviar logs de erro";
+"_br_3_logs_field" = "Enviar registros de erro";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "Tentar novamente";
@@ -50,7 +50,7 @@
 "_br_success_subtitle" = "Retornaremos assim que possível.";
 
 /* ReportBug success window: title text */
-"_br_success_title" = "Obrigado por seu comentário";
+"_br_success_title" = "Obrigado pelo seu feedback";
 
 /* ReportBugwindow title */
 "_br_window_title" = "Reportar um problema";

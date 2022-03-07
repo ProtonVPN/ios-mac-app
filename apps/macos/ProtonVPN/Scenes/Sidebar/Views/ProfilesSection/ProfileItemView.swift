@@ -62,7 +62,6 @@ class ProfileItemView: NSView {
         setupProfileName()
         setupSecondaryDescription()
         setupConnectButton()
-        setupAccessibility()
         setupAvailability()
         
         rowSeparator.fillColor = .protonLightGrey()
@@ -103,10 +102,6 @@ class ProfileItemView: NSView {
         viewModel.connectAction()
     }
     
-    private func setupAccessibility() {
-        setAccessibilityLabel(viewModel?.name.string)
-    }
-    
     private func setupAvailability() {
         [profileImage, profileCircle, profileName, secondaryDescription].forEach { view in
             view?.alphaValue = viewModel.alphaOfMainElements
@@ -117,7 +112,23 @@ class ProfileItemView: NSView {
     // MARK: - Accessibility
     
     override func accessibilityChildren() -> [Any]? {
-        return [connectButton]
+        return nil
     }
-    
+
+    override func accessibilityValue() -> Any? {
+        "\(viewModel.name.string), \(connectButton.title)"
+    }
+
+    override func accessibilityPerformPress() -> Bool {
+        connectButton.performClick(nil)
+        return true
+    }
+
+    override func isAccessibilityElement() -> Bool {
+        true
+    }
+
+    override func accessibilityRole() -> NSAccessibility.Role? {
+        return .button
+    }
 }

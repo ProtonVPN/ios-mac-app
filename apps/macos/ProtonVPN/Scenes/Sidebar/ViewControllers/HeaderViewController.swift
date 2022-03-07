@@ -73,7 +73,13 @@ final class HeaderViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        viewModel.isVisible = true
         setupAnnouncements()
+    }
+
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        viewModel.isVisible = false
     }
     
     private func setupPersistentView() {

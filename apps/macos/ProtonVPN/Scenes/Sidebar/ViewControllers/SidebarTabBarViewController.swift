@@ -79,7 +79,8 @@ class SidebarTabBarViewController: NSViewController {
     
     @objc private func countriesTabAction(_ sender: NSButton) {
         if activeTab != .countries {
-            activeTab = .countries        }
+            activeTab = .countries
+        }
     }
 
     @objc private func profilesTabAction(_ sender: NSButton) {
