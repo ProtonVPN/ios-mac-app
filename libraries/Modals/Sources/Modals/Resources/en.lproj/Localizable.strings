@@ -60,3 +60,21 @@
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "A note about speed...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Don’t show again";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Activate Secure Core";
+
+/* Common button title */
+"modals_common_cancel" = "Cancel";
+
+/* Common button title */
+"modals_common_learn_more" = "Learn more";

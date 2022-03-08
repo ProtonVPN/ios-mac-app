@@ -32,6 +32,7 @@ internal enum Asset {
   internal static let safeModeIOS = ImageAsset(name: "SafeMode-iOS")
   internal static let safeModeMacOS = ImageAsset(name: "SafeMode-macOS")
   internal static let secureCore = ImageAsset(name: "SecureCore")
+  internal static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
   internal static let streamingIcon = ImageAsset(name: "StreamingIcon")
   internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
   internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")

@@ -180,6 +180,9 @@ extension IosAlertService: CoreAlertService {
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
 
+        case let discourageAlert as DiscourageSecureCoreAlert:
+            show(discourageAlert)
+            
         case is SafeModeUpsellAlert:
             show(upsellType: .safeMode)
 
@@ -212,7 +215,12 @@ extension IosAlertService: CoreAlertService {
         upsellViewController.delegate = self
         windowService.present(modal: upsellViewController)
     }
-    
+
+    private func show(_ alert: DiscourageSecureCoreAlert) {
+        let discourageSecureCoreViewController = modalsFactory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
+        windowService.present(modal: discourageSecureCoreViewController)
+    }
+
     private func show(_ alert: AppUpdateRequiredAlert) {
         alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
             self?.appSessionManager.logOut(force: true)
