@@ -40,14 +40,12 @@ public enum LocalizedString {
   public static var searchRecentClearContinue: String { return LocalizedString.tr("Localizable", "search_recent_clear_continue") }
   /// Your search history will be lost. Continue?
   public static var searchRecentClearTitle: String { return LocalizedString.tr("Localizable", "search_recent_clear_title") }
-  /// Recently viewed (%@)
-  public static func searchRecentHeader(_ p1: Any) -> String {
-    return LocalizedString.tr("Localizable", "search_recent_header", String(describing: p1))
-  }
-  /// Countries (%@)
-  public static func searchResultsCountries(_ p1: Any) -> String {
-    return LocalizedString.tr("Localizable", "search_results_countries", String(describing: p1))
-  }
+  /// Recently viewed
+  public static var searchRecentHeader: String { return LocalizedString.tr("Localizable", "search_recent_header") }
+  /// Countries
+  public static var searchResultsCountries: String { return LocalizedString.tr("Localizable", "search_results_countries") }
+  /// Secure Core countries
+  public static var searchSecureCoreCountries: String { return LocalizedString.tr("Localizable", "search_secure_core_countries") }
   /// Servers
   public static var searchServers: String { return LocalizedString.tr("Localizable", "search_servers") }
   /// JP#50, CA#3, IT#14...

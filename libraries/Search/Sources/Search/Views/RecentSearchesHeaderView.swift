@@ -36,7 +36,7 @@ final class RecentSearchesHeaderView: UIView {
 
     var count: Int = 0 {
         didSet {
-            titleLabel.text = LocalizedString.searchRecentHeader("\(count)")
+            titleLabel.text = "\(LocalizedString.searchRecentHeader) (\(count))"
         }
     }
 

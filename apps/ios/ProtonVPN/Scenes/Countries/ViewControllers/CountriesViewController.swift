@@ -36,7 +36,7 @@ final class CountriesViewController: UIViewController {
     var connectionBarViewController: ConnectionBarViewController?
 
     private lazy var coordinator: SearchCoordinator = {
-        let coordinator = SearchCoordinator(configuration: Configuration(isFreeUser: viewModel.isFreeUser))
+        let coordinator = SearchCoordinator(configuration: Configuration())
         coordinator.delegate = self
         return coordinator
     }()
@@ -140,11 +140,19 @@ final class CountriesViewController: UIViewController {
     }
 
     @objc private func showSearch() {
-        guard let viewModel = viewModel, let navigationController = navigationController else {
+        guard let navigationController = navigationController else {
             return
         }
 
-        coordinator.start(navigationController: navigationController, data: viewModel.searchData)
+        let mode: SearchMode
+        if viewModel.isFreeUser {
+            mode = .freeUser
+        } else if viewModel.secureCoreOn {
+            mode = .secureCore
+        } else {
+            mode = .standard
+        }
+        coordinator.start(navigationController: navigationController, data: viewModel.searchData, mode: mode)
     }
 
     private func showCountry(cellModel: CountryItemViewModel) {

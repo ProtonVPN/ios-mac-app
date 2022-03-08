@@ -22,9 +22,9 @@ import Modals_iOS
 import Search
 
 final class ViewController: UIViewController {
-    @IBOutlet private weak var freeUserSwitch: UISwitch!
+    @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
 
-    private var coordinator: SearchCoordinator?
+    private let coordinator: SearchCoordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)), constants: Constants(numberOfCountries: 61)))
     private let modals = ModalsFactory(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)))
 
     override func viewDidLoad() {
@@ -36,43 +36,53 @@ final class ViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
 
         title = "Search sample app"
+        coordinator.delegate = self
     }
 
     @IBAction private func searchTapped(_ sender: Any) {
-        coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)), constants: Constants(numberOfCountries: 61), isFreeUser: freeUserSwitch.isOn))
-        coordinator?.delegate = self
-        coordinator?.start(navigationController: self.navigationController!, data: createData())
+        coordinator.start(navigationController: self.navigationController!, data: createData(), mode: createMode())
+    }
+
+    private func createMode() -> SearchMode {
+        switch modeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            return .standard
+        case 1:
+            return .secureCore
+        default:
+            return .freeUser
+        }
     }
 
     private func createData() -> [CountryItemViewModel] {
-        let tier = freeUserSwitch.isOn ? ServerTier.free : ServerTier.plus
+        let tier = createMode() == .freeUser ? ServerTier.free : ServerTier.plus
 
         return [
             CountryItemViewModel(country: "Switzerland", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CH#1", city: "Geneva"),
-                    ServerItemViewModel(server: "CH#2", city: "Geneva")
+                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free),
+                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "CH#3", city: "Zurich")
+                    ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland")
                 ]
             ]),
             CountryItemViewModel(country: "United States", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "NY#1", city: "New York"),
-                    ServerItemViewModel(server: "NY#2", city: "New York")
+                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free),
+                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "WA#3", city: "Seatle")
+                    ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States")
                 ]
             ]),
             CountryItemViewModel(country: "Czechia", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CZ#1", city: "Prague"),
-                    ServerItemViewModel(server: "CZ#2", city: "Brno")
+                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free),
+                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == .free)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "CZ#3", city: "Prague")
+                    ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia")
                 ]
             ])
         ]

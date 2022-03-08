@@ -35,7 +35,9 @@ public protocol ServerViewModel: AnyObject {
     var loadValue: String { get }
     var loadColor: UIColor { get }
     var city: String { get }
-    var viaCountry: (name: String, code: String)? { get }
+    var relayCountry: (name: String, flag: UIImage?)? { get }
+    var countryName: String { get }
+    var countryFlag: UIImage? { get }
 
     func updateTier()
     func connectAction()

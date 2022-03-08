@@ -45,12 +45,10 @@ public struct Colors {
 
 public struct Configuration {
     let colors: Colors
-    let isFreeUser: Bool
     let constants: Constants
 
-    public init(colors: Colors, constants: Constants, isFreeUser: Bool) {
+    public init(colors: Colors, constants: Constants) {
         self.colors = colors
         self.constants = constants
-        self.isFreeUser = isFreeUser
     }
 }

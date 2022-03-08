@@ -68,10 +68,10 @@ public final class ServerCell: UITableViewCell {
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             serverNameLabel.text = viewModel.description
-            serverNameLabel.isHidden = viewModel.viaCountry != nil
+            serverNameLabel.isHidden = viewModel.relayCountry != nil
             cityNameLabel.text = viewModel.city
-            cityNameLabel.isHidden = viewModel.viaCountry != nil
-            secureView.isHidden = viewModel.viaCountry == nil
+            cityNameLabel.isHidden = viewModel.relayCountry != nil
+            secureView.isHidden = viewModel.relayCountry == nil
 
             smartIV.isHidden = !viewModel.isSmartAvailable
             torIV.isHidden = !viewModel.torAvailable
@@ -85,8 +85,8 @@ public final class ServerCell: UITableViewCell {
                 view?.alpha = viewModel.alphaOfMainElements
             }
 
-            if let viaCountry = viewModel.viaCountry {
-                setupSecureCore(country: viaCountry.name, countryCode: viaCountry.code)
+            if let relayCountry = viewModel.relayCountry {
+                setupSecureCore(country: relayCountry.name, flag: relayCountry.flag)
             }
 
             DispatchQueue.main.async { [weak self] in
@@ -140,8 +140,8 @@ public final class ServerCell: UITableViewCell {
         }
     }
 
-    private func setupSecureCore( country: String, countryCode: String ) {
+    private func setupSecureCore(country: String, flag: UIImage?) {
         secureCountryLbl.text = LocalizedString.via + " " + country.uppercased()
-        secureCoreIV.image = UIImage(named: countryCode.lowercased() + "-plain")
+        secureCoreIV.image = flag
     }
 }
