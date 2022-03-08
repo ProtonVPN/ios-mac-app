@@ -28,6 +28,7 @@ public final class SearchCoordinator {
     private let storyboard: UIStoryboard
     private let recentSearchesService: RecentSearchesService
     private let configuration: Configuration
+    private var searchViewController: SearchViewController?
 
     public weak var delegate: SearchCoordinatorDelegate?
 
@@ -48,6 +49,16 @@ public final class SearchCoordinator {
         searchViewController.delegate = self
         searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data, constants: configuration.constants, mode: mode)
         navigationController.pushViewController(searchViewController, animated: true)
+        self.searchViewController = searchViewController
+    }
+
+    public func reload(data: [CountryViewModel], mode: SearchMode) {
+        guard let searchViewController = searchViewController else {
+            return
+        }
+
+        searchViewController.viewModel.reload(data: data, mode: mode)
+        searchViewController.reload()
     }
 }
 

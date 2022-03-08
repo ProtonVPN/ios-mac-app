@@ -34,8 +34,8 @@ final class SearchViewModel {
         }
     }
 
-    private let data: [CountryViewModel]
-    private let mode: SearchMode
+    private(set) var data: [CountryViewModel]
+    private(set) var mode: SearchMode
     private let constants: Constants
 
     weak var delegate: SearchViewModelDelegate?
@@ -56,13 +56,18 @@ final class SearchViewModel {
 
     // MARK: Actions
 
+    func reload(data: [CountryViewModel], mode: SearchMode) {
+        self.data = data
+        self.mode = mode
+    }
+
     func clearRecentSearches() {
         recentSearchesService.clear()
         status = .placeholder
     }
 
-    func search(searchText: String) {
-        guard !searchText.isEmpty else {
+    func search(searchText: String?) {
+        guard let searchText = searchText, !searchText.isEmpty else {
             let recent = recentSearchesService.get()
             status = recent.isEmpty ? .placeholder : .recentSearches(recent)
             return
