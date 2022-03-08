@@ -35,6 +35,8 @@ public final class ServerCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
+    // MARK: Outlets
+
     @IBOutlet private weak var serverNameLabel: UILabel!
     @IBOutlet private weak var cityNameLabel: UILabel!
     @IBOutlet private weak var loadLbl: UILabel!
@@ -50,6 +52,8 @@ public final class ServerCell: UITableViewCell {
     @IBOutlet private weak var secureCountryLbl: UILabel!
     @IBOutlet private weak var secureCoreIV: UIImageView!
     @IBOutlet private weak var connectButton: UIButton!
+
+    // MARK: Properties
 
     public weak var delegate: ServerCellDelegate?
 
@@ -91,6 +95,8 @@ public final class ServerCell: UITableViewCell {
         }
     }
 
+    // MARK: Actions
+
     func connect() {
         viewModel?.connectAction()
         stateChanged()
@@ -115,6 +121,8 @@ public final class ServerCell: UITableViewCell {
     @IBAction func connectButtonTap(_ sender: Any) {
         connect()
     }
+
+    // MARK: Setup
 
     private func stateChanged() {
         renderConnectButton()

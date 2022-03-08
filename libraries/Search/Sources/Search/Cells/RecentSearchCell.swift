@@ -39,6 +39,8 @@ final class RecentSearchCell: UITableViewCell {
         }
     }
 
+    // MARK: Setup
+
     override func awakeFromNib() {
         super.awakeFromNib()
 

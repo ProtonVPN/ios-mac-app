@@ -67,3 +67,17 @@ let textButtonStyle: (UIButton) -> Void = {
 let cellHeaderStyle = concat(subtitleStyle, and: {
     $0.textAlignment = .left
 })
+
+let upsellViewStyle: (UIView) -> Void = {
+    $0.backgroundColor = colors.secondaryBackground
+    $0.layer.cornerRadius = 12
+}
+
+let upsellSubtitleStyle = concat(baseTextStyle, and: {
+    $0.textColor = colors.weakText
+    $0.font = UIFont.systemFont(ofSize: 13)
+})
+
+let upsellTitleStyle = concat(baseTextStyle, and: {
+    $0.font = UIFont.systemFont(ofSize: 15)
+})

@@ -21,17 +21,21 @@ import UIKit
 
 public protocol SearchCoordinatorDelegate: AnyObject {
     func userDidSelectCountry(model: CountryViewModel)
+    func userDidRequestPlanPurchase()
 }
 
 public final class SearchCoordinator {
     private let storyboard: UIStoryboard
     private let recentSearchesService: RecentSearchesService
+    private let configuration: Configuration
 
     public weak var delegate: SearchCoordinatorDelegate?
 
     // MARK: Setup
 
     public init(configuration: Configuration) {
+        self.configuration = configuration
+
         colors = configuration.colors
         recentSearchesService = RecentSearchesService()
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
@@ -42,12 +46,16 @@ public final class SearchCoordinator {
     public func start(navigationController: UINavigationController, data: [CountryViewModel]) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
         searchViewController.delegate = self
-        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data)
+        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data, isFreeUser: configuration.isFreeUser, constants: configuration.constants)
         navigationController.pushViewController(searchViewController, animated: true)
     }
 }
 
 extension SearchCoordinator: SearchViewControllerDelegate {
+    func userDidRequestPlanPurchase() {
+        delegate?.userDidRequestPlanPurchase()
+    }
+
     public func userDidSelectCountry(model: CountryViewModel) {
         delegate?.userDidSelectCountry(model: model)
     }

@@ -35,12 +35,20 @@ final class SearchViewModel {
     }
 
     private let data: [CountryViewModel]
+    private let isFreeUser: Bool
+    private let constants: Constants
 
     weak var delegate: SearchViewModelDelegate?
 
-    init(recentSearchesService: RecentSearchesService, data: [CountryViewModel]) {
+    var numberOfServers: Int {
+        return constants.numberOfCountries
+    }
+
+    init(recentSearchesService: RecentSearchesService, data: [CountryViewModel], isFreeUser: Bool, constants: Constants) {
         self.data = data
         self.recentSearchesService = recentSearchesService
+        self.isFreeUser = isFreeUser
+        self.constants = constants
 
         let recent = recentSearchesService.get()
         status = recent.isEmpty ? .placeholder : .recentSearches(recent)
@@ -89,7 +97,9 @@ final class SearchViewModel {
                 results.append(SearchResult.servers(tier: tier, servers: tierServers))
             }
         }
-        status = results.isEmpty ? .noResults : .results(results)
+
+        let freeSection = isFreeUser ? [SearchResult.upsell] : []
+        status = results.isEmpty ? .noResults : .results(freeSection + results)
     }
 
     func saveSearch(searchText: String) {

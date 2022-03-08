@@ -38,7 +38,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         case .searching, .noResults, .placeholder:
             fatalError("Invalid usage")
         case let .recentSearches(data):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.identifier)  as? RecentSearchCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.identifier) as? RecentSearchCell else {
                 fatalError("Invalid configuration")
             }
             cell.title = data[indexPath.row]
@@ -47,16 +47,22 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             let item = data[indexPath.section]
             switch item {
             case let .countries(countries):
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier)  as? CountryCell else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
                     fatalError("Invalid configuration")
                 }
                 cell.viewModel = countries[indexPath.row]
                 return cell
             case let .servers(tier: _, servers: servers):
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier)  as? ServerCell else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
                     fatalError("Invalid configuration")
                 }
                 cell.viewModel = servers[indexPath.row]
+                return cell
+            case .upsell:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellCell.identifier) as? UpsellCell else {
+                    fatalError("Invalid configuration")
+                }
+                cell.numberOfServers = viewModel.numberOfServers
                 return cell
             }
         }
@@ -103,6 +109,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             switch item {
             case let .countries(countries):
                 delegate?.userDidSelectCountry(model: countries[indexPath.row])
+            case .upsell:
+                delegate?.userDidRequestPlanPurchase()
             case .servers:
                 break
             }
@@ -120,6 +128,23 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 return 64
             case .servers:
                 return 60
+            case .upsell:
+                return UITableView.automaticDimension
+            }
+        }
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch viewModel.status {
+        case .searching, .noResults, .placeholder, .recentSearches:
+            return UITableView.automaticDimension
+        case let .results(data):
+            let item = data[section]
+            switch item {
+            case .upsell:
+                return 0
+            case .countries, .servers:
+                return UITableView.automaticDimension
             }
         }
     }

@@ -17,12 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import Modals
+import Modals_iOS
 import Search
 
 final class ViewController: UIViewController {
     @IBOutlet private weak var freeUserSwitch: UISwitch!
 
     private var coordinator: SearchCoordinator?
+    private let modals = ModalsFactory(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)))
 
     override func viewDidLoad() {
         super.viewDidLoad()        
@@ -36,7 +39,7 @@ final class ViewController: UIViewController {
     }
 
     @IBAction private func searchTapped(_ sender: Any) {
-        coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)), isFreeUser: freeUserSwitch.isOn))
+        coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)), constants: Constants(numberOfCountries: 61), isFreeUser: freeUserSwitch.isOn))
         coordinator?.delegate = self
         coordinator?.start(navigationController: self.navigationController!, data: createData())
     }
@@ -77,6 +80,12 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: SearchCoordinatorDelegate {
+    func userDidRequestPlanPurchase() {
+        let upsell = UpsellType.allCountries(numberOfDevices: 10, numberOfServers: 1600, numberOfCountries: 61)
+        let upsellViewController = modals.upsellViewController(upsellType: upsell)
+        navigationController?.present(upsellViewController, animated: true, completion: nil)
+    }
+
     func userDidSelectCountry(model: CountryViewModel) {
 
     }

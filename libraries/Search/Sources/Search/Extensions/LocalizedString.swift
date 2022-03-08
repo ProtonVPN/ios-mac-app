@@ -56,6 +56,12 @@ public enum LocalizedString {
   public static var searchSubtitle: String { return LocalizedString.tr("Localizable", "search_subtitle") }
   /// Search
   public static var searchTitle: String { return LocalizedString.tr("Localizable", "search_title") }
+  /// Connect to what you are searching for
+  public static var searchUpsellSubtitle: String { return LocalizedString.tr("Localizable", "search_upsell_subtitle") }
+  /// Plural format key: "Get full access of %#@num_countries@"
+  public static func searchUpsellTitle(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "search_upsell_title", p1)
+  }
   /// US regions
   public static var searchUsRegions: String { return LocalizedString.tr("Localizable", "search_us_regions") }
   /// California, Florida, Colorado...
