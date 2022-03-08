@@ -20,15 +20,12 @@ import Foundation
 
 final class RecentSearchesService {
     private var data: [String] = []
-    private let key = "RECENT_SEARCHES"
     private let maxCount = 5
+    private let storage: SearchStorage
 
-    init() {
-        guard let serialized = UserDefaults.standard.data(forKey: key), let data = try? JSONDecoder().decode([String].self, from: serialized) else {
-            return
-        }
-
-        self.data = data
+    init(storage: SearchStorage) {
+        self.storage = storage
+        self.data = storage.get()
     }
 
     func get() -> [String] {
@@ -53,14 +50,10 @@ final class RecentSearchesService {
 
     private func save() {
         guard !data.isEmpty else {
-            UserDefaults.standard.removeObject(forKey: key)
+            storage.clear()
             return
         }
 
-        guard let serialized = try? JSONEncoder().encode(data) else {
-            return
-        }
-
-        UserDefaults.standard.set(serialized, forKey: key)
+        storage.save(data: data)
     }
 }

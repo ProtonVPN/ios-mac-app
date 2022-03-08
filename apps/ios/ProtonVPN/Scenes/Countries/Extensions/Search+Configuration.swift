@@ -26,3 +26,28 @@ extension Configuration {
         self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), secondaryBackground: .secondaryBackgroundColor()), constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
     }
 }
+
+protocol SearchStorageFactory: AnyObject {
+    func makeSearchStorage() -> SearchStorage
+}
+
+final class SearchModuleStorage: SearchStorage {
+    private let storage: Storage
+    private let key = "RECENT_SEARCHES"
+
+    init(storage: Storage) {
+        self.storage = storage
+    }
+
+    func clear() {
+        storage.removeObject(forKey: key)
+    }
+
+    func get() -> [String] {
+        return storage.getDecodableValue([String].self, forKey: key) ?? []
+    }
+
+    func save(data: [String]) {
+        storage.setEncodableValue(data, forKey: key)
+    }
+}
