@@ -38,6 +38,10 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         _ = searchBar.resignFirstResponder()
     }
+
+    func reload() {
+        viewModel.search(searchText: searchBar.text)
+    }
 }
 
 // MARK: Recent searches delegate

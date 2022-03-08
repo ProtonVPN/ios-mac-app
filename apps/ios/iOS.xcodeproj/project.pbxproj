@@ -468,6 +468,8 @@
 		F31E911D2758F5CF00140B2E /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911B2758F5CF00140B2E /* Logger+Callers.swift */; };
 		F31E91202758F5F900140B2E /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911F2758F5F900140B2E /* WGLogger.swift */; };
 		F345502E27D26EA2005AFC4D /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F345502D27D26EA2005AFC4D /* Search */; };
+		F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
+		F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
@@ -1007,6 +1009,7 @@
 		F31E911A2758F5CE00140B2E /* Logger+Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Categories.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Categories.swift"; sourceTree = "<group>"; };
 		F31E911B2758F5CF00140B2E /* Logger+Callers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Callers.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Callers.swift"; sourceTree = "<group>"; };
 		F31E911F2758F5F900140B2E /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
+		F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CountriesViewController+Search.swift"; path = "../../../../../ios/ProtonVPN/Scenes/Countries/ViewControllers/CountriesViewController+Search.swift"; sourceTree = "<group>"; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Flag.swift"; path = "../../../ios/ProtonVPN/Extensions/UIImage+Flag.swift"; sourceTree = "<group>"; };
@@ -2039,6 +2042,7 @@
 			isa = PBXGroup;
 			children = (
 				D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */,
+				F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */,
 				D5BCDD2825307681004BAEE8 /* CountryViewController.swift */,
 			);
 			path = ViewControllers;
@@ -3220,6 +3224,7 @@
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
 				E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */,
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
+				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
 				F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */,
@@ -3460,6 +3465,7 @@
 				D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */,
 				D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */,
 				D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */,
+				F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */,
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,

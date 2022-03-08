@@ -35,11 +35,7 @@ final class CountriesViewController: UIViewController {
     var viewModel: CountriesViewModel!
     var connectionBarViewController: ConnectionBarViewController?
 
-    private lazy var coordinator: SearchCoordinator = {
-        let coordinator = SearchCoordinator(configuration: Configuration(), storage: viewModel.searchStorage)
-        coordinator.delegate = self
-        return coordinator
-    }()
+    var coordinator: SearchCoordinator?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,7 +49,10 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.contentChanged = { [weak self] in self?.contentChanged() }
+        viewModel.contentChanged = { [weak self] in
+            self?.contentChanged()
+            self?.reloadSearch()
+        }
         setupView()
         setupConnectionBar()
         setupSecureCoreBar()
@@ -139,23 +138,7 @@ final class CountriesViewController: UIViewController {
         tableView.reloadData()
     }
 
-    @objc private func showSearch() {
-        guard let navigationController = navigationController else {
-            return
-        }
-
-        let mode: SearchMode
-        if viewModel.isFreeUser {
-            mode = .freeUser
-        } else if viewModel.secureCoreOn {
-            mode = .secureCore
-        } else {
-            mode = .standard
-        }
-        coordinator.start(navigationController: navigationController, data: viewModel.searchData, mode: mode)
-    }
-
-    private func showCountry(cellModel: CountryItemViewModel) {
+    func showCountry(cellModel: CountryItemViewModel) {
         if cellModel.isUsersTierTooLow {
             viewModel.presentAllCountriesUpsell()
             return
@@ -212,19 +195,5 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.1
-    }
-}
-
-extension CountriesViewController: SearchCoordinatorDelegate {
-    func userDidRequestPlanPurchase() {
-        viewModel.presentAllCountriesUpsell()
-    }
-
-    func userDidSelectCountry(model: CountryViewModel) {
-        guard let cellModel = model as? CountryItemViewModel else {
-            return
-        }
-
-        showCountry(cellModel: cellModel)
     }
 }

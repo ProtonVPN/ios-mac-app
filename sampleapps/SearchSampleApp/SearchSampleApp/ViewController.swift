@@ -54,8 +54,8 @@ final class ViewController: UIViewController {
         }
     }
 
-    private func createData() -> [CountryItemViewModel] {
-        let tier = createMode() == .freeUser ? ServerTier.free : ServerTier.plus
+    private func createData(forceTier: ServerTier? = nil) -> [CountryItemViewModel] {
+        let tier = forceTier ?? (createMode() == .freeUser ? ServerTier.free : ServerTier.plus)
 
         return [
             CountryItemViewModel(country: "Switzerland", servers: [
@@ -93,10 +93,22 @@ extension ViewController: SearchCoordinatorDelegate {
     func userDidRequestPlanPurchase() {
         let upsell = UpsellType.allCountries(numberOfDevices: 10, numberOfServers: 1600, numberOfCountries: 61)
         let upsellViewController = modals.upsellViewController(upsellType: upsell)
+        upsellViewController.delegate = self
         navigationController?.present(upsellViewController, animated: true, completion: nil)
     }
 
     func userDidSelectCountry(model: CountryViewModel) {
 
+    }
+}
+
+extension ViewController: UpsellViewControllerDelegate {
+    func userDidRequestPlus() {
+        coordinator.reload(data: createData(forceTier: .plus), mode: createMode())
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+
+    func userDidDismissUpsell() {
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
