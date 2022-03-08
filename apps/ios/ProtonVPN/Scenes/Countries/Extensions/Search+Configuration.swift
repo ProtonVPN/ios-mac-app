@@ -22,7 +22,7 @@ import vpncore
 import UIKit
 
 extension Configuration {
-    init() {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()))
+    init(isFreeUser: Bool) {
+        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()), isFreeUser: isFreeUser)
     }
 }

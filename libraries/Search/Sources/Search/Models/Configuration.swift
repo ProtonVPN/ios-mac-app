@@ -35,8 +35,10 @@ public struct Colors {
 
 public struct Configuration {
     let colors: Colors
+    let isFreeUser: Bool
 
-    public init(colors: Colors) {
+    public init(colors: Colors, isFreeUser: Bool) {
         self.colors = colors
+        self.isFreeUser = isFreeUser
     }
 }
