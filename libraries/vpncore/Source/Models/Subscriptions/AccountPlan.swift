@@ -27,9 +27,13 @@ public enum AccountPlan: String {
     case basic = "vpnbasic"
     case plus = "vpnplus"
     case visionary = "visionary"
+    case visionary2022 = "visionary2022"
     case trial = "trial"
     case unlimited = "bundle2022"
     case vpnPlus = "vpn2022"
+    case family = "family2022"
+    case bundlePro = "bundlepro2022"
+    case enterprise2022 = "enterprise2022"
     
     public var paid: Bool {
         switch self {
@@ -48,7 +52,7 @@ public enum AccountPlan: String {
             return "ProtonVPN Basic"
         case .plus:
             return "ProtonVPN Plus"
-        case .visionary:
+        case .visionary, .visionary2022:
             return "Proton Visionary"
         case .trial:
             return "ProtonVPN Plus Trial"
@@ -56,12 +60,18 @@ public enum AccountPlan: String {
             return "Proton Unlimited"
         case .vpnPlus:
             return "VPN Plus"
+        case .family:
+            return "Proton Family"
+        case .bundlePro:
+            return "Business"
+        case .enterprise2022:
+            return "Enterprise"
         }
     }
     
     public var devicesCount: Int {
         switch self {
-        case .plus, .visionary, .vpnPlus, .unlimited:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
             return 10
         case .basic:
             return 2
@@ -72,7 +82,7 @@ public enum AccountPlan: String {
 
     public var countriesCount: Int {
         switch self {
-        case .plus, .visionary, .vpnPlus, .unlimited:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
             return 61
         case .basic:
             return 40
@@ -83,7 +93,7 @@ public enum AccountPlan: String {
 
     public var serversCount: Int {
         switch self {
-        case .plus, .visionary, .vpnPlus, .unlimited:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
             return 1600
         case .basic:
             return 400
@@ -98,9 +108,9 @@ public enum AccountPlan: String {
             return CoreAppConstants.VpnTiers.free
         case .basic:
             return CoreAppConstants.VpnTiers.basic
-        case .plus, .vpnPlus:
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
             return CoreAppConstants.VpnTiers.plus
-        case .visionary, .unlimited:
+        case .visionary, .unlimited, .visionary2022:
             return CoreAppConstants.VpnTiers.visionary
         }
     }
