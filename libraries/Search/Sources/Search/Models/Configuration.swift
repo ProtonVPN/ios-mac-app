@@ -19,26 +19,38 @@
 import Foundation
 import UIKit
 
+public struct Constants {
+    let numberOfCountries: Int
+
+    public init(numberOfCountries: Int) {
+        self.numberOfCountries = numberOfCountries
+    }
+}
+
 public struct Colors {
     let background: UIColor
     let text: UIColor
     let brand: UIColor
     let weakText: UIColor
+    let secondaryBackground: UIColor
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, secondaryBackground: UIColor) {
         self.background = background
         self.text = text
         self.brand = brand
         self.weakText = weakText
+        self.secondaryBackground = secondaryBackground
     }
 }
 
 public struct Configuration {
     let colors: Colors
     let isFreeUser: Bool
+    let constants: Constants
 
-    public init(colors: Colors, isFreeUser: Bool) {
+    public init(colors: Colors, constants: Constants, isFreeUser: Bool) {
         self.colors = colors
+        self.constants = constants
         self.isFreeUser = isFreeUser
     }
 }

@@ -31,6 +31,8 @@ public final class CountryCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
+    // MARK: Outlets
+
     @IBOutlet private weak var flagIcon: UIImageView!
     @IBOutlet private weak var countryName: UILabel!
 
@@ -41,6 +43,8 @@ public final class CountryCell: UITableViewCell {
     @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private var rightMarginConstraint: NSLayoutConstraint!
     @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!
+
+    // MARK: Properties
 
     public var viewModel: CountryViewModel? {
         didSet {
@@ -69,9 +73,13 @@ public final class CountryCell: UITableViewCell {
         }
     }
 
+    // MARK: Actions
+
     @IBAction private func connectTapped(_ sender: Any) {
         viewModel?.connectAction()
     }
+
+    // MARK: Setup
 
     override public func awakeFromNib() {
         super.awakeFromNib()

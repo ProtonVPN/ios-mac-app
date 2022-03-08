@@ -38,17 +38,20 @@ extension ServerTier {
 }
 
 enum SearchResult {
+    case upsell
     case countries([CountryViewModel])
     case servers(tier: ServerTier, servers: [ServerViewModel])
 }
 
 extension SearchResult {
-    var title: String {
+    var title: String? {
         switch self {
         case let .countries(data):
             return LocalizedString.searchResultsCountries("\(data.count)")
         case let .servers(tier: tier, servers: data):
             return "\(tier.title) (\(data.count))"
+        case .upsell:
+            return nil
         }
     }
 
@@ -58,6 +61,8 @@ extension SearchResult {
             return data.count
         case let .servers(tier: _, servers: data):
             return data.count
+        case .upsell:
+            return 1
         }
     }
 }

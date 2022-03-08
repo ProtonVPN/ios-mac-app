@@ -23,6 +23,6 @@ import UIKit
 
 extension Configuration {
     init(isFreeUser: Bool) {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor()), isFreeUser: isFreeUser)
+        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), secondaryBackground: .secondaryBackgroundColor()), constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount), isFreeUser: isFreeUser)
     }
 }

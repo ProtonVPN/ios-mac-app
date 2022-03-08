@@ -204,6 +204,10 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension CountriesViewController: SearchCoordinatorDelegate {
+    func userDidRequestPlanPurchase() {
+        viewModel.presentAllCountriesUpsell()
+    }
+
     func userDidSelectCountry(model: CountryViewModel) {
         guard let cellModel = model as? CountryItemViewModel else {
             return

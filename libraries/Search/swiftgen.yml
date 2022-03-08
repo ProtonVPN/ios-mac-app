@@ -1,6 +1,7 @@
 strings:
   inputs: 
     - Sources/Search/Resources/en.lproj/Localizable.strings
+    - Sources/Search/Resources/en.lproj/Localizable.stringsdict
   outputs:
     params:
       publicAccess: true

@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 08.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,24 +18,26 @@
 
 import UIKit
 
-final class RecentSearchCell: UITableViewCell {
-    static var identifier: String {
+final class UpsellCell: UITableViewCell {
+    public static var identifier: String {
         return String(describing: self)
     }
 
-    static var nib: UINib {
+    public static var nib: UINib {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets
 
+    @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var mainView: UIView!
 
     // MARK: Properties
 
-    var title: String? {
+    var numberOfServers: Int = 0 {
         didSet {
-            titleLabel.text = title
+            titleLabel.text = LocalizedString.searchUpsellTitle(numberOfServers)
         }
     }
 
@@ -44,8 +46,12 @@ final class RecentSearchCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        selectionStyle = .none
         baseViewStyle(self)
-        cellHeaderStyle(titleLabel)
+        baseViewStyle(contentView)
+        upsellViewStyle(mainView)
+        upsellSubtitleStyle(subtitleLabel)
+        upsellTitleStyle(titleLabel)
+
+        subtitleLabel.text = LocalizedString.searchUpsellSubtitle
     }
 }
