@@ -25,15 +25,32 @@
                                     <action selector="searchTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="W1q-AO-KcK"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2Ba-hY-twR">
+                                <rect key="frame" x="16" y="421" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Free user" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWu-mF-qY9">
+                                <rect key="frame" x="81" y="426" width="317" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cWu-mF-qY9" secondAttribute="trailing" constant="16" id="Aiy-fx-JUD"/>
+                            <constraint firstItem="Mt2-Mr-z6Y" firstAttribute="top" secondItem="2Ba-hY-twR" secondAttribute="bottom" constant="8" id="DtG-8L-owt"/>
+                            <constraint firstItem="cWu-mF-qY9" firstAttribute="leading" secondItem="2Ba-hY-twR" secondAttribute="trailing" constant="16" id="Ofw-Z2-gxd"/>
+                            <constraint firstItem="2Ba-hY-twR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Trp-2f-C0c"/>
                             <constraint firstItem="Mt2-Mr-z6Y" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="fR3-yQ-H7I"/>
                             <constraint firstItem="Mt2-Mr-z6Y" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="lff-K5-P3r"/>
+                            <constraint firstItem="cWu-mF-qY9" firstAttribute="centerY" secondItem="2Ba-hY-twR" secondAttribute="centerY" id="tzP-xS-S58"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nmm-0h-Pio"/>
+                    <connections>
+                        <outlet property="freeUserSwitch" destination="2Ba-hY-twR" id="R80-LG-y40"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

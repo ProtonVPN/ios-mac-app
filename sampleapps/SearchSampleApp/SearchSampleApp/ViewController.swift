@@ -20,37 +20,9 @@ import UIKit
 import Search
 
 final class ViewController: UIViewController {
-    private var coordinator: SearchCoordinator?
+    @IBOutlet private weak var freeUserSwitch: UISwitch!
 
-    private let data: [CountryItemViewModel] = [
-        CountryItemViewModel(country: "Switzerland", servers: [
-            ServerTier.basic: [
-                ServerItemViewModel(server: "CH#1", city: "Geneva"),
-                ServerItemViewModel(server: "CH#2", city: "Geneva")
-            ],
-            ServerTier.plus: [
-                ServerItemViewModel(server: "CH#3", city: "Zurich")
-            ]
-        ]),
-        CountryItemViewModel(country: "United States", servers: [
-            ServerTier.basic: [
-                ServerItemViewModel(server: "NY#1", city: "New York"),
-                ServerItemViewModel(server: "NY#2", city: "New York")
-            ],
-            ServerTier.plus: [
-                ServerItemViewModel(server: "WA#3", city: "Seatle")
-            ]
-        ]),
-        CountryItemViewModel(country: "Czechia", servers: [
-            ServerTier.basic: [
-                ServerItemViewModel(server: "CZ#1", city: "Prague"),
-                ServerItemViewModel(server: "CZ#2", city: "Brno")
-            ],
-            ServerTier.plus: [
-                ServerItemViewModel(server: "CZ#3", city: "Prague")
-            ]
-        ])
-    ]
+    private var coordinator: SearchCoordinator?
 
     override func viewDidLoad() {
         super.viewDidLoad()        
@@ -60,13 +32,47 @@ final class ViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.isTranslucent = false
 
-        view.backgroundColor = .black
+        title = "Search sample app"
     }
 
     @IBAction private func searchTapped(_ sender: Any) {
-        coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1))))
+        coordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)), isFreeUser: freeUserSwitch.isOn))
         coordinator?.delegate = self
-        coordinator?.start(navigationController: self.navigationController!, data: data)
+        coordinator?.start(navigationController: self.navigationController!, data: createData())
+    }
+
+    private func createData() -> [CountryItemViewModel] {
+        let tier = freeUserSwitch.isOn ? ServerTier.free : ServerTier.plus
+
+        return [
+            CountryItemViewModel(country: "Switzerland", servers: [
+                ServerTier.basic: [
+                    ServerItemViewModel(server: "CH#1", city: "Geneva"),
+                    ServerItemViewModel(server: "CH#2", city: "Geneva")
+                ],
+                tier: [
+                    ServerItemViewModel(server: "CH#3", city: "Zurich")
+                ]
+            ]),
+            CountryItemViewModel(country: "United States", servers: [
+                ServerTier.basic: [
+                    ServerItemViewModel(server: "NY#1", city: "New York"),
+                    ServerItemViewModel(server: "NY#2", city: "New York")
+                ],
+                tier: [
+                    ServerItemViewModel(server: "WA#3", city: "Seatle")
+                ]
+            ]),
+            CountryItemViewModel(country: "Czechia", servers: [
+                ServerTier.basic: [
+                    ServerItemViewModel(server: "CZ#1", city: "Prague"),
+                    ServerItemViewModel(server: "CZ#2", city: "Brno")
+                ],
+                tier: [
+                    ServerItemViewModel(server: "CZ#3", city: "Prague")
+                ]
+            ])
+        ]
     }
 }
 
