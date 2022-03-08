@@ -781,6 +781,19 @@ public class AnnouncmentOfferAlert: SystemAlert {
     }
 }
 
+public class DiscourageSecureCoreAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var onDontShowAgain: ((Bool) -> Void)?
+    public var onActivate: (() -> Void)?
+    public var onLearnMore: (() -> Void)?
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}
+
 public class UpsellAlert: SystemAlert {
     public var title: String?
     public var message: String?

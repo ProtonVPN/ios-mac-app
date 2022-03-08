@@ -10,6 +10,18 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum LocalizedString {
+  /// Cancel
+  public static var modalsCommonCancel: String { return LocalizedString.tr("Localizable", "modals_common_cancel") }
+  /// Learn more
+  public static var modalsCommonLearnMore: String { return LocalizedString.tr("Localizable", "modals_common_learn_more") }
+  /// Activate Secure Core
+  public static var modalsDiscourageSecureCoreActivate: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_activate") }
+  /// Don’t show again
+  public static var modalsDiscourageSecureCoreDontShow: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_dont_show") }
+  /// Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.
+  public static var modalsDiscourageSecureCoreSubtitle: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_subtitle") }
+  /// A note about speed...
+  public static var modalsDiscourageSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_title") }
   /// Upgrade
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
   /// Browse at the highest speeds (10 Gbps)

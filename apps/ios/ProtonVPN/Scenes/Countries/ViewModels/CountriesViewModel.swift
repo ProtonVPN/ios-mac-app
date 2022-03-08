@@ -74,7 +74,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    internal lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     internal lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()

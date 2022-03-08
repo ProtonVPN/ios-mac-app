@@ -84,7 +84,8 @@ final class CountriesViewController: UIViewController {
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
         secureCoreSwitch.tapped = { [weak self] in
-            self?.viewModel?.toggleState { [weak self] succeeded in
+            let toOn = self?.viewModel?.secureCoreOn == true
+            self?.viewModel?.toggleState(toOn: !toOn) { [weak self] succeeded in
                 DispatchQueue.main.async {
                     guard let self = self else {
                         return
