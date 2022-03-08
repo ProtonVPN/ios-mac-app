@@ -43,10 +43,10 @@ public final class SearchCoordinator {
 
     // MARK: Actions
 
-    public func start(navigationController: UINavigationController, data: [CountryViewModel]) {
+    public func start(navigationController: UINavigationController, data: [CountryViewModel], mode: SearchMode) {
         let searchViewController = storyboard.instantiate(controllerType: SearchViewController.self)
         searchViewController.delegate = self
-        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data, isFreeUser: configuration.isFreeUser, constants: configuration.constants)
+        searchViewController.viewModel = SearchViewModel(recentSearchesService: recentSearchesService, data: data, constants: configuration.constants, mode: mode)
         navigationController.pushViewController(searchViewController, animated: true)
     }
 }

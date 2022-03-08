@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 08.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,12 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Search
-import vpncore
-import UIKit
 
-extension Configuration {
-    init() {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), secondaryBackground: .secondaryBackgroundColor()), constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
-    }
+public enum SearchMode {
+    case standard
+    case freeUser
+    case secureCore
 }

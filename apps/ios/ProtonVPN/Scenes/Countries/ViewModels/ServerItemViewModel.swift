@@ -239,4 +239,16 @@ extension ServerItemViewModel: ServerViewModel {
     var connectButtonColor: UIColor {
         return connectedUiState ? .brandColor() : (underMaintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
     }
+
+    var relayCountry: (name: String, flag: UIImage?)? {
+        return viaCountry.map({ ($0.0, UIImage(named: $0.1.lowercased() + "-plain")) })
+    }
+
+    var countryName: String {
+        return LocalizationUtility.default.countryName(forCode: serverModel.countryCode) ?? ""
+    }
+
+    var countryFlag: UIImage? {
+        return UIImage(named: serverModel.countryCode.lowercased() + "-plain")
+    }
 }

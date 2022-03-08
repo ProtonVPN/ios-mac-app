@@ -35,7 +35,7 @@ final class SearchViewModel {
     }
 
     private let data: [CountryViewModel]
-    private let isFreeUser: Bool
+    private let mode: SearchMode
     private let constants: Constants
 
     weak var delegate: SearchViewModelDelegate?
@@ -44,10 +44,10 @@ final class SearchViewModel {
         return constants.numberOfCountries
     }
 
-    init(recentSearchesService: RecentSearchesService, data: [CountryViewModel], isFreeUser: Bool, constants: Constants) {
+    init(recentSearchesService: RecentSearchesService, data: [CountryViewModel], constants: Constants, mode: SearchMode) {
         self.data = data
         self.recentSearchesService = recentSearchesService
-        self.isFreeUser = isFreeUser
+        self.mode = mode
         self.constants = constants
 
         let recent = recentSearchesService.get()
@@ -78,27 +78,36 @@ final class SearchViewModel {
 
         var results: [SearchResult] = []
         let countries = data.filter({ filter($0.description) })
-        if !countries.isEmpty {
-            results.append(SearchResult.countries(countries))
-        }
-        var servers: [ServerTier: [ServerViewModel]] = [:]
-        for tier in ServerTier.allCases {
-            servers[tier] = []
-        }
-        for country in data {
-            let groups = country.getServers()
-            for (key, values) in groups {
-                servers[key]?.append(contentsOf: values)
+
+        switch mode {
+        case .standard, .freeUser:
+            if !countries.isEmpty {
+                results.append(SearchResult.countries(countries: countries))
             }
-        }
-        for tier in servers.keys {
-            let tierServers = servers[tier]?.filter({ filter($0.description) }) ?? []
-            if !tierServers.isEmpty {
-                results.append(SearchResult.servers(tier: tier, servers: tierServers))
+            var servers: [ServerTier: [ServerViewModel]] = [:]
+            for tier in ServerTier.allCases {
+                servers[tier] = []
+            }
+            for country in data {
+                let groups = country.getServers()
+                for (key, values) in groups {
+                    servers[key]?.append(contentsOf: values)
+                }
+            }
+            for tier in servers.keys {
+                let tierServers = servers[tier]?.filter({ filter($0.description) }) ?? []
+                if !tierServers.isEmpty {
+                    results.append(SearchResult.servers(tier: tier, servers: tierServers))
+                }
+            }
+        case .secureCore:
+            if !countries.isEmpty {
+                let servers = countries.flatMap({ $0.getServers().flatMap { $0.1 } })
+                results.append(SearchResult.secureCoreCountries(servers: servers))
             }
         }
 
-        let freeSection = isFreeUser ? [SearchResult.upsell] : []
+        let freeSection = mode == .freeUser ? [SearchResult.upsell] : []
         status = results.isEmpty ? .noResults : .results(freeSection + results)
     }
 

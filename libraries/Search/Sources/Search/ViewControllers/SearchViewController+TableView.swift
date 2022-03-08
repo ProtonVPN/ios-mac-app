@@ -46,13 +46,19 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         case let .results(data):
             let item = data[indexPath.section]
             switch item {
-            case let .countries(countries):
+            case let .countries(countries: countries):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
                     fatalError("Invalid configuration")
                 }
                 cell.viewModel = countries[indexPath.row]
                 return cell
             case let .servers(tier: _, servers: servers):
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
+                    fatalError("Invalid configuration")
+                }
+                cell.viewModel = servers[indexPath.row]
+                return cell
+            case let .secureCoreCountries(servers: servers):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
                     fatalError("Invalid configuration")
                 }
@@ -111,7 +117,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 delegate?.userDidSelectCountry(model: countries[indexPath.row])
             case .upsell:
                 delegate?.userDidRequestPlanPurchase()
-            case .servers:
+            case .servers, .secureCoreCountries:
                 break
             }
         }
@@ -126,7 +132,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             switch item {
             case .countries:
                 return 64
-            case .servers:
+            case .servers, .secureCoreCountries:
                 return 60
             case .upsell:
                 return UITableView.automaticDimension
@@ -143,7 +149,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             switch item {
             case .upsell:
                 return 0
-            case .countries, .servers:
+            case .countries, .servers, .secureCoreCountries:
                 return UITableView.automaticDimension
             }
         }

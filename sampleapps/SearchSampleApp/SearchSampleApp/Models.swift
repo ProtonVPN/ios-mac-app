@@ -77,13 +77,15 @@ final class ServerItemViewModel: ServerViewModel {
 
     let connectIcon: UIImage? = UIImage(named: "con-available")
 
-    let textInPlaceOfConnectIcon: String? = nil
+    var textInPlaceOfConnectIcon: String? {
+        return isUsersTierTooLow ? "UPGRADE" : nil
+    }
 
     var connectionChanged: (() -> Void)?
 
     let alphaOfMainElements: CGFloat = 1
 
-    let isUsersTierTooLow: Bool = false
+    let isUsersTierTooLow: Bool
 
     let underMaintenance: Bool = false
 
@@ -95,7 +97,11 @@ final class ServerItemViewModel: ServerViewModel {
 
     let city: String
 
-    let viaCountry: (name: String, code: String)? = nil
+    let relayCountry: (name: String, flag: UIImage?)? = nil
+
+    let countryFlag: UIImage? = UIImage(named: "ch-plain")
+
+    let countryName: String
 
     func updateTier() {
 
@@ -105,8 +111,10 @@ final class ServerItemViewModel: ServerViewModel {
 
     }
 
-    init(server: String, city: String) {
+    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false) {
         description = server
         self.city = city
+        self.countryName = countryName
+        self.isUsersTierTooLow = isUsersTierTooLow
     }
 }
