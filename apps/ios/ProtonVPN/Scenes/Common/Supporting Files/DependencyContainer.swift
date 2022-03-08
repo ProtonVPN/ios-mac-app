@@ -24,6 +24,7 @@ import Foundation
 import vpncore
 import KeychainAccess
 import BugReport
+import Search
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -112,6 +113,7 @@ final class DependencyContainer {
         return doh
     }()
     lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
+    private lazy var searchStorage = SearchModuleStorage(storage: storage)
 }
 
 // MARK: NavigationServiceFactory
@@ -455,5 +457,12 @@ extension DependencyContainer: NATTypePropertyProviderFactory {
 extension DependencyContainer: SafeModePropertyProviderFactory {
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
         return SafeModePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
+    }
+}
+
+// MARK: SearchStorageFactory
+extension DependencyContainer: SearchStorageFactory {
+    func makeSearchStorage() -> SearchStorage {
+        return searchStorage
     }
 }

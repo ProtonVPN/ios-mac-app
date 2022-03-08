@@ -75,7 +75,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return (try? keychain.fetchCached().accountPlan)?.paid != true
     }
 
-    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ConnectionStatusServiceFactory & VpnKeychainFactory & PlanServiceFactory
+    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ConnectionStatusServiceFactory & VpnKeychainFactory & PlanServiceFactory & SearchStorageFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -87,6 +87,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol?
+    lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     
     init(factory: Factory, vpnGateway: VpnGatewayProtocol?, countryService: CountryService) {
         self.factory = factory

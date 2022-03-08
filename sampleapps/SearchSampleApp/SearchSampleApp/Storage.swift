@@ -1,5 +1,5 @@
 //
-//  Created on 02.03.2022.
+//  Created on 08.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,36 +18,27 @@
 
 import Foundation
 import Search
-import vpncore
-import UIKit
 
-extension Configuration {
-    init() {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), secondaryBackground: .secondaryBackgroundColor()), constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
-    }
-}
-
-protocol SearchStorageFactory: AnyObject {
-    func makeSearchStorage() -> SearchStorage
-}
-
-final class SearchModuleStorage: SearchStorage {
-    private let storage: Storage
+final class Storage: SearchStorage {
     private let key = "RECENT_SEARCHES"
 
-    init(storage: Storage) {
-        self.storage = storage
-    }
-
     func clear() {
-        storage.removeObject(forKey: key)
+        UserDefaults.standard.removeObject(forKey: key)
     }
 
     func get() -> [String] {
-        return storage.getDecodableValue([String].self, forKey: key) ?? []
+        guard let serialized = UserDefaults.standard.data(forKey: key), let data = try? JSONDecoder().decode([String].self, from: serialized) else {
+            return []
+        }
+
+        return data
     }
 
     func save(data: [String]) {
-        storage.setEncodableValue(data, forKey: key)
+        guard let serialized = try? JSONEncoder().encode(data) else {
+            return
+        }
+
+        UserDefaults.standard.set(serialized, forKey: key)
     }
 }

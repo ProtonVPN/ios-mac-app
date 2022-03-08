@@ -36,7 +36,7 @@ final class CountriesViewController: UIViewController {
     var connectionBarViewController: ConnectionBarViewController?
 
     private lazy var coordinator: SearchCoordinator = {
-        let coordinator = SearchCoordinator(configuration: Configuration())
+        let coordinator = SearchCoordinator(configuration: Configuration(), storage: viewModel.searchStorage)
         coordinator.delegate = self
         return coordinator
     }()

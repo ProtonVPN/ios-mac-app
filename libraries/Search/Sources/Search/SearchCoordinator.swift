@@ -33,11 +33,11 @@ public final class SearchCoordinator {
 
     // MARK: Setup
 
-    public init(configuration: Configuration) {
+    public init(configuration: Configuration, storage: SearchStorage) {
         self.configuration = configuration
 
         colors = configuration.colors
-        recentSearchesService = RecentSearchesService()
+        recentSearchesService = RecentSearchesService(storage: storage)
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
     }
 
