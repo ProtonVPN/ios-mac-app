@@ -323,4 +323,8 @@ extension CountryItemViewModel: CountryViewModel {
     var textColor: UIColor {
         return UIColor.normalTextColor()
     }
+
+    var isSecureCoreCountry: Bool {
+        return serverModels.allSatisfy({ $0.serverType == .secureCore })
+    }
 }

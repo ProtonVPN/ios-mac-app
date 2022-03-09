@@ -55,7 +55,9 @@ final class ViewController: UIViewController {
     }
 
     private func createData(forceTier: ServerTier? = nil) -> [CountryItemViewModel] {
-        let tier = forceTier ?? (createMode() == .freeUser ? ServerTier.free : ServerTier.plus)
+        let mode = createMode()
+        let tier = forceTier ?? (mode == .freeUser ? ServerTier.free : ServerTier.plus)
+        let isSecureCoreCountry = mode == .secureCore
 
         return [
             CountryItemViewModel(country: "Switzerland", servers: [
@@ -66,7 +68,7 @@ final class ViewController: UIViewController {
                 tier: [
                     ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland")
                 ]
-            ]),
+            ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "United States", servers: [
                 ServerTier.basic: [
                     ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free),
@@ -75,7 +77,7 @@ final class ViewController: UIViewController {
                 tier: [
                     ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States")
                 ]
-            ]),
+            ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "Czechia", servers: [
                 ServerTier.basic: [
                     ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free),
@@ -84,7 +86,7 @@ final class ViewController: UIViewController {
                 tier: [
                     ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia")
                 ]
-            ])
+            ], isSecureCoreCountry: isSecureCoreCountry)
         ]
     }
 }
