@@ -31,6 +31,7 @@ public protocol CountryViewModel: AnyObject {
     var flag: UIImage? { get }
     var connectButtonColor: UIColor { get }
     var textColor: UIColor { get }
+    var isSecureCoreCountry: Bool { get }
 
     func updateTier()
     func connectAction()

@@ -127,10 +127,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="double-arrow-right-green" translatesAutoresizingMaskIntoConstraints="NO" id="xbb-Fn-Ugg">
-                                <rect key="frame" x="120.5" y="26.5" width="6" height="8"/>
+                                <rect key="frame" x="120.5" y="22.5" width="16" height="16"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="6" id="Mw0-ie-3uP"/>
-                                    <constraint firstAttribute="height" constant="8" id="hXF-1c-eh8"/>
+                                    <constraint firstAttribute="width" constant="16" id="Mw0-ie-3uP"/>
+                                    <constraint firstAttribute="height" constant="16" id="hXF-1c-eh8"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -210,7 +210,7 @@
     </objects>
     <resources>
         <image name="con-available" width="22" height="22"/>
-        <image name="double-arrow-right-green" width="60" height="60"/>
+        <image name="double-arrow-right-green" width="16" height="16"/>
         <image name="ic_p2p" width="16" height="16"/>
         <image name="ic_smart-routing" width="16" height="16"/>
         <image name="ic_streaming" width="16" height="16"/>

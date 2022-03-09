@@ -46,6 +46,8 @@ final class CountryItemViewModel: CountryViewModel {
 
     let servers: [ServerTier: [ServerViewModel]]
 
+    let isSecureCoreCountry: Bool
+
     func updateTier() {
 
     }
@@ -54,9 +56,10 @@ final class CountryItemViewModel: CountryViewModel {
 
     }
 
-    init(country: String, servers: [ServerTier: [ServerViewModel]]) {
+    init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
         description = country
         self.servers = servers
+        self.isSecureCoreCountry = isSecureCoreCountry
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
