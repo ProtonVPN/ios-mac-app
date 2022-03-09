@@ -903,6 +903,8 @@
 		E91201FF27BBA9340058BE94 /* MergeLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLogFilesProvider.swift; sourceTree = "<group>"; };
 		E912020227BBB05B0058BE94 /* MergeLogFilesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergeLogFilesProviderTests.swift; sourceTree = "<group>"; };
 		E912020527BBB0E50058BE94 /* MockLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLogFilesProvider.swift; sourceTree = "<group>"; };
+		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E92CCE3127D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
 		E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportStorage.swift; sourceTree = "<group>"; };
 		E939EEEA27955317006E4305 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
@@ -2159,6 +2161,7 @@
 				hr,
 				tr,
 				"en-US",
+				uk,
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
@@ -3038,6 +3041,7 @@
 				C356B1F0272FA12A0002BED6 /* hr */,
 				C39EE8D3272FA13F008DAC54 /* tr */,
 				C31DD08027BA0DCB00D1FF91 /* en-US */,
+				E92CCE3127D88E3400A6A476 /* uk */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3066,6 +3070,7 @@
 				C356B1EE272FA12A0002BED6 /* hr */,
 				C39EE8D1272FA13F008DAC54 /* tr */,
 				C31DD07E27BA0DCB00D1FF91 /* en-US */,
+				E92CCE2F27D88E3400A6A476 /* uk */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
@@ -3112,6 +3117,7 @@
 				C356B1EF272FA12A0002BED6 /* hr */,
 				C39EE8D2272FA13F008DAC54 /* tr */,
 				C31DD07F27BA0DCB00D1FF91 /* en-US */,
+				E92CCE3027D88E3400A6A476 /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
