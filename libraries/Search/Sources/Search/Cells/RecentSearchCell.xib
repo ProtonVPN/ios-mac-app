@@ -18,32 +18,43 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-history-back" translatesAutoresizingMaskIntoConstraints="NO" id="C9E-ea-9PG">
-                        <rect key="frame" x="16" y="28.5" width="24" height="24"/>
+                        <rect key="frame" x="16" y="23" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="B4g-RV-4pV"/>
                             <constraint firstAttribute="width" constant="24" id="gzy-Jr-xgJ"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGw-Vw-tXS">
-                        <rect key="frame" x="52" y="15" width="240" height="51"/>
+                        <rect key="frame" x="52" y="4" width="240" height="62"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CV6-fc-t5H">
+                        <rect key="frame" x="0.0" y="68" width="320" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="1ou-po-ymg"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="XGw-Vw-tXS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="H9i-71-7ot"/>
+                    <constraint firstItem="CV6-fc-t5H" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="DdV-Us-F8H"/>
+                    <constraint firstAttribute="trailing" secondItem="CV6-fc-t5H" secondAttribute="trailing" id="Eag-an-s2a"/>
+                    <constraint firstItem="XGw-Vw-tXS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="H9i-71-7ot"/>
                     <constraint firstItem="XGw-Vw-tXS" firstAttribute="leading" secondItem="C9E-ea-9PG" secondAttribute="trailing" constant="12" id="Ii4-h0-MGs"/>
                     <constraint firstAttribute="trailingMargin" secondItem="XGw-Vw-tXS" secondAttribute="trailing" constant="12" id="L3y-Sy-BNd"/>
                     <constraint firstItem="C9E-ea-9PG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Teq-CZ-bUF"/>
                     <constraint firstItem="C9E-ea-9PG" firstAttribute="centerY" secondItem="XGw-Vw-tXS" secondAttribute="centerY" id="iH4-8E-NDc"/>
                     <constraint firstItem="XGw-Vw-tXS" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" constant="8" id="vDf-vj-YGE"/>
+                    <constraint firstAttribute="bottom" secondItem="CV6-fc-t5H" secondAttribute="bottom" id="xOI-yv-RNB"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="lineView" destination="CV6-fc-t5H" id="49S-OG-jQd"/>
+                <outlet property="lineViewHeightConstraint" destination="1ou-po-ymg" id="0E2-eJ-EcV"/>
                 <outlet property="titleLabel" destination="XGw-Vw-tXS" id="bSN-Ew-WsB"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="106.13839285714285"/>

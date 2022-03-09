@@ -29,6 +29,8 @@ final class RecentSearchCell: UITableViewCell {
 
     // MARK: Outlets
 
+    @IBOutlet private weak var lineViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var lineView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
 
     // MARK: Properties
@@ -47,5 +49,6 @@ final class RecentSearchCell: UITableViewCell {
         selectionStyle = .none
         baseViewStyle(self)
         cellHeaderStyle(titleLabel)
+        lineSeparatorStyle(lineView, lineViewHeightConstraint)
     }
 }
