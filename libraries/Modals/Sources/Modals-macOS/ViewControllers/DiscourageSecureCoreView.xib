@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="DiscourageSecureCoreViewController" customModule="Modals_macOS">
+            <connections>
+                <outlet property="activateButton" destination="r6q-92-W65" id="lSK-Rj-ZBO"/>
+                <outlet property="descriptionLabel" destination="kiz-Sr-4Mb" id="GKX-zp-rkg"/>
+                <outlet property="dontShowAgainButton" destination="N7m-h1-qKE" id="7n8-lx-iYO"/>
+                <outlet property="dontShowAgainLabel" destination="PHS-OS-Pm3" id="577-tZ-wDS"/>
+                <outlet property="imageView" destination="2Qq-Ps-ign" id="Udv-Vg-Ywv"/>
+                <outlet property="learnMoreButton" destination="vIq-89-3UX" id="P80-2w-brh"/>
+                <outlet property="titleLabel" destination="FYX-5b-Jwv" id="iS4-Mw-zuk"/>
+                <outlet property="view" destination="zdk-aa-GL6" id="GnA-ly-Ypj"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="zdk-aa-GL6">
+            <rect key="frame" x="0.0" y="0.0" width="520" height="583"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="r6q-92-W65" customClass="UpsellPrimaryActionButton" customModule="Modals_macOS">
+                    <rect key="frame" x="223" y="97" width="75" height="58"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="t2F-Qj-ByM"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xYu-xD-o8S">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                            <real key="value" value="48"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="activateButtonTapped:" target="-2" id="leJ-Qf-Mig"/>
+                    </connections>
+                </button>
+                <imageView autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Qq-Ps-ign">
+                    <rect key="frame" x="60" y="335" width="400" height="184"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="184" id="2eD-yq-Zqg"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="350" id="KYe-Nc-bEO"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="PlusCountries" id="qMQ-KR-g2Q"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FYX-5b-Jwv">
+                    <rect key="frame" x="58" y="299" width="404" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="400" id="AuW-9U-CNt"/>
+                    </constraints>
+                    <textFieldCell key="cell" alignment="center" title="A note about speed..." id="oLf-kj-aXR">
+                        <font key="font" metaFont="system" size="24"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kiz-Sr-4Mb">
+                    <rect key="frame" x="58" y="234" width="404" height="57"/>
+                    <textFieldCell key="cell" alignment="center" id="lq5-VK-6cy">
+                        <font key="font" metaFont="system" size="16"/>
+                        <string key="title">Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.</string>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="vIq-89-3UX">
+                    <rect key="frame" x="224" y="64" width="73" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" state="on" imageScaling="proportionallyDown" inset="2" id="8DZ-5S-3Ey">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="learnMoreButtonTapped:" target="-2" id="88o-B5-J3f"/>
+                    </connections>
+                </button>
+                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-Qc-5w6">
+                    <rect key="frame" x="194" y="182" width="133" height="20"/>
+                    <subviews>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="N7m-h1-qKE">
+                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="vej-ir-ajd"/>
+                                <constraint firstAttribute="height" constant="20" id="z36-dN-Z5R"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="checkbox" imagePosition="overlaps" alignment="right" imageScaling="proportionallyUpOrDown" inset="2" id="PlS-2a-zju">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="dontShowAgainSwitchToggled:" target="-2" id="C74-Hf-26i"/>
+                            </connections>
+                        </button>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PHS-OS-Pm3">
+                            <rect key="frame" x="26" y="2" width="109" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Don't show again" id="2Dc-Jh-jh3">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="kiz-Sr-4Mb" firstAttribute="top" secondItem="FYX-5b-Jwv" secondAttribute="bottom" constant="8" id="1fB-Xl-1qB"/>
+                <constraint firstItem="r6q-92-W65" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zdk-aa-GL6" secondAttribute="leading" constant="100" id="2Hh-LJ-fY8"/>
+                <constraint firstItem="r6q-92-W65" firstAttribute="centerX" secondItem="zdk-aa-GL6" secondAttribute="centerX" id="2NH-4n-28J"/>
+                <constraint firstItem="2Qq-Ps-ign" firstAttribute="centerX" secondItem="zdk-aa-GL6" secondAttribute="centerX" id="2uk-uc-0cI"/>
+                <constraint firstItem="2Qq-Ps-ign" firstAttribute="top" secondItem="zdk-aa-GL6" secondAttribute="top" constant="64" id="4b2-ao-pOV"/>
+                <constraint firstItem="FYX-5b-Jwv" firstAttribute="centerX" secondItem="2Qq-Ps-ign" secondAttribute="centerX" id="6Do-Ww-2Dz"/>
+                <constraint firstItem="r6q-92-W65" firstAttribute="top" secondItem="5gf-Qc-5w6" secondAttribute="bottom" constant="32" id="9FB-Lk-zC9"/>
+                <constraint firstItem="5gf-Qc-5w6" firstAttribute="top" secondItem="kiz-Sr-4Mb" secondAttribute="bottom" constant="32" id="ANW-HC-1wF"/>
+                <constraint firstItem="kiz-Sr-4Mb" firstAttribute="width" secondItem="FYX-5b-Jwv" secondAttribute="width" id="DhM-AQ-eOh"/>
+                <constraint firstItem="vIq-89-3UX" firstAttribute="top" secondItem="r6q-92-W65" secondAttribute="bottom" constant="24" id="H2F-Dk-3ga"/>
+                <constraint firstItem="r6q-92-W65" firstAttribute="top" secondItem="kiz-Sr-4Mb" secondAttribute="bottom" priority="500" constant="32" id="Kbf-E2-eaH"/>
+                <constraint firstAttribute="bottom" secondItem="vIq-89-3UX" secondAttribute="bottom" constant="64" id="QW4-xh-kJI"/>
+                <constraint firstItem="vIq-89-3UX" firstAttribute="centerX" secondItem="r6q-92-W65" secondAttribute="centerX" id="Rpp-Vn-7fj"/>
+                <constraint firstItem="2Qq-Ps-ign" firstAttribute="leading" secondItem="zdk-aa-GL6" secondAttribute="leading" constant="60" id="SRd-2j-D0Z"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="r6q-92-W65" secondAttribute="trailing" constant="100" id="ZcO-q5-uB1"/>
+                <constraint firstAttribute="trailing" secondItem="2Qq-Ps-ign" secondAttribute="trailing" constant="60" id="bIB-pu-eyU"/>
+                <constraint firstItem="5gf-Qc-5w6" firstAttribute="centerX" secondItem="zdk-aa-GL6" secondAttribute="centerX" id="c1k-vX-pwZ"/>
+                <constraint firstItem="kiz-Sr-4Mb" firstAttribute="centerX" secondItem="FYX-5b-Jwv" secondAttribute="centerX" id="fcS-Xc-2wU"/>
+                <constraint firstItem="FYX-5b-Jwv" firstAttribute="width" secondItem="2Qq-Ps-ign" secondAttribute="width" id="kAW-fg-ri0"/>
+                <constraint firstItem="FYX-5b-Jwv" firstAttribute="top" secondItem="2Qq-Ps-ign" secondAttribute="bottom" constant="8" id="klg-zM-ka3"/>
+                <constraint firstAttribute="bottom" secondItem="r6q-92-W65" secondAttribute="bottom" priority="749" constant="64" id="rYb-9d-DtU"/>
+            </constraints>
+            <point key="canvasLocation" x="279" y="295.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="PlusCountries" width="328" height="184"/>
+        <image name="checkbox" width="95" height="95"/>
+    </resources>
+</document>

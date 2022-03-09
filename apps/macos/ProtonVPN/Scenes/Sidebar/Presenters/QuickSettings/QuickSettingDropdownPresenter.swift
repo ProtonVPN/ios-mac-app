@@ -98,8 +98,17 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         assertionFailure("This variable should not be used directly. Please inherit and provide your own implementation of `alert`")
         return UpsellAlert()
     }
-    
+
     @objc func presentUpsellAlert() {
+        alertService.push(alert: alert)
+    }
+
+    func presentDiscourageSecureCoreAlert(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onDismiss: (() -> Void)?) {
+        let alert = DiscourageSecureCoreAlert()
+        alert.onDontShowAgain = onDontShowAgain
+        alert.onActivate = onActivate
+        alert.onLearnMore = didTapLearnMore
+        alert.dismiss = onDismiss
         alertService.push(alert: alert)
     }
 }

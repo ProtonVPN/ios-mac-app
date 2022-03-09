@@ -99,6 +99,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as NetShieldUpsellAlert:
             show(alert: alert, upsellType: .netShield)
 
+        case let alert as DiscourageSecureCoreAlert:
+            show(alert)
+
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
             
@@ -334,5 +337,12 @@ extension MacAlertService: CoreAlertService {
     
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
         windowService.openSubuserAlertWindow()
+    }
+
+    private func show(_ alert: DiscourageSecureCoreAlert) {
+        let factory = ModalsFactory(colors: UpsellColors())
+
+        let viewController = factory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
+        windowService.presentKeyModal(viewController: viewController)
     }
 }

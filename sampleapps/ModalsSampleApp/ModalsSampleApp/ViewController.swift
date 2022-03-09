@@ -81,6 +81,10 @@ class ViewController: UITableViewController {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
+    func shouldDismissUpsell() -> Bool {
+        true
+    }
+
     func userDidRequestPlus() {
         dismiss(animated: true, completion: nil)
     }

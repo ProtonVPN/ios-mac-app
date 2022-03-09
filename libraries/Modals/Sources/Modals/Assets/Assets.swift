@@ -21,6 +21,8 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let addLayer = ImageAsset(name: "AddLayer")
   internal static let blockAds = ImageAsset(name: "BlockAds")
+  internal static let checkboxEmpty = ImageAsset(name: "CheckboxEmpty")
+  internal static let checkboxFill = ImageAsset(name: "CheckboxFill")
   internal static let closeButton = ImageAsset(name: "CloseButton")
   internal static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
   internal static let moderateNAT = ImageAsset(name: "ModerateNAT")
