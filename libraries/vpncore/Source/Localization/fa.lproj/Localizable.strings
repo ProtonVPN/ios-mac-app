@@ -148,6 +148,9 @@
 /* Common word */
 "_close" = "بستن";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Collapse list of servers";
+
 /* Profile create/change form */
 "_color" = "رنگ";
 
@@ -537,6 +540,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "لطفا یک سرور دیگر انتخاب کنید.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Expand list of servers";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "منقضی شد";

@@ -1,0 +1,63 @@
+/* Upgrade plan button title */
+"modals_get_plus" = "Покращити";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Переглядайте контент на найвищій швидкості (10 Гбіт/с)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Блокуйте рекламу та зловмисні програми за допомогою NetShield";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Отримайте доступ до глобальних сервісів трансляції";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "І більше преміальних функцій";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "Помірна NAT або NAT 2 типу може покращити ваш досвід онлайн-роботи з різними програмами та онлайн-відеоіграми.\n\nРозблокуйте цю та інші функції за допомогою тарифного плану Plus.";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Використовуйте ProtonVPN для будь-якої спеціальної потреби, дозволяючи трафік до нестандартних портів через мережу VPN.\n\nРозблокуйте цю та інші функції передплативши тарифний план Plus.";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "У разі оновлення до тарифного плану Plus";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "Що таке помірна NAT?";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Увімкнути помірну NAT";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Блокування реклами та стеження";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Переглядайте контент на найвищій швидкості";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Захистіть свій пристрій від зловмисних програм";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Насолоджуйтесь переглядом контенту без реклами за допомогою NetShield";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Докладніше";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Дозволити трафік до нестандартних портів";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Захистіть себе від мережевих атак";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Додайте ще один рівень шифрування до свого VPN-з'єднання";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Спрямовуйте передачу даних через найзахищеніші сервери у Швейцарії, Швеції та Ісландії";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Подвійне шифрування за допомогою Secure Core";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Не зараз";
+

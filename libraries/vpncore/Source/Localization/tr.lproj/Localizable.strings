@@ -148,6 +148,9 @@
 /* Common word */
 "_close" = "Kapat";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Sunucu listesini daralt";
+
 /* Profile create/change form */
 "_color" = "Renk";
 
@@ -537,6 +540,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "Lütfen başka bir sunucu seçin.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Sunucu listesini genişlet";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "SÜRESİ GEÇMİŞ";
