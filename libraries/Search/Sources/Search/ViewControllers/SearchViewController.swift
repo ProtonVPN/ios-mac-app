@@ -33,8 +33,6 @@ final class SearchViewController: UIViewController {
     @IBOutlet weak var noResultsView: NoResultsView!
     @IBOutlet weak var noResultsBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var placeholderViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var activityIndicatorCenterYConstraint: NSLayoutConstraint!
     @IBOutlet weak var placeholderView: PlaceholderView!
 
     // MARK: Properties
@@ -62,7 +60,6 @@ final class SearchViewController: UIViewController {
         baseViewStyle(view)
         baseViewStyle(tableView)
         searchBarStyle(searchBar)
-        indicatorStyle(activityIndicator)
 
         title = LocalizedString.searchTitle
         searchBar.placeholder = LocalizedString.searchBarPlaceholder
@@ -110,7 +107,6 @@ final class SearchViewController: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         noResultsBottomConstraint.constant = height
         placeholderViewBottomConstraint.constant = height
-        activityIndicatorCenterYConstraint.constant = -height / 2
 
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
@@ -124,14 +120,11 @@ extension SearchViewController: SearchViewModelDelegate {
     func statusDidChange(status: SearchStatus) {
         tableView.isHidden = true
         placeholderView.isHidden = true
-        activityIndicator.isHidden = true
         noResultsView.isHidden = true
 
         switch status {
         case .placeholder:
             placeholderView.isHidden = false
-        case .searching:
-            activityIndicator.isHidden = false
         case .noResults:
             noResultsView.isHidden = false
         case .results:
