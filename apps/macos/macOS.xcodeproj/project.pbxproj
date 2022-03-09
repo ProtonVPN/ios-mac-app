@@ -2862,6 +2862,7 @@
 				pt,
 				hr,
 				tr,
+				uk,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
