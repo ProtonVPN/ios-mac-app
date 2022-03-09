@@ -711,6 +711,7 @@
 		C31DD07E27BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Localization/en-US.lproj/Intents.strings"; sourceTree = "<group>"; };
 		C31DD07F27BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Localization/en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C31DD08027BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "en-US"; path = "en-US.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		C34735DB27D8DFC900E318F7 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Intents.strings; sourceTree = "<group>"; };
 		C356B1EE272FA12A0002BED6 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = Localization/hr.lproj/Intents.strings; sourceTree = "<group>"; };
 		C356B1EF272FA12A0002BED6 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = Localization/hr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C356B1F0272FA12A0002BED6 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = hr; path = hr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -3070,7 +3071,7 @@
 				C356B1EE272FA12A0002BED6 /* hr */,
 				C39EE8D1272FA13F008DAC54 /* tr */,
 				C31DD07E27BA0DCB00D1FF91 /* en-US */,
-				E92CCE2F27D88E3400A6A476 /* uk */,
+				C34735DB27D8DFC900E318F7 /* uk */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";

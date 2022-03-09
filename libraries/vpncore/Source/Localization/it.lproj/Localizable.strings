@@ -148,6 +148,9 @@
 /* Common word */
 "_close" = "Chiudi";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Comprimi l'elenco dei server";
+
 /* Profile create/change form */
 "_color" = "Colore";
 
@@ -537,6 +540,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "Per favore seleziona un altro server.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Espandi l'elenco dei server";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "SCADUTO";
