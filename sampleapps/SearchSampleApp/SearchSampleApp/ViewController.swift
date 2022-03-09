@@ -58,33 +58,34 @@ final class ViewController: UIViewController {
         let mode = createMode()
         let tier = forceTier ?? (mode == .freeUser ? ServerTier.free : ServerTier.plus)
         let isSecureCoreCountry = mode == .secureCore
+        let relayCountry: String? = mode == .secureCore ? "Italy" : nil
 
         return [
             CountryItemViewModel(country: "Switzerland", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free),
-                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free)
+                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, relayCountry: relayCountry),
+                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, relayCountry: relayCountry)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland")
+                    ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", relayCountry: relayCountry)
                 ]
             ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "United States", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free),
-                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free)
+                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, relayCountry: relayCountry),
+                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, relayCountry: relayCountry)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States")
+                    ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", relayCountry: relayCountry)
                 ]
             ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "Czechia", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free),
-                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == .free)
+                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free, relayCountry: relayCountry),
+                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == .free, relayCountry: relayCountry)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia")
+                    ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", relayCountry: relayCountry)
                 ]
             ], isSecureCoreCountry: isSecureCoreCountry)
         ]
@@ -105,12 +106,16 @@ extension ViewController: SearchCoordinatorDelegate {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func userDidRequestPlus() {
-        coordinator.reload(data: createData(forceTier: .plus), mode: createMode())
-        navigationController?.dismiss(animated: true, completion: nil)
+    func userDidDismissUpsell() {
+        
     }
 
-    func userDidDismissUpsell() {
+    func shouldDismissUpsell() -> Bool {
+        return true
+    }
+
+    func userDidRequestPlus() {
+        coordinator.reload(data: createData(forceTier: .plus), mode: createMode())
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
