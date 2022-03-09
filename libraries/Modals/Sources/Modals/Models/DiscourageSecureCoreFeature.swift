@@ -25,5 +25,8 @@ public struct DiscourageSecureCoreFeature {
     public let activate: String = LocalizedString.modalsDiscourageSecureCoreActivate
     public let cancel: String = LocalizedString.modalsCommonCancel
 
+    public let checkboxFillImage: Image = Asset.checkboxFill.image
+    public let checkboxEmptyImage: Image = Asset.checkboxEmpty.image
+
     public init() { }
 }

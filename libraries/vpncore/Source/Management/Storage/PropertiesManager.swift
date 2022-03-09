@@ -587,6 +587,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public func logoutCleanup() {
         hasConnected = false
         secureCoreToggle = false
+        discourageSecureCore = true
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         lastWireguardConnection = nil
