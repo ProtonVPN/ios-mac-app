@@ -27,6 +27,22 @@ final class PlaceholderView: UIView {
     @IBOutlet private var contentView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
 
+    // MARK: Properties
+
+    var onlyCountries: Bool = false {
+        didSet {
+            itemViews.forEach {
+                if onlyCountries {
+                    $0.isHidden = $0.item != PlaceholderItem.countries
+                } else {
+                    $0.isHidden = false
+                }
+            }
+        }
+    }
+
+    private var itemViews: [PlaceholderItemView] = []
+
     // MARK: Setup
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +61,7 @@ final class PlaceholderView: UIView {
         let items = PlaceholderItem.allCases.map { item -> UIView in
             let view = Bundle.module.loadNibNamed("PlaceholderItemView", owner: self, options: nil)?.first as! PlaceholderItemView
             view.item = item
+            itemViews.append(view)
             return view
         }
 

@@ -63,6 +63,7 @@ final class SearchViewController: UIViewController {
 
         title = LocalizedString.searchTitle
         searchBar.placeholder = LocalizedString.searchBarPlaceholder
+        placeholderView.onlyCountries = viewModel.mode == .secureCore
     }
 
     private func setupData() {
