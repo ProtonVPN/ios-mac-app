@@ -17,8 +17,6 @@
 		F37F73EF27CF7B8700F1C621 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F37F73ED27CF7B8700F1C621 /* Main.storyboard */; };
 		F37F73F127CF7B8800F1C621 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F37F73F027CF7B8800F1C621 /* Assets.xcassets */; };
 		F37F73F427CF7B8800F1C621 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F37F73F227CF7B8800F1C621 /* LaunchScreen.storyboard */; };
-		F37F740927CF7B8900F1C621 /* SearchSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F740827CF7B8900F1C621 /* SearchSampleAppUITests.swift */; };
-		F37F740B27CF7B8900F1C621 /* SearchSampleAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F740A27CF7B8900F1C621 /* SearchSampleAppUITestsLaunchTests.swift */; };
 		F37F741927CF7BD800F1C621 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F37F741827CF7BD800F1C621 /* Search */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +42,6 @@
 		F37F73F327CF7B8800F1C621 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F37F73F527CF7B8800F1C621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F37F740427CF7B8900F1C621 /* SearchSampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SearchSampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F37F740827CF7B8900F1C621 /* SearchSampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSampleAppUITests.swift; sourceTree = "<group>"; };
-		F37F740A27CF7B8900F1C621 /* SearchSampleAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSampleAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +103,6 @@
 		F37F740727CF7B8900F1C621 /* SearchSampleAppUITests */ = {
 			isa = PBXGroup;
 			children = (
-				F37F740827CF7B8900F1C621 /* SearchSampleAppUITests.swift */,
-				F37F740A27CF7B8900F1C621 /* SearchSampleAppUITestsLaunchTests.swift */,
 			);
 			path = SearchSampleAppUITests;
 			sourceTree = "<group>";
@@ -238,8 +232,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F37F740B27CF7B8900F1C621 /* SearchSampleAppUITestsLaunchTests.swift in Sources */,
-				F37F740927CF7B8900F1C621 /* SearchSampleAppUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
