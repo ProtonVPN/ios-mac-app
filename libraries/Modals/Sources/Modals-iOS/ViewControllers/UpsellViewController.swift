@@ -22,6 +22,13 @@ import Modals
 
 public protocol UpsellViewControllerDelegate: AnyObject {
     func userDidRequestPlus()
+
+    /// This method exists to allow the parent to decide whether the view controller should dismiss itself or not.
+    ///
+    /// - Returns: A `Bool` value indicating whether the view controller should dismiss itself.
+    ///
+    /// - Note: In the onboarding module the parent dismisses the upsell modal. `IosAlertService` allows the upsell to dismiss itself.
+    func shouldDismissUpsell() -> Bool
     func userDidDismissUpsell()
 }
 
@@ -107,12 +114,18 @@ public final class UpsellViewController: UIViewController {
     }
 
     @IBAction private func useFreeTapped(_ sender: Any) {
+        guard delegate?.shouldDismissUpsell() == true else {
+            return
+        }
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.delegate?.userDidDismissUpsell()
         })
     }
 
     @objc private func closeTapped() {
+        guard delegate?.shouldDismissUpsell() == true else {
+            return
+        }
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.delegate?.userDidDismissUpsell()
         })
