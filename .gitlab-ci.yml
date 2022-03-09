@@ -444,25 +444,25 @@ i18n-crowdin-download:
     - !reference [.i18n-commit-locales-shared-apple, before_script]
 
 # --- Open Source GitHub related tasks ---
-github-push-commits:
-  stage: bot
-  extends: .release-sync-commit-shared
-  variables:
-    RELEASE_SYNC_TO_BRANCH: 'develop'
-    RELEASE_SYNC_FROM_BRANCH: 'develop'
-  # Run the job only if we have a tag ex:
-  #   - mac/1.1.1111111
-  #   - ios/1.1.1
-  only: &onlyTagsFilterOpenSource
-    refs:
-      - tags
-    variables:
-      - $CI_COMMIT_TAG =~ /^(mac|ios)\/\d+\.\d+\.\d+$/
-
-github-push-tag:
-  extends: .release-sync-tags-shared
-  variables:
-    RELEASE_SYNC_FROM_BRANCH: 'develop'
-  only:
-    <<: *onlyTagsFilterOpenSource
+#github-push-commits:
+#  stage: bot
+#  extends: .release-sync-commit-shared
+#  variables:
+#    RELEASE_SYNC_TO_BRANCH: 'develop'
+#    RELEASE_SYNC_FROM_BRANCH: 'develop'
+#  # Run the job only if we have a tag ex:
+#  #   - mac/1.1.1111111
+#  #   - ios/1.1.1
+#  only: &onlyTagsFilterOpenSource
+#    refs:
+#      - tags
+#    variables:
+#      - $CI_COMMIT_TAG =~ /^(mac|ios)\/\d+\.\d+\.\d+$/
+#
+#github-push-tag:
+#  extends: .release-sync-tags-shared
+#  variables:
+#    RELEASE_SYNC_FROM_BRANCH: 'develop'
+#  only:
+#    <<: *onlyTagsFilterOpenSource
 
