@@ -67,6 +67,9 @@ extension Upsell: UpsellViewControllerDelegate {
     func userDidRequestPlus() {
         planService.presentPlanSelection()
     }
+    func shouldDismissUpsell() -> Bool {
+        return true
+    }
     
     func userDidDismissUpsell() { }
 }

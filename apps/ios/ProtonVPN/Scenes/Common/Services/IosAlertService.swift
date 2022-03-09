@@ -290,6 +290,10 @@ extension IosAlertService: CoreAlertService {
 }
 
 extension IosAlertService: UpsellViewControllerDelegate {
+    func shouldDismissUpsell() -> Bool {
+        return true
+    }
+
     func userDidRequestPlus() {
         windowService.dismissModal { [weak self] in
             self?.planService.presentPlanSelection()
