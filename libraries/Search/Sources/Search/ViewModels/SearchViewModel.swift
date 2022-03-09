@@ -73,8 +73,6 @@ final class SearchViewModel {
             return
         }
 
-        status = .searching
-
         let filter = { (name: String) -> Bool in
             let normalizedSearchText = searchText.normalized
             let normalizedParts = name.components(separatedBy: CharacterSet.whitespaces).map({ $0.normalized })

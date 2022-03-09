@@ -45,10 +45,6 @@ let subtitleStyle = concat(centeredTextStyle, and: {
     $0.textColor = colors.weakText
 })
 
-let indicatorStyle: (UIActivityIndicatorView) -> Void = {
-    $0.color = colors.weakText
-}
-
 let searchBarStyle: (UISearchBar) -> Void = {
     $0.backgroundImage = UIImage()
     $0.tintColor = colors.weakText

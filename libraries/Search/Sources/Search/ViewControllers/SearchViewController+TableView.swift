@@ -24,7 +24,7 @@ import UIKit
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder:
+        case .noResults, .placeholder:
             return 0
         case let .recentSearches(data):
             return data.count
@@ -35,7 +35,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder:
+        case .noResults, .placeholder:
             fatalError("Invalid usage")
         case let .recentSearches(data):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RecentSearchCell.identifier) as? RecentSearchCell else {
@@ -76,7 +76,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder:
+        case .noResults, .placeholder:
             return 0
         case .recentSearches:
             return 1
@@ -87,7 +87,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder:
+        case .noResults, .placeholder:
             return nil
         case let .recentSearches(data):
             recentSearchesHeaderView.count = data.count
@@ -105,7 +105,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
         switch viewModel.status {
-        case .searching, .noResults, .placeholder:
+        case .noResults, .placeholder:
             break
         case let .recentSearches(data):
             searchBar.text = data[indexPath.row]
@@ -125,7 +125,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .recentSearches:
+        case .noResults, .placeholder, .recentSearches:
             return UITableView.automaticDimension
         case let .results(data):
             let item = data[indexPath.section]
@@ -142,7 +142,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch viewModel.status {
-        case .searching, .noResults, .placeholder, .recentSearches:
+        case .noResults, .placeholder, .recentSearches:
             return UITableView.automaticDimension
         case let .results(data):
             let item = data[section]
