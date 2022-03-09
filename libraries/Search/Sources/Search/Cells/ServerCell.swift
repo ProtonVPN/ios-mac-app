@@ -49,9 +49,11 @@ public final class ServerCell: UITableViewCell {
     @IBOutlet private weak var streamingIV: UIImageView!
 
     @IBOutlet private weak var secureView: UIView!
-    @IBOutlet private weak var secureCountryLbl: UILabel!
-    @IBOutlet private weak var secureCoreIV: UIImageView!
     @IBOutlet private weak var connectButton: UIButton!
+
+    @IBOutlet private weak var countryNameLabel: UILabel!
+    @IBOutlet private weak var exitFlagIcon: UIImageView!
+    @IBOutlet private weak var entryFlagIcon: UIImageView!
 
     // MARK: Properties
 
@@ -86,7 +88,9 @@ public final class ServerCell: UITableViewCell {
             }
 
             if let relayCountry = viewModel.relayCountry {
-                setupSecureCore(country: relayCountry.name, flag: relayCountry.flag)
+                entryFlagIcon.image = relayCountry.flag
+                exitFlagIcon.image = viewModel.countryFlag
+                countryNameLabel.text = viewModel.countryName
             }
 
             DispatchQueue.main.async { [weak self] in
@@ -138,10 +142,5 @@ public final class ServerCell: UITableViewCell {
             connectButton.setImage(viewModel?.connectIcon, for: .normal)
             connectButton.setTitle(nil, for: .normal)
         }
-    }
-
-    private func setupSecureCore(country: String, flag: UIImage?) {
-        secureCountryLbl.text = LocalizedString.via + " " + country.uppercased()
-        secureCoreIV.image = flag
     }
 }

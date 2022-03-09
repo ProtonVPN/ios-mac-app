@@ -100,7 +100,7 @@ final class ServerItemViewModel: ServerViewModel {
 
     let city: String
 
-    let relayCountry: (name: String, flag: UIImage?)? = nil
+    var relayCountry: (name: String, flag: UIImage?)? = nil
 
     let countryFlag: UIImage? = UIImage(named: "ch-plain")
 
@@ -114,10 +114,15 @@ final class ServerItemViewModel: ServerViewModel {
 
     }
 
-    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false) {
+    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, relayCountry: String? = nil) {
         description = server
         self.city = city
         self.countryName = countryName
         self.isUsersTierTooLow = isUsersTierTooLow
+        if let relayCountry = relayCountry {
+            self.relayCountry = (relayCountry, UIImage(named: "it-plain"))
+        } else {
+            self.relayCountry = nil
+        }
     }
 }
