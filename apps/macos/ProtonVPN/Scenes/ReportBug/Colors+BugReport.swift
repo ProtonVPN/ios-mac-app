@@ -22,17 +22,17 @@ import SwiftUI
 @available(macOS 11, *)
 extension BugReport.Colors {
     public init() {
-        self.init(brand: Color(.brandColor()),
-                  brandLight20: Color(.brandLighten20Color()),
-                  brandLight40: Color(.brandLighten40Color()),
-                  brandDark40: Color(.brandDarken40Color()),
-                  textPrimary: Color(.normalTextColor()),
-                  textSecondary: Color(.weakTextColor()),
-                  background: Color(.backgroundColor()),
-                  backgroundSecondary: Color(.secondaryBackgroundColor()),
-                  backgroundUpdateButton: Color(.weakInteractionColor()),
-                  separator: Color(.normalSeparatorColor()),
-                  qfIcon: Color(.notificationWarningColor())
+        self.init(brand: .brandColor,
+                  brandLight20: .brandLighten20Color,
+                  brandLight40: .brandLighten40Color,
+                  brandDark40: .brandDarken40Color,
+                  textPrimary: .normalTextColor,
+                  textSecondary: .weakTextColor,
+                  background: .backgroundColor,
+                  backgroundSecondary: .secondaryBackgroundColor,
+                  backgroundUpdateButton: .weakInteractionColor,
+                  separator: .normalSeparatorColor,
+                  qfIcon: .notificationWarningColor
         )
     }
 }
