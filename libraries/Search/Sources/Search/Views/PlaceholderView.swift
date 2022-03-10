@@ -58,7 +58,7 @@ final class PlaceholderView: UIView {
 
         titleLabel.text = LocalizedString.searchSubtitle
 
-        let items = PlaceholderItem.allCases.map { item -> UIView in
+        let items = [PlaceholderItem.countries, PlaceholderItem.servers].map { item -> UIView in
             let view = Bundle.module.loadNibNamed("PlaceholderItemView", owner: self, options: nil)?.first as! PlaceholderItemView
             view.item = item
             itemViews.append(view)
