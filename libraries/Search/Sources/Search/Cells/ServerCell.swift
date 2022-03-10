@@ -59,6 +59,12 @@ public final class ServerCell: UITableViewCell {
 
     public weak var delegate: ServerCellDelegate?
 
+    var searchText: String? {
+        didSet {
+            setupServerAndCountryName()
+        }
+    }
+
     public var viewModel: ServerViewModel? {
         didSet {
             guard let viewModel = viewModel else {
@@ -69,8 +75,8 @@ public final class ServerCell: UITableViewCell {
             selectionStyle = .none
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            serverNameLabel.text = viewModel.description
             serverNameLabel.isHidden = viewModel.relayCountry != nil
+            setupServerAndCountryName()
             cityNameLabel.text = viewModel.city
             cityNameLabel.isHidden = viewModel.relayCountry != nil
             secureView.isHidden = viewModel.relayCountry == nil
@@ -90,7 +96,6 @@ public final class ServerCell: UITableViewCell {
             if let relayCountry = viewModel.relayCountry {
                 entryFlagIcon.image = relayCountry.flag
                 exitFlagIcon.image = viewModel.countryFlag
-                countryNameLabel.text = viewModel.countryName
             }
 
             DispatchQueue.main.async { [weak self] in
@@ -142,5 +147,32 @@ public final class ServerCell: UITableViewCell {
             connectButton.setImage(viewModel?.connectIcon, for: .normal)
             connectButton.setTitle(nil, for: .normal)
         }
+    }
+
+    private func setupServerAndCountryName() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
+        guard let searchText = searchText, !searchText.isEmpty else {
+            serverNameLabel.text = viewModel.description
+            countryNameLabel.text = viewModel.countryName
+            return
+        }
+
+        let createText = { (string: String) -> NSAttributedString in
+            let text = NSMutableAttributedString(string: string, attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+                NSAttributedString.Key.foregroundColor: colors.weakText
+            ])
+
+            if string.normalized.starts(with: searchText.normalized) {
+                text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: NSRange(location: 0, length: searchText.count))
+            }
+            return text
+        }
+
+        serverNameLabel.attributedText = createText(viewModel.description)
+        countryNameLabel.attributedText = createText(viewModel.countryName)
     }
 }

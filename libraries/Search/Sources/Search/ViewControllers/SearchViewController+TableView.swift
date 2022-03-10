@@ -57,12 +57,14 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
                     fatalError("Invalid configuration")
                 }
+                cell.searchText = searchBar.text
                 cell.viewModel = servers[indexPath.row]
                 return cell
             case let .secureCoreCountries(servers: servers):
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
                     fatalError("Invalid configuration")
                 }
+                cell.searchText = searchBar.text
                 cell.viewModel = servers[indexPath.row]
                 return cell
             case .upsell:
