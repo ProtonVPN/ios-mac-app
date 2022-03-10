@@ -22,7 +22,6 @@ public enum UpsellType {
     case allCountries(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int)
     case safeMode
     case moderateNAT
-    case profile
 
     public func upsellFeature() -> UpsellFeature {
         UpsellFeature(title: title(), subtitle: subtitle(), features: features(), artImage: artImage(), footer: footer(), learnMore: learnMore())
@@ -40,8 +39,6 @@ public enum UpsellType {
             return LocalizedString.modalsUpsellSafeModeTitle
         case .moderateNAT:
             return LocalizedString.modalsUpsellModerateNatTitle
-        case .profile:
-            return "Profile XXX uses paid features"
         }
     }
 
@@ -57,8 +54,6 @@ public enum UpsellType {
             return LocalizedString.modalsUpsellFeaturesSafeModeSubtitle
         case .moderateNAT:
             return LocalizedString.modalsUpsellFeaturesModerateNatSubtitle
-        case .profile:
-            return "Upgrade your subscription to connect with it."
         }
     }
 
@@ -70,7 +65,7 @@ public enum UpsellType {
             return [.routeSecureServers, .addLayer, .protectFromAttacks]
         case .allCountries(let numberOfDevices, _, _):
             return [.streaming, .multipleDevices(numberOfDevices), .netshield, .highSpeed]
-        case .safeMode, .moderateNAT, .profile:
+        case .safeMode, .moderateNAT:
             return []
         }
     }
@@ -94,8 +89,6 @@ public enum UpsellType {
             return Asset.safeModeMacOS.image
 #endif
         case .moderateNAT:
-            return Asset.moderateNAT.image
-        case .profile:
             return Asset.moderateNAT.image
         }
     }

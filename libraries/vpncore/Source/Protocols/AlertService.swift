@@ -825,8 +825,6 @@ public class ModerateNATUpsellAlert: UpsellAlert {
     }
 }
 
-public class ProfileUpsellAlert: UpsellAlert { }
-
 public class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?
     public var message: String?
