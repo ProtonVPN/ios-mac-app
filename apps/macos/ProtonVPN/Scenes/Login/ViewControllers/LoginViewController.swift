@@ -254,8 +254,7 @@ class LoginViewController: NSViewController {
         guard helpPopover == nil else { return }
         
         helpPopover = NSPopover()
-        let helpPopoverViewModel = HelpPopoverViewModel()
-        helpPopover!.contentViewController = HelpPopoverViewController(viewModel: helpPopoverViewModel)
+        helpPopover!.contentViewController = HelpPopoverViewController(viewModel: viewModel.helpPopoverViewModel)
         helpPopover!.appearance = NSAppearance(named: .vibrantDark)
         helpPopover!.behavior = .transient
         helpPopover!.show(relativeTo: needHelpButton.bounds, of: needHelpButton, preferredEdge: .maxX)

@@ -23,21 +23,29 @@
 import Foundation
 import vpncore
 
-class HelpPopoverViewModel {
-    
-    let resetPasswordTitle: String
-    let forgotUsernameTitle: String
-    
-    init() {
-        resetPasswordTitle = LocalizedString.resetPassword
-        forgotUsernameTitle = LocalizedString.forgotUsername
+final class HelpPopoverViewModel {
+
+    private let navigationService: NavigationService
+
+    init(navigationService: NavigationService) {
+        self.navigationService = navigationService
     }
-    
+
+    // MARK: - Actions
+
     func resetAction() {
         SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
     }
     
     func forgotAction() {
         SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
+    }
+
+    func commonIssuesAction() {
+        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.loginProblems)
+    }
+
+    func reportBugAction() {
+        navigationService.showReportBug()
     }
 }
