@@ -107,10 +107,10 @@ struct Colors: ModalsColors {
     var weakText: UIColor
     
     init() {
-        background = UIColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1)
+        background = UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1)
         secondaryBackground = UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)
         text = .white
-        brand = UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1)
-        weakText = UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)
+        brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
+        weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
     }
 }

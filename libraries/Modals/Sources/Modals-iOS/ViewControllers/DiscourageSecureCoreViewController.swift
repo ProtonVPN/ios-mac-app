@@ -63,6 +63,7 @@ final class DiscourageSecureCoreViewController: UIViewController {
         brandStyleOnTint(dontShowAgainSwitch)
         labelStyle(dontShowAgainLabel)
 
+        dontShowAgainSwitch.onTintColor = colors.brand
         featureArtImageView.image = feature.artImage
     }
 
