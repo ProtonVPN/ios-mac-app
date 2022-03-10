@@ -21,13 +21,16 @@
 //
 
 import Cocoa
+import vpncore
 
 class HelpPopoverViewController: NSViewController {
 
     private let viewModel: HelpPopoverViewModel
     
-    @IBOutlet weak var resetButton: GreenActionButton!
-    @IBOutlet weak var forgotButton: GreenActionButton!
+    @IBOutlet private weak var resetButton: GreenActionButton!
+    @IBOutlet private weak var forgotButton: GreenActionButton!
+    @IBOutlet private weak var commonIssuesButton: GreenActionButton!
+    @IBOutlet private weak var reportBugButton: GreenActionButton!
     
     required init(viewModel: HelpPopoverViewModel) {
         self.viewModel = viewModel
@@ -42,15 +45,25 @@ class HelpPopoverViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resetButton.title = viewModel.resetPasswordTitle
-        forgotButton.title = viewModel.forgotUsernameTitle
+        resetButton.title = LocalizedString.resetPassword
+        forgotButton.title = LocalizedString.forgotUsername
+        commonIssuesButton.title = LocalizedString.commonIssues
+        reportBugButton.title = LocalizedString.reportBug
     }
     
     @IBAction func resetAction(_ sender: Any) {
         viewModel.resetAction()
     }
-    
+
     @IBAction func forgotAction(_ sender: Any) {
         viewModel.forgotAction()
+    }
+
+    @IBAction func commonIssuesAction(_ sender: Any) {
+        viewModel.commonIssuesAction()
+    }
+
+    @IBAction func reportBugAction(_ sender: Any) {
+        viewModel.reportBugAction()
     }
 }

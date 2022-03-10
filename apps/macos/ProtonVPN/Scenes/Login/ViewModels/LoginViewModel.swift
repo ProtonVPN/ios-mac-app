@@ -118,4 +118,8 @@ final class LoginViewModel {
     func createAccountAction() {
         SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.signUp)
     }
+
+    var helpPopoverViewModel: HelpPopoverViewModel {
+        return HelpPopoverViewModel(navigationService: navService)
+    }
 }

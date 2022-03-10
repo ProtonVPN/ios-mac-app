@@ -342,6 +342,9 @@
 "_reset_password" = "Reset Password";
 
 /* MacOS: button in login screen */
+"_common_issues" = "Common sign in issues";
+
+/* MacOS: button in login screen */
 "_forgot_username" = "Forgot Username";
 
 /* iOS: button in login screen */

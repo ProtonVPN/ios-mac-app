@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="HelpPopoverViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="commonIssuesButton" destination="93r-zz-5tA" id="3Tm-08-D3T"/>
+                <outlet property="forgotButton" destination="wNr-bd-6WG" id="HYw-4n-W43"/>
+                <outlet property="reportBugButton" destination="zPH-jk-s4N" id="O0I-dy-fZj"/>
+                <outlet property="resetButton" destination="Jd9-pL-XVG" id="1h1-tF-0cc"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY" customClass="HelpPopoverBackgroundView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="160" height="138"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rkL-vC-DQW">
+                    <rect key="frame" x="15" y="12" width="130" height="114"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jd9-pL-XVG" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="90" width="68" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="Ue5-26-R62"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Reset Link" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="bkf-2p-hTC">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="resetAction:" target="-2" id="fFz-nb-3lT"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNr-bd-6WG" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="60" width="74" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="gpk-A9-7iR"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Forgot Link" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="AbP-1R-7jK">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="forgotAction:" target="-2" id="jLn-uj-cjb"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="93r-zz-5tA" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="30" width="130" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="wWc-Ii-isk"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Common issues Link" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="gdq-J0-GJH">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="commonIssuesAction:" target="-2" id="b33-oO-x5E"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zPH-jk-s4N" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="102" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="sdM-h7-Jwh"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Report bug Link" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="UoE-aq-X0W">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="reportBugAction:" target="-2" id="oPv-Tj-QJ9"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="rkL-vC-DQW" secondAttribute="bottom" constant="12" id="20a-eC-VY9"/>
+                <constraint firstItem="rkL-vC-DQW" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="15" id="2pj-nK-30E"/>
+                <constraint firstItem="rkL-vC-DQW" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="12" id="ABu-FU-smG"/>
+                <constraint firstAttribute="trailing" secondItem="rkL-vC-DQW" secondAttribute="trailing" constant="15" id="cLf-V6-2Pg"/>
+            </constraints>
+            <point key="canvasLocation" x="-31" y="168"/>
+        </customView>
+    </objects>
+</document>
