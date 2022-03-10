@@ -19,15 +19,15 @@
                     <rect key="frame" x="0.0" y="44" width="443" height="327"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HWu-c7-J7d">
-                            <rect key="frame" x="36" y="36" width="371" height="255"/>
+                            <rect key="frame" x="0.0" y="36" width="443" height="255"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="HWu-c7-J7d" secondAttribute="bottom" constant="36" id="8HW-M5-CnV"/>
                         <constraint firstItem="HWu-c7-J7d" firstAttribute="top" secondItem="Q1K-Bm-khM" secondAttribute="top" constant="36" id="9ED-Dm-NG7"/>
-                        <constraint firstAttribute="trailing" secondItem="HWu-c7-J7d" secondAttribute="trailing" constant="36" id="fYd-n7-aYl"/>
-                        <constraint firstItem="HWu-c7-J7d" firstAttribute="leading" secondItem="Q1K-Bm-khM" secondAttribute="leading" constant="36" id="vbC-CK-LgX"/>
+                        <constraint firstAttribute="trailing" secondItem="HWu-c7-J7d" secondAttribute="trailing" id="fYd-n7-aYl"/>
+                        <constraint firstItem="HWu-c7-J7d" firstAttribute="leading" secondItem="Q1K-Bm-khM" secondAttribute="leading" id="vbC-CK-LgX"/>
                     </constraints>
                 </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="vfd-6h-9Fj">

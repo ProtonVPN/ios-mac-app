@@ -115,7 +115,7 @@ extension TabBarController: TabBarViewModelDelegate {
         if !quickConnectButtonConnecting { // to avoid animation jumping, don't reset animation during multiple connecting stage calls
             self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.brandColor()], for: .normal)
             self.tabBar.items?[2].title = LocalizedString.connecting
-            self.quickConnectButton.setImage(UIImage(named: "quick-connect-active-button"), for: .normal)
+            self.quickConnectButton.setImage(UIImage(named: "quick-connect-connecting-button"), for: .normal)
             self.electron.alpha = 1.0
             self.electron.isHidden = false
             
