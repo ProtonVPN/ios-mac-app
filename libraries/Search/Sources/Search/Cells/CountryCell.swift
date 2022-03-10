@@ -50,6 +50,12 @@ public final class CountryCell: UITableViewCell {
 
     // MARK: Properties
 
+    var searchText: String? {
+        didSet {
+            setupCountryName()
+        }
+    }
+
     public var viewModel: CountryViewModel? {
         didSet {
             guard let viewModel = viewModel else {
@@ -58,10 +64,7 @@ public final class CountryCell: UITableViewCell {
 
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            countryName.text = viewModel.description
-            countryName.numberOfLines = 2
-            countryName.lineBreakMode = .byTruncatingTail
-            countryName.tintColor = viewModel.textColor
+            setupCountryName()
 
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.isSmartAvailable
@@ -74,7 +77,7 @@ public final class CountryCell: UITableViewCell {
             }
             entryFlagIcon.isHidden = !viewModel.isSecureCoreCountry
             entrySeparator.isHidden = !viewModel.isSecureCoreCountry
-            flagsStackView.spacing = viewModel.isSecureCoreCountry ? 8 : 18
+            flagsStackView.spacing = viewModel.isSecureCoreCountry ? 8 : 16
             entryFlagIcon.backgroundColor = viewModel.connectButtonColor
 
             stateChanged()
@@ -92,6 +95,9 @@ public final class CountryCell: UITableViewCell {
     override public func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
+
+        countryName.numberOfLines = 2
+        countryName.lineBreakMode = .byTruncatingTail
     }
 
     private func stateChanged() {
@@ -114,5 +120,26 @@ public final class CountryCell: UITableViewCell {
             rightMarginConstraint.isActive = false
             rightNoMarginConstraint.isActive = true
         }
+    }
+
+    private func setupCountryName() {
+        guard let viewModel = viewModel else {
+            return
+        }
+
+        guard let searchText = searchText, !searchText.isEmpty else {
+            countryName.text = viewModel.description
+            countryName.textColor = viewModel.textColor
+            return
+        }
+
+        let name = NSMutableAttributedString(string: viewModel.description, attributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+            NSAttributedString.Key.foregroundColor: colors.weakText
+        ])
+
+        name.addAttributes([NSAttributedString.Key.foregroundColor: viewModel.textColor], range: NSRange(location: 0, length: searchText.count))
+
+        countryName.attributedText = name
     }
 }
