@@ -118,11 +118,7 @@ final class CountriesViewController: UIViewController {
     private func setupNavigationBar() {
         let infoButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-info-circle"), style: .plain, target: self, action: #selector(displayServicesInfo))
         let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-search"), style: .plain, target: self, action: #selector(showSearch))
-        #if DEBUG
         navigationItem.rightBarButtonItems = [searchButton, infoButton]
-        #else
-        navigationItem.rightBarButtonItems = [infoButton]
-        #endif
     }
     
     @objc private func displayServicesInfo() {
