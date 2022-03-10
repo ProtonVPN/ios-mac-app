@@ -99,9 +99,6 @@ extension MacAlertService: CoreAlertService {
         case let alert as NetShieldUpsellAlert:
             show(alert: alert, upsellType: .netShield)
 
-        case let alert as ProfileUpsellAlert:
-            show(alert: alert, upsellType: .profile)
-
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
             

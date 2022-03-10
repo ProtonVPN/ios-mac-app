@@ -74,7 +74,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
 
         guard !isUsersTierTooLow else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: ProfileUpsellAlert())
+            alertService.push(alert: AllCountriesUpsellAlert())
 
             return
         }
