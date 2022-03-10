@@ -50,6 +50,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
                     fatalError("Invalid configuration")
                 }
+                cell.searchText = searchBar.text
                 cell.viewModel = countries[indexPath.row]
                 return cell
             case let .servers(tier: _, servers: servers):
