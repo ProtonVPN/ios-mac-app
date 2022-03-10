@@ -15,7 +15,7 @@
 "search_recent_clear_title" = "Your search history will be lost. Continue?";
 "search_recent_clear_cancel" = "Cancel";
 "search_recent_clear_continue" = "Continue";
-"search_bar_placeholder" = "Country, City, or Server";
+"search_bar_placeholder" = "Country or Server";
 "search_results_countries" = "Countries";
 "search_upsell_subtitle" = "Connect to what you are searching for";
 "search_secure_core_countries" = "Secure Core countries";
