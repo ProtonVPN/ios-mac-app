@@ -16,9 +16,7 @@ public enum LocalizedString {
   public static var freeServers: String { return LocalizedString.tr("Localizable", "_free_servers") }
   /// PLUS Servers
   public static var plusServers: String { return LocalizedString.tr("Localizable", "_plus_servers") }
-  /// via
-  public static var via: String { return LocalizedString.tr("Localizable", "_via") }
-  /// Country, City, or Server
+  /// Country or Server
   public static var searchBarPlaceholder: String { return LocalizedString.tr("Localizable", "search_bar_placeholder") }
   /// Cities
   public static var searchCities: String { return LocalizedString.tr("Localizable", "search_cities") }
