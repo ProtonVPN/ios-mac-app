@@ -34,8 +34,8 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZHp-Fa-McN">
-                    <rect key="frame" x="24" y="280" width="450" height="200"/>
+                <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="450" placeholderIntrinsicHeight="200" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZHp-Fa-McN">
+                    <rect key="frame" x="24" y="221" width="450" height="200"/>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
