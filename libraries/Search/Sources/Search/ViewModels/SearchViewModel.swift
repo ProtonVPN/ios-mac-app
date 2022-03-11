@@ -40,7 +40,7 @@ final class SearchViewModel {
 
     weak var delegate: SearchViewModelDelegate?
 
-    var numberOfServers: Int {
+    var numberOfCountries: Int {
         return constants.numberOfCountries
     }
 

@@ -35,9 +35,9 @@ final class UpsellCell: UITableViewCell {
 
     // MARK: Properties
 
-    var numberOfServers: Int = 0 {
+    var numberOfCountries: Int = 0 {
         didSet {
-            titleLabel.text = LocalizedString.searchUpsellTitle(numberOfServers)
+            titleLabel.text = LocalizedString.searchUpsellTitle(numberOfCountries)
         }
     }
 
