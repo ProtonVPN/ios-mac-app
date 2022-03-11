@@ -53,6 +53,7 @@ extension UIColor {
     }
     
     class func brandDarken40Color() -> UIColor {
+        // ColorProvider.PurpleBase
         return ColorProvider.BrandDarken40
     }
 

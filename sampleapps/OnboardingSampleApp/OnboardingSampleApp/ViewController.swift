@@ -43,8 +43,16 @@ final class ViewController: UIViewController {
     }
 
     private func startOnboarding(variant: OnboardingVariant) {
-        coordinator = OnboardingCoordinator(configuration: Configuration(variant: variant, colors: Colors(background: UIColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1), text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1), textInverted: .black, notification: .white), constants: Constants(numberOfDevices: 10, numberOfServers: 1300, numberOfFreeServers: 23, numberOfFreeCountries: 3, numberOfCountries: 61)))
-        coordinator.delegate = self
+        let colors = Colors(background: UIColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1),
+                            text: .white,
+                            brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
+                            weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
+                            activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1),
+                            secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1),
+                            textInverted: .black,
+                            notification: .white)
+        coordinator = OnboardingCoordinator(configuration: Configuration(variant: variant, colors: colors, constants: Constants(numberOfDevices: 10, numberOfServers: 1300, numberOfFreeServers: 23, numberOfFreeCountries: 3, numberOfCountries: 61)))
+coordinator.delegate = self
         let vc = coordinator.start()
         present(vc, animated: true, completion: nil)
     }

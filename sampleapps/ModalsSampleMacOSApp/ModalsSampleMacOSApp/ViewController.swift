@@ -85,10 +85,10 @@ struct Colors: ModalsColors {
     var weakText: NSColor
 
     init() {
-        background = NSColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1)
+        background = NSColor(red: 28/255, green: 27/255, blue: 36/255, alpha: 1)
         text = .white
-        brand = NSColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1)
-        hoverBrand = NSColor(red: 86/255, green: 179/255, blue: 102/255, alpha: 1)
-        weakText = NSColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)
+        brand = NSColor(red: 109/255, green: 74/255, blue: 255/255, alpha: 1)
+        hoverBrand = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
+        weakText = NSColor(red: 167/255, green: 164/255, blue: 181/255, alpha: 1)
     }
 }
