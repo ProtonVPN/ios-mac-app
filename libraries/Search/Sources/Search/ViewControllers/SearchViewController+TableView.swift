@@ -71,7 +71,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellCell.identifier) as? UpsellCell else {
                     fatalError("Invalid configuration")
                 }
-                cell.numberOfServers = viewModel.numberOfServers
+                cell.numberOfCountries = viewModel.numberOfCountries
                 return cell
             }
         }
