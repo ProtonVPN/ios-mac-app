@@ -58,34 +58,34 @@ final class ViewController: UIViewController {
         let mode = createMode()
         let tier = forceTier ?? (mode == .freeUser ? ServerTier.free : ServerTier.plus)
         let isSecureCoreCountry = mode == .secureCore
-        let relayCountry: String? = mode == .secureCore ? "Italy" : nil
+        let entryCountryName: String? = mode == .secureCore ? "Italy" : nil
 
         return [
             CountryItemViewModel(country: "Switzerland", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, relayCountry: relayCountry),
-                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, relayCountry: relayCountry)
+                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName),
+                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", relayCountry: relayCountry)
+                    ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName)
                 ]
             ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "United States", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, relayCountry: relayCountry),
-                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, relayCountry: relayCountry)
+                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName),
+                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", relayCountry: relayCountry)
+                    ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName)
                 ]
             ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "Czechia", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free, relayCountry: relayCountry),
-                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == .free, relayCountry: relayCountry)
+                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName),
+                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName)
                 ],
                 tier: [
-                    ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", relayCountry: relayCountry)
+                    ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName)
                 ]
             ], isSecureCoreCountry: isSecureCoreCountry)
         ]

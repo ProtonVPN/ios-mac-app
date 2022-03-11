@@ -240,8 +240,16 @@ extension ServerItemViewModel: ServerViewModel {
         return connectedUiState ? .brandColor() : (underMaintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
     }
 
-    var relayCountry: (name: String, flag: UIImage?)? {
-        return viaCountry.map({ ($0.0, UIImage(named: $0.1.lowercased() + "-plain")) })
+    var entryCountryName: String? {
+        return viaCountry?.name
+    }
+
+    var entryCountryFlag: UIImage? {
+        guard let code = viaCountry?.code else {
+            return nil
+        }
+
+        return UIImage(named: code.lowercased() + "-plain")
     }
 
     var countryName: String {

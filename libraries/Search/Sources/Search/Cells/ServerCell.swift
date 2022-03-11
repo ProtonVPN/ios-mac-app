@@ -75,11 +75,11 @@ public final class ServerCell: UITableViewCell {
             selectionStyle = .none
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            serverNameLabel.isHidden = viewModel.relayCountry != nil
+            serverNameLabel.isHidden = viewModel.entryCountryName != nil
             setupServerAndCountryName()
             cityNameLabel.text = viewModel.city
-            cityNameLabel.isHidden = viewModel.relayCountry != nil
-            secureView.isHidden = viewModel.relayCountry == nil
+            cityNameLabel.isHidden = viewModel.entryCountryName != nil
+            secureView.isHidden = viewModel.entryCountryName == nil
 
             smartIV.isHidden = !viewModel.isSmartAvailable
             torIV.isHidden = !viewModel.torAvailable
@@ -93,10 +93,8 @@ public final class ServerCell: UITableViewCell {
                 view?.alpha = viewModel.alphaOfMainElements
             }
 
-            if let relayCountry = viewModel.relayCountry {
-                entryFlagIcon.image = relayCountry.flag
-                exitFlagIcon.image = viewModel.countryFlag
-            }
+            entryFlagIcon.image = viewModel.entryCountryFlag
+            exitFlagIcon.image = viewModel.countryFlag
 
             DispatchQueue.main.async { [weak self] in
                 self?.stateChanged()
