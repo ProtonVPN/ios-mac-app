@@ -21,6 +21,7 @@
 
 #if canImport(UIKit)
 import UIKit
+import ProtonCore_UIFoundations
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
@@ -38,20 +39,16 @@ public class ProfileConstants {
 
     #if canImport(UIKit)
     public static let profileColors = [
-        UIColor(red: 224 / 255, green: 32 / 255, blue: 39 / 255, alpha: 1.0),
-        UIColor(red: 190 / 255, green: 102 / 255, blue: 103 / 255, alpha: 1.0),
-        UIColor(red: 210 / 255, green: 41 / 255, blue: 182 / 255, alpha: 1.0),
-        UIColor(red: 177 / 255, green: 82 / 255, blue: 163 / 255, alpha: 1.0),
-        UIColor(red: 158 / 255, green: 78 / 255, blue: 216 / 255, alpha: 1.0),
-        UIColor(red: 147 / 255, green: 106 / 255, blue: 176 / 255, alpha: 1.0),
-        UIColor(red: 95 / 255, green: 115 / 255, blue: 216 / 255, alpha: 1.0),
-        UIColor(red: 104 / 255, green: 113 / 255, blue: 165 / 255, alpha: 1.0),
-        UIColor(red: 59 / 255, green: 197 / 255, blue: 201 / 255, alpha: 1.0),
-        UIColor(red: 87 / 255, green: 145 / 255, blue: 146 / 255, alpha: 1.0),
-        UIColor(red: 62 / 255, green: 185 / 255, blue: 102 / 255, alpha: 1.0),
-        UIColor(red: 163 / 255, green: 147 / 255, blue: 98 / 255, alpha: 1.0),
-        UIColor(red: 215 / 255, green: 114 / 255, blue: 39 / 255, alpha: 1.0),
-        UIColor(red: 169 / 255, green: 125 / 255, blue: 88 / 255, alpha: 1.0)
+        ColorProvider.PurpleBase,
+        ColorProvider.PinkBase,
+        ColorProvider.StrawberryBase,
+        ColorProvider.CarrotBase,
+        ColorProvider.SaharaBase,
+        ColorProvider.SlateblueBase,
+        ColorProvider.PacificBase,
+        ColorProvider.ReefBase,
+        ColorProvider.FernBase,
+        ColorProvider.OliveBase
     ]
     #elseif canImport(Cocoa)
     public static let profileColors = [
