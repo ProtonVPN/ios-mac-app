@@ -24,7 +24,6 @@ import Cocoa
 import vpncore
 
 class PrimaryActionButton: HoverDetectionButton {
-    
     var actionType = PrimaryActionType.confirmative {
         didSet {
             configureButton()
@@ -37,7 +36,7 @@ class PrimaryActionButton: HoverDetectionButton {
         }
     }
     
-    var fontSize: Double = 16 {
+    var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
@@ -56,22 +55,38 @@ class PrimaryActionButton: HoverDetectionButton {
     private func configureButton() {
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
-        
-        switch actionType {
-        case .confirmative, .cancel:
-            layer?.backgroundColor = isHovered ? NSColor.protonGreenShade().cgColor : NSColor.protonGreen().cgColor
-        case .destructive:
-            layer?.backgroundColor = isHovered ? NSColor.protonRedShade().cgColor : NSColor.protonRed().cgColor
-        }
+        layer?.backgroundColor = self.cgColor(.background)
     }
     
     private func configureTitle() {
-        attributedTitle = title.attributed(withColor: .protonWhite(), fontSize: fontSize)
+        attributedTitle = self.style(title, font: .themeFont(fontSize))
     }
 
     override var intrinsicContentSize: NSSize {
         var size = super.intrinsicContentSize
         size.width += 16
         return size
+    }
+}
+
+extension PrimaryActionButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .text:
+            return .normal
+        case .background, .border:
+            let hover: AppTheme.Style = isHovered ? .hovered : []
+            switch actionType {
+            case .confirmative, .cancel:
+                return .interactive + hover
+            case .destructive:
+                return .danger + hover
+            }
+        default:
+            break
+        }
+
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

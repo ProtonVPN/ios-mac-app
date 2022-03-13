@@ -24,9 +24,6 @@ import Cocoa
 import vpncore
 
 class FlagView: NSView {
-    
-    var defaultColor: NSColor = .protonDarkGrey()
-
     var backgroundImage: NSImage? {
         didSet {
             needsDisplay = true
@@ -53,16 +50,16 @@ class FlagView: NSView {
         let path = CGMutablePath()
         path.addRect(bounds)
         
-        context.setFillColor(defaultColor.cgColor)
+        context.setFillColor(.cgColor(.background, .strong))
         context.addPath(path)
         context.drawPath(using: .fill)
     }
     
     private func addGradient(context: CGContext) {
-        let diagonal = NSGradient(starting: .clear, ending: .protonDarkGrey())
+        let diagonal = NSGradient(starting: .transparent, ending: .normal)
         diagonal?.draw(in: bounds, angle: 0)
         
-        let curtain = NSGradient(starting: .clear, ending: .protonDarkGrey())
+        let curtain = NSGradient(starting: .transparent, ending: .normal)
         curtain?.draw(in: bounds, angle: 270)
     }
 }

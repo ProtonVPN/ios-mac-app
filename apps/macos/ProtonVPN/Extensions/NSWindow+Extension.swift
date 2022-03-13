@@ -62,7 +62,7 @@ extension NSWindow {
         titlebarAppearsTransparent = true
         title = "Proton VPN"
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        backgroundColor = .protonGreyShade()
+        backgroundColor = .color(.background)
         
         minSize = NSSize(width: AppConstants.Windows.sidebarWidth, height: AppConstants.Windows.minimumSidebarHeight)
     }

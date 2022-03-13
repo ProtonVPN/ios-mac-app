@@ -35,8 +35,27 @@ class ExpandCellButton: HoverDetectionButton {
         
     private func configureButton() {
         wantsLayer = true
-        contentTintColor = .protonWhite()
-        layer?.backgroundColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGrey().cgColor
-        layer?.borderColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGreyOutOfFocus().cgColor
+        contentTintColor = self.color(.icon)
+        layer?.backgroundColor = self.cgColor(.background)
+        layer?.borderColor = self.cgColor(.border)
+    }
+}
+
+extension ExpandCellButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background, .border:
+            if isHovered, isEnabled {
+                return [.interactive, .hovered]
+            }
+            return context == .border ? .normal : .weak
+        case .icon:
+            return .normal
+        default:
+            break
+        }
+
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

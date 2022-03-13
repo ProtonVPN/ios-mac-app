@@ -91,7 +91,7 @@ class ServerInfoViewController: NSViewController {
         loadValueView.load = viewModel.loadValue
         
         ipLabel.attributedStringValue = viewModel.ipLabel
-        ipValue.attributedStringValue = viewModel.ip.attributed(withColor: NSColor.protonWhite(), fontSize: 12, alignment: .left)
+        ipValue.attributedStringValue = viewModel.ip.styled(font: .themeFont(.small), alignment: .left)
         
         secureCoreLabel.attributedStringValue = viewModel.secureCoreLabel
         secureCoreIcon.image = viewModel.secureCoreImage

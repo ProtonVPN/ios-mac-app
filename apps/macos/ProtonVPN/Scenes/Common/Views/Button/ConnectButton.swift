@@ -64,30 +64,32 @@ class ConnectButton: ResizingTextButton {
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
         layer?.borderWidth = 2
-        
+        layer?.backgroundColor = self.cgColor(.background)
+        layer?.borderColor = self.cgColor(.border)
+
+        let title: String
         if isConnected {
-            layer?.backgroundColor = NSColor.protonGrey().cgColor
-            if isHovered {
-                layer?.borderColor = NSColor.protonRed().cgColor
-                layer?.backgroundColor = NSColor.protonRed().cgColor
-                attributedTitle = LocalizedString.disconnect.uppercased().attributed(withColor: .protonWhite(), fontSize: 12)
-            } else {
-                layer?.borderColor = NSColor.protonLightGrey().cgColor
-                attributedTitle = LocalizedString.connected.uppercased().attributed(withColor: .protonWhite(), fontSize: 12)
-            }
+            title = isHovered ? LocalizedString.disconnect : LocalizedString.connected
             setAccessibilityLabel(String(format: "%@ %@", LocalizedString.disconnect, nameForAccessibility ?? ""))
         } else {
-            let titleText = upgradeRequired ? LocalizedString.upgrade : LocalizedString.connect
-            attributedTitle = titleText.uppercased().attributed(withColor: .protonWhite(), fontSize: 12)
-            if isHovered {
-                layer?.borderColor = NSColor.protonGreen().cgColor
-                layer?.backgroundColor = NSColor.protonGreen().cgColor
-            } else {
-                layer?.borderColor = NSColor.protonLightGrey().cgColor
-                layer?.backgroundColor = NSColor.protonGrey().cgColor
-            }
-            setAccessibilityLabel(String(format: "%@ %@", titleText, nameForAccessibility ?? ""))
+            title = upgradeRequired ? LocalizedString.upgrade : LocalizedString.connect
+            setAccessibilityLabel(String(format: "%@ %@", title, nameForAccessibility ?? ""))
         }
-        
+        attributedTitle = title.uppercased().styled(font: .themeFont(.small))
+    }
+}
+
+extension ConnectButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        if context == .text {
+            return .normal
+        }
+
+        let defaultStyle: AppTheme.Style = context == .border ? .normal : .weak
+        if isConnected {
+            return isHovered ? .danger : defaultStyle
+        } else {
+            return isHovered ? .interactive : defaultStyle
+        }
     }
 }

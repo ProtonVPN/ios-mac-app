@@ -37,7 +37,7 @@ class ServerInfoView: NSView {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         
-        context.setFillColor(NSColor.protonGreyShade().cgColor)
+        context.setFillColor(.cgColor(.background))
         
         let contentFrame = CGRect(x: 0.0, y: 15, width: bounds.width, height: bounds.height - 15)
         context.addRect(contentFrame)

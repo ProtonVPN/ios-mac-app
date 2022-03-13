@@ -24,9 +24,6 @@ import Cocoa
 import vpncore
 
 class SidebarTabBarView: NSView {
-    
-    private let backgroundColor: CGColor = NSColor.protonDarkGrey().cgColor
-    
     var activeTab: SidebarTab? {
         didSet {
             needsDisplay = true
@@ -65,7 +62,7 @@ class SidebarTabBarView: NSView {
         let path = CGMutablePath()
         path.addRect(rect)
         
-        context.setFillColor(backgroundColor)
+        context.setFillColor(.cgColor(.background))
         context.addPath(path)
         context.fillPath()
     }
@@ -133,6 +130,6 @@ class SidebarTabBarView: NSView {
     }
     
     private func getColor(forFocus present: Bool) -> CGColor {
-        return present ? NSColor.protonGrey().cgColor : NSColor.protonDarkGreyShade().cgColor
+        return .cgColor(.background, present ? .weak : [.interactive, .weak])
     }
 }
