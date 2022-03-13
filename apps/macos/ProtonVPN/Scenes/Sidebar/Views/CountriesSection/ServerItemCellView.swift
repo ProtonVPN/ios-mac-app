@@ -47,11 +47,11 @@ final class ServerItemCellView: NSView {
     override func awakeFromNib() {
         super.awakeFromNib()
         wantsLayer = true
-        layer?.backgroundColor = NSColor.protonServerRow().cgColor
+        layer?.backgroundColor = .cgColor(.background, .weak)
         upgradeBtn.stringValue = LocalizedString.upgrade
         maintenanceIV.wantsLayer = true
         maintenanceIV.layer?.cornerRadius = 10
-        maintenanceIV.layer?.backgroundColor = NSColor.protonDarkBlueButton().cgColor
+        maintenanceIV.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
         let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)

@@ -74,11 +74,11 @@ class TabBarButton: NSButton {
         super.draw(dirtyRect)
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.clear.cgColor
+        layer?.backgroundColor = .cgColor(.background, .transparent)
     }
     
     private func setupAttributedTitle() {
         let shouldHighlight = isFocused || isHovered
-        attributedTitle = title.attributed(withColor: shouldHighlight ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 16)
+        attributedTitle = title.styled(shouldHighlight ? .normal : .weak, font: .themeFont(.heading4))
     }
 }

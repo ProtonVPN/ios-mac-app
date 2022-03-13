@@ -78,7 +78,7 @@ class WarningPopupViewController: NSViewController {
         cancelButton.action = #selector(cancelButtonAction)
         
         continueButton.title = LocalizedString.continue
-        continueButton.fontSize = 14
+        continueButton.fontSize = .paragraph
         continueButton.target = self
         continueButton.action = #selector(continueButtonAction)
     }

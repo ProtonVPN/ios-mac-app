@@ -88,7 +88,7 @@ class SCUpgradePopupViewController: NSViewController {
         cancelButton.action = #selector(okButtonAction)
         
         upgradeButton.title = LocalizedString.upgrade
-        upgradeButton.fontSize = 14
+        upgradeButton.fontSize = .paragraph
         upgradeButton.target = self
         upgradeButton.action = #selector(upgradeButtonAction)
     }

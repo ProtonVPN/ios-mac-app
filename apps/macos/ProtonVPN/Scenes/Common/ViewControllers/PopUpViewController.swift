@@ -113,7 +113,7 @@ class PopUpViewController: NSViewController {
         }
         
         confirmButton.title = viewModel.confirmButtonTitle
-        confirmButton.fontSize = 14
+        confirmButton.fontSize = .paragraph
         confirmButton.actionType = viewModel.confirmationType
         confirmButton.target = self
         confirmButton.action = #selector(confirmButtonAction)

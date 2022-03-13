@@ -49,18 +49,18 @@ final class CountryItemCellView: NSView {
         expandButton.wantsLayer = true
         expandButton.layer?.cornerRadius = 16
         expandButton.layer?.borderWidth = 2
-        expandButton.layer?.borderColor = NSColor.protonExandableButton().cgColor
+        expandButton.layer?.borderColor = .cgColor(.border, .weak)
         
         maintenanceBtn.wantsLayer = true
         maintenanceBtn.layer?.cornerRadius = 16
-        maintenanceBtn.layer?.backgroundColor = NSColor.protonServerRow().cgColor
+        maintenanceBtn.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
         
         torIV.toolTip = LocalizedString.torTitle
         p2pIV.toolTip = LocalizedString.p2pTitle
         smartIV.toolTip = LocalizedString.smartProtocolTitle
 
         separatorView.wantsLayer = true
-        separatorView.layer?.backgroundColor = NSColor.protonExandableButton().cgColor
+        separatorView.layer?.backgroundColor = .cgColor(.border, .weak)
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 4))
         let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)

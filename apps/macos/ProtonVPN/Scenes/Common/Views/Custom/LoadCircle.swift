@@ -23,7 +23,6 @@
 import Cocoa
 
 class LoadCircle: NSView {
-        
     var load: Int? {
         didSet {
             needsDisplay = true
@@ -48,13 +47,17 @@ class LoadCircle: NSView {
         let loadPortion = load > 15 ? load : 15
         let endAngle: CGFloat = (CGFloat(loadPortion) / 100) * (-2 * .pi) + .pi / 2
         context.setLineWidth(2.0)
+
+        let circleStyle: AppTheme.Style
         if load < 76 {
-            context.setStrokeColor(NSColor.loadGreen().cgColor)
+            circleStyle = .success
         } else if load < 91 {
-            context.setStrokeColor(NSColor.loadYellow().cgColor)
+            circleStyle = .warning
         } else {
-            context.setStrokeColor(NSColor.loadRed().cgColor)
+            circleStyle = .danger
         }
+        context.setStrokeColor(.cgColor(.icon, circleStyle))
+
         context.addArc(center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
                        radius: ocb.width / 2,
                        startAngle: startAngle,

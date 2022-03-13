@@ -43,20 +43,29 @@ class LargeConnectButton: HoverDetectionButton {
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = NSColor.clear.cgColor
+        layer?.backgroundColor = self.cgColor(.background)
         
-        let title: String
-        let accentColor: NSColor
-        
-        if isConnected {
-            accentColor = isHovered ? .protonRed() : .protonWhite()
-            title = LocalizedString.disconnect
-        } else {
-            accentColor = isHovered ? .protonGreen() : .protonWhite()
-            title = LocalizedString.quickConnect
+        let title: String = isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect
+        layer?.borderColor = self.cgColor(.icon)
+        attributedTitle = self.style(title, font: .themeFont(.heading4))
+    }
+}
+
+extension LargeConnectButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            return .transparent
+        case .icon, .text:
+            if isConnected {
+                return isHovered ? .danger : .normal
+            }
+            return isHovered ? [.interactive, .active] : .normal
+        default:
+            break
         }
-        
-        layer?.borderColor = accentColor.cgColor
-        attributedTitle = title.attributed(withColor: accentColor, fontSize: 16)
+
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

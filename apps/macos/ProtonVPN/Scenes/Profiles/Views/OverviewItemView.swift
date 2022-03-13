@@ -98,7 +98,7 @@ class OverviewItemView: NSTableRowView {
 
     private func setupConnectButton(action: NSAccessibilityCustomAction) {
         connectButton.title = action.name
-        connectButton.fontSize = 16.0
+        connectButton.fontSize = .heading4
         connectButton.target = action.target
         connectButton.action = action.selector
         (connectButton.cell as! NSButtonCell).imageDimsWhenDisabled = false
@@ -107,7 +107,7 @@ class OverviewItemView: NSTableRowView {
 
     private func setupEditButton(action: NSAccessibilityCustomAction) {
         editButton.title = action.name
-        editButton.fontSize = 16.0
+        editButton.fontSize = .heading4
         editButton.isHidden = viewModel.isSystemProfile
         editButton.target = action.target
         editButton.action = action.selector
@@ -115,7 +115,7 @@ class OverviewItemView: NSTableRowView {
 
     private func setupDeleteButton(action: NSAccessibilityCustomAction) {
         deleteButton.title = action.name
-        deleteButton.fontSize = 16.0
+        deleteButton.fontSize = .heading4
         deleteButton.isHidden = viewModel.isSystemProfile
         deleteButton.target = action.target
         deleteButton.action = action.selector

@@ -31,7 +31,7 @@ protocol CountriesServersHeaderViewModelProtocol {
 
 class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
-    let backgroundColor: CGColor = NSColor.protonGrey().cgColor
+    let backgroundColor: CGColor = .cgColor(.background)
     var didTapInfoBtn: (() -> Void)?
     
     init( _ sectionHeader: String, totalCountries: Int, isPremium: Bool, countriesViewModel: CountriesSectionViewModel ) {
@@ -45,7 +45,7 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
 
 class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
-    let backgroundColor: CGColor = NSColor.protonServerRow().cgColor
+    let backgroundColor: CGColor = .cgColor(.background, .weak)
     var didTapInfoBtn: (() -> Void)?
     
     init( _ sectionHeader: String, totalServers: Int, country: CountryModel, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {

@@ -55,8 +55,7 @@ final class UpsellViewController: NSViewController {
         
         upgradeButton.title = LocalizedString.upgradeMyPlan
         skipButton.title = LocalizedString.maybeLater
-        skipButton.fontSize = 15
-        
+
         moneyBackGuarantee.attributedStringValue = LocalizedString.moneyBackGuarantee.attributed(withColor: .protonWhite(), fontSize: 12)
     }
     

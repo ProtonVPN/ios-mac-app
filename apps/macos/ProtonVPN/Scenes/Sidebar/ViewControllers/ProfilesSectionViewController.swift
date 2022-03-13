@@ -52,7 +52,7 @@ class ProfileSectionViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
     }
     
     private func setupTableView() {
@@ -60,11 +60,11 @@ class ProfileSectionViewController: NSViewController {
         profileListTableView.delegate = self
         profileListTableView.ignoresMultiClick = true
         profileListTableView.selectionHighlightStyle = .none
-        profileListTableView.backgroundColor = .protonGrey()
+        profileListTableView.backgroundColor = .color(.background, .weak)
         profileListTableView.register(NSNib(nibNamed: NSNib.Name("ProfileItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.profile))
         profileListTableView.register(NSNib(nibNamed: NSNib.Name("FooterItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.footer))
         
-        profileListScrollView.backgroundColor = .protonGrey()
+        profileListScrollView.backgroundColor = .color(.background, .weak)
         
         viewModel.contentChanged = { [weak self] in self?.contentChanged() }
     }

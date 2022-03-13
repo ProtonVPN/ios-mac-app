@@ -137,11 +137,11 @@ class CountriesSectionViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
     }
         
     private func setupSearchSection() {
-        bottomHorizontalLine.fillColor = .protonLightGrey()
+        bottomHorizontalLine.fillColor = .color(.border, .weak)
         
         searchIcon.image = NSImage(named: NSImage.Name("search"))
         searchIcon.cell?.setAccessibilityElement(false)
@@ -153,11 +153,8 @@ class CountriesSectionViewController: NSViewController {
         searchTextField.delegate = self
         searchTextField.usesSingleLineMode = true
         searchTextField.focusRingType = .none
-        searchTextField.textColor = .protonWhite()
-        searchTextField.font = NSFont.systemFont(ofSize: 16)
-        searchTextField.alignment = .left
-        searchTextField.placeholderAttributedString = LocalizedString.searchForCountry.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
-        
+        searchTextField.style(placeholder: LocalizedString.searchForCountry, font: .themeFont(.heading4), alignment: .left)
+
         searchTextField.setAccessibilityIdentifier("SearchTextField")
         clearSearchBtn.setAccessibilityIdentifier("ClearSearchButton")
     }
@@ -168,12 +165,12 @@ class CountriesSectionViewController: NSViewController {
         serverListTableView.ignoresMultiClick = true
         serverListTableView.selectionHighlightStyle = .none
         serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
-        serverListTableView.backgroundColor = .protonGrey()
+        serverListTableView.backgroundColor = .color(.background, .weak)
         serverListTableView.register(Cell.country.nib, forIdentifier: Cell.country.identifier)
         serverListTableView.register(Cell.server.nib, forIdentifier: Cell.server.identifier)
         serverListTableView.register(Cell.header.nib, forIdentifier: Cell.header.identifier)
         
-        serverListScrollView.backgroundColor = .protonGrey()
+        serverListScrollView.backgroundColor = .color(.background, .weak)
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
         serverListScrollView.contentView.postsBoundsChangedNotifications = true
         
@@ -187,7 +184,7 @@ class CountriesSectionViewController: NSViewController {
         [ (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
           (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
           (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2) ].forEach { presenter, container, button, index in
-            let vc = QuickSettingDetailViewController( presenter )
+            let vc = QuickSettingDetailViewController(presenter)
             vc.viewWillAppear()
             container?.addSubview(vc.view)
             vc.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: container?.frame.size.height ?? 0)

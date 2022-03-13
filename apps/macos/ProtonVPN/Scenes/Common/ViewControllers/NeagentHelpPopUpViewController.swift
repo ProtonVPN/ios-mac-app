@@ -93,7 +93,7 @@ class NeagentHelpPopUpViewController: NSViewController {
         footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
         
         confirmationButton.title = LocalizedString.gotIt
-        confirmationButton.fontSize = 14
+        confirmationButton.fontSize = .paragraph
     }
     
     @IBAction func confirmButtonAction(_ sender: Any) {
