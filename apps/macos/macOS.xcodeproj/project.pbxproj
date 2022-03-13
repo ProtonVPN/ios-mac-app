@@ -59,6 +59,8 @@
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
+		4C2FC57427E1DE6000101912 /* NSGradient+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */; };
+		4C8313A727DE5D7200648797 /* NSTextField+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8313A627DE5D7200648797 /* NSTextField+AppTheme.swift */; };
 		4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
 		4C8641C127D261A000EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
@@ -69,6 +71,12 @@
 		4C8641C727D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
+		4C8641DD27DE0D8C00EEFB1D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641DC27DE0D8C00EEFB1D /* AppTheme.swift */; };
+		4C8641DF27DE0F6C00EEFB1D /* NSColor+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641DE27DE0F6C00EEFB1D /* NSColor+AppTheme.swift */; };
+		4C8641E127DE17F800EEFB1D /* NSFont+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E027DE17F800EEFB1D /* NSFont+AppTheme.swift */; };
+		4C8641E327DE18A600EEFB1D /* String+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */; };
+		4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */; };
+		4C8641E727DE35A500EEFB1D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
 		54A3F867B897C7D92CDF75C9 /* SubuserMacAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD48FBC3A054F5D91A15F1E /* SubuserMacAlertViewController.swift */; };
 		5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
@@ -620,6 +628,8 @@
 		45F03F9B62B304014D9F07D2 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A0223FF1859E2F464D0A3F7 /* Pods-ProtonVPN WireGuard.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.staging.xcconfig"; sourceTree = "<group>"; };
 		4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModelIDChecker.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Utilities/ModelIDChecker.swift; sourceTree = "<group>"; };
+		4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSGradient+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSGradient+AppTheme.swift"; sourceTree = "<group>"; };
+		4C8313A627DE5D7200648797 /* NSTextField+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSTextField+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSTextField+AppTheme.swift"; sourceTree = "<group>"; };
 		4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCClientConnection.swift; path = ../../macos/ExtensionsIPC/IPCClientConnection.swift; sourceTree = "<group>"; };
 		4C8641B827D22B1900EEFB1D /* AuditTokenGetter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuditTokenGetter.h; path = ../../macos/ExtensionsIPC/AuditTokenGetter.h; sourceTree = "<group>"; };
 		4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CodeSignatureComparitor.swift; path = ../../macos/ExtensionsIPC/CodeSignatureComparitor.swift; sourceTree = "<group>"; };
@@ -627,6 +637,12 @@
 		4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCServerConnection.swift; path = ../../macos/ExtensionsIPC/IPCServerConnection.swift; sourceTree = "<group>"; };
 		4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionIntercepts.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/ConnectionIntercepts.swift; sourceTree = "<group>"; };
 		4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NET2WarningPopupViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/ViewControllers/NET2WarningPopupViewController.swift; sourceTree = "<group>"; };
+		4C8641DC27DE0D8C00EEFB1D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppTheme.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Constants/AppTheme.swift; sourceTree = "<group>"; };
+		4C8641DE27DE0F6C00EEFB1D /* NSColor+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSColor+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSColor+AppTheme.swift"; sourceTree = "<group>"; };
+		4C8641E027DE17F800EEFB1D /* NSFont+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSFont+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSFont+AppTheme.swift"; sourceTree = "<group>"; };
+		4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/String+AppTheme.swift"; sourceTree = "<group>"; };
+		4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSImage+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSImage+AppTheme.swift"; sourceTree = "<group>"; };
+		4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OptionSet+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/OptionSet+Extension.swift"; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		65A71CB6D31F355FD456BA35 /* Pods-ProtonVPN OpenVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.release.xcconfig"; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -1233,6 +1249,19 @@
 				4C8641BE27D25D6400EEFB1D /* ProtonVPN OpenVPN-Bridging-Header.h */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		4C8641DB27DE0D7400EEFB1D /* AppTheme */ = {
+			isa = PBXGroup;
+			children = (
+				4C8641DE27DE0F6C00EEFB1D /* NSColor+AppTheme.swift */,
+				4C8641E027DE17F800EEFB1D /* NSFont+AppTheme.swift */,
+				4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */,
+				4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */,
+				4C8313A627DE5D7200648797 /* NSTextField+AppTheme.swift */,
+				4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */,
+			);
+			path = AppTheme;
 			sourceTree = "<group>";
 		};
 		59FDE4B3A2A3BC26BD32FAE2 /* Announcement */ = {
@@ -1941,6 +1970,7 @@
 			isa = PBXGroup;
 			children = (
 				EE98CFCE1F14E096000D6688 /* AppConstants.swift */,
+				4C8641DC27DE0D8C00EEFB1D /* AppTheme.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -2405,6 +2435,7 @@
 		F36ECE312611E0530089B898 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4C8641DB27DE0D7400EEFB1D /* AppTheme */,
 				F36ECE322611E0580089B898 /* Core */,
 				EEDC30B51EFB18DC00279A3A /* Bundle+Extension.swift */,
 				EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */,
@@ -2422,6 +2453,7 @@
 				42082650256BB78600A621EC /* NSView+Children.swift */,
 				E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */,
 				F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */,
+				4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3553,6 +3585,7 @@
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
 				E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
+				4C8313A727DE5D7200648797 /* NSTextField+AppTheme.swift in Sources */,
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
 				F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */,
 				EE24A3AB1F1BDDEF00B70949 /* ProfilesSectionViewController.swift in Sources */,
@@ -3577,8 +3610,10 @@
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,
 				EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */,
 				EED534851EEC112000013607 /* AppDelegate.swift in Sources */,
+				4C8641E127DE17F800EEFB1D /* NSFont+AppTheme.swift in Sources */,
 				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
+				4C8641DF27DE0F6C00EEFB1D /* NSColor+AppTheme.swift in Sources */,
 				EE7041701F239DB4008BC5AD /* PrefillInformation.swift in Sources */,
 				EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */,
 				EEB493CF1F20EA3400A979DC /* VerticalScrollView.swift in Sources */,
@@ -3649,6 +3684,7 @@
 				EE24A39F1F1BCF6000B70949 /* ConnectButton.swift in Sources */,
 				EEFE81D21F3F3AE30052A7A6 /* MapSectionViewController.swift in Sources */,
 				EEBB82EF1F1DF6230041432A /* CreateNewProfileViewController.swift in Sources */,
+				4C8641DD27DE0D8C00EEFB1D /* AppTheme.swift in Sources */,
 				EE98CFE51F15199C000D6688 /* WhiteHoverLinkButton.swift in Sources */,
 				D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */,
 				E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */,
@@ -3680,6 +3716,7 @@
 				42082651256BB78600A621EC /* NSView+Children.swift in Sources */,
 				E156C19B20BDA5920054E935 /* StatusMenuViewController.swift in Sources */,
 				E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */,
+				4C2FC57427E1DE6000101912 /* NSGradient+AppTheme.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */,
@@ -3688,8 +3725,10 @@
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
+				4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */,
 				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
+				4C8641E727DE35A500EEFB1D /* OptionSet+Extension.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
 				EE35FC431F1CD2DA00CFE26F /* SidebarTabBarView.swift in Sources */,
 				E180D16A2126FCE500F4D1C7 /* TourPreviousButton.swift in Sources */,
@@ -3710,6 +3749,7 @@
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
 				F315847927C795A100D1F6CC /* AdvancedSettingsViewModel.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
+				4C8641E327DE18A600EEFB1D /* String+AppTheme.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
 				E187022220E27801000521AC /* StatusMenuProfilesListViewModel.swift in Sources */,
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,
