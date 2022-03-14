@@ -27,7 +27,7 @@ class ExpandableContentPopupViewController: NSViewController {
     
     let viewModel: ExpandablePopupViewModel
     
-    @IBOutlet weak var actionBtn: WhiteCancelationButton!
+    @IBOutlet weak var actionBtn: CancellationButton!
     @IBOutlet weak var contentView: NSView!
     @IBOutlet weak var footerView: NSView!
     @IBOutlet weak var popupImage: NSImageView!

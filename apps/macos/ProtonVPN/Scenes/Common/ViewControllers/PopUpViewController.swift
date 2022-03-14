@@ -31,7 +31,7 @@ class PopUpViewController: NSViewController {
     @IBOutlet weak var leadingDescriptionConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: WhiteCancelationButton!
+    @IBOutlet weak var cancelButton: CancellationButton!
     @IBOutlet weak var confirmButton: PrimaryActionButton!
     
     let viewModel: PopUpViewModel

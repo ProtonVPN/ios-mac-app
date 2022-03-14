@@ -26,7 +26,7 @@ import vpncore
 class KillSwitchSwift5Popup: NSViewController {
 
     @IBOutlet weak var tryConnectButton: PrimaryActionButton!
-    @IBOutlet weak var keepDisabledButton: WhiteCancelationButton!
+    @IBOutlet weak var keepDisabledButton: CancellationButton!
     @IBOutlet weak var popupMessageLabel: PVPNTextViewLink!
     @IBOutlet weak var instructionIV: NSImageView!
     @IBOutlet weak var dontAskButton: NSButton!
