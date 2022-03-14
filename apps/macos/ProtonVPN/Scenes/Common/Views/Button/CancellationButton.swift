@@ -23,69 +23,67 @@
 import Cocoa
 
 class CancellationButton: HoverDetectionButton {
-    
     enum Style {
         case `default`
-        case hoveredRed
+        case destructive
     }
-    
+
     public var style: Style = .default
-    
+
+    private var isDestructive: Bool {
+        return style == .destructive
+    }
+
     override var title: String {
         didSet {
             configureTitle()
         }
     }
-    
-    var fontSize: Double = 16 {
+
+    var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
     }
-    
-    var textColor: NSColor {
-        switch style {
-        case .hoveredRed:
-            return .protonWhite()
-        default:
-            return isHovered ? .protonGreyShade() : .protonWhite()
-        }
-    }
-    
-    var borderColor: CGColor {
-        switch style {
-        case .hoveredRed:
-            return isHovered ? NSColor.protonRed().cgColor : NSColor.protonWhite().cgColor
-        default:
-            return NSColor.protonWhite().cgColor
-        }
-    }
-    
-    var backgroundColor: CGColor {
-        switch style {
-        case .hoveredRed:
-            return isHovered ? NSColor.protonRed().cgColor : NSColor.protonGreyShade().cgColor
-        default:
-            return isHovered ? NSColor.protonWhite().cgColor : NSColor.protonGreyShade().cgColor
-        }
-    }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.borderColor = borderColor
+        layer?.borderColor = self.cgColor(.border)
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = backgroundColor
-        attributedTitle = title.attributed(withColor: textColor, fontSize: fontSize)
+        layer?.backgroundColor = self.cgColor(.background)
+        configureTitle()
     }
-    
+
     private func configureTitle() {
-        attributedTitle = title.attributed(withColor: isHovered ? .protonGreyShade() : .protonWhite(), fontSize: fontSize)
+        attributedTitle = self.style(title, font: .themeFont(fontSize))
+    }
+}
+
+extension CancellationButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .text:
+            return isDestructive || !isHovered ? .normal : .weak
+        case .border:
+            return !isDestructive || !isHovered ? .inverted : [.danger, .hovered]
+        case .background:
+            if isDestructive {
+                return isHovered ? [.danger, .hovered] : .weak
+            } else {
+                return isHovered ? .inverted : .weak
+            }
+        default:
+            break
+        }
+
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

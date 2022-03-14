@@ -99,35 +99,29 @@ final class CreateNewProfileViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        view.layer?.backgroundColor = viewModel.cgColor(.background)
     }
     
     private func setupHeaderView() {
-        profileSettingsLabel.attributedStringValue = LocalizedString.profileSettings.uppercased().attributed(withColor: .protonGreyOutOfFocus(),
-                                                                                                         fontSize: 12, bold: true, alignment: .left)
-        connectionSettingsLabel.attributedStringValue = LocalizedString.connectionSettings.uppercased().attributed(withColor: .protonGreyOutOfFocus(),
-                                                                                                               fontSize: 12, bold: true, alignment: .left)
+        profileSettingsLabel.attributedStringValue = viewModel.style(LocalizedString.profileSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        connectionSettingsLabel.attributedStringValue = viewModel.style(LocalizedString.connectionSettings.uppercased(), context: .field, font: .themeFont(.small, bold: true), alignment: .left)
     }
     
     private func setupNameSection() {
-        nameLabel.attributedStringValue = (LocalizedString.name + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        nameTextField.font = NSFont.systemFont(ofSize: 16)
-        nameTextField.textColor = NSColor.protonWhite()
-        nameTextField.placeholderAttributedString = LocalizedString.name.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+        nameLabel.attributedStringValue = viewModel.style(LocalizedString.name + ":", font: .themeFont(.heading4), alignment: .left)
+
+        nameTextField.style(placeholder: LocalizedString.name, font: .themeFont(.heading4), alignment: .left)
         nameTextField.drawsBackground = true
-        nameTextField.backgroundColor = NSColor.protonGrey()
         nameTextField.focusRingType = .none
         nameTextField.delegate = self
         nameTextField.focusDelegate = self
-        
-        nameTextFieldHorizontalLine.fillColor = .protonLightGrey()
-        
         nameTextField.setAccessibilityIdentifier("NameTextField")
+        
+        nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)
     }
 
     private func setupProtocolSection() {
-        protocolLabel.attributedStringValue = LocalizedString.vpnProtocol.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        protocolLabel.attributedStringValue = viewModel.style(LocalizedString.vpnProtocol, font: .themeFont(.heading4), alignment: .left)
 
         protocolList.isBordered = false
         protocolList.menu?.delegate = self
@@ -138,57 +132,55 @@ final class CreateNewProfileViewController: NSViewController {
         protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
         protocolEnablementProgress.toolTip = LocalizedString.sysexSettingsDescription
 
-        protocolListHorizontalLine.fillColor = .protonLightGrey()
+        protocolListHorizontalLine.fillColor = viewModel.color(.border)
     }
     
     private func setupColorSection() {
-        colorPickerLabel.attributedStringValue = (LocalizedString.color + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        colorPickerLabel.attributedStringValue = viewModel.style(LocalizedString.color + ":", font: .themeFont(.heading4), alignment: .left)
         
         colorPickerViewController = ColorPickerViewController(viewModel: viewModel.colorPickerViewModel)
         colorPickerViewContainer.pin(viewController: colorPickerViewController)
     }
     
     private func setupTypeSection() {
-        typeLabel.attributedStringValue = (LocalizedString.feature + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        typeLabel.attributedStringValue = viewModel.style(LocalizedString.feature + ":", font: .themeFont(.heading4), alignment: .left)
         
         typeList.isBordered = false
         typeList.menu?.delegate = self
         typeList.target = self
         typeList.action = #selector(typeSelected)
         
-        typeListHorizontalLine.fillColor = .protonLightGrey()
+        typeListHorizontalLine.fillColor = viewModel.color(.border)
     }
     
     private func setupCountrySection() {
-        countryLabel.attributedStringValue = (LocalizedString.country + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        countryLabel.attributedStringValue = viewModel.style(LocalizedString.country + ":", font: .themeFont(.heading4), alignment: .left)
         
         countryList.isBordered = false
         countryList.menu?.delegate = self
         countryList.target = self
         countryList.action = #selector(countrySelected)
-        
         countryList.setAccessibilityIdentifier("CountryList")
 
-        countryListHorizontalLine.fillColor = .protonLightGrey()
+        countryListHorizontalLine.fillColor = viewModel.color(.border)
     }
     
     private func setupServerSection() {
-        serverLabel.attributedStringValue = (LocalizedString.server + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        serverLabel.attributedStringValue = viewModel.style(LocalizedString.server + ":", font: .themeFont(.heading4), alignment: .left)
         
         serverList.isBordered = false
         serverList.menu?.delegate = self
         serverList.target = self
         serverList.action = #selector(serverSelected)
-        
         serverList.setAccessibilityIdentifier("ServerList")
 
-        serverListHorizontalLine.fillColor = .protonLightGrey()
+        serverListHorizontalLine.fillColor = viewModel.color(.border)
     }
         
     private func setupWarningSection() {
         warningLabel.isHidden = true
         
-        warningLabelHorizontalLine.fillColor = .protonRed()
+        warningLabelHorizontalLine.fillColor = .color(.border, .danger)
         warningLabelHorizontalLine.isHidden = true
         
         warningLabel.setAccessibilityIdentifier("ErrorMessage")
@@ -207,7 +199,7 @@ final class CreateNewProfileViewController: NSViewController {
         saveButton.setAccessibilityIdentifier("SaveButton")
         
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
     }
     
     internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedProtocol: Int = 0) {
@@ -255,7 +247,7 @@ final class CreateNewProfileViewController: NSViewController {
         countryList.removeAllItems()
         
         let placeholderItem = NSMenuItem()
-        placeholderItem.attributedTitle = LocalizedString.selectCountry.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+        placeholderItem.attributedTitle = viewModel.style(LocalizedString.selectCountry, font: .themeFont(.heading4), alignment: .left)
         countryList.menu?.addItem(placeholderItem)
         
         let count = viewModel.countryCount(for: typeIndex)
@@ -272,7 +264,7 @@ final class CreateNewProfileViewController: NSViewController {
         serverList.removeAllItems()
         
         let placeholderItem = NSMenuItem()
-        placeholderItem.attributedTitle = LocalizedString.selectServer.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+        placeholderItem.attributedTitle = viewModel.style(LocalizedString.selectServer, font: .themeFont(.heading4), alignment: .left)
         serverList.menu?.addItem(placeholderItem)
         
         if countryIndex > 0 {
@@ -387,7 +379,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func presentAlert(_ message: String) {
-        warningLabel.attributedStringValue = message.attributed(withColor: .protonRed(), fontSize: 16)
+        warningLabel.attributedStringValue = message.styled(.danger, font: .themeFont(.heading4))
         warningLabel.isHidden = false
         warningLabelHorizontalLine.isHidden = false
     }
@@ -416,8 +408,7 @@ final class CreateNewProfileViewController: NSViewController {
         populateLists(selectedType: profileInformation.typeIndex,
                       selectedCountry: adjustedCountryIndex,
                       selectedServer: adjustedServerIndex,
-                      selectedProtocol: profileInformation.vpnProtocolIndex
-        )
+                      selectedProtocol: profileInformation.vpnProtocolIndex)
     }
     
     private func contentChanged() {
@@ -439,22 +430,19 @@ final class CreateNewProfileViewController: NSViewController {
 
 // MARK: - TextField highlight on focus
 extension CreateNewProfileViewController: TextFieldFocusDelegate {
-    
     func didReceiveFocus(_ textField: NSTextField) {
-        nameTextFieldHorizontalLine.fillColor = NSColor.protonGreen()
+        nameTextFieldHorizontalLine.fillColor = .color(.border, .interactive)
     }
 }
 
 // MARK: - TextField loss of highlight on loss of focus
 extension CreateNewProfileViewController: NSTextFieldDelegate {
-
     func controlTextDidEndEditing(_ obj: Notification) {
-        nameTextFieldHorizontalLine.fillColor = NSColor.protonLightGrey()
+        nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)
     }
 }
 
 extension CreateNewProfileViewController: NSMenuDelegate {
-    
     func confinementRect(for menu: NSMenu, on screen: NSScreen?) -> NSRect {
         let offset: CGFloat = 120
         let width: CGFloat = 500

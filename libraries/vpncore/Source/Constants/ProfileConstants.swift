@@ -27,7 +27,6 @@ import Cocoa
 import ProtonCore_UIFoundations
 
 public class ProfileConstants {
-    
     // WARNING: consuming client must contain "fastest" and "random" image assets
     public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
         return
@@ -37,8 +36,13 @@ public class ProfileConstants {
                       serverType: .unspecified, serverOffering: .random(nil), name: LocalizedString.random, connectionProtocol: connectionProtocol) ]
     }
 
-    #if canImport(UIKit)
-    public static let profileColors = [
+#if canImport(UIKit)
+    public typealias ProfileColors = [UIColor]
+#elseif canImport(Cocoa)
+    public typealias ProfileColors = [NSColor]
+#endif
+
+    public static let profileColors: ProfileColors = [
         ColorProvider.PurpleBase,
         ColorProvider.PinkBase,
         ColorProvider.StrawberryBase,
@@ -50,25 +54,4 @@ public class ProfileConstants {
         ColorProvider.FernBase,
         ColorProvider.OliveBase
     ]
-    #elseif canImport(Cocoa)
-    public static let profileColors = [
-        NSColor(red: 224 / 255, green: 32 / 255, blue: 39 / 255, alpha: 1.0),
-        NSColor(red: 190 / 255, green: 102 / 255, blue: 103 / 255, alpha: 1.0),
-        NSColor(red: 210 / 255, green: 41 / 255, blue: 182 / 255, alpha: 1.0),
-        NSColor(red: 177 / 255, green: 82 / 255, blue: 163 / 255, alpha: 1.0),
-        NSColor(red: 158 / 255, green: 78 / 255, blue: 216 / 255, alpha: 1.0),
-        NSColor(red: 147 / 255, green: 106 / 255, blue: 176 / 255, alpha: 1.0),
-        NSColor(red: 95 / 255, green: 115 / 255, blue: 216 / 255, alpha: 1.0),
-        NSColor(red: 104 / 255, green: 113 / 255, blue: 165 / 255, alpha: 1.0),
-        NSColor(red: 59 / 255, green: 197 / 255, blue: 201 / 255, alpha: 1.0),
-        NSColor(red: 87 / 255, green: 145 / 255, blue: 146 / 255, alpha: 1.0),
-        NSColor(red: 62 / 255, green: 185 / 255, blue: 102 / 255, alpha: 1.0),
-        NSColor(red: 91 / 255, green: 147 / 255, blue: 110 / 255, alpha: 1.0),
-        NSColor(red: 152 / 255, green: 184 / 255, blue: 59 / 255, alpha: 1.0),
-        NSColor(red: 144 / 255, green: 158 / 255, blue: 102 / 255, alpha: 1.0),
-        NSColor(red: 223 / 255, green: 189 / 255, blue: 82 / 255, alpha: 1.0),
-        NSColor(red: 163 / 255, green: 147 / 255, blue: 98 / 255, alpha: 1.0),
-        NSColor(red: 215 / 255, green: 114 / 255, blue: 39 / 255, alpha: 1.0),
-        NSColor(red: 169 / 255, green: 125 / 255, blue: 88 / 255, alpha: 1.0)   ]
-    #endif
 }

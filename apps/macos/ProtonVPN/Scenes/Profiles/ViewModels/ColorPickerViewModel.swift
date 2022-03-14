@@ -24,7 +24,6 @@ import Cocoa
 import vpncore
 
 class ColorPickerViewModel {
-    
     private let colors: [NSColor]
     
     var colorSelected: (() -> Void)?
@@ -35,17 +34,21 @@ class ColorPickerViewModel {
     
     var selectedColorIndex: Int {
         didSet {
+            guard selectedColorIndex < colors.count else {
+                selectedColorIndex = 0
+                return
+            }
             colorSelected?()
         }
     }
     
     init() {
         colors = ProfileConstants.profileColors
-        selectedColorIndex = Int(arc4random_uniform(UInt32(colors.count)))
+        selectedColorIndex = colors.randomIndex
     }
     
     func selectRandom() {
-        selectedColorIndex = Int(arc4random_uniform(UInt32(colorCount)))
+        selectedColorIndex = colors.randomIndex
     }
     
     func select(color newColor: NSColor?) {
@@ -68,5 +71,11 @@ class ColorPickerViewModel {
     
     func color(atIndex index: Int) -> NSColor {
         return colors[index]
+    }
+}
+
+private extension Array {
+    var randomIndex: Index {
+        Index(arc4random_uniform(UInt32(count)))
     }
 }

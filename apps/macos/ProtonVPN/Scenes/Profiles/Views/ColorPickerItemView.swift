@@ -25,9 +25,7 @@ import Cocoa
 class ColorPickerItemView: NSCollectionViewItem {
 
     @IBOutlet weak var colorPickerCircle: ColorPickerCircle!
-    
-    private let backgroundColor = NSColor.protonGrey().cgColor
-    
+        
     override var isSelected: Bool {
         didSet {
             colorPickerCircle.isSelected = isSelected

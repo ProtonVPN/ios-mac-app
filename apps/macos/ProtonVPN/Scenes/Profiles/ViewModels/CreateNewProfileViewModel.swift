@@ -243,7 +243,7 @@ class CreateNewProfileViewModel {
             title = LocalizedString.tor
         }
         
-        return title.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+        return self.style(title, font: .themeFont(.heading4), alignment: .left)
     }
 
     func vpnProtocolIndex(for vpnProtocol: VpnProtocol) -> Int? {
@@ -266,7 +266,7 @@ class CreateNewProfileViewModel {
             title = LocalizedString.wireguard
         }
 
-        return title.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+        return self.style(title, font: .themeFont(.heading4), alignment: .left)
     }
     
     func country(for typeIndex: Int, index countryIndex: Int) -> NSAttributedString {
@@ -327,5 +327,20 @@ class CreateNewProfileViewModel {
                 completion(result)
             }
         }
+    }
+}
+
+extension CreateNewProfileViewModel: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .field, .text:
+            return .normal
+        case .border, .background:
+            return .weak
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }
