@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "Batal";
+
+/* Common button title */
+"modals_common_learn_more" = "Pelajari lebih lanjut";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Aktifkan Secure Core";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Jangan tampilkan lagi";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core menawarkan tingkat keamanan dan privasi tertinggi, namun dapat menurunkan kecepatan internet Anda. Apabila Anda membutuhkan performa yang lebih, Anda dapat menonaktifkan Secure Core.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Catatan mengenai kecepatan...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Tingkatkan";
 

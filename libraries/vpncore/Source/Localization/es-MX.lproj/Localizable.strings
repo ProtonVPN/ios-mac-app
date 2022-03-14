@@ -154,6 +154,9 @@
 /* Profile create/change form */
 "_color" = "Color";
 
+/* MacOS: button in login screen */
+"_common_issues" = "Problemas comunes de inicio de sesión";
+
 /* Common word */
 "_connect" = "Conectar";
 

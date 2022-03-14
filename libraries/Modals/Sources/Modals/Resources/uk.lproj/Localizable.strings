@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "Скасувати";
+
+/* Common button title */
+"modals_common_learn_more" = "Докладніше";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Активувати Secure Core";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Не показувати знову";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core пропонує найвищий рівень безпеки та приватності, але це може знизити швидкість роботи інтернету. Якщо вам потрібна додаткова швидкодія, ви можете вимкнути Secure Core.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Примітка про швидкість...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Покращити";
 
