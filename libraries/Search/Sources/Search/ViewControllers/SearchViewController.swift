@@ -89,11 +89,9 @@ final class SearchViewController: UIViewController {
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
+        animateWithKeyboard(notification: notification) { [weak self] keyboardFrame in
+            self?.adjustForKeyboard(height: keyboardFrame.height)
         }
-
-        adjustForKeyboard(height: keyboardSize.height)
     }
 
     @objc private func keyboardWillHide(notification: NSNotification) {
@@ -101,17 +99,15 @@ final class SearchViewController: UIViewController {
             viewModel.saveSearch(searchText: searchText)
         }
 
-        adjustForKeyboard(height: 0)
+        animateWithKeyboard(notification: notification) { [weak self] keyboardFrame in
+            self?.adjustForKeyboard(height: keyboardFrame.height)
+        }
     }
 
     private func adjustForKeyboard(height: CGFloat) {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         noResultsBottomConstraint.constant = height
         placeholderViewBottomConstraint.constant = height
-
-        UIView.animate(withDuration: 0.5) {
-            self.view.layoutIfNeeded()
-        }
     }
 }
 
