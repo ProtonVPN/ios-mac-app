@@ -26,8 +26,9 @@ class ColorPickerViewController: NSViewController {
     
     @IBOutlet weak var collectionView: NSCollectionView!
     
-    private let backgroundColor = NSColor.protonGrey().cgColor
     private let circleCellWidth: CGFloat = 20.0
+    private let rows = 2
+    private let columns = 5
     
     var viewModel: ColorPickerViewModel!
     
@@ -58,27 +59,26 @@ class ColorPickerViewController: NSViewController {
     private func setupView() {
         let view = NSView()
         view.wantsLayer = true
-        view.layer?.backgroundColor = backgroundColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
         collectionView.backgroundView = view
     }
     
     private func setupCollectionView() {
-        let flowLayout = NSCollectionViewFlowLayout()
-        flowLayout.itemSize = NSSize(width: circleCellWidth, height: circleCellWidth)
-        flowLayout.sectionInset = NSEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
-        flowLayout.minimumInteritemSpacing = 0.0
-        flowLayout.minimumLineSpacing = 0.0
-        
+        let gridLayout = NSCollectionViewGridLayout()
+        gridLayout.maximumItemSize = NSSize(width: circleCellWidth, height: circleCellWidth)
+        gridLayout.maximumNumberOfRows = rows
+        gridLayout.maximumNumberOfColumns = columns
+
         let trackingArea = NSTrackingArea(rect: collectionView.bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
                                           owner: self, userInfo: nil)
         collectionView.addTrackingArea(trackingArea)
-        collectionView.collectionViewLayout = flowLayout
+        collectionView.collectionViewLayout = gridLayout
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.isSelectable = true
         collectionView.allowsEmptySelection = false
         collectionView.allowsMultipleSelection = false
-        
+
         setSelection()
         
         viewModel.colorSelected = { [weak self] in self?.setSelection() }

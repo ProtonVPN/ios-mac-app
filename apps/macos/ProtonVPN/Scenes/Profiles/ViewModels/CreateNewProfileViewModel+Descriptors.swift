@@ -25,33 +25,34 @@ import vpncore
 import AppKit
 
 extension CreateNewProfileViewModel {
-    private var fontSize: CGFloat {
-        return 16
+    private var fontSize: AppTheme.FontSize {
+        return .heading4
     }
+
     private var baselineOffset: CGFloat {
         return 4
     }
 
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
-        let imageAttributedString = embededImageIcon(image: NSImage.flag(countryCode: country.countryCode))
+        let imageAttributedString = embeddedImageIcon(image: NSImage.flag(countryCode: country.countryCode))
         let countryString = "  " + country.country
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString,
                 attributes: [
-                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: NSColor.dropDownWhiteColor()
+                    .foregroundColor: self.color(.text)
                 ]
             )
         } else {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString + " (\(LocalizedString.upgradeRequired))",
                 attributes: [
-                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: NSColor.protonGreyOutOfFocus()
+                    .foregroundColor: NSColor.color(.text, .weak)
                 ]
             )
         }
@@ -63,41 +64,41 @@ extension CreateNewProfileViewModel {
             let via = NSMutableAttributedString(
                 string: "via  ",
                 attributes: [
-                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: NSColor.dropDownWhiteColor()
+                    .foregroundColor: self.color(.text)
                 ]
             )
-            let entryCountryFlag = embededImageIcon(image: NSImage.flag(countryCode: server.entryCountryCode))
+            let entryCountryFlag = embeddedImageIcon(image: NSImage.flag(countryCode: server.entryCountryCode))
             let entryCountry = NSMutableAttributedString(
                 string: "  " + server.entryCountry,
                 attributes: [
-                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: NSColor.dropDownWhiteColor()
+                    .foregroundColor: self.color(.text)
                 ]
             )
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
-            let countryFlag = embededImageIcon(image: NSImage.flag(countryCode: server.countryCode))
+            let countryFlag = embeddedImageIcon(image: NSImage.flag(countryCode: server.countryCode))
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
                 serverDescriptor = NSMutableAttributedString(
                     string: serverString,
                     attributes: [
-                        .font: NSFont.systemFont(ofSize: fontSize),
+                        .font: NSFont.themeFont(fontSize),
                         .baselineOffset: baselineOffset,
-                        .foregroundColor: NSColor.dropDownWhiteColor()
+                        .foregroundColor: self.color(.text)
                     ]
                 )
             } else {
                 serverDescriptor = NSMutableAttributedString(
                     string: serverString + " (\(LocalizedString.upgradeRequired))",
                     attributes: [
-                        .font: NSFont.systemFont(ofSize: fontSize),
+                        .font: NSFont.themeFont(fontSize),
                         .baselineOffset: baselineOffset,
-                        .foregroundColor: NSColor.dropDownWhiteColor()
+                        .foregroundColor: self.color(.text)
                     ]
                 )
             }
@@ -118,26 +119,26 @@ extension CreateNewProfileViewModel {
             name = LocalizedString.random
         }
         
-        let imageAttributedString = embededImageIcon(named: imageName)
+        let imageAttributedString = embeddedImageIcon(named: imageName)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [
-                .font: NSFont.systemFont(ofSize: fontSize),
+                .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: NSColor.dropDownWhiteColor()
+                .foregroundColor: self.color(.text)
             ]
         )
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     
-    private func embededImageIcon(named name: String) -> NSAttributedString {
+    private func embeddedImageIcon(named name: String) -> NSAttributedString {
         if let imageAttributedString = NSAttributedString.imageAttachment(named: name, width: 18, height: 12) {
             return imageAttributedString
         }
         return NSAttributedString(string: "")
     }
 
-    private func embededImageIcon(image: NSImage?) -> NSAttributedString {
+    private func embeddedImageIcon(image: NSImage?) -> NSAttributedString {
         if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 18) {
             return imageAttributedString
         }

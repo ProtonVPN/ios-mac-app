@@ -104,8 +104,8 @@ class PopUpViewController: NSViewController {
         
         if let cancelTitle = viewModel.cancelButtonTitle {
             cancelButton.title = cancelTitle
-            cancelButton.fontSize = 14
-            cancelButton.style = viewModel.cancelType == .destructive ? .hoveredRed : .default
+            cancelButton.fontSize = .paragraph
+            cancelButton.style = viewModel.cancelType == .destructive ? .destructive : .default
             cancelButton.target = self
             cancelButton.action = #selector(cancelButtonAction)
         } else {

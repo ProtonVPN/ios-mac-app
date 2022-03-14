@@ -136,6 +136,6 @@ class ProfilesTabBarView: NSView {
     
     // MARK: - Colors
     private func getColor(forFocus present: Bool) -> CGColor {
-        return present ? NSColor.protonGrey().cgColor : NSColor.protonGreyShade().cgColor
+        return .cgColor(.background, present ? .weak : [.interactive, .weak])
     }
 }

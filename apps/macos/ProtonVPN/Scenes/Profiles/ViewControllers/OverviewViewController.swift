@@ -63,13 +63,13 @@ class OverviewViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
     }
     
     private func setupHeaderView() {
-        profileLabel.attributedStringValue = LocalizedString.profile.uppercased().attributed(withColor: .protonGreyOutOfFocus(), fontSize: 12, bold: true, alignment: .left)
-        connectionLabel.attributedStringValue = LocalizedString.connection.uppercased().attributed(withColor: .protonGreyOutOfFocus(), fontSize: 12, bold: true, alignment: .left)
-        actionLabel.attributedStringValue = LocalizedString.action.uppercased().attributed(withColor: .protonGreyOutOfFocus(), fontSize: 12, bold: true, alignment: .left)
+        profileLabel.attributedStringValue = LocalizedString.profile.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        connectionLabel.attributedStringValue = LocalizedString.connection.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
+        actionLabel.attributedStringValue = LocalizedString.action.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
     }
     
     private func setupTableView() {
@@ -77,17 +77,17 @@ class OverviewViewController: NSViewController {
         profileListTableView.delegate = self
         profileListTableView.ignoresMultiClick = true
         profileListTableView.selectionHighlightStyle = .none
-        profileListTableView.backgroundColor = .protonGrey()
+        profileListTableView.backgroundColor = .color(.background, .weak)
         profileListTableView.register(NSNib(nibNamed: NSNib.Name("OverviewItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier))
         
-        profileListScrollView.backgroundColor = .protonGrey()
+        profileListScrollView.backgroundColor = .color(.background, .weak)
         
         viewModel.contentChanged = { [weak self] in self?.contentChanged() }
     }
     
     private func setupFooterView() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
         
         createNewProfileButton.title = LocalizedString.createNewProfile
         createNewProfileButton.target = self

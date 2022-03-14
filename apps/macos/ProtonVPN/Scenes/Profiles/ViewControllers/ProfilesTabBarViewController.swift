@@ -61,7 +61,7 @@ class ProfilesTabBarViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonDarkGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background)
     }
     
     private func setupComponents() {
