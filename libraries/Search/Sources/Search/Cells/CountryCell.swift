@@ -138,7 +138,9 @@ public final class CountryCell: UITableViewCell {
             NSAttributedString.Key.foregroundColor: colors.weakText
         ])
 
-        name.addAttributes([NSAttributedString.Key.foregroundColor: viewModel.textColor], range: NSRange(location: 0, length: searchText.count))
+        viewModel.description.findStartingRanges(of: searchText).forEach {
+            name.addAttributes([NSAttributedString.Key.foregroundColor: viewModel.textColor], range: $0)
+        }
 
         countryName.attributedText = name
     }

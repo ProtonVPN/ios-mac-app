@@ -164,9 +164,10 @@ public final class ServerCell: UITableViewCell {
                 NSAttributedString.Key.foregroundColor: colors.weakText
             ])
 
-            if string.normalized.starts(with: searchText.normalized) {
-                text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: NSRange(location: 0, length: searchText.count))
+            string.findStartingRanges(of: searchText).forEach {
+                text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: $0)
             }
+
             return text
         }
 
