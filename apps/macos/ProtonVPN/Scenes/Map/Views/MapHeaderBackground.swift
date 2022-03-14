@@ -33,8 +33,7 @@ class MapHeaderBackground: NSView {
     private let innerCircleRadius: CGFloat = 15
     
     let width: CGFloat
-    let backgroundColor: CGColor = NSColor.protonGreyShade().cgColor
-    
+
     var isConnected: Bool? {
         didSet {
             needsDisplay = true
@@ -70,7 +69,7 @@ class MapHeaderBackground: NSView {
     }
     
     override func draw(_ dirtyRect: NSRect) {
-        guard let context = NSGraphicsContext.current?.cgContext, let isConnected = isConnected else {
+        guard let context = NSGraphicsContext.current?.cgContext else {
             log.error("Unable to obtain context for drawing.", category: .ui)
             return
         }
@@ -107,7 +106,7 @@ class MapHeaderBackground: NSView {
         path.addLine(to: start)
         
         context.addPath(path)
-        context.setFillColor(backgroundColor)
+        context.setFillColor(self.cgColor(.background))
         context.drawPath(using: .fill)
         
         outter = CGMutablePath()
@@ -125,13 +124,24 @@ class MapHeaderBackground: NSView {
         circleRect = CGRect(origin: circleOrigin, size: circleBounds)
         inner.addEllipse(in: circleRect)
         
-        let innerColor = colorForState(connected: isConnected)
         context.addPath(inner)
-        context.setFillColor(innerColor)
+        context.setFillColor(self.cgColor(.icon))
         context.drawPath(using: .fill)
     }
-    
-    private func colorForState(connected: Bool) -> CGColor {
-        return connected ? NSColor.protonGreen().cgColor : NSColor.protonLightGrey().cgColor
+}
+
+extension MapHeaderBackground: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            return .weak
+        case .icon:
+            let style: AppTheme.Style = isConnected == true ? .active : .weak
+            return .interactive + style
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

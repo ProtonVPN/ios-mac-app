@@ -25,7 +25,7 @@ import MapKit
 import vpncore
 
 class SCExitCountryAnnotationView: MKAnnotationView {
-    
+
     private let buttonHeight: CGFloat = 30
     private let buttonWidth: CGFloat
     private let buttonFrame: CGRect
@@ -74,29 +74,17 @@ class SCExitCountryAnnotationView: MKAnnotationView {
         super.setFrameOrigin(newOrigin - NSPoint(x: buttonWidth / 2, y: 0))
     }
     
-    // swiftlint:disable function_body_length operator_usage_whitespace
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
-        if viewModel.isConnected {
-            context.setStrokeColor(stateColor(for: viewModel.state == .hovered ? NSColor.protonWhite() : NSColor.protonGreen()))
-            context.setFillColor(stateColor(for: NSColor.protonGreen()))
-        } else {
-            switch viewModel.state {
-            case .idle:
-                context.setStrokeColor(stateColor(for: (viewModel.available ? NSColor.protonGreen() : NSColor.protonGreyButtonBackground())))
-            case .hovered:
-                context.setStrokeColor(stateColor(for: (viewModel.available ? NSColor.protonWhite() : NSColor.protonGreyButtonBackground())))
-            }
-            context.setFillColor(stateColor(for: NSColor.protonGreyShade()))
-        }
+        context.setStrokeColor(self.cgColor(.icon))
+        context.setFillColor(self.cgColor(.background))
         
         let lineWidth: CGFloat = 1.0
         path = CGMutablePath()
         
         // triangle
-        let itf/*innerTriangleFrame*/ = CGRect(x: triangleFrame.origin.x + lineWidth/2, y: triangleFrame.origin.y + lineWidth/2, width: triangleFrame.width - lineWidth, height: triangleFrame.height - lineWidth)
+        let itf/*innerTriangleFrame*/ = CGRect(x: triangleFrame.origin.x + lineWidth / 2, y: triangleFrame.origin.y + lineWidth / 2, width: triangleFrame.width - lineWidth, height: triangleFrame.height - lineWidth)
         context.setLineWidth(lineWidth)
         path.move(to: CGPoint(x: itf.origin.x, y: itf.origin.y))
         path.addLine(to: CGPoint(x: itf.origin.x + itf.width / 2, y: itf.origin.y + itf.height))
@@ -104,15 +92,15 @@ class SCExitCountryAnnotationView: MKAnnotationView {
         
         if viewModel.state == .hovered {
             // button
-            let ibf/*innerButtonFrame*/ = CGRect(x: lineWidth/2, y: lineWidth/2, width: buttonWidth - lineWidth, height: buttonHeight * CGFloat(viewModel.servers.count + 1))
-            path.addLine(to: CGPoint(x: ibf.maxX - buttonHeight/2, y: ibf.maxY))
-            path.addArc(center: CGPoint(x: ibf.maxX - buttonHeight/2, y: ibf.maxY - buttonHeight/2), radius: buttonHeight/2, startAngle: .pi/2, endAngle: 0, clockwise: true)
-            path.addLine(to: CGPoint(x: ibf.maxX, y: ibf.minY + buttonHeight/2))
-            path.addArc(center: CGPoint(x: ibf.maxX - buttonHeight/2, y: ibf.minY + buttonHeight/2), radius: buttonHeight/2, startAngle: 0, endAngle: .pi*3/2, clockwise: true)
-            path.addLine(to: CGPoint(x: ibf.minX + buttonHeight/2, y: ibf.minY))
-            path.addArc(center: CGPoint(x: ibf.minX + buttonHeight/2, y: ibf.minY + buttonHeight/2), radius: buttonHeight/2, startAngle: .pi*3/2, endAngle: .pi, clockwise: true)
-            path.addLine(to: CGPoint(x: ibf.minX, y: ibf.maxY - buttonHeight/2))
-            path.addArc(center: CGPoint(x: ibf.minX + buttonHeight/2, y: ibf.maxY - buttonHeight/2), radius: buttonHeight/2, startAngle: .pi, endAngle: .pi/2, clockwise: true)
+            let ibf/*innerButtonFrame*/ = CGRect(x: lineWidth / 2, y: lineWidth / 2, width: buttonWidth - lineWidth, height: buttonHeight * CGFloat(viewModel.servers.count + 1))
+            path.addLine(to: CGPoint(x: ibf.maxX - buttonHeight / 2, y: ibf.maxY))
+            path.addArc(center: CGPoint(x: ibf.maxX - buttonHeight / 2, y: ibf.maxY - buttonHeight / 2), radius: buttonHeight / 2, startAngle: .pi / 2, endAngle: 0, clockwise: true)
+            path.addLine(to: CGPoint(x: ibf.maxX, y: ibf.minY + buttonHeight / 2))
+            path.addArc(center: CGPoint(x: ibf.maxX - buttonHeight / 2, y: ibf.minY + buttonHeight / 2), radius: buttonHeight / 2, startAngle: 0, endAngle: .pi * 3 / 2, clockwise: true)
+            path.addLine(to: CGPoint(x: ibf.minX + buttonHeight / 2, y: ibf.minY))
+            path.addArc(center: CGPoint(x: ibf.minX + buttonHeight / 2, y: ibf.minY + buttonHeight / 2), radius: buttonHeight / 2, startAngle: .pi * 3 / 2, endAngle: .pi, clockwise: true)
+            path.addLine(to: CGPoint(x: ibf.minX, y: ibf.maxY - buttonHeight / 2))
+            path.addArc(center: CGPoint(x: ibf.minX + buttonHeight / 2, y: ibf.maxY - buttonHeight / 2), radius: buttonHeight / 2, startAngle: .pi, endAngle: .pi / 2, clockwise: true)
         }
         
         // close shape (either top of triangle or last section of button)
@@ -238,18 +226,6 @@ class SCExitCountryAnnotationView: MKAnnotationView {
         }
     }
     
-    private func stateColor(for color: NSColor) -> CGColor {
-        if isHighlighted, let correctColorSpaceColor = color.usingColorSpace(NSColorSpace.deviceRGB) {
-            return NSColor(red: correctColorSpaceColor.redComponent * 0.5,
-                           green: correctColorSpaceColor.greenComponent * 0.5,
-                           blue: correctColorSpaceColor.blueComponent * 0.5,
-                           alpha: correctColorSpaceColor.alphaComponent)
-                .cgColor
-        } else {
-            return color.cgColor
-        }
-    }
-    
     private func setupFrame() {
         let height: CGFloat
         switch viewModel.state {
@@ -283,5 +259,29 @@ class SCExitCountryAnnotationView: MKAnnotationView {
         let triangleOrigin = NSPoint(x: (buttonWidth - triangleWidth) / CGFloat(2), y: bounds.height - triangleHeight)
         let triangleSize = NSSize(width: triangleWidth, height: triangleHeight)
         triangleFrame = CGRect(origin: triangleOrigin, size: triangleSize)
+    }
+}
+
+extension SCExitCountryAnnotationView: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        guard context == .icon || context == .background else {
+            assertionFailure("Context not handled: \(context)")
+            return .normal
+        }
+
+        guard viewModel.isConnected else {
+            guard context == .icon else { // background
+                return .weak
+            }
+            guard viewModel.available else {
+                return [.interactive, .weak]
+            }
+            return viewModel.state == .hovered ? .normal : [.interactive, .active]
+        }
+
+        guard context == .icon else { // background
+            return .interactive
+        }
+        return viewModel.state == .hovered ? [.interactive, .active] : .normal
     }
 }

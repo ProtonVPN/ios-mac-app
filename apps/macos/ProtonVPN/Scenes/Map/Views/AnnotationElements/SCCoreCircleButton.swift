@@ -58,15 +58,9 @@ class SCCoreCircleButton: HoverDetectionButtonAdvanced {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
-        switch viewState {
-        case .idle:
-            context.setStrokeColor(isHovered ? stateColor(for: NSColor.protonLightGreen()) : stateColor(for: NSColor.protonGreen()))
-            context.setFillColor(stateColor(for: NSColor.protonMapBackgroundGrey()))
-        case .active:
-            context.setStrokeColor(stateColor(for: NSColor.protonGreen()))
-            context.setFillColor(stateColor(for: NSColor.protonWhite()))
-        }
+
+        context.setStrokeColor(stateColor(for: self.color(.icon)))
+        context.setFillColor(stateColor(for: self.color(.background)))
         
         let lineWidth: CGFloat = 2.0
         let innerFrame = CGRect(x: lineWidth / 2, y: lineWidth / 2, width: bounds.width - lineWidth, height: bounds.height - lineWidth)
@@ -77,14 +71,32 @@ class SCCoreCircleButton: HoverDetectionButtonAdvanced {
     }
     
     private func stateColor(for color: NSColor) -> CGColor {
-        if isHighlighted, let correctColorSpaceColor = color.usingColorSpace(NSColorSpace.deviceRGB) {
-            return NSColor(red: correctColorSpaceColor.redComponent * 0.5,
-                           green: correctColorSpaceColor.greenComponent * 0.5,
-                           blue: correctColorSpaceColor.blueComponent * 0.5,
-                           alpha: correctColorSpaceColor.alphaComponent)
-                .cgColor
-        } else {
+        guard isHighlighted else {
             return color.cgColor
+        }
+
+        return color.highlightedColor.cgColor
+    }
+}
+
+extension SCCoreCircleButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        guard context == .icon || context == .background else {
+            assertionFailure("Context not handled: \(context)")
+            return .normal
+        }
+
+        switch viewState {
+        case .idle:
+            guard context == .icon else { // background
+                return .weak
+            }
+            guard isHovered else {
+                return .interactive
+            }
+            return [.interactive, .hovered]
+        case .active:
+            return context == .icon ? .interactive : .inverted
         }
     }
 }
