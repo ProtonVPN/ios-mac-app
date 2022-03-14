@@ -29,6 +29,10 @@ let package = Package(
                 .process("Cells/CountryCell.xib"),
                 .process("Cells/ServerCell.xib"),
                 .process("Resources")
-            ])
+            ]),
+        .testTarget(
+            name: "SearchTests",
+            dependencies: ["Search", "Overture"]
+            )
     ]
 )
