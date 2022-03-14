@@ -24,7 +24,6 @@ import Cocoa
 import vpncore
 
 class ShowApplicationButton: HoverDetectionButton {
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
@@ -38,8 +37,10 @@ class ShowApplicationButton: HoverDetectionButton {
     }
     
     private func configureView() {
-        let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 13, height: 13, colored: isHovered ? .protonGreenHighlight() : nil)!
-        let show = (" " + LocalizedString.showProtonvpn).attributed(withColor: isHovered ? .protonGreenHighlight() : .protonGreen(), fontSize: 14)
+        let buttonStyle: AppTheme.Style = [.interactive, .active] + (isHovered ? .hovered : [])
+
+        let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 13, height: 13, colored: .color(.icon, buttonStyle))!
+        let show = (" " + LocalizedString.showProtonvpn).styled(buttonStyle)
         attributedTitle = NSAttributedString.concatenate(secureCoreIcon, show)
     }
 }

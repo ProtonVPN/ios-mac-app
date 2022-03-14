@@ -59,14 +59,13 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         
         let lw: CGFloat = 2
         let ib: CGRect
+        context.setStrokeColor(self.cgColor(.icon))
+        context.setFillColor(self.cgColor(.background))
+
         if isConnected {
             ib = NSRect(x: bounds.origin.x + lw/2, y: bounds.origin.y + lw/2, width: bounds.width - lw, height: bounds.height - lw)
-            context.setStrokeColor(isHovered ? NSColor.protonRed().cgColor : NSColor.protonWhite().cgColor)
-            context.setFillColor(NSColor.clear.cgColor)
         } else {
             ib = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width - lw/2, height: bounds.height)
-            context.setStrokeColor(NSColor.clear.cgColor)
-            context.setFillColor(isHovered ? NSColor.protonGreenShade().cgColor : NSColor.protonGreen().cgColor)
         }
         
         context.setLineWidth(lw)
@@ -87,48 +86,57 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         
         context.addPath(path)
         context.drawPath(using: .fillStroke)
-        
-        let buttonTitle: NSAttributedString
-        if isConnected {
-            let accentColor: NSColor = isHovered ? .protonRed() : .protonWhite()
-            buttonTitle = LocalizedString.disconnect.attributed(withColor: accentColor, fontSize: 14)
-        } else {
-            let accentColor: NSColor = .protonWhite()
-            buttonTitle = LocalizedString.quickConnect.attributed(withColor: accentColor, fontSize: 14)
-        }
+
+        let buttonTitle = self.style(isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect)
         let textHeight = buttonTitle.size().height
         buttonTitle.draw(in: CGRect(x: bounds.height/2, y: (bounds.height - textHeight) / 2, width: bounds.width - bounds.height/2, height: textHeight))
     }
 }
 // swiftlint:enable operator_usage_whitespace
 
-// swiftlint:disable function_body_length operator_usage_whitespace
+extension StatusBarAppConnectButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        if isConnected {
+            switch context {
+            case .text, .icon:
+                return isHovered ? .danger : .normal
+            case .background:
+                return .transparent
+            default:
+                break
+            }
+        } else {
+            switch context {
+            case .text:
+                return .normal
+            case .icon:
+                return .transparent
+            case .background:
+                return .interactive + (isHovered ? .hovered : [])
+            default:
+                break
+            }
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
+    }
+}
+
+// swiftlint:disable operator_usage_whitespace
 class StatusBarAppProfileDropdownButton: LargeDropdownButton {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         
-        if isConnected {
-            if isHovered {
-                context.setStrokeColor(NSColor.protonRed().cgColor)
-            } else {
-                context.setStrokeColor(NSColor.protonWhite().cgColor)
-            }
-        } else {
-            context.setStrokeColor(NSColor.clear.cgColor)
-        }
-        
         let lw: CGFloat = 2
         let ib: CGRect
+        context.setStrokeColor(self.cgColor(.icon))
+        context.setFillColor(self.cgColor(.background))
         if isConnected {
             ib = NSRect(x: bounds.origin.x - lw/2, y: bounds.origin.y + lw/2, width: bounds.width - lw/2, height: bounds.height - lw)
-            context.setStrokeColor(isHovered ? NSColor.protonGreyOutOfFocus().cgColor : NSColor.protonWhite().cgColor)
-            context.setFillColor(NSColor.clear.cgColor)
         } else {
             ib = NSRect(x: bounds.origin.x + lw/2, y: bounds.origin.y, width: bounds.width - lw/2, height: bounds.height)
-            context.setStrokeColor(NSColor.clear.cgColor)
-            context.setFillColor(isHovered ? NSColor.protonGreenShade().cgColor : NSColor.protonGreen().cgColor)
         }
         
         context.setLineWidth(lw)
@@ -163,4 +171,31 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         context.drawPath(using: .stroke)
     }
 }
-// swiftlint:enable function_body_length operator_usage_whitespace
+// swiftlint:enable operator_usage_whitespace
+
+extension StatusBarAppProfileDropdownButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        if isConnected {
+            switch context {
+            case .icon:
+                return isHovered ? [.weak, .interactive, .hovered] : .normal
+            case .background:
+                return .transparent
+            default:
+                break
+            }
+        } else {
+            switch context {
+            case .icon:
+                return .transparent
+            case .background:
+                return .interactive + (isHovered ? .hovered : [])
+            default:
+                break
+            }
+        }
+
+        assertionFailure("Context not handled: \(context)")
+        return .normal
+    }
+}
