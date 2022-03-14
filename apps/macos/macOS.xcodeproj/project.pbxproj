@@ -371,7 +371,7 @@
 		EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */; };
 		EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */; };
 		EE8EF1E91F1FB3BC0057CD94 /* WhiteCancelationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */; };
-		EE8EF1EB1F1FB8380057CD94 /* GreenActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EA1F1FB8380057CD94 /* GreenActionButton.swift */; };
+		EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */; };
 		EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */; };
 		EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */; };
 		EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */; };
@@ -1004,7 +1004,7 @@
 		EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryActionButton.swift; sourceTree = "<group>"; };
 		EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteCancelationButton.swift; sourceTree = "<group>"; };
-		EE8EF1EA1F1FB8380057CD94 /* GreenActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenActionButton.swift; sourceTree = "<group>"; };
+		EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveActionButton.swift; sourceTree = "<group>"; };
 		EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverDetectionButton.swift; sourceTree = "<group>"; };
 		EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
 		EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewItemViewModel.swift; sourceTree = "<group>"; };
@@ -2616,7 +2616,7 @@
 				E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */,
 				EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */,
 				E13C63F92038A08400D9E40C /* ExpandMapButton.swift */,
-				EE8EF1EA1F1FB8380057CD94 /* GreenActionButton.swift */,
+				EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */,
 				E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */,
 				EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */,
 				E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */,
@@ -3656,7 +3656,7 @@
 				E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */,
 				42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */,
 				E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */,
-				EE8EF1EB1F1FB8380057CD94 /* GreenActionButton.swift in Sources */,
+				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
 				E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */,
 				EE8EF1E91F1FB3BC0057CD94 /* WhiteCancelationButton.swift in Sources */,
 				EE27DB481F47095300D2FF2B /* AccountViewController.swift in Sources */,

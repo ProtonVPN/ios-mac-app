@@ -26,7 +26,7 @@ import vpncore
 class FooterItemView: NSView {
 
     @IBOutlet weak var createNewProfileButton: PrimaryActionButton!
-    @IBOutlet weak var manageProfilesButton: GreenActionButton!
+    @IBOutlet weak var manageProfilesButton: InteractiveActionButton!
     
     private var viewModel: ProfilesSectionViewModel!
     

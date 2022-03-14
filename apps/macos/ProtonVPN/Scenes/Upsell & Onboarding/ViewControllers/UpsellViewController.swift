@@ -28,7 +28,7 @@ final class UpsellViewController: NSViewController {
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var descriptionLabel: NSTextField!
     @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
-    @IBOutlet private weak var skipButton: GreenActionButton!
+    @IBOutlet private weak var skipButton: InteractiveActionButton!
     @IBOutlet private weak var moneyBackGuarantee: NSTextField!
     
     required init?(coder: NSCoder) {

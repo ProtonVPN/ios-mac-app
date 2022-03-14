@@ -71,8 +71,8 @@ final class LoginViewController: NSViewController {
     @IBOutlet private weak var startOnBootButton: SwitchButton!
     
     @IBOutlet private weak var loginButton: LoginButton!
-    @IBOutlet private weak var createAccountButton: GreenActionButton!
-    @IBOutlet private weak var needHelpButton: GreenActionButton!
+    @IBOutlet weak var createAccountButton: InteractiveActionButton!
+    @IBOutlet weak var needHelpButton: InteractiveActionButton!
     
     // MARK: - Loading view
     private lazy var loadingView: LoadingView = {

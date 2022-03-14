@@ -27,7 +27,7 @@ class SecureCoreWarningViewController: NSViewController {
     
     @IBOutlet weak var descriptionLabel: NSTextField!
     @IBOutlet weak var upgradeButton: PrimaryActionButton!
-    @IBOutlet weak var learnMoreButton: GreenActionButton!
+    @IBOutlet weak var learnMoreButton: InteractiveActionButton!
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

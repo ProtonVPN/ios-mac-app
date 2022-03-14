@@ -27,10 +27,10 @@ class HelpPopoverViewController: NSViewController {
 
     private let viewModel: HelpPopoverViewModel
     
-    @IBOutlet private weak var resetButton: GreenActionButton!
-    @IBOutlet private weak var forgotButton: GreenActionButton!
-    @IBOutlet private weak var commonIssuesButton: GreenActionButton!
-    @IBOutlet private weak var reportBugButton: GreenActionButton!
+    @IBOutlet private weak var resetButton: InteractiveActionButton!
+    @IBOutlet private weak var forgotButton: InteractiveActionButton!
+    @IBOutlet private weak var commonIssuesButton: InteractiveActionButton!
+    @IBOutlet private weak var reportBugButton: InteractiveActionButton!
     
     required init(viewModel: HelpPopoverViewModel) {
         self.viewModel = viewModel

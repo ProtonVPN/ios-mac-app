@@ -83,8 +83,9 @@
                                 <constraint firstAttribute="height" constant="1" id="nYL-Ge-eEw"/>
                             </constraints>
                         </box>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mvc-5H-vVI" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mvc-5H-vVI" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="133" y="60" width="75" height="20"/>
+                            <rect key="frame" x="132" y="60" width="76" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="xj2-pN-trf"/>
                             </constraints>
@@ -93,7 +94,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sIO-81-jPa" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sIO-81-jPa" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="121" y="90" width="98" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="gQm-9i-Vg8"/>
