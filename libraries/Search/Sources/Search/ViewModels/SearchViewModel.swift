@@ -106,7 +106,9 @@ final class SearchViewModel {
         case .secureCore:
             if !countries.isEmpty {
                 let servers = countries.flatMap({ $0.getServers().flatMap { $0.1 } })
-                results.append(SearchResult.secureCoreCountries(servers: servers))
+                if !servers.isEmpty {
+                    results.append(SearchResult.secureCoreCountries(servers: servers))
+                }
             }
         }
 
