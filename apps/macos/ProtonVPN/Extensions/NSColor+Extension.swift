@@ -24,6 +24,16 @@ import Cocoa
 import ProtonCore_UIFoundations
 
 extension NSColor {
+    var highlightedColor: NSColor {
+        guard let color = self.usingColorSpace(NSColorSpace.deviceRGB) else {
+            return self
+        }
+
+        return NSColor(red: color.redComponent * 0.5,
+                       green: color.greenComponent * 0.5,
+                       blue: color.blueComponent * 0.5,
+                       alpha: color.alphaComponent)
+    }
 
     class func brandColor() -> NSColor {
         return .purple

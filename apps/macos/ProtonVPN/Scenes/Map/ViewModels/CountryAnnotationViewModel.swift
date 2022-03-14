@@ -50,15 +50,16 @@ class CountryAnnotationViewModel {
     }
     
     var attributedConnect: NSAttributedString {
-        return LocalizedString.connect.attributed(withColor: available ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 14, bold: true)
+        return self.style(LocalizedString.connect, font: .themeFont(bold: true))
     }
     
     var attributedDisconnect: NSAttributedString {
-        return LocalizedString.disconnect.attributed(withColor: available ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 14, bold: true)
+        return self.style(LocalizedString.disconnect, font: .themeFont(bold: true))
     }
     
     var attributedCountry: NSAttributedString {
-        return (LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable).attributed(withColor: available ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 14)
+        let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        return self.style(countryName, font: .themeFont(bold: true))
     }
     
     var buttonWidth: CGFloat {
@@ -98,6 +99,17 @@ class CountryAnnotationViewModel {
             state = .idle
         }
         viewStateChange?()
+    }
+}
+
+extension CountryAnnotationViewModel: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        guard context == .text else {
+            assertionFailure("Context not handled: \(context)")
+            return .normal
+        }
+
+        return available ? .normal : [.interactive, .weak, .disabled]
     }
 }
 
@@ -184,7 +196,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     func attributedServer(for row: Int) -> NSAttributedString {
         guard servers.count > row else { return NSAttributedString() }
         let doubleArrows = NSAttributedString.imageAttachment(named: available ? "double-arrow-right-white" : "double-arrow-right-grey", width: 8, height: 8)!
-        let serverName = (" " + servers[row].name).attributed(withColor: available ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 14)
+        let serverName = (" " + servers[row].name).styled(available ? .normal : [.interactive, .weak, .disabled])
         let title = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(doubleArrows, serverName))
         let range = (title.string as NSString).range(of: title.string)
         title.setAlignment(.center, range: range)
@@ -224,7 +236,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     }
     
     override var attributedCountry: NSAttributedString {
-        return LocalizedString.secureCoreCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable).attributed(withColor: .protonWhite(), fontSize: 14)
+        return LocalizedString.secureCoreCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable).styled()
     }
     
     override var buttonWidth: CGFloat {

@@ -82,19 +82,8 @@ class CountryAnnotationView: MKAnnotationView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
-        if viewModel.isConnected {
-            context.setStrokeColor(stateColor(for: viewModel.state == .hovered ? NSColor.protonWhite() : NSColor.protonGreen()))
-            context.setFillColor(stateColor(for: NSColor.protonGreen()))
-        } else {
-            switch viewModel.state {
-            case .idle:
-                context.setStrokeColor(stateColor(for: (viewModel.available ? NSColor.protonGreen() : NSColor.protonGreyButtonBackground())))
-            case .hovered:
-                context.setStrokeColor(stateColor(for: (viewModel.available ? NSColor.protonWhite() : NSColor.protonGreyButtonBackground())))
-            }
-            context.setFillColor(stateColor(for: NSColor.protonGreyShade()))
-        }
+        context.setStrokeColor(self.cgColor(.icon))
+        context.setFillColor(self.cgColor(.background))
         
         let lineWidth: CGFloat = 1.0
         path = CGMutablePath()
@@ -206,15 +195,10 @@ class CountryAnnotationView: MKAnnotationView {
     }
     
     private func stateColor(for color: NSColor) -> CGColor {
-        if isHighlighted, let correctColorSpaceColor = color.usingColorSpace(NSColorSpace.deviceRGB) {
-            return NSColor(red: correctColorSpaceColor.redComponent * 0.5,
-                           green: correctColorSpaceColor.greenComponent * 0.5,
-                           blue: correctColorSpaceColor.blueComponent * 0.5,
-                           alpha: correctColorSpaceColor.alphaComponent)
-                .cgColor
-        } else {
+        guard isHighlighted else {
             return color.cgColor
         }
+        return color.highlightedColor.cgColor
     }
     
     private func setupAnnotationView() {
@@ -263,5 +247,29 @@ class CountryAnnotationView: MKAnnotationView {
         let triangleOrigin = NSPoint(x: (buttonWidth - triangleWidth) / CGFloat(2), y: bounds.height - triangleHeight)
         let triangleSize = NSSize(width: triangleWidth, height: triangleHeight)
         triangleFrame = CGRect(origin: triangleOrigin, size: triangleSize)
+    }
+}
+
+extension CountryAnnotationView: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        guard context == .icon || context == .background else {
+            assertionFailure("Context not handled: \(context)")
+            return .normal
+        }
+
+        guard viewModel.isConnected else {
+            guard context == .icon else { // background
+                return .weak
+            }
+            guard viewModel.available else {
+                return [.interactive, .weak]
+            }
+            return viewModel.state == .hovered ? .normal : [.interactive, .active]
+        }
+
+        guard context == .icon else { // background
+            return .interactive
+        }
+        return viewModel.state == .hovered ? [.interactive, .active] : .normal
     }
 }

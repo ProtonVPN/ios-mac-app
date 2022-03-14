@@ -82,8 +82,8 @@ class SCEntryCountryAnnotationView: MKAnnotationView {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         
         if viewModel.state == .hovered {
-            context.setStrokeColor(stateColor(for: NSColor.protonGreen()))
-            context.setFillColor(stateColor(for: viewModel.isConnected ? NSColor.protonGreen() : NSColor.protonGreyShade()))
+            context.setStrokeColor(.cgColor(.icon, [.interactive, .active]))
+            context.setFillColor(.cgColor(.background, viewModel.isConnected ? [.interactive, .active] : .weak))
             
             let lineWidth: CGFloat = 1.0
             
@@ -113,9 +113,6 @@ class SCEntryCountryAnnotationView: MKAnnotationView {
     // swiftlint:enable operator_usage_whitespace
     
     // MARK: - Private functions
-    private func stateColor(for color: NSColor) -> CGColor {
-        return color.cgColor
-    }
     
     private func setupAnnotationView() {
         setSelection()

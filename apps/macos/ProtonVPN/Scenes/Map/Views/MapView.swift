@@ -83,18 +83,18 @@ class MapView: NSView {
         initialDimensions = dimensions
         
         activeConnectionsLayer = CAShapeLayer()
-        activeConnectionsLayer.fillColor = NSColor.clear.cgColor
-        activeConnectionsLayer.strokeColor = NSColor.protonGreen().cgColor
+        activeConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
+        activeConnectionsLayer.strokeColor = .cgColor(.icon, .interactive)
         
         inactiveConnectionsLayer = CAShapeLayer()
-        inactiveConnectionsLayer.fillColor = NSColor.clear.cgColor
-        inactiveConnectionsLayer.strokeColor = NSColor.protonLightGrey().cgColor
+        inactiveConnectionsLayer.fillColor = .cgColor(.icon, .transparent)
+        inactiveConnectionsLayer.strokeColor = .cgColor(.icon, [.interactive, .weak])
         
         super.init(coder: decoder)
         
         mapView.layer = CALayer()
         wantsLayer = true
-        mapView.layer?.backgroundColor = NSColor.protonMapBackgroundGrey().cgColor
+        mapView.layer?.backgroundColor = .cgColor(.background)
         mapView.layer?.masksToBounds = true
         
         mapView.frame = frame

@@ -82,7 +82,7 @@ class ZoomView: NSView {
         
         let tickHeight: CGFloat = 6
         context.setLineWidth(1.0)
-        context.setStrokeColor(NSColor.protonLightGrey().cgColor)
+        context.setStrokeColor(.cgColor(.icon, [.interactive, .weak]))
         
         let stepHeight: CGFloat = 10
         let zoomStep = zoom + 1
@@ -105,7 +105,7 @@ class ZoomView: NSView {
         context.drawPath(using: .stroke)
         
         context.setLineWidth(2.0)
-        context.setStrokeColor(NSColor.protonWhite().cgColor)
+        context.setStrokeColor(.cgColor(.icon))
         
         if orientation == .vertical {
             tickStart = CGPoint(x: bounds.width - buttonWidth + (buttonWidth - stepHeight) / 2, y: buttonWidth + CGFloat(zoomStep) * length / (zoomLevels + 1))
