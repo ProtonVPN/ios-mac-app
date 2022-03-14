@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -98,7 +97,7 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fxo-oy-u32">
                     <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gf8-Rg-u9Q" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gf8-Rg-u9Q" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="390" y="8" width="90" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="OCg-Gy-BEY"/>

@@ -32,7 +32,7 @@ class WarningPopupViewController: NSViewController {
     @IBOutlet var warningDescription: PVPNTextViewLink!
 
     @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: WhiteCancelationButton!
+    @IBOutlet weak var cancelButton: CancellationButton!
     @IBOutlet weak var continueButton: PrimaryActionButton!
     
     var viewModel: WarningPopupViewModel!

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -43,7 +42,7 @@
                                 <action selector="didTapTryConnect:" target="-2" id="Luj-qM-YNz"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6UY-kF-gxH" userLabel="Enable Button" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6UY-kF-gxH" userLabel="Enable Button" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="403" y="20" width="154" height="16"/>
                             <buttonCell key="cell" type="bevel" title="Keep KillSwitch Disabled" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="1zy-yX-4YP">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -71,7 +70,7 @@
                     </constraints>
                 </customView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="894-jM-lPQ">
-                    <rect key="frame" x="20" y="90" width="729" height="120"/>
+                    <rect key="frame" x="20" y="92" width="729" height="120"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="894-jM-lPQ" secondAttribute="height" multiplier="911:150" id="3QO-My-w1R"/>
                         <constraint firstAttribute="height" constant="120" id="6bw-VZ-dTr"/>
@@ -79,17 +78,17 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ks_swift5_helper" id="8y4-vS-gJx"/>
                 </imageView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fO9-Xh-2IW">
-                    <rect key="frame" x="20" y="218" width="729" height="60"/>
+                    <rect key="frame" x="20" y="220" width="729" height="60"/>
                     <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="j7J-u9-xU9">
-                        <rect key="frame" x="0.0" y="0.0" width="729" height="60"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <rect key="frame" x="0.0" y="0.0" width="714" height="60"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="MIK-2c-Mmy" customClass="PVPNTextViewLink" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="729" height="60"/>
+                                <rect key="frame" x="0.0" y="0.0" width="714" height="60"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="729" height="60"/>
+                                <size key="minSize" width="714" height="60"/>
                                 <size key="maxSize" width="911" height="10000000"/>
                                 <attributedString key="textStorage">
                                     <fragment content="To enable Kill Switch, you need to download and install the %@.\nPlease install it before enabling Kill Switch.">
@@ -124,7 +123,7 @@
                     </scroller>
                 </scrollView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ffA-D8-lRp">
-                    <rect key="frame" x="18" y="54" width="61" height="18"/>
+                    <rect key="frame" x="18" y="55" width="65" height="18"/>
                     <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Vhd-G3-kFr">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>

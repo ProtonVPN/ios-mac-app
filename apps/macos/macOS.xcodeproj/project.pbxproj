@@ -77,6 +77,7 @@
 		4C8641E327DE18A600EEFB1D /* String+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */; };
 		4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */; };
 		4C8641E727DE35A500EEFB1D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */; };
+		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
 		54A3F867B897C7D92CDF75C9 /* SubuserMacAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD48FBC3A054F5D91A15F1E /* SubuserMacAlertViewController.swift */; };
 		5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
@@ -370,7 +371,6 @@
 		EE876E121F13859600C9B9C2 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E111F13859600C9B9C2 /* OverlayView.swift */; };
 		EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */; };
 		EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */; };
-		EE8EF1E91F1FB3BC0057CD94 /* WhiteCancelationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */; };
 		EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */; };
 		EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */; };
 		EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */; };
@@ -643,6 +643,7 @@
 		4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/String+AppTheme.swift"; sourceTree = "<group>"; };
 		4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSImage+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSImage+AppTheme.swift"; sourceTree = "<group>"; };
 		4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OptionSet+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/OptionSet+Extension.swift"; sourceTree = "<group>"; };
+		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		65A71CB6D31F355FD456BA35 /* Pods-ProtonVPN OpenVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.release.xcconfig"; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -1003,7 +1004,6 @@
 		EE876E111F13859600C9B9C2 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryActionButton.swift; sourceTree = "<group>"; };
-		EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteCancelationButton.swift; sourceTree = "<group>"; };
 		EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveActionButton.swift; sourceTree = "<group>"; };
 		EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoverDetectionButton.swift; sourceTree = "<group>"; };
 		EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewViewModel.swift; sourceTree = "<group>"; };
@@ -2637,7 +2637,7 @@
 				E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */,
 				E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */,
 				E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */,
-				EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */,
+				4CFFC94327E0C0AE0035969B /* CancellationButton.swift */,
 				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
 			);
 			path = Button;
@@ -3658,7 +3658,6 @@
 				E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */,
 				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
 				E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */,
-				EE8EF1E91F1FB3BC0057CD94 /* WhiteCancelationButton.swift in Sources */,
 				EE27DB481F47095300D2FF2B /* AccountViewController.swift in Sources */,
 				EE13E4371F543F4000E50B06 /* MapSectionViewModel.swift in Sources */,
 				D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */,
@@ -3724,6 +3723,7 @@
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */,
+				4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
 				4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */,
 				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,

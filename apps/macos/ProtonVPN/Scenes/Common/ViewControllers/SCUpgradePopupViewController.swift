@@ -32,7 +32,7 @@ class SCUpgradePopupViewController: NSViewController {
     @IBOutlet weak var upgradeDescriptionPart2: NSTextField!
     
     @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: WhiteCancelationButton!
+    @IBOutlet weak var cancelButton: CancellationButton!
     @IBOutlet weak var upgradeButton: PrimaryActionButton!
     
     let viewModel: SCUpgradePopUpViewModel

@@ -1,5 +1,5 @@
 //
-//  WhiteCancelationButton.swift
+//  CancellationButton.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,7 +22,7 @@
 
 import Cocoa
 
-class WhiteCancelationButton: HoverDetectionButton {
+class CancellationButton: HoverDetectionButton {
     
     enum Style {
         case `default`

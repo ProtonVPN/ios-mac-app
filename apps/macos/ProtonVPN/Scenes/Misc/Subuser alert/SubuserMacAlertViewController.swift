@@ -27,7 +27,7 @@ final class SubuserMacAlertViewController: NSViewController {
     @IBOutlet private weak var description2Label: NSTextField!
         
     @IBOutlet private weak var assignConnectionsButton: PrimaryActionButton!
-    @IBOutlet private weak var loginButton: WhiteCancelationButton!
+    @IBOutlet private weak var loginButton: CancellationButton!
     
     public var safariServiceFactory: SafariServiceFactory?
     private lazy var safariService = safariServiceFactory?.makeSafariService()

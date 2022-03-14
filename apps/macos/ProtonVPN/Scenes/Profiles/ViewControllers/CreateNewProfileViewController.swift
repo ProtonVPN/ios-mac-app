@@ -51,7 +51,7 @@ final class CreateNewProfileViewController: NSViewController {
     @IBOutlet private weak var warningLabelHorizontalLine: NSBox!
     @IBOutlet private weak var footerView: NSView!
     @IBOutlet private weak var saveButton: PrimaryActionButton!
-    @IBOutlet private weak var cancelButton: WhiteCancelationButton!
+    @IBOutlet private weak var cancelButton: CancellationButton!
     
     fileprivate var viewModel: CreateNewProfileViewModel!
 
