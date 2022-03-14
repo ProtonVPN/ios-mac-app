@@ -187,7 +187,7 @@ search_ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_search_test
-    - fastlane/print-coverage.sh fastlane/test_output/SearchTests.xcresult SearchTests.framework
+    - fastlane/print-coverage.sh fastlane/test_output/Search.xcresult Search 2
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
