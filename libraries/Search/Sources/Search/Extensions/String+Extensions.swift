@@ -22,4 +22,18 @@ extension String {
     var normalized: String {
         return folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
     }
+
+    func findStartingRanges(of substring: String) -> [NSRange] {
+        let parts = self.components(separatedBy: CharacterSet.whitespacesAndNewlines)
+        var ranges: [NSRange] = []
+        var count = 0
+        for part in parts {
+            if part.normalized.starts(with: substring.normalized) {
+                ranges.append(NSRange(location: count, length: substring.count))
+            }
+
+            count = count + part.count + 1
+        }
+        return ranges
+    }
 }
