@@ -2,7 +2,7 @@
 "_br_1_title" = "Wat is het probleem?";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Annuleren";
+"_br_2_button_cancel" = "Annuleer";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
 "_br_2_button_next" = "Contacteer ons";

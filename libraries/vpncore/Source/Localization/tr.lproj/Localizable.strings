@@ -154,6 +154,9 @@
 /* Profile create/change form */
 "_color" = "Renk";
 
+/* MacOS: button in login screen */
+"_common_issues" = "Sık karşılaşılan oturum açma sorunları";
+
 /* Common word */
 "_connect" = "Bağlan";
 

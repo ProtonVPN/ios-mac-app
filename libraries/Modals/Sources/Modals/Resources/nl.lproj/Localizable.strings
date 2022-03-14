@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "Annuleer";
+
+/* Common button title */
+"modals_common_learn_more" = "Meer informatie";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core activeren";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Niet meer weergeven";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core biedt het hoogste niveau van beveiliging en privacy, maar het kan uw internetsnelheid verlagen. Als u hogere prestaties wilt, kan u Secure Core uitschakelen.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Een opmerking over snelheid...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgraden";
 

@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "Отмена";
+
+/* Common button title */
+"modals_common_learn_more" = "Узнать больше";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Активировать Secure Core";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Больше не показывать";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core обеспечивает наивысший уровень безопасности и конфиденциальности, но может снизить скорость вашего Интернета. Если вам нужна более высокая производительность, вы можете отключить Secure Core.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Замечание о скорости...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Улучшить";
 
