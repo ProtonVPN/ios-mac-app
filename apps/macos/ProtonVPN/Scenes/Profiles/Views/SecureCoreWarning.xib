@@ -30,7 +30,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u9l-He-E5V" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="u9l-He-E5V" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                     <rect key="frame" x="112" y="30" width="116" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="7BS-sM-Kdk"/>

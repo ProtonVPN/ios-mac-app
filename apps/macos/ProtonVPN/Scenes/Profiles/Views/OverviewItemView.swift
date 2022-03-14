@@ -31,9 +31,9 @@ class OverviewItemView: NSTableRowView {
     @IBOutlet weak var profileNameField: NSTextField!
     @IBOutlet weak var connectionDescriptionField: NSTextField!
     @IBOutlet weak var actionButtonStackView: NSStackView!
-    @IBOutlet weak var connectButton: GreenActionButton!
-    @IBOutlet weak var editButton: GreenActionButton!
-    @IBOutlet weak var deleteButton: GreenActionButton!
+    @IBOutlet weak var connectButton: InteractiveActionButton!
+    @IBOutlet weak var editButton: InteractiveActionButton!
+    @IBOutlet weak var deleteButton: InteractiveActionButton!
     @IBOutlet weak var rowSeparator: NSBox!
     
     fileprivate var viewModel: OverviewItemViewModel!

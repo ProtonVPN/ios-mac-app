@@ -75,8 +75,8 @@
                                         <action selector="upgrade:" target="-2" id="cig-ed-5ft"/>
                                     </connections>
                                 </button>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RxV-aC-fbG" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="196" y="3" width="81" height="32"/>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RxV-aC-fbG" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="195" y="3" width="76" height="32"/>
                                     <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oBF-ZN-Wck">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>

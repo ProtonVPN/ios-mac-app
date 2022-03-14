@@ -28,7 +28,7 @@ class SCUpgradePopupViewController: NSViewController {
     @IBOutlet weak var bodyView: NSView!
     @IBOutlet weak var upgradeIcon: NSImageView!
     @IBOutlet weak var upgradeDescriptionPart1: NSTextField!
-    @IBOutlet weak var learnMoreButton: GreenActionButton!
+    @IBOutlet weak var learnMoreButton: InteractiveActionButton!
     @IBOutlet weak var upgradeDescriptionPart2: NSTextField!
     
     @IBOutlet weak var footerView: NSView!

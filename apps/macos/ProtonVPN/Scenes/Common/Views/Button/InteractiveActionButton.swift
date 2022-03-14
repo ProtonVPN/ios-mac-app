@@ -1,5 +1,5 @@
 //
-//  GreenActionButton.swift
+//  InteractiveActionButton.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,9 +22,8 @@
 
 import Cocoa
 
-class GreenActionButton: HoverDetectionButton {
-    
-    var fontSize: Double = 14.0 {
+class InteractiveActionButton: HoverDetectionButton {
+    var fontSize: AppTheme.FontSize = .paragraph {
         didSet {
             setAttributedTitle()
         }
@@ -40,10 +39,10 @@ class GreenActionButton: HoverDetectionButton {
         super.viewWillDraw()
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.clear.cgColor
+        layer?.backgroundColor = .cgColor(.background, .transparent)
     }
     
     private func setAttributedTitle() {
-        attributedTitle = title.attributed(withColor: .protonGreen(), fontSize: fontSize, alignment: alignment)
+        attributedTitle = title.styled(.interactive, font: .themeFont(fontSize), alignment: alignment)
     }
 }

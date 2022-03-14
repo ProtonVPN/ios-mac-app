@@ -34,7 +34,7 @@ class ExpandableContentPopupViewController: NSViewController {
     @IBOutlet weak var headerLbl: NSTextField!
     @IBOutlet weak var expandableLbl: NSTextField!
     @IBOutlet weak var footerLbl: NSTextField!
-    @IBOutlet weak var displayMoreBtn: GreenActionButton!
+    @IBOutlet weak var displayMoreBtn: InteractiveActionButton!
     @IBOutlet weak var hiddenContentHeightConstraint: NSLayoutConstraint!
     
     private var expanded = false

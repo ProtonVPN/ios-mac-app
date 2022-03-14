@@ -57,7 +57,7 @@
                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-Y8-fue">
                     <rect key="frame" x="610" y="15" width="270" height="20"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IpR-bN-7QI" userLabel="Connect Button" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IpR-bN-7QI" userLabel="Connect Button" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="56" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="1HE-ki-g8T"/>
@@ -67,7 +67,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oiv-pw-b41" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oiv-pw-b41" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="127" y="0.0" width="28" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="5qz-87-TIm"/>
@@ -77,7 +77,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="een-eS-fDW" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="een-eS-fDW" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="226" y="0.0" width="44" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="aVJ-Lu-guR"/>

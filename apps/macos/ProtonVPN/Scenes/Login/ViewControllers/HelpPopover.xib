@@ -24,7 +24,7 @@
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rkL-vC-DQW">
                     <rect key="frame" x="15" y="12" width="130" height="114"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jd9-pL-XVG" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jd9-pL-XVG" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="90" width="68" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="Ue5-26-R62"/>
@@ -37,7 +37,7 @@
                                 <action selector="resetAction:" target="-2" id="fFz-nb-3lT"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNr-bd-6WG" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wNr-bd-6WG" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="60" width="74" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="gpk-A9-7iR"/>
@@ -50,7 +50,7 @@
                                 <action selector="forgotAction:" target="-2" id="jLn-uj-cjb"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="93r-zz-5tA" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="93r-zz-5tA" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="30" width="130" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="wWc-Ii-isk"/>
@@ -63,7 +63,7 @@
                                 <action selector="commonIssuesAction:" target="-2" id="b33-oO-x5E"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zPH-jk-s4N" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zPH-jk-s4N" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="102" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="sdM-h7-Jwh"/>

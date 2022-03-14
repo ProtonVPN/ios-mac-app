@@ -37,7 +37,7 @@ class AccountViewController: NSViewController {
     @IBOutlet weak var accountPlanValue: PVPNTextField!
     @IBOutlet weak var accountPlanSeparator: NSBox!
     
-    @IBOutlet weak var manageSubscriptionButton: GreenActionButton!
+    @IBOutlet weak var manageSubscriptionButton: InteractiveActionButton!
     
     private let viewModel = AccountViewModel(vpnKeychain: VpnKeychain())
     

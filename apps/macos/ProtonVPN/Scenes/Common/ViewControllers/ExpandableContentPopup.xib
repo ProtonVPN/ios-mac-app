@@ -64,7 +64,7 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EJe-ZR-YMg" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EJe-ZR-YMg" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="130" y="24" width="60" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="oI9-fc-taH"/>

@@ -23,8 +23,8 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OBX-eX-ieE" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="98" y="22" width="145" height="20"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OBX-eX-ieE" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="97" y="22" width="146" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="zsi-rY-wsU"/>
                     </constraints>
