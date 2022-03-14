@@ -121,7 +121,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                 path.close()
 
                 let bezierPath = path
-                NSColor.black.set()
+                NSColor.color(.background).set()
                 bezierPath.fill()
                 return true
             }
@@ -150,7 +150,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     private func setupCountryCollection() {
         countryClipView.postsBoundsChangedNotifications = true
-        countryScrollView.backgroundColor = .clear
+        countryScrollView.backgroundColor = .color(.background, .transparent)
         NotificationCenter.default.addObserver(self, selector: #selector(countriesScrolled), name: NSView.boundsDidChangeNotification, object: countryClipView)
         
         let nib = NSNib(nibNamed: NSNib.Name("StatusMenuCountryViewItem"), bundle: nil)

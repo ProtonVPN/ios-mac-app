@@ -38,8 +38,10 @@ class QuitApplicationButton: HoverDetectionButton {
     }
     
     private func configureView() {
-        let powerIcon = NSAttributedString.imageAttachment(named: "power-button", width: 13, height: 13, colored: isHovered ? nil : .protonGreyUnselectedWhite())!
-        let show = (" " + LocalizedString.quit).attributed(withColor: isHovered ? .protonWhite() : .protonGreyUnselectedWhite(), fontSize: 14)
+        let style: AppTheme.Style = isHovered ? [.warning, .hovered] : .weak
+
+        let powerIcon = NSAttributedString.imageAttachment(named: "power-button", width: 13, height: 13, colored: .color(.icon, style))!
+        let show = (" " + LocalizedString.quit).styled(style)
         attributedTitle = NSAttributedString.concatenate(powerIcon, show)
     }
 }
