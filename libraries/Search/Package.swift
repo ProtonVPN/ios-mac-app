@@ -25,9 +25,13 @@ let package = Package(
                 .process("Views/PlaceholderView.xib"),
                 .process("Views/PlaceholderItemView.xib"),
                 .process("Views/RecentSearchesHeaderView.xib"),
+                .process("Views/NoResultsView.xib"),
+                .process("Views/SearchSectionHeaderView.xib"),
                 .process("Cells/RecentSearchCell.xib"),
                 .process("Cells/CountryCell.xib"),
                 .process("Cells/ServerCell.xib"),
+                .process("Cells/UpsellCell.xib"),
+                .process("Assets.xcassets"),
                 .process("Resources")
             ]),
         .testTarget(
