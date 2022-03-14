@@ -23,38 +23,76 @@
 import Cocoa
 
 class ButtonMask: NSView {
+    var drawBorder: Bool = false {
+        didSet {
+            needsDisplay = true
+        }
+    }
 
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
+        drawMask(context: context)
         
+        if drawBorder {
+            drawBorder(context: context)
+        }
+    }
+
+    private func drawMask(context: CGContext) {
         context.setLineWidth(0.0)
-        context.setFillColor(NSColor.protonGrey().cgColor)
+        context.setFillColor(.cgColor(.background, .weak))
         context.setShouldAntialias(true)
-        
-        let path = CGMutablePath()
-        path.move(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y))
-        path.addArc(center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
-                    radius: bounds.height / 2,
-                    startAngle: .pi / 2,
-                    endAngle: (3 * .pi) / 2,
-                    clockwise: false)
-        path.addLine(to: CGPoint(x: bounds.origin.x, y: bounds.origin.y))
-        path.addLine(to: CGPoint(x: bounds.origin.x, y: bounds.origin.y + bounds.height))
-        path.addLine(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height))
-        context.addPath(path)
-        
-        let path2 = CGMutablePath()
-        path2.move(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y))
-        path2.addArc(center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
-                     radius: bounds.height / 2,
-                     startAngle: .pi / 2,
-                     endAngle: (3 * .pi) / 2,
-                     clockwise: true)
-        path2.addLine(to: CGPoint(x: bounds.origin.x + bounds.width, y: bounds.origin.y))
-        path2.addLine(to: CGPoint(x: bounds.origin.x + bounds.width, y: bounds.origin.y + bounds.height))
-        path2.addLine(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height))
-        context.addPath(path2)
-        
+        do {
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y))
+            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                        radius: bounds.height / 2,
+                        startAngle: .pi / 2,
+                        endAngle: (3 * .pi) / 2,
+                        clockwise: false)
+            path.addLine(to: CGPoint(x: bounds.origin.x, y: bounds.origin.y))
+            path.addLine(to: CGPoint(x: bounds.origin.x, y: bounds.origin.y + bounds.height))
+            path.addLine(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height))
+            context.addPath(path)
+        }
+
+        do {
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y))
+            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                        radius: bounds.height / 2,
+                        startAngle: .pi / 2,
+                        endAngle: (3 * .pi) / 2,
+                        clockwise: true)
+            path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width, y: bounds.origin.y))
+            path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width, y: bounds.origin.y + bounds.height))
+            path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height))
+            context.addPath(path)
+        }
+
         context.drawPath(using: .eoFill)
+    }
+
+    private func drawBorder(context: CGContext) {
+        context.setLineWidth(1.5)
+        context.setStrokeColor(.cgColor(.border, .strong))
+        do {
+            // borders along arcs
+            let path = CGMutablePath()
+            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                        radius: bounds.height / 2 - 0.5,
+                        startAngle: .pi / 2,
+                        endAngle: (3 * .pi) / 2,
+                        clockwise: false)
+            path.addLine(to: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + 0.5))
+            path.addArc(center: CGPoint(x: bounds.origin.x + bounds.width - bounds.height / 2, y: bounds.origin.y + bounds.height / 2),
+                        radius: bounds.height / 2 - 0.5,
+                        startAngle: (3 * .pi) / 2,
+                        endAngle: .pi / 2,
+                        clockwise: false)
+            path.addLine(to: CGPoint(x: bounds.origin.x + bounds.height / 2, y: bounds.origin.y + bounds.height - 0.5))
+            context.addPath(path)
+        }
+        context.drawPath(using: .stroke)
     }
 }

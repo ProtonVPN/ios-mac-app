@@ -59,26 +59,26 @@ class AccountViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
     }
     
     private func setupStackView() {
-        usernameLabel.attributedStringValue = LocalizedString.username.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        usernameValue.attributedStringValue = viewModel.username.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
-        usernameSeparator.fillColor = .protonLightGrey()
+        usernameLabel.attributedStringValue = LocalizedString.username.styled(font: .themeFont(.heading4), alignment: .left)
+        usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+        usernameSeparator.fillColor = .color(.border, .weak)
         
-        accountTypeLabel.attributedStringValue = LocalizedString.accountType.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        accountTypeValue.attributedStringValue = viewModel.accountType.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
-        accountTypeSeparator.fillColor = .protonLightGrey()
+        accountTypeLabel.attributedStringValue = LocalizedString.accountType.styled(font: .themeFont(.heading4), alignment: .left)
+        accountTypeValue.attributedStringValue = viewModel.accountType.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+        accountTypeSeparator.fillColor = .color(.border, .weak)
         
-        accountPlanLabel.attributedStringValue = LocalizedString.accountPlan.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        accountPlanSeparator.fillColor = .protonLightGrey()
+        accountPlanLabel.attributedStringValue = LocalizedString.accountPlan.styled(font: .themeFont(.heading4), alignment: .left)
+        accountPlanSeparator.fillColor = .color(.border, .weak)
         
         if let accountPlan = viewModel.accountPlan {
             let planColor = colorForAccount(accountPlan)
-            accountPlanValue.attributedStringValue = accountPlan.description.attributed(withColor: planColor, fontSize: 16, alignment: .right)
+            accountPlanValue.attributedStringValue = accountPlan.description.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = LocalizedString.unavailable.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
+            accountPlanValue.attributedStringValue = LocalizedString.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         }
     }
     

@@ -46,6 +46,6 @@ class SettingsWindowController: WindowController {
         window.title = LocalizedString.preferences
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        window.backgroundColor = .protonGreyShade()
+        window.backgroundColor = .color(.background)
     }
 }

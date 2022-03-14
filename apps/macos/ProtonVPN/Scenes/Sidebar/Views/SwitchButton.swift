@@ -55,7 +55,15 @@ class SwitchButton: NSView, CAAnimationDelegate {
     var buttonView: NSButton?
     var innerView: NSView?
     
-    var currentButtonState: ButtonState = .off
+    var currentButtonState: ButtonState = .off {
+        didSet {
+            mask.drawBorder = currentButtonState == .off
+        }
+    }
+
+    var isOn: Bool {
+        return currentButtonState == .on
+    }
     
     var buttonWidth: Int!
     var buttonHeight: Int!
@@ -73,6 +81,8 @@ class SwitchButton: NSView, CAAnimationDelegate {
             initialSetup()
         }
     }
+
+    private var mask: ButtonMask!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -81,6 +91,8 @@ class SwitchButton: NSView, CAAnimationDelegate {
         buttonHeight = Int(super.frame.height)
         knobPadding = 4
         knobSize = buttonHeight - 2 * knobPadding
+        mask = ButtonMask(frame: bounds)
+        mask.drawBorder = !isOn
         
         initialSetup()
     }
@@ -122,7 +134,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
         buttonView?.addSubview(innerView!)
         
         if drawsUnderOverlay {
-            buttonView?.addSubview(ButtonMask(frame: bounds))
+            buttonView?.addSubview(mask)
         }
         
         addSubview(buttonView!)
@@ -147,10 +159,10 @@ class SwitchButton: NSView, CAAnimationDelegate {
         switch currentButtonState {
         case .on:
             innerView?.animator().frame.origin = NSPoint(x: 0, y: 0)
-            innerView?.animateBackgroundColor(enabled ? NSColor.protonGreen() : NSColor.protonGreyButtonBackground(), delegate: self)
+            innerView?.animateBackgroundColor(self.color(.background), delegate: self)
         case .off:
             innerView?.animator().frame.origin = NSPoint(x: -1 * (Int(buttonWidth - knobSize) - knobPadding * 2), y: 0)
-            innerView?.animateBackgroundColor(enabled ? NSColor.protonBlack() : NSColor.protonGreyButtonBackground(), delegate: self)
+            innerView?.animateBackgroundColor(self.color(.background), delegate: self)
         }
     }
     
@@ -204,21 +216,16 @@ class SwitchButton: NSView, CAAnimationDelegate {
     
     fileprivate func getKnobView() -> NSView {
         let knobView = NSView(frame: NSRect(x: Int(buttonWidth - knobSize) - knobPadding, y: knobPadding, width: knobSize, height: knobSize))
-        
+
         knobView.wantsLayer = true
         knobView.layer?.cornerRadius = CGFloat(knobSize / 2)
-        knobView.layer?.backgroundColor = enabled ? NSColor.protonLightGreen().cgColor : NSColor.protonUnavailableGrey().cgColor
+        knobView.layer?.backgroundColor = self.cgColor(.icon)
         
         return knobView
     }
     
     private func setInnerColor() {
-        switch currentButtonState {
-        case .on:
-            self.innerView?.layer?.backgroundColor = enabled ? NSColor.protonGreen().cgColor : NSColor.protonGreyButtonBackground().cgColor
-        case .off:
-            self.innerView?.layer?.backgroundColor = enabled ? NSColor.protonBlack().cgColor : NSColor.protonGreyButtonBackground().cgColor
-        }
+        self.innerView?.layer?.backgroundColor = self.cgColor(.background)
     }
     
     private func switchWithoutAnimation() {
@@ -245,5 +252,24 @@ class SwitchButton: NSView, CAAnimationDelegate {
     override func isAccessibilityElement() -> Bool {
         return true
     }
-    
+}
+
+extension SwitchButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            if !enabled {
+                return [.interactive, .active]
+            } else if isOn {
+                return .interactive
+            }
+            return .normal
+        case .icon:
+            return enabled ? .normal : [.interactive, .weak]
+        default:
+            break
+        }
+        assertionFailure("Unhandled context: \(context)")
+        return .normal
+    }
 }

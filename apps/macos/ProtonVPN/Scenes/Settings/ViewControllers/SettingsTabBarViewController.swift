@@ -54,7 +54,7 @@ final class SettingsTabBarViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonDarkGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background)
         
         tabBarView.tabWidth = accountButton.bounds.width
         tabBarView.tabHeight = accountButton.bounds.height
@@ -63,7 +63,7 @@ final class SettingsTabBarViewController: NSViewController {
     }
     
     private func setupComponents() {
-        headerLabel.attributedStringValue = LocalizedString.preferences.attributed(withColor: .protonWhite(), fontSize: 36, alignment: .left)
+        headerLabel.attributedStringValue = LocalizedString.preferences.styled(font: .themeFont(.heading1), alignment: .left)
         
         generalButton.title = LocalizedString.general
         generalButton.target = self

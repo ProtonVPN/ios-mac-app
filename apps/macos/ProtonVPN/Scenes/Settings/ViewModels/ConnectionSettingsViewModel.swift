@@ -313,7 +313,7 @@ final class ConnectionSettingsViewModel {
         if index > 0 {
             return profileString(for: index - 1)
         } else {
-            let imageAttributedString = attributedAttachment(for: .protonUnavailableGrey())
+            let imageAttributedString = attributedAttachment(style: .weak)
             return concatenated(imageString: imageAttributedString, with: LocalizedString.disabled, enabled: true)
         }
     }
@@ -344,9 +344,9 @@ final class ConnectionSettingsViewModel {
     
     // MARK: - Values
 
-    private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {
+    private func attributedAttachment(style: AppTheme.Style, width: CGFloat = 12) -> NSAttributedString {
         let profileCircle = ProfileCircle(frame: CGRect(x: 0, y: 0, width: width, height: width))
-        profileCircle.profileColor = color
+        profileCircle.profileColor = .color(.icon, style)
         let data = profileCircle.dataWithPDF(inside: profileCircle.bounds)
         let image = NSImage(data: data)
         let attachmentCell = NSTextAttachmentCell(imageCell: image)

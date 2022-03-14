@@ -46,7 +46,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private func setupView() {
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
     }
 
     private func setupAlternativeRoutingItem() {
