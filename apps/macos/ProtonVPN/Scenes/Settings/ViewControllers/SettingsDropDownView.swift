@@ -38,8 +38,6 @@ class SettingsDropDownView: NSView {
     @IBOutlet private weak var popupButton: HoverDetectionPopUpButton!
     @IBOutlet private weak var progressIndicator: NSProgressIndicator!
 
-    static let infoIcon = NSImage(named: NSImage.Name("info_green"))
-
     override func accessibilityRole() -> NSAccessibility.Role? {
         .popUpButton
     }
@@ -76,10 +74,10 @@ class SettingsDropDownView: NSView {
         self.model = model
         setAccessibilityLabel(model.labelText)
 
-        label.attributedStringValue = model.labelText.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        label.attributedStringValue = model.labelText.styled(font: .themeFont(.heading4), alignment: .left)
         infoIcon.image = model.toolTip != nil ? SettingsTickboxView.infoIcon : nil
         infoIcon.toolTip = model.toolTip
-        separator.fillColor = .protonLightGrey()
+        separator.fillColor = .color(.border, .weak)
         
         popupButton.isBordered = false
         popupButton.target = target

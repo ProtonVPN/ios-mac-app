@@ -48,7 +48,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     private var model: ViewModel?
 
-    static let infoIcon = NSImage(named: NSImage.Name("info_green"))
+    static let infoIcon = NSImage(named: NSImage.Name("info_green"))?.colored([.info, .active])
 
     var isOn: Bool {
         switchButton.currentButtonState == .on
@@ -82,7 +82,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         self.delegate = delegate
         self.model = model
 
-        label.attributedStringValue = model.labelText.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        label.attributedStringValue = model.labelText.styled(font: .themeFont(.heading4), alignment: .left)
         switchButton.setState(model.buttonState ? .on : .off)
         switchButton.delegate = self
         if !model.buttonEnabled {
@@ -90,7 +90,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         }
         infoIcon.image = model.toolTip != nil ? SettingsTickboxView.infoIcon : nil
         infoIcon.toolTip = model.toolTip
-        separator.fillColor = .protonLightGrey()
+        separator.fillColor = .color(.border, .weak)
     }
 
     func switchButtonClicked(_ button: NSButton) {
