@@ -688,7 +688,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public init(accountPlan: AccountPlan) {
         switch accountPlan {
         case .free, .basic:
-            message = LocalizedString.maximumDeviceDescription(AccountPlan.plus.name, AccountPlan.plus.devicesCount)
+            message = LocalizedString.maximumDeviceDescription(LocalizedString.tierPlus, AccountPlan.plus.devicesCount)
         default:
             message = LocalizedString.maximumDeviceReachedDescription
         }
@@ -781,6 +781,19 @@ public class AnnouncmentOfferAlert: SystemAlert {
     }
 }
 
+public class DiscourageSecureCoreAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var onDontShowAgain: ((Bool) -> Void)?
+    public var onActivate: (() -> Void)?
+    public var onLearnMore: (() -> Void)?
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}
+
 public class UpsellAlert: SystemAlert {
     public var title: String?
     public var message: String?
@@ -824,8 +837,6 @@ public class ModerateNATUpsellAlert: UpsellAlert {
         SafariService().open(url: CoreAppConstants.ProtonVpnLinks.moderateNAT)
     }
 }
-
-public class ProfileUpsellAlert: UpsellAlert { }
 
 public class SubuserWithoutConnectionsAlert: SystemAlert {
     public var title: String?

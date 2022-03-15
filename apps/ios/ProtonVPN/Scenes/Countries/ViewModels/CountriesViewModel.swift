@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 import vpncore
+import Search
 
 enum ServerItemModel {
     case server(ServerItemViewModel)
@@ -70,11 +71,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
 
-    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ConnectionStatusServiceFactory & VpnKeychainFactory & PlanServiceFactory
+    var isFreeUser: Bool {
+        return (try? keychain.fetchCached().accountPlan)?.paid != true
+    }
+
+    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ConnectionStatusServiceFactory & VpnKeychainFactory & PlanServiceFactory & SearchStorageFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    internal lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     internal lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
@@ -82,6 +87,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol?
+    lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     
     init(factory: Factory, vpnGateway: VpnGatewayProtocol?, countryService: CountryService) {
         self.factory = factory
@@ -144,16 +150,13 @@ class CountriesViewModel: SecureCoreToggleHandler {
             return LocalizedString.locationsAll + totalCountries
         }
     }
-
-    func isTierTooLow( for section: Int ) -> Bool {
-        if userTier > 1 { return false }
-        if userTier == 0 { return section > 0 }
-        return section == 1
-    }
     
-    func cellModel(for row: Int, in section: Int) -> CountryItemViewModel? {
+    func cellModel(for row: Int, in section: Int) -> CountryItemViewModel {
         let countryGroup = content(for: section)[row]
-        
+        return cellModel(countryGroup: countryGroup)
+    }
+
+    func cellModel(countryGroup: CountryGroup) -> CountryItemViewModel {
         return CountryItemViewModel(countryGroup: countryGroup,
                                     serverType: state.serverType,
                                     appStateManager: appStateManager,
@@ -227,5 +230,16 @@ class CountriesViewModel: SecureCoreToggleHandler {
         setTier()
         setStateOf(type: propertiesManager.serverTypeToggle)
         contentChanged?()
+    }
+}
+
+extension CountriesViewModel {
+    var searchData: [CountryViewModel] {
+        switch state {
+        case let .standard(data):
+            return data.map({ cellModel(countryGroup: $0) })
+        case let .secureCore(data):
+            return data.map({ cellModel(countryGroup: $0) })
+        }
     }
 }

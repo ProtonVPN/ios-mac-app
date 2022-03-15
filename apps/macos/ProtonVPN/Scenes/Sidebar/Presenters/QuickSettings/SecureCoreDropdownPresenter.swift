@@ -85,8 +85,19 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
                 self.presentUpsellAlert()
                 return
             }
-            self.vpnGateway.changeActiveServerType(.secureCore)
-            self.displayReconnectionFeedback()
+            let onActivate = { [weak self] in
+                self?.vpnGateway.changeActiveServerType(.secureCore)
+                self?.displayReconnectionFeedback()
+            }
+            guard self.propertiesManager.discourageSecureCore == false else {
+                self.presentDiscourageSecureCoreAlert(onDontShowAgain: { dontShow in
+                    self.propertiesManager.discourageSecureCore = !dontShow
+                },  
+                                                      onActivate: onActivate,
+                                                      onDismiss: nil)
+                return
+            }
+            onActivate()
         })
     }
     

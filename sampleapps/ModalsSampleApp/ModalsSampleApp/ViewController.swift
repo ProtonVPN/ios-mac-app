@@ -29,30 +29,62 @@ class ViewController: UITableViewController {
                                                         (.moderateNAT, "Moderate NAT")]
 
     let modalsFactory = ModalsFactory(colors: Colors())
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        upsells.count
+        switch section {
+        case 0:
+            return upsells.count
+        case 1:
+            return 1
+        default:
+            return 0
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModalTableViewCell", for: indexPath)
-        let upsell = upsells[indexPath.row]
-        
+
+        let title: String
+        if indexPath.section == 0 {
+            title = upsells[indexPath.row].title
+        } else {
+            title = "Discourage Secure Core"
+        }
+
         if let modalCell = cell as? ModalTableViewCell {
-            modalCell.modalTitle.text = upsell.title
+            modalCell.modalTitle.text = title
         }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let upsellViewController = modalsFactory.upsellViewController(upsellType: upsells[indexPath.row].type)
-        upsellViewController.delegate = self
-        present(upsellViewController, animated: true, completion: nil)
+        let viewController: UIViewController
+        if indexPath.section == 0 {
+            let modalVC = modalsFactory.upsellViewController(upsellType: upsells[indexPath.row].type)
+            modalVC.delegate = self
+            viewController = modalVC
+        } else {
+            let modalVC = modalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil,
+                                                                           onActivate: nil,
+                                                                           onCancel: nil,
+                                                                           onLearnMore: nil)
+            viewController = modalVC
+        }
+
+        present(viewController, animated: true, completion: nil)
     }
 }
 
 extension ViewController: UpsellViewControllerDelegate {
+    func shouldDismissUpsell() -> Bool {
+        true
+    }
+
     func userDidRequestPlus() {
         dismiss(animated: true, completion: nil)
     }

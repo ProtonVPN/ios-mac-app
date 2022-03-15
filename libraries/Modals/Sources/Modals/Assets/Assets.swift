@@ -21,6 +21,8 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let addLayer = ImageAsset(name: "AddLayer")
   internal static let blockAds = ImageAsset(name: "BlockAds")
+  internal static let checkboxEmpty = ImageAsset(name: "CheckboxEmpty")
+  internal static let checkboxFill = ImageAsset(name: "CheckboxFill")
   internal static let closeButton = ImageAsset(name: "CloseButton")
   internal static let highSpeedIcon = ImageAsset(name: "HighSpeedIcon")
   internal static let moderateNAT = ImageAsset(name: "ModerateNAT")
@@ -32,6 +34,7 @@ internal enum Asset {
   internal static let safeModeIOS = ImageAsset(name: "SafeMode-iOS")
   internal static let safeModeMacOS = ImageAsset(name: "SafeMode-macOS")
   internal static let secureCore = ImageAsset(name: "SecureCore")
+  internal static let secureCoreDiscourage = ImageAsset(name: "SecureCoreDiscourage")
   internal static let streamingIcon = ImageAsset(name: "StreamingIcon")
   internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
   internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")

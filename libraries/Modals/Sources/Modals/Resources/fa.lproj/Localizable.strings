@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "لغو";
+
+/* Common button title */
+"modals_common_learn_more" = "بیشتر بدانید";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "فعال کردن Secure Core";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Don’t show again";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "فناوری Secure Core بالاترین سطح امنیت و حریم خصوصی را ارائه می‌دهد، اما ممکن است سرعت اینترنت شما را کاهش دهد. اگر به کارایی بیشتری احتیاج دارید، می‌توانید Secure Core را غیرفعال کنید.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "A note about speed...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "ارتقا";
 

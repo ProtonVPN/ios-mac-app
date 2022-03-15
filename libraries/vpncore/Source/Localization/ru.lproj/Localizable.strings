@@ -86,10 +86,10 @@
 "_always_on_vpn" = "Постоянная VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Постоянная VPN переподключает VPN при обрывах быстро и автоматически. Для вашей безопасности, эту функцию нельзя отключить.";
+"_always_on_vpn_tooltip_ios" = "«Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "Постоянная VPN восстановит ваше подключение автоматически";
+"_always_on_will_reconnect" = "Постоянный VPN переподключит вас автоматически";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Журналы приложения";
@@ -148,8 +148,14 @@
 /* Common word */
 "_close" = "Закрыть";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Свернуть список серверов";
+
 /* Profile create/change form */
 "_color" = "Цвет";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Частые проблемы при входе";
 
 /* Common word */
 "_connect" = "Подключиться";
@@ -537,6 +543,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "Пожалуйста, выберите другой сервер.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Развернуть список серверов";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "ИСТЕКЛА";
@@ -1562,7 +1571,7 @@
 "_smart_routing_title" = "Smart маршрутизация";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Умный";
+"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ скорость";
@@ -1688,10 +1697,10 @@
 "_sysex_wizard_step1_description_link" = "здесь";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Открыть Параметры безопасности";
+"_sysex_wizard_step1_title" = "Открыть параметры безопасности";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Открыть Параметры безопасности";
+"_sysex_wizard_step1_title_1" = "Открыть параметры безопасности";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Щелкните на значок замка, чтобы можно было вносить изменения";
@@ -2101,16 +2110,16 @@
 "_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
 
 /* (No Comment) */
-"_wgks_description" = "Аварийный стоп препятствует подключению VPN к Интернету. Это может быть связано с несовместимостью с вашей операционной системой (macOS Catalina 10.15).\n\nЧтобы решить эту проблему, обновите операционную систему до последней версии.\n\nТакже вы можете перейти на протокол OpenVPN или отключить Аварийный стоп.";
+"_wgks_description" = "Kill Switch мешает подключить VPN к Интернету. Это может быть связано с несовместимостью с вашей операционной системой (macOS Catalina 10.15).\n\nЧтобы решить эту проблему, обновите операционную систему до последней версии.\n\nТакже вы можете перейти на протокол OpenVPN или отключить Kill Switch.";
 
 /* (No Comment) */
 "_wgks_ks_off" = "Отключить Kill Switch";
 
 /* (No Comment) */
-"_wgks_ovpn" = "Переключитесь на OpenVPN";
+"_wgks_ovpn" = "Переключиться на OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Аварийный стоп не позволяет VPN подключиться к Интернету";
+"_wgks_title" = "Аварийный стоп мешает подключить VPN к Интернету";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS виджет";

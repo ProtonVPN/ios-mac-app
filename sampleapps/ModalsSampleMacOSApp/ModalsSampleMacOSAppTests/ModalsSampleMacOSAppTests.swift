@@ -31,6 +31,5 @@ class ModalsSampleMacOSAppTests: XCTestCase {
         XCTAssertNotNil(factory.upsellViewController(upsellType: .secureCore, upgradeAction: nil, learnMoreAction: nil))
         XCTAssertNotNil(factory.upsellViewController(upsellType: .netShield, upgradeAction: nil, learnMoreAction: nil))
         XCTAssertNotNil(factory.upsellViewController(upsellType: .safeMode, upgradeAction: nil, learnMoreAction: nil))
-        XCTAssertNotNil(factory.upsellViewController(upsellType: .profile, upgradeAction: nil, learnMoreAction: nil))
     }
 }

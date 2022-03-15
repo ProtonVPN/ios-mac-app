@@ -222,6 +222,7 @@
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
 		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
+		E910272D27D9E4E300776425 /* SwiftUIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
 		E91BDD3B274BC9C1005F370C /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD39274BC9C1005F370C /* Logger+Callers.swift */; };
 		E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3A274BC9C1005F370C /* Logger+Categories.swift */; };
@@ -815,7 +816,6 @@
 		E1C1399B2114399700B88658 /* SwitchButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchButton.swift; sourceTree = "<group>"; };
 		E1C203292027191100F4D375 /* ZoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomView.swift; sourceTree = "<group>"; };
 		E1E0E3122059775200599F42 /* PVPNHyperlinkTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVPNHyperlinkTextField.swift; sourceTree = "<group>"; };
-		E1E7462622C5201B00BFDC90 /* ProtonVPN-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProtonVPN-Bridging-Header.h"; sourceTree = "<group>"; };
 		E1EA77FA2294366A007B9C2F /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryViewItem.swift; sourceTree = "<group>"; };
 		E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusMenuCountryViewItem.xib; sourceTree = "<group>"; };
@@ -831,6 +831,7 @@
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
+		E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SwiftUIColor+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/SwiftUIColor+Extension.swift"; sourceTree = "<group>"; };
 		E911B93CDEDAEACCA61CA0A0 /* Pods-ProtonVPN WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
 		E91BDD39274BC9C1005F370C /* Logger+Callers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Callers.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Callers.swift"; sourceTree = "<group>"; };
@@ -1936,6 +1937,8 @@
 			children = (
 				EE4943ED1F29C20200CF980F /* LoginViewController.swift */,
 				EE4943EB1F29BE3600CF980F /* Login.xib */,
+				E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */,
+				E1454CEC206FC6A900E6D396 /* HelpPopover.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1944,6 +1947,7 @@
 			isa = PBXGroup;
 			children = (
 				EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */,
+				E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2359,6 +2363,7 @@
 				EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */,
 				EE4FCF651F22102200B04EF8 /* NSAttributedString+Extension.swift */,
 				EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */,
+				E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */,
 				EE98CFE61F1519D4000D6688 /* NSImage+Extension.swift */,
 				EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */,
 				EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */,
@@ -2470,8 +2475,6 @@
 			children = (
 				42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */,
 				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
-				E1454CEC206FC6A900E6D396 /* HelpPopover.xib */,
-				E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */,
 				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
 				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
 				E144752F2093A10700F4C641 /* NeagentHelpPopUp.xib */,
@@ -2493,7 +2496,6 @@
 		F36ECE482611E2440089B898 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */,
 				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
 				EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */,
 				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
@@ -2899,6 +2901,7 @@
 				pt,
 				hr,
 				tr,
+				uk,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
@@ -3512,6 +3515,7 @@
 				42918CF2263836410065992E /* CountriesSectionHeaderView.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
 				EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
+				E910272D27D9E4E300776425 /* SwiftUIColor+Extension.swift in Sources */,
 				EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */,
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,
 				EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */,

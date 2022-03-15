@@ -72,19 +72,21 @@ public class VpnCredentials: NSObject, NSCoding {
     
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
-                
-        if let planName = vpnDic.string("PlanName") {
-            accountPlan = AccountPlan(planName: planName)
+
+        let accountPlan: AccountPlan
+        if let planName = vpnDic.string("PlanName"), let plan = AccountPlan(rawValue: planName) {
+            accountPlan = plan
             self.planName = planName
         } else {
             accountPlan = AccountPlan.free
             self.planName = nil
         }
+        self.accountPlan = accountPlan
         
         status = try vpnDic.intOrThrow(key: "Status")
         expirationTime = try vpnDic.unixTimestampOrThrow(key: "ExpirationTime")
         maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        maxTier = vpnDic.int(key: "MaxTier") ?? 0
+        maxTier = vpnDic.int(key: "MaxTier") ?? accountPlan.defaultTier
         services = try dic.intOrThrow(key: "Services")
         groupId = try vpnDic.stringOrThrow(key: "GroupID")
         name = try vpnDic.stringOrThrow(key: "Name")

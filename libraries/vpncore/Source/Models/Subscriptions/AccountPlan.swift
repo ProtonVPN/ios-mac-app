@@ -27,7 +27,13 @@ public enum AccountPlan: String {
     case basic = "vpnbasic"
     case plus = "vpnplus"
     case visionary = "visionary"
+    case visionary2022 = "visionary2022"
     case trial = "trial"
+    case unlimited = "bundle2022"
+    case vpnPlus = "vpn2022"
+    case family = "family2022"
+    case bundlePro = "bundlepro2022"
+    case enterprise2022 = "enterprise2022"
     
     public var paid: Bool {
         switch self {
@@ -46,183 +52,66 @@ public enum AccountPlan: String {
             return "ProtonVPN Basic"
         case .plus:
             return "ProtonVPN Plus"
-        case .visionary:
+        case .visionary, .visionary2022:
             return "Proton Visionary"
         case .trial:
             return "ProtonVPN Plus Trial"
-        }
-    }
-    
-    public var storeKitProductId: String? {
-        switch self {
-        case .free, .visionary, .trial:
-            return nil
-        case .basic:
-            return "ios_vpnbasic_12_usd_non_renewing"
-        case .plus:
-            return "ios_vpnplus_12_usd_non_renewing"
-        }
-    }
-    
-    public init(planName: String) {
-        if planName == "vpnbasic" {
-            self = .basic
-        } else if planName == "vpnplus" {
-            self = .plus
-        } else if planName == "visionary" {
-            self = .visionary
-        } else if planName == "trial" {
-            self = .trial
-        } else {
-            self = .free
-        }
-    }
-    
-    // MARK: - UI info
-    public init?(storeKitProductId: String) {
-        switch storeKitProductId {
-        case AccountPlan.basic.storeKitProductId:
-            self = .basic
-        case AccountPlan.plus.storeKitProductId:
-            self = .plus
-        default:
-            return nil
-        }
-    }
-    
-    public var name: String {
-        switch self {
-        case .basic:
-            return LocalizedString.tierBasic
-        case .plus:
-            return LocalizedString.tierPlus
-        case .visionary:
-            return LocalizedString.tierVisionary
-        default:
-            return LocalizedString.tierFree
-        }
-    }
-    
-    public var displayName: String {
-        let protonVPN = "ProtonVPN %@"
-        switch self {
-        case .free, .trial:
-            return String(format: protonVPN, "FREE")
-        case .basic:
-            return String(format: protonVPN, "BASIC")
-        case .plus:
-            return String(format: protonVPN, "PLUS")
-        case .visionary:
-            return String(format: protonVPN, "VISIONARY")
-        }
-    }
-    
-    // FUTUREFIXME: should get this from api
-    public var yearlyCost: Int {
-        switch self {
-        case .free, .trial:
-            return 0
-        case .basic:
-            return 4800
-        case .plus:
-            return 9600
-        case .visionary:
-            return 28800
-        }
-    }
-    
-    public var callToAction: String {
-        switch self {
-        case .free, .trial:
-            return LocalizedString.getPlan("Free")
-        case .basic:
-            return LocalizedString.getPlan("Basic")
-        case .plus:
-            return LocalizedString.getPlan("Plus")
-        case .visionary:
-            return LocalizedString.getPlan("Visionary")
+        case .unlimited:
+            return "Proton Unlimited"
+        case .vpnPlus:
+            return "VPN Plus"
+        case .family:
+            return "Proton Family"
+        case .bundlePro:
+            return "Business"
+        case .enterprise2022:
+            return "Enterprise"
         }
     }
     
     public var devicesCount: Int {
         switch self {
-        case .plus:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
             return 10
         case .basic:
             return 2
-        default:
+        case .free, .trial:
             return 1
         }
     }
 
     public var countriesCount: Int {
         switch self {
-        case .plus:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
             return 61
         case .basic:
             return 40
-        default:
+        case .free, .trial:
             return 3
         }
     }
 
     public var serversCount: Int {
         switch self {
-        case .plus:
+        case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
             return 1600
         case .basic:
             return 400
-        default:
+        case .free, .trial:
             return 24
         }
     }
-    
-    public var speed: String {
+
+    public var defaultTier: Int {
         switch self {
-        case .free:
-            return LocalizedString.medium
+        case .free, .trial:
+            return CoreAppConstants.VpnTiers.free
         case .basic:
-            return LocalizedString.high
-        case .plus, .visionary, .trial:
-            return LocalizedString.fastest
-        }
-    }
-    
-    public var speedDescription: String {
-        switch self {
-        case .free:
-            return LocalizedString.planSpeedMedium
-        case .basic:
-            return LocalizedString.planSpeedHigh
-        case .plus, .visionary, .trial:
-            return LocalizedString.planSpeedFastest
-        }
-    }
-    
-    public var features: String {
-        switch self {
-        case .free, .basic:
-            return ""
-        case .plus, .visionary, .trial:
-            return LocalizedString.plusPlanFeatures
-        }
-    }
-    
-    public var isMostPopular: Bool {
-        switch self {
-        case .plus:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    public var hasAdvancedFeatures: Bool {
-        switch self {
-        case .plus:
-            return true
-        default:
-            return false
+            return CoreAppConstants.VpnTiers.basic
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
+            return CoreAppConstants.VpnTiers.plus
+        case .visionary, .unlimited, .visionary2022:
+            return CoreAppConstants.VpnTiers.visionary
         }
     }
     
@@ -232,7 +121,8 @@ public enum AccountPlan: String {
     }
     
     public init(coder aDecoder: NSCoder) {
-        self.init(planName: aDecoder.decodeObject(forKey: CoderKey.accountPlan) as! String)
+        let name = aDecoder.decodeObject(forKey: CoderKey.accountPlan) as! String
+        self.init(rawValue: name)!
     }
     
     public func encode(with aCoder: NSCoder) {

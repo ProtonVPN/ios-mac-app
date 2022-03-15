@@ -24,6 +24,7 @@ import vpncore
 import UIKit
 import Foundation
 import TunnelKit
+import Search
 
 enum SessionStatus {
     
@@ -55,7 +56,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory & ProfileManagerFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory & ProfileManagerFactory & SearchStorageFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -69,6 +70,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     var vpnGateway: VpnGatewayProtocol?
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -350,6 +352,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         vpnAuthentication.clearEverything()
         announcementRefresher.clear()
         planService.clear()
+        searchStorage.clear()
         
         propertiesManager.logoutCleanup()
     }

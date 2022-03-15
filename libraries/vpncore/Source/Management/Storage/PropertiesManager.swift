@@ -52,6 +52,7 @@ public protocol PropertiesManagerProtocol: class {
     var secureCoreToggle: Bool { get set }
     var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
+    var discourageSecureCore: Bool { get set }
     
     // Destinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -146,6 +147,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         // AppState
         case lastTimeForeground = "LastTimeForeground"
+
+        // Discourage Secure Core
+        case discourageSecureCore = "DiscourageSecureCore"
         
         // Kill Switch
         case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
@@ -471,6 +475,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
             postNotificationOnUIThread(type(of: self).vpnAcceleratorNotification, object: newValue)
         }
     }
+
+    public var discourageSecureCore: Bool {
+        get {
+            return storage.defaults.bool(forKey: Keys.discourageSecureCore.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.discourageSecureCore.rawValue)
+        }
+    }
     
     public var killSwitch: Bool {
         get {
@@ -574,6 +587,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public func logoutCleanup() {
         hasConnected = false
         secureCoreToggle = false
+        discourageSecureCore = true
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         lastWireguardConnection = nil

@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Search
 
 final class CountriesViewController: UIViewController {
     
@@ -31,10 +32,10 @@ final class CountriesViewController: UIViewController {
     @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
     @IBOutlet private weak var tableView: UITableView!
     
-    var viewModel: CountriesViewModel?
+    var viewModel: CountriesViewModel!
     var connectionBarViewController: ConnectionBarViewController?
-    
-    var countryControllers: [Weak<CountryViewController>] = []
+
+    var coordinator: SearchCoordinator?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -48,7 +49,10 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel?.contentChanged = { [weak self] in self?.contentChanged() }        
+        viewModel.contentChanged = { [weak self] in
+            self?.contentChanged()
+            self?.reloadSearch()
+        }
         setupView()
         setupConnectionBar()
         setupSecureCoreBar()
@@ -84,13 +88,14 @@ final class CountriesViewController: UIViewController {
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
         secureCoreSwitch.tapped = { [weak self] in
-            self?.viewModel?.toggleState { [weak self] succeeded in
+            let toOn = self?.viewModel?.secureCoreOn == true
+            self?.viewModel?.toggleState(toOn: !toOn) { [weak self] succeeded in
                 DispatchQueue.main.async {
                     guard let self = self else {
                         return
                     }
 
-                    self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
+                    self.secureCoreSwitch.setOn(self.viewModel.secureCoreOn, animated: true)
 
                     if succeeded {
                         self.tableView.reloadData()
@@ -104,16 +109,16 @@ final class CountriesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        tableView.rowHeight = viewModel?.cellHeight ?? 61
+        tableView.rowHeight = viewModel.cellHeight
         tableView.backgroundColor = .backgroundColor()
-        tableView.register(CountryViewCell.nib, forCellReuseIdentifier: CountryViewCell.identifier)
+        tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
     
     private func setupNavigationBar() {
-        let image = #imageLiteral(resourceName: "ic-info-circle")
-        let rightItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(displayServicesInfo))
-        navigationItem.rightBarButtonItem = rightItem
+        let infoButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-info-circle"), style: .plain, target: self, action: #selector(displayServicesInfo))
+        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-search"), style: .plain, target: self, action: #selector(showSearch))
+        navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
     
     @objc private func displayServicesInfo() {
@@ -128,20 +133,33 @@ final class CountriesViewController: UIViewController {
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
     }
-    
+
+    func showCountry(cellModel: CountryItemViewModel) {
+        if cellModel.isUsersTierTooLow {
+            viewModel.presentAllCountriesUpsell()
+            return
+        }
+
+        guard let countryViewController = viewModel.countryViewController(viewModel: cellModel) else {
+            return
+        }
+
+        self.navigationController?.pushViewController(countryViewController, animated: true)
+    }
 }
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.numberOfSections() ?? 1
+        return viewModel.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        if (viewModel?.numberOfSections() ?? 0) < 2 { return nil }
+        if viewModel.numberOfSections() < 2 {
+            return nil
+        }
         
         if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView {
-            headerView.setName(name: viewModel?.titleFor(section: section) ?? "")
+            headerView.setName(name: viewModel.titleFor(section: section) ?? "")
             return headerView
         }
         
@@ -149,15 +167,16 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return viewModel?.headerHeight(for: section) ?? 0
+        return viewModel.headerHeight(for: section)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.numberOfRows(in: section) ?? 0
+        return viewModel.numberOfRows(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section), let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryViewCell.identifier) as? CountryViewCell else {
+        let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
+        guard let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
             return UITableViewCell()
         }
 
@@ -166,19 +185,8 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section) else {
-            return
-        }
-        
-        if viewModel?.isTierTooLow(for: indexPath.section) ?? true { // Premium countries
-            viewModel?.presentAllCountriesUpsell()
-            return
-        }
-        
-        if let countryViewController = viewModel?.countryViewController(viewModel: cellModel) {
-            countryControllers.append(Weak(value: countryViewController))
-            self.navigationController?.pushViewController(countryViewController, animated: true)
-        }
+        let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
+        showCountry(cellModel: cellModel)
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

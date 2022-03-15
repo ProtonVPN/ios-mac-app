@@ -29,7 +29,7 @@ struct UpsellColors: ModalsColors {
 
     public init() {
         background = .protonDarkGrey()
-        text = .normalTextColor()
+        text = .protonWhite()
         brand = .protonGreen()
         hoverBrand = .protonGreenShade()
         weakText = .weakTextColor()

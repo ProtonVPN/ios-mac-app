@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "Abbrechen";
+
+/* Common button title */
+"modals_common_learn_more" = "Mehr erfahren";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core aktivieren";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Nicht erneut anzeigen";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core bietet ein Höchstmaß an Sicherheit und Datenschutz, kann aber deine Internetgeschwindigkeit verringern. Wenn du mehr Leistung benötigst, kannst du Secure Core deaktivieren.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Ein Hinweis betr. Geschwindigkeit...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgrade benötigt";
 

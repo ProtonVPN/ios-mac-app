@@ -35,4 +35,13 @@ public struct ModalsFactory {
         upsell.learnMoreAction = learnMoreAction
         return upsell
     }
+
+    public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {
+        let discourageSecureCoreViewController = DiscourageSecureCoreViewController()
+        discourageSecureCoreViewController.onDontShowAgain = onDontShowAgain
+        discourageSecureCoreViewController.onActivate = onActivate
+        discourageSecureCoreViewController.onCancel = onCancel
+        discourageSecureCoreViewController.onLearnMore = onLearnMore
+        return discourageSecureCoreViewController
+    }
 }
