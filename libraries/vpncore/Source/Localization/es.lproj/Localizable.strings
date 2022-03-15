@@ -148,8 +148,14 @@
 /* Common word */
 "_close" = "Cerrar";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Collapse list of servers";
+
 /* Profile create/change form */
 "_color" = "Color";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Common sign in issues";
 
 /* Common word */
 "_connect" = "Conectar";
@@ -537,6 +543,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "Por favor, selecciona un servidor diferente.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Expand list of servers";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "EXPIRADO";

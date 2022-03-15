@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Search
 
 class CountryItemViewModel {
     
@@ -36,7 +37,7 @@ class CountryItemViewModel {
     
     private var userTier: Int = CoreAppConstants.VpnTiers.plus
     
-    private var isUsersTierTooLow: Bool {
+    var isUsersTierTooLow: Bool {
         return userTier < countryModel.lowestTier
     }
     
@@ -284,5 +285,46 @@ class CountryItemViewModel {
                 connectionChanged()
             }
         }
+    }
+}
+
+// MARK: - Search
+
+extension CountryItemViewModel: CountryViewModel {
+    func getServers() -> [ServerTier: [ServerViewModel]] {
+        var data: [ServerTier: [ServerViewModel]] = [:]
+        for tier in ServerTier.allCases {
+            data[tier] = []
+        }
+
+        for (tier, servers) in serverViewModels {
+            let serverTier: ServerTier
+            switch tier {
+            case CoreAppConstants.VpnTiers.free:
+                serverTier = .free
+            case CoreAppConstants.VpnTiers.plus:
+                serverTier = .plus
+            default:
+                serverTier = .basic
+            }
+            data[serverTier]?.append(contentsOf: servers)
+        }
+        return data
+    }
+
+    var flag: UIImage? {
+        return UIImage(named: countryCode.lowercased() + "-plain")
+    }
+
+    var connectButtonColor: UIColor {
+        return isCurrentlyConnected ? UIColor.brandColor() : (underMaintenance ? UIColor.weakInteractionColor() : UIColor.secondaryBackgroundColor())
+    }
+
+    var textColor: UIColor {
+        return UIColor.normalTextColor()
+    }
+
+    var isSecureCoreCountry: Bool {
+        return serverModels.allSatisfy({ $0.serverType == .secureCore })
     }
 }

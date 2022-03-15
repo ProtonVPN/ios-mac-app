@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Під'єднайте до %d пристроїв одночасно</string>
+			<key>many</key>
+			<string>Під'єднайте до %d пристроїв одночасно</string>
+			<key>one</key>
+			<string>Під'єднайте до %d пристрою одночасно</string>
+			<key>other</key>
+			<string>Під'єднайте до %d пристроїв одночасно</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Отримайте доступ до %#@num_servers@ у %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d країни</string>
+			<key>many</key>
+			<string>%d країн</string>
+			<key>one</key>
+			<string>%d країн</string>
+			<key>other</key>
+			<string>%d країн</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d захищених серверів</string>
+			<key>many</key>
+			<string>%d захищених серверів</string>
+			<key>one</key>
+			<string>%d захищеного сервера</string>
+			<key>other</key>
+			<string>%d захищених серверів</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

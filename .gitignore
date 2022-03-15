@@ -26,3 +26,5 @@ sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj/xcuserdata
 
 # Directory created by gitlab-runner
 builds
+sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj/xcuserdata
+sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj/xcuserdata

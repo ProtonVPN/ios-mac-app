@@ -1,3 +1,21 @@
+/* Common button title */
+"modals_common_cancel" = "Anuluj";
+
+/* Common button title */
+"modals_common_learn_more" = "Dowiedz się więcej";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Aktywuj funkcję Secure Core";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Don’t show again";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Funkcja Secure Core oferuje najwyższy poziom bezpieczeństwa i prywatności, ale może zmniejszyć prędkość połączenia. Jeśli potrzebujesz większej wydajności, wyłącz funkcję Secure Core.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "A note about speed...";
+
 /* Upgrade plan button title */
 "modals_get_plus" = "Ulepsz";
 

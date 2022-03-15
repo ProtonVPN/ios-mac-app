@@ -110,7 +110,24 @@ onboarding_lint:
     reports:
       junit:
         - swiftlint.xml
-    expire_in: 90 days    
+    expire_in: 90 days
+
+search_lint:
+  stage: linting
+  tags:
+    - iOS_ARM
+  script:
+    - cd libraries/Search
+    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+  allow_failure: false
+  artifacts:
+    name: "search-lint-$CI_COMMIT_TAG"
+    paths:
+      - swiftlint.xml
+    reports:
+      junit:
+        - swiftlint.xml
+    expire_in: 90 days      
 
 modals_lint:
   stage: linting
@@ -427,7 +444,7 @@ i18n-crowdin-upload:
   stage: bot
   variables:
       I18N_SYNC_CROWDIN_PROJECT: 'apple-vpn'
-      I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals'
+      I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals,libraries/Search'
   extends: .i18n-sync-crowdin-shared-apple
   before_script:
     - sh fastlane/adjust-for-strings-export.sh
@@ -437,32 +454,32 @@ i18n-crowdin-download:
   stage: bot
   variables:
       I18N_COMMIT_CROWDIN_PROJECT: 'apple-vpn'
-      I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals'
+      I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals,libraries/Search'
   extends: .i18n-commit-locales-shared-apple
   before_script:
     - sh fastlane/adjust-for-strings-export.sh
     - !reference [.i18n-commit-locales-shared-apple, before_script]
 
 # --- Open Source GitHub related tasks ---
-github-push-commits:
-  stage: bot
-  extends: .release-sync-commit-shared
-  variables:
-    RELEASE_SYNC_TO_BRANCH: 'develop'
-    RELEASE_SYNC_FROM_BRANCH: 'develop'
-  # Run the job only if we have a tag ex:
-  #   - mac/1.1.1111111
-  #   - ios/1.1.1
-  only: &onlyTagsFilterOpenSource
-    refs:
-      - tags
-    variables:
-      - $CI_COMMIT_TAG =~ /^(mac|ios)\/\d+\.\d+\.\d+$/
-
-github-push-tag:
-  extends: .release-sync-tags-shared
-  variables:
-    RELEASE_SYNC_FROM_BRANCH: 'develop'
-  only:
-    <<: *onlyTagsFilterOpenSource
+#github-push-commits:
+#  stage: bot
+#  extends: .release-sync-commit-shared
+#  variables:
+#    RELEASE_SYNC_TO_BRANCH: 'develop'
+#    RELEASE_SYNC_FROM_BRANCH: 'develop'
+#  # Run the job only if we have a tag ex:
+#  #   - mac/1.1.1111111
+#  #   - ios/1.1.1
+#  only: &onlyTagsFilterOpenSource
+#    refs:
+#      - tags
+#    variables:
+#      - $CI_COMMIT_TAG =~ /^(mac|ios)\/\d+\.\d+\.\d+$/
+#
+#github-push-tag:
+#  extends: .release-sync-tags-shared
+#  variables:
+#    RELEASE_SYNC_FROM_BRANCH: 'develop'
+#  only:
+#    <<: *onlyTagsFilterOpenSource
 

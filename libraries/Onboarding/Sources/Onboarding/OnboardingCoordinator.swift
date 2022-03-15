@@ -197,12 +197,12 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 // MARK: Upsell screen delegate
 
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
-    public func userDidDismissUpsell() {
+    public func shouldDismissUpsell() -> Bool {
         switch configuration.variant {
         case .A:
             if onboardingFinished {
                 delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
-                return
+                return false
             }
 
             popOverNavigationController?.dismiss(animated: true, completion: nil)
@@ -210,6 +210,11 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
             showConnectionSetup(animated: false)
             popOverNavigationController?.dismiss(animated: true, completion: nil)
         }
+        return false
+    }
+
+    public func userDidDismissUpsell() {
+
     }
 
     public func userDidRequestPlus() {

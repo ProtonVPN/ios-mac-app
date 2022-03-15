@@ -5,21 +5,27 @@
       location = "container:"
       name = "SampleApps">
       <FileRef
-         location = "group:sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:sampleapps/ModalsSampleApp/ModalsSampleApp.xcodeproj">
+         location = "group:sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:sampleapps/BugReportSampleMacOSApp/BugReportSampleMacOSApp.xcodeproj">
       </FileRef>
       <FileRef
-         location = "group:sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj">
+         location = "group:sampleapps/ModalsSampleApp/ModalsSampleApp.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj">
       </FileRef>
       <FileRef
          location = "group:sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj">
       </FileRef>
+      <FileRef
+         location = "group:sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj">
+      </FileRef>
    </Group>
+   <FileRef
+      location = "group:libraries/Search">
+   </FileRef>
    <FileRef
       location = "group:libraries/Onboarding">
    </FileRef>

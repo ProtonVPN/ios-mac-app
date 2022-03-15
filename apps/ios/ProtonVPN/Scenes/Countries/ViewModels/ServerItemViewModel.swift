@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Search
 
 class ServerItemViewModel {
     
@@ -229,5 +230,33 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
     override fileprivate func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
+    }
+}
+
+// MARK: - Search
+
+extension ServerItemViewModel: ServerViewModel {
+    var connectButtonColor: UIColor {
+        return connectedUiState ? .brandColor() : (underMaintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
+    }
+
+    var entryCountryName: String? {
+        return viaCountry?.name
+    }
+
+    var entryCountryFlag: UIImage? {
+        guard let code = viaCountry?.code else {
+            return nil
+        }
+
+        return UIImage(named: code.lowercased() + "-plain")
+    }
+
+    var countryName: String {
+        return LocalizationUtility.default.countryName(forCode: serverModel.countryCode) ?? ""
+    }
+
+    var countryFlag: UIImage? {
+        return UIImage(named: serverModel.countryCode.lowercased() + "-plain")
     }
 }

@@ -32,9 +32,9 @@ extension AccountPlan {
             color = NSColor.freeUser()
         case .basic:
             color = NSColor.basicUser()
-        case .plus:
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
             color = NSColor.plusUser()
-        case .visionary:
+        case .visionary, .unlimited, .visionary2022:
             color = NSColor.visionaryUser()
         case .trial:
             color = NSColor.plusUser()

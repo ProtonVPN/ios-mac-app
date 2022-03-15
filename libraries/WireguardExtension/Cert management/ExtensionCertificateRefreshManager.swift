@@ -19,7 +19,7 @@ final class ExtensionCertificateRefreshManager {
     private var refreshEarlierBy: TimeInterval = -60
     
     private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup, storage: Storage())
-    private let certificateRefreshRequest = CertificateRefreshRequest()
+    private let apiService = ExtensionAPIService(storage: Storage())
     private var timer: BackgroundTimer?
     
     func planNextRefresh() {
@@ -73,7 +73,7 @@ final class ExtensionCertificateRefreshManager {
         }
         
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
-        certificateRefreshRequest.refresh(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
+        apiService.refreshCertificate(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
             switch result {
             case .success(let certificate):
                 wg_log(.info, message: "Certificate refreshed. Saving to keychain.")

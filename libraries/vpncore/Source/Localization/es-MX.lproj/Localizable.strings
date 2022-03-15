@@ -148,8 +148,14 @@
 /* Common word */
 "_close" = "Cerrar";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Cierra la lista de servidores";
+
 /* Profile create/change form */
 "_color" = "Color";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Problemas comunes de inicio de sesión";
 
 /* Common word */
 "_connect" = "Conectar";
@@ -537,6 +543,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "Por favor, seleccione un servidor diferente.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Abre la lista de servidores";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "EXPIRADO";
@@ -1562,7 +1571,7 @@
 "_smart_routing_title" = "Smart Routing";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Inteligente";
+"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ velocidad";
