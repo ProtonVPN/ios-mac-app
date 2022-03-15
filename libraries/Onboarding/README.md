@@ -10,7 +10,7 @@ To use the Onboarding module you first need to create a new instance of the `Onb
 coordinator = OnboardingCoordinator(configuration: Configuration(variant: OnboardingVariant, colors: Colors))
 ```
 
-The `Configuration` struct lets you choose between the `A` and `B` screen flow variants and provided all the colors the Onboarding module uses for full customization.
+The `Configuration` struct lets you choose between the `A` and `B` screen flow variants and provide all the colors the Onboarding module uses for full customization.
 
 Next assign the `OnboardingCoordinatorDelegate` to the newly created coordinator
 
@@ -21,7 +21,7 @@ coordinator.delegate = self
 Finally you can start the coordinator and get back an `UINavigationController` instance that you can present in your iOS app
 
 ```swift
-let viewController = onboardingCoordinator.start()
+let viewController = coordinator.start()
 ```
 
 The `OnboardingCoordinatorDelegate` informs you when the coordinator finishes so you can dismiss it, when it requires the app to make a VPN connection and when it needs an `UIViewController` with the payments UI provided so it can allow the user to buy a Plus plan.

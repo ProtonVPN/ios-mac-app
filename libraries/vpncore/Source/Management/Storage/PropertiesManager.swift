@@ -580,7 +580,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         storage.defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
-            Keys.smartProtocol.rawValue: defaultSmartProtocol
+            Keys.smartProtocol.rawValue: defaultSmartProtocol,
+            Keys.discourageSecureCore.rawValue: true
         ])
     }
     

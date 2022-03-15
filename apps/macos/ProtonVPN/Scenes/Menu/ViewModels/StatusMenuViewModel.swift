@@ -204,17 +204,53 @@ class StatusMenuViewModel {
     // MARK: - Connect section - Inputs
     
     func toggleSecureCore(_ state: ButtonState) {
-        if state == .on, let userTier = (try? vpnGateway?.userTier()) ?? CoreAppConstants.VpnTiers.free, userTier < CoreAppConstants.VpnTiers.plus {
+        let applyNewStateToSecureCore: () -> Void = { [weak self] in
+            self?.changeActiveServerType(state: state)
+        }
+        guard state == .on else {
+            applyNewStateToSecureCore()
+            return
+        }
+        guard isSufficientTierLevel() else {
             viewController?.secureCoreSwitch.setState(.off)
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
+        guard propertiesManager.discourageSecureCore == false else {
+            viewController?.secureCoreSwitch.setState(.off)
+            presentDiscourageSecureCoreAlert(onActivate: applyNewStateToSecureCore)
+            return
+        }
+        applyNewStateToSecureCore()
+    }
+
+    private func isSufficientTierLevel() -> Bool {
+        let freeTier = CoreAppConstants.VpnTiers.free
+        let userTier: Int = (try? vpnGateway?.userTier() ?? freeTier) ?? freeTier
+        return userTier >= CoreAppConstants.VpnTiers.plus
+    }
+
+    private func presentDiscourageSecureCoreAlert(onActivate: (() -> Void)?) {
+        let alert = DiscourageSecureCoreAlert()
+        alert.onDontShowAgain = { [weak self] dontShow in
+            self?.propertiesManager.discourageSecureCore = !dontShow
+        }
+        alert.onActivate = onActivate
+        alert.onLearnMore = didTapLearnMore
+        alertService.push(alert: alert)
+    }
+
+    private func didTapLearnMore() {
+        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+    }
+
+    private func changeActiveServerType(state: ButtonState) {
         guard let vpnGateway = vpnGateway else { return }
         guard vpnGateway.connection != .connected else {
             presentDisconnectOnStateToggleWarning()
             return
         }
-        
+
         vpnGateway.changeActiveServerType(state == .on ? .secureCore : .standard)
     }
     

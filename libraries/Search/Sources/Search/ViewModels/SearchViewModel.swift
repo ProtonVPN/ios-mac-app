@@ -97,7 +97,7 @@ final class SearchViewModel {
                     servers[key]?.append(contentsOf: values)
                 }
             }
-            for tier in servers.keys {
+            for tier in ServerTier.allCases {
                 let tierServers = servers[tier]?.filter({ filter($0.description) }) ?? []
                 if !tierServers.isEmpty {
                     results.append(SearchResult.servers(tier: tier, servers: tierServers))
@@ -106,7 +106,9 @@ final class SearchViewModel {
         case .secureCore:
             if !countries.isEmpty {
                 let servers = countries.flatMap({ $0.getServers().flatMap { $0.1 } })
-                results.append(SearchResult.secureCoreCountries(servers: servers))
+                if !servers.isEmpty {
+                    results.append(SearchResult.secureCoreCountries(servers: servers))
+                }
             }
         }
 

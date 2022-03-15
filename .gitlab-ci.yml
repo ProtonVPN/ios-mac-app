@@ -180,6 +180,21 @@ bugreport_unit_tests:
       cobertura:
         - fastlane/test_output/BugReport.xml
 
+search_ios_unit_tests:
+  stage: core_unit_tests
+  tags:
+    - iOS_ARM
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - fastlane ios_search_test
+    - fastlane/print-coverage.sh fastlane/test_output/Search.xcresult Search 1
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit        
+
 core_macos_unit_tests:
   stage: core_unit_tests
   tags:

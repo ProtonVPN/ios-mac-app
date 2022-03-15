@@ -831,6 +831,9 @@
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
+		E90F956527E09D6600A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		E90F956627E09DBB00A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E90F956727E09DD400A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Intents.strings; sourceTree = "<group>"; };
 		E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SwiftUIColor+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/SwiftUIColor+Extension.swift"; sourceTree = "<group>"; };
 		E911B93CDEDAEACCA61CA0A0 /* Pods-ProtonVPN WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
@@ -3715,6 +3718,7 @@
 				D557D57A264AC337007E4396 /* pt */,
 				D5E38D772732A2B20015F0AF /* hr */,
 				D53D133C2732A57200B9D740 /* tr */,
+				E90F956627E09DBB00A51A42 /* uk */,
 			);
 			name = Localizable.strings;
 			path = Localization;
@@ -3741,6 +3745,7 @@
 				D557D57B264AC337007E4396 /* pt */,
 				D5E38D792732A2E30015F0AF /* hr */,
 				D53D133D2732A57800B9D740 /* tr */,
+				E90F956527E09D6600A51A42 /* uk */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3768,6 +3773,7 @@
 				D557D57D264AC337007E4396 /* pt-PT */,
 				D5E38D7A2732A2F40015F0AF /* hr */,
 				D53D133E2732A57C00B9D740 /* tr */,
+				E90F956727E09DD400A51A42 /* uk */,
 			);
 			name = Intents.strings;
 			path = Localization;
