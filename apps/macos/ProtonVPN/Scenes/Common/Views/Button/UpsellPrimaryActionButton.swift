@@ -37,7 +37,7 @@ class UpsellPrimaryActionButton: HoverDetectionButton {
         }
     }
     
-    var fontSize: Double = 16 {
+    var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
@@ -56,16 +56,31 @@ class UpsellPrimaryActionButton: HoverDetectionButton {
     private func configureButton() {
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
-        
-        switch actionType {
-        case .confirmative, .cancel:
-            layer?.backgroundColor = isHovered ? NSColor.protonGreen().cgColor : NSColor.protonUpsellGreen().cgColor
-        case .destructive:
-            layer?.backgroundColor = isHovered ? NSColor.protonRedShade().cgColor : NSColor.protonUpsellRed().cgColor
-        }
+        layer?.backgroundColor = self.cgColor(.background)
     }
     
     private func configureTitle() {
-        attributedTitle = title.attributed(withColor: .protonWhite(), fontSize: fontSize)
+        attributedTitle = self.style(title, font: .themeFont(fontSize))
+    }
+}
+
+extension UpsellPrimaryActionButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            let hover: AppTheme.Style = isHovered ? .hovered : []
+            switch actionType {
+            case .confirmative, .cancel:
+                return .interactive + hover
+            case .destructive:
+                return .danger + hover
+            }
+        case .text:
+            return .normal
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

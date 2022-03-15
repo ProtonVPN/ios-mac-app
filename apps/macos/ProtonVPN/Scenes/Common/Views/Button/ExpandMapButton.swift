@@ -41,7 +41,7 @@ class ExpandMapButton: HoverDetectionButton {
         super.init(coder: coder)
         
         wantsLayer = true
-        layer?.backgroundColor = NSColor.clear.cgColor
+        layer?.backgroundColor = .cgColor(.background, .transparent)
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -49,8 +49,8 @@ class ExpandMapButton: HoverDetectionButton {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         transform.concat()
         
-        context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
-        context.setFillColor(NSColor.protonGrey().cgColor)
+        context.setStrokeColor(.cgColor(.border, .weak))
+        context.setFillColor(.cgColor(.background, .weak))
         
         context.setLineWidth(1.5)
         var halfArrowHeight = bounds.height / 6

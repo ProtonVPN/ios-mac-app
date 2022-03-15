@@ -23,48 +23,12 @@
 import Cocoa
 
 class ConnectingOverlayButton: HoverDetectionButton {
-
     enum Style {
-        case main
-        case colorGreen
-        
-        func borderColor(hovered: Bool) -> NSColor {
-            switch self {
-            case .main: return .protonWhite()
-            case .colorGreen:
-                return hovered
-                    ? .protonGreen()
-                    : .white
-            }
-        }
-        
-        func backgroundColor(hovered: Bool) -> NSColor {
-            switch self {
-            case .main: return hovered
-                ? .protonWhite()
-                : NSColor.clear
-            case .colorGreen: return NSColor.clear
-            }
-        }
-        
-        func textColor(hovered: Bool) -> NSColor {
-            switch self {
-            case .main: return hovered
-                ? .protonBlack()
-                : .protonWhite()
-            case .colorGreen: return hovered
-                ? .protonGreen()
-                : .protonWhite()
-            }
-        }
-        
-        func textSize(hovered: Bool) -> Double {
-            return 16.0
-        }
-        
+        case normal
+        case interactive
     }
     
-    public var style: Style = .main {
+    public var style: Style = .normal {
         didSet {
             needsDisplay = true
         }
@@ -94,9 +58,34 @@ class ConnectingOverlayButton: HoverDetectionButton {
         layer?.borderWidth = 2
         layer?.cornerRadius = bounds.height / 2
         
-        layer?.backgroundColor = style.backgroundColor(hovered: isHovered).cgColor
-        layer?.borderColor = style.borderColor(hovered: isHovered).cgColor
-        attributedTitle = title.attributed(withColor: style.textColor(hovered: isHovered), fontSize: style.textSize(hovered: isHovered))
+        layer?.backgroundColor = self.cgColor(.background)
+        layer?.borderColor = self.cgColor(.border)
+        attributedTitle = self.style(title, font: .themeFont(.heading4))
     }
-    
+}
+
+extension ConnectingOverlayButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            guard style == .normal else {
+                return .transparent
+            }
+            return isHovered ? .inverted : .transparent
+        case .border:
+            guard style == .interactive else {
+                return .inverted
+            }
+            return isHovered ? .interactive : .inverted
+        case .text:
+            guard isHovered else {
+                return .normal
+            }
+            return style == .interactive ? .interactive : .inverted
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
+    }
 }

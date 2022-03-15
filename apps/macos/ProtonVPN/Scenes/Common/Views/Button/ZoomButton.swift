@@ -58,12 +58,12 @@ class ZoomButton: NSButton {
         
         let plusButtonFrame = CGRect(x: 0.5, y: 0.5, width: bounds.width - 1, height: bounds.height - 1)
         context.setLineWidth(1.0)
-        context.setStrokeColor(NSColor.protonLightGrey().cgColor)
+        context.setStrokeColor(.cgColor(.border, .strong))
         context.addRect(plusButtonFrame)
         context.drawPath(using: .stroke)
         
         context.setLineWidth(2.0)
-        context.setStrokeColor(NSColor.protonWhite().cgColor)
+        context.setStrokeColor(.cgColor(.border, .inverted))
         context.move(to: CGPoint(x: plusButtonFrame.origin.x + plusButtonFrame.width / 4, y: plusButtonFrame.origin.y + plusButtonFrame.height / 2))
         context.addLine(to: CGPoint(x: plusButtonFrame.origin.x + 3 * plusButtonFrame.width / 4, y: plusButtonFrame.origin.y + plusButtonFrame.height / 2))
         

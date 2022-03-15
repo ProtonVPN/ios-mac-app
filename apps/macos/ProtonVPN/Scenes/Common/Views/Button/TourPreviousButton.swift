@@ -26,12 +26,14 @@ class TourPreviousButton: HoverDetectionButton {
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
+        let hover: AppTheme.Style = isHovered ? .hovered : []
+
         wantsLayer = true
         layer?.borderWidth = 1.5
-        layer?.borderColor = isHovered ? NSColor.protonHoveredFadedButtonShade().cgColor : NSColor.protonFadedButtonShade().cgColor
+        layer?.borderColor = self.cgColor(.border)
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = NSColor.clear.cgColor
+        layer?.backgroundColor = self.cgColor(.background)
         
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         
@@ -47,7 +49,7 @@ class TourPreviousButton: HoverDetectionButton {
         
         context.setLineWidth(2.5)
         context.setLineCap(.round)
-        context.setStrokeColor(isHovered ? NSColor.protonHoveredFadedButtonShade().cgColor : NSColor.protonFadedButtonShade().cgColor)
+        context.setStrokeColor(self.cgColor(.border))
         context.addPath(arrow)
         context.drawPath(using: .stroke)
     }
@@ -60,5 +62,21 @@ class TourPreviousButton: HoverDetectionButton {
         }
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
+    }
+}
+
+extension TourPreviousButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .border:
+            let hover: AppTheme.Style = isHovered ? .hovered : []
+            return [.interactive, .weak] + hover
+        case .background:
+            return .transparent
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

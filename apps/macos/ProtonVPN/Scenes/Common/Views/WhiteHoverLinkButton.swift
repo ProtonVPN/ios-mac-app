@@ -42,7 +42,7 @@ class WhiteHoverLinkButton: NSButton {
     
     override func mouseExited(with event: NSEvent) {
         var attributes = attributedTitle.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: attributedTitle.length))
-        attributes[NSAttributedString.Key.foregroundColor] = NSColor.protonGreen()
+        attributes[NSAttributedString.Key.foregroundColor] = NSColor.color(.text, .interactive)
         attributedTitle = NSAttributedString(string: attributedTitle.string, attributes: attributes)
         addCursorRect(bounds, cursor: .arrow)
     }

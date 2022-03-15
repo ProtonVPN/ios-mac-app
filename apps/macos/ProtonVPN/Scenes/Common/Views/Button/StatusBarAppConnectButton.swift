@@ -166,7 +166,7 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         context.drawPath(using: .fillStroke)
         
         context.setLineWidth(1)
-        context.setStrokeColor(NSColor.protonWhite().cgColor)
+        context.setStrokeColor(.cgColor(.icon))
         context.addPath(arrow)
         context.drawPath(using: .stroke)
     }

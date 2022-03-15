@@ -53,7 +53,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
         
         switch viewModel.icon {
         case .image(let image):
-            let darkImage = image.colored(NSColor.protonBlack())
+            let darkImage = image?.colored(.inverted)
             profileImage.image = darkImage
             
             profileImage.isHidden = false
@@ -73,7 +73,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
     }
     
     private func setupSeperator() {
-        seperator.fillColor = .protonGreySeperatorOnWhite()
+        seperator.fillColor = .color(.border, .weak)
     }
     
     private func setupButton() {
@@ -81,9 +81,9 @@ class StatusMenuProfileViewItem: NSTableRowView {
             guard let `self` = self else { return }
             
             if self.button.isHovered, let viewModel = self.viewModel, viewModel.canConnect {
-                self.backgroundColor = .protonGreySeperatorOnWhite()
+                self.backgroundColor = .color(.background, [.interactive, .weak, .hovered])
             } else {
-                self.backgroundColor = .protonWhite()
+                self.backgroundColor = .color(.background, .inverted)
             }
         }
     }
