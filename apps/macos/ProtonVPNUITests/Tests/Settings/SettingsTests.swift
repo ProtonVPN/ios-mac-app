@@ -38,6 +38,8 @@ class SettingsTests: ProtonVPNUITests {
             .verify.checkGeneralTabIsOpen()
             .connectionTabClick()
             .verify.checkConnectionTabIsOpen()
+            .advancedTabTabClick()
+            .verify.checkAdvancedTabIsOpen()
             .accountTabClick()
             .verify.checkAccountTabIsOpen()
             .closeSettings()

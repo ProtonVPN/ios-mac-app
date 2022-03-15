@@ -44,7 +44,7 @@ class MainRobot {
     }
     
     func quickConnectToAServer() -> SettingsRobot {
-        app.buttons[qcButton].click()
+        app.buttons[qcButton].forceClick()
         return SettingsRobot()
     }
     

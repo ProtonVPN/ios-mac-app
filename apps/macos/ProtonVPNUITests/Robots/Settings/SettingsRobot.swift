@@ -24,6 +24,7 @@ var window: XCUIElement!
 fileprivate let preferencesTitleId = "Preferences"
 fileprivate let generalTab = "General"
 fileprivate let connectionTab = "Connection"
+fileprivate let advancedTab = "Advanced"
 fileprivate let accountTab = "Account"
 fileprivate let modalTitle = "Allow LAN connections"
 fileprivate let autoConnectFastest = "  Fastest"
@@ -44,6 +45,12 @@ class SettingsRobot {
     @discardableResult
     func connectionTabClick() -> SettingsRobot {
         app.tabGroups[connectionTab].click()
+        return SettingsRobot()
+    }
+    
+    @discardableResult
+    func advancedTabTabClick() -> SettingsRobot {
+        app.tabGroups[advancedTab].click()
         return SettingsRobot()
     }
     
@@ -112,6 +119,12 @@ class SettingsRobot {
         @discardableResult
         func checkConnectionTabIsOpen() -> SettingsRobot {
             XCTAssertTrue(app.staticTexts["Auto Connect"].exists)
+            return SettingsRobot()
+        }
+        
+        @discardableResult
+        func checkAdvancedTabIsOpen() -> SettingsRobot {
+            XCTAssertTrue(app.staticTexts["Allow alternative routing"].exists)
             return SettingsRobot()
         }
         
