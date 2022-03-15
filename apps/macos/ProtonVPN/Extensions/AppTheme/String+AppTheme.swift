@@ -26,7 +26,20 @@ extension String {
             style.insert(.hovered)
         }
 
-        return self.attributed(withColor: .color(context, style), font: font, alignment: alignment, lineBreakMode: lineBreakMode)
+        let color: NSColor = .color(context, style)
+        let newString = NSMutableAttributedString(string: self)
+        let range = (self as NSString).range(of: self)
+        newString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+        newString.addAttribute(NSAttributedString.Key.font, value: font, range: range)
+        newString.addAttribute(NSAttributedString.Key.backgroundColor, value: NSColor.clear, range: range)
+
+        if let lineBreakMode = lineBreakMode {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineBreakMode = lineBreakMode
+            newString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        }
+        newString.setAlignment(alignment, range: range)
+        return newString
     }
 }
 

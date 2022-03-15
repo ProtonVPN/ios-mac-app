@@ -83,7 +83,7 @@ final class HeaderViewModel {
     }
     
     var loadLabelShort: NSAttributedString? {
-        return formLoadLabelShort()
+        return formLoadLabel(short: true)
     }
     
     var loadPercentage: Int? {
@@ -110,7 +110,7 @@ final class HeaderViewModel {
             name = LocalizedString.wireguard
         }
 
-        return name.attributed(withColor: NSColor.protonWhite(), fontSize: 12)
+        return name.styled(font: .themeFont(.small))
     }
 
     var isVisible: Bool = false {
@@ -189,8 +189,8 @@ final class HeaderViewModel {
     }
     
     private func formBitrateLabel(with bitrate: Bitrate) -> NSAttributedString {
-        let downloadString = " \(rateString(for: bitrate.download))  ".attributed(withColor: NSColor.protonWhite(), fontSize: 12)
-        let uploadString = " \(rateString(for: bitrate.upload))".attributed(withColor: NSColor.protonWhite(), fontSize: 12)
+        let downloadString = " \(rateString(for: bitrate.download))  ".styled(font: .themeFont(.small))
+        let uploadString = " \(rateString(for: bitrate.upload))".styled(font: .themeFont(.small))
         let downloadIcon = NSAttributedString.imageAttachment(named: "bitrate-download-arrow", width: 12, height: 12)!
         let uploadIcon = NSAttributedString.imageAttachment(named: "bitrate-upload-arrow", width: 12, height: 12)!
         
@@ -226,32 +226,32 @@ final class HeaderViewModel {
     
     private func formHeaderLabel() -> NSAttributedString {
         if !isConnected {
-            return LocalizedString.youAreNotConnected.attributed(withColor: .protonRed(), fontSize: 16, bold: true, alignment: .left)
+            return LocalizedString.youAreNotConnected.styled(.danger, font: .themeFont(.heading4, bold: true), alignment: .left)
         }
         
         guard let server = appStateManager.activeConnection()?.server else {
-            return LocalizedString.noDescriptionAvailable.attributed(withColor: .protonWhite(), fontSize: 16, bold: false, alignment: .left)
+            return LocalizedString.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
         let doubleArrows = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
         
         if server.isSecureCore {
             let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14)!
-            let entryCountry = (" " + server.entryCountry + " ").attributed(withColor: .protonGreen(), fontSize: 16, bold: false, alignment: .left)
-            let exitCountry = (" " + server.exitCountry + " ").attributed(withColor: .protonWhite(), fontSize: 16, bold: false, alignment: .left)
+            let entryCountry = (" " + server.entryCountry + " ").styled(.interactive, font: .themeFont(.heading4), alignment: .left)
+            let exitCountry = (" " + server.exitCountry + " ").styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
-            let country = (server.country + " ").attributed(withColor: .protonWhite(), fontSize: 16, bold: false, alignment: .left)
-            let serverName = server.name.attributed(withColor: .protonWhite(), fontSize: 16, bold: false, alignment: .left)
+            let country = (server.country + " ").styled(font: .themeFont(.heading4), alignment: .left)
+            let serverName = server.name.styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(country, serverName)
         }
     }
     
     private func formIpLabel() -> NSAttributedString {
         let ip = LocalizedString.ipValue(getCurrentIp() ?? LocalizedString.unavailable)
-        let attributedString = NSMutableAttributedString(attributedString: ip.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left))
+        let attributedString = NSMutableAttributedString(attributedString: ip.styled(alignment: .left))
         let ipRange = (ip as NSString).range(of: getCurrentIp() ?? LocalizedString.unavailable)
-        attributedString.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 14), range: ipRange)
+        attributedString.addAttribute(.font, value: NSFont.themeFont(bold: true), range: ipRange)
         return attributedString
     }
     
@@ -263,31 +263,21 @@ final class HeaderViewModel {
         }
     }
     
-    private func formLoadLabel() -> NSAttributedString? {
+    private func formLoadLabel(short: Bool = false) -> NSAttributedString? {
         guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
-        return ("\(server.load)% " + LocalizedString.load).attributed(withColor: .protonWhite(),
-                                                                  fontSize: 12,
-                                                                  alignment: .right)
+        let includeLoad = short ? "" : " \(LocalizedString.load)"
+        return ("\(server.load)%" + includeLoad).styled(font: .themeFont(.small), alignment: .right)
     }
-    
-    private func formLoadLabelShort() -> NSAttributedString? {
-        guard let server = appStateManager.activeConnection()?.server else {
-            return nil
-        }
-        return ("\(server.load)%").attributed(withColor: .protonWhite(),
-                                                                  fontSize: 12,
-                                                                  alignment: .right)
-    }
-    
+
     private func formProfileButtonLabel() -> NSAttributedString? {
         guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
         
         if let profile = profileManager.profile(withServer: server) {
-            let deleteText = ("  " + profile.name).attributed(withColor: .protonWhite(), fontSize: 13, alignment: .left, lineBreakMode: .byTruncatingTail)
+            let deleteText = ("  " + profile.name).styled(font: .themeFont(literalSize: 13), alignment: .left, lineBreakMode: .byTruncatingTail)
             let attributedString = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(profile.profileIcon.attributedAttachment(width: 10), deleteText))
             let range = (attributedString.string as NSString).range(of: attributedString.string)
             let paragraphStyle = NSMutableParagraphStyle()
@@ -296,7 +286,7 @@ final class HeaderViewModel {
             return attributedString
         } else {
             let saveIcon = NSAttributedString.imageAttachment(named: "save_profile")!
-            let saveText = (" " + LocalizedString.saveAsProfile).attributed(withColor: .protonGreen(), fontSize: 13, alignment: .left)
+            let saveText = (" " + LocalizedString.saveAsProfile).styled(.interactive, font: .themeFont(literalSize: 13), alignment: .left)
             return NSAttributedString.concatenate(saveIcon, saveText)
         }
     }

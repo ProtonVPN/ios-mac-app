@@ -69,7 +69,7 @@ class ExpandableContentPopupViewController: NSViewController {
         headerLbl.stringValue = viewModel.message
         footerLbl.stringValue = viewModel.extraInfo
         expandableLbl.stringValue = viewModel.hiddenInfo
-        expandableLbl.textColor = .protonGreyUnselectedWhite()
+        expandableLbl.textColor = .color(.text, .weak)
         contentView.wantsLayer = true
         footerView.wantsLayer = true
         contentView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor

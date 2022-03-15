@@ -73,10 +73,6 @@ class ConnectingOverlayViewModel {
     
     weak var delegate: OverlayViewModelDelegate?
     
-    private let fontSizeTitle = 20.0
-    private let fontSizeDescription = 12.0
-    private let fontSizeFirst = 12.0
-    
     init(factory: Factory, cancellation: @escaping () -> Void) {
         self.factory = factory
         self.appState = factory.makeAppStateManager().state
@@ -112,9 +108,9 @@ class ConnectingOverlayViewModel {
     var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: fontSizeFirst)
+            return LocalizedString.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return LocalizedString.initializingConnection.attributed(withColor: .protonWhite(), fontSize: fontSizeFirst)
+            return LocalizedString.initializingConnection.styled(font: .themeFont(.small))
         }
     }
     
@@ -152,10 +148,10 @@ class ConnectingOverlayViewModel {
             }
         }
         
-        let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
         }
         
         return attributedString
@@ -165,11 +161,11 @@ class ConnectingOverlayViewModel {
         if !isIkeWithKsEnabled {
             let boldString = LocalizedString.timedOut
             let string = LocalizedString.connectingVpn(boldString)
-            let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
+            let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.small)))
             
             if let stringRange = string.range(of: boldString) {
                 let range = NSRange(stringRange, in: string)
-                attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
+                attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
             }
             return attributedString
         }
@@ -178,14 +174,14 @@ class ConnectingOverlayViewModel {
         let decription = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
         let string = LocalizedString.connectingVpn(boldString) + decription
                 
-        let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.small)))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
         }
         if let descriptionRange = string.range(of: decription) {
             let range = NSRange(descriptionRange, in: string)
-            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.systemFont(ofSize: CGFloat(fontSizeDescription)), range: range)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.small), range: range)
         }
         
         return attributedString

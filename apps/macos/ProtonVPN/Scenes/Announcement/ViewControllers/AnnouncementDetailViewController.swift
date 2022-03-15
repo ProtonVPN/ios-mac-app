@@ -54,7 +54,7 @@ final class AnnouncementDetailViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        incentiveLabel.textColor = .protonWhite()
+        incentiveLabel.textColor = .color(.text)
         let parts = data.incentive.components(separatedBy: "%IncentivePrice%")
         if parts.count == 1 {
             incentiveLabel.stringValue = data.incentive
@@ -69,11 +69,11 @@ final class AnnouncementDetailViewController: NSViewController {
             incentiveLabel.attributedStringValue = attributed
         }
 
-        pillLabel.textColor = .protonWhite()
+        pillLabel.textColor = .color(.text)
         pillLabel.stringValue = data.pill
 
         pillView.wantsLayer = true
-        pillView.layer?.backgroundColor = NSColor.protonRed().cgColor
+        pillView.layer?.backgroundColor = .cgColor(.background, .danger)
 
         if let pictureUrl = URL(string: data.pictureURL) {
             pictureView.sd_setImage(with: pictureUrl, completed: nil)
@@ -85,16 +85,16 @@ final class AnnouncementDetailViewController: NSViewController {
             featuresStackView.addArrangedSubview(featureView)
         }
 
-        titleLabel.textColor = .protonWhite()
+        titleLabel.textColor = .color(.text)
         titleLabel.stringValue = data.title
 
-        featuresFooterLabel.textColor = .protonUnavailableGrey()
+        featuresFooterLabel.textColor = .color(.text, .weak)
         featuresFooterLabel.stringValue = data.featuresFooter
 
         actionButton.title = data.button.text
         actionButton.contentTintColor = NSColor.protonWhite()
 
-        pageFooterLabel.textColor = .protonUnavailableGrey()
+        pageFooterLabel.textColor = .color(.text, .weak)
         pageFooterLabel.stringValue = data.pageFooter
     }
 

@@ -46,8 +46,8 @@ class ReportBugViewController: NSViewController {
     @IBOutlet weak var attachFilesCheckBox: NSButton!
     @IBOutlet weak var attachFilesImage: NSImageView!
     
-    private var fieldFont = NSFont.systemFont(ofSize: 14)
-    private var borderlessButtonFont = NSFont.systemFont(ofSize: 14, weight: .bold)
+    private var fieldFont = NSFont.themeFont()
+    private var borderlessButtonFont = NSFont.themeFont(bold: true)
     private var logs: [URL] = []
     
     required init?(coder aDecoder: NSCoder) {
@@ -143,10 +143,10 @@ class ReportBugViewController: NSViewController {
     private func setupLoadingView() {
         loadingView.isHidden = true
         
-        let font = NSFont.systemFont(ofSize: 18)
+        let font = NSFont.themeFont(.heading2)
         let fontManager = NSFontManager()
         let italicizedFont = fontManager.convert(font, toHaveTrait: [.italicFontMask])
-        loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.attributed(withColor: .protonWhite(), font: italicizedFont)
+        loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.styled(font: italicizedFont)
     }
     
     private func presentLoadingScreen() {

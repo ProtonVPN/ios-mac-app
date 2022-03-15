@@ -42,9 +42,9 @@ final class UpsellViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLabel.attributedStringValue = LocalizedString.plusUpgradeTitle.attributed(withColor: .protonWhite(), fontSize: 48, bold: true, alignment: .left)
+        titleLabel.attributedStringValue = LocalizedString.plusUpgradeTitle.styled(font: .themeFont(.title, bold: true), alignment: .left)
         
-        let description = NSMutableAttributedString(attributedString: LocalizedString.plusUpgradeDescription.attributed(withColor: .protonWhite(), fontSize: 20))
+        let description = NSMutableAttributedString(attributedString: LocalizedString.plusUpgradeDescription.styled(font: .themeFont(.heading2)))
         let descriptionFullRange = (description.string as NSString).range(of: description.string)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .left
@@ -56,7 +56,7 @@ final class UpsellViewController: NSViewController {
         upgradeButton.title = LocalizedString.upgradeMyPlan
         skipButton.title = LocalizedString.maybeLater
 
-        moneyBackGuarantee.attributedStringValue = LocalizedString.moneyBackGuarantee.attributed(withColor: .protonWhite(), fontSize: 12)
+        moneyBackGuarantee.attributedStringValue = LocalizedString.moneyBackGuarantee.styled(font: .themeFont(.small))
     }
     
     override func viewWillAppear() {

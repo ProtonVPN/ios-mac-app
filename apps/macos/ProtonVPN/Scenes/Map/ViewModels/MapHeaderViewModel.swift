@@ -45,8 +45,8 @@ class MapHeaderViewModel {
     
     var description: NSAttributedString {
         let text = (isConnected ? LocalizedString.connected : LocalizedString.disconnected).uppercased()
-        let color: NSColor = isConnected ? .protonGreen() : .protonRed()
-        return text.attributed(withColor: color, fontSize: 19, bold: true)
+        let style: AppTheme.Style = isConnected ? .success : .danger
+        return text.styled(style, font: .themeFont(literalSize: 19, bold: true))
     }
     
     var isSecureCore: Bool {

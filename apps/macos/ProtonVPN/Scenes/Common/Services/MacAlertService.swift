@@ -290,8 +290,8 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: P2pForwardedAlert) {
         guard let p2pIcon = NSAttributedString.imageAttachment(named: "p2p-white", width: 15, height: 12) else { return }
         
-        let bodyP1 = (LocalizedString.p2pForwardedPopupBodyP1 + " ").attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
-        let bodyP2 = (" " + LocalizedString.p2pForwardedPopupBodyP2).attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
+        let bodyP1 = (LocalizedString.p2pForwardedPopupBodyP1 + " ").styled(alignment: .natural)
+        let bodyP2 = (" " + LocalizedString.p2pForwardedPopupBodyP2).styled(alignment: .natural)
         let body = NSAttributedString.concatenate(bodyP1, p2pIcon, bodyP2)
         
         alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))

@@ -29,18 +29,18 @@ struct ServerInfoViewModel {
     private let serverModel: ServerModel
     
     var name: NSAttributedString {
-        return "\(serverModel.country) \(serverModel.name)".attributed(withColor: NSColor.protonWhite(), fontSize: 13, alignment: .left)
+        return "\(serverModel.country) \(serverModel.name)".styled(font: .themeFont(literalSize: 13), alignment: .left)
     }
     
-    let loadLabel = LocalizedString.serverLoad.attributed(withColor: NSColor.protonGreyButtonBackground(), fontSize: 12, alignment: .left)
+    let loadLabel = LocalizedString.serverLoad.styled(.weak, font: .themeFont(.small), alignment: .left)
     var load: NSAttributedString {
-        return "\(serverModel.load)%".attributed(withColor: NSColor.protonWhite(), fontSize: 12, alignment: .left)
+        return "\(serverModel.load)%".styled(font: .themeFont(.small), alignment: .left)
     }
     var loadValue: Int {
         return serverModel.load
     }
     
-    let ipLabel = LocalizedString.serverIp.attributed(withColor: NSColor.protonGreyButtonBackground(), fontSize: 12, alignment: .left)
+    let ipLabel = LocalizedString.serverIp.styled(.weak, font: .themeFont(.small), alignment: .left)
     var ip: String {
         if serverModel.isFree || serverModel.isSecureCore {
             return LocalizedString.autoAssigned
@@ -131,13 +131,13 @@ struct ServerInfoViewModel {
     
     private func availableAttributes(for label: NSMutableAttributedString) {
         let range = (label.string as NSString).range(of: label.string)
-        label.addAttribute(.font, value: NSFont.systemFont(ofSize: 12), range: range)
-        label.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: range)
+        label.addAttribute(.font, value: NSFont.themeFont(.small), range: range)
+        label.addAttribute(.foregroundColor, value: NSColor.color(.text, [.interactive, .active]), range: range)
     }
     
     private func unavailableAttributes(for label: NSMutableAttributedString) {
         let range = (label.string as NSString).range(of: label.string)
         label.addAttribute(.strikethroughStyle, value: true, range: range)
-        label.addAttribute(.foregroundColor, value: NSColor.protonUnavailableGrey(), range: range)
+        label.addAttribute(.foregroundColor, value: NSColor.color(.text, .weak), range: range)
     }
 }

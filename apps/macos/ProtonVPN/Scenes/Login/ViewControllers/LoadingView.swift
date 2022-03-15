@@ -23,10 +23,10 @@ class LoadingView: NSView {
     @IBOutlet private weak var loadingSymbol: LoadingAnimationView!
     @IBOutlet private weak var loadingLabel: PVPNTextField! {
         didSet {
-            let font = NSFont.systemFont(ofSize: 18)
+            let font = NSFont.themeFont(.heading3)
             let fontManager = NSFontManager()
             let italicizedFont = fontManager.convert(font, toHaveTrait: [.italicFontMask])
-            loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.attributed(withColor: .protonWhite(), font: italicizedFont)
+            loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.styled(font: italicizedFont)
         }
     }
 

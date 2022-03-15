@@ -34,7 +34,7 @@ class WhiteHoverLinkButton: NSButton {
     override func mouseEntered(with event: NSEvent) {
         if isEnabled {
             var attributes = attributedTitle.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: attributedTitle.length))
-            attributes[NSAttributedString.Key.foregroundColor] = NSColor.protonWhite()
+            attributes[NSAttributedString.Key.foregroundColor] = NSColor.color(.text)
             attributedTitle = NSAttributedString(string: attributedTitle.string, attributes: attributes)
             addCursorRect(bounds, cursor: .pointingHand)
         }

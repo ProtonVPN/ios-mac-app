@@ -56,6 +56,9 @@ class NeagentHelpPopUpViewController: NSViewController {
         bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
         
         let fontSize: CGFloat = 21
+        let lightFont = NSFont.systemFont(ofSize: fontSize, weight: .light)
+        let semiboldFont = NSFont.systemFont(ofSize: fontSize, weight: .semibold)
+        let interactiveColor: NSColor = .color(.text, [.interactive, .active])
         
         let text = LocalizedString.neagentDescription(
                           LocalizedString.neagentPassword,
@@ -63,7 +66,7 @@ class NeagentHelpPopUpViewController: NSViewController {
                           LocalizedString.neagentFirstStep,
                           LocalizedString.neagentAlwaysAllow,
                           LocalizedString.neagentSecondStep)
-        let description: NSMutableAttributedString = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), font: NSFont.systemFont(ofSize: fontSize, weight: .light)))
+        let description: NSMutableAttributedString = NSMutableAttributedString(attributedString: text.styled(font: lightFont))
         
         let fullRange = (text as NSString).range(of: text)
         let passwordRange = (text as NSString).range(of: LocalizedString.neagentPassword)
@@ -77,13 +80,13 @@ class NeagentHelpPopUpViewController: NSViewController {
         paragraphStyle.lineSpacing = 10
         
         description.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
-        description.addAttribute(.font, value: NSFont.systemFont(ofSize: fontSize, weight: .semibold), range: passwordRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: passwordStepRange)
-        description.addAttribute(.font, value: NSFont.systemFont(ofSize: fontSize, weight: .semibold), range: passwordStepRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: firstStepRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: alwaysAllowRange)
-        description.addAttribute(.font, value: NSFont.systemFont(ofSize: fontSize, weight: .semibold), range: alwaysAllowRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: secondStepRange)
+        description.addAttribute(.font, value: semiboldFont, range: passwordRange)
+        description.addAttribute(.foregroundColor, value: interactiveColor, range: passwordStepRange)
+        description.addAttribute(.font, value: semiboldFont, range: passwordStepRange)
+        description.addAttribute(.foregroundColor, value: interactiveColor, range: firstStepRange)
+        description.addAttribute(.foregroundColor, value: interactiveColor, range: alwaysAllowRange)
+        description.addAttribute(.font, value: semiboldFont, range: alwaysAllowRange)
+        description.addAttribute(.foregroundColor, value: interactiveColor, range: secondStepRange)
         
         descriptionLabel.attributedStringValue = description
     }

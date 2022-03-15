@@ -45,7 +45,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         if adjustedName.count > ProfileItemViewModel.maxCharCount {
             adjustedName = adjustedName[0..<ProfileItemViewModel.maxCharCount] + "..."
         }
-        return adjustedName.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left, lineBreakMode: .byTruncatingTail)
+        return adjustedName.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
     var hideDescription: Bool {
@@ -102,6 +102,6 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         } else {
             description = ""
         }
-        return description.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .right)
+        return description.styled(.weak, font: .themeFont(bold: true), alignment: .right)
     }
 }

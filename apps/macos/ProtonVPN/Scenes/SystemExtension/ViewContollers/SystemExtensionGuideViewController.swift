@@ -104,8 +104,8 @@ final class SystemExtensionGuideViewController: NSViewController {
             }
             let step = steps[index]
             titles[index].stringValue = step.title
-            titles[index].textColor = NSColor.protonWhite()
-            (numbers[index].subviews.first as? NSTextField)?.textColor = NSColor.protonWhite()
+            titles[index].textColor = .color(.text)
+            (numbers[index].subviews.first as? NSTextField)?.textColor = .color(.text)
             numbers[index].wantsLayer = true
             numbers[index].layer?.backgroundColor = NSColor.protonLightGrey().cgColor
             numbers[index].layer?.cornerRadius = numbers[index].bounds.width / 2

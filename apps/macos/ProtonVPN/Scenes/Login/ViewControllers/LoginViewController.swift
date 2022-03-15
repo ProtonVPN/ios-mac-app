@@ -122,7 +122,6 @@ final class LoginViewController: NSViewController {
         logoImage.imageScaling = .scaleProportionallyUpOrDown
         setupLoadingView()
         setupOnboardingView()
-        setupTwoFactorView()
         setupCallbacks()
 
         viewModel.updateAvailableDomains()
@@ -136,7 +135,8 @@ final class LoginViewController: NSViewController {
     
     // MARK: - Private functions
     private func setupLoadingView() {
-        reachabilityCheckIndicator.set(tintColor: NSColor.protonGreen())
+        loadingView.isHidden = true
+        reachabilityCheckIndicator.set(tintColor: .color(.icon, .interactive))
     }
 
     private func setupTwoFactorView() {
@@ -164,30 +164,24 @@ final class LoginViewController: NSViewController {
     }
     
     private func setupUsernameSection() {
-        usernameTextField.textColor = .protonWhite()
-        usernameTextField.font = .systemFont(ofSize: 14)
-        usernameTextField.placeholderAttributedString = LocalizedString.username.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
+        usernameTextField.style(placeholder: LocalizedString.username)
+
         usernameTextField.usesSingleLineMode = true
         usernameTextField.tag = TextField.username.rawValue
         usernameTextField.delegate = self
         usernameTextField.focusDelegate = self
-        
         usernameTextField.setAccessibilityIdentifier("UsernameTextField")
-        
-        usernameHorizontalLine.fillColor = .protonLightGrey()
     }
     
     private func setupPasswordSection() {
-        passwordSecureTextField.textColor = .protonWhite()
-        passwordSecureTextField.font = .systemFont(ofSize: 14)
+        passwordSecureTextField.style(placeholder: LocalizedString.password)
         passwordSecureTextField.usesSingleLineMode = true
         passwordSecureTextField.isHidden = false
         passwordSecureTextField.tag = TextField.passwordSecure.rawValue
         passwordSecureTextField.delegate = self
         passwordSecureTextField.focusDelegate = self
-        
-        passwordTextField.textColor = .protonWhite()
-        passwordTextField.font = .systemFont(ofSize: 14)
+
+        passwordTextField.style(placeholder: LocalizedString.password)
         passwordTextField.usesSingleLineMode = true
         passwordTextField.isHidden = true
         passwordTextField.tag = TextField.password.rawValue
@@ -195,10 +189,7 @@ final class LoginViewController: NSViewController {
         passwordTextField.focusDelegate = self
         
         passwordSecureTextField.setAccessibilityIdentifier("PasswordTextField")
-        
-        passwordSecureTextField.placeholderAttributedString = LocalizedString.password.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
-        passwordTextField.placeholderAttributedString = LocalizedString.password.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
-        
+
         passwordRevealButton.setButtonType(.toggle)
         passwordRevealButton.image = NSImage(named: NSImage.Name("eye-show"))
         passwordRevealButton.alternateImage = NSImage(named: NSImage.Name("eye-hide"))
@@ -208,11 +199,11 @@ final class LoginViewController: NSViewController {
         passwordRevealButton.action = #selector(togglePasswordField)
         passwordRevealButton.setAccessibilityLabel(LocalizedString.show)
         
-        passwordHorizontalLine.fillColor = .protonLightGrey()
+        passwordHorizontalLine.fillColor = .color(.border, .weak)
     }
     
     private func setupSwitchSection() {
-        startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
+        startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.styled(alignment: .left)
         startOnBootButton.setAccessibilityLabel(LocalizedString.startOnBoot)
         
         startOnBootButton.drawsUnderOverlay = false
@@ -248,16 +239,15 @@ final class LoginViewController: NSViewController {
                 self?.reachabilityCheckIndicator.stopAnimation(nil)
             }
         }
-        viewModel.twoFactorRequired = { [weak self] in self?.presentTwoFactorScreen(withErrorDescription: nil) }
     }
     
-    private func attemptLogin() {
+    fileprivate func attemptLogin() {
         viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
     }
 
     private func presentTwoFactorScreen(withErrorDescription description: String?) {
         if let description = description {
-            warningLabel.attributedStringValue = description.attributed(withColor: .protonRed(), fontSize: 14)
+            warningLabel.attributedStringValue = description.styled(.danger, font: .themeFont(.small))
             warningLabel.isHidden = false
         }
 
@@ -274,6 +264,7 @@ final class LoginViewController: NSViewController {
         onboardingView.isHidden = true
         twoFactorView.isHidden = true
 
+        loadingView.isHidden = false
         loadingView.animate(true)
     }
     
@@ -282,23 +273,21 @@ final class LoginViewController: NSViewController {
     }
     
     private func handleLoginFailureWithSupport(_ errorMessage: String?) {
-        if viewModel.isTwoFactorStep {
-            presentTwoFactorScreen(withErrorDescription: errorMessage)
-        } else {
-            presentOnboardingScreen(withErrorDescription: errorMessage)
-        }
+        presentOnboardingScreen(withErrorDescription: errorMessage)
         helpLink.isHidden = false
     }
     
     private func presentOnboardingScreen(withErrorDescription description: String?) {
         if let description = description {
-            warningLabel.attributedStringValue = description.attributed(withColor: .protonRed(), fontSize: 14)
+            warningLabel.attributedStringValue = description.styled(.danger)
             warningLabel.isHidden = false
         }
 
         _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false
         twoFactorView.isHidden = true
+
+        loadingView.isHidden = true
         loadingView.animate(false)
     }
     
@@ -340,17 +329,16 @@ final class LoginViewController: NSViewController {
 }
 
 extension LoginViewController: NSTextFieldDelegate {
+    
     func controlTextDidChange(_ obj: Notification) {
         loginButton.isEnabled = !usernameTextField.stringValue.isEmpty && !passwordEntry.isEmpty
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-
         if commandSelector == #selector(NSResponder.insertNewline(_:)) && loginButton.isEnabled {
             attemptLogin()
             return true
         }
-
         return false
     }
 }
@@ -370,11 +358,11 @@ extension LoginViewController: TextFieldFocusDelegate {
     func didReceiveFocus(_ textField: NSTextField) {
         switch textField.tag {
         case TextField.username.rawValue:
-            usernameHorizontalLine.fillColor = .protonGreen()
-            passwordHorizontalLine.fillColor = .protonLightGrey()
+            usernameHorizontalLine.fillColor = .color(.border, [.interactive, .active])
+            passwordHorizontalLine.fillColor = .color(.border, .weak)
         case TextField.password.rawValue, TextField.passwordSecure.rawValue:
-            usernameHorizontalLine.fillColor = .protonLightGrey()
-            passwordHorizontalLine.fillColor = .protonGreen()
+            usernameHorizontalLine.fillColor = .color(.border, .weak)
+            passwordHorizontalLine.fillColor = .color(.border, [.interactive, .active])
         default:
             break
         }
@@ -382,6 +370,7 @@ extension LoginViewController: TextFieldFocusDelegate {
 }
 
 extension LoginViewController: SwitchButtonDelegate {
+    
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
         case Switch.startOnBoot.rawValue:
@@ -393,6 +382,7 @@ extension LoginViewController: SwitchButtonDelegate {
 }
 
 extension LoginViewController: NSPopoverDelegate {
+    
     func popoverDidClose(_ notification: Notification) {
         helpPopover = nil
     }

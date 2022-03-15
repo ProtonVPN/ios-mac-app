@@ -28,7 +28,7 @@ final class TwoFactorView: NSView {
     @IBOutlet private weak var twoFactorTextField: TextFieldWithFocus!
     @IBOutlet private weak var twoFactorHorizontalLine: NSBox!
     @IBOutlet private weak var twoFactorButton: LoginButton!
-    @IBOutlet private weak var twoFactorModeButton: GreenActionButton!
+    @IBOutlet private weak var twoFactorModeButton: InteractiveActionButton!
     @IBOutlet private weak var twoFactorTitle: NSTextField!
     @IBOutlet private weak var backButton: NSButton!
 
@@ -47,7 +47,7 @@ final class TwoFactorView: NSView {
         twoFactorTextField.delegate = self
         twoFactorTextField.textColor = .protonWhite()
         twoFactorTextField.font = .systemFont(ofSize: 14)
-        twoFactorTextField.placeholderAttributedString = LocalizedString.twoFactorCode.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
+        twoFactorTextField.placeholderAttributedString = LocalizedString.twoFactorCode.styled(.weak, font: .themeFont(.small), alignment: .left)
         twoFactorTextField.usesSingleLineMode = true
 
         twoFactorButton.isEnabled = false

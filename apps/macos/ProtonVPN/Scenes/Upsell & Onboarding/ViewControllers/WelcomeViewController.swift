@@ -52,9 +52,9 @@ class WelcomeViewController: NSViewController {
             mapView.image = mapImage.colored(.protonMapBackgroundGrey())
         }
         
-        titleLabel.attributedStringValue = LocalizedString.welcomeTitle.attributed(withColor: .protonWhite(), fontSize: 48, bold: true)
+        titleLabel.attributedStringValue = LocalizedString.welcomeTitle.styled(font: .themeFont(.title, bold: true))
         
-        let description = NSMutableAttributedString(attributedString: LocalizedString.welcomeDescription.attributed(withColor: .protonWhite(), fontSize: 20))
+        let description = NSMutableAttributedString(attributedString: LocalizedString.welcomeDescription.styled(font: .themeFont(.heading2)))
         let fullRange = (description.string as NSString).range(of: description.string)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center

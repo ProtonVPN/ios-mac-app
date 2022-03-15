@@ -129,7 +129,7 @@ class StatusMenuViewModel {
     
     // MARK: - Login section
     var loginDescription: NSAttributedString {
-        return LocalizedString.openAppToLogIn.attributed(withColor: .protonWhite(), fontSize: 16)
+        return LocalizedString.openAppToLogIn.styled(font: .themeFont(.heading4))
     }
     
     // MARK: - Header section
@@ -143,15 +143,15 @@ class StatusMenuViewModel {
     
     // MARK: - Secure core
     var secureCoreLabel: NSAttributedString {
-        return LocalizedString.secureCore.attributed(withColor: .protonWhite(), fontSize: 14)
+        return LocalizedString.secureCore.styled()
     }
     
     var upgradeForSecureCoreLabel: NSAttributedString {
-        return LocalizedString.upgradeForSecureCore.attributed(withColor: .protonWhite(), fontSize: 14, lineBreakMode: .byWordWrapping)
+        return LocalizedString.upgradeForSecureCore.styled(lineBreakMode: .byWordWrapping)
     }
     
     var upgradeToPlusTitle: NSAttributedString {
-        return LocalizedString.upgradeToPlus.attributed(withColor: .protonGreen(), fontSize: 14)
+        return LocalizedString.upgradeToPlus.styled([.interactive, .active])
     }
     
     // MARK: - Quick action section - Outputs
@@ -391,7 +391,7 @@ class StatusMenuViewModel {
     
     private func formIpAddress() -> NSAttributedString {
         let ip = LocalizedString.ipValue(getCurrentIp() ?? LocalizedString.unavailable)
-        let attributedString = NSMutableAttributedString(attributedString: ip.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left))
+        let attributedString = NSMutableAttributedString(attributedString: ip.styled(font: .themeFont(.small), alignment: .left))
         let ipRange = (ip as NSString).range(of: getCurrentIp() ?? LocalizedString.unavailable)
         attributedString.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 12), range: ipRange)
         return attributedString
@@ -407,35 +407,35 @@ class StatusMenuViewModel {
     
     private func formConnectionLabel() -> NSAttributedString {
         if !isConnected {
-            return LocalizedString.notConnected.attributed(withColor: .protonRed(), fontSize: 14)
+            return LocalizedString.notConnected.styled(.danger)
         }
         
         guard let server = appStateManager.activeConnection()?.server else {
-            return LocalizedString.noDescriptionAvailable.attributed(withColor: .protonWhite(), fontSize: 14)
+            return LocalizedString.noDescriptionAvailable.styled()
         }
         
         if server.isSecureCore {
             let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14) ?? NSAttributedString()
-            let entryCountry = (" " + server.entryCountry + " ").attributed(withColor: .protonGreen(), fontSize: 14)
+            let entryCountry = (" " + server.entryCountry + " ").styled([.interactive, .active])
             let doubleArrows = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
-            let exitCountry = (" " + server.exitCountry + " ").attributed(withColor: .protonWhite(), fontSize: 14)
+            let exitCountry = (" " + server.exitCountry + " ").styled()
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
             let flag = NSAttributedString.imageAttachment(image: NSImage.flag(countryCode: server.countryCode), width: 18, height: 18) ?? NSAttributedString()
             let country = NSMutableAttributedString(
                 string: "  " + server.country + " ",
                 attributes: [
-                    .font: NSFont.systemFont(ofSize: 14, weight: .bold),
+                    .font: NSFont.themeFont(bold: true),
                     .baselineOffset: 4,
-                    .foregroundColor: NSColor.protonWhite()
+                    .foregroundColor: NSColor.color(.text)
                 ]
             )
             let serverName = NSMutableAttributedString(
                 string: server.name,
                 attributes: [
-                    .font: NSFont.systemFont(ofSize: 14),
+                    .font: NSFont.themeFont(),
                     .baselineOffset: 4,
-                    .foregroundColor: NSColor.protonWhite()
+                    .foregroundColor: NSColor.color(.text)
                 ]
             )
             return NSAttributedString.concatenate(flag, country, serverName)

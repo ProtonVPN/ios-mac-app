@@ -46,8 +46,8 @@ final class TroubleshootingRowItem: NSTableRowView {
             titleLabel.stringValue = item.title
             let length = item.description.string.count
             let value = NSMutableAttributedString(attributedString: item.description)
-            value.addAttribute(NSAttributedString.Key.font, value: NSFont.systemFont(ofSize: 12), range: NSRange(location: 0, length: length))
-            value.addAttribute(NSAttributedString.Key.foregroundColor, value: NSColor.protonWhite(), range: NSRange(location: 0, length: length))
+            value.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.small), range: NSRange(location: 0, length: length))
+            value.addAttribute(NSAttributedString.Key.foregroundColor, value: NSColor.color(.text), range: NSRange(location: 0, length: length))
             textView.textStorage?.setAttributedString(value)
 
             guard let actionable = item as? ActionableTroubleshootItem else {
@@ -71,7 +71,7 @@ final class TroubleshootingRowItem: NSTableRowView {
     // MARK: Setup
 
     private func setup() {
-        titleLabel.textColor = .protonWhite()
+        titleLabel.textColor = .color(.text)
         titleLabel.font = NSFont.boldSystemFont(ofSize: 17)
 
         textView.linkTextAttributes = [

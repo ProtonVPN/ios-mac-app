@@ -36,7 +36,8 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     }
     
     var name: NSAttributedString {
-        return profile.name.attributed(withColor: canConnect ? .protonBlack() : .protonGreyUnselectedWhite(), fontSize: 11, alignment: .left, lineBreakMode: .byTruncatingTail)
+        let style: AppTheme.Style = canConnect ? .inverted : .weak
+        return profile.name.styled(style, font: .themeFont(literalSize: 11), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
     var secondaryDescription: NSAttributedString {
@@ -63,6 +64,6 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
             description = ""
         }
         
-        return description.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 11, alignment: .right)
+        return description.styled(.weak, font: .themeFont(literalSize: 11), alignment: .right)
     }
 }

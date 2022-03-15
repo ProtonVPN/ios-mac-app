@@ -53,7 +53,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
         
         switch viewModel.icon {
         case .image(let image):
-            let darkImage = image?.colored(.inverted)
+            let darkImage = image.colored(.inverted)
             profileImage.image = darkImage
             
             profileImage.isHidden = false

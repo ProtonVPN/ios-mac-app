@@ -66,10 +66,9 @@ final class SubuserMacAlertViewController: NSViewController {
         assignConnectionsButton.isEnabled = true
         loginButton.isEnabled = true
         
-        titleView.textColor = .protonWhite()
-        description1Label.textColor = .protonWhite()
-        description2Label.textColor = .protonFontLightGrey()
-                
+        titleView.textColor = .color(.text)
+        description1Label.textColor = .color(.text)
+        description2Label.textColor = .color(.text, .weak)
     }
     
     // MARK: - Actions
