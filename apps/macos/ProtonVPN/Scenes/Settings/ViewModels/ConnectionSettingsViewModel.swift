@@ -327,19 +327,19 @@ final class ConnectionSettingsViewModel {
         
         switch vpnProtocol {
         case .smartProtocol:
-            return LocalizedString.smartTitle.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.smartTitle.styled(font: .themeFont(.heading4), alignment: .left)
         case .vpnProtocol(.openVpn(.tcp)):
             transport = " (" + LocalizedString.tcp + ")"
         case .vpnProtocol(.openVpn(.udp)):
             transport = " (" + LocalizedString.udp + ")"
         case .vpnProtocol(.wireGuard):
-            return LocalizedString.wireguard.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.wireguard.styled(font: .themeFont(.heading4), alignment: .left)
         case .vpnProtocol(.ike):
-            return LocalizedString.ikev2.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.ikev2.styled(font: .themeFont(.heading4), alignment: .left)
         default:
-            return LocalizedString.notConnected.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.notConnected.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        return (LocalizedString.openvpn + transport).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+        return (LocalizedString.openvpn + transport).styled(font: .themeFont(.heading4), alignment: .left)
     }
     
     // MARK: - Values
@@ -356,8 +356,8 @@ final class ConnectionSettingsViewModel {
     }
     
     private func concatenated(imageString: NSAttributedString, with text: String, enabled: Bool) -> NSAttributedString {
-        let color: NSColor = enabled ? .dropDownWhiteColor() : .dropDownWhiteColor().withAlphaComponent(0.5)
-        let nameAttributedString = ("  " + text).attributed(withColor: color, fontSize: 16)
+        let style: AppTheme.Style = enabled ? .normal : [.transparent, .disabled]
+        let nameAttributedString = ("  " + text).styled(style, font: .themeFont(.heading4))
         let attributedString = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(imageString, nameAttributedString))
         let range = (attributedString.string as NSString).range(of: attributedString.string)
         let paragraphStyle = NSMutableParagraphStyle()

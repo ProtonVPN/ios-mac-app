@@ -30,16 +30,16 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
             return super.secondString
         default:
             return (LocalizedString.reestablishVpnConnection + "\n\n" + LocalizedString.ipWillNotBeExposed)
-            .attributed(withColor: .protonWhite(), fontSize: 20)
+                .styled(font: .themeFont(.heading2))
         }
     }
     
     override var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: 12)
+            return LocalizedString.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return LocalizedString.applyingSettings.attributed(withColor: .white, fontSize: 15)
+            return LocalizedString.applyingSettings.styled(font: .themeFont(literalSize: 15))
         }
     }
 }

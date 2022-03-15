@@ -81,18 +81,18 @@ class AboutViewController: NSViewController {
     private func setupComponents() {
         
         let versionString = NSMutableAttributedString()
-        versionString.append(currentVersion.attributed(withColor: .protonWhite(), fontSize: 14, bold: true, alignment: .left))
-        versionString.append(" (\(currentBuild))".attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .left))
+        versionString.append(currentVersion.styled(font: .themeFont(bold: true), alignment: .left))
+        versionString.append(" (\(currentBuild))".styled(.weak, font: .themeFont(bold: true), alignment: .left))
                 
-        versionTitleLabel.attributedStringValue = LocalizedString.versionCurrent.attributed(withColor: .protonWhite(), fontSize: 14, bold: false, alignment: .left)
+        versionTitleLabel.attributedStringValue = LocalizedString.versionCurrent.styled(alignment: .left)
         versionLabel.attributedStringValue = versionString
                             
-        dateTitleLabel.attributedStringValue = LocalizedString.releaseDate.attributed(withColor: .protonWhite(), fontSize: 14, bold: false, alignment: .left)
-        dateLabel.attributedStringValue = currentVersionReleaseDate.attributed(withColor: .protonWhite(), fontSize: 14, bold: true, alignment: .left)
+        dateTitleLabel.attributedStringValue = LocalizedString.releaseDate.styled(alignment: .left)
+        dateLabel.attributedStringValue = currentVersionReleaseDate.styled(font: .themeFont(bold: true), alignment: .left)
         
-        acknowledgementsButton.attributedTitle = LocalizedString.acknowledgements.attributed(withColor: .protonGreen(), fontSize: 14, bold: true, alignment: .left)
+        acknowledgementsButton.attributedTitle = LocalizedString.acknowledgements.styled([.interactive, .active], font: .themeFont(bold: true), alignment: .left)
         
-        changelogLabel.attributedStringValue = LocalizedString.changelog.attributed(withColor: .protonWhite(), fontSize: 18, bold: true, alignment: .left)
+        changelogLabel.attributedStringValue = LocalizedString.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
         webView.loadHTMLString(changelogHtml, baseURL: nil)
     }
         

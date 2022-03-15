@@ -47,7 +47,7 @@ final class AnnouncementFeatureView: NSView {
         addSubview(contentView)
         contentView.pinTo(view: self)
 
-        titleLabel.textColor = .protonWhite()
+        titleLabel.textColor = .color(.text)
         titleLabel.stringValue = model.text
 
         if let url = URL(string: model.iconURL) {

@@ -30,7 +30,7 @@ final class NET2WarningPopupViewController: WarningPopupViewController {
         warningScrollViewContainer.isHidden = false
         continueButton.title = viewModel.confirmTitle
         cancelButton.title = viewModel.cancelTitle
-        cancelButton.style = .hoveredRed
+        cancelButton.style = .destructive
         setupLink()
     }
 

@@ -82,7 +82,7 @@ class LoadIcon: NSView {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = NSTextAlignment.center
         let attributes = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: fontSize, weight: .bold),
-                          NSAttributedString.Key.foregroundColor: NSColor.protonWhite(),
+                          NSAttributedString.Key.foregroundColor: NSColor.color(.text),
                           NSAttributedString.Key.paragraphStyle: paragraphStyle,
                           NSAttributedString.Key.baselineOffset: NSNumber(value: -0.4)]
         attrString.setAttributes(attributes, range: textRange)

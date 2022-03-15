@@ -65,7 +65,7 @@ class ProfilesTabBarViewController: NSViewController {
     }
     
     private func setupComponents() {
-        headerLabel.attributedStringValue = LocalizedString.profiles.attributed(withColor: .protonWhite(), fontSize: 36, alignment: .left)
+        headerLabel.attributedStringValue = LocalizedString.profiles.styled(font: .themeFont(.heading1), alignment: .left)
         
         overviewButton.title = LocalizedString.overview
         overviewButton.target = self

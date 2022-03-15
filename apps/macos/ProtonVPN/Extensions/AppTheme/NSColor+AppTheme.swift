@@ -172,12 +172,18 @@ extension AppTheme.Context {
     }
 
     func color(style: AppTheme.Style) -> NSColor {
-        guard !style.contains(.transparent) else {
+        guard style != .transparent else {
             return .clear
         }
 
-        let color = appearanceAwareColor(style: style)
-        return color.using(appearance: darkAqua)
+        var color: NSColor = appearanceAwareColor(style: style)
+            .using(appearance: darkAqua)
+
+        if self == .text && style.contains([.transparent, .disabled]) {
+            color = color.withAlphaComponent(0.5)
+        }
+
+        return color
     }
 }
 

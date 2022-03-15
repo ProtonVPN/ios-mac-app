@@ -53,10 +53,10 @@ class StatusMenuCountryItemViewModel {
         let label: NSAttributedString
         if type == .secureCore {
             let secureCoreIcon = NSAttributedString.imageAttachment(named: "double-arrow-right-green", width: 9, height: 9)!
-            let code = (" " + countryGroup.0.countryCode).attributed(withColor: .protonWhite(), fontSize: 11)
+            let code = (" " + countryGroup.0.countryCode).styled(font: .themeFont(literalSize: 11))
             label = NSAttributedString.concatenate(secureCoreIcon, code)
         } else {
-            label = countryGroup.0.countryCode.attributed(withColor: .protonWhite(), fontSize: 11)
+            label = countryGroup.0.countryCode.styled(font: .themeFont(literalSize: 11))
         }
         return label
     }

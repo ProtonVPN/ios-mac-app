@@ -26,7 +26,7 @@ class PVPNHyperlinkTextField: HoverDetectionButton {
     
     override var title: String {
         didSet {
-            attributedTitle = title.attributed(withColor: .protonWhite(), fontSize: 10)
+            attributedTitle = title.styled(font: .themeFont(.tiny))
         }
     }
     
@@ -42,7 +42,7 @@ class PVPNHyperlinkTextField: HoverDetectionButton {
         
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         
-        context.setStrokeColor(NSColor.protonWhite().cgColor)
+        context.setStrokeColor(.cgColor(.icon))
         context.move(to: CGPoint(x: bounds.origin.x + (bounds.size.width - attributedTitle.size().width) / 2, y: bounds.origin.y + bounds.size.height - 0.5))
         context.addLine(to: CGPoint(x: bounds.origin.x + attributedTitle.size().width + (bounds.size.width - attributedTitle.size().width) / 2, y: bounds.origin.y + bounds.size.height - 0.5))
         context.drawPath(using: .stroke)

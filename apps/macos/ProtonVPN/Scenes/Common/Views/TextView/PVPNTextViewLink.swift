@@ -25,8 +25,7 @@ import Cocoa
 class PVPNTextViewLink: NSTextView {
 
     var lineSpacing: CGFloat = 14
-    var textViewFont = NSFont.systemFont(ofSize: 14)
-    var textViewTextColor = NSColor.protonWhite()
+    var textViewFont = NSFont.themeFont()
     var defaultStyle: NSMutableParagraphStyle
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
@@ -46,13 +45,13 @@ class PVPNTextViewLink: NSTextView {
         let linkRange = attributedOriginalText.mutableString.range(of: hyperLink)
         let fullRange = NSRange(location: 0, length: attributedOriginalText.length)
         attributedOriginalText.addAttribute(NSAttributedString.Key.font, value: textViewFont, range: fullRange)
-        attributedOriginalText.addAttribute(NSAttributedString.Key.foregroundColor, value: textViewTextColor, range: fullRange)
+        attributedOriginalText.addAttribute(NSAttributedString.Key.foregroundColor, value: NSColor.color(.text), range: fullRange)
         attributedOriginalText.addAttribute(NSAttributedString.Key.link, value: urlString, range: linkRange)
         attributedOriginalText.addAttribute(NSAttributedString.Key.paragraphStyle, value: defaultStyle, range: fullRange)
 
         self.isAutomaticLinkDetectionEnabled = true
         self.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.protonGreen(),
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, .interactive),
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
             NSAttributedString.Key.cursor: NSCursor.pointingHand
         ]
@@ -69,7 +68,7 @@ class PVPNTextViewLink: NSTextView {
         
         guard let text = textStorage?.string, !text.isEmpty else { return }
         let titleAttributes = [NSAttributedString.Key.font: self.textViewFont,
-                               NSAttributedString.Key.foregroundColor: self.textColor ?? textViewTextColor,
+                               NSAttributedString.Key.foregroundColor: self.textColor ?? .color(.text),
                                NSAttributedString.Key.paragraphStyle: defaultStyle]
 
         let titleString = NSAttributedString(string: text, attributes: titleAttributes)

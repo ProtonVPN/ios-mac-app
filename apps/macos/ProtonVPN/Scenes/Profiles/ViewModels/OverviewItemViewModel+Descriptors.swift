@@ -26,7 +26,7 @@ import vpncore
 extension OverviewItemViewModel {
     
     internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
-        return profile.name.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left, lineBreakMode: .byTruncatingTail)
+        return profile.name.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
     internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
@@ -42,24 +42,24 @@ extension OverviewItemViewModel {
     
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .system else {
-            return LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
         let description: NSAttributedString
         switch profile.serverOffering {
         case .fastest:
-            description = LocalizedString.fastestAvailableServer.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            description = LocalizedString.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
         case .random:
-            description = LocalizedString.differentServerEachTime.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            description = LocalizedString.differentServerEachTime.styled(font: .themeFont(.heading4), alignment: .left)
         case .custom:
-            description = LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            description = LocalizedString.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         return description
     }
     
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
-            return LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
         let description: NSAttributedString
@@ -76,16 +76,16 @@ extension OverviewItemViewModel {
     
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
         guard let countryCode = countryCode else {
-            return description.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return description.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
-        let profileDescription = ("  " + description).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let profileDescription = ("  " + description).styled(font: .themeFont(.heading4), alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
-        let attributedCountryName = (countryName + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let attributedCountryName = (countryName + "  ").styled(font: .themeFont(.heading4), alignment: .left)
         let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
         
         let description: NSAttributedString
-        let buffer = "  ".attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let buffer = "  ".styled(font: .themeFont(.heading4), alignment: .left)
         switch serverType {
         case .standard:
             description = NSAttributedString.concatenate(attributedCountryName, doubleArrow, profileDescription)
@@ -108,12 +108,12 @@ extension OverviewItemViewModel {
         
         if serverModel.isSecureCore {
             let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14)!
-            let entryCountry = ("  " + serverModel.entryCountry + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-            let exitCountry = ("  " + serverModel.exitCountry + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let entryCountry = ("  " + serverModel.entryCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
+            let exitCountry = ("  " + serverModel.exitCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrow, exitCountry)
         } else {
-            let countryName = (serverModel.country + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-            let serverName = ("  " + serverModel.name).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let countryName = (serverModel.country + "  ").styled(font: .themeFont(.heading4), alignment: .left)
+            let serverName = ("  " + serverModel.name).styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(countryName, doubleArrow, serverName)
         }
     }

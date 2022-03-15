@@ -38,7 +38,7 @@ class TourNumberViewController: NSViewController {
     func display(page: Int) {
         precondition(1...5 ~= page) // pages run 1-5 inclusive
         
-        numberLabel.attributedStringValue = "\(page)".attributed(withColor: .protonWhite(), fontSize: 14)
+        numberLabel.attributedStringValue = "\(page)".styled()
     }
     
     func animate() {

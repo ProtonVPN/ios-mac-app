@@ -72,14 +72,14 @@ class TourViewController: NSViewController {
     func display(page: Int) {
         precondition(1...titles.count ~= page)
         
-        pageNumberLabel.attributedStringValue = "\(page)".attributed(withColor: .protonWhite(), fontSize: 14)
+        pageNumberLabel.attributedStringValue = "\(page)".styled()
         
         previousButton.isHidden = page == 1 // hide back button on first page
         nextButton.title = page == titles.count ? LocalizedString.endTour : LocalizedString.nextTip
         nextButton.showArrow = page != titles.count
         
-        titleLabel.attributedStringValue = titles[page - 1].attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
-        descriptionLabel.attributedStringValue = descriptions[page - 1].attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
+        titleLabel.attributedStringValue = titles[page - 1].styled(alignment: .left)
+        descriptionLabel.attributedStringValue = descriptions[page - 1].styled(font: .themeFont(.small), alignment: .left)
         
         let quickSettingStep = 4
         

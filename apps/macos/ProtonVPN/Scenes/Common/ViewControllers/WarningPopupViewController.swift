@@ -65,7 +65,7 @@ class WarningPopupViewController: NSViewController {
         bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
         
         warningImage.image = viewModel.image
-        warningDescriptionLabel.attributedStringValue = viewModel.description.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
+        warningDescriptionLabel.attributedStringValue = viewModel.description.styled(alignment: .natural)
     }
     
     private func setupFooterSection() {

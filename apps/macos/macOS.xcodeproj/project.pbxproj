@@ -208,7 +208,6 @@
 		E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31814224D23A6004D8171 /* InAppLinkManager.swift */; };
 		E1B31817224D2D78004D8171 /* SettingsTabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */; };
 		E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */; };
-		E1B5F67F21B8295700B558B0 /* CocoaString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F67E21B8295600B558B0 /* CocoaString+Extension.swift */; };
 		E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */; };
 		E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */; };
 		E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */; };
@@ -834,7 +833,6 @@
 		E1B31814224D23A6004D8171 /* InAppLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppLinkManager.swift; sourceTree = "<group>"; };
 		E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTabBarViewModel.swift; sourceTree = "<group>"; };
 		E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageView.swift; sourceTree = "<group>"; };
-		E1B5F67E21B8295600B558B0 /* CocoaString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CocoaString+Extension.swift"; sourceTree = "<group>"; };
 		E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingViewController.swift; sourceTree = "<group>"; };
 		E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectingOverlay.xib; sourceTree = "<group>"; };
 		E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingWindowController.swift; sourceTree = "<group>"; };
@@ -2445,7 +2443,6 @@
 				EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */,
 				EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */,
 				EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */,
-				E1B5F67E21B8295600B558B0 /* CocoaString+Extension.swift */,
 				42CF073A256FD1F60042CD47 /* NSFont+Extension.swift */,
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
@@ -3639,7 +3636,6 @@
 				E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */,
 				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,
 				D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */,
-				E1B5F67F21B8295700B558B0 /* CocoaString+Extension.swift in Sources */,
 				EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */,
 				EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */,
 				E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */,

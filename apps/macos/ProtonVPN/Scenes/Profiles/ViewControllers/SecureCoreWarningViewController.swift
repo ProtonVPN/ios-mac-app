@@ -58,7 +58,7 @@ class SecureCoreWarningViewController: NSViewController {
     private func setupComponents() {
         descriptionLabel.usesSingleLineMode = false
         descriptionLabel.cell?.lineBreakMode = .byWordWrapping
-        descriptionLabel.attributedStringValue = LocalizedString.planDoesNotIncludeSecureCore.attributed(withColor: .protonWhite(), fontSize: 16, bold: true)
+        descriptionLabel.attributedStringValue = LocalizedString.planDoesNotIncludeSecureCore.styled(font: .themeFont(.heading4, bold: true))
         
         upgradeButton.title = LocalizedString.upgradeRequired
         upgradeButton.target = self
