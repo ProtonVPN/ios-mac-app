@@ -69,7 +69,10 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "ProfileTests/testQuickConnectToAServerViaUnavailableProfile()">
+                  Identifier = "QuickSettingsTests/testSecureCoreAndNetshieldAreNotAvailableForFreeUser()">
+               </Test>
+               <Test
+                  Identifier = "SearchTests/testSearchCountry()">
                </Test>
             </SkippedTests>
          </TestableReference>
