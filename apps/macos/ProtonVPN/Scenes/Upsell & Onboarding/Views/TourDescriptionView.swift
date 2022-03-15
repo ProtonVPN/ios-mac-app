@@ -23,10 +23,9 @@
 import Cocoa
 
 class TourDescriptionView: NSView {
-
     override func viewWillDraw() {
         wantsLayer = true
-        layer?.backgroundColor = NSColor.protonGreen().cgColor
+        layer?.backgroundColor = .cgColor(.background, .interactive)
         
         layer?.cornerRadius = 16
     }

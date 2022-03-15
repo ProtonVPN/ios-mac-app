@@ -29,7 +29,7 @@ extension NSWindow {
         title = modalTitle
         titlebarAppearsTransparent = true
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        backgroundColor = .protonGreyShade()
+        backgroundColor = .color(.background, .weak)
     }
     
     func applyWarningAppearance(withTitle warningTitle: String) {
@@ -38,7 +38,7 @@ extension NSWindow {
         title = warningTitle
         titlebarAppearsTransparent = true
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        backgroundColor = .protonGreyShade()
+        backgroundColor = .color(.background, .weak)
     }
     
     // For windows without any borders such as the welcome window
@@ -48,14 +48,14 @@ extension NSWindow {
         titlebarAppearsTransparent = true
         titleVisibility = .hidden
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        backgroundColor = .protonGreyShade()
+        backgroundColor = .color(.background, .weak)
     }
     
     func applyLoginAppearance() {
         titlebarAppearsTransparent = true
         title = "Proton VPN"
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        backgroundColor = .protonGreyShade()
+        backgroundColor = .color(.background, .weak)
     }
 
     func applySidebarAppearance() {

@@ -62,7 +62,7 @@ class SCUpgradePopupViewController: NSViewController {
     
     private func setupBodyView() {
         bodyView.wantsLayer = true
-        bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         upgradeIcon.image = #imageLiteral(resourceName: "temp")
         
@@ -80,7 +80,7 @@ class SCUpgradePopupViewController: NSViewController {
     
     private func setupFooterView() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
         
         cancelButton.title = LocalizedString.cancel
         cancelButton.fontSize = .paragraph

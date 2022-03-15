@@ -47,6 +47,6 @@ class AboutWindowController: WindowController {
         window.title = LocalizedString.about
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        window.backgroundColor = .protonGreyShade()
+        window.backgroundColor = .color(.background, .weak)
     }
 }

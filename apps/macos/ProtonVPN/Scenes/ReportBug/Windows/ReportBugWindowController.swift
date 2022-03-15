@@ -46,7 +46,7 @@ class ReportBugWindowController: WindowController {
         window.title = LocalizedString.reportBug
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        window.backgroundColor = .protonGreyShade()
+        window.backgroundColor = .color(.background, .weak)
     }
     
 }

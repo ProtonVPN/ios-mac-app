@@ -81,7 +81,7 @@ class PopUpViewController: NSViewController {
     
     private func setupBodySection() {
         bodyView.wantsLayer = true
-        bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         popUpIcon.image = #imageLiteral(resourceName: "temp")
         if !viewModel.showIcon {
@@ -92,7 +92,7 @@ class PopUpViewController: NSViewController {
         // HACK: Because the text view is inside a scroll view, it doesn't correctly. To address this, the text view is aligned to the text field, which forces the resizing of the dialog.
         popUpDescription.attributedStringValue = viewModel.attributedDescription
         
-        popUpDescriptionTextView.backgroundColor = .protonGreyShade()
+        popUpDescriptionTextView.backgroundColor = .color(.background, .weak)
         popUpDescriptionTextView.delegate = viewModel
         
         popUpDescriptionTextView.textStorage?.setAttributedString(viewModel.attributedDescription)
@@ -100,7 +100,7 @@ class PopUpViewController: NSViewController {
     
     private func setupFooterSection() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
         
         if let cancelTitle = viewModel.cancelButtonTitle {
             cancelButton.title = cancelTitle

@@ -75,7 +75,7 @@ class AboutViewController: NSViewController {
     
     private func setupView() {
         backgroundView.wantsLayer = true
-        backgroundView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        backgroundView.layer?.backgroundColor = .cgColor(.background, .strong)
     }
     
     private func setupComponents() {
