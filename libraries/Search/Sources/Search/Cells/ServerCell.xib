@@ -36,7 +36,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qUd-gM-Kds" userLabel="props stack">
-                        <rect key="frame" x="105" y="22.5" width="141" height="16"/>
+                        <rect key="frame" x="161.5" y="22.5" width="141" height="16"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_p2p" translatesAutoresizingMaskIntoConstraints="NO" id="1mc-2c-HuB">
                                 <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
@@ -111,10 +111,10 @@
                         </constraints>
                     </stackView>
                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r99-ST-JOy" userLabel="SecureView">
-                        <rect key="frame" x="0.0" y="0.0" width="262" height="61"/>
+                        <rect key="frame" x="0.0" y="0.0" width="161.5" height="61"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uyK-oI-0bQ">
-                                <rect key="frame" x="16" y="0.0" width="246" height="61"/>
+                                <rect key="frame" x="16" y="0.0" width="145.5" height="61"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-l7-NBG" userLabel="flag Icon">
                                         <rect key="frame" x="0.0" y="20" width="32" height="21"/>
@@ -137,8 +137,8 @@
                                             <constraint firstAttribute="height" constant="21.329999999999998" id="gbM-Ey-5gF"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCK-ld-bJa">
-                                        <rect key="frame" x="104" y="20.5" width="142" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="500" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCK-ld-bJa">
+                                        <rect key="frame" x="104" y="20.5" width="41.5" height="20.5"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -156,13 +156,13 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8b2-dP-uUu" userLabel="row-button">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
+                        <rect key="frame" x="0.0" y="0.0" width="376.5" height="61"/>
                         <connections>
                             <action selector="rowTapped:forEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Iph-7Q-KGK"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vk-vj-5zc" userLabel="connect-button">
-                        <rect key="frame" x="262" y="10.5" width="42" height="40"/>
+                        <rect key="frame" x="318.5" y="10.5" width="42" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="A7w-Be-LUi"/>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="cmR-Io-MDp"/>
@@ -182,7 +182,7 @@
                 <constraints>
                     <constraint firstItem="qUd-gM-Kds" firstAttribute="centerY" secondItem="2Vk-vj-5zc" secondAttribute="centerY" id="1LP-Rv-Juq"/>
                     <constraint firstItem="r99-ST-JOy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="32F-vz-XBp"/>
-                    <constraint firstItem="2Vk-vj-5zc" firstAttribute="leading" secondItem="r99-ST-JOy" secondAttribute="trailing" id="3NS-pQ-C46"/>
+                    <constraint firstItem="qUd-gM-Kds" firstAttribute="leading" secondItem="r99-ST-JOy" secondAttribute="trailing" id="3NS-pQ-C46"/>
                     <constraint firstAttribute="bottom" secondItem="8b2-dP-uUu" secondAttribute="bottom" id="Mj4-Ba-COD"/>
                     <constraint firstItem="8b2-dP-uUu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="MzO-Fo-XTs"/>
                     <constraint firstItem="r99-ST-JOy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="S8x-SA-pl5"/>
