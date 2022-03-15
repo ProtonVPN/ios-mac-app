@@ -23,14 +23,13 @@
 import Cocoa
 
 class ClearCancellationButton: HoverDetectionButton {
-
     override var title: String {
         didSet {
             configureTitle()
         }
     }
     
-    var fontSize: Double = 16 {
+    var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
@@ -41,13 +40,30 @@ class ClearCancellationButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.borderColor = NSColor.protonWhite().cgColor
+        layer?.borderColor = self.cgColor(.border)
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = isHovered ? NSColor.protonWhite().cgColor : NSColor.clear.cgColor
-        attributedTitle = title.attributed(withColor: isHovered ? .protonGreyShade() : .protonWhite(), fontSize: fontSize)
+        layer?.backgroundColor = self.cgColor(.background)
+        attributedTitle = self.style(title, font: .themeFont(fontSize))
     }
     
     private func configureTitle() {
-        attributedTitle = title.attributed(withColor: isHovered ? .protonGreyShade() : .protonWhite(), fontSize: fontSize)
+        attributedTitle = self.style(title, font: .themeFont(fontSize))
+    }
+}
+
+extension ClearCancellationButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            return isHovered ? .inverted : .transparent
+        case .border:
+            return .inverted
+        case .text:
+            return isHovered ? .weak : .normal
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

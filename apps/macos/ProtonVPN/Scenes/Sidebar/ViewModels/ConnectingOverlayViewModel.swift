@@ -217,22 +217,22 @@ class ConnectingOverlayViewModel {
     }
     
     private var cancelButton: ButtonInfo {
-        return (LocalizedString.cancel, .main, { self.cancelConnecting() })
+        return (LocalizedString.cancel, .normal, { self.cancelConnecting() })
     }
     
     private var doneButton: ButtonInfo {
-        return (LocalizedString.done, .main, { self.cancelConnecting() })
+        return (LocalizedString.done, .normal, { self.cancelConnecting() })
     }
     
     private var retryButton: ButtonInfo {
-        return (LocalizedString.tryAgain, .main, {
+        return (LocalizedString.tryAgain, .normal, {
             log.info("Connection restart requested by pressing Retry button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }
     
     private var retryWithoutKSButton: ButtonInfo {
-        return (LocalizedString.tryAgainWithoutKillswitch, .colorGreen, {
+        return (LocalizedString.tryAgainWithoutKillswitch, .interactive, {
             self.disableKillSwitch()
             log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
@@ -240,7 +240,7 @@ class ConnectingOverlayViewModel {
     }
     
     private var retryWithOpenVpnButton: ButtonInfo {
-        return (LocalizedString.timeoutKsIkeSwitchProtocol, .colorGreen, {
+        return (LocalizedString.timeoutKsIkeSwitchProtocol, .interactive, {
             log.info("Reconnecting with OpenVPN as suggested to user", category: .connectionConnect)
             self.reconnectWithOvpn()
         })

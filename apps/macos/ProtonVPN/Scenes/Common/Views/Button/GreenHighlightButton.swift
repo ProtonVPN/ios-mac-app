@@ -23,7 +23,6 @@
 import Cocoa
 
 class GreenHighlightButton: HoverDetectionButton {
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
@@ -39,7 +38,8 @@ class GreenHighlightButton: HoverDetectionButton {
     private func configureView() {
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedTitle)
         let fullRange = (mutableAttributedString.string as NSString).range(of: mutableAttributedString.string)
-        mutableAttributedString.addAttribute(.foregroundColor, value: isHovered ? NSColor.protonGreenHighlight() : NSColor.protonGreen(), range: fullRange)
+        let hover: AppTheme.Style = isHovered ? .hovered : []
+        mutableAttributedString.addAttribute(.foregroundColor, value: NSColor.color(.text, .success + hover), range: fullRange)
         attributedTitle = mutableAttributedString
     }
 }

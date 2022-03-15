@@ -49,7 +49,7 @@ class ColoredLoadButton: NSButton {
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
+        context.setStrokeColor(self.cgColor(.icon))
         context.drawPath(using: .stroke)
         
         // outer circle segment
@@ -58,13 +58,7 @@ class ColoredLoadButton: NSButton {
         let loadPortion = load > 15 ? load : 15
         let endAngle: CGFloat = (CGFloat(loadPortion) / 100) * (-2 * .pi) + .pi / 2
         context.setLineWidth(2.0)
-        if load < 76 {
-            context.setStrokeColor(NSColor.loadGreen().cgColor)
-        } else if load < 91 {
-            context.setStrokeColor(NSColor.loadYellow().cgColor)
-        } else {
-            context.setStrokeColor(NSColor.loadRed().cgColor)
-        }
+        context.setStrokeColor(self.cgColor(.border))
         context.addArc(center: CGPoint(x: (ocb.width / 2) + ocb.origin.x, y: (ocb.height / 2) + ocb.origin.y),
                        radius: ocb.width / 2,
                        startAngle: startAngle,
@@ -78,7 +72,8 @@ class ColoredLoadButton: NSButton {
         let desiredSize = CGSize(width: infoSize.width / (infoSize.height / desiredHeight), height: desiredHeight)
         var infoRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
                               size: desiredSize)
-        if let image = infoIconImage.colored(NSColor.protonGreyOutOfFocus()).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
+
+        if let image = self.colorImage(infoIconImage).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
             context.draw(image, in: infoRect)
         }
     }
@@ -92,5 +87,27 @@ class ColoredLoadButton: NSButton {
     override func accessibilityChildren() -> [Any]? {
         return nil
     }
-    
+}
+
+extension ColoredLoadButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .icon:
+            return .weak
+        case .border:
+            guard let load = load else { return .normal }
+            
+            if load < 76 {
+                return .success
+            } else if load < 91 {
+                return .warning
+            } else {
+                return .danger
+            }
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
+    }
 }

@@ -48,8 +48,25 @@ class LoginButton: HoverDetectionButton {
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
         layer?.borderWidth = 2
-        layer?.borderColor = isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonLightGrey().cgColor
-        layer?.backgroundColor = isEnabled ? NSColor.protonGreen().cgColor : NSColor.clear.cgColor
-        attributedTitle = (displayTitle ?? LocalizedString.login).attributed(withColor: isEnabled ? .protonWhite() : .protonGreyButtonBackground(), fontSize: 16)
+        layer?.borderColor = self.cgColor(.border)
+        layer?.backgroundColor = self.cgColor(.background)
+        attributedTitle = self.style((displayTitle ?? LocalizedString.login), font: .themeFont(.heading4))
+    }
+}
+
+extension LoginButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .background:
+            return isEnabled ? .interactive : .transparent
+        case .border:
+            return isEnabled ? .interactive : .weak
+        case .text:
+            return isEnabled ? .normal : .weak
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

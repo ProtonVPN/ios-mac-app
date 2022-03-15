@@ -27,7 +27,6 @@ private let textOffset: CGFloat = 16
 private let arrowWidth: CGFloat = 4.5
 
 class TourNextButton: HoverDetectionButton {
-    
     var showArrow = false {
         didSet {
             if let tourCell = cell as? TourNextButtonCell {
@@ -38,7 +37,7 @@ class TourNextButton: HoverDetectionButton {
     
     override var title: String {
         didSet {
-            attributedTitle = title.attributed(withColor: .protonGreen(), fontSize: 14)
+            attributedTitle = self.style(title)
         }
     }
     
@@ -47,7 +46,7 @@ class TourNextButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = isHovered ? NSColor.protonHoveredWhite().cgColor : NSColor.protonWhite().cgColor
+        layer?.backgroundColor = self.cgColor(.background)
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -67,7 +66,7 @@ class TourNextButton: HoverDetectionButton {
             
             context.setLineWidth(2.5)
             context.setLineCap(.round)
-            context.setStrokeColor(NSColor.protonGreen().cgColor)
+            context.setStrokeColor(self.cgColor(.icon))
             context.addPath(arrow)
             context.drawPath(using: .stroke)
         }
@@ -85,12 +84,26 @@ class TourNextButton: HoverDetectionButton {
 }
 
 class TourNextButtonCell: NSButtonCell {
-    
     var showArrow = false
     
     override func titleRect(forBounds rect: NSRect) -> NSRect {
         // center text and move it left to allow the arrow icon to be part of the central alignment of the button's content if shown
         let r = CGRect(origin: rect.origin, size: CGSize(width: rect.width - (showArrow ? (textOffset - arrowWidth) : 0), height: rect.height * 0.95))
         return r
+    }
+}
+
+extension TourNextButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .border, .text, .icon:
+            return .interactive
+        case .background:
+            return isHovered ? [.interactive, .weak, .hovered] : .inverted
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }
