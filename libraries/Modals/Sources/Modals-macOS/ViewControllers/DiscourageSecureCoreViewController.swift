@@ -22,7 +22,6 @@ import Modals
 final class DiscourageSecureCoreViewController: NSViewController {
 
     @IBOutlet private weak var dontShowAgainLabel: NSTextField!
-    @IBOutlet private weak var dontShowAgainButton: NSButton!
     @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var learnMoreButton: NSButton!
@@ -60,7 +59,6 @@ final class DiscourageSecureCoreViewController: NSViewController {
     func setupSubviews() {
         titleLabel.textColor = colors.text
         descriptionLabel.textColor = colors.text
-        dontShowAgainButton.image = feature.checkboxEmptyImage
     }
 
     func setupFeatures() {
@@ -79,12 +77,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
         onLearnMore?()
     }
 
-    @IBAction private func dontShowAgainSwitchToggled(_ sender: NSButton) {
-        if sender.state == .on {
-            dontShowAgainButton.image = feature.checkboxFillImage
-        } else {
-            dontShowAgainButton.image = feature.checkboxEmptyImage
-        }
+    @IBAction func dontShowAgainSwitchToggled(_ sender: NSButton) {
         onDontShowAgain?(sender.state == .on)
     }
 

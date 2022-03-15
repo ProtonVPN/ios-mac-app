@@ -10,7 +10,6 @@
             <connections>
                 <outlet property="activateButton" destination="r6q-92-W65" id="lSK-Rj-ZBO"/>
                 <outlet property="descriptionLabel" destination="kiz-Sr-4Mb" id="GKX-zp-rkg"/>
-                <outlet property="dontShowAgainButton" destination="N7m-h1-qKE" id="7n8-lx-iYO"/>
                 <outlet property="dontShowAgainLabel" destination="PHS-OS-Pm3" id="577-tZ-wDS"/>
                 <outlet property="imageView" destination="2Qq-Ps-ign" id="Udv-Vg-Ywv"/>
                 <outlet property="learnMoreButton" destination="vIq-89-3UX" id="P80-2w-brh"/>
@@ -21,7 +20,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="zdk-aa-GL6">
-            <rect key="frame" x="0.0" y="0.0" width="520" height="583"/>
+            <rect key="frame" x="0.0" y="0.0" width="520" height="579"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="r6q-92-W65" customClass="UpsellPrimaryActionButton" customModule="Modals_macOS">
@@ -43,7 +42,7 @@
                     </connections>
                 </button>
                 <imageView autoresizesSubviews="NO" horizontalHuggingPriority="1000" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Qq-Ps-ign">
-                    <rect key="frame" x="60" y="335" width="400" height="184"/>
+                    <rect key="frame" x="60" y="331" width="400" height="184"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="184" id="2eD-yq-Zqg"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="350" id="KYe-Nc-bEO"/>
@@ -51,7 +50,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="top" imageScaling="proportionallyDown" image="PlusCountries" id="qMQ-KR-g2Q"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FYX-5b-Jwv">
-                    <rect key="frame" x="58" y="299" width="404" height="28"/>
+                    <rect key="frame" x="58" y="295" width="404" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="400" id="AuW-9U-CNt"/>
                     </constraints>
@@ -62,7 +61,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kiz-Sr-4Mb">
-                    <rect key="frame" x="58" y="234" width="404" height="57"/>
+                    <rect key="frame" x="58" y="230" width="404" height="57"/>
                     <textFieldCell key="cell" alignment="center" id="lq5-VK-6cy">
                         <font key="font" metaFont="system" size="16"/>
                         <string key="title">Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.</string>
@@ -81,24 +80,20 @@
                     </connections>
                 </button>
                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gf-Qc-5w6">
-                    <rect key="frame" x="194" y="182" width="133" height="20"/>
+                    <rect key="frame" x="197" y="182" width="127" height="16"/>
                     <subviews>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="N7m-h1-qKE">
-                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="20" id="vej-ir-ajd"/>
-                                <constraint firstAttribute="height" constant="20" id="z36-dN-Z5R"/>
-                            </constraints>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="checkbox" imagePosition="overlaps" alignment="right" imageScaling="proportionallyUpOrDown" inset="2" id="PlS-2a-zju">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o4w-kZ-Ts7">
+                            <rect key="frame" x="-2" y="-1" width="18" height="18"/>
+                            <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Um0-vm-f8y">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <action selector="dontShowAgainSwitchToggled:" target="-2" id="C74-Hf-26i"/>
+                                <action selector="dontShowAgainSwitchToggled:" target="-2" id="B9e-Tu-9Ia"/>
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PHS-OS-Pm3">
-                            <rect key="frame" x="26" y="2" width="109" height="16"/>
+                            <rect key="frame" x="20" y="0.0" width="109" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Don't show again" id="2Dc-Jh-jh3">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -144,6 +139,5 @@
     </objects>
     <resources>
         <image name="PlusCountries" width="328" height="184"/>
-        <image name="checkbox" width="95" height="95"/>
     </resources>
 </document>
