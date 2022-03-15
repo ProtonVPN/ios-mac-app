@@ -62,7 +62,7 @@ class WarningPopupViewController: NSViewController {
     private func setupBodySection() {
         warningScrollViewContainer.isHidden = true
         bodyView.wantsLayer = true
-        bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         warningImage.image = viewModel.image
         warningDescriptionLabel.attributedStringValue = viewModel.description.styled(alignment: .natural)
@@ -70,7 +70,7 @@ class WarningPopupViewController: NSViewController {
     
     private func setupFooterSection() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         cancelButton.title = LocalizedString.cancel
         cancelButton.fontSize = .paragraph

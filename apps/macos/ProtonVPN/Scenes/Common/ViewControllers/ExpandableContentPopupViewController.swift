@@ -72,8 +72,8 @@ class ExpandableContentPopupViewController: NSViewController {
         expandableLbl.textColor = .color(.text, .weak)
         contentView.wantsLayer = true
         footerView.wantsLayer = true
-        contentView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        contentView.layer?.backgroundColor = .cgColor(.background, .strong)
+        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
         displayMoreBtn.title = LocalizedString.moreInfo + "  "
         displayMoreBtn.target = self
         displayMoreBtn.action = #selector(expandBtnTap)

@@ -93,7 +93,7 @@ class OverviewItemView: NSTableRowView {
         setupEditButton(action: accessibilityEditAction)
         setupDeleteButton(action: accessibilityDeleteAction)
 
-        rowSeparator.fillColor = NSColor.protonLightGrey()
+        rowSeparator.fillColor = .color(.border, .weak)
     }
 
     private func setupConnectButton(action: NSAccessibilityCustomAction) {

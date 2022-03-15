@@ -47,6 +47,6 @@ class AcknowledgementsWindowController: WindowController {
         window.title = LocalizedString.acknowledgements
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        window.backgroundColor = .protonGreyShade()
+        window.backgroundColor = .color(.background, .weak)
     }
 }

@@ -31,6 +31,6 @@ class TourNumberRingView: NSView {
         
         layer?.cornerRadius = bounds.width / 2
         layer?.borderWidth = 1
-        layer?.borderColor = NSColor.protonWhite().cgColor
+        layer?.borderColor = .cgColor(.border, .inverted)
     }
 }

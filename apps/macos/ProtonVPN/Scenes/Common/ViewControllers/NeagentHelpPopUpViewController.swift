@@ -53,7 +53,7 @@ class NeagentHelpPopUpViewController: NSViewController {
     
     private func setupBody() {
         bodyView.wantsLayer = true
-        bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         let fontSize: CGFloat = 21
         let lightFont = NSFont.systemFont(ofSize: fontSize, weight: .light)
@@ -93,7 +93,7 @@ class NeagentHelpPopUpViewController: NSViewController {
     
     private func setupFooter() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
         
         confirmationButton.title = LocalizedString.gotIt
         confirmationButton.fontSize = .paragraph

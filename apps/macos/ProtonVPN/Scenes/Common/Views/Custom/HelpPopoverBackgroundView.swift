@@ -30,7 +30,7 @@ class HelpPopoverBackgroundView: NSView {
         }
         
         superview.wantsLayer = true
-        superview.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        superview.layer?.backgroundColor = .cgColor(.background, .weak)
     }
     
 }

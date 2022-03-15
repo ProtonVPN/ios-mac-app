@@ -64,7 +64,7 @@ class ProfileItemView: NSView {
         setupConnectButton()
         setupAvailability()
         
-        rowSeparator.fillColor = .protonLightGrey()
+        rowSeparator.fillColor = .color(.border, .weak)
     }
     
     // MARK: - Private functions
