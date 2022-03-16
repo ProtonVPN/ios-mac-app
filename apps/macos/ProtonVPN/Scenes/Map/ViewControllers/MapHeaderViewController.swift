@@ -64,8 +64,8 @@ class MapHeaderViewController: NSViewController {
     }
     
     private func setupPersistentView() {
-        connectImage.image = NSImage(named: NSImage.Name("home"))
-        
+        connectImage.image = AppTheme.Icon.houseFilled.colored()
+
         connectImage.setAccessibilityIdentifier("ConnectImage")
     }
     

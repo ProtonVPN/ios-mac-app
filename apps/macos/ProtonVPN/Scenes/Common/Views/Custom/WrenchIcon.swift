@@ -24,7 +24,7 @@ import Cocoa
 
 class WrenchIcon: NSImageView {
 
-    private let wrenchIcon = #imageLiteral(resourceName: "wrench")
+    private let wrenchIcon = AppTheme.Icon.wrench
 
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }

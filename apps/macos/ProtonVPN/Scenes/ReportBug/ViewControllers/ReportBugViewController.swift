@@ -104,7 +104,7 @@ class ReportBugViewController: NSViewController {
         horizontalLineEmail.wantsLayer = true
         horizontalLineEmail.layer?.backgroundColor = .cgColor(.border, .weak)
         sendButton.actionType = .confirmative
-        attachFilesImage.image = NSImage(named: NSImage.Name("info_green"))
+        attachFilesImage.image = AppTheme.Icon.infoCircleFilled.colored()
         attachFilesImage.toolTip = LocalizedString.reportDescription
     }
     

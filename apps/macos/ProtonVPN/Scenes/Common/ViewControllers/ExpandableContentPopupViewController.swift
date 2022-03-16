@@ -65,7 +65,7 @@ class ExpandableContentPopupViewController: NSViewController {
         actionBtn.title = viewModel.actionButtonTitle
         actionBtn.action = #selector(didPressActionBtn)
         actionBtn.target = self
-        popupImage.image = #imageLiteral(resourceName: "temp")
+        popupImage.image = AppTheme.Icon.vpnMainTransparent
         headerLbl.stringValue = viewModel.message
         footerLbl.stringValue = viewModel.extraInfo
         expandableLbl.stringValue = viewModel.hiddenInfo
@@ -97,7 +97,7 @@ class ExpandableContentPopupViewController: NSViewController {
         expanded = !expanded
         
         displayMoreBtn.title = (expanded ? LocalizedString.lessInfo : LocalizedString.moreInfo) + "  "
-        displayMoreBtn.image = expanded ? #imageLiteral(resourceName: "arrow-up") : #imageLiteral(resourceName: "arrow-down")
+        displayMoreBtn.image = expanded ? AppTheme.Icon.arrowUp : AppTheme.Icon.arrowDown
         self.hiddenContentHeightConstraint.constant = self.expanded ? self.closedHeight : self.expandedHeight
         self.expandableLbl.alphaValue = self.expanded ? 0 : 1
         NSAnimationContext.runAnimationGroup({ context in

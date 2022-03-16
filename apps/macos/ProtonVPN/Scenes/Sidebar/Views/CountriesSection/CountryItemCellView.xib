@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -39,7 +39,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="8" id="95k-gU-bxg"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="double-arrow-right-green" id="5r7-mq-aLa"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-chevrons-right" id="5r7-mq-aLa"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OM7-Qo-nl4">
                             <rect key="frame" x="26" y="0.0" width="46" height="20"/>
@@ -76,7 +76,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="O3i-iy-4TX"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_smart-routing" id="GZA-Rn-b5l"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-globe" id="GZA-Rn-b5l"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a2P-N6-2pz">
@@ -84,7 +84,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="zNW-Y8-kqN"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_p2p" id="vft-r3-oAX"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-arrows-switch" id="vft-r3-oAX"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AUT-fa-vc3">
@@ -92,7 +92,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="cJx-te-1aR"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_tor" id="VEd-mZ-v1n"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-brand-tor" id="VEd-mZ-v1n"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7wh-uQ-7Lp">
@@ -112,7 +112,7 @@
                                 <constraint firstAttribute="width" constant="32" id="UMX-gq-tXs"/>
                                 <constraint firstAttribute="height" constant="32" id="z9M-ZG-Ajk"/>
                             </constraints>
-                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_section_arrow_down" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="VJn-fu-Oc4">
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-chevron-down" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="VJn-fu-Oc4">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -126,7 +126,7 @@
                                 <constraint firstAttribute="height" constant="32" id="4Si-Nw-rXE"/>
                                 <constraint firstAttribute="width" constant="32" id="r5r-fO-uYO"/>
                             </constraints>
-                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_maintenance" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="h9x-P2-PO1">
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-wrench" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="h9x-P2-PO1">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -218,11 +218,11 @@
     </objects>
     <resources>
         <image name="ad-plain" width="84" height="49"/>
-        <image name="double-arrow-right-green" width="60" height="60"/>
-        <image name="ic_maintenance" width="16" height="16"/>
-        <image name="ic_p2p" width="16" height="16"/>
-        <image name="ic_section_arrow_down" width="14" height="8"/>
-        <image name="ic_smart-routing" width="16" height="16"/>
-        <image name="ic_tor" width="16" height="16"/>
+        <image name="ic-arrows-switch" width="24" height="24"/>
+        <image name="ic-brand-tor" width="24" height="24"/>
+        <image name="ic-chevron-down" width="24" height="24"/>
+        <image name="ic-chevrons-right" width="24" height="24"/>
+        <image name="ic-globe" width="24" height="24"/>
+        <image name="ic-wrench" width="24" height="24"/>
     </resources>
 </document>

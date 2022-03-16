@@ -52,6 +52,15 @@ final class ServerItemCellView: NSView {
         maintenanceIV.wantsLayer = true
         maintenanceIV.layer?.cornerRadius = 10
         maintenanceIV.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
+
+        maintenanceIV.image = AppTheme.Icon.wrench
+        loadIcon.image = AppTheme.Icon.infoCircle
+        streamingIV.image = AppTheme.Icon.play
+        torIV.image = AppTheme.Icon.brandTor
+        p2pIV.image = AppTheme.Icon.arrowsSwitch
+        smartIV.image = AppTheme.Icon.globe
+        secureCoreIV.image = AppTheme.Icon.chevronsRight
+
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
         let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
@@ -103,7 +112,7 @@ final class ServerItemCellView: NSView {
         }
                 
         if let code = viewModel.entryCountry {
-            secureFlagIV.image = NSImage.flag(countryCode: code)
+            secureFlagIV.image = AppTheme.Icon.flag(countryCode: code)
         }
         
         setupAccessibility()

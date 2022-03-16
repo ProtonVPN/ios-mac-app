@@ -133,6 +133,9 @@ class StatusMenuWindowModel {
 
 /// All possible status menu icons
 enum StatusIcon {
+    static let margin = 2
+    static let size = Int(NSStatusBar.system.thickness) - margin * 2
+
     case connected
     case disconnected
     case connecting

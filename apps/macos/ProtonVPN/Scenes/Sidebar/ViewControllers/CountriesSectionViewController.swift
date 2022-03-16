@@ -143,7 +143,7 @@ class CountriesSectionViewController: NSViewController {
     private func setupSearchSection() {
         bottomHorizontalLine.fillColor = .color(.border, .weak)
         
-        searchIcon.image = NSImage(named: NSImage.Name("search"))
+        searchIcon.image = AppTheme.Icon.magnifier
         searchIcon.cell?.setAccessibilityElement(false)
         
         clearSearchBtn.target = self

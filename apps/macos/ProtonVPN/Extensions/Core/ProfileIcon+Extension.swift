@@ -25,7 +25,6 @@ import vpncore
 import AppKit
 
 extension ProfileIcon {
-    
     func attributedAttachment(width: Int = 12) -> NSAttributedString {
         switch self {
         case .image(let image):
@@ -40,5 +39,10 @@ extension ProfileIcon {
             attachment.attachmentCell = attachmentCell
             return NSAttributedString(attachment: attachment)
         }
+    }
+
+    var icon: NSImage? {
+        guard case let .image(image) = self else { return nil }
+        return image
     }
 }

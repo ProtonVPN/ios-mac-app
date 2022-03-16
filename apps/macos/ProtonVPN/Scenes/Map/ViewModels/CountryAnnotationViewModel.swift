@@ -195,7 +195,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     
     func attributedServer(for row: Int) -> NSAttributedString {
         guard servers.count > row else { return NSAttributedString() }
-        let doubleArrows = NSAttributedString.imageAttachment(named: available ? "double-arrow-right-white" : "double-arrow-right-grey", width: 8, height: 8)!
+        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: available ? .normal : .weak, size: .square(8))
         let serverName = (" " + servers[row].name).styled(available ? .normal : [.interactive, .weak, .disabled])
         let title = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(doubleArrows, serverName))
         let range = (title.string as NSString).range(of: title.string)

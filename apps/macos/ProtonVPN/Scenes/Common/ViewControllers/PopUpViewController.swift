@@ -83,7 +83,7 @@ class PopUpViewController: NSViewController {
         bodyView.wantsLayer = true
         bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         
-        popUpIcon.image = #imageLiteral(resourceName: "temp")
+        popUpIcon.image = AppTheme.Icon.vpnMainTransparent
         if !viewModel.showIcon {
             popUpIcon.isHidden = true
             leadingDescriptionConstraint.constant = 20

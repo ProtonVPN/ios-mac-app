@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -278,11 +278,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="700" height="600"/>
                             </customView>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VjH-4C-IHs" userLabel="Logo View" customClass="PassThroughImageView" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="532" y="540" width="124" height="41"/>
+                                <rect key="frame" x="532" y="540" width="124" height="356"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="124" id="Ho5-He-jGM"/>
                                 </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottom" imageScaling="proportionallyDown" image="protonvpn-white-transparent" id="p99-38-ERf"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottom" imageScaling="proportionallyDown" image="VPNWordmarkNoBackground" id="p99-38-ERf"/>
                             </imageView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Mu7-j5-Aiv" customClass="ZoomView" customModule="ProtonVPN" customModuleProvider="target">
                                 <rect key="frame" x="530" y="400" width="130" height="130"/>
@@ -325,6 +325,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="protonvpn-white-transparent" width="241" height="41"/>
+        <image name="VPNWordmarkNoBackground" width="1676" height="356"/>
     </resources>
 </document>

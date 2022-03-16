@@ -37,10 +37,7 @@ class ShowApplicationButton: HoverDetectionButton {
     }
     
     private func configureView() {
-        let buttonStyle: AppTheme.Style = [.interactive, .active] + (isHovered ? .hovered : [])
-
-        let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 13, height: 13, colored: .color(.icon, buttonStyle))!
-        let show = (" " + LocalizedString.showProtonvpn).styled(buttonStyle)
-        attributedTitle = NSAttributedString.concatenate(secureCoreIcon, show)
+        let hover: AppTheme.Style = isHovered ? .hovered : []
+        attributedTitle = LocalizedString.showProtonvpn.styled([.interactive] + hover)
     }
 }

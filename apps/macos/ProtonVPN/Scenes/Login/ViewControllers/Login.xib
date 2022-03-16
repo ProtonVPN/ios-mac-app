@@ -183,7 +183,7 @@
                         <constraint firstAttribute="height" constant="40" id="oFP-uu-5R7"/>
                         <constraint firstAttribute="width" constant="200" id="vYX-xl-eng"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="protonvpn-white-transparent" id="nl5-nA-nZA"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="VPNWordmarkNoBackground" id="nl5-nA-nZA"/>
                 </imageView>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuR-aC-JB5">
                     <rect key="frame" x="106" y="440" width="129" height="55"/>
@@ -237,6 +237,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="protonvpn-white-transparent" width="121" height="21"/>
+        <image name="arrow-left" width="5" height="8"/>
+        <image name="VPNWordmarkNoBackground" width="1676" height="356"/>
     </resources>
 </document>

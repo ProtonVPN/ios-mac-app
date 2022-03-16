@@ -27,8 +27,6 @@ class TourPreviousButton: HoverDetectionButton {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        let hover: AppTheme.Style = isHovered ? .hovered : []
-
         wantsLayer = true
         layer?.borderWidth = 1.5
         layer?.borderColor = self.cgColor(.border)

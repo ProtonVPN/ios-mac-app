@@ -56,11 +56,11 @@ class WarningPopupViewModel {
         self.url = url
     }
     
-    convenience init(image: NSImage?, title: String, description: String, onConfirm: @escaping () -> Void) {
+    convenience init(image: NSImage? = AppTheme.Icon.vpnMainTransparent, title: String, description: String, onConfirm: @escaping () -> Void) {
         self.init(image: image, title: title, description: description, linkDescription: nil, url: nil, onConfirm: onConfirm, onCancel: nil)
     }
 
-    convenience init(image: NSImage?, title: String, description: String, linkDescription: String?, url: String?, onConfirm: @escaping () -> Void) {
+    convenience init(image: NSImage? = AppTheme.Icon.vpnMainTransparent, title: String, description: String, linkDescription: String?, url: String?, onConfirm: @escaping () -> Void) {
         self.init(image: image, title: title, description: description, linkDescription: linkDescription, url: url, onConfirm: onConfirm, onCancel: nil)
     }
 }

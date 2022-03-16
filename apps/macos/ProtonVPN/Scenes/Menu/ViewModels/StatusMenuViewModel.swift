@@ -294,8 +294,7 @@ class StatusMenuViewModel {
             self?.vpnGateway?.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
         }
 
-        let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
-                                              title: LocalizedString.vpnConnectionActive,
+        let viewModel = WarningPopupViewModel(title: LocalizedString.vpnConnectionActive,
                                               description: LocalizedString.viewToggleWillCauseDisconnect,
                                               onConfirm: confirmationClosure)
         disconnectWarning?(viewModel)
@@ -307,8 +306,7 @@ class StatusMenuViewModel {
             log.info("User accepted unsecure WiFi option", category: .net)
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
-        let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
-                                              title: LocalizedString.unsecureWifiTitle,
+        let viewModel = WarningPopupViewModel(title: LocalizedString.unsecureWifiTitle,
                                               description: "\(LocalizedString.unsecureWifi): \(wifiName). \(LocalizedString.unsecureWifiLearnMore)",
                                               linkDescription: LocalizedString.unsecureWifiLearnMore,
                                               url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
@@ -415,13 +413,13 @@ class StatusMenuViewModel {
         }
         
         if server.isSecureCore {
-            let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14) ?? NSAttributedString()
+            let secureCoreIcon = AppTheme.Icon.shield.asAttachment(style: .normal, size: .square(14))
             let entryCountry = (" " + server.entryCountry + " ").styled([.interactive, .active])
-            let doubleArrows = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
+            let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
             let exitCountry = (" " + server.exitCountry + " ").styled()
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
-            let flag = NSAttributedString.imageAttachment(image: NSImage.flag(countryCode: server.countryCode), width: 18, height: 18) ?? NSAttributedString()
+            let flag = AppTheme.Icon.flag(countryCode: server.countryCode)?.asAttachment(size: .square(18)) ?? NSAttributedString()
             let country = NSMutableAttributedString(
                 string: "  " + server.country + " ",
                 attributes: [
