@@ -19,34 +19,16 @@
 import Foundation
 import UIKit
 
-final class CityViewModel {
-    let name: String
-    let country: CountryViewModel
+public protocol CityViewModel {
+    var name: String { get }
+    var countryName: String { get }
+    var countryFlag: UIImage? { get }
+    var connectButtonColor: UIColor { get }
+    var connectIcon: UIImage? { get }
+    var textInPlaceOfConnectIcon: String? { get }
 
-    var isUsersTierTooLow: Bool {
-        return servers.allSatisfy({ $0.isUsersTierTooLow })
-    }
-    var underMaintenance: Bool {
-        return servers.allSatisfy({ $0.underMaintenance })
-    }
+    var connectionChanged: (() -> Void)?  { get set }
 
-    var server: ServerViewModel? {
-        return servers.first
-    }
-
-    var connectionChanged: (() -> Void)?
-
-    private let servers: [ServerViewModel]
-
-    init(name: String, country: CountryViewModel, servers: [ServerViewModel]) {
-        self.name = name
-        self.servers = servers
-        self.country = country
-    }
-
-    func updateTier() {
-        servers.forEach {
-            $0.updateTier()
-        }
-    }
+    func updateTier()
+    func connectAction()
 }

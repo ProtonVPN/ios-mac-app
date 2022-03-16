@@ -35,5 +35,7 @@ public protocol CountryViewModel: AnyObject {
 
     func updateTier()
     func connectAction()
+
     func getServers() -> [ServerTier: [ServerViewModel]]
+    func getCities() -> [CityViewModel]
 }

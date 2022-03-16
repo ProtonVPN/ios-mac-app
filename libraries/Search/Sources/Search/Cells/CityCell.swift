@@ -44,7 +44,7 @@ final class CityCell: UITableViewCell {
 
     public var viewModel: CityViewModel? {
         didSet {
-            flagImageView?.image = viewModel?.country.flag
+            flagImageView.image = viewModel?.countryFlag
             setupCityAndCountryName()
             viewModel?.updateTier()
             viewModel?.connectionChanged = { [weak self] in self?.stateChanged() }
@@ -58,8 +58,17 @@ final class CityCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        backgroundColor = .clear
+        selectionStyle = .none
         countryLabel.textColor = colors.weakText
         cityLabel.textColor = colors.weakText
+    }
+
+    // MARK: Actions
+
+    @IBAction private func connectButtonTap(_ sender: Any) {
+        viewModel?.connectAction()
+        stateChanged()
     }
 
     // MARK: Setup
@@ -69,13 +78,13 @@ final class CityCell: UITableViewCell {
     }
 
     private func renderConnectButton() {
-        connectButton.backgroundColor = viewModel?.server?.connectButtonColor
+        connectButton.backgroundColor = viewModel?.connectButtonColor
 
-        if let text = viewModel?.server?.textInPlaceOfConnectIcon {
+        if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)
             connectButton.setTitle(text, for: .normal)
         } else {
-            connectButton.setImage(viewModel?.server?.connectIcon, for: .normal)
+            connectButton.setImage(viewModel?.connectIcon, for: .normal)
             connectButton.setTitle(nil, for: .normal)
         }
     }
@@ -87,7 +96,7 @@ final class CityCell: UITableViewCell {
 
         guard let searchText = searchText, !searchText.isEmpty else {
             cityLabel.text = viewModel.name
-            countryLabel.text = viewModel.country.description
+            countryLabel.text = viewModel.countryName
             return
         }
 
@@ -105,6 +114,6 @@ final class CityCell: UITableViewCell {
         }
 
         cityLabel.attributedText = createText(viewModel.name)
-        countryLabel.attributedText = createText(viewModel.country.description)
+        countryLabel.attributedText = createText(viewModel.countryName)
     }
 }

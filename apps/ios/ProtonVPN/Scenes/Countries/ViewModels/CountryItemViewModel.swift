@@ -197,6 +197,14 @@ class CountryItemViewModel {
         
         return serverTypes
     }()
+
+    private lazy var cityItemViewModels: [CityItemViewModel] = {
+        let servers = serverViewModels.flatMap({ $1 })
+        let groups = Dictionary.init(grouping: servers, by: { $0.city })
+        return groups.map({
+            CityItemViewModel(name: $0.key, countryName: self.countryName, countryFlag: self.flag, servers: $0.value)
+        }).sorted(by: { $0.name < $1.name })
+    }()
     
     init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
         self.countryModel = countryGroup.0
@@ -306,6 +314,10 @@ extension CountryItemViewModel: CountryViewModel {
         return serverViewModels.reduce(into: [ServerTier: [ServerViewModel]]()) {
             $0[convertTier($1.tier)] = $1.viewModels
         }
+    }
+
+    func getCities() -> [CityViewModel] {
+        return cityItemViewModels
     }
 
     var flag: UIImage? {

@@ -37,7 +37,6 @@ final class SearchViewModel {
     private(set) var data: [CountryViewModel]
     private(set) var mode: SearchMode
     private let constants: Constants
-    private(set) var cities: [CityViewModel] = []
 
     weak var delegate: SearchViewModelDelegate?
 
@@ -53,8 +52,6 @@ final class SearchViewModel {
 
         let recent = recentSearchesService.get()
         status = recent.isEmpty ? .placeholder : .recentSearches(recent)
-
-        self.cities = createCities(data: data)
     }
 
     // MARK: Actions
@@ -62,7 +59,6 @@ final class SearchViewModel {
     func reload(data: [CountryViewModel], mode: SearchMode) {
         self.data = data
         self.mode = mode
-        self.cities = createCities(data: data)
     }
 
     func clearRecentSearches() {
@@ -92,7 +88,7 @@ final class SearchViewModel {
                 results.append(SearchResult.countries(countries: countries))
             }
 
-            let cities = self.cities.filter({ filter($0.name) || filter($0.country.description) }).sorted(by: { $0.name < $1.name })
+            let cities = data.flatMap({ $0.getCities() }).filter({ filter($0.name) || filter($0.countryName) }).sorted(by: { $0.name < $1.name })
             if !cities.isEmpty {
                 results.append(SearchResult.cities(cities: cities))
             }
@@ -120,15 +116,5 @@ final class SearchViewModel {
 
     func saveSearch(searchText: String) {
         recentSearchesService.add(searchText: searchText)
-    }
-
-    private func createCities(data: [CountryViewModel]) -> [CityViewModel] {
-        return data.flatMap { country -> [CityViewModel] in
-            let servers = country.getServers().values.flatMap({ $0 }).filter({ !$0.torAvailable && !$0.city.isEmpty })
-            let groups = Dictionary.init(grouping: servers, by: { $0.city })
-            return groups.map({
-                CityViewModel(name: $0.key, country: country, servers: $0.value)
-            }).sorted(by: { $0.name < $1.name })
-        }
     }
 }

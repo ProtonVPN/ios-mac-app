@@ -20,6 +20,37 @@ import Foundation
 import Search
 import UIKit
 
+final class CityItemViewModel: CityViewModel {
+    let name: String
+
+    let countryName: String
+
+    let countryFlag: UIImage?
+
+    let server: ServerViewModel? = nil
+
+    var connectionChanged: (() -> Void)?
+
+    let connectIcon: UIImage? = UIImage(named: "con-available")
+
+    let textInPlaceOfConnectIcon: String? = nil
+
+    let connectButtonColor: UIColor = .darkGray
+
+    func updateTier() {
+
+    }
+
+    func connectAction() {
+
+    }
+
+    init(name: String, countryName: String, countryFlag: UIImage?) {
+        self.name = name
+        self.countryName = countryName
+        self.countryFlag = countryFlag
+    }
+}
 
 final class CountryItemViewModel: CountryViewModel {
     let description: String
@@ -48,6 +79,8 @@ final class CountryItemViewModel: CountryViewModel {
 
     let isSecureCoreCountry: Bool
 
+    let cities: [CityViewModel]
+
     func updateTier() {
 
     }
@@ -60,10 +93,20 @@ final class CountryItemViewModel: CountryViewModel {
         description = country
         self.servers = servers
         self.isSecureCoreCountry = isSecureCoreCountry
+
+        let servers = [ServerTier.free, ServerTier.plus, ServerTier.basic].flatMap({ servers[$0] ?? [] })
+        let groups = Dictionary.init(grouping: servers, by: { $0.city })
+        self.cities = groups.map({
+            CityItemViewModel(name: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
+        }).sorted(by: { $0.name < $1.name })
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
         return servers
+    }
+
+    func getCities() -> [CityViewModel] {
+        return cities
     }
 }
 

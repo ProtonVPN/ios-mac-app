@@ -49,7 +49,7 @@ extension SearchResult: Equatable {
         case let (SearchResult.secureCoreCountries(servers: ldata), SearchResult.secureCoreCountries(servers: rdata)):
             return ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
         case let (SearchResult.cities(cities: ldata), SearchResult.cities(cities: rdata)):
-            return ldata == rdata
+            return ldata.map({ $0 as! CityViewModelMock }) == rdata.map({ $0 as! CityViewModelMock })
         default:
             return false
         }
@@ -68,8 +68,8 @@ extension CountryViewModelMock: Equatable {
     }
 }
 
-extension CityViewModel: Equatable {
-    public static func == (lhs: CityViewModel, rhs: CityViewModel) -> Bool {
+extension CityViewModelMock: Equatable {
+    static func == (lhs: CityViewModelMock, rhs: CityViewModelMock) -> Bool {
         return lhs.name == rhs.name
     }
 }
