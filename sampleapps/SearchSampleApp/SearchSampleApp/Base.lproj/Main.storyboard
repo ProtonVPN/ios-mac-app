@@ -26,27 +26,57 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="omn-UH-wzU">
-                                <rect key="frame" x="16" y="413" width="382" height="32"/>
+                                <rect key="frame" x="16" y="129" width="382" height="32"/>
                                 <segments>
-                                    <segment title="Paid user"/>
+                                    <segment title="Standard"/>
                                     <segment title="Secure core"/>
-                                    <segment title="Free user"/>
                                 </segments>
                             </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Lvz-iQ-czd">
+                                <rect key="frame" x="16" y="208" width="382" height="32"/>
+                                <segments>
+                                    <segment title="Free"/>
+                                    <segment title="Basic"/>
+                                    <segment title="Plus"/>
+                                    <segment title="Visionary"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search mode:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pk4-pC-MNB">
+                                <rect key="frame" x="16" y="104" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User tier:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwd-3p-scq">
+                                <rect key="frame" x="16" y="183" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Lvz-iQ-czd" firstAttribute="leading" secondItem="omn-UH-wzU" secondAttribute="leading" id="3vc-Xd-0fY"/>
+                            <constraint firstItem="bwd-3p-scq" firstAttribute="leading" secondItem="Lvz-iQ-czd" secondAttribute="leading" id="5mv-HB-D5f"/>
+                            <constraint firstItem="pk4-pC-MNB" firstAttribute="leading" secondItem="omn-UH-wzU" secondAttribute="leading" id="7gL-5U-ymR"/>
+                            <constraint firstItem="Lvz-iQ-czd" firstAttribute="top" secondItem="omn-UH-wzU" secondAttribute="bottom" constant="48" id="FKn-Be-fYH"/>
                             <constraint firstItem="omn-UH-wzU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Rng-vK-LMj"/>
+                            <constraint firstItem="Lvz-iQ-czd" firstAttribute="trailing" secondItem="omn-UH-wzU" secondAttribute="trailing" id="dmr-1d-Euk"/>
+                            <constraint firstItem="pk4-pC-MNB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="dxE-WU-7Uc"/>
                             <constraint firstItem="Mt2-Mr-z6Y" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="fR3-yQ-H7I"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="omn-UH-wzU" secondAttribute="trailing" constant="16" id="idm-xx-qYu"/>
+                            <constraint firstItem="Lvz-iQ-czd" firstAttribute="top" secondItem="bwd-3p-scq" secondAttribute="bottom" constant="4" id="l7B-zd-hwH"/>
                             <constraint firstItem="Mt2-Mr-z6Y" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="lff-K5-P3r"/>
-                            <constraint firstItem="Mt2-Mr-z6Y" firstAttribute="top" secondItem="omn-UH-wzU" secondAttribute="bottom" constant="16" id="pYh-3R-3bd"/>
+                            <constraint firstItem="omn-UH-wzU" firstAttribute="top" secondItem="pk4-pC-MNB" secondAttribute="bottom" constant="4" id="mcO-Oi-eiy"/>
+                            <constraint firstItem="bwd-3p-scq" firstAttribute="trailing" secondItem="Lvz-iQ-czd" secondAttribute="trailing" id="ra7-J8-els"/>
+                            <constraint firstItem="pk4-pC-MNB" firstAttribute="trailing" secondItem="omn-UH-wzU" secondAttribute="trailing" id="sZi-yz-6rM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nmm-0h-Pio"/>
                     <connections>
                         <outlet property="modeSegmentedControl" destination="omn-UH-wzU" id="Jsq-Ud-guU"/>
+                        <outlet property="userTierSegmentedControl" destination="Lvz-iQ-czd" id="QJr-Dv-Hbg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

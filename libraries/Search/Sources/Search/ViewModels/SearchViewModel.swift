@@ -83,12 +83,14 @@ final class SearchViewModel {
         let countries = data.filter({ filter($0.description) })
 
         switch mode {
-        case .standard, .freeUser:
+        case let .standard(userTier):
+            let tiers = ServerTier.sorted(by: userTier)
+
             if !countries.isEmpty {
                 results.append(SearchResult.countries(countries: countries))
             }
             var servers: [ServerTier: [ServerViewModel]] = [:]
-            for tier in ServerTier.allCases {
+            for tier in tiers {
                 servers[tier] = []
             }
             for country in data {
@@ -97,11 +99,15 @@ final class SearchViewModel {
                     servers[key]?.append(contentsOf: values)
                 }
             }
-            for tier in ServerTier.allCases {
+            for tier in tiers {
                 let tierServers = servers[tier]?.filter({ filter($0.description) }) ?? []
                 if !tierServers.isEmpty {
                     results.append(SearchResult.servers(tier: tier, servers: tierServers))
                 }
+            }
+
+            if userTier == .free, !results.isEmpty {
+                results.insert(SearchResult.upsell, at: 0)
             }
         case .secureCore:
             if !countries.isEmpty {
@@ -112,8 +118,7 @@ final class SearchViewModel {
             }
         }
 
-        let freeSection = mode == .freeUser ? [SearchResult.upsell] : []
-        status = results.isEmpty ? .noResults : .results(freeSection + results)
+        status = results.isEmpty ? .noResults : .results(results)
     }
 
     func saveSearch(searchText: String) {

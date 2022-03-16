@@ -18,8 +18,14 @@
 
 import Foundation
 
-public enum SearchMode {
-    case standard
-    case freeUser
+public enum UserTier {
+    case free
+    case basic
+    case plus
+    case visionary
+}
+
+public enum SearchMode: Equatable {
+    case standard(UserTier)
     case secureCore
 }
