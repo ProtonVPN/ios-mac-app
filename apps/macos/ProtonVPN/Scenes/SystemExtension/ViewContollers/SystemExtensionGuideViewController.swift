@@ -107,14 +107,14 @@ final class SystemExtensionGuideViewController: NSViewController {
             titles[index].textColor = .color(.text)
             (numbers[index].subviews.first as? NSTextField)?.textColor = .color(.text)
             numbers[index].wantsLayer = true
-            numbers[index].layer?.backgroundColor = NSColor.protonLightGrey().cgColor
+            numbers[index].layer?.backgroundColor = .cgColor(.background, .strong)
             numbers[index].layer?.cornerRadius = numbers[index].bounds.width / 2
             titles[index].isHidden = false
             numbers[index].isHidden = false
         }
         
         textUnderSteps.stringValue = LocalizedString.sysexWizardTextUnderSteps
-        textUnderSteps.textColor = NSColor.protonGreyUnselectedWhite()
+        textUnderSteps.textColor = .color(.text, .weak)
         imageDescription.defaultStyle.alignment = .center
         imageDescription.textViewFont = NSFont.boldSystemFont(ofSize: 14.0)
         imageDescription.textStorage?.setAttributedString(NSAttributedString(string: ""))

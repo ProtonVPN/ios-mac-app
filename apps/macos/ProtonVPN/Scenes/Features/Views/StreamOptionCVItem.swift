@@ -36,7 +36,7 @@ class StreamOptionCVItem: NSCollectionViewItem {
             serviceIV.isHidden = true
             serviceLbl.isHidden = false
             view.wantsLayer = true
-            view.layer?.backgroundColor = NSColor.protonUpsellBlack().cgColor
+            view.layer?.backgroundColor = .cgColor(.background)
             
             guard let url = viewModel.url else { return }
             

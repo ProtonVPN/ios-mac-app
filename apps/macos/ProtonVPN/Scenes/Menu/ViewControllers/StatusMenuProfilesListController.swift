@@ -62,10 +62,10 @@ class StatusMenuProfilesListController: WindowController {
         window.contentView?.layer?.backgroundColor = .clear
         
         topView.wantsLayer = true
-        topView.layer?.backgroundColor = NSColor.protonWhite().cgColor
+        topView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         roundedView.wantsLayer = true
-        roundedView.layer?.backgroundColor = NSColor.protonWhite().cgColor
+        roundedView.layer?.backgroundColor = .cgColor(.background, .weak)
         roundedView.layer?.cornerRadius = 8
     }
     
