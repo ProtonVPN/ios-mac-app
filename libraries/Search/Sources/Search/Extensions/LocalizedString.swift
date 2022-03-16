@@ -40,6 +40,8 @@ public enum LocalizedString {
   public static var searchRecentClearTitle: String { return LocalizedString.tr("Localizable", "search_recent_clear_title") }
   /// Recently viewed
   public static var searchRecentHeader: String { return LocalizedString.tr("Localizable", "search_recent_header") }
+  /// Cities
+  public static var searchResultsCities: String { return LocalizedString.tr("Localizable", "search_results_cities") }
   /// Countries
   public static var searchResultsCountries: String { return LocalizedString.tr("Localizable", "search_results_countries") }
   /// Secure Core countries
