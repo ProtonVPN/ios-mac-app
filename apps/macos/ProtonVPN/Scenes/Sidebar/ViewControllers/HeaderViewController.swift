@@ -104,8 +104,8 @@ final class HeaderViewController: NSViewController {
     }
     
     private func setupFlagView() {
-        if viewModel.isConnected, let countryCode = viewModel.connectedCountryCode?.lowercased() {
-            flagView.backgroundImage = NSImage(named: NSImage.Name("\(countryCode)-large"))
+        if viewModel.isConnected, let countryCode = viewModel.connectedCountryCode {
+            flagView.backgroundImage = AppTheme.Icon.flag(countryCode: countryCode, style: .large)
         } else if !viewModel.isConnected && flagView.backgroundImage != nil {
             flagView.backgroundImage = nil
         }
@@ -173,7 +173,7 @@ final class HeaderViewController: NSViewController {
         announcementsButton.toolTip = viewModel.announcementTooltip
         announcementsButton.isHidden = true
         guard let iconUrl = viewModel.announcementIconUrl else {
-            setup(NSImage(named: "bell"))
+            setup(AppTheme.Icon.bell)
             return
         }
 
@@ -188,7 +188,7 @@ final class HeaderViewController: NSViewController {
                 SDImageCache.shared.store(icon, forKey: iconUrl.absoluteString, completion: nil)
                 setup(icon)
             } else if self?.announcementsButton.image == nil {
-                setup(NSImage(named: "bell"))
+                setup(AppTheme.Icon.bell)
             }
         }
     }

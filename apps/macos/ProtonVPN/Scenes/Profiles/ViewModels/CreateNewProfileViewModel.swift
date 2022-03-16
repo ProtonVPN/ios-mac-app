@@ -34,13 +34,6 @@ internal enum DefaultServerOffering {
     case fastest
     case random
     
-    var name: String {
-        switch self {
-        case .fastest: return "fastest"
-        case .random: return "random"
-        }
-    }
-    
     var index: Int {
         switch self {
         case .fastest: return 0

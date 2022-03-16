@@ -23,6 +23,27 @@ extension NSImage {
     func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {
         self.colored(.color(context, style))
     }
+
+    func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default) -> NSAttributedString {
+        var resultingImage = self
+        if let style = style {
+            resultingImage = self.colored(context: context, style)
+        }
+
+        switch size {
+        case .square(let size):
+            resultingImage = resultingImage.resize(newWidth: size, newHeight: size)
+        case let .rect(width, height):
+            resultingImage = resultingImage.resize(newWidth: width, newHeight: height)
+        case .default:
+            break
+        }
+
+        let attachmentCell = NSTextAttachmentCell(imageCell: resultingImage)
+        let attachment = NSTextAttachment()
+        attachment.attachmentCell = attachmentCell
+        return NSAttributedString(attachment: attachment)
+    }
 }
 
 extension CustomStyleContext {

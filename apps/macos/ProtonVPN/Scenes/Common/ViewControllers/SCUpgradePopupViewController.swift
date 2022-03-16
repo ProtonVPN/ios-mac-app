@@ -64,7 +64,7 @@ class SCUpgradePopupViewController: NSViewController {
         bodyView.wantsLayer = true
         bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         
-        upgradeIcon.image = #imageLiteral(resourceName: "temp")
+        upgradeIcon.image = AppTheme.Icon.vpnMainTransparent
         
         upgradeDescriptionPart1.attributedStringValue =
             LocalizedString.upgradePlanToAccessSecureCoreP1.styled(alignment: .natural)

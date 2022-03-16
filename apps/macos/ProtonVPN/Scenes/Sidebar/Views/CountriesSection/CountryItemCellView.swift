@@ -53,11 +53,15 @@ final class CountryItemCellView: NSView {
         
         maintenanceBtn.wantsLayer = true
         maintenanceBtn.layer?.cornerRadius = 16
+        maintenanceBtn.image = AppTheme.Icon.wrench
         maintenanceBtn.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
         
         torIV.toolTip = LocalizedString.torTitle
+        torIV.image = AppTheme.Icon.brandTor
         p2pIV.toolTip = LocalizedString.p2pTitle
+        p2pIV.image = AppTheme.Icon.arrowsSwitch
         smartIV.toolTip = LocalizedString.smartProtocolTitle
+        smartIV.image = AppTheme.Icon.globe
 
         separatorView.wantsLayer = true
         separatorView.layer?.backgroundColor = .cgColor(.border, .weak)
@@ -96,9 +100,9 @@ final class CountryItemCellView: NSView {
         separatorView.isHidden = !viewModel.displaySeparator
         secureIV.isHidden = !viewModel.secureCoreEnabled
         
-        expandButton.image = viewModel.isOpened ? #imageLiteral(resourceName: "ic_section_arrow_up") : #imageLiteral(resourceName: "ic_section_arrow_down")
+        expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         countryLbl.stringValue = viewModel.countryName
-        flagIV.image = NSImage.flag(countryCode: viewModel.countryCode)
+        flagIV.image = AppTheme.Icon.flag(countryCode: viewModel.countryCode)
         connectButton.isConnected = viewModel.isConnected
         connectButton.isHidden = !connectButton.isConnected
         upgradeBtn.isHidden = !viewModel.isTierTooLow || viewModel.underMaintenance
@@ -113,7 +117,7 @@ final class CountryItemCellView: NSView {
     @IBAction private func didTapExpandBtn(_ sender: Any) {
         if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
         viewModel.changeCellState()
-        expandButton.image = viewModel.isOpened ? #imageLiteral(resourceName: "ic_section_arrow_up") : #imageLiteral(resourceName: "ic_section_arrow_down")
+        expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         setupAccessibilityCustomActions()
     }
     

@@ -62,9 +62,9 @@ struct ServerInfoViewModel {
     
     var secureCoreImage: NSImage {
         if serverModel.isSecureCore {
-            return #imageLiteral(resourceName: "protonvpn-server-sc-available")
+            return AppTheme.Icon.lockOpenCheckFilled.colored(.success)
         } else {
-            return #imageLiteral(resourceName: "protonvpn-server-sc-unavailable")
+            return AppTheme.Icon.lockFilled.colored(.weak)
         }
     }
     
@@ -80,11 +80,8 @@ struct ServerInfoViewModel {
     }
     
     var p2pImage: NSImage {
-        if serverModel.supportsP2P {
-            return #imageLiteral(resourceName: "protonvpn-server-p2p-available")
-        } else {
-            return #imageLiteral(resourceName: "protonvpn-server-p2p-unavailable")
-        }
+        return AppTheme.Icon.arrowsSwitch
+            .colored(serverModel.isSecureCore ? .success : .weak)
     }
     
     var premiumLabel: NSAttributedString {
@@ -118,11 +115,8 @@ struct ServerInfoViewModel {
     }
     
     var torImage: NSImage {
-        if serverModel.supportsTor {
-            return #imageLiteral(resourceName: "protonvpn-server-tor-available")
-        } else {
-            return #imageLiteral(resourceName: "protonvpn-server-tor-unavailable")
-        }
+        return AppTheme.Icon.brandTor
+            .colored(serverModel.supportsTor ? .success : .weak)
     }
     
     init(server: ServerModel) {

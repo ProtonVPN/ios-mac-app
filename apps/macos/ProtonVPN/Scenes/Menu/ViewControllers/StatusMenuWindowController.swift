@@ -34,7 +34,7 @@ class StatusMenuWindowController: WindowController {
     
     private var windowModel: StatusMenuWindowModel?
     
-    private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private let statusMenu = NSMenu()
     
     private let iconManager: StatusBarIconBlinker
@@ -196,12 +196,17 @@ extension NSEvent {
 
 extension StatusIcon {
     var image: NSImage {
+        let result: NSImage
         switch self {
-        case .connected: return NSImage(named: NSImage.Name("connected"))!
-        case .disconnected: return NSImage(named: NSImage.Name("disconnected"))!
-        case .connecting: return NSImage(named: NSImage.Name("idle"))!
-        case .unknown: return NSImage(named: NSImage.Name("empty_icon"))!
+        case .connected: result = AppTheme.Icon.vpnConnected
+        case .disconnected: result = AppTheme.Icon.vpnNotConnected
+        case .connecting: result = AppTheme.Icon.vpnConnecting
+        case .unknown: result = AppTheme.Icon.vpnEmpty
         }
+
+        return result
+            .resize(newWidth: Self.size, newHeight: Self.size)
+            .colored(.black)
     }
 }
 
@@ -210,7 +215,7 @@ class StatusBarIconBlinker {
     private var statusItem: NSStatusItem
     private var statusIcon: StatusIcon
     
-    private var emptyImage: NSImage = NSImage(named: "empty_icon")!
+    private var emptyImage: NSImage = AppTheme.Icon.vpnEmpty
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
     

@@ -30,7 +30,7 @@ class StatusMenuCountryItemViewModel {
     private let vpnGateway: VpnGatewayProtocol
     
     var flag: NSImage {
-        return NSImage.flag(countryCode: countryGroup.0.countryCode) ?? NSImage()
+        return AppTheme.Icon.flag(countryCode: countryGroup.0.countryCode) ?? NSImage()
     }
     
     var description: NSAttributedString {
@@ -52,7 +52,7 @@ class StatusMenuCountryItemViewModel {
     private func formDescription() -> NSAttributedString {
         let label: NSAttributedString
         if type == .secureCore {
-            let secureCoreIcon = NSAttributedString.imageAttachment(named: "double-arrow-right-green", width: 9, height: 9)!
+            let secureCoreIcon = AppTheme.Icon.chevronsRight.asAttachment(style: [.interactive, .active], size: .square(9))
             let code = (" " + countryGroup.0.countryCode).styled(font: .themeFont(literalSize: 11))
             label = NSAttributedString.concatenate(secureCoreIcon, code)
         } else {

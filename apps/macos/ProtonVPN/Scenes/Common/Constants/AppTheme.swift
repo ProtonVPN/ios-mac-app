@@ -19,8 +19,9 @@
 import Foundation
 import AppKit
 import ProtonCore_UIFoundations
+import vpncore
 
-public struct AppTheme {
+public enum AppTheme {
     public enum Context: String {
         case background
         case border
@@ -66,6 +67,37 @@ public struct AppTheme {
         case paragraph = 14
         case small = 12
         case tiny = 10
+    }
+
+    public enum IconSize {
+        case `default`
+        case square(Int)
+        case rect(width: Int, height: Int)
+    }
+
+    public enum FlagStyle: String {
+        case plain
+        case large
+
+        func imageName(countryCode: String) -> String {
+            countryCode.lowercased() + "-\(self.rawValue)"
+        }
+    }
+
+    @dynamicMemberLookup
+    public enum Icon {
+        static subscript(dynamicMember keyPath: KeyPath<IconProviderBase, NSImage>) -> NSImage {
+            return IconProvider[keyPath: keyPath]
+        }
+
+        static func flag(countryCode: String, style: FlagStyle = .plain) -> NSImage? {
+            return NSImage(named: style.imageName(countryCode: countryCode))
+        }
+
+        static let vpnConnected = NSImage(named: "vpn-connected")!
+        static let vpnNotConnected = NSImage(named: "vpn-not-connected")!
+        static let vpnConnecting = NSImage(named: "vpn-connecting")!
+        static let vpnEmpty = NSImage(named: "vpn-empty")!
     }
 }
 

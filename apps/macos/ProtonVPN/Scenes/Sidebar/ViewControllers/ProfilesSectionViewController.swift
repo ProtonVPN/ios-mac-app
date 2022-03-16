@@ -35,7 +35,7 @@ class ProfileSectionViewController: NSViewController {
     fileprivate let viewModel: ProfilesSectionViewModel
     
     required init?(coder: NSCoder) {
-        fatalError("Unsupproted initializer")
+        fatalError("Unsupported initializer")
     }
     
     required init(viewModel: ProfilesSectionViewModel) {

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "ic_server_load.pdf",
+      "filename" : "Image.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -17,8 +17,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

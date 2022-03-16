@@ -191,9 +191,9 @@ final class HeaderViewModel {
     private func formBitrateLabel(with bitrate: Bitrate) -> NSAttributedString {
         let downloadString = " \(rateString(for: bitrate.download))  ".styled(font: .themeFont(.small))
         let uploadString = " \(rateString(for: bitrate.upload))".styled(font: .themeFont(.small))
-        let downloadIcon = NSAttributedString.imageAttachment(named: "bitrate-download-arrow", width: 12, height: 12)!
-        let uploadIcon = NSAttributedString.imageAttachment(named: "bitrate-upload-arrow", width: 12, height: 12)!
-        
+        let downloadIcon = AppTheme.Icon.arrowDown.asAttachment(style: .normal, size: .square(12))
+        let uploadIcon = AppTheme.Icon.arrowUp.asAttachment(style: .normal, size: .square(12))
+
         return NSAttributedString.concatenate(downloadIcon, downloadString, uploadIcon, uploadString)
     }
     
@@ -233,11 +233,11 @@ final class HeaderViewModel {
             return LocalizedString.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
-        let doubleArrows = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
+        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
         
         if server.isSecureCore {
-            let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14)!
-            let entryCountry = (" " + server.entryCountry + " ").styled(.interactive, font: .themeFont(.heading4), alignment: .left)
+            let secureCoreIcon = AppTheme.Icon.shield.asAttachment(style: .normal, size: .square(14))
+            let entryCountry = (" " + server.entryCountry + " ").styled(.normal, font: .themeFont(.heading4), alignment: .left)
             let exitCountry = (" " + server.exitCountry + " ").styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {

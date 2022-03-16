@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -67,7 +67,7 @@
                                 <constraint firstAttribute="height" constant="16" id="5aw-vy-j0O"/>
                                 <constraint firstAttribute="width" constant="16" id="Szx-rX-m1n"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic_streaming" id="cGk-q8-Msr"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic-play" id="cGk-q8-Msr"/>
                             <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0Ev-RC-2z1">
@@ -173,7 +173,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="ic-play" width="24" height="24"/>
         <image name="ic_cross" width="10" height="10"/>
-        <image name="ic_streaming" width="16" height="16"/>
     </resources>
 </document>

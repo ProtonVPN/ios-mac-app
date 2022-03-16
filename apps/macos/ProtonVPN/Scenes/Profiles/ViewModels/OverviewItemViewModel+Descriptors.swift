@@ -82,21 +82,21 @@ extension OverviewItemViewModel {
         let profileDescription = ("  " + description).styled(font: .themeFont(.heading4), alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = (countryName + "  ").styled(font: .themeFont(.heading4), alignment: .left)
-        let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
-        
+        let doubleArrow = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
+
         let description: NSAttributedString
         let buffer = "  ".styled(font: .themeFont(.heading4), alignment: .left)
         switch serverType {
         case .standard:
             description = NSAttributedString.concatenate(attributedCountryName, doubleArrow, profileDescription)
         case .secureCore:
-            let icon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 15)!
+            let icon = AppTheme.Icon.shield.asAttachment(style: .interactive, size: .square(15))
             description = NSAttributedString.concatenate(icon, profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
         case .p2p:
-            let icon = NSAttributedString.imageAttachment(named: "protonvpn-server-p2p-available", width: 14, height: 12)!
+            let icon = AppTheme.Icon.arrowsSwitch.asAttachment(style: .interactive, size: .square(15))
             description = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         default: // case .tor:
-            let icon = NSAttributedString.imageAttachment(named: "protonvpn-server-tor-available", width: 14, height: 21)!
+            let icon = AppTheme.Icon.brandTor.asAttachment(style: .interactive, size: .square(15))
             description = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         }
         
@@ -104,10 +104,10 @@ extension OverviewItemViewModel {
     }
     
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
-        let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
-        
+        let doubleArrow = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
+
         if serverModel.isSecureCore {
-            let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14)!
+            let secureCoreIcon = AppTheme.Icon.shield.asAttachment(style: .interactive, size: .square(14))
             let entryCountry = ("  " + serverModel.entryCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
             let exitCountry = ("  " + serverModel.exitCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrow, exitCountry)

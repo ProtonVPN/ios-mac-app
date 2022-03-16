@@ -24,6 +24,8 @@ import Foundation
 import vpncore
 import AppKit
 
+private let iconSize: AppTheme.IconSize = .rect(width: 18, height: 18)
+
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
         return .heading4
@@ -33,8 +35,12 @@ extension CreateNewProfileViewModel {
         return 4
     }
 
+    private func flagString(_ countryCode: String) -> NSAttributedString {
+        AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: iconSize) ?? NSAttributedString(string: "")
+    }
+
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
-        let imageAttributedString = embeddedImageIcon(image: NSImage.flag(countryCode: country.countryCode))
+        let imageAttributedString = flagString(country.countryCode)
         let countryString = "  " + country.country
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
@@ -69,7 +75,7 @@ extension CreateNewProfileViewModel {
                     .foregroundColor: self.color(.text)
                 ]
             )
-            let entryCountryFlag = embeddedImageIcon(image: NSImage.flag(countryCode: server.entryCountryCode))
+            let entryCountryFlag = flagString(server.entryCountryCode)
             let entryCountry = NSMutableAttributedString(
                 string: "  " + server.entryCountry,
                 attributes: [
@@ -80,7 +86,7 @@ extension CreateNewProfileViewModel {
             )
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
-            let countryFlag = embeddedImageIcon(image: NSImage.flag(countryCode: server.countryCode))
+            let countryFlag = flagString(server.countryCode)
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
@@ -107,19 +113,19 @@ extension CreateNewProfileViewModel {
     }
     
     internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
-        let imageName: String
+        let image: NSImage
         let name: String
         
         switch index {
         case DefaultServerOffering.fastest.index:
-            imageName = DefaultServerOffering.fastest.name
+            image = AppTheme.Icon.bolt
             name = LocalizedString.fastest
         default:
-            imageName = DefaultServerOffering.random.name
+            image = AppTheme.Icon.arrowsSwapRight
             name = LocalizedString.random
         }
         
-        let imageAttributedString = embeddedImageIcon(named: imageName)
+        let imageAttributedString = image.asAttachment(size: iconSize)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [
@@ -129,19 +135,5 @@ extension CreateNewProfileViewModel {
             ]
         )
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
-    }
-    
-    private func embeddedImageIcon(named name: String) -> NSAttributedString {
-        if let imageAttributedString = NSAttributedString.imageAttachment(named: name, width: 18, height: 12) {
-            return imageAttributedString
-        }
-        return NSAttributedString(string: "")
-    }
-
-    private func embeddedImageIcon(image: NSImage?) -> NSAttributedString {
-        if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 18) {
-            return imageAttributedString
-        }
-        return NSAttributedString(string: "")
     }
 }

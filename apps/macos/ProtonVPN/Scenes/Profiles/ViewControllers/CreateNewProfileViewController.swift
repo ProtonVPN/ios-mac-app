@@ -323,7 +323,7 @@ final class CreateNewProfileViewController: NSViewController {
     
     @objc private func cancelButtonAction() {
         if isSessionUnderway {
-            let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"), title: LocalizedString.createNewProfile,
+            let viewModel = WarningPopupViewModel(title: LocalizedString.createNewProfile,
                                                   description: LocalizedString.currentSelectionWillBeLost) { [weak self] in
                 self?.viewModel.cancelCreation()
             }
