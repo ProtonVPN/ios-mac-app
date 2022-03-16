@@ -18,7 +18,7 @@
 
 import Foundation
 
-public enum ServerTier: CaseIterable {
+public enum ServerTier {
     case free
     case plus
     case basic
