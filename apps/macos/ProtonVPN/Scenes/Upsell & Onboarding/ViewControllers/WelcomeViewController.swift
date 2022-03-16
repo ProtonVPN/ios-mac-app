@@ -46,10 +46,10 @@ class WelcomeViewController: NSViewController {
         super.viewDidLoad()
         
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonMapGrey().cgColor
+        view.layer?.backgroundColor = .cgColor(.background, .weak)
         
         if let mapImage = mapView.image {
-            mapView.image = mapImage.colored(.protonMapBackgroundGrey())
+            mapView.image = mapImage.colored(context: .background)
         }
         
         titleLabel.attributedStringValue = LocalizedString.welcomeTitle.styled(font: .themeFont(.title, bold: true))

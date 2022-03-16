@@ -27,7 +27,7 @@ class UpsellGradientView: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        if let gradient = NSGradient(starting: .protonMapGrey(), ending: .protonUpsellBlack()) {
+        if let gradient = NSGradient(starting: .weak, ending: .normal) {
             gradient.draw(in: bounds, angle: -90)
         }
     }

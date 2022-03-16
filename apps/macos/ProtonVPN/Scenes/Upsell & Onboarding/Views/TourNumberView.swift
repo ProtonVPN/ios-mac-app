@@ -34,7 +34,7 @@ class TourNumberView: NSView {
     override func viewWillDraw() {
         wantsLayer = true
         
-        shape.fillColor = NSColor.protonGreen().cgColor
+        shape.fillColor = .cgColor(.background, .interactive)
         let insetRect = CGRect(x: bounds.minX + expansionRadius, y: bounds.minY + expansionRadius, width: bounds.width - 2 * expansionRadius, height: bounds.height - 2 * expansionRadius)
         insetPath = CGPath(ellipseIn: insetRect, transform: nil)
         expandedPath = CGPath(ellipseIn: bounds, transform: nil)
