@@ -52,7 +52,7 @@ public final class CountryCell: UITableViewCell {
 
     var searchText: String? {
         didSet {
-            setupCountryName()
+            highlightMatches(countryName, viewModel?.description, searchText)
         }
     }
 
@@ -64,7 +64,8 @@ public final class CountryCell: UITableViewCell {
 
             viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            setupCountryName()
+            countryName.textColor = viewModel.textColor
+            highlightMatches(countryName, viewModel.description, searchText)
 
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.isSmartAvailable
@@ -120,28 +121,5 @@ public final class CountryCell: UITableViewCell {
             rightMarginConstraint.isActive = false
             rightNoMarginConstraint.isActive = true
         }
-    }
-
-    private func setupCountryName() {
-        guard let viewModel = viewModel else {
-            return
-        }
-
-        guard let searchText = searchText, !searchText.isEmpty else {
-            countryName.text = viewModel.description
-            countryName.textColor = viewModel.textColor
-            return
-        }
-
-        let name = NSMutableAttributedString(string: viewModel.description, attributes: [
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-            NSAttributedString.Key.foregroundColor: colors.weakText
-        ])
-
-        viewModel.description.findStartingRanges(of: searchText).forEach {
-            name.addAttributes([NSAttributedString.Key.foregroundColor: viewModel.textColor], range: $0)
-        }
-
-        countryName.attributedText = name
     }
 }

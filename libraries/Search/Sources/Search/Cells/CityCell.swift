@@ -90,30 +90,7 @@ final class CityCell: UITableViewCell {
     }
 
     private func setupCityAndCountryName() {
-        guard let viewModel = viewModel else {
-            return
-        }
-
-        guard let searchText = searchText, !searchText.isEmpty else {
-            cityLabel.text = viewModel.cityName
-            countryLabel.text = viewModel.countryName
-            return
-        }
-
-        let createText = { (string: String) -> NSAttributedString in
-            let text = NSMutableAttributedString(string: string, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-                NSAttributedString.Key.foregroundColor: colors.weakText
-            ])
-
-            string.findStartingRanges(of: searchText).forEach {
-                text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: $0)
-            }
-
-            return text
-        }
-
-        cityLabel.attributedText = createText(viewModel.cityName)
-        countryLabel.attributedText = createText(viewModel.countryName)
+        highlightMatches(cityLabel, viewModel?.cityName, searchText)
+        highlightMatches(countryLabel, viewModel?.countryName, searchText)
     }
 }
