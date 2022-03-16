@@ -66,12 +66,20 @@ final class CityCell: UITableViewCell {
 
     // MARK: Actions
 
-    @IBAction private func connectButtonTap(_ sender: Any) {
+    private func connect() {
         viewModel?.connectAction()
         stateChanged()
     }
 
+    @IBAction private func connectButtonTap(_ sender: Any) {
+        connect()
+    }
+
     // MARK: Setup
+
+    @IBAction private func rowTapped(_ sender: Any, forEvent event: UIEvent) {
+        connect()
+    }
 
     private func stateChanged() {
         renderConnectButton()
