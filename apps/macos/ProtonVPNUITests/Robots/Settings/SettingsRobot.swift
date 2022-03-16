@@ -49,7 +49,7 @@ class SettingsRobot {
     }
     
     @discardableResult
-    func advancedTabTabClick() -> SettingsRobot {
+    func advancedTabClick() -> SettingsRobot {
         app.tabGroups[advancedTab].click()
         return SettingsRobot()
     }
