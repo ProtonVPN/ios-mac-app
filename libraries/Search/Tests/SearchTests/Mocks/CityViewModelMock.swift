@@ -21,7 +21,7 @@ import UIKit
 import Search
 
 final class CityViewModelMock: CityViewModel {
-    var name: String
+    var cityName: String
 
     var countryName: String
 
@@ -43,8 +43,8 @@ final class CityViewModelMock: CityViewModel {
 
     }
 
-    init(name: String, countryName: String = "") {
-        self.name = name
+    init(cityName: String, countryName: String = "") {
+        self.cityName = cityName
         self.countryName = countryName
     }
 }

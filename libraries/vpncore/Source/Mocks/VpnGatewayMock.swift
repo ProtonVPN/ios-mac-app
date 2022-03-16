@@ -81,6 +81,10 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public func connect(with request: ConnectionRequest?) {
         
     }
+
+    public func connectTo(country countryCode: String, city: String) {
+        
+    }
     
     public func stopConnecting(userInitiated: Bool) {
         connection = .disconnected

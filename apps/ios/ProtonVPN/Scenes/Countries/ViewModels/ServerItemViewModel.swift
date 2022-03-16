@@ -42,7 +42,7 @@ class ServerItemViewModel {
     
     let underMaintenance: Bool
     
-    private var isConnected: Bool {
+    var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server {
             if vpnGateway.connection == .connected, activeServer.id == serverModel.id {
                 return true
@@ -51,7 +51,7 @@ class ServerItemViewModel {
         return false
     }
     
-    private var isConnecting: Bool {
+    var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType, case CountryConnectionRequestType.server(let activeServer) = countryRequestType, activeServer == serverModel {
             return true
         }

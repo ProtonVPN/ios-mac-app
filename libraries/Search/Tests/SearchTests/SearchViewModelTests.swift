@@ -111,9 +111,9 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSearchingServers() {
         let fr1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let fr2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let france = CountryViewModelMock(country: "France", servers: [ServerTier.plus: [fr1, fr2]])
         let finland = CountryViewModelMock(country: "Finland", servers: [:])
         let ch1 = ServerViewModelMock(server: "CH#1", city: "Geneva", countryName: "Switzerland")
@@ -182,9 +182,9 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSortingServersForFreeUsers() {
         let free1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let free2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let basic1 = ServerViewModelMock(server: "FR#3", city: "Marseille", countryName: "France")
         let basic2 = ServerViewModelMock(server: "FR#4", city: "Paris", countryName: "France")
         let plus1 = ServerViewModelMock(server: "FR#5", city: "Marseille", countryName: "France")
@@ -209,9 +209,9 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSortingServersForBasicUsers() {
         let free1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let free2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let basic1 = ServerViewModelMock(server: "FR#3", city: "Marseille", countryName: "France")
         let basic2 = ServerViewModelMock(server: "FR#4", city: "Paris", countryName: "France")
         let plus1 = ServerViewModelMock(server: "FR#5", city: "Marseille", countryName: "France")
@@ -235,9 +235,9 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSortingServersForPlusUsers() {
         let free1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let free2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let basic1 = ServerViewModelMock(server: "FR#3", city: "Marseille", countryName: "France")
         let basic2 = ServerViewModelMock(server: "FR#4", city: "Paris", countryName: "France")
         let plus1 = ServerViewModelMock(server: "FR#5", city: "Marseille", countryName: "France")
@@ -261,9 +261,9 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSortingServersForVisionaryUsers() {
         let free1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let free2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let basic1 = ServerViewModelMock(server: "FR#3", city: "Marseille", countryName: "France")
         let basic2 = ServerViewModelMock(server: "FR#4", city: "Paris", countryName: "France")
         let plus1 = ServerViewModelMock(server: "FR#5", city: "Marseille", countryName: "France")
@@ -287,12 +287,12 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSearchingCitiesByName() {
         let fr1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let fr2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let france = CountryViewModelMock(country: "France", servers: [ServerTier.plus: [fr1, fr2]])
         let fi1 = ServerViewModelMock(server: "FI#2", city: "Paimio", countryName: "Finland")
-        let paimo = CityViewModelMock(name: "Paimio")
+        let paimo = CityViewModelMock(cityName: "Paimio")
         let finland = CountryViewModelMock(country: "Finland", servers: [ServerTier.plus: [fi1]])
 
         let data: [CountryViewModel] = [
@@ -314,12 +314,12 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSearchingCitiesByCountryName() {
         let fr1 = ServerViewModelMock(server: "FR#1", city: "Marseille", countryName: "France")
-        let marseille = CityViewModelMock(name: "Marseille")
+        let marseille = CityViewModelMock(cityName: "Marseille")
         let fr2 = ServerViewModelMock(server: "FR#2", city: "Paris", countryName: "France")
-        let paris = CityViewModelMock(name: "Paris")
+        let paris = CityViewModelMock(cityName: "Paris")
         let france = CountryViewModelMock(country: "France", servers: [ServerTier.plus: [fr1, fr2]])
         let fi1 = ServerViewModelMock(server: "FI#2", city: "Paimio", countryName: "Finland")
-        let paimo = CityViewModelMock(name: "Paimio")
+        let paimo = CityViewModelMock(cityName: "Paimio")
         let finland = CountryViewModelMock(country: "Finland", servers: [ServerTier.plus: [fi1]])
 
         let data: [CountryViewModel] = [

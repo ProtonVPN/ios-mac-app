@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 public protocol CityViewModel {
-    var name: String { get }
+    var cityName: String { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
     var connectButtonColor: UIColor { get }

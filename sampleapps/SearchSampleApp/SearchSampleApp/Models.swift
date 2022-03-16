@@ -21,7 +21,7 @@ import Search
 import UIKit
 
 final class CityItemViewModel: CityViewModel {
-    let name: String
+    let cityName: String
 
     let countryName: String
 
@@ -45,8 +45,8 @@ final class CityItemViewModel: CityViewModel {
 
     }
 
-    init(name: String, countryName: String, countryFlag: UIImage?) {
-        self.name = name
+    init(cityName: String, countryName: String, countryFlag: UIImage?) {
+        self.cityName = cityName
         self.countryName = countryName
         self.countryFlag = countryFlag
     }
@@ -97,8 +97,8 @@ final class CountryItemViewModel: CountryViewModel {
         let servers = [ServerTier.free, ServerTier.plus, ServerTier.basic].flatMap({ servers[$0] ?? [] })
         let groups = Dictionary.init(grouping: servers, by: { $0.city })
         self.cities = groups.map({
-            CityItemViewModel(name: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
-        }).sorted(by: { $0.name < $1.name })
+            CityItemViewModel(cityName: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
+        }).sorted(by: { $0.cityName < $1.cityName })
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {

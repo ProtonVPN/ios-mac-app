@@ -70,6 +70,6 @@ extension CountryViewModelMock: Equatable {
 
 extension CityViewModelMock: Equatable {
     static func == (lhs: CityViewModelMock, rhs: CityViewModelMock) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.cityName == rhs.cityName
     }
 }

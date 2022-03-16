@@ -52,13 +52,21 @@ class VpnServerSelector {
         
         let sortedServers: [ServerModel]
         let forSpecificCountry: Bool
-        if case ConnectionRequestType.country(let countryCode, _) = connectionRequest.connectionType { // servers of a single country
+
+        switch connectionRequest.connectionType {
+        case ConnectionRequestType.country(let countryCode, _):
             guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
                 return nil
             }
             sortedServers = countryGroup.1.sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
             forSpecificCountry = true
-        } else { // all servers
+        case let .city(country: countryCode, city: city):
+            guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
+                return nil
+            }
+            sortedServers = countryGroup.1.filter({ $0.city == city }).sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
+            forSpecificCountry = false
+        default:
             sortedServers = serverGrouping
                 .map({ $0.1 })
                 .flatMap({ $0 })
@@ -113,6 +121,8 @@ class VpnServerSelector {
             case .server(let server):
                 return server
             }
+        case .city:
+            return servers.first
         }
     }
     
