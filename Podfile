@@ -55,6 +55,7 @@ def vpn_core
     pod 'ProtonCore-Authentication/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Crypto-VPN', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Payments/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
 
     # Logs
     logs
@@ -96,19 +97,20 @@ target 'ProtonVPN' do
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Login/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-LoginUI/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-LoginUI-V5/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-CoreTranslation-V5', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-HumanVerification/Alamofire', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version  
+  pod 'ProtonCore-HumanVerification-V5/Alamofire', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Payments/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-PaymentsUI-V5/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-APIClient/Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-Hash', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-ForceUpgrade/Alamofire', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-ForceUpgrade-V5/Alamofire', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
     openvpn
@@ -124,7 +126,7 @@ target 'ProtonVPN' do
   end
 
   target 'ProtonVPNTests' do
-    pod 'ProtonCore-ForceUpgrade/Alamofire', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-ForceUpgrade-V5/Alamofire', :git => proton_core_path, :tag => proton_core_version
     inherit! :search_paths
   end
   
@@ -165,7 +167,7 @@ target 'ProtonVPN-mac' do
 
   vpn_core
   
-  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Login/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
 
   # Third party pods
