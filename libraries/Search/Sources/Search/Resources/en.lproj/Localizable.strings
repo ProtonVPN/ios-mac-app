@@ -50,7 +50,7 @@
 "search_recent_clear_continue" = "Continue";
 
 /* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Country or Server";
+"search_bar_placeholder" = "Country, City or Server";
 
 /* Title for the upsell banner shown to free users in search */
 "search_upsell_subtitle" = "Connect to what you are searching for";

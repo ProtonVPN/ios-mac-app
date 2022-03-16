@@ -449,6 +449,7 @@
 		ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
+		F3082A7027E3206B001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314140F27B11DC3007424E9 /* NATType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314140E27B11DC3007424E9 /* NATType.swift */; };
 		F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
@@ -3330,6 +3331,7 @@
 				E1D187F523029CDE00C5F492 /* LogSelectionViewController.swift in Sources */,
 				D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
+				F3082A7027E3206B001A83DF /* CityItemViewModel.swift in Sources */,
 				F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
