@@ -1,5 +1,5 @@
 //
-//  Created on 03.03.2022.
+//  Created on 16.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,24 +18,33 @@
 
 import Foundation
 import UIKit
+import Search
 
-public protocol CountryViewModel: AnyObject {
-    var description: String { get }
-    var isSmartAvailable: Bool { get }
-    var torAvailable: Bool { get }
-    var p2pAvailable: Bool { get }
-    var connectIcon: UIImage? { get }
-    var textInPlaceOfConnectIcon: String? { get }
-    var connectionChanged: (() -> Void)? { get set }
-    var alphaOfMainElements: CGFloat { get }
-    var flag: UIImage? { get }
-    var connectButtonColor: UIColor { get }
-    var textColor: UIColor { get }
-    var isSecureCoreCountry: Bool { get }
+final class CityViewModelMock: CityViewModel {
+    var name: String
 
-    func updateTier()
-    func connectAction()
+    var countryName: String
 
-    func getServers() -> [ServerTier: [ServerViewModel]]
-    func getCities() -> [CityViewModel]
+    var countryFlag: UIImage?
+
+    let connectIcon: UIImage? = nil
+
+    let textInPlaceOfConnectIcon: String? = nil
+
+    let connectButtonColor: UIColor = .darkGray
+
+    var connectionChanged: (() -> Void)?
+
+    func updateTier() {
+
+    }
+
+    func connectAction() {
+
+    }
+
+    init(name: String, countryName: String = "") {
+        self.name = name
+        self.countryName = countryName
+    }
 }

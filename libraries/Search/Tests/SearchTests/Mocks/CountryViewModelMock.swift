@@ -55,13 +55,25 @@ final class CountryViewModelMock: CountryViewModel {
 
     }
 
+    let cities: [CityViewModel]
+
     init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
         description = country
         self.servers = servers
         self.isSecureCoreCountry = isSecureCoreCountry
+
+        let servers = ServerTier.sorted(by: .plus).flatMap({ servers[$0] ?? [] })
+        let groups = Dictionary.init(grouping: servers, by: { $0.city })
+        self.cities = groups.map({
+            CityViewModelMock(name: $0.key, countryName: country)
+        }).sorted(by: { $0.name < $1.name })
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
         return servers
+    }
+
+    func getCities() -> [CityViewModel] {
+        return cities
     }
 }

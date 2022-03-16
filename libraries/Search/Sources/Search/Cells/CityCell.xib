@@ -55,6 +55,9 @@
                                 <integer key="value" value="20"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
+                        <connections>
+                            <action selector="connectButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ozq-aX-jRm"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>

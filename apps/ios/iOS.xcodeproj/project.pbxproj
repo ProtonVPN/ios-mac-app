@@ -448,6 +448,7 @@
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
 		ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */; };
+		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
 		F314140F27B11DC3007424E9 /* NATType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314140E27B11DC3007424E9 /* NATType.swift */; };
 		F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
@@ -999,6 +1000,7 @@
 		EB2244E51CA0DBD254B41DB9 /* Pods-ProtonVPNUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
+		F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityItemViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Countries/ViewModels/CityItemViewModel.swift; sourceTree = "<group>"; };
 		F314140E27B11DC3007424E9 /* NATType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NATType.swift; path = ../../../../libraries/vpncore/Source/Models/VPN/NATType.swift; sourceTree = "<group>"; };
 		F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureSelectionViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/PaidFeatureSelectionViewModel.swift; sourceTree = "<group>"; };
 		F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureSelectionViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/PaidFeatureSelectionViewController.swift; sourceTree = "<group>"; };
@@ -1425,6 +1427,7 @@
 			children = (
 				79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */,
 				79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */,
+				F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */,
 				79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */,
 			);
 			path = ViewModels;
@@ -3222,6 +3225,7 @@
 				E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */,
 				E1D21AB321831DA2000C389B /* AnnotationViewModel.swift in Sources */,
 				7904DA4520E57BA3008A4FCB /* ServerUtility.swift in Sources */,
+				F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */,
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
 				E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */,
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
