@@ -92,7 +92,7 @@ final class AnnouncementDetailViewController: NSViewController {
         featuresFooterLabel.stringValue = data.featuresFooter
 
         actionButton.title = data.button.text
-        actionButton.contentTintColor = NSColor.protonWhite()
+        actionButton.contentTintColor = .color(.icon)
 
         pageFooterLabel.textColor = .color(.text, .weak)
         pageFooterLabel.stringValue = data.pageFooter

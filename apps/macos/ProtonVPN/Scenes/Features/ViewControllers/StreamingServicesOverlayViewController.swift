@@ -47,6 +47,7 @@ class StreamingServicesOverlayViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let backgroundColor: NSColor = .color(.background)
         countryLbl.stringValue = LocalizedString.streamingTitle + " - " + viewModel.countryName
         featuresLbl.stringValue = LocalizedString.featuresTitle
         instructionLbl.stringValue = LocalizedString.streamingServersDescription
@@ -55,9 +56,9 @@ class StreamingServicesOverlayViewController: NSViewController {
         servicesCV.register(StreamOptionCVItem.self, forItemWithIdentifier: cellIdentifier)
         servicesCV.delegate = self
         servicesCV.dataSource = self
-        servicesCV.backgroundColors = [.protonUpsellBlack()]
+        servicesCV.backgroundColors = [backgroundColor]
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonUpsellBlack().cgColor
+        view.layer?.backgroundColor = backgroundColor.cgColor
     }
     
     // MARK: - Actions

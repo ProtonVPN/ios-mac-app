@@ -49,7 +49,7 @@ class FeaturesOverlayViewController: NSViewController {
         p2pRow.viewModel = viewModel.p2pViewModel
         torRow.viewModel = viewModel.torViewModel
         view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor.protonUpsellBlack().cgColor
+        view.layer?.backgroundColor = .cgColor(.background)
     }
     
     // MARK: - Actions

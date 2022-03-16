@@ -75,7 +75,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         titleLabel.font = NSFont.boldSystemFont(ofSize: 17)
 
         textView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.protonGreen()
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, .interactive)
         ]
 
         textView.isEditable = false
