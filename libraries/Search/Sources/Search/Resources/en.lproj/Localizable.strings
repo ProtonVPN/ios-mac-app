@@ -62,6 +62,9 @@
 "search_results_countries" = "Countries";
 
 /* Section header in search */
+"search_results_cities" = "Cities";
+
+/* Section header in search */
 "_free_servers" = "FREE Servers";
 
 /* Section header in search */

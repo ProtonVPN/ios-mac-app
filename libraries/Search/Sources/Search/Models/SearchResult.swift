@@ -21,6 +21,7 @@ import Foundation
 enum SearchResult {
     case upsell
     case countries(countries: [CountryViewModel])
+    case cities(cities: [CityViewModel])
     case secureCoreCountries(servers: [ServerViewModel])
     case servers(tier: ServerTier, servers: [ServerViewModel])
 }
@@ -34,6 +35,8 @@ extension SearchResult {
             return "\(tier.title) (\(data.count))"
         case let .secureCoreCountries(data):
             return "\(LocalizedString.searchSecureCoreCountries) (\(data.count))"
+        case let .cities(data):
+            return "\(LocalizedString.searchCities) (\(data.count))"
         case .upsell:
             return nil
         }
@@ -46,6 +49,8 @@ extension SearchResult {
         case let .servers(tier: _, servers: data):
             return data.count
         case let .secureCoreCountries(data):
+            return data.count
+        case let .cities(data):
             return data.count
         case .upsell:
             return 1
