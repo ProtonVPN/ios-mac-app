@@ -27,7 +27,7 @@ public protocol CityViewModel {
     var connectIcon: UIImage? { get }
     var textInPlaceOfConnectIcon: String? { get }
 
-    var connectionChanged: (() -> Void)?  { get set }
+    var connectionChanged: (() -> Void)? { get set }
 
     func updateTier()
     func connectAction()
