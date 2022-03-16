@@ -83,3 +83,21 @@ let lineSeparatorStyle: (UIView, NSLayoutConstraint) -> Void = {
     $0.backgroundColor = colors.weakText
     $1.constant = 0.5
 }
+
+let highlightMatches = { (label: UILabel, string: String?, searchText: String?) in
+    guard let searchText = searchText, !searchText.isEmpty, let string = string, !string.isEmpty else {
+        label.text = string
+        return
+    }
+
+    let text = NSMutableAttributedString(string: string, attributes: [
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
+        NSAttributedString.Key.foregroundColor: colors.weakText
+    ])
+
+    string.findStartingRanges(of: searchText).forEach {
+        text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: $0)
+    }
+
+    label.attributedText = text
+}

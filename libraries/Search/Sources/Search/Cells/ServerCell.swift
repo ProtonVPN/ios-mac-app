@@ -104,7 +104,7 @@ public final class ServerCell: UITableViewCell {
 
     // MARK: Actions
 
-    func connect() {
+    private func connect() {
         viewModel?.connectAction()
         stateChanged()
     }
@@ -125,7 +125,7 @@ public final class ServerCell: UITableViewCell {
         delegate?.userDidRequestStreamingInfo()
     }
 
-    @IBAction func connectButtonTap(_ sender: Any) {
+    @IBAction private func connectButtonTap(_ sender: Any) {
         connect()
     }
 
@@ -148,30 +148,7 @@ public final class ServerCell: UITableViewCell {
     }
 
     private func setupServerAndCountryName() {
-        guard let viewModel = viewModel else {
-            return
-        }
-
-        guard let searchText = searchText, !searchText.isEmpty else {
-            serverNameLabel.text = viewModel.description
-            countryNameLabel.text = viewModel.countryName
-            return
-        }
-
-        let createText = { (string: String) -> NSAttributedString in
-            let text = NSMutableAttributedString(string: string, attributes: [
-                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-                NSAttributedString.Key.foregroundColor: colors.weakText
-            ])
-
-            string.findStartingRanges(of: searchText).forEach {
-                text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: $0)
-            }
-
-            return text
-        }
-
-        serverNameLabel.attributedText = createText(viewModel.description)
-        countryNameLabel.attributedText = createText(viewModel.countryName)
+        highlightMatches(serverNameLabel, viewModel?.description, searchText)
+        highlightMatches(countryNameLabel, viewModel?.countryName, searchText)
     }
 }
