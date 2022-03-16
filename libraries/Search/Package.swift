@@ -31,6 +31,7 @@ let package = Package(
                 .process("Cells/CountryCell.xib"),
                 .process("Cells/ServerCell.xib"),
                 .process("Cells/UpsellCell.xib"),
+                .process("Cells/CityCell.xib"),
                 .process("Assets.xcassets"),
                 .process("Resources")
             ]),

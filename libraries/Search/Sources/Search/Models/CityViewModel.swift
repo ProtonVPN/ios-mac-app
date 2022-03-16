@@ -30,13 +30,21 @@ final class CityViewModel {
         return servers.allSatisfy({ $0.underMaintenance })
     }
 
+    var server: ServerViewModel? {
+        return servers.first
+    }
+
+    var connectionChanged: (() -> Void)?
+
     private let servers: [ServerViewModel]
 
     init(name: String, country: CountryViewModel, servers: [ServerViewModel]) {
         self.name = name
         self.servers = servers
         self.country = country
+    }
 
+    func updateTier() {
         servers.forEach {
             $0.updateTier()
         }
