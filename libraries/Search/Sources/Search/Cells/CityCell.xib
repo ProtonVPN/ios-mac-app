@@ -41,6 +41,12 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kn2-DK-rVP" userLabel="row-button">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <connections>
+                            <action selector="rowTapped:forEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kJZ-fC-afa"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wIr-wT-Mqg" userLabel="connect-button">
                         <rect key="frame" x="258" y="2" width="42" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -63,7 +69,11 @@
                 <constraints>
                     <constraint firstItem="KKB-DY-Jmf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9Fd-Vg-zr5"/>
                     <constraint firstItem="wIr-wT-Mqg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DXj-KA-0TZ"/>
+                    <constraint firstItem="Kn2-DK-rVP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="NEK-jH-sNk"/>
+                    <constraint firstAttribute="bottom" secondItem="Kn2-DK-rVP" secondAttribute="bottom" id="RXV-eH-pTd"/>
                     <constraint firstItem="8wK-nd-geK" firstAttribute="leading" secondItem="KKB-DY-Jmf" secondAttribute="trailing" constant="16" id="YjX-uE-80z"/>
+                    <constraint firstItem="Kn2-DK-rVP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Ylk-oD-KQ2"/>
+                    <constraint firstAttribute="trailing" secondItem="Kn2-DK-rVP" secondAttribute="trailing" id="fjW-BE-lW3"/>
                     <constraint firstAttribute="trailing" secondItem="wIr-wT-Mqg" secondAttribute="trailing" constant="20" id="qof-8D-lqX"/>
                     <constraint firstItem="8wK-nd-geK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="z8I-vf-AGR"/>
                     <constraint firstItem="KKB-DY-Jmf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="zVA-fy-vBO"/>

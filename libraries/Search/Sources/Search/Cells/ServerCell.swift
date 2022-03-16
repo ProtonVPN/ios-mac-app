@@ -109,7 +109,7 @@ public final class ServerCell: UITableViewCell {
         stateChanged()
     }
 
-    @IBAction func rowTapped(_ sender: Any, forEvent event: UIEvent) {
+    @IBAction private func rowTapped(_ sender: Any, forEvent event: UIEvent) {
         guard let button = sender as? UIButton, let touches = event.touches(for: button), let touch = touches.first, let convertedStreamingView = streamingIV.superview?.convert(streamingIV.frame, to: nil) else {
             connect()
             return
