@@ -75,8 +75,7 @@ class AccountViewController: NSViewController {
         accountPlanSeparator.fillColor = .color(.border, .weak)
         
         if let accountPlan = viewModel.accountPlan {
-            let planColor = colorForAccount(accountPlan)
-            accountPlanValue.attributedStringValue = accountPlan.description.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+            accountPlanValue.attributedStringValue = accountPlan.description.styled(accountPlan.styleForUI, font: .themeFont(.heading4), alignment: .right)
         } else {
             accountPlanValue.attributedStringValue = LocalizedString.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         }
@@ -87,11 +86,7 @@ class AccountViewController: NSViewController {
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
     }
-    
-    private func colorForAccount(_ plan: AccountPlan) -> NSColor {
-        return plan.colorForUI
-    }
-    
+
     @objc private func manageSubscriptionButtonAction() {
         viewModel.manageSubscriptionAction()
     }
