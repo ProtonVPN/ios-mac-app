@@ -22,6 +22,17 @@ import UIKit
 // MARK: Table view delegate
 
 extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
+    func setupTableView() {
+        tableView.register(RecentSearchCell.nib, forCellReuseIdentifier: RecentSearchCell.identifier)
+        tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
+        tableView.register(ServerCell.nib, forCellReuseIdentifier: ServerCell.identifier)
+        tableView.register(UpsellCell.nib, forCellReuseIdentifier: UpsellCell.identifier)
+        tableView.register(CityCell.nib, forCellReuseIdentifier: CityCell.identifier)
+        tableView.register(SearchSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: SearchSectionHeaderView.identifier)
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch viewModel.status {
         case .noResults, .placeholder:
@@ -67,10 +78,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.searchText = searchBar.text
                 cell.viewModel = servers[indexPath.row]
                 return cell
-            case .cities:
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
+            case let .cities(cities: cities):
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: CityCell.identifier) as? CityCell else {
                     fatalError("Invalid configuration")
                 }
+                cell.searchText = searchBar.text
+                cell.viewModel = cities[indexPath.row]
                 return cell
             case .upsell:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellCell.identifier) as? UpsellCell else {
