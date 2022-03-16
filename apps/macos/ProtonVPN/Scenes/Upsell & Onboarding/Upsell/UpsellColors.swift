@@ -28,10 +28,10 @@ struct UpsellColors: ModalsColors {
     public let weakText: NSColor
 
     public init() {
-        background = .protonDarkGrey()
-        text = .protonWhite()
-        brand = .protonGreen()
-        hoverBrand = .protonGreenShade()
-        weakText = .weakTextColor()
+        background = .color(.background)
+        text = .color(.text, .normal)
+        brand = .color(.icon, .interactive)
+        hoverBrand = .color(.icon, [.interactive, .hovered])
+        weakText = .color(.text, .weak)
     }
 }
