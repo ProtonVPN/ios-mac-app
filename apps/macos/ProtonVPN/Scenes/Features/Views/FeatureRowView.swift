@@ -33,7 +33,7 @@ class FeatureRowView: NSView {
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.stringValue = viewModel.title
-            iconIV.image = NSImage(named: viewModel.icon)
+            iconIV.image = viewModel.icon
             descriptionLbl.stringValue = viewModel.description
             learnMoreBtn.title = LocalizedString.learnMore
         }

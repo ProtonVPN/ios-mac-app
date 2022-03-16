@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class DefaultProfileViewModel {
     
@@ -45,7 +46,8 @@ class DefaultProfileViewModel {
                            name: LocalizedString.random,
                            connectionProtocol: propertiesManager.connectionProtocol)
         default:
-            return Profile(id: "st_f", accessTier: 0,
+            return Profile(id: "st_f",
+                           accessTier: 0,
                            profileIcon: .image("con-fastest"),
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
@@ -99,7 +101,7 @@ class DefaultProfileViewModel {
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            return UIImage(named: "con-fastest")!
+            return IconProvider.bolt // UIImage(named: "con-fastest")!
         case .random:
             return UIImage(named: "con-random")!
         default:

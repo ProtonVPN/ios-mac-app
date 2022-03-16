@@ -27,7 +27,7 @@ import Cocoa
 
 public enum ProfileIcon {
     
-    case image(String)
+    case image(UIImage)
     case circle(Int) // rgb color in hexadecimal
     
     public var description: String {
@@ -50,7 +50,7 @@ public enum ProfileIcon {
         let data = aDecoder.decodeObject(forKey: CoderKey.profileIcon) as! Data
         switch data[0] {
         case 0:
-            let name = aDecoder.decodeObject(forKey: CoderKey.image) as! String
+            let name = aDecoder.decodeObject(forKey: CoderKey.image) as! UIImage
             self = .image(name)
         default:
             #if canImport(UIKit)
@@ -65,9 +65,9 @@ public enum ProfileIcon {
     public func encode(with aCoder: NSCoder) {
         var data = Data(count: 1)
         switch self {
-        case .image(let name):
+        case .image(let image):
             data[0] = 0
-            aCoder.encode(name, forKey: CoderKey.image)
+            aCoder.encode(image, forKey: CoderKey.image)
         case .circle(let color):
             data[0] = 1
             #if canImport(UIKit)

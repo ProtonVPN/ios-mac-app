@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class FeatureTableViewCell: UITableViewCell {
     
@@ -45,12 +46,14 @@ class FeatureTableViewCell: UITableViewCell {
         backgroundColor = .backgroundColor()
         learnMoreBtn.setTitleColor(UIColor.brandColor(), for: .normal)
         learnMoreBtn.tintColor = UIColor.brandColor()
+        learnMoreBtn.setImage(IconProvider.arrowOutSquare, for: .normal)
     }
     
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.text = viewModel.title
-            iconIV.image = UIImage(named: viewModel.icon)
+            iconIV.image = viewModel.icon
+
             descriptionLbl.text = viewModel.description
             learnMoreBtn.setTitle(LocalizedString.learnMore, for: .normal)
             

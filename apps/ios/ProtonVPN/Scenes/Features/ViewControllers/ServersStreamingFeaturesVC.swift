@@ -22,11 +22,13 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class ServersStreamingFeaturesVC: UIViewController {
     
     private let viewModel: ServersStreamingFeaturesViewModel
-    
+
+    @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLbl: UILabel!
     @IBOutlet private weak var countryLbl: UILabel!
     @IBOutlet private weak var featuresLbl: UILabel!
@@ -49,6 +51,7 @@ class ServersStreamingFeaturesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        iconImageView.image = IconProvider.play
         countryLbl.text = LocalizedString.streamingTitle + " - " + viewModel.countryName
         titleLbl.text = LocalizedString.plusServers
         featuresLbl.text = LocalizedString.featuresTitle

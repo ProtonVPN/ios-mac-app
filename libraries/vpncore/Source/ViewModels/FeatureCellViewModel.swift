@@ -21,9 +21,15 @@
 //
 
 import Foundation
+import ProtonCore_UIFoundations
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 public protocol FeatureCellViewModel {
-    var icon: String { get }
+    var icon: Image { get }
     var title: String { get }
     var description: String { get }
     var urlContact: String { get }
@@ -39,7 +45,7 @@ extension FeatureCellViewModel {
 // MARK: - Features
 
 public struct SmartRoutingFeature: FeatureCellViewModel {
-    public let icon: String = "ic_smart-routing"
+    public let icon: Image = IconProvider.globe
     public let title: String = LocalizedString.smartRoutingTitle
     public let description: String = LocalizedString.featureSmartRoutingDescription
     public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreSmartRouting
@@ -47,7 +53,7 @@ public struct SmartRoutingFeature: FeatureCellViewModel {
 }
 
 public struct StreamingFeature: FeatureCellViewModel {
-    public let icon: String = "ic_streaming"
+    public let icon: Image = IconProvider.play
     public let title: String = LocalizedString.streamingTitle
     public let description: String = LocalizedString.featureStreamingDescription
     public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreStreaming
@@ -55,7 +61,7 @@ public struct StreamingFeature: FeatureCellViewModel {
 }
 
 public struct P2PFeature: FeatureCellViewModel {
-    public let icon: String = "ic_p2p"
+    public let icon: Image = IconProvider.arrowsSwitch
     public let title: String = LocalizedString.p2pTitle
     public let description: String = LocalizedString.featureP2pDescription
     public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreP2p
@@ -63,7 +69,7 @@ public struct P2PFeature: FeatureCellViewModel {
 }
 
 public struct TorFeature: FeatureCellViewModel {
-    public let icon: String = "ic_tor"
+    public let icon: Image = IconProvider.brandTor
     public let title: String = LocalizedString.featureTor
     public let description: String = LocalizedString.featureTorDescription
     public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreTor
@@ -71,7 +77,7 @@ public struct TorFeature: FeatureCellViewModel {
 }
 
 public struct LoadPerformanceFeature: FeatureCellViewModel {
-    public let icon: String = "ic_server_load"
+    public let icon: Image = IconProvider.servers
     public let title: String = LocalizedString.serverLoadTitle
     public let description: String = LocalizedString.performanceLoadDescription
     public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreLoads

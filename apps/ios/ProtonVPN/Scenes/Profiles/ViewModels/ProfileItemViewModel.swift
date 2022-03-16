@@ -23,6 +23,7 @@
 import Foundation
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 final class ProfileItemViewModel {
     
@@ -67,17 +68,17 @@ final class ProfileItemViewModel {
     
     var connectionChanged: (() -> Void)?
     
-    let connectedConnectIcon = UIImage(named: "con-connected")
+    let connectedConnectIcon: Image = IconProvider.powerOff
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return UIImage(named: "con-locked")
+            return IconProvider.lock
         } else if underMaintenance {
-            return UIImage(named: "con-unavailable")
+            return IconProvider.wrench
         } else if connectedUiState {
             return connectedConnectIcon
         } else {
-            return UIImage(named: "con-available")
+            return IconProvider.powerOff
         }
     }
     

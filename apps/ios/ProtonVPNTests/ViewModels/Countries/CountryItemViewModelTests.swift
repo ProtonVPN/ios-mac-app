@@ -22,6 +22,7 @@
 
 import XCTest
 import vpncore
+import ProtonCore_UIFoundations
 
 class CountryItemViewModelTests: XCTestCase {
 
@@ -39,19 +40,19 @@ class CountryItemViewModelTests: XCTestCase {
             serverModel(withStatus: 5),
             serverModel(withStatus: 1),
             serverModel(withStatus: 25),
-            ]).connectIcon! == UIImage(named: "con-unavailable"), "UnderMaintenance returned true while no server is under maintenance")
+            ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned true while no server is under maintenance")
         
         XCTAssertFalse(self.viewModel(withServers: [
             serverModel(withStatus: 5),
             serverModel(withStatus: 1),
             serverModel(withStatus: 0),
-            ]).connectIcon! == UIImage(named: "con-unavailable"), "UnderMaintenance returned true while at least one server is not under maintenance")
+            ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned true while at least one server is not under maintenance")
         
         XCTAssertTrue(self.viewModel(withServers: [
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
-            ]).connectIcon! == #imageLiteral(resourceName: "ic_maintenance"), "UnderMaintenance returned false while all servers are under maintenance")
+            ]).connectIcon! == IconProvider.wrench, "UnderMaintenance returned false while all servers are under maintenance")
     }
 
     // MARK: Mocks

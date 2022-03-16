@@ -23,6 +23,7 @@
 import UIKit
 import vpncore
 import Search
+import ProtonCore_UIFoundations
 
 class CountryItemViewModel {
     
@@ -117,11 +118,11 @@ class CountryItemViewModel {
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return #imageLiteral(resourceName: "con-locked")
+            return IconProvider.lock
         } else if underMaintenance {
-            return #imageLiteral(resourceName: "ic_maintenance")
+            return IconProvider.wrench
         } else {
-            return #imageLiteral(resourceName: "con-available")
+            return IconProvider.powerOff
         }
     }
     
