@@ -382,6 +382,8 @@
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E51C6079AB893075B8713F74 /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC8D5390AD2CD74301D6C54 /* Logger+Categories.swift */; };
+		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
+		E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
@@ -880,6 +882,7 @@
 		E534EA4B2806B68D00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
+		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
 		E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProviderTests.swift; sourceTree = "<group>"; };
 		E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLogFilesProvider.swift; sourceTree = "<group>"; };
 		E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProvider.swift; sourceTree = "<group>"; };
@@ -1678,6 +1681,7 @@
 				F7DD6EB6DCFD2331D821683A /* Optional+stringForLog.swift */,
 				4C4D898227BD0BE800548523 /* Array+Extension.swift */,
 				E5FFC89B2816C61500E355DA /* Countries+Extension.swift */,
+				E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2458,6 +2462,7 @@
 				E9DC7A07262DBFAA001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
 				E129C6CD22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
 				4242B0342465A41A0042145A /* VPNLogicalServicesRequest.swift in Sources */,
+				E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */,
 				F3C1413127BBF6C9009B881E /* SafeModePropertyProvider.swift in Sources */,
 				F314140C27B11AAE007424E9 /* NATTypePropertyProvider.swift in Sources */,
 				E976FB282791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */,
@@ -2763,6 +2768,7 @@
 				4242B09A2465A4E60042145A /* TrustKitHelper.swift in Sources */,
 				E1B5F63C21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68521B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
+				E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */,
 				F30B9EA92629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
 				D5906F1E22D46714001BC074 /* AttachmentRowViewModel.swift in Sources */,
 				E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,

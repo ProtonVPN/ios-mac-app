@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,6 +13,7 @@
                 <outlet property="countryLbl" destination="Psr-3V-aER" id="5j5-1L-qBE"/>
                 <outlet property="extraLbl" destination="7l7-7w-hrN" id="gbS-sw-9s5"/>
                 <outlet property="featuresLbl" destination="lI7-X5-WQw" id="I1c-JI-ZNo"/>
+                <outlet property="iconImageView" destination="emy-wk-gRB" id="ocd-ER-ClM"/>
                 <outlet property="instructionLbl" destination="UR3-r2-2Rq" id="IvG-ga-Se1"/>
                 <outlet property="noteLbl" destination="wTm-RO-JCq" id="PrJ-Nk-tyU"/>
                 <outlet property="servicesCV" destination="lPX-nk-i1J" id="EvF-n4-4TI"/>
@@ -58,34 +59,30 @@
                     <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_streaming" translatesAutoresizingMaskIntoConstraints="NO" id="emy-wk-gRB">
-                    <rect key="frame" x="16" y="156" width="16" height="16"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" image="placeholdertext.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="emy-wk-gRB">
+                    <rect key="frame" x="16" y="157" width="24" height="21.5"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="16" id="LXA-fC-Wxs"/>
-                        <constraint firstAttribute="height" constant="16" id="NWs-yD-4fU"/>
-                    </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Streaming - Italy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Psr-3V-aER">
-                    <rect key="frame" x="40" y="155.5" width="358" height="17"/>
+                    <rect key="frame" x="48" y="159.5" width="350" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect to a Plus server in this country to start streaming. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UR3-r2-2Rq">
-                    <rect key="frame" x="40" y="176.5" width="358" height="16"/>
+                    <rect key="frame" x="48" y="180.5" width="350" height="31.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note: Turn off the Location Service and clear the cache of the streaming apps to ensure new content appears." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTm-RO-JCq">
-                    <rect key="frame" x="40" y="196.5" width="358" height="31.5"/>
+                    <rect key="frame" x="48" y="216" width="350" height="31.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.61176470589999998" green="0.62745098040000002" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="lPX-nk-i1J">
-                    <rect key="frame" x="40" y="236" width="358" height="128"/>
+                    <rect key="frame" x="48" y="255.5" width="350" height="128"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="128" id="ywc-4C-fX9"/>
@@ -98,7 +95,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="and more " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7l7-7w-hrN">
-                    <rect key="frame" x="40" y="380" width="358" height="16"/>
+                    <rect key="frame" x="48" y="399.5" width="350" height="16"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -141,6 +138,6 @@
     </objects>
     <resources>
         <image name="close" width="217" height="217"/>
-        <image name="ic_streaming" width="16" height="16"/>
+        <image name="placeholdertext.fill" catalog="system" width="80" height="128"/>
     </resources>
 </document>

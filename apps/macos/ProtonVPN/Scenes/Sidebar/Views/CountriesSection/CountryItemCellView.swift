@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import ProtonCore_UIFoundations
 
 final class CountryItemCellView: NSView {
     
@@ -58,6 +59,10 @@ final class CountryItemCellView: NSView {
         torIV.toolTip = LocalizedString.torTitle
         p2pIV.toolTip = LocalizedString.p2pTitle
         smartIV.toolTip = LocalizedString.smartProtocolTitle
+
+        torIV.image = IconProvider.brandTor
+        p2pIV.image = IconProvider.arrowsSwitch
+        smartIV.image = IconProvider.globe
 
         separatorView.wantsLayer = true
         separatorView.layer?.backgroundColor = NSColor.protonExandableButton().cgColor
