@@ -33,7 +33,7 @@ class WrenchIcon: NSImageView {
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
+        context.setStrokeColor(.cgColor(.icon, .weak))
         context.drawPath(using: .stroke)
 
         // wrench icon
@@ -42,7 +42,7 @@ class WrenchIcon: NSImageView {
         let desiredSize = CGSize(width: wrenchSize.width / (wrenchSize.height / desiredHeight), height: desiredHeight)
         var infoRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
                               size: desiredSize)
-        if let image = wrenchIcon.colored(NSColor.protonGreyOutOfFocus()).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
+        if let image = wrenchIcon.colored(.weak).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
             context.draw(image, in: infoRect)
         }
     }

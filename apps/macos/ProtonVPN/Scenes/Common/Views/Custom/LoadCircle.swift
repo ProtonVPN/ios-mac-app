@@ -38,7 +38,7 @@ class LoadCircle: NSView {
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(NSColor.protonLightGrey().cgColor)
+        context.setStrokeColor(.cgColor(.icon, .weak))
         context.drawPath(using: .stroke)
         
         // outer circle segment

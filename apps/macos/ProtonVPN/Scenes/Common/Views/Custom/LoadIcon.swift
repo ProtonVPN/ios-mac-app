@@ -47,7 +47,7 @@ class LoadIcon: NSView {
         let icb = CGRect(x: 2.5, y: 2.5, width: bounds.width - 5, height: bounds.height - 5)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(NSColor.protonWhite().cgColor)
+        context.setStrokeColor(.cgColor(.icon))
         context.drawPath(using: .stroke)
         
         // outer circle segment
