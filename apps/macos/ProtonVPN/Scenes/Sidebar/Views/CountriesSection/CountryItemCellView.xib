@@ -10,11 +10,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" customClass="CountryItemCellView" customModule="ProtonVPN" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="435" height="73"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vAE-dT-dkH" userLabel="expandBtn">
-                    <rect key="frame" x="0.0" y="0.0" width="345" height="50"/>
+                    <rect key="frame" x="0.0" y="23" width="345" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="kwP-s5-tBN">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -25,7 +25,7 @@
                     </connections>
                 </button>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-N8-oAa">
-                    <rect key="frame" x="24" y="15" width="70" height="20"/>
+                    <rect key="frame" x="24" y="27" width="70" height="20"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KLl-LD-vXT" userLabel="flag">
                             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
@@ -68,35 +68,26 @@
                         <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
-                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ir3-ke-8Ga">
-                    <rect key="frame" x="110" y="9" width="206" height="32"/>
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ir3-ke-8Ga">
+                    <rect key="frame" x="189" y="21" width="222" height="32"/>
                     <subviews>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jbi-wV-au5">
-                            <rect key="frame" x="0.0" y="0.0" width="16" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="O3i-iy-4TX"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_smart-routing" id="GZA-Rn-b5l"/>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="Jbi-wV-au5">
+                            <rect key="frame" x="0.0" y="1.5" width="24.5" height="29"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="placeholdertext.fill" catalog="system" id="GZA-Rn-b5l"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a2P-N6-2pz">
-                            <rect key="frame" x="22" y="0.0" width="16" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="zNW-Y8-kqN"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_p2p" id="vft-r3-oAX"/>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="a2P-N6-2pz">
+                            <rect key="frame" x="30" y="1.5" width="24.5" height="29"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="placeholdertext.fill" catalog="system" id="vft-r3-oAX"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AUT-fa-vc3">
-                            <rect key="frame" x="44" y="0.0" width="16" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="cJx-te-1aR"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_tor" id="VEd-mZ-v1n"/>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="AUT-fa-vc3">
+                            <rect key="frame" x="60" y="1.5" width="24.5" height="29"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="placeholdertext.fill" catalog="system" id="VEd-mZ-v1n"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7wh-uQ-7Lp">
-                            <rect key="frame" x="66" y="0.0" width="64" height="32"/>
+                            <rect key="frame" x="90" y="0.0" width="64" height="32"/>
                             <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="fbx-Yz-THp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemBold" size="14"/>
@@ -107,7 +98,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YiN-1X-AMz" customClass="ExpandCellButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="136" y="0.0" width="32" height="32"/>
+                            <rect key="frame" x="160" y="0.0" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="UMX-gq-tXs"/>
                                 <constraint firstAttribute="height" constant="32" id="z9M-ZG-Ajk"/>
@@ -120,13 +111,9 @@
                                 <action selector="didTapExpandBtn:" target="c22-O7-iKe" id="WWN-2w-6ZD"/>
                             </connections>
                         </button>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vvv-5a-M1i">
-                            <rect key="frame" x="174" y="0.0" width="32" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="4Si-Nw-rXE"/>
-                                <constraint firstAttribute="width" constant="32" id="r5r-fO-uYO"/>
-                            </constraints>
-                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_maintenance" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="h9x-P2-PO1">
+                        <button verticalHuggingPriority="750" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="Vvv-5a-M1i">
+                            <rect key="frame" x="198" y="1.5" width="24.5" height="29"/>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="placeholdertext.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="h9x-P2-PO1">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -135,13 +122,7 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="7wh-uQ-7Lp" secondAttribute="bottom" id="2L4-15-FWz"/>
-                        <constraint firstItem="Jbi-wV-au5" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="53x-tc-4P1"/>
-                        <constraint firstAttribute="bottom" secondItem="a2P-N6-2pz" secondAttribute="bottom" id="7eO-VN-p2h"/>
-                        <constraint firstItem="AUT-fa-vc3" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="ABu-jz-X0Q"/>
                         <constraint firstItem="7wh-uQ-7Lp" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="Gt1-Cq-d2t"/>
-                        <constraint firstItem="a2P-N6-2pz" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="KU3-F3-UbJ"/>
-                        <constraint firstAttribute="bottom" secondItem="AUT-fa-vc3" secondAttribute="bottom" id="UgB-uy-0bs"/>
-                        <constraint firstAttribute="bottom" secondItem="Jbi-wV-au5" secondAttribute="bottom" id="dv5-bm-XVl"/>
                         <constraint firstAttribute="height" constant="32" id="yjP-7e-DiT"/>
                     </constraints>
                     <visibilityPriorities>
@@ -162,7 +143,7 @@
                     </customSpacing>
                 </stackView>
                 <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dyo-h7-133" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="208" y="9" width="68" height="32"/>
+                    <rect key="frame" x="303" y="21" width="68" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="oFh-La-Ogt"/>
                     </constraints>
@@ -183,7 +164,7 @@
                     </connections>
                 </button>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="iz4-kg-3lt">
-                    <rect key="frame" x="0.0" y="49" width="340" height="1"/>
+                    <rect key="frame" x="0.0" y="72" width="435" height="1"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="bxz-dH-b47"/>
                     </constraints>
@@ -213,7 +194,7 @@
                 <outlet property="torIV" destination="AUT-fa-vc3" id="A2R-To-lxK"/>
                 <outlet property="upgradeBtn" destination="7wh-uQ-7Lp" id="jce-2G-JRa"/>
             </connections>
-            <point key="canvasLocation" x="179" y="187"/>
+            <point key="canvasLocation" x="226.5" y="198.5"/>
         </customView>
     </objects>
     <resources>
@@ -222,7 +203,6 @@
         <image name="ic_maintenance" width="16" height="16"/>
         <image name="ic_p2p" width="16" height="16"/>
         <image name="ic_section_arrow_down" width="14" height="8"/>
-        <image name="ic_smart-routing" width="16" height="16"/>
-        <image name="ic_tor" width="16" height="16"/>
+        <image name="placeholdertext.fill" catalog="system" width="9" height="14"/>
     </resources>
 </document>
