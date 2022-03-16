@@ -37,7 +37,7 @@ struct FormiOSView: View {
 
                 UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-                StepProgress(step: 3, steps: 3, colorMain: colors.brand, colorText: colors.textAccent, colorSecondary: colors.brandLight40)
+                StepProgress(step: 3, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                     .padding(.bottom)
 
                 ScrollView {

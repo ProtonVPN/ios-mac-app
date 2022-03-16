@@ -230,7 +230,6 @@
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
 		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
-		E910272D27D9E4E300776425 /* SwiftUIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
 		E91BDD3B274BC9C1005F370C /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD39274BC9C1005F370C /* Logger+Callers.swift */; };
 		E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3A274BC9C1005F370C /* Logger+Categories.swift */; };
@@ -853,7 +852,6 @@
 		E90F956527E09D6600A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E90F956627E09DBB00A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E90F956727E09DD400A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Intents.strings; sourceTree = "<group>"; };
-		E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SwiftUIColor+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/SwiftUIColor+Extension.swift"; sourceTree = "<group>"; };
 		E911B93CDEDAEACCA61CA0A0 /* Pods-ProtonVPN WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
 		E91BDD39274BC9C1005F370C /* Logger+Callers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Callers.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Callers.swift"; sourceTree = "<group>"; };
@@ -2412,7 +2410,6 @@
 				EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */,
 				EE4FCF651F22102200B04EF8 /* NSAttributedString+Extension.swift */,
 				EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */,
-				E910272C27D9E4E300776425 /* SwiftUIColor+Extension.swift */,
 				EE98CFE61F1519D4000D6688 /* NSImage+Extension.swift */,
 				EEBE350D1EFAC508000ACCD1 /* NSString+Extension.swift */,
 				EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */,
@@ -3576,7 +3573,6 @@
 				42918CF2263836410065992E /* CountriesSectionHeaderView.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
 				EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
-				E910272D27D9E4E300776425 /* SwiftUIColor+Extension.swift in Sources */,
 				EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */,
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,
 				EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */,
