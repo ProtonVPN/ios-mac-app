@@ -18,25 +18,6 @@
 
 import Foundation
 
-public enum ServerTier: CaseIterable {
-    case free
-    case plus
-    case basic
-}
-
-extension ServerTier {
-    var title: String {
-        switch self {
-        case .basic:
-            return LocalizedString.basicServers
-        case .plus:
-            return LocalizedString.plusServers
-        case .free:
-            return LocalizedString.freeServers
-        }
-    }
-}
-
 enum SearchResult {
     case upsell
     case countries(countries: [CountryViewModel])

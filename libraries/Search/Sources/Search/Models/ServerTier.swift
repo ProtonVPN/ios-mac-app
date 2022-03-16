@@ -1,5 +1,5 @@
 //
-//  Created on 08.03.2022.
+//  Created on 16.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,14 +18,32 @@
 
 import Foundation
 
-public enum UserTier {
+public enum ServerTier: CaseIterable {
     case free
-    case basic
     case plus
-    case visionary
+    case basic
 }
 
-public enum SearchMode: Equatable {
-    case standard(UserTier)
-    case secureCore
+extension ServerTier {
+    var title: String {
+        switch self {
+        case .basic:
+            return LocalizedString.basicServers
+        case .plus:
+            return LocalizedString.plusServers
+        case .free:
+            return LocalizedString.freeServers
+        }
+    }
+
+    static func sorted(by userTier: UserTier) -> [ServerTier] {
+        switch userTier {
+        case .free:
+            return [.free, .plus, .basic]
+        case .basic:
+            return [.basic, .plus, .free]
+        case .plus, .visionary:
+            return [.plus, .basic, .free]
+        }
+    }
 }
