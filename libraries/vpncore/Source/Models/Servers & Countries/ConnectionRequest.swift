@@ -140,6 +140,7 @@ public enum ConnectionRequestType {
     case fastest
     case random
     case country(String, CountryConnectionRequestType)
+    case city(country: String, city: String)
 }
 
 public enum CountryConnectionRequestType {
@@ -157,6 +158,7 @@ extension ConnectionRequestType: Codable {
         case rawValue
         case countryCode
         case countryConnectionRequestType
+        case city
     }
     
     public init(from decoder: Decoder) throws {
@@ -171,6 +173,10 @@ extension ConnectionRequestType: Codable {
             let countryCode = try container.decode(String.self, forKey: .countryCode)
             let countryConnectionRequestType = try container.decode(CountryConnectionRequestType.self, forKey: .countryConnectionRequestType)
             self = .country(countryCode, countryConnectionRequestType)
+        case 3:
+            let countryCode = try container.decode(String.self, forKey: .countryCode)
+            let city = try container.decode(String.self, forKey: .city)
+            self = .city(country: countryCode, city: city)
         default:
             throw CodingError.unknownValue
         }
@@ -183,10 +189,14 @@ extension ConnectionRequestType: Codable {
             try container.encode(0, forKey: .rawValue)
         case .random:
             try container.encode(1, forKey: .rawValue)
-        case .country(let countryCode, let countryConnectionRequestType):
+        case let .country(countryCode, countryConnectionRequestType):
             try container.encode(2, forKey: .rawValue)
             try container.encode(countryCode, forKey: .countryCode)
             try container.encode(countryConnectionRequestType, forKey: .countryConnectionRequestType)
+        case let .city(country: countryCode, city: city):
+            try container.encode(3, forKey: .rawValue)
+            try container.encode(countryCode, forKey: .countryCode)
+            try container.encode(city, forKey: .city)
         }
     }
 }

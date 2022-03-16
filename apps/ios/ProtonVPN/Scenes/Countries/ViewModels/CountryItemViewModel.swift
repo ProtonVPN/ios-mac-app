@@ -199,11 +199,11 @@ class CountryItemViewModel {
     }()
 
     private lazy var cityItemViewModels: [CityItemViewModel] = {
-        let servers = serverViewModels.flatMap({ $1 })
-        let groups = Dictionary.init(grouping: servers, by: { $0.city })
+        let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
+        let groups = Dictionary(grouping: servers, by: { $0.city })
         return groups.map({
-            CityItemViewModel(name: $0.key, countryName: self.countryName, countryFlag: self.flag, servers: $0.value)
-        }).sorted(by: { $0.name < $1.name })
+            CityItemViewModel(cityName: $0.key, countryModel: self.countryModel, servers: $0.value, alertService: self.alertService, vpnGateway: self.vpnGateway, connectionStatusService: self.connectionStatusService)
+        }).sorted(by: { $0.cityName < $1.cityName })
     }()
     
     init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {

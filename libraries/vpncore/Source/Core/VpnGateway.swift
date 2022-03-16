@@ -76,6 +76,7 @@ public protocol VpnGatewayProtocol: class {
     func quickConnect()
     func quickConnectConnectionRequest() -> ConnectionRequest
     func connectTo(country countryCode: String, ofType serverType: ServerType)
+    func connectTo(country countryCode: String, city: String)
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
     func retryConnection()
@@ -248,6 +249,12 @@ public class VpnGateway: VpnGatewayProtocol {
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil)
         
+        connect(with: connectionRequest)
+    }
+
+    public func connectTo(country countryCode: String, city: String) {
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil)
+
         connect(with: connectionRequest)
     }
     

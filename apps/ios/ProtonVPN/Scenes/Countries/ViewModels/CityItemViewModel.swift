@@ -22,11 +22,20 @@ import Search
 import vpncore
 
 final class CityItemViewModel: CityViewModel {
-    let name: String
 
-    let countryName: String
+    private let alertService: AlertService
+    private var vpnGateway: VpnGatewayProtocol?
+    private let connectionStatusService: ConnectionStatusService
 
-    let countryFlag: UIImage?
+    let cityName: String
+
+    var countryName: String {
+        return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? ""
+    }
+
+    var countryFlag: UIImage? {
+        return UIImage(named: countryModel.countryCode.lowercased() + "-plain")
+    }
 
     var isUsersTierTooLow: Bool {
         return servers.allSatisfy({ $0.isUsersTierTooLow })
@@ -50,27 +59,34 @@ final class CityItemViewModel: CityViewModel {
         return isUsersTierTooLow ? LocalizedString.upgrade : nil
     }
 
+    var isConnected: Bool {
+        return servers.contains(where: { $0.isConnected })
+    }
+
+    var isConnecting: Bool {
+        return servers.contains(where: { $0.isConnecting })
+    }
+
     var isCurrentlyConnected: Bool {
-        return servers.contains(where: { $0.connectedUiState })
+        return isConnected || isConnecting
     }
 
     var connectButtonColor: UIColor {
         return isCurrentlyConnected ? UIColor.brandColor() : (underMaintenance ? UIColor.weakInteractionColor() : UIColor.secondaryBackgroundColor())
     }
 
-    var server: ServerViewModel? {
-        return servers.first
-    }
-
     var connectionChanged: (() -> Void)?
 
     private let servers: [ServerItemViewModel]
+    private let countryModel: CountryModel
 
-    init(name: String, countryName: String, countryFlag: UIImage?, servers: [ServerItemViewModel]) {
-        self.name = name
-        self.countryName = countryName
-        self.countryFlag = countryFlag
+    init(cityName: String, countryModel: CountryModel, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol?, connectionStatusService: ConnectionStatusService) {
+        self.cityName = cityName
+        self.countryModel = countryModel
         self.servers = servers
+        self.alertService = alertService
+        self.vpnGateway = vpnGateway
+        self.connectionStatusService = connectionStatusService
 
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: VpnGateway.connectionChanged, object: nil)
     }
@@ -82,7 +98,31 @@ final class CityItemViewModel: CityViewModel {
     }
 
     func connectAction() {
-        server?.connectAction()
+        guard let vpnGateway = vpnGateway else {
+            return
+        }
+
+        updateTier()
+
+        log.debug("Connect requested by clicking on Country item", category: .connectionConnect, event: .trigger)
+
+        if isUsersTierTooLow {
+            log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
+            alertService.push(alert: AllCountriesUpsellAlert())
+        } else if underMaintenance {
+            log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
+            alertService.push(alert: MaintenanceAlert(cityName: countryName))
+        } else if isConnected {
+            log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else if isConnecting {
+            log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.stopConnecting(userInitiated: true)
+        } else {
+            log.debug("Will connect to city: \(cityName) in country: \(countryName)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(country: countryModel.countryCode, city: cityName)
+            connectionStatusService.presentStatusViewController()
+        }
     }
 
     // MARK: - Private functions

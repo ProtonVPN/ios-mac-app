@@ -95,7 +95,7 @@ final class CityCell: UITableViewCell {
         }
 
         guard let searchText = searchText, !searchText.isEmpty else {
-            cityLabel.text = viewModel.name
+            cityLabel.text = viewModel.cityName
             countryLabel.text = viewModel.countryName
             return
         }
@@ -113,7 +113,7 @@ final class CityCell: UITableViewCell {
             return text
         }
 
-        cityLabel.attributedText = createText(viewModel.name)
+        cityLabel.attributedText = createText(viewModel.cityName)
         countryLabel.attributedText = createText(viewModel.countryName)
     }
 }

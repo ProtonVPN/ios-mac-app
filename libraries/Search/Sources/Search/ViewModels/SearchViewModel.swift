@@ -88,7 +88,7 @@ final class SearchViewModel {
                 results.append(SearchResult.countries(countries: countries))
             }
 
-            let cities = data.flatMap({ $0.getCities() }).filter({ filter($0.name) || filter($0.countryName) }).sorted(by: { $0.name < $1.name })
+            let cities = data.flatMap({ $0.getCities() }).filter({ filter($0.cityName) || filter($0.countryName) }).sorted(by: { $0.cityName < $1.cityName })
             if !cities.isEmpty {
                 results.append(SearchResult.cities(cities: cities))
             }

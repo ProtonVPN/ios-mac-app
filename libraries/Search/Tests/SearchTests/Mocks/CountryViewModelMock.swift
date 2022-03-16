@@ -65,8 +65,8 @@ final class CountryViewModelMock: CountryViewModel {
         let servers = ServerTier.sorted(by: .plus).flatMap({ servers[$0] ?? [] })
         let groups = Dictionary.init(grouping: servers, by: { $0.city })
         self.cities = groups.map({
-            CityViewModelMock(name: $0.key, countryName: country)
-        }).sorted(by: { $0.name < $1.name })
+            CityViewModelMock(cityName: $0.key, countryName: country)
+        }).sorted(by: { $0.cityName < $1.cityName })
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {

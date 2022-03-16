@@ -260,6 +260,11 @@ public class MaintenanceAlert: SystemAlert {
         title = LocalizedString.countryServersUnderMaintenance(countryName)
         type = .alert
     }
+
+    public init(cityName: String) {
+        title = LocalizedString.countryServersUnderMaintenance(cityName)
+        type = .alert
+    }
     
     /// If `forSpecificCountry` is set, switches between country and servers texts, if it's nil, uses one text
     public init(forSpecificCountry: Bool?) {
