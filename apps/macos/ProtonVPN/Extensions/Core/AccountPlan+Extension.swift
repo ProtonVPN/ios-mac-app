@@ -24,22 +24,16 @@ import vpncore
 import AppKit
 
 extension AccountPlan {
-    
-    var colorForUI: NSColor {
-        let color: NSColor
+    var styleForUI: AppTheme.Style {
         switch self {
         case .free:
-            color = NSColor.freeUser()
+            return .weak
         case .basic:
-            color = NSColor.basicUser()
-        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
-            color = NSColor.plusUser()
+            return .info
+        case .trial, .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
+            return .success
         case .visionary, .unlimited, .visionary2022:
-            color = NSColor.visionaryUser()
-        case .trial:
-            color = NSColor.plusUser()
+            return .interactive
         }
-        return color
     }
-    
 }
