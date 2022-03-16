@@ -22,10 +22,10 @@ import SwiftUI
 @available(iOS 14.0.0, *)
 extension BugReport.Colors {
     public init() {
-        self.init(brand: Color(.brandColor()),
-                  brandLight20: Color(.brandLighten20Color()),
-                  brandLight40: Color(.brandLighten40Color()),
-                  brandDark40: Color(.brandDarken40Color()),
+        self.init(interactive: Color(.brandColor()),
+                  interactiveSecondary: Color(.brandLighten20Color()),
+                  interactiveActive: Color(.brandLighten40Color()),
+                  interactiveDisabled: Color(.brandDarken40Color()),
                   textPrimary: Color(.normalTextColor()),
                   textSecondary: Color(.weakTextColor()),
                   textAccent: Color(.textAccent()),

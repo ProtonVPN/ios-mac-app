@@ -39,13 +39,13 @@ struct PrimaryButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
             .background(ZStack(alignment: .trailing) {
                 if isLoading {
-                    colors.brandLight20
+                    colors.interactiveSecondary
                     ProgressView()
                         .padding(.horizontal, paddingHorizontal)
                         .progressViewStyle(.circular)
 
                 } else {
-                    isEnabled ? colors.brand : colors.brandDark40
+                    isEnabled ? colors.interactive : colors.interactiveDisabled
                 }
 
             })
@@ -63,7 +63,7 @@ struct SecondaryButtonStyle: ButtonStyle {
         configuration.label
             .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
             .padding(.horizontal, paddingHorizontal)
-            .foregroundColor(colors.brand)
+            .foregroundColor(colors.interactive)
             .cornerRadius(cornerRadius)
             .opacity(configuration.isPressed ? 0.5 : 1)
     }

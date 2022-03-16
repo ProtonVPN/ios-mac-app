@@ -18,23 +18,24 @@
 
 import BugReport
 import SwiftUI
+import ProtonCore_UIFoundations
 
 @available(macOS 11, *)
 extension BugReport.Colors {
     public init() {
-        self.init(brand: .brandColor,
-                  brandLight20: .brandLighten20Color,
-                  brandLight40: .brandLighten40Color,
-                  brandDark40: .brandDarken40Color,
-                  textPrimary: .normalTextColor,
-                  textSecondary: .weakTextColor,
-                  textAccent: .normalTextColor,
-                  background: .backgroundColor,
-                  backgroundSecondary: .secondaryBackgroundColor,
-                  backgroundUpdateButton: .weakInteractionColor,
-                  separator: .normalSeparatorColor,
-                  qfIcon: .notificationWarningColor,
-                  externalLinkIcon: .textHint
+        self.init(interactive: ColorProvider.InteractionNorm,
+                  interactiveSecondary: ColorProvider.InteractionNormActive,
+                  interactiveActive: ColorProvider.InteractionNormHover,
+                  interactiveDisabled: ColorProvider.InteractionWeak,
+                  textPrimary: ColorProvider.TextNorm,
+                  textSecondary: ColorProvider.TextWeak,
+                  textAccent: ColorProvider.TextHint,
+                  background: ColorProvider.BackgroundNorm,
+                  backgroundSecondary: ColorProvider.BackgroundWeak,
+                  backgroundUpdateButton: ColorProvider.InteractionWeak,
+                  separator: ColorProvider.BorderWeak,
+                  qfIcon: ColorProvider.SignalWarning,
+                  externalLinkIcon: ColorProvider.TextHint
         )
     }
 }

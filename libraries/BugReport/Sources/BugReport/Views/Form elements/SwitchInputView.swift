@@ -31,7 +31,7 @@ struct SwitchInputView: View {
                 if #available(iOS 15.0, macOS 12, *) {
                     Toggle(field.label, isOn: $value)
                         .accessibilityIdentifier("Toggle \(field.submitLabel)")
-                        .tint(colors.brand)
+                        .tint(colors.interactive)
                 } else {
                     Toggle(field.label, isOn: $value)
                         .accessibilityIdentifier("Toggle \(field.submitLabel)")

@@ -38,7 +38,7 @@ struct QuickFixesiOSList: View {
 
                 UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-                StepProgress(step: 2, steps: 3, colorMain: colors.brand, colorText: colors.textAccent, colorSecondary: colors.brandLight40)
+                StepProgress(step: 2, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                     .padding(.bottom)
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -101,7 +101,7 @@ struct QuickFixesiOSList: View {
                             Text(LocalizedString.br2ButtonNext)
                                 .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
                                 .padding(.horizontal, 16)
-                                .background(colors.brand)
+                                .background(colors.interactive)
                                 .foregroundColor(.white)
                                 .cornerRadius(8)
                         }

@@ -23,11 +23,11 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct Colors {
 
-    public init(brand: Color, brandLight20: Color, brandLight40: Color, brandDark40: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundSecondary: Color, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
-        self.brand = brand
-        self.brandLight20 = brandLight20
-        self.brandLight40 = brandLight40
-        self.brandDark40 = brandDark40
+    public init(interactive: Color, interactiveSecondary: Color, interactiveActive: Color, interactiveDisabled: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundSecondary: Color, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
+        self.interactive = interactive
+        self.interactiveSecondary = interactiveSecondary
+        self.interactiveActive = interactiveActive
+        self.interactiveDisabled = interactiveDisabled
         self.textPrimary = textPrimary
         self.textSecondary = textSecondary
         self.textAccent = textAccent
@@ -39,10 +39,10 @@ public struct Colors {
         self.externalLinkIcon = externalLinkIcon
     }
 
-    public var brand: Color
-    public var brandLight20: Color
-    public var brandLight40: Color
-    public var brandDark40: Color
+    public var interactive: Color
+    public var interactiveSecondary: Color
+    public var interactiveActive: Color
+    public var interactiveDisabled: Color
 
     public var textPrimary: Color
     public var textSecondary: Color
@@ -58,10 +58,10 @@ public struct Colors {
 
     /// Default color set for testing and previews
     public static let testColors = Colors(
-        brand: Color(rgbValue: 0x6D4AFF),
-        brandLight20: Color(rgbValue: 0x8A6EFF),
-        brandLight40: Color(rgbValue: 0xC4B7FF),
-        brandDark40: Color(rgbValue: 0x372580),
+        interactive: Color(rgbValue: 0x6D4AFF),
+        interactiveSecondary: Color(rgbValue: 0x8A6EFF),
+        interactiveActive: Color(rgbValue: 0xC4B7FF),
+        interactiveDisabled: Color(rgbValue: 0x372580),
         textPrimary: Color.white,
         textSecondary: Color(rgbValue: 0xA7A4B5),
         textAccent: Color(rgbValue: 0x6C49FF),
