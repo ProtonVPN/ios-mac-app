@@ -49,7 +49,7 @@ class LoadingAnimationView: NSView {
         let icb = CGRect(x: lineWidth / 2, y: lineWidth / 2, width: bounds.width - lineWidth, height: bounds.height - lineWidth)
         
         context.setLineWidth(lineWidth)
-        context.setStrokeColor(NSColor.protonWhite().cgColor)
+        context.setStrokeColor(.cgColor(.icon))
         
         let halfWidth = width / 2
         let halfHeight = icb.height / 2
