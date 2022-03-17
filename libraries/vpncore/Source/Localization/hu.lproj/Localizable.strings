@@ -80,7 +80,7 @@
 "_auto_connect_tooltip" = "Az alkalmazás indításakor kapcsolódik a kiválasztott profilhoz";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "BASIC SZERVEREK";
+"_basic_servers" = "Basic Szerverek";
 
 /* Common word */
 "_cancel" = "Mégsem";
@@ -277,7 +277,7 @@
 /* MacOS app tour: end tour button */
 "_end_tour" = "Bezárás";
 
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+/* %@ is always 'Plus' e.g. ENJOY Plus FOR FREE! */
 "_enjoy_for_free" = "PRÓBÁLD KI A %@ CSOMAGOT INGYEN!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
@@ -523,13 +523,13 @@
 /* iOS: section header in countries list */
 "_free_servers" = "INGYENES SZERVEREK";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Frissíts a %@-ra, hogy továbbra is használhasd ezeket a funkciókat:";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "Az ingyenes próbaverzió lejárt!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "A fiókod átváltottuk a Proton VPN ingyenes csomagjába. Ezeket a funkciókat nem tartalmazza az ingyenes szolgáltatás %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
@@ -895,8 +895,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "A fizetett csomag megvásárlása után az iTunes-fiókodban felszámolásra kerül a megjelenített összeg, amely tartalmazza az adókat és a kiegészítő platformdíjakat (amelyeket a Proton nem számít fel közvetlenül). A vásárlás után automatikusan frissül a kiválasztott csomag egy évre, amely után megújíthatod vagy lemondhatod online vagy iOS-alkalmazásunkon keresztül.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plusz szerverek\nBiztonsági mag\nTor szerverek";
@@ -977,7 +977,7 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Publikus IP: %@";
@@ -1446,7 +1446,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Köszönjük a Proton VPN használatát. Vess egy pillantást\naz alkalmazás főbb jellemzőire.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Üdvözlő ajándékként 7 napos hozzáférést kapsz az a(z)\n%@ csomaghoz, ami az alábbiakat tartalmazza:";
 
 /* MacOS welcome screen: title */

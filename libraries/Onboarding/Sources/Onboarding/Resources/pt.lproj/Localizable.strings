@@ -8,7 +8,7 @@
 "onboarding_congratulations" = "Parabéns";
 
 /* (No Comment) */
-"onboarding_connected_connect_to_plus" = "Connect to a PLUS server";
+"onboarding_connected_connect_to_plus" = "Connect to a Plus server";
 
 /* (No Comment) */
 "onboarding_connected_connected_to" = "Ligado a:";
@@ -56,7 +56,7 @@
 "onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
 
 /* (No Comment) */
-"onboarding_plus_only" = "AVAILABLE WITH PLUS";
+"onboarding_plus_only" = "Available with Plus";
 
 /* (No Comment) */
 "onboarding_purchased_note" = "Enjoy the world of privacy.";

@@ -374,7 +374,7 @@ class CountriesSectionViewModel {
             }
         }
         
-        // FREE
+        // Free
 
         let freeLocations = countries.filter { $0.0.lowestTier == 0 }
         let basicPlusLocations = countries.filter { $0.0.lowestTier != 0 }

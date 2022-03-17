@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "Saat memulai aplikasi, Anda akan tersambung ke profil terpilih";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "Server BASIC";
+"_basic_servers" = "Server Basic";
 
 /* Battery usages screen description */
 "_battery_description" = "Semua lalu lintas di telepon Anda akan dikelola melalui OpenVPN, dengan demikian iOS akan mengalokasikan penggunaan baterai aplikasi lain ke Proton VPN.";
@@ -602,7 +602,7 @@
 "_feature_speed" = "Kecepatan";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Server-server PLUS memungkinkan Anda untuk dapat mengakses berbagai layanan streaming (Netflix, Disney+, dll) di manapun Anda berada.";
+"_feature_streaming_description" = "Server-server Plus memungkinkan Anda untuk dapat mengakses berbagai layanan streaming (Netflix, Disney+, dll) di manapun Anda berada.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -634,14 +634,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "Server GRATIS";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Tingkatkan ke %@ dan lanjut nikmati fitur-fitur ini:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Masa uji coba gratis Anda akan segera berakhir!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Akun Anda telah diturunkan ke Proton VPN FREE.\nIni yang akan Anda rindukan dari %@:";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Akun Anda telah diturunkan ke Proton VPN Free.\nIni yang akan Anda rindukan dari %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "MASA UJI COBA GRATIS %@";
@@ -830,16 +830,16 @@
 "_locations_all" = "Semua lokasi";
 
 /* (No Comment) */
-"_locations_basic" = "Lokasi BASIC";
+"_locations_basic" = "Lokasi Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Lokasi BASIC & PLUS";
+"_locations_basic_plus" = "Lokasi Basic & Plus";
 
 /* (No Comment) */
 "_locations_free" = "Lokasi GRATIS";
 
 /* (No Comment) */
-"_locations_plus" = "Lokasi PLUS";
+"_locations_plus" = "Lokasi Plus";
 
 /* iOS: Login button in several places */
 "_log_in" = "Masuk";
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Apabila paket pilihan Anda telah dikonfirmasi, akun iTunes Anda akan ditagih sesuai harga yang tertera, termasuk harga paket dan biaya transaksi aplikasi Apple (tidak ditarik oleh Proton). Usai pembayaran, Anda bisa segera menikmati paket yang dipilih selama 1 tahun. Setelah itu, Anda bisa memperpanjang atau membatalkan paket melalui web atau aplikasi kami di iOS.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Server Plus\nSecure Core\nServer Tor";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "Dibutuhkan langganan Plus atau Visionary";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "Server-server PLUS";
+"_plus_servers" = "Server-server Plus";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Gunakan Secure Core, tonton acara TV kesukaan Anda,\ngunakan sampai 5 perangkat berbeda dan masih banyak lagi!";
@@ -1280,7 +1280,7 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 /* (No Comment) */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP Publik";
@@ -1780,13 +1780,13 @@
 "_test_servers" = "Server TEST";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "FREE";
+"_tier_free" = "Free";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "VISIONARY";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Terima kasih telah menggunakan Proton VPN. Lihat sekilas fitur-fitur utama aplikasi.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Sebagai sebuah hadiah selamat datang, Anda diberikan 7 hari akses untuk berlangganan %@ yang memberikan Anda:";
 
 /* Shown on the Welcome screen as the screen headline */

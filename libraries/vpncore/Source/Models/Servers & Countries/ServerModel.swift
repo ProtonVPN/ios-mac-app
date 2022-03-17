@@ -359,7 +359,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     // swiftlint:enable nsobject_prefer_isequal
     
     public static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
-        // Servers whose name contains word FREE come
+        // Servers whose name contains word Free come
         // first in the ordering.
         let lhsIsFree = lhs.isFree
         let rhsIsFree = rhs.isFree

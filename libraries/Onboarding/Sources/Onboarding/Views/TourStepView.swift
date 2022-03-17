@@ -63,6 +63,6 @@ final class TourStepView: UIView {
         plusOnlyStyle(plusOnlyView)
         plusOnlyTextStyle(plusOnlyLabel)
 
-        plusOnlyLabel.text = LocalizedString.onboardingPlusOnly.uppercased()
+        plusOnlyLabel.text = LocalizedString.onboardingPlusOnly
     }
 }

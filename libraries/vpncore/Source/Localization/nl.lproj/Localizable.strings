@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "Bij het starten van de app bent u verbonden met het geselecteerde profiel";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "BASIC-servers";
+"_basic_servers" = "Basic-servers";
 
 /* Battery usages screen description */
 "_battery_description" = "Al het netwerkverkeer op uw telefoon verloopt via OpenVPN, daarom toont iOS het batterijgebruik van andere apps alsof het van Proton VPN is.";
@@ -602,7 +602,7 @@
 "_feature_speed" = "Snelheid";
 
 /* (No Comment) */
-"_feature_streaming_description" = "PLUS-servers ondersteunen streaming (Netflix, Disney+, enz.) wereldwijd.";
+"_feature_streaming_description" = "Plus servers ondersteunen streaming (Netflix, Disney+, enz.) wereldwijd.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -634,7 +634,7 @@
 /* iOS: section header in countries list */
 "_free_servers" = "GRATIS servers";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Upgrade naar %@ en blijf gebruik maken van deze functies:";
 
 /* MacOS: \Trial about to expire\ screen title */
@@ -830,16 +830,16 @@
 "_locations_all" = "Alle locaties";
 
 /* (No Comment) */
-"_locations_basic" = "BASIC locaties";
+"_locations_basic" = "Basic locaties";
 
 /* (No Comment) */
-"_locations_basic_plus" = "BASIC & PLUS locaties";
+"_locations_basic_plus" = "Basic & Plus locaties";
 
 /* (No Comment) */
 "_locations_free" = "GRATIS locaties";
 
 /* (No Comment) */
-"_locations_plus" = "PLUS locaties";
+"_locations_plus" = "Plus locaties";
 
 /* iOS: Login button in several places */
 "_log_in" = "Aanmelden";
@@ -1049,7 +1049,7 @@
 "_netshield_off" = "Uit";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "MALWARE & ADS BLOCKER";
+"_netshield_section_title" = "Malware & Ads Blocker";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Bij de bevestiging van uw aankoop van een betaald abonnement wordt het getoonde bedrag, inclusief belastingen en extra platformkosten (die niet rechtstreeks door Proton in rekening worden gebracht), in rekening gebracht op uw iTunes account. Na de aankoop wordt u automatisch geüpgraded naar het geselecteerde abonnement voor een periode van 1 jaar, waarna u kunt verlengen of annuleren, online of via onze iOS app.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus Servers\nSecure Core\nTor Servers";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "Plus of Visionary abonnement vereist";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "PLUS servers";
+"_plus_servers" = "Plus servers";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Gebruik Secure Core, stream uw favoriete TV-series,\ngebruik tot 5 verschillende apparaten en meer!";
@@ -1780,13 +1780,13 @@
 "_test_servers" = "TEST Servers";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "GRATIS";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "VISIONARY";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Bedankt voor het gebruik van Proton VPN. Bekijk snel \nde belangrijkste kenmerken van de applicatie.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Als welkomstgeschenk krijgt u 7 dagen toegang tot een\n%@ abonnement dat u het volgende biedt:";
 
 /* Shown on the Welcome screen as the screen headline */

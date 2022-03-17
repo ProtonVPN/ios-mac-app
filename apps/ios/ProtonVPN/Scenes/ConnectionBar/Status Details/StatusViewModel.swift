@@ -159,7 +159,7 @@ class StatusViewModel {
             timeCell
         ]
         
-        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
     }
     
     private var timeCell: TableViewCellModel {
@@ -172,7 +172,7 @@ class StatusViewModel {
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.notConnected),
         ]
         
-        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
     }
 
     private var technicalDetailsSectionConnecting: TableViewSection {
@@ -181,7 +181,7 @@ class StatusViewModel {
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.connecting),
         ]
 
-        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
     }
 
     private var technicalDetailsSectionLoadingConnectionInfo: TableViewSection {
@@ -190,7 +190,7 @@ class StatusViewModel {
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.loadingConnectionInfo),
         ]
 
-        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.technicalDetails, cells: cells)
     }
     
     // MARK: - Save as Profile
@@ -331,7 +331,7 @@ class StatusViewModel {
             }
         }
         
-        return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
     }
     
     private var netshieldUnavailableSection: TableViewSection {
@@ -347,7 +347,7 @@ class StatusViewModel {
             }))
         }
         
-        return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
     }
     
     private func changeNetshield(to newValue: NetShieldType) {

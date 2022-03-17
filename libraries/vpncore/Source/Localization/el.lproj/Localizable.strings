@@ -523,14 +523,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "ΔΩΡΕΑΝ ΔΙΑΚΟΜΙΣΤΕΣ";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Αναβαθμίστε σε %@ και συνεχίστε να απολαμβάνετε αυτές τις λειτουργίες:";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "Η δωρεάν περίοδος δοκιμής σας πρόκειται να λήξει!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Ο λογαριασμός σας έχει υποβαθμιστεί σε Proton VPN FREE.\nΔείτε τι χάνετε από %@:";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Ο λογαριασμός σας έχει υποβαθμιστεί σε Proton VPN Free.\nΔείτε τι χάνετε από %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "Η ΔΩΡΕΑΝ ΠΕΡΙΟΔΟΣ ΔΟΚΙΜΗΣ ΣΑΣ %@";
@@ -895,8 +895,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Μόλις επιβεβαιώσετε την αγορά ενός πακέτου, ο λογαριασμός σας στο iTunes θα χρεωθεί με το ποσό που εμφανίζεται, το οποίο περιλαμβάνει φόρους και πρόσθετα τέλη πλατφόρμας (τα οποία δεν χρεώνονται απευθείας από την Proton). Αφού πραγματοποιήσετε την αγορά, θα αναβαθμιστεί αυτόματα το πακέτο για περίοδο ενός έτους, μετά από την οποία μπορείτε να ανανεώσετε ή να το ακυρώσετε, είτε online είτε μέσω της εφαρμογής iOS.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Διακομιστές Plus\nSecure Core\nΔιακομιστές Tor";
@@ -977,7 +977,7 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Δημόσια IP: %@";
@@ -1446,7 +1446,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Ευχαριστούμε που χρησιμοποιείτε το Proton VPN. Ρίξτε μια γρήγορη ματιά\nστις κύριες λειτουργίες της εφαρμογής.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Ως δώρο καλωσορίσματος, σας παρέχεται πρόσβαση για 7 ημέρες σε μια\n%@ συνδρομή που σας δίνει:";
 
 /* MacOS welcome screen: title */
