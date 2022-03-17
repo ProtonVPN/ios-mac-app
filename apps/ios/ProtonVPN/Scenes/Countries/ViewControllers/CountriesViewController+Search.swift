@@ -47,14 +47,19 @@ extension CountriesViewController: SearchCoordinatorDelegate {
     }
 
     private var searchMode: SearchMode {
-        if viewModel.isFreeUser {
-            return .freeUser
-        }
-
         if viewModel.secureCoreOn {
             return .secureCore
         }
 
-        return .standard
+        switch viewModel.accountPlan {
+        case .free, .trial:
+            return .standard(.free)
+        case .basic:
+            return .standard(.basic)
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
+            return .standard(.plus)
+        case .visionary, .unlimited, .visionary2022:
+            return .standard(.visionary)
+        }
     }
 }

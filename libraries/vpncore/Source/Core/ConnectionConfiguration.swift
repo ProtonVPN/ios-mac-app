@@ -20,7 +20,19 @@ public struct ConnectionConfiguration: Codable {
     public let natType: NATType
     public let safeMode: Bool?
     public let ports: [Int]
-    
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.server = try container.decode(ServerModel.self, forKey: CodingKeys.server)
+        self.serverIp = try container.decode(ServerIp.self, forKey: CodingKeys.serverIp)
+        self.vpnProtocol = try container.decode(VpnProtocol.self, forKey: CodingKeys.vpnProtocol)
+        self.netShieldType = try container.decode(NetShieldType.self, forKey: CodingKeys.netShieldType)
+        self.ports = try container.decode([Int].self, forKey: CodingKeys.ports)
+        self.safeMode = try container.decodeIfPresent(Bool.self, forKey: CodingKeys.safeMode)
+        // This can be missing from JSON if config was saved with older app version. Set it to default in that case.
+        self.natType = try container.decodeIfPresent(NATType.self, forKey: .natType) ?? NATType.default
+    }
+
     public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, ports: [Int]) {
         self.server = server
         self.serverIp = serverIp

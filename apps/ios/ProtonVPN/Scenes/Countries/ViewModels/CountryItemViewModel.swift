@@ -292,24 +292,20 @@ class CountryItemViewModel {
 
 extension CountryItemViewModel: CountryViewModel {
     func getServers() -> [ServerTier: [ServerViewModel]] {
-        var data: [ServerTier: [ServerViewModel]] = [:]
-        for tier in ServerTier.allCases {
-            data[tier] = []
-        }
-
-        for (tier, servers) in serverViewModels {
-            let serverTier: ServerTier
+        let convertTier = { (tier: Int) -> ServerTier in
             switch tier {
             case CoreAppConstants.VpnTiers.free:
-                serverTier = .free
+                return .free
             case CoreAppConstants.VpnTiers.plus:
-                serverTier = .plus
+                return .plus
             default:
-                serverTier = .basic
+                return .basic
             }
-            data[serverTier]?.append(contentsOf: servers)
         }
-        return data
+
+        return serverViewModels.reduce(into: [ServerTier: [ServerViewModel]]()) {
+            $0[convertTier($1.tier)] = $1.viewModels
+        }
     }
 
     var flag: UIImage? {
