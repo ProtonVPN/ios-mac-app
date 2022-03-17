@@ -71,8 +71,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
 
-    var isFreeUser: Bool {
-        return (try? keychain.fetchCached().accountPlan)?.paid != true
+    var accountPlan: AccountPlan {
+        return (try? keychain.fetchCached().accountPlan) ?? .free
     }
 
     public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ConnectionStatusServiceFactory & VpnKeychainFactory & PlanServiceFactory & SearchStorageFactory

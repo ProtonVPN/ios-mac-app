@@ -22,6 +22,7 @@ import Modals_iOS
 import Search
 
 final class ViewController: UIViewController {
+    @IBOutlet private weak var userTierSegmentedControl: UISegmentedControl!
     @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
 
     private let coordinator: SearchCoordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)), constants: Constants(numberOfCountries: 61)), storage: Storage())
@@ -37,34 +38,49 @@ final class ViewController: UIViewController {
 
         title = "Search sample app"
         coordinator.delegate = self
+
+        modeSegmentedControl.addTarget(self, action: #selector(modeChanged), for: .valueChanged)
     }
 
     @IBAction private func searchTapped(_ sender: Any) {
         coordinator.start(navigationController: self.navigationController!, data: createData(), mode: createMode())
     }
 
+    @objc private func modeChanged() {
+        userTierSegmentedControl.isEnabled = modeSegmentedControl.selectedSegmentIndex == 0
+    }
+
     private func createMode() -> SearchMode {
         switch modeSegmentedControl.selectedSegmentIndex {
         case 0:
-            return .standard
-        case 1:
-            return .secureCore
+            return .standard(createTier())
         default:
-            return .freeUser
+            return .secureCore
+        }
+    }
+
+    private func createTier() -> UserTier {
+        switch userTierSegmentedControl.selectedSegmentIndex {
+        case 0:
+            return .basic
+        case 1:
+            return .plus
+        default:
+            return .visionary
         }
     }
 
     private func createData(forceTier: ServerTier? = nil) -> [CountryItemViewModel] {
         let mode = createMode()
-        let tier = forceTier ?? (mode == .freeUser ? ServerTier.free : ServerTier.plus)
+        let tier = forceTier ?? (createTier() == UserTier.free ? ServerTier.free : ServerTier.plus)
         let isSecureCoreCountry = mode == .secureCore
         let entryCountryName: String? = mode == .secureCore ? "Italy" : nil
 
         return [
             CountryItemViewModel(country: "Switzerland", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName),
-                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName)
+                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
+                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
                 ],
                 tier: [
                     ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName)
@@ -72,8 +88,8 @@ final class ViewController: UIViewController {
             ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "United States", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName),
-                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName)
+                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
+                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
                 ],
                 tier: [
                     ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName)
@@ -81,8 +97,8 @@ final class ViewController: UIViewController {
             ], isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "Czechia", servers: [
                 ServerTier.basic: [
-                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName),
-                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == .free, entryCountryName: entryCountryName)
+                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
+                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
                 ],
                 tier: [
                     ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName)

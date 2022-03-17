@@ -83,37 +83,30 @@ final class SearchViewModel {
         let countries = data.filter({ filter($0.description) })
 
         switch mode {
-        case .standard, .freeUser:
+        case let .standard(userTier):
             if !countries.isEmpty {
                 results.append(SearchResult.countries(countries: countries))
             }
-            var servers: [ServerTier: [ServerViewModel]] = [:]
-            for tier in ServerTier.allCases {
-                servers[tier] = []
-            }
-            for country in data {
-                let groups = country.getServers()
-                for (key, values) in groups {
-                    servers[key]?.append(contentsOf: values)
-                }
-            }
-            for tier in ServerTier.allCases {
-                let tierServers = servers[tier]?.filter({ filter($0.description) }) ?? []
+
+            for tier in ServerTier.sorted(by: userTier) {
+                let tierServers = data.flatMap({ $0.getServers()[tier]?.filter({ filter($0.description) }) ?? [] })
                 if !tierServers.isEmpty {
                     results.append(SearchResult.servers(tier: tier, servers: tierServers))
                 }
             }
+
+            if userTier == .free, !results.isEmpty {
+                results.insert(SearchResult.upsell, at: 0)
+            }
+
         case .secureCore:
-            if !countries.isEmpty {
-                let servers = countries.flatMap({ $0.getServers().flatMap { $0.1 } })
-                if !servers.isEmpty {
-                    results.append(SearchResult.secureCoreCountries(servers: servers))
-                }
+            let servers = countries.flatMap({ $0.getServers().flatMap { $0.1 } })
+            if !servers.isEmpty {
+                results.append(SearchResult.secureCoreCountries(servers: servers))
             }
         }
 
-        let freeSection = mode == .freeUser ? [SearchResult.upsell] : []
-        status = results.isEmpty ? .noResults : .results(freeSection + results)
+        status = results.isEmpty ? .noResults : .results(results)
     }
 
     func saveSearch(searchText: String) {
