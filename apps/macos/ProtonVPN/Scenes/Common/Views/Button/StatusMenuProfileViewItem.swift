@@ -52,10 +52,8 @@ class StatusMenuProfileViewItem: NSTableRowView {
         guard let viewModel = viewModel else { return }
         
         switch viewModel.icon {
-        case .image(let name):
-            let image = NSImage(named: NSImage.Name(name))
-            
-            let darkImage = image?.colored(NSColor.protonBlack())
+        case .image(let image):
+            let darkImage = image.colored(NSColor.protonBlack())
             profileImage.image = darkImage
             
             profileImage.isHidden = false

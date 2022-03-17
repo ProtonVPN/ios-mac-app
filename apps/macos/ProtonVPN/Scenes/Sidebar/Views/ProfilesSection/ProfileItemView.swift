@@ -71,7 +71,7 @@ class ProfileItemView: NSView {
     private func setupImage() {
         switch viewModel.icon {
         case .image(let image):
-            profileImage.image = NSImage(named: NSImage.Name(image))
+            profileImage.image = image
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case .circle(let color):

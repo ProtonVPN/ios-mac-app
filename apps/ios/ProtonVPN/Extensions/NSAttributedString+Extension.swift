@@ -49,12 +49,4 @@ extension NSAttributedString {
         attachment.image = image
         return NSAttributedString(attachment: attachment)
     }
-
-    static func imageAttachment(named name: String, width: CGFloat? = nil, height: CGFloat? = nil) -> NSAttributedString? {
-        guard let image = UIImage(named: name.lowercased()) else {
-            log.debug("Could not obtain image named for text attachment", category: .app, metadata: ["name": "\(name)"])
-            return nil
-        }
-        return imageAttachment(image: image, width: width, height: height)
-    }
 }
