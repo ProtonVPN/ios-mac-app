@@ -94,7 +94,7 @@ final class SearchViewController: UIViewController {
         }
 
         animateWithKeyboard(notification: notification) { [weak self] keyboardFrame in
-            self?.adjustForKeyboard(height: keyboardFrame.height)
+            self?.adjustForKeyboard(height: keyboardFrame.height - (self?.tabBarController?.tabBar.frame.height ?? 0))
         }
     }
 
