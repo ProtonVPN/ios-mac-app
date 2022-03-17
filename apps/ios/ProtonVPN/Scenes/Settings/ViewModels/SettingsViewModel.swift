@@ -238,7 +238,7 @@ final class SettingsViewModel {
             }))
         }
 
-        return TableViewSection(title: LocalizedString.account.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.account, cells: cells)
     }
     
     private var securitySection: TableViewSection {
@@ -291,7 +291,7 @@ final class SettingsViewModel {
             cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
         }
         
-        return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.securityOptions, cells: cells)
     }
 
     private var vpnAcceleratorSection: [TableViewCellModel] {
@@ -420,7 +420,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: moderateNATSection)
         }
 
-        return TableViewSection(title: LocalizedString.advanced.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.advanced, cells: cells)
     }
 
     private var connectionSection: TableViewSection? {
@@ -434,7 +434,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: allowLanSection)
         }
 
-        return cells.isEmpty ? nil : TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
+        return cells.isEmpty ? nil : TableViewSection(title: LocalizedString.connection, cells: cells)
     }
     
     private func switchLANCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
@@ -520,7 +520,7 @@ final class SettingsViewModel {
             })
         ]
         
-        return TableViewSection(title: LocalizedString.extensions.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.extensions, cells: cells)
     }
     
     private var batterySection: TableViewSection? {
@@ -553,7 +553,7 @@ final class SettingsViewModel {
             })
         ]
         
-        return TableViewSection(title: "DEVELOPER", cells: cells)
+        return TableViewSection(title: "Developer", cells: cells)
     }
     
     private var bottomSection: TableViewSection {

@@ -54,9 +54,9 @@ public enum LocalizedString {
   }
   /// Update
   public static var updateViewButton: String { return LocalizedString.tr("Localizable", "_update_view_button") }
-  /// You’re more likely to have issues on older versions of ProtonVPN.
+  /// You’re more likely to have issues on older versions of Proton VPN.
   public static var updateViewDescription: String { return LocalizedString.tr("Localizable", "_update_view_description") }
-  /// Update ProtonVPN
+  /// Update Proton VPN
   public static var updateViewTitle: String { return LocalizedString.tr("Localizable", "_update_view_title") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

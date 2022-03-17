@@ -10,11 +10,11 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum LocalizedString {
-  /// BASIC Servers
+  /// Basic Servers
   public static var basicServers: String { return LocalizedString.tr("Localizable", "_basic_servers") }
-  /// FREE Servers
+  /// Free Servers
   public static var freeServers: String { return LocalizedString.tr("Localizable", "_free_servers") }
-  /// PLUS Servers
+  /// Plus Servers
   public static var plusServers: String { return LocalizedString.tr("Localizable", "_plus_servers") }
   /// Country, City or Server
   public static var searchBarPlaceholder: String { return LocalizedString.tr("Localizable", "search_bar_placeholder") }

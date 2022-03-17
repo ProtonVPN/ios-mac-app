@@ -213,13 +213,13 @@
 "_retry" = "Retry";
 
 /* iOS: section header in countries list */
-"_free_servers" = "FREE Servers";
+"_free_servers" = "Free Servers";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "BASIC Servers";
+"_basic_servers" = "Basic Servers";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "PLUS Servers";
+"_plus_servers" = "Plus Servers";
 
 /* iOS: section header in countries list */
 "_test_servers" = "TEST Servers";
@@ -1323,16 +1323,16 @@
 "_take_tour" = "Take a Tour";
 
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "ENJOY %@ FOR FREE!";
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_enjoy_for_free" = "Enjoy %@ for free!";
+"_protonvpn_plus" = "Proton VPN Plus";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "As a welcome gift, you are granted a 7-day access to a\n%@ subscription which gives you:";
 
 /* MacOS: Used ir trial welcome and trial expired screens */
@@ -1346,10 +1346,10 @@
 "_expired" = "EXPIRED";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "YOUR FREE TRIAL %@";
+"_free_trial_expired_title" = "Your free trial %@";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from %@:";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from %@:";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Maybe Later";
@@ -1374,7 +1374,7 @@
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Your free trial is about to expire!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Upgrade to %@ and continue enjoying these features:";
 "_5_connections_description" = "Connect up to 5 devices\nat the same time";
 
@@ -1619,7 +1619,7 @@
 
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "MALWARE & ADS BLOCKER";
+"_netshield_section_title" = "Malware & Ads Blocker";
 
 // Announcements
 
@@ -1633,7 +1633,7 @@
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
 "_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling Kill Switch.";
-"_quick_settings_get_plus" = "GET PLUS";
+"_quick_settings_get_plus" = "Get Plus";
 "_applying_settings_" = "Applying settings";
 "_reestablish_vpn_connection_" = "Re-establishing VPN connection.";
 "_ip_will_not_be_exposed" = "Your IP will not be exposed.";
@@ -1764,7 +1764,7 @@
 
 "_delinquent_title" = "Your VPN account has pending invoices";
 "_delinquent_description" = "You will be able to access premium features again after these are paid.";
-"_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest FREE plan server available.";
+"_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
 
 "_maximum_device_title" = "You have reached your maximum device limit";
 "_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to %@ to get up to %d devices connected at the same time.";
@@ -1779,9 +1779,9 @@
 "_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
 "_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
 
-"_tier_free" = "FREE";
-"_tier_basic" = "BASIC";
-"_tier_plus" = "PLUS";
+"_tier_free" = "Free";
+"_tier_basic" = "Basic";
+"_tier_plus" = "Plus";
 "_tier_visionary" = "VISIONARY";
 
 // Streaming & Features
@@ -1800,7 +1800,7 @@
 "_streaming_servers_extra" = "and more";
 
 "_feature_smart_routing_description" = "This technology allows Proton VPN to provide higher speed and security in difficult-to-serve countries.";
-"_feature_streaming_description" = "PLUS servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";
+"_feature_streaming_description" = "Plus servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";
 "_feature_p2p_description" = "These servers give the best performance for BitTorrent and file sharing.";
 "_feature_tor_description" = "Route your Internet traffic through the Tor network. Slower, but more private.";
 "_performance_load_description" = "Servers with high load are slower than servers with low load.";
@@ -1810,10 +1810,10 @@
 "_performance_load_high" = "High";
 
 "_locations_all" = "All Locations";
-"_locations_free" = "FREE Locations";
-"_locations_basic_plus" = "BASIC & PLUS Locations";
-"_locations_basic" = "BASIC Locations";
-"_locations_plus" = "PLUS Locations";
+"_locations_free" = "Free Locations";
+"_locations_basic_plus" = "Basic & Plus Locations";
+"_locations_basic" = "Basic Locations";
+"_locations_plus" = "Plus Locations";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 "_vpn_accelerator_change_title" = "Change VPN Accelerator";

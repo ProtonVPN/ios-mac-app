@@ -331,7 +331,7 @@
 /* MacOS app tour: end tour button */
 "_end_tour" = "Turu bitir";
 
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR Free! */
 "_enjoy_for_free" = "ÜCRETSİZ %@ TADINI ÇIKARIN!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
@@ -634,16 +634,16 @@
 /* iOS: section header in countries list */
 "_free_servers" = "Free sunucuları";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "%@ sürümüne yükselterek şu özellikleri kullanmayı sürdürün:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Ücretsiz deneme süreniz sona ermek üzere!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Hesabınız Proton VPN FREE tarifesine geçirildi.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Hesabınız Proton VPN Free tarifesine geçirildi.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
 
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+/* %@ is always 'EXPIRED' e.g. YOUR Free TRIAL EXPIRED */
 "_free_trial_expired_title" = "ÜCRETSİZ DENEME SÜRÜMÜNÜZ %@";
 
 /* Downgrade */
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Ücretli bir tarife satın aldığınızı onayladıktan sonra, iTunes hesabınızdan vergiler ve ek platform ücretleri (doğrudan Proton tarafından ücretlendirilmeyen) ile birlikte görüntülenen tutar alınır. Satın alma işlemini yaptıktan sonra, 1 yıllık bir dönem için otomatik olarak seçilmiş tarifeye geçersiniz. Bu sürenin sonunda aboneliğinizi çevrimiçi olarak ya da iOS uygulamamız üzerinden yenileyebilir ya da iptal edebilirsiniz.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus sunucuları\nSecure Core\nTor sunucuları";
@@ -1783,10 +1783,10 @@
 "_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "FREE";
+"_tier_free" = "Free";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "Visionary";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Proton VPN kullandığınız için teşekkürler. Temel uygulama özelliklerine\nhızlıca göz atın.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Hoş geldiniz hediyesi olarak, size 7 günlük %@ aboneliği\nerişimi verilir ve şu özellikler bulunur:";
 
 /* Shown on the Welcome screen as the screen headline */

@@ -8,7 +8,7 @@
 "onboarding_congratulations" = "Felicitaciones";
 
 /* (No Comment) */
-"onboarding_connected_connect_to_plus" = "Conéctese a un servidor PLUS";
+"onboarding_connected_connect_to_plus" = "Conéctese a un servidor Plus";
 
 /* (No Comment) */
 "onboarding_connected_connected_to" = "Conectado a:";
@@ -56,7 +56,7 @@
 "onboarding_not_connected_subtitle" = "Ya está listo para navegar en Internet.";
 
 /* (No Comment) */
-"onboarding_plus_only" = "DISPONIBLE CON PLUS";
+"onboarding_plus_only" = "DISPONIBLE CON Plus";
 
 /* (No Comment) */
 "onboarding_purchased_note" = "Disfrute del mundo de la privacidad.";

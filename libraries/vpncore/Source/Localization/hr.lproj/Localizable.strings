@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "Pri pokretanju aplikacije, povezani ste s odabranim profilom";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "BASIC poslužitelji";
+"_basic_servers" = "Basic poslužitelji";
 
 /* Battery usages screen description */
 "_battery_description" = "Sav promet na vašem uređaju će se upravljati putem OpenVPN-a, stoga će iOS dodijeliti potrošnju baterije drugih aplikacija Proton VPN-u.";
@@ -272,7 +272,7 @@
 "_delinquent_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama.";
 
 /* (No Comment) */
-"_delinquent_reconnection_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama. Za sada vas ponovno povezujemo s najbržim FREE poslužiteljem koji je na raspolaganju.";
+"_delinquent_reconnection_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama. Za sada vas ponovno povezujemo s najbržim Free poslužiteljem koji je na raspolaganju.";
 
 /* (No Comment) */
 "_delinquent_title" = "Vaš VPN račun ima neplaćene fakture";
@@ -602,7 +602,7 @@
 "_feature_speed" = "Brzina";
 
 /* (No Comment) */
-"_feature_streaming_description" = "PLUS poslužitelji podržavaju streamanje (Netflix, Disney+, etc) od bilo gdje na svijetu.";
+"_feature_streaming_description" = "Plus poslužitelji podržavaju streamanje (Netflix, Disney+, etc) od bilo gdje na svijetu.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor preko VPN-a";
@@ -632,15 +632,15 @@
 "_free_countries" = "3 države";
 
 /* iOS: section header in countries list */
-"_free_servers" = "FREE poslužitelji";
+"_free_servers" = "Free poslužitelji";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Nadogradite na %@ i nastavite uživati u ovim značajkama:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Vaš besplatni probni period ubrzo istječe!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "Status vašeg računa je snižen na Proton VPN Free.\nEvo što će vam nedostajati %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
@@ -830,16 +830,16 @@
 "_locations_all" = "Sve lokacije";
 
 /* (No Comment) */
-"_locations_basic" = "BASIC lokacije";
+"_locations_basic" = "Basic lokacije";
 
 /* (No Comment) */
-"_locations_basic_plus" = "BASIC i PLUS lokacije";
+"_locations_basic_plus" = "Basic i Plus lokacije";
 
 /* (No Comment) */
-"_locations_free" = "FREE lokacije";
+"_locations_free" = "Free lokacije";
 
 /* (No Comment) */
-"_locations_plus" = "PLUS lokacije";
+"_locations_plus" = "Plus lokacije";
 
 /* iOS: Login button in several places */
 "_log_in" = "Prijava";
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Nakon potvrde kupnje plaćenog plana, s vašeg iTunes računa naplatit će se prikazani iznos, koji uključuje poreze i dodatne naknade na platformi (koje Proton ne naplaćuje izravno). Nakon kupnje, automatski ćete biti nadograditi na odabrani plan na razdoblje od 1 godine, nakon čega možete obnoviti ili otkazati, putem interneta ili putem naše iOS aplikacije.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus poslužitelji\nSecure Core\nTor poslužitelji";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "Plus ili Visionary pretplata je potrebna";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "PLUS poslužitelji";
+"_plus_servers" = "Plus poslužitelji";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Koristite Secure Core, streamajte TV emisije,\nkoristite ga na 5 različitih uređaja i još više!";
@@ -1280,7 +1280,7 @@
 "_protonvpn_macos" = "Proton VPN za macOS";
 
 /* (No Comment) */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Javni IP: %@";
@@ -1780,13 +1780,13 @@
 "_test_servers" = "TEST poslužitelji";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "BESPLATAN";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "VISIONARY";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Hvala što koristite Proton VPN. Brzo istražite\nglavne značajke aplikacije.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Kao poklon dobrodošlice, imate 7-dnevni pristupu\n%@ pretplati koja vam daje:";
 
 /* Shown on the Welcome screen as the screen headline */

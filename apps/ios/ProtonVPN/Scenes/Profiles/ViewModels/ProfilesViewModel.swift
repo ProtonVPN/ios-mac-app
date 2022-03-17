@@ -87,7 +87,7 @@ class ProfilesViewModel {
     }
     
     func title(for section: Int) -> String {
-        return sectionTitles[section].uppercased()
+        return sectionTitles[section]
     }
     
     var cellHeight: CGFloat {

@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "در آغاز برنامه، شما به پروفایل انتخاب شده متصل هستید";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "سرورهای BASIC";
+"_basic_servers" = "سرورهای Basic";
 
 /* Battery usages screen description */
 "_battery_description" = "همه ترافیک موبایل شما از طریق OpenVPN مدیریت خواهد شد، بنابراین iOS مصرف باطری دیگر برنامه‌ها را به Proton VPN اختصاص خواهد داد.";
@@ -634,13 +634,13 @@
 /* iOS: section header in countries list */
 "_free_servers" = "سرورهای رایگان";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "به %@ ارتقا دهید و از این امکانات بهره‌مند شوید:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "دوره آزمایشی رایگان شما رو به اتمام است!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "حساب شما به حالت رایگان بازگشته است.\nقابلیت‌هایی که بدون %@ از دست می‌دهید:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
@@ -830,16 +830,16 @@
 "_locations_all" = "همهٔ مکان‌ها";
 
 /* (No Comment) */
-"_locations_basic" = "مکان‌های BASIC";
+"_locations_basic" = "مکان‌های Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "مکان‌های BASIC و PLUS";
+"_locations_basic_plus" = "مکان‌های Basic و Plus";
 
 /* (No Comment) */
 "_locations_free" = "مکان‌های رایگان";
 
 /* (No Comment) */
-"_locations_plus" = "مکان‌های PLUS";
+"_locations_plus" = "مکان‌های Plus";
 
 /* iOS: Login button in several places */
 "_log_in" = "ورود";
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "به محض تایید شدن خرید طرح پرداختی شما، از حساب iTunes شما مبلغ نمایش داده شده کسر خواهد شد،که شامل مالیات و اجرتهای اضافی پلتفرم میباشد (که بطور مستقیم توسط پروتون کسر نمیشود). بعد از انجام خرید، شما بطور خودکار به طرح انتخاب شده به مدّت یک سال ارتقاء داده میشوید، که بعد از این دوره میتوانید تمدید یا لغو نمایید، چه آنلاین یا چه از طریق اپ iOS ما.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "سرورهای پلاس\nقابلیت Secure Core\nسرورهای Tor";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "اشتراک Plus یا Visionary مورد نیاز است";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "سرورهای PLUS";
+"_plus_servers" = "سرورهای Plus";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "از Secure Core استفاده کنید، برنامه‌های تلویزیونی خود را به صورت آنلاین پخش کنید،\nاز حداکثر ۵ دستگاه استفاده کنید و بسیاری چیزهای دیگر!";
@@ -1780,13 +1780,13 @@
 "_test_servers" = "سرورهای آزمایشی";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "رایگان";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "VISIONARY";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "بابت استفاده از Proton VPN سپاسگزاریم. نگاهی گذرا به ویژگی های اصلی برنامه بیندازید.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "به عنوان هدیهٔ ورود برای شما یک اشتراک ۷ روزه %@ در نظر گرفته شده که این امکانات را شامل می‌شود:";
 
 /* Shown on the Welcome screen as the screen headline */

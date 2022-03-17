@@ -80,7 +80,7 @@
 "_auto_connect_tooltip" = "アプリ起動時に、選択されたプロファイルに接続します。";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "BASIC サーバー";
+"_basic_servers" = "Basic サーバー";
 
 /* Common word */
 "_cancel" = "キャンセル";
@@ -155,7 +155,7 @@
 "_countries_count_plus" = "_countries_count_plus";
 
 /* iOS: countries list section header */
-"_countries_free" = "FREEプランの国一覧";
+"_countries_free" = "Freeプランの国一覧";
 
 /* iOS: countries list section header */
 "_countries_premium" = "PREMIUMプランの国一覧";
@@ -523,14 +523,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "無料サーバー";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "%@ へアップグレードして以下の機能を引き続き利用する：";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "無料トライアルの期間がまもなく終了します！";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "アカウントは Proton VPN FREE へダウングレードされました。\n%@ プランからのダウングレードで利用できなくなった機能：";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "アカウントは Proton VPN Free へダウングレードされました。\n%@ プランからのダウングレードで利用できなくなった機能：";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "%@ の無料トライアル";
@@ -895,17 +895,17 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "有料プランの購入を確定すると、あなたの iTunes アカウントにご希望のサービスプランおよびアプリ内購入にかかる手数料(これらの手数料は弊社より直接請求されません)が請求されます。購入後、自動的に選択したプランに1年間アップグレードされます。サービスプランは私たちの iOS アプリもしくはオンラインで更新やキャンセルが可能です。";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS プラン";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus プラン";
 
 /* Features of account plan */
-"_plus_plan_features" = "PLUS サーバー\nSecure Core\nTor サーバー";
+"_plus_plan_features" = "Plus サーバー\nSecure Core\nTor サーバー";
 
 /* Plan upgrade required alert */
-"_plus_required" = "PLUS または VISIONARY プランが必要です";
+"_plus_required" = "Plus または VISIONARY プランが必要です";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "PLUS サーバー";
+"_plus_servers" = "Plus サーバー";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Secure Core、お気に入りのテレビ番組のストリーミング、複数デバイス（最大5台）からのアクセスなど、さまざまな機能が利用できます！";
@@ -977,7 +977,7 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "公開 IP: %@";
@@ -1118,7 +1118,7 @@
 "_secure_core_info" = "Secure Coreネットワークを経由するようにルーティングすることにより、VPNサーバーの侵害に対する追加の保護を提供します。";
 
 /* MacOS app tour: secure core description */
-"_secure_core_tour_description" = "Secure Coreをオンにすると、安全なサーバーを経由してトラフィックをルーティングするため、追加のセキュリティ保護を得られます。PLUSおよびVISIONARYプランのユーザーが利用可能です。";
+"_secure_core_tour_description" = "Secure Coreをオンにすると、安全なサーバーを経由してトラフィックをルーティングするため、追加のセキュリティ保護を得られます。PlusおよびVISIONARYプランのユーザーが利用可能です。";
 
 /* MacOS app tour: secure core title */
 "_secure_core_tour_title" = "Secure Core";
@@ -1301,7 +1301,7 @@
 "_trial_popup_explanation" = "ウエルカムギフトとして、最初の数日間は拡張機能を含む%@をお試しいただけます。試用期間終了まで";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "Proton VPN PLUSへの無料アップグレード";
+"_trial_popup_free_upgrade" = "Proton VPN Plusへの無料アップグレード";
 
 /* (No Comment) */
 "_trial_popup_full_subscription" = "完全な Proton VPN サブスクリプション";
@@ -1309,7 +1309,7 @@
 /* Final text:
  
  We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "%@の追加機能やより多くのサーバーをお試しいただけます。Proton VPN PLUSの試用期間は7日間です。";
+"_trial_popup_introduction" = "%@の追加機能やより多くのサーバーをお試しいただけます。Proton VPN Plusの試用期間は7日間です。";
 
 /* (No Comment) */
 "_trial_popup_thanks" = "Proton VPNをご利用いただきありがとうございます!";
@@ -1363,7 +1363,7 @@
 "_upgrade_plan_to_access_country" = "申し訳ございませんが、この国にあなたのサブスクリプションで接続できるサーバーはありません。より多くのサーバーにアクセスするために、サブスクリプションのアップグレードをご検討ください。";
 
 /* macOS: plan upgrade for SecureCore required alert */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core は Proton VPN PLUS 以上のサブスクリプションが必要なプレミアム機能です。 Secure Core は VPN サーバーへの監視に対する追加の保護を提供します。";
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core は Proton VPN Plus 以上のサブスクリプションが必要なプレミアム機能です。 Secure Core は VPN サーバーへの監視に対する追加の保護を提供します。";
 
 /* macOS: plan upgrade for SecureCore required alert */
 "_upgrade_plan_to_access_secure_core_p2" = "Secure Coreを利用するには、この機能を利用可能なサブスクリプションプランをご覧ください。";
@@ -1378,7 +1378,7 @@
 "_upgrade_subscription" = "サブスクリプションをアップグレード";
 
 /* Main mac app menu item */
-"_upgrade_to_plus" = "PLUS プランにアップグレード";
+"_upgrade_to_plus" = "Plus プランにアップグレード";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Proton VPN サブスクリプションはアプリ内でアップグレードできません。 アップグレードするために account.protonvpn.com へアクセスしてください。";
@@ -1446,7 +1446,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Proton VPNをご利用いただきありがとうございます。ツアーでこのアプリの機能をご説明します。";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "ウェルカムギフトとして7日間のアクセス権を獲得しました\n%@ サブスクリプションは次の機能を含みます:";
 
 /* MacOS welcome screen: title */

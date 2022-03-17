@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "No arranque da aplicação, o perfil seleccionado está ligado";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "Servidores BASIC";
+"_basic_servers" = "Servidores Basic";
 
 /* Battery usages screen description */
 "_battery_description" = "Todo o tráfego do seu telefone será gerido através do OpenVPN, logo, o iOS vai alocar a utilização da bateria de outras aplicações para o Proton VPN.";
@@ -272,7 +272,7 @@
 "_delinquent_description" = "Poderá voltar a aceder a funcionalidades especiais após liquidar as facturas pendentes.";
 
 /* (No Comment) */
-"_delinquent_reconnection_description" = "Poderá aceder novamente a funcionalidades premium depois de estas serem pagas. Por agora, estamos de novo a ligar ao servidor de plano FREE mais rápido disponível.";
+"_delinquent_reconnection_description" = "Poderá aceder novamente a funcionalidades premium depois de estas serem pagas. Por agora, estamos de novo a ligar ao servidor de plano Free mais rápido disponível.";
 
 /* (No Comment) */
 "_delinquent_title" = "A sua conta VPN tem facturas pendentes";
@@ -602,7 +602,7 @@
 "_feature_speed" = "Velocidade";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Servidores PLUS suportam streaming (Netflix, Disney+, etc) de qualquer lugar do mundo.";
+"_feature_streaming_description" = "Servidores Plus suportam streaming (Netflix, Disney+, etc) de qualquer lugar do mundo.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor sobre VPN";
@@ -632,16 +632,16 @@
 "_free_countries" = "3 países";
 
 /* iOS: section header in countries list */
-"_free_servers" = "Servidores FREE";
+"_free_servers" = "Servidores Free";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Actualize para %@ e continue a desfrutar destas funcionalidades:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "A avaliação gratuita está prestes a expirar!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "A sua conta reverteu para Proton VPN FREE.\nEis o que vai perder do %@:";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "A sua conta reverteu para Proton VPN Free.\nEis o que vai perder do %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "O SEU TESTE GRÁTIS %@";
@@ -830,16 +830,16 @@
 "_locations_all" = "Todas as localizações";
 
 /* (No Comment) */
-"_locations_basic" = "Localizações BASIC";
+"_locations_basic" = "Localizações Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Localizações BASIC & PLUS";
+"_locations_basic_plus" = "Localizações Basic & Plus";
 
 /* (No Comment) */
-"_locations_free" = "Localizações FREE";
+"_locations_free" = "Localizações Free";
 
 /* (No Comment) */
-"_locations_plus" = "Localizações PLUS";
+"_locations_plus" = "Localizações Plus";
 
 /* iOS: Login button in several places */
 "_log_in" = "Iniciar sessão";
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Após confirmação da sua compra de um plano pago, será cobrada à sua conta iTunes a quantia mostrada, que inclui impostos e taxas adicionais da plataforma (que não são cobradas pelo Proton directamente). Após finalizar a compra, é feita a actualização para o plano seleccionado por 1 ano, após o qual pode renovar ou cancelar, seja online, seja pela nossa aplicação iOS.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Servidores Plus\nSecure Core\nServidores Tor";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "Requerida subscrição Plus ou Visionary";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "Servidores PLUS";
+"_plus_servers" = "Servidores Plus";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Utilize o Secure Core, veja os seus programas de TV favoritos, utilize até 5 dispositivos diferentes e mais!";
@@ -1280,7 +1280,7 @@
 "_protonvpn_macos" = "Proton VPN MacOS";
 
 /* (No Comment) */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP público: %@";
@@ -1601,7 +1601,7 @@
 "_status" = "Estado";
 
 /* (No Comment) */
-"_streaming_servers_description" = "Ligue a um servidor PLUS neste país para iniciar a transmissão.";
+"_streaming_servers_description" = "Ligue a um servidor Plus neste país para iniciar a transmissão.";
 
 /* (No Comment) */
 "_streaming_servers_extra" = "e mais";
@@ -1780,13 +1780,13 @@
 "_test_servers" = "Servidores TEST";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "FREE";
+"_tier_free" = "Free";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "VISIONARY";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Obrigado por utilizar o Proton VPN. Dê uma vista\nde olhos às principais funcionalidades.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Como presente de boasvindas, tem acesso por 7 dias à\nsubscrição %@ que lhe dá:";
 
 /* Shown on the Welcome screen as the screen headline */

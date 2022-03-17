@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "При запуску програми під'єднання до вибраного профілю";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "BASIC сервери";
+"_basic_servers" = "Basic сервери";
 
 /* Battery usages screen description */
 "_battery_description" = "Увесь трафік вашого телефона спрямовуватиметься через OpenVPN, тому iOS призначатиме для Proton VPN витрату заряду батареї іншими програмами.";
@@ -331,7 +331,7 @@
 /* MacOS app tour: end tour button */
 "_end_tour" = "Завершити знайомство";
 
-/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR Free! */
 "_enjoy_for_free" = "СПРОБУЙТЕ %@ БЕЗПЛАТНО!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
@@ -602,7 +602,7 @@
 "_feature_speed" = "Швидкість";
 
 /* (No Comment) */
-"_feature_streaming_description" = "PLUS сервери підтримують потокове передавання (Netflix, Disney+ тощо) звідусіль у світі.";
+"_feature_streaming_description" = "Plus сервери підтримують потокове передавання (Netflix, Disney+ тощо) звідусіль у світі.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
@@ -634,7 +634,7 @@
 /* iOS: section header in countries list */
 "_free_servers" = "Free сервери";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Передплатіть %@ і продовжуйте використовувати ці функції:";
 
 /* MacOS: \Trial about to expire\ screen title */
@@ -643,7 +643,7 @@
 /* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "Ваш обліковий запис було понижено до Proton VPN Free.\nОсь, що ви втрачаєте з %@:";
 
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+/* %@ is always 'EXPIRED' e.g. YOUR Free TRIAL EXPIRED */
 "_free_trial_expired_title" = "ВАШ БЕЗПЛАТНИЙ ПРОБНИЙ ПЕРІОД %@";
 
 /* Downgrade */
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Одразу після підтвердження покупки тарифного плану, з вашого облікового запису iTunes буде списано вказану суму, що включає податки та додаткові платежі платформи (які не стягуються безпосередньо Proton). Після покупки вас автоматично буде переведено на вибраний тарифний план терміном на 1 рік, після чого ви можете продовжити чи скасувати передплату онлайн, або в програмі iOS.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus сервери\nSecure Core\nTor сервери";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "Необхідна передплата Plus або Visionary";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "PLUS Сервери";
+"_plus_servers" = "Plus Сервери";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Використовуйте Secure Core, переглядайте улюблені телешоу,\nпідключайте до 5 різних пристроїв та отримуйте інші переваги!";
@@ -1780,13 +1780,13 @@
 "_test_servers" = "ТЕСТОВІ сервери";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "БЕЗПЛАТНИЙ";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
 "_tier_visionary" = "VISIONARY";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Дякуємо за використання Proton VPN. Швидко ознайомтеся\nз основними функціями програми.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Ми даруємо вам 7 днів доступу до\nтарифного плану %@, який надає вам:";
 
 /* Shown on the Welcome screen as the screen headline */

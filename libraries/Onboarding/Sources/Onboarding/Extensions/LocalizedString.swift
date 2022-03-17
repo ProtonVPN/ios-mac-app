@@ -10,13 +10,13 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum LocalizedString {
-  /// ProtonVPN supports all devices, including Windows, macOS, and many others.
+  /// Proton VPN supports all devices, including Windows, macOS, and many others.
   public static var onboardingBeprotectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_beprotected_subtitle") }
   /// Be protected everywhere
   public static var onboardingBeprotectedTitle: String { return LocalizedString.tr("Localizable", "onboarding_beprotected_title") }
   /// Congratulations
   public static var onboardingCongratulations: String { return LocalizedString.tr("Localizable", "onboarding_congratulations") }
-  /// Connect to a PLUS server
+  /// Connect to a Plus server
   public static var onboardingConnectedConnectToPlus: String { return LocalizedString.tr("Localizable", "onboarding_connected_connect_to_plus") }
   /// Connected to:
   public static var onboardingConnectedConnectedTo: String { return LocalizedString.tr("Localizable", "onboarding_connected_connected_to") }
@@ -34,7 +34,7 @@ public enum LocalizedString {
   public static var onboardingEstablishConnectNow: String { return LocalizedString.tr("Localizable", "onboarding_establish_connect_now") }
   /// We will connect you to the fastest and most stable server depending on your location.
   public static var onboardingEstablishNote: String { return LocalizedString.tr("Localizable", "onboarding_establish_note") }
-  /// Plural format key: "FREE subscription offers %#@num_servers@ in %#@num_countries@"
+  /// Plural format key: "Free subscription offers %#@num_servers@ in %#@num_countries@"
   public static func onboardingEstablishSubtitle(_ p1: Int, _ p2: Int) -> String {
     return LocalizedString.tr("Localizable", "onboarding_establish_subtitle", p1, p2)
   }
@@ -52,7 +52,7 @@ public enum LocalizedString {
   public static var onboardingNotConnectedError: String { return LocalizedString.tr("Localizable", "onboarding_not_connected_error") }
   /// You’re ready to browse the web.
   public static var onboardingNotConnectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_not_connected_subtitle") }
-  /// AVAILABLE WITH PLUS
+  /// Available with Plus
   public static var onboardingPlusOnly: String { return LocalizedString.tr("Localizable", "onboarding_plus_only") }
   /// Enjoy the world of privacy.
   public static var onboardingPurchasedNote: String { return LocalizedString.tr("Localizable", "onboarding_purchased_note") }
@@ -68,9 +68,9 @@ public enum LocalizedString {
   public static var onboardingUnblockstreamingSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_subtitle") }
   /// Unblock streaming
   public static var onboardingUnblockstreamingTitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_title") }
-  /// Learn how to get the most out of ProtonVPN in just a few seconds
+  /// Learn how to get the most out of Proton VPN in just a few seconds
   public static var onboardingWelcomeSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_welcome_subtitle") }
-  /// Welcome to ProtonVPN
+  /// Welcome to Proton VPN
   public static var onboardingWelcomeTitle: String { return LocalizedString.tr("Localizable", "onboarding_welcome_title") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
