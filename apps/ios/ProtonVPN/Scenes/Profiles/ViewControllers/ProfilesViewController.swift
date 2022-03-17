@@ -91,10 +91,11 @@ class ProfilesViewController: UIViewController {
         tableView.separatorInsetReference = .fromAutomaticInsets
 
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        tableView.rowHeight = viewModel?.cellHeight ?? UIConstants.cellHeight
+        tableView.estimatedRowHeight = viewModel?.cellHeight ?? UIConstants.cellHeight
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .backgroundColor()
         tableView.allowsSelectionDuringEditing = true
-        tableView.separatorColor = .clear
+        tableView.separatorStyle = .none
         tableView.register(CreateProfileTableViewCell.nib, forCellReuseIdentifier: CreateProfileTableViewCell.identifier)
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)

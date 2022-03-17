@@ -179,11 +179,7 @@ final class ProfileItemViewModel {
     
     // MARK: Descriptors
     internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
-        var textColor: UIColor = .normalTextColor()
-        if case let ProfileIcon.circle(color) = profile.profileIcon {
-            textColor = UIColor(rgbHex: color)
-        }
-        return profile.name.attributed(withColor: textColor, fontSize: 11, alignment: .left)
+        return profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
     }
     
     internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {

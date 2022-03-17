@@ -42,9 +42,9 @@ class DefaultProfileTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
         leftImageView.tintColor = .white
         backgroundColor = .backgroundColor()
+        connectButton.backgroundColor = .weakInteractionColor()
         label.textColor = .normalTextColor()
     }
     

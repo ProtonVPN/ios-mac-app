@@ -91,9 +91,13 @@ extension UIColor {
     class func notificationOKColor() -> UIColor {
         return ColorProvider.NotificationSuccess
     }
-    
+
     class func normalTextColor() -> UIColor {
         return ColorProvider.TextNorm
+    }
+
+    class func iconWeak() -> UIColor {
+        return ColorProvider.IconWeak
     }
     
     class func notificationErrorColor() -> UIColor {

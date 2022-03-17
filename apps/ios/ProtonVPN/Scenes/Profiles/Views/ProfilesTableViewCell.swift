@@ -61,6 +61,7 @@ class ProfilesTableViewCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .backgroundColor()
         tintColor = .normalTextColor()
+        connectButton.backgroundColor = .weakInteractionColor()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
