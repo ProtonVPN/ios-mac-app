@@ -23,6 +23,7 @@
 import UIKit
 import GSMessages
 import vpncore
+import ProtonCore_UIFoundations
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()
@@ -40,11 +41,8 @@ class ProfilesViewController: UIViewController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        let selectedImage = UIImage(named: "profiles-active")
-        let unselectedImage = UIImage(named: "profiles-inactive")
-        tabBarItem = UITabBarItem(title: LocalizedString.profiles, image: unselectedImage, tag: 3)
-        tabBarItem.selectedImage = selectedImage
+
+        tabBarItem = UITabBarItem(title: LocalizedString.profiles, image: IconProvider.bookmark, tag: 3)
         tabBarItem.accessibilityIdentifier = "Profiles"
     }
     

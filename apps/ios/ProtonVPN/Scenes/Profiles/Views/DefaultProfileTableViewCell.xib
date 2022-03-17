@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,30 +14,26 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="con-fastest" translatesAutoresizingMaskIntoConstraints="NO" id="mIb-TT-hAE">
-                        <rect key="frame" x="16" y="12" width="20" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="20" id="iQb-v6-SJ2"/>
-                            <constraint firstAttribute="width" constant="20" id="vwJ-GW-aMQ"/>
-                        </constraints>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" image="placeholdertext.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="mIb-TT-hAE">
+                        <rect key="frame" x="16" y="11" width="24" height="21.5"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fastest Connection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNP-3c-ioR">
-                        <rect key="frame" x="56" y="11.5" width="184" height="21"/>
+                        <rect key="frame" x="60" y="11.5" width="180" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USc-sm-VoB" userLabel="row-button">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <connections>
                             <action selector="connect:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CPd-qD-XMh"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HC-9S-eDc" userLabel="connectButton">
-                        <rect key="frame" x="260" y="0.0" width="60" height="43.5"/>
+                        <rect key="frame" x="260" y="0.0" width="60" height="44"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="p6L-Vg-H6h"/>
                         </constraints>
@@ -70,10 +64,11 @@
                 <outlet property="label" destination="hNP-3c-ioR" id="bv4-R6-Y7I"/>
                 <outlet property="leftImageView" destination="mIb-TT-hAE" id="Wlx-kM-lKn"/>
             </connections>
+            <point key="canvasLocation" x="139" y="138"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="con-available" width="22" height="22"/>
-        <image name="con-fastest" width="76" height="76"/>
+        <image name="placeholdertext.fill" catalog="system" width="80" height="128"/>
     </resources>
 </document>

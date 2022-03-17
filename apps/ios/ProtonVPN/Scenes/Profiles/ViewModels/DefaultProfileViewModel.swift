@@ -39,7 +39,7 @@ class DefaultProfileViewModel {
         case .random:
             return Profile(id: "st_r",
                            accessTier: 0,
-                           profileIcon: .image("con-random"),
+                           profileIcon: .image(IconProvider.arrowsSwapRight),
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
@@ -48,7 +48,7 @@ class DefaultProfileViewModel {
         default:
             return Profile(id: "st_f",
                            accessTier: 0,
-                           profileIcon: .image("con-fastest"),
+                           profileIcon: .image(IconProvider.bolt),
                            profileType: .system,
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
@@ -101,9 +101,9 @@ class DefaultProfileViewModel {
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            return IconProvider.bolt // UIImage(named: "con-fastest")!
+            return IconProvider.bolt
         case .random:
-            return UIImage(named: "con-random")!
+            return IconProvider.arrowsSwapRight
         default:
             return UIImage()
         }
