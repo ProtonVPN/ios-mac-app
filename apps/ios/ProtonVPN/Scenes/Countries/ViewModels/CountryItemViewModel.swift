@@ -327,7 +327,7 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var connectButtonColor: UIColor {
-        return isCurrentlyConnected ? UIColor.textAccent() : (underMaintenance ? UIColor.clear : UIColor.weakInteractionColor())
+        return isCurrentlyConnected ? UIColor.interactionNorm() : (underMaintenance ? UIColor.clear : UIColor.weakInteractionColor())
     }
 
     var textColor: UIColor {

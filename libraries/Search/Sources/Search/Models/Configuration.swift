@@ -33,13 +33,15 @@ public struct Colors {
     let brand: UIColor
     let weakText: UIColor
     let secondaryBackground: UIColor
+    let iconWeak: UIColor
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, secondaryBackground: UIColor) {
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, secondaryBackground: UIColor, iconWeak: UIColor) {
         self.background = background
         self.text = text
         self.brand = brand
         self.weakText = weakText
         self.secondaryBackground = secondaryBackground
+        self.iconWeak = iconWeak
     }
 }
 

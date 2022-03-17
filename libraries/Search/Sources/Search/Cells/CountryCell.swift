@@ -31,6 +31,8 @@ public final class CountryCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
+    static let chevronRight = UIImage(named: "ic-chevron-right", in: .module, compatibleWith: nil)
+
     // MARK: Outlets
 
     @IBOutlet private weak var flagIcon: UIImageView!
@@ -110,12 +112,16 @@ public final class CountryCell: UITableViewCell {
             connectButton.setImage(nil, for: .normal)
             connectButton.setTitle(text, for: .normal)
             accessoryType = .none
+            accessoryView = nil
             rightNoMarginConstraint.isActive = false
             rightMarginConstraint.isActive = true
         } else {
             connectButton.setImage(viewModel?.connectIcon, for: .normal)
             connectButton.setTitle(nil, for: .normal)
-            accessoryType = .disclosureIndicator
+            let chevronRight = UIImageView(image: CountryCell.chevronRight)
+            chevronRight.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
+            chevronRight.sizeToFit()
+            accessoryView = chevronRight
             rightMarginConstraint.isActive = false
             rightNoMarginConstraint.isActive = true
         }
