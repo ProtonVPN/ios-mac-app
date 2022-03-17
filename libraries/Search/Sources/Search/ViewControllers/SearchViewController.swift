@@ -89,12 +89,20 @@ final class SearchViewController: UIViewController {
     }
 
     @objc private func keyboardWillShow(notification: NSNotification) {
+        guard viewIfLoaded?.window != nil else {
+            return
+        }
+
         animateWithKeyboard(notification: notification) { [weak self] keyboardFrame in
             self?.adjustForKeyboard(height: keyboardFrame.height)
         }
     }
 
     @objc private func keyboardWillHide(notification: NSNotification) {
+        guard viewIfLoaded?.window != nil else {
+            return
+        }
+
         if let searchText = searchBar.text, !searchText.isEmpty {
             viewModel.saveSearch(searchText: searchText)
         }
