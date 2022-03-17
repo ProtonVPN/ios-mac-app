@@ -23,6 +23,7 @@
 import UIKit
 import vpncore
 import Search
+import ProtonCore_UIFoundations
 
 final class CountriesViewController: UIViewController {
     
@@ -39,11 +40,8 @@ final class CountriesViewController: UIViewController {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        let selectedImage = UIImage(named: "countries-active")
-        let unselectedImage = UIImage(named: "countries-inactive")
-        tabBarItem = UITabBarItem(title: LocalizedString.countries, image: unselectedImage, tag: 0)
-        tabBarItem.selectedImage = selectedImage
+
+        tabBarItem = UITabBarItem(title: LocalizedString.countries, image: IconProvider.earth, tag: 0)
         tabBarItem.accessibilityIdentifier = "Countries"
     }
     
@@ -65,6 +63,7 @@ final class CountriesViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupAnnouncements()
+        tabBarController?.tabBar.tintColor = .brandColor()
     }
     
     private func setupView() {

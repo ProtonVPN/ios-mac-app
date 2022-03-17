@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import UIKit
+import ProtonCore_UIFoundations
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {
@@ -106,19 +107,19 @@ extension CreateOrEditProfileViewModel {
     }
     
     internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
-        let imageName: String
+        let image: UIImage
         let name: String
         
         switch index {
         case 0:
-            imageName = "con-fastest"
+            image = IconProvider.bolt
             name = LocalizedString.fastest
         default:
-            imageName = "con-random"
+            image = IconProvider.arrowsSwapRight
             name = LocalizedString.random
         }
-        
-        let imageAttributedString = NSMutableAttributedString(attributedString: NSAttributedString.imageAttachment(named: imageName, width: 18, height: 18) ?? NSAttributedString(string: ""))
+
+        let imageAttributedString = NSMutableAttributedString(attributedString: NSAttributedString.imageAttachment(image: image, width: 24, height: 24) ?? NSAttributedString(string: ""))
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [

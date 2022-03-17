@@ -55,7 +55,7 @@ final class TabBarController: UITabBarController {
         
         tabBar.items?.forEach { item in
             item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
-            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()], for: .selected)
+            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.brandColor()], for: .selected)
         }
     }
     

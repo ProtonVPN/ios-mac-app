@@ -42,7 +42,8 @@ class DefaultProfileTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
+        leftImageView.tintColor = .white
         backgroundColor = .backgroundColor()
         label.textColor = .normalTextColor()
     }

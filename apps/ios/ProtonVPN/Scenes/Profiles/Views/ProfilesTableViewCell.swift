@@ -37,7 +37,7 @@ class ProfilesTableViewCell: UITableViewCell {
             guard let viewModel = viewModel else { return }
             switch viewModel.icon {
             case .image(let name):
-                profileImage.image = UIImage(named: name)
+                profileImage.image = name
             case .circle(let color):
                 profileImage.backgroundColor = UIColor(rgbHex: color)
                 profileImage.layer.cornerRadius = 10

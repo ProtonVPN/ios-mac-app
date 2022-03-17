@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 final class SettingsViewController: UIViewController {
 
@@ -48,11 +49,8 @@ final class SettingsViewController: UIViewController {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        let selectedImage = UIImage(named: "settings-active")
-        let unselectedImage = UIImage(named: "settings-inactive")
-        tabBarItem = UITabBarItem(title: LocalizedString.settings, image: unselectedImage, tag: 4)
-        tabBarItem.selectedImage = selectedImage
+
+        tabBarItem = UITabBarItem(title: LocalizedString.settings, image: IconProvider.cogWheel, tag: 4)
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
     

@@ -23,6 +23,7 @@
 import CoreLocation
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 final class MapViewController: UIViewController {
 
@@ -46,11 +47,8 @@ final class MapViewController: UIViewController {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        let selectedImage = UIImage(named: "map-active")
-        let unselectedImage = UIImage(named: "map-inactive")
-        tabBarItem = UITabBarItem(title: LocalizedString.map, image: unselectedImage, tag: 1)
-        tabBarItem.selectedImage = selectedImage
+
+        tabBarItem = UITabBarItem(title: LocalizedString.map, image: IconProvider.map, tag: 1)
         tabBarItem.accessibilityIdentifier = "Map"
     }
     
