@@ -106,6 +106,7 @@ final class SearchViewController: UIViewController {
 
     private func adjustForKeyboard(height: CGFloat) {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
+        tableView.scrollIndicatorInsets = tableView.contentInset
         noResultsBottomConstraint.constant = height
         placeholderViewBottomConstraint.constant = height
     }
