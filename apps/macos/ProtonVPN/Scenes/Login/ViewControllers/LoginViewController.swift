@@ -50,6 +50,9 @@ class LoginViewController: NSViewController {
     @IBOutlet weak var passwordRevealButton: NSButton!
     @IBOutlet weak var passwordHorizontalLine: NSBox!
     
+    @IBOutlet weak var startOnBootLabel: PVPNTextField!
+    @IBOutlet weak var startOnBootButton: SwitchButton!
+    
     @IBOutlet weak var loginButton: LoginButton!
     @IBOutlet weak var createAccountButton: GreenActionButton!
     @IBOutlet weak var needHelpButton: GreenActionButton!
@@ -115,6 +118,7 @@ class LoginViewController: NSViewController {
         setupWarningSection()
         setupUsernameSection()
         setupPasswordSection()
+        setupSwitchSection()
         setupFooterSection()
     }
     
@@ -173,6 +177,16 @@ class LoginViewController: NSViewController {
         passwordRevealButton.setAccessibilityLabel(LocalizedString.show)
         
         passwordHorizontalLine.fillColor = .protonLightGrey()
+    }
+    
+    private func setupSwitchSection() {
+        startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
+        startOnBootButton.setAccessibilityLabel(LocalizedString.startOnBoot)
+        
+        startOnBootButton.drawsUnderOverlay = false
+        startOnBootButton.buttonView?.tag = Switch.startOnBoot.rawValue
+        startOnBootButton.setState(viewModel.startOnBoot ? .on : .off)
+        startOnBootButton.delegate = self
     }
     
     private func setupFooterSection() {
@@ -293,6 +307,18 @@ extension LoginViewController: TextFieldFocusDelegate {
         case TextField.password.rawValue, TextField.passwordSecure.rawValue:
             usernameHorizontalLine.fillColor = .protonLightGrey()
             passwordHorizontalLine.fillColor = .protonGreen()
+        default:
+            break
+        }
+    }
+}
+
+extension LoginViewController: SwitchButtonDelegate {
+    
+    func switchButtonClicked(_ button: NSButton) {
+        switch button.tag {
+        case Switch.startOnBoot.rawValue:
+            viewModel.startOnBoot(enabled: startOnBootButton.currentButtonState == .on)
         default:
             break
         }
