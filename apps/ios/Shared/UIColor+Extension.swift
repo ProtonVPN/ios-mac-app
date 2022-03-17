@@ -39,9 +39,17 @@ extension UIColor {
         
         return red && green && blue && alpha
     }
-    
+
     class func brandColor() -> UIColor {
         return ColorProvider.BrandNorm
+    }
+
+    class func textAccent() -> UIColor {
+        return ColorProvider.TextAccent
+    }
+
+    class func interactionNorm() -> UIColor {
+        return ColorProvider.InteractionNorm
     }
     
     class func brandLighten20Color() -> UIColor {

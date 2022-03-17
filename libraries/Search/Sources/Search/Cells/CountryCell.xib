@@ -56,14 +56,14 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-DN-gvr" userLabel="connect-button">
-                        <rect key="frame" x="308" y="10.5" width="42" height="40"/>
+                        <rect key="frame" x="310" y="10.5" width="40" height="40"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="5pa-XR-RGX"/>
-                            <constraint firstAttribute="height" constant="40" id="zm9-oq-YRi"/>
+                            <constraint firstAttribute="height" constant="40" id="YkV-1S-HNX"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="eXa-UF-bva"/>
                         </constraints>
-                        <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
-                        <state key="normal" image="con-available"/>
+                        <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                        <state key="normal" image="ic-power-off"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                 <integer key="value" value="20"/>
@@ -73,37 +73,22 @@
                             <action selector="connectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DOj-gJ-sHq"/>
                         </connections>
                     </button>
-                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-EW-Wac" userLabel="props stack">
-                        <rect key="frame" x="236" y="22.5" width="56" height="16"/>
+                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-EW-Wac" userLabel="props stack">
+                        <rect key="frame" x="222" y="18.5" width="72" height="24"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_p2p" translatesAutoresizingMaskIntoConstraints="NO" id="BOu-g7-Mzx">
-                                <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                <color key="tintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="fPq-Zi-Ozh"/>
-                                    <constraint firstAttribute="width" constant="16" id="gdJ-SE-8uO"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-arrows-switch" translatesAutoresizingMaskIntoConstraints="NO" id="BOu-g7-Mzx">
+                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_tor" translatesAutoresizingMaskIntoConstraints="NO" id="4so-OQ-dvz">
-                                <rect key="frame" x="20" y="0.0" width="16" height="16"/>
-                                <color key="tintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="79L-Iy-2vd"/>
-                                    <constraint firstAttribute="height" constant="16" id="qwy-iA-rlS"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-brand-tor" translatesAutoresizingMaskIntoConstraints="NO" id="4so-OQ-dvz">
+                                <rect key="frame" x="24" y="0.0" width="24" height="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic_smart-routing" translatesAutoresizingMaskIntoConstraints="NO" id="Ixe-4X-lQ4">
-                                <rect key="frame" x="40" y="0.0" width="16" height="16"/>
-                                <color key="tintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="Lq4-1o-oa0"/>
-                                    <constraint firstAttribute="height" constant="16" id="eYh-Tg-dCL"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-globe" translatesAutoresizingMaskIntoConstraints="NO" id="Ixe-4X-lQ4">
+                                <rect key="frame" x="48" y="0.0" width="24" height="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="16" id="j5H-G9-SzM"/>
-                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -141,10 +126,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="con-available" width="22" height="22"/>
-        <image name="double-arrow-right-green" width="16" height="16"/>
-        <image name="ic_p2p" width="16" height="16"/>
-        <image name="ic_smart-routing" width="16" height="16"/>
-        <image name="ic_tor" width="16" height="16"/>
+        <image name="ic-arrows-switch" width="24" height="24"/>
+        <image name="ic-brand-tor" width="24" height="24"/>
+        <image name="ic-chevrons-right" width="24" height="24"/>
+        <image name="ic-globe" width="24" height="24"/>
+        <image name="ic-power-off" width="22" height="22"/>
     </resources>
 </document>

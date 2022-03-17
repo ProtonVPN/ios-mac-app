@@ -63,7 +63,7 @@ final class CountriesViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupAnnouncements()
-        tabBarController?.tabBar.tintColor = .brandColor()
+        tabBarController?.tabBar.tintColor = .textAccent()
     }
     
     private func setupView() {

@@ -63,7 +63,7 @@ final class CountryItemViewModel: CountryViewModel {
 
     let p2pAvailable: Bool = false
 
-    let connectIcon: UIImage? = UIImage(named: "con-available")
+    let connectIcon: UIImage? = UIImage(named: "ic-power-off")
 
     let textInPlaceOfConnectIcon: String? = nil
 
@@ -123,7 +123,7 @@ final class ServerItemViewModel: ServerViewModel {
 
     let streamingAvailable: Bool = false
 
-    let connectIcon: UIImage? = UIImage(named: "con-available")
+    let connectIcon: UIImage? = UIImage(named: "ic-power-off")
 
     var textInPlaceOfConnectIcon: String? {
         return isUsersTierTooLow ? "UPGRADE" : nil
