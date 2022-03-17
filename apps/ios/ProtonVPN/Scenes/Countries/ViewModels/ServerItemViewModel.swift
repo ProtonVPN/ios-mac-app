@@ -238,7 +238,7 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 
 extension ServerItemViewModel: ServerViewModel {
     var connectButtonColor: UIColor {
-        return connectedUiState ? .brandColor() : (underMaintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
+        return connectedUiState ? UIColor.textAccent() : (underMaintenance ? UIColor.clear : UIColor.weakInteractionColor())
     }
 
     var entryCountryName: String? {

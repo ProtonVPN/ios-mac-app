@@ -104,6 +104,7 @@ public final class CountryCell: UITableViewCell {
 
     private func renderConnectButton() {
         connectButton.backgroundColor = viewModel?.connectButtonColor
+        connectButton.tintColor = viewModel?.textColor
 
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)

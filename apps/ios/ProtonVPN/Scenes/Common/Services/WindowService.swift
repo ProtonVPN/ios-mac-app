@@ -82,7 +82,7 @@ class WindowServiceImplementation: WindowService {
         UITabBar.appearance().tintColor = .normalTextColor()
         UITabBar.appearance().isTranslucent = false
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.brandColor()], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.secondaryBackgroundColor()
