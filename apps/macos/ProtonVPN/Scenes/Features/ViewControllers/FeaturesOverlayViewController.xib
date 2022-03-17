@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,8 +18,8 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="302" height="465"/>
+        <customView misplaced="YES" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="302" height="460"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Os-YE-DFA">
@@ -62,29 +62,33 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="OyF-qf-P1d" userLabel="smart routing view" customClass="FeatureRowView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="300" width="270" height="84"/>
                             <subviews>
-                                <imageView placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="P7o-mf-aQE">
-                                    <rect key="frame" x="0.0" y="57.5" width="24.5" height="29"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="placeholdertext.fill" catalog="system" id="fBu-6A-xcV"/>
+                                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="P7o-mf-aQE">
+                                    <rect key="frame" x="0.0" y="68" width="16" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="16" id="D1U-Ki-SNg"/>
+                                        <constraint firstAttribute="width" constant="16" id="eQw-Dg-0W1"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic_smart-routing" id="fBu-6A-xcV"/>
                                     <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RlQ-9b-dno">
-                                    <rect key="frame" x="30" y="69" width="242" height="15"/>
+                                    <rect key="frame" x="22" y="69" width="250" height="15"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Smart Routing" id="ufV-LQ-zSV">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SoR-2e-v1S">
-                                    <rect key="frame" x="30" y="20" width="242" height="45"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SoR-2e-v1S">
+                                    <rect key="frame" x="22" y="20" width="250" height="45"/>
                                     <textFieldCell key="cell" selectable="YES" title="This technology allows ProtonVPN to provide higher speed and security in difficult-to-serve countries." id="c2K-Vt-g8v">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LFa-P4-Wyk">
-                                    <rect key="frame" x="32" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Uj9-Co-OLZ">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -118,29 +122,33 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="eZu-mW-ini" userLabel="streaming view" customClass="FeatureRowView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="200" width="270" height="84"/>
                             <subviews>
-                                <imageView placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="U8P-1n-JLq">
-                                    <rect key="frame" x="0.0" y="57.5" width="24.5" height="29"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="placeholdertext.fill" catalog="system" id="0wi-js-ED0"/>
+                                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="U8P-1n-JLq">
+                                    <rect key="frame" x="0.0" y="68" width="16" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="16" id="KXB-LE-Sj5"/>
+                                        <constraint firstAttribute="width" constant="16" id="ThA-IU-jtA"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic_smart-routing" id="0wi-js-ED0"/>
                                     <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J28-V4-8WR">
-                                    <rect key="frame" x="30" y="69" width="242" height="15"/>
+                                    <rect key="frame" x="22" y="69" width="250" height="15"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Smart Routing" id="he7-Li-nzI">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0rH-aR-1O2">
-                                    <rect key="frame" x="30" y="20" width="242" height="45"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0rH-aR-1O2">
+                                    <rect key="frame" x="22" y="20" width="250" height="45"/>
                                     <textFieldCell key="cell" selectable="YES" title="This technology allows ProtonVPN to provide higher speed and security in difficult-to-serve countries." id="1LI-ok-Nz9">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" red="0.61176470589999998" green="0.62745098040000002" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U5v-FO-2Gz">
-                                    <rect key="frame" x="32" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="MqE-nR-CST">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -174,29 +182,33 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="sqQ-MB-qqN" userLabel="p2p view" customClass="FeatureRowView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="100" width="270" height="84"/>
                             <subviews>
-                                <imageView placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="LJR-fe-8XG">
-                                    <rect key="frame" x="0.0" y="57.5" width="24.5" height="29"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="placeholdertext.fill" catalog="system" id="8pf-d9-L2Y"/>
+                                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="LJR-fe-8XG">
+                                    <rect key="frame" x="0.0" y="68" width="16" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="16" id="Cib-HW-Ivz"/>
+                                        <constraint firstAttribute="height" constant="16" id="TR8-Nf-wDJ"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic_smart-routing" id="8pf-d9-L2Y"/>
                                     <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0vD-cn-7o0">
-                                    <rect key="frame" x="30" y="69" width="242" height="15"/>
+                                    <rect key="frame" x="22" y="69" width="250" height="15"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Smart Routing" id="e1S-is-4Oj">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EPX-iE-CCn">
-                                    <rect key="frame" x="30" y="20" width="242" height="45"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EPX-iE-CCn">
+                                    <rect key="frame" x="22" y="20" width="250" height="45"/>
                                     <textFieldCell key="cell" selectable="YES" title="This technology allows ProtonVPN to provide higher speed and security in difficult-to-serve countries." id="try-41-FlC">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" red="0.61176470589999998" green="0.62745098040000002" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-j9-uMt">
-                                    <rect key="frame" x="32" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2FF-cV-VWv">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -230,29 +242,33 @@
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="4Cu-gD-qGv" userLabel="tor view" customClass="FeatureRowView" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="270" height="84"/>
                             <subviews>
-                                <imageView placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="ccz-5f-7Ml">
-                                    <rect key="frame" x="0.0" y="57.5" width="24.5" height="29"/>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="placeholdertext.fill" catalog="system" id="wBJ-FD-hz1"/>
+                                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="ccz-5f-7Ml">
+                                    <rect key="frame" x="0.0" y="68" width="16" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="16" id="1WN-BM-0eW"/>
+                                        <constraint firstAttribute="width" constant="16" id="e4g-Ku-n4l"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ic_smart-routing" id="wBJ-FD-hz1"/>
                                     <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="81I-Sd-T1h">
-                                    <rect key="frame" x="30" y="69" width="242" height="15"/>
+                                    <rect key="frame" x="22" y="69" width="250" height="15"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Smart Routing" id="PRm-Xh-Deh">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U2k-K7-Ikq">
-                                    <rect key="frame" x="30" y="20" width="242" height="45"/>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="U2k-K7-Ikq">
+                                    <rect key="frame" x="22" y="20" width="250" height="45"/>
                                     <textFieldCell key="cell" selectable="YES" title="This technology allows ProtonVPN to provide higher speed and security in difficult-to-serve countries." id="nz8-7c-mie">
-                                        <font key="font" metaFont="cellTitle"/>
+                                        <font key="font" metaFont="system" size="12"/>
                                         <color key="textColor" red="0.61176470589999998" green="0.62745098040000002" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fci-sX-PEJ">
-                                    <rect key="frame" x="32" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="r0F-nl-u8E">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -319,11 +335,11 @@
                 <constraint firstItem="6Os-YE-DFA" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="16" id="izG-cK-PjE"/>
                 <constraint firstItem="8GV-bP-l0U" firstAttribute="leading" secondItem="6Os-YE-DFA" secondAttribute="leading" id="nnO-jW-rTl"/>
             </constraints>
-            <point key="canvasLocation" x="-239" y="1687.5"/>
+            <point key="canvasLocation" x="-239" y="1739"/>
         </customView>
     </objects>
     <resources>
         <image name="ic_cross" width="10" height="10"/>
-        <image name="placeholdertext.fill" catalog="system" width="9" height="14"/>
+        <image name="ic_smart-routing" width="16" height="16"/>
     </resources>
 </document>

@@ -21,10 +21,10 @@
 
 #if canImport(UIKit)
 import UIKit
-import ProtonCore_UIFoundations
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
+import ProtonCore_UIFoundations
 
 public class ProfileConstants {
     

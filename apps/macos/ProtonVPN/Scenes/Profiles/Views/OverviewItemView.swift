@@ -70,8 +70,8 @@ class OverviewItemView: NSTableRowView {
     
     private func setupImage() {
         switch viewModel.icon {
-        case .image(let name):
-            profileImage.image = NSImage(named: NSImage.Name(name))
+        case .image(let image):
+            profileImage.image = image
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case .circle(let color):

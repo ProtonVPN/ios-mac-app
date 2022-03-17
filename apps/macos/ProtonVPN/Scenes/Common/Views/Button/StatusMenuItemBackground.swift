@@ -28,7 +28,7 @@ class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
         super.init(coder: coder)
         
         wantsLayer = true
-        layer?.cornerRadius = 8
+        layer?.cornerRadius = 4
     }
     
     override func viewWillDraw() {

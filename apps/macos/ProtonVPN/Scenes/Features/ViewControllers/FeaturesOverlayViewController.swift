@@ -22,8 +22,6 @@
 
 import Cocoa
 import vpncore
-import ProtonCore_UIFoundations
-
 class FeaturesOverlayViewController: NSViewController {
 
     @IBOutlet private weak var smartRoutingRow: FeatureRowView!
