@@ -28,12 +28,12 @@ class MapRobot {
     
     func showMapClick() -> MapRobot {
         app.buttons[showMapButton].click()
-        return MapRobot()
+        return self
     }
     
     func hideMapClick() ->  MapRobot {
         app.buttons[hideMapButton].click()
-        return MapRobot()
+        return self
     }
     
     let verify = Verify()
