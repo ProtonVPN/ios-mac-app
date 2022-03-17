@@ -65,8 +65,8 @@ public class Storage {
         defaults.value(forKey: key)
     }
     
-    public func setEncodableValue<Value>(_ value: Value, forKey key: String) where Value: Encodable {
-        defaults.setValue(try? JSONEncoder().encode(value), forKey: key)
+    public func setEncodableValue<Value>(_ value: Value?, forKey key: String) where Value: Encodable {
+        defaults.setValue(value != nil ? try? JSONEncoder().encode(value) : nil, forKey: key)
     }
     
     public func getDecodableValue<T>(_ type: T.Type, forKey key: String) -> T? where T: Decodable {
