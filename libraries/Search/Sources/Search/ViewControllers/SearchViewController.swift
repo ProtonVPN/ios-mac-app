@@ -107,8 +107,8 @@ final class SearchViewController: UIViewController {
             viewModel.saveSearch(searchText: searchText)
         }
 
-        animateWithKeyboard(notification: notification) { [weak self] keyboardFrame in
-            self?.adjustForKeyboard(height: keyboardFrame.height)
+        animateWithKeyboard(notification: notification) { [weak self] _ in
+            self?.adjustForKeyboard(height: 0)
         }
     }
 
