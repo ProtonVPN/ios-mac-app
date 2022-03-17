@@ -117,24 +117,23 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     func loadDataWithoutFetching() -> Bool {
-        guard !self.serverStorage.fetch().isEmpty,
+        let models = serverStorage.fetch()
+        guard !models.isEmpty,
               self.propertiesManager.userIp != nil else {
             return false
         }
-        
-        // swiftlint:disable unused_optional_binding
-        if let _ = try? vpnKeychain.fetchCached() {
+
+        if (try? vpnKeychain.fetchCached()) != nil {
             setAndNotify(for: .established)
         } else {
             setAndNotify(for: .notEstablished)
         }
-        // swiftlint:enable unused_optional_binding
-        
         return true
     }
     
     func canPreviewApp() -> Bool {
-        guard !self.serverStorage.fetch().isEmpty, self.propertiesManager.userIp != nil else {
+        let models = serverStorage.fetch()
+        guard !models.isEmpty, self.propertiesManager.userIp != nil else {
             return false
         }
         return true
@@ -165,7 +164,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 })
             case let .failure(error):
                 log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-                guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
+                let models = self.serverStorage.fetch()
+                guard !models.isEmpty, // only fail if there is a major reason
                     self.propertiesManager.userIp != nil,
                       !(error is vpncore.KeychainError) else {
                         failure(error)
@@ -242,7 +242,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 })
             case let .failure(error):
                 log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
-                guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
+                let models = self.serverStorage.fetch()
+                guard !models.isEmpty, // only fail if there is a major reason
                       self.propertiesManager.userIp != nil,
                       !(error is vpncore.KeychainError) else {
                           fail(error)
