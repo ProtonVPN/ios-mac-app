@@ -26,9 +26,10 @@ import vpncore
 
 final class LoginViewModel {
     
-    typealias Factory = NavigationServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & AuthApiServiceFactory
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & AuthApiServiceFactory
     private let factory: Factory
-
+    
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -41,6 +42,14 @@ final class LoginViewModel {
 
     init (factory: Factory) {
         self.factory = factory
+    }
+    
+    var startOnBoot: Bool {
+        return propertiesManager.startOnBoot
+    }
+    
+    func startOnBoot(enabled: Bool) {
+        propertiesManager.startOnBoot = enabled
     }
     
     func logInSilently() {

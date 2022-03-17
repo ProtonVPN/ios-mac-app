@@ -21,6 +21,8 @@
                 <outlet property="passwordRevealButton" destination="FhT-rA-7Im" id="4Kf-Xg-FhF"/>
                 <outlet property="passwordSecureTextField" destination="Oat-9Y-92S" id="fXn-BU-oJa"/>
                 <outlet property="passwordTextField" destination="1Vt-py-EJy" id="Gmx-6r-XOl"/>
+                <outlet property="startOnBootButton" destination="AUK-pM-3uL" id="qPs-BD-trr"/>
+                <outlet property="startOnBootLabel" destination="rxN-J0-rur" id="43y-Lx-Xle"/>
                 <outlet property="usernameHorizontalLine" destination="aw7-qm-KCg" id="ro8-Ho-Dc2"/>
                 <outlet property="usernameTextField" destination="L0d-AC-N2e" id="BlC-SP-Xpl"/>
                 <outlet property="view" destination="c22-O7-iKe" id="1ar-Gp-I5h"/>
@@ -125,13 +127,30 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rxN-J0-rur" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="28" y="276" width="87" height="16"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start On Boot" id="t7J-ck-lyp">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="AUK-pM-3uL" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="275" y="274" width="35" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="RqO-MB-dAj"/>
+                                <constraint firstAttribute="width" constant="35" id="nfK-Js-dR9"/>
+                            </constraints>
+                        </customView>
                     </subviews>
                     <constraints>
+                        <constraint firstItem="rxN-J0-rur" firstAttribute="centerY" secondItem="AUK-pM-3uL" secondAttribute="centerY" id="6iO-Qv-TjH"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="1Vt-py-EJy" secondAttribute="trailing" constant="5" id="7mw-aU-jiO"/>
                         <constraint firstItem="doA-fK-3JY" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="9et-Q8-vPP"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="leading" id="B4b-qe-cM9"/>
                         <constraint firstItem="Mvc-5H-vVI" firstAttribute="top" secondItem="sIO-81-jPa" secondAttribute="bottom" constant="10" id="E2Z-co-zZo"/>
                         <constraint firstItem="L0d-AC-N2e" firstAttribute="leading" secondItem="ehd-hP-OCf" secondAttribute="leading" constant="30" id="GBA-6J-iQs"/>
+                        <constraint firstItem="AUK-pM-3uL" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="HPW-4P-4m3"/>
                         <constraint firstItem="Oat-9Y-92S" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="JMA-IK-byM"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="top" secondItem="Oat-9Y-92S" secondAttribute="bottom" constant="8" id="K1B-3J-erB"/>
                         <constraint firstItem="L0d-AC-N2e" firstAttribute="top" secondItem="ehd-hP-OCf" secondAttribute="top" constant="15" id="S1V-Ut-LUM"/>
@@ -145,10 +164,12 @@
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="trailing" constant="5" id="lFH-Ha-6Fl"/>
                         <constraint firstItem="1Vt-py-EJy" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="50" id="ofV-I3-fl2"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" id="pU1-s6-Zq9"/>
+                        <constraint firstItem="rxN-J0-rur" firstAttribute="leading" secondItem="dhf-WW-VSQ" secondAttribute="leading" id="qDY-6g-qgs"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="centerY" secondItem="Oat-9Y-92S" secondAttribute="centerY" id="rE6-pk-GEh"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="sfn-b2-xtR"/>
                         <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="25" id="w49-BC-M9Z"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="x2f-Zn-Nlc"/>
+                        <constraint firstItem="rxN-J0-rur" firstAttribute="top" secondItem="dhf-WW-VSQ" secondAttribute="bottom" constant="40" id="zVY-BV-mLG"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="8" id="zo0-Z6-KPw"/>
                     </constraints>
                 </customView>
