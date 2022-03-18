@@ -5,22 +5,22 @@
 	<key>INEnums</key>
 	<array/>
 	<key>INIntentDefinitionModelVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>INIntentDefinitionNamespace</key>
 	<string>kbrLjS</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>18G95</string>
+	<string>21E230</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>11A420a</string>
+	<string>13E113</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>11.0</string>
+	<string>13.3</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
 			<string>generic</string>
 			<key>INIntentDescription</key>
-			<string>Connect to ProtonVPN</string>
+			<string>Connect to Proton VPN</string>
 			<key>INIntentDescriptionID</key>
 			<string>jf696t</string>
 			<key>INIntentName</key>
@@ -68,7 +68,7 @@
 			<key>INIntentCategory</key>
 			<string>generic</string>
 			<key>INIntentDescription</key>
-			<string>Disconnect from ProtonVPN</string>
+			<string>Disconnect from Proton VPN</string>
 			<key>INIntentDescriptionID</key>
 			<string>ksQcRb</string>
 			<key>INIntentName</key>
@@ -118,7 +118,7 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
-			<string>Get ProtonVPN Connection Status</string>
+			<string>Get Proton VPN Connection Status</string>
 			<key>INIntentDescriptionID</key>
 			<string>JOCERT</string>
 			<key>INIntentIneligibleForSuggestions</key>

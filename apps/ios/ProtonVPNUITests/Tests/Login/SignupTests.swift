@@ -59,7 +59,7 @@ class SignupTests: ProtonVPNUITests {
         let randomEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
         let password = StringUtils().randomAlphanumericString(length: 8)
         let code = "666666"
-        let plan = "ProtonVPN Free"
+        let plan = "Proton VPN Free"
 
         changeEnvToBlackIfNedded()
         useAndContinueTap()
@@ -88,7 +88,7 @@ class SignupTests: ProtonVPNUITests {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
         let password = StringUtils().randomAlphanumericString(length: 8)
-        let plan = "ProtonVPN Free"
+        let plan = "Proton VPN Free"
     
         changeEnvToBlackIfNedded()
         useAndContinueTap()

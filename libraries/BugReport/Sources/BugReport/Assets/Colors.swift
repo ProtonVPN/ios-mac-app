@@ -54,14 +54,14 @@ public struct Colors {
 
     /// Default color set for testing and previews
     public static let testColors = Colors(
-        brand: Color(rgbValue: 0x4DA358),
-        brandLight20: Color(rgbValue: 0x71B579),
-        brandLight40: Color(rgbValue: 0x94C89B),
-        brandDark40: Color(rgbValue: 0x2F6336),
+        brand: Color(rgbValue: 0x6D4AFF),
+        brandLight20: Color(rgbValue: 0x8A6EFF),
+        brandLight40: Color(rgbValue: 0xC4B7FF),
+        brandDark40: Color(rgbValue: 0x372580),
         textPrimary: Color.white,
         textSecondary: Color(rgbValue: 0xA7A4B5),
-        background: Color(rgbValue: 0x17181C),
-        backgroundSecondary: Color(rgbValue: 0x25272C),
+        background: Color(rgbValue: 0x1C1B24),
+        backgroundSecondary: Color(rgbValue: 0x292733),
         backgroundUpdateButton: Color(rgbValue: 0x303239),
         separator: Color(rgbValue: 0x303238),
         qfIcon: Color(rgbValue: 0xFAC530)

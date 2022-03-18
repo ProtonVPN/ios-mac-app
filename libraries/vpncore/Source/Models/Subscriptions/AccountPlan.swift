@@ -47,15 +47,15 @@ public enum AccountPlan: String {
     public var description: String {
         switch self {
         case .free:
-            return "ProtonVPN Free"
+            return "Proton VPN Free"
         case .basic:
-            return "ProtonVPN Basic"
+            return "Proton VPN Basic"
         case .plus:
-            return "ProtonVPN Plus"
+            return "Proton VPN Plus"
         case .visionary, .visionary2022:
             return "Proton Visionary"
         case .trial:
-            return "ProtonVPN Plus Trial"
+            return "Proton VPN Plus Trial"
         case .unlimited:
             return "Proton Unlimited"
         case .vpnPlus:
