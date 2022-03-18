@@ -168,7 +168,9 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         refreshPendingEnablement()
 
         viewModel.setProtocol(protocolItem) { [weak self] result in
-            self?.setupProtocolItem()
+            executeOnUIThread {
+                self?.setupProtocolItem()
+            }
         }
     }
 }
