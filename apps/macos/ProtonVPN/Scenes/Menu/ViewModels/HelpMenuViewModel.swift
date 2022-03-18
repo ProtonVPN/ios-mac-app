@@ -94,7 +94,7 @@ class HelpMenuViewModel {
     
     private func clearAllDataAndTerminate() {
         DispatchQueue.main.async {
-            if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: .now() + 5) == .timedOut {
+            if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
                 log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
             }
 
