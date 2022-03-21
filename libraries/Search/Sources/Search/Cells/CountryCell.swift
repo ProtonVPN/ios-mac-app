@@ -46,7 +46,6 @@ public final class CountryCell: UITableViewCell {
 
     @IBOutlet private weak var entrySeparator: UIImageView!
     @IBOutlet private weak var flagsStackView: UIStackView!
-    @IBOutlet private weak var entryFlagIcon: UIImageView!
 
     // MARK: Properties
 
@@ -73,13 +72,11 @@ public final class CountryCell: UITableViewCell {
 
             backgroundColor = .clear
             flagIcon.image = viewModel.flag
-            [flagIcon, countryName, torIV, p2pIV, smartIV, entryFlagIcon].forEach { view in
+            [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
-            entryFlagIcon.isHidden = !viewModel.isSecureCoreCountry
             entrySeparator.isHidden = !viewModel.isSecureCoreCountry
             flagsStackView.spacing = viewModel.isSecureCoreCountry ? 8 : 16
-            entryFlagIcon.backgroundColor = viewModel.connectButtonColor
 
             stateChanged()
         }
