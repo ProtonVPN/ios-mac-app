@@ -944,19 +944,19 @@
 "_menu_window" = "Вікно";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Увімкнути помірну NAT";
+"_moderate_nat_change_title" = "Увімкнути помірне NAT";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Увімкнути помірну NAT";
+"_moderate_nat_enable_title" = "Увімкнути помірне NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Помірна NAT вимикає рандомізацію показу локальних адрес, що може трохи знизити вашу безпеку, але дозволяє використовувати такі методи, як пряме підключення до програм, наприклад онлайн-ігор.\nДокладніше";
+"_moderate_nat_explanation" = "Помірне NAT вимикає рандомізацію показу локальних адрес, що може трохи знизити вашу безпеку, але дозволяє використовувати такі методи, як пряме підключення до програм, наприклад онлайн-ігор.\nДокладніше";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Докладніше";
 
 /* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Помірна NAT";
+"_moderate_nat_title" = "Помірне NAT";
 
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Гарантія повернення коштів протягом 30 днів";

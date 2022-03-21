@@ -32,7 +32,7 @@
 "modals_upsell_features_footer" = "І більше преміальних функцій";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Помірна NAT або NAT 2 типу може покращити ваш досвід онлайн-роботи з різними програмами та онлайн-відеоіграми.\n\nРозблокуйте цю та інші функції за допомогою тарифного плану Plus.";
+"modals_upsell_features_moderate_nat_subtitle" = "Помірне NAT або NAT 2 типу може покращити ваш досвід онлайн-роботи з різними програмами та онлайн-відеоіграми.\n\nРозблокуйте цю та інші функції за допомогою тарифного плану Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Використовуйте ProtonVPN для будь-якої спеціальної потреби, дозволяючи трафік до нестандартних портів через мережу VPN.\n\nРозблокуйте цю та інші функції передплативши тарифний план Plus.";
@@ -41,10 +41,10 @@
 "modals_upsell_features_subtitle" = "У разі оновлення до тарифного плану Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "Що таке помірна NAT?";
+"modals_upsell_moderate_nat_learn_more" = "Що таке помірне NAT?";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Увімкнути помірну NAT";
+"modals_upsell_moderate_nat_title" = "Увімкнути помірне NAT";
 
 /* Feature of the NetShield upsell screen */
 "modals_upsell_net_shield_ads" = "Блокування реклами та стеження";

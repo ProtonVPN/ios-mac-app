@@ -1,0 +1,72 @@
+/* Section header in search */
+"_basic_servers" = "Basic sunucuları";
+
+/* Section header in search */
+"_free_servers" = "Free sunucuları";
+
+/* Section header in search */
+"_plus_servers" = "Plus sunucuları";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Ülke ya da sunucu";
+
+/* Section header in search */
+"search_cities" = "İller";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, Londra, Tokyo...";
+
+/* Section header in search */
+"search_countries" = "Ülkeler";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "İsviçre, Birleşik devletler, İtalya...";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Lütfen farklı bir anahtar sözcük deneyin";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Herhangi bir sonuç bulunamadı";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Temizle";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "İptal";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Devam et";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Arama geçmişiniz kaybolacak. Devam edilsin mi?";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Son bakılanlar";
+
+/* Section header in search */
+"search_results_countries" = "Ülkeler";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core ülkeleri";
+
+/* Section header in Search */
+"search_servers" = "Sunucular";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Tüm konumlarda arama";
+
+/* Title of the search screen */
+"search_title" = "Arama";
+
+/* Title for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Aradığınıza bağlanın";
+
+/* Section header in search */
+"search_us_regions" = "Birleşik Devletler bölgeleri";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "California, Florida, Colorado...";
+

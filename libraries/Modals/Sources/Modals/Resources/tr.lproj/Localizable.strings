@@ -59,7 +59,7 @@
 "modals_upsell_net_shield_title" = "NetShield ile reklamlar olmadan gezinebilirsiniz";
 
 /* Learn more button title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_learn_more" = "Ayrıntlı bilgi alın";
+"modals_upsell_safe_mode_learn_more" = "Ayrıntılı bilgi alın";
 
 /* Title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_title" = "Standart olmayan kapı numaralarından trafik akabilsin";

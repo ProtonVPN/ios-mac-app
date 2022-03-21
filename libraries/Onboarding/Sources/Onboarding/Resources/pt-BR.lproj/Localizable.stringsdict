@@ -5,7 +5,7 @@
 	<key>onboarding_establish_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>FREE subscription offers %#@num_servers@ in %#@num_countries@</string>
+		<string>A assinatura GRATUITA oferece %#@num_servers@ em %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -24,7 +24,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d servers</string>
+			<string>%d servidores</string>
 			<key>other</key>
 			<string>%d servers</string>
 		</dict>
@@ -32,7 +32,7 @@
 	<key>onboarding_purchased_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>You now have access to %#@NUM_SEC_SERVERS@ and other premium features.</string>
+		<string>Agora você tem acesso a %#@NUM_SEC_SERVERS@ e outros recursos premium.</string>
 		<key>NUM_SEC_SERVERS</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -40,15 +40,15 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d secure server</string>
+			<string>%d servidor seguro</string>
 			<key>other</key>
-			<string>%d secure servers</string>
+			<string>%d servidores seguros</string>
 		</dict>
 	</dict>
 	<key>onboarding_upsell_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Connect %#@NUM_DEVICES@ simultaneously</string>
+		<string>Conecte %#@NUM_DEVICES@ simultaneamente</string>
 		<key>NUM_DEVICES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -64,7 +64,7 @@
 	<key>onboarding_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus</string>
+		<string>Acesse todos %#@NUM_SERVERS@ em %#@NUM_COUNTRIES@ com Plus</string>
 		<key>NUM_COUNTRIES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -83,9 +83,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d server</string>
+			<string>%d servidor</string>
 			<key>other</key>
-			<string>%d servers</string>
+			<string>%d servidores</string>
 		</dict>
 	</dict>
 </dict>

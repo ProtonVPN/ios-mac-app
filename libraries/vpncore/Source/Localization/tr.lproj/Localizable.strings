@@ -773,7 +773,7 @@
 "_kill_switch_reconnection_cancel" = "Yeniden bağlanmayı iptal et";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch IP adresinizi koruyor";
+"_kill_switch_reconnection_header" = "Bağlantı kesici IP adresinizi koruyor";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPN tüneli kesildiğinde tüm ağ trafiğini engeller.";
@@ -1948,7 +1948,7 @@
 "_unsecure_wifi" = "Güvenli olmayan Wi-Fi bağlantısı algılandı";
 
 /* (No Comment) */
-"_unsecure_wifi_learn_more" = "Ayrıntlı bilgi alın";
+"_unsecure_wifi_learn_more" = "Ayrıntılı bilgi alın";
 
 /* (No Comment) */
 "_unsecure_wifi_title" = "Güvenli olmayan Wi-Fi algılandı";
