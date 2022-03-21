@@ -11,7 +11,7 @@
 "modals_discourage_secure_core_dont_show" = "Não mostrar novamente";
 
 /* Subtitle of the Secure Core discouragement screen */
-"modals_discourage_secure_core_subtitle" = "Secure Core offers the highest level of security and privacy, but it may reduce your internet speed. If you need more performance, you can disable Secure Core.";
+"modals_discourage_secure_core_subtitle" = "O Secure Core oferece o mais alto nível de segurança e privacidade, mas pode reduzir a velocidade da sua internet. Se precisar de mais desempenho, você pode desabilitar o Secure Core.";
 
 /* Title of the Secure Core discouragement screen */
 "modals_discourage_secure_core_title" = "Uma nota sobre velocidade...";
@@ -20,13 +20,13 @@
 "modals_get_plus" = "Upgrade";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
+"modals_upsell_all_countries_feature_highSpeed" = "Navegue com velocidade máxima (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_netshield" = "Block ads and malware with Netshield";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
+"modals_upsell_all_countries_feature_streaming" = "Acesse os serviços de streaming globais";
 
 /* Footer of the All Countries upsell screen */
 "modals_upsell_features_footer" = "And many more premium features";

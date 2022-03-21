@@ -17,7 +17,7 @@
 "onboarding_connected_note" = "Safely.";
 
 /* (No Comment) */
-"onboarding_connected_subtitle" = "Your connection is protected and you’re ready to browse the web.";
+"onboarding_connected_subtitle" = "Sua conexão está protegida e você está pronto para navegar na Web.";
 
 /* (No Comment) */
 "onboarding_connected_title" = "Parabéns";
@@ -32,7 +32,7 @@
 "onboarding_establish_connect_now" = "Conectar agora";
 
 /* (No Comment) */
-"onboarding_establish_note" = "We will connect you to the fastest and most stable server depending on your location.";
+"onboarding_establish_note" = "Vamos conectá-lo ao servidor mais rápido e estável para a sua localização.";
 
 /* (No Comment) */
 "onboarding_establish_title" = "Estabeleça sua primeira conexão";
@@ -50,13 +50,13 @@
 "onboarding_next" = "Próximo";
 
 /* (No Comment) */
-"onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
+"onboarding_not_connected_error" = "Não foi possível estabelecer uma conexão. Por favor, tente novamente mais tarde no aplicativo.";
 
 /* (No Comment) */
-"onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
+"onboarding_not_connected_subtitle" = "Você está pronto para navegar na web.";
 
 /* (No Comment) */
-"onboarding_plus_only" = "AVAILABLE WITH PLUS";
+"onboarding_plus_only" = "DISPONÍVEL COM PLUS";
 
 /* (No Comment) */
 "onboarding_purchased_note" = "Aproveite o mundo da privacidade.";
@@ -65,10 +65,10 @@
 "onboarding_skip" = "Pular";
 
 /* (No Comment) */
-"onboarding_take_tour" = "Take a tour";
+"onboarding_take_tour" = "Faça um tour";
 
 /* (No Comment) */
-"onboarding_unblockstreaming_subtitle" = "Secure access your favourite content from other countries, now also on AndroidTV.";
+"onboarding_unblockstreaming_subtitle" = "Acesso seguro ao seu conteúdo favorito de outros países, agora também na AndroidTV.";
 
 /* (No Comment) */
 "onboarding_unblockstreaming_title" = "Desbloquear streaming";

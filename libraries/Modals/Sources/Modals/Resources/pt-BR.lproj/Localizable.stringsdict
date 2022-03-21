@@ -40,9 +40,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d secure servers</string>
+			<string>%d servidor seguro</string>
 			<key>other</key>
-			<string>%d secure servers</string>
+			<string>%d servidores seguros</string>
 		</dict>
 	</dict>
 </dict>

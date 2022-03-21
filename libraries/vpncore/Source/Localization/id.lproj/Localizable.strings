@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "Saat memulai aplikasi, Anda akan tersambung ke profil terpilih";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "Server-server BASIC";
+"_basic_servers" = "Server BASIC";
 
 /* Battery usages screen description */
 "_battery_description" = "Semua lalu lintas di telepon Anda akan dikelola melalui OpenVPN, dengan demikian iOS akan mengalokasikan penggunaan baterai aplikasi lain ke ProtonVPN.";

@@ -614,7 +614,7 @@
 "_features_title" = "Recursos";
 
 /* (No Comment) */
-"_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";
+"_force_upgrade_message" = "A versão do aplicativo ProtonVPN que você está usando no momento não é mais compatível. Por favor, atualize para a versão mais recente.";
 
 /* (No Comment) */
 "_force_upgrade_title" = "Atualização do aplicativo necessária";
@@ -956,7 +956,7 @@
 "_moderate_nat_explanation_link" = "Saiba mais";
 
 /* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Moderate NAT";
+"_moderate_nat_title" = "NAT moderado";
 
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Garantia de devolução do seu dinheiro por até 30 dias";
@@ -1076,7 +1076,7 @@
 "_non_standard_ports_explanation_link" = "Saiba mais";
 
 /* Non-standard ports feature title in Settings */
-"_non_standard_ports_title" = "Non-standard ports";
+"_non_standard_ports_title" = "Portas não padrão";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Não conectado";
@@ -1193,7 +1193,7 @@
 "_plus_plan_features" = "Servidores Plus\nSecure Core\nServidores Tor";
 
 /* Plan upgrade required alert */
-"_plus_required" = "É necessária a assinatura Plus ou Visionária";
+"_plus_required" = "É necessária a assinatura Plus ou Visionary";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Servidor PLUS";
@@ -1388,7 +1388,7 @@
 "_report_bug" = "Reportar um problema";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• ProtonVPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Fornecendo os seguintes detalhes, nossa equipe pode identificar seu problema e uma possível solução com maiores chances e menor tempo:\n• Registros do aplicativo ProtonVPN\n• Registros do OpenVPN\n• Registros do WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1556,7 +1556,7 @@
 "_skip" = "Pular";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Ative o Smart Protocol para usar automaticamente o protocolo e a porta que oferecem a melhor conectividade.";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Sua conexão será reiniciada para alterar o modo protocolo inteligente.";
@@ -1655,7 +1655,7 @@
 "_subuser_alert_login_button" = "Iniciar sessão novamente";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Thanks for upgrading to PROFESSIONAL/VISIONARY";
+"_subuser_alert_title" = "Obrigado por atualizar para PROFESSIONAL/VISIONARY";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado com sucesso";
@@ -1670,7 +1670,7 @@
 "_sysex_cannot_enable" = "Cannot enable System Extension";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
+"_sysex_enabled_description" = "Configuração concluída. Agora você pode navegar na Internet mais rápido com as melhores tecnologias de VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Configuração concluída";
@@ -1709,7 +1709,7 @@
 "_sysex_wizard_step2_title" = "Desbloqueie para fazer alterações";
 
 /* System exetnsion wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
+"_sysex_wizard_step3_description" = "Insira suas credenciais do macOS para autenticar";
 
 /* System exetnsion wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Inserir credenciais";
@@ -1727,22 +1727,22 @@
 "_sysex_wizard_step4_title_1" = "Botão \"Permitir\"";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Select both ProtonVPN items to enable custom protocols and click “OK”";
+"_sysex_wizard_step5_description" = "Selecione ambos os itens do ProtonVPN para ativar protocolos personalizados e clique em “OK”";
 
 /* System exetnsion wizard in mac: Step nr.5 title */
 "_sysex_wizard_step5_title" = "Selecionar itens do ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
+"_sysex_wizard_subtitle" = "Para isso, siga os passos abaixo:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "You’re now ready to use ProtonVPN with the latest and fastest VPN technologies available!";
+"_sysex_wizard_text_under_steps" = "Agora você está pronto para usar o ProtonVPN com as tecnologias VPN mais recentes e rápidas disponíveis!";
 
 /* System exetnsion wizard in mac: Main title */
-"_sysex_wizard_title" = "Enjoy the fastest connections by enabling custom protocols";
+"_sysex_wizard_title" = "Aproveite as conexões mais rápidas habilitando protocolos personalizados";
 
 /* System exetnsion wizard in mac: Main title */
-"_sysex_wizard_window_title" = "Enabling custom protocols";
+"_sysex_wizard_window_title" = "Ativar protocolos personalizados";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Notificações do sistema";
@@ -1766,22 +1766,22 @@
 "_test_servers" = "Servidores de TESTE";
 
 /* (No Comment) */
-"_tier_basic" = "BÁSICO";
+"_tier_basic" = "BASIC";
 
 /* (No Comment) */
-"_tier_free" = "GRATUITO";
+"_tier_free" = "FREE";
 
 /* (No Comment) */
 "_tier_plus" = "PLUS";
 
 /* (No Comment) */
-"_tier_visionary" = "VISIONÁRIO";
+"_tier_visionary" = "VISIONARY";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "tempo esgotado";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Another application might be interfering with Kill Switch. To fix this problem, switch to the OpenVPN protocol or disable Kill Switch and retry.";
+"_timeout_ks_ike_descritpion" = "Outra aplicação pode estar interferindo com o Kill Switch.\nPara resolver este problema, mude para o protocolo OpenVPN ou desative o Kill Switch e tente novamente.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Troque para o OpenVPN e tente novamente";
@@ -2053,7 +2053,7 @@
 "_vpn_accelerator_change_title" = "Alterar VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
+"_vpn_accelerator_description" = "O VPN Acelerador ativa um conjunto de tecnologias únicas de aprimoramento de desempenho que podem aumentar a velocidade da VPN em até 400%%. Saiba mais";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Saiba mais";
@@ -2080,7 +2080,7 @@
 "_vpnauth_certfail_title" = "Erro de autenticação";
 
 /* (No Comment) */
-"_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
+"_vpnauth_too_many_certs_description" = "Você atingiu o número máximo de alterações de configuração. Por favor, tente novamente em alguns minutos";
 
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Erro de autenticação";
@@ -2110,7 +2110,7 @@
 "_welcome_title" = "BEM-VINDO(A) A BORDO!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+"_wgks_description" = "Kill Switch está impedindo a VPN de se conectar à Internet. Isso pode ser devido a uma incompatibilidade com seu sistema operacional (macOS Catalina 10.15).\n\nPara resolver esse problema, atualize seu sistema operacional para a versão mais recente.\n\nComo alternativa, você pode alternar para o protocolo OpenVPN ou desativar o Kill Switch.";
 
 /* (No Comment) */
 "_wgks_ks_off" = "Desativar Kill Switch";
@@ -2119,7 +2119,7 @@
 "_wgks_ovpn" = "Mudar para OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
+"_wgks_title" = "Kill Switch está impedindo a VPN de se conectar à Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget do iOS";

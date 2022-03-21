@@ -155,7 +155,7 @@
 "_color" = "Kolor";
 
 /* MacOS: button in login screen */
-"_common_issues" = "Common sign in issues";
+"_common_issues" = "Typowe problemy z logowaniem";
 
 /* Common word */
 "_connect" = "Połącz";
