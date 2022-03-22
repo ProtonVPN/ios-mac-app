@@ -35,6 +35,7 @@ public protocol ServerViewModel: AnyObject {
     var loadValue: String { get }
     var loadColor: UIColor { get }
     var city: String { get }
+    var translatedCity: String? { get }
     var entryCountryName: String? { get }
     var entryCountryFlag: UIImage? { get }
     var countryName: String { get }
@@ -42,4 +43,10 @@ public protocol ServerViewModel: AnyObject {
 
     func updateTier()
     func connectAction()
+}
+
+extension ServerViewModel {
+    var displayCityName: String {
+        return translatedCity ?? city
+    }
 }

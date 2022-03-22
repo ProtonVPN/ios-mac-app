@@ -21,6 +21,7 @@ import UIKit
 
 public protocol CityViewModel {
     var cityName: String { get }
+    var translatedCityName: String? { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
     var connectButtonColor: UIColor { get }
@@ -31,4 +32,10 @@ public protocol CityViewModel {
 
     func updateTier()
     func connectAction()
+}
+
+extension CityViewModel {
+    var displayCityName: String {
+        return translatedCityName ?? cityName
+    }
 }

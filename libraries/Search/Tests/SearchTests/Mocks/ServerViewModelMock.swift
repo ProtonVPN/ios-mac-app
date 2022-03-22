@@ -61,6 +61,8 @@ final class ServerViewModelMock: ServerViewModel {
 
     let countryName: String
 
+    let translatedCity: String?
+
     func updateTier() {
 
     }
@@ -69,11 +71,12 @@ final class ServerViewModelMock: ServerViewModel {
 
     }
 
-    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil) {
+    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil) {
         description = server
         self.city = city
         self.countryName = countryName
         self.isUsersTierTooLow = isUsersTierTooLow
         self.entryCountryName = entryCountryName
+        self.translatedCity = translatedCity
     }
 }
