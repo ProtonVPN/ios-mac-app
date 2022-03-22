@@ -25,33 +25,81 @@ import vpncore
 import UIKit
 
 extension CreateOrEditProfileViewModel {
-    
+    private var fontSize: CGFloat {
+        return 17
+    }
+    private var baselineOffset: CGFloat {
+        return 4
+    }
+
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
         let imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: country.countryCode))
         let countryString = ("  " + country.country)
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
-            nameAttributedString = countryString.attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
+            nameAttributedString = NSMutableAttributedString(
+                string: countryString,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: UIColor.normalTextColor()
+                ]
+            )
         } else {
-            nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .weakTextColor(), fontSize: 17, alignment: .left)
+            nameAttributedString = NSMutableAttributedString(
+                string: countryString + " (\(LocalizedString.upgradeRequired))",
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: UIColor.weakTextColor()
+                ]
+            )
         }
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
-            let via = "\(LocalizedString.via)  ".attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
+            let via = NSMutableAttributedString(
+                string: "\(LocalizedString.via)  ",
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: UIColor.normalTextColor()
+                ]
+            )
             let entryCountryFlag = embededImageIcon(image: UIImage.flag(countryCode: server.entryCountryCode))
-            let entryCountry = ("  " + server.entryCountry).attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            let entryCountry = NSMutableAttributedString(
+                string: "  " + server.entryCountry,
+                attributes: [
+                    .font: UIFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: UIColor.normalTextColor()
+                ]
+            )
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
             let countryFlag = embededImageIcon(image: UIImage.flag(countryCode: server.countryCode))
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
-                serverDescriptor = serverString.attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
+                serverDescriptor = NSMutableAttributedString(
+                    string: serverString,
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: fontSize),
+                        .baselineOffset: baselineOffset,
+                        .foregroundColor: UIColor.normalTextColor()
+                    ]
+                )
             } else {
-                serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .weakTextColor(), fontSize: 17, alignment: .left)
+                serverDescriptor = NSMutableAttributedString(
+                    string: serverString + " (\(LocalizedString.upgradeRequired))",
+                    attributes: [
+                        .font: UIFont.systemFont(ofSize: fontSize),
+                        .baselineOffset: baselineOffset,
+                        .foregroundColor: UIColor.weakTextColor()
+                    ]
+                )
             }
             return NSAttributedString.concatenate(countryFlag, serverDescriptor)
         }
@@ -74,8 +122,8 @@ extension CreateOrEditProfileViewModel {
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [
-                .font: UIFont.systemFont(ofSize: 16),
-                .baselineOffset: 4
+                .font: UIFont.systemFont(ofSize: fontSize),
+                .baselineOffset: baselineOffset
             ]
         )
         nameAttributedString.insert(imageAttributedString, at: 0)
@@ -84,7 +132,7 @@ extension CreateOrEditProfileViewModel {
     }
     
     private func embededImageIcon(image: UIImage?) -> NSAttributedString {
-        if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 12) {
+        if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 18) {
             return imageAttributedString
         }
         return NSAttributedString(string: "")
