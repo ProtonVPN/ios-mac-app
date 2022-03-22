@@ -29,6 +29,8 @@ final class CityItemViewModel: CityViewModel {
 
     let cityName: String
 
+    let translatedCityName: String?
+
     var countryName: String {
         return LocalizationUtility.default.countryName(forCode: countryModel.countryCode) ?? ""
     }
@@ -80,8 +82,9 @@ final class CityItemViewModel: CityViewModel {
     private let servers: [ServerItemViewModel]
     private let countryModel: CountryModel
 
-    init(cityName: String, countryModel: CountryModel, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol?, connectionStatusService: ConnectionStatusService) {
+    init(cityName: String, translatedCityName: String?, countryModel: CountryModel, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol?, connectionStatusService: ConnectionStatusService) {
         self.cityName = cityName
+        self.translatedCityName = translatedCityName
         self.countryModel = countryModel
         self.servers = servers
         self.alertService = alertService

@@ -142,7 +142,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             score: 11,
             status: 1,
             location: ServerLocation(lat: 1, long: 2),
-            hostCountry: nil
+            hostCountry: nil,
+            translatedCity: nil
         )
     }
     

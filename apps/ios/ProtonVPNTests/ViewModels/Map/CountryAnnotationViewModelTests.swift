@@ -71,7 +71,8 @@ class CountryAnnotationViewModelTests: XCTestCase {
             score: 11,
             status: 2,
             location: ServerLocation(lat: 1, long: 2),
-            hostCountry: nil
+            hostCountry: nil,
+            translatedCity: nil
             )
         )
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(), doh: .mock)
@@ -101,7 +102,8 @@ class CountryAnnotationViewModelTests: XCTestCase {
             score: 11,
             status: status,
             location: ServerLocation(lat: 1, long: 2),
-            hostCountry: nil
+            hostCountry: nil,
+            translatedCity: nil
         )
     }
     
