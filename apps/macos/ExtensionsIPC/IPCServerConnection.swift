@@ -68,16 +68,28 @@ extension XPCBaseService: ProviderCommunication {
 extension XPCBaseService: NSXPCListenerDelegate {
     func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
         // Check the code signature of the remote endpoint to avoid tampering.
+        let pid = newConnection.processIdentifier
         let auditToken = newConnection.auditToken
 
         do {
-            guard try CodeSignatureComparitor.codeSignatureMatches(auditToken: auditToken) else {
-                self.log("Refusing XPC connection: code signature does not match")
+            let matches = try CodeSignatureComparitor.codeSignatureMatches(auditToken: auditToken)
+            #if DEBUG
+            if !matches {
+                self.log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
+            }
+            #else
+            guard matches else {
+                self.log("Refusing XPC connection with pid \(pid): code signature does not match")
                 return false
             }
+            #endif
         } catch {
-            self.log("Refusing XPC connection due to code signing error: \(String(describing: error))")
+            self.log("Code signing error occurred while verifying pid \(pid): \(String(describing: error))")
+
+            #if !DEBUG
+            self.log("Rejecting XPC connection.")
             return false
+            #endif
         }
 
         // The exported object is this IPCConnection instance.
