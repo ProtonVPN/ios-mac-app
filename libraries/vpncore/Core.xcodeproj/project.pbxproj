@@ -510,8 +510,6 @@
 		F3256AC126B98EF4003F073C /* WireguardAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3256ABE26B98EF4003F073C /* WireguardAvailabilityChecker.swift */; };
 		F3256AC426B993C2003F073C /* SmartProtocol+Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */; };
 		F3256AC626B993C2003F073C /* SmartProtocol+Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */; };
-		F32F2BFA2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */; };
-		F32F2BFC2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */; };
 		F331EA2A2754C1A200BA0C04 /* ReportsBugs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331EA292754C1A200BA0C04 /* ReportsBugs.swift */; };
 		F331EA2C2754C1A200BA0C04 /* ReportsBugs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331EA292754C1A200BA0C04 /* ReportsBugs.swift */; };
 		F34808AC266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */; };
@@ -951,7 +949,6 @@
 		F3256AB926B98CB3003F073C /* OpenVPNUDPAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNUDPAvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3256ABE26B98EF4003F073C /* WireguardAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardAvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SmartProtocol+Priority.swift"; sourceTree = "<group>"; };
-		F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CountryGroup+Wireguard.swift"; sourceTree = "<group>"; };
 		F331EA292754C1A200BA0C04 /* ReportsBugs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsBugs.swift; sourceTree = "<group>"; };
 		F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnFeatureChangeState.swift; sourceTree = "<group>"; };
 		F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnKeys+Generation.swift"; sourceTree = "<group>"; };
@@ -1650,7 +1647,6 @@
 		F36ECB672610A8870089B898 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */,
 				E129C6D522A9488900D8437E /* CLLocationCoordinate2D+Extension.swift */,
 				D5E853DD2428F863002EBF05 /* Date+Misc.swift */,
 				E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */,
@@ -2467,7 +2463,6 @@
 				E129C6CB22A9205700D8437E /* VpnManagerMock.swift in Sources */,
 				D5A8811D22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
 				D5B4712624DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */,
-				F32F2BFA2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */,
 				E1616BEC21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
 				E148AE6E21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				E9DC79B9262DBEDC001A0FC0 /* SmartProtocol.swift in Sources */,
@@ -2844,7 +2839,6 @@
 				D5D2955425A5D551000FBD74 /* NetShieldPropertyProvider.swift in Sources */,
 				F30B9E7B262886C90094C65E /* VpnKeys.swift in Sources */,
 				D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */,
-				F32F2BFC2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */,
 				F30B9EB12629B1BC0094C65E /* AsyncOperation.swift in Sources */,
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,
 				42066EFB263040E0001F86DB /* FeatureCellViewModel.swift in Sources */,

@@ -29,13 +29,6 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
     public let label: String?
     public let x25519PublicKey: String?
-
-    public var supportsWireguard: Bool {
-        if let x25519PublicKey = x25519PublicKey, !x25519PublicKey.isEmpty {
-            return true
-        }
-        return false
-    }
     
     override public var description: String {
         return

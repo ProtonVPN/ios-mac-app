@@ -145,7 +145,6 @@ class CountriesSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         updateState()
     }
@@ -325,7 +324,7 @@ class CountriesSectionViewModel {
         setTier()
         let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
         self.countries = serverManager.grouping(for: serverType, query: currentQuery)
-        data = groupServersIntoSections(self.countries.filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
+        data = groupServersIntoSections(self.countries, serverType: serverType)
         setupServers()
     }
     

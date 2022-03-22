@@ -208,16 +208,14 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
                                                name: serverManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
-                                               name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
     }
     
     internal func setStateOf(type: ServerType) {
         switch type {
         case .standard, .p2p, .tor, .unspecified:
-            state = ModelState.standard(serverManager.grouping(for: .standard).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
+            state = ModelState.standard(serverManager.grouping(for: .standard))
         case .secureCore:
-            state = ModelState.secureCore(serverManager.grouping(for: .secureCore).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
+            state = ModelState.secureCore(serverManager.grouping(for: .secureCore))
         }
     }
     

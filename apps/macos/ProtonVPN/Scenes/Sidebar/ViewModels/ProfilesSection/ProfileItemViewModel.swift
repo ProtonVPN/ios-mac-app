@@ -66,12 +66,6 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
         
-        if profile.connectionProtocol.vpnProtocol == .wireGuard, case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
-            log.debug("Won't connect because no wireguard server can be found for this profile.", category: .connectionConnect, event: .trigger)
-            alertService.push(alert: WireguardProfileErrorAlert())
-            return
-        }
-
         guard !isUsersTierTooLow else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             alertService.push(alert: AllCountriesUpsellAlert())
