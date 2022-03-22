@@ -31,7 +31,7 @@ final class VPNLogicalServicesRequest: Request {
     }
     
     var path: String {
-        return "/vpn/logicals"
+        return "/vpn/logicals?WithTranslations=true"
     }
     
     var isAuth: Bool {
