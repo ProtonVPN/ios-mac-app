@@ -130,7 +130,7 @@ PODS:
     - Sentry/Core (= 7.9.0)
   - Sentry/Core (7.9.0)
   - SwiftGen (6.4.0)
-  - SwiftLint (0.43.1)
+  - SwiftLint (0.46.5)
   - SwiftyBeaver (1.9.5)
   - TrustKit (1.7.0)
   - TunnelKit (3.3.1):
@@ -414,7 +414,7 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 2f7e91f247cfb05b05bd01e0b5d0692557a7687b
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
-  SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
+  SwiftLint: 2c16e8fa99dac2e440dc0c70ea74d2532048f6cf
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
