@@ -119,7 +119,7 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(quickConnectCell)
         cells.append(footerCell)
                 
-        return [TableViewSection(title: LocalizedString.selectProfileColor.uppercased(), cells: cells)]
+        return [TableViewSection(title: LocalizedString.selectProfileColor, cells: cells)]
     }
     
     func saveProfile(completion: @escaping (Bool) -> Void) {
