@@ -758,16 +758,6 @@ public class VpnServerSubscriptionErrorAlert: SystemAlert {
     public init() { }
 }
 
-public class WireguardProfileErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.wireguard
-    public var message: String? = LocalizedString.wireguardProfileWarningText
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init() { }
-}
-
 public class AnnouncmentOfferAlert: SystemAlert {
     public var title: String?
     public var message: String?

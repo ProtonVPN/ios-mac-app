@@ -86,8 +86,6 @@ public protocol PropertiesManagerProtocol: class {
     var streamingServices: StreamingDictServices { get set }
     var streamingResourcesUrl: String? { get set }
 
-    var showOnlyWireguardServersAndCountries: Bool { get }
-
     var connectionProtocol: ConnectionProtocol { get }
 
     var wireguardConfig: WireguardConfig { get set }
@@ -556,10 +554,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             storage.setValue(newValue, forKey: Keys.streamingResourcesUrl.rawValue)
         }
-    }
-
-    public var showOnlyWireguardServersAndCountries: Bool {
-        return !smartProtocol && vpnProtocol == .wireGuard
     }
 
     public var connectionProtocol: ConnectionProtocol {

@@ -49,8 +49,6 @@ class VpnServerSelector {
     public func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         // use the ui to determine connection type if unspecified
         let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
-        let onlyWireguardServersAndCountries = connectionRequest.connectionProtocol == .vpnProtocol(.wireGuard)
-        let serverGrouping = serverGrouping.filter(onlyWireguardServersAndCountries: onlyWireguardServersAndCountries)
         
         let sortedServers: [ServerModel]
         let forSpecificCountry: Bool

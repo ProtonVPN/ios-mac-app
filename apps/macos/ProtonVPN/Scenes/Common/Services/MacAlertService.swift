@@ -203,9 +203,6 @@ extension MacAlertService: CoreAlertService {
 
         case is VpnServerSubscriptionErrorAlert:
             showDefaultSystemAlert(alert)
-
-        case is WireguardProfileErrorAlert:
-            showDefaultSystemAlert(alert)
             
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
