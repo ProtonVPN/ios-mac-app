@@ -30,12 +30,17 @@ extension NSAttributedString {
         strings.forEach { mutableAttributedString.append($0) }
         return mutableAttributedString
     }
-    
+
     static func imageAttachment(named name: String, width: CGFloat? = nil, height: CGFloat? = nil) -> NSAttributedString? {
-        guard let image = UIImage(named: name.lowercased()) else {
-            log.debug("Could not obtain image named for text attachment", category: .app, metadata: ["name": "\(name)"])
+        imageAttachment(image: UIImage(named: name.lowercased()), width: width, height: height)
+    }
+    
+    static func imageAttachment(image: UIImage?, width: CGFloat? = nil, height: CGFloat? = nil) -> NSAttributedString? {
+        guard let image = image else {
+            log.debug("Could not obtain image named for text attachment", category: .app)
             return nil
         }
+
         let attachment = NSTextAttachment()
         if let width = width, let height = height {
             attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)

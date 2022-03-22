@@ -27,7 +27,7 @@ import UIKit
 extension CreateOrEditProfileViewModel {
     
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
-        let imageAttributedString = embededImageIcon(named: country.countryCode.lowercased() + "-plain")
+        let imageAttributedString = embededImageIcon(image: UIImage.flag(countryCode: country.countryCode))
         let countryString = ("  " + country.country)
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
@@ -41,11 +41,11 @@ extension CreateOrEditProfileViewModel {
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
             let via = "\(LocalizedString.via)  ".attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
-            let entryCountryFlag = embededImageIcon(named: server.entryCountryCode.lowercased() + "-plain")
+            let entryCountryFlag = embededImageIcon(image: UIImage.flag(countryCode: server.entryCountryCode))
             let entryCountry = ("  " + server.entryCountry).attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
-            let countryFlag = embededImageIcon(named: server.countryCode.lowercased() + "-plain")
+            let countryFlag = embededImageIcon(image: UIImage.flag(countryCode: server.countryCode))
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
@@ -83,8 +83,8 @@ extension CreateOrEditProfileViewModel {
         return nameAttributedString
     }
     
-    private func embededImageIcon(named name: String) -> NSAttributedString {
-        if let imageAttributedString = NSAttributedString.imageAttachment(named: name, width: 18, height: 12) {
+    private func embededImageIcon(image: UIImage?) -> NSAttributedString {
+        if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 12) {
             return imageAttributedString
         }
         return NSAttributedString(string: "")

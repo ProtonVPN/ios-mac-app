@@ -321,7 +321,7 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var flag: UIImage? {
-        return UIImage(named: countryCode.lowercased() + "-plain")
+        return UIImage.flag(countryCode: countryCode)
     }
 
     var connectButtonColor: UIColor {
