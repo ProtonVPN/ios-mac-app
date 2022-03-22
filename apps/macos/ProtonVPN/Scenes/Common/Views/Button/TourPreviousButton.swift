@@ -30,7 +30,7 @@ class TourPreviousButton: HoverDetectionButton {
         wantsLayer = true
         layer?.borderWidth = 1.5
         layer?.borderColor = self.cgColor(.border)
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.backgroundColor = self.cgColor(.background)
         
         guard let context = NSGraphicsContext.current?.cgContext else { return }

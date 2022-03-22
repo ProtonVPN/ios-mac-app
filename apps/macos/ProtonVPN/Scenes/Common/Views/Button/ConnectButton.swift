@@ -62,7 +62,7 @@ class ConnectButton: ResizingTextButton {
     
     private func configureButton() {
         wantsLayer = true
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.borderWidth = 2
         layer?.backgroundColor = self.cgColor(.background)
         layer?.borderColor = self.cgColor(.border)

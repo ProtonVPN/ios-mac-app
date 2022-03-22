@@ -42,7 +42,7 @@ class LargeConnectButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.backgroundColor = self.cgColor(.background)
         
         let title: String = isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect

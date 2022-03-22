@@ -46,7 +46,7 @@ class LoginButton: HoverDetectionButton {
         super.viewWillDraw()
         
         wantsLayer = true
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.borderWidth = 2
         layer?.borderColor = self.cgColor(.border)
         layer?.backgroundColor = self.cgColor(.background)

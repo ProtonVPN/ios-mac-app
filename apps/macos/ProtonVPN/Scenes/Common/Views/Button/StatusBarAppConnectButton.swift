@@ -72,13 +72,27 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         
         let path = CGMutablePath()
         path.move(to: CGPoint(x: ib.maxX, y: ib.maxY))
-        
+
+        let r = AppTheme.ButtonConstants.cornerRadius
         if dropDownExpanded {
+            // Bottom border (without corner)
             path.addLine(to: CGPoint(x: ib.minX, y: ib.maxY))
-            path.addArc(center: CGPoint(x: ib.minX + ib.height/2, y: ib.minY + ib.height/2), radius: ib.height/2, startAngle: .pi, endAngle: .pi*3/2, clockwise: false)
+            // Left border
+            path.addLine(to: CGPoint(x: ib.minX, y: ib.minY + r))
+            // Top-left corner
+            path.addArc(center: CGPoint(x: ib.minX + r, y: ib.minY + r), radius: r,
+                        startAngle: .pi, endAngle: .pi*3/2, clockwise: false)
         } else {
-            path.addLine(to: CGPoint(x: ib.minX + ib.height/2, y: ib.maxY))
-            path.addArc(center: CGPoint(x: ib.minX + ib.height/2, y: ib.minY + ib.height/2), radius: ib.height/2, startAngle: .pi/2, endAngle: .pi*3/2, clockwise: false)
+            // Bottom border
+            path.addLine(to: CGPoint(x: ib.minX + r, y: ib.maxY))
+            // Bottom-left corner
+            path.addArc(center: CGPoint(x: ib.minX + r, y: ib.minY + ib.height - r), radius: r,
+                        startAngle: .pi/2, endAngle: .pi, clockwise: false)
+            // Left border
+            path.addLine(to: CGPoint(x: ib.minX, y: ib.minY + r))
+            // Top-left corner
+            path.addArc(center: CGPoint(x: ib.minX + r, y: ib.minY + r), radius: r,
+                        startAngle: .pi, endAngle: .pi*3/2, clockwise: false)
         }
         
         path.addLine(to: CGPoint(x: ib.maxX, y: ib.minY))
@@ -98,10 +112,12 @@ extension StatusBarAppConnectButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         if isConnected {
             switch context {
-            case .text, .icon:
+            case .text:
+                return .normal
+            case .icon:
                 return isHovered ? .danger : .normal
             case .background:
-                return .transparent
+                return isHovered ? .danger : .transparent
             default:
                 break
             }
@@ -140,16 +156,22 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         }
         
         context.setLineWidth(lw)
-        
+
+        let r = AppTheme.ButtonConstants.cornerRadius
         let path = CGMutablePath()
         path.move(to: CGPoint(x: ib.minX, y: ib.minY))
         path.addLine(to: CGPoint(x: ib.maxX - ib.height/2, y: ib.minY))
-        
+        // Top-right corner
+        path.addArc(center: CGPoint(x: ib.maxX - r, y: ib.minY + r), radius: r, startAngle: .pi*3/2, endAngle: 0, clockwise: false)
+
         if dropDownExpanded {
-            path.addArc(center: CGPoint(x: ib.maxX - ib.height/2, y: ib.maxY - ib.height/2), radius: ib.height/2, startAngle: .pi*3/2, endAngle: 0, clockwise: false)
+            // Right border
             path.addLine(to: CGPoint(x: ib.maxX, y: ib.maxY))
         } else {
-            path.addArc(center: CGPoint(x: ib.maxX - ib.height/2, y: ib.maxY - ib.height/2), radius: ib.height/2, startAngle: .pi*3/2, endAngle: .pi/2, clockwise: false)
+            // Right border
+            path.addLine(to: CGPoint(x: ib.maxX, y: ib.maxY - r))
+            // Bottom-right corner
+            path.addArc(center: CGPoint(x: ib.maxX - r, y: ib.maxY - r), radius: r, startAngle: 0, endAngle: .pi/2, clockwise: false)
         }
         
         path.addLine(to: CGPoint(x: ib.minX, y: ib.maxY))

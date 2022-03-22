@@ -55,7 +55,7 @@ class UpsellPrimaryActionButton: HoverDetectionButton {
     
     private func configureButton() {
         wantsLayer = true
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.backgroundColor = self.cgColor(.background)
     }
     
