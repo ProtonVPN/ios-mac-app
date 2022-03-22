@@ -335,4 +335,23 @@ final class SearchViewModelTests: XCTestCase {
             SearchResult.servers(tier: ServerTier.plus, servers: [fr1, fr2, fi1])
         ]))
     }
+
+    func testSearchingCitiesByTranslatedNames() {
+        let cz1 = ServerViewModelMock(server: "CZ#1", city: "Prague", countryName: "Czechia", translatedCity: "Praha")
+        let cz2 = ServerViewModelMock(server: "CZ#1", city: "Brno", countryName: "Czechia")
+        let prague = CityViewModelMock(cityName: "Prague", translatedCityName: "Praha")
+        let czechia = CountryViewModelMock(country: "Czechia", servers: [ServerTier.plus: [cz1, cz2]])
+
+        let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: [czechia], constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
+
+        vm.search(searchText: "Prag")
+        XCTAssertEqual(vm.status, SearchStatus.results([
+            SearchResult.cities(cities: [prague])
+        ]))
+
+        vm.search(searchText: "Prah")
+        XCTAssertEqual(vm.status, SearchStatus.results([
+            SearchResult.cities(cities: [prague])
+        ]))
+    }
 }
