@@ -37,6 +37,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public var ips: [ServerIp] = []
     public var location: ServerLocation
     public let hostCountry: String?
+    public let translatedCity: String?
     
     override public var description: String {
         return
@@ -53,7 +54,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "City: \(String(describing: city))\n" +
             "IPs: \(ips)\n" +
             "Location: \(location)\n" +
-            "HostCountry: \(String(describing: hostCountry))\n"
+            "HostCountry: \(String(describing: hostCountry))\n" +
+            "TranslatedCity: \(String(describing: translatedCity))\n"
     }
     
     public var logDescription: String {
@@ -130,7 +132,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return false
     }
     
-    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?) {
+    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?) {
         self.id = id
         self.name = name
         self.domain = domain
@@ -145,6 +147,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.status = status
         self.location = location
         self.hostCountry = hostCountry
+        self.translatedCity = translatedCity
         super.init()
     }
     
@@ -162,6 +165,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         city = dic.string("City") // "City": "Zurich"
         self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
         hostCountry = dic.string("HostCountry")
+        translatedCity = dic["Translations"]?["City"] as? String
         super.init()
         try setupIps(fromArray: try dic.jsonArrayOrThrow(key: "Servers"))
     }
@@ -182,6 +186,10 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
         
         if let city = self.city, city.lowercased().contains(query) {
+            return true
+        }
+
+        if let translatedCity = self.translatedCity, translatedCity.lowercased().contains(query) {
             return true
         }
         
@@ -228,6 +236,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         case features = "features"
         case city = "city"
         case hostCountry = "hostCountry"
+        case translatedCity = "translatedCity"
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
@@ -257,7 +266,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   score: aDecoder.decodeDouble(forKey: CoderKey.score.rawValue),
                   status: aDecoder.decodeInteger(forKey: CoderKey.status.rawValue),
                   location: location,
-                  hostCountry: aDecoder.decodeObject(forKey: CoderKey.hostCountry.rawValue) as? String)
+                  hostCountry: aDecoder.decodeObject(forKey: CoderKey.hostCountry.rawValue) as? String,
+                  translatedCity: aDecoder.decodeObject(forKey: CoderKey.translatedCity.rawValue) as? String)
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -280,6 +290,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         aCoder.encode(locationData, forKey: CoderKey.location.rawValue)
 
         aCoder.encode(hostCountry, forKey: CoderKey.hostCountry.rawValue)
+
+        aCoder.encode(translatedCity, forKey: CoderKey.translatedCity.rawValue)
     }
     
     // MARK: - Codable
@@ -308,7 +320,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   score: try container.decode(Double.self, forKey: CoderKey.score),
                   status: try container.decode(Int.self, forKey: CoderKey.status),
                   location: location,
-                  hostCountry: try container.decodeIfPresent(String.self, forKey: CoderKey.hostCountry))
+                  hostCountry: try container.decodeIfPresent(String.self, forKey: CoderKey.hostCountry),
+                  translatedCity: try container.decodeIfPresent(String.self, forKey: CoderKey.translatedCity))
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -333,6 +346,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         try container.encode(locationData, forKey: .location)
 
         try container.encode(hostCountry, forKey: .hostCountry)
+
+        try container.encode(translatedCity, forKey: .translatedCity)
     }
     
     // MARK: - Static functions
