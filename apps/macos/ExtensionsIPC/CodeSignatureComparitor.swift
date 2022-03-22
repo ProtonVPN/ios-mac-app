@@ -35,8 +35,8 @@ struct CodeSignatureComparitor {
     private static func execute(secFunction: () -> OSStatus) throws {
         let status = secFunction()
         guard status == errSecSuccess else {
-            let description = SecCopyErrorMessageString(status, nil) as String?
-            throw CodeSignatureError(description: description ?? "(unknown code signing error)")
+            let description = (SecCopyErrorMessageString(status, nil) as String?) ?? "Unknown code signing error"
+            throw CodeSignatureError(description: "\(description) (\(status))")
         }
     }
 
@@ -67,7 +67,7 @@ struct CodeSignatureComparitor {
         }
 
         var possibleSecCode: SecCode?
-        try execute { SecCodeCopyGuestWithAttributes(nil, [kSecGuestAttributeAudit: auditTokenData] as CFDictionary, [], &possibleSecCode) }
+        try execute { SecCodeCopyGuestWithAttributes(nil, [kSecGuestAttributeAudit: auditTokenData as NSData] as CFDictionary, [], &possibleSecCode) }
         guard let secCode = possibleSecCode else {
             throw CodeSignatureError(description: "secStaticCode for audit token failed with uninitialized secCode")
         }
