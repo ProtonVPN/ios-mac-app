@@ -2130,9 +2130,6 @@
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Logs do WireGuard";
 
-/* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não oferece suporte ao WireGuard. Para se conectar, tente outro protocolo ou um servidor que o suporte.";
-
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Você não está conectado";
 
