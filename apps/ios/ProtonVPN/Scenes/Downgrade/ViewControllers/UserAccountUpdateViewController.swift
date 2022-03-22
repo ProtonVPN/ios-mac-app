@@ -78,6 +78,7 @@ class UserAccountUpdateViewController: UIViewController {
         serversView.layer.borderColor = UIColor.secondaryBackgroundColor().cgColor
         titleLbl.text = alert.title
         descriptionLbl.text = alert.message
+        secondActionBtn.setTitleColor(.textAccent(), for: .normal)
         
         imageView.isHidden = alert.imageName == nil
         if let imageName = alert.imageName { imageView.image = UIImage(named: imageName) }
