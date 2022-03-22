@@ -23,6 +23,8 @@ import Search
 final class CityViewModelMock: CityViewModel {
     var cityName: String
 
+    let translatedCityName: String?
+
     var countryName: String
 
     var countryFlag: UIImage?
@@ -43,8 +45,9 @@ final class CityViewModelMock: CityViewModel {
 
     }
 
-    init(cityName: String, countryName: String = "") {
+    init(cityName: String, countryName: String = "", translatedCityName: String? = nil) {
         self.cityName = cityName
         self.countryName = countryName
+        self.translatedCityName = translatedCityName
     }
 }

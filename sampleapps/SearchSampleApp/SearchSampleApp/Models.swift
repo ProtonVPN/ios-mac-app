@@ -23,6 +23,8 @@ import UIKit
 final class CityItemViewModel: CityViewModel {
     let cityName: String
 
+    let translatedCityName: String? = nil
+
     let countryName: String
 
     let countryFlag: UIImage?
@@ -150,6 +152,8 @@ final class ServerItemViewModel: ServerViewModel {
     let countryFlag: UIImage? = UIImage(named: "ch-plain")
 
     let countryName: String
+
+    let translatedCity: String? = nil
 
     func updateTier() {
 

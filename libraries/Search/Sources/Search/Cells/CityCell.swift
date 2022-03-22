@@ -98,7 +98,7 @@ final class CityCell: UITableViewCell {
     }
 
     private func setupCityAndCountryName() {
-        highlightMatches(cityLabel, viewModel?.cityName, searchText)
+        highlightMatches(cityLabel, viewModel?.displayCityName, searchText)
         highlightMatches(countryLabel, viewModel?.countryName, searchText)
     }
 }

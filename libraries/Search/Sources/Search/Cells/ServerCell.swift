@@ -77,7 +77,7 @@ public final class ServerCell: UITableViewCell {
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             serverNameLabel.isHidden = viewModel.entryCountryName != nil
             setupServerAndCountryName()
-            cityNameLabel.text = viewModel.city
+            cityNameLabel.text = viewModel.displayCityName
             cityNameLabel.isHidden = viewModel.entryCountryName != nil
             secureView.isHidden = viewModel.entryCountryName == nil
 
