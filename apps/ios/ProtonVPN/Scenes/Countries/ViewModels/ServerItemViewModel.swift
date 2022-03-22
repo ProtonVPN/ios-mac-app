@@ -249,7 +249,7 @@ extension ServerItemViewModel: ServerViewModel {
             return nil
         }
 
-        return UIImage(named: code.lowercased() + "-plain")
+        return UIImage.flag(countryCode: code)
     }
 
     var countryName: String {
@@ -257,6 +257,6 @@ extension ServerItemViewModel: ServerViewModel {
     }
 
     var countryFlag: UIImage? {
-        return UIImage(named: serverModel.countryCode.lowercased() + "-plain")
+        return UIImage.flag(countryCode: serverModel.countryCode)
     }
 }

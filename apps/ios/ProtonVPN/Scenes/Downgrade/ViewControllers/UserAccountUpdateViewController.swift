@@ -131,7 +131,7 @@ class UserAccountUpdateViewController: UIViewController {
     private func setServerHeader( _ server: ServerModel, _ headerFormat: (String) -> String, _ flagIV: UIImageView, _ serverName: UILabel, _ serverHeader: UILabel ) {
         let tiers = [LocalizedString.tierFree, LocalizedString.tierBasic, LocalizedString.tierPlus, LocalizedString.tierVisionary]
         serverName.text = server.name
-        flagIV.image = UIImage(named: server.countryCode.lowercased() + "-plain")
+        flagIV.image = UIImage.flag(countryCode: server.countryCode)
         serverHeader.text = headerFormat(tiers[server.tier])
     }
     

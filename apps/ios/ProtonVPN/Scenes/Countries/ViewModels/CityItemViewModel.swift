@@ -34,7 +34,7 @@ final class CityItemViewModel: CityViewModel {
     }
 
     var countryFlag: UIImage? {
-        return UIImage(named: countryModel.countryCode.lowercased() + "-plain")
+        return UIImage.flag(countryCode: countryModel.countryCode)
     }
 
     var isUsersTierTooLow: Bool {
