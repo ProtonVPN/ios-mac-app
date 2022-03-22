@@ -73,7 +73,11 @@ final class SearchViewModel {
             return
         }
 
-        let filter = { (name: String) -> Bool in
+        let filter = { (name: String?) -> Bool in
+            guard let name = name else {
+                return false
+            }
+
             let normalizedSearchText = searchText.normalized
             let normalizedParts = name.components(separatedBy: CharacterSet.whitespaces).map({ $0.normalized })
             return normalizedParts.contains(where: { $0.starts(with: normalizedSearchText) })
@@ -88,7 +92,7 @@ final class SearchViewModel {
                 results.append(SearchResult.countries(countries: countries))
             }
 
-            let cities = data.flatMap({ $0.getCities() }).filter({ filter($0.cityName) || filter($0.countryName) }).sorted(by: { $0.cityName < $1.cityName })
+            let cities = data.flatMap({ $0.getCities() }).filter({ filter($0.cityName) || filter($0.translatedCityName) || filter($0.countryName) }).sorted(by: { $0.cityName < $1.cityName })
             if !cities.isEmpty {
                 results.append(SearchResult.cities(cities: cities))
             }
