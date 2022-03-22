@@ -69,6 +69,12 @@ public enum AppTheme {
         case tiny = 10
     }
 
+    /// Constant button values, in pixels.
+    public enum ButtonConstants {
+        /// The standard radius of a button throughout the app.
+        static let cornerRadius: CGFloat = 8
+    }
+
     public enum IconSize {
         case `default`
         case square(Int)

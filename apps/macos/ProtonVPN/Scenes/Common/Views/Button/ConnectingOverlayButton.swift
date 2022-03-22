@@ -56,7 +56,7 @@ class ConnectingOverlayButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         
         layer?.backgroundColor = self.cgColor(.background)
         layer?.borderColor = self.cgColor(.border)

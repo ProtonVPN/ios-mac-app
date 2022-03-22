@@ -56,7 +56,7 @@ class CancellationButton: HoverDetectionButton {
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.borderColor = self.cgColor(.border)
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.backgroundColor = self.cgColor(.background)
         configureTitle()
     }
