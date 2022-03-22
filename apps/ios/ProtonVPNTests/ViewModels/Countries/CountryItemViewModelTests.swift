@@ -98,7 +98,8 @@ class CountryItemViewModelTests: XCTestCase {
             score: 11,
             status: status,
             location: ServerLocation(lat: 1, long: 2),
-            hostCountry: nil
+            hostCountry: nil,
+            translatedCity: nil
         )
     }
     

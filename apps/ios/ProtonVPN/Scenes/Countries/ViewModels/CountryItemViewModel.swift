@@ -202,7 +202,8 @@ class CountryItemViewModel {
         let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
         let groups = Dictionary(grouping: servers, by: { $0.city })
         return groups.map({
-            CityItemViewModel(cityName: $0.key, countryModel: self.countryModel, servers: $0.value, alertService: self.alertService, vpnGateway: self.vpnGateway, connectionStatusService: self.connectionStatusService)
+            let translatedCityName = $0.value.compactMap({ $0.translatedCity }).first
+            return CityItemViewModel(cityName: $0.key, translatedCityName: translatedCityName, countryModel: self.countryModel, servers: $0.value, alertService: self.alertService, vpnGateway: self.vpnGateway, connectionStatusService: self.connectionStatusService)
         }).sorted(by: { $0.cityName < $1.cityName })
     }()
     

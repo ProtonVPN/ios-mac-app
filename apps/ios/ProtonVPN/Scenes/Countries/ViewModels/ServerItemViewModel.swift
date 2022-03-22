@@ -259,4 +259,8 @@ extension ServerItemViewModel: ServerViewModel {
     var countryFlag: UIImage? {
         return UIImage.flag(countryCode: serverModel.countryCode)
     }
+
+    var translatedCity: String? {
+        return serverModel.translatedCity
+    }
 }

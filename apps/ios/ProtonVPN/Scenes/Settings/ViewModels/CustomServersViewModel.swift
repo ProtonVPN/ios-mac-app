@@ -37,7 +37,7 @@ struct CustomServersViewModel {
 
     func addServer(address: String) {
         let serverIp = ServerIp(id: "", entryIp: address, exitIp: address, domain: "", status: 1)
-        let newServer = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 0, feature: .zero, city: nil, ips: [serverIp], score: 0, status: 1, location: ServerLocation(lat: 0, long: 0), hostCountry: nil)
+        let newServer = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 0, feature: .zero, city: nil, ips: [serverIp], score: 0, status: 1, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil)
         
         var servers = propertiesManager.customServers ?? [ServerModel]()
         servers.append(newServer)
