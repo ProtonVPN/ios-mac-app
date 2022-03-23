@@ -22,6 +22,9 @@ import ProtonCore_UIFoundations
 
 extension UIImage {
     static func flag(countryCode: String) -> UIImage? {
+        // Core uses GB instead of UK for The United Kingdom
+        let countryCode = countryCode == "UK" ? "GB" : countryCode
+
         // normaly we would use IconProvider.flag(forCountryCode: countryCode) but it crashes with country codes that do not have a valid icon
         guard let url = Bundle(for: PMUIFoundations.self).resourceURL?.appendingPathComponent("Resources-UIFoundations.bundle"), let bundle = Bundle(url: url) else {
             return nil
