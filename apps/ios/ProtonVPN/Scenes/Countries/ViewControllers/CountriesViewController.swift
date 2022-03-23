@@ -28,6 +28,8 @@ import ProtonCore_UIFoundations
 final class CountriesViewController: UIViewController {
     
     @IBOutlet private weak var connectionBarContainerView: UIView!
+    @IBOutlet private weak var secureCoreSeparator: UIView!
+    @IBOutlet private weak var secureCoreSeparatorHeight: NSLayoutConstraint!
     @IBOutlet private weak var secureCoreBar: UIView!
     @IBOutlet private weak var secureCoreLabel: UILabel!
     @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
@@ -77,6 +79,8 @@ final class CountriesViewController: UIViewController {
     }
     
     private func setupSecureCoreBar() {
+        secureCoreSeparator.backgroundColor = .normalSeparatorColor()
+        secureCoreSeparatorHeight.constant = 1 / UIScreen.main.scale
         secureCoreBar.backgroundColor = .backgroundColor()
         secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = LocalizedString.useSecureCore
@@ -114,8 +118,8 @@ final class CountriesViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let infoButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-info-circle"), style: .plain, target: self, action: #selector(displayServicesInfo))
-        let searchButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic-search"), style: .plain, target: self, action: #selector(showSearch))
+        let infoButton = UIBarButtonItem(image: IconProvider.infoCircle, style: .plain, target: self, action: #selector(displayServicesInfo))
+        let searchButton = UIBarButtonItem(image: IconProvider.magnifier, style: .plain, target: self, action: #selector(showSearch))
         navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
     

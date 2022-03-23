@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,13 +35,23 @@
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch" customClass="ConfirmationToggleSwitch" customModule="ProtonVPN" customModuleProvider="target">
                                         <rect key="frame" x="345" y="9.5" width="51" height="31"/>
                                     </switch>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySY-aO-jzs">
+                                        <rect key="frame" x="0.0" y="49" width="414" height="1"/>
+                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="MqV-MC-fnZ"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="centerY" secondItem="8wW-ah-fu1" secondAttribute="centerY" id="0MK-ZH-Y8h"/>
                                     <constraint firstItem="58o-15-DXK" firstAttribute="centerY" secondItem="8wW-ah-fu1" secondAttribute="centerY" id="3RX-JQ-Ami"/>
+                                    <constraint firstAttribute="trailing" secondItem="ySY-aO-jzs" secondAttribute="trailing" id="8Cf-Lu-Crn"/>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leading" constant="20" id="Cwo-f4-HqL"/>
                                     <constraint firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="trailing" constant="20" id="Ecw-nJ-l46"/>
+                                    <constraint firstItem="ySY-aO-jzs" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leading" id="PUf-Fw-WZ6"/>
+                                    <constraint firstAttribute="bottom" secondItem="ySY-aO-jzs" secondAttribute="bottom" id="TpS-NI-HPZ"/>
                                     <constraint firstAttribute="height" constant="50" id="iOL-ne-wUB"/>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="leading" id="k0U-a6-4iF"/>
                                 </constraints>
@@ -69,6 +80,8 @@
                         <outlet property="connectionBarContainerView" destination="vAO-KT-Zmj" id="I13-ag-Lal"/>
                         <outlet property="secureCoreBar" destination="8wW-ah-fu1" id="qh2-Ad-gHF"/>
                         <outlet property="secureCoreLabel" destination="1Ij-zT-2wB" id="owi-QH-F0o"/>
+                        <outlet property="secureCoreSeparator" destination="ySY-aO-jzs" id="P5S-Qe-buJ"/>
+                        <outlet property="secureCoreSeparatorHeight" destination="MqV-MC-fnZ" id="za0-jg-Nts"/>
                         <outlet property="secureCoreSwitch" destination="58o-15-DXK" id="4g3-Hf-Wju"/>
                         <outlet property="tableView" destination="rsR-MM-FR6" id="PgS-gZ-5qh"/>
                     </connections>
@@ -119,4 +132,9 @@
             <point key="canvasLocation" x="47" y="-473"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

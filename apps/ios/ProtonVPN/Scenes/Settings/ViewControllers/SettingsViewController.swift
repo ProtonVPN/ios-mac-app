@@ -85,6 +85,7 @@ final class SettingsViewController: UIViewController {
         tableView.delegate = genericDataSource
         
         tableView.separatorColor = .normalSeparatorColor()
+        tableView.separatorInset = .zero
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
