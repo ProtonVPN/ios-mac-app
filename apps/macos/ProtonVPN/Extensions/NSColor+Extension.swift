@@ -26,23 +26,23 @@ import ProtonCore_UIFoundations
 extension NSColor {
 
     class func brandColor() -> NSColor {
-        return ColorProvider.BrandNorm
+        return .purple
     }
 
     class func brandLighten20Color() -> NSColor {
-        return ColorProvider.BrandLighten20
+        return purple
     }
 
     class func brandLighten40Color() -> NSColor {
-        return ColorProvider.BrandLighten40
+        return purple
     }
 
     class func brandDarken40Color() -> NSColor {
-        return ColorProvider.BrandDarken40
+        return purple
     }
 
     class func secondaryBackgroundColor() -> NSColor {
-        return ColorProvider.BackgroundSecondary
+        return purple
     }
 
     class func backgroundColor() -> NSColor {
@@ -58,15 +58,15 @@ extension NSColor {
     }
 
     class func normalSeparatorColor() -> NSColor {
-        return ColorProvider.SeparatorNorm
+        return purple
     }
 
     class func notificationWarningColor() -> NSColor {
-        return ColorProvider.NotificationWarning
+        return purple
     }
 
     class func notificationOKColor() -> NSColor {
-        return ColorProvider.NotificationSuccess
+        return purple
     }
 
     class func normalTextColor() -> NSColor {
@@ -74,7 +74,7 @@ extension NSColor {
     }
 
     class func notificationErrorColor() -> NSColor {
-        return ColorProvider.NotificationError
+        return purple
     }
 
     // MARK: Old color palette. Deprecated
