@@ -96,7 +96,8 @@ class ProtonVPNUITests: XCTestCase {
         accountTabButton.click()
 
         XCTAssert(app.staticTexts[credentials.username].exists)
-        XCTAssert(app.staticTexts[credentials.plan].exists)
+        let plan = credentials.plan.replacingOccurrences(of: "ProtonVPN", with: "Proton VPN")
+        XCTAssert(app.staticTexts[plan].exists)
 
         preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
     }

@@ -71,6 +71,7 @@ class ProtonVPNUITests: XCTestCase {
     
     func login(withCredentials credentials: Credentials) {
         let buttonQuickConnect = app.buttons["Quick Connect"]
+        let plan = credentials.plan.replacingOccurrences(of: "ProtonVPN", with: "Proton VPN")
         super.setUp()
         loginRobot
             .loginUser(credentials: credentials)
@@ -80,9 +81,9 @@ class ProtonVPNUITests: XCTestCase {
 
         app.tabBars.buttons["Settings"].tap()
         XCTAssert(app.staticTexts[credentials.username].exists)
-        XCTAssert(app.staticTexts[credentials.plan].exists)
+        XCTAssert(app.staticTexts[plan].exists)
 
-        switch credentials.plan {
+        switch plan {
         case "Proton VPN Basic", "Proton VPN Plus", "Proton Visionary":
             XCTAssert(app.buttons["Manage subscription"].exists)
         default:
