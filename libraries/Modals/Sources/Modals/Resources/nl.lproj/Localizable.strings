@@ -23,13 +23,13 @@
 "modals_get_plus" = "Upgraden";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "ProtonVPN's strikte geen-logboekenbeleid is gecertificeerd door een externe audit.";
+"modals_no_logs_external_audit" = "Proton VPN's strikte geen-logboekenbeleid is gecertificeerd door een externe audit.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "We loggen uw internetactiviteiten niet";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN is privacy eerst";
+"modals_no_logs_privacy_first" = "Proton VPN is privacy eerst";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "We delen geen enkele gegevens met derde partijen";

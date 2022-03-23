@@ -23,13 +23,13 @@
 "modals_get_plus" = "Upgrade";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "A rigorosa política de inexistência de registros do ProtonVPN é certificada por uma auditoria externa.";
+"modals_no_logs_external_audit" = "A rigorosa política de inexistência de registros do Proton VPN é certificada por uma auditoria externa.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Não registramos sua atividade na Internet";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN é privacidade em primeiro lugar";
+"modals_no_logs_privacy_first" = "Proton VPN é privacidade em primeiro lugar";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "Não compartilhamos nenhum dado com terceiros";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "NAT moderado, também conhecido como Nat Tipo 2, pode melhorar sua experiência online com várias aplicações e videogames online. \n\nDesbloqueie esse e outros recursos com um plano Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Use o ProtonVPN para qualquer necessidade especial, permitindo o tráfego para portas não padrão através da rede VPN. \n\nDesbloqueie este e outros recursos com um plano Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Use o Proton VPN para qualquer necessidade especial, permitindo o tráfego para portas não padrão através da rede VPN. \n\nDesbloqueie este e outros recursos com um plano Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Ao atualizar para o Plus";

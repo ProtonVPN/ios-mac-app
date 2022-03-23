@@ -23,13 +23,13 @@
 "modals_get_plus" = "Upgrade benötigt";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Die strenge No-Logs-Politik von ProtonVPN wurde durch ein externes Audit zertifiziert.";
+"modals_no_logs_external_audit" = "Die strenge No-Logs-Politik von Proton VPN wurde durch ein externes Audit zertifiziert.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Wir protokollieren keine deiner Internetaktivitäten";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "Bei ProtonVPN steht Datenschutz an erster Stelle";
+"modals_no_logs_privacy_first" = "Bei Proton VPN steht Datenschutz an erster Stelle";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "Wir geben keinerlei Daten an Dritte weiter";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Moderates NAT, auch bekannt als NAT Typ 2, kann dein Online-Erlebnis mit verschiedenen Anwendungen und Online-Videospielen verbessern.\n\nSchalte diese und andere Funktionen mit einem Plus-Abonnement frei.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Nutze ProtonVPN für jeden speziellen Bedarf, indem du Datenverkehr zu nicht standardisierten Ports durch das VPN-Netzwerk erlaubst.\n\nSchalte diese und andere Funktionen mit einem Plus-Abonnement frei.";
+"modals_upsell_features_safe_mode_subtitle" = "Nutze Proton VPN für jeden speziellen Bedarf, indem du Datenverkehr zu nicht standardisierten Ports durch das VPN-Netzwerk erlaubst.\n\nSchalte diese und andere Funktionen mit einem Plus-Abonnement frei.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Wenn du auf Plus umsteigst";

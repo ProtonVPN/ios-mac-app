@@ -32,7 +32,7 @@
 "_activate_widget_step_2" = "Görgess lefelé és érintsd meg a szerkesztés gombot.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Add hozzá a ProtonVPN-t az aktív widgettekhez.";
+"_activate_widget_step_3" = "Add hozzá a Proton VPN-t az aktív widgettekhez.";
 
 /* Plan information */
 "_advanced_features" = "+ Speciális szolgáltatások";
@@ -53,7 +53,7 @@
 "_all_servers_in_profile_under_maintenance" = "Profilszerver(ek) karbantartás alatt állnak";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Minden szerver karbantartás alatt áll. Ez általában azt jelenti, hogy technikai nehézségek vannak a ProtonVPN oldalán, vagy a hálózat korlátozott.";
+"_all_servers_under_maintenance" = "Minden szerver karbantartás alatt áll. Ez általában azt jelenti, hogy technikai nehézségek vannak a Proton VPN oldalán, vagy a hálózat korlátozott.";
 
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Már van fiókom";
@@ -194,7 +194,7 @@
 "_data_disclaimer_device_details" = "Eszköz típusa és az operációs rendszer verziója";
 
 /* iOS: data disclaimen screen */
-"_data_disclaimer_text" = "A ProtonVPN elkötelezett a személyes adataid védelme és tiszteletben tartása mellett. A mi irányadó elveink szerint a lehető legkevesebb felhasználói adatot gyűjtsük, hogy biztosítsuk a magán- és névtelen felhasználói élményt az alkalmazás használatában, különösen:\n\n%@ - bejelentkezés, az elveszett jelszó helyreállításához és a fontos szolgáltatásfrissítések küldéséhez.\n\n%@ - csak összeomlási jelentésekhez és hibákhoz.\n\nA ProtonVPN alkalmazás ezen adatokon kívül nem dolgoz fel felhasználói információkat. Nem naplózzuk az online tevékenységeket, semmilyen személyes azonosítható információt nem gyűjtünk. Az összes fent felsorolt adatot a ProtonVPN saját rendszerén tároljuk és dolgozzuk fel, harmadik fél még soha nem fért hozzá.";
+"_data_disclaimer_text" = "A Proton VPN elkötelezett a személyes adataid védelme és tiszteletben tartása mellett. A mi irányadó elveink szerint a lehető legkevesebb felhasználói adatot gyűjtsük, hogy biztosítsuk a magán- és névtelen felhasználói élményt az alkalmazás használatában, különösen:\n\n%@ - bejelentkezés, az elveszett jelszó helyreállításához és a fontos szolgáltatásfrissítések küldéséhez.\n\n%@ - csak összeomlási jelentésekhez és hibákhoz.\n\nA Proton VPN alkalmazás ezen adatokon kívül nem dolgoz fel felhasználói információkat. Nem naplózzuk az online tevékenységeket, semmilyen személyes azonosítható információt nem gyűjtünk. Az összes fent felsorolt adatot a Proton VPN saját rendszerén tároljuk és dolgozzuk fel, harmadik fél még soha nem fért hozzá.";
 
 /* iOS: data disclaimen screen */
 "_data_disclaimer_title" = "Védd magad online";
@@ -209,7 +209,7 @@
 "_delete" = "Törlés";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Minden ProtonVPN adat törlődik, és az alkalmazás kilép. Szeretnéd folytatni?";
+"_delete_application_data_popup_body" = "Minden Proton VPN adat törlődik, és az alkalmazás kilép. Szeretnéd folytatni?";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Alkalmazás gyorsítótár ürítése";
@@ -356,7 +356,7 @@
 "_error_loads" = "Nem lehet frissíteni a szerver betöltését";
 
 /* Man In The Middle attack alert */
-"_error_mitm_description" = "A TLS tanúsítvány érvényesítése sikertelen volt, amikor megpróbáltunk csatlakozni a ProtonVPN API-hoz. Lehet, hogy megfigyelhető a jelenlegi internet-kapcsolat. Az adatok biztonságának megőrzése érdekében megakadályozzuk az alkalmazás hozzáférését a ProtonVPN API-hoz.\nA bejelentkezéshez vagy a fiók eléréséhez válts egy új hálózatra, és próbálj meg újra csatlakozni.";
+"_error_mitm_description" = "A TLS tanúsítvány érvényesítése sikertelen volt, amikor megpróbáltunk csatlakozni a Proton VPN API-hoz. Lehet, hogy megfigyelhető a jelenlegi internet-kapcsolat. Az adatok biztonságának megőrzése érdekében megakadályozzuk az alkalmazás hozzáférését a Proton VPN API-hoz.\nA bejelentkezéshez vagy a fiók eléréséhez válts egy új hálózatra, és próbálj meg újra csatlakozni.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Nem biztonságos kapcsolat";
@@ -398,7 +398,7 @@
 "_error_transaction_failed_by_unknown_reason" = "Az App Store nem tudta feldolgozni a vásárlást.";
 
 /* In App Purchase error */
-"_error_transaction_of_other_user" = "A vásárlást más ProtonVPN felhasználónévvel kezdték meg.";
+"_error_transaction_of_other_user" = "A vásárlást más Proton VPN felhasználónévvel kezdték meg.";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "Nem sikerült beolvasni az elérhető áruk listáját az App Store-ból.";
@@ -425,7 +425,7 @@
 "_error_user_has_no_vpn_access" = "A fiókoddal nem lehet a VPN szerverekhez hozzáférni. Kérlek vedd fel a kapcsolatot a rendszergazdával";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Még nem regisztráltál a ProtonVPN-re";
+"_error_user_has_not_signed_up" = "Még nem regisztráltál a Proton VPN-re";
 
 /* VPN credentials can't be loaded error */
 "_error_user_is_on_waitlist" = "Jelenleg várólistán vagy, a fiókod még nem készült el";
@@ -443,10 +443,10 @@
 "_error_vpn_properties" = "Nem sikerült lekérni a VPN beállításokat!";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "A ProtonVPN munkamenet aktív";
+"_error_vpn_session_is_active" = "A Proton VPN munkamenet aktív";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "A ProtonVPN csomagszűrő tűzfalat használ a Kill Switch megvalósításához. A Kill Switch engedélyezésével felülírod az eszköz jelenlegi tűzfal-beállításait. Ha használod ezt a tűzfalkonfigurációt, akkor ne engedélyezd a Kill Switch szolgáltatást.\n\nA Kill Switch használatához és a jelenlegi tűzfal-beállítások felülírásához válaszd a FOLYTATÁS lehetőséget.\n\nA Kill Switch letiltásához és a jelenlegi tűzfal-beállítások megtartásához válaszd a MÉGSEM lehetőséget.";
+"_existing_firewall_popup_body" = "A Proton VPN csomagszűrő tűzfalat használ a Kill Switch megvalósításához. A Kill Switch engedélyezésével felülírod az eszköz jelenlegi tűzfal-beállításait. Ha használod ezt a tűzfalkonfigurációt, akkor ne engedélyezd a Kill Switch szolgáltatást.\n\nA Kill Switch használatához és a jelenlegi tűzfal-beállítások felülírásához válaszd a FOLYTATÁS lehetőséget.\n\nA Kill Switch letiltásához és a jelenlegi tűzfal-beállítások megtartásához válaszd a MÉGSEM lehetőséget.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Tűzfalat észleltük";
@@ -523,14 +523,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "INGYENES SZERVEREK";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Frissíts a %@-ra, hogy továbbra is használhasd ezeket a funkciókat:";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "Az ingyenes próbaverzió lejárt!";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "A fiókod átváltottuk a ProtonVPN ingyenes csomagjába. Ezeket a funkciókat nem tartalmazza az ingyenes szolgáltatás %@:";
+/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "A fiókod átváltottuk a Proton VPN ingyenes csomagjába. Ezeket a funkciókat nem tartalmazza az ingyenes szolgáltatás %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "INGYENES PRÓBAVERZIÓ %@";
@@ -550,7 +550,7 @@
 /* Button in several different alerts */
 "_got_it" = "Értem!";
 
-/* Main app menu; User with \"ProtonVPN\" inside the same main menu as a name for item that opens help page. */
+/* Main app menu; User with \"Proton VPN\" inside the same main menu as a name for item that opens help page. */
 "_help" = "Segítség";
 
 /* Show/hide password switch */
@@ -575,7 +575,7 @@
 "_invalid_refresh_token" = "A munkamenet lejárt";
 
 /* Token expired alert */
-"_invalid_refresh_token_please_login" = "Egy ideje már nem használtad a ProtonVPN alkalmazást, ezért biztonsági okokból újra be kell jelentkezned.";
+"_invalid_refresh_token_please_login" = "Egy ideje már nem használtad a Proton VPN alkalmazást, ezért biztonsági okokból újra be kell jelentkezned.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_description" = "A ProtonMail-t alkotó tudósok és mérnökök nevében üdvözlünk a biztonságosabb interneten.";
@@ -605,7 +605,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Megszakadt a kapcsolat a VPN kiszolgálókkal. A Kill Switch blokkolta az összes kapcsolatot az adatok kiszivárgásának elkerülése érdekében. A ProtonVPN megpróbál automatikusan újracsatlakozni. Az ablak bezárásához kattints az OK gombra.\n\nHa átmenetileg le szeretnéd tiltani a Kill Switch szolgáltatást, és újra csatlakozni szeretnél az internethez VPN védelem NÉLKÜL, kattints a KIKAPCSOLÁS gombra.\n\nA Kill Switch végleges kikapcsolásához kattints ide %@.";
+"_kill_switch_blocking_body" = "Megszakadt a kapcsolat a VPN kiszolgálókkal. A Kill Switch blokkolta az összes kapcsolatot az adatok kiszivárgásának elkerülése érdekében. A Proton VPN megpróbál automatikusan újracsatlakozni. Az ablak bezárásához kattints az OK gombra.\n\nHa átmenetileg le szeretnéd tiltani a Kill Switch szolgáltatást, és újra csatlakozni szeretnél az internethez VPN védelem NÉLKÜL, kattints a KIKAPCSOLÁS gombra.\n\nA Kill Switch végleges kikapcsolásához kattints ide %@.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch blokkolja az összes kapcsolatot";
@@ -614,7 +614,7 @@
 "_kill_switch_blocking_title" = "A Kill Switch blokkolja az IP szivárgásokat";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "A Kill Switch szolgáltatás nem működik megfelelően. Ha szeretnéd jelenteni a hibát a ProtonVPN támogatási csoportnak, kattints a Jelentés gombra.\nHa figyelmen kívül hagynád a hibát, és folytatni a böngészést Kill Switch NÉLKÜL, kattints a letiltás gombra.";
+"_kill_switch_error_body" = "A Kill Switch szolgáltatás nem működik megfelelően. Ha szeretnéd jelenteni a hibát a Proton VPN támogatási csoportnak, kattints a Jelentés gombra.\nHa figyelmen kívül hagynád a hibát, és folytatni a böngészést Kill Switch NÉLKÜL, kattints a letiltás gombra.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "A Kill Switch működésében hibát észleltünk";
@@ -623,7 +623,7 @@
 "_kill_switch_helper_install_issue_popup_body" = "Probléma merült fel a Kill Switch telepítésében vagy frissítésében.\n\nAz újbóli próbálkozáshoz kattints a VISSZA gombra.\n\nHa szeretnéd kikapcsolni a Kill Switch szolgáltatást, kattints a LETILTÁS gombra.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "A Kill Switch engedélyezéséhez meg kell adni a fiókod jelszavát. Ha megjelenik egy kérés, írja be a %@-ot az elfogadáshoz.\n\nElőfordulhat, hogy a ProtonVPN alkalmazás frissítéskor ismét megjelenik ez a kérés.";
+"_kill_switch_helper_install_popup_body" = "A Kill Switch engedélyezéséhez meg kell adni a fiókod jelszavát. Ha megjelenik egy kérés, írja be a %@-ot az elfogadáshoz.\n\nElőfordulhat, hogy a Proton VPN alkalmazás frissítéskor ismét megjelenik ez a kérés.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "A frissítéshez meg kell adnod a fiókod jelszavát. Amikor a kérés megjelenik, kérlek írd be a %@ -ot az elfogadáshoz.\n\nHa nem adod meg a fiókod jelszavát, a Kill Switch ki lesz kapcsolva.";
@@ -707,7 +707,7 @@
 "_medium" = "Közepes";
 
 /* Main mac app menu item */
-"_menu_about" = "A ProtonVPN-ről";
+"_menu_about" = "A Proton VPN-ről";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Frissítések keresése...";
@@ -716,7 +716,7 @@
 "_menu_hide_others" = "Többi elrejtése";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "ProtonVPN elrejtése";
+"_menu_hide_self" = "Proton VPN elrejtése";
 
 /* Main mac app menu item */
 "_menu_logout" = "Kijelentkezés";
@@ -728,7 +728,7 @@
 "_menu_preferences" = "Beállítások";
 
 /* Main mac app menu item */
-"_menu_quit" = "Kilépés a ProtonVPN-ből";
+"_menu_quit" = "Kilépés a Proton VPN-ből";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Összes megjelenítése";
@@ -773,7 +773,7 @@
 "_neagent_always_allow" = "Mindig engedélyez";
 
 /* Mac: neagent help screen */
-"_neagent_description" = "Kérlek add meg a %@\nhogy csatlakozz a ProtonVPN szolgáltatáshoz. Ha ez a kérés megjelenik,\nadd meg a(z) %@ %@ és kattints a(z) %@ %@.";
+"_neagent_description" = "Kérlek add meg a %@\nhogy csatlakozz a Proton VPN szolgáltatáshoz. Ha ez a kérés megjelenik,\nadd meg a(z) %@ %@ és kattints a(z) %@ %@.";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -815,7 +815,7 @@
 "_ok" = "OK";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "ProtonVPN bejelentkezés megjelenítése...";
+"_open_app_to_log_in" = "Proton VPN bejelentkezés megjelenítése...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN napló";
@@ -857,7 +857,7 @@
 "_p2p_servers" = "P2P szerverek";
 
 /* Plan upgrade required alert */
-"_paid_required" = "Előfizetéses ProtonVPN csomag szükséges";
+"_paid_required" = "Előfizetéses Proton VPN csomag szükséges";
 
 /* Used in sign-in, sign-up */
 "_password" = "Jelszó";
@@ -911,7 +911,7 @@
 "_plus_upgrade_description" = "Használd a biztonsági mag szolgáltatást, nézd kedvenc TV műsoraid,\nhasználj akár 5 különböző eszközt, stb!";
 
 /* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Tettszik a ProtonVPN?\nVálaszd a Plus csomagunkat, mindössze 8$/hó áron";
+"_plus_upgrade_title" = "Tettszik a Proton VPN?\nVálaszd a Plus csomagunkat, mindössze 8$/hó áron";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Beállítások";
@@ -974,10 +974,10 @@
 "_protocol" = "Protokoll";
 
 /* Mac: neagent help screen */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "Proton VPN macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "ProtonVPN PLUS";
+"_protonvpn_plus" = "Proton VPN PLUS";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Publikus IP: %@";
@@ -1184,19 +1184,19 @@
 "_setup_complete" = "Telepítés kész";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "A vásárlás sikerült. Aktiváltuk a megrendelt ProtonVPN csomagot.";
+"_setup_complete_basic" = "A vásárlás sikerült. Aktiváltuk a megrendelt Proton VPN csomagot.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "A ProtonVPN ingyenes csomagját választottad. Mivel új felhasználó vagy, hét napig ingyenesen használhatod a ProtonVPN Plus összes szolgáltatását.";
+"_setup_complete_free" = "A Proton VPN ingyenes csomagját választottad. Mivel új felhasználó vagy, hét napig ingyenesen használhatod a Proton VPN Plus összes szolgáltatását.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "A vásárlás sikerült. Aktiváltuk a megrendelt ProtonVPN csomagot.";
+"_setup_complete_plus" = "A vásárlás sikerült. Aktiváltuk a megrendelt Proton VPN csomagot.";
 
 /* Show/hide password switch */
 "_show" = "MEGJELENÍT";
 
 /* MacOS: button in custom status menu */
-"_show_protonvpn" = "ProtonVPN megjelenítése";
+"_show_protonvpn" = "Proton VPN megjelenítése";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Regisztráció";
@@ -1265,7 +1265,7 @@
 "_terms_and_conditions" = "Szerződési feltételeket";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "A ProtonVPN használatával elfogadod\na %@ és %@";
+"_terms_and_conditions_disclaimer" = "A Proton VPN használatával elfogadod\na %@ és %@";
 
 /* iOS: section header in countries list */
 "_test_servers" = "PRÓBA SZERVEREK";
@@ -1283,42 +1283,42 @@
 "_tor_server" = "Tor szerver";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "A ProtonVPN Plus 7 napos ingyenes próbaverziója lejárt. Folytathatod a ProtonVPN ingyenes csomag használatával, de ha támogatni szeretnéd a projektet, és nagyobb sebességgel, illetve több funkcióval rendelkező szolgáltatást szeretnél, kérlek válts egy fizetős csomagra.";
+"_trial_expired_alert_body_iOS" = "A Proton VPN Plus 7 napos ingyenes próbaverziója lejárt. Folytathatod a Proton VPN ingyenes csomag használatával, de ha támogatni szeretnéd a projektet, és nagyobb sebességgel, illetve több funkcióval rendelkező szolgáltatást szeretnél, kérlek válts egy fizetős csomagra.";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "A ProtonVPN Plus próbaverzió lejárt";
+"_trial_expired_alert_title_iOS" = "A Proton VPN Plus próbaverzió lejárt";
 
 /* (No Comment) */
-"_trial_popup_call_to_upgrade" = "A ProtonVPN Plus szolgáltatásaihoz való állandó hozzáférés érdekében frissítheted a csomagod.";
+"_trial_popup_call_to_upgrade" = "A Proton VPN Plus szolgáltatásaihoz való állandó hozzáférés érdekében frissítheted a csomagod.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Élvezd a biztonságos internet teljes előnyeit bárhol a ProtonVPN segítségével";
+"_trial_popup_enjoy" = "Élvezd a biztonságos internet teljes előnyeit bárhol a Proton VPN segítségével";
 
 /* Final text:
  
- As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
  1 day, 2 hours, 30 minutes */
 "_trial_popup_explanation" = "Üdvözlő ajándékként hozzáférhetsz a %@ csomagunkhoz, beleértve az összes prémium szoláltatásunkat. A próbaverzió lejárati ideje";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "ingyenes váltás a ProtonVPN Plus-ra";
+"_trial_popup_free_upgrade" = "ingyenes váltás a Proton VPN Plus-ra";
 
 /* (No Comment) */
-"_trial_popup_full_subscription" = "teljes ProtonVPN előfizetés";
+"_trial_popup_full_subscription" = "teljes Proton VPN előfizetés";
 
 /* Final text:
  
- We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Kaptál tőlünk egy %@-t, mely több szervert és szolgáltatást tartalmaz. A ProtonVPN Plus próbaverzió ideje 7 nap.";
+ We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Kaptál tőlünk egy %@-t, mely több szervert és szolgáltatást tartalmaz. A Proton VPN Plus próbaverzió ideje 7 nap.";
 
 /* (No Comment) */
-"_trial_popup_thanks" = "Köszönjük a ProtonVPN használatát!";
+"_trial_popup_thanks" = "Köszönjük a Proton VPN használatát!";
 
 /* (No Comment) */
-"_trial_popup_title" = "ProtonVPN próba";
+"_trial_popup_title" = "Proton VPN próba";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Üdvözlő ajándékként hozzáférhetsz a ProtonVPN összes fizetős szolgáltatásához!";
+"_trial_welcome_description_iOS" = "Üdvözlő ajándékként hozzáférhetsz a Proton VPN összes fizetős szolgáltatásához!";
 
 /* iOS trial welcome screen */
 "_trial_welcome_ends_in_iOS" = "A próbaidőszak lejár";
@@ -1339,7 +1339,7 @@
 "_update_required" = "Frissítés szükséges";
 
 /* App update required alert */
-"_update_required_no_longer_supported" = "A ProtonVPN ezt a verziót már nem támogatja. Kérlek frissítsd az alkalmazásod a egy újabb verzióra.";
+"_update_required_no_longer_supported" = "A Proton VPN ezt a verziót már nem támogatja. Kérlek frissítsd az alkalmazásod a egy újabb verzióra.";
 
 /* App update required alert */
 "_update_required_support" = "Kapcsolat velünk";
@@ -1363,7 +1363,7 @@
 "_upgrade_plan_to_access_country" = "Sajnáljuk, de a jelenlegi csomagoddal nem csatlakozhatsz ehhez a kiszolgálóhoz. Ha több szervert szeretnél elérni, fontold meg a csomagváltást.";
 
 /* macOS: plan upgrade for SecureCore required alert */
-"_upgrade_plan_to_access_secure_core_p1" = "A biztonsági mag egy prémium szolgáltatás, amelyhez legalább ProtonVPN Plus csomag szükséges. A biztonsági mag fejlett védelmet nyújt a VPN-kiszolgálók figyelése ellen.";
+"_upgrade_plan_to_access_secure_core_p1" = "A biztonsági mag egy prémium szolgáltatás, amelyhez legalább Proton VPN Plus csomag szükséges. A biztonsági mag fejlett védelmet nyújt a VPN-kiszolgálók figyelése ellen.";
 
 /* macOS: plan upgrade for SecureCore required alert */
 "_upgrade_plan_to_access_secure_core_p2" = "A biztonsági mag használatához olyan csomagot kell választanod, amely tartalmazza ezt a funkciót.";
@@ -1381,7 +1381,7 @@
 "_upgrade_to_plus" = "Váltás a Plus csomagra";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "A ProtonVPN csomag nem frissíthető az alkalmazáson belül, a frissítéshez kérlek látogass el a account.protonvpn.com webhelyre.";
+"_upgrade_unavailable_body" = "A Proton VPN csomag nem frissíthető az alkalmazáson belül, a frissítéshez kérlek látogass el a account.protonvpn.com webhelyre.";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Nincs elérhető frissítés az alkalmazáshoz";
@@ -1435,18 +1435,18 @@
 "_vpn_stuck_disconnecting_title" = "Kapcsolódási hiba";
 
 /* Status of VPN connection reported by Siri */
-"_vpnstatus_not_loggedin" = "Nem vagy bejelentkezve a ProtonVPN-be. Nyisd meg a ProtonVPN alkalmazást, és jelentkezz be.";
+"_vpnstatus_not_loggedin" = "Nem vagy bejelentkezve a Proton VPN-be. Nyisd meg a Proton VPN alkalmazást, és jelentkezz be.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Figyelem";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Egy másik felhasználó ProtonVPN munkamenete aktív ezen az eszközön. A bejelentkezési folyamat folytatásával az aktuális munkamenet leáll. Szeretnéd folytatni?";
+"_warning_vpn_session_is_active" = "Egy másik felhasználó Proton VPN munkamenete aktív ezen az eszközön. A bejelentkezési folyamat folytatásával az aktuális munkamenet leáll. Szeretnéd folytatni?";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "Köszönjük a ProtonVPN használatát. Vess egy pillantást\naz alkalmazás főbb jellemzőire.";
+"_welcome_description" = "Köszönjük a Proton VPN használatát. Vess egy pillantást\naz alkalmazás főbb jellemzőire.";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Üdvözlő ajándékként 7 napos hozzáférést kapsz az a(z)\n%@ csomaghoz, ami az alábbiakat tartalmazza:";
 
 /* MacOS welcome screen: title */

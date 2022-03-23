@@ -23,13 +23,13 @@
 "modals_get_plus" = "Улучшить";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Строгая политика отсутствия журналов активности ProtonVPN подтверждена внешней проверкой.";
+"modals_no_logs_external_audit" = "Строгая политика отсутствия журналов активности Proton VPN подтверждена внешней проверкой.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Мы не ведем журналы ваших действий в Интернете";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN - это конфиденциальность прежде всего";
+"modals_no_logs_privacy_first" = "Proton VPN - это конфиденциальность прежде всего";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "Мы не передаем никаких данных третьим лицам";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Умеренный NAT, также известный как Nat Type 2, может повысить удобство работы в Интернете с различными приложениями и сетевыми видеоиграми.\n\nРазблокируйте эту и другие функции на тарифе Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Используйте ProtonVPN для любых особых нужд, разрешая трафик на нестандартные порты через VPN.";
+"modals_upsell_features_safe_mode_subtitle" = "Используйте Proton VPN для любых особых нужд, разрешая трафик на нестандартные порты через VPN.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Когда вы улучшите до Plus";

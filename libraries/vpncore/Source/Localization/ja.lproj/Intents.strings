@@ -5,22 +5,22 @@
 "2LMbbw" = "接続状態";
 
 /* (No Comment) */
-"8tZ81X" = "ProtonVPN に接続する";
+"8tZ81X" = "Proton VPN に接続する";
 
 /* (No Comment) */
-"cQ4Mju" = "ProtonVPN から切断する";
+"cQ4Mju" = "Proton VPN から切断する";
 
 /* (No Comment) */
-"hIcJsr" = "ProtonVPN の接続状態を取得";
+"hIcJsr" = "Proton VPN の接続状態を取得";
 
 /* (No Comment) */
-"jf696t" = "ProtonVPN に接続する";
+"jf696t" = "Proton VPN に接続する";
 
 /* (No Comment) */
-"JOCERT" = "ProtonVPN の接続状態を取得";
+"JOCERT" = "Proton VPN の接続状態を取得";
 
 /* (No Comment) */
-"ksQcRb" = "ProtonVPN から切断する";
+"ksQcRb" = "Proton VPN から切断する";
 
 /* (No Comment) */
 "NzUfmp" = "${status}";

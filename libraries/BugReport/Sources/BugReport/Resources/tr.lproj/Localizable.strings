@@ -59,8 +59,8 @@
 "_update_view_button" = "Güncelle";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Eski ProtonVPN sürümlerinde sorun yaşamanız daha olasıdır.";
+"_update_view_description" = "Eski Proton VPN sürümlerinde sorun yaşamanız daha olasıdır.";
 
 /* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "ProtonVPN uygulamasını güncelle";
+"_update_view_title" = "Proton VPN uygulamasını güncelle";
 

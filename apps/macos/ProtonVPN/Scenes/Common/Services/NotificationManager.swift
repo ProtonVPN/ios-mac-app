@@ -68,7 +68,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private func connectedNotification(for server: ServerModel) -> NSUserNotification {
         let notification = NSUserNotification()
-        notification.title = "ProtonVPN " + LocalizedString.connected
+        notification.title = "Proton VPN " + LocalizedString.connected
         notification.subtitle = connectSubtitle(forServer: server)
         notification.informativeText = connectInformativeText(forServer: server)
         notification.hasActionButton = false

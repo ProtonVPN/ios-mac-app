@@ -32,7 +32,7 @@
 "_activate_widget_step_2" = "一番下までスクロールして編集ボタンをタップします。";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "有効なウィジェットのリストにProtonVPNウィジェットを追加します。";
+"_activate_widget_step_3" = "有効なウィジェットのリストにProton VPNウィジェットを追加します。";
 
 /* Plan information */
 "_advanced_features" = "+ 高度な機能";
@@ -53,7 +53,7 @@
 "_all_servers_in_profile_under_maintenance" = "プロファイルサーバー はメンテナンス中です。";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "全てのサーバー はメンテナンス中です。ProtonVPNの技術的な問題かネットワークが不安定な可能性があります。";
+"_all_servers_under_maintenance" = "全てのサーバー はメンテナンス中です。Proton VPNの技術的な問題かネットワークが不安定な可能性があります。";
 
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "既にアカウントをお持ちの方はこちら";
@@ -194,7 +194,7 @@
 "_data_disclaimer_device_details" = "デバイスの種類とOSのバージョン";
 
 /* iOS: data disclaimen screen */
-"_data_disclaimer_text" = "ProtonVPNはユーザーのプライバシーを尊重し、保護します。アプリを利用する個人及び匿名ユーザーの使いやすさを実現するため、以下のデータを含む必要最低限のユーザーデータのみを収集します。\n\n%@：　ログイン、パスワードのリセット、重要な更新のお知らせ\n\n%@：　クラッシュレポートやエラー発生時のみ\n\nProtonVPNアプリは、前出のユーザーデータ以外のユーザー情報を利用しません。また、オンラインアクティビティログや個人を特定可能な情報も収集しません。収集した前出のユーザーデータは、第三者によるアクセスが不可能なProtonVPN独自のシステム内で保存・処理されます。";
+"_data_disclaimer_text" = "Proton VPNはユーザーのプライバシーを尊重し、保護します。アプリを利用する個人及び匿名ユーザーの使いやすさを実現するため、以下のデータを含む必要最低限のユーザーデータのみを収集します。\n\n%@：　ログイン、パスワードのリセット、重要な更新のお知らせ\n\n%@：　クラッシュレポートやエラー発生時のみ\n\nProton VPNアプリは、前出のユーザーデータ以外のユーザー情報を利用しません。また、オンラインアクティビティログや個人を特定可能な情報も収集しません。収集した前出のユーザーデータは、第三者によるアクセスが不可能なProton VPN独自のシステム内で保存・処理されます。";
 
 /* iOS: data disclaimen screen */
 "_data_disclaimer_title" = "オンライン上の自分自身を保護";
@@ -209,7 +209,7 @@
 "_delete" = "削除";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "全てのProtonVPNデータを削除してアプリを終了します。処理を続けますか？";
+"_delete_application_data_popup_body" = "全てのProton VPNデータを削除してアプリを終了します。処理を続けますか？";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "アプリケーションデータの削除";
@@ -398,7 +398,7 @@
 "_error_transaction_failed_by_unknown_reason" = "App Storeは購入手続きを処理できませんでした。";
 
 /* In App Purchase error */
-"_error_transaction_of_other_user" = "別のProtonVPNユーザー名で購入手続きを開始しました。";
+"_error_transaction_of_other_user" = "別のProton VPNユーザー名で購入手続きを開始しました。";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "App Store 上の利用可能製品の一覧の取得に失敗しました。";
@@ -425,7 +425,7 @@
 "_error_user_has_no_vpn_access" = "このアカウントには VPN へのアクセス権がありません。アカウント管理者へご連絡ください。";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "ProtonVPNに登録されていません";
+"_error_user_has_not_signed_up" = "Proton VPNに登録されていません";
 
 /* VPN credentials can't be loaded error */
 "_error_user_is_on_waitlist" = "待機リストにいるため、アカウントはまだ作成されていません。";
@@ -443,10 +443,10 @@
 "_error_vpn_properties" = "VPN の詳細を取得できません！";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "ProtonVPNセッションはアクティブです";
+"_error_vpn_session_is_active" = "Proton VPNセッションはアクティブです";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPNはキルスイッチを実装するために、パケットフィルターファイヤーウォールを使用しています。キルスイッチを有効にすると、デバイスの現在のファイヤーウォール設定が上書きされます。現在のファイヤーウォール設定を変更したくない場合は、キルスイッチを使用しないでください。\n\nキルスイッチを有効にして現在のファイヤーウォール設定を上書きするには【続行】を押してください。\n\nキルスイッチを無効にして現在のファーヤーウォール設定を維持する場合は【キャンセル】を選択してください。";
+"_existing_firewall_popup_body" = "Proton VPNはキルスイッチを実装するために、パケットフィルターファイヤーウォールを使用しています。キルスイッチを有効にすると、デバイスの現在のファイヤーウォール設定が上書きされます。現在のファイヤーウォール設定を変更したくない場合は、キルスイッチを使用しないでください。\n\nキルスイッチを有効にして現在のファイヤーウォール設定を上書きするには【続行】を押してください。\n\nキルスイッチを無効にして現在のファーヤーウォール設定を維持する場合は【キャンセル】を選択してください。";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "ファイヤーウォールが検出されました";
@@ -523,14 +523,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "無料サーバー";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "%@ へアップグレードして以下の機能を引き続き利用する：";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "無料トライアルの期間がまもなく終了します！";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "アカウントは ProtonVPN FREE へダウングレードされました。\n%@ プランからのダウングレードで利用できなくなった機能：";
+/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "アカウントは Proton VPN FREE へダウングレードされました。\n%@ プランからのダウングレードで利用できなくなった機能：";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "%@ の無料トライアル";
@@ -550,7 +550,7 @@
 /* Button in several different alerts */
 "_got_it" = "了解";
 
-/* Main app menu; User with \"ProtonVPN\" inside the same main menu as a name for item that opens help page. */
+/* Main app menu; User with \"Proton VPN\" inside the same main menu as a name for item that opens help page. */
 "_help" = "ヘルプ";
 
 /* Show/hide password switch */
@@ -575,7 +575,7 @@
 "_invalid_refresh_token" = "セッションの有効期限が切れました";
 
 /* Token expired alert */
-"_invalid_refresh_token_please_login" = "ProtonVPNアプリをしばらく起動していないため、再ログインが必要です。";
+"_invalid_refresh_token_please_login" = "Proton VPNアプリをしばらく起動していないため、再ログインが必要です。";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_description" = "ProtonMailを開発した科学者やエンジニアが、より安全でプライベートなインターネット接続を提供します。";
@@ -605,7 +605,7 @@
 "_kill_switch" = "キルスイッチ";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "VPN サーバーとの接続が切断されました。データの漏洩を防ぐため、キルスイッチが全ての接続をブロックしています。ProtonVPNは自動的に再接続を試行します。このウィンドウを閉じるには【OK】を押します。\n\n一時的にキルスイッチを無効にし、VPNを経由せずインターネットへ再接続する場合は【無効化】を押してください。\n\nキルスイッチを随時無効にするには、%@ で設定します。";
+"_kill_switch_blocking_body" = "VPN サーバーとの接続が切断されました。データの漏洩を防ぐため、キルスイッチが全ての接続をブロックしています。Proton VPNは自動的に再接続を試行します。このウィンドウを閉じるには【OK】を押します。\n\n一時的にキルスイッチを無効にし、VPNを経由せずインターネットへ再接続する場合は【無効化】を押してください。\n\nキルスイッチを随時無効にするには、%@ で設定します。";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "全ての接続をブロックするキルスイッチ";
@@ -614,7 +614,7 @@
 "_kill_switch_blocking_title" = "キルスイッチがIPアドレスの漏洩をブロックしています。";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "キルスイッチが正常に機能していません。ProtonVPNのサポートチームへ問題を報告する場合は【報告】をクリックしてください。\nエラーを無視してキルスイッチによる保護なしにインターネット接続を続けるには【無視】をクリックしてください。";
+"_kill_switch_error_body" = "キルスイッチが正常に機能していません。Proton VPNのサポートチームへ問題を報告する場合は【報告】をクリックしてください。\nエラーを無視してキルスイッチによる保護なしにインターネット接続を続けるには【無視】をクリックしてください。";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "キルスイッチのエラーが検出されました";
@@ -623,7 +623,7 @@
 "_kill_switch_helper_install_issue_popup_body" = "キルスイッチのインストールまたはアップデート時にエラーが発生するしました。\n\nもう一度処理を繰り返す場合は【再試行】をクリックしてください。\n\nキルスイッチを使用せずに続行する場合は【無効化】をクリックします。";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "キルスイッチを有効にするには、お使いのコンピュータに設定したアカウントのパスワードが必要です。入力を促すポップアップウィンドウが表示されたら %@ を入力し【了解】をクリックしてください。\n\nProtonVPNがアップデートされる際、再度入力が必要な場合もあります。";
+"_kill_switch_helper_install_popup_body" = "キルスイッチを有効にするには、お使いのコンピュータに設定したアカウントのパスワードが必要です。入力を促すポップアップウィンドウが表示されたら %@ を入力し【了解】をクリックしてください。\n\nProton VPNがアップデートされる際、再度入力が必要な場合もあります。";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "ダウンロードした最新アップデートを適用するには、コンピュータに設定したアカウントのパスワードが必要です。入力を促すポップアップウィンドウが表示されたら %@ を入力し【了解】をクリックしてください。 \n\nMacアカウントのパスワードを入力しない場合、キルスイッチは無効になります。";
@@ -707,7 +707,7 @@
 "_medium" = "中速";
 
 /* Main mac app menu item */
-"_menu_about" = "ProtonVPN について";
+"_menu_about" = "Proton VPN について";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "更新を確認...";
@@ -716,7 +716,7 @@
 "_menu_hide_others" = "他を隠す";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "ProtonVPN を隠す";
+"_menu_hide_self" = "Proton VPN を隠す";
 
 /* Main mac app menu item */
 "_menu_logout" = "ログアウト";
@@ -728,7 +728,7 @@
 "_menu_preferences" = "設定";
 
 /* Main mac app menu item */
-"_menu_quit" = "ProtonVPN を終了";
+"_menu_quit" = "Proton VPN を終了";
 
 /* Main mac app menu item */
 "_menu_show_all" = "全て表示";
@@ -773,7 +773,7 @@
 "_neagent_always_allow" = "常に許可";
 
 /* Mac: neagent help screen */
-"_neagent_description" = "ProtonVPNサービスへアクセスするには %@ が必要です。入力を促すポップアップウィンドウが表示されたら %@ %@ を入力し【%@】%@ をクリックしてください。";
+"_neagent_description" = "Proton VPNサービスへアクセスするには %@ が必要です。入力を促すポップアップウィンドウが表示されたら %@ %@ を入力し【%@】%@ をクリックしてください。";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -815,7 +815,7 @@
 "_ok" = "OK";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "ProtonVPN を表示してログイン...";
+"_open_app_to_log_in" = "Proton VPN を表示してログイン...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN のログ";
@@ -857,7 +857,7 @@
 "_p2p_servers" = "P2P サーバー";
 
 /* Plan upgrade required alert */
-"_paid_required" = "ProtonVPN の有料プランが必要です";
+"_paid_required" = "Proton VPN の有料プランが必要です";
 
 /* Used in sign-in, sign-up */
 "_password" = "パスワード";
@@ -911,7 +911,7 @@
 "_plus_upgrade_description" = "Secure Core、お気に入りのテレビ番組のストリーミング、複数デバイス（最大5台）からのアクセスなど、さまざまな機能が利用できます！";
 
 /* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "ProtonVPNを気に入っていただけましたか？\nPlusプランは月額わずか8ドルです";
+"_plus_upgrade_title" = "Proton VPNを気に入っていただけましたか？\nPlusプランは月額わずか8ドルです";
 
 /* MacOS: Settings screen title */
 "_preferences" = "設定";
@@ -974,10 +974,10 @@
 "_protocol" = "プロトコル";
 
 /* Mac: neagent help screen */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "Proton VPN macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "ProtonVPN PLUS";
+"_protonvpn_plus" = "Proton VPN PLUS";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "公開 IP: %@";
@@ -1169,7 +1169,7 @@
 "_server_under_maintenance" = "サーバーはメンテナンス中です";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "現在のアカウントに設定されている同時接続の最大数に達しました。接続数を増やすにはProtonVPNプランをアップグレードしてください。";
+"_session_count_reached_description" = "現在のアカウントに設定されている同時接続の最大数に達しました。接続数を増やすにはProton VPNプランをアップグレードしてください。";
 
 /* Session count limit alert */
 "_session_count_reached_title" = "セッション数制限に達しました";
@@ -1184,19 +1184,19 @@
 "_setup_complete" = "セットアップ完了";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "購入手続きが完了しました。ProtonVPN Basicプランを利用できます。";
+"_setup_complete_basic" = "購入手続きが完了しました。Proton VPN Basicプランを利用できます。";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "ProtonVPN Freeプランへの登録が完了しました。ProtonVPN Plusプランを7日間無料でお試しいただけます。";
+"_setup_complete_free" = "Proton VPN Freeプランへの登録が完了しました。Proton VPN Plusプランを7日間無料でお試しいただけます。";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "購入手続きが完了しました。ProtonVPN Plusプランを利用できます。";
+"_setup_complete_plus" = "購入手続きが完了しました。Proton VPN Plusプランを利用できます。";
 
 /* Show/hide password switch */
 "_show" = "表示";
 
 /* MacOS: button in custom status menu */
-"_show_protonvpn" = "ProtonVPN を表示";
+"_show_protonvpn" = "Proton VPN を表示";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "新規登録";
@@ -1265,7 +1265,7 @@
 "_terms_and_conditions" = "利用規約";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "ProtonVPNを利用することにより、%@および%@に同意したものとみなされます。";
+"_terms_and_conditions_disclaimer" = "Proton VPNを利用することにより、%@および%@に同意したものとみなされます。";
 
 /* iOS: section header in countries list */
 "_test_servers" = "テスト用サーバー";
@@ -1283,48 +1283,48 @@
 "_tor_server" = "Tor サーバー";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "7日間のProtonVPN Plus無料評価期間は終了しました。ProtonVPN Freeの使用をご継続いただけますが、プロジェクトへの支援・より多くの国や機能へのアクセスをご希望の場合は有料プランへのアップグレードをお願いいたします。";
+"_trial_expired_alert_body_iOS" = "7日間のProton VPN Plus無料評価期間は終了しました。Proton VPN Freeの使用をご継続いただけますが、プロジェクトへの支援・より多くの国や機能へのアクセスをご希望の場合は有料プランへのアップグレードをお願いいたします。";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "ProtonVPN Plusプランの試用期間が終了しました。";
+"_trial_expired_alert_title_iOS" = "Proton VPN Plusプランの試用期間が終了しました。";
 
 /* (No Comment) */
-"_trial_popup_call_to_upgrade" = "ProtonVPN Plusの機能を引き続き利用する場合は、プランのアップグレードが必要です。";
+"_trial_popup_call_to_upgrade" = "Proton VPN Plusの機能を引き続き利用する場合は、プランのアップグレードが必要です。";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "ProtonVPNは、どこでも安全なインターネット環境を実現します";
+"_trial_popup_enjoy" = "Proton VPNは、どこでも安全なインターネット環境を実現します";
 
 /* Final text:
  
- As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
  1 day, 2 hours, 30 minutes */
 "_trial_popup_explanation" = "ウエルカムギフトとして、最初の数日間は拡張機能を含む%@をお試しいただけます。試用期間終了まで";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "ProtonVPN PLUSへの無料アップグレード";
+"_trial_popup_free_upgrade" = "Proton VPN PLUSへの無料アップグレード";
 
 /* (No Comment) */
-"_trial_popup_full_subscription" = "完全な ProtonVPN サブスクリプション";
+"_trial_popup_full_subscription" = "完全な Proton VPN サブスクリプション";
 
 /* Final text:
  
- We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "%@の追加機能やより多くのサーバーをお試しいただけます。ProtonVPN PLUSの試用期間は7日間です。";
+ We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "%@の追加機能やより多くのサーバーをお試しいただけます。Proton VPN PLUSの試用期間は7日間です。";
 
 /* (No Comment) */
-"_trial_popup_thanks" = "ProtonVPNをご利用いただきありがとうございます!";
+"_trial_popup_thanks" = "Proton VPNをご利用いただきありがとうございます!";
 
 /* (No Comment) */
-"_trial_popup_title" = "ProtonVPN トライアル";
+"_trial_popup_title" = "Proton VPN トライアル";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "ウェルカムギフトとして、高度な機能を含む完全な ProtonVPN サブスクリプションへの1日アクセス権を獲得しました。";
+"_trial_welcome_description_iOS" = "ウェルカムギフトとして、高度な機能を含む完全な Proton VPN サブスクリプションへの1日アクセス権を獲得しました。";
 
 /* iOS trial welcome screen */
 "_trial_welcome_ends_in_iOS" = "試用期間終了まで";
 
 /* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "ProtonVPNへようこそ";
+"_trial_welcome_heading_iOS" = "Proton VPNへようこそ";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "再試行";
@@ -1339,7 +1339,7 @@
 "_update_required" = "アップデートが必要です。";
 
 /* App update required alert */
-"_update_required_no_longer_supported" = "このバージョンの ProtonVPN はサポートされていません。使用を継続するにはアップデートしてください。";
+"_update_required_no_longer_supported" = "このバージョンの Proton VPN はサポートされていません。使用を継続するにはアップデートしてください。";
 
 /* App update required alert */
 "_update_required_support" = "サポートへ連絡";
@@ -1363,7 +1363,7 @@
 "_upgrade_plan_to_access_country" = "申し訳ございませんが、この国にあなたのサブスクリプションで接続できるサーバーはありません。より多くのサーバーにアクセスするために、サブスクリプションのアップグレードをご検討ください。";
 
 /* macOS: plan upgrade for SecureCore required alert */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core は ProtonVPN PLUS 以上のサブスクリプションが必要なプレミアム機能です。 Secure Core は VPN サーバーへの監視に対する追加の保護を提供します。";
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core は Proton VPN PLUS 以上のサブスクリプションが必要なプレミアム機能です。 Secure Core は VPN サーバーへの監視に対する追加の保護を提供します。";
 
 /* macOS: plan upgrade for SecureCore required alert */
 "_upgrade_plan_to_access_secure_core_p2" = "Secure Coreを利用するには、この機能を利用可能なサブスクリプションプランをご覧ください。";
@@ -1381,7 +1381,7 @@
 "_upgrade_to_plus" = "PLUS プランにアップグレード";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "ProtonVPN サブスクリプションはアプリ内でアップグレードできません。 アップグレードするために account.protonvpn.com へアクセスしてください。";
+"_upgrade_unavailable_body" = "Proton VPN サブスクリプションはアプリ内でアップグレードできません。 アップグレードするために account.protonvpn.com へアクセスしてください。";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "アプリ内でアップグレードできません";
@@ -1435,22 +1435,22 @@
 "_vpn_stuck_disconnecting_title" = "接続エラー";
 
 /* Status of VPN connection reported by Siri */
-"_vpnstatus_not_loggedin" = "ProtonVPN にログインしていません。 ProtonVPN アプリを開いてログインしてください。";
+"_vpnstatus_not_loggedin" = "Proton VPN にログインしていません。 Proton VPN アプリを開いてログインしてください。";
 
 /* Used as a title in alerts/modals */
 "_warning" = "警告";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "他のユーザーが ProtonVPN セッションをこのデバイス上で有効化しています。ログイン処理を継続すると現在のセッションが終了します。処理を継続しますか?";
+"_warning_vpn_session_is_active" = "他のユーザーが Proton VPN セッションをこのデバイス上で有効化しています。ログイン処理を継続すると現在のセッションが終了します。処理を継続しますか?";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "ProtonVPNをご利用いただきありがとうございます。ツアーでこのアプリの機能をご説明します。";
+"_welcome_description" = "Proton VPNをご利用いただきありがとうございます。ツアーでこのアプリの機能をご説明します。";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "ウェルカムギフトとして7日間のアクセス権を獲得しました\n%@ サブスクリプションは次の機能を含みます:";
 
 /* MacOS welcome screen: title */
-"_welcome_title" = "ProtonVPN へようこそ！";
+"_welcome_title" = "Proton VPN へようこそ！";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS ウィジェット";

@@ -23,13 +23,13 @@
 "modals_get_plus" = "Покращити";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Сувора політика ProtonVPN без журналювання підтверджена зовнішньою перевіркою.";
+"modals_no_logs_external_audit" = "Сувора політика Proton VPN без журналювання підтверджена зовнішньою перевіркою.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Ми не журналюємо вашу активність в Інтернеті";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN - це насамперед приватність";
+"modals_no_logs_privacy_first" = "Proton VPN - це насамперед приватність";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "Ми не передаємо ніяких даних третім особам";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Помірне NAT або NAT 2 типу може вдосконалити вашу онлайн-роботу з різними застосунками та онлайн-відеоіграми.\n\nРозблокуйте цю та інші функції за допомогою тарифного плану Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Використовуйте ProtonVPN для будь-якої спеціальної потреби, дозволяючи трафік до нестандартних портів через мережу VPN.\n\nРозблокуйте цю та інші функції передплативши тарифний план Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Використовуйте Proton VPN для будь-якої спеціальної потреби, дозволяючи трафік до нестандартних портів через мережу VPN.\n\nРозблокуйте цю та інші функції передплативши тарифний план Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "У разі оновлення до тарифного плану Plus";

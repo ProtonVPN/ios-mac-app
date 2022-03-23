@@ -32,7 +32,7 @@
 "_activate_widget_step_2" = "Κάντε κύλιση προς τα κάτω και πατήστε το κουμπί επεξεργασίας.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Προσθέστε το ProtonVPN widget στη λίστα των ενεργών widget.";
+"_activate_widget_step_3" = "Προσθέστε το Proton VPN widget στη λίστα των ενεργών widget.";
 
 /* Plan information */
 "_advanced_features" = "+ Προηγμένα χαρακτηριστικά";
@@ -53,7 +53,7 @@
 "_all_servers_in_profile_under_maintenance" = "Το προφίλ διακομιστή/ων βρίσκεται υπό συντήρηση";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Όλοι οι διακομιστές βρίσκονται υπό συντήρηση. Αυτό συνήθως σημαίνει πως είτε υπάρχουν τεχνικές δυσκολίες απο την πλευρά του ProtonVPN, είτε το δίκτυό σας είναι περιορισμένο.";
+"_all_servers_under_maintenance" = "Όλοι οι διακομιστές βρίσκονται υπό συντήρηση. Αυτό συνήθως σημαίνει πως είτε υπάρχουν τεχνικές δυσκολίες απο την πλευρά του Proton VPN, είτε το δίκτυό σας είναι περιορισμένο.";
 
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Έχω ήδη ένα λογαριασμό";
@@ -194,7 +194,7 @@
 "_data_disclaimer_device_details" = "Το μοντέλο της συσκευής σας και η έκδοση λειτουργικού συστήματος";
 
 /* iOS: data disclaimen screen */
-"_data_disclaimer_text" = "Το ProtonVPN δεσμεύεται να προστατεύει και να σέβεται τα προσωπικά σας δεδομένα. Είναι η πρωταρχική πολιτική μας να συλλέγουμε όσο το δυνατόν λιγότερα δεδομένα χρήστη για να διασφαλίσουμε μια ιδιωτική και ανώνυμη εμπειρία χρήστη κατά την χρήση της εφαρμογής, συγκεκριμένα:\n\n%@ – για να συνδεθείτε, βοήθεια για να ανακτήσετε έναν χαμένο κωδικό πρόσβασης και να στείλετε σημαντικές ενημερώσεις υπηρεσίας.\n\n%@ – για αναφορές σφαλμάτων και σφάλματα μόνο.\n\nΗ εφαρμογή ProtonVPN δεν επεξεργάζεται πληροφορίες χρηστών εκτός αυτών των δεδομένων. Δεν καταγράφουμε την ηλεκτρονική σας δραστηριότητα ούτε τυχόν προσωπικά αναγνωρίσιμα στοιχεία. Όλα τα δεδομένα που αναφέρονται παραπάνω αποθηκεύονται και επεξεργάζονται στο σύστημα του ProtonVPN, χωρίς ποτέ να έχει πρόσβαση τρίτο μέρος σε αυτό.";
+"_data_disclaimer_text" = "Το Proton VPN δεσμεύεται να προστατεύει και να σέβεται τα προσωπικά σας δεδομένα. Είναι η πρωταρχική πολιτική μας να συλλέγουμε όσο το δυνατόν λιγότερα δεδομένα χρήστη για να διασφαλίσουμε μια ιδιωτική και ανώνυμη εμπειρία χρήστη κατά την χρήση της εφαρμογής, συγκεκριμένα:\n\n%@ – για να συνδεθείτε, βοήθεια για να ανακτήσετε έναν χαμένο κωδικό πρόσβασης και να στείλετε σημαντικές ενημερώσεις υπηρεσίας.\n\n%@ – για αναφορές σφαλμάτων και σφάλματα μόνο.\n\nΗ εφαρμογή Proton VPN δεν επεξεργάζεται πληροφορίες χρηστών εκτός αυτών των δεδομένων. Δεν καταγράφουμε την ηλεκτρονική σας δραστηριότητα ούτε τυχόν προσωπικά αναγνωρίσιμα στοιχεία. Όλα τα δεδομένα που αναφέρονται παραπάνω αποθηκεύονται και επεξεργάζονται στο σύστημα του Proton VPN, χωρίς ποτέ να έχει πρόσβαση τρίτο μέρος σε αυτό.";
 
 /* iOS: data disclaimen screen */
 "_data_disclaimer_title" = "Προστατεύστε τον εαυτό σας online";
@@ -209,7 +209,7 @@
 "_delete" = "Διαγραφή";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Όλα τα δεδομένα ProtonVPN θα διαγραφούν και η εφαρμογή θα τερματιστεί. Επιθυμείτε να συνεχίσετε;";
+"_delete_application_data_popup_body" = "Όλα τα δεδομένα Proton VPN θα διαγραφούν και η εφαρμογή θα τερματιστεί. Επιθυμείτε να συνεχίσετε;";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Εκκαθάριση δεδομένων εφαρμογής";
@@ -290,7 +290,7 @@
 "_enter_verification_code" = "123 456";
 
 /* API error */
-"_error_api_offline" = "Το API του ProtonVPN, είναι προσωρινά εκτός σύνδεσης";
+"_error_api_offline" = "Το API του Proton VPN, είναι προσωρινά εκτός σύνδεσης";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Έχετε εγγραφεί επιτυχώς, αλλά η πληρωμή σας δεν υποβλήθηκε σε επεξεργασία. Για να στείλετε ξανά τα στοιχεία πληρωμής σας, κάντε κλικ στο Επανάληψη. Θα χρεωθείτε μόνο μία φορά. Εάν το πρόβλημα παραμένει, επικοινωνήστε με την υποστήριξη πελατών.";
@@ -356,7 +356,7 @@
 "_error_loads" = "Δεν είναι δυνατή η ενημέρωση των φορτίων διακομιστή";
 
 /* Man In The Middle attack alert */
-"_error_mitm_description" = "Η επαλήθευση του πιστοποιητικού TLS απέτυχε όταν προσπαθήσατε να συνδεθείτε στο API του ProtonVPN. Η τρέχουσα σύνδεση στο Internet μπορεί να παρακολουθείται. Για να διατηρήσουμε τα δεδομένα σας ασφαλή, αποτρέπουμε την πρόσβαση της εφαρμογής στο ProtonVPN API.\nΓια να συνδεθείτε ή να αποκτήσετε πρόσβαση στο λογαριασμό σας, μεταβείτε σε ένα νέο δίκτυο και προσπαθήστε να συνδεθείτε ξανά.";
+"_error_mitm_description" = "Η επαλήθευση του πιστοποιητικού TLS απέτυχε όταν προσπαθήσατε να συνδεθείτε στο API του Proton VPN. Η τρέχουσα σύνδεση στο Internet μπορεί να παρακολουθείται. Για να διατηρήσουμε τα δεδομένα σας ασφαλή, αποτρέπουμε την πρόσβαση της εφαρμογής στο Proton VPN API.\nΓια να συνδεθείτε ή να αποκτήσετε πρόσβαση στο λογαριασμό σας, μεταβείτε σε ένα νέο δίκτυο και προσπαθήστε να συνδεθείτε ξανά.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Μη-ασφαλής σύνδεση";
@@ -398,7 +398,7 @@
 "_error_transaction_failed_by_unknown_reason" = "Το App Store δεν μπορεί να επεξεργαστεί την αγορά σας.";
 
 /* In App Purchase error */
-"_error_transaction_of_other_user" = "Ξεκίνησε μια αγορά με διαφορετικό όνομα χρήστη ProtonVPN.";
+"_error_transaction_of_other_user" = "Ξεκίνησε μια αγορά με διαφορετικό όνομα χρήστη Proton VPN.";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "Αποτυχία λήψης λίστας διαθέσιμων προϊόντων από το App Store.";
@@ -425,7 +425,7 @@
 "_error_user_has_no_vpn_access" = "Ο λογαριασμός σας δεν διαθέτει πρόσβαση VPN. Επικοινωνήστε με τον διαχειριστή του λογαριασμού σας";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Δεν έχετε ακόμη εγγραφεί στο ProtonVPN";
+"_error_user_has_not_signed_up" = "Δεν έχετε ακόμη εγγραφεί στο Proton VPN";
 
 /* VPN credentials can't be loaded error */
 "_error_user_is_on_waitlist" = "Αυτήν τη στιγμή βρίσκεστε στην αναμονή και ο λογαριασμός σας δεν είναι ακόμα έτοιμος";
@@ -443,10 +443,10 @@
 "_error_vpn_properties" = "Δεν είναι δυνατή η εξαγωγή ιδιοτήτων VPN!";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "Η περίοδος συνεδρίας ProtonVPN είναι ενεργή";
+"_error_vpn_session_is_active" = "Η περίοδος συνεδρίας Proton VPN είναι ενεργή";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Το ProtonVPN χρησιμοποιεί ένα firewall πακέτων φίλτρων για την εφαρμογή ενός Kill Switch. Με την ενεργοποίηση του Kill Switch, θα αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall της συσκευής σας. Αν βασίζεστε σε αυτή τη διαμόρφωση του firewall, δεν θα πρέπει να χρησιμοποιήσετε το Kill Switch.\n\nΓια να χρησιμοποιήσετε τον Kill Switch και να αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall, επιλέξτε CONTINUE.\n\nΓια να απενεργοποιήσετε τον Kill Switch και να συνεχίσετε να χρησιμοποιείτε το τρέχον firewall, επιλέξτε CANCEL.";
+"_existing_firewall_popup_body" = "Το Proton VPN χρησιμοποιεί ένα firewall πακέτων φίλτρων για την εφαρμογή ενός Kill Switch. Με την ενεργοποίηση του Kill Switch, θα αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall της συσκευής σας. Αν βασίζεστε σε αυτή τη διαμόρφωση του firewall, δεν θα πρέπει να χρησιμοποιήσετε το Kill Switch.\n\nΓια να χρησιμοποιήσετε τον Kill Switch και να αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall, επιλέξτε CONTINUE.\n\nΓια να απενεργοποιήσετε τον Kill Switch και να συνεχίσετε να χρησιμοποιείτε το τρέχον firewall, επιλέξτε CANCEL.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Εντοπίστηκε Firewall";
@@ -523,14 +523,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "ΔΩΡΕΑΝ ΔΙΑΚΟΜΙΣΤΕΣ";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Αναβαθμίστε σε %@ και συνεχίστε να απολαμβάνετε αυτές τις λειτουργίες:";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "Η δωρεάν περίοδος δοκιμής σας πρόκειται να λήξει!";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Ο λογαριασμός σας έχει υποβαθμιστεί σε ProtonVPN FREE.\nΔείτε τι χάνετε από %@:";
+/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Ο λογαριασμός σας έχει υποβαθμιστεί σε Proton VPN FREE.\nΔείτε τι χάνετε από %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "Η ΔΩΡΕΑΝ ΠΕΡΙΟΔΟΣ ΔΟΚΙΜΗΣ ΣΑΣ %@";
@@ -550,7 +550,7 @@
 /* Button in several different alerts */
 "_got_it" = "Το κατάλαβα!";
 
-/* Main app menu; User with \"ProtonVPN\" inside the same main menu as a name for item that opens help page. */
+/* Main app menu; User with \"Proton VPN\" inside the same main menu as a name for item that opens help page. */
 "_help" = "Βοήθεια";
 
 /* Show/hide password switch */
@@ -575,7 +575,7 @@
 "_invalid_refresh_token" = "Η συνεδρία έληξε";
 
 /* Token expired alert */
-"_invalid_refresh_token_please_login" = "Έχει καιρό από τότε που χρησιμοποιήσατε τελευταία φορά την εφαρμογή ProtonVPN. Παρακαλούμε συνδεθείτε ξανά.";
+"_invalid_refresh_token_please_login" = "Έχει καιρό από τότε που χρησιμοποιήσατε τελευταία φορά την εφαρμογή Proton VPN. Παρακαλούμε συνδεθείτε ξανά.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_description" = "Από τους επιστήμονες και τους μηχανικούς που δημιούργησαν το ProtonMail, καλωσήρθατε σε ένα ασφαλέστερο και ιδιωτικό Διαδίκτυο.";
@@ -605,7 +605,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Έχετε χάσει τη σύνδεση με το διακομιστή VPN. Το Kill Switch μπλοκάρει όλες τις συνδέσεις για να αποφύγει τη διαρροή των δεδομένων σας. Το ProtonVPN θα προσπαθήσει να επανασυνδεθεί αυτόματα. Για να απορρίψετε αυτό το παράθυρο, κάντε κλικ στο κουμπί OK.\n\nΕάν θέλετε να απενεργοποιήσετε προσωρινά το Kill Switch και να επανασυνδεθείτε στο Internet ΧΩΡΙΣ προστασια VPN, κάντε κλικ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.\n\nΓια να κλείστε το Kill Switch μόνιμα, πηγαίνετε στο %@.";
+"_kill_switch_blocking_body" = "Έχετε χάσει τη σύνδεση με το διακομιστή VPN. Το Kill Switch μπλοκάρει όλες τις συνδέσεις για να αποφύγει τη διαρροή των δεδομένων σας. Το Proton VPN θα προσπαθήσει να επανασυνδεθεί αυτόματα. Για να απορρίψετε αυτό το παράθυρο, κάντε κλικ στο κουμπί OK.\n\nΕάν θέλετε να απενεργοποιήσετε προσωρινά το Kill Switch και να επανασυνδεθείτε στο Internet ΧΩΡΙΣ προστασια VPN, κάντε κλικ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.\n\nΓια να κλείστε το Kill Switch μόνιμα, πηγαίνετε στο %@.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Το Kill Switch μπλοκάρει όλες τις συνδέσεις";
@@ -614,7 +614,7 @@
 "_kill_switch_blocking_title" = "Το Kill Switch αυτή τη στιγμή εμποδίζει διαρροές IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Ο Kill Switch δεν λειτουργεί σωστά. Αν θέλετε να αναφέρετε αυτό το σφάλμα στην ομάδα υποστήριξης του ProtonVPN, κάντε κλικ στην επιλογή Αναφορά.\nΕάν θέλετε να αγνοήσετε αυτό το σφάλμα και να συνεχίσετε να περιηγείστε στο Internet ΧΩΡΙΣ Kill Switch, κάντε κλικ στην επιλογή Αγνόηση.";
+"_kill_switch_error_body" = "Ο Kill Switch δεν λειτουργεί σωστά. Αν θέλετε να αναφέρετε αυτό το σφάλμα στην ομάδα υποστήριξης του Proton VPN, κάντε κλικ στην επιλογή Αναφορά.\nΕάν θέλετε να αγνοήσετε αυτό το σφάλμα και να συνεχίσετε να περιηγείστε στο Internet ΧΩΡΙΣ Kill Switch, κάντε κλικ στην επιλογή Αγνόηση.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Έχει εντοπιστεί σφάλμα Kill Switch";
@@ -623,7 +623,7 @@
 "_kill_switch_helper_install_issue_popup_body" = "Παρουσιάστηκε πρόβλημα κατά την εγκατάσταση ή την ενημέρωση του Kill Switch.\n\nΓια να προσπαθήστε ξανά, κάντε κλικ στο ΕΠΑΝΑΛΗΨΗ.\n\nΓια να συνεχίσετε χωρίς το Kill Switch, κάντε κλικ στο ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Για να ενεργοποιήσετε το Kill Switch, ίσως σας ζητηθεί να δώσετε τον κωδικό του λογαριασμού υπολογιστή σας. Εάν εμφανιστεί ένα αίτημα, πληκτρολογήστε το %@ και κάντε αποδοχή.\n\nΕνδέχεται να δείτε ξανά αυτό το αίτημα περιστασιακά όταν η εφαρμογή ProtonVPN λαμβάνει ενημερώσεις.";
+"_kill_switch_helper_install_popup_body" = "Για να ενεργοποιήσετε το Kill Switch, ίσως σας ζητηθεί να δώσετε τον κωδικό του λογαριασμού υπολογιστή σας. Εάν εμφανιστεί ένα αίτημα, πληκτρολογήστε το %@ και κάντε αποδοχή.\n\nΕνδέχεται να δείτε ξανά αυτό το αίτημα περιστασιακά όταν η εφαρμογή Proton VPN λαμβάνει ενημερώσεις.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "Η πιο πρόσφατη ενημέρωση που κατεβάσατε, απαιτεί να δώσετε τον κωδικό πρόσβασης του υπολογιστή σας. Όταν εμφανιστεί το αίτημα, εισαγάγετε το %@ και αποδεχτείτε.\n\nΕάν δεν εισάγετε τον κωδικό Mac σας, το Kill Switch θα απενεργοποιηθεί.";
@@ -707,7 +707,7 @@
 "_medium" = "Μέτρια";
 
 /* Main mac app menu item */
-"_menu_about" = "Σχετικά με το ProtonVPN";
+"_menu_about" = "Σχετικά με το Proton VPN";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Έλεγχος για Ενημερώσεις...";
@@ -716,7 +716,7 @@
 "_menu_hide_others" = "Απόκρυψη Άλλων";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "Απόκρυψη ProtonVPN";
+"_menu_hide_self" = "Απόκρυψη Proton VPN";
 
 /* Main mac app menu item */
 "_menu_logout" = "Αποσύνδεση";
@@ -728,7 +728,7 @@
 "_menu_preferences" = "Προτιμήσεις";
 
 /* Main mac app menu item */
-"_menu_quit" = "Έξοδος απο το ProtonVPN";
+"_menu_quit" = "Έξοδος απο το Proton VPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Εμφάνιση Όλων";
@@ -773,7 +773,7 @@
 "_neagent_always_allow" = "Να Επιτρέπεται Πάντα";
 
 /* Mac: neagent help screen */
-"_neagent_description" = "Ενδέχεται να σας ζητηθεί να δώσετε το δικό σας %@\nγια να συνδεθείτε με την υπηρεσία ProtonVPN. Εάν εμφανιστεί αυτό το αίτημα,\nΕισάγετε το %@ %@ και κάντε κλίκ %@ ’ %@.";
+"_neagent_description" = "Ενδέχεται να σας ζητηθεί να δώσετε το δικό σας %@\nγια να συνδεθείτε με την υπηρεσία Proton VPN. Εάν εμφανιστεί αυτό το αίτημα,\nΕισάγετε το %@ %@ και κάντε κλίκ %@ ’ %@.";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -815,7 +815,7 @@
 "_ok" = "ΟΚ";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Εμφάνιση του ProtonVPN για σύνδεση...";
+"_open_app_to_log_in" = "Εμφάνιση του Proton VPN για σύνδεση...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN Logs";
@@ -857,7 +857,7 @@
 "_p2p_servers" = "Διακομιστές P2P";
 
 /* Plan upgrade required alert */
-"_paid_required" = "Απαιτείται πλάνο ProtonVPN επι πληρωμής";
+"_paid_required" = "Απαιτείται πλάνο Proton VPN επι πληρωμής";
 
 /* Used in sign-in, sign-up */
 "_password" = "Κωδικός";
@@ -911,7 +911,7 @@
 "_plus_upgrade_description" = "Χρησιμοποιήστε το Secure Core, μεταδώστε τις αγαπημένες σας τηλεοπτικές εκπομπές,\nχρήση σε έως και 5 διαφορετικές συσκευές και πολλά άλλα!";
 
 /* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Απολαμβάνετε το ProtonVPN;\nΠάρτε Plus για μόνο 8 $ /μήνα";
+"_plus_upgrade_title" = "Απολαμβάνετε το Proton VPN;\nΠάρτε Plus για μόνο 8 $ /μήνα";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Προτιμήσεις";
@@ -974,10 +974,10 @@
 "_protocol" = "Πρωτόκολλο";
 
 /* Mac: neagent help screen */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "Proton VPN macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "ProtonVPN PLUS";
+"_protonvpn_plus" = "Proton VPN PLUS";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Δημόσια IP: %@";
@@ -1169,7 +1169,7 @@
 "_server_under_maintenance" = "Διακομιστής υπό συντήρηση";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "Έχετε φτάσει τον μέγιστο αριθμό ταυτόχρονων συνδέσεων που επιτρέπονται για το λογαριασμό σας. Κάντε αναβάθμιση του πακέτου ProtonVPN για περισσότερες συνδέσεις.";
+"_session_count_reached_description" = "Έχετε φτάσει τον μέγιστο αριθμό ταυτόχρονων συνδέσεων που επιτρέπονται για το λογαριασμό σας. Κάντε αναβάθμιση του πακέτου Proton VPN για περισσότερες συνδέσεις.";
 
 /* Session count limit alert */
 "_session_count_reached_title" = "Το όριο συνεδριών έχει επιτευχθεί";
@@ -1184,19 +1184,19 @@
 "_setup_complete" = "Η Εγκατάσταση Ολοκληρώθηκε";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας ProtonVPN Basic είναι τώρα ενεργό.";
+"_setup_complete_basic" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας Proton VPN Basic είναι τώρα ενεργό.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Τώρα έχετε εγγραφεί για ένα δωρεάν πρόγραμμα ProtonVPN. Για να ξεκινήσετε, απολαύστε δωρεάν τις επτά ημέρες του πακέτου ProtonVPN Plus.";
+"_setup_complete_free" = "Τώρα έχετε εγγραφεί για ένα δωρεάν πρόγραμμα Proton VPN. Για να ξεκινήσετε, απολαύστε δωρεάν τις επτά ημέρες του πακέτου Proton VPN Plus.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας ProtonVPN Plus είναι τώρα ενεργό.";
+"_setup_complete_plus" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας Proton VPN Plus είναι τώρα ενεργό.";
 
 /* Show/hide password switch */
 "_show" = "ΕΜΦΑΝΙΣΗ";
 
 /* MacOS: button in custom status menu */
-"_show_protonvpn" = "Εμφάνιση ProtonVPN";
+"_show_protonvpn" = "Εμφάνιση Proton VPN";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Εγγραφή";
@@ -1265,7 +1265,7 @@
 "_terms_and_conditions" = "Όροι και Προϋποθέσεις";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Χρησιμοποιώντας το ProtonVPN, συμφωνείτε με %@ και %@";
+"_terms_and_conditions_disclaimer" = "Χρησιμοποιώντας το Proton VPN, συμφωνείτε με %@ και %@";
 
 /* iOS: section header in countries list */
 "_test_servers" = "ΔΙΑΚΟΜΙΣΤΕΣ ΔΟΚΙΜΩΝ";
@@ -1283,42 +1283,42 @@
 "_tor_server" = "Διακομιστής Tor";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Η δοκιμαστική περίοδος για 7 ημέρες ProtonVPN Plus έχει λήξει. Μπορείτε να συνεχίσετε να χρησιμοποιείτε το ProtonVPN Free, αλλά αν θέλετε να υποστηρίξετε το έργο μας και να αποκτήσετε πρόσβαση σε περισσότερες χώρες και δυνατότητες, παρακαλούμε αναβαθμίστε σε ένα πακέτο επί πληρωμής.";
+"_trial_expired_alert_body_iOS" = "Η δοκιμαστική περίοδος για 7 ημέρες Proton VPN Plus έχει λήξει. Μπορείτε να συνεχίσετε να χρησιμοποιείτε το Proton VPN Free, αλλά αν θέλετε να υποστηρίξετε το έργο μας και να αποκτήσετε πρόσβαση σε περισσότερες χώρες και δυνατότητες, παρακαλούμε αναβαθμίστε σε ένα πακέτο επί πληρωμής.";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Η δοκιμαστική περίοδος ProtonVPN Plus έληξε";
+"_trial_expired_alert_title_iOS" = "Η δοκιμαστική περίοδος Proton VPN Plus έληξε";
 
 /* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Για να έχετε μόνιμη πρόσβαση στις λειτουργίες ProtonVPN Plus, μπορείτε να αναβαθμίσετε το πακέτο σας.";
+"_trial_popup_call_to_upgrade" = "Για να έχετε μόνιμη πρόσβαση στις λειτουργίες Proton VPN Plus, μπορείτε να αναβαθμίσετε το πακέτο σας.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Απολαύστε τα οφέλη ενός ασφαλές διαδικτύου οπουδήποτε, με το ProtonVPN";
+"_trial_popup_enjoy" = "Απολαύστε τα οφέλη ενός ασφαλές διαδικτύου οπουδήποτε, με το Proton VPN";
 
 /* Final text:
  
- As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
  1 day, 2 hours, 30 minutes */
 "_trial_popup_explanation" = "Ως δώρο καλωσορίσματος, έχετε πρόσβαση σε %@, συμπεριλαμβανομένων των προηγμένων λειτουργιών για τις πρώτες ημέρες! Η δοκιμαστική περίοδος, λήγει σε";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "free αναβάθμιση σε ProtonVPN Plus";
+"_trial_popup_free_upgrade" = "free αναβάθμιση σε Proton VPN Plus";
 
 /* (No Comment) */
-"_trial_popup_full_subscription" = "πλήρης συνδρομή ProtonVPN";
+"_trial_popup_full_subscription" = "πλήρης συνδρομή Proton VPN";
 
 /* Final text:
  
- We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Σας έχουμε δώσει ένα %@ το οποίο περιλαμβάνει περισσότερους διακομιστές και επιπλέον λειτουργίες. Η δοκιμαστική περίοδος σας στο ProtonVPN Plus λήγει σε 7 ημέρες.";
+ We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Σας έχουμε δώσει ένα %@ το οποίο περιλαμβάνει περισσότερους διακομιστές και επιπλέον λειτουργίες. Η δοκιμαστική περίοδος σας στο Proton VPN Plus λήγει σε 7 ημέρες.";
 
 /* (No Comment) */
-"_trial_popup_thanks" = "Ευχαριστούμε που χρησιμοποιείτε το ProtonVPN!";
+"_trial_popup_thanks" = "Ευχαριστούμε που χρησιμοποιείτε το Proton VPN!";
 
 /* (No Comment) */
-"_trial_popup_title" = "ProtonVPN Trial";
+"_trial_popup_title" = "Proton VPN Trial";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Ως δώρο καλωσορίσματος έχετε πρόσβαση σε μια πλήρη συνδρομή ProtonVPN που περιλαμβάνει προηγμένες λειτουργίες για τις πρώτες μέρες!";
+"_trial_welcome_description_iOS" = "Ως δώρο καλωσορίσματος έχετε πρόσβαση σε μια πλήρη συνδρομή Proton VPN που περιλαμβάνει προηγμένες λειτουργίες για τις πρώτες μέρες!";
 
 /* iOS trial welcome screen */
 "_trial_welcome_ends_in_iOS" = "Η δοκιμαστική περίοδος λήγει σε";
@@ -1339,7 +1339,7 @@
 "_update_required" = "Απαιτείται ενημέρωση";
 
 /* App update required alert */
-"_update_required_no_longer_supported" = "Αυτή η έκδοση του ProtonVPN δεν υποστηρίζεται πλέον, ενημερώστε την εφαρμογή για να συνεχίσετε να τη χρησιμοποιείτε.";
+"_update_required_no_longer_supported" = "Αυτή η έκδοση του Proton VPN δεν υποστηρίζεται πλέον, ενημερώστε την εφαρμογή για να συνεχίσετε να τη χρησιμοποιείτε.";
 
 /* App update required alert */
 "_update_required_support" = "Επικοινωνήστε με την υποστήριξη";
@@ -1363,7 +1363,7 @@
 "_upgrade_plan_to_access_country" = "Λυπούμαστε, δεν υπάρχουν διακομιστές που να είναι διαθέσιμοι για τη βαθμίδα εγγραφής σας στη συγκεκριμένη χώρα αυτήν τη στιγμή. Εάν θέλετε να αποκτήσετε πρόσβαση σε περισσότερους διακομιστές, εξετάστε την αναβάθμιση της συνδρομής σας.";
 
 /* macOS: plan upgrade for SecureCore required alert */
-"_upgrade_plan_to_access_secure_core_p1" = "Το Secure Core είναι ένα premium χαρακτηριστικό που απαιτεί πακέτο ProtonVPN Plus ή μεγαλύτερο. Το Secure Core προσθέτει προηγμένη προστασία ενάντια στην παρακολούθηση διακομιστών VPN.";
+"_upgrade_plan_to_access_secure_core_p1" = "Το Secure Core είναι ένα premium χαρακτηριστικό που απαιτεί πακέτο Proton VPN Plus ή μεγαλύτερο. Το Secure Core προσθέτει προηγμένη προστασία ενάντια στην παρακολούθηση διακομιστών VPN.";
 
 /* macOS: plan upgrade for SecureCore required alert */
 "_upgrade_plan_to_access_secure_core_p2" = "Για να αποκτήσετε πρόσβαση στο Secure Core, ανατρέξτε στα άλλα πακέτα συνδρομών που περιλαμβάνουν αυτή τη λειτουργία.";
@@ -1381,7 +1381,7 @@
 "_upgrade_to_plus" = "Αναβάθμιση σε Plus";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Η συνδρομή σας ProtonVPN δεν μπορεί να αναβαθμιστεί μέσα από την εφαρμογή, επισκεφθείτε το account.protonvpn.com για αναβάθμιση.";
+"_upgrade_unavailable_body" = "Η συνδρομή σας Proton VPN δεν μπορεί να αναβαθμιστεί μέσα από την εφαρμογή, επισκεφθείτε το account.protonvpn.com για αναβάθμιση.";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Αναβάθμιση μη διαθέσιμη στην εφαρμογή";
@@ -1435,18 +1435,18 @@
 "_vpn_stuck_disconnecting_title" = "Σφάλμα σύνδεσης";
 
 /* Status of VPN connection reported by Siri */
-"_vpnstatus_not_loggedin" = "Δεν είστε συνδεδεμένοι στο ProtonVPN. Ανοίξτε την εφαρμογή ProtonVPN και συνδεθείτε.";
+"_vpnstatus_not_loggedin" = "Δεν είστε συνδεδεμένοι στο Proton VPN. Ανοίξτε την εφαρμογή Proton VPN και συνδεθείτε.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Προειδοποίηση";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Η συνεδρία ενός άλλου χρήστη ProtonVPN, είναι ενεργή σε αυτήν τη συσκευή. Η συνέχιση της διαδικασίας σύνδεσης θα προκαλέσει τη λήξη της τρέχουσας συνεδρίας. Θέλετε να συνεχίσετε;";
+"_warning_vpn_session_is_active" = "Η συνεδρία ενός άλλου χρήστη Proton VPN, είναι ενεργή σε αυτήν τη συσκευή. Η συνέχιση της διαδικασίας σύνδεσης θα προκαλέσει τη λήξη της τρέχουσας συνεδρίας. Θέλετε να συνεχίσετε;";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "Ευχαριστούμε που χρησιμοποιείτε το ProtonVPN. Ρίξτε μια γρήγορη ματιά\nστις κύριες λειτουργίες της εφαρμογής.";
+"_welcome_description" = "Ευχαριστούμε που χρησιμοποιείτε το Proton VPN. Ρίξτε μια γρήγορη ματιά\nστις κύριες λειτουργίες της εφαρμογής.";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Ως δώρο καλωσορίσματος, σας παρέχεται πρόσβαση για 7 ημέρες σε μια\n%@ συνδρομή που σας δίνει:";
 
 /* MacOS welcome screen: title */

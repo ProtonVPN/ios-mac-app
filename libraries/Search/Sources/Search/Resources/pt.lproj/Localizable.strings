@@ -1,11 +1,11 @@
 /* Section header in search */
-"_basic_servers" = "Servidores BASIC";
+"_basic_servers" = "Servidores Basic";
 
 /* Section header in search */
-"_free_servers" = "Servidores FREE";
+"_free_servers" = "Servidores Free";
 
 /* Section header in search */
-"_plus_servers" = "Servidores PLUS";
+"_plus_servers" = "Servidores Plus";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Country, City or Server";

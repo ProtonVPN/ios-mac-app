@@ -53,14 +53,14 @@ extension NSWindow {
     
     func applyLoginAppearance() {
         titlebarAppearsTransparent = true
-        title = "ProtonVPN"
+        title = "Proton VPN"
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         backgroundColor = .protonGreyShade()
     }
 
     func applySidebarAppearance() {
         titlebarAppearsTransparent = true
-        title = "ProtonVPN"
+        title = "Proton VPN"
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         backgroundColor = .protonGreyShade()
         
