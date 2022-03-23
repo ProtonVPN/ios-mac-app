@@ -21,23 +21,23 @@ import ProtonCore_UIFoundations
 
 extension Color {
     static var brandColor: Color {
-        ColorProvider.BrandNorm
+        ColorProvider.Primary
     }
 
     static var brandLighten20Color: Color {
-        ColorProvider.BrandLighten20
+        ColorProvider.Shade20
     }
 
     static var brandLighten40Color: Color {
-        ColorProvider.BrandLighten40
+        ColorProvider.Shade40
     }
 
     static var brandDarken40Color: Color {
-        ColorProvider.BrandDarken40
+        ColorProvider.Shade20
     }
 
     static var secondaryBackgroundColor: Color {
-        ColorProvider.BackgroundSecondary
+        purple
     }
 
     static var backgroundColor: Color {
@@ -53,15 +53,15 @@ extension Color {
     }
 
     static var normalSeparatorColor: Color {
-        ColorProvider.SeparatorNorm
+        purple
     }
 
     static var notificationWarningColor: Color {
-        ColorProvider.NotificationWarning
+        purple
     }
 
     static var notificationOKColor: Color {
-        ColorProvider.NotificationSuccess
+        purple
     }
 
     static var normalTextColor: Color {
@@ -69,6 +69,6 @@ extension Color {
     }
 
     static var notificationErrorColor: Color {
-        ColorProvider.NotificationError
+        purple
     }
 }
