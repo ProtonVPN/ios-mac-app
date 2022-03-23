@@ -1,11 +1,11 @@
 /* Section header in search */
-"_basic_servers" = "Serwery planu BASIC";
+"_basic_servers" = "Serwery planu Basic";
 
 /* Section header in search */
-"_free_servers" = "Serwery planu FREE";
+"_free_servers" = "Serwery planu Free";
 
 /* Section header in search */
-"_plus_servers" = "Serwery planu PLUS";
+"_plus_servers" = "Serwery planu Plus";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Kraj, miasto lub serwer";

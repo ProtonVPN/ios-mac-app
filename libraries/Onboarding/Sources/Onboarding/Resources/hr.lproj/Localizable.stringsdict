@@ -5,7 +5,7 @@
 	<key>onboarding_establish_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>FREE subscription offers %#@num_servers@ in %#@num_countries@</string>
+		<string>Free subscription offers %#@num_servers@ in %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

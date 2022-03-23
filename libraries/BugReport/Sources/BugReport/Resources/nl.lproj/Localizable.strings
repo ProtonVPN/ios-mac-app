@@ -59,8 +59,8 @@
 "_update_view_button" = "Bijwerken";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "U heeft meer kans op problemen op oudere versies van ProtonVPN.";
+"_update_view_description" = "U heeft meer kans op problemen op oudere versies van Proton VPN.";
 
 /* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "Update ProtonVPN";
+"_update_view_title" = "Update Proton VPN";
 

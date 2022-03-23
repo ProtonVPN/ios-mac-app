@@ -65,10 +65,10 @@
 "search_results_cities" = "Cities";
 
 /* Section header in search */
-"_free_servers" = "FREE Servers";
+"_free_servers" = "Free Servers";
 
 /* Section header in search */
-"_basic_servers" = "BASIC Servers";
+"_basic_servers" = "Basic Servers";
 
 /* Section header in search */
-"_plus_servers" = "PLUS Servers";
+"_plus_servers" = "Plus Servers";

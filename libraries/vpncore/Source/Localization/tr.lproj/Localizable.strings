@@ -35,7 +35,7 @@
 "_activate_widget_step_2" = "Tamamen aşağı kaydırın ve düzenle düğmesine dokunun.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "ProtonVPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
+"_activate_widget_step_3" = "Proton VPN ekran bileşenini etkin ekran bileşenleri listesine ekleyin.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Reklam engelleyici (NetShield)";
@@ -62,7 +62,7 @@
 "_all_servers_in_profile_under_maintenance" = "Profil sunucularında bakım yapılıyor";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Tüm sunucularda bakım yapılıyor. Bu durum genellikle ProtonVPN tarafında teknik sorunlar olduğu ya da ağınızın kısıtlandığı anlamına gelir.";
+"_all_servers_under_maintenance" = "Tüm sunucularda bakım yapılıyor. Bu durum genellikle Proton VPN tarafında teknik sorunlar olduğu ya da ağınızın kısıtlandığı anlamına gelir.";
 
 /* (No Comment) */
 "_allow" = "İzin ver";
@@ -110,7 +110,7 @@
 "_basic_servers" = "Basic sunucuları";
 
 /* Battery usages screen description */
-"_battery_description" = "Telefonunuzdaki tüm trafik OpenVPN üzerinden geçirilecek. Bu nedenle iOS, diğer uygulamaların pil kullanımını ProtonVPN için ayıracak.";
+"_battery_description" = "Telefonunuzdaki tüm trafik OpenVPN üzerinden geçirilecek. Bu nedenle iOS, diğer uygulamaların pil kullanımını Proton VPN için ayıracak.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Ayrıntılı bilgi almak ister misiniz?";
@@ -239,7 +239,7 @@
 "_data_disclaimer_device_details" = "Aygıtınızın modeli ve işletim sistemi sürümü";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "ProtonVPN, kişisel gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme bildirimleri ve hatalar için.\n\nProtonVPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler ProtonVPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
+"_data_disclaimer_text" = "Proton VPN, kişisel gizliliğinize saygı duyar ve korumayı amaçlar. Öncelikli ilkemiz uygulamanın kullanımında kişisel ve anonim bir kullanıcı deneyimi sağlamak için olabildiğince az kullanıcı verisi toplamaktır. Özellikle:\n\n%@ – oturumunuzu açmak, parola sıfırlamak ve önemli hizmet güncellemelerini göndermek için.\n\n%@ – yalnızca kilitlenme bildirimleri ve hatalar için.\n\nProton VPN uygulaması, bu veriler dışında herhangi bir kullanıcı bilgisini işlemez. Çevrimiçi etkinliklerinizi veya gerçekte kim olduğunuzu belirleyebilecek bilgilerinizi kaydetmeyiz. Yukarıda belirtilen tüm veriler Proton VPN hizmetinin kendi sisteminde saklanır ve işlenir. Hiçbir üçüncü tarafın bu bilgilere erişimi yoktur.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Çevrimiçi ortamda kendinizi koruyun";
@@ -254,7 +254,7 @@
 "_delete" = "Sil";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Tüm ProtonVPN verileri silinecek ve uygulama kapanacak. Devam etmek istiyor musunuz?";
+"_delete_application_data_popup_body" = "Tüm Proton VPN verileri silinecek ve uygulama kapanacak. Devam etmek istiyor musunuz?";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Uygulama verilerini temizle";
@@ -344,7 +344,7 @@
 "_enter_verification_code" = "123 456";
 
 /* API error */
-"_error_api_offline" = "ProtonVPN API şu anda çevrimdışı";
+"_error_api_offline" = "Proton VPN API şu anda çevrimdışı";
 
 /* (No Comment) */
 "_error_apply_payment_failed_free" = "Ücretsiz hesap ile devam edin";
@@ -431,7 +431,7 @@
 "_error_loads" = "Sunucu yükleri güncellenemedi";
 
 /* (No Comment) */
-"_error_mitm_description" = "ProtonVPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli İnternet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın ProtonVPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
+"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli İnternet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Güvenli olmayan bağlantı";
@@ -482,7 +482,7 @@
 "_error_transaction_failed_by_unknown_reason" = "App Store siparişinizi işleyemedi.";
 
 /* In App Purchase error */
-"_error_transaction_of_other_user" = "Farklı bir ProtonVPN kullanıcı adıyla bir satın alma işlemi başlatıldı.";
+"_error_transaction_of_other_user" = "Farklı bir Proton VPN kullanıcı adıyla bir satın alma işlemi başlatıldı.";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "App Store üzerinden kullanılabilecek ürünlerin listesi alınamadı.";
@@ -509,7 +509,7 @@
 "_error_user_has_no_vpn_access" = "Hesabınızın VPN erişimi yok. Lütfen hesap yöneticinizle görüşün";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Henüz ProtonVPN hesabı açmamışsınız";
+"_error_user_has_not_signed_up" = "Henüz Proton VPN hesabı açmamışsınız";
 
 /* VPN credentials can't be loaded error */
 "_error_user_is_on_waitlist" = "Şu anda bekleme listesindesiniz ve hesabınız henüz hazır değil";
@@ -527,13 +527,13 @@
 "_error_vpn_properties" = "VPN özellikleri alınamadı!";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "ProtonVPN oturumu etkin";
+"_error_vpn_session_is_active" = "Proton VPN oturumu etkin";
 
 /* In App Purchase error */
 "_error_wrong_payment_token_status" = "Ödeme kodu durumu yanlış. Lütfen uygulamayı yeniden başlatın. Sorun sürerse, destek ekibimiz ile görüşün.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN, Bağlantı kesici için paket süzen bir güvenlik duvarı kullanır. Bağlantı kesiciyi etkinleştirdiğinizde, aygıtınızın var olan güvenlik duvarı ayarlarının üzerine yazacaksınız. Bu güvenlik duvarı yapılandırmasına güveniyorsanız, Bağlantı kesiciyi kullanmamalısınız.\n\nBağlantı kesiciyi kullanmak ve var olan güvenlik duvarı ayarlarınızın üzerine yazmak için Devam üzerine tıklayın.\n\nBağlantı kesiciyi kapatmak ve var olan güvenlik duvarınızı kullanmayı sürdürmek için İptal üzerine tıklayın.";
+"_existing_firewall_popup_body" = "Proton VPN, Bağlantı kesici için paket süzen bir güvenlik duvarı kullanır. Bağlantı kesiciyi etkinleştirdiğinizde, aygıtınızın var olan güvenlik duvarı ayarlarının üzerine yazacaksınız. Bu güvenlik duvarı yapılandırmasına güveniyorsanız, Bağlantı kesiciyi kullanmamalısınız.\n\nBağlantı kesiciyi kullanmak ve var olan güvenlik duvarı ayarlarınızın üzerine yazmak için Devam üzerine tıklayın.\n\nBağlantı kesiciyi kapatmak ve var olan güvenlik duvarınızı kullanmayı sürdürmek için İptal üzerine tıklayın.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Güvenlik duvarı algılandı";
@@ -596,7 +596,7 @@
 "_feature_server_count" = "Şuradaki sunuculara bağlan";
 
 /* (No Comment) */
-"_feature_smart_routing_description" = "Bu teknoloji, hizmet verilmesi zor ülkelerde ProtonVPN için daha yüksek hız ve güvenlik sağlar.";
+"_feature_smart_routing_description" = "Bu teknoloji, hizmet verilmesi zor ülkelerde Proton VPN için daha yüksek hız ve güvenlik sağlar.";
 
 /* iOS plan feature */
 "_feature_speed" = "Hız";
@@ -614,7 +614,7 @@
 "_features_title" = "Özellikler";
 
 /* (No Comment) */
-"_force_upgrade_message" = "Şu anda kullandığınız ProtonVPN uygulamasının sürümü artık desteklenmiyor. Lütfen son sürüme güncelleyin.";
+"_force_upgrade_message" = "Şu anda kullandığınız Proton VPN uygulamasının sürümü artık desteklenmiyor. Lütfen son sürüme güncelleyin.";
 
 /* (No Comment) */
 "_force_upgrade_title" = "Uygulamanın güncellemesi gerekli";
@@ -634,14 +634,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "Free sunucuları";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "%@ sürümüne yükselterek şu özellikleri kullanmayı sürdürün:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Ücretsiz deneme süreniz sona ermek üzere!";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Hesabınız ProtonVPN FREE tarifesine geçirildi.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
+/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Hesabınız Proton VPN FREE tarifesine geçirildi.\nİşte %@ tarifesinden özleyeceğiniz şeyler:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "ÜCRETSİZ DENEME SÜRÜMÜNÜZ %@";
@@ -656,7 +656,7 @@
 "_get_plan" = "%@ tarifesine geçin";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Bu ve diğer özellikleri kullanmak için ProtonVPN Plus tarifesine geçin.";
+"_get_plus_for_feature" = "Bu ve diğer özellikleri kullanmak için Proton VPN Plus tarifesine geçin.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "E-posta ile doğrula";
@@ -667,7 +667,7 @@
 /* Button in several different alerts */
 "_got_it" = "Anladım!";
 
-/* Main app menu; User with \ProtonVPN\ inside the same main menu as a name for item that opens help page. */
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
 "_help" = "Yardım";
 
 /* Show/hide password switch */
@@ -695,7 +695,7 @@
 "_invalid_refresh_token" = "Oturum süresi dolmuş";
 
 /* (No Comment) */
-"_invalid_refresh_token_please_login" = "ProtonVPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
+"_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_description" = "ProtonMail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve kişisel bir internete hoş geldiniz.";
@@ -728,7 +728,7 @@
 "_kill_switch" = "Bağlantı kesici";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Bağlantı kesici IP adresinizi koruyor\n\nProtonVPN bir sunucuya yeniden bağlandığında internet bağlantınız açılacak. VPN koruması olmadan devam etmek için Bağlantı kesici özelliğini devre dışı bırakın.";
+"_kill_switch_blocking_body" = "Bağlantı kesici IP adresinizi koruyor\n\nProton VPN bir sunucuya yeniden bağlandığında internet bağlantınız açılacak. VPN koruması olmadan devam etmek için Bağlantı kesici özelliğini devre dışı bırakın.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Bağlantı kesici tüm bağlantıları engelliyor";
@@ -746,7 +746,7 @@
 "_kill_switch_error_head" = "Antivirüs veya güvenlik duvarı gibi bazı uygulamalar, Bağlantı kesici ile çakışarak düzgün çalışmamasına neden olabilir.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Bağlantı kesici, macOS güvenlik duvarı ile çalışır.\nGüvenlik duvarıyla ilişkili başka uygulamalar varsa, bunlar ProtonVPN Bağlantı kesiciye müdahale edebilir.\nBu uygulamaları sonlandırmak, Bağlantı kesici tarafından ayarlanan güvenlik duvarı kurallarını geri yükleyebilir.";
+"_kill_switch_error_info" = "Bağlantı kesici, macOS güvenlik duvarı ile çalışır.\nGüvenlik duvarıyla ilişkili başka uygulamalar varsa, bunlar Proton VPN Bağlantı kesiciye müdahale edebilir.\nBu uygulamaları sonlandırmak, Bağlantı kesici tarafından ayarlanan güvenlik duvarı kurallarını geri yükleyebilir.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Bağlantı kesici sorunu algılandı";
@@ -755,13 +755,13 @@
 "_kill_switch_helper_install_issue_popup_body" = "Bağlantı kesici kurulurken veya güncellenirken bir sorun çıktı.\n\nYeniden denemek için Yeniden dene üzerine tıklayın.\n\nBağlantı kesiciyi kapatarak devam etmek için Devre dışı bırak üzerine tıklayın.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Bağlantı kesici özelliğini etkinleştirmek için, bilgisayar hesabı parolanızı yazmanız istenebilir. Bir istek görüntülenirse, %@ yazın ve kabul edin.\n\nAra sıra ProtonVPN uygulaması güncellendikçe bu isteği yeniden görebilirsiniz.";
+"_kill_switch_helper_install_popup_body" = "Bağlantı kesici özelliğini etkinleştirmek için, bilgisayar hesabı parolanızı yazmanız istenebilir. Bir istek görüntülenirse, %@ yazın ve kabul edin.\n\nAra sıra Proton VPN uygulaması güncellendikçe bu isteği yeniden görebilirsiniz.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "İndirdiğiniz son güncelleme için bilgisayar hesabı parolanızı yazmanız gerekiyor. İstek göründüğünde, lütfen %@ yazın ve kabul edin.\n\nMac parolanızı yazmazsanız, Bağlantı kesici kapatılır.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "ProtonVPN sunucuya yeniden bağlandığında internet bağlantınız açılacak.\nVPN ve Bağlantı kesici koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
+"_kill_switch_reconnection" = "Proton VPN sunucuya yeniden bağlandığında internet bağlantınız açılacak.\nVPN ve Bağlantı kesici koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "olmadan";
@@ -785,7 +785,7 @@
 "_ks_requires_swift5_popup_msg" = "Bağlantı kesiciyi etkinleştirmek için, %@ indirip kurmanız gerekiyor.\nLütfen Bağlantı kesiciyi etkinleştirmeden önce kurun.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN %@ algılayamadı. Bağlantı kesiciyi etkinleştirin. Lütfen önce uygulamayı kurun.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN %@ algılayamadı. Bağlantı kesiciyi etkinleştirin. Lütfen önce uygulamayı kurun.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Swift 5 çalıştırma ortamı desteği kitaplığı";
@@ -914,7 +914,7 @@
 "_medium" = "Orta";
 
 /* Main mac app menu item */
-"_menu_about" = "ProtonVPN hakkında";
+"_menu_about" = "Proton VPN hakkında";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Güncellemeleri denetle...";
@@ -923,7 +923,7 @@
 "_menu_hide_others" = "Diğerlerini gizle";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "ProtonVPN'i gizle";
+"_menu_hide_self" = "Proton VPN'i gizle";
 
 /* Main mac app menu item */
 "_menu_logout" = "Oturumu kapat";
@@ -935,7 +935,7 @@
 "_menu_preferences" = "Tercihler";
 
 /* Main mac app menu item */
-"_menu_quit" = "ProtonVPN'den çık";
+"_menu_quit" = "Proton VPN'den çık";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Tümünü göster";
@@ -1004,7 +1004,7 @@
 "_neagent_always_allow" = "Her zaman izin ver";
 
 /* Mac: neagent help screen */
-"_neagent_description" = "ProtonVPN hizmetine bağlanmak için\n%@ yazmanız istenebilir. Bu istek görüntülenirse,\n%@%@ yazın ve ‘%@’ %@ üzerine tıklayın.";
+"_neagent_description" = "Proton VPN hizmetine bağlanmak için\n%@ yazmanız istenebilir. Bu istek görüntülenirse,\n%@%@ yazın ve ‘%@’ %@ üzerine tıklayın.";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -1082,7 +1082,7 @@
 "_non_standard_ports_change_title" = "Standart olmayan kapı numaralarını etkinleştir";
 
 /* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "VPN ağı üzerinden standart olmayan kapı numaralarından trafik akışına izin vererek herhangi bir özel gereksinim için ProtonVPN kullanabilirsiniz. \nAyrıntılı bilgi alın";
+"_non_standard_ports_explanation" = "VPN ağı üzerinden standart olmayan kapı numaralarından trafik akışına izin vererek herhangi bir özel gereksinim için Proton VPN kullanabilirsiniz. \nAyrıntılı bilgi alın";
 
 /* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
 "_non_standard_ports_explanation_link" = "Ayrıntılı bilgi alın";
@@ -1106,7 +1106,7 @@
 "_on_maintenance" = "Bakım yapılıyor";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Oturum açılacak ProtonVPN'i göster...";
+"_open_app_to_log_in" = "Oturum açılacak Proton VPN'i göster...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN günlük kayıtları";
@@ -1151,7 +1151,7 @@
 "_p2p_title" = "P2P/BitTorrent";
 
 /* Plan upgrade required alert */
-"_paid_required" = "Ücretli ProtonVPN tarifesi gerekli";
+"_paid_required" = "Ücretli Proton VPN tarifesi gerekli";
 
 /* Used in sign-in, sign-up */
 "_password" = "Parola";
@@ -1214,7 +1214,7 @@
 "_plus_upgrade_description" = "Secure Core kullanın, en sevdiğiniz TV dizilerini izleyin,\n5 farklı aygıtla bağlanın ve daha fazla özellikten yararlanın!";
 
 /* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "ProtonVPN uygulamasını beğendiniz mi?\nAyda yalnızca 8$ ödeyerek Plus tarifesine geçin";
+"_plus_upgrade_title" = "Proton VPN uygulamasını beğendiniz mi?\nAyda yalnızca 8$ ödeyerek Plus tarifesine geçin";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Tercihler";
@@ -1277,10 +1277,10 @@
 "_protocol" = "İletişim kuralı";
 
 /* (No Comment) */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "Proton VPN macOS";
 
 /* (No Comment) */
-"_protonvpn_plus" = "ProtonVPN Plus";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Herkese açık IP: %@";
@@ -1400,7 +1400,7 @@
 "_report_bug" = "Bir sorun bildirin";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Aşağıdaki bilgileri verdiğinizde ekibimiz, sorununuzu ve olası çözümünü daha yüksek olasılıkla ve daha kısa sürede bulabilir:\n• ProtonVPN uygulama günlüğü kayıtları\n• OpenVPN günlüğü kayıtları\n• WireGuard günlüğü kayıtları";
+"_report_description" = "Aşağıdaki bilgileri verdiğinizde ekibimiz, sorununuzu ve olası çözümünü daha yüksek olasılıkla ve daha kısa sürede bulabilir:\n• Proton VPN uygulama günlüğü kayıtları\n• OpenVPN günlüğü kayıtları\n• WireGuard günlüğü kayıtları";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-posta:";
@@ -1529,7 +1529,7 @@
 "_server_under_maintenance" = "Sunucuda bakım yapılıyor";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "Hesabınız için izin verilen en fazla eşzamanlı bağlantı sayısına ulaştınız. Daha fazla bağlantı kullanmak için ProtonVPN tarifenizi yükseltin.";
+"_session_count_reached_description" = "Hesabınız için izin verilen en fazla eşzamanlı bağlantı sayısına ulaştınız. Daha fazla bağlantı kullanmak için Proton VPN tarifenizi yükseltin.";
 
 /* Session count limit alert */
 "_session_count_reached_title" = "Oturum sınırına ulaşıldı";
@@ -1544,13 +1544,13 @@
 "_setup_complete" = "Kurulum tamamlandı";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Satın alma işleminiz tamamlandı. ProtonVPN Basic tarifeniz etkinleştirildi.";
+"_setup_complete_basic" = "Satın alma işleminiz tamamlandı. Proton VPN Basic tarifeniz etkinleştirildi.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Ücretsiz ProtonVPN hesabınızı açtınız. Başlamak için, yedi günlük ProtonVPN Plus tarifemizin tadını çıkarın.";
+"_setup_complete_free" = "Ücretsiz Proton VPN hesabınızı açtınız. Başlamak için, yedi günlük Proton VPN Plus tarifemizin tadını çıkarın.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Satın alma işleminiz tamamlandı. ProtonVPN Plus tarifeniz etkinleştirildi.";
+"_setup_complete_plus" = "Satın alma işleminiz tamamlandı. Proton VPN Plus tarifeniz etkinleştirildi.";
 
 /* Show/hide password switch */
 "_show" = "GÖSTER";
@@ -1559,7 +1559,7 @@
 "_show_instructions" = "Yönergeleri göster";
 
 /* (No Comment) */
-"_show_protonvpn" = "ProtonVPN'i göster";
+"_show_protonvpn" = "Proton VPN'i göster";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Hesap açın";
@@ -1658,7 +1658,7 @@
 "_subuser_alert_assign_connections_button" = "VPN bağlantıları ata";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "ProtonVPN yolculuğunuza başlamak için lütfen hesabınıza ya da başka bir alt hesaba VPN bağlantıları atayın.";
+"_subuser_alert_description1" = "Proton VPN yolculuğunuza başlamak için lütfen hesabınıza ya da başka bir alt hesaba VPN bağlantıları atayın.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Bu adım birkaç dakika sürecek. Bundan sonra oturum açabilir ve tüm aygıtlarınızı koruyabilirsiniz.";
@@ -1688,10 +1688,10 @@
 "_sysex_enabled_title" = "Yapılandırma tamamlandı";
 
 /* (No Comment) */
-"_sysex_error_description" = "Sistem eklentisi kurulurken bir sorun çıktı.\nBu sorunu gidermek için uygulamalar klasöründe olacağından emin olarak yeniden ProtonVPN kurun. Alternatif olarak, destek ekibimizle görüşebilirsiniz.";
+"_sysex_error_description" = "Sistem eklentisi kurulurken bir sorun çıktı.\nBu sorunu gidermek için uygulamalar klasöründe olacağından emin olarak yeniden Proton VPN kurun. Alternatif olarak, destek ekibimizle görüşebilirsiniz.";
 
 /* (No Comment) */
-"_sysex_settings_description" = "ProtonVPN uygulamasının, Smart Protocol, OpenVPN ve WireGuard özelliklerini kullanabilmesi için bir sistem eklentisi yüklenmelidir.";
+"_sysex_settings_description" = "Proton VPN uygulamasının, Smart Protocol, OpenVPN ve WireGuard özelliklerini kullanabilmesi için bir sistem eklentisi yüklenmelidir.";
 
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_title" = "Sistem eklentisi gerekli";
@@ -1741,16 +1741,16 @@
 "_sysex_wizard_step4_title_1" = "“İzin ver” düğmesi";
 
 /* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Özel iletişim kurallarını etkinleştirmek için iki ProtonVPN ögesini seçin ve “Tamam” üzerine tıklayın";
+"_sysex_wizard_step5_description" = "Özel iletişim kurallarını etkinleştirmek için iki Proton VPN ögesini seçin ve “Tamam” üzerine tıklayın";
 
 /* System extension wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "ProtonVPN ögelerini seçmek";
+"_sysex_wizard_step5_title" = "Proton VPN ögelerini seçmek";
 
 /* System extension wizard in mac: Subtitle */
 "_sysex_wizard_subtitle" = "Bunu yapmak için şu adımları izleyin:";
 
 /* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "Artık kullanılabilecek en yeni ve en hızlı VPN teknolojileriyle ProtonVPN kullanmaya hazırsınız!";
+"_sysex_wizard_text_under_steps" = "Artık kullanılabilecek en yeni ve en hızlı VPN teknolojileriyle Proton VPN kullanmaya hazırsınız!";
 
 /* System extension wizard in mac: Main title */
 "_sysex_wizard_title" = "Özel iletişim kurallarını etkinleştirerek en hızlı bağlantıların tadını çıkarın";
@@ -1774,7 +1774,7 @@
 "_terms_and_conditions" = "Hüküm ve Koşullar";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "ProtonVPN kullanarak, şunları kabul etmiş olursunuz\n%@ ve %@";
+"_terms_and_conditions_disclaimer" = "Proton VPN kullanarak, şunları kabul etmiş olursunuz\n%@ ve %@";
 
 /* iOS: section header in countries list */
 "_test_servers" = "Test sunucuları";
@@ -1816,39 +1816,39 @@
 "_tor_title" = "Tor";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "7 günlük ücretsiz ProtonVPN Plus deneme süresi doldu. Ücretsiz ProtonVPN hizmetini kullanmaya devam edebilirsiniz. Ancak projeyi destekleyerek başka ükelere ve daha fazla özelliğe erişmek istiyorsanız, ücretli bir tarifeye geçin.";
+"_trial_expired_alert_body_iOS" = "7 günlük ücretsiz Proton VPN Plus deneme süresi doldu. Ücretsiz Proton VPN hizmetini kullanmaya devam edebilirsiniz. Ancak projeyi destekleyerek başka ükelere ve daha fazla özelliğe erişmek istiyorsanız, ücretli bir tarifeye geçin.";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "ProtonVPN Plus deneme süresi doldu";
+"_trial_expired_alert_title_iOS" = "Proton VPN Plus deneme süresi doldu";
 
 /* (No Comment) */
-"_trial_popup_call_to_upgrade" = "ProtonVPN Plus özelliklerine kalıcı olarak erişim sağlamak için tarifenizi yükseltebilirsiniz.";
+"_trial_popup_call_to_upgrade" = "Proton VPN Plus özelliklerine kalıcı olarak erişim sağlamak için tarifenizi yükseltebilirsiniz.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "ProtonVPN ile her yerde güvenli internetten tamamıyla yararlanın";
+"_trial_popup_enjoy" = "Proton VPN ile her yerde güvenli internetten tamamıyla yararlanın";
 
 /* Final text:
  
- As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
  1 day, 2 hours, 30 minutes */
 "_trial_popup_explanation" = "Hoş geldiniz hediyesi olarak, ilk birkaç gün için gelişmiş özelliklerin bulunduğu %@ erişiminiz olacak! Bu özellikleri deneme süreniz şu tarihte bitecek";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "ProtonVPN Plus tarifesine ücretsiz geçiş";
+"_trial_popup_free_upgrade" = "Proton VPN Plus tarifesine ücretsiz geçiş";
 
 /* (No Comment) */
-"_trial_popup_full_subscription" = "tam ProtonVPN aboneliği";
+"_trial_popup_full_subscription" = "tam Proton VPN aboneliği";
 
 /* Final text:
  
- We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Size daha fazla sunucuya ve ek özelliklere erişim sağlayan bir %@ verdik. ProtonVPN Plus deneme süreniz 7 gün içinde sona erecek.";
+ We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Size daha fazla sunucuya ve ek özelliklere erişim sağlayan bir %@ verdik. Proton VPN Plus deneme süreniz 7 gün içinde sona erecek.";
 
 /* (No Comment) */
-"_trial_popup_thanks" = "ProtonVPN kullandığınız için teşekkür ederiz!";
+"_trial_popup_thanks" = "Proton VPN kullandığınız için teşekkür ederiz!";
 
 /* (No Comment) */
-"_trial_popup_title" = "ProtonVPN denemesi";
+"_trial_popup_title" = "Proton VPN denemesi";
 
 /* iOS trial welcome screen */
 "_trial_welcome_description_iOS" = "Hoş geldiniz hediyesi olarak, ilk birkaç gün için gelişmiş özelliklerin bulunduğu %@ erişiminiz olacak!";
@@ -1956,7 +1956,7 @@
 "_unprotected_network" = "Korunmayan ağlar bildirilsin";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "ProtonVPN korunmayan bir ağa bağlı olduğunuzu algıladığında bir bildirim görüntülenir.";
+"_unprotected_network_tooltip" = "Proton VPN korunmayan bir ağa bağlı olduğunuzu algıladığında bir bildirim görüntülenir.";
 
 /* (No Comment) */
 "_unsecure_wifi" = "Güvenli olmayan Wi-Fi bağlantısı algılandı";
@@ -1974,7 +1974,7 @@
 "_update_required" = "Güncelleme gerekli";
 
 /* (No Comment) */
-"_update_required_no_longer_supported" = "Bu ProtonVPN sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için uygulamayı güncelleyin.";
+"_update_required_no_longer_supported" = "Bu Proton VPN sürümü artık desteklenmiyor. Lütfen kullanmayı sürdürmek için uygulamayı güncelleyin.";
 
 /* App update required alert */
 "_update_required_support" = "Destek ekibimizle görüşün";
@@ -2001,7 +2001,7 @@
 "_upgrade_plan_to_access_country" = "Ne yazık ki, şu anda bu ülkede abonelik düzeyinize uygun bir sunucu yok. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi düşünün.";
 
 /* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core özelliği ProtonVPN Plus veya üzerindeki tarifelerle kullanılabilen ücretli bir özelliktir. Secure Core, VPN sunucularının izlemesine karşı gelişmiş koruma sağlar.";
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core özelliği Proton VPN Plus veya üzerindeki tarifelerle kullanılabilen ücretli bir özelliktir. Secure Core, VPN sunucularının izlemesine karşı gelişmiş koruma sağlar.";
 
 /* (No Comment) */
 "_upgrade_plan_to_access_secure_core_p2" = "Secure Core kullanmak için, bu özelliğin bulunduğu diğer abonelik tarifelerimize bakın.";
@@ -2022,7 +2022,7 @@
 "_upgrade_to_plus" = "Plus tarifesine yükselt";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "ProtonVPN aboneliğiniz uygulama içinden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
+"_upgrade_unavailable_body" = "Proton VPN aboneliğiniz uygulama içinden yükseltilemez. Yükseltmek için lütfen account.protonvpn.com adresine gidin.";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Yükseltme uygulamada içinden yapılamaz";
@@ -2100,21 +2100,21 @@
 "_vpnauth_too_many_certs_title" = "Kimlik doğrulama hatası";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "ProtonVPN oturum açmamışsınız. ProtonVPN uygulamasını açıp oturum açın.";
+"_vpnstatus_not_loggedin" = "Proton VPN oturum açmamışsınız. Proton VPN uygulamasını açıp oturum açın.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Uyarı";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Bu aygıtta başka bir kullanıcının ProtonVPN oturumu etkin. Oturum açma işlemine devam etmek geçerli oturumun kapatılmasına neden olacak. Devam etmek istiyor musunuz?";
+"_warning_vpn_session_is_active" = "Bu aygıtta başka bir kullanıcının Proton VPN oturumu etkin. Oturum açma işlemine devam etmek geçerli oturumun kapatılmasına neden olacak. Devam etmek istiyor musunuz?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "İnternet bağlantınızı şifreleyerek kişisel gizliliğinizi koruyan yüksek hızlı İsviçre'li VPN.";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "ProtonVPN kullandığınız için teşekkürler. Temel uygulama özelliklerine\nhızlıca göz atın.";
+"_welcome_description" = "Proton VPN kullandığınız için teşekkürler. Temel uygulama özelliklerine\nhızlıca göz atın.";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Hoş geldiniz hediyesi olarak, size 7 günlük %@ aboneliği\nerişimi verilir ve şu özellikler bulunur:";
 
 /* Shown on the Welcome screen as the screen headline */
@@ -2166,13 +2166,13 @@
 "login_fetch_vpn_data" = "VPN erişiminiz yapılandırılıyor";
 
 /* (No Comment) */
-"login_summary_button" = "ProtonVPN kullanarak başlat";
+"login_summary_button" = "Proton VPN kullanarak başlat";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Oturum açma yöntemi geçersiz. Lütfen destek ekibi ile görüşün.";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle ProtonVPN web sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
+"proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle Proton VPN web sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Kurtarma kodu";

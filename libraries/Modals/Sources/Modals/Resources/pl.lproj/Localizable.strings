@@ -23,13 +23,13 @@
 "modals_get_plus" = "Ulepsz";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Polityka braku przechowywania logów ProtonVPN została potwierdzona przez zewnętrzny audyt.";
+"modals_no_logs_external_audit" = "Polityka braku przechowywania logów Proton VPN została potwierdzona przez zewnętrzny audyt.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Nie przechowujemy logów Twojej aktywności w Internecie";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN stawia na prywatność";
+"modals_no_logs_privacy_first" = "Proton VPN stawia na prywatność";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "Nie udostępniamy danych stronom trzecim";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Umiarkowany NAT (znany również jako NAT typ 2) może poprawić jakość korzystania z Internetu w różnych aplikacjach i grach online.\n\nOdblokuj tę i inne funkcje dzięki planowi Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Używaj aplikacji ProtonVPN do wszelkich specjalnych potrzeb, zezwalając na ruch do niestandardowych portów przez sieć VPN.\n\nOdblokuj tę i inne funkcje dzięki planowi Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Używaj aplikacji Proton VPN do wszelkich specjalnych potrzeb, zezwalając na ruch do niestandardowych portów przez sieć VPN.\n\nOdblokuj tę i inne funkcje dzięki planowi Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Po ulepszeniu planu do wersji Plus";

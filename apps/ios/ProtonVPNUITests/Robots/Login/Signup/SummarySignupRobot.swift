@@ -18,7 +18,7 @@
 
 import pmtest
 
-fileprivate let summaryTitle = "Welcome to ProtonVPN"
+fileprivate let summaryTitle = "Welcome to Proton VPN"
 fileprivate let summaryDescription = "Learn how to get the most out of ProtonVPN in just a few seconds"
 fileprivate let takeTourButton = "Take a tour"
 fileprivate let skipButton = "Skip"

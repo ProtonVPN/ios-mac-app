@@ -23,13 +23,13 @@
 "modals_get_plus" = "Yükselt";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "ProtonVPN'in katı kayıt tutmama ilkesi bir dış denetim tarafından belgelenmiştir.";
+"modals_no_logs_external_audit" = "Proton VPN'in katı kayıt tutmama ilkesi bir dış denetim tarafından belgelenmiştir.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "İnternetteki etkinliklerinizi kaydetmeyiz";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN kişisel gizliliğe öncelik verir";
+"modals_no_logs_privacy_first" = "Proton VPN kişisel gizliliğe öncelik verir";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_third_parties" = "Üçüncü taraflarla hiç bir veri paylaşmıyoruz";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT, 2. tür Nat olarak da bilinir ve çeşitli uygulamalar ve çevrimiçi video oyunlarıyla ilgili çevrimiçi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "ProtonVPN ile özel durumlar için VPN ağında standart dışı kapı numaralarından trafik akışına izin verebilirsiniz. \n\nPlus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
+"modals_upsell_features_safe_mode_subtitle" = "Proton VPN ile özel durumlar için VPN ağında standart dışı kapı numaralarından trafik akışına izin verebilirsiniz. \n\nPlus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Plus tarifesine yükselttiğinizde";

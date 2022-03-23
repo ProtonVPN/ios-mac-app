@@ -59,8 +59,8 @@
 "_update_view_button" = "Perbarui";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Anda akan lebih rentan terhadap berbagai masalah apabila Anda masih menggunakan ProtonVPN versi lama.";
+"_update_view_description" = "Anda akan lebih rentan terhadap berbagai masalah apabila Anda masih menggunakan Proton VPN versi lama.";
 
 /* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "Perbarui ProtonVPN";
+"_update_view_title" = "Perbarui Proton VPN";
 

@@ -35,7 +35,7 @@
 "_activate_widget_step_2" = "Geser sampai bawah dan sentuh tombol sunting.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Tambahkan widget ProtonVPN ke dalam daftar widget yang aktif.";
+"_activate_widget_step_3" = "Tambahkan widget Proton VPN ke dalam daftar widget yang aktif.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Adblocker (NetShield)";
@@ -62,7 +62,7 @@
 "_all_servers_in_profile_under_maintenance" = "Server profil dalam pemeliharaan";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Seluruh server sedang berada dalam pemeliharaan. Pada umumnya, hal ini menandakan bahwa ProtonVPN sedang mengalami kesalahan teknis atau Anda sedang berada pada jaringan yang terbatas.";
+"_all_servers_under_maintenance" = "Seluruh server sedang berada dalam pemeliharaan. Pada umumnya, hal ini menandakan bahwa Proton VPN sedang mengalami kesalahan teknis atau Anda sedang berada pada jaringan yang terbatas.";
 
 /* (No Comment) */
 "_allow" = "Izinkan";
@@ -110,7 +110,7 @@
 "_basic_servers" = "Server BASIC";
 
 /* Battery usages screen description */
-"_battery_description" = "Semua lalu lintas di telepon Anda akan dikelola melalui OpenVPN, dengan demikian iOS akan mengalokasikan penggunaan baterai aplikasi lain ke ProtonVPN.";
+"_battery_description" = "Semua lalu lintas di telepon Anda akan dikelola melalui OpenVPN, dengan demikian iOS akan mengalokasikan penggunaan baterai aplikasi lain ke Proton VPN.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Ingin mempelajari lebih lanjut?";
@@ -239,7 +239,7 @@
 "_data_disclaimer_device_details" = "Versi Sistem Operasi dan model perangkat Anda";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "ProtonVPN berkomitmen melindungi dan menghargai privasi Anda. Ini adalah kebijakan utama kami untuk mengoleksi sekecil mungkin data pengguna untuk memastikan pengalaman pengguna yang anonim dan pribadi dalam penggunaan aplikasi, khususnya:\n\n%@ – untuk masuk, membantu Anda memulihkan kata sandi yang hilang, dan mengirim pembaruan layanan penting.\n\n%@ – hanya untuk melaporkan aplikasi mogok dan eror.\n\nAplikasi ProtonVPN tidak memproses segala informasi pengguna di luar data ini. Kami tidak mencatat aktivitas daring Anda maupun informasi pribadi. Semua data di atas disimpan dan diproses oleh sistem milik ProtonVPN, tanpa satu pun pihak ke-3 yang dapat mengaksesnya.";
+"_data_disclaimer_text" = "Proton VPN berkomitmen melindungi dan menghargai privasi Anda. Ini adalah kebijakan utama kami untuk mengoleksi sekecil mungkin data pengguna untuk memastikan pengalaman pengguna yang anonim dan pribadi dalam penggunaan aplikasi, khususnya:\n\n%@ – untuk masuk, membantu Anda memulihkan kata sandi yang hilang, dan mengirim pembaruan layanan penting.\n\n%@ – hanya untuk melaporkan aplikasi mogok dan eror.\n\nAplikasi Proton VPN tidak memproses segala informasi pengguna di luar data ini. Kami tidak mencatat aktivitas daring Anda maupun informasi pribadi. Semua data di atas disimpan dan diproses oleh sistem milik Proton VPN, tanpa satu pun pihak ke-3 yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Lindungi diri Anda saat online";
@@ -254,7 +254,7 @@
 "_delete" = "Hapus";
 
 /* MacOS: clear application data alert */
-"_delete_application_data_popup_body" = "Seluruh data ProtonVPN akan dihapus dan aplikasi akan ditutup. Apakah Anda ingin melanjutkan?";
+"_delete_application_data_popup_body" = "Seluruh data Proton VPN akan dihapus dan aplikasi akan ditutup. Apakah Anda ingin melanjutkan?";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Bersihkan data aplikasi";
@@ -344,7 +344,7 @@
 "_enter_verification_code" = "123 456";
 
 /* API error */
-"_error_api_offline" = "API ProtonVPN sedang offline";
+"_error_api_offline" = "API Proton VPN sedang offline";
 
 /* (No Comment) */
 "_error_apply_payment_failed_free" = "Lanjutkan dengan akun gratis";
@@ -431,7 +431,7 @@
 "_error_loads" = "Tidak dapat memperbarui muatan server";
 
 /* (No Comment) */
-"_error_mitm_description" = "Validasi sertifikat TLS gagal saat mencoba tersambung ke API ProtonVPN. Sambungan Internet Anda saat ini mungkin diawasi. Untuk melindungi data Anda, aplikasi ini sementara diblokir dari API ProtonVPN.\nUntuk masuk atau mengakses akun Anda, pindah ke jaringan baru dan coba sambungkan lagi.";
+"_error_mitm_description" = "Validasi sertifikat TLS gagal saat mencoba tersambung ke API Proton VPN. Sambungan Internet Anda saat ini mungkin diawasi. Untuk melindungi data Anda, aplikasi ini sementara diblokir dari API Proton VPN.\nUntuk masuk atau mengakses akun Anda, pindah ke jaringan baru dan coba sambungkan lagi.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Koneksi tidak aman";
@@ -482,7 +482,7 @@
 "_error_transaction_failed_by_unknown_reason" = "App Store tidak dapat memproses pembelian Anda.";
 
 /* In App Purchase error */
-"_error_transaction_of_other_user" = "Pembayaran dimulai oleh nama pengguna ProtonVPN yang berbeda.";
+"_error_transaction_of_other_user" = "Pembayaran dimulai oleh nama pengguna Proton VPN yang berbeda.";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "Gagal memperoleh daftar produk-produk yang tersedia dari App Store.";
@@ -509,7 +509,7 @@
 "_error_user_has_no_vpn_access" = "Akun Anda tidak memiliki akses VPN. Silakan hubungi Administrator Akun Anda";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Anda belum mendaftar ke ProtonVPN";
+"_error_user_has_not_signed_up" = "Anda belum mendaftar ke Proton VPN";
 
 /* VPN credentials can't be loaded error */
 "_error_user_is_on_waitlist" = "Anda sedang berada di Daftar Tunggu dan akun Anda belum siap";
@@ -527,13 +527,13 @@
 "_error_vpn_properties" = "Tidak dapat mengambil properti VPN!";
 
 /* VPN session is active error */
-"_error_vpn_session_is_active" = "Sesi ProtonVPN sedang aktif";
+"_error_vpn_session_is_active" = "Sesi Proton VPN sedang aktif";
 
 /* In App Purchase error */
 "_error_wrong_payment_token_status" = "Status token pembayaran salah. Silakan buka ulang aplikasi. Jika galat masih terjadi, hubungi dukungan.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN menggunakan filter paket firewall untuk mengimplementasikan Kill Switch. Dengan mengaktifkan Kill Switch, Anda akan menimpa setelan firewall yang ada saat ini. Apabila Anda bergantung pada konfigurasi firewall ini, Anda seharusnya tidak mengaktifkan Kill Switch.\n\nUntuk mengaktifkan Kill Switch dan menimpa setelan firewall Anda saat ini, pilih LANJUT.\n\nUntuk menonaktifkan Kill Switch dan kembali menggunakan firewall Anda, pilih BATAL.";
+"_existing_firewall_popup_body" = "Proton VPN menggunakan filter paket firewall untuk mengimplementasikan Kill Switch. Dengan mengaktifkan Kill Switch, Anda akan menimpa setelan firewall yang ada saat ini. Apabila Anda bergantung pada konfigurasi firewall ini, Anda seharusnya tidak mengaktifkan Kill Switch.\n\nUntuk mengaktifkan Kill Switch dan menimpa setelan firewall Anda saat ini, pilih LANJUT.\n\nUntuk menonaktifkan Kill Switch dan kembali menggunakan firewall Anda, pilih BATAL.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall terdeteksi";
@@ -596,7 +596,7 @@
 "_feature_server_count" = "Terhubung ke server dalam";
 
 /* (No Comment) */
-"_feature_smart_routing_description" = "Teknologi ini mengizinkan ProtonVPN menyediakan kecepatan dan keamanan yang lebih tinggi di negara yang kesulitan mendapatkannya.";
+"_feature_smart_routing_description" = "Teknologi ini mengizinkan Proton VPN menyediakan kecepatan dan keamanan yang lebih tinggi di negara yang kesulitan mendapatkannya.";
 
 /* iOS plan feature */
 "_feature_speed" = "Kecepatan";
@@ -614,7 +614,7 @@
 "_features_title" = "Fitur";
 
 /* (No Comment) */
-"_force_upgrade_message" = "Versi aplikasi ProtonVPN yang Anda gunakan sudah tidak lagi didukung. Silakan perbarui aplikasi Anda ke versi terbaru.";
+"_force_upgrade_message" = "Versi aplikasi Proton VPN yang Anda gunakan sudah tidak lagi didukung. Silakan perbarui aplikasi Anda ke versi terbaru.";
 
 /* (No Comment) */
 "_force_upgrade_title" = "Aplikasi perlu dimutakhirkan";
@@ -634,14 +634,14 @@
 /* iOS: section header in countries list */
 "_free_servers" = "Server GRATIS";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Tingkatkan ke %@ dan lanjut nikmati fitur-fitur ini:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Masa uji coba gratis Anda akan segera berakhir!";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Akun Anda telah diturunkan ke ProtonVPN FREE.\nIni yang akan Anda rindukan dari %@:";
+/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Akun Anda telah diturunkan ke Proton VPN FREE.\nIni yang akan Anda rindukan dari %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "MASA UJI COBA GRATIS %@";
@@ -656,7 +656,7 @@
 "_get_plan" = "Dapatkan Paket %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Dapatkan ProtonVPN Plus untuk membuka fitur ini dan lainnya.";
+"_get_plus_for_feature" = "Dapatkan Proton VPN Plus untuk membuka fitur ini dan lainnya.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Dapatkan email verifikasi";
@@ -667,7 +667,7 @@
 /* Button in several different alerts */
 "_got_it" = "Mengerti!";
 
-/* Main app menu; User with \ProtonVPN\ inside the same main menu as a name for item that opens help page. */
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
 "_help" = "Bantuan";
 
 /* Show/hide password switch */
@@ -695,7 +695,7 @@
 "_invalid_refresh_token" = "Sesi kedaluwarsa";
 
 /* (No Comment) */
-"_invalid_refresh_token_please_login" = "Sudah lama Anda tidak menggunakan aplikasi ProtonVPN. Silakan masuk kembali.";
+"_invalid_refresh_token_please_login" = "Sudah lama Anda tidak menggunakan aplikasi Proton VPN. Silakan masuk kembali.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_description" = "Dari para ilmuwan dan insinyur yang menciptakan ProtonMail, selamat datang di internet yang lebih aman dan privat.";
@@ -728,7 +728,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch melindungi IP Anda\n\nKoneksi internet Anda akan segera berlanjut saat ProtonVPN menyambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan Kill Switch.";
+"_kill_switch_blocking_body" = "Kill Switch melindungi IP Anda\n\nKoneksi internet Anda akan segera berlanjut saat Proton VPN menyambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan Kill Switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch memblokir seluruh koneksi";
@@ -746,7 +746,7 @@
 "_kill_switch_error_head" = "Beberapa aplikasi, seperti antivirus atau firewall, mungkin berkonflik dengan Kill Switch, menjadikannya tidak berjalan sesuai fungsi.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch bekerja dengan Firewall macOS.\nAplikasi lain yang terkait dengan Firewall mungkin akan mengganggu Kill Switch ProtonVPN. Matikan aplikasi tersebut untuk memulihkan aturan Firewall yang ditulis oleh Kill Switch.";
+"_kill_switch_error_info" = "Kill Switch bekerja dengan Firewall macOS.\nAplikasi lain yang terkait dengan Firewall mungkin akan mengganggu Kill Switch Proton VPN. Matikan aplikasi tersebut untuk memulihkan aturan Firewall yang ditulis oleh Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Sebuah kesalahan Kill Switch terlah terdeteksi";
@@ -755,13 +755,13 @@
 "_kill_switch_helper_install_issue_popup_body" = "Sedang terdapat sebuah masalah memasang atau memperbaharui Kill Switch.\n\nUntuk mencoba kembali, klik COBA KEMBALI.\n\nUntuk melanjutkan tanpa Kill Switch, klik NONAKTIFKAN.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Untuk mengaktifkan Kill Switch, Anda akan diminta untuk memasukkan kata sandi komputer Anda. Jika sebuah permintaan muncul, masukan %@ Anda dan terima.\n\nAnda kadang akan menerima permintaan ini kembali ketika aplikasi ProtonVPN menerima pembaruan.";
+"_kill_switch_helper_install_popup_body" = "Untuk mengaktifkan Kill Switch, Anda akan diminta untuk memasukkan kata sandi komputer Anda. Jika sebuah permintaan muncul, masukan %@ Anda dan terima.\n\nAnda kadang akan menerima permintaan ini kembali ketika aplikasi Proton VPN menerima pembaruan.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "Pembaharuan terbaru yang Anda unduh memerlukanmu untuk menyediakan kata sandi akun komputer Anda. Ketika permintaan muncul, mohon masukkan %@ dan terima.\n\nJika Anda tidak memasukkan kata sandi Mac, Kill Switch akan dinonaktifkan.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Koneksi internet Anda akan dilanjutkan segera saat ProtonVPN menyambung ulang ke server. Untuk menggunakan internet tanpa perlindungan VPN dan Kill Switch, batalkan sambungan ulang ke server.";
+"_kill_switch_reconnection" = "Koneksi internet Anda akan dilanjutkan segera saat Proton VPN menyambung ulang ke server. Untuk menggunakan internet tanpa perlindungan VPN dan Kill Switch, batalkan sambungan ulang ke server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "tanpa";
@@ -785,7 +785,7 @@
 "_ks_requires_swift5_popup_msg" = "Untuk mengaktifkan Kill Switch, Anda perlu mengunduh dan memasang %@.\nSilakan pasang sebelum mengaktifkan Kill Switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN tidak dapat mendeteksi %@. Untuk mengaktifkan Kill Switch, silakan pasang perangkat lunak terlebih dahulu.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN tidak dapat mendeteksi %@. Untuk mengaktifkan Kill Switch, silakan pasang perangkat lunak terlebih dahulu.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Pustaka Swift 5 Runtime Support";
@@ -914,7 +914,7 @@
 "_medium" = "Sedang";
 
 /* Main mac app menu item */
-"_menu_about" = "Tentang ProtonVPN";
+"_menu_about" = "Tentang Proton VPN";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Periksa Pembaruan...";
@@ -923,7 +923,7 @@
 "_menu_hide_others" = "Sembunyikan Lainnya";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "Sembunyikan ProtonVPN";
+"_menu_hide_self" = "Sembunyikan Proton VPN";
 
 /* Main mac app menu item */
 "_menu_logout" = "Keluar";
@@ -935,7 +935,7 @@
 "_menu_preferences" = "Preferensi";
 
 /* Main mac app menu item */
-"_menu_quit" = "Keluar ProtonVPN";
+"_menu_quit" = "Keluar Proton VPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Tampilkan Semua";
@@ -983,7 +983,7 @@
 "_name" = "Nama";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server ProtonVPN";
+"_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server Proton VPN";
 
 /* Network error */
 "_ne_network_connection_lost" = "Koneksi internet terputus";
@@ -1004,7 +1004,7 @@
 "_neagent_always_allow" = "Selalu Izinkan";
 
 /* Mac: neagent help screen */
-"_neagent_description" = "Anda mungkin akan diminta untuk menyediakan %@\nagar Anda dapat terhubung ke layanan ProtonVPN. Apabila permintaan ini muncul,\nmasukkan %@ %@ dan klik ‘%@’ %@.";
+"_neagent_description" = "Anda mungkin akan diminta untuk menyediakan %@\nagar Anda dapat terhubung ke layanan Proton VPN. Apabila permintaan ini muncul,\nmasukkan %@ %@ dan klik ‘%@’ %@.";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -1106,7 +1106,7 @@
 "_on_maintenance" = "Sedang dalam pemeliharaan";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Tampilkan ProtonVPN untuk masuk...";
+"_open_app_to_log_in" = "Tampilkan Proton VPN untuk masuk...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Log OpenVPN";
@@ -1151,7 +1151,7 @@
 "_p2p_title" = "P2P/BitTorrent";
 
 /* Plan upgrade required alert */
-"_paid_required" = "Dibutuhkan paket Berbayar ProtonVPN";
+"_paid_required" = "Dibutuhkan paket Berbayar Proton VPN";
 
 /* Used in sign-in, sign-up */
 "_password" = "Kata Sandi";
@@ -1214,7 +1214,7 @@
 "_plus_upgrade_description" = "Gunakan Secure Core, tonton acara TV kesukaan Anda,\ngunakan sampai 5 perangkat berbeda dan masih banyak lagi!";
 
 /* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Menikmati ProtonVPN?\nDapatkan paket Plus hanya $8/bulan";
+"_plus_upgrade_title" = "Menikmati Proton VPN?\nDapatkan paket Plus hanya $8/bulan";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Preferensi";
@@ -1277,10 +1277,10 @@
 "_protocol" = "Protokol";
 
 /* (No Comment) */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "Proton VPN macOS";
 
 /* (No Comment) */
-"_protonvpn_plus" = "ProtonVPN PLUS";
+"_protonvpn_plus" = "Proton VPN PLUS";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP Publik";
@@ -1400,7 +1400,7 @@
 "_report_bug" = "Laporkan masalah";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas-berkas log ProtonVPN\n• Berkas-berkas log OpenVPN \n• Berkas-berkas log WireGuard";
+"_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas-berkas log Proton VPN\n• Berkas-berkas log OpenVPN \n• Berkas-berkas log WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1529,7 +1529,7 @@
 "_server_under_maintenance" = "Server sedang dalam pemeliharaan";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "Anda sudah mencapai jumlah maksimum pemakaian sambungan serentak yang diizinkan bagi akun Anda. Mohon tingkatkan paket berlangganan ProtonVPN untuk mendapatkan lebih banyak sambungan.";
+"_session_count_reached_description" = "Anda sudah mencapai jumlah maksimum pemakaian sambungan serentak yang diizinkan bagi akun Anda. Mohon tingkatkan paket berlangganan Proton VPN untuk mendapatkan lebih banyak sambungan.";
 
 /* Session count limit alert */
 "_session_count_reached_title" = "Batas sesi tercapai";
@@ -1544,13 +1544,13 @@
 "_setup_complete" = "Pengaturan Selesai";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Pembelian Anda telah berhasil. Paket ProtonVPN Basic Anda sekarang telah aktif.";
+"_setup_complete_basic" = "Pembelian Anda telah berhasil. Paket Proton VPN Basic Anda sekarang telah aktif.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Anda telah terdaftar untuk paket ProtonVPN Free. Untuk memulai, nikmati tujuh hari paket ProtonVPN Plus secara gratis.";
+"_setup_complete_free" = "Anda telah terdaftar untuk paket Proton VPN Free. Untuk memulai, nikmati tujuh hari paket Proton VPN Plus secara gratis.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Pembelian Anda telah berhasil. Paket ProtonVPN Plus Anda sekarang telah aktif.";
+"_setup_complete_plus" = "Pembelian Anda telah berhasil. Paket Proton VPN Plus Anda sekarang telah aktif.";
 
 /* Show/hide password switch */
 "_show" = "TAMPILKAN";
@@ -1559,7 +1559,7 @@
 "_show_instructions" = "Tampilkan petunjuk";
 
 /* (No Comment) */
-"_show_protonvpn" = "Tampilkan ProtonVPN";
+"_show_protonvpn" = "Tampilkan Proton VPN";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Daftar";
@@ -1658,7 +1658,7 @@
 "_subuser_alert_assign_connections_button" = "Tetapkan koneksi VPN";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "Untuk dapat mulai menggunakan ProtonVPN, harap tetapkan koneksi VPN pada akun Anda atau sub-akun lainnya.";
+"_subuser_alert_description1" = "Untuk dapat mulai menggunakan Proton VPN, harap tetapkan koneksi VPN pada akun Anda atau sub-akun lainnya.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Langkah ini akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
@@ -1688,10 +1688,10 @@
 "_sysex_enabled_title" = "Konfigurasi selesai";
 
 /* (No Comment) */
-"_sysex_error_description" = "Terjadi kesalahan dalam memasang modul Ekstensi Sistem.\nInstall ulang ProtonVPN, dan pastikan ProtonVPN terpasang pada folder Aplikasi untuk menyelesaikan masalah ini. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
+"_sysex_error_description" = "Terjadi kesalahan dalam memasang modul Ekstensi Sistem.\nInstall ulang Proton VPN, dan pastikan Proton VPN terpasang pada folder Aplikasi untuk menyelesaikan masalah ini. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
 
 /* (No Comment) */
-"_sysex_settings_description" = "ProtonVPN membutuhkan hal-hal tertentu dari modul Ekstensi Sistem untuk dapat menjalankan Smart Protocol, OpenVPN, dan WireGuard.";
+"_sysex_settings_description" = "Proton VPN membutuhkan hal-hal tertentu dari modul Ekstensi Sistem untuk dapat menjalankan Smart Protocol, OpenVPN, dan WireGuard.";
 
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_title" = "Modul Ekstensi Sistem dibutuhkan";
@@ -1741,16 +1741,16 @@
 "_sysex_wizard_step4_title_1" = "Tombol \"Izinkan\"";
 
 /* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Pilih poin-poin milik ProtonVPN pada daftar yang tertera dan klik \"OK\" setelahnya";
+"_sysex_wizard_step5_description" = "Pilih poin-poin milik Proton VPN pada daftar yang tertera dan klik \"OK\" setelahnya";
 
 /* System extension wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Memilih poin-poin milik ProtonVPN";
+"_sysex_wizard_step5_title" = "Memilih poin-poin milik Proton VPN";
 
 /* System extension wizard in mac: Subtitle */
 "_sysex_wizard_subtitle" = "Untuk dapat melakukan tindakan ini, ikuti langkah-langkah berikut:";
 
 /* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "Anda kini telah siap untuk menggunakan ProtonVPN yang didukung oleh teknologi-teknologi VPN tercepat dan termutakhir saat ini!";
+"_sysex_wizard_text_under_steps" = "Anda kini telah siap untuk menggunakan Proton VPN yang didukung oleh teknologi-teknologi VPN tercepat dan termutakhir saat ini!";
 
 /* System extension wizard in mac: Main title */
 "_sysex_wizard_title" = "Nikmati koneksi tercepat dengan mengaktifkan protokol-protokol khusus";
@@ -1774,7 +1774,7 @@
 "_terms_and_conditions" = "Syarat dan Ketentuan";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Menggunakan ProtonVPN, Anda setuju terhadap\n%@ dan %@";
+"_terms_and_conditions_disclaimer" = "Menggunakan Proton VPN, Anda setuju terhadap\n%@ dan %@";
 
 /* iOS: section header in countries list */
 "_test_servers" = "Server TEST";
@@ -1816,42 +1816,42 @@
 "_tor_title" = "Tor";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Masa uji coba gratis 7 hari ProtonVPN Plus Anda telah habis. Anda akan tetap dapat menggunakan ProtonVPN versi Gratis, namun apabila Anda ingin mendukung proyek ini dan memperoleh akses ke lebih banyak negara dan berbagai fitur lainnya, silakan tingkatkan jenis akun Anda ke akun berbayar.";
+"_trial_expired_alert_body_iOS" = "Masa uji coba gratis 7 hari Proton VPN Plus Anda telah habis. Anda akan tetap dapat menggunakan Proton VPN versi Gratis, namun apabila Anda ingin mendukung proyek ini dan memperoleh akses ke lebih banyak negara dan berbagai fitur lainnya, silakan tingkatkan jenis akun Anda ke akun berbayar.";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Masa uji coba ProtonVPN Plus telah habis";
+"_trial_expired_alert_title_iOS" = "Masa uji coba Proton VPN Plus telah habis";
 
 /* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Untuk dapat menikmati akses ke fitur ProtonVPN Plus secara permanen, Anda dapat meningkatkan paket berlangganan Anda.";
+"_trial_popup_call_to_upgrade" = "Untuk dapat menikmati akses ke fitur Proton VPN Plus secara permanen, Anda dapat meningkatkan paket berlangganan Anda.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Nikmati manfaat penuh dari internet aman di manapun dengan ProtonVPN";
+"_trial_popup_enjoy" = "Nikmati manfaat penuh dari internet aman di manapun dengan Proton VPN";
 
 /* Final text:
  
- As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
  1 day, 2 hours, 30 minutes */
 "_trial_popup_explanation" = "Sebagai hadiah selamat datang, Anda mendapatkan akses ke %@, termasuk fitur lanjutan untuk beberapa hari pertama! Uji coba kedatangan Anda akan berakhir dalam";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "gratis upgrade ke ProtonVPN Plus";
+"_trial_popup_free_upgrade" = "gratis upgrade ke Proton VPN Plus";
 
 /* (No Comment) */
-"_trial_popup_full_subscription" = "berlangganan paket ProtonVPN penuh";
+"_trial_popup_full_subscription" = "berlangganan paket Proton VPN penuh";
 
 /* Final text:
  
- We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Kami telah memberikan Anda %@ yang termasuk lebih banyak server dan fitur tambahan. Uji coba ProtonVPN Plus Anda akan berakhir dalam 7 hari.";
+ We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Kami telah memberikan Anda %@ yang termasuk lebih banyak server dan fitur tambahan. Uji coba Proton VPN Plus Anda akan berakhir dalam 7 hari.";
 
 /* (No Comment) */
-"_trial_popup_thanks" = "Terima kasih telah menggunakan ProtonVPN!";
+"_trial_popup_thanks" = "Terima kasih telah menggunakan Proton VPN!";
 
 /* (No Comment) */
-"_trial_popup_title" = "Uji Coba ProtonVPN";
+"_trial_popup_title" = "Uji Coba Proton VPN";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Sebagai hadiah selamat datang, Anda mendapatkan akses ke paket berlangganan ProtonVPN penuh, termasuk fitur tingkat lanjut untuk beberapa hari pertama!";
+"_trial_welcome_description_iOS" = "Sebagai hadiah selamat datang, Anda mendapatkan akses ke paket berlangganan Proton VPN penuh, termasuk fitur tingkat lanjut untuk beberapa hari pertama!";
 
 /* iOS trial welcome screen */
 "_trial_welcome_ends_in_iOS" = "Masa uji coba Anda akan berakhir dalam";
@@ -1956,7 +1956,7 @@
 "_unprotected_network" = "Beri tahu jaringan yang tidak dilindungi";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Terima notifikasi saat ProtonVPN mendeteksi Anda tersambung ke jaringan yang tidak dilindungi.";
+"_unprotected_network_tooltip" = "Terima notifikasi saat Proton VPN mendeteksi Anda tersambung ke jaringan yang tidak dilindungi.";
 
 /* (No Comment) */
 "_unsecure_wifi" = "Koneksi WiFi tidak aman terdeteksi";
@@ -1974,7 +1974,7 @@
 "_update_required" = "Pembaruan dibutuhkan";
 
 /* (No Comment) */
-"_update_required_no_longer_supported" = "Versi ProtonVPN ini tidak lagi didukung, mohon perbarui aplikasi untuk tetap dapat menggunakanya.";
+"_update_required_no_longer_supported" = "Versi Proton VPN ini tidak lagi didukung, mohon perbarui aplikasi untuk tetap dapat menggunakanya.";
 
 /* App update required alert */
 "_update_required_support" = "Hubungi dukungan";
@@ -2001,7 +2001,7 @@
 "_upgrade_plan_to_access_country" = "Maaf, tidak ada server tersedia untuk tingkat paket berlangganan Anda di negara saat ini. Jika Anda ingin mengakses lebih banyak server, pertimbangkan untuk meningkatkan paket berlangganan Anda.";
 
 /* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core adalah fitur premium yang membutuhkan paket ProtonVPN Plus atau lebih tinggi. Secure Core menambahkan perlindungan lebih terhadap pemantauan server VPN.";
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core adalah fitur premium yang membutuhkan paket Proton VPN Plus atau lebih tinggi. Secure Core menambahkan perlindungan lebih terhadap pemantauan server VPN.";
 
 /* (No Comment) */
 "_upgrade_plan_to_access_secure_core_p2" = "Untuk mengakses Secure Core, silahkan lihat paket langganan kami yang lain yang menyertakan fitur ini.";
@@ -2022,7 +2022,7 @@
 "_upgrade_to_plus" = "Tingkatkan ke Plus";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Langganan ProtonVPN anda tidak dapat ditingkatkan dari aplikasi, silakan kunjungi account.protonvpn.com untuk peningkatan.";
+"_upgrade_unavailable_body" = "Langganan Proton VPN anda tidak dapat ditingkatkan dari aplikasi, silakan kunjungi account.protonvpn.com untuk peningkatan.";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Peningkatan tidak tersedia di aplikasi";
@@ -2100,21 +2100,21 @@
 "_vpnauth_too_many_certs_title" = "Kesalahan autentikasi";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "Anda belum masuk ke ProtonVPN. Buka aplikasinya dan masuk di sana.";
+"_vpnstatus_not_loggedin" = "Anda belum masuk ke Proton VPN. Buka aplikasinya dan masuk di sana.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Peringatan";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Sesi ProtonVPN pengguna lain sedang aktif pada perangkat ini. Melanjutkan dengan proses masuk akan mengakhiri sesi ini. Apakah Anda bersedia untuk melanjutkan?";
+"_warning_vpn_session_is_active" = "Sesi Proton VPN pengguna lain sedang aktif pada perangkat ini. Melanjutkan dengan proses masuk akan mengakhiri sesi ini. Apakah Anda bersedia untuk melanjutkan?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "Terima kasih telah menggunakan ProtonVPN. Lihat sekilas fitur-fitur utama aplikasi.";
+"_welcome_description" = "Terima kasih telah menggunakan Proton VPN. Lihat sekilas fitur-fitur utama aplikasi.";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Sebagai sebuah hadiah selamat datang, Anda diberikan 7 hari akses untuk berlangganan %@ yang memberikan Anda:";
 
 /* Shown on the Welcome screen as the screen headline */
@@ -2166,13 +2166,13 @@
 "login_fetch_vpn_data" = "Mengatur akses VPN Anda";
 
 /* (No Comment) */
-"login_summary_button" = "Mulai gunakan ProtonVPN";
+"login_summary_button" = "Mulai gunakan Proton VPN";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Metode login tidak valid. Mohon hubungi layanan dukungan.";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "Situs web ProtonVPN terindikasi sedang tidak dapat dijangkau karena batasan jaringan. Mohon gunakan aplikasi mobile kami untuk membuat akun Proton yang baru.";
+"proton_website_unreachable" = "Situs web Proton VPN terindikasi sedang tidak dapat dijangkau karena batasan jaringan. Mohon gunakan aplikasi mobile kami untuk membuat akun Proton yang baru.";
 
 /* Placeholder for the Recovery code text field */
 "recovery_code" = "Kode pemulihan";

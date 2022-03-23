@@ -73,7 +73,7 @@ class HelpMenuController: NSObject {
         clearApplicationDataItem.target = self
         clearApplicationDataItem.action = #selector(clearApplicationDataItemAction)
         
-        helpItem.title = "ProtonVPN " + LocalizedString.help
+        helpItem.title = "Proton VPN " + LocalizedString.help
         helpItem.isEnabled = true
         helpItem.target = self
         helpItem.action = #selector(helpItemAction)

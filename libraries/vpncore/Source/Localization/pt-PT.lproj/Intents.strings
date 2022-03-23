@@ -2,9 +2,9 @@
 
 "2LMbbw" = "Connection Status";
 
-"8tZ81X" = "Connect to ProtonVPN";
+"8tZ81X" = "Connect to Proton VPN";
 
-"JOCERT" = "Get ProtonVPN Connection Status";
+"JOCERT" = "Get Proton VPN Connection Status";
 
 "NzUfmp" = "${status}";
 
@@ -12,13 +12,13 @@
 
 "ZqjXZN" = "${status}";
 
-"cQ4Mju" = "Disconnect from ProtonVPN";
+"cQ4Mju" = "Disconnect from Proton VPN";
 
-"hIcJsr" = "Get ProtonVPN Connection Status";
+"hIcJsr" = "Get Proton VPN Connection Status";
 
-"jf696t" = "Connect to ProtonVPN";
+"jf696t" = "Connect to Proton VPN";
 
-"ksQcRb" = "Disconnect from ProtonVPN";
+"ksQcRb" = "Disconnect from Proton VPN";
 
 "ujOFps" = "Status";
 
