@@ -77,7 +77,7 @@ final class CoreLoginService {
         settingsService = factory.makeSettingsService()
     }
 
-    private func show() { // swiftlint:disable:this function_body_length
+    private func show() {
         let signupAvailability = SignupAvailability.available(parameters: SignupParameters(passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
         let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
         self.login = login
@@ -110,16 +110,12 @@ final class CoreLoginService {
             let reportBugItem = HelpItem.custom(icon: UIImage(named: "ic-bug")!, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
                 self?.settingsService.presentReportBug()
             })
-            var result = [[HelpItem]]()
-            var currentContent: [HelpItem]
-            if input.first != nil {
-                currentContent = input.first!
-                currentContent.append(reportBugItem)
+            var result = input
+            if !result.isEmpty {
+                result[0].append(reportBugItem)
             } else {
-                currentContent = [reportBugItem]
+                result = [[reportBugItem]]
             }
-            result.append(currentContent)
-            result.append(contentsOf: input.dropFirst())
             return result
         })
         let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, customization: customization) { [weak self] (result: LoginResult) -> Void in
