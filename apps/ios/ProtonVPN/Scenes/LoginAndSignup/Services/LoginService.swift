@@ -47,6 +47,7 @@ final class CoreLoginService {
         & NetworkingFactory
         & DoHVPNFactory
         & CoreApiServiceFactory
+        & SettingsServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -57,6 +58,7 @@ final class CoreLoginService {
     private let propertiesManager: PropertiesManagerProtocol
     private let doh: DoHVPN
     private let coreApiService: CoreApiService
+    private let settingsService: SettingsService
 
     private var login: LoginAndSignupInterface?
 
@@ -72,9 +74,10 @@ final class CoreLoginService {
         networking = factory.makeNetworking()
         doh = factory.makeDoHVPN()
         coreApiService = factory.makeCoreApiService()
+        settingsService = factory.makeSettingsService()
     }
 
-    private func show() {
+    private func show() { // swiftlint:disable:this function_body_length
         let signupAvailability = SignupAvailability.available(parameters: SignupParameters(passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
         let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
         self.login = login
@@ -103,7 +106,22 @@ final class CoreLoginService {
         }
 
         let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
-        let customization = LoginCustomizationOptions(username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self, helpDecorator: { $0 })
+        let customization = LoginCustomizationOptions(username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self, helpDecorator: { input in
+            let reportBugItem = HelpItem.custom(icon: UIImage(named: "ic-bug")!, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
+                self?.settingsService.presentReportBug()
+            })
+            var result = [[HelpItem]]()
+            var currentContent: [HelpItem]
+            if input.first != nil {
+                currentContent = input.first!
+                currentContent.append(reportBugItem)
+            } else {
+                currentContent = [reportBugItem]
+            }
+            result.append(currentContent)
+            result.append(contentsOf: input.dropFirst())
+            return result
+        })
         let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, customization: customization) { [weak self] (result: LoginResult) -> Void in
             switch result {
             case .dismissed:
