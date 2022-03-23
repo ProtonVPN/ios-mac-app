@@ -105,21 +105,21 @@ final class CorePlanService: PlanService {
         }
 
         paymentsUI = createPaymentsUI()
-        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: false) { [weak self] response in
+        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
         }
     }
 
     func presentSubscriptionManagement() {
         paymentsUI = createPaymentsUI()
-        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: false) { [weak self] response in
+        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
         }
     }
 
     func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void) {
         paymentsUI = createPaymentsUI(onlyPlusPlan: true)
-        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true, updateCredits: false) { [weak self] response in
+        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true) { [weak self] response in
             switch response {
             case let .open(vc: viewController, opened: false):
                 completion(.planPurchaseViewControllerCreated(viewController))

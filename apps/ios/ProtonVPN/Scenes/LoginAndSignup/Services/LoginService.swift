@@ -103,7 +103,8 @@ final class CoreLoginService {
         }
 
         let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self) { [weak self] (result: LoginResult) -> Void in
+        let customization = LoginCustomizationOptions(username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self, helpDecorator: { $0 })
+        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, customization: customization) { [weak self] (result: LoginResult) -> Void in
             switch result {
             case .dismissed:
                 log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
