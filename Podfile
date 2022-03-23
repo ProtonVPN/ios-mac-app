@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.10.0'
+  '3.12.1'
 end
 
 def openvpn
@@ -38,7 +38,7 @@ def vpn_core
     keychain_access
     
     # Checks code style and bad practices
-    pod 'SwiftLint'
+    pod 'SwiftLint', '0.46.5'
 
     pod 'SwiftGen', '~> 6.0'
 
