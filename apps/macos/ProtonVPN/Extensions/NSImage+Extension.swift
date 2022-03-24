@@ -21,9 +21,10 @@
 //
 
 import Cocoa
+import AppKit
+import ProtonCore_UIFoundations
 
 extension NSImage {
-    
     func resize(newWidth w: Int, newHeight h: Int) -> NSImage {
         let destSize = NSSize(width: CGFloat(w), height: CGFloat(h))
         let newImage = NSImage(size: destSize)
@@ -65,5 +66,9 @@ extension NSImage {
         let greyImage = NSImage(size: greyScale.size)
         greyImage.addRepresentation(greyScale)
         return greyImage
+    }
+
+    static func flag(countryCode: String) -> NSImage? {
+        return IconProvider.flag(forCountryCode: countryCode)
     }
 }

@@ -30,7 +30,7 @@ class StatusMenuCountryItemViewModel {
     private let vpnGateway: VpnGatewayProtocol
     
     var flag: NSImage {
-        return NSImage(named: NSImage.Name(countryGroup.0.countryCode.lowercased() + "-plain")) ?? NSImage()
+        return NSImage.flag(countryCode: countryGroup.0.countryCode) ?? NSImage()
     }
     
     var description: NSAttributedString {

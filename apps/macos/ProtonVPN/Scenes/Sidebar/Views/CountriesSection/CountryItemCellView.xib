@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -32,7 +32,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="c9s-fg-JDi"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ad-plain" id="IF0-Gn-ECG"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="IF0-Gn-ECG"/>
                         </imageView>
                         <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gAW-1O-emT" userLabel="secure">
                             <rect key="frame" x="20" y="0.0" width="8" height="20"/>
@@ -217,8 +217,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="ad-plain" width="84" height="49"/>
-        <image name="double-arrow-right-green" width="60" height="60"/>
+        <image name="double-arrow-right-green" width="16" height="16"/>
         <image name="ic_maintenance" width="16" height="16"/>
         <image name="ic_p2p" width="16" height="16"/>
         <image name="ic_section_arrow_down" width="14" height="8"/>
