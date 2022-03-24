@@ -421,9 +421,23 @@ class StatusMenuViewModel {
             let exitCountry = (" " + server.exitCountry + " ").attributed(withColor: .protonWhite(), fontSize: 14)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
-            let flag = NSAttributedString.imageAttachment(named: server.countryCode.lowercased() + "-plain", width: 17, height: 11) ?? NSAttributedString()
-            let country = ("  " + server.country + " ").attributed(withColor: .protonWhite(), fontSize: 14, bold: true)
-            let serverName = server.name.attributed(withColor: .protonWhite(), fontSize: 14)
+            let flag = NSAttributedString.imageAttachment(image: NSImage.flag(countryCode: server.countryCode), width: 18, height: 18) ?? NSAttributedString()
+            let country = NSMutableAttributedString(
+                string: "  " + server.country + " ",
+                attributes: [
+                    .font: NSFont.systemFont(ofSize: 14, weight: .bold),
+                    .baselineOffset: 4,
+                    .foregroundColor: NSColor.protonWhite()
+                ]
+            )
+            let serverName = NSMutableAttributedString(
+                string: server.name,
+                attributes: [
+                    .font: NSFont.systemFont(ofSize: 14),
+                    .baselineOffset: 4,
+                    .foregroundColor: NSColor.protonWhite()
+                ]
+            )
             return NSAttributedString.concatenate(flag, country, serverName)
         }
     }

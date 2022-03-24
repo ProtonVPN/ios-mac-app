@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import AppKit
 
 extension NSAttributedString {
     
@@ -30,17 +31,17 @@ extension NSAttributedString {
         strings.forEach { mutableAttributedString.append($0) }
         return mutableAttributedString
     }
-    
-    static func imageAttachment(named name: String, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
-        guard var image = NSImage(named: NSImage.Name(name.lowercased())) else {
-            log.error("Could not obtain image named \(name) for text attachment.", category: .ui)
+
+    static func imageAttachment(image: NSImage?, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
+        guard var image = image else {
+            log.error("Could not obtain image for text attachment.", category: .ui)
             return nil
         }
-        
+
         if let color = color {
             image = image.colored(color)
         }
-        
+
         let newWidth = width != nil ? width! : Int(image.size.width)
         let newHeight = height != nil ? height! : Int(image.size.height)
         image = image.resize(newWidth: newWidth, newHeight: newHeight)
@@ -48,6 +49,10 @@ extension NSAttributedString {
         let attachment = NSTextAttachment()
         attachment.attachmentCell = attachmentCell
         return NSAttributedString(attachment: attachment)
+    }
+    
+    static func imageAttachment(named name: String, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
+        return NSAttributedString.imageAttachment(image: NSImage(named: NSImage.Name(name.lowercased())), width: width, height: height, colored: color)
     }
     
     func applyStyle( for strings: [String], attrs: [NSAttributedString.Key: Any] ) -> NSAttributedString {
