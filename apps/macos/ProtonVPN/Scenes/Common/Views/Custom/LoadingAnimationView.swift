@@ -23,82 +23,34 @@
 import Cocoa
 
 class LoadingAnimationView: NSView {
+    static let loadingAnimationSubdirectory = "LoadingAnimationFrames"
 
-    let lineWidth: CGFloat = 2.0
-    let speed: CGFloat = 2
-    
-    var shrinking = true
-    var width: CGFloat!
-    var timer: Timer?
-    
+    private var gifView: GIFView!
+
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         setup()
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setup()
     }
-    
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-        
-        guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
-        let icb = CGRect(x: lineWidth / 2, y: lineWidth / 2, width: bounds.width - lineWidth, height: bounds.height - lineWidth)
-        
-        context.setLineWidth(lineWidth)
-        context.setStrokeColor(.cgColor(.icon))
-        
-        let halfWidth = width / 2
-        let halfHeight = icb.height / 2
-        let centerX: CGFloat = icb.origin.x + halfHeight
-        let centerY: CGFloat = icb.origin.y + halfHeight
-        let circle1Bounds = CGRect(x: bounds.origin.x - halfWidth, y: bounds.origin.y - halfHeight, width: width, height: icb.height)
-        context.translateBy(x: centerX, y: centerY)
-        
-        context.rotate(by: .pi / 4)
-        context.addEllipse(in: circle1Bounds)
-        
-        context.rotate(by: -.pi / 2)
-        context.addEllipse(in: circle1Bounds)
-        
-        context.drawPath(using: .stroke)
-    }
-    
-    func animate(_ animate: Bool) {
-        if animate {
-            if timer == nil {
-                timer = Timer.scheduledTimer(timeInterval: 1 / 60, target: self, selector: #selector(redraw), userInfo: nil, repeats: true)
-                redraw()
-            }
-        } else {
-            if let timer = timer {
-                timer.invalidate()
-                self.timer = nil
-            }
-            width = bounds.width - lineWidth
-        }
-    }
-    
+
     private func setup() {
-        width = bounds.width - lineWidth
+        gifView = GIFView(frame: frame, pngDirectoryString: Self.loadingAnimationSubdirectory)
+        gifView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(gifView)
+
+        NSLayoutConstraint.activate([
+            gifView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            gifView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            gifView.heightAnchor.constraint(equalTo: heightAnchor),
+            gifView.widthAnchor.constraint(equalTo: widthAnchor)
+        ])
     }
-    
-    @objc private func redraw() {
-        if width <= speed {
-            shrinking = false
-        } else if width >= bounds.width - lineWidth {
-            shrinking = true
-        }
-        
-        if shrinking {
-            width -= speed
-        } else {
-            width += speed
-        }
-        
-        needsDisplay = true
+
+    func animate(_ animate: Bool) {
+        gifView?.animate(animate)
     }
 }
