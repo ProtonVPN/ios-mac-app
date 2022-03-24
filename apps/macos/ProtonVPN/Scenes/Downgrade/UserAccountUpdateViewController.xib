@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -93,7 +93,7 @@
                                                 <constraint firstAttribute="width" constant="16" id="kMi-p6-hAa"/>
                                                 <constraint firstAttribute="width" secondItem="bgx-oU-VqE" secondAttribute="height" multiplier="12:7" id="pn1-0M-V64"/>
                                             </constraints>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="ad-plain" id="6Xk-mh-BWC"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="6Xk-mh-BWC"/>
                                         </imageView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wen-YU-rxV">
                                             <rect key="frame" x="46" y="13" width="75" height="17"/>
@@ -130,7 +130,7 @@
                                                 <constraint firstAttribute="width" secondItem="WsN-zY-lKy" secondAttribute="height" multiplier="12:7" id="1zQ-1Y-hRW"/>
                                                 <constraint firstAttribute="width" constant="16" id="7ky-iX-15E"/>
                                             </constraints>
-                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="ad-plain" id="D99-Ye-Ech"/>
+                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="D99-Ye-Ech"/>
                                         </imageView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ovb-Sc-KUS">
                                             <rect key="frame" x="46" y="13" width="75" height="17"/>
@@ -152,7 +152,7 @@
                                     </constraints>
                                 </customView>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="psw-MP-7MX">
-                                    <rect key="frame" x="172" y="15.5" width="32.5" height="38"/>
+                                    <rect key="frame" x="172" y="15" width="32.5" height="39"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="psw-MP-7MX" secondAttribute="height" multiplier="1:1" id="PvU-YA-X6W"/>
                                         <constraint firstAttribute="height" constant="32" id="zab-CV-RKJ"/>
@@ -395,8 +395,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="ad-plain" width="84" height="49"/>
-        <image name="arrow.right" catalog="system" width="19" height="15"/>
+        <image name="arrow.right" catalog="system" width="20" height="16"/>
         <image name="checkbox" width="95" height="95"/>
         <image name="sessions_limit" width="270" height="232"/>
     </resources>

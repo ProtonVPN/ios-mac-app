@@ -98,7 +98,7 @@ final class CountryItemCellView: NSView {
         
         expandButton.image = viewModel.isOpened ? #imageLiteral(resourceName: "ic_section_arrow_up") : #imageLiteral(resourceName: "ic_section_arrow_down")
         countryLbl.stringValue = viewModel.countryName
-        flagIV.image = NSImage(named: viewModel.countryCode.lowercased() + "-plain")
+        flagIV.image = NSImage.flag(countryCode: viewModel.countryCode)
         connectButton.isConnected = viewModel.isConnected
         connectButton.isHidden = !connectButton.isConnected
         upgradeBtn.isHidden = !viewModel.isTierTooLow || viewModel.underMaintenance

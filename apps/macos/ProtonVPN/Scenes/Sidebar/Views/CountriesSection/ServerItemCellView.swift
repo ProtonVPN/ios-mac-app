@@ -103,7 +103,7 @@ final class ServerItemCellView: NSView {
         }
                 
         if let code = viewModel.entryCountry {
-            secureFlagIV.image = NSImage(named: code.lowercased() + "-plain")
+            secureFlagIV.image = NSImage.flag(countryCode: code)
         }
         
         setupAccessibility()

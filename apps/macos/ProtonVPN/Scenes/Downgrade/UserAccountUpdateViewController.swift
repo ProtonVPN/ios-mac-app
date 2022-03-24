@@ -137,7 +137,7 @@ class UserAccountUpdateViewController: NSViewController {
     
     private func setServerHeader( _ server: ServerModel, _ headerFormat: (String) -> String, _ flagIV: NSImageView, _ serverName: NSTextField, _ serverHeader: NSTextField ) {
         serverName.stringValue = server.name
-        flagIV.image = NSImage(named: server.countryCode.lowercased() + "-plain")
+        flagIV.image = NSImage.flag(countryCode: server.countryCode)
         serverHeader.stringValue = headerFormat(serverType(server))
     }
     
