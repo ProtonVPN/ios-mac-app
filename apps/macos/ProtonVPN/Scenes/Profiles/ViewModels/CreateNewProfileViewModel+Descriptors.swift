@@ -25,33 +25,81 @@ import vpncore
 import AppKit
 
 extension CreateNewProfileViewModel {
+    private var fontSize: CGFloat {
+        return 16
+    }
+    private var baselineOffset: CGFloat {
+        return 4
+    }
 
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
-        let imageAttributedString = embededImageIcon(named: country.countryCode.lowercased() + "-plain")
-        let countryString = ("  " + country.country)
+        let imageAttributedString = embededImageIcon(image: NSImage.flag(countryCode: country.countryCode))
+        let countryString = "  " + country.country
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
-            nameAttributedString = countryString.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+            nameAttributedString = NSMutableAttributedString(
+                string: countryString,
+                attributes: [
+                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: NSColor.dropDownWhiteColor()
+                ]
+            )
         } else {
-            nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+            nameAttributedString = NSMutableAttributedString(
+                string: countryString + " (\(LocalizedString.upgradeRequired))",
+                attributes: [
+                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: NSColor.protonGreyOutOfFocus()
+                ]
+            )
         }
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
-            let via = "via  ".attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
-            let entryCountryFlag = embededImageIcon(named: server.entryCountryCode.lowercased() + "-plain")
-            let entryCountry = ("  " + server.entryCountry).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+            let via = NSMutableAttributedString(
+                string: "via  ",
+                attributes: [
+                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: NSColor.dropDownWhiteColor()
+                ]
+            )
+            let entryCountryFlag = embededImageIcon(image: NSImage.flag(countryCode: server.entryCountryCode))
+            let entryCountry = NSMutableAttributedString(
+                string: "  " + server.entryCountry,
+                attributes: [
+                    .font: NSFont.systemFont(ofSize: fontSize),
+                    .baselineOffset: baselineOffset,
+                    .foregroundColor: NSColor.dropDownWhiteColor()
+                ]
+            )
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
-            let countryFlag = embededImageIcon(named: server.countryCode.lowercased() + "-plain")
+            let countryFlag = embededImageIcon(image: NSImage.flag(countryCode: server.countryCode))
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
-                serverDescriptor = serverString.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+                serverDescriptor = NSMutableAttributedString(
+                    string: serverString,
+                    attributes: [
+                        .font: NSFont.systemFont(ofSize: fontSize),
+                        .baselineOffset: baselineOffset,
+                        .foregroundColor: NSColor.dropDownWhiteColor()
+                    ]
+                )
             } else {
-                serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+                serverDescriptor = NSMutableAttributedString(
+                    string: serverString + " (\(LocalizedString.upgradeRequired))",
+                    attributes: [
+                        .font: NSFont.systemFont(ofSize: fontSize),
+                        .baselineOffset: baselineOffset,
+                        .foregroundColor: NSColor.dropDownWhiteColor()
+                    ]
+                )
             }
             return NSAttributedString.concatenate(countryFlag, serverDescriptor)
         }
@@ -71,12 +119,26 @@ extension CreateNewProfileViewModel {
         }
         
         let imageAttributedString = embededImageIcon(named: imageName)
-        let nameAttributedString = ("  " + name).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
+        let nameAttributedString = NSMutableAttributedString(
+            string: "  " + name,
+            attributes: [
+                .font: NSFont.systemFont(ofSize: fontSize),
+                .baselineOffset: baselineOffset,
+                .foregroundColor: NSColor.dropDownWhiteColor()
+            ]
+        )
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     
     private func embededImageIcon(named name: String) -> NSAttributedString {
         if let imageAttributedString = NSAttributedString.imageAttachment(named: name, width: 18, height: 12) {
+            return imageAttributedString
+        }
+        return NSAttributedString(string: "")
+    }
+
+    private func embededImageIcon(image: NSImage?) -> NSAttributedString {
+        if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 18) {
             return imageAttributedString
         }
         return NSAttributedString(string: "")
