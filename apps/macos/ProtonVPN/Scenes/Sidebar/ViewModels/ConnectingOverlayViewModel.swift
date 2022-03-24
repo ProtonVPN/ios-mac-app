@@ -246,9 +246,9 @@ class ConnectingOverlayViewModel {
     
     func graphic(with frame: CGRect) -> NSView {
         if timedOut {
-            let connectedView = NSImageView(frame: CGRect(x: frame.origin.x + frame.width / 4, y: frame.origin.y, width: frame.width / 2, height: frame.height / 2))
-            connectedView.image = AppTheme.Icon.clock.resize(newWidth: Int(connectedView.frame.width),
-                                                             newHeight: Int(connectedView.frame.height))
+            let connectedView = NSImageView(frame: frame)
+            connectedView.imageScaling = .scaleProportionallyUpOrDown
+            connectedView.image = AppTheme.Icon.vpnResultTimeout
             return connectedView
         }
         
@@ -256,13 +256,13 @@ class ConnectingOverlayViewModel {
         case .connected:
             loadingView.animate(false)
             let connectedView = NSImageView(frame: frame)
-            connectedView.image = AppTheme.Icon.checkmarkCircle
-                .colored(.success)
-                .resize(newWidth: Int(frame.width), newHeight: Int(frame.height))
+            connectedView.imageScaling = .scaleProportionallyUpOrDown
+            connectedView.image = AppTheme.Icon.vpnResultConnected
             return connectedView
         case .error, .disconnected:
-            let connectedView = NSImageView(frame: CGRect(x: frame.origin.x + frame.width / 4, y: frame.origin.y, width: frame.width / 2, height: frame.height / 2))
-            connectedView.image = #imageLiteral(resourceName: "failure")
+            let connectedView = NSImageView(frame: frame)
+            connectedView.imageScaling = .scaleProportionallyUpOrDown
+            connectedView.image = AppTheme.Icon.vpnResultDisconnected
             return connectedView
         default:
             loadingView.frame = frame

@@ -98,6 +98,10 @@ public enum AppTheme {
         static let vpnNotConnected = NSImage(named: "vpn-not-connected")!
         static let vpnConnecting = NSImage(named: "vpn-connecting")!
         static let vpnEmpty = NSImage(named: "vpn-empty")!
+
+        static let vpnResultConnected = NSImage(named: "vpn-result-connected")!
+        static let vpnResultDisconnected = NSImage(named: "vpn-result-not-connected")!
+        static let vpnResultTimeout = NSImage(named: "vpn-result-warning")!
     }
 }
 

@@ -215,7 +215,7 @@ class StatusBarIconBlinker {
     private var statusItem: NSStatusItem
     private var statusIcon: StatusIcon
     
-    private var emptyImage: NSImage = AppTheme.Icon.vpnEmpty
+    private var emptyImage: NSImage = StatusIcon.unknown.image
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
     
