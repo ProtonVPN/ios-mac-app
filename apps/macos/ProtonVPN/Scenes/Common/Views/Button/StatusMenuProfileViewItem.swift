@@ -53,9 +53,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
         
         switch viewModel.icon {
         case .image(let image):
-            let darkImage = image.colored(.inverted)
-            profileImage.image = darkImage
-            
+            profileImage.image = image.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
         case .circle(let color):
@@ -83,7 +81,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
             if self.button.isHovered, let viewModel = self.viewModel, viewModel.canConnect {
                 self.backgroundColor = .color(.background, [.interactive, .weak, .hovered])
             } else {
-                self.backgroundColor = .color(.background, .inverted)
+                self.backgroundColor = .color(.background, .strong)
             }
         }
     }
