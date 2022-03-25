@@ -24,8 +24,6 @@ import Cocoa
 import vpncore
 
 class ColoredLoadButton: NSButton {
-    private let infoIconImage = AppTheme.Icon.infoCircle
-        
     var load: Int? {
         didSet {
             needsDisplay = true
@@ -43,6 +41,13 @@ class ColoredLoadButton: NSButton {
     
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let load = load else { return }
+
+        // inner circle
+        let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
+        context.setLineWidth(1.0)
+        context.addEllipse(in: icb)
+        context.setStrokeColor(self.cgColor(.icon))
+        context.drawPath(using: .stroke)
         
         // outer circle segment
         let ocb = CGRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2)
@@ -57,14 +62,6 @@ class ColoredLoadButton: NSButton {
                        endAngle: endAngle,
                        clockwise: true)
         context.drawPath(using: .stroke)
-        
-        // info icon
-        let desiredSize = CGSize(width: bounds.width, height: bounds.height)
-        var infoRect = CGRect(origin: CGPoint(x: 0, y: 0), size: desiredSize)
-
-        if let image = self.colorImage(infoIconImage).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
-            context.draw(image, in: infoRect)
-        }
     }
     
     // MARK: - Accessibility

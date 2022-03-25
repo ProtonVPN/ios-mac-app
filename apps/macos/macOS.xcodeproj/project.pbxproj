@@ -226,9 +226,6 @@
 		E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */; };
 		E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */; };
 		E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
-		E1FFCF76202D942E001B8108 /* ServerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF75202D942E001B8108 /* ServerInfoView.swift */; };
-		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
-		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
 		E57CD12027BF81D800AA4144 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* Modals */; };
@@ -856,9 +853,6 @@
 		E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryViewItem.swift; sourceTree = "<group>"; };
 		E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusMenuCountryViewItem.xib; sourceTree = "<group>"; };
 		E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppConnectButton.swift; sourceTree = "<group>"; };
-		E1FFCF75202D942E001B8108 /* ServerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoView.swift; sourceTree = "<group>"; };
-		E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewModel.swift; sourceTree = "<group>"; };
-		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
 		E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "XCUIElement+forceClick.swift"; path = "../../../macos/ProtonVPNUITests/Other classes/XCUIElement+forceClick.swift"; sourceTree = "<group>"; };
 		E534EA4D2806B6DB00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2296,7 +2290,6 @@
 				EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */,
 				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
-				E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
 				424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */,
@@ -2322,7 +2315,6 @@
 			children = (
 				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
 				EECF306A1F179A54006F819F /* CountryItemViewModel.swift */,
-				E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */,
 				EECF30701F17A188006F819F /* ServerItemViewModel.swift */,
 				421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */,
 			);
@@ -2392,7 +2384,6 @@
 				EEF7814A1F1A701900E77B59 /* CountriesSection.xib */,
 				EECEF3D81F1699F500A16606 /* CountryItemCellView.xib */,
 				EECEF3DD1F169B4800A16606 /* CountryItemCellView.swift */,
-				E1FFCF75202D942E001B8108 /* ServerInfoView.swift */,
 				EECEF3DA1F169A0500A16606 /* ServerItemCellView.xib */,
 				EECEF3DF1F169EC300A16606 /* ServerItemCellView.swift */,
 				42918CF8263836530065992E /* CountriesSectionHeaderView.xib */,
@@ -3501,7 +3492,6 @@
 				E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */,
 				42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */,
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
-				E1FFCF76202D942E001B8108 /* ServerInfoView.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
@@ -3521,7 +3511,6 @@
 				EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */,
 				F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */,
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
-				E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
 				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
 				4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */,
@@ -3648,7 +3637,6 @@
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */,
 				E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */,
-				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,
 				D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */,
 				EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */,
 				EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */,
