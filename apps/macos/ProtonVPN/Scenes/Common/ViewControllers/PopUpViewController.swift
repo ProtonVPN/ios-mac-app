@@ -100,7 +100,7 @@ class PopUpViewController: NSViewController {
     
     private func setupFooterSection() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
+        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         if let cancelTitle = viewModel.cancelButtonTitle {
             cancelButton.title = cancelTitle
