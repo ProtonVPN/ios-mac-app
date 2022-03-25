@@ -22,6 +22,10 @@ import ProtonCore_UIFoundations
 
 private let CP = ColorProvider
 private let darkAqua = NSAppearance(named: .darkAqua)!
+private let offWhite = NSColor(red: 254,
+                               green: 255,
+                               blue: 255,
+                               alpha: 1.0)
 
 private extension AppTheme.Style {
     static var signalStyles: Self {
@@ -176,11 +180,25 @@ extension AppTheme.Context {
             return .clear
         }
 
-        var color: NSColor = appearanceAwareColor(style: style)
-            .using(appearance: darkAqua)
+        var color: NSColor
 
-        if self == .text && style.contains([.transparent, .disabled]) {
-            color = color.withAlphaComponent(0.5)
+        // Hack: workaround to get macOS 12 to display white text in dropdowns (VPNAPPL-1010)
+        if self == .text {
+            let isDisabled = style.contains([.transparent, .disabled])
+
+            if #available(macOS 12, *), style == .normal || isDisabled {
+                color = offWhite
+            } else {
+                color = appearanceAwareColor(style: style)
+                    .using(appearance: darkAqua)
+            }
+
+            if isDisabled {
+                color = color.withAlphaComponent(0.5)
+            }
+        } else {
+            color = appearanceAwareColor(style: style)
+                .using(appearance: darkAqua)
         }
 
         return color

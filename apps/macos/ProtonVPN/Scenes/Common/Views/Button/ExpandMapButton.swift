@@ -49,7 +49,7 @@ class ExpandMapButton: HoverDetectionButton {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         transform.concat()
         
-        context.setStrokeColor(.cgColor(.border, .weak))
+        context.setStrokeColor(.cgColor(.border, .strong))
         context.setFillColor(.cgColor(.background, .weak))
         
         context.setLineWidth(1.5)

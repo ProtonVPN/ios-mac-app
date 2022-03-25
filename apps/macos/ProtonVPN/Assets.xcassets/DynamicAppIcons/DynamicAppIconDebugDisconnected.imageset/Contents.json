@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "vpn-connecting.pdf",
+      "filename" : "VPN_debug_icon_disconnected_512x512.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -17,8 +17,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

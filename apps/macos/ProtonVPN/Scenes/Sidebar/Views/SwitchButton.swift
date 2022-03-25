@@ -259,13 +259,13 @@ extension SwitchButton: CustomStyleContext {
         switch context {
         case .background:
             if !enabled {
-                return [.interactive, .active]
+                return [.interactive, .weak, .disabled]
             } else if isOn {
                 return .interactive
             }
             return .normal
         case .icon:
-            return enabled ? .normal : [.interactive, .weak]
+            return .normal
         default:
             break
         }

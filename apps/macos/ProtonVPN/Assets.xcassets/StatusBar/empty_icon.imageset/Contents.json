@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "empty.png",
+      "filename" : "vpn-empty.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "empty@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

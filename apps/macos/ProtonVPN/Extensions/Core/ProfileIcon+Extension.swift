@@ -28,7 +28,7 @@ extension ProfileIcon {
     func attributedAttachment(width: Int = 12) -> NSAttributedString {
         switch self {
         case .image(let image):
-            return NSAttributedString.imageAttachment(image: image, width: width, height: width) ?? NSAttributedString(string: "")
+            return image.asAttachment(style: .normal, size: .square(width))
         case .circle(let color):
             let profileCircle = ProfileCircle(frame: CGRect(x: 0, y: 0, width: width, height: width))
             profileCircle.profileColor = NSColor(rgbHex: color)
