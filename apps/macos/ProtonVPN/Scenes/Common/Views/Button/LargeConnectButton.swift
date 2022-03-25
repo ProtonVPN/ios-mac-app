@@ -55,12 +55,12 @@ extension LargeConnectButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .background:
+            let hover: AppTheme.Style = isHovered ? .hovered : []
+            return (isConnected ? .danger : .interactive) + hover
+        case .text:
+            return .normal
+        case .icon:
             return .transparent
-        case .icon, .text:
-            if isConnected {
-                return isHovered ? .danger : .normal
-            }
-            return isHovered ? [.interactive, .active] : .normal
         default:
             break
         }

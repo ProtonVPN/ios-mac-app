@@ -46,7 +46,7 @@ class MapSectionViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        logoImageView.image = AppTheme.Icon.masterBrandLightDark
+        logoImageView.image = AppTheme.Icon.vpnWordmarkAlwaysDark
         view.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
         
         setupHeader()

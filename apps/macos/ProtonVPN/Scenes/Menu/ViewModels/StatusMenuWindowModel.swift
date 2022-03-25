@@ -78,6 +78,19 @@ class StatusMenuWindowModel {
             return .disconnected
         }
     }
+
+    var appIcon: AppIcon {
+        guard let connectionStatus = vpnGateway?.connection else {
+            return .disconnected
+        }
+
+        switch connectionStatus {
+        case .connected:
+            return .active
+        default:
+            return .disconnected
+        }
+    }
     
     var isStatusIconBlinking: Bool {
         guard let connectionStatus = vpnGateway?.connection else {
@@ -140,4 +153,9 @@ enum StatusIcon {
     case disconnected
     case connecting
     case unknown
+}
+
+enum AppIcon {
+    case active
+    case disconnected
 }

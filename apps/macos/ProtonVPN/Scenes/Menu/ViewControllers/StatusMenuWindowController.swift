@@ -96,6 +96,7 @@ class StatusMenuWindowController: WindowController {
     private func setupIcon() {
         iconManager.setImage(windowModel?.statusIcon ?? .unknown)
         iconManager.isBlinking = windowModel?.isStatusIconBlinking ?? false
+        NSApp.applicationIconImage = (windowModel?.appIcon ?? .active).image
     }
     
     private func togglePopover() {
@@ -196,7 +197,7 @@ extension NSEvent {
 
 extension StatusIcon {
     var image: NSImage {
-        let result: NSImage
+        var result: NSImage
         switch self {
         case .connected: result = AppTheme.Icon.vpnConnected
         case .disconnected: result = AppTheme.Icon.vpnNotConnected
@@ -204,9 +205,21 @@ extension StatusIcon {
         case .unknown: result = AppTheme.Icon.vpnEmpty
         }
 
-        return result
+        result = result
             .resize(newWidth: Self.size, newHeight: Self.size)
-            .colored(.black)
+        result.isTemplate = true
+        return result
+    }
+}
+
+extension AppIcon {
+    var image: NSImage {
+        switch self {
+        case .active:
+            return AppTheme.Icon.appIconConnected
+        case .disconnected:
+            return AppTheme.Icon.appIconDisconnected
+        }
     }
 }
 

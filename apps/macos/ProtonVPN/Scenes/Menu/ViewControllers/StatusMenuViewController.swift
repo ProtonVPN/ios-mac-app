@@ -184,7 +184,8 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         window.addChildWindow(profilesWindow, ordered: .above)
         let connectFrameInWindow = connectButton.convert(connectButton.bounds, to: nil)
         let tableHeight: CGFloat = 200
-        let profilesWindowFrame = CGRect(x: window.frame.minX + connectButton.frame.minX, y: window.frame.minY + connectFrameInWindow.minY + 2 - tableHeight, width: window.frame.width - connectButton.frame.minX * 2, height: tableHeight)
+        let menuButtonMargin: CGFloat = 5
+        let profilesWindowFrame = CGRect(x: window.frame.minX + connectButton.frame.minX, y: window.frame.minY + connectFrameInWindow.minY + 2 - tableHeight - menuButtonMargin, width: window.frame.width - connectButton.frame.minX * 2, height: tableHeight)
         profilesWindowController?.window?.setFrame(profilesWindowFrame, display: true)
         profilesWindowController?.window?.makeKeyAndOrderFront(self)
     }

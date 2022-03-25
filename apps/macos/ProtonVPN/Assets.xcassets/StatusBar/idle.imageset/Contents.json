@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "idle.png",
+      "filename" : "vpn-connecting.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "idle@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

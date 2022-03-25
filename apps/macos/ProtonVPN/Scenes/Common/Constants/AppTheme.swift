@@ -97,17 +97,30 @@ public enum AppTheme {
         }
 
         static func flag(countryCode: String, style: FlagStyle = .plain) -> NSImage? {
+            if style == .plain {
+                return IconProvider.flag(forCountryCode: countryCode)
+            }
             return NSImage(named: style.imageName(countryCode: countryCode))
         }
 
-        static let vpnConnected = NSImage(named: "vpn-connected")!
-        static let vpnNotConnected = NSImage(named: "vpn-not-connected")!
-        static let vpnConnecting = NSImage(named: "vpn-connecting")!
-        static let vpnEmpty = NSImage(named: "vpn-empty")!
+        #if STAGING // use Debug icon for staging builds
+        static let appIconConnected = NSImage(named: "DynamicAppIconDebugConnected")!
+        static let appIconDisconnected = NSImage(named: "DynamicAppIconDebugDisconnected")!
+        #else
+        static let appIconConnected = NSImage(named: "DynamicAppIconConnected")!
+        static let appIconDisconnected = NSImage(named: "DynamicAppIconDisconnected")!
+        #endif
+
+        static let vpnConnected = NSImage(named: "connected")!
+        static let vpnNotConnected = NSImage(named: "disconnected")!
+        static let vpnConnecting = NSImage(named: "idle")!
+        static let vpnEmpty = NSImage(named: "empty_icon")!
 
         static let vpnResultConnected = NSImage(named: "vpn-result-connected")!
         static let vpnResultDisconnected = NSImage(named: "vpn-result-not-connected")!
         static let vpnResultTimeout = NSImage(named: "vpn-result-warning")!
+
+        static let vpnWordmarkAlwaysDark = NSImage(named: "vpn-wordmark-always-dark")!
     }
 }
 
