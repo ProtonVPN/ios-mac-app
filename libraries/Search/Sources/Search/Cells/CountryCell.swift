@@ -32,6 +32,7 @@ public final class CountryCell: ConnectTableViewCell {
     }
 
     static let chevronRight = UIImage(named: "ic-chevron-right", in: .module, compatibleWith: nil)
+    static let chevronsRight = UIImage(named: "ic-chevrons-right", in: .module, compatibleWith: nil)
 
     // MARK: Outlets
 
@@ -100,6 +101,9 @@ public final class CountryCell: ConnectTableViewCell {
 
         countryName.numberOfLines = 2
         countryName.lineBreakMode = .byTruncatingTail
+
+        entrySeparator.image = CountryCell.chevronsRight
+        entrySeparator.tintColor = viewModel?.connectButtonColor
     }
 
     private func stateChanged() {

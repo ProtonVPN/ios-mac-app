@@ -21,6 +21,7 @@
 //
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class ConnectionBarViewController: UIViewController {
     
@@ -45,7 +46,8 @@ class ConnectionBarViewController: UIViewController {
         
         connectedLabel.text = LocalizedString.connected
         
-        arrowImage.image = arrowImage.image?.imageFlippedForRightToLeftLayoutDirection()
+        arrowImage.image = IconProvider.chevronRight.imageFlippedForRightToLeftLayoutDirection()
+        arrowImage.tintColor = .iconWeak()
 
         viewModel?.onAppDisplayStateChanged = { [weak self] state in
             switch state {
