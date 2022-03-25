@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nde-1b-wub">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nde-1b-wub">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -34,12 +34,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-right" translatesAutoresizingMaskIntoConstraints="NO" id="v5z-Fv-isN">
-                                <rect key="frame" x="346" y="18.5" width="13" height="13"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="13" id="Eyd-4I-pY1"/>
-                                    <constraint firstAttribute="width" constant="13" id="psm-Hj-Dby"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" placeholderIntrinsicWidth="13" placeholderIntrinsicHeight="13" image="placeholdertext.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v5z-Fv-isN">
+                                <rect key="frame" x="346" y="19.5" width="13" height="10.5"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1es-tg-I6Q"/>
@@ -105,6 +101,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow-right" width="5" height="8"/>
+        <image name="placeholdertext.fill" catalog="system" width="80" height="128"/>
     </resources>
 </document>
