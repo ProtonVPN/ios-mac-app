@@ -135,7 +135,8 @@ class CountryAnnotation: AnnotationView {
             self.flagContainerView.frame = innerCircleFrame
             self.flagContainerView.layer.cornerRadius = innerCircleDiameter * 0.5
 
-            self.flagView.frame = CGRect(x: 0, y: -1.0 * self.flagContainerView.frame.height / 3.0, width: self.flagContainerView.frame.width, height: self.flagContainerView.frame.height * 1.6)
+            let flagViewNewHeight = self.flagContainerView.frame.height * 1.5
+            self.flagView.frame = CGRect(x: 0, y: flagViewNewHeight / -6.0, width: self.flagContainerView.frame.width, height: flagViewNewHeight)
             
             self.flagOverlayView.frame = innerCircleFrame
             self.flagOverlayView.layer.cornerRadius = innerCircleDiameter * 0.5
