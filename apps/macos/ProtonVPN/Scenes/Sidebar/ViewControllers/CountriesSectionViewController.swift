@@ -90,7 +90,6 @@ class CountriesSectionViewController: NSViewController {
     fileprivate let viewModel: CountriesSectionViewModel
     
     private var infoButtonRowSelected: Int?
-    private var serverInfoViewController: ServerInfoViewController?
     private var quickSettingDetailDisplayed = false
     
     weak var sidebarView: NSView?
@@ -201,28 +200,6 @@ class CountriesSectionViewController: NSViewController {
         }
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
-    }
-    
-    private func showInfo(for row: Int, and view: NSView, with server: ServerModel) {
-        guard let sidebarView = sidebarView else { return }
-        
-        let infoModel = ServerInfoViewModel(server: server)
-        if let infoButtonRowSelected = infoButtonRowSelected,
-           let serverInfoViewController = serverInfoViewController,
-           sidebarView.subviews.contains(serverInfoViewController.view) {
-            serverInfoViewController.removeFromParent()
-            guard infoButtonRowSelected != row else {
-                self.serverInfoViewController = nil
-                return
-            }
-        }
-        infoButtonRowSelected = row
-        serverInfoViewController = ServerInfoViewController(viewModel: infoModel)
-        
-        let rowOrigin = self.view.convert(view.frame.origin, from: view)
-        serverInfoViewController!.infoYPosition = rowOrigin.y + view.frame.height / 2
-        serverInfoViewController!.view.frame = sidebarView.frame
-        sidebarView.addSubview(serverInfoViewController!.view)
     }
     
     @objc private func scrolled(_ notification: Notification) {
@@ -368,10 +345,6 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
 }
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
-    func userDidRequestServerInfo(for cell: NSView, server: ServerItemViewModel) {
-        showInfo(for: serverListTableView.row(for: cell), and: cell, with: server.serverModel)
-    }
-
     func userDidRequestStreamingInfo(server: ServerItemViewModel) {
         viewModel.showStreamingServices(server: server)
     }

@@ -24,7 +24,6 @@ import Cocoa
 import vpncore
 
 protocol ServerItemCellViewDelegate: AnyObject {
-    func userDidRequestServerInfo(for cell: NSView, server: ServerItemViewModel)
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
 }
 
@@ -54,7 +53,6 @@ final class ServerItemCellView: NSView {
         maintenanceIV.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
 
         maintenanceIV.image = AppTheme.Icon.wrench
-        loadIcon.image = AppTheme.Icon.infoCircle
         streamingIV.image = AppTheme.Icon.play
         torIV.image = AppTheme.Icon.brandTor
         p2pIV.image = AppTheme.Icon.arrowsSwitch
@@ -124,10 +122,6 @@ final class ServerItemCellView: NSView {
         let isUnderMaintenance = viewModel.underMaintenance
         maintenanceIV.isHidden = !isUnderMaintenance
         loadIcon.isHidden = isUnderMaintenance
-        if !isUnderMaintenance {
-            loadIcon.target = self
-            loadIcon.action = #selector(showInfo)
-        }
     }
     
     @IBAction private func didTapConnectBtn(_ sender: Any) {
@@ -136,10 +130,6 @@ final class ServerItemCellView: NSView {
     
     @IBAction private func didTapUpgradeBtn(_ sender: Any) {
         viewModel.upgradeAction()
-    }
-    
-    @objc private func showInfo() {
-        delegate?.userDidRequestServerInfo(for: self, server: viewModel)
     }
 
     @IBAction private func didTapStreaming(_ sender: Any) {
