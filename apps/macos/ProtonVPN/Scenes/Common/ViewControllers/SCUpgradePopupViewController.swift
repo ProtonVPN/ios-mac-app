@@ -80,7 +80,7 @@ class SCUpgradePopupViewController: NSViewController {
     
     private func setupFooterView() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
+        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         cancelButton.title = LocalizedString.cancel
         cancelButton.fontSize = .paragraph
