@@ -31,6 +31,7 @@ class CountryAnnotation: AnnotationView {
     private let flagBoarderView: UIButton
     private let iconView: UIImageView
     private let countryLabel: UILabel
+    private let flagContainerView: UIView
     
     var viewModel: AnnotationViewModel
     
@@ -77,6 +78,7 @@ class CountryAnnotation: AnnotationView {
         self.flagOverlayView = UIView()
         self.iconView = UIImageView(image: nil)
         self.countryLabel = UILabel(frame: CGRect.zero)
+        self.flagContainerView = UIView()
         
         super.init(frame: frame)
         
@@ -87,7 +89,9 @@ class CountryAnnotation: AnnotationView {
         flagView.clipsToBounds = true
         flagView.contentMode = .scaleAspectFill
         flagView.isUserInteractionEnabled = false // allow touch to fall through to button
-        addSubview(flagView)
+        flagContainerView.clipsToBounds = true
+        addSubview(flagContainerView)
+        flagContainerView.addSubview(flagView)
         
         flagOverlayView.clipsToBounds = true
         flagOverlayView.isUserInteractionEnabled = false
@@ -128,8 +132,10 @@ class CountryAnnotation: AnnotationView {
         let animationClosure = { [weak self] in
             guard let `self` = self else { return }
             
-            self.flagView.frame = innerCircleFrame
-            self.flagView.layer.cornerRadius = innerCircleDiameter * 0.5
+            self.flagContainerView.frame = innerCircleFrame
+            self.flagContainerView.layer.cornerRadius = innerCircleDiameter * 0.5
+
+            self.flagView.frame = CGRect(x: 0, y: -1.0 * self.flagContainerView.frame.height / 3.0, width: self.flagContainerView.frame.width, height: self.flagContainerView.frame.height * 1.6)
             
             self.flagOverlayView.frame = innerCircleFrame
             self.flagOverlayView.layer.cornerRadius = innerCircleDiameter * 0.5
