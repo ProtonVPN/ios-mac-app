@@ -36,7 +36,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     }
     
     var name: NSAttributedString {
-        let style: AppTheme.Style = canConnect ? .inverted : .weak
+        let style: AppTheme.Style = canConnect ? .normal : .weak
         return profile.name.styled(style, font: .themeFont(literalSize: 11), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
