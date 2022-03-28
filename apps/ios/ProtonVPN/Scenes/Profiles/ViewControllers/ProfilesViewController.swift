@@ -171,14 +171,22 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return false
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            self.tableView.beginUpdates()
-            viewModel?.deleteProfile(for: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .fade)
-            self.tableView.endUpdates()
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: LocalizedString.delete) { [weak self] ( _, _, completionHandler) in
+            guard let `self` = self else {
+                completionHandler(false)
+                return
+            }
+            tableView.beginUpdates()
+            self.viewModel?.deleteProfile(for: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+
+            completionHandler(true)
         }
+        action.backgroundColor = ColorProvider.NotificationError
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
