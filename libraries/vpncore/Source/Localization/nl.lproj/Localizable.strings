@@ -602,7 +602,7 @@
 "_feature_speed" = "Snelheid";
 
 /* (No Comment) */
-"_feature_streaming_description" = "PLUS servers ondersteunen streaming (Netflix, Disney+, enz.) van overal in de wereld.";
+"_feature_streaming_description" = "PLUS-servers ondersteunen streaming (Netflix, Disney+, enz.) wereldwijd.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -1151,7 +1151,7 @@
 "_per_year_short" = "/ jaar";
 
 /* (No Comment) */
-"_performance_load_description" = "Servers met hoge belasting zijn langzamer dan servers met lage lading.";
+"_performance_load_description" = "Servers met hoge belasting zijn langzamer dan servers met lage belasting.";
 
 /* (No Comment) */
 "_performance_load_high" = "Hoog";
@@ -1178,7 +1178,7 @@
 "_plan_speed_fastest" = "Hoogste snelheid";
 
 /* Plan speed */
-"_plan_speed_high" = "Hoge Snelheid";
+"_plan_speed_high" = "Hoge snelheid";
 
 /* Plan speed */
 "_plan_speed_medium" = "Gemiddelde snelheid";
@@ -1688,7 +1688,7 @@
 "_sysex_wizard_button" = "Begin configuratie";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Klik op \"Begin configuratie\". Er verschijnen twee dialoogvensters, klik dan op \"Open Security Preferences\".\nAls alternatief kunt u hier klikken om dezelfde instellingen te openen. uration.";
+"_sysex_wizard_step1_description" = "Klik op \"Begin configuratie\". Er verschijnen twee dialoogvensters, klik dan op \"Open Veiligheidsvoorkeuren\".\nAls alternatief kunt u hier klikken om dezelfde instellingen te openen.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
 "_sysex_wizard_step1_description_1" = "Klik op \"Begin configuratie\". Dialoog zal verschijnen, klik dan op \"Open Veiligheid Voorkeuren\".\nU kunt ook hier klikken om dezelfde instellingen te openen.";
@@ -2050,7 +2050,7 @@
 "_view_toggle_will_cause_disconnect" = "Secure Core inschakelen zal uw huidige verbinding verbreken.";
 
 /* (No Comment) */
-"_vpn_accelerator_change_title" = "Wijzig VPN Versneller";
+"_vpn_accelerator_change_title" = "Wijzig VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
 "_vpn_accelerator_description" = "VPN Accelerator maakt gebruik van een reeks unieke prestatieverbeterende technologieën die de VPN-snelheden kunnen opdrijven tot 400%.\nLeer meer";

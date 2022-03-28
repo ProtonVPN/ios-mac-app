@@ -7,9 +7,6 @@
 /* Section header in search */
 "_plus_servers" = "Plus sunucuları";
 
-/* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Ülke ya da sunucu";
-
 /* Section header in search */
 "search_cities" = "İller";
 

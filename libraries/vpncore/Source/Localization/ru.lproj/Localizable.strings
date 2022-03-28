@@ -83,7 +83,7 @@
 "_already_have_account" = "У меня уже есть аккаунт";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "Постоянная VPN";
+"_always_on_vpn" = "Постоянный VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "«Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
@@ -833,7 +833,7 @@
 "_locations_basic" = "Местоположения BASIC";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Местоположения BASIC & и PLUS";
+"_locations_basic_plus" = "Местоположения BASIC и PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Местоположения FREE";

@@ -7,9 +7,6 @@
 /* Section header in search */
 "_plus_servers" = "Servidores PLUS";
 
-/* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Country or Server";
-
 /* Section header in search */
 "search_cities" = "Cities";
 
