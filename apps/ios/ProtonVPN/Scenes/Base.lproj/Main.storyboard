@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,7 +22,7 @@
                                     <constraint firstAttribute="height" constant="50" id="0hL-xk-78n"/>
                                 </constraints>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4av-1p-I8Y" userLabel="SecureCoreBar">
+                            <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4av-1p-I8Y" userLabel="SecureCoreBar">
                                 <rect key="frame" x="0.0" y="50" width="375" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USE SECURE CORE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZF-8E-T8i">
@@ -42,8 +42,8 @@
                                     <constraint firstItem="UZF-8E-T8i" firstAttribute="centerY" secondItem="4av-1p-I8Y" secondAttribute="centerY" id="Vbb-53-8TS"/>
                                     <constraint firstItem="XoH-ug-OBD" firstAttribute="centerY" secondItem="4av-1p-I8Y" secondAttribute="centerY" id="WLp-7K-hGD"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="aYm-7d-0Gk"/>
-                                    <constraint firstItem="UZF-8E-T8i" firstAttribute="leading" secondItem="4av-1p-I8Y" secondAttribute="leading" constant="20" id="fcF-A7-dOu"/>
-                                    <constraint firstAttribute="trailing" secondItem="XoH-ug-OBD" secondAttribute="trailing" constant="20" id="glo-SA-HMn"/>
+                                    <constraint firstItem="UZF-8E-T8i" firstAttribute="leading" secondItem="4av-1p-I8Y" secondAttribute="leadingMargin" constant="12" id="fcF-A7-dOu"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="XoH-ug-OBD" secondAttribute="trailing" constant="12" id="glo-SA-HMn"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDE-H6-rIy">

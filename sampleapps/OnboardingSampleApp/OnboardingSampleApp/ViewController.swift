@@ -45,6 +45,7 @@ final class ViewController: UIViewController {
     private func startOnboarding(variant: OnboardingVariant) {
         let colors = Colors(background: UIColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1),
                             text: .white,
+                            textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
                             brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
                             weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
                             activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1),

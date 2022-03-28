@@ -12,7 +12,7 @@
         <scene sceneID="70E-mE-1zk">
             <objects>
                 <viewController storyboardIdentifier="ConnectionBarViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nde-1b-wub" customClass="ConnectionBarViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="lxd-B5-qQS">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="lxd-B5-qQS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -53,7 +53,7 @@
                             <constraint firstItem="vx6-lh-0Na" firstAttribute="leadingMargin" secondItem="1es-tg-I6Q" secondAttribute="leading" id="n9O-AH-kJJ"/>
                             <constraint firstAttribute="leading" secondItem="gsL-EG-ZOw" secondAttribute="leading" constant="-20" id="ngg-1Y-bib"/>
                             <constraint firstItem="1es-tg-I6Q" firstAttribute="trailing" secondItem="vx6-lh-0Na" secondAttribute="trailing" id="qqv-H2-pTF"/>
-                            <constraint firstAttribute="trailing" secondItem="v5z-Fv-isN" secondAttribute="trailing" constant="16" id="wYu-Jd-zyb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="v5z-Fv-isN" secondAttribute="trailing" id="wYu-Jd-zyb"/>
                         </constraints>
                     </view>
                     <size key="freeformSize" width="375" height="50"/>

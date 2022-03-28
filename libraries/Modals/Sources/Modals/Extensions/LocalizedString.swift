@@ -26,11 +26,19 @@ public enum LocalizedString {
   public static var modalsDiscourageSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_title") }
   /// Upgrade
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
-  /// ProtonVPN's strict no-log policy is certified by an external audit.
+  /// Dismiss
+  public static var modalsNewBrandDismiss: String { return LocalizedString.tr("Localizable", "modals_new_brand_dismiss") }
+  /// Read more
+  public static var modalsNewBrandReadMore: String { return LocalizedString.tr("Localizable", "modals_new_brand_read_more") }
+  /// We’ve changed a few things around to make your encrypted apps fresher and more modern.
+  public static var modalsNewBrandSubtitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_subtitle") }
+  /// New look, same protection
+  public static var modalsNewBrandTitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_title") }
+  /// Proton VPN's strict no-log policy is certified by an external audit.
   public static var modalsNoLogsExternalAudit: String { return LocalizedString.tr("Localizable", "modals_no_logs_external_audit") }
   /// We do not log your internet activity
   public static var modalsNoLogsLogActivity: String { return LocalizedString.tr("Localizable", "modals_no_logs_log_activity") }
-  /// ProtonVPN is privacy first
+  /// Proton VPN is privacy first
   public static var modalsNoLogsPrivacyFirst: String { return LocalizedString.tr("Localizable", "modals_no_logs_privacy_first") }
   /// We do not share any data with third parties
   public static var modalsNoLogsThirdParties: String { return LocalizedString.tr("Localizable", "modals_no_logs_third_parties") }

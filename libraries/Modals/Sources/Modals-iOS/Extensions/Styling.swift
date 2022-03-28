@@ -49,7 +49,7 @@ let actionButtonStyle = concat(baseButtonStyle, brandStyle, and: {
 
 let textButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.font = .systemFont(ofSize: 17)
-    $0.setTitleColor(colors.brand, for: .normal)
+    $0.setTitleColor(colors.textAccent, for: .normal)
 }
 
 let actionTextButtonStyle = concat(textButtonStyle, and: {

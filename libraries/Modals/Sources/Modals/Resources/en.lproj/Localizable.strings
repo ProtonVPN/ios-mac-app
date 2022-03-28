@@ -88,6 +88,18 @@
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Activate Secure Core";
 
+/* Title of the New Brand screen */
+"modals_new_brand_title" = "New look, same protection";
+
+/* Subtitle of the New Brand screen */
+"modals_new_brand_subtitle" = "We’ve changed a few things around to make your encrypted apps fresher and more modern.";
+
+/* Read more with a link in New Brand screen */
+"modals_new_brand_read_more" = "Read more";
+
+/* Dismiss the New Brand screen */
+"modals_new_brand_dismiss" = "Dismiss";
+
 /* Common button title */
 "modals_common_cancel" = "Cancel";
 

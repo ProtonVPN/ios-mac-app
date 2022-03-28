@@ -180,6 +180,9 @@ extension IosAlertService: CoreAlertService {
 
         case let discourageAlert as DiscourageSecureCoreAlert:
             show(discourageAlert)
+
+        case let newBrandAlert as NewBrandAlert:
+            show(newBrandAlert)
             
         case is SafeModeUpsellAlert:
             show(upsellType: .safeMode)
@@ -212,6 +215,13 @@ extension IosAlertService: CoreAlertService {
         let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
         upsellViewController.delegate = self
         windowService.present(modal: upsellViewController)
+    }
+
+    private func show(_ alert: NewBrandAlert) {
+        let newBrandViewController = modalsFactory.newBrandViewController(onDismiss: alert.dismiss, onReadMore: alert.onReadMore)
+        newBrandViewController.modalTransitionStyle = .crossDissolve
+        newBrandViewController.modalPresentationStyle = .overFullScreen
+        windowService.present(modal: newBrandViewController)
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {

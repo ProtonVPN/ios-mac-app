@@ -32,14 +32,14 @@ class ViewController: UITableViewController {
     let modalsFactory = ModalsFactory(colors: Colors())
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return upsells.count
-        case 1:
+        case 1, 2:
             return 1
         default:
             return 0
@@ -52,8 +52,10 @@ class ViewController: UITableViewController {
         let title: String
         if indexPath.section == 0 {
             title = upsells[indexPath.row].title
-        } else {
+        } else if indexPath.section == 1 {
             title = "Discourage Secure Core"
+        } else {
+            title = "New Brand"
         }
 
         if let modalCell = cell as? ModalTableViewCell {
@@ -69,11 +71,15 @@ class ViewController: UITableViewController {
             let modalVC = modalsFactory.upsellViewController(upsellType: upsells[indexPath.row].type)
             modalVC.delegate = self
             viewController = modalVC
-        } else {
+        } else if indexPath.section == 1 {
             let modalVC = modalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil,
                                                                            onActivate: nil,
                                                                            onCancel: nil,
                                                                            onLearnMore: nil)
+            viewController = modalVC
+        } else {
+            let modalVC = modalsFactory.newBrandViewController(onDismiss: nil, onReadMore: nil)
+            modalVC.modalPresentationStyle = .overFullScreen
             viewController = modalVC
         }
 
@@ -103,6 +109,7 @@ struct Colors: ModalsColors {
     var background: UIColor
     var secondaryBackground: UIColor
     var text: UIColor
+    var textAccent: UIColor
     var brand: UIColor
     var weakText: UIColor
     
@@ -110,6 +117,7 @@ struct Colors: ModalsColors {
         background = UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1)
         secondaryBackground = UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)
         text = .white
+        textAccent = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
         brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
         weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
     }
