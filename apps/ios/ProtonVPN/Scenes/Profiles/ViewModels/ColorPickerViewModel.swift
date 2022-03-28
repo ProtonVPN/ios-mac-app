@@ -36,7 +36,8 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     var height: CGFloat {
-        return cellHeight * 2 + inset + 2 * interitemSpacing
+        let numberOfLines: CGFloat = UIDevice.current.isIpad ? 1 : 2
+        return (cellHeight + interitemSpacing) * numberOfLines + inset
     }
     
     var inset: CGFloat {
@@ -72,7 +73,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: inset, left: interitemSpacing, bottom: inset, right: inset)
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -1,5 +1,5 @@
 //
-//  Created on 14/02/2022.
+//  Created on 28/03/2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,24 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
-import Modals
-import Modals_iOS
+import Foundation
 
-struct UpsellColors: ModalsColors {
-    var background: UIColor
-    var secondaryBackground: UIColor
-    var text: UIColor
-    var textAccent: UIColor
-    var brand: UIColor
-    var weakText: UIColor
-    
-    init() {
-        background = UIColor.backgroundColor()
-        secondaryBackground = UIColor.secondaryBackgroundColor()
-        text = UIColor.normalTextColor()
-        textAccent = UIColor.textAccent()
-        brand = UIColor.brandColor()
-        weakText = UIColor.weakTextColor()
-    }
+public struct NewBrandFeature {
+    public let artImage: Image = Asset.newBrandBackground.image
+    public let iconImage: Image = Asset.vpnMain.image
+    public let title: String = LocalizedString.modalsNewBrandTitle
+    public let subtitle: String = LocalizedString.modalsNewBrandSubtitle
+    public let learnMore: String = LocalizedString.modalsNewBrandReadMore
+    public let cancel: String = LocalizedString.modalsNewBrandDismiss
+
+    public init() { }
 }
