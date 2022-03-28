@@ -54,9 +54,6 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = configuration.entryServerAddress
-        #if os(iOS)
-        protocolConfiguration.disconnectOnSleep = true
-        #endif
         return protocolConfiguration
     }
     
