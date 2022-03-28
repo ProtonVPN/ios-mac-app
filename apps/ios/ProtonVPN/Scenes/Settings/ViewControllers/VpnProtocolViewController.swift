@@ -61,7 +61,10 @@ final class VpnProtocolViewController: UIViewController {
     }
     
     private func updateTableView() {
-        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
+        let onSelectionChange: () -> Void = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
+        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData, onSelectionChange: onSelectionChange)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }

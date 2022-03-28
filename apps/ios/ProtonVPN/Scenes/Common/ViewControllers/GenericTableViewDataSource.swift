@@ -63,9 +63,11 @@ struct TableViewSection {
 class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     var sections: [TableViewSection]
+    var onSelectionChange: (() -> Void)?
     
-    init(for tableView: UITableView, with sections: [TableViewSection]) {
+    init(for tableView: UITableView, with sections: [TableViewSection], onSelectionChange: (() -> Void)? = nil) {
         self.sections = sections
+        self.onSelectionChange = onSelectionChange
         
         tableView.register(StandardTableViewCell.nib, forCellReuseIdentifier: StandardTableViewCell.identifier)
         tableView.register(TitleTextFieldTableViewCell.nib, forCellReuseIdentifier: TitleTextFieldTableViewCell.identifier)
@@ -306,14 +308,17 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()
+            onSelectionChange?()
         case .checkmarkStandard:
             guard let cell = cell as? CheckmarkTableViewCell else { return }
             
             cell.select()
+            onSelectionChange?()
         case .staticPushKeyValue:
             guard let cell = cell as? KeyValueTableViewCell else { return }
             
             cell.select()
+            onSelectionChange?()
         default:
             return
         }
