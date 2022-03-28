@@ -7,9 +7,6 @@
 /* Section header in search */
 "_plus_servers" = "PLUS Сервери";
 
-/* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Країна або сервер";
-
 /* Section header in search */
 "search_cities" = "Міста";
 

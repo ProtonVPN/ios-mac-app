@@ -421,7 +421,7 @@
 		E939EEEC27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
 		E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEEF27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
-		E939EEF3279561EE006E4305 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */; };
+		E939EEF3279561EE006E4305 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* BugReport */; };
 		E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E732696F76F001AE3FA /* CertificateConstants.swift */; };
@@ -439,7 +439,7 @@
 		E977A799268215A70013495A /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A796268215A70013495A /* KeychainConstants.swift */; };
 		E992F27E26675C3200169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
 		E992F27F26675C3300169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
-		E99F266027A1A7A5003C4586 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E986F007279843F9003A745D /* SwiftPackageProductDependency */; };
+		E99F266027A1A7A5003C4586 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E986F007279843F9003A745D /* BugReport */; };
 		E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94C126B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
@@ -990,7 +990,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E939EEF3279561EE006E4305 /* BuildFile in Frameworks */,
+				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1009,7 +1009,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */,
-				E99F266027A1A7A5003C4586 /* BuildFile in Frameworks */,
+				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2038,7 +2038,7 @@
 			);
 			name = "vpncore-ios";
 			packageProductDependencies = (
-				E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */,
+				E939EEF2279561EE006E4305 /* BugReport */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2082,7 +2082,7 @@
 			);
 			name = "vpncore-macos";
 			packageProductDependencies = (
-				E986F007279843F9003A745D /* SwiftPackageProductDependency */,
+				E986F007279843F9003A745D /* BugReport */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -3797,11 +3797,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */ = {
+		E939EEF2279561EE006E4305 /* BugReport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
 		};
-		E986F007279843F9003A745D /* SwiftPackageProductDependency */ = {
+		E986F007279843F9003A745D /* BugReport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
 		};

@@ -710,7 +710,7 @@
 "_ios_onboarding_page2_title" = "Wir glauben daran, dass das Internet frei sein sollte";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "Wir sind ein Sicherheitsunternehmen. Ob es unsere Secure‐Core‐Architektur oder unsere fortgeschrittene Verschlüsselung ist; Sicherheit kommt immer zuerst.";
+"_ios_onboarding_page3_description" = "Wir sind ein Sicherheitsunternehmen. Ob es unsere Secure Core‐Architektur oder unsere fortgeschrittene Verschlüsselung ist, Sicherheit kommt immer zuerst.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "Ihre Sicherheit ist unsere Priorität";
@@ -794,7 +794,7 @@
 "_learn_more" = "Mehr erfahren";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_learn_more_about_secure_core" = "Erfahren Sie mehr über Secure Core";
+"_learn_more_about_secure_core" = "Erfahre mehr über Secure Core";
 
 /* Display less information */
 "_less_info" = "Weniger Informationen";
@@ -1172,7 +1172,7 @@
 "_phone_number_placeholder" = "Telefonnummer eingeben";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Ihr Abonnement enthält keine Secure‐Core‐Funktion.";
+"_plan_does_not_include_secure_core" = "Dein Abonnement enthält keine Secure‐Core‐Funktion.";
 
 /* (No Comment) */
 "_plan_speed_fastest" = "Höchste Geschwindigkeit";
@@ -1199,7 +1199,7 @@
 "_plus_servers" = "Plus‐Server";
 
 /* MacOS: Upgrade screen text */
-"_plus_upgrade_description" = "Erhalten Sie Zugriff auf Secure Core, streamen Sie Ihre Lieblings‐TV‐Shows,\nbenutzen Sie bis zu 5 verschiedene Geräte und vieles mehr!";
+"_plus_upgrade_description" = "Erhalte Zugriff auf Secure Core, streame deine Lieblings‐TV‐Shows,\nbenutze bis zu 5 verschiedene Geräte und vieles mehr!";
 
 /* MacOS: Upgrade screen title */
 "_plus_upgrade_title" = "Gefällt Ihnen ProtonVPN?\nErwerben Sie jetzt Plus für nur 8 $/Monat";
@@ -1319,7 +1319,7 @@
 "_quick_settings_tour_description" = "Erhöhen Sie Ihre Sicherheit mit nur einem Mausklick:";
 
 /* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Fügen Sie mit „Secure Core” eine zusätzliche Sicherheitsebene hinzu.";
+"_quick_settings_tour_feature_1" = "Füge mit „Secure Core” eine zusätzliche Sicherheitsebene hinzu.";
 
 /* MacOS app tour: quick settings net shield */
 "_quick_settings_tour_feature_2" = "Surfen Sie mit NetShield frei von Schadsoftware und Werbung im Internet.";
@@ -1990,7 +1990,7 @@
 "_upgrade_plan_to_access_secure_core_p1" = "Secure Core ist eine Premium‐Funktion, welche mindestens ProtonVPN Plus benötigt. Secure Core fügt erweiterten Schutz gegen die Überwachung von VPN‐Servern hinzu.";
 
 /* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Um Zugriff auf Secure Core zu erhalten, sehen Sie sich unsere anderen Abonnements an, die diese Funktion enthalten.";
+"_upgrade_plan_to_access_secure_core_p2" = "Um Zugriff auf Secure Core zu erhalten, sieh dir unsere anderen Abonnements an, die diese Funktion enthalten.";
 
 /* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Leider ist dieser Server für Ihre Abonnementstufe nicht verfügbar. Wenn Sie auf zusätzliche Server zugreifen möchten, sollten Sie ein Upgrade Ihres Abonnements in Betracht ziehen.";
@@ -1999,7 +1999,7 @@
 "_upgrade_required" = "Upgrade erforderlich";
 
 /* (No Comment) */
-"_upgrade_required_securecore_description" = "Secure Core ist in Verbindung mit einem Plus-Abonnement verfügbar. Steigen Sie jetzt um, um den Datenverkehr über unsere sichersten Server in datenschutzfreundlichen Ländern zu leiten.";
+"_upgrade_required_securecore_description" = "Secure Core ist in Verbindung mit einem Plus-Abonnement verfügbar. Steige jetzt um, um den Datenverkehr über unsere sichersten Server in datenschutzfreundlichen Ländern zu leiten.";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
 "_upgrade_subscription" = "Abonnement upgraden";
@@ -2047,7 +2047,7 @@
 "_view_logs" = "Protokolle ansehen";
 
 /* Text in warning screen before actions that will disconnect VPN */
-"_view_toggle_will_cause_disconnect" = "Das Umschalten von Secure Core beendet Ihre aktuelle Verbindung.";
+"_view_toggle_will_cause_disconnect" = "Das Umschalten von Secure Core beendet deine aktuelle Verbindung.";
 
 /* (No Comment) */
 "_vpn_accelerator_change_title" = "VPN-Accelerator ändern";
