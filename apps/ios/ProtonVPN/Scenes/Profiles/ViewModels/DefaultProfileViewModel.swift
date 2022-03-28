@@ -57,7 +57,7 @@ class DefaultProfileViewModel {
         }
     }
     
-    private var isConnected: Bool {
+    var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
@@ -77,15 +77,7 @@ class DefaultProfileViewModel {
     
     var connectionChanged: (() -> Void)?
     
-    let connectedConnectIcon = UIImage(named: "con-connected")
-    
-    var connectIcon: UIImage? {
-        if connectedUiState {
-            return connectedConnectIcon
-        } else {
-            return UIImage(named: "con-available")
-        }
-    }
+    var connectIcon: UIImage? = IconProvider.powerOff
     
     var title: String {
         switch serverOffering {

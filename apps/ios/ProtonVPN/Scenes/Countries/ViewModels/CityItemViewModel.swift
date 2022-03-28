@@ -75,10 +75,17 @@ final class CityItemViewModel: CityViewModel {
     }
 
     var connectButtonColor: UIColor {
-        return isCurrentlyConnected ? UIColor.brandColor() : (underMaintenance ? UIColor.weakInteractionColor() : UIColor.secondaryBackgroundColor())
+        if underMaintenance {
+            return isUsersTierTooLow ? UIColor.weakInteractionColor() : .clear
+        }
+        return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
     }
 
     var connectionChanged: (() -> Void)?
+
+    var textColor: UIColor {
+        return UIColor.normalTextColor()
+    }
 
     private let servers: [ServerItemViewModel]
     private let countryModel: CountryModel

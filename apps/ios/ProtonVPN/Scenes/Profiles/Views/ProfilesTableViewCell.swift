@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class ProfilesTableViewCell: UITableViewCell {
 
@@ -68,8 +69,9 @@ class ProfilesTableViewCell: UITableViewCell {
         super.setEditing(editing, animated: animated)
         if editing {
             connectButton.setTitle(nil, for: .normal)
-            connectButton.setImage(UIImage(named: "arrow-right"), for: .normal)
-            connectButton.imageEdgeInsets = UIEdgeInsets.init(top: 20, left: 35, bottom: 20, right: 13)
+            connectButton.setImage(IconProvider.chevronRight, for: .normal)
+            connectButton.imageView?.tintColor = .white
+            connectButton.backgroundColor = .clear
             connectButton.isUserInteractionEnabled = false
             overlayButton.isUserInteractionEnabled = false
         } else {

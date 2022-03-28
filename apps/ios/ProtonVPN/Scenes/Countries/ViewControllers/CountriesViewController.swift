@@ -111,7 +111,7 @@ final class CountriesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        tableView.rowHeight = viewModel.cellHeight
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .backgroundColor()
         tableView.register(CountryCell.nib, forCellReuseIdentifier: CountryCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)

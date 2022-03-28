@@ -45,6 +45,7 @@ class DefaultProfileTableViewCell: UITableViewCell {
         leftImageView.tintColor = .white
         backgroundColor = .backgroundColor()
         connectButton.backgroundColor = .weakInteractionColor()
+        connectButton.tintColor = .white
         label.textColor = .normalTextColor()
     }
     
@@ -59,7 +60,11 @@ class DefaultProfileTableViewCell: UITableViewCell {
     }
     
     private func stateChanged() {
-        connectButton.setImage(viewModel?.connectIcon, for: .normal)
+        guard let viewModel = viewModel else {
+            return
+        }
+        connectButton.setImage(viewModel.connectIcon, for: .normal)
+        connectButton.backgroundColor = viewModel.isConnected ? .brandColor() : .weakInteractionColor()
     }
     
 }

@@ -21,6 +21,8 @@ import UIKit
 @testable import Search
 
 final class ServerViewModelMock: ServerViewModel {
+    var textColor: UIColor
+    
     let description: String
 
     let isSmartAvailable: Bool = false
@@ -78,5 +80,6 @@ final class ServerViewModelMock: ServerViewModel {
         self.isUsersTierTooLow = isUsersTierTooLow
         self.entryCountryName = entryCountryName
         self.translatedCity = translatedCity
+        self.textColor = .white
     }
 }

@@ -199,7 +199,7 @@ class CountryItemViewModel {
         return serverTypes
     }()
 
-    private lazy var cityItemViewModels: [CityItemViewModel] = {
+    private lazy var cityItemViewModels: [CityViewModel] = {
         let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
         let groups = Dictionary(grouping: servers, by: { $0.city })
         return groups.map({
@@ -327,7 +327,10 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var connectButtonColor: UIColor {
-        return isCurrentlyConnected ? UIColor.interactionNorm() : (underMaintenance ? UIColor.clear : UIColor.weakInteractionColor())
+        if underMaintenance {
+            return isUsersTierTooLow ? UIColor.weakInteractionColor() : .clear
+        }
+        return isCurrentlyConnected ? UIColor.interactionNorm() : UIColor.weakInteractionColor()
     }
 
     var textColor: UIColor {

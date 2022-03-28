@@ -21,6 +21,8 @@ import UIKit
 import Search
 
 final class CityViewModelMock: CityViewModel {
+    var textColor: UIColor
+
     var cityName: String
 
     let translatedCityName: String?
@@ -48,6 +50,7 @@ final class CityViewModelMock: CityViewModel {
     init(cityName: String, countryName: String = "", translatedCityName: String? = nil) {
         self.cityName = cityName
         self.countryName = countryName
+        self.textColor = .white
         self.translatedCityName = translatedCityName
     }
 }

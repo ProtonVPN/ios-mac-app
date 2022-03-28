@@ -1,5 +1,5 @@
 //
-//  Created on 15.03.2022.
+//  Created on 24/03/2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,22 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import UIKit
 
-public protocol CityViewModel: ConnectViewModel {
-    var cityName: String { get }
-    var translatedCityName: String? { get }
-    var countryName: String { get }
-    var countryFlag: UIImage? { get }
+public protocol ConnectViewModel {
+    var connectButtonColor: UIColor { get }
+    var connectIcon: UIImage? { get }
+    var textInPlaceOfConnectIcon: String? { get }
+    var textColor: UIColor { get }
 
-    var connectionChanged: (() -> Void)? { get set }
-
-    func updateTier()
-}
-
-extension CityViewModel {
-    var displayCityName: String {
-        return translatedCityName ?? cityName
-    }
+    func connectAction()
 }

@@ -22,7 +22,7 @@
 
 import UIKit
 
-public final class CountryCell: UITableViewCell {
+public final class CountryCell: ConnectTableViewCell {
     public static var identifier: String {
         return String(describing: self)
     }
@@ -42,7 +42,6 @@ public final class CountryCell: UITableViewCell {
     @IBOutlet private weak var smartIV: UIImageView!
     @IBOutlet private weak var torIV: UIImageView!
 
-    @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private var rightMarginConstraint: NSLayoutConstraint!
     @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!
 
@@ -53,13 +52,16 @@ public final class CountryCell: UITableViewCell {
 
     var searchText: String? {
         didSet {
-            highlightMatches(countryName, viewModel?.description, searchText)
+            guard let viewModel = viewModel as? CountryViewModel else {
+                return
+            }
+            highlightMatches(countryName, viewModel.description, searchText)
         }
     }
 
-    public var viewModel: CountryViewModel? {
+    override public var viewModel: ConnectViewModel? {
         didSet {
-            guard let viewModel = viewModel else {
+            guard let viewModel = viewModel as? CountryViewModel else {
                 return
             }
 
@@ -102,22 +104,16 @@ public final class CountryCell: UITableViewCell {
 
     private func stateChanged() {
         renderConnectButton()
+        updateAccessoryView()
     }
 
-    private func renderConnectButton() {
-        connectButton.backgroundColor = viewModel?.connectButtonColor
-        connectButton.tintColor = viewModel?.textColor
-
-        if let text = viewModel?.textInPlaceOfConnectIcon {
-            connectButton.setImage(nil, for: .normal)
-            connectButton.setTitle(text, for: .normal)
+    func updateAccessoryView() {
+        if viewModel?.textInPlaceOfConnectIcon != nil {
             accessoryType = .none
             accessoryView = nil
             rightNoMarginConstraint.isActive = false
             rightMarginConstraint.isActive = true
         } else {
-            connectButton.setImage(viewModel?.connectIcon, for: .normal)
-            connectButton.setTitle(nil, for: .normal)
             let chevronRight = UIImageView(image: CountryCell.chevronRight)
             chevronRight.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
             chevronRight.sizeToFit()
