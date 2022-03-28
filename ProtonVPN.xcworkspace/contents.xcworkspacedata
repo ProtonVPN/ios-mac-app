@@ -36,6 +36,9 @@
       location = "group:libraries/Modals">
    </FileRef>
    <FileRef
+      location = "group:libraries/Review">
+   </FileRef>
+   <FileRef
       location = "group:apps/iOS/iOS.xcodeproj">
    </FileRef>
    <FileRef
