@@ -26,7 +26,7 @@ public protocol ServerCellDelegate: AnyObject {
     func userDidRequestStreamingInfo()
 }
 
-public final class ServerCell: UITableViewCell {
+public final class ServerCell: ConnectTableViewCell {
     public static var identifier: String {
         return String(describing: self)
     }
@@ -49,7 +49,6 @@ public final class ServerCell: UITableViewCell {
     @IBOutlet private weak var streamingIV: UIImageView!
 
     @IBOutlet private weak var secureView: UIView!
-    @IBOutlet private weak var connectButton: UIButton!
 
     @IBOutlet private weak var countryNameLabel: UILabel!
     @IBOutlet private weak var exitFlagIcon: UIImageView!
@@ -65,9 +64,9 @@ public final class ServerCell: UITableViewCell {
         }
     }
 
-    public var viewModel: ServerViewModel? {
+    override public var viewModel: ConnectViewModel? {
         didSet {
-            guard let viewModel = viewModel else {
+            guard let viewModel = viewModel as? ServerViewModel else {
                 return
             }
 
@@ -135,20 +134,11 @@ public final class ServerCell: UITableViewCell {
         renderConnectButton()
     }
 
-    private func renderConnectButton() {
-        connectButton.backgroundColor = viewModel?.connectButtonColor
-
-        if let text = viewModel?.textInPlaceOfConnectIcon {
-            connectButton.setImage(nil, for: .normal)
-            connectButton.setTitle(text, for: .normal)
-        } else {
-            connectButton.setImage(viewModel?.connectIcon, for: .normal)
-            connectButton.setTitle(nil, for: .normal)
-        }
-    }
-
     private func setupServerAndCountryName() {
-        highlightMatches(serverNameLabel, viewModel?.description, searchText)
-        highlightMatches(countryNameLabel, viewModel?.countryName, searchText)
+        guard let viewModel = viewModel as? ServerViewModel else {
+            return
+        }
+        highlightMatches(serverNameLabel, viewModel.description, searchText)
+        highlightMatches(countryNameLabel, viewModel.countryName, searchText)
     }
 }

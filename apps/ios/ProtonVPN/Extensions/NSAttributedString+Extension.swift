@@ -31,22 +31,26 @@ extension NSAttributedString {
         return mutableAttributedString
     }
 
-    static func imageAttachment(named name: String, width: CGFloat? = nil, height: CGFloat? = nil) -> NSAttributedString? {
-        imageAttachment(image: UIImage(named: name.lowercased()), width: width, height: height)
-    }
-    
-    static func imageAttachment(image: UIImage?, width: CGFloat? = nil, height: CGFloat? = nil) -> NSAttributedString? {
-        guard let image = image else {
+    static func imageAttachment(named name: String, size: CGSize? = nil) -> NSAttributedString? {
+        guard let image = UIImage(named: name.lowercased()) else {
             log.debug("Could not obtain image named for text attachment", category: .app)
             return nil
         }
-
+        return imageAttachment(image: image, size: size)
+    }
+    
+    static func imageAttachment(image: UIImage, baselineOffset: Int? = nil, size: CGSize? = nil) -> NSAttributedString {
         let attachment = NSTextAttachment()
-        if let width = width, let height = height {
-            attachment.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        if let size = size {
+            attachment.bounds = CGRect(origin: .zero, size: size)
         }
 
         attachment.image = image
-        return NSAttributedString(attachment: attachment)
+        let string = NSMutableAttributedString(attachment: attachment)
+        if let baselineOffset = baselineOffset {
+            // swiftlint:disable legacy_constructor
+            string.addAttribute(NSAttributedString.Key.baselineOffset, value: baselineOffset, range: NSMakeRange(0, string.length))
+        }
+        return string
     }
 }

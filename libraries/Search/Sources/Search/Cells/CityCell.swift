@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class CityCell: UITableViewCell {
+final class CityCell: ConnectTableViewCell {
     static var identifier: String {
         return String(describing: self)
     }
@@ -32,7 +32,6 @@ final class CityCell: UITableViewCell {
     @IBOutlet private weak var countryLabel: UILabel!
     @IBOutlet private weak var cityLabel: UILabel!
     @IBOutlet private weak var flagImageView: UIImageView!
-    @IBOutlet private weak var connectButton: UIButton!
 
     // MARK: Properties
 
@@ -42,12 +41,15 @@ final class CityCell: UITableViewCell {
         }
     }
 
-    public var viewModel: CityViewModel? {
+    override public var viewModel: ConnectViewModel? {
         didSet {
-            flagImageView.image = viewModel?.countryFlag
+            guard var viewModel = viewModel as? CityViewModel else {
+                return
+            }
+            flagImageView.image = viewModel.countryFlag
             setupCityAndCountryName()
-            viewModel?.updateTier()
-            viewModel?.connectionChanged = { [weak self] in self?.stateChanged() }
+            viewModel.updateTier()
+            viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
 
             DispatchQueue.main.async { [weak self] in
                 self?.stateChanged()
@@ -85,20 +87,11 @@ final class CityCell: UITableViewCell {
         renderConnectButton()
     }
 
-    private func renderConnectButton() {
-        connectButton.backgroundColor = viewModel?.connectButtonColor
-
-        if let text = viewModel?.textInPlaceOfConnectIcon {
-            connectButton.setImage(nil, for: .normal)
-            connectButton.setTitle(text, for: .normal)
-        } else {
-            connectButton.setImage(viewModel?.connectIcon, for: .normal)
-            connectButton.setTitle(nil, for: .normal)
-        }
-    }
-
     private func setupCityAndCountryName() {
-        highlightMatches(cityLabel, viewModel?.displayCityName, searchText)
-        highlightMatches(countryLabel, viewModel?.countryName, searchText)
+        guard let viewModel = viewModel as? CityViewModel else {
+            return
+        }
+        highlightMatches(cityLabel, viewModel.displayCityName, searchText)
+        highlightMatches(countryLabel, viewModel.countryName, searchText)
     }
 }

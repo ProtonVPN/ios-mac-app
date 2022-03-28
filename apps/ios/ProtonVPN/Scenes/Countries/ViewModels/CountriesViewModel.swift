@@ -117,10 +117,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return vpnGateway == nil || vpnGateway?.connection != .connecting
     }
     
-    var cellHeight: CGFloat {
-        return 72
-    }
-    
     func headerHeight(for section: Int) -> CGFloat {
         if numberOfSections() < 2 { return 0 }
         return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0

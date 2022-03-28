@@ -119,7 +119,7 @@ extension CreateOrEditProfileViewModel {
             name = LocalizedString.random
         }
 
-        let imageAttributedString = NSMutableAttributedString(attributedString: NSAttributedString.imageAttachment(image: image, width: 24, height: 24) ?? NSAttributedString(string: ""))
+        let imageAttributedString = NSMutableAttributedString(attributedString: NSAttributedString.imageAttachment(image: image, size: CGSize(width: 24, height: 24)))
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [
@@ -133,8 +133,8 @@ extension CreateOrEditProfileViewModel {
     }
     
     private func embededImageIcon(image: UIImage?) -> NSAttributedString {
-        if let imageAttributedString = NSAttributedString.imageAttachment(image: image, width: 18, height: 18) {
-            return imageAttributedString
+        if let image = image {
+            return NSAttributedString.imageAttachment(image: image, size: CGSize(width: 18, height: 18))
         }
         return NSAttributedString(string: "")
     }

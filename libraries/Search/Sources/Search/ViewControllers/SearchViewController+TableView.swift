@@ -31,6 +31,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.register(SearchSectionHeaderView.nib, forHeaderFooterViewReuseIdentifier: SearchSectionHeaderView.identifier)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -146,20 +147,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch viewModel.status {
-        case .noResults, .placeholder:
-            return UITableView.automaticDimension
         case .recentSearches:
             return 48
-        case let .results(data):
-            let item = data[indexPath.section]
-            switch item {
-            case .countries, .cities:
-                return 64
-            case .servers, .secureCoreCountries:
-                return 60
-            case .upsell:
-                return UITableView.automaticDimension
-            }
+        default:
+            return UITableView.automaticDimension
         }
     }
 

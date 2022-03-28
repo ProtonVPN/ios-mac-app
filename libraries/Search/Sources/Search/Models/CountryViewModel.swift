@@ -19,22 +19,17 @@
 import Foundation
 import UIKit
 
-public protocol CountryViewModel: AnyObject {
+public protocol CountryViewModel: AnyObject, ConnectViewModel {
     var description: String { get }
     var isSmartAvailable: Bool { get }
     var torAvailable: Bool { get }
     var p2pAvailable: Bool { get }
-    var connectIcon: UIImage? { get }
-    var textInPlaceOfConnectIcon: String? { get }
     var connectionChanged: (() -> Void)? { get set }
     var alphaOfMainElements: CGFloat { get }
     var flag: UIImage? { get }
-    var connectButtonColor: UIColor { get }
-    var textColor: UIColor { get }
     var isSecureCoreCountry: Bool { get }
 
     func updateTier()
-    func connectAction()
 
     func getServers() -> [ServerTier: [ServerViewModel]]
     func getCities() -> [CityViewModel]

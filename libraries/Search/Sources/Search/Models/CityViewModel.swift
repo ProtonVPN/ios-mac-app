@@ -19,19 +19,15 @@
 import Foundation
 import UIKit
 
-public protocol CityViewModel {
+public protocol CityViewModel: ConnectViewModel {
     var cityName: String { get }
     var translatedCityName: String? { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
-    var connectButtonColor: UIColor { get }
-    var connectIcon: UIImage? { get }
-    var textInPlaceOfConnectIcon: String? { get }
 
     var connectionChanged: (() -> Void)? { get set }
 
     func updateTier()
-    func connectAction()
 }
 
 extension CityViewModel {

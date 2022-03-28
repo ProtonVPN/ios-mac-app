@@ -19,19 +19,16 @@
 import Foundation
 import UIKit
 
-public protocol ServerViewModel: AnyObject {
+public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var description: String { get }
     var isSmartAvailable: Bool { get }
     var torAvailable: Bool { get }
     var p2pAvailable: Bool { get }
     var streamingAvailable: Bool { get }
-    var connectIcon: UIImage? { get }
-    var textInPlaceOfConnectIcon: String? { get }
     var connectionChanged: (() -> Void)? { get set }
     var alphaOfMainElements: CGFloat { get }
     var isUsersTierTooLow: Bool { get }
     var underMaintenance: Bool { get }
-    var connectButtonColor: UIColor { get }
     var loadValue: String { get }
     var loadColor: UIColor { get }
     var city: String { get }
@@ -42,7 +39,6 @@ public protocol ServerViewModel: AnyObject {
     var countryFlag: UIImage? { get }
 
     func updateTier()
-    func connectAction()
 }
 
 extension ServerViewModel {

@@ -40,7 +40,8 @@
                             <constraint firstAttribute="height" constant="40" id="0EE-Bs-iaL"/>
                             <constraint firstAttribute="width" constant="40" id="p6L-Vg-H6h"/>
                         </constraints>
-                        <state key="normal" image="con-available"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" image="placeholdertext.fill" catalog="system"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                 <integer key="value" value="20"/>
@@ -77,7 +78,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="con-available" width="22" height="22"/>
         <image name="placeholdertext.fill" catalog="system" width="80" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

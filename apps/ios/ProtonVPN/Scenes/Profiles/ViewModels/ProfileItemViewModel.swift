@@ -248,8 +248,8 @@ final class ProfileItemViewModel {
         let profileDescription = description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = countryName.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
-        let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
-        
+        let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
+
         let description: NSAttributedString
         if serverType == .secureCore {
             description = NSAttributedString.concatenate(profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
@@ -260,7 +260,7 @@ final class ProfileItemViewModel {
     }
     
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
-        let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
+        let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
         
         if serverModel.isSecureCore {
             let entryCountry = (serverModel.entryCountry + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
