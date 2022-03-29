@@ -509,3 +509,10 @@ extension DependencyContainer: ModelIdCheckerFactory {
         return ModelIdChecker()
     }
 }
+
+// MARK: ProtonReachabilityCheckerFactory
+extension DependencyContainer: ProtonReachabilityCheckerFactory {
+    func makeProtonReachabilityChecker() -> ProtonReachabilityChecker {
+        return URLSessionProtonReachabilityChecker()
+    }
+}
