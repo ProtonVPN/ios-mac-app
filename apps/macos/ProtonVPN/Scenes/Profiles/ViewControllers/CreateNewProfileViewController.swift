@@ -199,7 +199,7 @@ final class CreateNewProfileViewController: NSViewController {
         saveButton.setAccessibilityIdentifier("SaveButton")
         
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
+        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
     }
     
     internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedProtocol: Int = 0) {

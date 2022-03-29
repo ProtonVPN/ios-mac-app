@@ -35,8 +35,10 @@ class CountriesSectionHeaderView: NSView {
         didSet {
             wantsLayer = true
             titleLbl.stringValue = viewModel?.title ?? ""
+            titleLbl.textColor = .color(.text, .hint)
             layer?.backgroundColor = viewModel?.backgroundColor ?? .clear
             informationBtn.isHidden = viewModel?.didTapInfoBtn == nil
+            informationBtn.image = AppTheme.Icon.infoCircleFilled.colored(.hint)
         }
     }
 }

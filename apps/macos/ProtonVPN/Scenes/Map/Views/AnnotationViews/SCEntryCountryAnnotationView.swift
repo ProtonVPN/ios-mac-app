@@ -24,45 +24,40 @@ import Cocoa
 import MapKit
 import vpncore
 
-class SCEntryCountryAnnotationView: MKAnnotationView {
-    
-    private let buttonHeight: CGFloat = 30
-    private let buttonWidth: CGFloat
-    private let buttonFrame: CGRect
-    
-    private let triangleWidth: CGFloat = 17
-    private let triangleHeight: CGFloat = 14
-    
-    private let circleDiameter: CGFloat = 14
+class SCEntryCountryAnnotationView: MapAnnotationView {
+    private static let circleDiameter: CGFloat = 14
 
-    private var triangleFrame: CGRect = CGRect()
-    
     let viewModel: SCEntryCountryAnnotationViewModel
+
+    var hovered: Bool {
+        viewModel.state == .hovered
+    }
+
+    override var triangleFrame: CGRect {
+        let origin = CGPoint(x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
+                             y: bounds.height - Self.triangleSize.height - Self.circleDiameter)
+        return CGRect(origin: origin, size: Self.triangleSize)
+    }
     
     private var containerView: NSView?
     
-    var _tag = -1
-    override var tag: Int {
-        get {
-            return _tag
-        }
-        set {
-            _tag = newValue
-        }
-    }
-    
     required init?(coder aDecoder: NSCoder) {
-        fatalError("Unsupported initializer")
+        fatalError("Unsupported initializer \(#function)")
+    }
+
+    required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        fatalError("Unsupported initializer \(#function)")
     }
     
     init(viewModel: SCEntryCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
-        buttonWidth = viewModel.buttonWidth
-        
-        buttonFrame = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
-        
-        super.init(annotation: nil, reuseIdentifier: reuseIdentifier)
-        
+
+        super.init(buttonSize: CGSize(width: viewModel.buttonWidth,
+                                      height: MapAnnotationView.textLineHeight),
+                   hoveredTag: .middle,
+                   styleDelegate: viewModel,
+                   reuseIdentifier: reuseIdentifier)
+
         viewModel.viewStateChange = { [weak self] in
             guard let `self` = self else { return }
             self.setupAnnotationView()
@@ -71,47 +66,20 @@ class SCEntryCountryAnnotationView: MKAnnotationView {
         
         setupAnnotationView()
     }
-    
+
     override func setFrameOrigin(_ newOrigin: NSPoint) {
-        super.setFrameOrigin(newOrigin - NSPoint(x: buttonWidth / 2, y: circleDiameter / 2))
+        super.setFrameOrigin(newOrigin - NSPoint(x: 0, y: Self.circleDiameter / 2))
     }
     
-    // swiftlint:disable operator_usage_whitespace
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
-        if viewModel.state == .hovered {
-            context.setStrokeColor(.cgColor(.icon, [.interactive, .active]))
-            context.setFillColor(.cgColor(.background, viewModel.isConnected ? [.interactive, .active] : .weak))
-            
-            let lineWidth: CGFloat = 1.0
-            
-            // triangle
-            let itf/*innerTriangleFrame*/ = CGRect(x: triangleFrame.origin.x + lineWidth/2, y: triangleFrame.origin.y + lineWidth/2, width: triangleFrame.width - lineWidth, height: triangleFrame.height - lineWidth)
-            context.setLineWidth(lineWidth)
-            context.move(to: CGPoint(x: itf.origin.x, y: itf.origin.y))
-            context.addLine(to: CGPoint(x: itf.origin.x + itf.width / 2, y: itf.origin.y + itf.height))
-            context.addLine(to: CGPoint(x: itf.origin.x + itf.width, y: itf.origin.y))
-        
-            // button
-            let ibf/*innerButtonFrame*/ = CGRect(x: lineWidth/2, y: lineWidth/2, width: buttonWidth - lineWidth, height: buttonHeight)
-            context.addLine(to: CGPoint(x: ibf.maxX - ibf.height/2, y: ibf.maxY))
-            context.addArc(center: CGPoint(x: ibf.maxX - ibf.height/2, y: ibf.maxY - ibf.height/2), radius: ibf.height/2, startAngle: .pi/2, endAngle: .pi*3/2, clockwise: true)
-            context.addLine(to: CGPoint(x: ibf.minX + ibf.height/2, y: ibf.minY))
-            context.addArc(center: CGPoint(x: ibf.minX + ibf.height/2, y: ibf.maxY - ibf.height/2), radius: ibf.height/2, startAngle: .pi*3/2, endAngle: .pi/2, clockwise: true)
-        
-            // close shape (either top of triangle or last section of button)
-            context.closePath()
-            context.drawPath(using: .fillStroke)
-        
-            let attributedTitle = viewModel.attributedCountry
-            let textHeight = attributedTitle.size().height
-            attributedTitle.draw(in: CGRect(x: 0, y: (buttonHeight - textHeight) / 2, width: buttonWidth, height: textHeight))
-        }
+
+        guard hovered else { return }
+
+        drawAnnotation(context: context, text: [viewModel.attributedCountry])
     }
-    // swiftlint:enable operator_usage_whitespace
-    
+
     // MARK: - Private functions
     
     private func setupAnnotationView() {
@@ -131,39 +99,21 @@ class SCEntryCountryAnnotationView: MKAnnotationView {
     
     private func setupFrame() {
         let height: CGFloat
+        let hovered: Bool
         switch viewModel.state {
         case .idle:
-            height = circleDiameter
-            tag = -1 // default view tag
+            height = Self.circleDiameter
+            hovered = false
         case .hovered:
-            height = circleDiameter + triangleHeight + buttonHeight
-            
-            // brings this view to the forefront of the superview's subviews except for any open exit views
-            if let parentView = superview {
-                tag = 50 // less than hovered exit countries
-                parentView.sortSubviews({ (view1, view2, _) -> ComparisonResult in
-                    if view1.tag > view2.tag {
-                        return .orderedDescending
-                    } else if view1.tag < view2.tag {
-                        return .orderedAscending
-                    } else {
-                        return .orderedSame
-                    }
-                }, context: nil)
-            }
+            height = Self.circleDiameter + Self.triangleSize.height + buttonFrame.size.height
+            hovered = true
         }
-        
-        setFrameSize(NSSize(width: buttonWidth, height: height))
+
+        orderInForeground(hovered: hovered)
+        setFrameSize(NSSize(width: buttonFrame.size.width, height: height))
         centerOffset = NSPoint(x: 0, y: -frame.size.height / 2)
-        setTriangleFrame()
     }
-    
-    private func setTriangleFrame() {
-        let triangleOrigin = NSPoint(x: (buttonWidth - triangleWidth) / CGFloat(2), y: bounds.height - triangleHeight - circleDiameter)
-        let triangleSize = NSSize(width: triangleWidth, height: triangleHeight)
-        triangleFrame = CGRect(origin: triangleOrigin, size: triangleSize)
-    }
-    
+
     private func recycleContainerView() {
         if let containerView = containerView {
             containerView.removeFromSuperview()
@@ -182,11 +132,11 @@ class SCEntryCountryAnnotationView: MKAnnotationView {
             return
         }
         
-        let origin = NSPoint(x: (frame.size.width - circleDiameter) / CGFloat(2), y: 0)
-        let size = NSSize(width: circleDiameter, height: circleDiameter)
+        let origin = NSPoint(x: (frame.size.width - Self.circleDiameter) / CGFloat(2), y: 0)
+        let size = NSSize(width: Self.circleDiameter, height: Self.circleDiameter)
         
         let circleState: SCCoreCircleButton.ButtonState
-        if viewModel.isConnected || viewModel.state == .hovered {
+        if viewModel.isConnected || hovered {
             circleState = .active
         } else {
             circleState = .idle

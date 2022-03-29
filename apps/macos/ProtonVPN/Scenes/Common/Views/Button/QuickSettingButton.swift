@@ -55,7 +55,7 @@ class QuickSettingButton: NSButton {
     override func updateLayer() {
         layer?.cornerRadius = 3
         layer?.masksToBounds = false
-        layer?.backgroundColor = .cgColor(.background)
+        layer?.backgroundColor = self.cgColor(.background)
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -118,16 +118,20 @@ extension QuickSettingButton: CustomStyleContext {
         case .background:
             switch self.currentStyle {
             case .disabled:
-                return .normal + hover
+                if hovered {
+                    return [.transparent, .active, .hovered]
+                } else {
+                    return .normal
+                }
             case .enabled:
-                return [.interactive, .weak] + hover
+                return [.transparent, .active] + hover
             }
         case .text, .icon:
             switch self.currentStyle {
             case .disabled:
                 return .normal
             case .enabled:
-                return [.interactive, .active] + hover
+                return [.interactive, .strong] + hover
             }
         default:
             break

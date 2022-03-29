@@ -36,7 +36,7 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
     
     let title: String!
     let active: Bool!
-    var icon: NSImage! = #imageLiteral(resourceName: "protonvpn-server-tor-list")
+    var icon: NSImage! = AppTheme.Icon.brandTor
     var requiresUpdate: Bool!
     var selectCallback: (() -> Void)?
     
@@ -66,11 +66,11 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         let icon: NSImage
         switch level {
         case .level1:
-            icon = #imageLiteral(resourceName: "qs_netshield_level1")
+            icon = AppTheme.Icon.shieldHalfFilled
         case .level2:
-            icon = #imageLiteral(resourceName: "qs_netshield_level2")
+            icon = AppTheme.Icon.shieldFilled
         case .off:
-            icon = #imageLiteral(resourceName: "qs_netshield_off")
+            icon = AppTheme.Icon.shield
         }
 
         super.init(text, icon: icon, active: isActive, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {

@@ -48,16 +48,23 @@ final class ServerItemCellView: NSView {
         wantsLayer = true
         layer?.backgroundColor = .cgColor(.background, .weak)
         upgradeBtn.stringValue = LocalizedString.upgrade
-        maintenanceIV.wantsLayer = true
-        maintenanceIV.layer?.cornerRadius = 10
-        maintenanceIV.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
 
+        let imageMargin = 8
+        maintenanceIV.wantsLayer = true
+        maintenanceIV.layer?.cornerRadius = maintenanceIV.bounds.height / 2
+        maintenanceIV.layer?.backgroundColor = .clear
+        maintenanceIV.layer?.borderColor = .cgColor(.icon, .hint)
+        maintenanceIV.layer?.borderWidth = 2.0
         maintenanceIV.image = AppTheme.Icon.wrench
-        streamingIV.image = AppTheme.Icon.play
-        torIV.image = AppTheme.Icon.brandTor
-        p2pIV.image = AppTheme.Icon.arrowsSwitch
-        smartIV.image = AppTheme.Icon.globe
-        secureCoreIV.image = AppTheme.Icon.chevronsRight
+            .colored(.hint)
+            .resize(newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
+                    newHeight: Int(maintenanceIV.bounds.height) - imageMargin)
+
+        streamingIV.image = AppTheme.Icon.play.colored(.hint)
+        torIV.image = AppTheme.Icon.brandTor.colored(.hint)
+        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.hint)
+        smartIV.image = AppTheme.Icon.globe.colored(.hint)
+        secureCoreIV.image = AppTheme.Icon.chevronsRight.colored(.interactive)
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
         let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)

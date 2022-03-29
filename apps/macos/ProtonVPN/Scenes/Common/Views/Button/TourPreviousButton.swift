@@ -47,7 +47,7 @@ class TourPreviousButton: HoverDetectionButton {
         
         context.setLineWidth(2.5)
         context.setLineCap(.round)
-        context.setStrokeColor(self.cgColor(.border))
+        context.setStrokeColor(self.cgColor(.icon))
         context.addPath(arrow)
         context.drawPath(using: .stroke)
     }
@@ -66,9 +66,10 @@ class TourPreviousButton: HoverDetectionButton {
 extension TourPreviousButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
+        case .icon:
+            return isHovered ? .normal : [.interactive, .weak]
         case .border:
-            let hover: AppTheme.Style = isHovered ? .hovered : []
-            return [.interactive, .weak] + hover
+            return isHovered ? .inverted : [.interactive, .weak]
         case .background:
             return .transparent
         default:

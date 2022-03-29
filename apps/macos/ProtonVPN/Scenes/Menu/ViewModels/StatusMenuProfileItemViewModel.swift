@@ -37,7 +37,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
     var name: NSAttributedString {
         let style: AppTheme.Style = canConnect ? .normal : .weak
-        return profile.name.styled(style, font: .themeFont(literalSize: 11), alignment: .left, lineBreakMode: .byTruncatingTail)
+        return profile.name.styled(style, font: .themeFont(.paragraph), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
     var secondaryDescription: NSAttributedString {
@@ -64,6 +64,6 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
             description = ""
         }
         
-        return description.styled(.weak, font: .themeFont(literalSize: 11), alignment: .right)
+        return description.styled(.weak, font: .themeFont(.paragraph), alignment: .right)
     }
 }

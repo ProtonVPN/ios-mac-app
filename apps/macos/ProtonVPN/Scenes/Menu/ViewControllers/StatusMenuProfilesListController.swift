@@ -76,6 +76,8 @@ class StatusMenuProfilesListController: WindowController {
         profileList.selectionHighlightStyle = .none
         profileList.backgroundColor = .clear
         profileList.register(NSNib(nibNamed: NSNib.Name("StatusMenuProfileViewItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier))
+        profileList.columnAutoresizingStyle = .uniformColumnAutoresizingStyle
+        profileList.sizeLastColumnToFit()
     }
 }
 
@@ -87,13 +89,13 @@ extension StatusMenuProfilesListController: NSTableViewDelegate {
 }
 
 extension StatusMenuProfilesListController: NSTableViewDataSource {
-    
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         return viewModel.cellHeight
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier), owner: nil) as! StatusMenuProfileViewItem
+
         let cellViewModel = viewModel.cellModel(forIndex: row)
         rowItem.updateView(withModel: cellViewModel)
         return rowItem

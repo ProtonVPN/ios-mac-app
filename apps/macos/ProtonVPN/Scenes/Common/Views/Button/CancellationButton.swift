@@ -70,14 +70,14 @@ extension CancellationButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .text:
-            return isDestructive || !isHovered ? .normal : .weak
+            return .normal
         case .border:
-            return !isDestructive || !isHovered ? .inverted : [.danger, .hovered]
+            return !isDestructive || !isHovered ? .normal : [.danger, .hovered]
         case .background:
             if isDestructive {
-                return isHovered ? [.danger, .hovered] : .weak
+                return isHovered ? [.danger, .hovered] : .transparent
             } else {
-                return isHovered ? .inverted : .weak
+                return .transparent + (isHovered ? .hovered : [])
             }
         default:
             break

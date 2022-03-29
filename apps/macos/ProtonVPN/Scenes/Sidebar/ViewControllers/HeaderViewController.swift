@@ -84,7 +84,7 @@ final class HeaderViewController: NSViewController {
     
     private func setupPersistentView() {
         backgroundView.wantsLayer = true
-        backgroundView.layer?.backgroundColor = .cgColor(.background, .weak)
+        backgroundView.layer?.backgroundColor = .cgColor(.background)
                 
         connectButton.target = self
         connectButton.action = #selector(quickConnectButtonAction)

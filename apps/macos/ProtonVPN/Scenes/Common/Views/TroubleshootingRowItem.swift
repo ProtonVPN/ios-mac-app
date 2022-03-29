@@ -59,6 +59,7 @@ final class TroubleshootingRowItem: NSTableRowView {
             trailingConstraint?.constant = -80
             switchView.isHidden = false
             switchView.setState(actionable.isOn ? .on : .off)
+            switchView.maskColor = .cgColor(.background)
         }
     }
     

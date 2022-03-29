@@ -28,7 +28,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
     @IBOutlet weak var profileImage: NSImageView!
     @IBOutlet weak var label: NSTextField!
     @IBOutlet weak var secondaryLabel: NSTextField!
-    @IBOutlet weak var seperator: NSBox!
+    @IBOutlet weak var separator: NSBox!
     @IBOutlet weak var button: StatusMenuSurfaceButton!
     
     private var viewModel: StatusMenuProfileItemViewModel?
@@ -38,7 +38,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
         
         setupIcon()
         setupLabels()
-        setupSeperator()
+        setupSeparator()
         setupButton()
         setupAvailability()
     }
@@ -70,19 +70,28 @@ class StatusMenuProfileViewItem: NSTableRowView {
         secondaryLabel.attributedStringValue = viewModel.secondaryDescription
     }
     
-    private func setupSeperator() {
-        seperator.fillColor = .color(.border, .weak)
+    private func setupSeparator() {
+        separator.fillColor = .color(.border, .strong)
     }
     
     private func setupButton() {
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: centerXAnchor),
+            button.centerYAnchor.constraint(equalTo: centerYAnchor),
+            button.widthAnchor.constraint(equalTo: widthAnchor),
+            button.heightAnchor.constraint(equalTo: heightAnchor)
+        ])
+
         button.stateChanged = { [weak self] in
             guard let `self` = self else { return }
             
             if self.button.isHovered, let viewModel = self.viewModel, viewModel.canConnect {
-                self.backgroundColor = .color(.background, [.interactive, .weak, .hovered])
+                self.button.layer?.backgroundColor = .cgColor(.background, [.transparent, .hovered])
             } else {
-                self.backgroundColor = .color(.background, .strong)
+                self.button.layer?.backgroundColor = .cgColor(.background, [.transparent])
             }
+            self.button.needsDisplay = true
         }
     }
     

@@ -158,7 +158,7 @@
 		D97746283DCDA99D9169BA3F /* Pods-ProtonVPN OpenVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */; };
 		E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
 		E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */; };
-		E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */; };
+		E12657A220ED01E6004A21C4 /* InteractiveHighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12657A120ED01E6004A21C4 /* InteractiveHighlightButton.swift */; };
 		E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464AA2033780300C0DB7D /* LoadCircle.swift */; };
 		E13464AD20342D2A00C0DB7D /* FeatureIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464AC20342D2A00C0DB7D /* FeatureIcon.swift */; };
 		E13464D32035774200C0DB7D /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464D22035774200C0DB7D /* ShadowView.swift */; };
@@ -784,7 +784,7 @@
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredLoadButton.swift; sourceTree = "<group>"; };
-		E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenHighlightButton.swift; sourceTree = "<group>"; };
+		E12657A120ED01E6004A21C4 /* InteractiveHighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveHighlightButton.swift; sourceTree = "<group>"; };
 		E13464AA2033780300C0DB7D /* LoadCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCircle.swift; sourceTree = "<group>"; };
 		E13464AC20342D2A00C0DB7D /* FeatureIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureIcon.swift; sourceTree = "<group>"; };
 		E13464D22035774200C0DB7D /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
@@ -2621,7 +2621,7 @@
 				EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */,
 				E13C63F92038A08400D9E40C /* ExpandMapButton.swift */,
 				EE8EF1EA1F1FB8380057CD94 /* InteractiveActionButton.swift */,
-				E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */,
+				E12657A120ED01E6004A21C4 /* InteractiveHighlightButton.swift */,
 				EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */,
 				E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */,
 				EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */,
@@ -3550,7 +3550,7 @@
 				42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */,
 				E187021920E23815000521AC /* StatusMenuProfilesListController.swift in Sources */,
 				EE4943EE1F29C20200CF980F /* LoginViewController.swift in Sources */,
-				E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */,
+				E12657A220ED01E6004A21C4 /* InteractiveHighlightButton.swift in Sources */,
 				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,

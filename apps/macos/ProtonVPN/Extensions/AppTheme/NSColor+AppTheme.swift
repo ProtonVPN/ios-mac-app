@@ -44,6 +44,14 @@ private extension AppTheme.Style {
             } else {
                 return CP.InteractionWeak
             }
+        } else if contains(.strong) {
+            if contains(.hovered) {
+                return CP.LinkHover
+            } else if contains(.active) {
+                return CP.LinkActive
+            } else {
+                return CP.LinkNorm
+            }
         } else {
             if contains(.hovered) {
                 return CP.InteractionNormHover
@@ -95,7 +103,15 @@ private extension AppTheme.Style {
     }
 
     var backgroundColor: AppearanceAwareColor {
-        if contains(.inverted) {
+        if contains(.transparent) {
+            if contains(.hovered) {
+                return CP.InteractionDefaultHover
+            } else if contains(.active) {
+                return CP.InteractionDefaultActive
+            } else {
+                return CP.InteractionDefault
+            }
+        } else if contains(.inverted) {
             return CP.TextNorm
         } else if contains(.hovered) {
             return CP.InteractionWeakHover
@@ -131,6 +147,8 @@ private extension AppTheme.Style {
     var textColor: AppearanceAwareColor {
         if contains(.weak) {
             return CP.TextWeak
+        } else if contains(.hint) {
+            return CP.TextHint
         } else if contains(.disabled) {
             return CP.TextDisabled
         } else if contains(.inverted) {
@@ -141,15 +159,7 @@ private extension AppTheme.Style {
     }
 
     var iconColor: AppearanceAwareColor {
-        if contains(.weak) {
-            return CP.TextWeak
-        } else if contains(.disabled) {
-            return CP.TextDisabled
-        } else if contains(.inverted) {
-            return CP.TextInvert
-        } else {
-            return CP.TextNorm
-        }
+        return textColor
     }
 }
 

@@ -413,7 +413,7 @@ class StatusMenuViewModel {
         }
         
         if server.isSecureCore {
-            let secureCoreIcon = AppTheme.Icon.shield.asAttachment(style: .normal, size: .square(14))
+            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(14))
             let entryCountry = (" " + server.entryCountry + " ").styled([.interactive, .active])
             let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
             let exitCountry = (" " + server.exitCountry + " ").styled()

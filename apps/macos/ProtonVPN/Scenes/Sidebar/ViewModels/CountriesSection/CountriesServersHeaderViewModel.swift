@@ -31,7 +31,7 @@ protocol CountriesServersHeaderViewModelProtocol {
 
 class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
-    let backgroundColor: CGColor = .cgColor(.background)
+    let backgroundColor: CGColor = .cgColor(.background, .weak)
     var didTapInfoBtn: (() -> Void)?
     
     init( _ sectionHeader: String, totalCountries: Int, isPremium: Bool, countriesViewModel: CountriesSectionViewModel ) {

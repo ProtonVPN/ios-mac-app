@@ -82,39 +82,51 @@ extension OverviewItemViewModel {
         let profileDescription = ("  " + description).styled(font: .themeFont(.heading4), alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = (countryName + "  ").styled(font: .themeFont(.heading4), alignment: .left)
-        let doubleArrow = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
+        let doubleArrow = AppTheme.Icon.chevronRight.asAttachment(style: .normal, size: .square(10))
 
-        let description: NSAttributedString
+        let result: NSAttributedString
         let buffer = "  ".styled(font: .themeFont(.heading4), alignment: .left)
         switch serverType {
         case .standard:
-            description = NSAttributedString.concatenate(attributedCountryName, doubleArrow, profileDescription)
+            result = NSAttributedString.concatenate(attributedCountryName, doubleArrow, profileDescription)
         case .secureCore:
-            let icon = AppTheme.Icon.shield.asAttachment(style: .interactive, size: .square(15))
-            description = NSAttributedString.concatenate(icon, profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
+            let icon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(15))
+            result = NSAttributedString.concatenate(icon, profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
         case .p2p:
-            let icon = AppTheme.Icon.arrowsSwitch.asAttachment(style: .interactive, size: .square(15))
-            description = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
+            let icon = AppTheme.Icon.arrowsSwitch.asAttachment(style: .normal, size: .square(15))
+            result = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         default: // case .tor:
-            let icon = AppTheme.Icon.brandTor.asAttachment(style: .interactive, size: .square(15))
-            description = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
+            let icon = AppTheme.Icon.brandTor.asAttachment(style: .normal, size: .square(15))
+            result = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         }
         
-        return description
+        return result
     }
     
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
-        let doubleArrow = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
+        let doubleArrow = AppTheme.Icon.chevronRight.asAttachment(style: .normal, size: .square(10))
 
+        let prefixIcon: NSImage?
         if serverModel.isSecureCore {
-            let secureCoreIcon = AppTheme.Icon.shield.asAttachment(style: .interactive, size: .square(14))
-            let entryCountry = ("  " + serverModel.entryCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
-            let exitCountry = ("  " + serverModel.exitCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
-            return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrow, exitCountry)
+            prefixIcon = AppTheme.Icon.locks
+        } else if serverModel.supportsTor {
+            prefixIcon = AppTheme.Icon.brandTor
+        } else if serverModel.supportsP2P {
+            prefixIcon = AppTheme.Icon.arrowsSwitch
         } else {
-            let countryName = (serverModel.country + "  ").styled(font: .themeFont(.heading4), alignment: .left)
+            prefixIcon = nil
+        }
+        let buffer = prefixIcon == nil ? "" : "  "
+
+        let prefixString = prefixIcon?.colored(.hint).asAttachment(style: .normal, size: .square(15)) ?? NSAttributedString()
+        if serverModel.isSecureCore {
+            let entryCountry = (buffer + serverModel.entryCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
+            let exitCountry = ("  " + serverModel.exitCountry + "  ").styled(font: .themeFont(.heading4), alignment: .left)
+            return NSAttributedString.concatenate(prefixString, entryCountry, doubleArrow, exitCountry)
+        } else {
+            let countryName = (buffer + serverModel.country + "  ").styled(font: .themeFont(.heading4), alignment: .left)
             let serverName = ("  " + serverModel.name).styled(font: .themeFont(.heading4), alignment: .left)
-            return NSAttributedString.concatenate(countryName, doubleArrow, serverName)
+            return NSAttributedString.concatenate(prefixString, countryName, doubleArrow, serverName)
         }
     }
 }

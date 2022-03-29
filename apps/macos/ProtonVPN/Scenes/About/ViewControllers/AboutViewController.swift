@@ -28,13 +28,13 @@ class AboutViewController: NSViewController {
     
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory
     public var factory: Factory!
-    
+
     @IBOutlet weak var backgroundView: NSView!
     @IBOutlet weak var versionTitleLabel: PVPNTextField!
     @IBOutlet weak var versionLabel: PVPNTextField!
     @IBOutlet weak var dateTitleLabel: PVPNTextField!
     @IBOutlet weak var dateLabel: PVPNTextField!
-    @IBOutlet weak var acknowledgementsButton: GreenHighlightButton!
+    @IBOutlet weak var acknowledgementsButton: InteractiveHighlightButton!
     @IBOutlet weak var changelogLabel: PVPNTextField!
     @IBOutlet weak var webView: WKWebView!
     
@@ -75,7 +75,7 @@ class AboutViewController: NSViewController {
     
     private func setupView() {
         backgroundView.wantsLayer = true
-        backgroundView.layer?.backgroundColor = .cgColor(.background, .strong)
+        backgroundView.layer?.backgroundColor = .cgColor(.background)
     }
     
     private func setupComponents() {
@@ -93,6 +93,8 @@ class AboutViewController: NSViewController {
         acknowledgementsButton.attributedTitle = LocalizedString.acknowledgements.styled([.interactive, .active], font: .themeFont(bold: true), alignment: .left)
         
         changelogLabel.attributedStringValue = LocalizedString.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
+
+        webView.layer?.backgroundColor = .cgColor(.background)
         webView.loadHTMLString(changelogHtml, baseURL: nil)
     }
         

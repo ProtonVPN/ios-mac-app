@@ -51,7 +51,7 @@ class PVPNTextViewLink: NSTextView {
 
         self.isAutomaticLinkDetectionEnabled = true
         self.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.color(.text, .interactive),
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .strong]),
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
             NSAttributedString.Key.cursor: NSCursor.pointingHand
         ]
