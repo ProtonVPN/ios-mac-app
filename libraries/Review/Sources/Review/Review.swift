@@ -24,7 +24,6 @@ public final class Review {
     private var successConenctionsCount = 0
     private var lastReviewShownTimestamp: Date?
     private var plan: String
-    private var newPlanPurchaseTimestamp: Date?
     private var activeConenctionStartTimestamp: Date?
 
     private let dateProvider: () -> Date
@@ -58,7 +57,6 @@ public final class Review {
 
     public func planPurchased(plan: String) {
         self.plan = plan
-        newPlanPurchaseTimestamp = dateProvider()
     }
 
     public func activated() {
@@ -66,7 +64,6 @@ public final class Review {
     }
 
     private func show() {
-        newPlanPurchaseTimestamp = nil
         successConenctionsCount = 0
         lastReviewShownTimestamp = dateProvider()
         reviewPrompt.show()
@@ -109,22 +106,6 @@ public final class Review {
              user's subscription is in rating_eligible_plans
          */
         if let activeConenctionStartTimestamp = activeConenctionStartTimestamp, activeConenctionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
-            show()
-            return
-        }
-
-        /**
-         FR-3. Rating after successful connection after payment
-
-         When an in-app purchase is performed and completed, the following conditions must be true in order to show the review modal:
-
-             VPN is connected
-             purchase was successful
-             user's subscription is in rating_eligible_plans
-         */
-
-        // connected after less than 60 seconds after new plan purchase or purchased while a connection is active
-        if let newPlanPurchaseTimestamp = newPlanPurchaseTimestamp, newPlanPurchaseTimestamp.addingTimeInterval(60) > dateProvider(), activeConenctionStartTimestamp != nil {
             show()
             return
         }

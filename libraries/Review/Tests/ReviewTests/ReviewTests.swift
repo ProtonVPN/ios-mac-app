@@ -92,28 +92,6 @@ final class ReviewTests: XCTestCase {
         XCTAssertFalse(prompt.shown)
     }
 
-    func testReviewAfterConnectingAfterPlanPurchase() {
-        let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
-
-        review.planPurchased(plan: "visionary")
-        XCTAssertFalse(prompt.shown)
-
-        review.connected()
-        XCTAssertTrue(prompt.shown)
-    }
-
-    func testReviewAfterConnectingAfterPlanPurchaseWithIneligiblePlan() {
-        let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
-
-        review.planPurchased(plan: "visionary")
-        XCTAssertFalse(prompt.shown)
-
-        review.connected()
-        XCTAssertFalse(prompt.shown)
-    }
-
     func testFailedConenctionsResetsTheSuccessCount() {
         let prompt = ReviewPromptMock()
         let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
