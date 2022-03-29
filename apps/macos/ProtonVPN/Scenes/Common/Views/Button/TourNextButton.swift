@@ -43,17 +43,21 @@ class TourNextButton: HoverDetectionButton {
     
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
+        attributedTitle = self.style(title)
+
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
         layer?.backgroundColor = self.cgColor(.background)
+        layer?.borderColor = self.cgColor(.border)
+        layer?.borderWidth = 2.0
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
+
         if showArrow {
             let midX = bounds.midX + (attributedTitle.size().width - textOffset - arrowWidth) / 2 + textOffset
             let midY = bounds.midY
@@ -96,10 +100,12 @@ class TourNextButtonCell: NSButtonCell {
 extension TourNextButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
-        case .border, .text, .icon:
-            return .interactive
+        case .border:
+            return .inverted
+        case .text, .icon:
+            return isHovered ? .interactive : .normal
         case .background:
-            return isHovered ? [.interactive, .weak, .hovered] : .inverted
+            return isHovered ? .inverted : .interactive
         default:
             break
         }

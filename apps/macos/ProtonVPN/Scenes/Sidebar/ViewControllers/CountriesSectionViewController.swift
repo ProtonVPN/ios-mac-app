@@ -335,9 +335,9 @@ extension CountriesSectionViewController: NSTextFieldDelegate {
 
 extension CountriesSectionViewController: CountriesSettingsDelegate {
     func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool) {
-        secureCoreBtn.switchState(secureCore ? #imageLiteral(resourceName: "qs_securecore_on") : #imageLiteral(resourceName: "qs_securecore_off"), enabled: secureCore)
-        killSwitchBtn.switchState(killSwitch ? #imageLiteral(resourceName: "qs_killswitch_on") : #imageLiteral(resourceName: "qs_killswitch_off"), enabled: killSwitch)
-        netShieldBtn.switchState(netshield == .off ? #imageLiteral(resourceName: "qs_netshield_off") : ( netshield == .level1 ? #imageLiteral(resourceName: "qs_netshield_level1") : #imageLiteral(resourceName: "qs_netshield_level2") ), enabled: netshield != .off)
+        secureCoreBtn.switchState(secureCore ? AppTheme.Icon.locks : AppTheme.Icon.lock, enabled: secureCore)
+        killSwitchBtn.switchState(killSwitch ? AppTheme.Icon.switchOn : AppTheme.Icon.switchOff, enabled: killSwitch)
+        netShieldBtn.switchState(netshield == .off ? AppTheme.Icon.shield : (netshield == .level1 ? AppTheme.Icon.shieldHalfFilled : AppTheme.Icon.shieldFilled), enabled: netshield != .off)
         children
             .compactMap { $0 as? QuickSettingsDetailViewControllerProtocol }
             .forEach { $0.reloadOptions() }

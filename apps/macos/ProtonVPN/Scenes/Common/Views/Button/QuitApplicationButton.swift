@@ -38,9 +38,9 @@ class QuitApplicationButton: HoverDetectionButton {
     }
     
     private func configureView() {
-        let style: AppTheme.Style = isHovered ? [.warning, .hovered] : .weak
+        let style: AppTheme.Style = isHovered ? [.danger, .hovered] : .weak
 
-        let powerIcon = AppTheme.Icon.powerOff.asAttachment(style: style, size: .square(14))
+        let powerIcon = AppTheme.Icon.powerOff.asAttachment(style: style, size: .square(12))
         let show = (" " + LocalizedString.quit).styled(style)
         attributedTitle = NSAttributedString.concatenate(powerIcon, show)
     }

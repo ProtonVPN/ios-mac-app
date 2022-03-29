@@ -50,18 +50,25 @@ final class CountryItemCellView: NSView {
         expandButton.layer?.cornerRadius = 16
         expandButton.layer?.borderWidth = 2
         expandButton.layer?.borderColor = .cgColor(.border, .weak)
-        
+
+        let imageMargin = 8
         maintenanceBtn.wantsLayer = true
         maintenanceBtn.layer?.cornerRadius = 16
         maintenanceBtn.image = AppTheme.Icon.wrench
-        maintenanceBtn.layer?.backgroundColor = .cgColor(.icon, [.interactive, .weak, .active])
-        
+            .colored(.hint)
+            .resize(newWidth: Int(maintenanceBtn.bounds.width) - imageMargin,
+                    newHeight: Int(maintenanceBtn.bounds.height) - imageMargin)
+        maintenanceBtn.layer?.borderColor = .cgColor(.icon, .hint)
+        maintenanceBtn.layer?.backgroundColor = .clear
+
+        secureIV.toolTip = LocalizedString.secureCoreInfo
+        secureIV.image = AppTheme.Icon.chevronsRight.colored(.interactive)
         torIV.toolTip = LocalizedString.torTitle
-        torIV.image = AppTheme.Icon.brandTor
+        torIV.image = AppTheme.Icon.brandTor.colored(.hint)
         p2pIV.toolTip = LocalizedString.p2pTitle
-        p2pIV.image = AppTheme.Icon.arrowsSwitch
+        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.hint)
         smartIV.toolTip = LocalizedString.smartProtocolTitle
-        smartIV.image = AppTheme.Icon.globe
+        smartIV.image = AppTheme.Icon.globe.colored(.hint)
 
         separatorView.wantsLayer = true
         separatorView.layer?.backgroundColor = .cgColor(.border, .weak)

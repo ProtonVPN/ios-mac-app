@@ -43,6 +43,6 @@ class InteractiveActionButton: HoverDetectionButton {
     }
     
     private func setAttributedTitle() {
-        attributedTitle = title.styled(.interactive, font: .themeFont(fontSize), alignment: alignment)
+        attributedTitle = title.styled([.interactive, .strong], font: .themeFont(fontSize), alignment: alignment)
     }
 }

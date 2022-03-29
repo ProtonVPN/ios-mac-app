@@ -29,6 +29,12 @@ class ButtonMask: NSView {
         }
     }
 
+    var maskColor: CGColor = .cgColor(.background, .weak) {
+        didSet {
+            needsDisplay = true
+        }
+    }
+
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         drawMask(context: context)
@@ -40,7 +46,7 @@ class ButtonMask: NSView {
 
     private func drawMask(context: CGContext) {
         context.setLineWidth(0.0)
-        context.setFillColor(.cgColor(.background, .weak))
+        context.setFillColor(maskColor)
         context.setShouldAntialias(true)
         do {
             let path = CGMutablePath()

@@ -82,6 +82,15 @@ class SwitchButton: NSView, CAAnimationDelegate {
         }
     }
 
+    var maskColor: CGColor {
+        get {
+            mask.maskColor
+        }
+        set {
+            mask.maskColor = newValue
+        }
+    }
+
     private var mask: ButtonMask!
     
     required init?(coder aDecoder: NSCoder) {

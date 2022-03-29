@@ -53,7 +53,7 @@ final class TroubleshootingPopup: NSViewController {
 
     private func setupUI() {
         view.wantsLayer = true
-        let backgroundColor: NSColor = .color(.background, .weak)
+        let backgroundColor: NSColor = .color(.background)
         view.layer?.backgroundColor = backgroundColor.cgColor
         tableView.backgroundColor = backgroundColor
     }

@@ -236,7 +236,7 @@ final class HeaderViewModel {
         let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
         
         if server.isSecureCore {
-            let secureCoreIcon = AppTheme.Icon.shield.asAttachment(style: .normal, size: .square(14))
+            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(14))
             let entryCountry = (" " + server.entryCountry + " ").styled(.normal, font: .themeFont(.heading4), alignment: .left)
             let exitCountry = (" " + server.exitCountry + " ").styled(font: .themeFont(.heading4), alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)

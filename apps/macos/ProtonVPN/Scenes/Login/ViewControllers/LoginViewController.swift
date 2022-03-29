@@ -118,7 +118,8 @@ final class LoginViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
+        logoImage.image = AppTheme.Icon.vpnWordmarkAlwaysDark
         logoImage.imageScaling = .scaleProportionallyUpOrDown
         setupLoadingView()
         setupOnboardingView()

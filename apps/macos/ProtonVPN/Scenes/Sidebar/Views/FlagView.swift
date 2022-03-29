@@ -50,7 +50,7 @@ class FlagView: NSView {
         let path = CGMutablePath()
         path.addRect(bounds)
         
-        context.setFillColor(.cgColor(.background, .strong))
+        context.setFillColor(.cgColor(.background))
         context.addPath(path)
         context.drawPath(using: .fill)
     }

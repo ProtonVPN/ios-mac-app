@@ -75,7 +75,7 @@ class ConnectButton: ResizingTextButton {
             title = upgradeRequired ? LocalizedString.upgrade : LocalizedString.connect
             setAccessibilityLabel(String(format: "%@ %@", title, nameForAccessibility ?? ""))
         }
-        attributedTitle = title.uppercased().styled(font: .themeFont(.small))
+        attributedTitle = title.styled(font: .themeFont(.small))
     }
 }
 

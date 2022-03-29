@@ -23,6 +23,9 @@
 import Cocoa
 
 class TabBarButton: NSButton {
+    static func backgroundColor(forFocus present: Bool) -> CGColor {
+        .cgColor(.background, present ? .weak : .normal)
+    }
     
     override var title: String {
         didSet {

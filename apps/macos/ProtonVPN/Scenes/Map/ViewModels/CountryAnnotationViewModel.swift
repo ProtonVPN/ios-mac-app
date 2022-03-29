@@ -24,7 +24,7 @@ import Foundation
 import CoreLocation
 import vpncore
 
-class CountryAnnotationViewModel {
+class CountryAnnotationViewModel: CustomStyleContext {
     
     enum ViewState {
         case idle
@@ -100,16 +100,29 @@ class CountryAnnotationViewModel {
         }
         viewStateChange?()
     }
-}
 
-extension CountryAnnotationViewModel: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
-        guard context == .text else {
-            assertionFailure("Context not handled: \(context)")
-            return .normal
+        switch context {
+        case .text:
+            return available ? .normal : [.interactive, .weak, .disabled]
+        case .background:
+            guard isConnected else {
+                return .weak
+            }
+            return .interactive
+        case .icon:
+            guard isConnected else {
+                guard available else {
+                    return [.interactive, .weak]
+                }
+                return state == .hovered ? .normal : [.interactive, .active]
+            }
+            return state == .hovered ? [.interactive, .active] : .normal
+        default:
+            break
         }
-
-        return available ? .normal : [.interactive, .weak, .disabled]
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }
 
@@ -195,7 +208,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     
     func attributedServer(for row: Int) -> NSAttributedString {
         guard servers.count > row else { return NSAttributedString() }
-        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: available ? .normal : .weak, size: .square(8))
+        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: available ? .normal : .weak, size: .square(10))
         let serverName = (" " + servers[row].name).styled(available ? .normal : [.interactive, .weak, .disabled])
         let title = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(doubleArrows, serverName))
         let range = (title.string as NSString).range(of: title.string)
@@ -282,5 +295,20 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
         if selection.countryCode != countryCode {
             state = .idle
         }
+    }
+
+    override func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .text:
+            return .normal
+        case .icon:
+            return [.interactive, .active]
+        case .background:
+            return isConnected ? [.interactive, .active] : .weak
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

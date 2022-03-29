@@ -31,7 +31,7 @@ class StatusMenuProfilesListViewModel {
     var contentChanged: (() -> Void)?
     
     var cellHeight: CGFloat {
-        return 25
+        return 44
     }
     
     var cellCount: Int {

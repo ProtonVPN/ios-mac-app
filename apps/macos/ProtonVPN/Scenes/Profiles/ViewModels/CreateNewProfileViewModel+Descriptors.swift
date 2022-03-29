@@ -125,7 +125,7 @@ extension CreateNewProfileViewModel {
             name = LocalizedString.random
         }
         
-        let imageAttributedString = image.asAttachment(size: iconSize)
+        let imageAttributedString = self.colorImage(image).asAttachment(size: iconSize)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [

@@ -326,7 +326,7 @@ class CreateNewProfileViewModel {
 extension CreateNewProfileViewModel: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
-        case .field, .text:
+        case .field, .text, .icon:
             return .normal
         case .border, .background:
             return .weak

@@ -87,7 +87,7 @@ class OverviewViewController: NSViewController {
     
     private func setupFooterView() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = .cgColor(.background, .strong)
+        footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         
         createNewProfileButton.title = LocalizedString.createNewProfile
         createNewProfileButton.target = self

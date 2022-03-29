@@ -136,7 +136,7 @@ class TabBarView: NSView {
     }
     
     private func getColor(forFocus present: Bool) -> CGColor {
-        return .cgColor(.background, present ? .weak : [.interactive, .weak])
+        TabBarButton.backgroundColor(forFocus: present)
     }
     
     private func isFocused(tabIndex index: Int) -> Bool {
