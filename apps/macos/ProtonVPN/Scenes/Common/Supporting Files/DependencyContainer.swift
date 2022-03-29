@@ -225,7 +225,9 @@ extension DependencyContainer: ServerStorageFactory {
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
-        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper(), netShieldPropertyProvider: makeNetShieldPropertyProvider(), natTypePropertyProvider: makeNATTypePropertyProvider(), safeModePropertyProvider: makeSafeModePropertyProvider(), propertiesManager: makePropertiesManager(), profileManager: makeProfileManager())
+        let connectionIntercepts = ConnectionIntercepts(factory: self).intercepts
+
+        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper(), netShieldPropertyProvider: makeNetShieldPropertyProvider(), natTypePropertyProvider: makeNATTypePropertyProvider(), safeModePropertyProvider: makeSafeModePropertyProvider(), propertiesManager: makePropertiesManager(), profileManager: makeProfileManager(), vpnInterceptPolicies: connectionIntercepts)
     }
 }
 
@@ -498,5 +500,12 @@ extension DependencyContainer: SafeModePropertyProviderFactory {
 extension DependencyContainer: AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
         return appCertificateRefreshManager
+    }
+}
+
+// MARK: ModelIdCheckerFactory
+extension DependencyContainer: ModelIdCheckerFactory {
+    func makeModelIdChecker() -> ModelIdCheckerProtocol {
+        return ModelIdChecker()
     }
 }

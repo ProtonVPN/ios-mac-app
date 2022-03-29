@@ -111,7 +111,7 @@ public class VpnGateway: VpnGatewayProtocol {
     
     private let serverStorage: ServerStorage = ServerStorageConcrete()
     private let propertiesManager: PropertiesManagerProtocol
-    
+
     private let siriHelper: SiriHelperProtocol?
     
     private var tier: Int {
@@ -166,9 +166,11 @@ public class VpnGateway: VpnGatewayProtocol {
     private var safeMode: Bool? {
         return safeModePropertyProvider.safeMode
     }
-    
+
+    let interceptPolicies: [VpnConnectionInterceptPolicyItem]
+
     // FUTUREDO: Use factory
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager) {
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, vpnInterceptPolicies: [VpnConnectionInterceptPolicyItem] = []) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
@@ -183,6 +185,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
+        self.interceptPolicies = vpnInterceptPolicies
 
         if case .connected = state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
@@ -382,43 +385,54 @@ public class VpnGateway: VpnGatewayProtocol {
         guard let server = server else {
             return
         }
+
+        var connectionProtocol = connectionProtocol
         var smartProtocolConfig = propertiesManager.smartProtocolConfig
-        
-        // WG + KS is not working on Catalina. Let's prevent users from having troubles.
-        #if os(macOS)
-        if propertiesManager.killSwitch, #available(macOS 10.15, *) {
-            if #available(macOS 11, *) { } else {
-                switch connectionProtocol {
-                    
-                // If WireGuard is selected, let's ask user to change it
-                case .vpnProtocol(.wireGuard):
-                    log.debug("WireGuard + KillSwitch on Catalina detected. Asking user to change one or another.", category: .connectionConnect, event: .scan)
-                    alertService?.push(alert: WireguardKSOnCatalinaAlert(killswiftOffHandler: {
-                        self.propertiesManager.killSwitch = false
-                        self.connect(with: connectionProtocol, server: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
-                    }, openVpnHandler: {
-                        self.connect(with: .vpnProtocol(.openVpn(.tcp)), server: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
-                    }))
-                    return
-                    
-                // If SmartProtocol is used, let's make it smart enough to not select WireGuard if we know it won't work
-                case .smartProtocol:
-                    log.debug("SmartProtocol + KillSwitch on Catalina detected. Disabling WireGuard in SmartProtocol.", category: .connectionConnect, event: .scan)
-                    smartProtocolConfig = smartProtocolConfig.configWithWireGuard(enabled: false)
-                    
-                default:
-                    break
+        let killSwitch = propertiesManager.killSwitch
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            for policy in self.interceptPolicies {
+                let group = DispatchGroup()
+                group.enter()
+
+                var result: VpnConnectionInterceptResult = .allow
+                policy.shouldIntercept(connectionProtocol, isKillSwitchOn: killSwitch) { interceptResult in
+                    result = interceptResult
+                    group.leave()
                 }
+                group.wait()
+                
+                guard case .intercept(let parameters) = result else {
+                    continue
+                }
+
+                if parameters.smartProtocolWithoutWireGuard {
+                    smartProtocolConfig = smartProtocolConfig.configWithWireGuard(enabled: false)
+                }
+                if parameters.disableKillSwitch {
+                    self.propertiesManager.killSwitch = false
+                }
+                if connectionProtocol != parameters.newProtocol {
+                    connectionProtocol = parameters.newProtocol
+                }
+                break
+            }
+
+            self.propertiesManager.lastPreparedServer = server
+            self.connectionPreparer = VpnConnectionPreparer(appStateManager: self.appStateManager,
+                                                            vpnApiService: self.vpnApiService,
+                                                            alertService: self.alertService,
+                                                            serverTierChecker: self.serverTierChecker,
+                                                            vpnKeychain: self.vpnKeychain,
+                                                            smartProtocolConfig: smartProtocolConfig,
+                                                            openVpnConfig: self.propertiesManager.openVpnConfig,
+                                                            wireguardConfig: self.propertiesManager.wireguardConfig)
+
+            DispatchQueue.main.async {
+                self.appStateManager.prepareToConnect()
+                self.connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             }
         }
-        #endif
-        
-        propertiesManager.lastPreparedServer = server
-        appStateManager.prepareToConnect()
-        
-        connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain, smartProtocolConfig: smartProtocolConfig, openVpnConfig: propertiesManager.openVpnConfig, wireguardConfig: propertiesManager.wireguardConfig)
-
-        connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
     }
     
     private func appStateChanged(_ notification: Notification) {

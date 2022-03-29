@@ -64,7 +64,7 @@ public enum ConnectionProtocol: Codable, Equatable {
     }
 }
 
-public struct ConnectionRequest: Codable {
+public struct ConnectionRequest {
     public let serverType: ServerType
     public let connectionType: ConnectionRequestType
     public let connectionProtocol: ConnectionProtocol
@@ -109,7 +109,9 @@ public struct ConnectionRequest: Codable {
         case natType
         case safeMode
     }
+}
 
+extension ConnectionRequest: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         serverType = try container.decode(ServerType.self, forKey: .serverType)

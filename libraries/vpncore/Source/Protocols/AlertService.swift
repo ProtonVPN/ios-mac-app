@@ -859,8 +859,27 @@ public class WireguardKSOnCatalinaAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(killswiftOffHandler: @escaping () -> Void, openVpnHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.wgksKsOff, style: .confirmative, handler: killswiftOffHandler))
+    public init(killSwitchOffHandler: @escaping () -> Void, openVpnHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler))
         actions.append(AlertAction(title: LocalizedString.wgksOvpn, style: .confirmative, handler: openVpnHandler))
+    }
+}
+
+public class NEKSOnT2Alert: SystemAlert {
+    public static let t2kbUrlString = "https://support.apple.com/en-us/HT208862"
+
+    public var title: String? = LocalizedString.neksT2Title
+    public var message: String? = LocalizedString.neksT2Description
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public let link = LocalizedString.neksT2Hyperlink
+    public let killSwitchOffAction: AlertAction
+    public let connectAnywayAction: AlertAction
+
+    public init(killSwitchOffHandler: @escaping () -> Void, connectAnywayHandler: @escaping () -> Void) {
+        self.killSwitchOffAction = AlertAction(title: LocalizedString.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
+        self.connectAnywayAction = AlertAction(title: LocalizedString.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
     }
 }

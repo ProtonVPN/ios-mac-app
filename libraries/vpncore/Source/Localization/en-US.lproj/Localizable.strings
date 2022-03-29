@@ -163,6 +163,9 @@
 /* Common word */
 "_connected" = "Connected";
 
+/* Permanently dismiss an alert */
+"_dont_show_again" = "Don't show this message again";
+
 /* iOS status view */
 "_connected_to" = "Connected to";
 

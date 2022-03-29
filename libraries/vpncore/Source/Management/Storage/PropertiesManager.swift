@@ -26,7 +26,7 @@ public protocol PropertiesManagerFactory {
 }
 
 public protocol PropertiesManagerProtocol: class {
-    
+
     static var hasConnectedNotification: Notification.Name { get }
     static var userIpNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
@@ -54,7 +54,7 @@ public protocol PropertiesManagerProtocol: class {
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
     
-    // Destinguishes if kill switch should be disabled
+    // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
     var userIp: String? { get set }
     var userDataDisclaimerAgreed: Bool { get set }
@@ -166,7 +166,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
-        
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
