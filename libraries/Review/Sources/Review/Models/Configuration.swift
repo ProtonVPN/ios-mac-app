@@ -19,15 +19,21 @@
 import Foundation
 
 public struct Configuration {
-    public let eligiblePlans: [String]
-    public let successConnections: Int
-    public let daysLastReviewPassed: Int
-    public let daysConnected: Int
+    let eligiblePlans: [String]
+    let successConnections: Int
+    let daysLastReviewPassed: Int
+    let daysConnected: Int
+    let daysFromFirstConnection: Int
 
-    public init(eligiblePlans: [String], successConnections: Int, daysLastReviewPassed: Int, daysConnected: Int) {
+    public init(eligiblePlans: [String], successConnections: Int, daysLastReviewPassed: Int, daysConnected: Int, daysFromFirstConnection: Int) {
         self.eligiblePlans = eligiblePlans
         self.successConnections = successConnections
         self.daysLastReviewPassed = daysLastReviewPassed
         self.daysConnected = daysConnected
+        self.daysFromFirstConnection = daysFromFirstConnection
+    }
+
+    public init() {
+        self.init(eligiblePlans: ["vpnplus"], successConnections: 3, daysLastReviewPassed: 100, daysConnected: 3, daysFromFirstConnection: 14)
     }
 }

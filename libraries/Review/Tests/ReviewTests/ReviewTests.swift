@@ -4,7 +4,7 @@ import XCTest
 final class ReviewTests: XCTestCase {
     func testReviewAfter3SuccessfulConnections() {
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
 
         XCTAssertFalse(prompt.shown)
 
@@ -27,7 +27,7 @@ final class ReviewTests: XCTestCase {
 
     func testReviewAfter3SuccessfulConnectionsWithIneligiblePlan() {
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
 
         XCTAssertFalse(prompt.shown)
 
@@ -51,7 +51,7 @@ final class ReviewTests: XCTestCase {
     func testReviewAfterBeingConnectedFor5Days() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -65,7 +65,7 @@ final class ReviewTests: XCTestCase {
     func testReviewAfterBeingConnectedFor5DaysWithIneligiblePlan() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -78,7 +78,7 @@ final class ReviewTests: XCTestCase {
     func testReviewAfterBeingConnectedFor5DaysIsNotTriggeredMultipleTimes() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -94,7 +94,7 @@ final class ReviewTests: XCTestCase {
 
     func testFailedConenctionsResetsTheSuccessCount() {
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
 
         XCTAssertFalse(prompt.shown)
 
@@ -135,7 +135,7 @@ final class ReviewTests: XCTestCase {
     func testShowingReviewResetsTheSuccessCount() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
 
         XCTAssertFalse(prompt.shown)
 
