@@ -221,6 +221,9 @@ extension MacAlertService: CoreAlertService {
 
         case let neKST2Alert as NEKSOnT2Alert:
             show(neKST2Alert)
+
+        case is ProtonUnreachableAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

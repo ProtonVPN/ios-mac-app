@@ -450,6 +450,7 @@
 		F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03626F08DEC00336F7A /* TourDescriptionView.swift */; };
 		F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03926F08E1400336F7A /* TourNumberView.swift */; };
 		F320E03C26F08FAB00336F7A /* Tour.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E03B26F08FAB00336F7A /* Tour.xib */; };
+		F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */; };
 		F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */; };
 		F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
 		F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */; };
@@ -1075,6 +1076,7 @@
 		F320E03626F08DEC00336F7A /* TourDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDescriptionView.swift; sourceTree = "<group>"; };
 		F320E03926F08E1400336F7A /* TourNumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberView.swift; sourceTree = "<group>"; };
 		F320E03B26F08FAB00336F7A /* Tour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Tour.xib; sourceTree = "<group>"; };
+		F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtonReachabilityChecker.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/Services/ProtonReachabilityChecker.swift; sourceTree = "<group>"; };
 		F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSProgressIndicator+Extensions.swift"; path = "../../../macos/ProtonVPN/Extensions/NSProgressIndicator+Extensions.swift"; sourceTree = "<group>"; };
 		F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = macOSNetworkingDelegate.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/macOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
@@ -1835,6 +1837,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		F34AC17527F33E1A0007FF93 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F34AC17627F33E350007FF93 /* ProtonReachabilityChecker.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1943,6 +1953,7 @@
 		F36ECE032611DBAC0089B898 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				F34AC17527F33E1A0007FF93 /* Services */,
 				F36ECE042611DBB30089B898 /* ViewControllers */,
 				F36ECE052611DBDF0089B898 /* ViewModels */,
 				F36ECE372611E1420089B898 /* Windows */,
@@ -3491,6 +3502,7 @@
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
 				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
+				F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */,
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
 				E14475322093A52A00F4C641 /* NeagentHelpPopUpViewController.swift in Sources */,
 				4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */,

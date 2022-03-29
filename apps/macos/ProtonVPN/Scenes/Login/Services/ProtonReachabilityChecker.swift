@@ -20,7 +20,7 @@ import vpncore
 import Foundation
 
 protocol ProtonReachabilityCheckerFactory {
-    func makeSignupReachabilityChecker() -> ProtonReachabilityChecker
+    func makeProtonReachabilityChecker() -> ProtonReachabilityChecker
 }
 
 protocol ProtonReachabilityChecker {

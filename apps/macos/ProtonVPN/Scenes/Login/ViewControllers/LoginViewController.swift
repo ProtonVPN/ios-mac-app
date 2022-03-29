@@ -23,7 +23,7 @@
 import Cocoa
 import vpncore
 
-class LoginViewController: NSViewController {
+final class LoginViewController: NSViewController {
     
     fileprivate enum TextField: Int {
         case username
@@ -38,29 +38,31 @@ class LoginViewController: NSViewController {
     // MARK: - Onboarding view
     @IBOutlet weak var onboardingView: NSView!
     
-    @IBOutlet weak var logoImage: NSImageView!
-    @IBOutlet weak var warningLabel: PVPNTextField!
-    @IBOutlet weak var helpLink: PVPNHyperlinkTextField!
+    @IBOutlet private weak var logoImage: NSImageView!
+    @IBOutlet private weak var warningLabel: PVPNTextField!
+    @IBOutlet private weak var helpLink: PVPNHyperlinkTextField!
     
-    @IBOutlet weak var usernameTextField: TextFieldWithFocus!
-    @IBOutlet weak var usernameHorizontalLine: NSBox!
+    @IBOutlet private weak var usernameTextField: TextFieldWithFocus!
+    @IBOutlet private weak var usernameHorizontalLine: NSBox!
     
-    @IBOutlet weak var passwordTextField: TextFieldWithFocus!
-    @IBOutlet weak var passwordSecureTextField: SecureTextFieldWithFocus!
-    @IBOutlet weak var passwordRevealButton: NSButton!
-    @IBOutlet weak var passwordHorizontalLine: NSBox!
+    @IBOutlet private weak var passwordTextField: TextFieldWithFocus!
+    @IBOutlet private weak var passwordSecureTextField: SecureTextFieldWithFocus!
+    @IBOutlet private weak var passwordRevealButton: NSButton!
+    @IBOutlet private weak var passwordHorizontalLine: NSBox!
     
-    @IBOutlet weak var startOnBootLabel: PVPNTextField!
-    @IBOutlet weak var startOnBootButton: SwitchButton!
+    @IBOutlet private weak var startOnBootLabel: PVPNTextField!
+    @IBOutlet private weak var startOnBootButton: SwitchButton!
     
-    @IBOutlet weak var loginButton: LoginButton!
-    @IBOutlet weak var createAccountButton: GreenActionButton!
-    @IBOutlet weak var needHelpButton: GreenActionButton!
+    @IBOutlet private weak var loginButton: LoginButton!
+    @IBOutlet private weak var createAccountButton: GreenActionButton!
+    @IBOutlet private weak var needHelpButton: GreenActionButton!
     
     // MARK: - Loading view
-    @IBOutlet weak var loadingView: NSView!
-    @IBOutlet weak var loadingSymbol: LoadingAnimationView!
-    @IBOutlet weak var loadingLabel: PVPNTextField!
+    @IBOutlet private weak var loadingView: NSView!
+    @IBOutlet private weak var loadingSymbol: LoadingAnimationView!
+    @IBOutlet private weak var loadingLabel: PVPNTextField!
+
+    @IBOutlet private weak var reachabilityCheckIndicator: NSProgressIndicator!
     
     private var helpPopover: NSPopover?
     
@@ -110,6 +112,8 @@ class LoginViewController: NSViewController {
         let fontManager = NSFontManager()
         let italicizedFont = fontManager.convert(font, toHaveTrait: [.italicFontMask])
         loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.attributed(withColor: .protonWhite(), font: italicizedFont)
+
+        reachabilityCheckIndicator.set(tintColor: NSColor.protonGreen())
     }
     
     private func setupOnboardingView() {
@@ -209,6 +213,13 @@ class LoginViewController: NSViewController {
         viewModel.logInInProgress = { [weak self] in self?.presentLoadingScreen() }
         viewModel.logInFailure = { [weak self] errorMessage in self?.handleLoginFailure(errorMessage) }
         viewModel.logInFailureWithSupport = { [weak self] errorMessage in self?.handleLoginFailureWithSupport(errorMessage) }
+        viewModel.checkInProgress = { [weak self] checkInProgress in
+            if checkInProgress {
+                self?.reachabilityCheckIndicator.startAnimation(nil)
+            } else {
+                self?.reachabilityCheckIndicator.stopAnimation(nil)
+            }
+        }
     }
     
     fileprivate func attemptLogin() {

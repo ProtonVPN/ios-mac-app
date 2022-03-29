@@ -26,7 +26,7 @@ import vpncore
 
 final class LoginViewModel {
     
-    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & AuthApiServiceFactory
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & AuthApiServiceFactory & ProtonReachabilityCheckerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -35,10 +35,12 @@ final class LoginViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
+    private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
     
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
     var logInFailureWithSupport: ((String?) -> Void)?
+    var checkInProgress: ((Bool) -> Void)?
 
     init (factory: Factory) {
         self.factory = factory
@@ -125,7 +127,17 @@ final class LoginViewModel {
     }
     
     func createAccountAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.signUp)
+        checkInProgress?(true)
+
+        protonReachabilityChecker.check { [weak self] reachable in
+            self?.checkInProgress?(false)
+
+            if reachable {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.signUp)
+            } else {
+                self?.alertService.push(alert: ProtonUnreachableAlert())
+            }
+        }
     }
 
     var helpPopoverViewModel: HelpPopoverViewModel {

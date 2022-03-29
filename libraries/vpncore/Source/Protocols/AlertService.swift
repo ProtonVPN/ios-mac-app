@@ -884,7 +884,7 @@ public class NEKSOnT2Alert: SystemAlert {
     }
 }
 
-public class ProtonUnrechableAlert: SystemAlert {
+public class ProtonUnreachableAlert: SystemAlert {
     public var title: String?
     public var message: String? = LocalizedString.protonWebsiteUnreachable
     public var actions = [AlertAction]()
