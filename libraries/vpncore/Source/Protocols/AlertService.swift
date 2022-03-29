@@ -883,3 +883,14 @@ public class NEKSOnT2Alert: SystemAlert {
         self.connectAnywayAction = AlertAction(title: LocalizedString.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
     }
 }
+
+public class ProtonUnrechableAlert: SystemAlert {
+    public var title: String?
+    public var message: String? = LocalizedString.protonWebsiteUnreachable
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() {
+    }
+}
