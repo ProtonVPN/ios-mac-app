@@ -44,19 +44,18 @@ class ModelIdConnectionInterceptTests: XCTestCase {
                                                     alertService: alerts,
                                                     propertiesManager: properties)
 
-        do {
-            let expectation = XCTestExpectation(description: "Immediately allow connect for non-T2 models")
-            bgQ.async {
-                intercept.shouldIntercept(.smartProtocol, isKillSwitchOn: true) { interceptResult in
-                    if case .intercept = interceptResult {
-                        XCTFail("Expected to allow connection")
-                    }
-                    expectation.fulfill()
+        let expectation = XCTestExpectation(description: "Immediately allow connect for non-T2 models")
+        bgQ.async {
+            intercept.shouldIntercept(.smartProtocol, isKillSwitchOn: true) { interceptResult in
+                if case .intercept = interceptResult {
+                    XCTFail("Expected to allow connection")
                 }
+                expectation.fulfill()
             }
-
-            wait(for: [expectation], timeout: 5)
         }
+
+        wait(for: [expectation], timeout: 5)
+
     }
 
     func testModelT2InterceptAndReconnectWithoutKS() {
@@ -67,36 +66,38 @@ class ModelIdConnectionInterceptTests: XCTestCase {
                                                     alertService: alerts,
                                                     propertiesManager: properties)
 
-        do {
-            let expectation = XCTestExpectation(description: "Get intercept alert")
-            bgQ.async {
-                intercept.shouldIntercept(.smartProtocol, isKillSwitchOn: true) { interceptResult in
-                    switch interceptResult {
-                    case .intercept(let parameters):
-                        XCTAssertEqual(parameters.newProtocol, .smartProtocol, "Expected to still connect with smart protocol")
-                        XCTAssertFalse(parameters.smartProtocolWithoutWireGuard, "Expected to leave smart protocol alone")
-                        XCTAssertTrue(parameters.disableKillSwitch, "Expected to disable kill switch")
-                    case .allow:
-                        XCTFail("Expected to intercept connection")
-                    }
-                    expectation.fulfill()
+        let expectationCompletion = XCTestExpectation(description: "Intercept alert completion called")
+        let expectationAlert = XCTestExpectation(description: "Get intercept alert")
+        
+        bgQ.async {
+            intercept.shouldIntercept(.smartProtocol, isKillSwitchOn: true) { interceptResult in
+                switch interceptResult {
+                case .intercept(let parameters):
+                    XCTAssertEqual(parameters.newProtocol, .smartProtocol, "Expected to still connect with smart protocol")
+                    XCTAssertFalse(parameters.smartProtocolWithoutWireGuard, "Expected to leave smart protocol alone")
+                    XCTAssertTrue(parameters.disableKillSwitch, "Expected to disable kill switch")
+                case .allow:
+                    XCTFail("Expected to intercept connection")
                 }
+                expectationCompletion.fulfill()
             }
-
-            var i = 0
-            while alerts.alerts.isEmpty && i < 3 {
-                sleep(1)
-                i += 1
-            }
-
-            guard let alert = alerts.alerts.first as? NEKSOnT2Alert else {
-                XCTFail("Didn't get intercept alert")
-                return
-            }
-
-            alert.killSwitchOffAction.handler?()
-            wait(for: [expectation], timeout: 5)
         }
+
+        alerts.alertAdded = { newAlert in
+            if self.alerts.alerts.first is NEKSOnT2Alert {
+                expectationAlert.fulfill()
+            }
+        }
+
+        wait(for: [expectationAlert], timeout: 3)
+
+        guard let alert = alerts.alerts.first as? NEKSOnT2Alert else {
+            XCTFail("Didn't get intercept alert")
+            return
+        }
+        alert.killSwitchOffAction.handler?()
+
+        wait(for: [expectationCompletion], timeout: 3)
     }
 
     func testModelT2InterceptContinue() {
@@ -107,31 +108,33 @@ class ModelIdConnectionInterceptTests: XCTestCase {
                                                     alertService: alerts,
                                                     propertiesManager: properties)
 
-
-        do {
-            let expectation = XCTestExpectation(description: "Get intercept alert")
-            bgQ.async {
-                intercept.shouldIntercept(.smartProtocol, isKillSwitchOn: true) { interceptResult in
-                    if case .intercept = interceptResult {
-                        XCTFail("Expected to allow connection")
-                    }
-                    expectation.fulfill()
+        let expectationCompletion = XCTestExpectation(description: "Intercept alert completion called")
+        let expectationAlert = XCTestExpectation(description: "Get intercept alert")
+        
+        bgQ.async {
+            intercept.shouldIntercept(.smartProtocol, isKillSwitchOn: true) { interceptResult in
+                if case .intercept = interceptResult {
+                    XCTFail("Expected to allow connection")
                 }
+                expectationCompletion.fulfill()
             }
-
-            var i = 0
-            while alerts.alerts.isEmpty && i < 3 {
-                sleep(1)
-                i += 1
-            }
-
-            guard let alert = alerts.alerts.first as? NEKSOnT2Alert else {
-                XCTFail("Didn't get intercept alert")
-                return
-            }
-
-            alert.connectAnywayAction.handler?()
-            wait(for: [expectation], timeout: 5)
         }
+
+        alerts.alertAdded = { newAlert in
+            if self.alerts.alerts.first is NEKSOnT2Alert {
+                expectationAlert.fulfill()
+            }
+        }
+
+        wait(for: [expectationAlert], timeout: 3)
+
+        guard let alert = alerts.alerts.first as? NEKSOnT2Alert else {
+            XCTFail("Didn't get intercept alert")
+            return
+        }
+
+        alert.connectAnywayAction.handler?()
+        wait(for: [expectationCompletion], timeout: 3)
+
     }
 }
