@@ -218,6 +218,9 @@ extension MacAlertService: CoreAlertService {
             
         case is WireguardKSOnCatalinaAlert:
             showDefaultSystemAlert(alert)
+
+        case let neKST2Alert as NEKSOnT2Alert:
+            show(neKST2Alert)
             
         default:
             #if DEBUG
@@ -341,5 +344,10 @@ extension MacAlertService: CoreAlertService {
 
         let viewController = factory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
         windowService.presentKeyModal(viewController: viewController)
+    }
+
+    private func show(_ alert: NEKSOnT2Alert) {
+        let vc = NET2WarningPopupViewController(viewModel: WarningPopupViewModel(alert: alert))
+        windowService.presentKeyModal(viewController: vc)
     }
 }

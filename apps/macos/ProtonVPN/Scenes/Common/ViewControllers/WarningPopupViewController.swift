@@ -28,8 +28,8 @@ class WarningPopupViewController: NSViewController {
     @IBOutlet weak var bodyView: NSView!
     @IBOutlet weak var warningImage: NSImageView!
     @IBOutlet weak var warningDescriptionLabel: NSTextField!
-    @IBOutlet weak var wifiWarningScrollViewContainer: NSScrollView!
-    @IBOutlet var wifiWarningDescription: PVPNTextViewLink!
+    @IBOutlet weak var warningScrollViewContainer: NSScrollView!
+    @IBOutlet var warningDescription: PVPNTextViewLink!
 
     @IBOutlet weak var footerView: NSView!
     @IBOutlet weak var cancelButton: WhiteCancelationButton!
@@ -60,7 +60,7 @@ class WarningPopupViewController: NSViewController {
     }
     
     private func setupBodySection() {
-        wifiWarningScrollViewContainer.isHidden = true
+        warningScrollViewContainer.isHidden = true
         bodyView.wantsLayer = true
         bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
         

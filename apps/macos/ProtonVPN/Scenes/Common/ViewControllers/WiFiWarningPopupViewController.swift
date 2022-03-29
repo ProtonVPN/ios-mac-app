@@ -33,13 +33,13 @@ final class WiFiWarningPopupViewController: WarningPopupViewController {
     private func setupUI() {
         cancelButton.isHidden = true
         warningDescriptionLabel.isHidden = true
-        wifiWarningScrollViewContainer.isHidden = false
-        continueButton.title = LocalizedString.ok
+        warningScrollViewContainer.isHidden = false
+        continueButton.title = viewModel.confirmTitle
         setupLink()
     }
 
     private func setupLink() {
-        wifiWarningDescription.hyperLink(originalText: viewModel.description, hyperLink: viewModel.linkDescription ?? "", urlString: viewModel.url ?? "")
+        warningDescription.hyperLink(originalText: viewModel.description, hyperLink: viewModel.linkDescription ?? "", urlString: viewModel.url ?? "")
     }
 
 }

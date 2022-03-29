@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 class WarningPopupViewModel {
     
@@ -29,8 +30,11 @@ class WarningPopupViewModel {
     let description: String
     let linkDescription: String?
     let url: String?
+
     let onConfirm: () -> Void
+    let confirmTitle: String
     let onCancel: (() -> Void)?
+    let cancelTitle: String
     
     init(image: NSImage?,
          title: String,
@@ -38,12 +42,16 @@ class WarningPopupViewModel {
          linkDescription: String?,
          url: String?,
          onConfirm: @escaping () -> Void,
-         onCancel: (() -> Void)?) {
+         confirmTitle: String = LocalizedString.ok,
+         onCancel: (() -> Void)?,
+         cancelTitle: String = LocalizedString.cancel) {
         self.image = image
         self.title = title
         self.description = description
         self.onConfirm = onConfirm
+        self.confirmTitle = confirmTitle
         self.onCancel = onCancel
+        self.cancelTitle = cancelTitle
         self.linkDescription = linkDescription
         self.url = url
     }
