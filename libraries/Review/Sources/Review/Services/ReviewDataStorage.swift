@@ -37,40 +37,50 @@ final class UserDefaultsReviewDataStorage: ReviewDataStorage {
 
     var successConnenctionsInARowCount: Int {
         get {
-            UserDefaults.standard.integer(forKey: Keys.successConnenctionsInARowCount.rawValue)
+            userDefaults.integer(forKey: Keys.successConnenctionsInARowCount.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.successConnenctionsInARowCount.rawValue)
+            userDefaults.set(newValue, forKey: Keys.successConnenctionsInARowCount.rawValue)
         }
     }
     var lastReviewShownTimestamp: Date? {
         get {
-            UserDefaults.standard.date(forKey: Keys.lastReviewShownTimestamp.rawValue)
+            userDefaults.date(forKey: Keys.lastReviewShownTimestamp.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.lastReviewShownTimestamp.rawValue)
+            userDefaults.set(newValue, forKey: Keys.lastReviewShownTimestamp.rawValue)
         }
     }
     var activeConnectionStartTimestamp: Date? {
         get {
-            UserDefaults.standard.date(forKey: Keys.activeConnectionStartTimestamp.rawValue)
+            userDefaults.date(forKey: Keys.activeConnectionStartTimestamp.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.activeConnectionStartTimestamp.rawValue)
+            userDefaults.set(newValue, forKey: Keys.activeConnectionStartTimestamp.rawValue)
         }
     }
     var firstSuccessConnectionStartTimestamp: Date? {
         get {
-            UserDefaults.standard.date(forKey: Keys.firstSuccessConnectionStartTimestamp.rawValue)
+            userDefaults.date(forKey: Keys.firstSuccessConnectionStartTimestamp.rawValue)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Keys.firstSuccessConnectionStartTimestamp.rawValue)
+            userDefaults.set(newValue, forKey: Keys.firstSuccessConnectionStartTimestamp.rawValue)
         }
+    }
+
+    private let userDefaults: UserDefaults
+
+    convenience init() {
+        self.init(userDefaults: UserDefaults.standard)
+    }
+
+    init(userDefaults: UserDefaults) {
+        self.userDefaults = userDefaults
     }
 
     func clear() {
         for key in Keys.allCases {
-            UserDefaults.standard.removeObject(forKey: key.rawValue)
+            userDefaults.removeObject(forKey: key.rawValue)
         }
     }
 }

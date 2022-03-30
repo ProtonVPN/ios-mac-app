@@ -514,6 +514,7 @@
 		F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
 		F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
 		F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */; };
+		F3BD66F327F58C0F00C26B25 /* Review+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34AC17C27F439B40007FF93 /* Review+Configuration.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3F36C4126D64CC4008AD48B /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -3361,6 +3362,7 @@
 				F37EC5B2272FF2B7002A5B8E /* TokenStorage.swift in Sources */,
 				D5136C33228592E80002C095 /* GenericTableViewDataSource.swift in Sources */,
 				D5136C34228592E80002C095 /* StatusViewController.swift in Sources */,
+				F3BD66F327F58C0F00C26B25 /* Review+Configuration.swift in Sources */,
 				D55B36C82457FDF500D8B0B9 /* TroubleshootCoordinator.swift in Sources */,
 				E1D187ED2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
 				D5136C35228592E80002C095 /* TabBarController.swift in Sources */,
