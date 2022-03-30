@@ -197,6 +197,25 @@ bugreport_unit_tests:
       cobertura:
         - fastlane/test_output/BugReport.xml
 
+review_unit_tests:
+  stage: core_unit_tests
+  tags:
+    - iOS_ARM
+  script:
+    - cd libraries/Review/
+    - swift test --enable-code-coverage
+    - mkdir -p ../../fastlane/test_output
+    - XCODE_PATH=`xcode-select -p`
+    - ARCH="$(uname -m)"
+    - $XCODE_PATH/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-cov export -instr-profile=.build/$ARCH-apple-macosx/debug/codecov/default.profdata .build/$ARCH-apple-macosx/debug/ReviewPackageTests.xctest/Contents/MacOS/ReviewPackageTests -format=lcov > ../../fastlane/test_output/Review.lcov
+    - cd -
+    - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/Review.lcov -o fastlane/test_output/Review.xml
+    - Scripts/print-coverage-cobertura.sh fastlane/test_output/Review.xml
+  artifacts:
+    reports:
+      cobertura:
+        - fastlane/test_output/BugReport.xml        
+
 search_ios_unit_tests:
   stage: core_unit_tests
   tags:
