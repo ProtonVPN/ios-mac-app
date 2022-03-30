@@ -2,9 +2,11 @@ import XCTest
 @testable import Review
 
 final class ReviewTests: XCTestCase {
-    func testReviewAfter3SuccessfulConnections() {
+    func testReviewAfter3SuccessfulConnectionsButNotYet14Days() {
+        let date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         XCTAssertFalse(prompt.shown)
 
@@ -22,12 +24,14 @@ final class ReviewTests: XCTestCase {
 
         // 3
         review.connected()
-        XCTAssertTrue(prompt.shown)
+        XCTAssertFalse(prompt.shown)
     }
 
-    func testReviewAfter3SuccessfulConnectionsWithIneligiblePlan() {
+    func testReviewAfter3SuccessfulConnectionsAnd15Days() {
+        var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         XCTAssertFalse(prompt.shown)
 
@@ -42,6 +46,37 @@ final class ReviewTests: XCTestCase {
         XCTAssertFalse(prompt.shown)
         review.disconnect()
         XCTAssertFalse(prompt.shown)
+
+        // rewind 15 days
+        date = date.addingTimeInterval(15 * 24 * 60 * 60)
+
+        // 3
+        review.connected()
+        XCTAssertTrue(prompt.shown)
+    }
+
+    func testReviewAfter3SuccessfulConnectionsWithIneligiblePlan() {
+        var date = Date()
+        let prompt = ReviewPromptMock()
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+
+        XCTAssertFalse(prompt.shown)
+
+        // 1
+        review.connected()
+        XCTAssertFalse(prompt.shown)
+        review.disconnect()
+        XCTAssertFalse(prompt.shown)
+
+        // 2
+        review.connected()
+        XCTAssertFalse(prompt.shown)
+        review.disconnect()
+        XCTAssertFalse(prompt.shown)
+
+        // rewind 15 days
+        date = date.addingTimeInterval(15 * 24 * 60 * 60)
 
         // 3
         review.connected()
@@ -51,7 +86,32 @@ final class ReviewTests: XCTestCase {
     func testReviewAfterBeingConnectedFor5Days() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+
+        review.connected()
+        XCTAssertFalse(prompt.shown)
+
+        // Activate after 5 days
+        date = date.addingTimeInterval(5 * 24 * 60 * 60)
+        review.activated()
+        XCTAssertFalse(prompt.shown)
+    }
+
+    func testReviewAfterBeingConnectedFor5DaysAfterFirstConnection15DaysAgo() {
+        var date = Date()
+        let prompt = ReviewPromptMock()
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
+
+        review.connected()
+        XCTAssertFalse(prompt.shown)
+
+        // rewind 15 days
+        date = date.addingTimeInterval(15 * 24 * 60 * 60)
+
+        review.disconnect()
+        XCTAssertFalse(prompt.shown)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -65,7 +125,8 @@ final class ReviewTests: XCTestCase {
     func testReviewAfterBeingConnectedFor5DaysWithIneligiblePlan() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
@@ -75,16 +136,17 @@ final class ReviewTests: XCTestCase {
         XCTAssertFalse(prompt.shown)
     }
 
-    func testReviewAfterBeingConnectedFor5DaysIsNotTriggeredMultipleTimes() {
+    func testReviewAfterBeingConnectedFor15DaysIsNotTriggeredMultipleTimes() {
         var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         review.connected()
         XCTAssertFalse(prompt.shown)
 
-        // Activate after 5 days
-        date = date.addingTimeInterval(5 * 24 * 60 * 60)
+        // Activate after 15 days
+        date = date.addingTimeInterval(15 * 24 * 60 * 60)
         review.activated()
         XCTAssertTrue(prompt.shown)
 
@@ -93,8 +155,10 @@ final class ReviewTests: XCTestCase {
     }
 
     func testFailedConenctionsResetsTheSuccessCount() {
+        var date = Date()
         let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { Date() }, reviewPrompt: prompt)
+        let storage = ReviewDataStorageMock()
+        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt, dataStorage: storage)
 
         XCTAssertFalse(prompt.shown)
 
@@ -103,6 +167,9 @@ final class ReviewTests: XCTestCase {
         XCTAssertFalse(prompt.shown)
         review.disconnect()
         XCTAssertFalse(prompt.shown)
+
+        // rewind 15 days
+        date = date.addingTimeInterval(15 * 24 * 60 * 60)
 
         // 2
         review.connected()
@@ -130,36 +197,5 @@ final class ReviewTests: XCTestCase {
         // 3
         review.connected()
         XCTAssertTrue(prompt.shown)
-    }
-
-    func testShowingReviewResetsTheSuccessCount() {
-        var date = Date()
-        let prompt = ReviewPromptMock()
-        let review = Review(configuration: Configuration(eligiblePlans: ["plus", "visionary"], successConnections: 3, daysLastReviewPassed: 5, daysConnected: 4, daysFromFirstConnection: 14), plan: "plus", dateProvider: { date }, reviewPrompt: prompt)
-
-        XCTAssertFalse(prompt.shown)
-
-        // 1
-        review.connected()
-        XCTAssertFalse(prompt.shown)
-        review.disconnect()
-        XCTAssertFalse(prompt.shown)
-
-        // 2
-        review.connected()
-        XCTAssertFalse(prompt.shown)
-        review.disconnect()
-        XCTAssertFalse(prompt.shown)
-
-        // 3, show, reset count
-        review.connected()
-        XCTAssertTrue(prompt.shown)
-
-        // add then days to go over the days passed limit
-        date = date.addingTimeInterval(10 * 24 * 60 * 60)
-
-        // 1
-        review.connected()
-        XCTAssertFalse(prompt.shown)
     }
 }
