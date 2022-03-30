@@ -153,6 +153,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
                 self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
+                self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
                     self.announcementRefresher.refresh()
                 }

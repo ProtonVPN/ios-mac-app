@@ -28,16 +28,18 @@ public struct ClientConfig {
     public let serverRefreshInterval: Int
     public let wireGuardConfig: WireguardConfig
     public let smartProtocolConfig: SmartProtocolConfig
+    public let ratingSettings: RatingSettings
 
-    public init(openVPNConfig: OpenVpnConfig, featureFlags: FeatureFlags, serverRefreshInterval: Int, wireGuardConfig: WireguardConfig, smartProtocolConfig: SmartProtocolConfig) {
+    public init(openVPNConfig: OpenVpnConfig, featureFlags: FeatureFlags, serverRefreshInterval: Int, wireGuardConfig: WireguardConfig, smartProtocolConfig: SmartProtocolConfig, ratingSettings: RatingSettings) {
         self.openVPNConfig = openVPNConfig
         self.featureFlags = featureFlags
         self.serverRefreshInterval = serverRefreshInterval
         self.wireGuardConfig = wireGuardConfig
         self.smartProtocolConfig = smartProtocolConfig
+        self.ratingSettings = ratingSettings
     }
 
     public init() {
-        self.init(openVPNConfig: OpenVpnConfig(), featureFlags: FeatureFlags(), serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime, wireGuardConfig: WireguardConfig(), smartProtocolConfig: SmartProtocolConfig())
+        self.init(openVPNConfig: OpenVpnConfig(), featureFlags: FeatureFlags(), serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime, wireGuardConfig: WireguardConfig(), smartProtocolConfig: SmartProtocolConfig(), ratingSettings: RatingSettings())
     }
 }

@@ -91,6 +91,8 @@ public protocol PropertiesManagerProtocol: class {
     var wireguardConfig: WireguardConfig { get set }
 
     var smartProtocolConfig: SmartProtocolConfig { get set }
+
+    var ratingSettings: RatingSettings { get set }
     
     func logoutCleanup()
     
@@ -166,6 +168,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
+        case ratingSettings = "RatingSettings"        
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -408,6 +411,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             storage.setEncodableValue(newValue, forKey: Keys.smartProtocolConfig.rawValue)
+        }
+    }
+
+    public var ratingSettings: RatingSettings {
+        get {
+            return storage.getDecodableValue(RatingSettings.self, forKey: Keys.ratingSettings.rawValue) ?? RatingSettings()
+        }
+        set {
+            storage.setEncodableValue(newValue, forKey: Keys.ratingSettings.rawValue)
         }
     }
     

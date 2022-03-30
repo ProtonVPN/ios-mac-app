@@ -61,6 +61,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var openVpnConfig: OpenVpnConfig = OpenVpnConfig()
     public var wireguardConfig: WireguardConfig = WireguardConfig()
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
+    public var ratingSettings: RatingSettings = RatingSettings()
     public var vpnProtocol: VpnProtocol = .ike
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?

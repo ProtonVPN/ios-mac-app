@@ -154,7 +154,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             case let .success(properties):
                 if let credentials = properties.vpnCredentials {
                     self.vpnKeychain.store(vpnCredentials: credentials)
-                    self.review.planUpdated(plan: credentials.accountPlan.rawValue)
+                    self.review.update(plan: credentials.accountPlan.rawValue)
                 }
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
@@ -223,7 +223,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             case let .success(properties):
                 if let credentials = properties.vpnCredentials {
                     self.vpnKeychain.store(vpnCredentials: credentials)
-                    self.review.planUpdated(plan: credentials.accountPlan.rawValue)
+                    self.review.update(plan: credentials.accountPlan.rawValue)
                 }
                 self.serverStorage.store(properties.serverModels)
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
@@ -234,6 +234,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
                 self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
                 self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
+                self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
+                self.review.update(configuration: Configuration(settings: properties.clientConfig.ratingSettings))
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
                     self.announcementRefresher.refresh()
                 }
