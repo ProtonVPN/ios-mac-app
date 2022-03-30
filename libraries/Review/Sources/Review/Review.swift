@@ -39,14 +39,11 @@ public final class Review {
     }
 
     public func connected() {
-        print("Connected invoked")
         if dataStorage.firstSuccessConnectionStartTimestamp == nil {
-            print("Setting first conenction timestamp")
             dataStorage.firstSuccessConnectionStartTimestamp = dateProvider()
         }
 
         if dataStorage.activeConnectionStartTimestamp == nil {
-            print("Setting active conenction timestamp")
             dataStorage.activeConnectionStartTimestamp = dateProvider()
             dataStorage.successConnenctionsInARowCount = dataStorage.successConnenctionsInARowCount + 1
         }
@@ -54,12 +51,10 @@ public final class Review {
     }
 
     public func disconnect() {
-        print("Disconencted invoked, resetting active connection timestamp")
         dataStorage.activeConnectionStartTimestamp = nil
     }
 
     public func connectionFailed() {
-        print("Failed invoked, resetting active connection timestamp and success count")
         dataStorage.activeConnectionStartTimestamp = nil
         dataStorage.successConnenctionsInARowCount = 0
     }
@@ -69,12 +64,10 @@ public final class Review {
     }
 
     public func update(plan: String) {
-        print("Plan changed to \(plan)")
         self.plan = plan
     }
 
     public func activated() {
-        print("App activated")
         checkConditions()
     }
 
@@ -104,7 +97,7 @@ public final class Review {
             return
         }
 
-        /**
+        /*
          FR-1. Rating after X successful connections
 
          All the following conditions must be true in order to show the review modal:
@@ -119,7 +112,7 @@ public final class Review {
             return
         }
 
-        /**
+        /*
          FR-2. Rating after X days connected
 
          When the app goes in foreground, the following conditions must be true in order to show the review modal:
