@@ -39,28 +39,38 @@ public final class Review {
     }
 
     public func connected() {
+        print("Connected invoked")
         if dataStorage.firstSuccessConnectionStartTimestamp == nil {
+            print("Setting first conenction timestamp")
             dataStorage.firstSuccessConnectionStartTimestamp = dateProvider()
         }
-        dataStorage.activeConnectionStartTimestamp = dateProvider()
-        dataStorage.successConnenctionsInARowCount = dataStorage.successConnenctionsInARowCount + 1
+
+        if dataStorage.activeConnectionStartTimestamp == nil {
+            print("Setting active conenction timestamp")
+            dataStorage.activeConnectionStartTimestamp = dateProvider()
+            dataStorage.successConnenctionsInARowCount = dataStorage.successConnenctionsInARowCount + 1
+        }
         checkConditions()
     }
 
     public func disconnect() {
+        print("Disconencted invoked, resetting active connection timestamp")
         dataStorage.activeConnectionStartTimestamp = nil
     }
 
     public func connectionFailed() {
+        print("Failed invoked, resetting active connection timestamp and success count")
         dataStorage.activeConnectionStartTimestamp = nil
         dataStorage.successConnenctionsInARowCount = 0
     }
 
-    public func planPurchased(plan: String) {
+    public func planUpdated(plan: String) {
+        print("Plan changed to \(plan)")
         self.plan = plan
     }
 
     public func activated() {
+        print("App activated")
         checkConditions()
     }
 

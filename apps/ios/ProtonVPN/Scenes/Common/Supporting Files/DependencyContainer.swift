@@ -25,6 +25,7 @@ import vpncore
 import KeychainAccess
 import BugReport
 import Search
+import Review
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -114,6 +115,7 @@ final class DependencyContainer {
     }()
     lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
     private lazy var searchStorage = SearchModuleStorage(storage: storage)
+    private lazy var review = Review(configuration: Configuration(), plan: (try? vpnKeychain.fetchCached().accountPlan.description) ?? "")
 }
 
 // MARK: NavigationServiceFactory
@@ -464,5 +466,12 @@ extension DependencyContainer: SafeModePropertyProviderFactory {
 extension DependencyContainer: SearchStorageFactory {
     func makeSearchStorage() -> SearchStorage {
         return searchStorage
+    }
+}
+
+// MARK: ReviewFactory
+extension DependencyContainer: ReviewFactory {
+    func makeReview() -> Review {
+        return review
     }
 }
