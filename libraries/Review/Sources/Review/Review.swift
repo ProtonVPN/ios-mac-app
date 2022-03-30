@@ -20,39 +20,40 @@ import Foundation
 
 public final class Review {
     private let configuration: Configuration
-
-    private var successConenctionsCount = 0
-    private var lastReviewShownTimestamp: Date?
     private var plan: String
-    private var activeConenctionStartTimestamp: Date?
 
     private let dateProvider: () -> Date
     private let reviewPrompt: ReviewPrompt
+    private let dataStorage: ReviewDataStorage
 
     public convenience init(configuration: Configuration, plan: String) {
-        self.init(configuration: configuration, plan: plan, dateProvider: { Date() }, reviewPrompt: AppStoreReviewPrompt())
+        self.init(configuration: configuration, plan: plan, dateProvider: { Date() }, reviewPrompt: AppStoreReviewPrompt(), dataStorage: UserDefaultsReviewDataStorage())
     }
 
-    init(configuration: Configuration, plan: String, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt) {
+    init(configuration: Configuration, plan: String, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage) {
         self.configuration = configuration
         self.plan = plan
         self.dateProvider = dateProvider
         self.reviewPrompt = reviewPrompt
+        self.dataStorage = dataStorage
     }
 
     public func connected() {
-        activeConenctionStartTimestamp = dateProvider()
-        successConenctionsCount = successConenctionsCount + 1
+        if dataStorage.firstSuccessConnectionStartTimestamp == nil {
+            dataStorage.firstSuccessConnectionStartTimestamp = dateProvider()
+        }
+        dataStorage.activeConnectionStartTimestamp = dateProvider()
+        dataStorage.successConnenctionsInARowCount = dataStorage.successConnenctionsInARowCount + 1
         checkConditions()
     }
 
     public func disconnect() {
-        activeConenctionStartTimestamp = nil
+        dataStorage.activeConnectionStartTimestamp = nil
     }
 
     public func connectionFailed() {
-        activeConenctionStartTimestamp = nil
-        successConenctionsCount = 0
+        dataStorage.activeConnectionStartTimestamp = nil
+        dataStorage.successConnenctionsInARowCount = 0
     }
 
     public func planPurchased(plan: String) {
@@ -63,9 +64,12 @@ public final class Review {
         checkConditions()
     }
 
+    public func clear() {
+        dataStorage.clear()
+    }
+
     private func show() {
-        successConenctionsCount = 0
-        lastReviewShownTimestamp = dateProvider()
+        dataStorage.lastReviewShownTimestamp = dateProvider()
         reviewPrompt.show()
     }
 
@@ -75,9 +79,14 @@ public final class Review {
             return
         }
 
+        // all the conditions require that sufficient time passed since first successful connection
+        guard let firstSuccessConnectionStartTimestamp = dataStorage.firstSuccessConnectionStartTimestamp, firstSuccessConnectionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysFromFirstConnection * 60 * 60 * 24)) < dateProvider() else {
+            return
+        }
+
         // never show the rating again before the time limit passes no matter which conditions is matched
         // this prevents situations like showing the rating on app activation multiple times if the user is connected for X days (FR-2)
-        if let lastReviewShownTimestamp = lastReviewShownTimestamp, lastReviewShownTimestamp.addingTimeInterval(TimeInterval(configuration.daysLastReviewPassed * 60 * 60 * 24)) > dateProvider() {
+        if let lastReviewShownTimestamp = dataStorage.lastReviewShownTimestamp, lastReviewShownTimestamp.addingTimeInterval(TimeInterval(configuration.daysLastReviewPassed * 60 * 60 * 24)) > dateProvider() {
             return
         }
 
@@ -91,7 +100,7 @@ public final class Review {
              the number of days since the last review modal >= rating_days_last_review_passed
              user's subscription is in rating_eligible_plans
          */
-        if successConenctionsCount >= configuration.successConnections {
+        if dataStorage.successConnenctionsInARowCount >= configuration.successConnections {
             show()
             return
         }
@@ -105,7 +114,7 @@ public final class Review {
              VPN session length (in days) >= rating_days_connected
              user's subscription is in rating_eligible_plans
          */
-        if let activeConenctionStartTimestamp = activeConenctionStartTimestamp, activeConenctionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
+        if let activeConenctionStartTimestamp = dataStorage.activeConnectionStartTimestamp, activeConenctionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
             show()
             return
         }
