@@ -39,6 +39,7 @@ struct ClientConfigResponse: Decodable {
         case featureFlags
         case serverRefreshInterval
         case smartProtocol
+        case ratingSettings
     }
 
     init(from decoder: Decoder) throws {
@@ -59,7 +60,8 @@ struct ClientConfigResponse: Decodable {
             wireguardConfig = WireguardConfig()
         }
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
+        let ratingSettings = try container.decodeIfPresent(RatingSettings.self, forKey: .ratingSettings) ?? RatingSettings()
 
-        clientConfig = ClientConfig(openVPNConfig: openVPnConfig, featureFlags: featureFlags, serverRefreshInterval: serverRefreshInterval, wireGuardConfig: wireguardConfig, smartProtocolConfig: smartProtocolConfig)
+        clientConfig = ClientConfig(openVPNConfig: openVPnConfig, featureFlags: featureFlags, serverRefreshInterval: serverRefreshInterval, wireGuardConfig: wireguardConfig, smartProtocolConfig: smartProtocolConfig, ratingSettings: ratingSettings)
     }
 }

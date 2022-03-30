@@ -19,7 +19,7 @@
 import Foundation
 
 public final class Review {
-    private let configuration: Configuration
+    private var configuration: Configuration
     private var plan: String
 
     private let dateProvider: () -> Date
@@ -64,7 +64,11 @@ public final class Review {
         dataStorage.successConnenctionsInARowCount = 0
     }
 
-    public func planUpdated(plan: String) {
+    public func update(configuration: Configuration) {
+        self.configuration = configuration
+    }
+
+    public func update(plan: String) {
         print("Plan changed to \(plan)")
         self.plan = plan
     }

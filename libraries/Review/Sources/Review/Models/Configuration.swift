@@ -32,8 +32,4 @@ public struct Configuration {
         self.daysConnected = daysConnected
         self.daysFromFirstConnection = daysFromFirstConnection
     }
-
-    public init() {
-        self.init(eligiblePlans: ["vpnplus"], successConnections: 3, daysLastReviewPassed: 100, daysConnected: 3, daysFromFirstConnection: 14)
-    }
 }

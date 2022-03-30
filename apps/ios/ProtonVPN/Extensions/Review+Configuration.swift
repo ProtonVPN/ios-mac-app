@@ -16,9 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import vpncore
 import Foundation
 import Review
 
 protocol ReviewFactory {
     func makeReview() -> Review
+}
+
+extension Configuration {
+    init(settings: RatingSettings) {
+        self.init(eligiblePlans: settings.eligiblePlans, successConnections: settings.successConnections, daysLastReviewPassed: settings.daysLastReviewPassed, daysConnected: settings.daysConnected, daysFromFirstConnection: settings.daysFromFirstConnection)
+    }
 }
