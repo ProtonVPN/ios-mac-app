@@ -44,11 +44,11 @@ final class UpsellPrimaryActionButton: HoverDetectionButton {
 
     private func configureButton() {
         wantsLayer = true
-        layer?.cornerRadius = bounds.height / 2
+        layer?.cornerRadius = 8
         layer?.backgroundColor = isHovered ? colors.hoverBrand.cgColor : colors.brand.cgColor
     }
 
     private func configureTitle() {
-        attributedTitle = NSAttributedString(string: title, attributes: [.foregroundColor: colors.text, .font: NSFont.boldSystemFont(ofSize: fontSize)])
+        attributedTitle = NSAttributedString(string: title, attributes: [.foregroundColor: colors.text, .font: NSFont.systemFont(ofSize: fontSize)])
     }
 }

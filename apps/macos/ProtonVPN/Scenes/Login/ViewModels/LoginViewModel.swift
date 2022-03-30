@@ -115,6 +115,11 @@ final class LoginViewModel {
             switch status {
             case let .finished(data):
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: { [weak self] in
+                    guard self?.propertiesManager.didShowNewBrandModal == false else {
+                        return
+                    }
+                    self?.alertService.push(alert: NewBrandAlert())
+                    self?.propertiesManager.didShowNewBrandModal = true
                     self?.silentlyCheckForUpdates()
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)

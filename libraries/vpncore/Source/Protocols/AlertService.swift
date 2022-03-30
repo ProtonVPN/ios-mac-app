@@ -791,7 +791,7 @@ public class DiscourageSecureCoreAlert: SystemAlert {
     public var onDontShowAgain: ((Bool) -> Void)?
     public var onActivate: (() -> Void)?
     public var onLearnMore: (() -> Void) = {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
     }
     public var dismiss: (() -> Void)?
 

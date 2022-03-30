@@ -28,7 +28,9 @@ class ProtonVPNUITests: XCTestCase {
     let app = XCUIApplication()
     
     override func setUp() {
-        app.launchArguments = ["UITests"]
+        app.launchArguments += ["UITests"]
+        app.launchArguments += ["-DidShowNewBrandModal"]
+        app.launchArguments += ["true"]
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         setupSnapshot(app)

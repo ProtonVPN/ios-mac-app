@@ -44,8 +44,8 @@ class FeatureTableViewCell: UITableViewCell {
         super.awakeFromNib()
         selectionStyle = .none
         backgroundColor = .backgroundColor()
-        learnMoreBtn.setTitleColor(UIColor.brandColor(), for: .normal)
-        learnMoreBtn.tintColor = UIColor.brandColor()
+        learnMoreBtn.setTitleColor(UIColor.textAccent(), for: .normal)
+        learnMoreBtn.tintColor = UIColor.textAccent()
         learnMoreBtn.setImage(IconProvider.arrowOutSquare, for: .normal)
     }
     

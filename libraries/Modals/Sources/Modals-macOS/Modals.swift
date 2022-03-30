@@ -44,4 +44,10 @@ public struct ModalsFactory {
         discourageSecureCoreViewController.onLearnMore = onLearnMore
         return discourageSecureCoreViewController
     }
+
+    public func newBrandViewController(onReadMore: (() -> Void)?) -> NSViewController {
+        let newBrandViewController = NewBrandViewController()
+        newBrandViewController.onReadMore = onReadMore
+        return newBrandViewController
+    }
 }
