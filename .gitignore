@@ -28,3 +28,5 @@ sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj/xcuserdata
 builds
 sampleapps/ModalsSampleMacOSApp/ModalsSampleMacOSApp.xcodeproj/xcuserdata
 sampleapps/SearchSampleApp/SearchSampleApp.xcodeproj/xcuserdata
+libraries/Review/Tests/ReviewTests/ExtensionsTests.swift.plist
+libraries/Review/Tests/ReviewTests/UserDefaultsReviewDataStorageTests.swift.plist
