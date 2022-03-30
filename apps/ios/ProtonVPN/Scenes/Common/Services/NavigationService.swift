@@ -171,6 +171,7 @@ final class NavigationService {
 
     private func presentMainInterface() {
         setupTabs()
+        showNewBrandModal()
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -208,6 +209,13 @@ final class NavigationService {
         tabBarController.setupView()
         
         windowService.show(viewController: tabBarController)
+    }
+
+    private func showNewBrandModal() {
+        if !propertiesManager.didShowNewBrandModal {
+            alertService.push(alert: NewBrandAlert())
+            propertiesManager.didShowNewBrandModal = true
+        }
     }
     
     func makeLaunchViewController() -> LaunchViewController? {
@@ -375,6 +383,7 @@ extension NavigationService: LoginServiceDelegate {
     }
 
     func userDidSignUp(onboardingShowFirstConnection: Bool) {
+        propertiesManager.didShowNewBrandModal = true
         onboardingService.showOnboarding(showFirstConnection: onboardingShowFirstConnection)
     }
 }

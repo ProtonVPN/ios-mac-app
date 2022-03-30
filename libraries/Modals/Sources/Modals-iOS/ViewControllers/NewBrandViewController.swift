@@ -46,7 +46,7 @@ class NewBrandViewController: UIViewController {
 
         titleLabel.text = feature.title
         subtitleLabel.text = feature.subtitle
-        readMoreButton.setTitle(feature.learnMore, for: .normal)
+        readMoreButton.setTitle(feature.readMore, for: .normal)
         dismissButton.setTitle(feature.cancel, for: .normal)
 
         contentView.layer.cornerRadius = 8

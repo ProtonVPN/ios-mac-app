@@ -23,7 +23,7 @@ public struct NewBrandFeature {
     public let iconImage: Image = Asset.vpnMain.image
     public let title: String = LocalizedString.modalsNewBrandTitle
     public let subtitle: String = LocalizedString.modalsNewBrandSubtitle
-    public let learnMore: String = LocalizedString.modalsNewBrandReadMore
+    public let readMore: String = LocalizedString.modalsNewBrandReadMore
     public let cancel: String = LocalizedString.modalsNewBrandDismiss
 
     public init() { }

@@ -25,14 +25,18 @@ class ViewController: NSViewController {
     enum Modal {
         case upsell(UpsellType)
         case discourageSecureCore
+        case newBrand
     }
 
-    let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfDevices: 10, numberOfServers: 1300, numberOfCountries: 61)), "All countries"),
+    let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfDevices: 10,
+                                                                         numberOfServers: 1300,
+                                                                         numberOfCountries: 61)), "All countries"),
                                                   (.upsell(.secureCore), "Secure Core"),
                                                   (.upsell(.netShield), "Net Shield"),
                                                   (.upsell(.safeMode), "Safe Mode"),
                                                   (.upsell(.moderateNAT), "Moderate NAT"),
-                                                  (.discourageSecureCore, "Discourage Secure Core")]
+                                                  (.discourageSecureCore, "Discourage Secure Core"),
+                                                  (.newBrand, "New Brand")]
 
     let factory = ModalsFactory(colors: Colors())
 
@@ -53,6 +57,8 @@ extension ViewController: NSTableViewDelegate {
             viewController = factory.upsellViewController(upsellType: type, upgradeAction: { }, learnMoreAction: { })
         case .discourageSecureCore:
             viewController = factory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+        case .newBrand:
+            viewController = factory.newBrandViewController(onReadMore: nil)
         }
 
         presentAsModalWindow(viewController)
