@@ -65,9 +65,9 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     }
     
     func viewDidLoad() {
-        viewController?.dropdownTitle.attributedStringValue = title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        viewController?.dropdownUgradeButton.target = self
-        viewController?.dropdownUgradeButton.action = #selector(presentUpsellAlert)
+        viewController?.dropdownTitle.attributedStringValue = title.styled(font: .themeFont(.heading4), alignment: .left)
+        viewController?.dropdownUpgradeButton.target = self
+        viewController?.dropdownUpgradeButton.action = #selector(presentUpsellAlert)
         viewController?.dropdownLearnMore.target = self
         viewController?.dropdownLearnMore.action = #selector(didTapLearnMore)
     }
@@ -91,7 +91,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     // MARK: - Actions
     
     @objc private func didTapLearnMore() {
-        SafariService.openLink(url: learnLink )
+        SafariService.openLink(url: learnLink)
     }
 
     var alert: UpsellAlert {
