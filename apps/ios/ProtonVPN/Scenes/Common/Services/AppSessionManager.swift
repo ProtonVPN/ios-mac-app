@@ -25,6 +25,7 @@ import UIKit
 import Foundation
 import TunnelKit
 import Search
+import Review
 
 enum SessionStatus {
     
@@ -56,7 +57,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory & ProfileManagerFactory & SearchStorageFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory & ProfileManagerFactory & SearchStorageFactory & ReviewFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -71,6 +72,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
+    private lazy var review: Review = factory.makeReview()
     var vpnGateway: VpnGatewayProtocol?
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -84,6 +86,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         super.init(factory: factory)
 
         planService.delegate = self
+
+        NotificationCenter.default.addObserver(forName: appStateManager.stateChange, object: nil, queue: nil, using: updateState)
     }
     
     // MARK: - Beginning of the login logic.
@@ -150,6 +154,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             case let .success(properties):
                 if let credentials = properties.vpnCredentials {
                     self.vpnKeychain.store(vpnCredentials: credentials)
+                    self.review.planUpdated(plan: credentials.accountPlan.rawValue)
                 }
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
@@ -218,6 +223,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             case let .success(properties):
                 if let credentials = properties.vpnCredentials {
                     self.vpnKeychain.store(vpnCredentials: credentials)
+                    self.review.planUpdated(plan: credentials.accountPlan.rawValue)
                 }
                 self.serverStorage.store(properties.serverModels)
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
@@ -354,6 +360,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         announcementRefresher.clear()
         planService.clear()
         searchStorage.clear()
+        review.clear()
         
         propertiesManager.logoutCleanup()
     }
@@ -386,6 +393,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 }
 
+// MARK: - Plan change
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     func paymentTransactionDidFinish() {
         guard AuthKeychain.fetch() != nil else {
@@ -398,5 +406,21 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
         }, failure: { error in
             log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         })
+    }
+}
+
+// MARK: - Review
+extension AppSessionManagerImplementation {
+    private func updateState(_ notification: Notification) {
+        switch appStateManager.state {
+        case .connected:
+            review.connected()
+        case .disconnected:
+            review.disconnect()
+        case .error, .aborted(userInitiated: true):
+            review.connectionFailed()
+        default:
+            break
+        }
     }
 }

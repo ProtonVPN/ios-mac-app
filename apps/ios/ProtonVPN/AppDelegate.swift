@@ -123,6 +123,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         container.makeAppSessionManager().refreshVpnAuthCertificate(success: { }, failure: { _ in })
+        container.makeReview().activated()
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
