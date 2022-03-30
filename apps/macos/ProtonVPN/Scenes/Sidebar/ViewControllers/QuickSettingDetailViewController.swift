@@ -30,7 +30,7 @@ protocol QuickSettingsDetailViewControllerProtocol: class {
     var dropdownTitle: NSTextField! { get }
     var dropdownDescription: NSTextField! { get }
     var dropdownLearnMore: NSButton! { get }
-    var dropdownUgradeButton: PrimaryActionButton! { get }
+    var dropdownUpgradeButton: PrimaryActionButton! { get }
     var dropdownNote: NSTextField! { get }
     
     func reloadOptions()
@@ -46,7 +46,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     @IBOutlet weak var dropdownTitle: NSTextField!
     @IBOutlet weak var dropdownDescription: NSTextField!
     @IBOutlet weak var dropdownLearnMore: NSButton!
-    @IBOutlet weak var dropdownUgradeButton: PrimaryActionButton!
+    @IBOutlet weak var dropdownUpgradeButton: PrimaryActionButton!
     @IBOutlet weak var dropdownNote: NSTextField!
     
     @IBOutlet weak var dropdownOptionsView: NSView!
@@ -57,7 +57,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     
     let presenter: QuickSettingDropdownPresenterProtocol
     
-    init( _ presenter: QuickSettingDropdownPresenterProtocol ) {
+    init(_ presenter: QuickSettingDropdownPresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: QuickSettingDetailViewController.className(), bundle: nil)
         self.presenter.viewController = self
@@ -73,28 +73,23 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         
         dropdownTitle.setAccessibilityIdentifier("QSTitle")
         dropdownDescription.setAccessibilityIdentifier("QSDescription")
-        dropdownUgradeButton.setAccessibilityIdentifier("UpgradeButton")
+        dropdownUpgradeButton.setAccessibilityIdentifier("UpgradeButton")
         dropdownLearnMore.setAccessibilityIdentifier("LearnMoreButton")
         dropdownNote.setAccessibilityIdentifier("QSNote")
         
         view.wantsLayer = true
-        
-        let shadow = NSShadow()
-        shadow.shadowColor = .protonDarkGrey()
-        shadow.shadowBlurRadius = 8
-        view.shadow = shadow
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
 
+        contentBox.fillColor = .color(.background)
+        if let image = arrowIV.image {
+            arrowIV.image = image.colored(context: .background)
+        }
         arrowIV.cell?.setAccessibilityElement(false)
         
-        dropdownUgradeButton.attributedTitle = LocalizedString.upgrade.uppercased().attributed(withColor: .white, fontSize: 12)
-        
-        dropdownLearnMore.attributedTitle = LocalizedString.learnMore.attributed(
-            withColor: .protonGreen(),
-            fontSize: 12,
-            alignment: .left
-        )
+        dropdownUpgradeButton.attributedTitle = LocalizedString.upgrade.uppercased().styled(font: .themeFont(.small))
+        dropdownLearnMore.attributedTitle = LocalizedString.learnMore.styled(.interactive, font: .themeFont(.small), alignment: .left)
+
         reloadOptions()
     }
         
@@ -132,7 +127,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         
         self.noteTopConstraint.isActive = self.dropdownNote.attributedStringValue.length > 0
         
-        self.dropdownUgradeButton.isHidden = !needsUpgrade
+        self.dropdownUpgradeButton.isHidden = !needsUpgrade
         self.dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
         self.dropdownOptionsView.fillVertically(withViews: views)
         self.dropdownOptionsView.wantsLayer = true

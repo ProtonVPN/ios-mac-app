@@ -30,9 +30,9 @@ class QuickSettingButton: NSButton {
     var detailOpened: Bool = false {
         didSet {
             if detailOpened {
-                setEnabledStyle()
+                currentStyle = .enabled
             } else {
-                setDisabledStyle()
+                currentStyle = .disabled
             }
         }
     }
@@ -42,11 +42,6 @@ class QuickSettingButton: NSButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         wantsLayer = true
-        
-        shadow = NSShadow()
-        shadow?.shadowColor = .protonDarkGrey()
-        shadow?.shadowBlurRadius = 8
-        
     }
 
     override func isAccessibilityElement() -> Bool {
@@ -58,12 +53,9 @@ class QuickSettingButton: NSButton {
     }
     
     override func updateLayer() {
-        layer?.shadowRadius = 3
         layer?.cornerRadius = 3
         layer?.masksToBounds = false
-        layer?.shadowOffset = CGSize(width: 0, height: 2)
-        layer?.shadowOpacity = currentStyle.shadow ? 1 : 0
-        layer?.backgroundColor = hovered ? currentStyle.hoveredColor : currentStyle.color
+        layer?.backgroundColor = .cgColor(.background)
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -74,10 +66,10 @@ class QuickSettingButton: NSButton {
         callback?(self)
     }
     
-    func switchState( _ image: NSImage, enabled: Bool ) {
-        self.image = image.colored( enabled ? .protonGreen() : .protonWhite() )
+    func switchState(_ image: NSImage, enabled: Bool) {
+        self.image = image.colored(enabled ? .interactive : .normal)
     }
-    
+
     override func layoutSubtreeIfNeeded() {
         if let area = self.trackingArea { removeTrackingArea(area) }
         trackingArea = NSTrackingArea(rect: bounds, options: [
@@ -90,43 +82,17 @@ class QuickSettingButton: NSButton {
     }
     
     // MARK: - Styles
-    
-    private func setEnabledStyle() {
-        currentStyle = .enabled
-        needsDisplay = true
+
+    private var currentStyle: Style = .disabled {
+        didSet {
+            needsDisplay = true
+            updateLayer()
+        }
     }
-    
-    private func setDisabledStyle() {
-        currentStyle = .disabled
-        needsDisplay = true
-    }
-    
-    private var currentStyle: Style = .disabled
     
     private enum Style {
         case enabled
         case disabled
-        
-        var color: CGColor {
-            switch self {
-            case .enabled: return NSColor.protonDarkBlueButton().cgColor
-            case .disabled: return NSColor.protonQuickSettingButton().cgColor
-            }
-        }
-        
-        var hoveredColor: CGColor {
-            switch self {
-            case .enabled: return NSColor.protonHoverEnabled().cgColor
-            case .disabled: return NSColor.protonHoverDisabled().cgColor
-            }
-        }
-        
-        var shadow: Bool {
-            switch self {
-            case .enabled: return false
-            case .disabled: return true
-            }
-        }
     }
         
     // MARK: - Mouse
@@ -134,12 +100,39 @@ class QuickSettingButton: NSButton {
     override func mouseMoved(with event: NSEvent) {
         hovered = true
         addCursorRect(bounds, cursor: .pointingHand)
-        layer?.backgroundColor = currentStyle.hoveredColor
+        layer?.backgroundColor = self.cgColor(.background)
     }
     
     override func mouseExited(with event: NSEvent) {
         hovered = false
         removeCursorRect(bounds, cursor: .pointingHand)
-        layer?.backgroundColor = currentStyle.color
+        layer?.backgroundColor = self.cgColor(.background)
+    }
+}
+
+extension QuickSettingButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        let hover: AppTheme.Style = hovered ? .hovered : []
+
+        switch context {
+        case .background:
+            switch self.currentStyle {
+            case .disabled:
+                return .normal + hover
+            case .enabled:
+                return [.interactive, .weak] + hover
+            }
+        case .text, .icon:
+            switch self.currentStyle {
+            case .disabled:
+                return .normal
+            case .enabled:
+                return [.interactive, .active] + hover
+            }
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

@@ -35,6 +35,7 @@ class QuickSettingsDropdownOption: NSView {
     var action: SuccessCallback?
     
     private var state: State = .blocked
+    private var isHovered: Bool = false
 
     @IBAction func didTapActionBtn(_ sender: Any) {
         action?()
@@ -50,7 +51,8 @@ class QuickSettingsDropdownOption: NSView {
         containerView.wantsLayer = true
         containerView.layer?.cornerRadius = 3
         containerView.layer?.masksToBounds = false
-        containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        containerView.layer?.borderWidth = 1
+        setBackground()
     
         plusText.stringValue = LocalizedString.upgrade.uppercased()
         plusAndTitleConstraint.isActive = false
@@ -64,29 +66,6 @@ class QuickSettingsDropdownOption: NSView {
         case selected
         case unselected
         case blocked
-        
-        var color: CGColor {
-            switch self {
-            case .selected: return NSColor.protonDarkBlueButton().cgColor
-            case .unselected, .blocked: return NSColor.protonGrey().cgColor
-            }
-        }
-        
-        var hoveredColor: CGColor {
-            switch self {
-            case .selected: return NSColor.protonHoverEnabled().cgColor
-            case .unselected: return NSColor.protonHoverDisabled().cgColor
-            case .blocked: return NSColor.protonGrey().cgColor
-            }
-        }
-        
-        var labelColor: NSColor {
-            switch self {
-            case .selected: return .protonGreen()
-            case .unselected: return .white
-            case .blocked: return .protonGreyUnselectedWhite()
-            }
-        }
     }
     
     func selectedStyle() {
@@ -97,36 +76,30 @@ class QuickSettingsDropdownOption: NSView {
     
     func disabledStyle() {
         state = .unselected
-        applyShadow()
         applyState()
-
     }
     
     func blockedStyle() {
         state = .blocked
         plusBox.isHidden = false
         plusAndTitleConstraint.isActive = true
-        applyShadow()
         applyState()
 
     }
     
     // MARK: - Private
-    
-    private func applyState() {
-        containerView.layer?.backgroundColor = state.color
-        optionIconIV.image = optionIconIV.image?.colored(state.labelColor)
-        titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
-            withColor: state.labelColor,
-            fontSize: 14,
-            alignment: .left)
+
+    private func setBackground() {
+        containerView.layer?.backgroundColor = self.cgColor(.background)
+        containerView.layer?.borderColor = self.cgColor(.border)
     }
-    
-    private func applyShadow() {
-        let addShadow = NSShadow()
-        addShadow.shadowColor = .protonDarkGrey()
-        addShadow.shadowBlurRadius = 3
-        containerView.shadow = addShadow
+
+    private func applyState() {
+        setBackground()
+        if let image = optionIconIV.image {
+            optionIconIV.image = self.colorImage(image)
+        }
+        titleLabel.attributedStringValue = self.style(titleLabel.stringValue, alignment: .left)
     }
     
     private func applyTrackingArea() {
@@ -143,12 +116,14 @@ class QuickSettingsDropdownOption: NSView {
     
     override func mouseMoved(with event: NSEvent) {
         addCursorRect(bounds, cursor: .pointingHand)
-        containerView.layer?.backgroundColor = state.hoveredColor
+        self.isHovered = true
+        setBackground()
     }
     
     override func mouseExited(with event: NSEvent) {
         removeCursorRect(bounds, cursor: .pointingHand)
-        containerView.layer?.backgroundColor = state.color
+        self.isHovered = false
+        setBackground()
     }
 
     // MARK: - Accessibility
@@ -172,5 +147,42 @@ class QuickSettingsDropdownOption: NSView {
     override func accessibilityPerformPress() -> Bool {
         action?()
         return true
+    }
+}
+
+extension QuickSettingsDropdownOption: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style { // swiftlint:disable:this cyclomatic_complexity
+        let hover: AppTheme.Style = isHovered ? .hovered : []
+
+        switch context {
+        case .background:
+            if self.state == .blocked || !isHovered {
+                return .normal
+            } else {
+                return .strong
+            }
+        case .border:
+            switch self.state {
+            case .blocked:
+                return .transparent
+            case .unselected:
+                return [.interactive, .weak] + hover
+            case .selected:
+                return .interactive + hover
+            }
+        case .text, .icon:
+            switch self.state {
+            case .blocked:
+                return [.interactive, .weak]
+            case .unselected:
+                return .normal
+            case .selected:
+                return [.interactive, .active] + hover
+            }
+        default:
+            break
+        }
+        assertionFailure("Context not handled: \(context)")
+        return .normal
     }
 }

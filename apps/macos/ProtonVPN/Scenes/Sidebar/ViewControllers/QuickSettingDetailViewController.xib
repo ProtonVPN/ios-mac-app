@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,7 +16,7 @@
                 <outlet property="dropdownNote" destination="EW3-Fs-3UC" id="FYR-Yj-o9v"/>
                 <outlet property="dropdownOptionsView" destination="lCE-Jm-Yx9" id="x0F-dF-Psy"/>
                 <outlet property="dropdownTitle" destination="ZTu-7u-BXA" id="EQO-bg-48P"/>
-                <outlet property="dropdownUgradeButton" destination="1xP-QI-Slv" id="qQK-Pg-ohh"/>
+                <outlet property="dropdownUpgradeButton" destination="1xP-QI-Slv" id="qQK-Pg-ohh"/>
                 <outlet property="noteTopConstraint" destination="KO3-Gg-ccE" id="UIJ-yq-AOP"/>
                 <outlet property="upgradeBottomConstraint" destination="dHD-VN-BLm" id="tdh-zo-VeD"/>
                 <outlet property="upgradeTopConstraint" destination="I51-01-Sf3" id="hiu-72-rnl"/>
@@ -78,7 +78,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="148" y="45" width="93" height="32"/>
+                                            <rect key="frame" x="151" y="45" width="87" height="32"/>
                                             <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="du1-Nc-Ubv">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
