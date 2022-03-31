@@ -25,25 +25,29 @@ public final class Review {
     private let dateProvider: () -> Date
     private let reviewPrompt: ReviewPrompt
     private let dataStorage: ReviewDataStorage
+    private let logger: ((String) -> Void)?
 
-    public convenience init(configuration: Configuration, plan: String) {
-        self.init(configuration: configuration, plan: plan, dateProvider: { Date() }, reviewPrompt: AppStoreReviewPrompt(), dataStorage: UserDefaultsReviewDataStorage())
+    public convenience init(configuration: Configuration, plan: String, logger: @escaping (String) -> Void) {
+        self.init(configuration: configuration, plan: plan, dateProvider: { Date() }, reviewPrompt: AppStoreReviewPrompt(), dataStorage: UserDefaultsReviewDataStorage(), logger: logger)
     }
 
-    init(configuration: Configuration, plan: String, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage) {
+    init(configuration: Configuration, plan: String, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage, logger: ((String) -> Void)? = nil) {
         self.configuration = configuration
         self.plan = plan
         self.dateProvider = dateProvider
         self.reviewPrompt = reviewPrompt
         self.dataStorage = dataStorage
+        self.logger = logger
     }
 
     public func connected() {
         if dataStorage.firstSuccessConnectionStartTimestamp == nil {
+            logger?("Saving first successful connection timestamp")
             dataStorage.firstSuccessConnectionStartTimestamp = dateProvider()
         }
 
         if dataStorage.activeConnectionStartTimestamp == nil {
+            logger?("Saving new active connection timestamp and incrementing successful connections count")
             dataStorage.activeConnectionStartTimestamp = dateProvider()
             dataStorage.successConnenctionsInARowCount = dataStorage.successConnenctionsInARowCount + 1
         }
@@ -51,19 +55,35 @@ public final class Review {
     }
 
     public func disconnect() {
+        guard dataStorage.activeConnectionStartTimestamp != nil else {
+            return
+        }
+
+        logger?("Resetting active connection timestamp because of disconnection")
         dataStorage.activeConnectionStartTimestamp = nil
     }
 
     public func connectionFailed() {
+        logger?("Resetting successful connections count and active connection timestamp because of failure")
         dataStorage.activeConnectionStartTimestamp = nil
         dataStorage.successConnenctionsInARowCount = 0
     }
 
     public func update(configuration: Configuration) {
+        guard self.configuration != configuration else {
+            return
+        }
+
+        logger?("Review configuration updated")
         self.configuration = configuration
     }
 
     public func update(plan: String) {
+        guard self.plan != plan else {
+            return
+        }
+
+        logger?("Review user plan updated to \(plan)")
         self.plan = plan
     }
 
@@ -72,10 +92,12 @@ public final class Review {
     }
 
     public func clear() {
+        logger?("Clearing all review data")
         dataStorage.clear()
     }
 
     private func show() {
+        logger?("Showing review prompt and saving last review timestamp")
         dataStorage.lastReviewShownTimestamp = dateProvider()
         reviewPrompt.show()
     }
@@ -108,6 +130,7 @@ public final class Review {
              user's subscription is in rating_eligible_plans
          */
         if dataStorage.successConnenctionsInARowCount >= configuration.successConnections {
+            logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with \(dataStorage.successConnenctionsInARowCount) successful connections in a row")
             show()
             return
         }
@@ -122,6 +145,7 @@ public final class Review {
              user's subscription is in rating_eligible_plans
          */
         if let activeConenctionStartTimestamp = dataStorage.activeConnectionStartTimestamp, activeConenctionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
+            logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with session length of \(dateProvider().timeIntervalSince(activeConenctionStartTimestamp).days)")
             show()
             return
         }
