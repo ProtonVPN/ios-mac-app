@@ -44,4 +44,17 @@ final class ExtensionsTests: XCTestCase {
         userDefaults.set(nilDate, forKey: "K1")
         XCTAssertNil(userDefaults.date(forKey: "K1"))
     }
+
+    func testDaysSinceDate() {
+        let now = Date()
+
+        let date1 = now.addingTimeInterval(86_400)
+        XCTAssertEqual(date1.timeIntervalSince(now).days, "1d")
+
+        let date2 = now.addingTimeInterval(86_400 + 156)
+        XCTAssertEqual(date2.timeIntervalSince(now).days, "1d")
+
+        let date3 = now.addingTimeInterval(5 * 86_400 + 156)
+        XCTAssertEqual(date3.timeIntervalSince(now).days, "5d")
+    }
 }
