@@ -419,7 +419,7 @@ extension AppSessionManagerImplementation {
             review.connected()
         case .disconnected:
             review.disconnect()
-        case .error, .aborted(userInitiated: true):
+        case .error, .aborted(userInitiated: false):
             review.connectionFailed()
         default:
             break
