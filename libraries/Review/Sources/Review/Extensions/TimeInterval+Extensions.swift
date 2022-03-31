@@ -1,5 +1,5 @@
 //
-//  Created on 28.03.2022.
+//  Created on 31.03.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,18 +18,10 @@
 
 import Foundation
 
-public struct Configuration: Equatable {
-    let eligiblePlans: [String]
-    let successConnections: Int
-    let daysLastReviewPassed: Int
-    let daysConnected: Int
-    let daysFromFirstConnection: Int
-
-    public init(eligiblePlans: [String], successConnections: Int, daysLastReviewPassed: Int, daysConnected: Int, daysFromFirstConnection: Int) {
-        self.eligiblePlans = eligiblePlans
-        self.successConnections = successConnections
-        self.daysLastReviewPassed = daysLastReviewPassed
-        self.daysConnected = daysConnected
-        self.daysFromFirstConnection = daysFromFirstConnection
+extension TimeInterval {
+    var days: String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day]
+        return formatter.string(from: self)!
     }
 }
