@@ -20,18 +20,18 @@ import Foundation
 
 public final class Review {
     private var configuration: Configuration
-    private var plan: String
+    private var plan: String?
 
     private let dateProvider: () -> Date
     private let reviewPrompt: ReviewPrompt
     private let dataStorage: ReviewDataStorage
     private let logger: ((String) -> Void)?
 
-    public convenience init(configuration: Configuration, plan: String, logger: @escaping (String) -> Void) {
+    public convenience init(configuration: Configuration, plan: String?, logger: @escaping (String) -> Void) {
         self.init(configuration: configuration, plan: plan, dateProvider: { Date() }, reviewPrompt: AppStoreReviewPrompt(), dataStorage: UserDefaultsReviewDataStorage(), logger: logger)
     }
 
-    init(configuration: Configuration, plan: String, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage, logger: ((String) -> Void)? = nil) {
+    init(configuration: Configuration, plan: String?, dateProvider: @escaping () -> Date, reviewPrompt: ReviewPrompt, dataStorage: ReviewDataStorage, logger: ((String) -> Void)? = nil) {
         self.configuration = configuration
         self.plan = plan
         self.dateProvider = dateProvider
@@ -93,6 +93,7 @@ public final class Review {
 
     public func clear() {
         logger?("Clearing all review data")
+        plan = nil
         dataStorage.clear()
     }
 
@@ -104,7 +105,7 @@ public final class Review {
 
     private func checkConditions() {
         // all the conditions require the users plan to be in the eligible list
-        guard configuration.eligiblePlans.contains(plan) else {
+        guard let plan = plan, configuration.eligiblePlans.contains(plan) else {
             return
         }
 
