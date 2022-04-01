@@ -19,7 +19,7 @@
 import AppKit
 import Modals
 
-class NewBrandViewController: NSViewController {
+final class NewBrandViewController: NSViewController {
 
     @IBOutlet private weak var iconBackground: NSImageView!
     @IBOutlet private weak var newBrandBackground: NSImageView!
@@ -27,7 +27,6 @@ class NewBrandViewController: NSViewController {
     @IBOutlet private weak var subtitleLabel: NSTextField!
     @IBOutlet private weak var readMoreButton: UpsellPrimaryActionButton!
 
-    var onDismiss: (() -> Void)?
     var onReadMore: (() -> Void)?
 
     let feature = NewBrandFeature()
@@ -48,12 +47,17 @@ class NewBrandViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupOutlets()
+        setupFeature()
+    }
 
+    private func setupOutlets() {
         newBrandBackground.layer?.cornerRadius = 8
-
         titleLabel.textColor = colors.text
         subtitleLabel.textColor = colors.text
+    }
 
+    private func setupFeature() {
         readMoreButton.title = feature.readMore
         iconBackground.image = feature.iconImage
         newBrandBackground.image = feature.artImage

@@ -19,7 +19,7 @@
 import Modals
 import UIKit
 
-class NewBrandViewController: UIViewController {
+final class NewBrandViewController: UIViewController {
 
     @IBOutlet private weak var iconBackground: UIImageView!
     @IBOutlet private weak var newBrandBackground: UIImageView!
@@ -37,19 +37,16 @@ class NewBrandViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .init(red: 0, green: 0, blue: 0, alpha: 0.52)
+        setupOutlets()
+        setupFeature()
+    }
 
-        newBrandBackground.image = feature.artImage
+    private func setupOutlets() {
         newBrandBackground.layer.cornerRadius = 8
-        iconBackground.image = feature.iconImage
-
-        titleLabel.text = feature.title
-        subtitleLabel.text = feature.subtitle
-        readMoreButton.setTitle(feature.readMore, for: .normal)
-        dismissButton.setTitle(feature.cancel, for: .normal)
 
         contentView.layer.cornerRadius = 8
+        contentView.backgroundColor = colors.background
 
         titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         titleLabel.textColor = colors.text
@@ -58,8 +55,16 @@ class NewBrandViewController: UIViewController {
 
         actionButtonStyle(readMoreButton)
         actionTextButtonStyle(dismissButton)
+    }
 
-        contentView.backgroundColor = colors.background
+    private func setupFeature() {
+        newBrandBackground.image = feature.artImage
+        iconBackground.image = feature.iconImage
+
+        titleLabel.text = feature.title
+        subtitleLabel.text = feature.subtitle
+        readMoreButton.setTitle(feature.readMore, for: .normal)
+        dismissButton.setTitle(feature.cancel, for: .normal)
     }
 
     override func viewDidLayoutSubviews() {

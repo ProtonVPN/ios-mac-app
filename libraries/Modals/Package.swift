@@ -40,6 +40,10 @@ let package = Package(
             name: "Modals-macOS",
             dependencies: ["Modals"],
             resources: []
-        )
+        ),
+        .testTarget(
+            name: "ModalsTests",
+            dependencies: ["Modals", "Overture"]
+            )
     ]
 )
