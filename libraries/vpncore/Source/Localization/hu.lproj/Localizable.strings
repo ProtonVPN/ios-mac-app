@@ -290,7 +290,7 @@
 "_enter_verification_code" = "123 456";
 
 /* API error */
-"_error_api_offline" = "A ProtonMail API jelenleg nem elérhető";
+"_error_api_offline" = "A Proton Mail API jelenleg nem elérhető";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Sikeresen regisztráltál, de a fizetés nem került feldolgozásra. A fizetési információk újbóli elküldéséhez kattints az Újra gombra. A díj csak egyszer kerül felszámolásra. Ha a probléma továbbra is fennáll, fordulj az ügyfélszolgálatunkhoz.";
@@ -388,8 +388,8 @@
 /* Parsing error */
 "_error_session_count_parser" = "Nem lehet feldolgozni a munkamenetet";
 
-/* Error when the user attempts to sign up using an existing ProtonMail email address */
-"_error_signup_using_protonmail_address" = "ProtonMail-fiókod már konfigurálva van a VPN-hez. Jelentkezz be a meglévő hitelesítő adatokkal.";
+/* Error when the user attempts to sign up using an existing Proton Mail email address */
+"_error_signup_using_protonmail_address" = "Proton Mail-fiókod már konfigurálva van a VPN-hez. Jelentkezz be a meglévő hitelesítő adatokkal.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Nem lehet elemezni az előfizetési információkat";
@@ -578,7 +578,7 @@
 "_invalid_refresh_token_please_login" = "Egy ideje már nem használtad a Proton VPN alkalmazást, ezért biztonsági okokból újra be kell jelentkezned.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "A ProtonMail-t alkotó tudósok és mérnökök nevében üdvözlünk a biztonságosabb interneten.";
+"_ios_onboarding_page1_description" = "A Proton Mail-t alkotó tudósok és mérnökök nevében üdvözlünk a biztonságosabb interneten.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Üdvözlünk egy jobb interneten";

@@ -388,8 +388,8 @@
 /* Parsing error */
 "_error_session_count_parser" = "セッションカウントを解析できません";
 
-/* Error when the user attempts to sign up using an existing ProtonMail email address */
-"_error_signup_using_protonmail_address" = "このProtonMailアカウントは既にVPNが設定されています。認証済みの既存アカウントでログインしてください。";
+/* Error when the user attempts to sign up using an existing Proton Mail email address */
+"_error_signup_using_protonmail_address" = "このProton Mailアカウントは既にVPNが設定されています。認証済みの既存アカウントでログインしてください。";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "サブスクリプション情報を解析できません";
@@ -578,7 +578,7 @@
 "_invalid_refresh_token_please_login" = "Proton VPNアプリをしばらく起動していないため、再ログインが必要です。";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "ProtonMailを開発した科学者やエンジニアが、より安全でプライベートなインターネット接続を提供します。";
+"_ios_onboarding_page1_description" = "Proton Mailを開発した科学者やエンジニアが、より安全でプライベートなインターネット接続を提供します。";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "より良いインターネットへようこそ";

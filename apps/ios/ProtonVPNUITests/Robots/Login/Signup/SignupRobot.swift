@@ -14,7 +14,7 @@ fileprivate let externalEmailTextFieldId = "SignupViewController.externalEmailTe
 fileprivate let internalEmailTextFieldId = "SignupViewController.internalNameTextField.textField"
 fileprivate let nextButtonId = "SignupViewController.nextButton"
 fileprivate let signInButtonId = "SignupViewController.signinButton"
-fileprivate let protonmailErrorMessage = "Please use a non-ProtonMail email address"
+fileprivate let protonmailErrorMessage = "Please use a non-Proton Mail email address"
 fileprivate let usernameErrorMessage = "Username already used"
 fileprivate let okButton = "OK"
 

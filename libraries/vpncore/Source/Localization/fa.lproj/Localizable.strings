@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "امکان دریافت تعداد جلسه‌ها از سرور وجود ندارد";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "حساب کاربری ProtonMail شما در حال حاضر برای استفاده از VPN پیکربندی و آماده شده است. لطفا با اطلاعات هویتی فعلی خود به آن وارد شوید.";
+"_error_signup_using_protonmail_address" = "حساب کاربری Proton Mail شما در حال حاضر برای استفاده از VPN پیکربندی و آماده شده است. لطفا با اطلاعات هویتی فعلی خود به آن وارد شوید.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "امکان دریافت اطلاعات مربوط به اشتراک حساب وجود ندارد";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "از آخرین باری که از Proton VPN استفاده کرده‌اید مدتی گذشته است. لطفا دوباره وارد شوید.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "از طرف دانشمندان و مهندسانی که ProtonMail را ایجاد کرده‌اند، به اینترنت امن‌تر و دارای حریم خصوصی بیشتر خوش آمدید.";
+"_ios_onboarding_page1_description" = "از طرف دانشمندان و مهندسانی که Proton Mail را ایجاد کرده‌اند، به اینترنت امن‌تر و دارای حریم خصوصی بیشتر خوش آمدید.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "به اینترنت بهتر خوش آمدید";

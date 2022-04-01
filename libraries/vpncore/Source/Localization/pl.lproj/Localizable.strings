@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Nie można przetworzyć informacji o liczbie połączeń";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Twoje konto ProtonMail jest już skonfigurowane dla usługi VPN. Zaloguj się przy użyciu swoich danych logowania.";
+"_error_signup_using_protonmail_address" = "Twoje konto Proton Mail jest już skonfigurowane dla usługi VPN. Zaloguj się przy użyciu swoich danych logowania.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Nie można przetworzyć informacji o subskrypcji";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Minęło trochę czasu, odkąd ostatnio używałeś aplikacji Proton VPN. Zaloguj się ponownie.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Naukowcy i inżynierowie, którzy stworzyli pocztę ProtonMail, witają w bezpieczniejszym i bardziej prywatnym Internecie.";
+"_ios_onboarding_page1_description" = "Naukowcy i inżynierowie, którzy stworzyli pocztę Proton Mail, witają w bezpieczniejszym i bardziej prywatnym Internecie.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Witaj w lepszym Internecie";

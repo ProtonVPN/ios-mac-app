@@ -344,7 +344,7 @@
 "_enter_verification_code" = "123 456";
 
 /* API error */
-"_error_api_offline" = "ProtonMail API зараз не в мережі";
+"_error_api_offline" = "Proton Mail API зараз не в мережі";
 
 /* (No Comment) */
 "_error_apply_payment_failed_free" = "Продовжити безплатно";
@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Неможливо проаналізувати кількість сеансів";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Ваш обліковий запис ProtonMail вже налаштовано для VPN. Виконайте вхід з вашими обліковими даними.";
+"_error_signup_using_protonmail_address" = "Ваш обліковий запис Proton Mail вже налаштовано для VPN. Виконайте вхід з вашими обліковими даними.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Неможливо проаналізувати інформацію про передплату";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Ви деякий час не користувалися Proton VPN. Будь ласка, увійдіть.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Від вчених та інженерів, які створили ProtonMail, ласкаво просимо до безпечнішого та приватнішого Інтернету.";
+"_ios_onboarding_page1_description" = "Від вчених та інженерів, які створили Proton Mail, ласкаво просимо до безпечнішого та приватнішого Інтернету.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Вітаємо у кращому Інтернеті";

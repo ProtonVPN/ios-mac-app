@@ -388,8 +388,8 @@
 /* Parsing error */
 "_error_session_count_parser" = "Δεν είναι δυνατή η ανάλυση του αριθμού συνεδριών";
 
-/* Error when the user attempts to sign up using an existing ProtonMail email address */
-"_error_signup_using_protonmail_address" = "Ο λογαριασμός σας ProtonMail έχει ήδη ρυθμιστεί για VPN. Συνδεθείτε με τα υπάρχοντα διαπιστευτήριά σας.";
+/* Error when the user attempts to sign up using an existing Proton Mail email address */
+"_error_signup_using_protonmail_address" = "Ο λογαριασμός σας Proton Mail έχει ήδη ρυθμιστεί για VPN. Συνδεθείτε με τα υπάρχοντα διαπιστευτήριά σας.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Δεν είναι δυνατή η ανάλυση των πληροφοριών συνδρομής";
@@ -578,7 +578,7 @@
 "_invalid_refresh_token_please_login" = "Έχει καιρό από τότε που χρησιμοποιήσατε τελευταία φορά την εφαρμογή Proton VPN. Παρακαλούμε συνδεθείτε ξανά.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Από τους επιστήμονες και τους μηχανικούς που δημιούργησαν το ProtonMail, καλωσήρθατε σε ένα ασφαλέστερο και ιδιωτικό Διαδίκτυο.";
+"_ios_onboarding_page1_description" = "Από τους επιστήμονες και τους μηχανικούς που δημιούργησαν το Proton Mail, καλωσήρθατε σε ένα ασφαλέστερο και ιδιωτικό Διαδίκτυο.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Καλωσήρθατε σε ένα καλύτερο Internet";
