@@ -107,6 +107,7 @@ extension MacAlertService: CoreAlertService {
 
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
+
         case let alert as NewBrandAlert:
             show(alert)
 

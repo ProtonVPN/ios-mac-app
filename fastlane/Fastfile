@@ -197,6 +197,17 @@ lane :wireguard_networkextension_tests do
     )
 end
 
+desc "Run Modals module unit tests"
+lane :ios_modals_test do
+  simulator_name = ENV["CI_JOB_ID"]
+  scan(scheme: "Modals",    
+    result_bundle: true,
+    derived_data_path: $derived_data_path,
+    skip_slack: true,
+    devices: [simulator_name],
+    clean: true)
+end
+
 lane :ios_internal_beta do |options|
   if !options[:changelog]
       abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
