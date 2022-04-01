@@ -40,7 +40,7 @@ final class ProfileItemViewModel {
     private let lowestSeverTier: Int
     private let underMaintenance: Bool
     
-    private var isConnected: Bool {
+    var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }

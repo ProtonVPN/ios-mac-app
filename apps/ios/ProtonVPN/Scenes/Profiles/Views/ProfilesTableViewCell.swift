@@ -100,6 +100,7 @@ class ProfilesTableViewCell: UITableViewCell {
             connectButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
             connectButton.setTitle(nil, for: .normal)
         }
+        connectButton.backgroundColor = viewModel?.isConnected ?? false ? .brandColor() : .weakInteractionColor()
     }
     
 }
