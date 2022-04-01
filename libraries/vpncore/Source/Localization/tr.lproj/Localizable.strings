@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Oturum sayısı işlenemedi";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "ProtonMail hesabınız zaten VPN için yapılandırılmış. Lütfen var olan kimlik doğrulama bilgilerinizle oturum açın.";
+"_error_signup_using_protonmail_address" = "Proton Mail hesabınız zaten VPN için yapılandırılmış. Lütfen var olan kimlik doğrulama bilgilerinizle oturum açın.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Abonelik bilgileri işlenemedi";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "ProtonMail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve kişisel bir internete hoş geldiniz.";
+"_ios_onboarding_page1_description" = "Proton Mail uygulamasını yaratan bilim insanları ve mühendislerin sunduğu, daha güvenli ve kişisel bir internete hoş geldiniz.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Daha iyi bir internete hoş geldiniz";

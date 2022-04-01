@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Neuspješno prikazivanje broja sesija";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Vaš ProtonMail račun je već postavljen za VPN. Prijavite se svojim postojećim podacima za prijavu.";
+"_error_signup_using_protonmail_address" = "Vaš Proton Mail račun je već postavljen za VPN. Prijavite se svojim postojećim podacima za prijavu.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Neuspješno prikazivanje podataka o pretplati";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Prošlo je dosta vremena otkad ste posljednji put koristili Proton VPN aplikaciju. Prijavite se ponovo.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Od znanstvenika i inženjera koji su stvorili ProtonMail, dobrodošli na sigurniji i privatniji Internet.";
+"_ios_onboarding_page1_description" = "Od znanstvenika i inženjera koji su stvorili Proton Mail, dobrodošli na sigurniji i privatniji Internet.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Dobrodošli na bolji Internet";

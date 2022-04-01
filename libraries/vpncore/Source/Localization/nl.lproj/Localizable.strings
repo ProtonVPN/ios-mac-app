@@ -443,7 +443,7 @@
 "_error_modulus_signature" = "Modulushandtekening is leeg";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Log in op het ProtonMail-account waarop u het abonnement aan het upgraden bent, zodat we uw aankoop kunnen voltooien.";
+"_error_no_active_username" = "Log in op het Proton Mail-account waarop u het abonnement aan het upgraden bent, zodat we uw aankoop kunnen voltooien.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Uw abonnementsupgrade is succesvol. Herstart de app om gebruik te maken van uw nieuwe abonnement.";
@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Kan sessiecount niet verwerken";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Uw ProtonMail-account is al geconfigureerd voor VPN. Log in met uw bestaande inloggegevens.";
+"_error_signup_using_protonmail_address" = "Uw Proton Mail-account is al geconfigureerd voor VPN. Log in met uw bestaande inloggegevens.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Kan de abonnementsinformatie niet verwerken";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Het is een tijdje geleden sinds u de Proton VPN-app voor het laatst hebt gebruikt. Log alstublieft opnieuw in.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Van de wetenschappers en ingenieurs die ProtonMail hebben gecreëerd, heten we u welkom op een veiliger en meer privé internet.";
+"_ios_onboarding_page1_description" = "Van de wetenschappers en ingenieurs die Proton Mail hebben gecreëerd, heten we u welkom op een veiliger en meer privé internet.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Welkom op een beter internet";
@@ -746,7 +746,7 @@
 "_kill_switch_error_head" = "Sommige apps, zoals antivirussen of firewalls, kunnen botsen met de Kill Switch, waardoor deze niet goed functioneert.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch werkt met de macOS Firewall.\nAls er andere apps zijn gekoppeld aan de Firewall, kunnen ze de Kill Switch van ProtonMail verstoren. Het beëindigen van deze apps kan de Firewall regels die door de Kill Switch zijn ingesteld herstellen.";
+"_kill_switch_error_info" = "Kill Switch werkt met de macOS Firewall.\nAls er andere apps zijn gekoppeld aan de Firewall, kunnen ze de Kill Switch van Proton Mail verstoren. Het beëindigen van deze apps kan de Firewall regels die door de Kill Switch zijn ingesteld herstellen.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Er is een fout opgetreden bij de Kill Switch";

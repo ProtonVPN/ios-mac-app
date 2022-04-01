@@ -217,9 +217,9 @@ extension CachedVpnCredentials {
     public var serviceName: String {
         var name = LocalizedString.unavailable
         if services & 0b001 != 0 {
-            name = "ProtonMail"
+            name = "Proton Mail"
         } else if services & 0b100 != 0 {
-            name = "ProtonVPN"
+            name = "Proton VPN"
         }
         return name
     }

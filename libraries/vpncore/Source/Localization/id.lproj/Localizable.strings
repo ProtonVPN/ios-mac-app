@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Tidak dapat mengurai jumlah sesi";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Akun ProtonMail Anda telah dikonfigurasi untuk penggunaan VPN. Silakan masuk dengan menggunakan info login Anda.";
+"_error_signup_using_protonmail_address" = "Akun Proton Mail Anda telah dikonfigurasi untuk penggunaan VPN. Silakan masuk dengan menggunakan info login Anda.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Tidak dapat mengurai info langganan";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Sudah lama Anda tidak menggunakan aplikasi Proton VPN. Silakan masuk kembali.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Dari para ilmuwan dan insinyur yang menciptakan ProtonMail, selamat datang di internet yang lebih aman dan privat.";
+"_ios_onboarding_page1_description" = "Dari para ilmuwan dan insinyur yang menciptakan Proton Mail, selamat datang di internet yang lebih aman dan privat.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Selamat datang di internet yang lebih baik";

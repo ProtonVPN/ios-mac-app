@@ -443,7 +443,7 @@
 "_error_modulus_signature" = "Пустая сигнатура остатка";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Пожалуйста, войдите в ту учётную запись ProtonMail, тарифный план которой вы обновляете, чтобы мы могли завершить вашу покупку.";
+"_error_no_active_username" = "Пожалуйста, войдите в ту учётную запись Proton Mail, тарифный план которой вы обновляете, чтобы мы могли завершить вашу покупку.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Повышение вашей подписки успешно. Пожалуйста, перезапустите приложение, чтобы воспользоваться вашим новым тарифным планом.";
@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Не могу выполнить разбор счетчика сеансов";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Ваш аккаунт ProtonMail уже настроен для VPN. Пожалуйста, войдите в систему с существующими учетными данными.";
+"_error_signup_using_protonmail_address" = "Ваш аккаунт Proton Mail уже настроен для VPN. Пожалуйста, войдите в систему с существующими учетными данными.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Не могу разобрать информацию о подписке";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Прошло много времени с тех пор, как вы в последний раз использовали приложение Proton VPN. Пожалуйста, войдите в систему.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Учёные и инженеры, создавшие ProtonMail, приглашают вас в более безопасный Интернет без цензуры.";
+"_ios_onboarding_page1_description" = "Учёные и инженеры, создавшие Proton Mail, приглашают вас в более безопасный Интернет без цензуры.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
