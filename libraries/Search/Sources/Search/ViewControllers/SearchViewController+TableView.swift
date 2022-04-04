@@ -119,6 +119,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                 fatalError("Invalid configuration")
             }
             headerView.item = data[section]
+            headerView.titleLabelLeadingConstraint.constant = tableView.readableContentGuide.layoutFrame.origin.x
             return headerView
         }
     }

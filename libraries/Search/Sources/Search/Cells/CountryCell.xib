@@ -65,22 +65,25 @@
                             <action selector="connectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DOj-gJ-sHq"/>
                         </connections>
                     </button>
-                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-EW-Wac" userLabel="props stack">
-                        <rect key="frame" x="228" y="20" width="72" height="24"/>
+                    <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" alignment="center" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-EW-Wac" userLabel="props stack">
+                        <rect key="frame" x="236" y="24" width="64" height="16"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-arrows-switch" translatesAutoresizingMaskIntoConstraints="NO" id="BOu-g7-Mzx">
-                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
+                                <rect key="frame" x="0.0" y="0.0" width="24" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-brand-tor" translatesAutoresizingMaskIntoConstraints="NO" id="4so-OQ-dvz">
-                                <rect key="frame" x="24" y="0.0" width="24" height="24"/>
+                                <rect key="frame" x="20" y="0.0" width="24" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-globe" translatesAutoresizingMaskIntoConstraints="NO" id="Ixe-4X-lQ4">
-                                <rect key="frame" x="48" y="0.0" width="24" height="24"/>
+                                <rect key="frame" x="40" y="0.0" width="24" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="BNw-dq-3jV"/>
+                        </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
@@ -89,7 +92,7 @@
                     <constraint firstItem="Fhq-DN-gvr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DLo-7A-gVU"/>
                     <constraint firstItem="6MC-cJ-Jgy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="JFn-Gt-Zea"/>
                     <constraint firstItem="QzE-EW-Wac" firstAttribute="centerY" secondItem="Fhq-DN-gvr" secondAttribute="centerY" id="MyR-uy-YkN"/>
-                    <constraint firstAttribute="trailing" secondItem="Fhq-DN-gvr" secondAttribute="trailing" constant="16" id="Ogr-8q-z6M"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Fhq-DN-gvr" secondAttribute="trailing" id="Ogr-8q-z6M"/>
                     <constraint firstItem="6MC-cJ-Jgy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="QcJ-hy-zva"/>
                     <constraint firstAttribute="trailing" secondItem="6MC-cJ-Jgy" secondAttribute="trailing" constant="64" id="U6r-74-rET"/>
                     <constraint firstAttribute="bottom" secondItem="6MC-cJ-Jgy" secondAttribute="bottom" id="u7n-bs-10k"/>

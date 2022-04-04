@@ -37,7 +37,7 @@ public struct BugReportiOSView: View {
 
                     UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-                    StepProgress(step: 1, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
+                    StepProgress(step: 1, steps: 3, colorMain: colors.brand, colorText: colors.textAccent, colorSecondary: colors.brandLight40)
                         .padding(.bottom)
 
                     Text(LocalizedString.br1Title)

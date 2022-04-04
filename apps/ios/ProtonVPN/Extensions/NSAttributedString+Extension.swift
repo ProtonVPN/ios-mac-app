@@ -48,7 +48,7 @@ extension NSAttributedString {
         attachment.image = image
         let string = NSMutableAttributedString(attachment: attachment)
         if let baselineOffset = baselineOffset {
-            // swiftlint:disable legacy_constructor
+            // swiftlint:disable:next legacy_constructor
             string.addAttribute(NSAttributedString.Key.baselineOffset, value: baselineOffset, range: NSMakeRange(0, string.length))
         }
         return string

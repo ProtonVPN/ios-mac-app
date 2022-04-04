@@ -52,6 +52,10 @@ extension Color {
         ColorProvider.InteractionWeak
     }
 
+    static var textHint: Color {
+        ColorProvider.TextHint
+    }
+
     static var normalSeparatorColor: Color {
         purple
     }

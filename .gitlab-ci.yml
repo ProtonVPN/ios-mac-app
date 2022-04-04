@@ -238,7 +238,7 @@ modals_ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
-    - fastlane/print-coverage.sh fastlane/test_output/Modals.xcresult Search 1
+    - fastlane/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
