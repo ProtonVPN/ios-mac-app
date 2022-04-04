@@ -26,7 +26,7 @@ public protocol ServerCellDelegate: AnyObject {
     func userDidRequestStreamingInfo()
 }
 
-public final class ServerCell: ConnectTableViewCell {
+public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     public static var identifier: String {
         return String(describing: self)
     }
@@ -37,6 +37,7 @@ public final class ServerCell: ConnectTableViewCell {
 
     // MARK: Outlets
 
+    @IBOutlet weak var connectButton: UIButton!
     @IBOutlet private weak var serverNameLabel: UILabel!
     @IBOutlet private weak var cityNameLabel: UILabel!
     @IBOutlet private weak var loadLbl: UILabel!
@@ -58,13 +59,18 @@ public final class ServerCell: ConnectTableViewCell {
 
     public weak var delegate: ServerCellDelegate?
 
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        connectButton.layer.cornerRadius = mode.cornerRadius
+    }
+
     var searchText: String? {
         didSet {
             setupServerAndCountryName()
         }
     }
 
-    override public var viewModel: ConnectViewModel? {
+    public var viewModel: ConnectViewModel? {
         didSet {
             guard let viewModel = viewModel as? ServerViewModel else {
                 return

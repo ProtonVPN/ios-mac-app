@@ -212,10 +212,11 @@ final class NavigationService {
     }
 
     private func showNewBrandModal() {
-        if !propertiesManager.didShowNewBrandModal {
-            alertService.push(alert: NewBrandAlert())
-            propertiesManager.didShowNewBrandModal = true
+        guard !propertiesManager.didShowNewBrandModal else {
+            return
         }
+        alertService.push(alert: NewBrandAlert())
+        propertiesManager.didShowNewBrandModal = true
     }
     
     func makeLaunchViewController() -> LaunchViewController? {

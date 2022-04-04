@@ -22,7 +22,7 @@
 
 import UIKit
 
-public final class CountryCell: ConnectTableViewCell {
+public final class CountryCell: UITableViewCell, ConnectTableViewCell {
     public static var identifier: String {
         return String(describing: self)
     }
@@ -36,6 +36,7 @@ public final class CountryCell: ConnectTableViewCell {
 
     // MARK: Outlets
 
+    @IBOutlet weak var connectButton: UIButton!
     @IBOutlet private weak var flagIcon: UIImageView!
     @IBOutlet private weak var countryName: UILabel!
 
@@ -60,7 +61,7 @@ public final class CountryCell: ConnectTableViewCell {
         }
     }
 
-    override public var viewModel: ConnectViewModel? {
+    public var viewModel: ConnectViewModel? {
         didSet {
             guard let viewModel = viewModel as? CountryViewModel else {
                 return
@@ -104,6 +105,11 @@ public final class CountryCell: ConnectTableViewCell {
 
         entrySeparator.image = CountryCell.chevronsRight
         entrySeparator.tintColor = viewModel?.connectButtonColor
+    }
+
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        connectButton.layer.cornerRadius = mode.cornerRadius
     }
 
     private func stateChanged() {

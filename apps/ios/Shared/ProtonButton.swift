@@ -58,7 +58,7 @@ class ProtonButton: UIButton {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = bounds.height / 2
+        layer.cornerRadius = 8
     }
     
     private func setUpView() {
@@ -77,9 +77,9 @@ class ProtonButton: UIButton {
             layer.borderWidth = 0.0
             setTitleColor(.normalTextColor(), for: .normal)
         case .secondary:
-            backgroundColor = .weakInteractionColor()
+            backgroundColor = .clear
             layer.borderWidth = 0.0
-            setTitleColor(.normalTextColor(), for: .normal)
+            setTitleColor(.textAccent(), for: .normal)
         case .destructive:
             backgroundColor = .weakTextColor()
             layer.borderWidth = 0.0

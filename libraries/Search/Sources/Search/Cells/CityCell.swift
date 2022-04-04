@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class CityCell: ConnectTableViewCell {
+final class CityCell: UITableViewCell, ConnectTableViewCell {
     static var identifier: String {
         return String(describing: self)
     }
@@ -29,6 +29,7 @@ final class CityCell: ConnectTableViewCell {
 
     // MARK: Outlets
 
+    @IBOutlet weak var connectButton: UIButton!
     @IBOutlet private weak var countryLabel: UILabel!
     @IBOutlet private weak var cityLabel: UILabel!
     @IBOutlet private weak var flagImageView: UIImageView!
@@ -41,7 +42,7 @@ final class CityCell: ConnectTableViewCell {
         }
     }
 
-    override public var viewModel: ConnectViewModel? {
+    public var viewModel: ConnectViewModel? {
         didSet {
             guard var viewModel = viewModel as? CityViewModel else {
                 return
@@ -64,6 +65,11 @@ final class CityCell: ConnectTableViewCell {
         selectionStyle = .none
         countryLabel.textColor = colors.weakText
         cityLabel.textColor = colors.weakText
+    }
+
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        connectButton.layer.cornerRadius = mode.cornerRadius
     }
 
     // MARK: Actions
