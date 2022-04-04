@@ -145,15 +145,6 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch viewModel.status {
-        case .recentSearches:
-            return 48
-        default:
-            return UITableView.automaticDimension
-        }
-    }
-
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch viewModel.status {
         case .noResults, .placeholder, .recentSearches:

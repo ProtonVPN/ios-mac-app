@@ -29,7 +29,7 @@ class ProtonVPNUITests: XCTestCase {
     
     override func setUp() {
         app.launchArguments += ["UITests"]
-        app.launchArguments += ["-DidShowNewBrandModal"]
+        app.launchArguments += ["-NewBrandModalShown"]
         app.launchArguments += ["true"]
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
