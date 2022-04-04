@@ -29,6 +29,7 @@ class AboutViewController: NSViewController {
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory
     public var factory: Factory!
 
+    @IBOutlet weak var imageHeader: NSImageView!
     @IBOutlet weak var backgroundView: NSView!
     @IBOutlet weak var versionTitleLabel: PVPNTextField!
     @IBOutlet weak var versionLabel: PVPNTextField!
@@ -83,7 +84,8 @@ class AboutViewController: NSViewController {
         let versionString = NSMutableAttributedString()
         versionString.append(currentVersion.styled(font: .themeFont(bold: true), alignment: .left))
         versionString.append(" (\(currentBuild))".styled(.weak, font: .themeFont(bold: true), alignment: .left))
-                
+
+        imageHeader.image = AppTheme.Icon.vpnWordmarkAlwaysDark
         versionTitleLabel.attributedStringValue = LocalizedString.versionCurrent.styled(alignment: .left)
         versionLabel.attributedStringValue = versionString
                             

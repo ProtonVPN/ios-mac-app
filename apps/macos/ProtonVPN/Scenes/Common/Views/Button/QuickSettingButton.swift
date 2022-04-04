@@ -53,7 +53,7 @@ class QuickSettingButton: NSButton {
     }
     
     override func updateLayer() {
-        layer?.cornerRadius = 3
+        layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.masksToBounds = false
         layer?.backgroundColor = self.cgColor(.background)
     }

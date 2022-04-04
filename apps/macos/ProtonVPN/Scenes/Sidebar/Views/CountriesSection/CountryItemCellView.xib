@@ -24,22 +24,22 @@
                         <action selector="didTapExpandBtn:" target="c22-O7-iKe" id="lIL-Qw-2Vb"/>
                     </connections>
                 </button>
-                <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-N8-oAa">
+                <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-N8-oAa">
                     <rect key="frame" x="24" y="15" width="70" height="20"/>
                     <subviews>
+                        <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gAW-1O-emT" userLabel="secure">
+                            <rect key="frame" x="0.0" y="-4" width="12" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="12" id="95k-gU-bxg"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-chevrons-right" id="5r7-mq-aLa"/>
+                        </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KLl-LD-vXT" userLabel="flag">
                             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="c9s-fg-JDi"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="IF0-Gn-ECG"/>
-                        </imageView>
-                        <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gAW-1O-emT" userLabel="secure">
-                            <rect key="frame" x="16" y="0.0" width="12" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="12" id="95k-gU-bxg"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-chevrons-right" id="5r7-mq-aLa"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="flags-AE" id="IF0-Gn-ECG"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OM7-Qo-nl4">
                             <rect key="frame" x="26" y="0.0" width="46" height="20"/>
@@ -52,10 +52,6 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Eet-Lb-bFf"/>
-                        <constraint firstItem="OM7-Qo-nl4" firstAttribute="leading" secondItem="gAW-1O-emT" secondAttribute="trailing" id="PSD-OG-TXz"/>
-                        <constraint firstAttribute="bottom" secondItem="gAW-1O-emT" secondAttribute="bottom" id="T9Q-pD-PNl"/>
-                        <constraint firstItem="gAW-1O-emT" firstAttribute="top" secondItem="vFF-N8-oAa" secondAttribute="top" id="elS-qs-pOz"/>
-                        <constraint firstItem="OM7-Qo-nl4" firstAttribute="leading" secondItem="gAW-1O-emT" secondAttribute="trailing" id="gqK-4I-uO9"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>
@@ -217,6 +213,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="flags-AE" width="32" height="32"/>
         <image name="ic-arrows-switch" width="24" height="24"/>
         <image name="ic-brand-tor" width="24" height="24"/>
         <image name="ic-chevron-down" width="24" height="24"/>
