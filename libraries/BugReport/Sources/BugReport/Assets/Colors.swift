@@ -23,18 +23,20 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct Colors {
 
-    public init(brand: Color, brandLight20: Color, brandLight40: Color, brandDark40: Color, textPrimary: Color, textSecondary: Color, background: Color, backgroundSecondary: Color, backgroundUpdateButton: Color, separator: Color, qfIcon: Color) {
+    public init(brand: Color, brandLight20: Color, brandLight40: Color, brandDark40: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundSecondary: Color, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
         self.brand = brand
         self.brandLight20 = brandLight20
         self.brandLight40 = brandLight40
         self.brandDark40 = brandDark40
         self.textPrimary = textPrimary
         self.textSecondary = textSecondary
+        self.textAccent = textAccent
         self.background = background
         self.backgroundSecondary = backgroundSecondary
         self.backgroundUpdateButton = backgroundUpdateButton
         self.separator = separator
         self.qfIcon = qfIcon
+        self.externalLinkIcon = externalLinkIcon
     }
 
     public var brand: Color
@@ -44,6 +46,7 @@ public struct Colors {
 
     public var textPrimary: Color
     public var textSecondary: Color
+    public var textAccent: Color
 
     public var background: Color
     public var backgroundSecondary: Color
@@ -51,6 +54,7 @@ public struct Colors {
     public var separator: Color
 
     public var qfIcon: Color
+    public var externalLinkIcon: Color
 
     /// Default color set for testing and previews
     public static let testColors = Colors(
@@ -60,11 +64,13 @@ public struct Colors {
         brandDark40: Color(rgbValue: 0x372580),
         textPrimary: Color.white,
         textSecondary: Color(rgbValue: 0xA7A4B5),
+        textAccent: Color(rgbValue: 0x6C49FF),
         background: Color(rgbValue: 0x1C1B24),
         backgroundSecondary: Color(rgbValue: 0x292733),
         backgroundUpdateButton: Color(rgbValue: 0x303239),
         separator: Color(rgbValue: 0x303238),
-        qfIcon: Color(rgbValue: 0xFAC530)
+        qfIcon: Color(rgbValue: 0xFAC530),
+        externalLinkIcon: Color(rgbValue: 0x999592)
     )
 
 }

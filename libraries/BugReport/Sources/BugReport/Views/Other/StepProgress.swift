@@ -25,6 +25,7 @@ struct StepProgress: View {
     var steps: UInt
 
     let colorMain: Color
+    let colorText: Color
     let colorSecondary: Color
 
     var barHeight: CGFloat = 2
@@ -46,7 +47,7 @@ struct StepProgress: View {
 
             Text(LocalizedString.stepOf(Int(step), Int(steps)))
                 .font(font)
-                .foregroundColor(colorMain)
+                .foregroundColor(colorText)
                 .padding(.horizontal)
 
         }
@@ -58,7 +59,7 @@ struct StepProgress: View {
 @available(iOS 14.0, macOS 11, *)
 struct StepProgress_Previews: PreviewProvider {
     static var previews: some View {
-        StepProgress(step: 2, steps: 3, colorMain: .green, colorSecondary: .red)
+        StepProgress(step: 2, steps: 3, colorMain: .green, colorText: .purple, colorSecondary: .red)
             .preferredColorScheme(.dark)
     }
 }

@@ -28,11 +28,13 @@ extension BugReport.Colors {
                   brandDark40: Color(.brandDarken40Color()),
                   textPrimary: Color(.normalTextColor()),
                   textSecondary: Color(.weakTextColor()),
+                  textAccent: Color(.textAccent()),
                   background: Color(.backgroundColor()),
                   backgroundSecondary: Color(.secondaryBackgroundColor()),
                   backgroundUpdateButton: Color(.weakInteractionColor()),
                   separator: Color(.normalSeparatorColor()),
-                  qfIcon: Color(.notificationWarningColor())
+                  qfIcon: Color(.notificationWarningColor()),
+                  externalLinkIcon: Color(.iconHint())
         )
     }
 }

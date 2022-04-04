@@ -99,6 +99,10 @@ extension UIColor {
     class func iconWeak() -> UIColor {
         return ColorProvider.IconWeak
     }
+
+    class func iconHint() -> UIColor {
+        return ColorProvider.IconHint
+    }
     
     class func notificationErrorColor() -> UIColor {
         return ColorProvider.NotificationError

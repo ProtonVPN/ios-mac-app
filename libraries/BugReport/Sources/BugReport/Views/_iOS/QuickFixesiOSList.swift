@@ -38,7 +38,7 @@ struct QuickFixesiOSList: View {
 
                 UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
 
-                StepProgress(step: 2, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
+                StepProgress(step: 2, steps: 3, colorMain: colors.brand, colorText: colors.textAccent, colorSecondary: colors.brandLight40)
                     .padding(.bottom)
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -65,6 +65,7 @@ struct QuickFixesiOSList: View {
                                                 .frame(minHeight: 24, alignment: .leading)
                                             Spacer()
                                             Image(Asset.quickfixLink.name, bundle: assetsBundle)
+                                                .foregroundColor(colors.externalLinkIcon)
                                         }
                                     }
                                     .padding(.horizontal)
