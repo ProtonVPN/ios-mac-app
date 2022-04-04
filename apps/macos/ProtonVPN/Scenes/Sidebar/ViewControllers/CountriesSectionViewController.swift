@@ -63,6 +63,8 @@ class CountriesSectionViewController: NSViewController {
 
     @IBOutlet weak var searchIcon: NSImageView!
     @IBOutlet weak var searchTextField: TextFieldWithFocus!
+    @IBOutlet weak var searchBox: NSBox!
+
     @IBOutlet weak var bottomHorizontalLine: NSBox!
     @IBOutlet weak var serverListScrollView: BlockeableScrollView!
     @IBOutlet weak var serverListTableView: NSTableView!
@@ -153,6 +155,9 @@ class CountriesSectionViewController: NSViewController {
         searchTextField.usesSingleLineMode = true
         searchTextField.focusRingType = .none
         searchTextField.style(placeholder: LocalizedString.searchForCountry, font: .themeFont(.heading4), alignment: .left)
+        searchBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
+        searchBox.layer?.backgroundColor = .cgColor(.background)
+        searchBox.layer?.borderColor = .cgColor(.border)
 
         searchTextField.setAccessibilityIdentifier("SearchTextField")
         clearSearchBtn.setAccessibilityIdentifier("ClearSearchButton")

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,6 +20,7 @@
                 <outlet property="netShieldSectionView" destination="Uag-7s-udL" id="82m-sY-u6Z"/>
                 <outlet property="netshieldContainer" destination="wdu-7r-MZX" id="JzR-yp-ZGs"/>
                 <outlet property="quickSettingsStack" destination="62O-3H-Vui" id="48B-PC-fbt"/>
+                <outlet property="searchBox" destination="qf9-9Y-IsT" id="4Z6-q8-u8I"/>
                 <outlet property="searchIcon" destination="8u3-tX-dep" id="dSA-jo-Plh"/>
                 <outlet property="searchTextField" destination="SQG-nw-URT" id="KoE-mG-DN1"/>
                 <outlet property="secureCoreBtn" destination="JrW-be-2tC" id="Yeu-YT-APa"/>
@@ -258,7 +259,6 @@
                         <constraint firstAttribute="height" constant="46" id="ZbK-xI-SQw"/>
                     </constraints>
                     <color key="borderColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                    <color key="fillColor" red="0.16470588235294117" green="0.16470588235294117" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </box>
                 <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="xcp-Uy-Ngx" userLabel="SecureCoreContainer">
                     <rect key="frame" x="0.0" y="0.0" width="514" height="459"/>
