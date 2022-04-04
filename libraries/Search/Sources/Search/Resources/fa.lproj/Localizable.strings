@@ -7,6 +7,9 @@
 /* Section header in search */
 "_plus_servers" = "سرورهای PLUS";
 
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Country, City or Server";
+
 /* Section header in search */
 "search_cities" = "Cities";
 
@@ -39,6 +42,9 @@
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Recently viewed";
+
+/* Section header in search */
+"search_results_cities" = "Cities";
 
 /* Section header in search */
 "search_results_countries" = "کشورها";

@@ -7,6 +7,9 @@
 /* Section header in search */
 "_plus_servers" = "PLUS Сервери";
 
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Країна, місто або сервер";
+
 /* Section header in search */
 "search_cities" = "Міста";
 
@@ -39,6 +42,9 @@
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Недавно переглянуте";
+
+/* Section header in search */
+"search_results_cities" = "Міста";
 
 /* Section header in search */
 "search_results_countries" = "Країни";
