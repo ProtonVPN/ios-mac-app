@@ -18,28 +18,21 @@
 
 import UIKit
 
-public class ConnectTableViewCell: UITableViewCell {
-    enum Mode {
-        case connect(UIImage)
-        case upgrade(String)
-    }
+protocol ConnectTableViewCell {
+    var mode: ConnectTableViewCellMode { get }
+    var connectButton: UIButton! { get }
+    var viewModel: ConnectViewModel? { get }
+    func renderConnectButton()
+}
 
-    var mode: Mode {
+extension ConnectTableViewCell {
+    var mode: ConnectTableViewCellMode {
         if let text = viewModel?.textInPlaceOfConnectIcon {
             return .upgrade(text)
         } else if let icon = viewModel?.connectIcon {
             return .connect(icon)
         }
         return .upgrade("")
-    }
-
-    @IBOutlet weak var connectButton: UIButton!
-
-    public var viewModel: ConnectViewModel?
-
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        connectButton.layer.cornerRadius = mode.cornerRadius
     }
 
     func renderConnectButton() {
@@ -54,7 +47,12 @@ public class ConnectTableViewCell: UITableViewCell {
     }
 }
 
-extension ConnectTableViewCell.Mode {
+enum ConnectTableViewCellMode {
+    case connect(UIImage)
+    case upgrade(String)
+}
+
+extension ConnectTableViewCellMode {
     var cornerRadius: CGFloat {
         switch self {
         case .connect:
