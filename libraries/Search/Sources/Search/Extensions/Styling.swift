@@ -81,7 +81,7 @@ let upsellTitleStyle = concat(baseTextStyle, and: {
 
 let lineSeparatorStyle: (UIView, NSLayoutConstraint) -> Void = {
     $0.backgroundColor = colors.weakText
-    $1.constant = 0.5
+    $1.constant = 1 / UIScreen.main.scale
 }
 
 let highlightMatches = { (label: UILabel, string: String?, searchText: String?) in

@@ -212,11 +212,11 @@ final class NavigationService {
     }
 
     private func showNewBrandModal() {
-        guard !propertiesManager.didShowNewBrandModal else {
+        guard !propertiesManager.newBrandModalShown else {
             return
         }
         alertService.push(alert: NewBrandAlert())
-        propertiesManager.didShowNewBrandModal = true
+        propertiesManager.newBrandModalShown = true
     }
     
     func makeLaunchViewController() -> LaunchViewController? {
@@ -384,7 +384,7 @@ extension NavigationService: LoginServiceDelegate {
     }
 
     func userDidSignUp(onboardingShowFirstConnection: Bool) {
-        propertiesManager.didShowNewBrandModal = true
+        propertiesManager.newBrandModalShown = true
         onboardingService.showOnboarding(showFirstConnection: onboardingShowFirstConnection)
     }
 }
