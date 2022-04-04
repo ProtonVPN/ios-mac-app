@@ -1019,6 +1019,18 @@
 "_need_help" = "Potrzebujesz pomocy?";
 
 /* (No Comment) */
+"_neks_t2_connect" = "Connect Anyway";
+
+/* (No Comment) */
+"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+
+/* `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "T2 Security Chip";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Kill Switch Stability Warning";
+
+/* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.";
 
 /* (No Comment) */
@@ -1684,64 +1696,66 @@
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_title" = "Rozszerzenie systemu jest wymagane";
 
-/* System exetnsion wizard in mac: Button */
+/* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Rozpocznij konfigurację";
 
-/* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
+/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
 "_sysex_wizard_step1_description" = "Kliknij przycisk \"Rozpocznij konfigurację\". W wyświetlonych oknach kliknij \"Otwórz ustawienia bezpieczeństwa\".\nAlternatywnie, kliknij tutaj, aby otworzyć te ustawienia.";
 
-/* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
+/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
 "_sysex_wizard_step1_description_1" = "Kliknij przycisk \"Rozpocznij konfigurację\". W wyświetlonym oknie kliknij \"Otwórz ustawienia bezpieczeństwa\".\nAlternatywnie, kliknij tutaj, aby otworzyć te ustawienia.";
 
-/* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
-"_sysex_wizard_step1_description_link" = "tutaj";
+/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
+   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
+   `_sysex_wizard_step1_description_1' localized strings. */
+"_sysex_wizard_step1_description_link" = "kliknij tutaj";
 
-/* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
+/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
 "_sysex_wizard_step1_title" = "Otwórz ustawienia bezpieczeństwa";
 
-/* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
+/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
 "_sysex_wizard_step1_title_1" = "Otwórz ustawienia bezpieczeństwa";
 
-/* System exetnsion wizard in mac: Step nr.2 description */
+/* System extension wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Kliknij, aby wprowadzić zmiany";
 
-/* System exetnsion wizard in mac: Step nr.2 title */
+/* System extension wizard in mac: Step nr.2 title */
 "_sysex_wizard_step2_title" = "Odblokuj, aby wprowadzić zmiany";
 
-/* System exetnsion wizard in mac: Step nr.3 description */
+/* System extension wizard in mac: Step nr.3 description */
 "_sysex_wizard_step3_description" = "Wpisz dane logowania macOS";
 
-/* System exetnsion wizard in mac: Step nr.3 title */
+/* System extension wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Wpisz dane logowania";
 
-/* System exetnsion wizard in mac: Step nr.4 description (for case with more than one system extension) */
+/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
 "_sysex_wizard_step4_description" = "Kliknij przycisk “Szczegóły...”";
 
-/* System exetnsion wizard in mac: Step nr.4 description (for case with only one system extension) */
+/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
 "_sysex_wizard_step4_description_1" = "Kliknij przycisk “Zezwalaj”";
 
-/* System exetnsion wizard in mac: Step nr.4 title (for case with more than one system extension) */
+/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
 "_sysex_wizard_step4_title" = "Przycisk “Szczegóły...”";
 
-/* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
+/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
 "_sysex_wizard_step4_title_1" = "Przycisk “Zezwalaj”";
 
-/* System exetnsion wizard in mac: Step nr.5 description */
+/* System extension wizard in mac: Step nr.5 description */
 "_sysex_wizard_step5_description" = "Zaznacz dwa elementy aplikacji ProtonVPN, aby włączyć niestandardowe protokoły i kliknij przycisk \"OK\"";
 
-/* System exetnsion wizard in mac: Step nr.5 title */
+/* System extension wizard in mac: Step nr.5 title */
 "_sysex_wizard_step5_title" = "Zaznaczenie elementów aplikacji ProtonVPN";
 
-/* System exetnsion wizard in mac: Subtitle */
+/* System extension wizard in mac: Subtitle */
 "_sysex_wizard_subtitle" = "Aby to zrobić, wykonaj poniższe kroki:";
 
-/* System exetnsion wizard in mac: Text under 5 points */
+/* System extension wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Jesteś gotowy do używania aplikacji ProtonVPN z najnowszymi i najszybszymi technologiami VPN!";
 
-/* System exetnsion wizard in mac: Main title */
+/* System extension wizard in mac: Main title */
 "_sysex_wizard_title" = "Ciesz się najszybszymi połączeniami dzięki włączeniu niestandardowych protokołów";
 
-/* System exetnsion wizard in mac: Main title */
+/* System extension wizard in mac: Main title */
 "_sysex_wizard_window_title" = "Włączenie niestandardowych protokołów";
 
 /* MacOS: Settings -> General: name of field. */
@@ -2112,7 +2126,7 @@
 /* (No Comment) */
 "_wgks_description" = "Funkcja Kill Switch zapobiega nawiązywaniu połączenia internetowego bez ochrony VPN. Może to być spowodowane niekompatybilną aplikacją z systemem operacyjnym (macOS Catalina 10.15).\n\nZaktualizuj system operacyjny do najnowszej wersji, aby rozwiązać problem.\n\nOpcjonalnie możesz zmienić protokół na OpenVPN lub wyłączyć funkcję Kill Switch.";
 
-/* (No Comment) */
+/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Wyłącz Kill Switch";
 
 /* (No Comment) */
@@ -2138,4 +2152,7 @@
 
 /* (No Comment) */
 "login_summary_button" = "Zacznij korzystać z aplikacji ProtonVPN";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
 

@@ -7,6 +7,9 @@
 /* Section header in search */
 "_plus_servers" = "Serveurs PLUS";
 
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Pays, ville ou serveur";
+
 /* Section header in search */
 "search_cities" = "Villes";
 
@@ -39,6 +42,9 @@
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Vu récemment";
+
+/* Section header in search */
+"search_results_cities" = "Villes";
 
 /* Section header in search */
 "search_results_countries" = "Pays";

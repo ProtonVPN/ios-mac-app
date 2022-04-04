@@ -7,6 +7,9 @@
 /* Section header in search */
 "_plus_servers" = "PLUS-Server";
 
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Land, Stadt oder Server";
+
 /* Section header in search */
 "search_cities" = "Städte";
 
@@ -39,6 +42,9 @@
 
 /* Header for the recent searches section in search */
 "search_recent_header" = "Kürzlich betrachtet";
+
+/* Section header in search */
+"search_results_cities" = "Städte";
 
 /* Section header in search */
 "search_results_countries" = "Länder";
