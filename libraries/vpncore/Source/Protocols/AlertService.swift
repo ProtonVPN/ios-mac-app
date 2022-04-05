@@ -439,15 +439,9 @@ public class UserVerificationAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public let verificationMethods: VerificationMethods
-    public let success: ((HumanVerificationToken) -> Void)
-    public let failure: ((Error) -> Void)
     public let error: Error
     
-    public init(verificationMethods: VerificationMethods, error: Error, success: @escaping ((HumanVerificationToken) -> Void), failure: @escaping ((Error) -> Void)) {
-        self.verificationMethods = verificationMethods
-        self.success = success
-        self.failure = failure
+    public init(error: Error) {
         self.error = error
         #if os(macOS)
         self.message = error.localizedDescription

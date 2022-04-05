@@ -30,7 +30,7 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
 extension macOSNetworkingDelegate {
     func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, error: NSError, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
         // there is no human verification on macOS so just show en error
-        alertService.push(alert: UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: parameters.methods.compactMap({ HumanVerificationToken.TokenType.type(fromString: $0.method) }), captchaToken: parameters.startToken), error: error, success: { _ in }, failure: { _ in }))
+        alertService.push(alert: UserVerificationAlert(error: error))
 
         // report human verification as closed by the user
         // should result in the request failing with error
