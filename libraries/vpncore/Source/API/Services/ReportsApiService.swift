@@ -30,7 +30,6 @@ public protocol ReportsApiServiceFactory {
 }
 
 public class ReportsApiService {
-    
     private let networking: Networking
     
     public init(networking: Networking) {
