@@ -27,7 +27,7 @@ class UserVerificationAlertTests: XCTestCase {
     
     #if os(iOS)
     func testUserVerificationAlertOnIosDoesntHaveMessage() throws {
-        let alert = UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: [.captcha], captchaToken: nil), error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation), success: {_ in }, failure: { _ in })
+        let alert = UserVerificationAlert(error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation))
         
         XCTAssertNil(alert.message)
     }
@@ -35,7 +35,7 @@ class UserVerificationAlertTests: XCTestCase {
     
     #if os(macOS)
     func testUserVerificationAlertOnMacOSHasMessage() throws {
-        let alert = UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: [.captcha], captchaToken: nil), error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation), success: {_ in }, failure: { _ in })
+        let alert = UserVerificationAlert(error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation))
 
         XCTAssertEqual(alert.message, LocalizedString.errorUserFailedHumanValidation)
     }

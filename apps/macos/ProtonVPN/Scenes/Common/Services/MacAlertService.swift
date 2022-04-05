@@ -320,9 +320,7 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show( _ alert: UserVerificationAlert) {
-        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: {
-            alert.failure(alert.error)
-        }))
+        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
         showDefaultSystemAlert(alert)
     }
     
