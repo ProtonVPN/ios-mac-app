@@ -10,17 +10,23 @@
 import Foundation
 
 public enum VpnProtocol {
+
+    case ike
+    case openVpn(OpenVpnTransport)
+    case wireGuard
+
     public enum AuthenticationType {
         case credentials
         case certificate
     }
     
     // swiftlint:disable nesting
-    public enum TransportProtocol: String, Codable {
+    public enum OpenVpnTransport: String, Codable {
         
         case tcp = "tcp"
         case udp = "udp"
-        case undefined = "undefined"
+
+        private static var defaultValue = OpenVpnTransport.tcp
         
         private struct CoderKey {
             static let transportProtocol = "transportProtocol"
@@ -28,7 +34,7 @@ public enum VpnProtocol {
         
         public init(coder aDecoder: NSCoder) {
             guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
-                self = .undefined
+                self = .defaultValue
                 return
             }
             switch data[0] {
@@ -37,7 +43,7 @@ public enum VpnProtocol {
             case 1:
                 self = .udp
             default:
-                self = .undefined
+                self = .defaultValue
             }
         }
         
@@ -48,17 +54,11 @@ public enum VpnProtocol {
                 data[0] = 0
             case .udp:
                 data[0] = 1
-            case .undefined:
-                data[0] = 2
             }
             aCoder.encode(data, forKey: CoderKey.transportProtocol)
         }
     }
     // swiftlint:enable nesting
-    
-    case ike
-    case openVpn(TransportProtocol)
-    case wireGuard
     
     public var localizedString: String {
         var string: String
@@ -72,8 +72,6 @@ public enum VpnProtocol {
                 string += " (\(LocalizedString.tcp))"
             case .udp:
                 string += " (\(LocalizedString.udp))"
-            case .undefined:
-                break
             }
         case .wireGuard:
             string = LocalizedString.wireguard
@@ -98,7 +96,7 @@ public enum VpnProtocol {
         }
     }
     
-    public func isOpenVpn(_ transportProtocol: TransportProtocol) -> Bool {
+    public func isOpenVpn(_ transportProtocol: OpenVpnTransport) -> Bool {
         if case .openVpn(let transport) = self {
             return transportProtocol == transport
         } else {
@@ -119,17 +117,6 @@ public enum VpnProtocol {
         case .ike: return .credentials
         case .openVpn: return .credentials
         case .wireGuard: return .certificate
-        }
-    }
-
-    public var transportProtocol: TransportProtocol {
-        switch self {
-        case .ike:
-            return .undefined
-        case .openVpn(let transportProtocol):
-            return transportProtocol
-        case .wireGuard:
-            return .undefined
         }
     }
 
@@ -158,7 +145,7 @@ extension VpnProtocol: Codable {
         case 0:
             self = .ike
         case 1:
-            let transportProtocol = try container.decode(TransportProtocol.self, forKey: .transportProtocol)
+            let transportProtocol = try container.decode(OpenVpnTransport.self, forKey: .transportProtocol)
             self = .openVpn(transportProtocol)
         case 2:
             self = .wireGuard
@@ -196,7 +183,7 @@ extension VpnProtocol {
         
         switch data[0] {
         case 1:
-            self = .openVpn(TransportProtocol(coder: aDecoder))
+            self = .openVpn(OpenVpnTransport(coder: aDecoder))
         case 2:
             self = .wireGuard
         default:

@@ -148,7 +148,7 @@ fileprivate extension ConnectionProtocol {
             switch vpnProtocol {
             case .ike:
                 return 1
-            case .openVpn(.udp), .openVpn(.undefined):
+            case .openVpn(.udp):
                 return 2
             case .openVpn(.tcp):
                 return 3

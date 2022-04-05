@@ -105,8 +105,6 @@ final class HeaderViewModel {
                 name = "\(LocalizedString.openvpn) (\(LocalizedString.tcp))"
             case .udp:
                 name = "\(LocalizedString.openvpn) (\(LocalizedString.udp))"
-            case .undefined:
-                name = LocalizedString.openvpn
             }
         case .wireGuard:
             name = LocalizedString.wireguard

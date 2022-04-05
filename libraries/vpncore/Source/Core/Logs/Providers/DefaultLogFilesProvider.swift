@@ -26,7 +26,7 @@ public class DefaultLogFilesProvider: LogFilesProvider {
         logFiles = [
             (LocalizedString.applicationLogs, logFileManager.getFileUrl(named: appLogFilename)), // Application logs
             (LocalizedString.applicationLogs, vpnManager.logFile(for: .ike)), // Empty for apple's ikev2 implementation
-            (LocalizedString.openVpnLogs, vpnManager.logFile(for: .openVpn(.undefined))),
+            (LocalizedString.openVpnLogs, vpnManager.logFile(for: .openVpn(.tcp))),
             (LocalizedString.wireguardLogs, vpnManager.logFile(for: .wireGuard))
         ]
     }
