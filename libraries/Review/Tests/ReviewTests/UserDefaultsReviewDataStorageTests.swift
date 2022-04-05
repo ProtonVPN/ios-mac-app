@@ -35,15 +35,15 @@ final class UserDefaultsReviewDataStorageTests: XCTestCase {
         XCTAssertNil(storage.firstSuccessConnectionStartTimestamp)
         XCTAssertNil(storage.activeConnectionStartTimestamp)
         XCTAssertNil(storage.lastReviewShownTimestamp)
-        XCTAssertEqual(storage.successConnenctionsInARowCount, 0)
+        XCTAssertEqual(storage.successConnectionsInARowCount, 0)
     }
 
     func testStoringValues() {
         let storage = UserDefaultsReviewDataStorage(userDefaults: userDefaults)
-        storage.successConnenctionsInARowCount = 4
-        XCTAssertEqual(storage.successConnenctionsInARowCount, 4)
-        storage.successConnenctionsInARowCount = 1
-        XCTAssertEqual(storage.successConnenctionsInARowCount, 1)
+        storage.successConnectionsInARowCount = 4
+        XCTAssertEqual(storage.successConnectionsInARowCount, 4)
+        storage.successConnectionsInARowCount = 1
+        XCTAssertEqual(storage.successConnectionsInARowCount, 1)
 
         var date = Date().addingTimeInterval(45)
         storage.lastReviewShownTimestamp = date
@@ -78,7 +78,7 @@ final class UserDefaultsReviewDataStorageTests: XCTestCase {
 
     func testClearingValues() {
         let storage = UserDefaultsReviewDataStorage(userDefaults: userDefaults)
-        storage.successConnenctionsInARowCount = 4
+        storage.successConnectionsInARowCount = 4
         storage.lastReviewShownTimestamp = Date().addingTimeInterval(45)
         storage.activeConnectionStartTimestamp = Date().addingTimeInterval(69)
         storage.firstSuccessConnectionStartTimestamp = Date().addingTimeInterval(89)
@@ -87,14 +87,14 @@ final class UserDefaultsReviewDataStorageTests: XCTestCase {
         XCTAssertNil(storage.firstSuccessConnectionStartTimestamp)
         XCTAssertNil(storage.activeConnectionStartTimestamp)
         XCTAssertNil(storage.lastReviewShownTimestamp)
-        XCTAssertEqual(storage.successConnenctionsInARowCount, 0)
+        XCTAssertEqual(storage.successConnectionsInARowCount, 0)
     }
 
     func testValuesBeingOnlyDepedendOnUserDefauts() {
         let storage = UserDefaultsReviewDataStorage(userDefaults: userDefaults)
-        storage.successConnenctionsInARowCount = 4
+        storage.successConnectionsInARowCount = 4
 
         let storage2 = UserDefaultsReviewDataStorage(userDefaults: userDefaults)
-        XCTAssertEqual(storage2.successConnenctionsInARowCount, 4)
+        XCTAssertEqual(storage2.successConnectionsInARowCount, 4)
     }
 }

@@ -49,7 +49,7 @@ public final class Review {
         if dataStorage.activeConnectionStartTimestamp == nil {
             logger?("Saving new active connection timestamp and incrementing successful connections count")
             dataStorage.activeConnectionStartTimestamp = dateProvider()
-            dataStorage.successConnenctionsInARowCount = dataStorage.successConnenctionsInARowCount + 1
+            dataStorage.successConnectionsInARowCount = dataStorage.successConnectionsInARowCount + 1
         }
         checkConditions()
     }
@@ -66,7 +66,7 @@ public final class Review {
     public func connectionFailed() {
         logger?("Resetting successful connections count and active connection timestamp because of failure")
         dataStorage.activeConnectionStartTimestamp = nil
-        dataStorage.successConnenctionsInARowCount = 0
+        dataStorage.successConnectionsInARowCount = 0
     }
 
     public func update(configuration: Configuration) {
@@ -130,8 +130,8 @@ public final class Review {
              the number of days since the last review modal >= rating_days_last_review_passed
              user's subscription is in rating_eligible_plans
          */
-        if dataStorage.successConnenctionsInARowCount >= configuration.successConnections {
-            logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with \(dataStorage.successConnenctionsInARowCount) successful connections in a row")
+        if dataStorage.successConnectionsInARowCount >= configuration.successConnections {
+            logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with \(dataStorage.successConnectionsInARowCount) successful connections in a row")
             show()
             return
         }
@@ -145,8 +145,8 @@ public final class Review {
              VPN session length (in days) >= rating_days_connected
              user's subscription is in rating_eligible_plans
          */
-        if let activeConenctionStartTimestamp = dataStorage.activeConnectionStartTimestamp, activeConenctionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
-            logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with session length of \(dateProvider().timeIntervalSince(activeConenctionStartTimestamp).days)")
+        if let activeConnectionStartTimestamp = dataStorage.activeConnectionStartTimestamp, activeConnectionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
+            logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with session length of \(dateProvider().timeIntervalSince(activeConnectionStartTimestamp).days)")
             show()
             return
         }

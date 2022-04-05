@@ -19,7 +19,7 @@
 import Foundation
 
 protocol ReviewDataStorage: AnyObject {
-    var successConnenctionsInARowCount: Int { get set }
+    var successConnectionsInARowCount: Int { get set }
     var lastReviewShownTimestamp: Date? { get set }
     var activeConnectionStartTimestamp: Date? { get set }
     var firstSuccessConnectionStartTimestamp: Date? { get set }
@@ -29,18 +29,18 @@ protocol ReviewDataStorage: AnyObject {
 
 final class UserDefaultsReviewDataStorage: ReviewDataStorage {
     private enum Keys: String, CaseIterable {
-        case successConnenctionsInARowCount
+        case successConnectionsInARowCount
         case lastReviewShownTimestamp
         case activeConnectionStartTimestamp
         case firstSuccessConnectionStartTimestamp
     }
 
-    var successConnenctionsInARowCount: Int {
+    var successConnectionsInARowCount: Int {
         get {
-            userDefaults.integer(forKey: Keys.successConnenctionsInARowCount.rawValue)
+            userDefaults.integer(forKey: Keys.successConnectionsInARowCount.rawValue)
         }
         set {
-            userDefaults.set(newValue, forKey: Keys.successConnenctionsInARowCount.rawValue)
+            userDefaults.set(newValue, forKey: Keys.successConnectionsInARowCount.rawValue)
         }
     }
     var lastReviewShownTimestamp: Date? {
