@@ -32,7 +32,6 @@ public protocol CoreApiService {
 }
 
 public class CoreApiServiceImplementation: CoreApiService {
-    
     private let networking: Networking
     
     public init(networking: Networking) {
