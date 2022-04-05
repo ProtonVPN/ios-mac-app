@@ -56,5 +56,10 @@ final class ExtensionsTests: XCTestCase {
 
         let date3 = now.addingTimeInterval(5 * 86_400 + 156)
         XCTAssertEqual(date3.timeIntervalSince(now).days, "5d")
+
+        XCTAssertEqual(now.timeIntervalSince(now).days, "0d")
+
+        let date4 = now.addingTimeInterval(-2 * 86_400 - 156)
+        XCTAssertEqual(date4.timeIntervalSince(now).days, "-2d")
     }
 }
