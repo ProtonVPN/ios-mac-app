@@ -64,7 +64,7 @@ class ReportBugViewController: NSViewController {
         self.logs.append(logFileManager.getFileUrl(named: AppConstants.Filenames.appLogFilename))
         
         // Add ovpn log file
-        vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
+        vpnManager.logsContent(for: .openVpn(.tcp)) { logs in
             let file = logFileManager.getFileUrl(named: AppConstants.Filenames.openVpnLogFilename)
             if let content = logs {
                 self.logFileManager.dump(logs: content, toFile: file.path)

@@ -178,7 +178,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let socketType: SocketType
         if case VpnProtocol.openVpn(let transportProtocol) = vpnProtocol {
             switch transportProtocol {
-            case .tcp, .undefined:
+            case .tcp:
                 socketType = .tcp
             case .udp:
                 socketType = .udp

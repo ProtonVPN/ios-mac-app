@@ -62,7 +62,7 @@ class HelpMenuViewModel {
     
     func openOpenVpnLogsFolderAction() {
         // Save log to file
-        vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
+        vpnManager.logsContent(for: .openVpn(.tcp)) { logs in
             if let content = logs {
                 self.logFileManager.dump(logs: content, toFile: AppConstants.Filenames.openVpnLogFilename)
             }

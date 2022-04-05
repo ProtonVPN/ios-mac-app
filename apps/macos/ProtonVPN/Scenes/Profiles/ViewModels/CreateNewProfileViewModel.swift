@@ -261,8 +261,6 @@ class CreateNewProfileViewModel {
                 title = "\(LocalizedString.openvpn) (\(LocalizedString.tcp))"
             case .udp:
                 title = "\(LocalizedString.openvpn) (\(LocalizedString.udp))"
-            case .undefined:
-                title = LocalizedString.openvpn
             }
         case .wireGuard:
             title = LocalizedString.wireguard

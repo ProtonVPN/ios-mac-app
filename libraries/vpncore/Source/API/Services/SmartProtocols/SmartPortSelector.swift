@@ -43,7 +43,7 @@ final class SmartPortSelectorImplementation {
             switch transportProtocol {
             case .udp:
                 completion(openVpnConfig.defaultUdpPorts.shuffled())
-            case .tcp, .undefined:
+            case .tcp:
                 completion(openVpnConfig.defaultTcpPorts.shuffled())
             }
         }

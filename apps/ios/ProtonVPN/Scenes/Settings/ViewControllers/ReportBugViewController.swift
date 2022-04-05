@@ -111,7 +111,7 @@ class ReportBugViewController: UIViewController {
                 viewModel.add(files: [applicationLogFile])
             }
             
-            if let fileUrl = vpnManager.logFile(for: .openVpn(.undefined)) {
+            if let fileUrl = vpnManager.logFile(for: .openVpn(.tcp)) {
                 viewModel.add(files: [fileUrl])
             }
             
