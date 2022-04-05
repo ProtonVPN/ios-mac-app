@@ -114,7 +114,7 @@ public final class Review {
             return
         }
 
-        // never show the rating again before the time limit passes no matter which conditions is matched
+        // never show the rating again before the time limit passes no matter which conditions are matched
         // this prevents situations like showing the rating on app activation multiple times if the user is connected for X days (FR-2)
         if let lastReviewShownTimestamp = dataStorage.lastReviewShownTimestamp, lastReviewShownTimestamp.addingTimeInterval(TimeInterval(configuration.daysLastReviewPassed * 60 * 60 * 24)) > dateProvider() {
             return
