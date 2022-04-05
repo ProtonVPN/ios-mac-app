@@ -181,8 +181,6 @@
 		D5ADF51A2281975E0062367C /* SiriHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADF5162281975D0062367C /* SiriHelperProtocol.swift */; };
 		D5ADFBD023A0D09600C28CFF /* URLArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */; };
 		D5ADFBD223A0D09600C28CFF /* URLArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */; };
-		D5B4712624DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
-		D5B4712724DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
 		D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */; };
 		D5B53ADA25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */; };
 		D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
@@ -756,7 +754,6 @@
 		D5A8812C22CE06F6009B63D1 /* test_log_2.log */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_log_2.log; sourceTree = "<group>"; };
 		D5ADF5162281975D0062367C /* SiriHelperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriHelperProtocol.swift; sourceTree = "<group>"; };
 		D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLArrayTests.swift; sourceTree = "<group>"; };
-		D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSubscriptionResponse.swift; sourceTree = "<group>"; };
 		D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceManagerHelper.swift; sourceTree = "<group>"; };
 		D5B694CF2449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5B694D02449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1517,7 +1514,6 @@
 				F38F7BEB27956674005B9EA2 /* CoreApiFeatureRespone.swift */,
 				E1616BBD21C7D24E00F42D79 /* Responses.swift */,
 				F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */,
-				D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */,
 				C13CF157E79D07C8924BAB1F /* Reports */,
 			);
 			path = Responses;
@@ -2470,7 +2466,6 @@
 				E15367E622663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
 				E129C6CB22A9205700D8437E /* VpnManagerMock.swift in Sources */,
 				D5A8811D22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
-				D5B4712624DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */,
 				E1616BEC21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
 				E148AE6E21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				E9DC79B9262DBEDC001A0FC0 /* SmartProtocol.swift in Sources */,
@@ -2759,7 +2754,6 @@
 				D5A8811E22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
 				F389189326C3E55A006214A8 /* SmartProtocolConfig.swift in Sources */,
 				F3747BF226D3B93300EF2F00 /* Networking.swift in Sources */,
-				D5B4712724DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */,
 				F3D4DA0D263015400032B752 /* VpnAuthenticationData.swift in Sources */,
 				E9DC79EE262DBF62001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */,
 				E1616BED21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
