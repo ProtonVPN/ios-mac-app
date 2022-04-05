@@ -86,7 +86,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="100%" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gy0-ry-hsN">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gy0-ry-hsN">
                                         <rect key="frame" x="12" y="-0.5" width="38" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
@@ -97,6 +97,7 @@
                                 <constraints>
                                     <constraint firstItem="0Cy-HH-d7d" firstAttribute="leading" secondItem="Rif-yk-4lY" secondAttribute="leading" id="DYa-8d-VR0"/>
                                     <constraint firstItem="Gy0-ry-hsN" firstAttribute="leading" secondItem="0Cy-HH-d7d" secondAttribute="trailing" constant="4" id="Tkh-nG-WnE"/>
+                                    <constraint firstAttribute="width" constant="50" id="f2X-3n-BM3"/>
                                     <constraint firstItem="Gy0-ry-hsN" firstAttribute="centerY" secondItem="0Cy-HH-d7d" secondAttribute="centerY" id="hZV-co-YYo"/>
                                     <constraint firstItem="0Cy-HH-d7d" firstAttribute="centerY" secondItem="Rif-yk-4lY" secondAttribute="centerY" id="hov-Dg-qSU"/>
                                     <constraint firstAttribute="trailing" secondItem="Gy0-ry-hsN" secondAttribute="trailing" id="st6-cU-Pxv"/>
