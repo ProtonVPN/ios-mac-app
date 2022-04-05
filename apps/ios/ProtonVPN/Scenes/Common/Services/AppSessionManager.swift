@@ -414,7 +414,11 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
 // MARK: - Review
 extension AppSessionManagerImplementation {
     private func updateState(_ notification: Notification) {
-        switch appStateManager.state {
+        guard let state = notification.object as? AppState else {
+            return
+        }
+
+        switch state {
         case .connected:
             review.connected()
         case .disconnected:
