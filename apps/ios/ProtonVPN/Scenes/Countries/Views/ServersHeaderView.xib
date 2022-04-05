@@ -28,7 +28,7 @@
                                 <constraint firstAttribute="height" constant="24" id="6fc-Lx-txW"/>
                                 <constraint firstAttribute="width" constant="24" id="Z6P-X2-y1p"/>
                             </constraints>
-                            <state key="normal" image="ic-info-circle"/>
+                            <state key="normal" image="placeholdertext.fill" catalog="system"/>
                             <connections>
                                 <action selector="didTapInfoBtn:" destination="-1" eventType="touchUpInside" id="ZRX-58-aro"/>
                             </connections>
@@ -60,6 +60,6 @@
         </view>
     </objects>
     <resources>
-        <image name="ic-info-circle" width="24" height="24"/>
+        <image name="placeholdertext.fill" catalog="system" width="80" height="128"/>
     </resources>
 </document>

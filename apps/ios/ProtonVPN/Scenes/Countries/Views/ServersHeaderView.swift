@@ -21,6 +21,7 @@
 //
 
 import UIKit
+import ProtonCore_UIFoundations
 
 class ServersHeaderView: UITableViewHeaderFooterView {
 
@@ -46,6 +47,8 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         super.awakeFromNib()
         colorView.backgroundColor = .backgroundColor()
         serversName.textColor = .weakTextColor()
+        infoBtn.setImage(IconProvider.infoCircle, for: .normal)
+        infoBtn.tintColor = ColorProvider.IconNorm
     }
 
     @IBAction private func didTapInfoBtn(_ sender: Any) {
