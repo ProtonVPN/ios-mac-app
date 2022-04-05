@@ -475,3 +475,10 @@ extension DependencyContainer: ReviewFactory {
         return review
     }
 }
+
+// MARK: PaymentsApiServiceFactory
+extension DependencyContainer: PaymentsApiServiceFactory {
+    func makePaymentsApiService() -> PaymentsApiService {
+        return PaymentsApiServiceImplementation(networking: makeNetworking())
+    }
+}

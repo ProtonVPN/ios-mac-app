@@ -469,6 +469,9 @@
 		F31E911C2758F5CF00140B2E /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911A2758F5CE00140B2E /* Logger+Categories.swift */; };
 		F31E911D2758F5CF00140B2E /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911B2758F5CF00140B2E /* Logger+Callers.swift */; };
 		F31E91202758F5F900140B2E /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911F2758F5F900140B2E /* WGLogger.swift */; };
+		F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01527FC85AE00C3AA33 /* CouponViewController.swift */; };
+		F330F01827FC884700C3AA33 /* CouponViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F330F01727FC884700C3AA33 /* CouponViewController.xib */; };
+		F330F01A27FC88EE00C3AA33 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01927FC88EE00C3AA33 /* CouponViewModel.swift */; };
 		F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
 		F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
 		F348C9D627D8E54200622584 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F348C9D527D8E54200622584 /* Search */; };
@@ -1015,6 +1018,9 @@
 		F31E911A2758F5CE00140B2E /* Logger+Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Categories.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Categories.swift"; sourceTree = "<group>"; };
 		F31E911B2758F5CF00140B2E /* Logger+Callers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Callers.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Callers.swift"; sourceTree = "<group>"; };
 		F31E911F2758F5F900140B2E /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
+		F330F01527FC85AE00C3AA33 /* CouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.swift; sourceTree = "<group>"; };
+		F330F01727FC884700C3AA33 /* CouponViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CouponViewController.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.xib; sourceTree = "<group>"; };
+		F330F01927FC88EE00C3AA33 /* CouponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/CouponViewModel.swift; sourceTree = "<group>"; };
 		F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CountriesViewController+Search.swift"; path = "../../../../../ios/ProtonVPN/Scenes/Countries/ViewControllers/CountriesViewController+Search.swift"; sourceTree = "<group>"; };
 		F34AC17C27F439B40007FF93 /* Review+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Review+Configuration.swift"; path = "../../../ios/ProtonVPN/Extensions/Review+Configuration.swift"; sourceTree = "<group>"; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
@@ -1331,6 +1337,8 @@
 			isa = PBXGroup;
 			children = (
 				D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */,
+				F330F01527FC85AE00C3AA33 /* CouponViewController.swift */,
+				F330F01727FC884700C3AA33 /* CouponViewController.xib */,
 				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
@@ -2176,6 +2184,7 @@
 		F36ECCAF2611C75E0089B898 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F330F01927FC88EE00C3AA33 /* CouponViewModel.swift */,
 				E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */,
 				E1EB9E7822FF0B30009E704F /* LogSelectionViewModel.swift */,
 				E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */,
@@ -2216,26 +2225,24 @@
 		F36ECCD42611C8530089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */,
-				E16C2925239E673500E7B61D /* CustomServers.xib */,
-				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
-				E1A4BF5C21ADBF3D004D187F /* Logs.xib */,
-				E1D187E82301A20700C5F492 /* VpnProtocol.xib */,
-				E13EDF6621F0A14400030CE7 /* WidgetSettings.xib */,
 				793ECF452149045400C186A7 /* AppVersionView.swift */,
 				793ECF432149041A00C186A7 /* AppVersionView.xib */,
+				D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */,
 				793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */,
 				793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */,
 				E1D187EF2301AB2E00C5F492 /* CheckmarkTableViewCell.swift */,
 				E1D187F02301AB2E00C5F492 /* CheckmarkTableViewCell.xib */,
 				E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */,
 				E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */,
+				E16C2925239E673500E7B61D /* CustomServers.xib */,
 				E13EDF6C21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift */,
 				E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */,
 				E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */,
 				E13EDF7221F0C79A00030CE7 /* InstructionStepView.xib */,
 				793ECF372148DCF900C186A7 /* KeyValueTableViewCell.swift */,
 				793ECF382148DCF900C186A7 /* KeyValueTableViewCell.xib */,
+				E1A4BF5C21ADBF3D004D187F /* Logs.xib */,
+				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
 				E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */,
 				E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */,
 				D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */,
@@ -2244,6 +2251,8 @@
 				E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */,
 				793ECF3B2148E84500C186A7 /* TooltipTableViewCell.swift */,
 				793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */,
+				E1D187E82301A20700C5F492 /* VpnProtocol.xib */,
+				E13EDF6621F0A14400030CE7 /* WidgetSettings.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2792,6 +2801,7 @@
 				DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */,
 				A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */,
 				20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */,
+				F330F01827FC884700C3AA33 /* CouponViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3239,6 +3249,7 @@
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
+				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
 				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
 				F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
@@ -3257,6 +3268,7 @@
 				D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */,
 				7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */,
 				E1D187F12301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
+				F330F01A27FC88EE00C3AA33 /* CouponViewModel.swift in Sources */,
 				F37EC5B1272FF2AD002A5B8E /* TokenStorage.swift in Sources */,
 				793ECF3D2148E84500C186A7 /* TooltipTableViewCell.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
