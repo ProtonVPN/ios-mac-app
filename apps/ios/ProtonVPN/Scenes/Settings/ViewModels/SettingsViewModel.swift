@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory & PaymentsApiServiceFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -229,7 +229,10 @@ final class SettingsViewModel {
                 self?.manageSubscriptionAction()
             }))
         }
-        
+        cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .brandColor(), handler: { [weak self] in
+            self?.pushCouponViewController()
+        }))
+
         return TableViewSection(title: LocalizedString.account.uppercased(), cells: cells)
     }
     
@@ -633,5 +636,9 @@ final class SettingsViewModel {
     
     private func logOut() {
         appSessionManager.logOut(force: false)
+    }
+
+    private func pushCouponViewController() {
+        pushHandler?(CouponViewController(viewModel: CouponViewModel(paymentsApiService: factory.makePaymentsApiService())))
     }
 }

@@ -1908,3 +1908,12 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Use coupon";
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Coupon code";
+/* Button to apply coupon */
+"apply_coupon" = "Apply";
+/* Hint under the text field to enter coupon code */
+"enter_coupon" = "Enter the coupon code.";
