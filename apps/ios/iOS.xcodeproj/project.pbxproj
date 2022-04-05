@@ -1334,11 +1334,12 @@
 				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
+				F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */,
 				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
+				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
 				E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */,
 				E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */,
-				F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2165,7 +2166,6 @@
 			isa = PBXGroup;
 			children = (
 				F314141C27B174BF007424E9 /* Models */,
-				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
 				F36ECCD42611C8530089B898 /* Views */,
 				791DE610208E08E600A29EA5 /* ViewControllers */,
 				F36ECCAF2611C75E0089B898 /* ViewModels */,
