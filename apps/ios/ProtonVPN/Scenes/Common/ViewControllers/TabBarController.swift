@@ -27,7 +27,6 @@ final class TabBarController: UITabBarController {
 
     private var quickConnectButtonConnecting = false
     private let quickConnectButton = UIButton()
-    private let electron = UIView() // animating ball
     
     var viewModel: TabBarViewModel? {
         didSet {
@@ -81,14 +80,7 @@ final class TabBarController: UITabBarController {
         let centerXConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .bottom, relatedBy: .equal, toItem: bottomItem, attribute: .bottom, multiplier: 1, constant: 6)
         view.addConstraints([widthConstraint, heightConstraint, centerXConstraint, bottomConstraint])
-        
-        // Electron
-        electron.backgroundColor = .brandColor()
-        electron.isUserInteractionEnabled = false
-        quickConnectButton.addSubview(electron)
-        
-        electron.translatesAutoresizingMaskIntoConstraints = false
-        
+
         disconnectedQuickConnect()
     }
     
@@ -103,12 +95,6 @@ extension TabBarController: TabBarViewModelDelegate {
         self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         self.tabBar.items?[2].title = LocalizedString.disconnect
         self.quickConnectButton.setImage(UIImage(named: "quick-connect-active-button"), for: .normal)
-        UIView.animate(withDuration: 0.25, animations: {
-            self.electron.alpha = 0.0
-        }, completion: { _ in
-            self.electron.layer.removeAllAnimations()
-            self.electron.isHidden = true
-        })
     }
     
     func connectingQuickConnect() {
@@ -116,39 +102,6 @@ extension TabBarController: TabBarViewModelDelegate {
             self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .normal)
             self.tabBar.items?[2].title = LocalizedString.connecting
             self.quickConnectButton.setImage(UIImage(named: "quick-connect-connecting-button"), for: .normal)
-            self.electron.alpha = 1.0
-            self.electron.isHidden = false
-            
-            // electron points
-            let electronPoint1 = CGPoint(x: (self.quickConnectButton.frame.width / 2) - 9, y: (self.quickConnectButton.frame.height / 2) + -10)
-            let electronPoint2 = CGPoint(x: (self.quickConnectButton.frame.width / 2) + 2, y: (self.quickConnectButton.frame.height / 2) + 5)
-            let electronPoint3 = CGPoint(x: (self.quickConnectButton.frame.width / 2) + 8, y: (self.quickConnectButton.frame.height / 2) + -17)
-            let electronWidth1: CGFloat = 12
-            let electronWidth2: CGFloat = 4
-            let electronWidth3: CGFloat = 8
-            
-            self.electron.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: electronWidth1, height: electronWidth1))
-            self.electron.layer.cornerRadius = electronWidth1 / 2
-            self.electron.center = electronPoint1
-            
-            let options = UIView.KeyframeAnimationOptions([UIView.KeyframeAnimationOptions.repeat, UIView.KeyframeAnimationOptions.calculationModeLinear])
-            UIView.animateKeyframes(withDuration: 2.2, delay: 0, options: options, animations: {
-                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.3, animations: {
-                    self.electron.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: electronWidth2, height: electronWidth2))
-                    self.electron.layer.cornerRadius = electronWidth2 / 2
-                    self.electron.center = electronPoint2
-                })
-                UIView.addKeyframe(withRelativeStartTime: 0.3, relativeDuration: 0.4, animations: {
-                    self.electron.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: electronWidth3, height: electronWidth3))
-                    self.electron.layer.cornerRadius = electronWidth3 / 2
-                    self.electron.center = electronPoint3
-                })
-                UIView.addKeyframe(withRelativeStartTime: 0.7, relativeDuration: 0.3, animations: {
-                    self.electron.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: electronWidth1, height: electronWidth1))
-                    self.electron.layer.cornerRadius = electronWidth1 / 2
-                    self.electron.center = electronPoint1
-                })
-            }, completion: nil)
         }
         
         quickConnectButtonConnecting = true
@@ -160,8 +113,6 @@ extension TabBarController: TabBarViewModelDelegate {
         self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         self.tabBar.items?[2].title = LocalizedString.quickConnect
         self.quickConnectButton.setImage(UIImage(named: "quick-connect-inactive-button"), for: .normal)
-        self.electron.isHidden = true
-        self.electron.layer.removeAllAnimations()
     }
 }
 
