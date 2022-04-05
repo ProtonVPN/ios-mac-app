@@ -34,7 +34,6 @@ public protocol AuthApiService {
 }
 
 public class AuthApiServiceImplementation: AuthApiService {
-    
     private let networking: Networking
      
     public init(networking: Networking) {
