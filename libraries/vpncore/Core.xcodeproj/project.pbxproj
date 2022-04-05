@@ -1511,7 +1511,6 @@
 				42370604262DA21300A920CF /* VPN */,
 				F36ECB3F2610A78F0089B898 /* Core */,
 				4243631E26555D590027EAEE /* SessionsResponse.swift */,
-				F38F7BEB27956674005B9EA2 /* CoreApiFeatureRespone.swift */,
 				E1616BBD21C7D24E00F42D79 /* Responses.swift */,
 				F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */,
 				C13CF157E79D07C8924BAB1F /* Reports */,
@@ -1522,6 +1521,7 @@
 		F36ECB3F2610A78F0089B898 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F38F7BEB27956674005B9EA2 /* CoreApiFeatureRespone.swift */,
 				D5DCCADB252B5C2B004CB353 /* GetApiNotificationsResponse.swift */,
 				F3E5787027CCCE91000E48E3 /* AvailableDomainResponse.swift */,
 			);
