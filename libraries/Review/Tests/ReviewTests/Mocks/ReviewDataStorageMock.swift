@@ -20,17 +20,15 @@ import Foundation
 @testable import Review
 
 final class ReviewDataStorageMock: ReviewDataStorage {
-    var successConnenctionsInARowCount: Int = 0
+    var successConnectionsInARowCount: Int = 0
     var lastReviewShownTimestamp: Date?
     var activeConnectionStartTimestamp: Date?
     var firstSuccessConnectionStartTimestamp: Date?
 
     func clear() {
-        successConnenctionsInARowCount = 0
+        successConnectionsInARowCount = 0
         lastReviewShownTimestamp = nil
         activeConnectionStartTimestamp = nil
         firstSuccessConnectionStartTimestamp = nil
-    }
-
-    
+    }    
 }
