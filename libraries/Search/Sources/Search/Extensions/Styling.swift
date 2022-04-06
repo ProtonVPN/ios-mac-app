@@ -80,7 +80,7 @@ let upsellTitleStyle = concat(baseTextStyle, and: {
 })
 
 let lineSeparatorStyle: (UIView, NSLayoutConstraint) -> Void = {
-    $0.backgroundColor = colors.weakText
+    $0.backgroundColor = colors.separator
     $1.constant = 1 / UIScreen.main.scale // UIScreen.main.scale is either 1, 2 or 3 for screens 1x, 2x and 3x. This way we're always getting a 1 pixel value.
 }
 
