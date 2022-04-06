@@ -1917,3 +1917,5 @@
 "apply_coupon" = "Apply";
 /* Hint under the text field to enter coupon code */
 "enter_coupon" = "Enter the coupon code.";
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Coupon has been applied successfully.";

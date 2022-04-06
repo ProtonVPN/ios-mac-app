@@ -29,10 +29,16 @@ final class CouponViewController: UIViewController {
     @IBOutlet private weak var textField: PMTextField!
     @IBOutlet private weak var applyButton: UIButton!
 
+    private let viewModel: CouponViewModel
+    private var banner: PMBanner?
+
     // MARK: Setup
 
     init(viewModel: CouponViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: "CouponViewController", bundle: nil)
+
+        viewModel.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -58,15 +64,39 @@ final class CouponViewController: UIViewController {
         applyButton.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        _ = textField.becomeFirstResponder()
+    }
+
+    // MARK: Actions
+
     @objc private func applyTapped() {
-        textField.isError = false
+        viewModel.applyPromoCode(code: textField.value) { [weak self] result in
+            switch result {
+            case let .failure(error):
+                self?.showErrorBanner(error: error)
+            case .success:
+                guard let navigationController = self?.navigationController else {
+                    return
+                }
 
-        let code = textField.value
-
-        guard !code.isEmpty else {
-            textField.isError = true
-            return
+                navigationController.popViewController(animated: true) {
+                    let banner = PMBanner(message: LocalizedString.couponApplied, style: PMBannerNewStyle.success, dismissDuration: 3)
+                    banner.show(at: .top, on: navigationController)
+                }
+            }
         }
+    }
+
+    private func showErrorBanner(error: Error) {
+        banner?.dismiss()
+        banner = PMBanner(message: error.localizedDescription, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
+        banner?.addButton(text: LocalizedString.ok) { [weak self] _ in
+            self?.banner?.dismiss()
+        }
+        banner?.show(at: .top, on: self)
     }
 
     // MARK: Keyboard
@@ -93,6 +123,24 @@ final class CouponViewController: UIViewController {
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
 }
+
+// MARK: CouponViewModelDelegate
+
+extension CouponViewController: CouponViewModelDelegate {
+    func errorDidChange(isError: Bool) {
+        textField.isError = isError
+
+        if !isError {
+            banner?.dismiss()
+        }
+    }
+
+    func loadingDidChange(isLoading: Bool) {
+        applyButton.isSelected = isLoading
+        view.isUserInteractionEnabled = !isLoading
+    }
+}
+
 // MARK: PMTextFieldDelegate
 
 extension CouponViewController: PMTextFieldDelegate {
