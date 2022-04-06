@@ -32,14 +32,16 @@ public struct Colors {
     let text: UIColor
     let brand: UIColor
     let weakText: UIColor
+    let separator: UIColor
     let secondaryBackground: UIColor
     let iconWeak: UIColor
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, secondaryBackground: UIColor, iconWeak: UIColor) {
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, separator: UIColor, secondaryBackground: UIColor, iconWeak: UIColor) {
         self.background = background
         self.text = text
         self.brand = brand
         self.weakText = weakText
+        self.separator = separator
         self.secondaryBackground = secondaryBackground
         self.iconWeak = iconWeak
     }
