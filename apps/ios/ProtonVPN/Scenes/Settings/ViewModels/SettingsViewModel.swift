@@ -639,6 +639,6 @@ final class SettingsViewModel {
     }
 
     private func pushCouponViewController() {
-        pushHandler?(CouponViewController(viewModel: CouponViewModel(paymentsApiService: factory.makePaymentsApiService())))
+        pushHandler?(CouponViewController(viewModel: CouponViewModel(paymentsApiService: factory.makePaymentsApiService(), appSessionManager: appSessionManager)))
     }
 }

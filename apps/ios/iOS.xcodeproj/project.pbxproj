@@ -472,6 +472,10 @@
 		F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01527FC85AE00C3AA33 /* CouponViewController.swift */; };
 		F330F01827FC884700C3AA33 /* CouponViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F330F01727FC884700C3AA33 /* CouponViewController.xib */; };
 		F330F01A27FC88EE00C3AA33 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01927FC88EE00C3AA33 /* CouponViewModel.swift */; };
+		F330F01C27FD752E00C3AA33 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */; };
+		F330F01D27FDABAE00C3AA33 /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01527FC85AE00C3AA33 /* CouponViewController.swift */; };
+		F330F01E27FDABB300C3AA33 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01927FC88EE00C3AA33 /* CouponViewModel.swift */; };
+		F330F01F27FDABFB00C3AA33 /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */; };
 		F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
 		F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */; };
 		F348C9D627D8E54200622584 /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = F348C9D527D8E54200622584 /* Search */; };
@@ -1021,6 +1025,7 @@
 		F330F01527FC85AE00C3AA33 /* CouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.swift; sourceTree = "<group>"; };
 		F330F01727FC884700C3AA33 /* CouponViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CouponViewController.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.xib; sourceTree = "<group>"; };
 		F330F01927FC88EE00C3AA33 /* CouponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/CouponViewModel.swift; sourceTree = "<group>"; };
+		F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UINavigationController+Extensions.swift"; path = "../../../ios/ProtonVPN/Extensions/UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 		F348C9D227D7B63300622584 /* CountriesViewController+Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CountriesViewController+Search.swift"; path = "../../../../../ios/ProtonVPN/Scenes/Countries/ViewControllers/CountriesViewController+Search.swift"; sourceTree = "<group>"; };
 		F34AC17C27F439B40007FF93 /* Review+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Review+Configuration.swift"; path = "../../../ios/ProtonVPN/Extensions/Review+Configuration.swift"; sourceTree = "<group>"; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
@@ -1388,6 +1393,7 @@
 				D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */,
 				F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */,
 				F34AC17C27F439B40007FF93 /* Review+Configuration.swift */,
+				F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3206,6 +3212,7 @@
 				D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */,
 				7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */,
 				E98630A0269863C200F56B87 /* Intents.intentdefinition in Sources */,
+				F330F01C27FD752E00C3AA33 /* UINavigationController+Extensions.swift in Sources */,
 				D5209C7026CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
 				E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */,
@@ -3387,6 +3394,7 @@
 				D5136C40228592E80002C095 /* ProtonQCViewController.swift in Sources */,
 				D5136C41228592E80002C095 /* ProfilesViewController.swift in Sources */,
 				D5136C42228592E80002C095 /* CreateProfileViewController.swift in Sources */,
+				F330F01E27FDABB300C3AA33 /* CouponViewModel.swift in Sources */,
 				F314142427B19B66007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */,
 				D5136C43228592E80002C095 /* SelectionViewController.swift in Sources */,
 				F37F741F27CFBD4D00F1C621 /* Search+Configuration.swift in Sources */,
@@ -3401,6 +3409,7 @@
 				D55B36CC2457FF0A00D8B0B9 /* TroubleshootingSwitchCell.swift in Sources */,
 				D5136C4C228592E80002C095 /* ConnectionBarViewModel.swift in Sources */,
 				D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */,
+				F330F01D27FDABAE00C3AA33 /* CouponViewController.swift in Sources */,
 				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1D6CF6E22E0C99500B58E11 /* ObfuscatedConstants.swift in Sources */,
 				D5209C7B26CBE05A00AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
@@ -3494,6 +3503,7 @@
 				D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */,
 				D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */,
 				F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */,
+				F330F01F27FDABFB00C3AA33 /* UINavigationController+Extensions.swift in Sources */,
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
