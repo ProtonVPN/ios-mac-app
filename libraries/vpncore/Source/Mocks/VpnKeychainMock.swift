@@ -86,7 +86,8 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             credit: 0,
             currency: "",
             hasPaymentMethod: false,
-            planName: accountPlan.rawValue
+            planName: accountPlan.rawValue,
+            subscribed: 0
         )
     }
     
