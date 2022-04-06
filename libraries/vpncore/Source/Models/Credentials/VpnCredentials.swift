@@ -36,6 +36,7 @@ public class VpnCredentials: NSObject, NSCoding {
     public let credit: Int
     public let currency: String
     public let hasPaymentMethod: Bool
+    public let subscribed: Int?
     
     override public var description: String {
         return
@@ -49,10 +50,11 @@ public class VpnCredentials: NSObject, NSCoding {
             "Name: \(name)\n" +
             "Password: \(password)\n" +
             "Delinquent: \(delinquent)\n" +
-            "Has Payment Method: \(hasPaymentMethod)"
+            "Has Payment Method: \(hasPaymentMethod)\n" +
+            "Subscribed: \(String(describing: subscribed))"
     }
 
-    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool, planName: String?) {
+    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool, planName: String?, subscribed: Int?) {
         self.status = status
         self.expirationTime = expirationTime
         self.accountPlan = accountPlan
@@ -67,6 +69,7 @@ public class VpnCredentials: NSObject, NSCoding {
         self.currency = currency
         self.hasPaymentMethod = hasPaymentMethod
         self.planName = planName // Saving original string we got from API, because we need to know if it was null
+        self.subscribed = subscribed
         super.init()
     }
     
@@ -95,6 +98,7 @@ public class VpnCredentials: NSObject, NSCoding {
         credit = try dic.intOrThrow(key: "Credit")
         currency = try dic.stringOrThrow(key: "Currency")
         hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
+        subscribed = dic.int(key: "Subscribed")
         super.init()
     }
     
@@ -114,6 +118,7 @@ public class VpnCredentials: NSObject, NSCoding {
         static let credit = "credit"
         static let currency = "currency"
         static let hasPaymentMethod = "hasPaymentMethod"
+        static let subscribed = "subscribed"
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
@@ -131,7 +136,8 @@ public class VpnCredentials: NSObject, NSCoding {
                   credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
                   currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
                   hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
-                  planName: aDecoder.decodeObject(forKey: CoderKey.planName) as? String
+                  planName: aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
+                  subscribed: aDecoder.decodeObject(forKey: CoderKey.planName) as? Int
         )
     }
 
@@ -150,6 +156,7 @@ public class VpnCredentials: NSObject, NSCoding {
         aCoder.encode(currency, forKey: CoderKey.currency)
         aCoder.encode(hasPaymentMethod, forKey: CoderKey.hasPaymentMethod)
         aCoder.encode(planName, forKey: CoderKey.planName)
+        aCoder.encode(subscribed, forKey: CoderKey.subscribed)
     }
 }
 
@@ -188,7 +195,8 @@ extension CachedVpnCredentials {
                   delinquent: credentials.delinquent,
                   credit: credentials.credit,
                   currency: credentials.currency,
-                  hasPaymentMethod: credentials.hasPaymentMethod)
+                  hasPaymentMethod: credentials.hasPaymentMethod,
+                  subscribed: credentials.subscribed)
     }
 }
 
