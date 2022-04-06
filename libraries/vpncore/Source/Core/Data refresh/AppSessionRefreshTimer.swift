@@ -31,7 +31,7 @@ public class AppSessionRefreshTimer {
     private let serverLoadsRefreshTimeout: TimeInterval // Default: 15 minutes
     private let accountRefreshTimeout: TimeInterval // Default: 3 minutes
     
-    public typealias Factory = AppSessionRefresherFactory
+    public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory
     private let factory: Factory
     
     private var timerFullRefresh: Timer?
@@ -74,6 +74,8 @@ public class AppSessionRefreshTimer {
             log.debug("Account refresh timer started", category: .app, metadata: ["interval": "\(accountRefreshTimeout)"])
             timerAccountRefresh = Timer.scheduledTimer(timeInterval: accountRefreshTimeout, target: self, selector: #selector(refreshAccount), userInfo: nil, repeats: true)
         }
+
+        var accountRefreshed = false
         if now {
             if appSessionRefresher.lastDataRefresh == nil || appSessionRefresher.lastDataRefresh!.addingTimeInterval(fullServerRefreshTimeout) < Date() {
                 refreshFull()
@@ -82,8 +84,14 @@ public class AppSessionRefreshTimer {
             }
             
             if appSessionRefresher.lastAccountRefresh == nil || appSessionRefresher.lastAccountRefresh!.addingTimeInterval(accountRefreshTimeout) < Date() {
+                accountRefreshed = true
                 refreshAccount()
             }
+        }
+
+        // refresh account if the subscribed flag is missing to ensure proper data migration
+        if !accountRefreshed, let credentials = try? factory.makeVpnKeychain().fetchCached(), credentials.subscribed == nil {
+            refreshAccount()
         }
     }
     
