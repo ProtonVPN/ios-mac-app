@@ -140,6 +140,8 @@ final class SettingsViewModel {
                                                name: type(of: propertiesManager).featureFlagsNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+                                               name: type(of: vpnKeychain).vpnCredentialsChanged, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -229,9 +231,12 @@ final class SettingsViewModel {
                 self?.manageSubscriptionAction()
             }))
         }
-        cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .brandColor(), handler: { [weak self] in
-            self?.pushCouponViewController()
-        }))
+
+        if let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
+            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .brandColor(), handler: { [weak self] in
+                self?.pushCouponViewController()
+            }))
+        }
 
         return TableViewSection(title: LocalizedString.account.uppercased(), cells: cells)
     }
