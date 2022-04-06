@@ -25,7 +25,7 @@ internal enum Asset {
   internal static let icFailure = ImageAsset(name: "ic_failure")
   internal static let icSuccess = ImageAsset(name: "ic_success")
   internal static let lightbulb = ImageAsset(name: "ic-lightbulb")
-  internal static let quickfixLink = ImageAsset(name: "ic-arrow-out")
+  internal static let quickfixLink = ImageAsset(name: "ic-arrow-out-square")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

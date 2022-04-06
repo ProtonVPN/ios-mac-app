@@ -28,7 +28,7 @@ extension NSTextField {
         self.alignment = alignment
 
         if let placeholder = placeholder {
-            self.placeholderAttributedString = self.style(placeholder, context: .field, font: font, alignment: alignment)
+            self.placeholderAttributedString = placeholder.styled(.hint, font: font, alignment: alignment)
         }
     }
 }
@@ -40,7 +40,7 @@ extension NSTextField: CustomStyleContext {
             return .weak
         case .border:
             return .weak
-        case .text, .field:
+        case .text:
             return .normal
         default:
             break

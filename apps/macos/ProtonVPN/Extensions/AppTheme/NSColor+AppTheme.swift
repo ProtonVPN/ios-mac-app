@@ -44,7 +44,7 @@ private extension AppTheme.Style {
             } else {
                 return CP.InteractionWeak
             }
-        } else if contains(.strong) {
+        } else if contains(.hint) {
             if contains(.hovered) {
                 return CP.LinkHover
             } else if contains(.active) {
@@ -57,6 +57,8 @@ private extension AppTheme.Style {
                 return CP.InteractionNormHover
             } else if contains(.active) {
                 return CP.InteractionNormActive
+            } else if contains(.strong) {
+                return CP.Primary
             } else {
                 return CP.InteractionNorm
             }

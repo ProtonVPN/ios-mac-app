@@ -161,7 +161,7 @@ class ConnectingOverlayViewModel {
         if !isIkeWithKsEnabled {
             let boldString = LocalizedString.timedOut
             let string = LocalizedString.connectingVpn(boldString)
-            let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.small)))
+            let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
             
             if let stringRange = string.range(of: boldString) {
                 let range = NSRange(stringRange, in: string)
@@ -174,7 +174,7 @@ class ConnectingOverlayViewModel {
         let decription = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
         let string = LocalizedString.connectingVpn(boldString) + decription
                 
-        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.small)))
+        let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
@@ -251,18 +251,23 @@ class ConnectingOverlayViewModel {
             connectedView.image = AppTheme.Icon.vpnResultTimeout
             return connectedView
         }
-        
+
+        // A fudge factor to make the animation and still images line up to
+        // look the same size.
+        let margin = 15
         switch appState {
         case .connected:
             loadingView.animate(false)
             let connectedView = NSImageView(frame: frame)
-            connectedView.imageScaling = .scaleProportionallyUpOrDown
+            connectedView.imageScaling = .scaleNone
             connectedView.image = AppTheme.Icon.vpnResultConnected
+                .resize(newWidth: Int(frame.size.width) - margin, newHeight: Int(frame.size.height) - margin)
             return connectedView
         case .error, .disconnected:
             let connectedView = NSImageView(frame: frame)
-            connectedView.imageScaling = .scaleProportionallyUpOrDown
+            connectedView.imageScaling = .scaleNone
             connectedView.image = AppTheme.Icon.vpnResultDisconnected
+                .resize(newWidth: Int(frame.size.width) - margin, newHeight: Int(frame.size.height) - margin)
             return connectedView
         default:
             loadingView.frame = frame

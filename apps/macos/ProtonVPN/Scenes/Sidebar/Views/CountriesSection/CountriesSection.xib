@@ -238,7 +238,7 @@
                                     <constraint firstAttribute="width" secondItem="ngW-Fz-8Yk" secondAttribute="height" multiplier="1:1" id="lLO-cs-npb"/>
                                     <constraint firstAttribute="height" constant="16" id="xSq-wz-coZ"/>
                                 </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="clear_search" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="KBf-b3-9rI">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic-cross-circle-filled" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="KBf-b3-9rI">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -2234,6 +2234,6 @@ gR2BIoExgTWBQIFIgVWBYoF3gXyBgIGCgYSBhoGPgZSBmoGigaSBpoGogaqTSpNPk1yTX5Nsk3GTeZN8
 k4GTiQAAAAAAAAIBAAAAAAAAAGoAAAAAAAAAAAAAAAAAAJOMA
 </mutableData>
         </image>
-        <image name="clear_search" width="64" height="64"/>
+        <image name="ic-cross-circle-filled" width="24" height="24"/>
     </resources>
 </document>

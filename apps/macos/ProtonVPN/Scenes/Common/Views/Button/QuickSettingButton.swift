@@ -67,7 +67,7 @@ class QuickSettingButton: NSButton {
     }
     
     func switchState(_ image: NSImage, enabled: Bool) {
-        self.image = image.colored(enabled ? .interactive : .normal)
+        self.image = image.colored(enabled ? [.interactive, .strong] : .normal)
     }
 
     override func layoutSubtreeIfNeeded() {
@@ -112,31 +112,22 @@ class QuickSettingButton: NSButton {
 
 extension QuickSettingButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        guard context == .background else {
+            assertionFailure("Context not handled: \(context)")
+            return .normal
+        }
+
         let hover: AppTheme.Style = hovered ? .hovered : []
 
-        switch context {
-        case .background:
-            switch self.currentStyle {
-            case .disabled:
-                if hovered {
-                    return [.transparent, .active, .hovered]
-                } else {
-                    return .normal
-                }
-            case .enabled:
-                return [.transparent, .active] + hover
-            }
-        case .text, .icon:
-            switch self.currentStyle {
-            case .disabled:
+        switch self.currentStyle {
+        case .disabled:
+            if hovered {
+                return [.transparent, .active, .hovered]
+            } else {
                 return .normal
-            case .enabled:
-                return [.interactive, .strong] + hover
             }
-        default:
-            break
+        case .enabled:
+            return [.transparent, .active] + hover
         }
-        assertionFailure("Context not handled: \(context)")
-        return .normal
     }
 }

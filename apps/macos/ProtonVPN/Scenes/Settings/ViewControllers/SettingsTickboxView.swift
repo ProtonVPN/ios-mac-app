@@ -48,7 +48,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     private var model: ViewModel?
 
-    static let infoIcon = AppTheme.Icon.infoCircleFilled.colored()
+    static let infoIcon = AppTheme.Icon.infoCircleFilled.colored(.hint)
 
     var isOn: Bool {
         switchButton.currentButtonState == .on

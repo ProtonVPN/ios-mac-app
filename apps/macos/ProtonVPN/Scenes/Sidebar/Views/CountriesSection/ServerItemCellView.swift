@@ -64,7 +64,7 @@ final class ServerItemCellView: NSView {
         torIV.image = AppTheme.Icon.brandTor.colored(.hint)
         p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.hint)
         smartIV.image = AppTheme.Icon.globe.colored(.hint)
-        secureCoreIV.image = AppTheme.Icon.chevronsRight.colored(.interactive)
+        secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
         let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)

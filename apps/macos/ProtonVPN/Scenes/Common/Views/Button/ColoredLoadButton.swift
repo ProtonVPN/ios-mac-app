@@ -79,7 +79,7 @@ extension ColoredLoadButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .icon:
-            return .weak
+            return .hint
         case .border:
             guard let load = load else { return .normal }
             

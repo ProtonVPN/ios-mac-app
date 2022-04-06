@@ -49,6 +49,7 @@ struct QuickFixesMacOSList: View {
                                 Link(destination: url) {
                                     HStack(alignment: .top) {
                                         Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                            .renderingMode(.template)
                                             .foregroundColor(colors.qfIcon)
                                         Text(suggestion.text)
                                             .lineSpacing(7)
@@ -56,6 +57,7 @@ struct QuickFixesMacOSList: View {
                                             .frame(minHeight: 24, alignment: .leading)
                                         Spacer()
                                         Image(Asset.quickfixLink.name, bundle: assetsBundle)
+                                            .renderingMode(.template)
                                             .foregroundColor(colors.externalLinkIcon)
                                     }
                                     .frame(width: 310) // Magic number that that prevents button to be too wide. Should be changed in case we change the width of ReportBug window.
@@ -71,6 +73,7 @@ struct QuickFixesMacOSList: View {
                             } else {
                                 HStack(alignment: .top) {
                                     Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                        .renderingMode(.template)
                                         .foregroundColor(colors.qfIcon)
                                     Text(suggestion.text)
                                         .lineSpacing(7)

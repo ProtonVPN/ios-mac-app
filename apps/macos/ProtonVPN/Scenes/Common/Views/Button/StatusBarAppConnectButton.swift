@@ -59,7 +59,7 @@ class StatusBarAppConnectButton: LargeDropdownButton {
 
         let lw: CGFloat = 2
         let ib: CGRect
-        context.setStrokeColor(self.cgColor(.icon))
+        context.setStrokeColor(self.cgColor(.border))
         context.setFillColor(self.cgColor(.background))
 
         if isConnected {
@@ -89,8 +89,8 @@ extension StatusBarAppConnectButton: CustomStyleContext {
             switch context {
             case .text:
                 return .normal
-            case .icon:
-                return isHovered ? .danger : .weak
+            case .border:
+                return isHovered ? .danger : .normal
             case .background:
                 return isHovered ? .danger : .transparent
             default:
@@ -100,7 +100,7 @@ extension StatusBarAppConnectButton: CustomStyleContext {
             switch context {
             case .text:
                 return .normal
-            case .icon:
+            case .border:
                 return .transparent
             case .background:
                 return .interactive + (isHovered ? .hovered : [])
@@ -124,7 +124,7 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
 
         let lw: CGFloat = 2
         let ib: CGRect
-        context.setStrokeColor(self.cgColor(.icon))
+        context.setStrokeColor(self.cgColor(.border))
         context.setFillColor(self.cgColor(.background))
         if isConnected {
             ib = NSRect(x: bounds.origin.x - lw/2 + buttonMargin, y: bounds.origin.y + lw/2, width: bounds.width - lw/2 - buttonMargin, height: bounds.height - lw)
@@ -138,7 +138,7 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         path.addRoundedRectangle(ib, cornerRadius: AppTheme.ButtonConstants.cornerRadius)
 
         let ah: CGFloat = dropDownExpanded ? -4 : 4 // arrowHeight
-        let borderMargin: CGFloat = self.customStyle(context: .icon) == .transparent ? 0 : 2
+        let borderMargin: CGFloat = self.customStyle(context: .border) == .transparent ? 0 : 2
         let midX: CGFloat = bounds.midX - borderMargin + buttonMargin/2
         let arrow = CGMutablePath()
         arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah/2))
@@ -158,10 +158,14 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
 
 extension StatusBarAppProfileDropdownButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        guard context != .icon else {
+            return .normal
+        }
+
         if isConnected {
             switch context {
-            case .icon:
-                return isHovered ? [.interactive, .hovered] : .weak
+            case .border:
+                return isHovered ? [.interactive, .hovered] : .normal
             case .background:
                 if isHovered {
                     return [.interactive, .hovered]
@@ -175,7 +179,7 @@ extension StatusBarAppProfileDropdownButton: CustomStyleContext {
             }
         } else {
             switch context {
-            case .icon:
+            case .border:
                 return .transparent
             case .background:
                 return .interactive + (isHovered ? .hovered : [])
