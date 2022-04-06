@@ -181,6 +181,11 @@ public struct CachedVpnCredentials {
     public let credit: Int
     public let currency: String
     public let hasPaymentMethod: Bool
+    public let subscribed: Int?
+
+    public var canUsePromoCode: Bool {
+        return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
+    }
 }
 
 extension CachedVpnCredentials {
