@@ -37,12 +37,14 @@ public enum ConnectionProtocol: Codable, Equatable, CustomStringConvertible {
         return vpnProtocol
     }
 
+    #if os(macOS)
     public var requiresSystemExtension: Bool {
         guard self != .smartProtocol else {
             return true
         }
         return vpnProtocol?.requiresSystemExtension == true
     }
+    #endif
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)

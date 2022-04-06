@@ -46,31 +46,13 @@ final class VpnProtocolViewModel {
         }
         
         let smartDisabled = !displaySmartProtocol || connectionProtocol != .smartProtocol || !featureFlags.smartReconnect
-        
-        cells.append(
-            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard && smartDisabled, handler: {
-                self.switchConnectionProtocol(.vpnProtocol(.wireGuard))
+
+        [VpnProtocol.wireGuard(.udp), VpnProtocol.openVpn(.udp), VpnProtocol.openVpn(.tcp), VpnProtocol.ike, VpnProtocol.wireGuard(.tcp), VpnProtocol.wireGuard(.tls)].forEach { addProtocol in
+            cells.append(.checkmarkStandard(title: addProtocol.localizedString, checked: vpnProtocol == addProtocol && smartDisabled, handler: {
+                self.switchConnectionProtocol(.vpnProtocol(addProtocol))
                 return true
             }))
-        
-        let isUDP = vpnProtocol.isOpenVpn(.udp)
-        
-        cells.append(.checkmarkStandard(title: VpnProtocol.openVpn(.udp).localizedString, checked: isUDP && smartDisabled, handler: {
-            self.switchConnectionProtocol(.vpnProtocol(.openVpn(.udp)))
-            return true
-        }))
-        
-        let isTCP = vpnProtocol.isOpenVpn(.tcp)
-        
-        cells.append(.checkmarkStandard(title: VpnProtocol.openVpn(.tcp).localizedString, checked: isTCP && smartDisabled, handler: {
-            self.switchConnectionProtocol(.vpnProtocol(.openVpn(.tcp)))
-            return true
-        }))
-        
-        cells.append(.checkmarkStandard(title: LocalizedString.ikev2, checked: vpnProtocol.isIke && smartDisabled, handler: {
-            self.switchConnectionProtocol(.vpnProtocol(.ike))
-            return true
-        }))
+        }
         
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }

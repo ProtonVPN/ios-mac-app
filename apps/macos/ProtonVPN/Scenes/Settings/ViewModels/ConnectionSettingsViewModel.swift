@@ -150,7 +150,7 @@ final class ConnectionSettingsViewModel {
     }
     
     var protocolItemCount: Int {
-        return 5
+        return 7
     }
         
     // MARK: - Setters
@@ -188,10 +188,17 @@ final class ConnectionSettingsViewModel {
             switch vpnProtocol {
             case .openVpn(let transport):
                 return transport == .tcp ? 1 : 2
-            case .wireGuard:
-                return 3
+            case .wireGuard(let transport):
+                switch transport {
+                case .udp:
+                    return 3
+                case .tcp:
+                    return 4
+                case .tls:
+                    return 5
+                }
             case .ike:
-                return 4
+                return 6
             }
         }
     }
@@ -201,8 +208,10 @@ final class ConnectionSettingsViewModel {
         case 0: return .smartProtocol
         case 1: return .vpnProtocol(.openVpn(.tcp))
         case 2: return .vpnProtocol(.openVpn(.udp))
-        case 3: return .vpnProtocol(.wireGuard)
-        case 4: return .vpnProtocol(.ike)
+        case 3: return .vpnProtocol(.wireGuard(.udp))
+        case 4: return .vpnProtocol(.wireGuard(.tcp))
+        case 5: return .vpnProtocol(.wireGuard(.tls))
+        case 6: return .vpnProtocol(.ike)
         default: return nil
         }
     }
@@ -351,18 +360,7 @@ final class ConnectionSettingsViewModel {
     }
         
     func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
-        switch vpnProtocol {
-        case .smartProtocol:
-            return LocalizedString.smartTitle.styled(font: .themeFont(.heading4), alignment: .left)
-        case .vpnProtocol(.openVpn(.tcp)):
-            return ("\(LocalizedString.openvpn) (\(LocalizedString.tcp))").styled(font: .themeFont(.heading4), alignment: .left)
-        case .vpnProtocol(.openVpn(.udp)):
-            return ("\(LocalizedString.openvpn) (\(LocalizedString.udp))").styled(font: .themeFont(.heading4), alignment: .left)
-        case .vpnProtocol(.wireGuard):
-            return LocalizedString.wireguard.styled(font: .themeFont(.heading4), alignment: .left)
-        case .vpnProtocol(.ike):
-            return LocalizedString.ikev2.styled(font: .themeFont(.heading4), alignment: .left)
-        }
+        return vpnProtocol.description.styled(font: .themeFont(.heading4), alignment: .left)
     }
     
     // MARK: - Values

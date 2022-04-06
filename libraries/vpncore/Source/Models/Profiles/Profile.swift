@@ -152,8 +152,12 @@ fileprivate extension ConnectionProtocol {
                 return 2
             case .openVpn(.tcp):
                 return 3
-            case .wireGuard:
+            case .wireGuard(.udp):
                 return 4
+            case .wireGuard(.tcp):
+                return 5
+            case .wireGuard(.tls):
+                return 6
             }
         }
     }
@@ -169,7 +173,11 @@ fileprivate extension ConnectionProtocol {
         case 3:
             return vpnProtocol(.openVpn(.tcp))
         case 4:
-            return .vpnProtocol(.wireGuard)
+            return .vpnProtocol(.wireGuard(.udp))
+        case 5:
+            return .vpnProtocol(.wireGuard(.tcp))
+        case 6:
+            return .vpnProtocol(.wireGuard(.tls))
         default:
             return nil
         }
