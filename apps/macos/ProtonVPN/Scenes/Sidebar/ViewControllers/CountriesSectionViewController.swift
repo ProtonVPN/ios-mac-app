@@ -144,20 +144,22 @@ class CountriesSectionViewController: NSViewController {
     private func setupSearchSection() {
         bottomHorizontalLine.fillColor = .color(.border, .weak)
         
-        searchIcon.image = AppTheme.Icon.magnifier
+        searchIcon.image = AppTheme.Icon.magnifier.colored(.hint)
         searchIcon.cell?.setAccessibilityElement(false)
         
         clearSearchBtn.target = self
         clearSearchBtn.action = #selector(clearSearch)
+        clearSearchBtn.image = AppTheme.Icon.crossCircleFilled.colored(.hint)
         clearSearchBtn.cell?.setAccessibilityElement(false)
-        
+
+        searchTextField.focusDelegate = self
         searchTextField.delegate = self
         searchTextField.usesSingleLineMode = true
         searchTextField.focusRingType = .none
         searchTextField.style(placeholder: LocalizedString.searchForCountry, font: .themeFont(.heading4), alignment: .left)
         searchBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         searchBox.layer?.backgroundColor = .cgColor(.background)
-        searchBox.layer?.borderColor = .cgColor(.border)
+        searchBox.borderColor = .color(.border)
 
         searchTextField.setAccessibilityIdentifier("SearchTextField")
         clearSearchBtn.setAccessibilityIdentifier("ClearSearchButton")
@@ -283,7 +285,6 @@ class CountriesSectionViewController: NSViewController {
         }
         serverListTableView.endUpdates()
     }
-
 }
 
 extension CountriesSectionViewController: NSTableViewDataSource {
@@ -333,8 +334,25 @@ extension CountriesSectionViewController: NSTableViewDelegate {
 
 extension CountriesSectionViewController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
-        clearSearchBtn.isHidden = searchTextField.stringValue.isEmpty
+        if searchTextField.stringValue.isEmpty {
+            clearSearchBtn.isHidden = true
+            searchBox.borderColor = .color(.border)
+        } else {
+            clearSearchBtn.isHidden = false
+            searchBox.borderColor = .color(.border, [.interactive, .hint])
+        }
         viewModel.filterContent(forQuery: searchTextField.stringValue)
+    }
+
+    func controlTextDidEndEditing(_ obj: Notification) {
+        searchIcon.image = searchIcon.image?.colored(.hint)
+        searchBox.borderColor = .color(.border)
+    }
+}
+
+extension CountriesSectionViewController: TextFieldFocusDelegate {
+    func didReceiveFocus(_ textField: NSTextField) {
+        searchIcon.image = searchIcon.image?.colored(.normal)
     }
 }
 

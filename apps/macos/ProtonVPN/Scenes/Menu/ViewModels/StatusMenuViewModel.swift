@@ -413,10 +413,11 @@ class StatusMenuViewModel {
         }
         
         if server.isSecureCore {
-            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(14))
-            let entryCountry = (" " + server.entryCountry + " ").styled([.interactive, .active])
-            let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
-            let exitCountry = (" " + server.exitCountry + " ").styled()
+            let font = NSFont.themeFont()
+            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
+            let entryCountry = (" " + server.entryCountry + " ").styled([.interactive, .active], font: font)
+            let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
+            let exitCountry = (" " + server.exitCountry + " ").styled(font: font)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
             let flag = AppTheme.Icon.flag(countryCode: server.countryCode)?.asAttachment(size: .square(18)) ?? NSAttributedString()

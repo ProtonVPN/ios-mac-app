@@ -42,11 +42,11 @@ class LargeConnectButton: HoverDetectionButton {
         
         wantsLayer = true
         layer?.borderWidth = 2
+        layer?.borderColor = self.cgColor(.border)
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.backgroundColor = self.cgColor(.background)
         
         let title: String = isConnected ? LocalizedString.disconnect : LocalizedString.quickConnect
-        layer?.borderColor = self.cgColor(.icon)
         attributedTitle = self.style(title, font: .themeFont(.heading4))
     }
 }
@@ -55,12 +55,17 @@ extension LargeConnectButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .background:
-            let hover: AppTheme.Style = isHovered ? .hovered : []
-            return (isConnected ? .danger : .interactive) + hover
+            if isConnected {
+                return isHovered ? [.danger, .hovered] : .transparent
+            } else {
+                let hover: AppTheme.Style = isHovered ? .hovered : []
+                return .interactive + hover
+            }
         case .text:
             return .normal
-        case .icon:
-            return .transparent
+        case .border:
+            let val: AppTheme.Style = !isConnected || isHovered ? .transparent : .normal
+            return val
         default:
             break
         }

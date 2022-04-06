@@ -39,7 +39,7 @@ class InteractiveHighlightButton: HoverDetectionButton {
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedTitle)
         let fullRange = (mutableAttributedString.string as NSString).range(of: mutableAttributedString.string)
         let hover: AppTheme.Style = isHovered ? .hovered : []
-        mutableAttributedString.addAttribute(.foregroundColor, value: NSColor.color(.text, [.interactive, .strong] + hover), range: fullRange)
+        mutableAttributedString.addAttribute(.foregroundColor, value: NSColor.color(.text, [.interactive, .hint] + hover), range: fullRange)
         attributedTitle = mutableAttributedString
     }
 }

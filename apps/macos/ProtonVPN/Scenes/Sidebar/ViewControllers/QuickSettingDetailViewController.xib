@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -35,23 +36,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="407"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="vHT-FC-Dgo">
-                                <rect key="frame" x="199" y="393" width="30" height="10"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="Bkr-lG-bsr"/>
-                                    <constraint firstAttribute="width" secondItem="vHT-FC-Dgo" secondAttribute="height" multiplier="18:6" id="nt3-MM-u06"/>
-                                </constraints>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="qs_detail_triangle" id="zHa-8j-4Sv"/>
-                                <color key="contentTintColor" red="0.26274509800000001" green="0.2666666667" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </imageView>
-                            <box ambiguous="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="OF3-Mw-Sjv" userLabel="Content">
+                            <box ambiguous="YES" boxType="custom" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="OF3-Mw-Sjv" userLabel="Content">
                                 <rect key="frame" x="20" y="23" width="388" height="367"/>
                                 <view key="contentView" ambiguous="YES" id="Fqw-F9-tj9">
-                                    <rect key="frame" x="0.0" y="0.0" width="388" height="367"/>
+                                    <rect key="frame" x="1" y="1" width="386" height="365"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZTu-7u-BXA">
-                                            <rect key="frame" x="22" y="321" width="344" height="19"/>
+                                            <rect key="frame" x="22" y="319" width="342" height="19"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="NetShield" id="AM0-L5-Z9G">
                                                 <font key="font" metaFont="system" size="16"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -59,7 +51,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7V-iK-cc1">
-                                            <rect key="frame" x="22" y="236" width="344" height="64"/>
+                                            <rect key="frame" x="22" y="234" width="342" height="64"/>
                                             <textFieldCell key="cell" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." id="JR4-4w-pB3">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -67,10 +59,10 @@
                                             </textFieldCell>
                                         </textField>
                                         <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lCE-Jm-Yx9">
-                                            <rect key="frame" x="22" y="100" width="342" height="96"/>
+                                            <rect key="frame" x="22" y="98" width="340" height="96"/>
                                         </customView>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EW3-Fs-3UC">
-                                            <rect key="frame" x="22" y="16" width="344" height="16"/>
+                                            <rect key="frame" x="22" y="16" width="342" height="16"/>
                                             <textFieldCell key="cell" lineBreakMode="charWrapping" enabled="NO" title="Note: If some sites don’t load, try disabling NetShield." id="Xh9-cq-lRr">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -78,7 +70,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="151" y="45" width="87" height="32"/>
+                                            <rect key="frame" x="149" y="45" width="88" height="32"/>
                                             <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="du1-Nc-Ubv">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -94,7 +86,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U0y-aY-rlv" userLabel="learnMoreButton">
-                                            <rect key="frame" x="22" y="204" width="45" height="6"/>
+                                            <rect key="frame" x="22" y="202" width="46" height="6"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="xW6-PM-ue2"/>
                                             </constraints>
@@ -126,12 +118,21 @@
                                         <constraint firstItem="g7V-iK-cc1" firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" id="tmZ-GP-3GE"/>
                                     </constraints>
                                 </view>
-                                <color key="borderColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" red="0.2054606974" green="0.2053156793" blue="0.2322165668" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="borderColor" name="ProtonCarbonBorderWeak"/>
+                                <color key="fillColor" name="ProtonCarbonBackgroundNorm"/>
                             </box>
+                            <imageView placeholderIntrinsicWidth="30" placeholderIntrinsicHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="vHT-FC-Dgo">
+                                <rect key="frame" x="199" y="393" width="30" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Bkr-lG-bsr"/>
+                                    <constraint firstAttribute="width" secondItem="vHT-FC-Dgo" secondAttribute="height" multiplier="18:6" id="nt3-MM-u06"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="qs_detail_triangle" id="zHa-8j-4Sv"/>
+                                <color key="contentTintColor" red="0.26274509800000001" green="0.2666666667" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="OF3-Mw-Sjv" firstAttribute="top" secondItem="vHT-FC-Dgo" secondAttribute="bottom" constant="-1" id="MM4-LT-DpR"/>
+                            <constraint firstItem="OF3-Mw-Sjv" firstAttribute="top" secondItem="vHT-FC-Dgo" secondAttribute="bottom" constant="-2" id="MM4-LT-DpR"/>
                             <constraint firstItem="OF3-Mw-Sjv" firstAttribute="leading" secondItem="EYL-6L-NcP" secondAttribute="leading" constant="20" id="Zhp-19-2zH"/>
                             <constraint firstItem="vHT-FC-Dgo" firstAttribute="top" secondItem="EYL-6L-NcP" secondAttribute="top" constant="4" id="bK3-tT-VuK"/>
                             <constraint firstItem="vHT-FC-Dgo" firstAttribute="centerX" secondItem="OF3-Mw-Sjv" secondAttribute="centerX" id="crk-PZ-PmL"/>
@@ -152,6 +153,12 @@
         </customView>
     </objects>
     <resources>
-        <image name="qs_detail_triangle" width="26" height="12"/>
+        <image name="qs_detail_triangle" width="16" height="7"/>
+        <namedColor name="ProtonCarbonBackgroundNorm">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ProtonCarbonBorderWeak">
+            <color red="0.91764705882352937" green="0.90588235294117647" blue="0.89411764705882357" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

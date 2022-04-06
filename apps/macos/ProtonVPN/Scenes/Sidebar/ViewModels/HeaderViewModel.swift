@@ -232,17 +232,17 @@ final class HeaderViewModel {
         guard let server = appStateManager.activeConnection()?.server else {
             return LocalizedString.noDescriptionAvailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        
-        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(10))
-        
+
+        let font = NSFont.themeFont(.heading4)
         if server.isSecureCore {
-            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(14))
-            let entryCountry = (" " + server.entryCountry + " ").styled(.normal, font: .themeFont(.heading4), alignment: .left)
-            let exitCountry = (" " + server.exitCountry + " ").styled(font: .themeFont(.heading4), alignment: .left)
+            let secureCoreIcon = AppTheme.Icon.locks.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
+            let entryCountry = (" " + server.entryCountry + " ").styled(.normal, font: font, alignment: .left)
+            let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: .normal, size: .square(16), centeredVerticallyForFont: font)
+            let exitCountry = (" " + server.exitCountry + " ").styled(font: font, alignment: .left)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
-            let country = (server.country + " ").styled(font: .themeFont(.heading4), alignment: .left)
-            let serverName = server.name.styled(font: .themeFont(.heading4), alignment: .left)
+            let country = (server.country + " ").styled(font: font, alignment: .left)
+            let serverName = server.name.styled(font: font, alignment: .left)
             return NSAttributedString.concatenate(country, serverName)
         }
     }

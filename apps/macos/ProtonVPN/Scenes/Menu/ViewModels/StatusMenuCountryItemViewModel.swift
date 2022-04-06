@@ -51,12 +51,14 @@ class StatusMenuCountryItemViewModel {
     // MARK: - Private
     private func formDescription() -> NSAttributedString {
         let label: NSAttributedString
+        let font = NSFont.themeFont(literalSize: 11)
+
         if type == .secureCore {
-            let secureCoreIcon = AppTheme.Icon.chevronsRight.asAttachment(style: [.interactive, .active], size: .square(9))
-            let code = (" " + countryGroup.0.countryCode).styled(font: .themeFont(literalSize: 11))
+            let secureCoreIcon = AppTheme.Icon.chevronsRight.asAttachment(style: [.interactive, .strong], size: .square(16), centeredVerticallyForFont: font)
+            let code = (" " + countryGroup.0.countryCode).styled(font: font)
             label = NSAttributedString.concatenate(secureCoreIcon, code)
         } else {
-            label = countryGroup.0.countryCode.styled(font: .themeFont(literalSize: 11))
+            label = countryGroup.0.countryCode.styled(font: font)
         }
         return label
     }

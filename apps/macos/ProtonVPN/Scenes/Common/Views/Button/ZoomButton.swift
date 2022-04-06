@@ -27,9 +27,10 @@ enum ZoomType {
     case out
 }
 
-class ZoomButton: NSButton {
+class ZoomButton: HoverDetectionButton {
     
     let zoomType: ZoomType
+    let imageView = NSImageView()
     
     override var frame: NSRect {
         didSet {
@@ -39,10 +40,15 @@ class ZoomButton: NSButton {
     
     init(type zoomType: ZoomType) {
         self.zoomType = zoomType
-        
+
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
+
+        let image = zoomType == .in ? AppTheme.Icon.plus : AppTheme.Icon.minus
+        imageView.image = self.colorImage(image)
+        imageView.isHidden = false
+
         isTransparent = true
+        addSubview(imageView)
     }
     
     required init?(coder: NSCoder) {
@@ -55,24 +61,43 @@ class ZoomButton: NSButton {
         guard let context = NSGraphicsContext.current?.cgContext else {
             return
         }
-        
+
+        let cornerRadius: CGFloat = 4
+        let lineWidth: CGFloat = 1
         let plusButtonFrame = CGRect(x: 0.5, y: 0.5, width: bounds.width - 1, height: bounds.height - 1)
-        context.setLineWidth(1.0)
-        context.setStrokeColor(.cgColor(.border, .strong))
-        context.addRect(plusButtonFrame)
-        context.drawPath(using: .stroke)
-        
-        context.setLineWidth(2.0)
-        context.setStrokeColor(.cgColor(.border, .inverted))
-        context.move(to: CGPoint(x: plusButtonFrame.origin.x + plusButtonFrame.width / 4, y: plusButtonFrame.origin.y + plusButtonFrame.height / 2))
-        context.addLine(to: CGPoint(x: plusButtonFrame.origin.x + 3 * plusButtonFrame.width / 4, y: plusButtonFrame.origin.y + plusButtonFrame.height / 2))
-        
-        if zoomType == .in {
-            context.move(to: CGPoint(x: plusButtonFrame.origin.x + plusButtonFrame.width / 2, y: plusButtonFrame.origin.y + plusButtonFrame.height / 4))
-            context.addLine(to: CGPoint(x: plusButtonFrame.origin.x + plusButtonFrame.width / 2, y: plusButtonFrame.origin.y + 3 * plusButtonFrame.height / 4))
-        }
-        
-        context.drawPath(using: .stroke)
+
+        context.setLineWidth(lineWidth)
+        context.setStrokeColor(self.cgColor(.border))
+        context.setFillColor(self.cgColor(.background))
+
+        let path = CGMutablePath()
+        path.addRoundedRectangle(plusButtonFrame, cornerRadius: cornerRadius)
+
+        context.addPath(path)
+        context.drawPath(using: .fillStroke)
+
+        let margin: CGFloat = 6
+        let imageFrame = CGRect(x: margin / 2, y: margin / 2,
+                                width: bounds.width - margin,
+                                height: bounds.width - margin)
+        imageView.frame = imageFrame
+        imageView.needsDisplay = true
     }
     
+}
+
+extension ZoomButton: CustomStyleContext {
+    func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        switch context {
+        case .icon, .border:
+            return .normal
+        case .background:
+            return .transparent + (isHovered ? .hovered : [])
+        default:
+            break
+        }
+
+        assertionFailure("Context not handled: \(context)")
+        return .normal
+    }
 }

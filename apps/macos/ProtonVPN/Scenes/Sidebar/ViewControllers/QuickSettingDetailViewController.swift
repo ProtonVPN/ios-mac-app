@@ -81,10 +81,11 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
 
+        contentBox.borderColor = .color(.border, .weak)
+        contentBox.borderWidth = 2
+        contentBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         contentBox.fillColor = .color(.background)
-        if let image = arrowIV.image {
-            arrowIV.image = image.colored(context: .background)
-        }
+
         arrowIV.cell?.setAccessibilityElement(false)
         
         dropdownUpgradeButton.attributedTitle = LocalizedString.upgrade.uppercased().styled(font: .themeFont(.small))

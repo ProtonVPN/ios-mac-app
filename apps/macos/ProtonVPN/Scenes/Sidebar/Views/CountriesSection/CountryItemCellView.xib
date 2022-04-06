@@ -28,9 +28,10 @@
                     <rect key="frame" x="24" y="15" width="70" height="20"/>
                     <subviews>
                         <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gAW-1O-emT" userLabel="secure">
-                            <rect key="frame" x="0.0" y="-4" width="12" height="24"/>
+                            <rect key="frame" x="0.0" y="2" width="16" height="16"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="12" id="95k-gU-bxg"/>
+                                <constraint firstAttribute="width" constant="16" id="95k-gU-bxg"/>
+                                <constraint firstAttribute="height" constant="16" id="N0f-nd-2hj"/>
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-chevrons-right" id="5r7-mq-aLa"/>
                         </imageView>
@@ -52,6 +53,7 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Eet-Lb-bFf"/>
+                        <constraint firstItem="gAW-1O-emT" firstAttribute="centerY" secondItem="vFF-N8-oAa" secondAttribute="centerY" id="hXU-H1-UfY"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>

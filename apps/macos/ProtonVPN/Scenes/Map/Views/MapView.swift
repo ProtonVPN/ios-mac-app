@@ -99,7 +99,7 @@ class MapView: NSView {
         
         mapView.frame = frame
         mapLayer.frame = frame
-        mapLayer.contents = mapImage.colored(context: .background, .weak)
+        mapLayer.contents = mapImage
         mapLayer.contentsGravity = .center
         
         mapLayer.contentsScale = imageScale

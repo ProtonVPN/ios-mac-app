@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
-                    <rect key="frame" x="24" y="13" width="242" height="24"/>
+                    <rect key="frame" x="24" y="13" width="250" height="24"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jz-D5-q91">
                             <rect key="frame" x="0.0" y="1" width="22" height="22"/>
@@ -55,14 +55,15 @@
                             </textFieldCell>
                         </textField>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="htq-Vh-M3a" userLabel="secure">
-                            <rect key="frame" x="138" y="0.0" width="8" height="24"/>
+                            <rect key="frame" x="138" y="4" width="16" height="16"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="8" id="6QB-6f-Fdv"/>
+                                <constraint firstAttribute="width" constant="16" id="6QB-6f-Fdv"/>
+                                <constraint firstAttribute="height" constant="16" id="gFA-OU-rtc"/>
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="double-arrow-right-green" id="25F-RR-AXu"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="61R-2Y-fBC">
-                            <rect key="frame" x="154" y="0.0" width="16" height="24"/>
+                            <rect key="frame" x="162" y="0.0" width="16" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="cKi-1L-PQn"/>
                             </constraints>
@@ -70,7 +71,7 @@
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Meu-TF-bG3">
-                            <rect key="frame" x="178" y="0.0" width="16" height="24"/>
+                            <rect key="frame" x="186" y="0.0" width="16" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="IaS-xx-SrL"/>
                             </constraints>
@@ -78,7 +79,7 @@
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Vh-5IW">
-                            <rect key="frame" x="202" y="0.0" width="16" height="24"/>
+                            <rect key="frame" x="210" y="0.0" width="16" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="0cJ-0y-Rxt"/>
                             </constraints>
@@ -86,7 +87,7 @@
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="xnJ-CI-Tms">
-                            <rect key="frame" x="226" y="0.0" width="16" height="24"/>
+                            <rect key="frame" x="234" y="0.0" width="16" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="z2R-cG-iyr"/>
                             </constraints>

@@ -52,6 +52,7 @@ class QuickSettingsDropdownOption: NSView {
         containerView.layer?.cornerRadius = 3
         containerView.layer?.masksToBounds = false
         containerView.layer?.borderWidth = 1
+        containerView.layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         setBackground()
     
         plusText.stringValue = LocalizedString.upgrade.uppercased()
@@ -156,19 +157,20 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
 
         switch context {
         case .background:
-            if self.state == .blocked || !isHovered {
-                return .normal
-            } else {
-                return .strong
+            switch self.state {
+            case .blocked:
+                return .transparent
+            default:
+                return .transparent + (isHovered ? .hovered : [])
             }
         case .border:
             switch self.state {
             case .blocked:
                 return .transparent
             case .unselected:
-                return [.interactive, .weak] + hover
+                return .normal
             case .selected:
-                return .interactive + hover
+                return [.interactive, .hint] + hover
             }
         case .text, .icon:
             switch self.state {
@@ -177,7 +179,7 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
             case .unselected:
                 return .normal
             case .selected:
-                return [.interactive, .active] + hover
+                return [.interactive, .hint] + hover
             }
         default:
             break

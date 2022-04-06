@@ -24,25 +24,32 @@ extension NSImage {
         self.colored(.color(context, style))
     }
 
-    func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default) -> NSAttributedString {
+    func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default, centeredVerticallyForFont font: NSFont? = nil) -> NSAttributedString {
         var resultingImage = self
         if let style = style {
             resultingImage = self.colored(context: context, style)
         }
+        resultingImage = resultingImage.resize(size)
 
-        switch size {
-        case .square(let size):
-            resultingImage = resultingImage.resize(newWidth: size, newHeight: size)
-        case let .rect(width, height):
-            resultingImage = resultingImage.resize(newWidth: width, newHeight: height)
-        case .default:
-            break
+        let attachment = NSTextAttachment()
+        attachment.image = resultingImage
+        if let font = font {
+            let imageY = (font.capHeight - resultingImage.size.height).rounded(.toNearestOrEven) / 2
+            attachment.bounds = CGRect(origin: CGPoint(x: 0, y: imageY), size: resultingImage.size)
         }
 
-        let attachmentCell = NSTextAttachmentCell(imageCell: resultingImage)
-        let attachment = NSTextAttachment()
-        attachment.attachmentCell = attachmentCell
         return NSAttributedString(attachment: attachment)
+    }
+
+    func resize(_ newSize: AppTheme.IconSize) -> NSImage {
+        switch newSize {
+        case .square(let size):
+            return self.resize(newWidth: size, newHeight: size)
+        case let .rect(width, height):
+            return self.resize(newWidth: width, newHeight: height)
+        case .default:
+            return self
+        }
     }
 }
 

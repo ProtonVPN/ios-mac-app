@@ -63,7 +63,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         }
     }
     
-    override  func awakeFromNib() {
+    override func awakeFromNib() {
         super.awakeFromNib()
 
         setup()
@@ -76,7 +76,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         titleLabel.font = NSFont.boldSystemFont(ofSize: 17)
 
         textView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .strong])
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint])
         ]
 
         textView.isEditable = false

@@ -23,6 +23,7 @@
 import Foundation
 import CoreLocation
 import vpncore
+import Cocoa
 
 class CountryAnnotationViewModel: CustomStyleContext {
     
@@ -208,8 +209,9 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     
     func attributedServer(for row: Int) -> NSAttributedString {
         guard servers.count > row else { return NSAttributedString() }
-        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: available ? .normal : .weak, size: .square(10))
-        let serverName = (" " + servers[row].name).styled(available ? .normal : [.interactive, .weak, .disabled])
+        let font = NSFont.themeFont()
+        let doubleArrows = AppTheme.Icon.chevronsRight.asAttachment(style: available ? .normal : .weak, size: .square(14), centeredVerticallyForFont: font)
+        let serverName = (" " + servers[row].name).styled(available ? .normal : [.interactive, .weak, .disabled], font: font)
         let title = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(doubleArrows, serverName))
         let range = (title.string as NSString).range(of: title.string)
         title.setAlignment(.center, range: range)

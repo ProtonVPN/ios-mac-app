@@ -62,7 +62,7 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.layer?.backgroundColor = .clear
 
         secureIV.toolTip = LocalizedString.secureCoreInfo
-        secureIV.image = AppTheme.Icon.chevronsRight.colored(.interactive)
+        secureIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
         torIV.toolTip = LocalizedString.torTitle
         torIV.image = AppTheme.Icon.brandTor.colored(.hint)
         p2pIV.toolTip = LocalizedString.p2pTitle
