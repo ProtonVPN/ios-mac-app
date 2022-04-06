@@ -52,6 +52,7 @@ final class CouponViewController: UIViewController {
 
         textField.title = LocalizedString.useCoupon
         textField.assistiveText = LocalizedString.enterCoupon
+        textField.delegate = self
 
         applyButton.setTitle(LocalizedString.applyCoupon, for: .normal)
         applyButton.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
@@ -91,4 +92,24 @@ final class CouponViewController: UIViewController {
         scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
+}
+// MARK: PMTextFieldDelegate
+
+extension CouponViewController: PMTextFieldDelegate {
+    func didChangeValue(_ textField: PMTextField, value: String) {
+        let normalized = value.uppercased()
+        guard normalized != textField.value else {
+            return
+        }
+
+        textField.value = normalized
+    }
+
+    func didEndEditing(textField: PMTextField) { }
+
+    func textFieldShouldReturn(_ textField: PMTextField) -> Bool {
+        return true
+    }
+
+    func didBeginEditing(textField: PMTextField) { }
 }
