@@ -51,11 +51,6 @@ final class TabBarController: UITabBarController {
     func setupView() {
         view.backgroundColor = .backgroundColor()
         selectedIndex = 0
-        
-        tabBar.items?.forEach { item in
-            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
-            item.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .selected)
-        }
     }
     
     private func setupQuickConnectView() {

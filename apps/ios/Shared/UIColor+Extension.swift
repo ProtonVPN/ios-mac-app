@@ -103,6 +103,10 @@ extension UIColor {
     class func iconHint() -> UIColor {
         return ColorProvider.IconHint
     }
+
+    class func iconAccent() -> UIColor {
+        return ColorProvider.IconAccent
+    }
     
     class func notificationErrorColor() -> UIColor {
         return ColorProvider.NotificationError
