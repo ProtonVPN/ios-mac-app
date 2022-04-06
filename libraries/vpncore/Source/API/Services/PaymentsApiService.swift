@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_Networking
 
 public protocol PaymentsApiServiceFactory {
     func makePaymentsApiService() -> PaymentsApiService
@@ -40,7 +41,9 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
             case .success:
                 completion(.success)
             case let .failure(error):
-                completion(.failure(error))
+                let responseError = error as? ResponseError
+                let specificError = responseError?.underlyingError ?? responseError ?? error
+                completion(.failure(specificError))
             }
         }
     }
