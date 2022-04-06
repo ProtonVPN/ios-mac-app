@@ -31,6 +31,10 @@ final class PromoCodeRequest: Request {
         return "/payments/v4/promocode"
     }
 
+    var method: HTTPMethod {
+        return .post
+    }
+
     var parameters: [String: Any]? {
         return [
             "Product": "VPN",
