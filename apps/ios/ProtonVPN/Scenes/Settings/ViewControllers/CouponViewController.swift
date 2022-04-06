@@ -82,7 +82,7 @@ final class CouponViewController: UIViewController {
                 }
 
                 navigationController.popViewController(animated: true) {
-                    let banner = PMBanner(message: LocalizedString.couponApplied, style: PMBannerNewStyle.success, dismissDuration: 3)
+                    let banner = PMBanner(message: LocalizedString.couponApplied, style: PMBannerNewStyle.success)
                     banner.show(at: .top, on: navigationController)
                 }
             }
