@@ -57,7 +57,6 @@ final class CouponViewController: UIViewController {
         view.backgroundColor = UIColor.backgroundColor()
 
         textField.title = LocalizedString.useCoupon
-        textField.assistiveText = LocalizedString.enterCoupon
         textField.delegate = self
 
         applyButton.setTitle(LocalizedString.applyCoupon, for: .normal)
