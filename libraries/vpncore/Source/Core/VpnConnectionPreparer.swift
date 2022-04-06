@@ -110,7 +110,7 @@ class VpnConnectionPreparer {
             smartPortSelector = SmartPortSelectorImplementation(
                 openVpnTcpChecker: availabilityCheckerResolver.availabilityChecker(for: .openVpn(.tcp)),
                 openVpnUdpChecker: availabilityCheckerResolver.availabilityChecker(for: .openVpn(.udp)),
-                wireguardChecker: availabilityCheckerResolver.availabilityChecker(for: .wireGuard)
+                wireguardChecker: availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.udp))
             )
             smartPortSelector?.determineBestPort(for: vpnProtocol, on: serverIp) { ports in
                 completion(vpnProtocol, ports)

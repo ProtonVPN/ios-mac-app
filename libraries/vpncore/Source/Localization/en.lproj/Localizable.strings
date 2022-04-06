@@ -1145,11 +1145,14 @@
 /* iOS Settings -> Protocol: IKEv2 option */
 "_ikev2" = "IKEv2";
 
-/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
 "_tcp" = "TCP";
 
-/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
 "_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
 
 /* iOS Settings -> Protocol: WireGuard option */
 "_wireguard" = "WireGuard";

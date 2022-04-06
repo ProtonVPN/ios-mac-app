@@ -26,7 +26,9 @@ enum SmartProtocolProtocol {
     case ikev2
     case openVpnUdp
     case openVpnTcp
-    case wireguard
+    case wireguardUdp
+    case wireguardTcp
+    case wireguardTls
 
     var vpnProtocol: VpnProtocol {
         switch self {
@@ -36,26 +38,34 @@ enum SmartProtocolProtocol {
             return .openVpn(.udp)
         case .openVpnTcp:
             return .openVpn(.tcp)
-        case .wireguard:
-            return .wireGuard
+        case .wireguardUdp:
+            return .wireGuard(.udp)
+        case .wireguardTcp:
+            return .wireGuard(.tcp)
+        case .wireguardTls:
+            return .wireGuard(.tls)
         }
     }
 
     var priority: Int {
         #if os(iOS)
         switch self {
-        case .wireguard:
+        case .wireguardUdp:
             return 0
         case .openVpnUdp:
             return 1
         case .openVpnTcp:
             return 2
-        case .ikev2:
+        case .wireguardTls:
             return 3
+        case .wireguardTcp:
+            return 4
+        case .ikev2:
+            return 5
         }
         #else
         switch self {
-        case .wireguard:
+        case .wireguardUdp:
             return 0
         case .ikev2:
             return 1
@@ -63,6 +73,10 @@ enum SmartProtocolProtocol {
             return 2
         case .openVpnTcp:
             return 3
+        case .wireguardTls:
+            return 4
+        case .wireguardTcp:
+            return 5
         }
         #endif
     }

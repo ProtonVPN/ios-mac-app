@@ -10,56 +10,46 @@
 import Foundation
 
 public enum VpnProtocol {
-
     case ike
     case openVpn(OpenVpnTransport)
-    case wireGuard
+    case wireGuard(WireGuardTransport)
+
+}
+
+public enum OpenVpnTransport: String, Codable {
+    case tcp = "tcp"
+    case udp = "udp"
+
+    private static var defaultValue = OpenVpnTransport.tcp
+}
+
+public enum WireGuardTransport: String, Codable, Equatable {
+    case udp = "udp"
+    case tcp = "tcp"
+    case tls = "tls"
+
+    private static var defaultValue = WireGuardTransport.udp
+}
+
+// MARK: -
+
+extension VpnProtocol { // Authencication
 
     public enum AuthenticationType {
         case credentials
         case certificate
     }
-    
-    // swiftlint:disable nesting
-    public enum OpenVpnTransport: String, Codable {
-        
-        case tcp = "tcp"
-        case udp = "udp"
 
-        private static var defaultValue = OpenVpnTransport.tcp
-        
-        private struct CoderKey {
-            static let transportProtocol = "transportProtocol"
-        }
-        
-        public init(coder aDecoder: NSCoder) {
-            guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
-                self = .defaultValue
-                return
-            }
-            switch data[0] {
-            case 0:
-                self = .tcp
-            case 1:
-                self = .udp
-            default:
-                self = .defaultValue
-            }
-        }
-        
-        public func encode(with aCoder: NSCoder) {
-            var data = Data(count: 1)
-            switch self {
-            case .tcp:
-                data[0] = 0
-            case .udp:
-                data[0] = 1
-            }
-            aCoder.encode(data, forKey: CoderKey.transportProtocol)
+    public var authenticationType: AuthenticationType {
+        switch self {
+        case .ike: return .credentials
+        case .openVpn: return .credentials
+        case .wireGuard: return .certificate
         }
     }
-    // swiftlint:enable nesting
-    
+}
+
+extension VpnProtocol { // Text for UI
     public var localizedString: String {
         var string: String
         switch self {
@@ -73,62 +63,23 @@ public enum VpnProtocol {
             case .udp:
                 string += " (\(LocalizedString.udp))"
             }
-        case .wireGuard:
+        case .wireGuard(let transportProtocol):
             string = LocalizedString.wireguard
+            switch transportProtocol {
+            case .udp:
+                string += "" // (\(LocalizedString.udp))
+            case .tcp:
+                string += " (\(LocalizedString.tcp))"
+            case .tls:
+                string += " (\(LocalizedString.tls))"
+            }
         }
-        
+
         return string
     }
-    
-    public var isIke: Bool {
-        if case .ike = self {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    public var isOpenVpn: Bool {
-        if case .openVpn = self {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    public func isOpenVpn(_ transportProtocol: OpenVpnTransport) -> Bool {
-        if case .openVpn(let transport) = self {
-            return transportProtocol == transport
-        } else {
-            return false
-        }
-    }
-    
-    public var isWireGuard: Bool {
-        if case .wireGuard = self {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    public var authenticationType: AuthenticationType {
-        switch self {
-        case .ike: return .credentials
-        case .openVpn: return .credentials
-        case .wireGuard: return .certificate
-        }
-    }
-
-    public var requiresSystemExtension: Bool {
-        switch self {
-        case .openVpn, .wireGuard:
-            return true
-        default:
-            return false
-        }
-    }
 }
+
+// MARK: - Codable
 
 extension VpnProtocol: Codable {
     
@@ -148,7 +99,8 @@ extension VpnProtocol: Codable {
             let transportProtocol = try container.decode(OpenVpnTransport.self, forKey: .transportProtocol)
             self = .openVpn(transportProtocol)
         case 2:
-            self = .wireGuard
+            let transportProtocol = try container.decode(WireGuardTransport.self, forKey: .transportProtocol)
+            self = .wireGuard(transportProtocol)
         default:
             throw CodingError.unknownValue
         }
@@ -163,13 +115,15 @@ extension VpnProtocol: Codable {
         case .openVpn(let transportProtocol):
             try container.encode(1, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
-        case .wireGuard:
+        case .wireGuard(let transportProtocol):
             try container.encode(2, forKey: .rawValue)
+            try container.encode(transportProtocol, forKey: .transportProtocol)
         }
     }
 }
 
 // MARK: - NSCoding (used by Profile)
+
 extension VpnProtocol {
     private struct CoderKey {
         static let vpnProtocol = "vpnProtocol"
@@ -185,7 +139,7 @@ extension VpnProtocol {
         case 1:
             self = .openVpn(OpenVpnTransport(coder: aDecoder))
         case 2:
-            self = .wireGuard
+            self = .wireGuard(WireGuardTransport(coder: aDecoder))
         default:
             self = .ike
         }
@@ -206,4 +160,89 @@ extension VpnProtocol {
     }
 }
 
-extension VpnProtocol: Equatable, Hashable {}
+extension OpenVpnTransport {
+
+    private struct CoderKey {
+        static let transportProtocol = "transportProtocol"
+    }
+
+    public init(coder aDecoder: NSCoder) {
+        guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
+            self = .defaultValue
+            return
+        }
+        switch data[0] {
+        case 0:
+            self = .tcp
+        case 1:
+            self = .udp
+        default:
+            self = .defaultValue
+        }
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        var data = Data(count: 1)
+        switch self {
+        case .tcp:
+            data[0] = 0
+        case .udp:
+            data[0] = 1
+        }
+        aCoder.encode(data, forKey: CoderKey.transportProtocol)
+    }
+}
+
+extension WireGuardTransport {
+
+    private struct CoderKey {
+        static let transportProtocol = "transportProtocol"
+    }
+
+    public init(coder aDecoder: NSCoder) {
+        guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
+            self = .defaultValue
+            return
+        }
+        switch data[0] {
+        case 0:
+            self = .tcp
+        case 1:
+            self = .udp
+        case 2:
+            self = .tls
+        default:
+            self = .defaultValue
+        }
+    }
+
+    public func encode(with aCoder: NSCoder) {
+        var data = Data(count: 1)
+        switch self {
+        case .tcp:
+            data[0] = 0
+        case .udp:
+            data[0] = 1
+        case .tls:
+            data[0] = 2
+        }
+        aCoder.encode(data, forKey: CoderKey.transportProtocol)
+    }
+}
+
+extension VpnProtocol: Equatable & Hashable {}
+
+// MARK: - MacOS
+
+#if os(macOS)
+extension VpnProtocol {
+    public var requiresSystemExtension: Bool {
+        switch self {
+        case .openVpn, .wireGuard:
+            return true
+        default:
+            return false
+        }
+    }
+}
+#endif

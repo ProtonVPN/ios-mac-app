@@ -23,7 +23,7 @@
 import Foundation
 
 final class WireguardAvailabilityChecker {
-    let vpnProtocol: VpnProtocol = .wireGuard
+    let vpnProtocol: VpnProtocol = .wireGuard(.udp)
     private let config: WireguardConfig
 
     init(config: WireguardConfig) {

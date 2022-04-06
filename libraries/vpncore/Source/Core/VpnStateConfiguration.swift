@@ -110,7 +110,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     }
 
     public func determineActiveVpnProtocol(defaultToIke: Bool, completion: @escaping ((VpnProtocol?) -> Void)) {
-        let protocols: [VpnProtocol] = [.ike, .openVpn(.tcp), .wireGuard]
+        let protocols: [VpnProtocol] = [.ike, .openVpn(.tcp), .wireGuard(.udp)]
         var activeProtocols: [VpnProtocol] = []
 
         let dispatchGroup = DispatchGroup()
@@ -136,8 +136,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             // OpenVPN takes precedence but if neither are active, then it should remain unchanged
             if activeProtocols.contains(.openVpn(.tcp)) {
                 completion(.openVpn(.tcp))
-            } else if activeProtocols.contains(.wireGuard) {
-                completion(.wireGuard)
+            } else if activeProtocols.contains(.wireGuard(.udp)) {
+                completion(.wireGuard(.udp))
             } else if defaultToIke || activeProtocols.contains(.ike) {
                 completion(.ike)
             } else {
