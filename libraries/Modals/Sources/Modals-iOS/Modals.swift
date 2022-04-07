@@ -35,6 +35,8 @@ public struct ModalsFactory {
         let newBrandViewController = newBrandStoryboard.instantiate(controllerType: NewBrandViewController.self)
         newBrandViewController.onReadMore = onReadMore
         newBrandViewController.onDismiss = onDismiss
+        newBrandViewController.modalTransitionStyle = .crossDissolve
+        newBrandViewController.modalPresentationStyle = .overFullScreen
         return newBrandViewController
     }
 }
