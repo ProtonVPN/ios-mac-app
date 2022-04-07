@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.13.0'
+  '3.14.0'
 end
 
 def openvpn
@@ -88,7 +88,7 @@ target 'ProtonVPN' do
 
   pod 'GSMessages', '~> 1.0'
   pod 'AlamofireImage', '~> 4.1'
-  pod 'Alamofire', '5.3.0'
+  pod 'Alamofire', '5.4.4'
   
   pod 'ReachabilitySwift', '5.0.0'
   
