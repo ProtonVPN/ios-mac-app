@@ -479,6 +479,6 @@ extension DependencyContainer: ReviewFactory {
 // MARK: PaymentsApiServiceFactory
 extension DependencyContainer: PaymentsApiServiceFactory {
     func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(networking: makeNetworking())
+        return PaymentsApiServiceImplementation(networking: makeNetworking(), vpnKeychain: makeVpnKeychain(), vpnApiService: makeVpnApiService())
     }
 }
