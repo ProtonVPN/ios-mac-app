@@ -23,7 +23,7 @@
                                     <constraint firstAttribute="height" constant="50" id="Fco-cf-Cs9"/>
                                 </constraints>
                             </containerView>
-                            <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8wW-ah-fu1" userLabel="SecureCoreBar">
+                            <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8wW-ah-fu1" userLabel="SecureCoreBar">
                                 <rect key="frame" x="0.0" y="94" width="414" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Secure Core" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ij-zT-2wB">
@@ -48,8 +48,8 @@
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="centerY" secondItem="8wW-ah-fu1" secondAttribute="centerY" id="0MK-ZH-Y8h"/>
                                     <constraint firstItem="58o-15-DXK" firstAttribute="centerY" secondItem="8wW-ah-fu1" secondAttribute="centerY" id="3RX-JQ-Ami"/>
                                     <constraint firstAttribute="trailing" secondItem="ySY-aO-jzs" secondAttribute="trailing" id="8Cf-Lu-Crn"/>
-                                    <constraint firstItem="1Ij-zT-2wB" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leadingMargin" constant="12" id="Cwo-f4-HqL"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="58o-15-DXK" secondAttribute="trailing" constant="12" id="Ecw-nJ-l46"/>
+                                    <constraint firstItem="1Ij-zT-2wB" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leadingMargin" id="Cwo-f4-HqL"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="58o-15-DXK" secondAttribute="trailing" id="Ecw-nJ-l46"/>
                                     <constraint firstItem="ySY-aO-jzs" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leading" id="PUf-Fw-WZ6"/>
                                     <constraint firstAttribute="bottom" secondItem="ySY-aO-jzs" secondAttribute="bottom" id="TpS-NI-HPZ"/>
                                     <constraint firstAttribute="height" constant="50" id="iOL-ne-wUB"/>
