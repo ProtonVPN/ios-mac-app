@@ -32,6 +32,7 @@ final class SearchSectionHeaderView: UITableViewHeaderFooterView {
 
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet weak var titleLabelLeadingConstraint: NSLayoutConstraint!
+    var leadingConstraint: NSLayoutConstraint?
 
     // MARK: Properties
 
@@ -39,6 +40,15 @@ final class SearchSectionHeaderView: UITableViewHeaderFooterView {
         didSet {
             titleLabel.text = item?.title
         }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let tableView = superview as? UITableView else {
+            return
+        }
+        // The below is due to UITableViewHeaderFooterView not respecting the readableContentGuide. I couldn't find a bug report about this.
+        titleLabelLeadingConstraint.constant = tableView.readableContentGuide.layoutFrame.minX
     }
 
     // MARK: Setup
