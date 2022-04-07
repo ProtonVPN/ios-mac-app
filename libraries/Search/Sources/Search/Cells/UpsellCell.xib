@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,14 +14,14 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="146" id="KGk-i7-Jjw" customClass="UpsellCell" customModule="Search">
             <rect key="frame" x="0.0" y="0.0" width="433" height="146"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="433" height="146"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a0r-ol-5cD">
-                        <rect key="frame" x="20" y="11" width="397" height="124"/>
+                        <rect key="frame" x="20" y="11" width="393" height="124"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-globe" translatesAutoresizingMaskIntoConstraints="NO" id="Dhg-dZ-wL1">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-earth" translatesAutoresizingMaskIntoConstraints="NO" id="Dhg-dZ-wL1">
                                 <rect key="frame" x="16" y="16" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="7JC-eP-bh5"/>
@@ -29,16 +29,16 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TVU-f9-UKP">
-                                <rect key="frame" x="56" y="16" width="293" height="92"/>
+                                <rect key="frame" x="56" y="16" width="289" height="92"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mon-h9-OMr">
-                                        <rect key="frame" x="0.0" y="0.0" width="293" height="71.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="289" height="71.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCq-h7-023">
-                                        <rect key="frame" x="0.0" y="71.5" width="293" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="71.5" width="289" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -46,7 +46,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-chevron-right" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-xF-03T">
-                                <rect key="frame" x="365" y="50" width="24" height="24"/>
+                                <rect key="frame" x="361" y="50" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="XAV-aR-Epa"/>
                                     <constraint firstAttribute="height" constant="24" id="YIE-sj-dqb"/>
@@ -67,7 +67,7 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="a0r-ol-5cD" secondAttribute="trailing" constant="-4" id="AVC-48-dCv"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="a0r-ol-5cD" secondAttribute="trailing" id="AVC-48-dCv"/>
                     <constraint firstAttribute="bottomMargin" secondItem="a0r-ol-5cD" secondAttribute="bottom" id="CRd-5M-b0d"/>
                     <constraint firstItem="a0r-ol-5cD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="ZvZ-s9-WcZ"/>
                     <constraint firstItem="a0r-ol-5cD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="qH9-Fg-pR6"/>
@@ -75,6 +75,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="chevronImageView" destination="cK6-xF-03T" id="tKK-kx-KCY"/>
+                <outlet property="iconImageView" destination="Dhg-dZ-wL1" id="X7c-gA-LO1"/>
                 <outlet property="mainView" destination="a0r-ol-5cD" id="aFM-Qq-3HL"/>
                 <outlet property="subtitleLabel" destination="wCq-h7-023" id="ZUQ-3K-rXC"/>
                 <outlet property="titleLabel" destination="mon-h9-OMr" id="gRy-RM-a2l"/>
@@ -84,7 +86,7 @@
     </objects>
     <resources>
         <image name="ic-chevron-right" width="24" height="24"/>
-        <image name="ic-globe" width="24" height="24"/>
+        <image name="ic-earth" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -10,12 +10,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="SearchSectionHeaderView" customModule="Search">
+        <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="SearchSectionHeaderView" customModule="Search">
             <rect key="frame" x="0.0" y="0.0" width="653" height="191"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vke-fN-ndK">
-                    <rect key="frame" x="46.5" y="24" width="590.5" height="163"/>
+                    <rect key="frame" x="0.0" y="24" width="637" height="163"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -26,7 +26,7 @@
                 <constraint firstAttribute="bottom" secondItem="vke-fN-ndK" secondAttribute="bottom" constant="4" id="MTw-58-8LN"/>
                 <constraint firstItem="vke-fN-ndK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="24" id="PzJ-GS-dqz"/>
                 <constraint firstAttribute="trailing" secondItem="vke-fN-ndK" secondAttribute="trailing" constant="16" id="icr-Oj-9qD"/>
-                <constraint firstItem="vke-fN-ndK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="tls-1W-Xvn"/>
+                <constraint firstItem="vke-fN-ndK" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tls-1W-Xvn"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

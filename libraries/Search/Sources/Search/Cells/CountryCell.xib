@@ -17,8 +17,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="370" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="249" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lS1-aJ-zqn">
-                        <rect key="frame" x="16" y="0.0" width="220" height="64"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" verticalHuggingPriority="249" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="lS1-aJ-zqn">
+                        <rect key="frame" x="16" y="0.0" width="188" height="64"/>
                         <subviews>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GQT-CR-jkT">
                                 <rect key="frame" x="-16" y="24" width="16" height="16"/>
@@ -35,7 +35,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="248" horizontalCompressionResistancePriority="500" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kug-mZ-k4l">
-                                <rect key="frame" x="48" y="22" width="172" height="20.5"/>
+                                <rect key="frame" x="48" y="22" width="140" height="20.5"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -46,17 +46,8 @@
                             <constraint firstAttribute="height" constant="64" id="noA-fn-r7y"/>
                         </constraints>
                     </stackView>
-                    <button opaque="NO" contentMode="center" horizontalHuggingPriority="253" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-DN-gvr" userLabel="connect-button">
-                        <rect key="frame" x="316" y="13" width="38" height="38"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                        <state key="normal" image="ic-power-off"/>
-                        <connections>
-                            <action selector="connectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DOj-gJ-sHq"/>
-                        </connections>
-                    </button>
                     <stackView opaque="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" distribution="fillEqually" alignment="center" spacing="-4" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-EW-Wac" userLabel="props stack">
-                        <rect key="frame" x="236" y="24" width="64" height="16"/>
+                        <rect key="frame" x="204" y="24" width="64" height="16"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-arrows-switch" translatesAutoresizingMaskIntoConstraints="NO" id="BOu-g7-Mzx">
                                 <rect key="frame" x="0.0" y="0.0" width="24" height="16"/>
@@ -75,23 +66,34 @@
                             <constraint firstAttribute="height" constant="16" id="BNw-dq-3jV"/>
                         </constraints>
                     </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="IQi-k6-oGd">
+                        <rect key="frame" x="284" y="13" width="70" height="38"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="center" horizontalHuggingPriority="253" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-DN-gvr" userLabel="connect-button">
+                                <rect key="frame" x="0.0" y="0.0" width="38" height="38"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" image="ic-power-off"/>
+                                <connections>
+                                    <action selector="connectTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DOj-gJ-sHq"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-chevron-right" translatesAutoresizingMaskIntoConstraints="NO" id="GXa-Lp-aZB">
+                                <rect key="frame" x="46" y="0.0" width="24" height="38"/>
+                            </imageView>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Fhq-DN-gvr" firstAttribute="leading" secondItem="QzE-EW-Wac" secondAttribute="trailing" constant="16" id="1W7-OX-OTA"/>
                     <constraint firstItem="lS1-aJ-zqn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="1oW-rq-9p7"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Fhq-DN-gvr" secondAttribute="trailing" id="4Sa-Jk-N7b"/>
                     <constraint firstItem="lS1-aJ-zqn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="6yA-ze-C91"/>
-                    <constraint firstItem="Fhq-DN-gvr" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="DLo-7A-gVU"/>
-                    <constraint firstItem="QzE-EW-Wac" firstAttribute="centerY" secondItem="Fhq-DN-gvr" secondAttribute="centerY" id="MyR-uy-YkN"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Fhq-DN-gvr" secondAttribute="trailing" id="Ogr-8q-z6M"/>
+                    <constraint firstItem="IQi-k6-oGd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="BAe-rI-6JW"/>
+                    <constraint firstItem="IQi-k6-oGd" firstAttribute="leading" secondItem="QzE-EW-Wac" secondAttribute="trailing" constant="16" id="IB2-F5-72x"/>
+                    <constraint firstItem="QzE-EW-Wac" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="o9u-fv-eAZ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="IQi-k6-oGd" secondAttribute="trailing" id="ojY-7L-sQc"/>
                     <constraint firstItem="QzE-EW-Wac" firstAttribute="leading" secondItem="lS1-aJ-zqn" secondAttribute="trailing" id="pfu-6h-1PJ"/>
                     <constraint firstAttribute="bottom" secondItem="lS1-aJ-zqn" secondAttribute="bottom" id="skv-7x-SHo"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="4Sa-Jk-N7b"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -102,8 +104,7 @@
                 <outlet property="flagIcon" destination="SuA-Jj-bfX" id="RyR-GC-8Dh"/>
                 <outlet property="flagsStackView" destination="lS1-aJ-zqn" id="YeP-T5-d4k"/>
                 <outlet property="p2pIV" destination="BOu-g7-Mzx" id="Mkk-Bp-ERJ"/>
-                <outlet property="rightMarginConstraint" destination="4Sa-Jk-N7b" id="Jcp-y9-Zvn"/>
-                <outlet property="rightNoMarginConstraint" destination="Ogr-8q-z6M" id="jiy-Lk-76I"/>
+                <outlet property="rightChevron" destination="GXa-Lp-aZB" id="ZNI-Sl-C4I"/>
                 <outlet property="smartIV" destination="Ixe-4X-lQ4" id="JAA-Uk-PS0"/>
                 <outlet property="torIV" destination="4so-OQ-dvz" id="H8j-oD-Sfz"/>
             </connections>
@@ -113,6 +114,7 @@
     <resources>
         <image name="ic-arrows-switch" width="24" height="24"/>
         <image name="ic-brand-tor" width="24" height="24"/>
+        <image name="ic-chevron-right" width="24" height="24"/>
         <image name="ic-globe" width="24" height="24"/>
         <image name="ic-power-off" width="22" height="22"/>
     </resources>

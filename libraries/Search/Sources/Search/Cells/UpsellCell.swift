@@ -32,6 +32,8 @@ final class UpsellCell: UITableViewCell {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var mainView: UIView!
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var chevronImageView: UIImageView!
 
     // MARK: Properties
 
@@ -53,5 +55,8 @@ final class UpsellCell: UITableViewCell {
         upsellTitleStyle(titleLabel)
 
         subtitleLabel.text = LocalizedString.searchUpsellSubtitle
+
+        iconImageView.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
+        chevronImageView.tintColor = UIColor(red: 153 / 255, green: 150 / 255, blue: 147 / 255, alpha: 1) // colors.iconHint
     }
 }

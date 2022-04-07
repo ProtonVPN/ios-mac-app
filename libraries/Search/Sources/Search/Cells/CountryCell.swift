@@ -44,9 +44,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
     @IBOutlet private weak var smartIV: UIImageView!
     @IBOutlet private weak var torIV: UIImageView!
 
-    @IBOutlet private var rightMarginConstraint: NSLayoutConstraint!
-    @IBOutlet private var rightNoMarginConstraint: NSLayoutConstraint!
-
+    @IBOutlet private weak var rightChevron: UIImageView!
     @IBOutlet private weak var entrySeparator: UIImageView!
     @IBOutlet private weak var flagsStackView: UIStackView!
 
@@ -105,6 +103,9 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
         entrySeparator.image = CountryCell.chevronsRight
         entrySeparator.tintColor = viewModel?.connectButtonColor
+
+        rightChevron.image = CountryCell.chevronRight
+        rightChevron.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
     }
 
     override public func layoutSubviews() {
@@ -114,22 +115,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     private func stateChanged() {
         renderConnectButton()
-        updateAccessoryView()
-    }
 
-    func updateAccessoryView() {
-        if viewModel?.textInPlaceOfConnectIcon != nil {
-            accessoryType = .none
-            accessoryView = nil
-            rightNoMarginConstraint.isActive = false
-            rightMarginConstraint.isActive = true
-        } else {
-            let chevronRight = UIImageView(image: CountryCell.chevronRight)
-            chevronRight.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
-            chevronRight.sizeToFit()
-            accessoryView = chevronRight
-            rightMarginConstraint.isActive = false
-            rightNoMarginConstraint.isActive = true
-        }
+        rightChevron.isHidden = viewModel?.textInPlaceOfConnectIcon != nil
     }
 }
