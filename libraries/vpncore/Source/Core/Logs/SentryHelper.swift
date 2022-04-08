@@ -28,5 +28,9 @@ public final class SentryHelper {
         }
         #endif
     }
-    
+
+    public static func log(error: Error) {
+        SentrySDK.capture(error: error)
+    }
+
 }
