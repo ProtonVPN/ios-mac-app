@@ -98,9 +98,6 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
         super.awakeFromNib()
         selectionStyle = .none
 
-        countryName.numberOfLines = 2
-        countryName.lineBreakMode = .byTruncatingTail
-
         entrySeparator.image = CountryCell.chevronsRight
         entrySeparator.tintColor = viewModel?.connectButtonColor
 

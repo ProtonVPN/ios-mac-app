@@ -24,7 +24,7 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="8wK-nd-geK">
-                        <rect key="frame" x="64" y="13" width="41.5" height="38.5"/>
+                        <rect key="frame" x="64" y="13" width="186" height="38.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bmW-vz-SnE">
                                 <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
@@ -61,6 +61,7 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="wIr-wT-Mqg" firstAttribute="leading" secondItem="8wK-nd-geK" secondAttribute="trailing" constant="16" id="90A-VM-7Wi"/>
                     <constraint firstItem="KKB-DY-Jmf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9Fd-Vg-zr5"/>
                     <constraint firstItem="Kn2-DK-rVP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="NEK-jH-sNk"/>
                     <constraint firstAttribute="bottom" secondItem="Kn2-DK-rVP" secondAttribute="bottom" id="RXV-eH-pTd"/>
