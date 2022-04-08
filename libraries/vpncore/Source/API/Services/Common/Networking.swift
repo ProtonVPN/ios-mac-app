@@ -271,6 +271,7 @@ extension CoreNetworking: AuthDelegate {
                 complete(updatedCredential, nil)
             case .failure(let error):
                 log.error("Updating access token failed", category: .net, event: .response, metadata: ["error": "\(error)"])
+                SentryHelper.log(error: error) // Log this temporarily to get a grasp at how ofter this happens. Can be removed after a few months.
                 complete(nil, error)
             }
         }
