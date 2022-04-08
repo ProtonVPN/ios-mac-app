@@ -30,7 +30,7 @@ public enum AppTheme {
         case icon
     }
 
-    public struct Style: OptionSet {
+    public struct Style: OptionSet, Hashable {
         public let rawValue: Int
 
         // Modifiers
@@ -103,4 +103,44 @@ public enum AppTheme {
 
 public protocol CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style
+}
+
+extension AppTheme.Style: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        // "normal" is the empty set (0)
+        guard self != .normal else {
+            return "normal"
+        }
+
+        var copy = self
+        let lookup: [AppTheme.Style: String] = [
+            .weak: "weak",
+            .transparent: "transparent",
+            .hovered: "hovered",
+            .strong: "strong",
+            .active: "active",
+            .hint: "hint",
+            .disabled: "disabled",
+            .cancel: "cancel",
+            .danger: "danger",
+            .info: "info",
+            .interactive: "interactive",
+            .inverted: "inverted",
+            .warning: "warning",
+        ]
+
+        var result = ""
+        for (item, name) in lookup {
+            if copy.contains(item) {
+                if !result.isEmpty {
+                    result += ", "
+                }
+                result += name
+                copy.remove(item)
+            }
+        }
+
+        assert(copy.isEmpty, "Style item missing from debug description")
+        return result
+    }
 }
