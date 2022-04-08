@@ -46,7 +46,7 @@ final class CouponViewModel {
         self.appSessionManager = appSessionManager
     }
 
-    func applyPromoCode(code: String, completion: @escaping (Result<(), Error>) -> Void) {
+    func applyPromoCode(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard !code.isEmpty else {
             isError = true
             return
@@ -65,23 +65,33 @@ final class CouponViewModel {
 
                 completion(.failure(error))
 
-            case .success:
-                log.info("Promo code applied, reloading data")
+            case let .success(type):
+                switch type {
+                case .planUpgraded:
+                    log.info("Promo code applied, reloading data")
 
-                // reload the user data
-                self?.appSessionManager.attemptSilentLogIn { [weak self] result in
-                    self?.isLoading = false
+                    // reload the user data
+                    self?.appSessionManager.attemptSilentLogIn { [weak self] result in
+                        self?.isLoading = false
 
-                    switch result {
-                    case let .failure(error):
-                        log.error("Failed to reload data after applying promo code", category: .app, metadata: ["error": "\(error)"])
-                        self?.isError = true
-                        completion(.failure(error))
-
-                    case .success:
-                        log.debug("Data reloaded after applying promo code", category: .app)
-                        completion(.success)
+                        switch result {
+                        case let .failure(error):
+                            switch error {
+                            case is CertificateRefreshError:
+                                log.debug("Certificate refresh failed after data reload but the data reloaded successfully")
+                                completion(.success(LocalizedString.couponApplied))
+                            default:
+                                log.error("Failed to reload data after applying promo code", category: .app, metadata: ["error": "\(error)"])
+                                completion(.success(LocalizedString.couponAppliedPlanNotUpgradedYet))
+                            }
+                        case .success:
+                            log.debug("Data reloaded after applying promo code", category: .app)
+                            completion(.success(LocalizedString.couponApplied))
+                        }
                     }
+                case .planNotUpgradedYet:
+                    log.info("Promo code applied, not reloading data because the plan was not upgraded yet")
+                    completion(.success(LocalizedString.couponAppliedPlanNotUpgradedYet))
                 }
             }
         }
