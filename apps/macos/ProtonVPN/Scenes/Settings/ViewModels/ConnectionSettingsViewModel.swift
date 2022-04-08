@@ -314,7 +314,7 @@ final class ConnectionSettingsViewModel {
             return profileString(for: index - 1)
         } else {
             let imageAttributedString = attributedAttachment(for: .protonUnavailableGrey())
-            return concatenated(imageString: imageAttributedString, with: LocalizedString.disabled)
+            return concatenated(imageString: imageAttributedString, with: LocalizedString.disabled, enabled: true)
         }
     }
     
@@ -355,8 +355,9 @@ final class ConnectionSettingsViewModel {
         return NSAttributedString(attachment: attachment)
     }
     
-    private func concatenated(imageString: NSAttributedString, with text: String) -> NSAttributedString {
-        let nameAttributedString = ("  " + text).attributed(withColor: .dropDownWhiteColor(), fontSize: 16)
+    private func concatenated(imageString: NSAttributedString, with text: String, enabled: Bool) -> NSAttributedString {
+        let color: NSColor = enabled ? .dropDownWhiteColor() : .dropDownWhiteColor().withAlphaComponent(0.5)
+        let nameAttributedString = ("  " + text).attributed(withColor: color, fontSize: 16)
         let attributedString = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(imageString, nameAttributedString))
         let range = (attributedString.string as NSString).range(of: attributedString.string)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -365,9 +366,18 @@ final class ConnectionSettingsViewModel {
         attributedString.setAlignment(.left, range: range)
         return attributedString
     }
-    
+
+    private var userTier: Int {
+        do {
+            return try vpnGateway.userTier()
+        } catch {
+            return CoreAppConstants.VpnTiers.free
+        }
+    }
+
     private func profileString(for index: Int) -> NSAttributedString {
         let profile = profileManager.allProfiles[index]
-        return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name)
+        let enabled = profile.accessTier <= userTier
+        return concatenated(imageString: profile.profileIcon.attributedAttachment(), with: profile.name, enabled: enabled)
     }
 }
