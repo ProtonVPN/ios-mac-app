@@ -22,7 +22,6 @@
 
 import Cocoa
 import vpncore
-
 class FeaturesOverlayViewController: NSViewController {
 
     @IBOutlet private weak var smartRoutingRow: FeatureRowView!
