@@ -73,6 +73,14 @@ let upsellViewStyle: (UIView) -> Void = {
     $0.layer.cornerRadius = 12
 }
 
+let iconWeakStyle: (UIView) -> Void = {
+    $0.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
+}
+
+let iconHintStyle: (UIView) -> Void = {
+    $0.tintColor = UIColor(red: 153 / 255, green: 150 / 255, blue: 147 / 255, alpha: 1) // colors.iconHint
+}
+
 let upsellSubtitleStyle = concat(baseTextStyle, and: {
     $0.textColor = colors.weakText
     $0.font = UIFont.systemFont(ofSize: 13)

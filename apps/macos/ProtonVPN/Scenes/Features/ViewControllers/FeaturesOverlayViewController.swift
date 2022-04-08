@@ -22,7 +22,6 @@
 
 import Cocoa
 import vpncore
-import ProtonCore_UIFoundations
 
 class FeaturesOverlayViewController: NSViewController {
 

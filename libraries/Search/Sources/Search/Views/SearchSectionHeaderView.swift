@@ -31,8 +31,7 @@ final class SearchSectionHeaderView: UITableViewHeaderFooterView {
     // MARK: Outlets
 
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet weak var titleLabelLeadingConstraint: NSLayoutConstraint!
-    var leadingConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var titleLabelLeadingConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 
