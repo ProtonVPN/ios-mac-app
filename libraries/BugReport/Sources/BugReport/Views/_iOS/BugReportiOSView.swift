@@ -45,6 +45,7 @@ public struct BugReportiOSView: View {
                         .fontWeight(.bold)
                         .foregroundColor(colors.textPrimary)
                         .padding(.horizontal)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 24, trailing: 0))
 
                     List(delegate?.model.categories ?? []) { category in
                         if category.suggestions?.isEmpty ?? true { // If no suggestions found skip directly to the form

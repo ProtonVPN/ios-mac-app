@@ -222,12 +222,12 @@ final class SettingsViewModel {
             .staticKeyValue(key: LocalizedString.subscriptionPlan, value: accountPlanName)
         ]
         if allowUpgrade {
-            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [buySubscriptionAction] in
+            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .textAccent(), handler: { [buySubscriptionAction] in
                 buySubscriptionAction()
             }))
         }
         if allowPlanManagement {
-            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .brandColor(), handler: { [weak self] in
+            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .textAccent(), handler: { [weak self] in
                 self?.manageSubscriptionAction()
             }))
         }

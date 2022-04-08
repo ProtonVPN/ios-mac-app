@@ -31,9 +31,8 @@ class TooltipTableViewCell: UITableViewCell {
         
         backgroundColor = .backgroundColor()
         tooltipLabel.textColor = UIColor.weakTextColor()
-        tooltipLabel.tintColor = .brandColor()
         tooltipLabel.linkTextAttributes = [
-            .foregroundColor: UIColor.brandColor(),
+            .foregroundColor: UIColor.textAccent(),
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
         

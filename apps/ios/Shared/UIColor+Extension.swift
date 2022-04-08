@@ -104,6 +104,10 @@ extension UIColor {
         return ColorProvider.IconHint
     }
 
+    class func iconNorm() -> UIColor {
+        return ColorProvider.IconNorm
+    }
+
     class func iconAccent() -> UIColor {
         return ColorProvider.IconAccent
     }

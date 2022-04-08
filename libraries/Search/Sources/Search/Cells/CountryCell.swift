@@ -102,7 +102,8 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
         entrySeparator.tintColor = viewModel?.connectButtonColor
 
         rightChevron.image = CountryCell.chevronRight
-        rightChevron.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
+
+        iconWeakStyle(rightChevron)
     }
 
     override public func layoutSubviews() {

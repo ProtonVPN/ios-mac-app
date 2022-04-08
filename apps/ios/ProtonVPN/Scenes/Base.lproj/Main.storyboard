@@ -12,7 +12,7 @@
         <scene sceneID="wg7-f3-ORb">
             <objects>
                 <viewController storyboardIdentifier="MapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8rJ-Kc-sve" customClass="MapViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
+                    <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="QS5-Rx-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -22,17 +22,17 @@
                                     <constraint firstAttribute="height" constant="50" id="0hL-xk-78n"/>
                                 </constraints>
                             </containerView>
-                            <view contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4av-1p-I8Y" userLabel="SecureCoreBar">
+                            <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4av-1p-I8Y" userLabel="SecureCoreBar">
                                 <rect key="frame" x="0.0" y="50" width="375" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USE SECURE CORE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZF-8E-T8i">
-                                        <rect key="frame" x="20" y="15" width="286" height="20.5"/>
+                                        <rect key="frame" x="16" y="15" width="294" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XoH-ug-OBD" userLabel="SecureCoreSwitch" customClass="ConfirmationToggleSwitch" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="306" y="9.5" width="51" height="31"/>
+                                        <rect key="frame" x="310" y="9.5" width="51" height="31"/>
                                     </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -42,8 +42,8 @@
                                     <constraint firstItem="UZF-8E-T8i" firstAttribute="centerY" secondItem="4av-1p-I8Y" secondAttribute="centerY" id="Vbb-53-8TS"/>
                                     <constraint firstItem="XoH-ug-OBD" firstAttribute="centerY" secondItem="4av-1p-I8Y" secondAttribute="centerY" id="WLp-7K-hGD"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="aYm-7d-0Gk"/>
-                                    <constraint firstItem="UZF-8E-T8i" firstAttribute="leading" secondItem="4av-1p-I8Y" secondAttribute="leadingMargin" constant="12" id="fcF-A7-dOu"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="XoH-ug-OBD" secondAttribute="trailing" constant="12" id="glo-SA-HMn"/>
+                                    <constraint firstItem="UZF-8E-T8i" firstAttribute="leading" secondItem="4av-1p-I8Y" secondAttribute="leadingMargin" id="fcF-A7-dOu"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="XoH-ug-OBD" secondAttribute="trailing" id="glo-SA-HMn"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDE-H6-rIy">
