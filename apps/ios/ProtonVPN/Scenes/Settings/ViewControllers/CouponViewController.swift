@@ -76,13 +76,13 @@ final class CouponViewController: UIViewController {
             switch result {
             case let .failure(error):
                 self?.showErrorBanner(error: error)
-            case .success:
+            case let .success(message):
                 guard let navigationController = self?.navigationController else {
                     return
                 }
 
                 navigationController.popViewController(animated: true) {
-                    let banner = PMBanner(message: LocalizedString.couponApplied, style: PMBannerNewStyle.success)
+                    let banner = PMBanner(message: message, style: PMBannerNewStyle.success)
                     banner.show(at: .top, on: navigationController)
                 }
             }

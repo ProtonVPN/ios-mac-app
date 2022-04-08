@@ -22,7 +22,7 @@
 
 import Foundation
 
-enum CertificateRefreshError: Error {
+public enum CertificateRefreshError: Error {
     case canceled
 }
 
