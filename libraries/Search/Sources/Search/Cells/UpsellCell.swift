@@ -53,10 +53,9 @@ final class UpsellCell: UITableViewCell {
         upsellViewStyle(mainView)
         upsellSubtitleStyle(subtitleLabel)
         upsellTitleStyle(titleLabel)
+        iconWeakStyle(iconImageView)
+        iconHintStyle(chevronImageView)
 
         subtitleLabel.text = LocalizedString.searchUpsellSubtitle
-
-        iconImageView.tintColor = UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1) // colors.iconWeak
-        chevronImageView.tintColor = UIColor(red: 153 / 255, green: 150 / 255, blue: 147 / 255, alpha: 1) // colors.iconHint
     }
 }
