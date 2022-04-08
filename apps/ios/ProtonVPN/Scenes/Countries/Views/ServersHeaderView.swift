@@ -48,7 +48,7 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         colorView.backgroundColor = .backgroundColor()
         serversName.textColor = .weakTextColor()
         infoBtn.setImage(IconProvider.infoCircle, for: .normal)
-        infoBtn.tintColor = ColorProvider.IconNorm
+        infoBtn.tintColor = .iconNorm()
     }
 
     @IBAction private func didTapInfoBtn(_ sender: Any) {
