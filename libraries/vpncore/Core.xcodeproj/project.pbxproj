@@ -713,6 +713,9 @@
 		C06FA74B404A712CB9FC055D /* Pods-Core-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
 		C0B3BBF683E35241139EBB14 /* Pods-Core-vpncore-iosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.staging.xcconfig"; sourceTree = "<group>"; };
 		C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetShieldType+Extensions.swift"; sourceTree = "<group>"; };
+		C31D73012803E1C0004C6AB6 /* es-LA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-LA"; path = "Localization/es-la.lproj/Intents.strings"; sourceTree = "<group>"; };
+		C31D73022803E1C0004C6AB6 /* es-LA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-LA"; path = "Localization/es-la.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C31D73032803E1C0004C6AB6 /* es-LA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-LA"; path = "es-la.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		C31DD07E27BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Localization/en-US.lproj/Intents.strings"; sourceTree = "<group>"; };
 		C31DD07F27BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Localization/en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C31DD08027BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "en-US"; path = "en-US.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -2187,6 +2190,7 @@
 				tr,
 				"en-US",
 				uk,
+				"es-LA",
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
@@ -3071,6 +3075,7 @@
 				C39EE8D3272FA13F008DAC54 /* tr */,
 				C31DD08027BA0DCB00D1FF91 /* en-US */,
 				E92CCE3127D88E3400A6A476 /* uk */,
+				C31D73032803E1C0004C6AB6 /* es-LA */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3100,6 +3105,7 @@
 				C39EE8D1272FA13F008DAC54 /* tr */,
 				C31DD07E27BA0DCB00D1FF91 /* en-US */,
 				C34735DB27D8DFC900E318F7 /* uk */,
+				C31D73012803E1C0004C6AB6 /* es-LA */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
@@ -3147,6 +3153,7 @@
 				C39EE8D2272FA13F008DAC54 /* tr */,
 				C31DD07F27BA0DCB00D1FF91 /* en-US */,
 				E92CCE3027D88E3400A6A476 /* uk */,
+				C31D73022803E1C0004C6AB6 /* es-LA */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

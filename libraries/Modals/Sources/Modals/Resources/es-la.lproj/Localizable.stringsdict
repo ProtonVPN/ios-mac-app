@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>modals_upsell_all_countries_feature_multipleDevices</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Connect up to %d devices at once</string>
+			<key>many</key>
+			<string>Connect up to %d devices at once</string>
+			<key>one</key>
+			<string>Connect up to %d devices at once</string>
+			<key>other</key>
+			<string>Conecte hasta %d dispositivos a la vez</string>
+			<key>two</key>
+			<string>Connect up to %d devices at once</string>
+			<key>zero</key>
+			<string>Connect up to %d devices at once</string>
+		</dict>
+	</dict>
+	<key>modals_upsell_all_countries_title</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Acceda a más de %#@num_servers@ en %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d countries</string>
+			<key>many</key>
+			<string>%d countries</string>
+			<key>one</key>
+			<string>%d countries</string>
+			<key>other</key>
+			<string>%d países</string>
+			<key>two</key>
+			<string>%d countries</string>
+			<key>zero</key>
+			<string>%d countries</string>
+		</dict>
+		<key>num_servers</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d secure servers</string>
+			<key>many</key>
+			<string>%d secure servers</string>
+			<key>one</key>
+			<string>%d secure servers</string>
+			<key>other</key>
+			<string>%d servidores seguros</string>
+			<key>two</key>
+			<string>%d secure servers</string>
+			<key>zero</key>
+			<string>%d secure servers</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Enable Moderate NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
+"_moderate_nat_explanation" = "NAT moderado desativa a aleatoriedade do seu mapeamento de endereço. Isso pode reduzir ligeiramente sua segurança, mas permite que aplicações peer-to-peer como jogos online estabeleçam conexões diretas.\nSaiba mais";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Saiba mais";

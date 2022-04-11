@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Activer le NAT modéré";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Le NAT modéré désactive la distribution aléatoire des adresses locales, ce qui peut réduire légèrement votre sécurité, mais permet des utilisations telles que les connexions directes pour des applications comme les jeux en ligne. \nEn savoir plus";
+"_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "En savoir plus";
@@ -1022,13 +1022,13 @@
 "_neks_t2_connect" = "Se connecter quand même";
 
 /* (No Comment) */
-"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+"_neks_t2_description" = "L'utilisation du kill switch est instable sur cet appareil.\n\nVotre appareil possède une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si la fonctionnalité kill switch est utilisée par ProtonVPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Puce de sécurité T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Avertissement de stabilité Kill Switch";
+"_neks_t2_title" = "Avertissement de stabilité kill switch";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Votre connexion sera réinitialisée pour changer le mode NetShield.";
@@ -2154,5 +2154,5 @@
 "login_summary_button" = "Commencer à utiliser ProtonVPN";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
+"proton_website_unreachable" = "Le site Web de ProtonVPN peut être temporairement indisponible à cause de restrictions réseau. Veuillez utiliser l'application mobile pour créer un nouveau compte Proton.";
 

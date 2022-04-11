@@ -8,7 +8,7 @@
 "_plus_servers" = "Серверы PLUS";
 
 /* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Country, City or Server";
+"search_bar_placeholder" = "Страна, город или сервер";
 
 /* Section header in search */
 "search_cities" = "Города";

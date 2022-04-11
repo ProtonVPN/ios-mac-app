@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Увімкнути помірне NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Помірне NAT вимикає рандомізацію показу локальних адрес, що може трохи знизити вашу безпеку, але дозволяє використовувати такі методи, як пряме під'єднання до застосунків, наприклад онлайн-ігор.\nДокладніше";
+"_moderate_nat_explanation" = "Помірна NAT вимикає рандомізацію мапінгу локальних адрес. Це може трохи знизити рівень вашої безпеки, але уможливлює користування одноранговими застосунками, як-от онлайн-ігри для встановлення прямих з'єднань.\nДокладніше";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Докладніше";
