@@ -27,6 +27,11 @@ final class UpsellCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
+    struct Model {
+        let numberOfServers: Int
+        let numberOfCountries: Int
+    }
+
     // MARK: Outlets
 
     @IBOutlet private weak var subtitleLabel: UILabel!
@@ -37,9 +42,9 @@ final class UpsellCell: UITableViewCell {
 
     // MARK: Properties
 
-    var numberOfCountries: Int = 0 {
+    var model: Model = Model(numberOfServers: 0, numberOfCountries: 0) {
         didSet {
-            titleLabel.text = LocalizedString.searchUpsellTitle(numberOfCountries)
+            subtitleLabel.text = LocalizedString.searchUpsellSubtitle(model.numberOfServers, model.numberOfCountries)
         }
     }
 
@@ -56,6 +61,6 @@ final class UpsellCell: UITableViewCell {
         iconWeakStyle(iconImageView)
         iconHintStyle(chevronImageView)
 
-        subtitleLabel.text = LocalizedString.searchUpsellSubtitle
+        titleLabel.text = LocalizedString.searchUpsellTitle
     }
 }

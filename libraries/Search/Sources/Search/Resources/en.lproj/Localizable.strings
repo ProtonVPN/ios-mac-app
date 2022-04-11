@@ -53,7 +53,7 @@
 "search_bar_placeholder" = "Country, City or Server";
 
 /* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Connect to what you are searching for";
+"search_upsell_title" = "Get full access with Plus";
 
 /* Section header in search */
 "search_secure_core_countries" = "Secure Core countries";

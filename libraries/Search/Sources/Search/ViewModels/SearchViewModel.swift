@@ -44,6 +44,10 @@ final class SearchViewModel {
         return constants.numberOfCountries
     }
 
+    var numberOfServers: Int {
+        return constants.numberOfServers
+    }
+
     init(recentSearchesService: RecentSearchesService, data: [CountryViewModel], constants: Constants, mode: SearchMode) {
         self.data = data
         self.recentSearchesService = recentSearchesService
