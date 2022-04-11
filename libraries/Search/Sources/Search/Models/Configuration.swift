@@ -21,9 +21,11 @@ import UIKit
 
 public struct Constants {
     let numberOfCountries: Int
+    let numberOfServers: Int
 
-    public init(numberOfCountries: Int) {
+    public init(numberOfCountries: Int, numberOfServers: Int) {
         self.numberOfCountries = numberOfCountries
+        self.numberOfServers = numberOfServers
     }
 }
 

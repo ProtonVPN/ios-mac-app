@@ -83,7 +83,7 @@ public enum AccountPlan: String {
     public var countriesCount: Int {
         switch self {
         case .plus, .visionary, .vpnPlus, .unlimited, .visionary2022, .family, .bundlePro, .enterprise2022:
-            return 61
+            return 63
         case .basic:
             return 40
         case .free, .trial:
