@@ -49,12 +49,12 @@ class QuickSettingsDropdownOption: NSView {
         layer?.masksToBounds = false
         
         containerView.wantsLayer = true
-        containerView.layer?.cornerRadius = 3
         containerView.layer?.masksToBounds = false
         containerView.layer?.borderWidth = 1
         containerView.layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         setBackground()
-    
+
+        plusBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         plusText.stringValue = LocalizedString.upgrade.uppercased()
         plusAndTitleConstraint.isActive = false
 

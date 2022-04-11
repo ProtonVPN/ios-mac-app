@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,30 +16,30 @@
                     <rect key="frame" x="0.0" y="10" width="326" height="40"/>
                     <subviews>
                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="4HN-TR-4Fn">
-                            <rect key="frame" x="16" y="12" width="16" height="16"/>
+                            <rect key="frame" x="16" y="8" width="24" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="16" id="J7S-RE-fIO"/>
+                                <constraint firstAttribute="height" constant="24" id="J7S-RE-fIO"/>
                                 <constraint firstAttribute="width" secondItem="4HN-TR-4Fn" secondAttribute="height" multiplier="1:1" id="znp-eC-XNO"/>
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="qs_netshield_level1" id="7Dp-Ju-czb"/>
                             <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </imageView>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="UMw-zQ-QKK" userLabel="titileLbl">
-                            <rect key="frame" x="46" y="12" width="207" height="16"/>
+                            <rect key="frame" x="54" y="12" width="197" height="16"/>
                             <textFieldCell key="cell" enabled="NO" title="Multiline Label" id="L4T-u6-hAz">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <box hidden="YES" boxType="custom" cornerRadius="10" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Cnq-b9-LeX" userLabel="Plus box">
-                            <rect key="frame" x="259" y="10" width="51" height="20"/>
+                        <box hidden="YES" boxType="custom" cornerRadius="8" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Cnq-b9-LeX" userLabel="Plus box">
+                            <rect key="frame" x="257" y="10" width="53" height="20"/>
                             <view key="contentView" id="Ygm-Ae-lfQ">
-                                <rect key="frame" x="1" y="1" width="49" height="18"/>
+                                <rect key="frame" x="1" y="1" width="51" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4QC-AD-7aA">
-                                        <rect key="frame" x="6" y="4" width="37" height="10"/>
+                                        <rect key="frame" x="6" y="4" width="39" height="10"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="_PLUS_" id="U2C-T8-JhV">
                                             <font key="font" metaFont="miniSystem"/>
                                             <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
