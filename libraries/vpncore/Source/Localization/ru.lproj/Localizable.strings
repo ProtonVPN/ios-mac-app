@@ -101,7 +101,7 @@
 "_auto_assigned" = "Назначается автоматически";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Автоматическое подключение";
+"_auto_connect" = "Автоподключение";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "При запуске приложения, вы подключаетесь к выбранному профилю";
@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Включить умеренное NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Умеренное NAT выключает рандомизацию переназначений локальных адресов, что может слегка уменьшить безопасность, но позволит работать таким функциям, как прямое подключение для приложений, например, для онлайн игр. \nПодробнее";
+"_moderate_nat_explanation" = "Умеренное NAT отключает произвольное сопоставление локальных адресов. Это может несколько снизить уровень безопасности, но позволяет одноранговым приложениям, таким как сетевые игры, устанавливать прямые соединения. \nПодробнее";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Узнать больше";
@@ -1019,16 +1019,16 @@
 "_need_help" = "Нужна помощь?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connect Anyway";
+"_neks_t2_connect" = "Подключиться в любом случае";
 
 /* (No Comment) */
-"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+"_neks_t2_description" = "Использование функции Kill Switch нестабильно на этом устройстве.\n\nВаше устройство оснащено чипом безопасности T2, что может привести к проблемам со стабильностью системы, если функция Kill Switch в macOS используется Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "T2 Security Chip";
+"_neks_t2_hyperlink" = "Чип безопасности T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill Switch Stability Warning";
+"_neks_t2_title" = "Предупреждение о стабильности Kill Switch";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Ваше соединение будет перезапущено для изменения режима NetShield.";
@@ -2154,5 +2154,5 @@
 "login_summary_button" = "Начать использовать ProtonVPN";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
+"proton_website_unreachable" = "Сайт ProtonVPN может быть временно недоступен из-за сетевых ограничений. Пожалуйста, используйте мобильное приложение для создания новой учетной записи Proton.";
 

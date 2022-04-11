@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Ilımlı NAT kullanılsın";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Ilımlı NAT, güvenliğinizi biraz azaltabilir. Ancak çevrimiçi oyunlar gibi uygulamalar için doğrudan bağlantı kurma gibi tekniklere izin veren yerel adres eşlemelerinin rastgeleleştirilmesi özelliğini devre dışı bırakır. \nAyrıntrılı bilgi alın";
+"_moderate_nat_explanation" = "Ilımlı NAT rastgele yerel adres eşleştirmesini devre dışı bırakır. Böylece güvenliğinizi hafifçe olumsuz etkiler. Ancak çevrimiçi oyunlar gibi doğrudan bağlantı kuran uçtan uca bağlantıların kurulabilmesini sağlar. Ayrıntılı bilgi alın";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Ayrıntılı bilgi alın";

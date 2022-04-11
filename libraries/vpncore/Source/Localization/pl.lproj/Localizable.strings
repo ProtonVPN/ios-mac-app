@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Włącz umiarkowany NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Umiarkowany NAT wyłącza losowe mapowanie adresów lokalnych, co może nieco zmniejszyć bezpieczeństwo, ale umożliwia stosowanie technik takich, jak bezpośrednie połączenia aplikacji, np. gier online.\nDowiedz się więcej";
+"_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Dowiedz się więcej";
@@ -1019,16 +1019,16 @@
 "_need_help" = "Potrzebujesz pomocy?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connect Anyway";
+"_neks_t2_connect" = "Połącz mimo to";
 
 /* (No Comment) */
 "_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "T2 Security Chip";
+"_neks_t2_hyperlink" = "Czip zabezpieczeń T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill Switch Stability Warning";
+"_neks_t2_title" = "Ostrzeżenie o niestabilności funkcji Kill Switch";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.";

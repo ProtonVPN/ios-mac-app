@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Aktifkan NAT Moderat";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Pengaturan NAT moderat akan menonaktifkan pengacakan alamat IP lokal, yang dapat membuat Anda lebih rentan namun memungkinkan Anda untuk dapat terhubung langsung dengan para pengguna lainnya pada berbagai aplikasi dan permainan online. \nPelajari lebih lanjut";
+"_moderate_nat_explanation" = "Pengaturan NAT Moderat akan menonaktifkan pengacakan alamat IP lokal. Hal ini dapat membuat Anda menjadi lebih rentan, namun akan memungkinkan aplikasi peer-to-peer seperti game online untuk dapat terhubung secara langsung antar satu sama lain. \nPelajari lebih lanjut";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Pelajari lebih lanjut";

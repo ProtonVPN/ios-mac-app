@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Moderates NAT aktivieren";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderates NAT deaktiviert die zufällige Zuordnung der lokalen Adressen, dies kann die Sicherheit etwas einschränken, jedoch ermöglicht dies aber Techniken wie direkte Verbindungen für Anwendungen wie Online-Spiele. \nMehr erfahren";
+"_moderate_nat_explanation" = "Moderates NAT deaktiviert die Zufallsgenerierung der lokalen Adresszuordnung. Dies kann die Sicherheit etwas einschränken, erlaubt aber Peer-to-Peer-Anwendungen wie Online-Spielen, direkte Verbindungen herzustellen. \nMehr erfahren";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Mehr erfahren";

@@ -1,0 +1,81 @@
+/* Common button title */
+"modals_common_cancel" = "Cancelar";
+
+/* Common button title */
+"modals_common_learn_more" = "Más información";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Habilitar Secure Core";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "No volver a mostrar";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "Secure Core ofrece el más alto nivel de seguridad y privacidad, pero puede reducir la velocidad de Internet. Si necesita más rendimiento, puede deshabilitar Secure Core.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Una nota acerca de la velocidad...";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "Mejorar";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Navegue a las velocidades máximas (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Bloquee anuncios y malware con NetShield";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Acceda a servicios de transmisión global";
+
+/* Footer of the All Countries upsell screen */
+"modals_upsell_features_footer" = "Y mucho más funciones premium";
+
+/* Subtitle of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_subtitle" = "La NAT moderada, también conocida como NAT Tipo 2, puede mejorar su experiencia en línea con varias aplicaciones y videojuegos en línea.\n\nDesbloquee esta y otras funciones con un plan Plus.";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Use ProtonVPN para cualquier necesidad permitiendo el tráfico a puertos no estándar mediante la red VPN.\n\nDesbloquee ésta y otras funciones con un plan Plus.";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Cuando actualice a Plus";
+
+/* Learn more button title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_learn_more" = "¿Qué es NAT moderada?";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Habilitar NAT moderada";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Bloquear anuncios y rastreadores";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Navegue a las velocidades máximas";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Proteja su dispositivo de malware";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Disfrute la navegación sin anuncios con NetShield";
+
+/* Learn more button title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_learn_more" = "Más información";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Permitir el tráfico a puertos no estándar";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Protéjase de los ataques de red";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Añada otra capa de cifrado a su conexión VPN";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Enrute a través de servidores ultra seguros en Suiza, Suecia e Islandia";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Duplique el cifrado con Secure Core";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Ahora no";
+
