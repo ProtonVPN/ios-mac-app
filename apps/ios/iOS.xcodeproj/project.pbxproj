@@ -302,8 +302,6 @@
 		D92A295D47C56CEE2650AA70 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		DA0FAF1A5F1E32A1ABAEEA4C /* SubuserAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9637CD83510D2FCE5F039 /* SubuserAlertViewController.swift */; };
 		DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2087AA9678CFB84779ED67E7 /* Environments.storyboard */; };
-		E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
-		E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E119AF722170B8E800255F7E /* CountryAnnotation.swift */; };
 		E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */; };
@@ -848,7 +846,6 @@
 		D5F5689A23263C7D00795953 /* IosAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosAlertService.swift; sourceTree = "<group>"; };
 		D5F568A22327833100795953 /* AppSessionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerMock.swift; sourceTree = "<group>"; };
 		E0AC83A56B01FC7CB17C2689 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
-		E109118D2295A111001F6A0B /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E119AF722170B8E800255F7E /* CountryAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotation.swift; sourceTree = "<group>"; };
 		E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreToggleHandler.swift; sourceTree = "<group>"; };
@@ -1388,7 +1385,6 @@
 				79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */,
 				D594A957227C0E470041D423 /* UIView+nib.swift */,
 				D594A964227C466F0041D423 /* UIView+constraints.swift */,
-				E109118D2295A111001F6A0B /* UIViewController+Extension.swift */,
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */,
 				F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */,
@@ -3206,7 +3202,6 @@
 				E14EE2DB217E18E2004AF568 /* SecureCoreEntryAnnotation.swift in Sources */,
 				F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
 				060D071625D34599002B98B8 /* AppSessionManager.swift in Sources */,
-				E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
 				E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				42066E8626301BF8001F86DB /* FeatureTableViewCell.swift in Sources */,
 				D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */,
@@ -3362,7 +3357,6 @@
 				F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
-				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
 				E5C035B227BAA8EF003196F5 /* Upsell.swift in Sources */,
 				D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */,
