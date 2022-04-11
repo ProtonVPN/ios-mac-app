@@ -56,7 +56,7 @@ final class TourStepView: UIView {
 
     private func setupUI() {
         baseViewStyle(self)
-        tourStepHeaderStyle(topView)
+        secondaryViewStyle(topView)
         tourPagerStyle(pageControlView)
         centeredTextStyle(subtitleLabel)
         titleStyle(titleLabel)
