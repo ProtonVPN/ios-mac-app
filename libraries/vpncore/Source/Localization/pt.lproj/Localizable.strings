@@ -1037,7 +1037,7 @@
 "_netshield_alert_reconnect_description_on" = "A sua ligação será reiniciada para alterar o modo NetShield.\nNota: se algumas páginas não carregarem, tente desactivar o NetShield.";
 
 /* (No Comment) */
-"_netshield_alert_upgrade_description" = "O Netshield aumenta a sua privacidade ao bloquear anúncios e rastreadores.";
+"_netshield_alert_upgrade_description" = "O NetShield aumenta a sua privacidade ao bloquear anúncios e rastreadores.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Bloquear malware";

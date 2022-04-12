@@ -41,7 +41,7 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Navegue com velocidade máxima (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Bloqueie anúncios e malware com o Netshield";
+"modals_upsell_all_countries_feature_netshield" = "Bloqueie anúncios e malware com o NetShield";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Acesse os serviços de streaming globais";
@@ -56,7 +56,7 @@
 "modals_upsell_features_safe_mode_subtitle" = "Use o Proton VPN para qualquer necessidade especial, permitindo o tráfego para portas não padrão através da rede VPN. \n\nDesbloqueie este e outros recursos com um plano Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Ao atualizar para o Plus";
+"modals_upsell_features_subtitle" = "Ao atualizar para o VPN Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "O que é NAT moderado?";
