@@ -70,7 +70,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="150" y="45" width="87" height="32"/>
+                                            <rect key="frame" x="151" y="45" width="87" height="32"/>
                                             <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="du1-Nc-Ubv">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>

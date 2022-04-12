@@ -23,29 +23,33 @@
 import Cocoa
 import vpncore
 
-class AccountViewController: NSViewController {
+final class AccountViewController: NSViewController {
 
-    @IBOutlet weak var usernameLabel: PVPNTextField!
-    @IBOutlet weak var usernameValue: PVPNTextField!
-    @IBOutlet weak var usernameSeparator: NSBox!
+    @IBOutlet private weak var usernameLabel: PVPNTextField!
+    @IBOutlet private weak var usernameValue: PVPNTextField!
+    @IBOutlet private weak var usernameSeparator: NSBox!
     
-    @IBOutlet weak var accountTypeLabel: PVPNTextField!
-    @IBOutlet weak var accountTypeValue: PVPNTextField!
-    @IBOutlet weak var accountTypeSeparator: NSBox!
+    @IBOutlet private weak var accountTypeLabel: PVPNTextField!
+    @IBOutlet private weak var accountTypeValue: PVPNTextField!
+    @IBOutlet private weak var accountTypeSeparator: NSBox!
     
-    @IBOutlet weak var accountPlanLabel: PVPNTextField!
-    @IBOutlet weak var accountPlanValue: PVPNTextField!
-    @IBOutlet weak var accountPlanSeparator: NSBox!
+    @IBOutlet private weak var accountPlanLabel: PVPNTextField!
+    @IBOutlet private weak var accountPlanValue: PVPNTextField!
+    @IBOutlet private weak var accountPlanSeparator: NSBox!
     
-    @IBOutlet weak var manageSubscriptionButton: InteractiveActionButton!
+    @IBOutlet private weak var manageSubscriptionButton: InteractiveActionButton!
+    @IBOutlet private weak var useCouponButton: InteractiveActionButton!
+    private let couponViewController: CouponViewController
     
-    private let viewModel = AccountViewModel(vpnKeychain: VpnKeychain())
+    private let viewModel: AccountViewModel
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
     
-    required init() {
+    required init(accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) {
+        viewModel = accountViewModel
+        couponViewController = CouponViewController(viewModel: couponViewModel)
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
     }
     
@@ -55,6 +59,7 @@ class AccountViewController: NSViewController {
         setupView()
         setupStackView()
         setupFooterView()
+        setupCouponViewController()
     }
     
     private func setupView() {
@@ -85,9 +90,35 @@ class AccountViewController: NSViewController {
         manageSubscriptionButton.title = LocalizedString.manageSubscription
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
+
+        useCouponButton.title = LocalizedString.useCoupon
+        useCouponButton.target = self
+        useCouponButton.action = #selector(useCoupon)
     }
 
+    private func setupCouponViewController() {
+        couponViewController.delegate = self
+        couponViewController.viewWillAppear()
+        couponViewController.view.isHidden = true
+        view.addSubview(couponViewController.view)
+        couponViewController.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: 200)
+        couponViewController.view.frame.origin = .zero
+        addChild(couponViewController)
+    }
+    
     @objc private func manageSubscriptionButtonAction() {
         viewModel.manageSubscriptionAction()
+    }
+
+    @objc private func useCoupon() {
+        couponViewController.view.frame.origin = CGPoint(x: (view.frame.size.width - AppConstants.Windows.sidebarWidth) / 2, y: 48)
+        couponViewController.view.isHidden = false
+    }
+}
+
+// MARK: CouponViewControllerDelegate
+extension AccountViewController: CouponViewControllerDelegate {
+    func userDidCloseCouponViewController() {
+        couponViewController.view.isHidden = true
     }
 }

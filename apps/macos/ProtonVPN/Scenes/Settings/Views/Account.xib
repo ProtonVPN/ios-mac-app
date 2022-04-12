@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,6 +15,7 @@
                 <outlet property="accountTypeSeparator" destination="fUm-bc-cEP" id="YQg-ho-RZo"/>
                 <outlet property="accountTypeValue" destination="4xy-J4-IYv" id="Dc5-gF-24b"/>
                 <outlet property="manageSubscriptionButton" destination="KP6-ou-7qP" id="qp3-9A-Xhg"/>
+                <outlet property="useCouponButton" destination="CjQ-Jp-Ar9" id="vTq-kH-QUz"/>
                 <outlet property="usernameLabel" destination="KwT-jo-bPa" id="s5E-BI-LPm"/>
                 <outlet property="usernameSeparator" destination="TzG-qg-j0x" id="NJV-KT-KtO"/>
                 <outlet property="usernameValue" destination="UhW-14-BIc" id="W4L-6f-k3g"/>
@@ -171,17 +172,38 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="x6P-lQ-byj">
                     <rect key="frame" x="0.0" y="0.0" width="511" height="96"/>
                     <subviews>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KP6-ou-7qP" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="169" y="20" width="174" height="16"/>
-                            <buttonCell key="cell" type="bevel" title="Manage subscription button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="hSy-yP-2y2">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                        </button>
+                        <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sUs-v0-wfZ">
+                            <rect key="frame" x="0.0" y="28" width="511" height="48"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KP6-ou-7qP" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="169" y="32" width="174" height="16"/>
+                                    <buttonCell key="cell" type="bevel" title="Manage subscription button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="hSy-yP-2y2">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                </button>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CjQ-Jp-Ar9" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="217" y="0.0" width="77" height="16"/>
+                                    <buttonCell key="cell" type="bevel" title="Use coupon" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="zXc-qo-nJs">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                </button>
+                            </subviews>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="KP6-ou-7qP" secondAttribute="bottom" constant="20" id="1Q7-yl-Jz4"/>
-                        <constraint firstItem="KP6-ou-7qP" firstAttribute="centerX" secondItem="x6P-lQ-byj" secondAttribute="centerX" id="sNn-rc-0HD"/>
+                        <constraint firstAttribute="bottom" secondItem="sUs-v0-wfZ" secondAttribute="bottom" constant="28" id="Amq-DD-sQR"/>
+                        <constraint firstAttribute="trailing" secondItem="sUs-v0-wfZ" secondAttribute="trailing" id="GXi-bD-FXH"/>
+                        <constraint firstItem="sUs-v0-wfZ" firstAttribute="leading" secondItem="x6P-lQ-byj" secondAttribute="leading" id="Ivg-4t-f3W"/>
                     </constraints>
                 </customView>
             </subviews>
