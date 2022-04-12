@@ -86,7 +86,7 @@ public class AppStateManagerImplementation: AppStateManager {
         set {
             dispatchAssert(condition: .onQueue(.main))
             _state = newValue
-            computeDisplayState()
+            computeDisplayState(with: vpnManager.isLocalAgentConnected)
         }
     }
 
@@ -380,9 +380,9 @@ public class AppStateManagerImplementation: AppStateManager {
                 self?.vpnStateChanged()
             }
         }
-        vpnManager.localAgentStateChanged = { [weak self] in
+        vpnManager.localAgentStateChanged = { [weak self] localAgentConnectedState in
             executeOnUIThread {
-                self?.computeDisplayState()
+                self?.computeDisplayState(with: localAgentConnectedState)
             }
         }
         
@@ -593,9 +593,9 @@ public class AppStateManagerImplementation: AppStateManager {
         })
     }
 
-    private func computeDisplayState() {
+    private func computeDisplayState(with localAgentConnectedState: Bool?) {
         // not using local agent, use the real state
-        guard let isLocalAgentConnected = vpnManager.isLocalAgentConnected else {
+        guard let isLocalAgentConnected = localAgentConnectedState else {
             displayState = state.asDisplayState()
             return
         }
