@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -78,7 +78,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="148" y="45" width="93" height="32"/>
+                                            <rect key="frame" x="151" y="45" width="87" height="32"/>
                                             <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="du1-Nc-Ubv">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -127,7 +127,7 @@
                                     </constraints>
                                 </view>
                                 <color key="borderColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="fillColor" red="0.2054606974" green="0.2053156793" blue="0.2322165668" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="fillColor" red="0.20392156862745098" green="0.20392156862745098" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </box>
                         </subviews>
                         <constraints>

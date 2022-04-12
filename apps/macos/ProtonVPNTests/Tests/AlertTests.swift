@@ -104,7 +104,7 @@ fileprivate class WindowServiceMock: WindowService {
     func showTour() {}
     func openAbout(factory: AboutViewController.Factory) {}
     func openAcknowledgements() {}
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {}
+    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) { }
     func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
     

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CouponViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="closeButton" destination="pXG-Rm-2Ab" id="6Q9-5y-dKR"/>
+                <outlet property="view" destination="c22-O7-iKe" id="aqx-qP-jeE"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="406"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="0mC-Zq-9yS" userLabel="Detail">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="406"/>
+                    <view key="contentView" id="yps-vh-CoU">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="406"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="TOI-s3-aZs" userLabel="Content">
+                                <rect key="frame" x="20" y="6" width="440" height="396"/>
+                                <view key="contentView" id="V4V-0t-8ht">
+                                    <rect key="frame" x="0.0" y="0.0" width="440" height="396"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pXG-Rm-2Ab">
+                                            <rect key="frame" x="412" y="368" width="20" height="20"/>
+                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-cross" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="VeX-aO-h1j">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="pXG-Rm-2Ab" secondAttribute="trailing" constant="8" id="BmE-2l-7DZ"/>
+                                        <constraint firstItem="pXG-Rm-2Ab" firstAttribute="top" secondItem="V4V-0t-8ht" secondAttribute="top" constant="8" id="G8s-gP-Mu9"/>
+                                    </constraints>
+                                </view>
+                                <color key="borderColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" red="0.20392156859999999" green="0.20392156859999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </box>
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="iKV-rJ-exD">
+                                <rect key="frame" x="215" y="0.0" width="50" height="8"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="8" id="PGd-MZ-5UW"/>
+                                    <constraint firstAttribute="width" constant="50" id="W8O-pW-mUP"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="ReverseTriangle" id="qiX-tc-acS"/>
+                                <color key="contentTintColor" red="0.26274509800000001" green="0.2666666667" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="TOI-s3-aZs" secondAttribute="trailing" constant="20" id="Fj2-Gd-G4s"/>
+                            <constraint firstAttribute="bottom" secondItem="iKV-rJ-exD" secondAttribute="bottom" id="SmG-3s-gWD"/>
+                            <constraint firstItem="iKV-rJ-exD" firstAttribute="top" secondItem="TOI-s3-aZs" secondAttribute="bottom" constant="-2" id="TAG-Nl-lYl"/>
+                            <constraint firstItem="TOI-s3-aZs" firstAttribute="top" secondItem="yps-vh-CoU" secondAttribute="top" constant="4" id="hHz-RL-9MK"/>
+                            <constraint firstItem="iKV-rJ-exD" firstAttribute="centerX" secondItem="TOI-s3-aZs" secondAttribute="centerX" id="krU-YX-utw"/>
+                            <constraint firstItem="TOI-s3-aZs" firstAttribute="leading" secondItem="yps-vh-CoU" secondAttribute="leading" constant="20" id="rbf-4s-1UM"/>
+                        </constraints>
+                    </view>
+                    <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="0mC-Zq-9yS" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="8tp-k2-25z"/>
+                <constraint firstItem="0mC-Zq-9yS" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Vk9-oT-I1Z"/>
+                <constraint firstAttribute="trailing" secondItem="0mC-Zq-9yS" secondAttribute="trailing" id="fkd-vV-E23"/>
+                <constraint firstAttribute="bottom" secondItem="0mC-Zq-9yS" secondAttribute="bottom" id="qeE-Cj-Rjx"/>
+            </constraints>
+            <point key="canvasLocation" x="-3" y="157"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="ReverseTriangle" width="64" height="8"/>
+        <image name="ic-cross" width="20" height="20"/>
+    </resources>
+</document>
