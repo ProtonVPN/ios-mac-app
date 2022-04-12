@@ -45,17 +45,16 @@ final class SettingsContainerViewController: NSViewController {
         return AdvancedSettingsViewController(viewModel: viewModel.advancedSettingsViewModel)
     }()
     
-    lazy var accountViewController: AccountViewController = {
-        return AccountViewController()
-    }()
+    let accountViewController: AccountViewController
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {
+    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
+        self.accountViewController = AccountViewController(accountViewModel: accountViewModel, couponViewModel: couponViewModel)
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
     

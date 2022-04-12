@@ -54,6 +54,7 @@ class NavigationService {
         & SafeModePropertyProviderFactory
         & ProtonReachabilityCheckerFactory
         & NetworkingFactory
+        & CouponViewModelFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -197,7 +198,7 @@ extension NavigationService {
     func openSettings(to tab: SettingsTab) {        
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab), accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain()), couponViewModel: factory.makeCouponViewModel())
     }
     
     func logOutRequested() {
