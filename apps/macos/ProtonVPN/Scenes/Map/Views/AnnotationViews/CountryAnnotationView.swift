@@ -48,8 +48,8 @@ class MapAnnotationView: MKAnnotationView {
     /// the corner radius), "b" is the second-shortest, and "c" is the hypotenuse.
     /// theta is equivalent to an angle of 120 degrees (the triangle's corner.)
     /// omega is the offset in the circle where the multiples of theta align with the
-    ///   triangle's corners, in this case the "top" of the circle because the triangle
-    ///   is oriented upside-down.
+    /// triangle's corners, in this case the "top" of the circle because the triangle
+    /// is oriented upside-down.
     private typealias CornerOffsets = (a: CGFloat, b: CGFloat, c: CGFloat,
                                        theta: CGFloat, omega: CGFloat)
     private static let triangleCornerOffsets: CornerOffsets = {
@@ -106,7 +106,7 @@ class MapAnnotationView: MKAnnotationView {
     }
 
     init(buttonSize: CGSize, hoveredTag: ForegroundOrder, styleDelegate: CustomStyleContext, reuseIdentifier: String?) {
-        self.buttonFrame = CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize)
+        self.buttonFrame = CGRect(origin: .zero, size: buttonSize)
         self.hoveredTag = hoveredTag
         self.styleDelegate = styleDelegate
 
