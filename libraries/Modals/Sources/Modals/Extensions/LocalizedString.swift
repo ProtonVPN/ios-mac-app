@@ -50,7 +50,7 @@ public enum LocalizedString {
   public static func modalsUpsellAllCountriesFeatureMultipleDevices(_ p1: Int) -> String {
     return LocalizedString.tr("Localizable", "modals_upsell_all_countries_feature_multipleDevices", p1)
   }
-  /// Block ads and malware with Netshield
+  /// Block ads and malware with NetShield
   public static var modalsUpsellAllCountriesFeatureNetshield: String { return LocalizedString.tr("Localizable", "modals_upsell_all_countries_feature_netshield") }
   /// Access global streaming services
   public static var modalsUpsellAllCountriesFeatureStreaming: String { return LocalizedString.tr("Localizable", "modals_upsell_all_countries_feature_streaming") }
@@ -68,7 +68,7 @@ public enum LocalizedString {
   /// 
   /// Unlock this and other features with a Plus plan.
   public static var modalsUpsellFeaturesSafeModeSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_safe_mode_subtitle") }
-  /// When you upgrade to Plus
+  /// When you upgrade to VPN Plus
   public static var modalsUpsellFeaturesSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_subtitle") }
   /// What is Moderate NAT?
   public static var modalsUpsellModerateNatLearnMore: String { return LocalizedString.tr("Localizable", "modals_upsell_moderate_nat_learn_more") }

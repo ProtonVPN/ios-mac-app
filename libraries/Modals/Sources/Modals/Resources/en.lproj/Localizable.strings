@@ -8,7 +8,7 @@
 "modals_upsell_features_footer" = "And many more premium features";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "When you upgrade to Plus";
+"modals_upsell_features_subtitle" = "When you upgrade to VPN Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
 "modals_upsell_features_safe_mode_subtitle" = "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network.\n\nUnlock this and other features with a Plus plan.";
@@ -35,7 +35,7 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with Netshield";
+"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with NetShield";
 
 /* Title of the NetShield upsell screen */
 "modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";

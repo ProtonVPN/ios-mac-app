@@ -33,7 +33,7 @@ final class ViewController: UIViewController {
                              separator: UIColor(red: 0.918, green: 0.906, blue: 0.894, alpha: 1),
                              secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1),
                              iconWeak: UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1))
-        return SearchCoordinator(configuration: Configuration(colors: colors, constants: Constants(numberOfCountries: 61, numberOfServers: 1200)), storage: Storage())
+        return SearchCoordinator(configuration: Configuration(colors: colors, constants: Constants(numberOfCountries: 61)), storage: Storage())
     }()
     private let modals: ModalsFactory = {
         let colors = Colors(background: UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1),

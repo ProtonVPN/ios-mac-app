@@ -28,11 +28,11 @@
                                     <constraint firstAttribute="height" constant="24" id="v5T-wg-WQS"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="TVU-f9-UKP">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="TVU-f9-UKP">
                                 <rect key="frame" x="56" y="16" width="289" height="92"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mon-h9-OMr">
-                                        <rect key="frame" x="0.0" y="0.0" width="289" height="71.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="289" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -46,23 +46,19 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-chevron-right" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-xF-03T">
-                                <rect key="frame" x="361" y="50" width="24" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="XAV-aR-Epa"/>
-                                    <constraint firstAttribute="height" constant="24" id="YIE-sj-dqb"/>
-                                </constraints>
+                                <rect key="frame" x="361" y="14.5" width="24" height="24"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="cK6-xF-03T" secondAttribute="trailing" constant="8" id="2TG-wu-0vT"/>
                             <constraint firstAttribute="bottom" secondItem="TVU-f9-UKP" secondAttribute="bottom" constant="16" id="BRM-C8-vtS"/>
-                            <constraint firstItem="cK6-xF-03T" firstAttribute="centerY" secondItem="TVU-f9-UKP" secondAttribute="centerY" id="DT8-lE-zJo"/>
                             <constraint firstAttribute="trailing" secondItem="TVU-f9-UKP" secondAttribute="trailing" constant="48" id="O1p-JQ-yqb"/>
                             <constraint firstItem="TVU-f9-UKP" firstAttribute="top" secondItem="a0r-ol-5cD" secondAttribute="top" constant="16" id="OaY-N6-iC6"/>
                             <constraint firstItem="Dhg-dZ-wL1" firstAttribute="leading" secondItem="a0r-ol-5cD" secondAttribute="leading" constant="16" id="Tj7-DQ-0eI"/>
                             <constraint firstItem="TVU-f9-UKP" firstAttribute="leading" secondItem="Dhg-dZ-wL1" secondAttribute="trailing" constant="16" id="Zes-MG-DTY"/>
                             <constraint firstItem="Dhg-dZ-wL1" firstAttribute="top" secondItem="a0r-ol-5cD" secondAttribute="top" constant="16" id="hAa-qM-3kc"/>
+                            <constraint firstItem="cK6-xF-03T" firstAttribute="centerY" secondItem="mon-h9-OMr" secondAttribute="centerY" id="rkr-YB-DjU"/>
                         </constraints>
                     </view>
                 </subviews>

@@ -78,7 +78,7 @@ let iconWeakStyle: (UIView) -> Void = {
 }
 
 let iconHintStyle: (UIView) -> Void = {
-    $0.tintColor = UIColor(red: 153 / 255, green: 150 / 255, blue: 147 / 255, alpha: 1) // colors.iconHint
+    $0.tintColor = UIColor(red: 109 / 255, green: 105 / 255, blue: 125 / 255, alpha: 1) // colors.iconHint
 }
 
 let upsellSubtitleStyle = concat(baseTextStyle, and: {
