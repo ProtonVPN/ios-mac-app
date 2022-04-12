@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory & PaymentsApiServiceFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory & PaymentsApiServiceFactory & CouponViewModelFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -644,6 +644,6 @@ final class SettingsViewModel {
     }
 
     private func pushCouponViewController() {
-        pushHandler?(CouponViewController(viewModel: CouponViewModel(paymentsApiService: factory.makePaymentsApiService(), appSessionManager: appSessionManager)))
+        pushHandler?(CouponViewController(viewModel: factory.makeCouponViewModel()))
     }
 }

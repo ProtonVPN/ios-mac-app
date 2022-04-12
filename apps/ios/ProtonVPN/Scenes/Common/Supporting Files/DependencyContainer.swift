@@ -488,3 +488,10 @@ extension DependencyContainer: PaymentsApiServiceFactory {
         return PaymentsApiServiceImplementation(networking: makeNetworking(), vpnKeychain: makeVpnKeychain(), vpnApiService: makeVpnApiService())
     }
 }
+
+// MARK: CouponViewModelFactory
+extension DependencyContainer: CouponViewModelFactory {
+    func makeCouponViewModel() -> CouponViewModel {
+        return CouponViewModel(paymentsApiService: makePaymentsApiService(), appSessionRefresher: appSessionManager)
+    }
+}

@@ -17,14 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import vpncore
 
-protocol CouponViewModelDelegate: AnyObject {
+public protocol CouponViewModelFactory {
+    func makeCouponViewModel() -> CouponViewModel
+}
+
+public protocol CouponViewModelDelegate: AnyObject {
     func loadingDidChange(isLoading: Bool)
     func errorDidChange(isError: Bool)
 }
 
-final class CouponViewModel {
+public final class CouponViewModel {
     private(set) var isLoading: Bool = false {
         didSet {
             delegate?.loadingDidChange(isLoading: isLoading)
@@ -36,17 +39,17 @@ final class CouponViewModel {
         }
     }
 
-    weak var delegate: CouponViewModelDelegate?
+    public weak var delegate: CouponViewModelDelegate?
 
     private let paymentsApiService: PaymentsApiService
-    private let appSessionManager: AppSessionManager
+    private let appSessionRefresher: AppSessionRefresherImplementation
 
-    init(paymentsApiService: PaymentsApiService, appSessionManager: AppSessionManager) {
+    public init(paymentsApiService: PaymentsApiService, appSessionRefresher: AppSessionRefresherImplementation) {
         self.paymentsApiService = paymentsApiService
-        self.appSessionManager = appSessionManager
+        self.appSessionRefresher = appSessionRefresher
     }
 
-    func applyPromoCode(code: String, completion: @escaping (Result<String, Error>) -> Void) {
+    public func applyPromoCode(code: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard !code.isEmpty else {
             isError = true
             return
@@ -71,7 +74,7 @@ final class CouponViewModel {
                     log.info("Promo code applied, reloading data")
 
                     // reload the user data
-                    self?.appSessionManager.attemptSilentLogIn { [weak self] result in
+                    self?.appSessionRefresher.attemptSilentLogIn { [weak self] result in
                         self?.isLoading = false
 
                         switch result {
