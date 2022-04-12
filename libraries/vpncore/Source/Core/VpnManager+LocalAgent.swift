@@ -22,6 +22,8 @@
 
 import Foundation
 
+private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
+
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
         guard self.currentVpnProtocol?.authenticationType == .certificate else {
@@ -29,15 +31,17 @@ extension VpnManager {
         }
 
         let connect = { (data: VpnAuthenticationData) in
-            guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, safeModePropertyProvider: self.safeModePropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
-                log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
-                return
-            }
+            localAgentQueue.sync {
+                guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, safeModePropertyProvider: self.safeModePropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
+                    log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
+                    return
+                }
 
-            self.disconnectLocalAgent()
-            self.localAgent = LocalAgentImplementation()
-            self.localAgent?.delegate = self
-            self.localAgent?.connect(data: data, configuration: configuration)
+                self.disconnectLocalAgentNoSync()
+                self.localAgent = LocalAgentImplementation()
+                self.localAgent?.delegate = self
+                self.localAgent?.connect(data: data, configuration: configuration)
+            }
         }
 
         if let authenticationData = data {
@@ -60,7 +64,7 @@ extension VpnManager {
         }
     }
 
-    func disconnectLocalAgent() {
+    private func disconnectLocalAgentNoSync() {
         if localAgent != nil {
             log.debug("Disconnecting Local agent", category: .localAgent)
         }
@@ -68,6 +72,12 @@ extension VpnManager {
         isLocalAgentConnected = false
         localAgent?.disconnect()
         localAgent = nil
+    }
+
+    func disconnectLocalAgent() {
+        localAgentQueue.sync {
+            disconnectLocalAgentNoSync()
+        }
     }
 
     func refreshCertificateWithError(completion: @escaping (VpnAuthenticationData) -> Void) {
@@ -79,7 +89,9 @@ extension VpnManager {
                 log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting", category: .localAgent, event: .error)
                 self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
                 self?.disconnect { [weak self] in
-                    self?.localAgent?.disconnect()
+                    localAgentQueue.sync {
+                        self?.localAgent?.disconnect()
+                    }
                 }
             }
         }
@@ -188,9 +200,12 @@ extension VpnManager: LocalAgentDelegate {
     // swiftlint:enable cyclomatic_complexity
 
     func didChangeState(state: LocalAgentState) {
+        dispatchPrecondition(condition: .notOnQueue(localAgentQueue))
         log.debug("Local agent state changed to \(state)", category: .localAgent, event: .stateChange)
 
-        isLocalAgentConnected = state == .connected
+        localAgentQueue.sync {
+            isLocalAgentConnected = state == .connected
+        }
 
         switch state {
         case .clientCertificateError:

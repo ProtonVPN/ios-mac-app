@@ -25,7 +25,7 @@ public protocol VpnManagerProtocol {
 
     var stateChanged: (() -> Void)? { get set }
     var state: VpnState { get }
-    var localAgentStateChanged: (() -> Void)? { get set }
+    var localAgentStateChanged: ((Bool?) -> Void)? { get set }
     var isLocalAgentConnected: Bool? { get }
     var currentVpnProtocol: VpnProtocol? { get }
     
@@ -113,10 +113,10 @@ public class VpnManager: VpnManagerProtocol {
             guard isLocalAgentConnected != oldValue else {
                 return
             }
-            localAgentStateChanged?()
+            localAgentStateChanged?(isLocalAgentConnected)
         }
     }
-    public var localAgentStateChanged: (() -> Void)?
+    public var localAgentStateChanged: ((Bool?) -> Void)?
     
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String

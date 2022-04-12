@@ -87,5 +87,5 @@ public class VpnManagerMock: VpnManagerProtocol {
     }
 
     public private(set) var isLocalAgentConnected: Bool?
-    public var localAgentStateChanged: (() -> Void)?
+    public var localAgentStateChanged: ((Bool?) -> Void)?
 }
