@@ -545,6 +545,8 @@
 		F38F7BEA2795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38F7BE82795657B005B9EA2 /* CoreApiFeatureRequest.swift */; };
 		F38F7BEC27956674005B9EA2 /* CoreApiFeatureRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38F7BEB27956674005B9EA2 /* CoreApiFeatureRespone.swift */; };
 		F38F7BED27956674005B9EA2 /* CoreApiFeatureRespone.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38F7BEB27956674005B9EA2 /* CoreApiFeatureRespone.swift */; };
+		F397EA5E280561400072D511 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F397EA5D280561400072D511 /* CouponViewModel.swift */; };
+		F397EA5F280561400072D511 /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F397EA5D280561400072D511 /* CouponViewModel.swift */; };
 		F39E71CA26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
 		F39E71CC26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
 		F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
@@ -965,6 +967,7 @@
 		F38BB44B265B893F00329619 /* LocalAgentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentError.swift; sourceTree = "<group>"; };
 		F38F7BE82795657B005B9EA2 /* CoreApiFeatureRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreApiFeatureRequest.swift; sourceTree = "<group>"; };
 		F38F7BEB27956674005B9EA2 /* CoreApiFeatureRespone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreApiFeatureRespone.swift; sourceTree = "<group>"; };
+		F397EA5D280561400072D511 /* CouponViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
 		F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfigResponse.swift; sourceTree = "<group>"; };
 		F3A05A3326C14223004D9E18 /* AppDisplayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDisplayState.swift; sourceTree = "<group>"; };
 		F3A3D6C627C015BE00B474D7 /* NATTypePropertyProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NATTypePropertyProviderMock.swift; sourceTree = "<group>"; };
@@ -1836,6 +1839,7 @@
 		F36ECB8F2610A9D00089B898 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				F397EA5D280561400072D511 /* CouponViewModel.swift */,
 				D5A8811C22CCE400009B63D1 /* ReportBugViewModel.swift */,
 				D5906F1C22D46469001BC074 /* AttachmentRowViewModel.swift */,
 				D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */,
@@ -2559,6 +2563,7 @@
 				E129C6C022A90E6500D8437E /* AlertServiceMock.swift in Sources */,
 				E1B5F66F21B8205100B558B0 /* ServerLocation.swift in Sources */,
 				E151126B22F07D3100C9A41F /* VpnManagerConfiguration.swift in Sources */,
+				F397EA5E280561400072D511 /* CouponViewModel.swift in Sources */,
 				42370606262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
 				F389188C26C3D673006214A8 /* WireguardConfig.swift in Sources */,
 				E1B5F63221B6B19200B558B0 /* VpnState.swift in Sources */,
@@ -2972,6 +2977,7 @@
 				8527DAA95348977F75A7452E /* Logger+Main.swift in Sources */,
 				F3E5787227CCCE91000E48E3 /* AvailableDomainResponse.swift in Sources */,
 				77BF10C45A2119E8240BF3E9 /* FileLogHandler.swift in Sources */,
+				F397EA5F280561400072D511 /* CouponViewModel.swift in Sources */,
 				507B573219411E448ADE32C8 /* PropertiesManager+Log.swift in Sources */,
 				262328404A30662F306A590A /* URL+String.swift in Sources */,
 				76875591C80BAD34685C0BE0 /* ConsoleLogHandler.swift in Sources */,
