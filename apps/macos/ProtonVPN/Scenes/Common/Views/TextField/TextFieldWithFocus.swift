@@ -40,10 +40,17 @@ class TextFieldWithFocus: NSTextField {
     }
     
     override func becomeFirstResponder() -> Bool {
-        if let focusDelegate = focusDelegate {
-            focusDelegate.didReceiveFocus(self)
+        defer {
+            focusDelegate?.didReceiveFocus(self)
         }
         return super.becomeFirstResponder()
+    }
+
+    override func resignFirstResponder() -> Bool {
+        defer {
+            focusDelegate?.didLooseFocus(self)
+        }
+        return super.resignFirstResponder()
     }
     
     // swiftlint:disable cyclomatic_complexity

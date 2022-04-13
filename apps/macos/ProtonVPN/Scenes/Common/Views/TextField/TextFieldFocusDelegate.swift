@@ -23,6 +23,10 @@
 import Cocoa
 
 protocol TextFieldFocusDelegate: class {
-    
     func didReceiveFocus(_ textField: NSTextField)
+    func didLooseFocus(_ textField: NSTextField)
+}
+
+extension TextFieldFocusDelegate {
+    func didLooseFocus(_ textField: NSTextField) { }
 }
