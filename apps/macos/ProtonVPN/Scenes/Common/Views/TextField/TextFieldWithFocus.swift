@@ -54,6 +54,13 @@ class TextFieldWithFocus: NSTextField {
         }
         return super.becomeFirstResponder()
     }
+
+    override func resignFirstResponder() -> Bool {
+        defer {
+            focusDelegate?.didLoseFocus(self)
+        }
+        return super.resignFirstResponder()
+    }
     
     // swiftlint:disable cyclomatic_complexity
     override func performKeyEquivalent(with event: NSEvent) -> Bool {

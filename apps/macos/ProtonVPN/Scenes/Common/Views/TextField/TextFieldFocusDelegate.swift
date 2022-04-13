@@ -25,4 +25,9 @@ import Cocoa
 protocol TextFieldFocusDelegate: class {
     var shouldBecomeFirstResponder: Bool { get }
     func willReceiveFocus(_ textField: NSTextField)
+    func didLoseFocus(_ textField: NSTextField)
+}
+
+extension TextFieldFocusDelegate {
+    func didLoseFocus(_ textField: NSTextField) { }
 }
