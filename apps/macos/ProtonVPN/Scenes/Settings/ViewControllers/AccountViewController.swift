@@ -40,6 +40,7 @@ final class AccountViewController: NSViewController {
     @IBOutlet private weak var manageSubscriptionButton: InteractiveActionButton!
     @IBOutlet private weak var useCouponButton: InteractiveActionButton!
     private let couponViewController: CouponViewController
+    private var banner: BannerView?
     
     private let viewModel: AccountViewModel
     
@@ -145,6 +146,11 @@ extension AccountViewController: CouponViewControllerDelegate {
     func couponDidApply(message: String) {
         userDidCloseCouponViewController()
         viewModel.reload()
+
+        banner?.dismiss()
+        banner = BannerView(message: message)
+        // one level up is the bottom part of the settings container and another level up is the actual container
+        banner?.show(from: view.superview?.superview ?? view)
     }
 
     func userDidCloseCouponViewController() {
