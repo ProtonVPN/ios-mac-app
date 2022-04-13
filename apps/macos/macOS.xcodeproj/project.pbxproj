@@ -68,9 +68,6 @@
 		4C8641C527D2620C00EEFB1D /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C8641C727D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
-		4C3778C927C7CBA3008A6AB7 /* ModelIdCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383427C3E27200D7A88D /* ModelIdCheckerTests.swift */; };
-		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
-		4C54383527C3E27200D7A88D /* ModelIdCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383427C3E27200D7A88D /* ModelIdCheckerTests.swift */; };
 		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
@@ -705,9 +702,6 @@
 		D557D565264AC337007E4396 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D557D566264AC337007E4396 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		D557D567264AC337007E4396 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Intents.strings"; sourceTree = "<group>"; };
-		D557D569264AC337007E4396 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		D557D56A264AC337007E4396 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-MX"; path = "es-MX.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
-		D557D56B264AC337007E4396 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Intents.strings"; sourceTree = "<group>"; };
 		D557D56C264AC337007E4396 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D557D56D264AC337007E4396 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D557D56E264AC337007E4396 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -838,6 +832,9 @@
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
 		E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "XCUIElement+forceClick.swift"; path = "../../../macos/ProtonVPNUITests/Other classes/XCUIElement+forceClick.swift"; sourceTree = "<group>"; };
+		E534EA4D2806B6DB00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
@@ -2920,7 +2917,6 @@
 				pl,
 				"pt-BR",
 				es,
-				"es-MX",
 				nl,
 				"pt-PT",
 				de,
@@ -2934,6 +2930,7 @@
 				hr,
 				tr,
 				uk,
+				"es-419",
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
@@ -3745,7 +3742,6 @@
 				D557D55D264AC337007E4396 /* hu */,
 				D557D561264AC337007E4396 /* pl */,
 				D557D565264AC337007E4396 /* pt-BR */,
-				D557D569264AC337007E4396 /* es-MX */,
 				D557D56C264AC337007E4396 /* ru */,
 				D557D570264AC337007E4396 /* fr */,
 				D557D573264AC337007E4396 /* id */,
@@ -3754,6 +3750,7 @@
 				D5E38D772732A2B20015F0AF /* hr */,
 				D53D133C2732A57200B9D740 /* tr */,
 				E90F956627E09DBB00A51A42 /* uk */,
+				E534EA4D2806B6DB00BCC9F6 /* es-419 */,
 			);
 			name = Localizable.strings;
 			path = Localization;
@@ -3772,7 +3769,6 @@
 				D557D55E264AC337007E4396 /* hu */,
 				D557D562264AC337007E4396 /* pl */,
 				D557D566264AC337007E4396 /* pt-BR */,
-				D557D56A264AC337007E4396 /* es-MX */,
 				D557D56D264AC337007E4396 /* ru */,
 				D557D571264AC337007E4396 /* fr */,
 				D557D574264AC337007E4396 /* id */,
@@ -3781,6 +3777,7 @@
 				D5E38D792732A2E30015F0AF /* hr */,
 				D53D133D2732A57800B9D740 /* tr */,
 				E90F956527E09D6600A51A42 /* uk */,
+				E534EA4E2806B6DE00BCC9F6 /* es-419 */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3799,7 +3796,6 @@
 				D557D55F264AC337007E4396 /* hu */,
 				D557D563264AC337007E4396 /* pl */,
 				D557D567264AC337007E4396 /* pt-BR */,
-				D557D56B264AC337007E4396 /* es-MX */,
 				D557D56E264AC337007E4396 /* ru */,
 				D557D572264AC337007E4396 /* fr */,
 				D557D575264AC337007E4396 /* id */,
@@ -3809,6 +3805,7 @@
 				D5E38D7A2732A2F40015F0AF /* hr */,
 				D53D133E2732A57C00B9D740 /* tr */,
 				E90F956727E09DD400A51A42 /* uk */,
+				E534EA4F2806B6E200BCC9F6 /* es-419 */,
 			);
 			name = Intents.strings;
 			path = Localization;
