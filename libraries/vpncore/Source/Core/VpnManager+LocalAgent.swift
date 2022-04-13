@@ -195,6 +195,9 @@ extension VpnManager: LocalAgentDelegate {
             disconnect { }
         case .restrictedServer:
             log.error("Local agent reported restricted server error, waiting for the local agent to recover", category: .localAgent, event: .error)
+        case .serverSessionDoesntMatch:
+            log.error("Server session doesn't match, trying to generate new key and certificate and reconnect", category: .localAgent, event: .error)
+            reconnectWithNewKeyAndCertificate()
         }
     }
     // swiftlint:enable cyclomatic_complexity

@@ -42,6 +42,7 @@ enum LocalAgentError: Error {
     case guestSession
     case badCertificateSignature
     case certificateNotProvided
+    case serverSessionDoesntMatch
 }
 
 extension LocalAgentError {
@@ -89,6 +90,8 @@ extension LocalAgentError {
             return .badCertificateSignature
         case consts.errorCodeCertNotProvided:
             return .certificateNotProvided
+        case 86202: // Server session doesn't match: Use the correct ed25519/x25519 key
+            return .serverSessionDoesntMatch
         default:
             log.error("Trying to parse unknown local agent error \(code)", category: .localAgent)
             return nil
