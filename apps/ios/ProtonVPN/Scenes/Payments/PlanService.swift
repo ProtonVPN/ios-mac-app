@@ -30,10 +30,6 @@ protocol PlanServiceFactory {
     func makePlanService() -> PlanService
 }
 
-protocol UpsellFactory {
-    func makeUpsell() -> Upsell
-}
-
 protocol PlanServiceDelegate: AnyObject {
     func paymentTransactionDidFinish()
 }
@@ -45,6 +41,7 @@ enum PlusPlanUIResult {
 
 protocol PlanService {
     var allowUpgrade: Bool { get }
+    var countriesCount: Int { get }
     var delegate: PlanServiceDelegate? { get set }
 
     func presentPlanSelection()
@@ -60,6 +57,8 @@ final class CorePlanService: PlanService {
     private let payments: Payments
     private let alertService: CoreAlertService
     private let userCachedStatus: UserCachedStatus
+
+    var countriesCount: Int = AccountPlan.plus.countriesCount
 
     let tokenStorage: PaymentTokenStorage?
 
@@ -83,6 +82,33 @@ final class CorePlanService: PlanService {
                 alertService.push(alert: ReportBugAlert())
             }
         )
+
+        updateCountriesCount { [weak self] result in
+            switch result {
+            case .success(let count):
+                self?.countriesCount = count
+            case .failure:
+                self?.countriesCount = AccountPlan.plus.countriesCount
+            }
+        }
+    }
+
+    private func updateCountriesCount(completion: @escaping (Result<Int, Error>) -> Void) {
+        if let counts = payments.planService.countriesCount {
+            return completion(.success(counts.maxCountries()))
+        }
+        payments.planService.updateCountriesCount { [weak self] in
+            if let count = self?.payments.planService.countriesCount?.maxCountries() {
+                return completion(.success(count))
+            }
+            return completion(.failure(CountriesCountError.internalError))
+        } failure: { error in
+            return completion(.failure(error))
+        }
+    }
+
+    private enum CountriesCountError: Error {
+        case internalError
     }
 
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
@@ -198,5 +224,13 @@ extension CorePlanService: StoreKitManagerDelegate {
         }
 
         return credentials.userId
+    }
+}
+
+private extension Array where Element == Countries {
+    func maxCountries() -> Int {
+        self.max {
+            $0.count < $1.count
+        }?.count ?? AccountPlan.plus.countriesCount
     }
 }

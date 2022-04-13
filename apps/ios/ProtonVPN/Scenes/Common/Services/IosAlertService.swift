@@ -36,7 +36,6 @@ class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
-    private lazy var upsell: Upsell = Upsell(factory)
 
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = ModalsFactory(colors: UpsellColors())
@@ -196,7 +195,7 @@ extension IosAlertService: CoreAlertService {
 
         case is AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
-            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
+            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
             show(upsellType: allCountriesUpsell)
             
         default:
