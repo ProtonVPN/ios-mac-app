@@ -28,12 +28,12 @@ public protocol CouponViewModelDelegate: AnyObject {
 }
 
 public final class CouponViewModel {
-    private(set) var isLoading: Bool = false {
+    public private(set) var isLoading: Bool = false {
         didSet {
             delegate?.loadingDidChange(isLoading: isLoading)
         }
     }
-    private(set) var isError: Bool = false {
+    public private(set) var isError: Bool = false {
         didSet {
             delegate?.errorDidChange(isError: isError)
         }
