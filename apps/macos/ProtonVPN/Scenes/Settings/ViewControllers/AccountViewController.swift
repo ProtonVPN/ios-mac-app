@@ -42,6 +42,7 @@ final class AccountViewController: NSViewController {
 
     private let viewModel: AccountViewModel
     private let couponViewController: CouponViewController
+    private var banner: BannerView?
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -129,6 +130,11 @@ extension AccountViewController: CouponViewControllerDelegate {
     func couponDidApply(message: String) {
         userDidCloseCouponViewController()
         viewModel.reload()
+
+        banner?.dismiss()
+        banner = BannerView(message: message)
+        // one level up is the bottom part of the settings container and another level up is the actual container
+        banner?.show(from: view.superview?.superview ?? view)
     }
 
     func userDidCloseCouponViewController() {

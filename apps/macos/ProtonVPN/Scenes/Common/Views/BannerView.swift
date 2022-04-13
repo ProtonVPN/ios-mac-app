@@ -37,14 +37,14 @@ final class BannerView: NSView {
     private var size: NSSize?
     private let margin: CGFloat = 14
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(message: String) {
+        super.init(frame: .zero)
         setup()
+        label.stringValue = message
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setup() {
@@ -61,13 +61,12 @@ final class BannerView: NSView {
         ])
     }
 
-    func show(message: String, parentView: NSView) {
-        label.stringValue = message
+    func show(from parentView: NSView, duration: TimeInterval = 3) {
         let labelSize = label.sizeThatFits(NSSize(width: parentView.frame.width - 4 * margin, height: parentView.frame.height))
         size = NSSize(width: labelSize.width + 2 * margin, height: labelSize.height + 2 * margin)
         invalidateIntrinsicContentSize()
         NSLayoutConstraint.activate([
-            label.widthAnchor.constraint(equalToConstant: labelSize.width + 4 * margin),
+            label.widthAnchor.constraint(equalToConstant: labelSize.width + 2 * margin),
             label.heightAnchor.constraint(equalToConstant: labelSize.height)
         ])
 
@@ -76,6 +75,14 @@ final class BannerView: NSView {
             topAnchor.constraint(equalTo: parentView.topAnchor, constant: 2 * margin),
             centerXAnchor.constraint(equalTo: parentView.centerXAnchor)
         ])
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
+            self?.dismiss()
+        }
+    }
+
+    func dismiss() {
+        removeFromSuperview()
     }
 
     override var intrinsicContentSize: NSSize {
