@@ -51,52 +51,36 @@ final class AccountViewController: NSViewController {
         viewModel = accountViewModel
         couponViewController = CouponViewController(viewModel: couponViewModel)
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
+
+        viewModel.reloadNeeded = { [weak self] in
+            self?.setupData()
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
-        setupStackView()
-        setupFooterView()
-        setupCouponViewController()
+        setupUI()
+        setupActions()
+        setupData()
     }
-    
-    private func setupView() {
+
+    private func setupUI() {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.protonGrey().cgColor
-    }
-    
-    private func setupStackView() {
+
         usernameLabel.attributedStringValue = LocalizedString.username.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        usernameValue.attributedStringValue = viewModel.username.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
         usernameSeparator.fillColor = .protonLightGrey()
-        
+
         accountTypeLabel.attributedStringValue = LocalizedString.accountType.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        accountTypeValue.attributedStringValue = viewModel.accountType.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
-        accountTypeSeparator.fillColor = .protonLightGrey()
-        
         accountPlanLabel.attributedStringValue = LocalizedString.accountPlan.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+
+        accountTypeSeparator.fillColor = .protonLightGrey()
         accountPlanSeparator.fillColor = .protonLightGrey()
-        
-        if let accountPlan = viewModel.accountPlan {
-            accountPlanValue.attributedStringValue = accountPlan.description.attributed(withColor: accountPlan.colorForUI, fontSize: 16, alignment: .right)
-        } else {
-            accountPlanValue.attributedStringValue = LocalizedString.unavailable.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
-        }
-    }
-    
-    private func setupFooterView() {
+
         manageSubscriptionButton.title = LocalizedString.manageSubscription
-        manageSubscriptionButton.target = self
-        manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
-
         useCouponButton.title = LocalizedString.useCoupon
-        useCouponButton.target = self
-        useCouponButton.action = #selector(useCoupon)
-    }
 
-    private func setupCouponViewController() {
         couponViewController.delegate = self
         couponViewController.viewWillAppear()
         couponViewController.view.isHidden = true
@@ -104,6 +88,27 @@ final class AccountViewController: NSViewController {
         couponViewController.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: 200)
         couponViewController.view.frame.origin = .zero
         addChild(couponViewController)
+    }
+
+    private func setupActions() {
+        manageSubscriptionButton.target = self
+        manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
+
+        useCouponButton.target = self
+        useCouponButton.action = #selector(useCoupon)
+    }
+    
+    private func setupData() {
+        usernameValue.attributedStringValue = viewModel.username.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
+        accountTypeValue.attributedStringValue = viewModel.accountType.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
+
+        if let accountPlan = viewModel.accountPlan {
+            accountPlanValue.attributedStringValue = accountPlan.description.attributed(withColor: accountPlan.colorForUI, fontSize: 16, alignment: .right)
+        } else {
+            accountPlanValue.attributedStringValue = LocalizedString.unavailable.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .right)
+        }
+
+        useCouponButton.isHidden = !viewModel.canUsePromo
     }
     
     @objc private func manageSubscriptionButtonAction() {
@@ -118,6 +123,7 @@ final class AccountViewController: NSViewController {
 
 // MARK: CouponViewControllerDelegate
 extension AccountViewController: CouponViewControllerDelegate {
+
     func userDidCloseCouponViewController() {
         couponViewController.view.isHidden = true
     }
