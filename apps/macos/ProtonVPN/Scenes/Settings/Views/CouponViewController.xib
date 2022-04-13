@@ -8,7 +8,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="CouponViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="applyButton" destination="Dec-Jo-KW5" id="1Mj-yP-Slt"/>
                 <outlet property="closeButton" destination="pXG-Rm-2Ab" id="6Q9-5y-dKR"/>
+                <outlet property="errorLabel" destination="gwn-bt-UPe" id="xg7-n3-pmr"/>
+                <outlet property="textField" destination="JSe-k5-uXE" id="yvb-1g-ck2"/>
+                <outlet property="textFieldFieldHorizontalLine" destination="Sdp-xD-nYo" id="NR8-IC-tnf"/>
                 <outlet property="view" destination="c22-O7-iKe" id="aqx-qP-jeE"/>
             </connections>
         </customObject>
@@ -37,10 +41,81 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5v1-j0-k6u">
+                                            <rect key="frame" x="110" y="24" width="220" height="119"/>
+                                            <subviews>
+                                                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7sw-hn-eee">
+                                                    <rect key="frame" x="0.0" y="88" width="220" height="31"/>
+                                                    <subviews>
+                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSe-k5-uXE" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="9" width="220" height="22"/>
+                                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Mrf-cf-IWc">
+                                                                <font key="font" metaFont="menu" size="14"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Sdp-xD-nYo">
+                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="1"/>
+                                                            <view key="contentView" id="zeu-mx-JaW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="220" height="1"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            </view>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="O3H-Sc-eQ1"/>
+                                                            </constraints>
+                                                        </box>
+                                                    </subviews>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
+                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gwn-bt-UPe">
+                                                    <rect key="frame" x="-2" y="56" width="224" height="16"/>
+                                                    <textFieldCell key="cell" selectable="YES" alignment="center" id="N68-RY-oqS">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dec-Jo-KW5" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="VoG-5B-czI"/>
+                                                        <constraint firstAttribute="width" constant="220" id="kpF-4Y-GC7"/>
+                                                    </constraints>
+                                                    <buttonCell key="cell" type="bevel" title="Apply button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="8Yf-FV-Q0J">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gwn-bt-UPe" firstAttribute="width" secondItem="Dec-Jo-KW5" secondAttribute="width" id="PS2-Ru-3vU"/>
+                                                <constraint firstAttribute="width" constant="220" id="vt0-mr-ohu"/>
+                                            </constraints>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="pXG-Rm-2Ab" secondAttribute="trailing" constant="8" id="BmE-2l-7DZ"/>
                                         <constraint firstItem="pXG-Rm-2Ab" firstAttribute="top" secondItem="V4V-0t-8ht" secondAttribute="top" constant="8" id="G8s-gP-Mu9"/>
+                                        <constraint firstAttribute="bottom" secondItem="5v1-j0-k6u" secondAttribute="bottom" constant="24" id="YU3-iV-2ta"/>
+                                        <constraint firstItem="5v1-j0-k6u" firstAttribute="centerX" secondItem="V4V-0t-8ht" secondAttribute="centerX" id="fTS-pC-JTw"/>
                                     </constraints>
                                 </view>
                                 <color key="borderColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
