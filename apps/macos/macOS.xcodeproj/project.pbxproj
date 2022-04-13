@@ -460,6 +460,7 @@
 		F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */; };
 		F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */; };
 		F3B3BEB9279EBD5700F85BDF /* Upsell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3B3BEB8279EBD5600F85BDF /* Upsell.xib */; };
+		F3F48B1D2806D76500E0B814 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F48B1C2806D76500E0B814 /* BannerView.swift */; };
 		FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C16264DDB60F80353FA5CA /* LogViewHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -1092,6 +1093,7 @@
 		F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellViewController.swift; sourceTree = "<group>"; };
 		F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellGradientView.swift; sourceTree = "<group>"; };
 		F3B3BEB8279EBD5600F85BDF /* Upsell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upsell.xib; sourceTree = "<group>"; };
+		F3F48B1C2806D76500E0B814 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BannerView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Views/BannerView.swift; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2576,6 +2578,7 @@
 				F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */,
 				EE876E111F13859600C9B9C2 /* OverlayView.swift */,
 				EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */,
+				F3F48B1C2806D76500E0B814 /* BannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3572,6 +3575,7 @@
 				424C14D125596E0F00E1D988 /* QuickSettingDetailViewController.swift in Sources */,
 				EE9589E41F596DFC005E7495 /* PVPNTextField.swift in Sources */,
 				D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */,
+				F3F48B1D2806D76500E0B814 /* BannerView.swift in Sources */,
 				EE2C46321F5570A700BA34B8 /* CellSurfaceButton.swift in Sources */,
 				E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */,
 				D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */,
