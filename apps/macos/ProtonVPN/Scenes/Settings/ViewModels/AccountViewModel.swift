@@ -23,13 +23,35 @@
 import Foundation
 import vpncore
 
-class AccountViewModel {
+final class AccountViewModel {
     
-    let username: String
-    let accountType: String
-    let accountPlan: AccountPlan?
+    private(set) var username: String
+    private(set) var accountType: String
+    private(set) var accountPlan: AccountPlan?
+
+    var canUsePromo: Bool {
+        return (try? vpnKeychain.fetchCached())?.canUsePromoCode ?? false
+    }
+
+    private let vpnKeychain: VpnKeychainProtocol
+
+    var reloadNeeded: (() -> Void)?
     
     init(vpnKeychain: VpnKeychainProtocol) {
+        self.vpnKeychain = vpnKeychain
+
+        username = LocalizedString.unavailable
+        accountType = LocalizedString.unavailable
+        accountPlan = nil
+
+        reload()
+    }
+    
+    func manageSubscriptionAction() {
+        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+    }
+
+    func reload() {
         if let authCredentials = AuthKeychain.fetch() {
             username = authCredentials.username
             do {
@@ -45,9 +67,7 @@ class AccountViewModel {
             accountType = LocalizedString.unavailable
             accountPlan = nil
         }
-    }
-    
-    func manageSubscriptionAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+
+        reloadNeeded?()
     }
 }

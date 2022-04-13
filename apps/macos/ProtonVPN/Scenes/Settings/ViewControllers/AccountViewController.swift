@@ -51,18 +51,21 @@ final class AccountViewController: NSViewController {
         viewModel = accountViewModel
         couponViewController = CouponViewController(viewModel: couponViewModel)
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
+
+        viewModel.reloadNeeded = { [weak self] in
+            self?.setupData()
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupView()
-        setupStackView()
-        setupFooterView()
-        setupCouponViewController()
+        setupUI()
+        setupActions()
+        setupData()
     }
-    
-    private func setupView() {
+
+    private func setupUI() {
         view.wantsLayer = true
         view.layer?.backgroundColor = .cgColor(.background, .weak)
     }
@@ -91,12 +94,9 @@ final class AccountViewController: NSViewController {
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
 
+        manageSubscriptionButton.title = LocalizedString.manageSubscription
         useCouponButton.title = LocalizedString.useCoupon
-        useCouponButton.target = self
-        useCouponButton.action = #selector(useCoupon)
-    }
 
-    private func setupCouponViewController() {
         couponViewController.delegate = self
         couponViewController.viewWillAppear()
         couponViewController.view.isHidden = true
@@ -104,6 +104,27 @@ final class AccountViewController: NSViewController {
         couponViewController.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: 200)
         couponViewController.view.frame.origin = .zero
         addChild(couponViewController)
+    }
+
+    private func setupActions() {
+        manageSubscriptionButton.target = self
+        manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
+
+        useCouponButton.target = self
+        useCouponButton.action = #selector(useCoupon)
+    }
+    
+    private func setupData() {
+        usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+        accountTypeValue.attributedStringValue = viewModel.accountType.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+
+        if let accountPlan = viewModel.accountPlan {
+            accountPlanValue.attributedStringValue = accountPlan.description.styled(accountPlan.styleForUI, font: .themeFont(.heading4), alignment: .right)
+        } else {
+            accountPlanValue.attributedStringValue = LocalizedString.unavailable.styled(.weak, font: .themeFont(.heading4), alignment: .right)
+        }
+
+        useCouponButton.isHidden = !viewModel.canUsePromo
     }
     
     @objc private func manageSubscriptionButtonAction() {
@@ -118,6 +139,7 @@ final class AccountViewController: NSViewController {
 
 // MARK: CouponViewControllerDelegate
 extension AccountViewController: CouponViewControllerDelegate {
+
     func userDidCloseCouponViewController() {
         couponViewController.view.isHidden = true
     }
