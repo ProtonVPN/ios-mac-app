@@ -24,7 +24,7 @@ import Foundation
 import vpncore
 import AppKit
 
-private let iconSize: AppTheme.IconSize = .rect(width: 18, height: 18)
+private let iconSize: AppTheme.IconSize = .square(18)
 
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
