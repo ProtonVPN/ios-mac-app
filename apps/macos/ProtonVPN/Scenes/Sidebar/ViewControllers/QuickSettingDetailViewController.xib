@@ -132,7 +132,7 @@
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="OF3-Mw-Sjv" firstAttribute="top" secondItem="vHT-FC-Dgo" secondAttribute="bottom" constant="-2" id="MM4-LT-DpR"/>
+                            <constraint firstItem="OF3-Mw-Sjv" firstAttribute="top" secondItem="vHT-FC-Dgo" secondAttribute="bottom" constant="-1" id="MM4-LT-DpR"/>
                             <constraint firstItem="OF3-Mw-Sjv" firstAttribute="leading" secondItem="EYL-6L-NcP" secondAttribute="leading" constant="20" id="Zhp-19-2zH"/>
                             <constraint firstItem="vHT-FC-Dgo" firstAttribute="top" secondItem="EYL-6L-NcP" secondAttribute="top" constant="4" id="bK3-tT-VuK"/>
                             <constraint firstItem="vHT-FC-Dgo" firstAttribute="centerX" secondItem="OF3-Mw-Sjv" secondAttribute="centerX" id="crk-PZ-PmL"/>
@@ -153,7 +153,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="qs_detail_triangle" width="16" height="7"/>
+        <image name="qs_detail_triangle" width="16" height="8"/>
         <namedColor name="ProtonCarbonBackgroundNorm">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

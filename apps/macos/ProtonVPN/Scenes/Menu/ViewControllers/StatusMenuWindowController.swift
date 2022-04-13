@@ -162,7 +162,7 @@ class StatusMenuWindowController: WindowController {
         window.styleMask = .nonactivatingPanel
         window.level = .popUpMenu
         window.collectionBehavior = [.fullScreenAuxiliary]
-        window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
+        window.appearance = NSAppearance(named: .darkAqua)
     }
 }
 

@@ -339,7 +339,7 @@ extension CountriesSectionViewController: NSTextFieldDelegate {
             searchBox.borderColor = .color(.border)
         } else {
             clearSearchBtn.isHidden = false
-            searchBox.borderColor = .color(.border, [.interactive, .hint])
+            searchBox.borderColor = .color(.border, [.interactive, .strong])
         }
         viewModel.filterContent(forQuery: searchTextField.stringValue)
     }

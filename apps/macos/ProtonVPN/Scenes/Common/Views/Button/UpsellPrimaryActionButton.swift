@@ -74,6 +74,8 @@ extension UpsellPrimaryActionButton: CustomStyleContext {
                 return .interactive + hover
             case .destructive:
                 return .danger + hover
+            case .secondary:
+                return .transparent + hover
             }
         case .text:
             return .normal

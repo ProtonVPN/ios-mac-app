@@ -24,6 +24,7 @@ import Foundation
 public enum PrimaryActionType {
     case confirmative
     case destructive
+    case secondary
     case cancel
 }
 

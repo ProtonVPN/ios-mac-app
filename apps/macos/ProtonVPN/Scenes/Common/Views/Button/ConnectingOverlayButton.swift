@@ -66,22 +66,24 @@ class ConnectingOverlayButton: HoverDetectionButton {
 
 extension ConnectingOverlayButton: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
+        let hover: AppTheme.Style = isHovered ? .hovered : []
         switch context {
         case .background:
-            guard style == .normal else {
-                return .transparent
+            switch style {
+            case .interactive:
+                return .interactive + hover
+            case .normal:
+                return .transparent + hover
             }
-            return isHovered ? .inverted : .transparent
         case .border:
-            guard style == .interactive else {
-                return .inverted
-            }
-            return isHovered ? .interactive : .inverted
-        case .text:
-            guard isHovered else {
+            switch style {
+            case .interactive:
+                return .interactive + hover
+            case .normal:
                 return .normal
             }
-            return style == .interactive ? .interactive : .inverted
+        case .text:
+            return .normal
         default:
             break
         }
