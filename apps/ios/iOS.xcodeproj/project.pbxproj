@@ -426,11 +426,8 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
-		E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
-		E5C035B227BAA8EF003196F5 /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
-		E5C035B627BAA930003196F5 /* UpsellMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C035B527BAA930003196F5 /* UpsellMock.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
@@ -975,7 +972,6 @@
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E593B96B27BA4D3000AFCA8C /* Upsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upsell.swift; sourceTree = "<group>"; };
 		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
-		E5C035B527BAA930003196F5 /* UpsellMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellMock.swift; path = ../../../ios/ProtonVPNTests/Mocks/UpsellMock.swift; sourceTree = "<group>"; };
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E86A799CCEC040F563446F6F /* Pods-WireGuardNetworkExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -1662,7 +1658,6 @@
 				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
 				D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */,
 				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
-				E5C035B527BAA930003196F5 /* UpsellMock.swift */,
 				E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */,
 			);
 			path = Mocks;
@@ -1937,7 +1932,6 @@
 		E593B96D27BA7DA100AFCA8C /* Upsell */ = {
 			isa = PBXGroup;
 			children = (
-				E593B96B27BA4D3000AFCA8C /* Upsell.swift */,
 				E593B97027BA7DC100AFCA8C /* UpsellColors.swift */,
 			);
 			path = Upsell;
@@ -3511,7 +3505,6 @@
 				79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */,
 				E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */,
 				79312B7C2118852D00E79D09 /* DrillInTableViewCell.swift in Sources */,
-				E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */,
 				791DE5E1208DDA3000A29EA5 /* MapViewController.swift in Sources */,
 				E13EDF7121F0C53F00030CE7 /* InstructionStepView.swift in Sources */,
 				D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */,
@@ -3582,7 +3575,6 @@
 				F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
-				E5C035B227BAA8EF003196F5 /* Upsell.swift in Sources */,
 				D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
@@ -3644,7 +3636,6 @@
 				D5136C55228592E80002C095 /* ServerItemViewModel.swift in Sources */,
 				D5136C56228592E80002C095 /* ConnectionViewModel.swift in Sources */,
 				D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */,
-				E5C035B627BAA930003196F5 /* UpsellMock.swift in Sources */,
 				D5136C57228592E80002C095 /* MapViewModel.swift in Sources */,
 				D5136C58228592E80002C095 /* SecureCoreEntryCountryModel.swift in Sources */,
 				D5136C59228592E80002C095 /* CreateOrEditProfileViewModel.swift in Sources */,

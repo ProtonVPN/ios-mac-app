@@ -87,7 +87,9 @@ extension MacAlertService: CoreAlertService {
             show(refreshTokenExpiredAlert)
 
         case let alert as AllCountriesUpsellAlert:
-            show(alert: alert, upsellType: .allCountries(numberOfDevices: alert.numberOfDevices, numberOfServers: alert.numberOfServers, numberOfCountries: alert.numberOfCountries))
+            let plus = AccountPlan.plus
+            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
+            show(alert: alert, upsellType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:
             show(alert: alert, upsellType: .moderateNAT)

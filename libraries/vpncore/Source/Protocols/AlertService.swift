@@ -798,18 +798,7 @@ public class UpsellAlert: SystemAlert {
 
 }
 
-public class AllCountriesUpsellAlert: UpsellAlert {
-    public let numberOfDevices: Int
-    public let numberOfServers: Int
-    public let numberOfCountries: Int
-    
-    override public init() {
-        let plus = AccountPlan.plus
-        self.numberOfDevices = plus.devicesCount
-        self.numberOfServers = plus.serversCount
-        self.numberOfCountries = plus.countriesCount
-    }
-}
+public class AllCountriesUpsellAlert: UpsellAlert { }
 
 public class NetShieldUpsellAlert: UpsellAlert { }
 

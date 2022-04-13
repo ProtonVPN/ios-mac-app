@@ -29,6 +29,10 @@ class PlanServiceMock: PlanService {
     var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
+    var countriesCount: Int {
+        return 63
+    }
+
     var allowUpgrade: Bool {
         return true
     }
