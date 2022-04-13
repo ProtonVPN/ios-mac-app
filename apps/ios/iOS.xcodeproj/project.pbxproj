@@ -911,6 +911,9 @@
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
 		E297CD5417EBE288B62F3B9A /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.debug.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
+		E534EA432806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
+		E534EA442806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E593B96B27BA4D3000AFCA8C /* Upsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upsell.swift; sourceTree = "<group>"; };
 		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
 		E5C035B527BAA930003196F5 /* UpsellMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellMock.swift; path = ../../../ios/ProtonVPNTests/Mocks/UpsellMock.swift; sourceTree = "<group>"; };
@@ -967,9 +970,6 @@
 		E9863081269835E500F56B87 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E9863082269835E500F56B87 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E9863083269835E500F56B87 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Intents.strings"; sourceTree = "<group>"; };
-		E9863085269835E500F56B87 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		E9863086269835E500F56B87 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-MX"; path = "es-MX.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
-		E9863087269835E500F56B87 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E9863088269835E500F56B87 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E9863089269835E500F56B87 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E986308A269835E500F56B87 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -2710,7 +2710,6 @@
 				it,
 				"pt-BR",
 				es,
-				"es-MX",
 				de,
 				ru,
 				fa,
@@ -2723,6 +2722,7 @@
 				hr,
 				tr,
 				uk,
+				"es-419",
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
@@ -3749,13 +3749,13 @@
 				E9863079269835E500F56B87 /* hu */,
 				E986307D269835E500F56B87 /* pl */,
 				E9863081269835E500F56B87 /* pt-BR */,
-				E9863085269835E500F56B87 /* es-MX */,
 				E9863088269835E500F56B87 /* ru */,
 				E986308C269835E500F56B87 /* fr */,
 				E986308F269835E500F56B87 /* id */,
 				E9863093269835E500F56B87 /* nl */,
 				E9863096269835E500F56B87 /* pt */,
 				E92CCE3327D89FA000A6A476 /* uk */,
+				E534EA442806B36B00BCC9F6 /* es-419 */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -3773,12 +3773,12 @@
 				E986307A269835E500F56B87 /* hu */,
 				E986307E269835E500F56B87 /* pl */,
 				E9863082269835E500F56B87 /* pt-BR */,
-				E9863086269835E500F56B87 /* es-MX */,
 				E9863089269835E500F56B87 /* ru */,
 				E986308D269835E500F56B87 /* fr */,
 				E9863090269835E500F56B87 /* id */,
 				E9863094269835E500F56B87 /* nl */,
 				E9863097269835E500F56B87 /* pt */,
+				E534EA452806B36B00BCC9F6 /* es-419 */,
 			);
 			name = Localizable.stringsdict;
 			sourceTree = "<group>";
@@ -3795,7 +3795,6 @@
 				E986307B269835E500F56B87 /* hu */,
 				E986307F269835E500F56B87 /* pl */,
 				E9863083269835E500F56B87 /* pt-BR */,
-				E9863087269835E500F56B87 /* es-MX */,
 				E986308A269835E500F56B87 /* ru */,
 				E986308E269835E500F56B87 /* fr */,
 				E9863091269835E500F56B87 /* id */,
@@ -3813,6 +3812,7 @@
 				D5E38D742732898F0015F0AF /* hr */,
 				D5E38D7527329FF20015F0AF /* tr */,
 				E92CCE3227D88EC600A6A476 /* uk */,
+				E534EA432806B36B00BCC9F6 /* es-419 */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
