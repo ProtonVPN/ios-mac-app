@@ -137,7 +137,7 @@ public class VpnCredentials: NSObject, NSCoding {
                   currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
                   hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
                   planName: aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
-                  subscribed: aDecoder.decodeObject(forKey: CoderKey.planName) as? Int
+                  subscribed: aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int
         )
     }
 
