@@ -21,10 +21,15 @@ import vpncore
 
 protocol CouponViewControllerDelegate: AnyObject {
     func userDidCloseCouponViewController()
+    func couponDidApply(message: String)
 }
 
 final class CouponViewController: NSViewController {
     @IBOutlet private weak var closeButton: NSButton!
+    @IBOutlet private weak var applyButton: PrimaryActionButton!
+    @IBOutlet private weak var errorLabel: NSTextField!
+    @IBOutlet private weak var textField: TextFieldWithFocus!
+    @IBOutlet private weak var textFieldFieldHorizontalLine: NSBox!
 
     weak var delegate: CouponViewControllerDelegate?
 
@@ -33,6 +38,8 @@ final class CouponViewController: NSViewController {
     init(viewModel: CouponViewModel) {
         self.viewModel = viewModel
         super.init(nibName: "CouponViewController", bundle: nil)
+
+        viewModel.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -46,6 +53,12 @@ final class CouponViewController: NSViewController {
         setupActions()
     }
 
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+
+        applyButton.isHovered = false
+    }
+
     private func setupUI() {
         view.wantsLayer = true
 
@@ -55,14 +68,123 @@ final class CouponViewController: NSViewController {
         view.shadow = shadow
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
+
+        applyButton.title = LocalizedString.applyCoupon
+
+        textField.textColor = .color(.text)
+        textField.font = .themeFont()
+        textField.placeholderAttributedString = LocalizedString.couponCode.styled(.weak, alignment: .left)
+        textField.usesSingleLineMode = true
+        textField.delegate = self
+        textField.focusDelegate = self
+
+        setLineColors(isFirstResponder: false)
+        errorLabel.textColor = .color(.text, .danger)
+
+        progressIndicator.set(tintColor: NSColor.protonGreen())
     }
 
     private func setupActions() {
         closeButton.target = self
         closeButton.action = #selector(close)
+
+        applyButton.target = self
+        applyButton.action = #selector(apply)
     }
 
     @objc private func close() {
         delegate?.userDidCloseCouponViewController()
+    }
+
+    @objc private func apply() {
+        _ = textField.resignFirstResponder()
+
+        viewModel.applyPromoCode(code: textField.stringValue) { [weak self] result in
+            switch result {
+            case let .success(message):
+                self?.delegate?.couponDidApply(message: message)
+            case let .failure(error):
+                self?.errorLabel.stringValue = error.localizedDescription
+            }
+        }
+    }
+
+    private func setErrorMessage(message: String?) {
+        guard let message = message, !message.isEmpty else {
+            errorLabel.attributedStringValue = "".attributed(withColor: NSColor.protonRed(), font: NSFont.systemFont(ofSize: 14))
+            return
+        }
+
+        let icon = NSAttributedString.imageAttachment(named: "ic-exclamation-circle", width: 16, height: 16)!
+        let text = NSMutableAttributedString(
+            string: " " + message,
+            attributes: [
+                .font: NSFont.systemFont(ofSize: 14),
+                .baselineOffset: 3,
+                .foregroundColor: NSColor.protonRed()
+            ]
+        )
+        errorLabel.attributedStringValue = NSAttributedString.concatenate(icon, text)
+    }
+
+    private func setLineColors(isFirstResponder: Bool) {
+        let color: NSColor
+        if viewModel.isError {
+            color = .color(.border, .danger)
+        } else if isFirstResponder {
+            color = .color(.border, .interactive)
+        } else {
+            color = .color(.border, .weak)
+        }
+        textFieldFieldHorizontalLine.fillColor = color
+    }
+
+    func focus() {
+        _ = textField.becomeFirstResponder()
+    }
+}
+
+// MARK: NSTextFieldDelegate
+extension CouponViewController: NSTextFieldDelegate {
+    func controlTextDidChange(_ obj: Notification) {
+        let normalized = textField.stringValue.uppercased()
+        if textField.stringValue != normalized {
+            textField.stringValue = normalized
+        }
+    }
+
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+            apply()
+            return true
+        }
+        return false
+    }
+}
+
+// MARK: TextFieldFocusDelegate
+extension CouponViewController: TextFieldFocusDelegate {
+    var shouldBecomeFirstResponder: Bool { true }
+
+    func didLoseFocus(_ textField: NSTextField) {
+        setLineColors(isFirstResponder: false)
+    }
+
+    func willReceiveFocus(_ textField: NSTextField) {
+        setLineColors(isFirstResponder: true)
+    }
+}
+
+// MARK: CouponViewModelDelegate
+extension CouponViewController: CouponViewModelDelegate {
+    func loadingDidChange(isLoading: Bool) {
+
+    }
+
+    func errorDidChange(isError: Bool) {
+        setLineColors(isFirstResponder: false)
+        if !isError {
+            errorLabel.stringValue = ""
+        }
     }
 }

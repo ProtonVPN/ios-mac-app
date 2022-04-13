@@ -134,11 +134,18 @@ final class AccountViewController: NSViewController {
     @objc private func useCoupon() {
         couponViewController.view.frame.origin = CGPoint(x: (view.frame.size.width - AppConstants.Windows.sidebarWidth) / 2, y: 48)
         couponViewController.view.isHidden = false
+        DispatchQueue.main.async { [weak self] in
+            self?.couponViewController.focus()
+        }
     }
 }
 
 // MARK: CouponViewControllerDelegate
 extension AccountViewController: CouponViewControllerDelegate {
+    func couponDidApply(message: String) {
+        userDidCloseCouponViewController()
+        viewModel.reload()
+    }
 
     func userDidCloseCouponViewController() {
         couponViewController.view.isHidden = true
