@@ -17,10 +17,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lmS-Zl-ejH">
-                            <rect key="frame" x="20" y="18" width="15" height="15"/>
+                            <rect key="frame" x="20" y="16" width="18" height="18"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="15" id="5JN-eD-nya"/>
-                                <constraint firstAttribute="width" constant="15" id="96c-ai-WB1"/>
+                                <constraint firstAttribute="height" constant="18" id="5JN-eD-nya"/>
+                                <constraint firstAttribute="width" constant="18" id="96c-ai-WB1"/>
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="AWM-uv-9bM"/>
                         </imageView>

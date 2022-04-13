@@ -79,17 +79,23 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         
         view.wantsLayer = true
         view.layer?.masksToBounds = false
+
+        let shadow = NSShadow()
+        shadow.shadowColor = .color(.background)
+        shadow.shadowBlurRadius = 8
+        view.shadow = shadow
         view.layer?.shadowRadius = 5
 
         contentBox.borderColor = .color(.border, .weak)
-        contentBox.borderWidth = 2
+        contentBox.borderWidth = 1
         contentBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         contentBox.fillColor = .color(.background)
 
         arrowIV.cell?.setAccessibilityElement(false)
         
-        dropdownUpgradeButton.attributedTitle = LocalizedString.upgrade.uppercased().styled(font: .themeFont(.small))
-        dropdownLearnMore.attributedTitle = LocalizedString.learnMore.styled(.interactive, font: .themeFont(.small), alignment: .left)
+        dropdownUpgradeButton.attributedTitle = LocalizedString.plus.styled(font: .themeFont(.small))
+        dropdownUpgradeButton.actionType = .secondary
+        dropdownLearnMore.attributedTitle = LocalizedString.learnMore.styled([.interactive, .hint], font: .themeFont(.small), alignment: .left)
 
         reloadOptions()
     }

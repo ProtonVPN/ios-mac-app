@@ -24,8 +24,6 @@ import Foundation
 import vpncore
 import AppKit
 
-private let iconSize: AppTheme.IconSize = .square(18)
-
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
         return .heading4
@@ -36,7 +34,7 @@ extension CreateNewProfileViewModel {
     }
 
     private func flagString(_ countryCode: String) -> NSAttributedString {
-        AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: iconSize) ?? NSAttributedString(string: "")
+        AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
     }
 
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
@@ -125,7 +123,7 @@ extension CreateNewProfileViewModel {
             name = LocalizedString.random
         }
         
-        let imageAttributedString = self.colorImage(image).asAttachment(size: iconSize)
+        let imageAttributedString = self.colorImage(image).asAttachment(size: .profileIconSize)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,
             attributes: [

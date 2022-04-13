@@ -119,7 +119,7 @@ extension PrimaryActionType {
     
     var alertButtonStyle: UIAlertAction.Style {
         switch self {
-        case .confirmative:
+        case .confirmative, .secondary:
             return .default
         case .destructive:
             return .destructive

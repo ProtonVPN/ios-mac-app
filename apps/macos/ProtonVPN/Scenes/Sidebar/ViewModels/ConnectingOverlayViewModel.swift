@@ -171,15 +171,15 @@ class ConnectingOverlayViewModel {
         }
         
         let boldString = LocalizedString.timedOut
-        let decription = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
-        let string = LocalizedString.connectingVpn(boldString) + decription
+        let description = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
+        let string = LocalizedString.connectingVpn(boldString) + description
                 
         let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
         }
-        if let descriptionRange = string.range(of: decription) {
+        if let descriptionRange = string.range(of: description) {
             let range = NSRange(descriptionRange, in: string)
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.small), range: range)
         }

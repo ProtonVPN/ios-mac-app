@@ -74,13 +74,25 @@ extension PrimaryActionButton: CustomStyleContext {
         switch context {
         case .text:
             return .normal
-        case .background, .border:
+        case .border:
             let hover: AppTheme.Style = isHovered ? .hovered : []
             switch actionType {
             case .confirmative, .cancel:
                 return .interactive + hover
             case .destructive:
                 return .danger + hover
+            case .secondary:
+                return .normal
+            }
+        case .background:
+            let hover: AppTheme.Style = isHovered ? .hovered : []
+            switch actionType {
+            case .confirmative, .cancel:
+                return .interactive + hover
+            case .destructive:
+                return .danger + hover
+            case .secondary:
+                return .transparent + hover
             }
         default:
             break

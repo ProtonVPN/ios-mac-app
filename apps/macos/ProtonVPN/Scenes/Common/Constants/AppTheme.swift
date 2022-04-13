@@ -80,6 +80,8 @@ public enum AppTheme {
         case `default`
         case square(Int)
         case rect(width: Int, height: Int)
+
+        static let profileIconSize: Self = .square(18)
     }
 
     public enum FlagStyle: String {

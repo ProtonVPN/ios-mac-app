@@ -37,10 +37,10 @@
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CFE-9s-pzL">
-                    <rect key="frame" x="42" y="18" width="15" height="15"/>
+                    <rect key="frame" x="42" y="16" width="18" height="18"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="15" id="4Mt-wZ-G28"/>
-                        <constraint firstAttribute="height" constant="15" id="mYb-gF-FIG"/>
+                        <constraint firstAttribute="width" constant="18" id="4Mt-wZ-G28"/>
+                        <constraint firstAttribute="height" constant="18" id="mYb-gF-FIG"/>
                     </constraints>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="5TW-bv-sFz"/>
                 </imageView>

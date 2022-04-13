@@ -110,7 +110,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                 }
             }
             
-            visualEffectView.material = .ultraDark
+            visualEffectView.material = .windowBackground
             
             let maskImage = NSImage(size: view.bounds.size, flipped: false) { rect in
                 let path = NSBezierPath()
