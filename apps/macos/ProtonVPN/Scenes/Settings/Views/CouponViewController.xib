@@ -11,6 +11,7 @@
                 <outlet property="applyButton" destination="Dec-Jo-KW5" id="1Mj-yP-Slt"/>
                 <outlet property="closeButton" destination="pXG-Rm-2Ab" id="6Q9-5y-dKR"/>
                 <outlet property="errorLabel" destination="gwn-bt-UPe" id="xg7-n3-pmr"/>
+                <outlet property="progressIndicator" destination="cWc-OW-tBM" id="khx-Nw-ddI"/>
                 <outlet property="textField" destination="JSe-k5-uXE" id="yvb-1g-ck2"/>
                 <outlet property="textFieldFieldHorizontalLine" destination="Sdp-xD-nYo" id="NR8-IC-tnf"/>
                 <outlet property="view" destination="c22-O7-iKe" id="aqx-qP-jeE"/>
@@ -76,27 +77,42 @@
                                                     </customSpacing>
                                                 </stackView>
                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="gwn-bt-UPe">
-                                                    <rect key="frame" x="-2" y="56" width="224" height="16"/>
+                                                    <rect key="frame" x="-2" y="56" width="8" height="16"/>
                                                     <textFieldCell key="cell" selectable="YES" alignment="center" id="N68-RY-oqS">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dec-Jo-KW5" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="G9a-bk-IxK">
                                                     <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+                                                    <subviews>
+                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dec-Jo-KW5" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="VoG-5B-czI"/>
+                                                                <constraint firstAttribute="width" constant="220" id="kpF-4Y-GC7"/>
+                                                            </constraints>
+                                                            <buttonCell key="cell" type="bevel" title="Apply button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="8Yf-FV-Q0J">
+                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="system"/>
+                                                            </buttonCell>
+                                                        </button>
+                                                        <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="cWc-OW-tBM">
+                                                            <rect key="frame" x="188" y="12" width="16" height="16"/>
+                                                        </progressIndicator>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="VoG-5B-czI"/>
-                                                        <constraint firstAttribute="width" constant="220" id="kpF-4Y-GC7"/>
+                                                        <constraint firstItem="Dec-Jo-KW5" firstAttribute="leading" secondItem="G9a-bk-IxK" secondAttribute="leading" id="FYo-dR-F1a"/>
+                                                        <constraint firstItem="cWc-OW-tBM" firstAttribute="centerY" secondItem="G9a-bk-IxK" secondAttribute="centerY" id="Km9-ep-hv4"/>
+                                                        <constraint firstItem="Dec-Jo-KW5" firstAttribute="top" secondItem="G9a-bk-IxK" secondAttribute="top" id="OBg-nv-Yy7"/>
+                                                        <constraint firstAttribute="trailing" secondItem="cWc-OW-tBM" secondAttribute="trailing" constant="16" id="Zgv-w8-lpH"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Dec-Jo-KW5" secondAttribute="trailing" id="hKt-r8-oAQ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Dec-Jo-KW5" secondAttribute="bottom" id="sTC-uw-DWp"/>
                                                     </constraints>
-                                                    <buttonCell key="cell" type="bevel" title="Apply button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="8Yf-FV-Q0J">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="system"/>
-                                                    </buttonCell>
-                                                </button>
+                                                </customView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="gwn-bt-UPe" firstAttribute="width" secondItem="Dec-Jo-KW5" secondAttribute="width" id="PS2-Ru-3vU"/>
                                                 <constraint firstAttribute="width" constant="220" id="vt0-mr-ohu"/>
                                             </constraints>
                                             <visibilityPriorities>
