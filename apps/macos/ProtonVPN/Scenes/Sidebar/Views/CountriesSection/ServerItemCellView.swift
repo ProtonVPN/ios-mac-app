@@ -53,17 +53,17 @@ final class ServerItemCellView: NSView {
         maintenanceIV.wantsLayer = true
         maintenanceIV.layer?.cornerRadius = maintenanceIV.bounds.height / 2
         maintenanceIV.layer?.backgroundColor = .clear
-        maintenanceIV.layer?.borderColor = .cgColor(.icon, .hint)
+        maintenanceIV.layer?.borderColor = .cgColor(.icon, .weak)
         maintenanceIV.layer?.borderWidth = 2.0
         maintenanceIV.image = AppTheme.Icon.wrench
-            .colored(.hint)
+            .colored(.weak)
             .resize(newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
                     newHeight: Int(maintenanceIV.bounds.height) - imageMargin)
 
-        streamingIV.image = AppTheme.Icon.play.colored(.hint)
-        torIV.image = AppTheme.Icon.brandTor.colored(.hint)
-        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.hint)
-        smartIV.image = AppTheme.Icon.globe.colored(.hint)
+        streamingIV.image = AppTheme.Icon.play.colored(.weak)
+        torIV.image = AppTheme.Icon.brandTor.colored(.weak)
+        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.weak)
+        smartIV.image = AppTheme.Icon.globe.colored(.weak)
         secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
