@@ -38,10 +38,19 @@ class TextFieldWithFocus: NSTextField {
         super.init(frame: frameRect)
         setupTransparency()
     }
+
+    override func mouseDown(with event: NSEvent) {
+        focusDelegate?.willReceiveFocus(self)
+        super.mouseDown(with: event)
+    }
     
     override func becomeFirstResponder() -> Bool {
         if let focusDelegate = focusDelegate {
-            focusDelegate.didReceiveFocus(self)
+            guard focusDelegate.shouldBecomeFirstResponder else {
+                return false
+            }
+
+            focusDelegate.willReceiveFocus(self)
         }
         return super.becomeFirstResponder()
     }

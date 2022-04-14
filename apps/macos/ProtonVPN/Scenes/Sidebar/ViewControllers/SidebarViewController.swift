@@ -144,6 +144,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             overlayViewModel = nil
         }
     }
+
+    override func mouseDown(with event: NSEvent) {
+        view.window?.makeFirstResponder(nil)
+    }
     
     func windowDidResize(_ notification: Notification) {
         configureExpandButton()

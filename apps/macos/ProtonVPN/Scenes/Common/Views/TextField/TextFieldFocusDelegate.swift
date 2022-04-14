@@ -23,6 +23,6 @@
 import Cocoa
 
 protocol TextFieldFocusDelegate: class {
-    
-    func didReceiveFocus(_ textField: NSTextField)
+    var shouldBecomeFirstResponder: Bool { get }
+    func willReceiveFocus(_ textField: NSTextField)
 }
