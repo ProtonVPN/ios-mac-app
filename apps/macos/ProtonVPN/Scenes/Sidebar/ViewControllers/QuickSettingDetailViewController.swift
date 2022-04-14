@@ -29,7 +29,7 @@ protocol QuickSettingsDetailViewControllerProtocol: class {
     var contentBox: NSBox! { get }
     var dropdownTitle: NSTextField! { get }
     var dropdownDescription: NSTextField! { get }
-    var dropdownLearnMore: NSButton! { get }
+    var dropdownLearnMore: InteractiveActionButton! { get }
     var dropdownUpgradeButton: PrimaryActionButton! { get }
     var dropdownNote: NSTextField! { get }
     
@@ -45,7 +45,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     
     @IBOutlet weak var dropdownTitle: NSTextField!
     @IBOutlet weak var dropdownDescription: NSTextField!
-    @IBOutlet weak var dropdownLearnMore: NSButton!
+    @IBOutlet weak var dropdownLearnMore: InteractiveActionButton!
     @IBOutlet weak var dropdownUpgradeButton: PrimaryActionButton!
     @IBOutlet weak var dropdownNote: NSTextField!
     
@@ -95,7 +95,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         
         dropdownUpgradeButton.attributedTitle = LocalizedString.plus.styled(font: .themeFont(.small))
         dropdownUpgradeButton.actionType = .secondary
-        dropdownLearnMore.attributedTitle = LocalizedString.learnMore.styled([.interactive, .hint], font: .themeFont(.small), alignment: .left)
+
+        dropdownLearnMore.fontSize = .small
+        dropdownLearnMore.title = LocalizedString.learnMore
 
         reloadOptions()
     }

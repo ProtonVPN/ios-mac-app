@@ -23,6 +23,10 @@
 import Cocoa
 
 class InteractiveActionButton: HoverDetectionButton {
+    override var intrinsicContentSize: NSSize {
+        return attributedTitle.size()
+    }
+
     var fontSize: AppTheme.FontSize = .paragraph {
         didSet {
             setAttributedTitle()
@@ -34,15 +38,17 @@ class InteractiveActionButton: HoverDetectionButton {
             setAttributedTitle()
         }
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         
         wantsLayer = true
         layer?.backgroundColor = .cgColor(.background, .transparent)
+        setAttributedTitle()
     }
     
     private func setAttributedTitle() {
-        attributedTitle = title.styled([.interactive, .hint], font: .themeFont(fontSize), alignment: alignment)
+        let hover: AppTheme.Style = isHovered ? .hovered : []
+        attributedTitle = title.styled([.interactive, .hint] + hover, font: .themeFont(fontSize), alignment: alignment)
     }
 }

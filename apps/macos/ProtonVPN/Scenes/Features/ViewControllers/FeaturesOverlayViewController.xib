@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -87,8 +87,8 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LFa-P4-Wyk">
-                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LFa-P4-Wyk" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Uj9-Co-OLZ">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -147,8 +147,8 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U5v-FO-2Gz">
-                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U5v-FO-2Gz" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="MqE-nR-CST">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -207,8 +207,8 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-j9-uMt">
-                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-j9-uMt" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2FF-cV-VWv">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -267,8 +267,8 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fci-sX-PEJ">
-                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fci-sX-PEJ" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="r0F-nl-u8E">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
