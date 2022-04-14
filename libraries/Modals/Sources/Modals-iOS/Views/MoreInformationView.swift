@@ -24,24 +24,11 @@ final class MoreInformationView: UIView {
 
     // MARK: Outlets
 
-    @IBOutlet private weak var contentView: UIView! {
-        didSet {
-            contentView.layer.cornerRadius = 12
-            contentView.backgroundColor = colors.secondaryBackground
-        }
-    }
-    @IBOutlet private weak var button: UIButton! {
-        didSet {
-            button.setTitle("", for: .normal)
-        }
-    }
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var button: UIButton!
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var linkImageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel! {
-        didSet {
-            footerStyle(titleLabel)
-        }
-    }
+    @IBOutlet private weak var titleLabel: UILabel!
 
     // MARK: Properties
 
@@ -51,6 +38,15 @@ final class MoreInformationView: UIView {
             linkImageView.image = feature?.linkImage
             titleLabel.text = feature?.title()
         }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        contentView.layer.cornerRadius = 12
+        contentView.backgroundColor = colors.secondaryBackground
+        button.setTitle("", for: .normal)
+        footerStyle(titleLabel)
     }
 
     @IBAction func buttonTapped(_ sender: UIButton) {
