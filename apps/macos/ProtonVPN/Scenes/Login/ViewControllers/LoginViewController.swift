@@ -356,7 +356,9 @@ extension LoginViewController: TwoFactorDelegate {
 }
 
 extension LoginViewController: TextFieldFocusDelegate {
-    func didReceiveFocus(_ textField: NSTextField) {
+    var shouldBecomeFirstResponder: Bool { true }
+
+    func willReceiveFocus(_ textField: NSTextField) {
         switch textField.tag {
         case TextField.username.rawValue:
             usernameHorizontalLine.fillColor = .color(.border, [.interactive, .active])

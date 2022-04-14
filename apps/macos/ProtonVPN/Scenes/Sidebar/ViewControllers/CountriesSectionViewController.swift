@@ -334,25 +334,23 @@ extension CountriesSectionViewController: NSTableViewDelegate {
 
 extension CountriesSectionViewController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
-        if searchTextField.stringValue.isEmpty {
-            clearSearchBtn.isHidden = true
-            searchBox.borderColor = .color(.border)
-        } else {
-            clearSearchBtn.isHidden = false
-            searchBox.borderColor = .color(.border, [.interactive, .strong])
-        }
+        clearSearchBtn.isHidden = searchTextField.stringValue.isEmpty
         viewModel.filterContent(forQuery: searchTextField.stringValue)
     }
 
     func controlTextDidEndEditing(_ obj: Notification) {
-        searchIcon.image = searchIcon.image?.colored(.hint)
+        searchIcon.image = searchIcon.image?.colored(.weak)
         searchBox.borderColor = .color(.border)
     }
 }
 
 extension CountriesSectionViewController: TextFieldFocusDelegate {
-    func didReceiveFocus(_ textField: NSTextField) {
+    /// Don't focus on search field when countries view is displayed
+    var shouldBecomeFirstResponder: Bool { false }
+
+    func willReceiveFocus(_ textField: NSTextField) {
         searchIcon.image = searchIcon.image?.colored(.normal)
+        searchBox.borderColor = .color(.border, [.interactive, .strong])
     }
 }
 
