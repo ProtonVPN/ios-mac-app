@@ -104,14 +104,14 @@ final class CouponViewController: NSViewController {
             case let .success(message):
                 self?.delegate?.couponDidApply(message: message)
             case let .failure(error):
-                self?.errorLabel.stringValue = error.localizedDescription
+                self?.setErrorMessage(message: error.localizedDescription)
             }
         }
     }
 
     private func setErrorMessage(message: String?) {
         guard let message = message, !message.isEmpty else {
-            errorLabel.attributedStringValue = "".attributed(withColor: NSColor.protonRed(), font: NSFont.systemFont(ofSize: 14))
+            errorLabel.attributedStringValue = "".styled(.danger)
             return
         }
 
@@ -119,9 +119,9 @@ final class CouponViewController: NSViewController {
         let text = NSMutableAttributedString(
             string: " " + message,
             attributes: [
-                .font: NSFont.systemFont(ofSize: 14),
+                .font: NSFont.themeFont(),
                 .baselineOffset: 3,
-                .foregroundColor: NSColor.protonRed()
+                .foregroundColor: NSColor.color(.text, .danger)
             ]
         )
         errorLabel.attributedStringValue = NSAttributedString.concatenate(icon, text)
@@ -184,7 +184,7 @@ extension CouponViewController: CouponViewModelDelegate {
     func errorDidChange(isError: Bool) {
         setLineColors(isFirstResponder: false)
         if !isError {
-            errorLabel.stringValue = ""
+            setErrorMessage(message: nil)
         }
     }
 }
