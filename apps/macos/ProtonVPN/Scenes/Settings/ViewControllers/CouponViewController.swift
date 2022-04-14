@@ -30,6 +30,7 @@ final class CouponViewController: NSViewController {
     @IBOutlet private weak var errorLabel: NSTextField!
     @IBOutlet private weak var textField: TextFieldWithFocus!
     @IBOutlet private weak var textFieldFieldHorizontalLine: NSBox!
+    @IBOutlet private weak var progressIndicator: NSProgressIndicator!
 
     weak var delegate: CouponViewControllerDelegate?
 
@@ -79,6 +80,8 @@ final class CouponViewController: NSViewController {
         textField.focusDelegate = self
 
         setLineColors(isFirsResponder: false)
+
+        progressIndicator.set(tintColor: NSColor.protonGreen())
     }
 
     private func setupActions() {
@@ -173,7 +176,13 @@ extension CouponViewController: TextFieldFocusDelegate {
 // MARK: CouponViewModelDelegate
 extension CouponViewController: CouponViewModelDelegate {
     func loadingDidChange(isLoading: Bool) {
+        applyButton.isEnabled = !isLoading
 
+        if isLoading {
+            progressIndicator.startAnimation(nil)
+        } else {
+            progressIndicator.stopAnimation(nil)
+        }
     }
 
     func errorDidChange(isError: Bool) {
