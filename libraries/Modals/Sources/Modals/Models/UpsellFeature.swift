@@ -18,8 +18,9 @@
 
 public struct UpsellFeature {
     public let title: String
-    public let subtitle: String
+    public let subtitle: String?
     public let features: [Feature]
+    public let moreInformation: Feature?
     public let artImage: Image
     public let footer: String?
     public let learnMore: String?

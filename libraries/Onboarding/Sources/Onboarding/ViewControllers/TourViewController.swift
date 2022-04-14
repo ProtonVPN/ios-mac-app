@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Modals
+import Modals_iOS
 import UIKit
 
 protocol TourViewControllerDelegate: AnyObject {

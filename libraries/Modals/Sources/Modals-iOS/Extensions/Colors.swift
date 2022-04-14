@@ -22,6 +22,7 @@ var colors: ModalsColors!
 
 public protocol ModalsColors {
     var background: UIColor { get }
+    var secondaryBackground: UIColor { get }
     var text: UIColor { get }
     var brand: UIColor { get }
     var weakText: UIColor { get }
@@ -29,12 +30,14 @@ public protocol ModalsColors {
 
 public struct Colors {
     public let background: UIColor
+    public let secondaryBackground: UIColor
     public let text: UIColor
     public let brand: UIColor
     public let weakText: UIColor
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
+    public init(background: UIColor, secondaryBackground: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
         self.background = background
+        self.secondaryBackground = secondaryBackground
         self.text = text
         self.brand = brand
         self.weakText = weakText

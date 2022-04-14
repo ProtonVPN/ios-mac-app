@@ -72,4 +72,6 @@ extension Upsell: UpsellViewControllerDelegate {
     }
     
     func userDidDismissUpsell() { }
+
+    func userDidTapNext() { }
 }

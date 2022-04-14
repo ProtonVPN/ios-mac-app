@@ -37,9 +37,14 @@ public enum Feature {
     case routeSecureServers
     case addLayer
     case protectFromAttacks
+    case privacyFirst
+    case activityLogging
+    case noThirdParties
+    case externalAudit
 }
 
 extension Feature {
+    // swiftlint:disable:next cyclomatic_complexity
     public func title() -> String {
         switch self {
         case .streaming:
@@ -62,6 +67,23 @@ extension Feature {
             return LocalizedString.modalsUpsellSecureCoreLayer
         case .protectFromAttacks:
             return LocalizedString.modalsUpsellSecureCoreAttacks
+        case .privacyFirst:
+            return LocalizedString.modalsNoLogsPrivacyFirst
+        case .activityLogging:
+            return LocalizedString.modalsNoLogsLogActivity
+        case .noThirdParties:
+            return LocalizedString.modalsNoLogsThirdParties
+        case .externalAudit:
+            return LocalizedString.modalsNoLogsExternalAudit
+        }
+    }
+
+    public var linkImage: Image? {
+        switch self {
+        case .externalAudit:
+            return Asset.icArrowOutSquare.image
+        default:
+            return nil
         }
     }
 
@@ -87,6 +109,10 @@ extension Feature {
             return Asset.addLayer.image
         case .protectFromAttacks:
             return Asset.protectFromAttacks.image
+        case .privacyFirst, .activityLogging, .noThirdParties:
+            return Asset.checkmarkCircle.image
+        case .externalAudit:
+            return Asset.icLightbulb.image
         }
     }
 }

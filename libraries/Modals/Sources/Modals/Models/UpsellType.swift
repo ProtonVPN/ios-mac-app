@@ -22,9 +22,25 @@ public enum UpsellType {
     case allCountries(numberOfDevices: Int, numberOfServers: Int, numberOfCountries: Int)
     case safeMode
     case moderateNAT
+    case noLogs
 
     public func upsellFeature() -> UpsellFeature {
-        UpsellFeature(title: title(), subtitle: subtitle(), features: features(), artImage: artImage(), footer: footer(), learnMore: learnMore())
+        UpsellFeature(title: title(),
+                      subtitle: subtitle(),
+                      features: features(),
+                      moreInformation: moreInformation(),
+                      artImage: artImage(),
+                      footer: footer(),
+                      learnMore: learnMore())
+    }
+
+    private func moreInformation() -> Feature? {
+        switch self {
+        case .noLogs:
+            return .externalAudit
+        default:
+            return nil
+        }
     }
 
     private func title() -> String {
@@ -39,10 +55,12 @@ public enum UpsellType {
             return LocalizedString.modalsUpsellSafeModeTitle
         case .moderateNAT:
             return LocalizedString.modalsUpsellModerateNatTitle
+        case .noLogs:
+            return LocalizedString.modalsNoLogsTitle
         }
     }
 
-    private func subtitle() -> String {
+    private func subtitle() -> String? {
         switch self {
         case .netShield:
             return LocalizedString.modalsUpsellFeaturesSubtitle
@@ -54,6 +72,8 @@ public enum UpsellType {
             return LocalizedString.modalsUpsellFeaturesSafeModeSubtitle
         case .moderateNAT:
             return LocalizedString.modalsUpsellFeaturesModerateNatSubtitle
+        case .noLogs:
+            return nil
         }
     }
 
@@ -67,6 +87,8 @@ public enum UpsellType {
             return [.streaming, .multipleDevices(numberOfDevices), .netshield, .highSpeed]
         case .safeMode, .moderateNAT:
             return []
+        case .noLogs:
+            return [.privacyFirst, .activityLogging, .noThirdParties]
         }
     }
 
@@ -90,6 +112,8 @@ public enum UpsellType {
 #endif
         case .moderateNAT:
             return Asset.moderateNAT.image
+        case .noLogs:
+            return Asset.noLogs.image
         }
     }
 

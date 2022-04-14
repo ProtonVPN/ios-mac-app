@@ -30,6 +30,7 @@ public protocol UpsellViewControllerDelegate: AnyObject {
     /// - Note: In the onboarding module the parent dismisses the upsell modal. `IosAlertService` allows the upsell to dismiss itself.
     func shouldDismissUpsell() -> Bool
     func userDidDismissUpsell()
+    func userDidTapNext()
 }
 
 public final class UpsellViewController: UIViewController {
@@ -73,8 +74,20 @@ public final class UpsellViewController: UIViewController {
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
         footerStyle(featuresFooterLabel)
-        getPlusButton.setTitle(LocalizedString.modalsGetPlus, for: .normal)
+        switch upsellType {
+        case .noLogs:
+            getPlusButton.setTitle(LocalizedString.modalsCommonNext, for: .normal)
+        default:
+            getPlusButton.setTitle(LocalizedString.modalsGetPlus, for: .normal)
+        }
         useFreeButton.setTitle(LocalizedString.modalsUpsellStayFree, for: .normal)
+
+        switch upsellType {
+        case .noLogs:
+            useFreeButton.isHidden = true
+        default:
+            break
+        }
 
         useFreeButton.accessibilityIdentifier = "UseFreeButton"
         getPlusButton.accessibilityIdentifier = "GetPlusButton"
@@ -85,7 +98,11 @@ public final class UpsellViewController: UIViewController {
         guard let upsellType = upsellType else { return }
         let upsellFeature = upsellType.upsellFeature()
         titleLabel.text = upsellFeature.title
-        subtitleLabel.text = upsellFeature.subtitle
+        if let subtitle = upsellFeature.subtitle {
+            subtitleLabel.text = subtitle
+        } else {
+            subtitleLabel.isHidden = true
+        }
         featuresFooterLabel.text = upsellFeature.footer
         featureArtImageView.image = upsellFeature.artImage
 
@@ -101,6 +118,13 @@ public final class UpsellViewController: UIViewController {
             }
         }
 
+        if let feature = upsellType.upsellFeature().moreInformation {
+            if let view = Bundle.module.loadNibNamed("MoreInformationView", owner: self, options: nil)?.first as? MoreInformationView {
+                view.feature = feature
+                featuresStackView.addArrangedSubview(view)
+            }
+        }
+
         let closeButtonImage = UpsellFeature.closeButton()
         let closeButton = UIBarButtonItem(image: closeButtonImage, style: .plain, target: self, action: #selector(closeTapped))
         closeButton.accessibilityIdentifier = "CloseButton"
@@ -110,7 +134,12 @@ public final class UpsellViewController: UIViewController {
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
-        delegate?.userDidRequestPlus()
+        switch upsellType {
+        case .noLogs:
+            delegate?.userDidTapNext()
+        default:
+            delegate?.userDidRequestPlus()
+        }
     }
 
     @IBAction private func useFreeTapped(_ sender: Any) {

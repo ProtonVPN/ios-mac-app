@@ -308,4 +308,6 @@ extension IosAlertService: UpsellViewControllerDelegate {
     func userDidDismissUpsell() {
         windowService.dismissModal { }
     }
+
+    func userDidTapNext() { }
 }
