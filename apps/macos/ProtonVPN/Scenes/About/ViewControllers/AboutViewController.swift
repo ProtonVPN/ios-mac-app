@@ -35,7 +35,7 @@ class AboutViewController: NSViewController {
     @IBOutlet weak var versionLabel: PVPNTextField!
     @IBOutlet weak var dateTitleLabel: PVPNTextField!
     @IBOutlet weak var dateLabel: PVPNTextField!
-    @IBOutlet weak var acknowledgementsButton: InteractiveHighlightButton!
+    @IBOutlet weak var acknowledgementsButton: InteractiveActionButton!
     @IBOutlet weak var changelogLabel: PVPNTextField!
     @IBOutlet weak var webView: WKWebView!
     
@@ -91,8 +91,8 @@ class AboutViewController: NSViewController {
                             
         dateTitleLabel.attributedStringValue = LocalizedString.releaseDate.styled(alignment: .left)
         dateLabel.attributedStringValue = currentVersionReleaseDate.styled(font: .themeFont(bold: true), alignment: .left)
-        
-        acknowledgementsButton.attributedTitle = LocalizedString.acknowledgements.styled([.interactive, .active], font: .themeFont(bold: true), alignment: .left)
+
+        acknowledgementsButton.title = LocalizedString.acknowledgements
         
         changelogLabel.attributedStringValue = LocalizedString.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
 

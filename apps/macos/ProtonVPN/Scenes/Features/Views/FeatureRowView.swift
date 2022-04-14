@@ -28,7 +28,7 @@ class FeatureRowView: NSView {
     @IBOutlet private weak var iconIV: NSImageView!
     @IBOutlet private weak var titleLbl: NSTextField!
     @IBOutlet private weak var descriptionLbl: NSTextField!
-    @IBOutlet private weak var learnMoreBtn: NSButton!
+    @IBOutlet private weak var learnMoreBtn: InteractiveActionButton!
     
     var viewModel: FeatureCellViewModel! {
         didSet {
