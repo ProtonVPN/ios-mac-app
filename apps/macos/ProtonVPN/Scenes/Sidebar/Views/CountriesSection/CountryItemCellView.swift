@@ -55,20 +55,20 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.wantsLayer = true
         maintenanceBtn.layer?.cornerRadius = 16
         maintenanceBtn.image = AppTheme.Icon.wrench
-            .colored(.hint)
+            .colored(.weak)
             .resize(newWidth: Int(maintenanceBtn.bounds.width) - imageMargin,
                     newHeight: Int(maintenanceBtn.bounds.height) - imageMargin)
-        maintenanceBtn.layer?.borderColor = .cgColor(.icon, .hint)
+        maintenanceBtn.layer?.borderColor = .cgColor(.icon, .weak)
         maintenanceBtn.layer?.backgroundColor = .clear
 
         secureIV.toolTip = LocalizedString.secureCoreInfo
         secureIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
         torIV.toolTip = LocalizedString.torTitle
-        torIV.image = AppTheme.Icon.brandTor.colored(.hint)
+        torIV.image = AppTheme.Icon.brandTor.colored(.weak)
         p2pIV.toolTip = LocalizedString.p2pTitle
-        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.hint)
+        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.weak)
         smartIV.toolTip = LocalizedString.smartProtocolTitle
-        smartIV.image = AppTheme.Icon.globe.colored(.hint)
+        smartIV.image = AppTheme.Icon.globe.colored(.weak)
 
         separatorView.wantsLayer = true
         separatorView.layer?.backgroundColor = .cgColor(.border, .weak)
