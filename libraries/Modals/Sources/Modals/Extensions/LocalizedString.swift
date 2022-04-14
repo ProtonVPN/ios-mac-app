@@ -14,6 +14,8 @@ public enum LocalizedString {
   public static var modalsCommonCancel: String { return LocalizedString.tr("Localizable", "modals_common_cancel") }
   /// Learn more
   public static var modalsCommonLearnMore: String { return LocalizedString.tr("Localizable", "modals_common_learn_more") }
+  /// Next
+  public static var modalsCommonNext: String { return LocalizedString.tr("Localizable", "modals_common_next") }
   /// Activate Secure Core
   public static var modalsDiscourageSecureCoreActivate: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_activate") }
   /// Don’t show again
@@ -24,6 +26,16 @@ public enum LocalizedString {
   public static var modalsDiscourageSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_title") }
   /// Upgrade
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
+  /// ProtonVPN's strict no-log policy is certified by an external audit.
+  public static var modalsNoLogsExternalAudit: String { return LocalizedString.tr("Localizable", "modals_no_logs_external_audit") }
+  /// We do not log your internet activity
+  public static var modalsNoLogsLogActivity: String { return LocalizedString.tr("Localizable", "modals_no_logs_log_activity") }
+  /// ProtonVPN is privacy first
+  public static var modalsNoLogsPrivacyFirst: String { return LocalizedString.tr("Localizable", "modals_no_logs_privacy_first") }
+  /// We do not share any data with third parties
+  public static var modalsNoLogsThirdParties: String { return LocalizedString.tr("Localizable", "modals_no_logs_third_parties") }
+  /// No logs and Swiss-based
+  public static var modalsNoLogsTitle: String { return LocalizedString.tr("Localizable", "modals_no_logs_title") }
   /// Browse at the highest speeds (10 Gbps)
   public static var modalsUpsellAllCountriesFeatureHighSpeed: String { return LocalizedString.tr("Localizable", "modals_upsell_all_countries_feature_highSpeed") }
   /// Plural format key: "%#@VARIABLE@"

@@ -22,12 +22,14 @@ import Modals_iOS
 
 struct UpsellColors: ModalsColors {
     var background: UIColor
+    var secondaryBackground: UIColor
     var text: UIColor
     var brand: UIColor
     var weakText: UIColor
     
     init() {
         background = UIColor.backgroundColor()
+        secondaryBackground = UIColor.secondaryBackgroundColor()
         text = UIColor.normalTextColor()
         brand = UIColor.brandColor()
         weakText = UIColor.weakTextColor()

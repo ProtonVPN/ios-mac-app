@@ -26,7 +26,8 @@ class ViewController: UITableViewController {
                                                         (.secureCore, "Secure Core"),
                                                         (.netShield, "Net Shield"),
                                                         (.safeMode, "Safe Mode"),
-                                                        (.moderateNAT, "Moderate NAT")]
+                                                        (.moderateNAT, "Moderate NAT"),
+                                                        (.noLogs, "No Logs")]
 
     let modalsFactory = ModalsFactory(colors: Colors())
 
@@ -81,6 +82,10 @@ class ViewController: UITableViewController {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
+    func userDidTapNext() {
+        dismiss(animated: true, completion: nil)
+    }
+
     func shouldDismissUpsell() -> Bool {
         true
     }
@@ -96,12 +101,14 @@ extension ViewController: UpsellViewControllerDelegate {
 
 struct Colors: ModalsColors {
     var background: UIColor
+    var secondaryBackground: UIColor
     var text: UIColor
     var brand: UIColor
     var weakText: UIColor
     
     init() {
         background = UIColor(red: 23/255, green: 24/255, blue: 28/255, alpha: 1)
+        secondaryBackground = UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)
         text = .white
         brand = UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1)
         weakText = UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)

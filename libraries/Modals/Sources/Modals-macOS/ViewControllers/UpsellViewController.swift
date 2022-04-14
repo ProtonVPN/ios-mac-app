@@ -79,7 +79,11 @@ public final class UpsellViewController: NSViewController {
         guard let upsellType = upsellType else { return }
         let upsellFeature = upsellType.upsellFeature()
         titleLabel.stringValue = upsellFeature.title
-        descriptionLabel.stringValue = upsellFeature.subtitle
+        if let subtitle = upsellFeature.subtitle {
+            descriptionLabel.stringValue = subtitle
+        } else {
+            descriptionLabel.isHidden = true
+        }
         footerLabel?.stringValue = upsellFeature.footer ?? ""
         imageView.image = upsellFeature.artImage
 

@@ -44,6 +44,7 @@ let textButtonStyle: (UIButton) -> Void = {
 }
 
 let actionTextButtonStyle = concat(textButtonStyle, and: {
+    $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
     $0.titleLabel?.font = .systemFont(ofSize: 15)
 })
 

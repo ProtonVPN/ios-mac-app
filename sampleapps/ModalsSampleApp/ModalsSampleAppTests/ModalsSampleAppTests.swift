@@ -32,6 +32,7 @@ final class ModalsSampleAppTests: XCTestCase {
 }
 
 struct MockColors: ModalsColors {
+    var secondaryBackground: UIColor = .white
     var background: UIColor = .white
     var text: UIColor = .white
     var brand: UIColor = .white

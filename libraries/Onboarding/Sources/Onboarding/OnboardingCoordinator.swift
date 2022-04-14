@@ -72,6 +72,12 @@ public final class OnboardingCoordinator {
         navigationController.pushViewController(tourViewController, animated: true)
     }
 
+    private func showNoLogs() {
+        let noLogsViewController = modals.upsellViewController(upsellType: .noLogs)
+        noLogsViewController.delegate = self
+        navigationController.pushViewController(noLogsViewController, animated: true)
+    }
+
     private func showConnectionSetup(animated: Bool = true) {
         guard !(navigationController.topViewController is ConnectionViewController) else {
             return
@@ -150,7 +156,7 @@ extension OnboardingCoordinator: TourViewControllerDelegate {
     func userDidRequestSkipTour() {
         switch configuration.variant {
         case .A:
-            showConnectionSetup()
+            showNoLogs()
         case .B:
             showUpsell()
         }
@@ -207,7 +213,7 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
 
             popOverNavigationController?.dismiss(animated: true, completion: nil)
         case .B:
-            showConnectionSetup(animated: false)
+            showNoLogs()
             popOverNavigationController?.dismiss(animated: true, completion: nil)
         }
         return false
@@ -219,6 +225,10 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
 
     public func userDidRequestPlus() {
         showGetPlus()
+    }
+
+    public func userDidTapNext() {
+        showConnectionSetup()
     }
 }
 

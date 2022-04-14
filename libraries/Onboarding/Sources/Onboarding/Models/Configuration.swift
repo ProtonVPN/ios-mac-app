@@ -25,7 +25,7 @@ public struct Colors {
     public let brand: UIColor
     public let weakText: UIColor
     let activeBrandButton: UIColor
-    let secondaryBackground: UIColor
+    public let secondaryBackground: UIColor
     let textInverted: UIColor
     let notification: UIColor
 
