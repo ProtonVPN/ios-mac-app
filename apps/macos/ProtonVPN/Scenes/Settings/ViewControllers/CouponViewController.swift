@@ -79,7 +79,6 @@ final class CouponViewController: NSViewController {
         textField.focusDelegate = self
 
         setLineColors(isFirsResponder: false)
-        errorLabel.textColor = .protonRed()
     }
 
     private func setupActions() {
@@ -102,9 +101,27 @@ final class CouponViewController: NSViewController {
             case let .success(message):
                 self?.delegate?.couponDidApply(message: message)
             case let .failure(error):
-                self?.errorLabel.stringValue = error.localizedDescription
+                self?.setErrorMessage(message: error.localizedDescription)
             }
         }
+    }
+
+    private func setErrorMessage(message: String?) {
+        guard let message = message, !message.isEmpty else {
+            errorLabel.attributedStringValue = "".attributed(withColor: NSColor.protonRed(), font: NSFont.systemFont(ofSize: 14))
+            return
+        }
+
+        let icon = NSAttributedString.imageAttachment(named: "ic-exclamation-circle", width: 16, height: 16)!
+        let text = NSMutableAttributedString(
+            string: " " + message,
+            attributes: [
+                .font: NSFont.systemFont(ofSize: 14),
+                .baselineOffset: 3,
+                .foregroundColor: NSColor.protonRed()
+            ]
+        )
+        errorLabel.attributedStringValue = NSAttributedString.concatenate(icon, text)
     }
 
     private func setLineColors(isFirsResponder: Bool) {
@@ -162,7 +179,7 @@ extension CouponViewController: CouponViewModelDelegate {
     func errorDidChange(isError: Bool) {
         setLineColors(isFirsResponder: false)
         if !isError {
-            errorLabel.stringValue = ""
+            setErrorMessage(message: nil)
         }
     }
 }
