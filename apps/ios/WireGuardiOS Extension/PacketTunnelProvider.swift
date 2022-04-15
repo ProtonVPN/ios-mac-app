@@ -15,6 +15,11 @@ import Logging
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
     private let certificateRefreshManager = ExtensionCertificateRefreshManager()
+
+    override init() {
+        super.init()
+        setupLogging()
+    }
     
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")
@@ -37,8 +42,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         CertificateConstants.certificateDuration = "15 minutes"
         #endif
 
-        setupLogging()
-        wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
+        wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly" : "app"))
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
         guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
@@ -128,11 +132,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             completionHandler?(nil)
         }
     }
-    
+
+    // MARK - Logs
+
+    // LoggingSystem crashes if bootstrap is called more than once during process lifetime, so we have to remember it was already set up
+    private static var loggingSetupIsDone = false
+
     private func setupLogging() {
         // Our logger
-        LoggingSystem.bootstrap { _ in
-            return WGLogHandler(formatter: WGLogFormatter())
+        if !Self.loggingSetupIsDone {
+            Self.loggingSetupIsDone = true
+            LoggingSystem.bootstrap { _ in
+                return WGLogHandler(formatter: WGLogFormatter())
+            }
         }
         // WG logger
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
@@ -140,9 +152,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     private func flushLogsToFile() {
         guard let path = FileManager.logTextFileURL?.path else { return }
-        if Logger.global == nil { // Probably NE was not yet started
-            setupLogging()
-        }
         if Logger.global?.writeLog(to: path) ?? false {
             wg_log(.info, message: "flushLogsToFile written to file \(path) ")
         } else {
