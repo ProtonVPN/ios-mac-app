@@ -203,12 +203,9 @@ extension VpnManager: LocalAgentDelegate {
     // swiftlint:enable cyclomatic_complexity
 
     func didChangeState(state: LocalAgentState) {
-        dispatchPrecondition(condition: .notOnQueue(localAgentQueue))
         log.debug("Local agent state changed to \(state)", category: .localAgent, event: .stateChange)
 
-        localAgentQueue.sync {
-            isLocalAgentConnected = state == .connected
-        }
+        isLocalAgentConnected = state == .connected
 
         switch state {
         case .clientCertificateError:
