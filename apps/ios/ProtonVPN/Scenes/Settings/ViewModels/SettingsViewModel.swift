@@ -232,11 +232,11 @@ final class SettingsViewModel {
             }))
         }
 
-        if let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
-            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .brandColor(), handler: { [weak self] in
-                self?.pushCouponViewController()
-            }))
-        }
+//        if let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
+//            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .brandColor(), handler: { [weak self] in
+//                self?.pushCouponViewController()
+//            }))
+//        }
 
         return TableViewSection(title: LocalizedString.account.uppercased(), cells: cells)
     }
