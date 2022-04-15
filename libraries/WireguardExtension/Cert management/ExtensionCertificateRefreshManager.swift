@@ -20,7 +20,6 @@ final class ExtensionCertificateRefreshManager {
     
     private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup, storage: Storage())
     private let apiService = ExtensionAPIService(storage: Storage())
-    private var timer: BackgroundTimer?
     
     func planNextRefresh() {
         guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
@@ -39,13 +38,18 @@ final class ExtensionCertificateRefreshManager {
         startTimer(at: nextRefreshTime)
     }
     
-    // MARK: -
+    // MARK: - Timer
+
+    private var timer: BackgroundTimer?
+    private var timerQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
     
     private func startTimer(at nextRunTime: Date) {
-        timer = BackgroundTimer(runAt: nextRunTime) { [weak self] in
-            self?.timerFired()
+        timerQueue.async {
+            self.timer = BackgroundTimer(runAt: nextRunTime, queue: self.timerQueue) { [weak self] in
+                self?.timerFired()
+            }
+            wg_log(.info, message: "Timer setup for \(nextRunTime)")
         }
-        wg_log(.info, message: "Timer setup for \(nextRunTime)")
     }
     
     @objc private func timerFired() {
@@ -109,9 +113,9 @@ private final class BackgroundTimer {
     }
     private var state: State = .resumed
     
-    init(runAt nextRunTime: Date, _ closure: @escaping () -> Void) {
+    init(runAt nextRunTime: Date, queue: DispatchQueue, _ closure: @escaping () -> Void) {
         self.closure = closure
-        timerSource = DispatchSource.makeTimerSource()
+        timerSource = DispatchSource.makeTimerSource(queue: queue)
         
         timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)), repeating: .infinity, leeway: .seconds(10)) // We have at least minute before app (if in foreground) may start refreshing cert. So 10 seconds later is ok.
         timerSource.setEventHandler { [weak self] in
