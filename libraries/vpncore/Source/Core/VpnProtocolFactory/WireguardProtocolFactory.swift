@@ -109,6 +109,10 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 }
 
 extension VpnManagerConfiguration {
+
+    private var persistentKeepalive: Int? {
+        return 25
+    }
     
     public func asWireguardConfiguration(config: WireguardConfig) -> String {
         var output = "[Interface]\n"
@@ -125,6 +129,9 @@ extension VpnManagerConfiguration {
         }
         output.append("AllowedIPs = \(config.allowedIPs)\n")
         output.append("Endpoint = \(entryServerAddress):\(ports.first!)\n")
+        if let persistentKeepalive = persistentKeepalive {
+            output.append("PersistentKeepalive = \(persistentKeepalive)")
+        }
         
         return output
     }
