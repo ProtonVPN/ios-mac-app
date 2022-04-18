@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Non sei connesso";
 
+/* Button to apply coupon */
+"apply_coupon" = "Applica";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Il coupon è stato applicato con successo.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Il coupon è stato applicato con successo. Il tuo abbonamento verrà aggiornato in pochi minuti.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Codice coupon";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "Configurazione del tuo accesso VPN";
 
@@ -2155,4 +2167,7 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Il sito Web di ProtonVPN potrebbe essere temporaneamente irraggiungibile a causa di restrizioni di rete. Utilizza l'app mobile per creare un nuovo account Proton.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Utilizza coupon";
 

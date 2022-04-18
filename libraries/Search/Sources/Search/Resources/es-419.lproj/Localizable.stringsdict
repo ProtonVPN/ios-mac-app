@@ -12,18 +12,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d countries</string>
-			<key>many</key>
-			<string>%d countries</string>
 			<key>one</key>
 			<string>%d country</string>
 			<key>other</key>
 			<string>%d países</string>
-			<key>two</key>
-			<string>%d countries</string>
-			<key>zero</key>
-			<string>%d countries</string>
 		</dict>
 	</dict>
 </dict>

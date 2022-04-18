@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Włącz umiarkowany NAT";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
+"_moderate_nat_explanation" = "Umiarkowany NAT wyłącza losowe mapowanie adresów lokalnych. To może nieco zmniejszyć bezpieczeństwo, ale umożliwia połączenia P2P, aby osiągnąć bezpośrednie połączenia aplikacji. \nDowiedz się więcej";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Dowiedz się więcej";
@@ -1022,7 +1022,7 @@
 "_neks_t2_connect" = "Połącz mimo to";
 
 /* (No Comment) */
-"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+"_neks_t2_description" = "Funkcja Kill Switch jest niestabilna na tym urządzeniu.\n\nTwoje urządzenia posiada czip zabezpieczeń T2, który może powodować problemy ze stabilnością tej funkcji.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Czip zabezpieczeń T2";
@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Nie jesteś połączony";
 
+/* Button to apply coupon */
+"apply_coupon" = "Zastosuj";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Kupon został naliczony.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Kupon został naliczony. Subskrypcja zostanie ulepszona w ciągu kilku minut.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Kod kuponu";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "Konfiguracja dostępu do usługi VPN";
 
@@ -2154,5 +2166,8 @@
 "login_summary_button" = "Zacznij korzystać z aplikacji ProtonVPN";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
+"proton_website_unreachable" = "Strona internetowa ProtonVPN może być tymczasowo niedostępna z powodu ograniczeń sieciowych. Użyj aplikacji mobilnej, aby utworzyć nowe konto Proton.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Użyj kuponu";
 

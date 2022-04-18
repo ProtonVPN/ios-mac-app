@@ -4,6 +4,9 @@
 /* Common button title */
 "modals_common_learn_more" = "Más información";
 
+/* Common button title */
+"modals_common_next" = "Siguiente";
+
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Activate Secure Core";
 
@@ -18,6 +21,21 @@
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Mejorar";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "ProtonVPN's strict no-log policy is certified by an external audit.";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "We do not log your internet activity";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "ProtonVPN is privacy first";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "We do not share any data with third parties";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "No logs and Swiss-based";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";

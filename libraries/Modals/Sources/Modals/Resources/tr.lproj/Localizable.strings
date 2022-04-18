@@ -4,6 +4,9 @@
 /* Common button title */
 "modals_common_learn_more" = "Ayrıntılı bilgi alın";
 
+/* Common button title */
+"modals_common_next" = "İleri";
+
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Secure Core kullanılsın";
 
@@ -18,6 +21,21 @@
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Yükselt";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "ProtonVPN'in katı kayıt tutmama ilkesi bir dış denetim tarafından belgelenmiştir.";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "İnternetteki etkinliklerinizi kaydetmeyiz";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "ProtonVPN kişisel gizliliğe öncelik verir";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Üçüncü taraflarla hiç bir veri paylaşmıyoruz";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Kayıt tutmuyoruz ve İsviçre merkezliyiz";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "En yüksek hızlarda gezinin (10 Gb/sn)";
