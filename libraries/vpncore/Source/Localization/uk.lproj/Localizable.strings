@@ -1825,7 +1825,7 @@
 "_trial_popup_call_to_upgrade" = "Щоб мати постійний доступ до функцій ProtonVPN Plus, ви можете передплатити тарифний план.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Отримайте переваги захищеного Інтернету де завгодно з ProtonVPN";
+"_trial_popup_enjoy" = "Користуйтеся перевагами захищеного Інтернету де завгодно з ProtonVPN";
 
 /* Final text:
  
@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Ви не під'єднані";
 
+/* Button to apply coupon */
+"apply_coupon" = "Застосувати";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Купон використано успішно.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Купон успішно застосовано. Ваша передплата буде покращена протягом кількох хвилин.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Код купону";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "Налаштування доступу до VPN";
 
@@ -2155,4 +2167,7 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Вебсайт ProtonVPN може бути тимчасово недоступний через мережеві обмеження. Скористайтеся мобільним застосунком, щоб створити новий обліковий запис Proton.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Використати купон";
 

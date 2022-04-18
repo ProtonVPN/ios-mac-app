@@ -44,7 +44,7 @@
 "_advanced" = "Lanjutan";
 
 /* Plan information */
-"_advanced_features" = "+ Fitur-fitur canggih";
+"_advanced_features" = "+ Berbagai fitur mutakhir";
 
 /* API error */
 "_ae_vpn_info_not_received" = "Tidak dapat menerima informasi vpn";
@@ -374,7 +374,7 @@
 "_error_apply_payment_failed_title" = "Pembayaran gagal";
 
 /* (No Comment) */
-"_error_credit_applied" = "Hubungi support@protonvpn.com untuk menyelesaikan pembayaran Anda.";
+"_error_credit_applied" = "Hubungi support@protonvpn.com untuk menuntaskan pembayaran Anda.";
 
 /* Error decoding an object */
 "_error_decode" = "Gagal mendekode data yang diarsipkan di kelas: %@";
@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Anda tidak tersambung";
 
+/* Button to apply coupon */
+"apply_coupon" = "Terapkan";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Kupon telah berhasil digunakan.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Kupon telah berhasil digunakan. Jenis akun Anda akan segera ditingkatkan dalam beberapa menit ke depan.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Kode kupon";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "Mengatur akses VPN Anda";
 
@@ -2155,4 +2167,7 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Situs web ProtonVPN terindikasi sedang tidak dapat dijangkau karena batasan jaringan. Mohon gunakan aplikasi mobile kami untuk membuat akun Proton yang baru.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Gunakan kupon";
 

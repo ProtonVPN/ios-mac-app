@@ -12,18 +12,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>Step %d</string>
-			<key>many</key>
-			<string>Step %d</string>
 			<key>one</key>
 			<string>Step %d</string>
 			<key>other</key>
 			<string>Paso %d</string>
-			<key>two</key>
-			<string>Step %d</string>
-			<key>zero</key>
-			<string>Step %d</string>
 		</dict>
 		<key>STEPS</key>
 		<dict>
@@ -31,18 +23,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>of %d</string>
-			<key>many</key>
-			<string>of %d</string>
 			<key>one</key>
 			<string>of %d</string>
 			<key>other</key>
 			<string>de %d</string>
-			<key>two</key>
-			<string>of %d</string>
-			<key>zero</key>
-			<string>of %d</string>
 		</dict>
 	</dict>
 </dict>

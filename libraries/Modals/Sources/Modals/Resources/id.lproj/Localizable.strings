@@ -4,6 +4,9 @@
 /* Common button title */
 "modals_common_learn_more" = "Pelajari lebih lanjut";
 
+/* Common button title */
+"modals_common_next" = "Selanjutnya";
+
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Aktifkan Secure Core";
 
@@ -18,6 +21,21 @@
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Tingkatkan";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Kebijakan tanpa log ketat yang diusung oleh ProtonVPN telah tersertifikasi oleh audit eksternal.";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "Kami tidak merekam aktivitas internet Anda";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "ProtonVPN selalu mengutamakan privasi";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Kami tidak membagikan data apapun kepada pihak ketiga";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Tanpa log dan berbasis di Swiss";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Jelajahi internet pada kecepatan tertinggi (10 Gbps)";

@@ -4,6 +4,9 @@
 /* Common button title */
 "modals_common_learn_more" = "Meer informatie";
 
+/* Common button title */
+"modals_common_next" = "Volgende";
+
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Secure Core activeren";
 
@@ -18,6 +21,21 @@
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Upgraden";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "ProtonVPN's strikte geen-logboekenbeleid is gecertificeerd door een externe audit.";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "We loggen uw internetactiviteiten niet";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "ProtonVPN is privacy eerst";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "We delen geen enkele gegevens met derde partijen";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Geen logboeken en gebaseerd in Zwitserland";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Browse aan de hoogste snelheden (10 Gbps)";

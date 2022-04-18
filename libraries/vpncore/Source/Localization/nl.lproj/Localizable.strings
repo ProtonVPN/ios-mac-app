@@ -1019,16 +1019,16 @@
 "_need_help" = "Hulp nodig?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connect Anyway";
+"_neks_t2_connect" = "Toch Verbinden";
 
 /* (No Comment) */
-"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+"_neks_t2_description" = "Het gebruik van Kill Switch is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de Kill Switch-functionaliteit van macOS gebruikt wordt door ProtonVPN.";
 
 /* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "T2 Security Chip";
+"_neks_t2_hyperlink" = "T2-beveiligingschip";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill Switch Stability Warning";
+"_neks_t2_title" = "Kill Switch Stabiliteitswaarschuwing";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Uw verbinding zal opnieuw worden gestart om de NetShield modus te wijzigen.";
@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "U bent niet verbonden";
 
+/* Button to apply coupon */
+"apply_coupon" = "Pas toe";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Kortingscode werd succesvol toegepast.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Kortingscode werd succesvol toegepast. Uw abonnement wordt over enkele ogenblikken geüpgraded.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Kortingscode";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "VPN-toegang aan het configureren";
 
@@ -2154,5 +2166,8 @@
 "login_summary_button" = "Aan de slag met ProtonVPN";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
+"proton_website_unreachable" = "De ProtonVPN website zou tijdelijk onbereikbaar kunnen zijn wegens netwerkbeperkingen. Gebruik de mobiele app om een nieuw Proton-account aan te maken.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Gebruik kortingscode";
 

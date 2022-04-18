@@ -8,7 +8,7 @@
 "_plus_servers" = "PLUS servers";
 
 /* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Country, City or Server";
+"search_bar_placeholder" = "Land, stad of server";
 
 /* Section header in search */
 "search_cities" = "Steden";

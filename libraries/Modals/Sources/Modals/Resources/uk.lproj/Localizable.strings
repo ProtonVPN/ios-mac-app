@@ -4,6 +4,9 @@
 /* Common button title */
 "modals_common_learn_more" = "Докладніше";
 
+/* Common button title */
+"modals_common_next" = "Далі";
+
 /* Positive user action on Secure Core discouragement screen */
 "modals_discourage_secure_core_activate" = "Активувати Secure Core";
 
@@ -18,6 +21,21 @@
 
 /* Upgrade plan button title */
 "modals_get_plus" = "Покращити";
+
+/* Learn more of the No Logs screen */
+"modals_no_logs_external_audit" = "Сувора політика ProtonVPN без журналювання підтверджена зовнішньою перевіркою.";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_log_activity" = "Ми не журналюємо вашу активність в Інтернеті";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_privacy_first" = "ProtonVPN - це насамперед приватність";
+
+/* Feature of the No Logs screen */
+"modals_no_logs_third_parties" = "Ми не передаємо ніяких даних третім особам";
+
+/* Title of the No Logs screen */
+"modals_no_logs_title" = "Не веде журналів і розташовано у Швейцарії";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Переглядайте контент на найвищій швидкості (10 Гбіт/с)";

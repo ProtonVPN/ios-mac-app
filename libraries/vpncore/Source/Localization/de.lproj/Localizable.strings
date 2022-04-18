@@ -23,19 +23,19 @@
 "_action" = "Aktion";
 
 /* (No Comment) */
-"_action_requires_reconnect" = "Ihre Verbindung muss neu aufgebaut werden, um diese Änderung zu übernehmen.";
+"_action_requires_reconnect" = "Deine Verbindung muss neu aufgebaut werden, um diese Änderung zu übernehmen.";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Widget aktivieren";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "Swipen Sie von Ihrem Homescreen aus nach links, um auf Ihre Widgets zuzugreifen.";
+"_activate_widget_step_1" = "Swipe von deinem Homescreen aus nach links, um auf deine Widgets zuzugreifen.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Scrollen Sie ganz nach unten und tippen Sie auf die Bearbeiten‐Schaltfläche.";
+"_activate_widget_step_2" = "Scrolle ganz nach unten und tippe auf die Bearbeiten‐Schaltfläche.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Fügen Sie das ProtonVPN‐Widget zur Liste aktiver Widgets hinzu.";
+"_activate_widget_step_3" = "Füge das ProtonVPN‐Widget zur Liste aktiver Widgets hinzu.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Werbeblocker (NetShield)";
@@ -56,13 +56,13 @@
 "_all_countries" = "Mehr als 50 Länder";
 
 /* Under maintenance alert */
-"_all_servers_in_country_under_maintenance" = "Alle Server in diesem Land werden gegenwärtig gewartet. Bitte verbinden Sie sich mit einem anderen Land.";
+"_all_servers_in_country_under_maintenance" = "Alle Server in diesem Land werden gegenwärtig gewartet. Bitte verbinde dich mit einem anderen Land.";
 
 /* Under maintenance alert */
-"_all_servers_in_profile_under_maintenance" = "Profil‐Server in Wartung";
+"_all_servers_in_profile_under_maintenance" = "Profil‐Server sind im Wartungsmodus";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Alle Server werden zurzeit gewartet. Dies bedeutet normalerweise, dass es zurzeit technische Schwierigkeiten auf unserer Seite gibt oder Ihr Netzwerk beschränkt ist.";
+"_all_servers_under_maintenance" = "Alle Server werden zurzeit gewartet. Dies bedeutet normalerweise, dass es zurzeit technische Schwierigkeiten auf unserer Seite gibt oder dein Netzwerk beschränkt ist.";
 
 /* (No Comment) */
 "_allow" = "Erlauben";
@@ -74,7 +74,7 @@
 "_allow_lan_info" = "Ermöglicht das Umgehen des VPN, um eine Verbindung zu Geräten in Ihrem lokalen Netzwerk herzustellen (z. B. zu Ihrem Drucker).";
 
 /* (No Comment) */
-"_allow_lan_note" = "Beachten Sie, dass Ihre Verbindung neu gestartet werden muss, um diese Änderung übernehmen zu können";
+"_allow_lan_note" = "Beachte, dass dei e Verbindung neu gestartet werden muss, um diese Änderung übernehmen zu können";
 
 /* (No Comment) */
 "_allow_lan_title" = "LAN‐Verbindungen zulassen";
@@ -86,10 +86,10 @@
 "_always_on_vpn" = "Durchgängig aktives VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Eine Always‐On‐VPN stellt eine sichere VPN‐Verbindung schnell und automatisch wieder her. Zu Ihrer Sicherheit ist diese Option ständig aktiviert.";
+"_always_on_vpn_tooltip_ios" = "Always‐On‐VPN stellt eine sichere VPN‐Verbindung schnell und automatisch wieder her. Zu deiner Sicherheit ist diese Option ständig aktiviert.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "Always‐on‐VPN stellt Ihre Verbindung automatisch wieder her";
+"_always_on_will_reconnect" = "Always‐on‐VPN stellt deine Verbindung automatisch wieder her";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Anwendungsprotokolle";
@@ -104,13 +104,13 @@
 "_auto_connect" = "Automatisch verbinden";
 
 /* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "Beim Start der Anwendung werden Sie mit dem ausgewählten Profil verbunden";
+"_auto_connect_tooltip" = "Beim Start der Anwendung wirst du mit dem ausgewählten Profil verbunden";
 
 /* iOS: section header in countries list */
 "_basic_servers" = "BASIC-Server";
 
 /* Battery usages screen description */
-"_battery_description" = "Der gesamte Datenverkehr Ihres Telefons wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Anwendungen ProtonVPN zuweisen.";
+"_battery_description" = "Der gesamte Datenverkehr deines Telefons wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Anwendungen ProtonVPN zuweisen.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Möchten Sie mehr erfahren?";
@@ -134,10 +134,10 @@
 "_changelog" = "Änderungsprotokoll";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Bitte überprüfen Sie, ob alle Felder ausgefüllt sind";
+"_check_if_fields_present" = "Bitte überprüfe, ob alle Felder ausgefüllt sind";
 
 /* iOS plan selection: header */
-"_choose_plan" = "Paket auswählen";
+"_choose_plan" = "Abonnement auswählen";
 
 /* iOS status view */
 "_city" = "Stadt";
@@ -194,7 +194,7 @@
 "_contact_our_support" = "Kontaktieren Sie unsere Kundenbetreuung";
 
 /* (No Comment) */
-"_continue" = "Weiter";
+"_continue" = "Fortfahren";
 
 /* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
 "_countries" = "Länder";
@@ -278,7 +278,7 @@
 "_delinquent_title" = "Ihr VPN-Konto enthält noch offene Rechnungen";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Ihr Konto hat derzeit eine überfällige Rechnung. Bitte zahlen Sie alle unbezahlten Rechnungen auf account.protonvpn.com";
+"_delinquent_user_description" = "Dein Konto hat derzeit eine überfällige Rechnung. Bitte zahle alle unbezahlten Rechnungen auf account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Unbezahlte Rechnung";
@@ -353,7 +353,7 @@
 "_error_apply_payment_failed_message" = "Ihre Zahlung konnte nicht verarbeitet werden. Um es erneut zu versuchen, klicken Sie auf „Wiederholen”. Ihr Konto wird nur einmalig belastet.\nUm mit einem kostenlosen Konto fortzufahren, klicken Sie auf „Weiter mit kostenlosem Konto”. Sie können zu einem späteren Zeitpunkt zu einem kostenpflichtigen Paket wechseln.";
 
 /* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Sie haben sich erfolgreich registriert, aber Ihre Zahlung wurde nicht verarbeitet. Um Ihre Zahlungsinformationen erneut zu senden, klicken Sie auf „Wiederholen”. Sie werden nur einmal belastet. Wenn das Problem weiterhin besteht, wenden Sie sich bitte an den Kundendienst.";
+"_error_apply_payment_failed_on_registration_message" = "Du hast dich erfolgreich registriert, aber deine Zahlung wurde nicht verarbeitet. Um deine Zahlungsinformationen erneut zu senden, klicke auf „Wiederholen”. Es erfolgt nur eine einmalige Belastung. Wenn das Problem weiterhin besteht, wende dich bitte an den Kundendienst.";
 
 /* (No Comment) */
 "_error_apply_payment_failed_on_registration_support" = "Kundensupport kontaktieren";
@@ -374,7 +374,7 @@
 "_error_apply_payment_failed_title" = "Zahlung fehlgeschlagen";
 
 /* (No Comment) */
-"_error_credit_applied" = "Kontaktieren Sie support@protonvpn.com, um Ihren Kauf abzuschließen.";
+"_error_credit_applied" = "Kontaktiere support@protonvpn.com, um deinen Kauf abzuschließen.";
 
 /* Error decoding an object */
 "_error_decode" = "Fehler beim Dekodieren der archivierten Daten in der Klasse: %@";
@@ -410,7 +410,7 @@
 "_error_internal_error" = "Interner API‐Fehler";
 
 /* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Möchten Sie einen neuen Bestätigungsschlüssel anfordern oder eine alternative Bestätigungsmethode verwenden?";
+"_error_invalid_human_verification_code_message" = "Möchtest du einen neuen Verifizierungscode anfordern oder eine alternative Verifizierungsmethode verwenden?";
 
 /* Invalid human verification code alert button */
 "_error_invalid_human_verification_code_resend" = "Erneut senden";
@@ -431,7 +431,7 @@
 "_error_loads" = "Serverauslastungen können nicht aktualisiert werden";
 
 /* (No Comment) */
-"_error_mitm_description" = "Die TLS-Zertifikatsvalidierung schlug fehl beim Versuch, eine Verbindung zur ProtonVPN-API herzustellen. Ihre aktuelle Internetverbindung könnte überwacht werden. Um die Sicherheit Ihrer Daten zu gewährleisten, wird verhindert, dass die App auf die ProtonVPN-API zugreifen kann. Um sich anzumelden oder auf Ihr Konto zuzugreifen, wechseln Sie zu einem neuen Netzwerk und versuchen Sie erneut, eine Verbindung herzustellen.";
+"_error_mitm_description" = "Die TLS-Zertifikatsvalidierung schlug fehl beim Versuch, eine Verbindung zur ProtonVPN-API herzustellen. Deine aktuelle Internetverbindung könnte überwacht werden. Um die Sicherheit deier Daten zu gewährleisten, wird verhindert, dass die App auf die ProtonVPN-API zugreifen kann. Um dich anzumelden oder auf dein Konto zuzugreifen, wechsle zu einem neuen Netzwerk und versuche erneut, eine Verbindung herzustellen.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Unverschlüsselte Verbindung";
@@ -443,22 +443,22 @@
 "_error_modulus_signature" = "Modulsignatur ist leer";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Bitte melden Sie sich mit dem Konto an, für das Sie das Abonnement erwerben möchten, damit wieder den Kauf abschließen können.";
+"_error_no_active_username" = "Bitte melde dich mit dem Konto an, für welches du das Abonnement erwerben möchtest, damit wir den Kauf abschließen können.";
 
 /* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Ihr Upgrade war erfolgreich. Bitte starten Sie die Anwendung neu, um alle neuen Funktionen zu aktivieren.";
+"_error_no_new_subscription_in_successfull_response" = "Dein Abonnement-Upgrade war erfolgreich. Bitte starte die Anwendung neu, um alle neuen Funktionen zu aktivieren.";
 
 /* In App Purchase error alert */
 "_error_occured" = "Fehler aufgetreten";
 
 /* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Es war nicht möglich, das App Store Produkt mit Produkten auf unserem Server abzugleichen. Bitte wenden Sie sich an den Support.";
+"_error_purchased_plan_does_not_match_available" = "Es war nicht möglich, das App Store Produkt mit Produkten auf unserem Server abzugleichen. Bitte wende dich an den Support.";
 
 /* In App Purchase error */
-"_error_receipt_lost" = "App Store Eingangsbestätigung fehlt. Bitte wenden Sie sich an den Support, wenn Ihr Paket nicht aktiviert wurde.";
+"_error_receipt_lost" = "App Store Eingangsbestätigung fehlt. Bitte wende dich an den Support, wenn dein Paket nicht aktiviert wurde.";
 
 /* In App Purchase error */
-"_error_sandbox_receipt" = "Käufe werden in der Beta‐Version der iOS‐App nicht unterstützt. Es fallen für Sie keine Gebühren an.";
+"_error_sandbox_receipt" = "Käufe werden in der Beta‐Version der iOS‐App nicht unterstützt. Es wurde keine Abbuchung vorgenommen.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Serverinformationen können nicht verarbeitet werden";
@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "Sitzungszähler kann nicht verarbeitet werden";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Ihr ProtonMail‐Konto ist bereits für VPN konfiguriert. Bitte melden Sie sich mit Ihren bestehenden Daten an.";
+"_error_signup_using_protonmail_address" = "Dein ProtonMail‐Konto ist bereits für VPN konfiguriert. Bitte melde dich mit deinen bestehenden Daten an.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Abonnementinformation kann nicht verarbeitet werden";
@@ -479,10 +479,10 @@
 "_error_tls_server_verification" = "Server-Zertifikat konnte nicht verifiziert werden.";
 
 /* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store kann Ihren Kauf nicht verarbeiten.";
+"_error_transaction_failed_by_unknown_reason" = "App Store kann deinen Kauf nicht verarbeiten.";
 
 /* In App Purchase error */
-"_error_transaction_of_other_user" = "Ein Kauf wurde mit einem anderen ProtonVPN‐Benutzername gestartet.";
+"_error_transaction_of_other_user" = "Ein Kauf wurde mit einem anderen ProtonVPN‐Benutzernamen gestartet.";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "Die Liste der verfügbaren Produkte im App Store konnte nicht abgerufen werden.";
@@ -497,22 +497,22 @@
 "_error_user_creation" = "Kontoerstellung fehlgeschlagen";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Benutzerdaten sind abgelaufen; bitte erneut anmelden.";
+"_error_user_credentials_expired" = "Benutzeranmeldedaten sind abgelaufen. Bitte melde dich an";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Benutzerdaten fehlen; Anmeldung fehlgeschlagen.";
+"_error_user_credentials_missing" = "Benutzerdaten fehlen. Anmeldung fehlgeschlagen";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Es konnte nicht festgestellt werden, ob Sie ein Mensch sind. Bitte versuchen Sie es erneut oder erwerben Sie ein Premium‐Paket.";
+"_error_user_failed_human_validation" = "Es konnte nicht festgestellt werden, ob du ein Mensch bist. Bitte versuche es erneut oder erwerbe ein Premium‐Abonnement.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Ihr Konto hat keinen VPN‐Zugriff. Bitte kontaktieren Sie Ihren Konto‐Admin";
+"_error_user_has_no_vpn_access" = "Dein Konto hat keinen VPN‐Zugriff. Bitte kontaktieren deinen Konto‐Admin";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Sie haben sich noch nicht für ProtonVPN registriert";
+"_error_user_has_not_signed_up" = "Du hast dich noch nicht für ProtonVPN registriert";
 
 /* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Sie befinden sich in der Warteschlange, Ihr Konto ist noch nicht bereit";
+"_error_user_is_on_waitlist" = "Du befindest dich in der Warteschlange, dein Konto ist noch nicht bereit";
 
 /* Username unavailable error */
 "_error_username_unavailable" = "Der Benutzername ist bereits vergeben";
@@ -542,7 +542,7 @@
 "_existing_session" = "Server nicht verfügbar";
 
 /* Existing connection alert */
-"_existing_session_to_server" = "Bitte wählen Sie einen anderen Server.";
+"_existing_session_to_server" = "Bitte wähle einen anderen Server.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Serverliste ausklappen";
@@ -557,7 +557,7 @@
 "_failed" = "fehlgeschlagen";
 
 /* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Fehler beim Abrufen der VPN‐Zugangsdaten; bitte melden Sie sich erneut an, um das Problem zu lösen.";
+"_failed_to_access_vpn_credentials_description" = "Fehler beim Abrufen der VPN‐Zugangsdaten bitte melde dich erneut an, um das Problem zu lösen.";
 
 /* VPN credentials not accessible alert */
 "_failed_to_access_vpn_credentials_title" = "VPN‐Anmeldedaten fehlen";
@@ -812,13 +812,13 @@
 "_loading_screen_slogan" = "Sicheres Internet überall";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Sie sind nicht berechtigt, eine Verbindung zu diesem Server aufzubauen. Wählen Sie einen anderen Server oder erweitern Sie Ihr Abonnement.";
+"_local_agent_policy_violation_error_message" = "Du bist nicht berechtigt, eine Verbindung zu diesem Server aufzubauen. Wähle einen anderen Server oder erweitere dein Abonnement.";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_title" = "Verstoß gegen Richtlinien";
 
 /* (No Comment) */
-"_local_agent_server_error_message" = "Beim Verbinden mit dem Server ist ein Problem aufgetreten. Bitte verbinden Sie sich mit einem anderen Server.";
+"_local_agent_server_error_message" = "Beim Verbinden mit dem Server ist ein Problem aufgetreten. Bitte verbinde dich mit einem anderen Server.";
 
 /* Local agent */
 "_local_agent_server_error_title" = "Serverfehler";
@@ -845,13 +845,13 @@
 "_log_in" = "Anmelden";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Bitte melden Sie sich an, um zu beginnen";
+"_log_in_to_use_widget" = "Bitte melde dich an, um zu beginnen";
 
 /* iOS: button in settings screen */
 "_log_out" = "Abmelden";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Das Abmelden wird Ihre VPN‐Sitzung beenden.";
+"_log_out_warning" = "Das Abmelden wird deine VPN‐Sitzung beenden.";
 
 /* MacOS: Logout alert */
 "_log_out_warning_long" = "Wenn Sie sich von der Anwendung abmelden, wird die aktive VPN-Verbindung getrennt. Möchten Sie fortfahren?";
@@ -878,7 +878,7 @@
 "_maintenance_on_server_detected_title" = "Bei diesem VPN-Server werden derzeit Wartungsarbeiten durchgeführt";
 
 /* Profile create/change form */
-"_make_default_profile" = "Als Standard‐Profil setzen";
+"_make_default_profile" = "Als Standard‐Profil festlegen";
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Profile verwalten";
@@ -887,7 +887,7 @@
 "_manage_subscription" = "Abonnement verwalten";
 
 /* (No Comment) */
-"_manage_subscription_on_web" = "Verwalten Sie Ihr Abonnement im Web‐Dashboard";
+"_manage_subscription_on_web" = "Verwalte dein Abonnement im Web‐Dashboard";
 
 /* iOS: Map screen title and tabbar item */
 "_map" = "Karte";
@@ -899,7 +899,7 @@
 "_map_show" = "Karte anzeigen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Bitte trennen Sie ein anderes Gerät, um dieses verbinden zu können, oder aktualisieren Sie auf %@, um bis zu %d Geräte gleichzeitig nutzen zu können.";
+"_maximum_device_description" = "Bitte trenne ein anderes Gerät, um dieses verbinden zu können, oder aktualisiere auf %@, um bis zu %d Geräte gleichzeitig nutzen zu können.";
 
 /* (No Comment) */
 "_maximum_device_reached_description" = "Bitte trennen Sie erst ein anderes Gerät, um dieses zu verbinden.";
@@ -1094,7 +1094,7 @@
 "_not_connected" = "Nicht verbunden";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Die VPN‐Verbindung konnte nicht hergestellt werden. Sie sind nicht mit dem Internet verbunden.";
+"_not_connected_to_the_internet" = "Die VPN‐Verbindung konnte nicht hergestellt werden. Du bist nicht mit dem Internet verbunden.";
 
 /* (No Comment) */
 "_not_now" = "Nicht jetzt";
@@ -1253,7 +1253,7 @@
 "_profile_name_is_required" = "Bitte geben Sie einen Namen ein";
 
 /* Error in profile create/change form */
-"_profile_name_is_too_long" = "Länge des Profilnamen darf 25 Zeichen nicht überschreiten";
+"_profile_name_is_too_long" = "Länge des Profilnamens darf 25 Zeichen nicht überschreiten";
 
 /* (No Comment) */
 "_profile_name_needs_to_be_unique" = "Profil mit demselben Namen existiert bereits";
@@ -1289,7 +1289,7 @@
 "_quick_connect" = "Schnellverbinden";
 
 /* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Die Schaltfläche „Schnellverbinden“ verbindet Sie mit dem ausgewählten Profil";
+"_quick_connect_tooltip" = "Die Schaltfläche „Schnellverbinden“ verbindet dich mit dem ausgewählten Profil";
 
 /* MacOS app tour: quick connect description */
 "_quick_connect_tour_description" = "Verbindet Sie automatisch mit dem Server, der Ihnen die schnellste Verbindung bietet.";
@@ -1304,7 +1304,7 @@
 "_quick_settings_killSwitch_description" = "Trennt die Verbindung zum Internet, wenn die VPN-Verbindung abbricht, um ein versehentliches IP-Leck zu verhindern.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Wenn Sie keine Verbindung zu Geräten in Ihrem lokalen Netzwerk herstellen können, versuchen Sie, Kill Switch zu deaktivieren.";
+"_quick_settings_killSwitch_note" = "Wenn du keine Verbindung zu Geräten in deinem lokalen Netzwerk herstellen kannst, versuche Kill Switch zu deaktivieren.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Surfen Sie im Internet ohne Werbung und Malware.";
@@ -1346,7 +1346,7 @@
 "_quit" = "Beenden";
 
 /* MacOS: alert show before quitting app if VPN is connected */
-"_quit_warning" = "Beim Beenden der Anwendung wird die aktive VPN‐Verbindung getrennt. Möchten Sie fortfahren?";
+"_quit_warning" = "Beim Beenden der Anwendung wird die aktive VPN‐Verbindung getrennt. Möchtest du fortfahren?";
 
 /* Profile create/change form and other places describing profile */
 "_random" = "Zufällig";
@@ -1400,7 +1400,7 @@
 "_report_bug" = "Problem melden";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Mit den folgenden Angaben kann unser Team Ihr Problem besser identifizieren und eine mögliche Lösung mit höherer Wahrscheinlichkeit und kürzerer Zeit finden:\n• ProtonVPN-Anwendungsprotokolle\n• OpenVPN-Protokolle\n• WireGuard-Protokolle";
+"_report_description" = "Mit den folgenden Angaben kann unser Team dein Problem besser identifizieren und eine mögliche Lösung mit höherer Wahrscheinlichkeit und kürzerer Zeit finden:\n• ProtonVPN-Anwendungsprotokolle\n• OpenVPN-Protokolle\n• WireGuard-Protokolle";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E‐Mail-Adresse:";
@@ -1418,13 +1418,13 @@
 "_report_logs" = "VPN‐Protokolle";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Durch das Aktivieren, werden Ihre clientseitigen VPN-Protokolle in diesen Bericht aufgenommen.";
+"_report_logs_description" = "Durch das Aktivieren, werden deine clientseitigen VPN-Protokolle in diesen Bericht aufgenommen.";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Kontakt‐E‐Mail‐Adresse";
 
 /* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Ihre Nachricht …";
+"_report_placeholder_message" = "Deine Nachricht...";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Meldungsnachricht";
@@ -1478,7 +1478,7 @@
 "_secure_core_info" = "Bietet zusätzlichen Schutz gegen kompromittierte VPN‐Server, indem die Verbindung über unser sicheres Netzwerk umgeleitet wird";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_streaming_description" = "Sicheres Streaming\nIhrer Lieblingsinhalte";
+"_secure_streaming_description" = "Sicheres Streaming\ndeiner Lieblingsinhalte";
 
 /* MacOS: \Trial about to expire\ screen */
 "_secure_streaming_title" = "Sicheres Streaming";
@@ -1496,7 +1496,7 @@
 "_select_phone_country_code" = "Ländercode auswählen";
 
 /* Button in plan selection */
-"_select_plan" = "Paket auswählen";
+"_select_plan" = "Abonnement auswählen";
 
 /* iOS: new profile screen */
 "_select_profile_color" = "Profilfarbe auswählen";
@@ -1529,7 +1529,7 @@
 "_server_under_maintenance" = "Server wird gewartet";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "Sie haben das Maximum an gleichzeitigen Verbindungen für Ihr Konto erreicht. Upgraden Sie Ihr ProtonVPN‐Abonnement, um zusätzliche Verbindungen zu erhalten.";
+"_session_count_reached_description" = "Du hast das Maximum an gleichzeitigen Verbindungen für dein Konto erreicht. Führe ein Upgrade deines ProtonVPN‐Abonnements durch, um zusätzliche Verbindungen zu erhalten.";
 
 /* Session count limit alert */
 "_session_count_reached_title" = "Sitzungslimit erreicht";
@@ -1682,13 +1682,13 @@
 "_sysex_cannot_enable" = "Systemerweiterung konnte nicht aktiviert werden";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Konfiguration abgeschlossen. Ab jetzt können Sie mit den besten VPN-Technologien schneller im Internet surfen.";
+"_sysex_enabled_description" = "Konfiguration abgeschlossen. Ab jetzt kannst du mit den besten VPN-Technologien schneller im Internet surfen.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Konfiguration abgeschlossen";
 
 /* (No Comment) */
-"_sysex_error_description" = "Bei der Installation der Systemerweiterung ist ein Fehler aufgetreten.\nInstallieren Sie ProtonVPN neu und stellen Sie sicher, dass es sich im Ordner „Programme” befindet, um dieses Problem zu beheben. Wenden Sie sich alternativ an unseren Support.";
+"_sysex_error_description" = "Bei der Installation der Systemerweiterung ist ein Fehler aufgetreten.\nInstalliere ProtonVPN neu und stelle sicher, dass es sich im Ordner „Programme” befindet, um dieses Problem zu beheben. Wende dich alternativ an unseren Support.";
 
 /* (No Comment) */
 "_sysex_settings_description" = "ProtonVPN erfordert das Installieren einer Systemerweiterung, um Smart Protocol, OpenVPN und WireGuard nutzen zu können.";
@@ -1700,10 +1700,10 @@
 "_sysex_wizard_button" = "Konfiguration starten";
 
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Klicken Sie auf „Konfiguration starten”. Es werden zwei Dialogfenster geöffnet. Klicken Sie dort auf „Sicherheitseinstellungen öffnen”.\nAlternativ können Sie auch hier klicken, um die entsprechenden Einstellungen zu öffnen.";
+"_sysex_wizard_step1_description" = "Klicke auf „Konfiguration starten”. Es werden zwei Dialogfenster geöffnet. Klicke dort auf „Sicherheitseinstellungen öffnen”.\nAlternativ kannt auch hier klicken, um die entsprechenden Einstellungen zu öffnen.";
 
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Klicken Sie auf „Konfiguration starten”. Es wird ein Dialog angezeigt. Klicken Sie dort auf „Sicherheitseinstellungen öffnen”.\nAlternativ können Sie auch hier klicken, um die entsprechenden Einstellungen zu öffnen.";
+"_sysex_wizard_step1_description_1" = "Klicke auf „Konfiguration starten”. Es wird ein Dialog angezeigt. Klicke dort auf „Sicherheitseinstellungen öffnen”.\nAlternativ kannst du auch hier klicken, um die entsprechenden Einstellungen zu öffnen.";
 
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
@@ -1717,22 +1717,22 @@
 "_sysex_wizard_step1_title_1" = "Sicherheitseinstellungen öffnen";
 
 /* System extension wizard in mac: Step nr.2 description */
-"_sysex_wizard_step2_description" = "Klicken Sie auf das Schloss, um Änderungen vorzunehmen";
+"_sysex_wizard_step2_description" = "Klicke auf das Schloss, um Änderungen vorzunehmen";
 
 /* System extension wizard in mac: Step nr.2 title */
 "_sysex_wizard_step2_title" = "Entsperren, um Änderungen vorzunehmen";
 
 /* System extension wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Geben Sie Ihre macOS-Anmeldedaten zur Authentifizierung ein";
+"_sysex_wizard_step3_description" = "Gib deine macOS-Anmeldedaten zur Authentifizierung ein";
 
 /* System extension wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Anmeldedaten eingeben";
 
 /* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Klicken Sie auf die Schaltfläche „Details …”";
+"_sysex_wizard_step4_description" = "Klicke auf die Schaltfläche „Details…”";
 
 /* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Klicken Sie auf die Schaltfläche „Zulassen”";
+"_sysex_wizard_step4_description_1" = "Klicke auf die Schaltfläche „Zulassen”";
 
 /* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
 "_sysex_wizard_step4_title" = "Schaltfläche „Details …”";
@@ -1741,19 +1741,19 @@
 "_sysex_wizard_step4_title_1" = "Schaltfläche „Zulassen”";
 
 /* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Wählen Sie beide ProtonVPN-Elemente, um benutzerdefinierte Protokolle zu aktivieren, und klicken Sie anschließend auf „OK”";
+"_sysex_wizard_step5_description" = "Wähle beide ProtonVPN-Elemente, um benutzerdefinierte Protokolle zu aktivieren, und klicke anschließend auf „OK”";
 
 /* System extension wizard in mac: Step nr.5 title */
 "_sysex_wizard_step5_title" = "ProtonVPN-Elemente auswählen";
 
 /* System extension wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Gehen Sie dazu wie folgt vor:";
+"_sysex_wizard_subtitle" = "Gehe dazu wie folgt vor:";
 
 /* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "Sie sind jetzt gerüstet, um ProtonVPN mit den neuesten und schnellsten verfügbaren VPN-Technologien zu nutzen!";
+"_sysex_wizard_text_under_steps" = "Du bist jetzt gerüstet, um ProtonVPN mit den neuesten und schnellsten verfügbaren VPN-Technologien zu nutzen!";
 
 /* System extension wizard in mac: Main title */
-"_sysex_wizard_title" = "Genießen Sie die schnellsten Verbindungen durch Aktivierung benutzerdefinierter Protokolle";
+"_sysex_wizard_title" = "Genieße die schnellsten Verbindungen durch Aktivierung benutzerdefinierter Protokolle";
 
 /* System extension wizard in mac: Main title */
 "_sysex_wizard_window_title" = "Benutzerdefinierte Protokolle werden aktiviert";
@@ -1795,7 +1795,7 @@
 "_timed_out" = "hat Zeit überschritten";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Eine andere Anwendung könnte die Risiko-Trennung von „Kill Switch” stören. Um dieses Problem zu beheben, wechseln Sie zum OpenVPN-Protokoll oder deaktivieren Sie „Kill Switch” und versuchen Sie es erneut.";
+"_timeout_ks_ike_descritpion" = "Eine andere Anwendung könnte die Risiko-Trennung von „Kill Switch” stören. Um dieses Problem zu beheben, wechsle zum OpenVPN-Protokoll oder deaktiviere „Kill Switch” und versuche es erneut.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Zu OpenVPN wechseln und erneut versuchen";
@@ -1807,7 +1807,7 @@
 "_tor" = "TOR";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Mit Tor‐Netzwerk verbinden";
+"_tor_description" = "Mit TOR‐Netzwerk verbinden";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor‐Server";
@@ -1851,10 +1851,10 @@
 "_trial_popup_title" = "ProtonVPN‐Probephase";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Als Willkommensgeschenk erhalten Sie Zugriff auf ein vollständiges ProtonVPN‐Abonnement, welches erweiterte Funktionen für die ersten Tage enthält!";
+"_trial_welcome_description_iOS" = "Als Willkommensgeschenk erhältst Zugriff auf ein vollständiges ProtonVPN‐Abonnement, welches erweiterte Funktionen für die ersten Tage enthält!";
 
 /* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Ihre Testversion endet in";
+"_trial_welcome_ends_in_iOS" = "Deine Testversion endet in";
 
 /* iOS trial welcome screen */
 "_trial_welcome_heading_iOS" = "Willkommen an Bord";
@@ -2019,7 +2019,7 @@
 "_upgrade_subscription" = "Abonnement upgraden";
 
 /* Main mac app menu item */
-"_upgrade_to_plus" = "Zu Plus wechseln";
+"_upgrade_to_plus" = "Auf Plus upgraden";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Ihr ProtonVPN‐Abonnement kann nicht innerhalb der App aktualisiert werden, bitte besuchen Sie account.protonvpn.com, um zu aktualisieren.";
@@ -2043,7 +2043,7 @@
 "_username" = "Benutzername";
 
 /* iOS: text in human verification code form */
-"_verification_instructions" = "Ein Verifizierungscode wurde Ihnen zugesendet, bitte geben Sie diesen unten ein.";
+"_verification_instructions" = "Ein Verifizierungscode wurde dir zugesendet, bitte gib diesen unten ein.";
 
 /* iOS setting: after this word actual version and build number are appended */
 "_version" = "Version";
@@ -2082,7 +2082,7 @@
 "_vpn_protocol" = "VPN-Protokoll";
 
 /* VPN stuck alert */
-"_vpn_stuck_disconnecting_body" = "Ihr Gerät konnte eine frühere VPN‐Sitzung nicht beenden. Sie müssen Ihr Gerät neu starten, bevor Sie eine neue VPN‐Verbindung aufbauen können.";
+"_vpn_stuck_disconnecting_body" = "Dein Gerät konnte eine frühere VPN‐Sitzung nicht beenden. Du musst dein Gerät neu starten, bevor du eine neue VPN‐Verbindung aufbauen kannst.";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Verbindungsfehler";
@@ -2106,13 +2106,13 @@
 "_warning" = "Warnung";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Die Sitzung eines anderen Benutzers ist auf diesem Gerät bereits aktiv. Durch das Fortfahren der Anmeldung wird die aktuelle Sitzung beendet. Möchten Sie fortfahren?";
+"_warning_vpn_session_is_active" = "Die Sitzung eines anderen Benutzers ist auf diesem Gerät bereits aktiv. Durch das Fortfahren der Anmeldung wird die aktuelle Sitzung beendet. Möchtest du fortfahren?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "Schweizer Hochgeschwindigkeits-VPN, das deine Privatsphäre schützt, indem es deine Internetverbindung verschlüsselt.";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "Vielen Dank, dass Sie ProtonVPN benutzen. Schauen\nSie sich am besten direkt die wichtigsten Funktionen an.";
+"_welcome_description" = "Vielen Dank, dass du ProtonVPN benutzt. Schaue dir am besten direkt die wichtigsten Funktionen an.";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Als Willkommensgeschenk erhalten Sie einen 7-tägigen Zugang zu einem %@-Abonnement, welches Folgendes bietet:";
@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Verbindung getrennt";
 
+/* Button to apply coupon */
+"apply_coupon" = "Übernehmen";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Gutschein wurde erfolgreich angewandt.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Gutschein wurde erfolgreich angewandt. Dein Abonnement wird innerhalb weniger Minuten aktualisiert.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Gutschein-Code";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "Dein VPN-Zugang wird konfiguriert";
 
@@ -2155,4 +2167,7 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Die ProtonVPN-Website ist möglicherweise aufgrund von Netzwerkeinschränkungen vorübergehend nicht erreichbar. Bitte verwende die mobile App, um ein neues Proton-Konto zu erstellen.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Gutschein verwenden";
 

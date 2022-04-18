@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Activer le NAT modéré";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
+"_moderate_nat_explanation" = "Le NAT modéré désactive la randomisation du mappage d'adresses locales. Cela peut légèrement réduire votre sécurité, mais permet aux applications de pair-à-pair telles que les jeux en ligne d'établir des connexions directes. \nEn savoir plus";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "En savoir plus";
@@ -2147,6 +2147,18 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Vous n'êtes pas connecté";
 
+/* Button to apply coupon */
+"apply_coupon" = "Appliquer";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Le code promotionnel a bien été appliqué.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Le code promotionnel a bien été appliqué. Votre abonnement sera mis à niveau dans quelques minutes.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Code promotionnel";
+
 /* (No Comment) */
 "login_fetch_vpn_data" = "Configuration de votre accès VPN";
 
@@ -2155,4 +2167,7 @@
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Le site Web de ProtonVPN peut être temporairement indisponible à cause de restrictions réseau. Veuillez utiliser l'application mobile pour créer un nouveau compte Proton.";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Utiliser un code promotionnel";
 
