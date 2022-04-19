@@ -607,7 +607,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         hasConnected = false
         secureCoreToggle = false
         discourageSecureCore = true
-        newBrandModalShown = false
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         lastWireguardConnection = nil
