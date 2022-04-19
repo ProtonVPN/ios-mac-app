@@ -20,6 +20,7 @@
                 <outlet property="fromServerIV" destination="bgx-oU-VqE" id="3nq-Si-wrs"/>
                 <outlet property="fromServerLbl" destination="wen-YU-rxV" id="fgl-ON-Shn"/>
                 <outlet property="fromServerTitleLbl" destination="0iU-Qr-f2L" id="8hD-D8-6Gp"/>
+                <outlet property="fromToArrow" destination="psw-MP-7MX" id="xdh-zf-Yb5"/>
                 <outlet property="imageView" destination="uYd-M6-jfp" id="Rap-Rb-DuG"/>
                 <outlet property="offsetView" destination="E9a-e3-1ZQ" id="0q0-Eg-yWR"/>
                 <outlet property="primaryActionBtn" destination="rjh-SY-pQw" id="510-Ky-0at"/>
@@ -152,13 +153,13 @@
                                     </constraints>
                                 </customView>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="psw-MP-7MX">
-                                    <rect key="frame" x="172" y="15" width="32.5" height="39"/>
+                                    <rect key="frame" x="172" y="18" width="32" height="32"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="psw-MP-7MX" secondAttribute="height" multiplier="1:1" id="PvU-YA-X6W"/>
                                         <constraint firstAttribute="height" constant="32" id="zab-CV-RKJ"/>
                                     </constraints>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="hG9-Dl-zkn">
-                                        <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
+                                        <imageReference key="image" image="ic-arrow-right" symbolScale="large"/>
                                     </imageCell>
                                 </imageView>
                             </subviews>
@@ -331,10 +332,10 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fillEqually" orientation="horizontal" alignment="top" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V6S-Mf-DsC">
-                    <rect key="frame" x="235" y="64" width="184" height="46"/>
+                    <rect key="frame" x="236" y="64" width="182" height="46"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n2f-Xn-oqP" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="-7" y="19" width="98" height="32"/>
+                            <rect key="frame" x="-7" y="19" width="97" height="32"/>
                             <buttonCell key="cell" type="push" title="Not Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bOu-1z-Vmj">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system" size="16"/>
@@ -352,7 +353,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rjh-SY-pQw" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="93" y="19" width="98" height="32"/>
+                            <rect key="frame" x="92" y="19" width="97" height="32"/>
                             <buttonCell key="cell" type="push" title="Renew" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sNd-ga-MbG">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system" size="16"/>
@@ -395,9 +396,8 @@
         </customView>
     </objects>
     <resources>
-        <image name="ad-plain" width="84" height="49"/>
-        <image name="arrow.right" catalog="system" width="20" height="16"/>
         <image name="checkbox" width="95" height="95"/>
+        <image name="ic-arrow-right" width="24" height="24"/>
         <image name="sessions_limit" width="270" height="232"/>
     </resources>
 </document>
