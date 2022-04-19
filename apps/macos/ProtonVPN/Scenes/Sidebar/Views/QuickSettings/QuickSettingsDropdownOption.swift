@@ -55,7 +55,7 @@ class QuickSettingsDropdownOption: NSView {
         setBackground()
 
         plusBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        plusText.stringValue = LocalizedString.upgrade.uppercased()
+        plusText.stringValue = LocalizedString.plus
         plusAndTitleConstraint.isActive = false
 
         optionIconIV.cell?.setAccessibilityElement(false)
