@@ -45,13 +45,13 @@ enum SmartProtocolProtocol {
         #if os(iOS)
         switch self {
         case .wireguard:
-            return 0
+            return 3
         case .openVpnUdp:
             return 1
         case .openVpnTcp:
             return 2
         case .ikev2:
-            return 3
+            return 0
         }
         #else
         switch self {
