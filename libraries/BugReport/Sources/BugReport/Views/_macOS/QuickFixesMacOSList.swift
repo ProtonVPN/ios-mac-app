@@ -48,7 +48,7 @@ struct QuickFixesMacOSList: View {
                             if let link = suggestion.link, let url = URL(string: link) {
                                 Link(destination: url) {
                                     HStack(alignment: .top) {
-                                        Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                        Image(Asset.icLightbulb.name, bundle: assetsBundle)
                                             .renderingMode(.template)
                                             .foregroundColor(colors.qfIcon)
                                         Text(suggestion.text)
@@ -56,7 +56,7 @@ struct QuickFixesMacOSList: View {
                                             .multilineTextAlignment(.leading)
                                             .frame(minHeight: 24, alignment: .leading)
                                         Spacer()
-                                        Image(Asset.quickfixLink.name, bundle: assetsBundle)
+                                        Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
                                             .renderingMode(.template)
                                             .foregroundColor(colors.externalLinkIcon)
                                     }
@@ -72,7 +72,7 @@ struct QuickFixesMacOSList: View {
                                 }
                             } else {
                                 HStack(alignment: .top) {
-                                    Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                    Image(Asset.icLightbulb.name, bundle: assetsBundle)
                                         .renderingMode(.template)
                                         .foregroundColor(colors.qfIcon)
                                     Text(suggestion.text)
