@@ -56,7 +56,7 @@ public enum LocalizedString {
   public static var onboardingPlusOnly: String { return LocalizedString.tr("Localizable", "onboarding_plus_only") }
   /// Enjoy the world of privacy.
   public static var onboardingPurchasedNote: String { return LocalizedString.tr("Localizable", "onboarding_purchased_note") }
-  /// Plural format key: "%#@VARIABLE@"
+  /// Plural format key: "You now have access to %#@NUM_SEC_SERVERS@ and other premium features."
   public static func onboardingPurchasedSubtitle(_ p1: Int) -> String {
     return LocalizedString.tr("Localizable", "onboarding_purchased_subtitle", p1)
   }
@@ -68,6 +68,14 @@ public enum LocalizedString {
   public static var onboardingUnblockstreamingSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_subtitle") }
   /// Unblock streaming
   public static var onboardingUnblockstreamingTitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_title") }
+  /// Plural format key: "Connect %#@NUM_DEVICES@ simultaneously"
+  public static func onboardingUpsellFeatureMultipleDevices(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "onboarding_upsell_feature_multipleDevices", p1)
+  }
+  /// Plural format key: "Access all %#@NUM_SERVERS@ in %#@NUM_COUNTRIES@ with Plus"
+  public static func onboardingUpsellTitle(_ p1: Int, _ p2: Int) -> String {
+    return LocalizedString.tr("Localizable", "onboarding_upsell_title", p1, p2)
+  }
   /// Learn how to get the most out of Proton VPN in just a few seconds
   public static var onboardingWelcomeSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_welcome_subtitle") }
   /// Welcome to Proton VPN
