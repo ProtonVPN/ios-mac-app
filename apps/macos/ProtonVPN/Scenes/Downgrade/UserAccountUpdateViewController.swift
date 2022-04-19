@@ -48,7 +48,9 @@ class UserAccountUpdateViewController: NSViewController {
     @IBOutlet weak var fromServerTitleLbl: NSTextField!
     @IBOutlet weak var fromServerIV: NSImageView!
     @IBOutlet weak var fromServerLbl: NSTextField!
-    
+
+    @IBOutlet weak var fromToArrow: NSImageView!
+
     @IBOutlet weak var toServerTitleLbl: NSTextField!
     @IBOutlet weak var toServerIV: NSImageView!
     @IBOutlet weak var toServerLbl: NSTextField!
@@ -82,6 +84,7 @@ class UserAccountUpdateViewController: NSViewController {
         
         titleLbl.stringValue = alert.title ?? ""
         descriptionLbl.stringValue = alert.message ?? ""
+        fromToArrow.image = AppTheme.Icon.arrowRight.colored(.weak)
         
         setupFeatures()
         setupActions()
