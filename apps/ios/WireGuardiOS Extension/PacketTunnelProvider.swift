@@ -133,7 +133,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
-    // MARK - Logs
+    // MARK: - Logs
 
     // LoggingSystem crashes if bootstrap is called more than once during process lifetime, so we have to remember it was already set up
     private static var loggingSetupIsDone = false
