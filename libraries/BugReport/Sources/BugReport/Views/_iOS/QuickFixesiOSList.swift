@@ -57,21 +57,21 @@ struct QuickFixesiOSList: View {
                                 if let link = suggestion.link, let url = URL(string: link) {
                                     Link(destination: url) {
                                         HStack(alignment: .top) {
-                                            Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                            Image(Asset.icLightbulb.name, bundle: assetsBundle)
                                                 .foregroundColor(colors.qfIcon)
                                             Text(suggestion.text)
                                                 .multilineTextAlignment(.leading)
                                                 .lineSpacing(7)
                                                 .frame(minHeight: 24, alignment: .leading)
                                             Spacer()
-                                            Image(Asset.quickfixLink.name, bundle: assetsBundle)
+                                            Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
                                                 .foregroundColor(colors.externalLinkIcon)
                                         }
                                     }
                                     .padding(.horizontal)
                                 } else {
                                     HStack(alignment: .top) {
-                                        Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                        Image(Asset.icLightbulb.name, bundle: assetsBundle)
                                             .foregroundColor(colors.qfIcon)
                                         Text(suggestion.text)
                                             .lineSpacing(7)

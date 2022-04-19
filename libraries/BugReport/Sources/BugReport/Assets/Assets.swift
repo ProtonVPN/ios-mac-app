@@ -20,12 +20,12 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
   internal static let appIcon = ImageAsset(name: "app_icon")
+  internal static let icArrowOutSquare = ImageAsset(name: "ic-arrow-out-square")
   internal static let icInfoCircle = ImageAsset(name: "ic-info-circle")
+  internal static let icLightbulb = ImageAsset(name: "ic-lightbulb")
   internal static let icClipboard = ImageAsset(name: "ic_clipboard")
   internal static let icFailure = ImageAsset(name: "ic_failure")
   internal static let icSuccess = ImageAsset(name: "ic_success")
-  internal static let lightbulb = ImageAsset(name: "ic-lightbulb")
-  internal static let quickfixLink = ImageAsset(name: "ic-arrow-out-square")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
@@ -40,6 +40,7 @@ internal struct ImageAsset {
   internal typealias Image = UIImage
   #endif
 
+  @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.7, *)
   internal var image: Image {
     let bundle = BundleToken.bundle
     #if os(iOS) || os(tvOS)
@@ -55,9 +56,21 @@ internal struct ImageAsset {
     }
     return result
   }
+
+  #if os(iOS) || os(tvOS)
+  @available(iOS 8.0, tvOS 9.0, *)
+  internal func image(compatibleWith traitCollection: UITraitCollection) -> Image {
+    let bundle = BundleToken.bundle
+    guard let result = Image(named: name, in: bundle, compatibleWith: traitCollection) else {
+      fatalError("Unable to load image asset named \(name).")
+    }
+    return result
+  }
+  #endif
 }
 
 internal extension ImageAsset.Image {
+  @available(iOS 8.0, tvOS 9.0, watchOS 2.0, *)
   @available(macOS, deprecated,
     message: "This initializer is unsafe on macOS, please use the ImageAsset.image property")
   convenience init?(asset: ImageAsset) {
