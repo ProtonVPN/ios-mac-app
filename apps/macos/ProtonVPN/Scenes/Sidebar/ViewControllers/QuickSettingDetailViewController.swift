@@ -93,8 +93,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
         arrowIV.cell?.setAccessibilityElement(false)
         
-        dropdownUpgradeButton.attributedTitle = LocalizedString.upgrade.styled(font: .themeFont(.small))
-        dropdownUpgradeButton.actionType = .secondary
+        dropdownUpgradeButton.title = LocalizedString.upgrade
+        dropdownUpgradeButton.actionType = .confirmative
+        dropdownUpgradeButton.fontSize = .paragraph
 
         dropdownLearnMore.fontSize = .small
         dropdownLearnMore.title = LocalizedString.learnMore
