@@ -23,7 +23,8 @@ import ProtonCore_UIFoundations
 @available(macOS 11, *)
 extension BugReport.Colors {
     public init() {
-        self.init(interactive: ColorProvider.InteractionNorm,
+        self.init(primary: ColorProvider.Primary,
+                  interactive: ColorProvider.InteractionNorm,
                   interactiveSecondary: ColorProvider.InteractionNormActive,
                   interactiveActive: ColorProvider.InteractionNormHover,
                   interactiveDisabled: ColorProvider.InteractionWeak,
@@ -31,7 +32,8 @@ extension BugReport.Colors {
                   textSecondary: ColorProvider.TextWeak,
                   textAccent: ColorProvider.TextHint,
                   background: ColorProvider.BackgroundNorm,
-                  backgroundSecondary: ColorProvider.BackgroundWeak,
+                  backgroundWeak: ColorProvider.BackgroundWeak,
+                  backgroundStrong: ColorProvider.BackgroundStrong,
                   backgroundUpdateButton: ColorProvider.InteractionWeak,
                   separator: ColorProvider.BorderWeak,
                   qfIcon: ColorProvider.SignalWarning,

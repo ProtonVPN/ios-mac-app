@@ -51,7 +51,7 @@ struct MultiLineTextInputView: View {
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            .background(colors.backgroundSecondary)
+            .background(colors.backgroundWeak)
             .cornerRadius(8)
         }
         .padding(.horizontal)

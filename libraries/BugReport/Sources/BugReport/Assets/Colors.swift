@@ -23,7 +23,8 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct Colors {
 
-    public init(interactive: Color, interactiveSecondary: Color, interactiveActive: Color, interactiveDisabled: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundSecondary: Color, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
+    public init(primary: Color, interactive: Color, interactiveSecondary: Color, interactiveActive: Color, interactiveDisabled: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundWeak: Color, backgroundStrong: Color?, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
+        self.primary = primary
         self.interactive = interactive
         self.interactiveSecondary = interactiveSecondary
         self.interactiveActive = interactiveActive
@@ -32,13 +33,15 @@ public struct Colors {
         self.textSecondary = textSecondary
         self.textAccent = textAccent
         self.background = background
-        self.backgroundSecondary = backgroundSecondary
+        self.backgroundWeak = backgroundWeak
+        self.backgroundStrong = backgroundStrong
         self.backgroundUpdateButton = backgroundUpdateButton
         self.separator = separator
         self.qfIcon = qfIcon
         self.externalLinkIcon = externalLinkIcon
     }
 
+    public var primary: Color
     public var interactive: Color
     public var interactiveSecondary: Color
     public var interactiveActive: Color
@@ -49,7 +52,8 @@ public struct Colors {
     public var textAccent: Color
 
     public var background: Color
-    public var backgroundSecondary: Color
+    public var backgroundWeak: Color
+    public var backgroundStrong: Color?
     public var backgroundUpdateButton: Color
     public var separator: Color
 
@@ -58,6 +62,7 @@ public struct Colors {
 
     /// Default color set for testing and previews
     public static let testColors = Colors(
+        primary: Color(rgbValue: 0x8A6EFF),
         interactive: Color(rgbValue: 0x6D4AFF),
         interactiveSecondary: Color(rgbValue: 0x8A6EFF),
         interactiveActive: Color(rgbValue: 0xC4B7FF),
@@ -66,7 +71,8 @@ public struct Colors {
         textSecondary: Color(rgbValue: 0xA7A4B5),
         textAccent: Color(rgbValue: 0x6C49FF),
         background: Color(rgbValue: 0x1C1B24),
-        backgroundSecondary: Color(rgbValue: 0x292733),
+        backgroundWeak: Color(rgbValue: 0x292733),
+        backgroundStrong: nil,
         backgroundUpdateButton: Color(rgbValue: 0x303239),
         separator: Color(rgbValue: 0x303238),
         qfIcon: Color(rgbValue: 0xFAC530),

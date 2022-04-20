@@ -34,7 +34,7 @@ struct SwitchInputView: View {
             }
             .padding()
             #if os(iOS)
-            .background(Rectangle().foregroundColor(colors.backgroundSecondary))
+            .background(Rectangle().foregroundColor(colors.backgroundWeak))
             #endif
 
             if let placeholder = field.placeholder {
