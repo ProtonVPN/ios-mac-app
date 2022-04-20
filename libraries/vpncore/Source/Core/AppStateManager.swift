@@ -30,8 +30,6 @@ public protocol AppStateManagerFactory {
 }
 
 public protocol AppStateManager {
-    var stateChange: Notification.Name { get }
-    var displayStateChange: Notification.Name { get }
     
     var state: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
@@ -57,12 +55,9 @@ public protocol AppStateManager {
     func activeConnection() -> ConnectionConfiguration?
 }
 
-public let appStateChangedNotification = Notification.Name("AppStateManagerStateChange")
-public let displayStateChangeNotification = Notification.Name("AppStateManagerDisplayStateChange")
-
-extension AppStateManager {
-    public var stateChange: Notification.Name { appStateChangedNotification }
-    public var displayStateChange: Notification.Name { displayStateChangeNotification }
+public struct AppStateManagerNotification {
+    public static var stateChange: Notification.Name = Notification.Name("AppStateManagerStateChange")
+    public static var displayStateChange: Notification.Name = Notification.Name("AppStateManagerDisplayStateChange")
 }
 
 public class AppStateManagerImplementation: AppStateManager {
@@ -104,7 +99,7 @@ public class AppStateManagerImplementation: AppStateManager {
                     return
                 }
 
-                NotificationCenter.default.post(name: self.displayStateChange,
+                NotificationCenter.default.post(name: AppStateManagerNotification.displayStateChange,
                                                 object: self.displayState)
             }
         }
@@ -567,7 +562,7 @@ public class AppStateManagerImplementation: AppStateManager {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
             
-            NotificationCenter.default.post(name: self.stateChange, object: self.state)
+            NotificationCenter.default.post(name: AppStateManagerNotification.stateChange, object: self.state)
         }
     }
     

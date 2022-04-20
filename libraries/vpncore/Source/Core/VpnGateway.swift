@@ -191,7 +191,7 @@ public class VpnGateway: VpnGatewayProtocol {
             changeActiveServerType(activeServer.serverType)
         }
 
-        NotificationCenter.default.addObserver(forName: appStateManager.stateChange,
+        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.stateChange,
                                                object: nil,
                                                queue: nil,
                                                using: appStateChanged)

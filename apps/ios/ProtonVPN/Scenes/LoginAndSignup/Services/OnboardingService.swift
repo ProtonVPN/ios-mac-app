@@ -57,7 +57,7 @@ final class OnboardingModuleService {
         appStateManager = factory.makeAppStateManager()
         planService = factory.makePlanService()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: appStateManager.displayStateChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: AppStateManagerNotification.displayStateChange, object: nil)
     }
 
     @objc private func connectionChanged(_ notification: NSNotification) {

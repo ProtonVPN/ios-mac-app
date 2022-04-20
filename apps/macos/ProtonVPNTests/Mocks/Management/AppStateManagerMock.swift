@@ -28,13 +28,13 @@ import Foundation
 class AppStateManagerMock: AppStateManager {
     var displayState: AppDisplayState = .disconnected {
         didSet {
-            NotificationCenter.default.post(name: displayStateChange, object: state)
+            NotificationCenter.default.post(name: AppStateManagerNotification.displayStateChange, object: state)
         }
     }
 
     var state: AppState = .disconnected {
         didSet {
-            NotificationCenter.default.post(name: stateChange, object: state)
+            NotificationCenter.default.post(name: AppStateManagerNotification.stateChange, object: state)
         }
     }
     

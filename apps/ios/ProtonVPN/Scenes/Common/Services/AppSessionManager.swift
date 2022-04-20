@@ -87,7 +87,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         planService.delegate = self
 
-        NotificationCenter.default.addObserver(forName: appStateManager.stateChange, object: nil, queue: nil, using: updateState)
+        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.stateChange, object: nil, queue: nil, using: updateState)
     }
     
     // MARK: - Beginning of the login logic.

@@ -78,7 +78,7 @@ class MapSectionViewModel {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
 
-        NotificationCenter.default.addObserver(forName: appStateManager.stateChange,
+        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.stateChange,
                                                object: nil,
                                                queue: nil,
                                                using: appStateChanged)
