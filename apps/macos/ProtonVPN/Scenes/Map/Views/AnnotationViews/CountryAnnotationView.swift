@@ -212,16 +212,17 @@ class MapAnnotationView: MKAnnotationView {
         context.setFillColor(styleDelegate.cgColor(.background))
         context.setLineWidth(lineWidth)
 
+        let tf = triangleFrame
         // "Inner triangle frame." Upside down equilateral triangle with
         // side length == width, height set according to same 30/60/90 rule above.
         // The y-coordinate is offset by the size of the corner triangle's longer
         // side so that the bottom of the rounded corner still rests exactly over
         // the country's coordinate on the map.
         let itf = (
-            x: triangleFrame.origin.x + lineWidth/2,
-            y: triangleFrame.origin.y + ct.b,
-            w: triangleFrame.width - lineWidth,
-            h: (triangleFrame.width - lineWidth) * sqrt3/2 - lineWidth
+            x: tf.origin.x + lineWidth/2,
+            y: tf.origin.y + ct.b,
+            w: tf.width - lineWidth,
+            h: (tf.width - lineWidth) * sqrt3/2 - lineWidth
         )
 
         // To keep the bottom side of the hover button horizontal
