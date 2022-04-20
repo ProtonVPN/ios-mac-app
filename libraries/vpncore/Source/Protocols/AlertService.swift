@@ -777,7 +777,7 @@ public class NewBrandAlert: SystemAlert {
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var onReadMore: (() -> Void) = {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.manifesto)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.updatedProton)
     }
     public var dismiss: (() -> Void)?
 
@@ -822,7 +822,7 @@ public class SecureCoreUpsellAlert: UpsellAlert { }
 
 public class SafeModeUpsellAlert: UpsellAlert {
     override public func learnMore() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.moderateNAT)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.safeMode)
     }
 }
 

@@ -41,6 +41,7 @@ public enum AppTheme {
         public static let inverted = Self(bitPosition: 4)
         public static let disabled = Self(bitPosition: 5)
         public static let transparent = Self(bitPosition: 6)
+        public static let link = Self(bitPosition: 7)
 
         // Action contexts
         public static let interactive = Self(bitPosition: 10)
@@ -153,6 +154,7 @@ extension AppTheme.Style: CustomDebugStringConvertible {
             .interactive: "interactive",
             .inverted: "inverted",
             .warning: "warning",
+            .link: "link",
         ]
 
         var result = ""

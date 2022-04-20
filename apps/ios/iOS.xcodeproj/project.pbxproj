@@ -426,6 +426,9 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E53D64B2281159760060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B1281159760060C463 /* NewBrandModalIcons.swift */; };
+		E53D64B3281159790060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B1281159760060C463 /* NewBrandModalIcons.swift */; };
+		E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
@@ -971,6 +974,8 @@
 		E534EA432806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E534EA442806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		E53D64B1281159760060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NewBrandModalIcons.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/NewBrandModalIcons.swift; sourceTree = "<group>"; };
+		E593B96B27BA4D3000AFCA8C /* Upsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upsell.swift; sourceTree = "<group>"; };
 		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E86A799CCEC040F563446F6F /* Pods-WireGuardNetworkExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1935,6 +1940,7 @@
 			isa = PBXGroup;
 			children = (
 				E593B97027BA7DC100AFCA8C /* UpsellColors.swift */,
+				E53D64B1281159760060C463 /* NewBrandModalIcons.swift */,
 			);
 			path = Upsell;
 			sourceTree = "<group>";
@@ -3439,6 +3445,7 @@
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
 				7904DA4920E6BA3E008A4FCB /* ColorPickerViewModel.swift in Sources */,
+				E53D64B2281159760060C463 /* NewBrandModalIcons.swift in Sources */,
 				F37F741E27CF877A00F1C621 /* Search+Configuration.swift in Sources */,
 				D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */,
 				E1EB9E7622FF096A009E704F /* LogSelectionViewController.swift in Sources */,
@@ -3638,6 +3645,8 @@
 				D5136C55228592E80002C095 /* ServerItemViewModel.swift in Sources */,
 				D5136C56228592E80002C095 /* ConnectionViewModel.swift in Sources */,
 				D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */,
+				E5C035B627BAA930003196F5 /* UpsellMock.swift in Sources */,
+				E53D64B3281159790060C463 /* NewBrandModalIcons.swift in Sources */,
 				D5136C57228592E80002C095 /* MapViewModel.swift in Sources */,
 				D5136C58228592E80002C095 /* SecureCoreEntryCountryModel.swift in Sources */,
 				D5136C59228592E80002C095 /* CreateOrEditProfileViewModel.swift in Sources */,

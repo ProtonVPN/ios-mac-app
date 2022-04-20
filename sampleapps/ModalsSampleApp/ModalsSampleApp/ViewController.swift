@@ -78,7 +78,7 @@ class ViewController: UITableViewController {
                                                                            onLearnMore: nil)
             viewController = modalVC
         } else {
-            let modalVC = modalsFactory.newBrandViewController(onDismiss: nil, onReadMore: nil)
+            let modalVC = modalsFactory.newBrandViewController(icons: ModalIcons(), onDismiss: nil, onReadMore: nil)
             modalVC.modalPresentationStyle = .overFullScreen
             viewController = modalVC
         }
@@ -112,7 +112,7 @@ struct Colors: ModalsColors {
     var textAccent: UIColor
     var brand: UIColor
     var weakText: UIColor
-    
+
     init() {
         background = UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1)
         secondaryBackground = UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)
@@ -120,5 +120,19 @@ struct Colors: ModalsColors {
         textAccent = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
         brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
         weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
+    }
+}
+
+struct ModalIcons: NewBrandIcons {
+    let vpnMain: Image
+    let driveMain: Image
+    let calendarMain: Image
+    let mailMain: Image
+
+    init() {
+        vpnMain = UIImage(named: "VPNMain")!
+        driveMain = UIImage(named: "DriveMain")!
+        calendarMain = UIImage(named: "CalendarMain")!
+        mailMain = UIImage(named: "MailMain")!
     }
 }

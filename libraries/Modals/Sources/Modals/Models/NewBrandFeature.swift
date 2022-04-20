@@ -23,8 +23,25 @@ public struct NewBrandFeature {
     public let iconImage: Image = Asset.vpnMain.image
     public let title: String = LocalizedString.modalsNewBrandTitle
     public let subtitle: String = LocalizedString.modalsNewBrandSubtitle
-    public let readMore: String = LocalizedString.modalsNewBrandReadMore
-    public let cancel: String = LocalizedString.modalsNewBrandDismiss
+    public let gotIt: String = LocalizedString.modalsNewBrandGotIt
+    public let readMoreLink: String = LocalizedString.modalsNewBrandReadMore
+    public let learnMore: String = LocalizedString.modalsCommonLearnMore
 
     public init() { }
+}
+
+public protocol NewBrandIcons {
+    var vpnMain: Image { get }
+    var driveMain: Image { get }
+    var calendarMain: Image { get }
+    var mailMain: Image { get }
+}
+
+extension NSMutableAttributedString {
+    public func setAsLink(textToFind: String, linkURL: String) {
+        let foundRange = mutableString.range(of: textToFind)
+        if foundRange.location != NSNotFound {
+            addAttribute(.link, value: NSURL(string: linkURL)!, range: foundRange)
+        }
+    }
 }

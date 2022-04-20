@@ -19,6 +19,7 @@
 import UIKit
 import Modals
 import Modals_iOS
+import ProtonCore_UIFoundations
 
 struct UpsellColors: ModalsColors {
     var background: UIColor
@@ -27,7 +28,7 @@ struct UpsellColors: ModalsColors {
     var textAccent: UIColor
     var brand: UIColor
     var weakText: UIColor
-    
+
     init() {
         background = UIColor.backgroundColor()
         secondaryBackground = UIColor.secondaryBackgroundColor()

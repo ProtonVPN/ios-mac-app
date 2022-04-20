@@ -45,9 +45,10 @@ public struct ModalsFactory {
         return discourageSecureCoreViewController
     }
 
-    public func newBrandViewController(onReadMore: (() -> Void)?) -> NSViewController {
+    public func newBrandViewController(icons: NewBrandIcons, onReadMore: (() -> Void)?) -> NSViewController {
         let newBrandViewController = NewBrandViewController()
         newBrandViewController.onReadMore = onReadMore
+        newBrandViewController.icons = icons
         return newBrandViewController
     }
 }

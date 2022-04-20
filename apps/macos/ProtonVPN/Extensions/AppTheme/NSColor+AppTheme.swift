@@ -155,6 +155,8 @@ private extension AppTheme.Style {
             return CP.TextDisabled
         } else if contains(.inverted) {
             return CP.TextInvert
+        } else if contains(.link) {
+            return CP.LinkNorm
         } else {
             return CP.TextNorm
         }

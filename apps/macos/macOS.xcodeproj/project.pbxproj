@@ -72,8 +72,6 @@
 		4C8641C527D2620C00EEFB1D /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C8641C727D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
-		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
-		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
 		4C8641DD27DE0D8C00EEFB1D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641DC27DE0D8C00EEFB1D /* AppTheme.swift */; };
 		4C8641DF27DE0F6C00EEFB1D /* NSColor+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641DE27DE0F6C00EEFB1D /* NSColor+AppTheme.swift */; };
 		4C8641E127DE17F800EEFB1D /* NSFont+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E027DE17F800EEFB1D /* NSFont+AppTheme.swift */; };
@@ -227,6 +225,7 @@
 		E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
+		E53D64B5281159B90060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B4281159B90060C463 /* NewBrandModalIcons.swift */; };
 		E57CD12027BF81D800AA4144 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD11F27BF81D800AA4144 /* Modals */; };
 		E57CD12227BF81D800AA4144 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E57CD12127BF81D800AA4144 /* Modals-macOS */; };
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
@@ -633,7 +632,6 @@
 		4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSGradient+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSGradient+AppTheme.swift"; sourceTree = "<group>"; };
 		4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGMutablePath+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/CGMutablePath+Extension.swift"; sourceTree = "<group>"; };
 		4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LoadingAnimationFrames; sourceTree = "<group>"; };
-		4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGMutablePath+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/CGMutablePath+Extension.swift"; sourceTree = "<group>"; };
 		4C8313A627DE5D7200648797 /* NSTextField+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSTextField+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSTextField+AppTheme.swift"; sourceTree = "<group>"; };
 		4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCClientConnection.swift; path = ../../macos/ExtensionsIPC/IPCClientConnection.swift; sourceTree = "<group>"; };
 		4C8641B827D22B1900EEFB1D /* AuditTokenGetter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuditTokenGetter.h; path = ../../macos/ExtensionsIPC/AuditTokenGetter.h; sourceTree = "<group>"; };
@@ -856,6 +854,7 @@
 		E534EA4D2806B6DB00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
+		E53D64B4281159B90060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
 		E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TwoFactorView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.swift; sourceTree = "<group>"; };
@@ -1575,6 +1574,7 @@
 			isa = PBXGroup;
 			children = (
 				E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */,
+				E53D64B4281159B90060C463 /* NewBrandModalIcons.swift */,
 			);
 			path = Upsell;
 			sourceTree = "<group>";
@@ -3651,6 +3651,7 @@
 				EE01DD131F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */,
 				42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */,
+				E53D64B5281159B90060C463 /* NewBrandModalIcons.swift in Sources */,
 				E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */,
 				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
 				E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */,
