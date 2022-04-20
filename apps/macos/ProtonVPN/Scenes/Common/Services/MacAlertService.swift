@@ -358,7 +358,7 @@ extension MacAlertService: CoreAlertService {
 
     private func show(_ alert: NewBrandAlert) {
         let factory = ModalsFactory(colors: UpsellColors())
-        let viewController = factory.newBrandViewController(onReadMore: alert.onReadMore)
+        let viewController = factory.newBrandViewController(icons: NewBrandModalIcons(), onReadMore: alert.onReadMore)
         windowService.presentKeyModal(viewController: viewController)
     }
 

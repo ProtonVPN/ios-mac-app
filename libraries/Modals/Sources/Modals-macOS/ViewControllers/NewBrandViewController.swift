@@ -25,9 +25,15 @@ final class NewBrandViewController: NSViewController {
     @IBOutlet private weak var newBrandBackground: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var subtitleLabel: NSTextField!
+    @IBOutlet private weak var learnMoreButton: NSButton!
     @IBOutlet private weak var readMoreButton: UpsellPrimaryActionButton!
+    @IBOutlet private weak var mailIcon: NSImageView!
+    @IBOutlet private weak var calendarIcon: NSImageView!
+    @IBOutlet private weak var driveIcon: NSImageView!
+    @IBOutlet private weak var vpnIcon: NSImageView!
 
     var onReadMore: (() -> Void)?
+    var icons: NewBrandIcons?
 
     let feature = NewBrandFeature()
 
@@ -43,6 +49,10 @@ final class NewBrandViewController: NSViewController {
         super.awakeFromNib()
         view.wantsLayer = true
         view.layer?.backgroundColor = colors.background.cgColor
+        newBrandBackground.wantsLayer = true
+
+        learnMoreButton.attributedTitle = NSAttributedString(string: LocalizedString.modalsCommonLearnMore, attributes: [.foregroundColor: colors.linkNorm, .font: NSFont.systemFont(ofSize: 14)])
+
     }
 
     override func viewDidLoad() {
@@ -54,13 +64,34 @@ final class NewBrandViewController: NSViewController {
     private func setupOutlets() {
         newBrandBackground.layer?.cornerRadius = 8
         titleLabel.textColor = colors.text
-        subtitleLabel.textColor = colors.text
+        subtitleLabel.allowsEditingTextAttributes = true
+        subtitleLabel.isSelectable = true
     }
 
     private func setupFeature() {
-        readMoreButton.title = feature.readMore
+        mailIcon.image = icons?.mailMain
+        calendarIcon.image = icons?.calendarMain
+        driveIcon.image = icons?.driveMain
+        vpnIcon.image = icons?.vpnMain
+        readMoreButton.title = feature.gotIt
         iconBackground.image = feature.iconImage
         newBrandBackground.image = feature.artImage
+        titleLabel.stringValue = feature.title
+        subtitleLabel.attributedStringValue = subtitleLabelText()
+    }
+
+    private func subtitleLabelText() -> NSAttributedString {
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        let text = NSMutableAttributedString(string: feature.subtitle,
+                                             attributes: [.font: NSFont.systemFont(ofSize: 14, weight: .regular),
+                                                          .foregroundColor: colors.text,
+                                                          .paragraphStyle: style])
+        return text
+    }
+
+    @IBAction func learnMoreTapped(_ sender: NSButton) {
+        onReadMore?()
     }
 
     override public func viewWillAppear() {
@@ -69,7 +100,6 @@ final class NewBrandViewController: NSViewController {
     }
 
     @IBAction private func readMoreButtonTapped(_ sender: NSButton) {
-        onReadMore?()
         dismiss(nil)
     }
 }

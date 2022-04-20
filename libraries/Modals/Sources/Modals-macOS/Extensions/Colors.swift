@@ -26,4 +26,5 @@ public protocol ModalsColors {
     var brand: NSColor { get }
     var hoverBrand: NSColor { get }
     var weakText: NSColor { get }
+    var linkNorm: NSColor { get }
 }

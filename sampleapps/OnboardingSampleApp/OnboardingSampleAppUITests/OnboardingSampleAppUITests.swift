@@ -144,23 +144,23 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .verify.onboardingABScreen()
     }
 
-//    func testStartOnboardingBConnectNowFreePlan() {
-//        onboardingMainRobot
-//            .startOnboardingB()
-//            .verify.welcomeScreenIsShown()
-//            .startUserOnboarding()
-//            .verify.onboardingFirstSlideIsShown()
-//            .nextOnboardingScreen()
-//            .verify.onboardingSecondSlideIsShown()
-//            .nextOnboardingScreen()
-//            .verify.onboardingThirdSlideIsShown()
-//            .nextStepB()
-//            .verify.accessAllCountriesScreenIsShown()
-//            .useFreePlanB()
-//            .verify.establichConnectionScreenIsShown()
-//            .connectNow()
-//            .verify.connectionScreenIsShown()
-//            .nextStepB()
-//            .verify.onboardingABScreen()
-//    }
+    func testStartOnboardingBConnectNowFreePlan() {
+        onboardingMainRobot
+            .startOnboardingB()
+            .verify.welcomeScreenIsShown()
+            .startUserOnboarding()
+            .verify.onboardingFirstSlideIsShown()
+            .nextOnboardingScreen()
+            .verify.onboardingSecondSlideIsShown()
+            .nextOnboardingScreen()
+            .verify.onboardingThirdSlideIsShown()
+            .nextStepB()
+            .verify.accessAllCountriesScreenIsShown()
+            .useFreePlanB()
+            .verify.establichConnectionScreenIsShown()
+            .connectNow()
+            .verify.connectionScreenIsShown()
+            .nextStepB()
+            .verify.onboardingABScreen()
+    }
 }

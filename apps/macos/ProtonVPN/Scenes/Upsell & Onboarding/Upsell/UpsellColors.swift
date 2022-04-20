@@ -19,6 +19,7 @@
 import AppKit
 import Modals
 import Modals_macOS
+import ProtonCore_UIFoundations
 
 struct UpsellColors: ModalsColors {
     public let background: NSColor
@@ -26,6 +27,7 @@ struct UpsellColors: ModalsColors {
     public let brand: NSColor
     public let hoverBrand: NSColor
     public let weakText: NSColor
+    public let linkNorm: NSColor
 
     public init() {
         background = .color(.background)
@@ -33,5 +35,6 @@ struct UpsellColors: ModalsColors {
         brand = .color(.icon, .interactive)
         hoverBrand = .color(.icon, [.interactive, .hovered])
         weakText = .color(.text, .weak)
+        linkNorm = .color(.text, .link)
     }
 }

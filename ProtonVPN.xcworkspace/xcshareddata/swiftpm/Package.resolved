@@ -9,15 +9,6 @@
           "revision": "7977acd7597f413717058acc1e080731249a1d7e",
           "version": "0.5.0"
         }
-      },
-      {
-        "package": "WireGuardKit",
-        "repositoryURL": "https://github.com/jaroslavas/wireguard-apple.git",
-        "state": {
-          "branch": null,
-          "revision": "15c31a27cc098dea853a82e74ce3e042456298ff",
-          "version": null
-        }
       }
     ]
   },

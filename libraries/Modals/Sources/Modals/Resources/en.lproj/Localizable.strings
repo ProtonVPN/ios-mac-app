@@ -89,16 +89,16 @@
 "modals_discourage_secure_core_activate" = "Activate Secure Core";
 
 /* Title of the New Brand screen */
-"modals_new_brand_title" = "New look, same protection";
+"modals_new_brand_title" = "Updated Proton, unified protection";
 
 /* Subtitle of the New Brand screen */
-"modals_new_brand_subtitle" = "We’ve changed a few things around to make your encrypted apps fresher and more modern.";
+"modals_new_brand_subtitle" = "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an Internet where privacy is the default.";
+
+/* Title of "done" button in New Brand screen */
+"modals_new_brand_got_it" = "Got it";
 
 /* Read more with a link in New Brand screen */
-"modals_new_brand_read_more" = "Read more";
-
-/* Dismiss the New Brand screen */
-"modals_new_brand_dismiss" = "Dismiss";
+"modals_new_brand_read_more" = "https://proton.me/news/updated-proton";
 
 /* Common button title */
 "modals_common_cancel" = "Cancel";

@@ -32,10 +32,17 @@ final class ModalsSampleAppTests: XCTestCase {
 }
 
 struct MockColors: ModalsColors {
-    var textAccent: UIColor = .white
-    var secondaryBackground: UIColor = .white
-    var background: UIColor = .white
-    var text: UIColor = .white
-    var brand: UIColor = .white
-    var weakText: UIColor = .white
+    let textAccent: UIColor = .white
+    let secondaryBackground: UIColor = .white
+    let background: UIColor = .white
+    let text: UIColor = .white
+    let brand: UIColor = .white
+    let weakText: UIColor = .white
+}
+
+struct MockIcons: NewBrandIcons {
+    let vpnMain: Image = UIImage()
+    let driveMain: Image = UIImage()
+    let calendarMain: Image = UIImage()
+    let mailMain: Image = UIImage()
 }

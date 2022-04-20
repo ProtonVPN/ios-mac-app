@@ -26,13 +26,14 @@ public enum LocalizedString {
   public static var modalsDiscourageSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_title") }
   /// Upgrade
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
-  /// Dismiss
-  public static var modalsNewBrandDismiss: String { return LocalizedString.tr("Localizable", "modals_new_brand_dismiss") }
-  /// Read more
+  /// Got it
+  public static var modalsNewBrandGotIt: String { return LocalizedString.tr("Localizable", "modals_new_brand_got_it") }
+  /// https://proton.me/news/updated-proton
   public static var modalsNewBrandReadMore: String { return LocalizedString.tr("Localizable", "modals_new_brand_read_more") }
-  /// We’ve changed a few things around to make your encrypted apps fresher and more modern.
+  /// Introducing Proton’s refreshed look.
+  /// Many services, one mission. Welcome to an Internet where privacy is the default.
   public static var modalsNewBrandSubtitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_subtitle") }
-  /// New look, same protection
+  /// Updated Proton, unified protection
   public static var modalsNewBrandTitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_title") }
   /// Proton VPN's strict no-log policy is certified by an external audit.
   public static var modalsNoLogsExternalAudit: String { return LocalizedString.tr("Localizable", "modals_no_logs_external_audit") }
