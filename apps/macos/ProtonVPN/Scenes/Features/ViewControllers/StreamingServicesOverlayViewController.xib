@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,6 +15,7 @@
                 <outlet property="noteLbl" destination="i0m-7C-xIg" id="lmo-rT-kbe"/>
                 <outlet property="servicesCV" destination="Rto-Vd-3MV" id="ClY-TX-pLM"/>
                 <outlet property="servicesCVHeightConstraint" destination="2Yv-fo-33H" id="Syt-YD-uy7"/>
+                <outlet property="streamingIcon" destination="oOT-NO-5LW" id="OBe-B4-Jfu"/>
                 <outlet property="view" destination="qyh-l6-hEW" id="XLh-Ke-Fk3"/>
             </connections>
         </customObject>
@@ -154,7 +155,6 @@
                     </constraints>
                     <connections>
                         <outlet property="descriptionLbl" destination="IHU-yC-LzD" id="sbW-ig-9Xy"/>
-                        <outlet property="iconIV" destination="oOT-NO-5LW" id="6Ju-AO-JrZ"/>
                     </connections>
                 </customView>
             </subviews>
