@@ -61,11 +61,14 @@ public class DoHVPN: DoH, ServerConfig {
     }
 
     public var alternativeRouting: Bool {
-        get {
-            return status == .on
+        didSet {
+            settingsUpdated()
         }
-        set {
-            status = newValue ? .on : .off            
+    }
+
+    private var appState: AppState {
+        didSet {
+            settingsUpdated()
         }
     }
 
@@ -91,17 +94,42 @@ public class DoHVPN: DoH, ServerConfig {
         return defaultHost != liveURL
     }
 
-    public init(apiHost: String, verifyHost: String, alternativeRouting: Bool, customHost: String? = nil, atlasSecret: String? = nil) {
+    public init(apiHost: String, verifyHost: String, alternativeRouting: Bool, customHost: String? = nil, atlasSecret: String? = nil, appState: AppState) {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
         self.atlasSecret = atlasSecret
+        self.alternativeRouting = alternativeRouting
+        self.appState = appState
         super.init()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: appStateChangedNotification, object: nil)
+
         status = alternativeRouting ? .on : .off
+    }
+
+    @objc private func stateChanged(notification: Notification) {
+        guard let newState = notification.object as? AppState else {
+            return
+        }
+        appState = newState
+    }
+
+    private func settingsUpdated() {
+        if case .connected = appState {
+            if status == .on {
+                log.debug("Disabling DoH while connected to VPN", category: .api)
+            }
+            status = .off
+        } else {
+            if status == .off, alternativeRouting {
+                log.debug("Re-enabling DoH while disconnected from VPN", category: .api)
+            }
+            status = alternativeRouting ? .on : .off
+        }
     }
 }
 
 public extension DoHVPN {
-    static let mock = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false)
+    static let mock = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
 }

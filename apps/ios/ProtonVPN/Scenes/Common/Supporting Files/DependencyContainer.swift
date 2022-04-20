@@ -107,7 +107,13 @@ final class DependencyContainer {
         #else
         let atlasSecret: String? = nil
         #endif
-        let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host, alternativeRouting: propertiesManager.alternativeRouting, customHost: propertiesManager.apiEndpoint, atlasSecret: atlasSecret)
+        let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost,
+                         verifyHost: ObfuscatedConstants.humanVerificationV3Host,
+                         alternativeRouting: propertiesManager.alternativeRouting,
+                         customHost: propertiesManager.apiEndpoint,
+                         atlasSecret: atlasSecret,
+                         appState: .disconnected // AppState is not known yet, because DoH is initialized before AppStateManager
+        )
         propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
         }

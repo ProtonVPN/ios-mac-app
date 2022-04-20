@@ -57,9 +57,12 @@ public protocol AppStateManager {
     func activeConnection() -> ConnectionConfiguration?
 }
 
+public let appStateChangedNotification = Notification.Name("AppStateManagerStateChange")
+public let displayStateChangeNotification = Notification.Name("AppStateManagerDisplayStateChange")
+
 extension AppStateManager {
-    public var stateChange: Notification.Name { Notification.Name("AppStateManagerStateChange") }
-    public var displayStateChange: Notification.Name { Notification.Name("AppStateManagerDisplayStateChange") }
+    public var stateChange: Notification.Name { appStateChangedNotification }
+    public var displayStateChange: Notification.Name { displayStateChangeNotification }
 }
 
 public class AppStateManagerImplementation: AppStateManager {
