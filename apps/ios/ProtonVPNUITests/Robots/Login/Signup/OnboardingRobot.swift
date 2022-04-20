@@ -22,6 +22,7 @@ fileprivate let establishConnectionTitle = "Establish your first connection"
 fileprivate let connectNowButton = "Connect now"
 fileprivate let continueButton = "Continue"
 fileprivate let skipButton = "Skip"
+fileprivate let nextButton = "Next"
 fileprivate let closeButton = "CloseButton"
 fileprivate let takeTourButton = "Take a tour"
 
@@ -46,9 +47,14 @@ class OnboardingRobot: CoreElements {
           button(takeTourButton).tap()
           return OnboardingRobot()
     }
-    
+
     func skipOnboarding() -> OnboardingRobot {
           button(skipButton).tap()
+          return OnboardingRobot()
+    }
+
+    func nextOnboardingStep() -> OnboardingRobot {
+          button(nextButton).tap()
           return OnboardingRobot()
     }
 }

@@ -902,7 +902,7 @@
 "_plus_plan_features" = "Plus サーバー\nSecure Core\nTor サーバー";
 
 /* Plan upgrade required alert */
-"_plus_required" = "Plus または VISIONARY プランが必要です";
+"_plus_required" = "Plus または Visionary プランが必要です";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Plus サーバー";
@@ -1118,7 +1118,7 @@
 "_secure_core_info" = "Secure Coreネットワークを経由するようにルーティングすることにより、VPNサーバーの侵害に対する追加の保護を提供します。";
 
 /* MacOS app tour: secure core description */
-"_secure_core_tour_description" = "Secure Coreをオンにすると、安全なサーバーを経由してトラフィックをルーティングするため、追加のセキュリティ保護を得られます。PlusおよびVISIONARYプランのユーザーが利用可能です。";
+"_secure_core_tour_description" = "Secure Coreをオンにすると、安全なサーバーを経由してトラフィックをルーティングするため、追加のセキュリティ保護を得られます。PlusおよびVisionaryプランのユーザーが利用可能です。";
 
 /* MacOS app tour: secure core title */
 "_secure_core_tour_title" = "Secure Core";

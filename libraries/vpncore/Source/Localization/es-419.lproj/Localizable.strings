@@ -107,7 +107,7 @@
 "_auto_connect_tooltip" = "Al iniciar la app, estará conectado al perfil seleccionado";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "Servidores BASIC";
+"_basic_servers" = "Servidores Basic";
 
 /* Battery usages screen description */
 "_battery_description" = "Todo el tráfico en su teléfono se gestionará a través de OpenVPN, por lo tanto iOS asignará el uso de la batería de otras aplicaciones a Proton VPN.";
@@ -830,16 +830,16 @@
 "_locations_all" = "Todas las ubicaciones";
 
 /* (No Comment) */
-"_locations_basic" = "Ubicaciones BASIC";
+"_locations_basic" = "Ubicaciones Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Ubicaciones BASIC y PLUS";
+"_locations_basic_plus" = "Ubicaciones Basic y Plus";
 
 /* (No Comment) */
-"_locations_free" = "Ubicaciones GRATUITAS";
+"_locations_free" = "Ubicaciones Gratuitas";
 
 /* (No Comment) */
-"_locations_plus" = "Ubicaciones PLUS";
+"_locations_plus" = "Ubicaciones Plus";
 
 /* iOS: Login button in several places */
 "_log_in" = "Iniciar sesión";
@@ -1208,7 +1208,7 @@
 "_plus_required" = "Se requiere suscripción Plus o Visionary";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "Servidores PLUS";
+"_plus_servers" = "Servidores Plus";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "Use Secure Core, transmita sus programas de TV favoritos,\n¡use hasta 5 dispositivos diferentes y más!";
@@ -1280,7 +1280,7 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 /* (No Comment) */
-"_protonvpn_plus" = "Proton VPN PLUS";
+"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP pública: %@";
@@ -1667,7 +1667,7 @@
 "_subuser_alert_login_button" = "Iniciar sesión nuevamente";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Gracias por actualizar a PROFESSIONAL/VISIONARY";
+"_subuser_alert_title" = "Gracias por actualizar a Professional/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado con éxito";
@@ -1780,16 +1780,16 @@
 "_test_servers" = "Servidores de prueba";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "GRATIS";
+"_tier_free" = "Gratis";
 
 /* (No Comment) */
-"_tier_plus" = "PLUS";
+"_tier_plus" = "Plus";
 
 /* (No Comment) */
-"_tier_visionary" = "VISIONARY";
+"_tier_visionary" = "Visionary";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "tiempo agotado";

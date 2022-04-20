@@ -1780,16 +1780,16 @@
 "_test_servers" = "Servidores de TESTE";
 
 /* (No Comment) */
-"_tier_basic" = "BASIC";
+"_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "FREE";
+"_tier_free" = "Free";
 
 /* (No Comment) */
 "_tier_plus" = "Plus";
 
 /* (No Comment) */
-"_tier_visionary" = "VISIONARY";
+"_tier_visionary" = "Visionary";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "tempo esgotado";
