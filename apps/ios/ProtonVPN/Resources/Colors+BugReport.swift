@@ -22,7 +22,8 @@ import SwiftUI
 @available(iOS 14.0.0, *)
 extension BugReport.Colors {
     public init() {
-        self.init(interactive: Color(.brandColor()),
+        self.init(primary: Color(.brandLighten20Color()),
+                  interactive: Color(.brandColor()),
                   interactiveSecondary: Color(.brandLighten20Color()),
                   interactiveActive: Color(.brandLighten40Color()),
                   interactiveDisabled: Color(.brandDarken40Color()),
@@ -30,7 +31,8 @@ extension BugReport.Colors {
                   textSecondary: Color(.weakTextColor()),
                   textAccent: Color(.textAccent()),
                   background: Color(.backgroundColor()),
-                  backgroundSecondary: Color(.secondaryBackgroundColor()),
+                  backgroundWeak: Color(.secondaryBackgroundColor()),
+                  backgroundStrong: nil,
                   backgroundUpdateButton: Color(.weakInteractionColor()),
                   separator: Color(.normalSeparatorColor()),
                   qfIcon: Color(.notificationWarningColor()),

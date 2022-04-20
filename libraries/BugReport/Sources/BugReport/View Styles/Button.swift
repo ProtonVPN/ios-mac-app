@@ -97,7 +97,7 @@ struct CategoryButtonStyle: ButtonStyle {
             .foregroundColor(colors.textPrimary)
             .padding(.horizontal, horizontalPadding)
             .background(ZStack(alignment: .trailing) {
-                colors.backgroundSecondary
+                colors.backgroundStrong ?? colors.backgroundWeak
                 Image(systemName: "chevron.right").padding(.trailing, horizontalPadding)
             })
             .cornerRadius(cornerRadius)

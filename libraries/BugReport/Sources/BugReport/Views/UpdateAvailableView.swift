@@ -63,7 +63,7 @@ struct UpdateAvailableView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 24)
             #if os(iOS)
-            .background(colors.backgroundSecondary)
+            .background(colors.backgroundWeak)
             #endif
         }
     }

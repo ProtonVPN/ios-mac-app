@@ -65,7 +65,7 @@ struct BugReportNavigationView: View {
                         .opacity(viewModel.step > 1 ? 1 : 0) // There is no hidden() modifier with condition, so here we go :(
                         .transition(.opacity)
 
-                    StepProgress(step: viewModel.step, steps: viewModel.steps, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
+                    StepProgress(step: viewModel.step, steps: viewModel.steps, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
                         .padding(.bottom)
                         .transition(.opacity)
 
