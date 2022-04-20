@@ -24,8 +24,9 @@ fileprivate let slideTwoTitle = "Unblock streaming"
 fileprivate let slideTwoDescription = "Secure access your favourite content from other countries, now also on AndroidTV."
 fileprivate let slideThreeTitle = "Block ads and much more"
 fileprivate let slideThreeDescription = "Block malware, ads, and trackers in browser and in all apps."
+fileprivate let slideFourTitle = "No logs and Swiss-based"
 fileprivate let skipButton = "SkipButton"
-fileprivate let nextButton = "NextButton"
+fileprivate let nextButton = "Next"
 
 class OnboardingSlidesRobot {
     let app: XCUIApplication
@@ -75,13 +76,20 @@ class OnboardingSlidesRobot {
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
             return OnboardingSlidesRobot(app: app)
         }
-        
+
         @discardableResult
         func onboardingThirdSlideIsShown() -> OnboardingSlidesRobot {
             XCTAssert(app.staticTexts[slideThreeTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[slideThreeDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
+            return OnboardingSlidesRobot(app: app)
+        }
+
+        @discardableResult
+        func onboardingFourSlideIsShown() -> OnboardingSlidesRobot {
+            XCTAssert(app.staticTexts[slideFourTitle].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.buttons[nextButton].isEnabled)
             return OnboardingSlidesRobot(app: app)
         }
     }
