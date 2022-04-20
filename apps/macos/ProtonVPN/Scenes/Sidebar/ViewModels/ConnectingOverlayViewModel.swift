@@ -86,7 +86,7 @@ class ConnectingOverlayViewModel {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appStateChanged(_:)),
-                                               name: appStateManager.stateChange,
+                                               name: AppStateManagerNotification.stateChange,
                                                object: nil)
     }
     

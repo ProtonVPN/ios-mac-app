@@ -107,6 +107,6 @@ class TabBarViewModel {
     // MARK: - Private
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: appStateManager.displayStateChange, object: nil)
+                                               name: AppStateManagerNotification.displayStateChange, object: nil)
     }
 }

@@ -37,11 +37,11 @@ final class ConnectionBarViewModel {
     init(appStateManager: AppStateManager) {
         self.appStateManager = appStateManager
 
-        NotificationCenter.default.addObserver(forName: appStateManager.stateChange,
+        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.stateChange,
                                                object: nil,
                                                queue: nil,
                                                using: updateState)
-        NotificationCenter.default.addObserver(forName: appStateManager.displayStateChange,
+        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.displayStateChange,
                                                object: nil,
                                                queue: nil,
                                                using: updateDisplayState)
