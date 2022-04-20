@@ -1,11 +1,11 @@
 /* Section header in search */
-"_basic_servers" = "BASIC-servers";
+"_basic_servers" = "Basic-servers";
 
 /* Section header in search */
-"_free_servers" = "GRATIS servers";
+"_free_servers" = "Gratis servers";
 
 /* Section header in search */
-"_plus_servers" = "PLUS servers";
+"_plus_servers" = "Plus servers";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Land, stad of server";

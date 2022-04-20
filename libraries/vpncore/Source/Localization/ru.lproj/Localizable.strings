@@ -602,7 +602,7 @@
 "_feature_speed" = "Скорость";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Серверы PLUS поддерживают просмотр трансляций (Netflix, Disney+, и т. д.) из любой точки мира.";
+"_feature_streaming_description" = "Серверы Plus поддерживают просмотр трансляций (Netflix, Disney+, и т. д.) из любой точки мира.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
@@ -1789,7 +1789,7 @@
 "_tier_plus" = "Plus";
 
 /* (No Comment) */
-"_tier_visionary" = "VISIONARY";
+"_tier_visionary" = "Visionary";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "время ожидания истекло";

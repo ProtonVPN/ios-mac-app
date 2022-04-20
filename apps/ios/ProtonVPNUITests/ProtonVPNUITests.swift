@@ -171,10 +171,16 @@ class ProtonVPNUITests: XCTestCase {
         let elementclose = app.buttons["CloseButton"]
         
         if elementclose.exists {
-            return onboardingRobot.closeOnboardingScreen().skipOnboarding().startUsingProtonVpn()
-        }
-        else {
-          return onboardingRobot.skipOnboarding().startUsingProtonVpn().closeOnboardingScreen()
+            return onboardingRobot
+                .closeOnboardingScreen()
+                .skipOnboarding()
+                .startUsingProtonVpn()
+        } else {
+            return onboardingRobot
+                .nextOnboardingStep()
+                .skipOnboarding()
+                .startUsingProtonVpn()
+                .closeOnboardingScreen()
         }
         return OnboardingRobot()
     }

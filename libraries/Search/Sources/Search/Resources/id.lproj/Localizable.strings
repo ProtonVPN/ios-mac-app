@@ -1,11 +1,11 @@
 /* Section header in search */
-"_basic_servers" = "Server BASIC";
+"_basic_servers" = "Server Basic";
 
 /* Section header in search */
-"_free_servers" = "Server GRATIS";
+"_free_servers" = "Server Gratis";
 
 /* Section header in search */
-"_plus_servers" = "Server-server PLUS";
+"_plus_servers" = "Server-server Plus";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Negara, Kota, atau Server";
