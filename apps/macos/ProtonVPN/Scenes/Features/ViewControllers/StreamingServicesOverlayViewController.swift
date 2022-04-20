@@ -24,7 +24,7 @@ import Cocoa
 import vpncore
 
 class StreamingServicesOverlayViewController: NSViewController {
-    
+    @IBOutlet private weak var streamingIcon: NSImageView!
     @IBOutlet private weak var countryLbl: NSTextField!
     @IBOutlet private weak var featuresLbl: NSTextField!
     @IBOutlet private weak var instructionLbl: NSTextField!
@@ -48,6 +48,7 @@ class StreamingServicesOverlayViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let backgroundColor: NSColor = .color(.background)
+        streamingIcon.image = AppTheme.Icon.play.colored(.weak)
         countryLbl.stringValue = LocalizedString.streamingTitle + " - " + viewModel.countryName
         featuresLbl.stringValue = LocalizedString.featuresTitle
         instructionLbl.stringValue = LocalizedString.streamingServersDescription
