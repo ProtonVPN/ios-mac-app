@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -129,6 +129,7 @@
                         <constraint firstAttribute="bottom" secondItem="eFD-KT-oxG" secondAttribute="bottom" constant="20" id="62S-s2-LUL"/>
                         <constraint firstItem="eFD-KT-oxG" firstAttribute="top" secondItem="9O0-r8-G55" secondAttribute="top" id="ahB-NG-P0k"/>
                         <constraint firstItem="eFD-KT-oxG" firstAttribute="centerY" secondItem="ar6-Fs-KA6" secondAttribute="centerY" id="fLL-I2-BUj"/>
+                        <constraint firstAttribute="trailing" secondItem="eFD-KT-oxG" secondAttribute="trailing" constant="20" id="yJN-nV-MQW"/>
                     </constraints>
                 </customView>
             </subviews>
@@ -138,7 +139,6 @@
                 <constraint firstItem="9O0-r8-G55" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="3uV-Us-WTd"/>
                 <constraint firstAttribute="bottom" secondItem="9O0-r8-G55" secondAttribute="bottom" id="Iml-k5-WQz"/>
                 <constraint firstAttribute="trailing" secondItem="9O0-r8-G55" secondAttribute="trailing" id="TNq-0B-R3p"/>
-                <constraint firstItem="eFD-KT-oxG" firstAttribute="trailing" secondItem="0m1-gw-FAf" secondAttribute="trailing" id="ZYK-31-mIA"/>
                 <constraint firstAttribute="trailing" secondItem="YQv-pg-Si6" secondAttribute="trailing" id="zNt-Lb-TFe"/>
                 <constraint firstItem="YQv-pg-Si6" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="zkp-MG-1vf"/>
             </constraints>
