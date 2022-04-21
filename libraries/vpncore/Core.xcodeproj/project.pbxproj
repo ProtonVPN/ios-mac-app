@@ -435,6 +435,8 @@
 		E977A78E268206B30013495A /* AuthCredentials+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A78B268206B30013495A /* AuthCredentials+vpncore.swift */; };
 		E977A797268215A70013495A /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A796268215A70013495A /* KeychainConstants.swift */; };
 		E977A799268215A70013495A /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A796268215A70013495A /* KeychainConstants.swift */; };
+		E97CBDC628118891004D2989 /* OSLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97CBDC528118891004D2989 /* OSLogHandler.swift */; };
+		E97CBDC728118891004D2989 /* OSLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97CBDC528118891004D2989 /* OSLogHandler.swift */; };
 		E992F27E26675C3200169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
 		E992F27F26675C3300169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
 		E99F266027A1A7A5003C4586 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E986F007279843F9003A745D /* BugReport */; };
@@ -920,6 +922,7 @@
 		E977A7822681F9C70013495A /* AuthCredentials+Alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Alamofire.swift"; sourceTree = "<group>"; };
 		E977A78B268206B30013495A /* AuthCredentials+vpncore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+vpncore.swift"; sourceTree = "<group>"; };
 		E977A796268215A70013495A /* KeychainConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainConstants.swift; sourceTree = "<group>"; };
+		E97CBDC528118891004D2989 /* OSLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogHandler.swift; sourceTree = "<group>"; };
 		E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
 		E9B32EAFAF2F48F27AE34B86 /* FileLogHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogHandlerTests.swift; sourceTree = "<group>"; };
@@ -1132,6 +1135,7 @@
 			children = (
 				8A9ACAF7DD1B9A7C7F48F43E /* ConsoleLogHandler.swift */,
 				53EBB65215BA5F5CD6AD30E9 /* FileLogHandler.swift */,
+				E97CBDC528118891004D2989 /* OSLogHandler.swift */,
 			);
 			path = Handlers;
 			sourceTree = "<group>";
@@ -2622,6 +2626,7 @@
 				E1616BFC21C95C5C00F42D79 /* Weak.swift in Sources */,
 				F30B9EAF2629B1BC0094C65E /* AsyncOperation.swift in Sources */,
 				E148AE7621C2B12C007AB65A /* NSError+Extension.swift in Sources */,
+				E97CBDC628118891004D2989 /* OSLogHandler.swift in Sources */,
 				D5DCCADC252B5C2B004CB353 /* GetApiNotificationsResponse.swift in Sources */,
 				E9C9FDC7268C8755005665C6 /* UIDevice+ModelName.swift in Sources */,
 				F34808AC266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */,
@@ -2871,6 +2876,7 @@
 				D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */,
 				F30B9EB12629B1BC0094C65E /* AsyncOperation.swift in Sources */,
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,
+				E97CBDC728118891004D2989 /* OSLogHandler.swift in Sources */,
 				42066EFB263040E0001F86DB /* FeatureCellViewModel.swift in Sources */,
 				E1616C0121C95D1E00F42D79 /* ProfileManager.swift in Sources */,
 				F31A46FB26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */,

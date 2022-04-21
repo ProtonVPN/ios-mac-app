@@ -54,12 +54,16 @@ public class Logger {
     }
 }
 
+extension OSLog {
+    static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+}
+
 func wg_log(_ type: OSLogType, staticMessage msg: StaticString) {
-    os_log("[PROTON-WG] %{public}s", log: OSLog.default, type: type, String(describing: msg))
+    os_log("%{public}s", log: OSLog.wg, type: type, String(describing: msg))
     Logger.global?.log(message: "\(msg)")
 }
 
 func wg_log(_ type: OSLogType, message msg: String) {
-    os_log("[PROTON-WG] %{public}s", log: OSLog.default, type: type, msg)
+    os_log("%{public}s", log: OSLog.wg, type: type, msg)
     Logger.global?.log(message: msg)
 }

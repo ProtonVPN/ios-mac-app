@@ -138,6 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LoggingSystem.bootstrap {_ in
             return MultiplexLogHandler([
                 ConsoleLogHandler(),
+//                OSLogHandler(), // Uncomment if you need logs to appear in system logs (through console app or `log` command)
                 FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename))
             ])
         }
