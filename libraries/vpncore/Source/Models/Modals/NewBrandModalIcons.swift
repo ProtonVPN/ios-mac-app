@@ -17,3 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Modals
+import ProtonCore_UIFoundations
+
+public struct NewBrandModalIcons: NewBrandIcons {
+    public let vpnMain: Image
+    public let driveMain: Image
+    public let calendarMain: Image
+    public let mailMain: Image
+
+    public init() {
+        vpnMain = IconProvider.vpnMain
+        driveMain = IconProvider.driveMain
+        calendarMain = IconProvider.calendarMain
+        mailMain = IconProvider.mailMain
+    }
+}

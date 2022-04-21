@@ -17,9 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
-import Modals
 import Modals_iOS
-import ProtonCore_UIFoundations
 
 struct UpsellColors: ModalsColors {
     var background: UIColor
