@@ -17,15 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import NetworkExtension
 #if os(iOS)
 import UIKit
 #endif
 
 final class ExtensionAPIService {
 
-    func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    func refreshCertificate(provider: NEPacketTunnelProvider, publicKey: String, features: VPNConnectionFeatures?, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
         // On the first try we allow refreshing API token
-        refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
+        refreshCertificate(provider: provider, publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
     }
 
     init(storage: Storage) {
@@ -57,7 +58,7 @@ final class ExtensionAPIService {
         case apiTokenRefreshError(Error?)
     }
 
-    private func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    private func refreshCertificate(provider: NEPacketTunnelProvider, publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
 
         guard let authCredentials = AuthKeychain.fetch() else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
@@ -74,22 +75,32 @@ final class ExtensionAPIService {
 
         let certificateRequest = CertificateRefreshRequest(params: params)
         var urlRequest = makeUrlRequest(certificateRequest)
+        guard let url = urlRequest.url, let host = url.host else {
+            log.error("Could not get API endpoint hostname.", category: .api)
+            completionHandler(.failure(ExtensionAPIServiceError.parseError))
+            return
+        }
 
         // Auth Headers
         urlRequest.setValue("Bearer \(authCredentials.accessToken)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
-        let task = session.dataTask(with: urlRequest) { data, response, error in
-            if (response as? HTTPURLResponse)?.statusCode == 401 {
+        let port = url.port ?? 443
+        let endpoint = NWHostEndpoint(hostname: host, port: "\(port)")
+
+        let connection = provider.createTCPConnectionThroughTunnel(to: endpoint, enableTLS: true, tlsParameters: nil, delegate: nil)
+        let session = NWTCPConnectionSession(connection: connection)
+        session.request(urlRequest) { data, response, error in
+            if response?.statusCode == 401 {
                 guard refreshApiTokenIfNeeded else {
                     log.error("Will not refresh API token.", category: .api)
-                    completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
+                    completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(nil)))
                     return
                 }
                 self.handleTokenExpired(publicKey: publicKey, features: features) { result in
                     switch result {
                     case .success:
-                        self.refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
+                        self.refreshCertificate(provider: provider, publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
 
                     case .failure(let error):
                         log.error("Error refreshing certificate: \(error)", category: .userCert)
@@ -99,13 +110,7 @@ final class ExtensionAPIService {
                 return
             }
 
-            if let error = error {
-                log.error("Error refreshing certificate: \(error)", category: .userCert)
-                completionHandler(.failure(ExtensionAPIServiceError.requestError(error)))
-                return
-            }
             guard let data = data else {
-                log.error("No response data", category: .userCert)
                 completionHandler(.failure(ExtensionAPIServiceError.noData))
                 return
             }
@@ -123,7 +128,6 @@ final class ExtensionAPIService {
                 return
             }
         }
-        task.resume()
     }
 
     private func makeUrlRequest(_ apiRequest: APIRequest) -> URLRequest {
