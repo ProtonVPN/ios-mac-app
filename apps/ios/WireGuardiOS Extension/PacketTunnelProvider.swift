@@ -18,7 +18,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override init() {
         super.init()
-        certificateRefreshManager = ExtensionCertificateRefreshManager(provider: self)
+        let storage = Storage()
+
+        let connectionFactory = NEPacketTunnelConnectionSessionFactory(provider: self)
+        let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
+                                                                 storage: storage)
+        certificateRefreshManager = ExtensionCertificateRefreshManager(storage: storage,
+                                                                       connectionFactory: connectionFactory,
+                                                                       vpnAuthenticationStorage: vpnAuthenticationStorage,
+                                                                       keychain: AuthKeychain())
         setupLogging()
     }
     

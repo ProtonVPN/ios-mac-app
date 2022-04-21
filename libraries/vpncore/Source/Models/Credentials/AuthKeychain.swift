@@ -22,6 +22,11 @@
 import Foundation
 import KeychainAccess
 
+public protocol AuthKeychainHandle {
+    func fetch() -> AuthCredentials?
+    func store(_ credentials: AuthCredentials) throws
+}
+
 public class AuthKeychain {
     
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
@@ -84,4 +89,14 @@ public class AuthKeychain {
     }
 
     public init() { }
+}
+
+extension AuthKeychain: AuthKeychainHandle {
+    public func fetch() -> AuthCredentials? {
+        Self.fetch()
+    }
+
+    public func store(_ credentials: AuthCredentials) throws {
+        try Self.store(credentials)
+    }
 }

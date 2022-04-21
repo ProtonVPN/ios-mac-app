@@ -19,13 +19,12 @@ final class ExtensionCertificateRefreshManager {
     /// Certificate will be refreshed this number of seconds earlier than requested to lessen the possibility of refreshing it by both app and extension.
     private var refreshEarlierBy: TimeInterval = -60
     
-    private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup, storage: Storage())
-    private let apiService = ExtensionAPIService(storage: Storage())
+    private let vpnAuthenticationStorage: VpnAuthenticationStorage
+    private let apiService: ExtensionAPIService
 
-    private weak var provider: NEPacketTunnelProvider!
-
-    init(provider: NEPacketTunnelProvider) {
-        self.provider = provider
+    init(storage: Storage, connectionFactory: ConnectionSessionFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
+        self.vpnAuthenticationStorage = vpnAuthenticationStorage
+        self.apiService = ExtensionAPIService(storage: storage, connectionFactory: connectionFactory, keychain: keychain)
     }
     
     func planNextRefresh() {
@@ -84,7 +83,7 @@ final class ExtensionCertificateRefreshManager {
         }
         
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
-        apiService.refreshCertificate(provider: provider, publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
+        apiService.refreshCertificate(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
             switch result {
             case .success(let certificate):
                 wg_log(.info, message: "Certificate refreshed. Saving to keychain.")
