@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import os.log
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `planNextRefresh()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.

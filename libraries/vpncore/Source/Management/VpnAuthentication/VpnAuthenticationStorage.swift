@@ -21,7 +21,6 @@
 //
 
 import Foundation
-import KeychainAccess
 
 public protocol VpnAuthenticationStorage {
     func deleteKeys()
@@ -38,108 +37,6 @@ public protocol VpnAuthenticationStorage {
 public protocol VpnAuthenticationStorageDelegate: AnyObject {
     func certificateDeleted()
     func certificateStored(_ certificate: VpnCertificateWithFeatures)
-}
-
-public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
-    private struct KeychainStorageKey {
-        static let vpnKeys = "vpnKeys"
-        static let vpnCertificate = "vpnCertificate"
-    }
-    
-    private struct DefaultsStorageKey {
-        static let vpnCertificateFeatures = "vpnCertificateFeatures"
-    }
-
-    private let appKeychain: KeychainAccess.Keychain
-    private var storage: Storage
-    public weak var delegate: VpnAuthenticationStorageDelegate?
-
-    public init(accessGroup: String, storage: Storage) {
-        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
-        self.storage = storage
-    }
-
-    public func deleteKeys() {
-        log.info("Deleting existing vpn authentication keys", category: .userCert)
-        appKeychain[KeychainStorageKey.vpnKeys] = nil
-        deleteCertificate()
-    }
-
-    public func deleteCertificate() {
-        log.info("Deleting existing vpn authentication certificate", category: .userCert)
-        appKeychain[KeychainStorageKey.vpnCertificate] = nil
-        delegate?.certificateDeleted()
-    }
-
-    public func getKeys() -> VpnKeys {
-        let keys: VpnKeys
-        if let existingKeys = self.getStoredKeys() {
-            log.info("Using existing vpn authentication keys", category: .userCert)
-            keys = existingKeys
-        } else {
-            log.info("No vpn auth keys, generating and storing", category: .userCert)
-            keys = VpnKeys()
-            self.store(keys: keys)
-        }
-
-        return keys
-    }
-    
-    public func getStoredCertificate() -> VpnCertificate? {
-       do {
-            guard let json = try appKeychain.getData(KeychainStorageKey.vpnCertificate) else {
-                return nil
-            }
-
-            let certificate = try JSONDecoder().decode(VpnCertificate.self, from: json)
-            return certificate
-        } catch {
-            log.error("Keychain (vpn) read error: \(error)", category: .userCert)
-            return nil
-        }
-    }
-    
-    public func getStoredCertificateFeatures() -> VPNConnectionFeatures? {
-        return storage.getDecodableValue(VPNConnectionFeatures.self, forKey: DefaultsStorageKey.vpnCertificateFeatures)
-    }
-
-    public func getStoredKeys() -> VpnKeys? {
-        do {
-            guard let json = try appKeychain.getData(KeychainStorageKey.vpnKeys) else {
-                return nil
-            }
-
-            let keys = try JSONDecoder().decode(VpnKeys.self, from: json)
-            return keys
-        } catch {
-            log.error("Keychain (vpn) read error: \(error)", category: .userCert)
-            // If keys are broken then the certificate is also unusable, so just delete everything and start again
-            deleteKeys()
-            deleteCertificate()
-            return nil
-        }
-    }
-
-    public func store(keys: VpnKeys) {
-        do {
-            let data = try JSONEncoder().encode(keys)
-            try appKeychain.set(data, key: KeychainStorageKey.vpnKeys)
-        } catch {
-            log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
-        }
-    }
-
-    public func store(certificate: VpnCertificateWithFeatures) {
-        do {
-            let data = try JSONEncoder().encode(certificate.certificate)
-            try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
-            storage.setEncodableValue(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
-            log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
-            delegate?.certificateStored(certificate)
-        } catch {
-            log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
-        }
-    }
 }
 
 public protocol VpnAuthenticationStorageUserDefaults {
