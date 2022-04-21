@@ -70,7 +70,7 @@ class WarningPopupViewController: NSViewController {
     
     private func setupFooterSection() {
         footerView.wantsLayer = true
-        footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
+        footerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
         
         cancelButton.title = LocalizedString.cancel
         cancelButton.fontSize = 14
