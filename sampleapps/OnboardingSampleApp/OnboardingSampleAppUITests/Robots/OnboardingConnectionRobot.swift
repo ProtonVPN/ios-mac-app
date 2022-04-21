@@ -28,6 +28,8 @@ fileprivate let connectionDescription = "CongratulationsSubtitle"
 fileprivate let connectedTo = "ConnectedToLabel"
 fileprivate let continueButton = "DoneButton"
 fileprivate let getPlusButton = "GetPlusButton"
+fileprivate let slideFourTitle = "No logs and Swiss-based"
+fileprivate let nextButton = "Next"
 
 class OnboardingConnectionRobot {
     let app: XCUIApplication
@@ -52,6 +54,11 @@ class OnboardingConnectionRobot {
         app.buttons[continueButton].tap()
         return OnboardingMainRobot(app: app)
     }
+
+    func nextOnboardingScreen() -> OnboardingConnectionRobot {
+        app.buttons[nextButton].tap()
+        return OnboardingConnectionRobot(app: app)
+    }
     
     class Verify {
         let app: XCUIApplication
@@ -60,7 +67,7 @@ class OnboardingConnectionRobot {
             self.app = app
         }
 
-        func establichConnectionScreenIsShown() -> OnboardingConnectionRobot {
+        func establishConnectionScreenIsShown() -> OnboardingConnectionRobot {
             XCTAssert(app.staticTexts[establishConnectionTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[establishConnectionSubtitle].exists)
             XCTAssertTrue(app.staticTexts[establishConnectionDescription].exists)
@@ -74,6 +81,13 @@ class OnboardingConnectionRobot {
             XCTAssertTrue(app.staticTexts[connectionDescription].exists)
             XCTAssertTrue(app.staticTexts[connectedTo].exists)
             XCTAssertTrue(app.buttons[continueButton].isEnabled)
+            return OnboardingConnectionRobot(app: app)
+        }
+
+        @discardableResult
+        func onboardingFourSlideIsShown() -> OnboardingConnectionRobot {
+            XCTAssert(app.staticTexts[slideFourTitle].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.buttons[nextButton].isEnabled)
             return OnboardingConnectionRobot(app: app)
         }
     }
