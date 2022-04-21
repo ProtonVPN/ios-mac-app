@@ -25,7 +25,29 @@ enum HTTPError: Error {
     case noData
 }
 
-class NWTCPConnectionSession {
+protocol ConnectionSession {
+    func request(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
+}
+
+protocol ConnectionSessionFactory {
+    func connect(hostname: String, port: String, useTLS: Bool) -> ConnectionSession
+}
+
+class NEPacketTunnelConnectionSessionFactory: ConnectionSessionFactory {
+    let provider: NEPacketTunnelProvider
+
+    init(provider: NEPacketTunnelProvider) {
+        self.provider = provider
+    }
+
+    func connect(hostname: String, port: String, useTLS: Bool) -> ConnectionSession {
+        let endpoint = NWHostEndpoint(hostname: hostname, port: port)
+        let connection = provider.createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: nil)
+        return NWTCPConnectionSession(connection: connection)
+    }
+}
+
+class NWTCPConnectionSession: ConnectionSession {
     let connection: NWTCPConnection
     var observation: NSKeyValueObservation!
     let ready = DispatchGroup()

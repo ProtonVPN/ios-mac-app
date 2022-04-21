@@ -23,14 +23,15 @@ import UIKit
 #endif
 
 final class ExtensionAPIService {
-
-    func refreshCertificate(provider: NEPacketTunnelProvider, publicKey: String, features: VPNConnectionFeatures?, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
         // On the first try we allow refreshing API token
-        refreshCertificate(provider: provider, publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
+        refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
     }
 
-    init(storage: Storage) {
+    init(storage: Storage, connectionFactory: ConnectionSessionFactory, keychain: AuthKeychainHandle) {
         self.storage = storage
+        self.connectionFactory = connectionFactory
+        self.keychain = keychain
     }
 
     // MARK: -
@@ -47,8 +48,8 @@ final class ExtensionAPIService {
     }
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
-    private let config = URLSessionConfiguration.default
-    private lazy var session = URLSession(configuration: config)
+    private let connectionFactory: ConnectionSessionFactory
+    private let keychain: AuthKeychainHandle
 
     enum ExtensionAPIServiceError: Error {
         case noCredentials
@@ -58,9 +59,9 @@ final class ExtensionAPIService {
         case apiTokenRefreshError(Error?)
     }
 
-    private func refreshCertificate(provider: NEPacketTunnelProvider, publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    private func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
 
-        guard let authCredentials = AuthKeychain.fetch() else {
+        guard let authCredentials = keychain.fetch() else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
             completionHandler(.failure(ExtensionAPIServiceError.noCredentials))
             return
@@ -86,10 +87,7 @@ final class ExtensionAPIService {
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
         let port = url.port ?? 443
-        let endpoint = NWHostEndpoint(hostname: host, port: "\(port)")
-
-        let connection = provider.createTCPConnectionThroughTunnel(to: endpoint, enableTLS: true, tlsParameters: nil, delegate: nil)
-        let session = NWTCPConnectionSession(connection: connection)
+        let session = connectionFactory.connect(hostname: host, port: "\(port)", useTLS: true)
         session.request(urlRequest) { data, response, error in
             if response?.statusCode == 401 {
                 guard refreshApiTokenIfNeeded else {
@@ -100,7 +98,7 @@ final class ExtensionAPIService {
                 self.handleTokenExpired(publicKey: publicKey, features: features) { result in
                     switch result {
                     case .success:
-                        self.refreshCertificate(provider: provider, publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
+                        self.refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
 
                     case .failure(let error):
                         log.error("Error refreshing certificate: \(error)", category: .userCert)
@@ -154,7 +152,7 @@ final class ExtensionAPIService {
 
     private func handleTokenExpired(publicKey: String, features: VPNConnectionFeatures?, completionHandler: @escaping (Result<Void, Error>) -> Void) {
         log.debug("Will try to refresh API token", category: .api)
-        guard let authCredentials = AuthKeychain.fetch() else {
+        guard let authCredentials = keychain.fetch() else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .api)
             completionHandler(.failure(ExtensionAPIServiceError.noCredentials))
             return
@@ -168,12 +166,19 @@ final class ExtensionAPIService {
         ))
 
         var urlRequest = makeUrlRequest(tokenRequest)
+        guard let url = urlRequest.url, let host = url.host else {
+            log.error("Could not get API endpoint hostname.", category: .api)
+            completionHandler(.failure(ExtensionAPIServiceError.parseError))
+            return
+        }
 
         // Auth Headers (without the auth token)
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
-        let task = session.dataTask(with: urlRequest) { data, response, error in
-            guard (response as? HTTPURLResponse)?.statusCode == 200, error == nil else {
+        let port = url.port ?? 443
+        let connection = connectionFactory.connect(hostname: host, port: "\(port)", useTLS: true)
+        connection.request(urlRequest) { data, response, error in
+            guard response?.statusCode == 200, error == nil else {
                 completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
                 return
             }
@@ -187,14 +192,13 @@ final class ExtensionAPIService {
             do {
                 let response = try JSONDecoder().decode(TokenRefreshRequest.Response.self, from: data)
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)
-                try AuthKeychain.store(updatedCreds)
+                try self.keychain.store(updatedCreds)
                 log.debug("API token updated", category: .api, metadata: ["authCredentials": "\(updatedCreds.description)"])
                 completionHandler(.success(Void()))
             } catch {
                 completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
             }
         }
-        task.resume()
     }
 
     // MARK: - Mandatory fields for sending to API
