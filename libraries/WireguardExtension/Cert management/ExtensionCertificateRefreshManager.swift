@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import os.log
+import NetworkExtension
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `planNextRefresh()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
@@ -21,6 +21,12 @@ final class ExtensionCertificateRefreshManager {
     
     private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup, storage: Storage())
     private let apiService = ExtensionAPIService(storage: Storage())
+
+    private weak var provider: NEPacketTunnelProvider!
+
+    init(provider: NEPacketTunnelProvider) {
+        self.provider = provider
+    }
     
     func planNextRefresh() {
         guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
@@ -78,7 +84,7 @@ final class ExtensionCertificateRefreshManager {
         }
         
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
-        apiService.refreshCertificate(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
+        apiService.refreshCertificate(provider: provider, publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
             switch result {
             case .success(let certificate):
                 wg_log(.info, message: "Certificate refreshed. Saving to keychain.")

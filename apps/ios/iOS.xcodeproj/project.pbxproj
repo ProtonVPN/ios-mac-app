@@ -47,7 +47,10 @@
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
 		4BC5682058B8885897BB5EA1 /* Pods_NetworkExtensionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FF3BA2365F1F282560BB1C6 /* Pods_NetworkExtensionTests.framework */; };
-		4CAF943F281144680050C8B4 /* NetworkExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF943E281144680050C8B4 /* NetworkExtensionTests.swift */; };
+		4C4A30292811582800768AD9 /* NWTCPConnection+URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF941A28103C2B0050C8B4 /* NWTCPConnection+URLRequest.swift */; };
+		4C4A302B281168A600768AD9 /* CertificateRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4A302A281168A600768AD9 /* CertificateRefreshTests.swift */; };
+		4CAF941B28103C2B0050C8B4 /* NWTCPConnection+URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF941A28103C2B0050C8B4 /* NWTCPConnection+URLRequest.swift */; };
+		4CAF943F281144680050C8B4 /* RequestParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF943E281144680050C8B4 /* RequestParsingTests.swift */; };
 		4CAF9444281144700050C8B4 /* ExtensionCertificateRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997D26A6FA870083D61E /* ExtensionCertificateRefreshManager.swift */; };
 		4CAF9445281144E30050C8B4 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552536E9D3C3A3ED5F3D2677 /* Storage.swift */; };
 		4CAF94462811453C0050C8B4 /* ExtensionAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8655793F9A76F03C39D1689D /* ExtensionAPIService.swift */; };
@@ -708,8 +711,10 @@
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRobot.swift; sourceTree = "<group>"; };
 		4B74568593579C719298744C /* BugReport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BugReport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BDA607B9EC0277A0B58BA0A /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-ProtonVPNUITests-metadata.plist"; sourceTree = "<group>"; };
+		4C4A302A281168A600768AD9 /* CertificateRefreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CertificateRefreshTests.swift; path = ../../ios/NetworkExtensionTests/CertificateRefreshTests.swift; sourceTree = "<group>"; };
+		4CAF941A28103C2B0050C8B4 /* NWTCPConnection+URLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NWTCPConnection+URLRequest.swift"; sourceTree = "<group>"; };
 		4CAF943C281144680050C8B4 /* NetworkExtensionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkExtensionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4CAF943E281144680050C8B4 /* NetworkExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkExtensionTests.swift; sourceTree = "<group>"; };
+		4CAF943E281144680050C8B4 /* RequestParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParsingTests.swift; sourceTree = "<group>"; };
 		4CAF9448281145E10050C8B4 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VpnAuthenticationKeychain.swift; path = "../../../macos/ProtonVPN WireGuard/vpncore/VpnAuthenticationKeychain.swift"; sourceTree = "<group>"; };
 		4CAF9465281149470050C8B4 /* NetworkExtensionTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NetworkExtensionTests-Bridging-Header.h"; path = "../../ios/NetworkExtensionTests/NetworkExtensionTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1275,7 +1280,8 @@
 		4CAF943D281144680050C8B4 /* NetworkExtensionTests */ = {
 			isa = PBXGroup;
 			children = (
-				4CAF943E281144680050C8B4 /* NetworkExtensionTests.swift */,
+				4CAF943E281144680050C8B4 /* RequestParsingTests.swift */,
+				4C4A302A281168A600768AD9 /* CertificateRefreshTests.swift */,
 				4CAF9465281149470050C8B4 /* NetworkExtensionTests-Bridging-Header.h */,
 			);
 			path = NetworkExtensionTests;
@@ -2046,6 +2052,7 @@
 			children = (
 				4053FDE72598EAD8EDA5FC75 /* Endpoints */,
 				8655793F9A76F03C39D1689D /* ExtensionAPIService.swift */,
+				4CAF941A28103C2B0050C8B4 /* NWTCPConnection+URLRequest.swift */,
 				FF4B4D9336B89B19623B4802 /* JSONKeyCoder.swift */,
 			);
 			path = API;
@@ -3331,6 +3338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CAF9451281147B50050C8B4 /* AuthKeychain.swift in Sources */,
+				4C4A302B281168A600768AD9 /* CertificateRefreshTests.swift in Sources */,
 				4CAF945D281148770050C8B4 /* JSONKeyCoder.swift in Sources */,
 				4CAF945E2811487C0050C8B4 /* VpnKeys+init.swift in Sources */,
 				4CAF944A281147570050C8B4 /* VpnKeys.swift in Sources */,
@@ -3343,7 +3351,7 @@
 				4CAF944E281147B50050C8B4 /* Logger+Callers.swift in Sources */,
 				4CAF946728114A3F0050C8B4 /* AppConstants.swift in Sources */,
 				4CAF9455281147B50050C8B4 /* NATType.swift in Sources */,
-				4CAF943F281144680050C8B4 /* NetworkExtensionTests.swift in Sources */,
+				4CAF943F281144680050C8B4 /* RequestParsingTests.swift in Sources */,
 				4CAF9444281144700050C8B4 /* ExtensionCertificateRefreshManager.swift in Sources */,
 				4CAF9447281145420050C8B4 /* VpnAuthenticationStorage.swift in Sources */,
 				4CAF9460281148940050C8B4 /* WGLogger.swift in Sources */,
@@ -3355,6 +3363,7 @@
 				4CAF9461281148A30050C8B4 /* ringlogger.c in Sources */,
 				4CAF944C2811479A0050C8B4 /* VpnCertificate.swift in Sources */,
 				4CAF944D281147B50050C8B4 /* Optional+stringForLog.swift in Sources */,
+				4C4A30292811582800768AD9 /* NWTCPConnection+URLRequest.swift in Sources */,
 				4CAF944B281147910050C8B4 /* VPNConnectionFeatures.swift in Sources */,
 				4CAF9457281147B50050C8B4 /* Logger+Categories.swift in Sources */,
 				4CAF9462281148A30050C8B4 /* Logger.swift in Sources */,
@@ -3787,6 +3796,7 @@
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,
 				E977A7882681FE2B0013495A /* AuthCredentials.swift in Sources */,
+				4CAF941B28103C2B0050C8B4 /* NWTCPConnection+URLRequest.swift in Sources */,
 				F31E91202758F5F900140B2E /* WGLogger.swift in Sources */,
 				F31E911C2758F5CF00140B2E /* Logger+Categories.swift in Sources */,
 				F31E91192758F5C600140B2E /* PMLogFormatter.swift in Sources */,

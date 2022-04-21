@@ -14,10 +14,11 @@ import Logging
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
-    private let certificateRefreshManager = ExtensionCertificateRefreshManager()
+    private var certificateRefreshManager: ExtensionCertificateRefreshManager!
 
     override init() {
         super.init()
+        certificateRefreshManager = ExtensionCertificateRefreshManager(provider: self)
         setupLogging()
     }
     
