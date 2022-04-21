@@ -61,27 +61,34 @@ class CertificateRefreshTests: XCTestCase {
 
     }
 
+    func fakeCertificateData() -> (VpnCertificate, Data?) {
+        let oneHour = Double(60 * 60)
+        let fiveMinutes = Double(5 * 60)
+        let certificate = VpnCertificate(fakeCertExpiringAfterInterval: oneHour,
+                                         refreshBeforeExpiring: fiveMinutes)
+
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        return (certificate, try? encoder.encode(certificate))
+    }
+
+    func fakeTokenData() -> Data? {
+        let encoder = JSONEncoder()
+        let oneHour = Double(60 * 60)
+        return try? encoder.encode(TokenRefreshRequest.Response(fakeTokenExpiringIn: oneHour))
+    }
+
     func testNormalCertRefresh() {
         let expectation = XCTestExpectation(description: "Wait for certificate refresh")
 
-        tokenRefreshCallback = { _, _ in
-            XCTFail("Should not have tried to refresh token")
-        }
-
         certRefreshCallback = { request, completionHandler in
-            let oneHour = Double(60 * 60)
-            let fiveMinutes = Double(5 * 60)
-            let certificate = VpnCertificate(fakeCertExpiringAfterInterval: oneHour,
-                                             refreshBeforeExpiring: fiveMinutes)
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)
 
-            let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .secondsSince1970
-            guard let data = try? encoder.encode(certificate) else {
+            let (certificate, data) = self.fakeCertificateData()
+            guard let data = data else {
                 XCTFail("Couldn't generate fake certificate")
                 return
             }
-
-            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)
             completionHandler(data, response, nil)
 
             XCTAssertEqual(self.authenticationStorage.cert?.certificate, certificate.certificate)
@@ -89,16 +96,88 @@ class CertificateRefreshTests: XCTestCase {
             XCTAssertEqual(self.authenticationStorage.cert?.refreshTime, certificate.refreshTime)
             expectation.fulfill()
         }
+
+        tokenRefreshCallback = { _, _ in
+            XCTFail("Should not have tried to refresh token")
+        }
+
         manager.planNextRefresh()
 
         wait(for: [expectation], timeout: 5)
     }
+
+    func testError401LeadingToTokenRefresh() {
+        let expectationForFirstCertRefresh = XCTestExpectation(description: "Wait for first certificate refresh")
+        let expectationForRetryCertRefresh = XCTestExpectation(description: "Wait for subsequent certificate refresh")
+        let expectationForAuthTokenRefresh = XCTestExpectation(description: "Wait to request new token from API")
+        var askedForRefresh = false
+
+        certRefreshCallback = { request, completionHandler in
+            let response: HTTPURLResponse
+            let data: Data?
+
+            if !askedForRefresh {
+                askedForRefresh = true
+                response = HTTPURLResponse(url: request.url!,
+                                           statusCode: 401,
+                                           httpVersion: nil,
+                                           headerFields: nil)!
+                data = nil
+            } else {
+                response = HTTPURLResponse(url: request.url!,
+                                           statusCode: 200,
+                                           httpVersion: nil,
+                                           headerFields: nil)!
+
+                let (_, certData) = self.fakeCertificateData()
+                guard let certData = certData else {
+                    XCTFail("Couldn't generate fake certificate")
+                    return
+                }
+
+                data = certData
+            }
+
+            completionHandler(data, response, nil)
+            (data == nil ? expectationForFirstCertRefresh : expectationForRetryCertRefresh).fulfill()
+        }
+
+        tokenRefreshCallback = { request, completionHandler in
+            XCTAssert(askedForRefresh, "Should have asked for cert refresh first")
+
+            let response = HTTPURLResponse(url: request.url!,
+                                           statusCode: 200,
+                                           httpVersion: nil,
+                                           headerFields: nil)!
+            guard let data = self.fakeTokenData() else {
+                XCTFail("Couldn't generate fake token")
+                return
+            }
+
+            completionHandler(data, response, nil)
+            expectationForAuthTokenRefresh.fulfill()
+        }
+
+        manager.planNextRefresh()
+
+        wait(for: [expectationForFirstCertRefresh,
+                   expectationForRetryCertRefresh,
+                   expectationForAuthTokenRefresh], timeout: 5)
+    }
 }
 
-extension VpnCertificate {
+extension CertificateRefreshRequest.Respone {
     init(fakeCertExpiringAfterInterval interval: TimeInterval, refreshBeforeExpiring refreshBefore: TimeInterval) {
         self.certificate = "This is a fake certificate"
         self.validUntil = Date() + interval
         self.refreshTime = validUntil - refreshBefore
+    }
+}
+
+extension TokenRefreshRequest.Response {
+    init(fakeTokenExpiringIn expiresIn: TimeInterval) {
+        self.accessToken = "abcd1234"
+        self.refreshToken = "15213rox"
+        self.expiresIn = expiresIn
     }
 }
