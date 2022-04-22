@@ -24,6 +24,11 @@ enum HTTPError: Error {
     case parseError
     case noData
     case encodingError(String)
+    case responseError(String)
+
+    static func httpUrlResponseError(response: HTTPURLResponse) -> Self {
+        .responseError(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))
+    }
 }
 
 /// A wrapper protocol for making requests with NWTCPConnection.

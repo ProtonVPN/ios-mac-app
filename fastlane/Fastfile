@@ -184,6 +184,19 @@ lane :ios_search_test do
     clean: true)
 end
 
+desc "Run WireGuard NetworkExtension tests"
+lane :wireguard_networkextension_tests do
+    simulator_name = ENV["CI_JOB_ID"]
+    scan(
+      scheme: "WireGuardNetworkExtensionTests",
+      derived_data_path: $derived_data_path,
+      clean: true,
+      result_bundle: true,
+      skip_slack: true,
+      devices: [simulator_name]
+    )
+end
+
 lane :ios_internal_beta do |options|
   if !options[:changelog]
       abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")

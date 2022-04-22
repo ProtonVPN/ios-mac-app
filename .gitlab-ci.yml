@@ -247,6 +247,23 @@ core_macos_unit_tests:
       junit:
         - fastlane/test_output/report.junit
 
+wireguard_unit_tests:
+  stage: apps_unit_tests
+  tags:
+    - iOS_ARM
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
+    - fastlane wireguard_networkextension_tests
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit
+
 ios_unit_tests:
   stage: apps_unit_tests
   tags:
