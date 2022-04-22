@@ -114,6 +114,16 @@ final class ExtensionAPIService {
                 return
             }
 
+            guard response?.statusCode == 200 else {
+                guard let response = response else {
+                    completionHandler(.failure(ExtensionAPIServiceError.noData))
+                    return
+                }
+
+                completionHandler(.failure(HTTPError.httpUrlResponseError(response: response)))
+                return
+            }
+
             guard let data = data else {
                 completionHandler(.failure(ExtensionAPIServiceError.noData))
                 return
