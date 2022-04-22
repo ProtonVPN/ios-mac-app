@@ -23,6 +23,7 @@ enum HTTPError: Error {
     case requestHasNoURL
     case parseError
     case noData
+    case encodingError(String)
 }
 
 protocol ConnectionSession {
@@ -74,7 +75,15 @@ class NWTCPConnectionSession: ConnectionSession {
         }
 
         ready.notify(queue: .global()) {
-            self.connection.write(request.data()) { error in
+            let data: Data
+            do {
+                data = try request.data()
+            } catch {
+                completionHandler(nil, nil, error)
+                return
+            }
+
+            self.connection.write(data) { error in
                 if let error = error {
                     completionHandler(nil, nil, error)
                     return
@@ -103,17 +112,20 @@ class NWTCPConnectionSession: ConnectionSession {
 }
 
 extension URLRequest {
-    func data(encoding: String.Encoding = .utf8) -> Data {
+    func data(encoding: String.Encoding = .utf8) throws -> Data {
         let method = httpMethod ?? "GET"
         let path = url?.path ?? "/"
 
         var request = Data()
 
-        func addToRequest(_ str: String) {
-            request.append(str.data(using: encoding) ?? Data())
+        func addToRequest(_ str: String) throws {
+            guard let data = str.data(using: encoding) else {
+                throw HTTPError.encodingError(str)
+            }
+            request.append(data)
         }
 
-        addToRequest("\(method) \(path) HTTP/1.1\n")
+        try addToRequest("\(method) \(path) HTTP/1.1\n")
 
         if let httpHeaders = allHTTPHeaderFields, !httpHeaders.isEmpty {
             #if DEBUG
@@ -122,12 +134,12 @@ extension URLRequest {
             let headerKeys = httpHeaders.keys
             #endif
             for header in headerKeys {
-                addToRequest("\(header): \(httpHeaders[header] ?? "")\n")
+                try addToRequest("\(header): \(httpHeaders[header] ?? "")\n")
             }
         }
 
         if let body = httpBody {
-            addToRequest("\n")
+            try addToRequest("\n")
             request.append(body)
         }
 
@@ -136,13 +148,9 @@ extension URLRequest {
 }
 
 extension HTTPURLResponse {
-    static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (response: HTTPURLResponse?, body: Data?) {
+    @available(iOS, introduced: 10, deprecated: 13)
+    private static func oldParseHelper(scanner: Scanner) throws -> (httpVersion: String, statusCode: Int, headers: [String: String], headerEnd: Int) {
         let parseError = HTTPError.parseError
-        guard let string = String(data: data, encoding: encoding) else {
-            throw parseError
-        }
-
-        let scanner = Scanner(string: string)
 
         let space = CharacterSet(charactersIn: " ")
         let newline = CharacterSet(charactersIn: "\n")
@@ -150,8 +158,8 @@ extension HTTPURLResponse {
         let skip = space.union(newline).union(colon)
         scanner.charactersToBeSkipped = skip
 
-        var httpVersion: NSString?
-        guard scanner.scanUpToCharacters(from: space, into: &httpVersion) else {
+        var _httpVersion: NSString?
+        guard scanner.scanUpToCharacters(from: space, into: &_httpVersion), let httpVersion = _httpVersion as? String else {
             throw parseError
         }
 
@@ -176,6 +184,58 @@ extension HTTPURLResponse {
                 headers[header] = value
                 headerEnd = scanner.scanLocation
             }
+        }
+
+        return (httpVersion, statusCode, headers, headerEnd)
+    }
+
+    @available(iOS 13, *)
+    private static func parseHelper(scanner: Scanner) throws -> (httpVersion: String, statusCode: Int, headers: [String: String], headerEnd: Int) {
+        let parseError = HTTPError.parseError
+
+        let space = CharacterSet(charactersIn: " ")
+        let newline = CharacterSet(charactersIn: "\n")
+        let colon = CharacterSet(charactersIn: ":")
+        let skip = space.union(newline).union(colon)
+        scanner.charactersToBeSkipped = skip
+
+        guard let httpVersion = scanner.scanUpToCharacters(from: space),
+              let statusCode = scanner.scanInt(),
+              // status message (e.g., "OK", "Not Found", "Unauthorized")
+              let _ = scanner.scanUpToCharacters(from: newline) else {
+            throw parseError
+        }
+
+        var headers: [String: String] = [:]
+        var headerEnd: String.Index = scanner.currentIndex
+        do {
+            while let header = scanner.scanUpToCharacters(from: colon),
+                  let value = scanner.scanUpToCharacters(from: newline) {
+                headers[header] = value
+                headerEnd = scanner.currentIndex
+            }
+        }
+
+        let distance = scanner.string.distance(from: scanner.string.startIndex, to: headerEnd)
+        return (httpVersion, statusCode, headers, distance)
+    }
+
+    static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (response: HTTPURLResponse?, body: Data?) {
+        let parseError = HTTPError.parseError
+        guard let string = String(data: data, encoding: encoding) else {
+            throw parseError
+        }
+
+        let scanner = Scanner(string: string)
+
+        let httpVersion: String
+        let headers: [String: String]
+        let statusCode, headerEnd: Int
+
+        if #available(iOS 13, *) {
+            (httpVersion, statusCode, headers, headerEnd) = try parseHelper(scanner: scanner)
+        } else {
+            (httpVersion, statusCode, headers, headerEnd) = try oldParseHelper(scanner: scanner)
         }
 
         var body: Data?

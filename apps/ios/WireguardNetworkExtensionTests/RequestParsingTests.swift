@@ -98,8 +98,8 @@ class RequestParsingTests: XCTestCase {
             let response = "This is not an HTTP response.\nThese are just random English sentences.".data(using: .utf8)!
             let (_, _) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
             XCTFail("Expected to throw an error from the above function.")
-        } catch let e as HTTPError {
-            XCTAssertEqual(e, HTTPError.parseError, "Should have been an HTTP parse error")
+        } catch HTTPError.parseError {
+            // This is expected
         } catch {
             XCTFail("Expected an HTTPError but got a different type")
         }
@@ -122,7 +122,7 @@ class RequestParsingTests: XCTestCase {
             let requestBody = "This is a request body"
             request.httpBody = requestBody.data(using: .utf8)!
 
-            let data = request.data()
+            let data = try request.data()
             let expected = makeRequest(preamble: "POST /vpn HTTP/1.1", headers: headers, body: requestBody)
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
@@ -135,7 +135,7 @@ class RequestParsingTests: XCTestCase {
             }
             request.httpMethod = "GET"
 
-            let data = request.data()
+            let data = try request.data()
             let expected = makeRequest(preamble: "GET /vpn HTTP/1.1", headers: headers, body: nil)
             XCTAssertEqual(data, expected)
         }

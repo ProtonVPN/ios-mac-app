@@ -149,7 +149,7 @@ target 'WireGuardiOS Extension' do
   logs
 end
 
-target 'NetworkExtensionTests' do
+target 'WireGuardNetworkExtensionTests' do
   project 'apps/iOS/iOS.xcodeproj'
   platform :ios, '12.1'
   use_frameworks!
