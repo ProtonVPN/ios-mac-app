@@ -57,6 +57,8 @@ extension MacAlertService: CoreAlertService {
             return
         }
         
+        log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
+        
         switch alert {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)

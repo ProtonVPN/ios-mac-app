@@ -50,6 +50,8 @@ extension IosAlertService: CoreAlertService {
     
     // swiftlint:disable cyclomatic_complexity function_body_length
     func push(alert: SystemAlert) {
+        log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
+
         switch alert {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
