@@ -67,7 +67,7 @@ Many services, one mission. Welcome to an Internet where privacy is the default.
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="Got it"/>
                                                 <connections>
-                                                    <action selector="readMoreButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="3dS-Gi-xzz"/>
+                                                    <action selector="dismissButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kZD-dK-upb"/>
                                                 </connections>
                                             </button>
                                         </subviews>
