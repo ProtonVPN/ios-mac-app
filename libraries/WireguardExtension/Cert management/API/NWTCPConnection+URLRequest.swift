@@ -26,14 +26,17 @@ enum HTTPError: Error {
     case encodingError(String)
 }
 
+/// A wrapper protocol for making requests with NWTCPConnection.
 protocol ConnectionSession {
     func request(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
 }
 
+/// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
 protocol ConnectionSessionFactory {
     func connect(hostname: String, port: String, useTLS: Bool) -> ConnectionSession
 }
 
+/// Generate NWTCPConnections by connecting to endpoints through the NEPacketTunnelProvider's tunnel.
 class NEPacketTunnelConnectionSessionFactory: ConnectionSessionFactory {
     let provider: NEPacketTunnelProvider
 
@@ -48,6 +51,7 @@ class NEPacketTunnelConnectionSessionFactory: ConnectionSessionFactory {
     }
 }
 
+/// A wrapper class around NWTCPConnection for generating HTTP requests and receiving responses.
 class NWTCPConnectionSession: ConnectionSession {
     let connection: NWTCPConnection
     var observation: NSKeyValueObservation!
@@ -57,15 +61,15 @@ class NWTCPConnectionSession: ConnectionSession {
         self.connection = connection
         ready.enter()
 
+        // Look for changes in the NWTCPConnection's state. When the connection is established, leave
+        // the dispatch group to indicate that the connection is ready to receive data, and invalidate
+        // the observation since our work is done.
         self.observation = connection.observe(\.state, options: [.initial, .new]) { _, observed in
             if observed.newValue == .connected {
                 self.ready.leave()
+                self.observation?.invalidate()
             }
         }
-    }
-
-    deinit {
-        observation?.invalidate()
     }
 
     func request(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
@@ -74,32 +78,34 @@ class NWTCPConnectionSession: ConnectionSession {
             return
         }
 
-        ready.notify(queue: .global()) {
-            let data: Data
-            do {
-                data = try request.data()
-            } catch {
-                completionHandler(nil, nil, error)
-                return
-            }
+        let requestData: Data
+        do {
+            requestData = try request.data()
+        } catch {
+            completionHandler(nil, nil, error)
+            return
+        }
 
-            self.connection.write(data) { error in
+        // When the connection is ready, go ahead and send the request/process the response.
+        ready.notify(queue: .global()) {
+            self.connection.write(requestData) { error in
                 if let error = error {
                     completionHandler(nil, nil, error)
                     return
                 }
 
+                // XXX: if our JSON responses ever get above 8KB, we should do something about this :)
                 let (min, max) = (1, 8192)
-                self.connection.readMinimumLength(min, maximumLength: max) { data, error in
+                self.connection.readMinimumLength(min, maximumLength: max) { responseData, error in
                     if let error = error {
                         completionHandler(nil, nil, error)
                         return
                     }
-                    guard let data = data else {
+                    guard let responseData = responseData else {
                         completionHandler(nil, nil, HTTPError.noData)
                         return
                     }
-                    guard let (response, body) = try? HTTPURLResponse.parse(responseFromURL: url, data: data) else {
+                    guard let (response, body) = try? HTTPURLResponse.parse(responseFromURL: url, data: responseData) else {
                         completionHandler(nil, nil, HTTPError.parseError)
                         return
                     }
@@ -112,6 +118,8 @@ class NWTCPConnectionSession: ConnectionSession {
 }
 
 extension URLRequest {
+    /// Turn a URLRequest into its appropriate HTTP Request data, to be
+    /// sent over the wire.
     func data(encoding: String.Encoding = .utf8) throws -> Data {
         let method = httpMethod ?? "GET"
         let path = url?.path ?? "/"
@@ -220,6 +228,7 @@ extension HTTPURLResponse {
         return (httpVersion, statusCode, headers, distance)
     }
 
+    /// Parse an HTTP response, returning the response object and the response body, if it exists.
     static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (response: HTTPURLResponse?, body: Data?) {
         let parseError = HTTPError.parseError
         guard let string = String(data: data, encoding: encoding) else {
