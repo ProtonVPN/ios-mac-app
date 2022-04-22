@@ -55,7 +55,7 @@ final class CouponViewModel {
         isError = false
         isLoading = true
 
-        paymentsApiService.applyPromoCode(code: code) { [weak self] result in
+        paymentsApiService.applyPromoCode(code: code.uppercased()) { [weak self] result in
             switch result {
             case let .failure(error):
                 log.error("Failed to apply promo code", category: .app, metadata: ["error": "\(error)"])
