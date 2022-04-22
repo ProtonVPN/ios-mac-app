@@ -56,8 +56,8 @@ final class CouponViewController: UIViewController {
         title = LocalizedString.useCoupon
         view.backgroundColor = UIColor.backgroundColor()
 
+        textField.autocapitalizationType = .allCharacters
         textField.title = LocalizedString.useCoupon
-        textField.delegate = self
 
         applyButton.setTitle(LocalizedString.applyCoupon, for: .normal)
         applyButton.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
@@ -138,25 +138,4 @@ extension CouponViewController: CouponViewModelDelegate {
         applyButton.isSelected = isLoading
         view.isUserInteractionEnabled = !isLoading
     }
-}
-
-// MARK: PMTextFieldDelegate
-
-extension CouponViewController: PMTextFieldDelegate {
-    func didChangeValue(_ textField: PMTextField, value: String) {
-        let normalized = value.uppercased()
-        guard normalized != textField.value else {
-            return
-        }
-
-        textField.value = normalized
-    }
-
-    func didEndEditing(textField: PMTextField) { }
-
-    func textFieldShouldReturn(_ textField: PMTextField) -> Bool {
-        return true
-    }
-
-    func didBeginEditing(textField: PMTextField) { }
 }
