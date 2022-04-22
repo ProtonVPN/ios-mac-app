@@ -108,6 +108,12 @@ final class ExtensionAPIService {
                 return
             }
 
+            if let error = error {
+                log.error("Error refreshing certificate: \(error)", category: .userCert)
+                completionHandler(.failure(ExtensionAPIServiceError.requestError(error)))
+                return
+            }
+
             guard let data = data else {
                 completionHandler(.failure(ExtensionAPIServiceError.noData))
                 return
@@ -116,7 +122,7 @@ final class ExtensionAPIService {
             do {
                 let decoder = JSONDecoder()
                 decoder.dateDecodingStrategy = .secondsSince1970
-                let certificate = try decoder.decode(CertificateRefreshRequest.Respone.self, from: data)
+                let certificate = try decoder.decode(CertificateRefreshRequest.Response.self, from: data)
                 log.info("Response cert is valid until: \(certificate.validUntil)", category: .userCert)
                 completionHandler(.success(certificate))
 

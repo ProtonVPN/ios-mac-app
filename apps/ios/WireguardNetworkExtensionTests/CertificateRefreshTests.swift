@@ -92,8 +92,10 @@ class CertificateRefreshTests: XCTestCase {
             completionHandler(data, response, nil)
 
             XCTAssertEqual(self.authenticationStorage.cert?.certificate, certificate.certificate)
-            XCTAssertEqual(self.authenticationStorage.cert?.validUntil, certificate.validUntil)
-            XCTAssertEqual(self.authenticationStorage.cert?.refreshTime, certificate.refreshTime)
+            XCTAssertEqual(self.authenticationStorage.cert?.validUntil.formatted(),
+                           certificate.validUntil.formatted())
+            XCTAssertEqual(self.authenticationStorage.cert?.refreshTime.formatted(),
+                           certificate.refreshTime.formatted())
             expectation.fulfill()
         }
 
@@ -113,33 +115,28 @@ class CertificateRefreshTests: XCTestCase {
         var askedForRefresh = false
 
         certRefreshCallback = { request, completionHandler in
-            let response: HTTPURLResponse
-            let data: Data?
-
             if !askedForRefresh {
                 askedForRefresh = true
-                response = HTTPURLResponse(url: request.url!,
-                                           statusCode: 401,
-                                           httpVersion: nil,
-                                           headerFields: nil)!
-                data = nil
+                let response = HTTPURLResponse(url: request.url!,
+                                               statusCode: 401,
+                                               httpVersion: nil,
+                                               headerFields: nil)
+                completionHandler(nil, response, nil)
+                expectationForFirstCertRefresh.fulfill()
             } else {
-                response = HTTPURLResponse(url: request.url!,
-                                           statusCode: 200,
-                                           httpVersion: nil,
-                                           headerFields: nil)!
+                let response = HTTPURLResponse(url: request.url!,
+                                               statusCode: 200,
+                                               httpVersion: nil,
+                                               headerFields: nil)
 
                 let (_, certData) = self.fakeCertificateData()
                 guard let certData = certData else {
                     XCTFail("Couldn't generate fake certificate")
                     return
                 }
-
-                data = certData
+                completionHandler(certData, response, nil)
+                expectationForRetryCertRefresh.fulfill()
             }
-
-            completionHandler(data, response, nil)
-            (data == nil ? expectationForFirstCertRefresh : expectationForRetryCertRefresh).fulfill()
         }
 
         tokenRefreshCallback = { request, completionHandler in
@@ -166,7 +163,7 @@ class CertificateRefreshTests: XCTestCase {
     }
 }
 
-extension CertificateRefreshRequest.Respone {
+extension CertificateRefreshRequest.Response {
     init(fakeCertExpiringAfterInterval interval: TimeInterval, refreshBeforeExpiring refreshBefore: TimeInterval) {
         self.certificate = "This is a fake certificate"
         self.validUntil = Date() + interval

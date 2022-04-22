@@ -31,7 +31,7 @@ struct CertificateRefreshRequest: APIRequest {
         let features: VPNConnectionFeatures?
     }
 
-    typealias Respone = VpnCertificate
+    typealias Response = VpnCertificate
 
     init(params: Params) {
         self.params = params

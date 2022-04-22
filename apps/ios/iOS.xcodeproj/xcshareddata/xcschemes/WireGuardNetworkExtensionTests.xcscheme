@@ -16,9 +16,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4CAF9427281141A40050C8B4"
-               BuildableName = "NetworkExtensionTests.xctest"
-               BlueprintName = "NetworkExtensionTests"
+               BlueprintIdentifier = "4CAF943B281144680050C8B4"
+               BuildableName = "WireGuardNetworkExtensionTests.xctest"
+               BlueprintName = "WireGuardNetworkExtensionTests"
                ReferencedContainer = "container:iOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
