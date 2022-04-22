@@ -24,7 +24,7 @@ public struct NewBrandFeature {
     public let title: String = LocalizedString.modalsNewBrandTitle
     public let subtitle: String = LocalizedString.modalsNewBrandSubtitle
     public let gotIt: String = LocalizedString.modalsNewBrandGotIt
-    public let readMoreLink: String = LocalizedString.modalsNewBrandReadMore
+    public let readMoreLink: String = "fake-read-more-link" // only used to intercept the tap on URL
     public let learnMore: String = LocalizedString.modalsCommonLearnMore.replacingOccurrences(of: " ", with: "\u{00a0}") // non-breaking space
 
     public init() { }
@@ -41,7 +41,7 @@ extension NSMutableAttributedString {
     public func setAsLink(textToFind: String, linkURL: String) {
         let foundRange = mutableString.range(of: textToFind)
         if foundRange.location != NSNotFound {
-            addAttribute(.link, value: NSURL(string: linkURL)!, range: foundRange)
+            addAttribute(.link, value: linkURL, range: foundRange)
         }
     }
 }

@@ -28,8 +28,6 @@ public enum LocalizedString {
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
   /// Got it
   public static var modalsNewBrandGotIt: String { return LocalizedString.tr("Localizable", "modals_new_brand_got_it") }
-  /// https://proton.me/news/updated-proton
-  public static var modalsNewBrandReadMore: String { return LocalizedString.tr("Localizable", "modals_new_brand_read_more") }
   /// Introducing Proton’s refreshed look.
   /// Many services, one mission. Welcome to an Internet where privacy is the default.
   public static var modalsNewBrandSubtitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_subtitle") }

@@ -218,7 +218,7 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: NewBrandAlert) {
-        let newBrandViewController = modalsFactory.newBrandViewController(icons: NewBrandModalIcons(), onDismiss: alert.dismiss)
+        let newBrandViewController = modalsFactory.newBrandViewController(icons: NewBrandModalIcons(), onDismiss: alert.dismiss, onReadMore: alert.onReadMore)
         newBrandViewController.modalTransitionStyle = .crossDissolve
         newBrandViewController.modalPresentationStyle = .overFullScreen
         windowService.present(modal: newBrandViewController)

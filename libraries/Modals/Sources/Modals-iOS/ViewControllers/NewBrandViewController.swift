@@ -32,6 +32,7 @@ final class NewBrandViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var subtitleTextViewHeightConstraint: NSLayoutConstraint!
 
     var onDismiss: (() -> Void)?
+    var onReadMore: (() -> Void)?
     var icons: NewBrandIcons?
 
     let feature = NewBrandFeature()
@@ -110,5 +111,13 @@ final class NewBrandViewController: UIViewController, UITextViewDelegate {
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.onDismiss?()
         })
+    }
+
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        if URL.absoluteString == feature.readMoreLink {
+            onReadMore?()
+            return false
+        }
+        return true
     }
 }

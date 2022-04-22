@@ -97,9 +97,6 @@
 /* Title of "done" button in New Brand screen */
 "modals_new_brand_got_it" = "Got it";
 
-/* Read more with a link in New Brand screen */
-"modals_new_brand_read_more" = "https://proton.me/news/updated-proton";
-
 /* Common button title */
 "modals_common_cancel" = "Cancel";
 
