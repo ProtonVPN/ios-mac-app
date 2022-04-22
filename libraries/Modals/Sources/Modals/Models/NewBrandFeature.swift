@@ -25,7 +25,7 @@ public struct NewBrandFeature {
     public let subtitle: String = LocalizedString.modalsNewBrandSubtitle
     public let gotIt: String = LocalizedString.modalsNewBrandGotIt
     public let readMoreLink: String = LocalizedString.modalsNewBrandReadMore
-    public let learnMore: String = LocalizedString.modalsCommonLearnMore
+    public let learnMore: String = LocalizedString.modalsCommonLearnMore.replacingOccurrences(of: " ", with: "\u{00a0}") // non-breaking space
 
     public init() { }
 }

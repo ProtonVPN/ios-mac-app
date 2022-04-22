@@ -32,7 +32,6 @@ final class NewBrandViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var subtitleTextViewHeightConstraint: NSLayoutConstraint!
 
     var onDismiss: (() -> Void)?
-    var onReadMore: (() -> Void)?
     var icons: NewBrandIcons?
 
     let feature = NewBrandFeature()
@@ -67,9 +66,6 @@ final class NewBrandViewController: UIViewController, UITextViewDelegate {
         subtitleTextView.delegate = self
         subtitleTextView.showsHorizontalScrollIndicator = false
         subtitleTextView.showsVerticalScrollIndicator = false
-        let width = subtitleTextView.contentSize.width
-        let size = subtitleTextView.sizeThatFits(.init(width: width, height: .infinity))
-        subtitleTextViewHeightConstraint.constant = size.height
 
         actionButtonStyle(gotItButton)
     }
@@ -87,7 +83,6 @@ final class NewBrandViewController: UIViewController, UITextViewDelegate {
         subtitleTextView.textAlignment = .center
         subtitleTextView.linkTextAttributes = [.font: UIFont.systemFont(ofSize: 14, weight: .regular),
                                                .foregroundColor: colors.textAccent]
-
         gotItButton.setTitle(feature.gotIt, for: .normal)
     }
 
@@ -103,14 +98,12 @@ final class NewBrandViewController: UIViewController, UITextViewDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let size = feature.artImage.size
-        newBrandBackgroundHeight.constant = contentView.bounds.size.width * (size.height / size.width)
-    }
+        let artSize = feature.artImage.size
+        newBrandBackgroundHeight.constant = contentView.bounds.size.width * (artSize.height / artSize.width)
 
-    @IBAction private func readMoreButtonTapped(_ sender: UIButton) {
-        presentingViewController?.dismiss(animated: true, completion: { [weak self] in
-            self?.onReadMore?()
-        })
+        let width = contentView.bounds.width - 32 // 32 is the leading and trailing constraints sum that reduce the available width
+        let subtitleSize = subtitleTextView.sizeThatFits(.init(width: width, height: .infinity))
+        subtitleTextViewHeightConstraint.constant = subtitleSize.height
     }
 
     @IBAction private func dismissButtonTapped(_ sender: UIButton) {

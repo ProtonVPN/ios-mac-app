@@ -31,9 +31,8 @@ public struct ModalsFactory {
         return discourageSecureCoreViewController
     }
 
-    public func newBrandViewController(icons: NewBrandIcons, onDismiss: (() -> Void)?, onReadMore: (() -> Void)?) -> UIViewController {
+    public func newBrandViewController(icons: NewBrandIcons, onDismiss: (() -> Void)?) -> UIViewController {
         let newBrandViewController = newBrandStoryboard.instantiate(controllerType: NewBrandViewController.self)
-        newBrandViewController.onReadMore = onReadMore
         newBrandViewController.onDismiss = onDismiss
         newBrandViewController.modalTransitionStyle = .crossDissolve
         newBrandViewController.modalPresentationStyle = .overFullScreen

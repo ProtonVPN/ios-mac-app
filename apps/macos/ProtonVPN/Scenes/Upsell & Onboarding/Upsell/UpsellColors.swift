@@ -33,6 +33,6 @@ struct UpsellColors: ModalsColors {
         brand = .color(.icon, .interactive)
         hoverBrand = .color(.icon, [.interactive, .hovered])
         weakText = .color(.text, .weak)
-        linkNorm = .color(.text, .link)
+        linkNorm = .color(.text, [.interactive, .hint])
     }
 }

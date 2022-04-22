@@ -233,7 +233,7 @@ final class SettingsViewModel {
         }
 
         if propertiesManager.featureFlags.promoCode, let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
-            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .brandColor(), handler: { [weak self] in
+            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .textAccent(), handler: { [weak self] in
                 self?.pushCouponViewController()
             }))
         }
