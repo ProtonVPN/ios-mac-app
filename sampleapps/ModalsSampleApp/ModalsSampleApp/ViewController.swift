@@ -78,7 +78,7 @@ class ViewController: UITableViewController {
                                                                            onLearnMore: nil)
             viewController = modalVC
         } else {
-            let modalVC = modalsFactory.newBrandViewController(icons: ModalIcons(), onDismiss: nil)
+            let modalVC = modalsFactory.newBrandViewController(icons: ModalIcons(), onDismiss: nil, onReadMore: nil)
             modalVC.modalPresentationStyle = .overFullScreen
             viewController = modalVC
         }
