@@ -140,8 +140,8 @@ public class FileLogHandler: LogHandler {
     private func moveToNextFile() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYMMddHHmmssSSS"
-        let nextFileURL = fileUrl.deletingPathExtension().appendingPathExtension(dateFormatter.string(from: Date()) + ".log")
-        
+        let nextFileURL = fileUrl.deletingPathExtension().appendingPathExtension(dateFormatter.string(from: Date()) + "_\(UUID().uuidString).log")
+
         do {
             try fileManager.moveItem(at: fileUrl, to: nextFileURL)
             debugLog("🟢🟢 File rotated \(nextFileURL.lastPathComponent)")
@@ -154,14 +154,14 @@ public class FileLogHandler: LogHandler {
         let filenameWithoutExtension = fileUrl.deletingPathExtension().pathComponents.last ?? "ProtonVPN"
         do {
             let oldFiles = try fileManager.contentsOfDirectory(at: logsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-                .filter { $0.pathComponents.last?.hasMatches(for: "\(filenameWithoutExtension).\\d+.log") ?? false }
+                .filter { $0.pathComponents.last?.hasMatches(for: "\(filenameWithoutExtension).\\d+(_[\\d\\w\\-]+)?.log") ?? false }
             guard oldFiles.count > maxArchivedFilesCount else {
                 return
             }
             
             let sortedFiles = try oldFiles.sorted {
                 let date1 = try self.fileManager.attributesOfItem(atPath: $0.path)[.creationDate] as? Date
-                let date2 = try self.fileManager.attributesOfItem(atPath: $1.path)[.creationDate ] as? Date
+                let date2 = try self.fileManager.attributesOfItem(atPath: $1.path)[.creationDate] as? Date
                 return date1!.timeIntervalSince1970 < date2!.timeIntervalSince1970
             }
             
