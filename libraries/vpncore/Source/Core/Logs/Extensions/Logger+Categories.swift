@@ -41,6 +41,7 @@ extension Logger {
         case iap = "in_app_purchase"
         // Custom ios (please add to confluence)
         case sysex // System Extension
+        case review
     }
 
     public enum Event: String {

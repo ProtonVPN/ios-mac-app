@@ -121,7 +121,7 @@ final class DependencyContainer {
     }()
     lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
     private lazy var searchStorage = SearchModuleStorage(storage: storage)
-    private lazy var review = Review(configuration: Configuration(settings: propertiesManager.ratingSettings), plan: (try? vpnKeychain.fetchCached().accountPlan.description), logger: { message in log.debug("[Review] \(message)", category: .app) })
+    private lazy var review = Review(configuration: Configuration(settings: propertiesManager.ratingSettings), plan: (try? vpnKeychain.fetchCached().accountPlan.description), logger: { message in log.debug(message, category: .review) })
 }
 
 // MARK: NavigationServiceFactory
