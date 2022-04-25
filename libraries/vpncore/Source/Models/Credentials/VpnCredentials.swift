@@ -42,7 +42,7 @@ public class VpnCredentials: NSObject, NSCoding {
         return
             "Status: \(status)\n" +
             "Expiration time: \(String(describing: expirationTime))\n" +
-            "Account plan: \(accountPlan.description) (\(planName)\n" +
+            "Account plan: \(accountPlan.description) (\(planName ?? "unknown"))\n" +
             "Max connect: \(maxConnect)\n" +
             "Max tier: \(maxTier)\n" +
             "Services: \(services)\n" +
@@ -166,12 +166,12 @@ extension VpnCredentials {
     }
 }
 
-/// Contains everything that VpnCredentials has, minus the username, password, and group ID.
+/// Contains everything that VpnCredentials has, minus the username, password, group ID,
+/// and expiration date/time.
 /// This lets us avoid querying the keychain unnecessarily, since every query results in a synchronous
 /// roundtrip to securityd.
 public struct CachedVpnCredentials {
     public let status: Int
-    public let expirationTime: Date
     public let accountPlan: AccountPlan
     public let planName: String?
     public let maxConnect: Int
@@ -191,7 +191,6 @@ public struct CachedVpnCredentials {
 extension CachedVpnCredentials {
     init(credentials: VpnCredentials) {
         self.init(status: credentials.status,
-                  expirationTime: credentials.expirationTime,
                   accountPlan: credentials.accountPlan,
                   planName: credentials.planName,
                   maxConnect: credentials.maxConnect,
@@ -207,10 +206,6 @@ extension CachedVpnCredentials {
 
 // MARK: - Checks performed on CachedVpnCredentials
 extension CachedVpnCredentials {
-    public var hasExpired: Bool {
-        return Date().compare(expirationTime) != .orderedAscending
-    }
-
     public var isDelinquent: Bool {
         return delinquent > 2
     }
