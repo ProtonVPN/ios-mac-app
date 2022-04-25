@@ -385,6 +385,8 @@
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E51C6079AB893075B8713F74 /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC8D5390AD2CD74301D6C54 /* Logger+Categories.swift */; };
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
+		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
+		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E91201F627BB96260058BE94 /* FolderLogFilesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */; };
 		E91201F727BB96260058BE94 /* FolderLogFilesProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */; };
 		E91201FA27BBA6F80058BE94 /* DefaultLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */; };
@@ -878,6 +880,7 @@
 		E534EA4A2806B68700BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "Localization/es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4B2806B68D00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
+		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProviderTests.swift; sourceTree = "<group>"; };
 		E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLogFilesProvider.swift; sourceTree = "<group>"; };
 		E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProvider.swift; sourceTree = "<group>"; };
@@ -1674,6 +1677,7 @@
 				F973511943D701511CC59CC4 /* URL+String.swift */,
 				F7DD6EB6DCFD2331D821683A /* Optional+stringForLog.swift */,
 				4C4D898227BD0BE800548523 /* Array+Extension.swift */,
+				E5FFC89B2816C61500E355DA /* Countries+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2611,6 +2615,7 @@
 				E9C9FDC7268C8755005665C6 /* UIDevice+ModelName.swift in Sources */,
 				F34808AC266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */,
 				D5DCCAB7252B4AEB004CB353 /* CoreNewsRequest.swift in Sources */,
+				E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */,
 				F38F7BEC27956674005B9EA2 /* CoreApiFeatureRespone.swift in Sources */,
 				E1616B8121C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
 				E1B5F67621B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
@@ -2793,6 +2798,7 @@
 				F307F7BA27C3C205004FD4A7 /* SafeModePropertyProviderMock.swift in Sources */,
 				F330F01027FC81C200C3AA33 /* PaymentsApiService.swift in Sources */,
 				F365356A263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
+				E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */,
 				D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */,
 				E1616BF621C95BC400F42D79 /* ServerOffering.swift in Sources */,
 				D52585282507D4DD00657B80 /* FeatureFlags.swift in Sources */,

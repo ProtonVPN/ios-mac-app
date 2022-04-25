@@ -28,7 +28,7 @@ import Modals_macOS
 
 class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -37,6 +37,7 @@ class MacAlertService {
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var planService: PlanService = factory.makePlanService()
     
     fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -88,7 +89,8 @@ extension MacAlertService: CoreAlertService {
 
         case let alert as AllCountriesUpsellAlert:
             let plus = AccountPlan.plus
-            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: plus.countriesCount)
+            let countriesCount = planService.countriesCount
+            let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: countriesCount)
             show(alert: alert, upsellType: allCountriesUpsell)
 
         case let alert as ModerateNATUpsellAlert:

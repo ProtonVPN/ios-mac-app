@@ -222,6 +222,7 @@
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
 		E5F1112C27CE184A007DEC0D /* SettingsTickboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */; };
 		E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
+		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
 		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
@@ -836,6 +837,7 @@
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
+		E5FFC8992816AEFC00E355DA /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../macos/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -1539,6 +1541,14 @@
 			path = Upsell;
 			sourceTree = "<group>";
 		};
+		E5FFC8982816AEF200E355DA /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				E5FFC8992816AEFC00E355DA /* PlanService.swift */,
+			);
+			path = Payments;
+			sourceTree = "<group>";
+		};
 		E9036B3D26C1042E00EDFDA4 /* IPC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1842,6 +1852,7 @@
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				E5FFC8982816AEF200E355DA /* Payments */,
 				42BEF9442631760E009180A7 /* Features */,
 				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
@@ -3652,6 +3663,7 @@
 				EE4E7DF51F6276C9000F7D5E /* WindowService.swift in Sources */,
 				42082651256BB78600A621EC /* NSView+Children.swift in Sources */,
 				E156C19B20BDA5920054E935 /* StatusMenuViewController.swift in Sources */,
+				E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */,

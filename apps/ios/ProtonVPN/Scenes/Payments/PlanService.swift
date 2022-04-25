@@ -226,11 +226,3 @@ extension CorePlanService: StoreKitManagerDelegate {
         return credentials.userId
     }
 }
-
-private extension Array where Element == Countries {
-    func maxCountries() -> Int {
-        self.max {
-            $0.count < $1.count
-        }?.count ?? AccountPlan.plus.countriesCount
-    }
-}
