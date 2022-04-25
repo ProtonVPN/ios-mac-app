@@ -28,7 +28,7 @@ import BugReport
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
 final class DependencyContainer {
-    
+
     private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
     private var teamId: String {
         return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -112,6 +112,7 @@ final class DependencyContainer {
     private lazy var propertiesManager = PropertiesManager(storage: storage)
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
+    private lazy var planService = CorePlanService(networking: networking)
     private lazy var appInfo = AppInfoImplementation()
     private lazy var doh: DoHVPN = {
         #if !RELEASE
@@ -132,6 +133,13 @@ final class DependencyContainer {
         return doh
     }()
     private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
+}
+
+// MARK: PlanServiceFactory
+extension DependencyContainer: PlanServiceFactory {
+    func makePlanService() -> PlanService {
+        return planService
+    }
 }
 
 // MARK: NavigationServiceFactory
