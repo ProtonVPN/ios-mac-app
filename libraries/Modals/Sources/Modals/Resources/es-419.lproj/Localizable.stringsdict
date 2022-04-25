@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Connect up to %d devices at once</string>
+			<string>Conecte %d dispositivos simultáneamente</string>
 			<key>other</key>
 			<string>Conecte hasta %d dispositivos a la vez</string>
 		</dict>
@@ -29,7 +29,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d countries</string>
+			<string>%d país</string>
 			<key>other</key>
 			<string>%d países</string>
 		</dict>
@@ -40,7 +40,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d secure servers</string>
+			<string>%d servidor seguro</string>
 			<key>other</key>
 			<string>%d servidores seguros</string>
 		</dict>
