@@ -54,6 +54,7 @@ def vpn_core
     pod 'ProtonCore-Networking/Alamofire', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Authentication/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Crypto-VPN', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Payments/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
 
     # Logs
     logs
@@ -103,7 +104,6 @@ target 'ProtonVPN' do
   pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-HumanVerification/Alamofire', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Payments/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-APIClient/Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
