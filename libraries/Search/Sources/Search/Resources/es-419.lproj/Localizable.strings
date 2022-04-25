@@ -8,7 +8,7 @@
 "_plus_servers" = "Servidores PLUS";
 
 /* Placeholder text showing in the search bar on the search screen */
-"search_bar_placeholder" = "Country, City or Server";
+"search_bar_placeholder" = "País, ciudad o servidor";
 
 /* Section header in search */
 "search_cities" = "Ciudades";

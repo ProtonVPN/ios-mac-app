@@ -950,7 +950,7 @@
 "_moderate_nat_enable_title" = "Habilitar NAT moderada";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
+"_moderate_nat_explanation" = "La NAT moderada desactiva la aleatorización de la asignación de direcciones locales. Esto puede reducir ligeramente su seguridad, pero permite que las aplicaciones punto a punto, como los juegos en línea, establezcan conexiones directas. \nMás información";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Más información";
@@ -1019,16 +1019,16 @@
 "_need_help" = "¿Necesita ayuda?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connect Anyway";
+"_neks_t2_connect" = "Conectar de todos modos";
 
 /* (No Comment) */
-"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+"_neks_t2_description" = "El uso de interruptor de apagado es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";
 
 /* `_neks_t2_description' localized string. */
-"_neks_t2_hyperlink" = "T2 Security Chip";
+"_neks_t2_hyperlink" = "Chip de seguridad T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill Switch Stability Warning";
+"_neks_t2_title" = "Advertencia de estabilidad del interruptor de apagado";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Su conexión se reiniciará para cambiar el modo NetShield.";
@@ -1583,7 +1583,7 @@
 "_smart_routing_title" = "Smart Routing";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "Inteligente";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ velocidad";
@@ -2151,13 +2151,13 @@
 "apply_coupon" = "Aplicar";
 
 /* Banner shown after coupon is applied */
-"coupon_applied" = "Coupon has been applied successfully.";
+"coupon_applied" = "El cupón ha sido aplicado con éxito.";
 
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
-"coupon_applied_plan_not_upgraded_yet" = "Coupon has been applied successfully. Your subscription will be upgraded within a few minutes.";
+"coupon_applied_plan_not_upgraded_yet" = "El cupón ha sido aplicado con éxito. Su suscripción será actualizada en unos minutos.";
 
 /* Title of the screen to apply a coupon */
-"coupon_code" = "Coupon code";
+"coupon_code" = "Código de cupón";
 
 /* (No Comment) */
 "login_fetch_vpn_data" = "Configurando su acceso VPN";
@@ -2166,8 +2166,8 @@
 "login_summary_button" = "Comience a usar ProtonVPN";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
-"proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
+"proton_website_unreachable" = "El sitio web de ProtonVPN podría estar temporalmente inaccesible debido a restricciones de red. Use la aplicación móvil para crear una cuenta nueva de Proton.";
 
 /* Title of the Use coupon button in Settings */
-"use_coupon" = "Use coupon";
+"use_coupon" = "Usar cupón";
 

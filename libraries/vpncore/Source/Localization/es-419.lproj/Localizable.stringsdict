@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d country</string>
+			<string>%d país</string>
 			<key>other</key>
 			<string>%d países</string>
 		</dict>
@@ -29,7 +29,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d+ country</string>
+			<string>%d+ país</string>
 			<key>other</key>
 			<string>%d+ países</string>
 		</dict>
@@ -45,7 +45,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d connection</string>
+			<string>%d conexión</string>
 			<key>other</key>
 			<string>%d conexiones</string>
 		</dict>

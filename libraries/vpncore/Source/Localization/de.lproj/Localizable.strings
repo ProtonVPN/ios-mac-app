@@ -416,7 +416,7 @@
 "_error_invalid_human_verification_code_resend" = "Erneut senden";
 
 /* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Ungültiger Bestätigungsschlüssel";
+"_error_invalid_human_verification_code_title" = "Ungültiger Bestätigungscode";
 
 /* Invalid human verification code alert button */
 "_error_invalid_human_verification_code_try_other" = "Eine andere Methode verwenden";

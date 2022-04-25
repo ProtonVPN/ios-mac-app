@@ -23,19 +23,19 @@
 "modals_get_plus" = "Mejorar";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "ProtonVPN's strict no-log policy is certified by an external audit.";
+"modals_no_logs_external_audit" = "La política estricta de no registro de ProtonVPN está certificada por una auditoría externa.";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "We do not log your internet activity";
+"modals_no_logs_log_activity" = "No registramos su actividad en internet";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_privacy_first" = "ProtonVPN is privacy first";
+"modals_no_logs_privacy_first" = "ProtonVPN es la privacidad primero";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "We do not share any data with third parties";
+"modals_no_logs_third_parties" = "No compartimos ningún dato con terceros";
 
 /* Title of the No Logs screen */
-"modals_no_logs_title" = "No logs and Swiss-based";
+"modals_no_logs_title" = "Sin registros y con sede en Suiza";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_highSpeed" = "Navegue a las velocidades máximas (10 Gbps)";

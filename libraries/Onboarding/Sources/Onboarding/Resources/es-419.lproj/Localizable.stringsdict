@@ -40,7 +40,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d secure server</string>
+			<string>%d servidor seguro</string>
 			<key>other</key>
 			<string>%d servidores seguros</string>
 		</dict>
@@ -56,7 +56,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d device</string>
+			<string>%d dispositivo</string>
 			<key>other</key>
 			<string>%d dispositivos</string>
 		</dict>
@@ -72,7 +72,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d country</string>
+			<string>%d país</string>
 			<key>other</key>
 			<string>%d países</string>
 		</dict>
@@ -83,7 +83,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d server</string>
+			<string>%d servidor</string>
 			<key>other</key>
 			<string>%d servidores</string>
 		</dict>

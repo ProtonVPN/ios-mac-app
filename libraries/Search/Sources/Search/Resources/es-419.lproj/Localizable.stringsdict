@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d country</string>
+			<string>%d país</string>
 			<key>other</key>
 			<string>%d países</string>
 		</dict>
