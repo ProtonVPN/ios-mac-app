@@ -120,7 +120,8 @@ class CountriesSectionViewModel {
         CoreAlertServiceFactory &
         VpnKeychainFactory &
         VpnManagerFactory &
-        VpnStateConfigurationFactory
+        VpnStateConfigurationFactory &
+        ModelIdCheckerFactory
 
     private let factory: Factory
     

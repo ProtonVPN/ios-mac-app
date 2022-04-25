@@ -70,37 +70,12 @@ struct CatalinaKSIntercept: VpnConnectionInterceptPolicyItem {
     }
 }
 
-/// NetworkExtension + KS can cause kernel panics on T2 Macs (FB9860255). Prompt user to switch to Ike, disable KillSwitch, connect anyway, or always connect and permanently dismiss this warning.
-struct NetworkExtensionT2Intercept: VpnConnectionInterceptPolicyItem {
-    let modelIdChecker: ModelIdCheckerProtocol
-    let alertService: CoreAlertService
-    let propertiesManager: PropertiesManagerProtocol
-
-    func shouldIntercept(_ connectionProtocol: ConnectionProtocol, isKillSwitchOn: Bool, completion: @escaping (VpnConnectionInterceptResult) -> Void) {
-        guard isKillSwitchOn && modelIdChecker.isT2Mac else {
-            completion(.allow)
-            return
-        }
-
-        log.debug("NetworkExtension + KillSwitch on T2 detected. Asking user to change one or another.", category: .connectionConnect, event: .scan)
-        DispatchQueue.global(qos: .userInteractive).async {
-            alertService.push(alert: NEKSOnT2Alert(killSwitchOffHandler: {
-                completion(.intercept(.withoutUsingKillSwitch(with: connectionProtocol)))
-            }, connectAnywayHandler: {
-                completion(.allow)
-            }))
-        }
-    }
-}
-
 class ConnectionIntercepts {
-    typealias Factory = ModelIdCheckerFactory & CoreAlertServiceFactory & PropertiesManagerFactory
+    typealias Factory = CoreAlertServiceFactory
 
     private let factory: Factory
 
-    private lazy var modelIdChecker = factory.makeModelIdChecker()
     private lazy var alertService = factory.makeCoreAlertService()
-    private lazy var propertiesManager = factory.makePropertiesManager()
 
     public private(set) var intercepts: [VpnConnectionInterceptPolicyItem] = []
 
@@ -109,7 +84,6 @@ class ConnectionIntercepts {
 
         self.intercepts = [
             CatalinaKSIntercept(alertService: alertService),
-            NetworkExtensionT2Intercept(modelIdChecker: modelIdChecker, alertService: alertService, propertiesManager: propertiesManager),
         ]
     }
 }

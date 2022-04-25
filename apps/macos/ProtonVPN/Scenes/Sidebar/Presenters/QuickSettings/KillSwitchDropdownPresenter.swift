@@ -26,11 +26,12 @@ import AppKit
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory
+    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory
     
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
     
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
@@ -80,22 +81,44 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let active = propertiesManager.killSwitch
         let text = LocalizedString.killSwitch + " " + LocalizedString.switchSideButtonOn.capitalized
         let icon = #imageLiteral(resourceName: "qs_killswitch_on")
-        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
-            let wrapper = {
-                self.propertiesManager.killSwitch = true
-                self.propertiesManager.excludeLocalNetworks = false
-                if self.vpnGateway.connection == .connected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                    self.vpnGateway.retryConnection()
-                }
+
+        let connect = {
+            self.propertiesManager.killSwitch = true
+            self.propertiesManager.excludeLocalNetworks = false
+            if self.vpnGateway.connection == .connected {
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                self.vpnGateway.retryConnection()
             }
-            
+        }
+
+        let connectAfterLocalNetworkWarning = {
             guard self.propertiesManager.excludeLocalNetworks else {
-                wrapper()
+                connect()
                 return
             }
-            
-            self.alertService.push(alert: TurnOnKillSwitchAlert(confirmHandler: wrapper, cancelHandler: nil))
+
+            self.alertService.push(alert: TurnOnKillSwitchAlert(confirmHandler: connect, cancelHandler: nil))
+        }
+
+        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
+            guard self.modelIdChecker.isT2Mac else {
+                connectAfterLocalNetworkWarning()
+                return
+            }
+
+            log.info("User receiving T2 warning after attempting to enable Kill Switch",
+                     category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+            self.alertService.push(alert: NEKSOnT2Alert(
+                killSwitchOffHandler: {
+                    log.info("User has disabled Kill Switch after receiving T2 warning",
+                             category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                },
+                connectAnywayHandler: {
+                    log.info("User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
+                             category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                    connectAfterLocalNetworkWarning()
+                })
+            )
         })
     }
 }

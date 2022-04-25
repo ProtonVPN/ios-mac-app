@@ -58,7 +58,6 @@
 		42F256ED257E36270033633B /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F256EC257E36270033633B /* SystemExtensionManager.swift */; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
-		4C3778C927C7CBA3008A6AB7 /* ModelIdCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383427C3E27200D7A88D /* ModelIdCheckerTests.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
 		4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
@@ -616,7 +615,6 @@
 		45F03F9B62B304014D9F07D2 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A0223FF1859E2F464D0A3F7 /* Pods-ProtonVPN WireGuard.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.staging.xcconfig"; sourceTree = "<group>"; };
 		4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModelIDChecker.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Utilities/ModelIDChecker.swift; sourceTree = "<group>"; };
-		4C54383427C3E27200D7A88D /* ModelIdCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ModelIdCheckerTests.swift; path = ../../../macos/ProtonVPNTests/Tests/ModelIdCheckerTests.swift; sourceTree = "<group>"; };
 		4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCClientConnection.swift; path = ../../macos/ExtensionsIPC/IPCClientConnection.swift; sourceTree = "<group>"; };
 		4C8641B827D22B1900EEFB1D /* AuditTokenGetter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuditTokenGetter.h; path = ../../macos/ExtensionsIPC/AuditTokenGetter.h; sourceTree = "<group>"; };
 		4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CodeSignatureComparitor.swift; path = ../../macos/ExtensionsIPC/CodeSignatureComparitor.swift; sourceTree = "<group>"; };
@@ -1507,7 +1505,6 @@
 				E15B755B20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift */,
 				E13F4CF120FC99DA00D985C2 /* ServerManagerTests.swift */,
 				E1683FF92372DCBD00992E75 /* AlertTests.swift */,
-				4C54383427C3E27200D7A88D /* ModelIdCheckerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -3362,7 +3359,6 @@
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
-				4C3778C927C7CBA3008A6AB7 /* ModelIdCheckerTests.swift in Sources */,
 				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
