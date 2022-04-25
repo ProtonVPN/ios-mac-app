@@ -42,6 +42,7 @@ extension Logger {
         // Custom ios (please add to confluence)
         case sysex // System Extension
         case review
+        case core
     }
 
     public enum Event: String {
