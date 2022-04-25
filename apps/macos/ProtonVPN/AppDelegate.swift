@@ -247,9 +247,9 @@ extension AppDelegate {
         ProtonCore_Log.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:
-                log.debug("[Core] \(message)", category: .app)
+                log.debug("\(message)", category: .core)
             case .error, .fatal:
-                log.error("[Core] \(message)", category: .app, source: "Core")
+                log.error("\(message)", category: .core)
             }
         }
     }
