@@ -96,13 +96,6 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         }
         
         let serverID = activeConnection.serverIp.id
-        
-        let failureCallback: ErrorCallback = { error in
-            log.error("Server check request failed with error. Requesting Quick Connect.", category: .connectionConnect, event: .connect, metadata: ["error": "\(error)"])
-            self.vpnGateWay.quickConnect()
-            failure?(error)
-        }
-        
         vpnApiService.serverState(serverId: serverID) { result in
             switch result {
             case let .success(vpnServerState):
@@ -115,15 +108,13 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                     switch result {
                     case let .success(servers):
                         self.serverStorage.store(servers)
-                        self.alertService.push(alert: VpnServerOnMaintenanceAlert())
-                        self.vpnGateWay.quickConnect()
                         completion?(true)
                     case let .failure(error):
-                        failureCallback(error)
+                        failure?(error)
                     }
                 }
             case let .failure(error):
-                failureCallback(error)
+                failure?(error)
             }
         }
     }
