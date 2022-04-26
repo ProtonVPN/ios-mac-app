@@ -105,7 +105,7 @@ class CertificateRefreshTests: XCTestCase {
 
         manager.planNextRefresh()
 
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 10)
     }
 
     func testError401LeadingToTokenRefresh() {
@@ -159,7 +159,7 @@ class CertificateRefreshTests: XCTestCase {
 
         wait(for: [expectationForFirstCertRefresh,
                    expectationForRetryCertRefresh,
-                   expectationForAuthTokenRefresh], timeout: 5)
+                   expectationForAuthTokenRefresh], timeout: 10)
     }
 }
 
