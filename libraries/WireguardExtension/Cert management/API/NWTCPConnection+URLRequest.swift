@@ -51,7 +51,7 @@ class NEPacketTunnelConnectionSessionFactory: ConnectionSessionFactory {
 
     func connect(hostname: String, port: String, useTLS: Bool) -> ConnectionSession {
         let endpoint = NWHostEndpoint(hostname: hostname, port: port)
-        log.debug("Connecting to endpoint \(hostname):\(port)")
+        log.debug("Connecting to endpoint \(hostname):\(port)", category: .net)
         let connection = provider.createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: nil)
         return NWTCPConnectionSession(connection: connection)
     }
@@ -106,7 +106,7 @@ class NWTCPConnectionSession: ConnectionSession {
                 let (min, max) = (1, 8192)
                 self.connection.readMinimumLength(min, maximumLength: max) { responseData, error in
                     if let error = error {
-                        log.debug("Received error. State: \(self.connection.state)")
+                        log.debug("Received error. State: \(self.connection.state)", category: .net)
                         completionHandler(nil, nil, error)
                         return
                     }
