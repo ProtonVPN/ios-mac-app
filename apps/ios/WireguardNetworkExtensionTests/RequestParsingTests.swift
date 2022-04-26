@@ -22,21 +22,26 @@ class RequestParsingTests: XCTestCase {
     func makeHeaders(headers: [String: String]) -> String {
         // sort header keys for reproducibility between test runs
         headers.keys.sorted().reduce("") { result, key in
-            result.appending("\(key): \(headers[key]!)\n")
+            result.appending("\(key): \(headers[key]!)\r\n")
         }
     }
 
     func makeResponse(preamble: String = "HTTP/1.1 200 OK", headers: [String: String], body: String?) -> Data {
         """
-        \(preamble)
-        \(makeHeaders(headers: headers))\(body?.prepending("\n") ?? "")
+        \(preamble)\r
+        \(makeHeaders(headers: headers))\(body?.prepending("\r\n") ?? "")
         """.data(using: .utf8)!
     }
 
     func makeRequest(preamble: String, headers: [String: String], body: String?) -> Data {
-        """
-        \(preamble)
-        \(makeHeaders(headers: headers))\(body?.prepending("\n") ?? "")
+        var body: String? = body
+        if body != nil {
+            body = body!.prepending("Content-Length: \(body!.count)\r\n\r\n")
+        }
+
+        return """
+        \(preamble)\r
+        \(makeHeaders(headers: headers))\(body ?? "")
         """.data(using: .utf8)!
     }
 
@@ -103,6 +108,23 @@ class RequestParsingTests: XCTestCase {
         } catch {
             XCTFail("Expected an HTTPError but got a different type")
         }
+    }
+
+    func testHTTPErrorResponseParsing() {
+        let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
+
+        let data = "HTTP/1.1 400 Bad Request\r\ndate: Mon, 25 Apr 2022 15:20:39 GMT\r\ncache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\nexpires: Fri, 04 May 1984 22:15:00 GMT\r\naccess: application/vnd.protonmail.api+json;apiversion=1\r\nset-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=protonvpn.ch; Path=/; HttpOnly; Secure; Max-Age=7776000\r\nset-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\ncontent-length: 97\r\ncontent-type: application/json\r\ncontent-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\nexpect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\npublic-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\nx-content-type-options: nosniff\r\nx-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\nreferrer-policy: strict-origin-when-cross-origin\r\nx-permitted-cross-domain-policies: none\r\n\r\n{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\nContent-length: 90\r\nCache-Control: no-cache\r\nConnection: close\r\nContent-Type: text/html\r\n\r\n<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n".data(using: .utf8)!
+
+        let expectedBody = "{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\nContent-length: 90\r\nCache-Control: no-cache\r\nConnection: close\r\nContent-Type: text/html\r\n\r\n<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n".data(using: .utf8)!
+
+        do {
+            let (response, body) = try HTTPURLResponse.parse(responseFromURL: url, data: data)
+            XCTAssertEqual(response!.statusCode, 400)
+            XCTAssertEqual(body, expectedBody)
+        } catch {
+            XCTFail("Shouldn't fail")
+        }
+
     }
 
     func testValidHTTPRequestGeneration() throws {
