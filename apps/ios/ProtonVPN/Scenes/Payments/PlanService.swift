@@ -137,6 +137,8 @@ final class CorePlanService: PlanService {
                 }
             case let .planPurchaseProcessingInProgress(accountPlan: plan):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
+            case .toppedUpCredits:
+                log.debug("Credits topped up", category: .iap)
             }
         }
     }
@@ -167,6 +169,8 @@ final class CorePlanService: PlanService {
             log.debug("Payments closed", category: .iap)
         case let .purchaseError(error: error):
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
+        case .toppedUpCredits:
+            log.debug("Credits topped up", category: .iap)
         }
     }
 }

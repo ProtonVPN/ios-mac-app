@@ -57,6 +57,7 @@ final class CouponViewController: UIViewController {
         view.backgroundColor = UIColor.backgroundColor()
 
         textField.autocapitalizationType = .allCharacters
+        textField.allowOnlyUppercase = true
         textField.title = LocalizedString.useCoupon
 
         applyButton.setTitle(LocalizedString.applyCoupon, for: .normal)
