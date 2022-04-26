@@ -126,14 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         container.makeReview().activated()
     }
     
-    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        container.makeMaintenanceManager().observeCurrentServerState(every: 0, repeats: false, completion: { maintenance in
-            completionHandler( maintenance ? .newData : .noData)
-        }, failure: { _ in
-            completionHandler(.failed)
-        })
-    }
-    
     private func setupLogsForApp() {
         LoggingSystem.bootstrap {_ in
             return MultiplexLogHandler([
