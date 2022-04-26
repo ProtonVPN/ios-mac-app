@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Foundation
 
 final class LoginViewController: NSViewController {
     
@@ -56,8 +57,10 @@ final class LoginViewController: NSViewController {
     }()
 
     @IBOutlet private weak var logoImage: NSImageView!
+    @IBOutlet private weak var warningStack: NSStackView!
     @IBOutlet private weak var warningLabel: PVPNTextField!
-    @IBOutlet private weak var helpLink: PVPNHyperlinkTextField!
+    @IBOutlet private weak var warningIcon: NSImageView!
+    @IBOutlet private weak var helpLink: InteractiveActionButton!
     
     @IBOutlet private weak var usernameTextField: TextFieldWithFocus!
     @IBOutlet private weak var usernameHorizontalLine: NSBox!
@@ -121,7 +124,6 @@ final class LoginViewController: NSViewController {
 
         logoImage.image = AppTheme.Icon.vpnWordmarkAlwaysDark
         logoImage.imageScaling = .scaleProportionallyUpOrDown
-        setupLoadingView()
         setupOnboardingView()
         setupTwoFactorView()
         setupCallbacks()
@@ -148,6 +150,7 @@ final class LoginViewController: NSViewController {
     
     private func setupOnboardingView() {
         onboardingView.isHidden = true
+        logoImage.isHidden = true
         
         setupWarningSection()
         setupUsernameSection()
@@ -157,12 +160,15 @@ final class LoginViewController: NSViewController {
     }
     
     private func setupWarningSection() {
-        warningLabel.isHidden = true
+        warningStack.isHidden = true
         
         helpLink.title = LocalizedString.learnMore
         helpLink.isHidden = true
         helpLink.target = self
         helpLink.action = #selector(keychainHelpAction)
+
+        warningIcon.image = AppTheme.Icon.exclamationCircleFilled
+        warningIcon.contentTintColor = .color(.icon, .danger)
     }
     
     private func setupUsernameSection() {
@@ -196,6 +202,7 @@ final class LoginViewController: NSViewController {
         passwordRevealButton.setButtonType(.toggle)
         passwordRevealButton.image = AppTheme.Icon.eye
         passwordRevealButton.alternateImage = AppTheme.Icon.eyeSlash
+        passwordRevealButton.contentTintColor = .color(.icon, .interactive)
         passwordRevealButton.imagePosition = .imageOnly
         passwordRevealButton.isBordered = false
         passwordRevealButton.target = self
@@ -263,9 +270,9 @@ final class LoginViewController: NSViewController {
     }
     
     private func presentLoadingScreen() {
-        warningLabel.isHidden = true
-        helpLink.isHidden = true
+        warningStack.isHidden = true
         onboardingView.isHidden = true
+        logoImage.isHidden = true
         twoFactorView.isHidden = true
 
         loadingView.isHidden = false
@@ -287,8 +294,8 @@ final class LoginViewController: NSViewController {
     
     private func presentOnboardingScreen(withErrorDescription description: String?) {
         if let description = description {
-            warningLabel.attributedStringValue = description.styled(.danger)
-            warningLabel.isHidden = false
+            warningLabel.attributedStringValue = description.styled(.danger, font: .themeFont(.small), alignment: .natural)
+            warningStack.isHidden = false
         }
 
         _ = usernameTextField.becomeFirstResponder()

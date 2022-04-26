@@ -321,7 +321,7 @@
 "_hide" = "HIDE";
 
 /* MacOS: Login button */
-"_login" = "Login";
+"_login" = "Sign in";
 
 /* iOS: Login button in several places */
 "_log_in" = "Log In";

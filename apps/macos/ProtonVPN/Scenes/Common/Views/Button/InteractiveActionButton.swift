@@ -27,7 +27,7 @@ class InteractiveActionButton: HoverDetectionButton {
         return attributedTitle.size()
     }
 
-    var fontSize: AppTheme.FontSize = .paragraph {
+    var fontSize: AppTheme.FontSize = .small {
         didSet {
             setAttributedTitle()
         }
