@@ -354,4 +354,29 @@ final class SearchViewModelTests: XCTestCase {
             SearchResult.cities(cities: [prague])
         ]))
     }
+
+    func testSearchingCountriesWithMultipleWords() {
+        let us = CountryViewModelMock(country: "United States", servers: [:])
+        let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: [us], constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
+
+        vm.search(searchText: "united")
+        XCTAssertEqual(vm.status, SearchStatus.results([
+            .countries(countries: [us])
+        ]))
+
+        vm.search(searchText: "united ")
+        XCTAssertEqual(vm.status, SearchStatus.results([
+            .countries(countries: [us])
+        ]))
+
+        vm.search(searchText: "united st")
+        XCTAssertEqual(vm.status, SearchStatus.results([
+            .countries(countries: [us])
+        ]))
+
+        vm.search(searchText: "united states")
+        XCTAssertEqual(vm.status, SearchStatus.results([
+            .countries(countries: [us])
+        ]))
+    }
 }
