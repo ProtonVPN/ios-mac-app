@@ -59,8 +59,9 @@ final class DiscourageSecureCoreViewController: UIViewController {
         actionTextButtonStyle(cancelButton)
         titleStyle(titleLabel)
         subtitleStyle(subtitleLabel)
-        subtitleStyle(dontShowAgainLabel)
         actionTextButtonStyle(learnMoreButton)
+        brandStyleOnTint(dontShowAgainSwitch)
+        labelStyle(dontShowAgainLabel)
 
         featureArtImageView.image = feature.artImage
     }
