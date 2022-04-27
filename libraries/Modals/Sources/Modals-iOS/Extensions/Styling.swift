@@ -30,6 +30,15 @@ let brandStyle: (UIView) -> Void = {
     $0.backgroundColor = colors.brand
 }
 
+let brandStyleOnTint: (UISwitch) -> Void = {
+    $0.onTintColor = colors.brand
+}
+
+let labelStyle: (UILabel) -> Void = {
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
+    $0.textColor = colors.text
+}
+
 let baseViewStyle: (UIView) -> Void = {
     $0.backgroundColor = colors.background
 }
