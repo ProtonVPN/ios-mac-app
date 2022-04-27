@@ -17,14 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dqS-16-vVf">
-                                <rect key="frame" x="0.0" y="44" width="414" height="710"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="dqS-16-vVf" customClass="CenteringScrollView" customModule="Modals_iOS">
+                                <rect key="frame" x="0.0" y="44" width="414" height="726"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GBb-Hz-STb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="374"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="184" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="184" translatesAutoresizingMaskIntoConstraints="NO" id="ZLz-VF-2hg">
                                                 <rect key="frame" x="16" y="0.0" width="382" height="184"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="184" id="qOo-cy-pNo"/>
+                                                </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Jg-ku-cxb">
                                                 <rect key="frame" x="16" y="208" width="382" height="81.5"/>
@@ -91,7 +94,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="qbl-gt-UXf"/>
                             </scrollView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dK9-Gz-Kpq">
-                                <rect key="frame" x="16" y="762" width="382" height="68"/>
+                                <rect key="frame" x="16" y="778" width="382" height="68"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHs-vS-yIf">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
@@ -121,11 +124,12 @@
                             <constraint firstItem="dqS-16-vVf" firstAttribute="top" secondItem="Oow-8b-WVq" secondAttribute="top" id="FLi-gE-XOg"/>
                             <constraint firstItem="Oow-8b-WVq" firstAttribute="trailing" secondItem="dqS-16-vVf" secondAttribute="trailing" id="POL-9H-9aD"/>
                             <constraint firstItem="dK9-Gz-Kpq" firstAttribute="leading" secondItem="Oow-8b-WVq" secondAttribute="leading" constant="16" id="d9y-tX-xAq"/>
-                            <constraint firstItem="Oow-8b-WVq" firstAttribute="bottom" secondItem="dK9-Gz-Kpq" secondAttribute="bottom" constant="32" id="g2V-bl-IZD"/>
+                            <constraint firstItem="Oow-8b-WVq" firstAttribute="bottom" secondItem="dK9-Gz-Kpq" secondAttribute="bottom" constant="16" id="g2V-bl-IZD"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="featureArtImageView" destination="ZLz-VF-2hg" id="AP2-xj-mKD"/>
+                        <outlet property="featureArtImageView" destination="ZLz-VF-2hg" id="dqd-Xg-f0V"/>
+                        <outlet property="featureArtImageViewHeight" destination="qOo-cy-pNo" id="TxU-Mv-dvT"/>
                         <outlet property="featureView" destination="GBb-Hz-STb" id="aiH-3H-eTb"/>
                         <outlet property="featuresFooterLabel" destination="h8S-Hl-OTq" id="2RP-Uc-Dcp"/>
                         <outlet property="featuresStackView" destination="9q6-jr-eNp" id="m22-36-frb"/>

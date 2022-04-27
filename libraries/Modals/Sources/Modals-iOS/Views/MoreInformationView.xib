@@ -16,27 +16,18 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hcV-j9-8ea">
                     <rect key="frame" x="0.0" y="12" width="434" height="111"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ncw-bL-hi2">
-                            <rect key="frame" x="16" y="16" width="402" height="79"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="248" horizontalCompressionResistancePriority="751" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="WnP-Tr-9Mz">
-                                    <rect key="frame" x="0.0" y="0.0" width="24" height="79"/>
-                                </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="248" verticalHuggingPriority="251" text="ProtonVPN's strict no-log policy is certified by an external audit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtF-gp-Ftl">
-                                    <rect key="frame" x="32" y="0.0" width="338" height="79"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ori-vJ-fnp">
-                                    <rect key="frame" x="378" y="0.0" width="24" height="79"/>
-                                </imageView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="WnP-Tr-9Mz" firstAttribute="top" secondItem="Ncw-bL-hi2" secondAttribute="top" id="BcZ-aG-GYY"/>
-                                <constraint firstItem="Ori-vJ-fnp" firstAttribute="top" secondItem="Ncw-bL-hi2" secondAttribute="top" id="Cac-TR-Zhq"/>
-                            </constraints>
-                        </stackView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="248" horizontalCompressionResistancePriority="1000" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="WnP-Tr-9Mz">
+                            <rect key="frame" x="16" y="16" width="24" height="24"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="ProtonVPN's strict no-log policy is certified by an external audit." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtF-gp-Ftl">
+                            <rect key="frame" x="48" y="16" width="338" height="79"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" placeholderIntrinsicWidth="24" placeholderIntrinsicHeight="24" translatesAutoresizingMaskIntoConstraints="NO" id="Ori-vJ-fnp">
+                            <rect key="frame" x="394" y="16" width="24" height="24"/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hc1-LO-Lf5">
                             <rect key="frame" x="0.0" y="0.0" width="434" height="111"/>
                             <state key="normal" title="Button"/>
@@ -48,13 +39,17 @@
                     </subviews>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="jtF-gp-Ftl" secondAttribute="bottom" constant="16" id="0lr-pO-tN5"/>
+                        <constraint firstItem="Ori-vJ-fnp" firstAttribute="leading" secondItem="jtF-gp-Ftl" secondAttribute="trailing" constant="8" id="3tV-JN-Y29"/>
                         <constraint firstAttribute="trailing" secondItem="Hc1-LO-Lf5" secondAttribute="trailing" id="45t-k6-bPs"/>
+                        <constraint firstItem="Ori-vJ-fnp" firstAttribute="top" secondItem="hcV-j9-8ea" secondAttribute="top" constant="16" id="7Yx-aV-5TD"/>
+                        <constraint firstItem="WnP-Tr-9Mz" firstAttribute="leading" secondItem="hcV-j9-8ea" secondAttribute="leading" constant="16" id="ArX-Wo-mwL"/>
                         <constraint firstItem="Hc1-LO-Lf5" firstAttribute="top" secondItem="hcV-j9-8ea" secondAttribute="top" id="K4F-0M-mk8"/>
-                        <constraint firstAttribute="bottom" secondItem="Ncw-bL-hi2" secondAttribute="bottom" constant="16" id="T7p-NO-8WE"/>
-                        <constraint firstItem="Ncw-bL-hi2" firstAttribute="leading" secondItem="hcV-j9-8ea" secondAttribute="leading" constant="16" id="WhK-27-xhi"/>
+                        <constraint firstAttribute="trailing" secondItem="Ori-vJ-fnp" secondAttribute="trailing" constant="16" id="KvM-L1-XYl"/>
+                        <constraint firstItem="jtF-gp-Ftl" firstAttribute="leading" secondItem="WnP-Tr-9Mz" secondAttribute="trailing" constant="8" id="PUB-Wi-wTN"/>
+                        <constraint firstItem="jtF-gp-Ftl" firstAttribute="top" secondItem="hcV-j9-8ea" secondAttribute="top" constant="16" id="bBX-vg-8FX"/>
                         <constraint firstItem="Hc1-LO-Lf5" firstAttribute="leading" secondItem="hcV-j9-8ea" secondAttribute="leading" id="ft8-Ev-RYs"/>
-                        <constraint firstAttribute="trailing" secondItem="Ncw-bL-hi2" secondAttribute="trailing" constant="16" id="gRc-0P-ElK"/>
-                        <constraint firstItem="Ncw-bL-hi2" firstAttribute="top" secondItem="hcV-j9-8ea" secondAttribute="top" constant="16" id="mly-24-Iys"/>
+                        <constraint firstItem="WnP-Tr-9Mz" firstAttribute="top" secondItem="hcV-j9-8ea" secondAttribute="top" constant="16" id="jMV-Ad-G3p"/>
                         <constraint firstAttribute="bottom" secondItem="Hc1-LO-Lf5" secondAttribute="bottom" id="z79-CT-AnW"/>
                     </constraints>
                 </view>
