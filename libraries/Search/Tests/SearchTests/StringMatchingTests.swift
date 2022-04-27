@@ -60,4 +60,18 @@ final class StringMatchingTests: XCTestCase {
         let ranges = name.findStartingRanges(of: "e")
         XCTAssertEqual(ranges.count, 0)
     }
+
+    func testMatchingInMultipleWordsWithASpace() {
+        let name = "United States"
+        let ranges = name.findStartingRanges(of: "Unit ")
+        XCTAssertEqual(ranges.count, 1)
+        XCTAssertEqual(ranges.first, NSRange(location: 0, length: 4))
+    }
+
+    func testMatchingInMultipleWordsFully() {
+        let name = "United States"
+        let ranges = name.findStartingRanges(of: "United Sta")
+        XCTAssertEqual(ranges.count, 1)
+        XCTAssertEqual(ranges.first, NSRange(location: 0, length: 10))
+    }
 }
