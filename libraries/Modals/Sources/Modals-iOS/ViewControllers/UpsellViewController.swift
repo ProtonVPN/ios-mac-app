@@ -38,7 +38,7 @@ public final class UpsellViewController: UIViewController {
     // MARK: Outlets
 
     @IBOutlet private weak var featureView: UIView!
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: CenteringScrollView!
     @IBOutlet private weak var getPlusButton: UIButton!
     @IBOutlet private weak var useFreeButton: UIButton!
     @IBOutlet private weak var featuresStackView: UIStackView!
@@ -46,6 +46,7 @@ public final class UpsellViewController: UIViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var featuresFooterLabel: UILabel!
     @IBOutlet private weak var featureArtImageView: UIImageView!
+    @IBOutlet private weak var featureArtImageViewHeight: NSLayoutConstraint!
 
     // MARK: Properties
 
@@ -59,12 +60,6 @@ public final class UpsellViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupFeatures()
-    }
-
-    override public func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let topInset = max(0, (scrollView.bounds.height - featureView.bounds.height) / 2)
-        scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
     }
 
     private func setupUI() {
@@ -105,6 +100,8 @@ public final class UpsellViewController: UIViewController {
         }
         featuresFooterLabel.text = upsellFeature.footer
         featureArtImageView.image = upsellFeature.artImage
+        let imageSize = upsellFeature.artImage.size
+        featureArtImageViewHeight.constant = (imageSize.height * featureArtImageView.bounds.width) / imageSize.width
 
         for view in featuresStackView.arrangedSubviews {
             view.removeFromSuperview()
