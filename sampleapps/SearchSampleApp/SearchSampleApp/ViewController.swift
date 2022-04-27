@@ -26,7 +26,7 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
 
     private let coordinator: SearchCoordinator = SearchCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)), constants: Constants(numberOfCountries: 61)), storage: Storage())
-    private let modals = ModalsFactory(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)))
+    private let modals = ModalsFactory(colors: Colors(background: .black, secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1), text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1)))
 
     override func viewDidLoad() {
         super.viewDidLoad()        
@@ -122,6 +122,10 @@ extension ViewController: SearchCoordinatorDelegate {
 }
 
 extension ViewController: UpsellViewControllerDelegate {
+    func userDidTapNext() {
+
+    }
+
     func userDidDismissUpsell() {
         
     }
