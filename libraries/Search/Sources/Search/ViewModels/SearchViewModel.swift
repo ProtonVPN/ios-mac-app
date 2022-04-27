@@ -67,7 +67,7 @@ final class SearchViewModel {
     }
 
     func search(searchText: String?) {
-        guard let searchText = searchText, !searchText.isEmpty else {
+        guard let searchText = searchText?.trimmingCharacters(in: CharacterSet.whitespaces), !searchText.isEmpty else {
             let recent = recentSearchesService.get()
             status = recent.isEmpty ? .placeholder : .recentSearches(recent)
             return
@@ -79,6 +79,13 @@ final class SearchViewModel {
             }
 
             let normalizedSearchText = searchText.normalized
+
+            // full match
+            if name.normalized.starts(with: normalizedSearchText) {
+                return true
+            }
+
+            // any of the words in the text match the search text
             let normalizedParts = name.components(separatedBy: CharacterSet.whitespaces).map({ $0.normalized })
             return normalizedParts.contains(where: { $0.starts(with: normalizedSearchText) })
         }
