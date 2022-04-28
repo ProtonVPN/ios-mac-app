@@ -85,6 +85,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             cityNameLabel.text = viewModel.displayCityName
             cityNameLabel.isHidden = viewModel.entryCountryName != nil
             secureView.isHidden = viewModel.entryCountryName == nil
+            countryNameLabel.isHidden = viewModel.entryCountryName == nil
 
             smartIV.isHidden = !viewModel.isSmartAvailable
             torIV.isHidden = !viewModel.torAvailable
