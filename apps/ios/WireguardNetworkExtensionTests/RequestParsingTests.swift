@@ -33,14 +33,17 @@ class RequestParsingTests: XCTestCase {
         """.data(using: .utf8)!
     }
 
-    func makeRequest(preamble: String, headers: [String: String], body: String?) -> Data {
+    func makeRequest(preamble: String, host: String, headers: [String: String], body: String?) -> Data {
         var body: String? = body
         if body != nil {
             body = body!.prepending("Content-Length: \(body!.count)\r\n\r\n")
+        } else {
+            body = "\r\n"
         }
 
         return """
         \(preamble)\r
+        Host: \(host)\r
         \(makeHeaders(headers: headers))\(body ?? "")
         """.data(using: .utf8)!
     }
@@ -145,7 +148,7 @@ class RequestParsingTests: XCTestCase {
             request.httpBody = requestBody.data(using: .utf8)!
 
             let data = try request.data()
-            let expected = makeRequest(preamble: "POST /vpn HTTP/1.1", headers: headers, body: requestBody)
+            let expected = makeRequest(preamble: "POST /vpn HTTP/1.1", host: url.host!, headers: headers, body: requestBody)
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
 
@@ -158,8 +161,8 @@ class RequestParsingTests: XCTestCase {
             request.httpMethod = "GET"
 
             let data = try request.data()
-            let expected = makeRequest(preamble: "GET /vpn HTTP/1.1", headers: headers, body: nil)
-            XCTAssertEqual(data, expected)
+            let expected = makeRequest(preamble: "GET /vpn HTTP/1.1", host: url.host!, headers: headers, body: nil)
+            XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
     }
 }

@@ -143,6 +143,9 @@ extension URLRequest {
         }
 
         try addToRequest("\(method) \(path) HTTP/1.1\r\n")
+        if let url = self.url, let host = url.host {
+            try addToRequest("Host: \(host)\r\n")
+        }
 
         if let httpHeaders = allHTTPHeaderFields, !httpHeaders.isEmpty {
             #if DEBUG
@@ -158,6 +161,8 @@ extension URLRequest {
         if let body = httpBody {
             try addToRequest("Content-Length: \(body.count)\r\n\r\n")
             request.append(body)
+        }else {
+            try addToRequest("\r\n")
         }
 
         return request
