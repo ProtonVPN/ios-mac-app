@@ -67,7 +67,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
     func testSavesValueToStorage() {
         let propertiesManager = PropertiesManagerMock()
-        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: true)
+        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: true, promoCode: true)
         let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.plus)
         let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider)
 
@@ -98,7 +98,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
 
     private func getFactory(safeMode: Bool?, tier: Int, safeModeFeatureFlag: Bool = true) -> (PaidFeaturePropertyProviderFactoryMock, Storage) {
         let propertiesManager = PropertiesManagerMock()
-        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag)
+        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: safeModeFeatureFlag, promoCode: true)
         let userTierProvider = UserTierProviderMock(tier)
         testDefauls.set(safeMode, forKey: "SafeMode\(Self.username!)")
         return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider), Storage())
