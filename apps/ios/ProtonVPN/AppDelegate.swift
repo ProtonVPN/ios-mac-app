@@ -62,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
-        NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
                 
         _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
         return true
@@ -207,18 +206,7 @@ fileprivate extension AppDelegate {
                 
             propertiesManager.lastTimeForeground = nil
         }
-    }
-    
-    @objc func featureFlagsChanged() {
-        // Check servers in maintenance
-        guard propertiesManager.featureFlags.serverRefresh else {
-            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
-            return
-        }
-        let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
-        UIApplication.shared.setMinimumBackgroundFetchInterval(time)
-    }
-    
+    }    
 }
 
 extension AppDelegate {
