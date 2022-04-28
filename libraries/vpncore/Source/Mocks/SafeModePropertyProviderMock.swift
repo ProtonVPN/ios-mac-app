@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-@testable import vpncore
 
 public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
     public var factory: Factory

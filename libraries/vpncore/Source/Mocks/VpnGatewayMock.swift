@@ -20,7 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-@testable import vpncore
 
 public class VpnGatewayMock: VpnGatewayProtocol {
     public static var connectionChanged: Notification.Name = Notification.Name("")
