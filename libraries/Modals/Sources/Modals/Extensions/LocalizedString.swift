@@ -10,6 +10,22 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name vertical_whitespace_opening_braces
 public enum LocalizedString {
+  /// You will be able to access premium features again after these are paid.
+  public static var delinquentDescription: String { return LocalizedString.tr("Localizable", "delinquent_description") }
+  /// You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.
+  public static var delinquentReconnectionDescription: String { return LocalizedString.tr("Localizable", "delinquent_reconnection_description") }
+  /// Your VPN account has pending invoices
+  public static var delinquentTitle: String { return LocalizedString.tr("Localizable", "delinquent_title") }
+  /// From Server:
+  public static var fromServerTitle: String { return LocalizedString.tr("Localizable", "from_server_title") }
+  /// Please disconnect another device to connect this one.
+  public static var maximumDeviceLimit: String { return LocalizedString.tr("Localizable", "maximum_device_limit") }
+  /// Please disconnect another device to connect this one or upgrade to %@ to get up to %d devices connected at the same time.
+  public static func maximumDevicePlanLimit(_ p1: Any, _ p2: Int) -> String {
+    return LocalizedString.tr("Localizable", "maximum_device_plan_limit", String(describing: p1), p2)
+  }
+  /// You have reached your maximum device limit
+  public static var maximumDeviceTitle: String { return LocalizedString.tr("Localizable", "maximum_device_title") }
   /// Cancel
   public static var modalsCommonCancel: String { return LocalizedString.tr("Localizable", "modals_common_cancel") }
   /// Learn more
@@ -88,6 +104,34 @@ public enum LocalizedString {
   public static var modalsUpsellSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_secure_core_title") }
   /// Not now
   public static var modalsUpsellStayFree: String { return LocalizedString.tr("Localizable", "modals_upsell_stay_free") }
+  /// We are reconnecting to the fastest server available.
+  public static var reconnectTitle: String { return LocalizedString.tr("Localizable", "reconnect_title") }
+  /// Your subscription has been downgraded.
+  public static var subscriptionExpiredDescription: String { return LocalizedString.tr("Localizable", "subscription_expired_description") }
+  /// Your subscription has been downgraded, so we are reconnecting to the fastest available server.
+  public static var subscriptionExpiredReconnectionDescription: String { return LocalizedString.tr("Localizable", "subscription_expired_reconnection_description") }
+  /// Your VPN subscription plan has expired
+  public static var subscriptionExpiredTitle: String { return LocalizedString.tr("Localizable", "subscription_expired_title") }
+  /// Hundreds of servers in %@ countries
+  public static func subscriptionUpgradeOption1(_ p1: Any) -> String {
+    return LocalizedString.tr("Localizable", "subscription_upgrade_option1", String(describing: p1))
+  }
+  /// Connect up to %@ devices at the same time
+  public static func subscriptionUpgradeOption2(_ p1: Any) -> String {
+    return LocalizedString.tr("Localizable", "subscription_upgrade_option2", String(describing: p1))
+  }
+  /// Advanced features: NetShield, Secure Core, Tor, P2P
+  public static var subscriptionUpgradeOption3: String { return LocalizedString.tr("Localizable", "subscription_upgrade_option3") }
+  /// Upgrade again to enjoy all the features:
+  public static var subscriptionUpgradeTitle: String { return LocalizedString.tr("Localizable", "subscription_upgrade_title") }
+  /// To Server:
+  public static var toServerTitle: String { return LocalizedString.tr("Localizable", "to_server_title") }
+  /// Update My Billing
+  public static var updateBilling: String { return LocalizedString.tr("Localizable", "update_billing") }
+  /// Upgrade Again
+  public static var upgradeAgain: String { return LocalizedString.tr("Localizable", "upgrade_again") }
+  /// No Thanks
+  public static var upgradeNoThanks: String { return LocalizedString.tr("Localizable", "upgrade_no_thanks") }
   /// Got it
   public static var newPlansBrandGotIt: String { return LocalizedString.tr("Localizable", "new_plans_brand_got_it") }
   /// Introducing Proton’s refreshed look.

@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "maximum-device-limit-warning.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}
