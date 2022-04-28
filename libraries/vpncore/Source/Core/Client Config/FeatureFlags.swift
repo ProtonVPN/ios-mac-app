@@ -33,8 +33,9 @@ public struct FeatureFlags: Codable {
     public let serverRefresh: Bool
     public let guestHoles: Bool
     public let safeMode: Bool
+    public let promoCode: Bool
 
-    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool) {
+    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool) {
         self.smartReconnect = smartReconnect
         self.vpnAccelerator = vpnAccelerator
         self.netShield = netShield
@@ -45,9 +46,10 @@ public struct FeatureFlags: Codable {
         self.serverRefresh = serverRefresh
         self.guestHoles = guestHoles
         self.safeMode = safeMode
+        self.promoCode = promoCode
     }
 
     public init() {
-        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false)
+        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false)
     }
 }
