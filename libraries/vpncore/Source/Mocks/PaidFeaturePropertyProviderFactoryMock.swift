@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-@testable import vpncore
 
 final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.Factory {
     let propertiesManager: PropertiesManagerMock

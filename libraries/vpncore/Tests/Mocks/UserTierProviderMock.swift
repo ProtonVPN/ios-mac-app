@@ -21,7 +21,6 @@
 //
 
 import Foundation
-@testable import vpncore
 
 class UserTierProviderMock: UserTierProvider {
     
