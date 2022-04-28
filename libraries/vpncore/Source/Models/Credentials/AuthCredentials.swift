@@ -22,24 +22,6 @@
 import Foundation
 
 public class AuthCredentials: NSObject, NSCoding {
-    
-    public enum Scope: String {
-        case `self`
-        case payments
-        case unknown
-        
-        init(_ string: String) {
-            switch string {
-            case "self":
-                self = .self
-            case "payments":
-                self = .payments
-            default:
-                self = .unknown
-            }
-        }
-    }
-    
     let VERSION: Int = 0 // Current build version.
     
     public let cacheVersion: Int // Cached version default is 0
@@ -49,7 +31,7 @@ public class AuthCredentials: NSObject, NSCoding {
     public let sessionId: String
     public let userId: String? // introduced in version 1.0.1 iOS, 1.4.0 macOS
     public let expiration: Date
-    public let scopes: [Scope]
+    public let scopes: [String]
     
     override public var description: String {
         return
@@ -62,7 +44,7 @@ public class AuthCredentials: NSObject, NSCoding {
             "Scopes: \(scopes)\n"
     }
     
-    public init(version: Int, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, expiration: Date, scopes: [Scope]) {
+    public init(version: Int, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, expiration: Date, scopes: [String]) {
         self.cacheVersion = version
         self.username = username
         self.accessToken = accessToken
@@ -83,7 +65,7 @@ public class AuthCredentials: NSObject, NSCoding {
         userId = try dic.stringOrThrow(key: "UserID")
         expiration = try dic.unixTimestampFromNowOrThrow(key: "ExpiresIn")
         let scopeString = try dic.stringOrThrow(key: "Scope")
-        scopes = scopeString.components(separatedBy: .whitespaces).map { Scope($0) }
+        scopes = scopeString.components(separatedBy: .whitespaces)
         super.init()
     }
         
@@ -100,9 +82,9 @@ public class AuthCredentials: NSObject, NSCoding {
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
-        var scopes: [Scope] = []
+        var scopes: [String] = []
         if let scopesData = aDecoder.decodeObject(forKey: CoderKey.scopes) as? Data {
-            scopes = (NSKeyedUnarchiver.unarchiveObject(with: scopesData) as? [String] ?? []).map { Scope($0) }
+            scopes = (NSKeyedUnarchiver.unarchiveObject(with: scopesData) as? [String] ?? [])
         }
         
         self.init(version: aDecoder.decodeObject(forKey: CoderKey.authCacheVersion) as? Int ?? 0,
@@ -124,7 +106,7 @@ public class AuthCredentials: NSObject, NSCoding {
         aCoder.encode(userId, forKey: CoderKey.userId)
         aCoder.encode(expiration, forKey: CoderKey.expiration)
         
-        let scopesData = NSKeyedArchiver.archivedData(withRootObject: scopes.map { $0.rawValue })
+        let scopesData = NSKeyedArchiver.archivedData(withRootObject: scopes)
         aCoder.encode(scopesData, forKey: CoderKey.scopes)
     }
     

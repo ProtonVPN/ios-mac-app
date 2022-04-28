@@ -26,7 +26,7 @@ extension AuthCredentials {
         case let .credential(credential):
             self.init(credential)
         case let .userData(userData):
-            self.init(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, expiration: userData.credential.expiration, scopes: userData.scopes.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
+            self.init(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, expiration: userData.credential.expiration, scopes: userData.scopes)
         }
     }
 }
