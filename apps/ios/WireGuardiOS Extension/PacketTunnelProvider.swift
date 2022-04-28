@@ -75,7 +75,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
                 completionHandler(nil)
                 
-                self.certificateRefreshManager.planNextRefresh()
+                self.certificateRefreshManager.start()
                 
                 return
             }

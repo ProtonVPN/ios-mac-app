@@ -103,7 +103,7 @@ class CertificateRefreshTests: XCTestCase {
             XCTFail("Should not have tried to refresh token")
         }
 
-        manager.planNextRefresh()
+        manager.start()
 
         wait(for: [expectation], timeout: 10)
     }
@@ -155,7 +155,7 @@ class CertificateRefreshTests: XCTestCase {
             expectationForAuthTokenRefresh.fulfill()
         }
 
-        manager.planNextRefresh()
+        manager.start()
 
         wait(for: [expectationForFirstCertRefresh,
                    expectationForRetryCertRefresh,
