@@ -30,13 +30,10 @@
 		42066FDA263049C5001F86DB /* ServersStreamingFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */; };
 		42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF9B3262F126600944379 /* StreamingServiceCell.swift */; };
 		42066FE626304A0C001F86DB /* FeatureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */; };
-		421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
-		421B3BD9261B2C2200670A7C /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */; };
 		422395822446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395832446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395842446EF660089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
-		4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
 		428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */; };
 		428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 428DF977262EFCDE00944379 /* ServersStreamingFeaturesVC.xib */; };
 		428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF98A262F031600944379 /* ServersStreamingFeaturesViewModel.swift */; };
@@ -694,8 +691,6 @@
 		42066E8D2630240F001F86DB /* ServersFeaturesInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationVC.swift; sourceTree = "<group>"; };
 		42066E8E2630240F001F86DB /* ServersFeaturesInformationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServersFeaturesInformationVC.xib; sourceTree = "<group>"; };
 		42066E96263025E0001F86DB /* ServersFeaturesInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationViewModel.swift; sourceTree = "<group>"; };
-		421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
-		421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		422395812446E9E00089002F /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersStreamingFeaturesVC.swift; sourceTree = "<group>"; };
 		428DF977262EFCDE00944379 /* ServersStreamingFeaturesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServersStreamingFeaturesVC.xib; sourceTree = "<group>"; };
@@ -1208,23 +1203,6 @@
 				CD27524A4A19998F520D26A2 /* TokenRefreshRequest.swift */,
 			);
 			path = Endpoints;
-			sourceTree = "<group>";
-		};
-		421B3BD4261B2B7A00670A7C /* Downgrade */ = {
-			isa = PBXGroup;
-			children = (
-				421B3BD5261B2BDA00670A7C /* ViewControllers */,
-			);
-			path = Downgrade;
-			sourceTree = "<group>";
-		};
-		421B3BD5261B2BDA00670A7C /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */,
-				421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		428DF974262EFC8C00944379 /* Features */ = {
@@ -1750,7 +1728,6 @@
 				F36ECC8B2611C5DF0089B898 /* Common */,
 				D50342602472C82A005F6B90 /* ConnectionBar */,
 				F36ECC842611C4D60089B898 /* Countries */,
-				421B3BD4261B2B7A00670A7C /* Downgrade */,
 				428DF974262EFC8C00944379 /* Features */,
 				F36ECCC62611C7F10089B898 /* Launch */,
 				F36ECD3B2611C9A40089B898 /* Map */,
@@ -2894,7 +2871,6 @@
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
 				793ECF442149041A00C186A7 /* AppVersionView.xib in Resources */,
-				421B3BD9261B2C2200670A7C /* UserAccountUpdateViewController.xib in Resources */,
 				428DF9B6262F126600944379 /* StreamingServiceCell.xib in Resources */,
 				E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */,
 				42066E902630240F001F86DB /* ServersFeaturesInformationVC.xib in Resources */,
@@ -3524,7 +3500,6 @@
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
-				421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */,
 				428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */,
 				D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
@@ -3685,7 +3660,6 @@
 				E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */,
 				D5136C7A228592E80002C095 /* KeyValueTableViewCell.swift in Sources */,
 				D5136C7B228592E80002C095 /* StandardTableViewCell.swift in Sources */,
-				4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */,
 				E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */,
 				D5136C7C228592E80002C095 /* TooltipTableViewCell.swift in Sources */,
 				D5136C7D228592E80002C095 /* InstructionStepView.swift in Sources */,

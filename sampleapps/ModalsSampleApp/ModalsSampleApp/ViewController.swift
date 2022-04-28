@@ -22,27 +22,41 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    let upsells: [(type: UpsellType, title: String)] = [(.allCountries(numberOfDevices: 10, numberOfServers: 1300, numberOfCountries: 61), "All countries"),
-                                                        (.secureCore, "Secure Core"),
-                                                        (.netShield, "Net Shield"),
-                                                        (.safeMode, "Safe Mode"),
-                                                        (.moderateNAT, "Moderate NAT"),
-                                                        (.noLogs, "No Logs")]
+    let upsells: [(type: UpsellType, title: String)] = [
+        (.allCountries(numberOfDevices: 10, numberOfServers: 1300, numberOfCountries: 61), "All countries"),
+        (.secureCore, "Secure Core"),
+        (.netShield, "Net Shield"),
+        (.safeMode, "Safe Mode"),
+        (.moderateNAT, "Moderate NAT"),
+        (.noLogs, "No Logs")]
+    let upgrades: [(type: UserAccountUpdateFeature, title: String)] = [
+        (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
+                                             numberOfDevices: 5,
+                                             fromServer: ViewController.fromServer,
+                                             toServer: ViewController.toServer), "Subscription Downgraded Reconnecting"),
+        (.subscriptionDowngraded(numberOfCountries: 63, numberOfDevices: 5), "Subscription Downgraded"),
+        (.reachedDeviceLimit, "Reached Device Limit"),
+        (.reachedDevicePlanLimit(numberOfDevices: 5), "Reached Device Plan Limit"),
+        (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
+        (.pendingInvoices, "Pending Invoices")]
+
+    static let fromServer = UserAccountUpdateFeature.Server(name: "US-CA#63", flag: UIImage(named: "Flag")!)
+    static let toServer = UserAccountUpdateFeature.Server(name: "US-CA#78", flag: UIImage(named: "Flag")!)
 
     let modalsFactory = ModalsFactory(colors: Colors())
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        3
+        4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return upsells.count
-        case 1, 2:
-            return 1
+        case 3:
+            return upgrades.count
         default:
-            return 0
+            return 1
         }
     }
     
@@ -54,8 +68,12 @@ class ViewController: UITableViewController {
             title = upsells[indexPath.row].title
         } else if indexPath.section == 1 {
             title = "Discourage Secure Core"
-        } else {
+        } else if indexPath.section == 2 {
             title = "New Brand"
+        } else if indexPath.section == 3 {
+            title = upgrades[indexPath.row].title
+        } else {
+            title = ""
         }
 
         if let modalCell = cell as? ModalTableViewCell {
@@ -77,10 +95,18 @@ class ViewController: UITableViewController {
                                                                            onCancel: nil,
                                                                            onLearnMore: nil)
             viewController = modalVC
-        } else {
+        } else  if indexPath.section == 2 {
             let modalVC = modalsFactory.newBrandViewController(icons: ModalIcons(), onDismiss: nil, onReadMore: nil)
             modalVC.modalPresentationStyle = .overFullScreen
             viewController = modalVC
+        } else  if indexPath.section == 3 {
+            let modalVC = modalsFactory.userAccountUpdateViewController(feature: upgrades[indexPath.row].type,
+                                                                        onPrimaryButtonTap: nil,
+                                                                        onSecondaryButtonTap: nil)
+            modalVC.modalPresentationStyle = .overFullScreen
+            viewController = modalVC
+        } else {
+            fatalError()
         }
 
         present(viewController, animated: true, completion: nil)

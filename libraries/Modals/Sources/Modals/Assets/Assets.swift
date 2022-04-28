@@ -40,6 +40,8 @@ internal enum Asset {
   internal static let vpnMain = ImageAsset(name: "VPN main")
   internal static let icArrowOutSquare = ImageAsset(name: "ic-arrow-out-square")
   internal static let icLightbulb = ImageAsset(name: "ic-lightbulb")
+  internal static let maximumDeviceLimitUpsell = ImageAsset(name: "maximum-device-limit-upsell")
+  internal static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
   internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
 }
