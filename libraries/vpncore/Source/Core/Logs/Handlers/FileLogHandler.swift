@@ -43,6 +43,7 @@ public class FileLogHandler: LogHandler {
     private var fileHandle: FileHandleWrapper?
     private var currentSize: UInt64 = 0
     private var fileManager: FileManagerWrapper
+    private let minimumFreeSpaceForLogging = 16 * 1024
     
     private var logsDirectory: URL {
         return fileUrl.deletingLastPathComponent()
@@ -57,7 +58,7 @@ public class FileLogHandler: LogHandler {
     }
     
     deinit {
-        closeFile()
+        try? closeFile()
     }
     
     public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) { // swiftlint:disable:this function_parameter_count
@@ -66,20 +67,41 @@ public class FileLogHandler: LogHandler {
         queue.async {
             if let data = (text + "\r\n").data(using: .utf8) {
                 do {
+                    // Avoid unnecessary free space check on newer systems, since checking free space on each
+                    // logging operation is expensive
+                    if #unavailable(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2),
+                       try !self.freeSpaceAvailable() {
+                        throw POSIXError(.ENOSPC)
+                    }
+
                     try self.getFileHandleAtTheEndOfFile()?.writeCustom(contentsOf: data)
+                    try self.rotate()
                 } catch {
+                    SentryHelper.log(error: error)
                     self.debugLog("🔴🔴 Error writing to file: \(error)")
                 }
             }
-            
-            self.rotate()
         }
+    }
+
+    // MARK: - File System
+
+    /// Check if free space is available on older systems before writing log data.
+    ///
+    /// See `writeCustom` implementation: the old implementation of `FileHandle.write` does not catch
+    /// exceptions. Logging to a full filesystem on those implementations would cause the app to crash.
+    private func freeSpaceAvailable() throws -> Bool {
+        let attributes = try FileManager.default.attributesOfItem(atPath: self.fileUrl.path)
+        if let freeSpace = attributes[.systemFreeSize] as? Int, freeSpace < self.minimumFreeSpaceForLogging {
+            return false
+        }
+        return true
     }
     
     // MARK: - File
     
     private func openFile() throws {
-        closeFile()
+        try closeFile()
         try fileManager.createDirectory(at: logsDirectory, withIntermediateDirectories: true, attributes: nil)
         
         if !fileManager.fileExists(atPath: fileUrl.path) {
@@ -93,12 +115,12 @@ public class FileLogHandler: LogHandler {
         fileHandle = try fileManager.createFileHandle(forWritingTo: fileUrl)
     }
     
-    private func closeFile() {
+    private func closeFile() throws {
         guard let fileHandle = fileHandle else {
             return
         }
-        try? fileHandle.synchronizeCustom()
-        try? fileHandle.closeCustom()
+        try fileHandle.synchronizeCustom()
+        try fileHandle.closeCustom()
         
         self.fileHandle = nil
     }
@@ -119,7 +141,7 @@ public class FileLogHandler: LogHandler {
         return fileHandle
     }
     
-    private func rotate() {
+    private func rotate() throws {
         if currentSize < 1 {
             do {
                 currentSize = try fileHandle?.seekToEndCustom() ?? 0
@@ -130,15 +152,16 @@ public class FileLogHandler: LogHandler {
         guard currentSize > maxFileSize else {
             return
         }
-        closeFile()
-        moveToNextFile()
-        removeOldFiles()
+
+        try closeFile()
+        try moveToNextFile()
+        try removeOldFiles()
         // File will be reopened next time write operation is needed
         
         delegate?.didRotateLogFile()
     }
         
-    private func moveToNextFile() {
+    private func moveToNextFile() throws {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYMMddHHmmssSSS"
         let nextFileURL = fileUrl.deletingPathExtension().appendingPathExtension(dateFormatter.string(from: Date()) + "_\(UUID().uuidString).log")
@@ -148,10 +171,11 @@ public class FileLogHandler: LogHandler {
             debugLog("🟢🟢 File rotated \(nextFileURL.lastPathComponent)")
         } catch {
             debugLog("🔴🔴 Error while moving file: \(error)")
+            throw error
         }
     }
     
-    private func removeOldFiles() {
+    private func removeOldFiles() throws {
         let filenameWithoutExtension = fileUrl.deletingPathExtension().pathComponents.last ?? "ProtonVPN"
         do {
             let oldFiles = try fileManager.contentsOfDirectory(at: logsDirectory, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
@@ -172,6 +196,7 @@ public class FileLogHandler: LogHandler {
         
         } catch {
             debugLog("🔴🔴 Error while removing old logfiles: \(error)")
+            throw error
         }
     }
     
