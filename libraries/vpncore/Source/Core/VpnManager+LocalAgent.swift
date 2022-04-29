@@ -161,7 +161,6 @@ extension VpnManager: LocalAgentDelegate {
         switch error {
         case .certificateExpired, .certificateNotProvided:
             log.error("Local agent reported expired or missing, trying to refresh and reconnect", category: .localAgent, event: .error)
-            vpnAuthentication.clearCertificate()
             refreshCertificateWithError { [weak self] data in
                 log.info("Reconnecting to local agent with new certificate", category: .localAgent)
                 self?.connectLocalAgent(data: data)
