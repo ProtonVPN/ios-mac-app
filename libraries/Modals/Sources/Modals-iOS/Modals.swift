@@ -43,16 +43,10 @@ public struct ModalsFactory {
         return newBrandViewController
     }
 
-    public func userAccountUpdateViewController(feature: UserAccountUpdateFeature, onPrimaryButtonTap: (() -> Void)?, onSecondaryButtonTap: (() -> Void)?) -> UIViewController {
+    public func userAccountUpdateViewController(feature: UserAccountUpdateFeature, onPrimaryButtonTap: (() -> Void)?) -> UIViewController {
         let userAccountUpdateViewController = userAccountUpdateStoryboard.instantiate(controllerType: UserAccountUpdateViewController.self)
-//        newBrandViewController.onReadMore = onReadMore
-//        newBrandViewController.onDismiss = onDismiss
-        userAccountUpdateViewController.modalTransitionStyle = .crossDissolve
-        userAccountUpdateViewController.modalPresentationStyle = .overFullScreen
         userAccountUpdateViewController.feature = feature
-        userAccountUpdateViewController.dismissCompletion = onSecondaryButtonTap
         userAccountUpdateViewController.onPrimaryButtonTap = onPrimaryButtonTap
-//        newBrandViewController.icons = icons
         return userAccountUpdateViewController
     }
 }

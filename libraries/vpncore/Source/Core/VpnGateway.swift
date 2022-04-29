@@ -473,19 +473,20 @@ fileprivate extension VpnGateway {
         
         guard downgradeInfo.to.maxTier < downgradeInfo.from.maxTier else { return }
         
-        var reconnectInfo: VpnReconnectInfo?
+        var reconnectInfo: ReconnectInfo?
         
         if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
             reconnectInfo = reconnectServer(downgradeInfo, oldServer: server)
         }
 
-        let alert = UserPlanDowngradedAlert(accountUpdate: downgradeInfo, reconnectionInfo: reconnectInfo)
+        let alert = UserPlanDowngradedAlert(reconnectInfo: reconnectInfo)
+
         alertService?.push(alert: alert)
     }
     
     func userBecameDelinquent(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
-        var reconnectInfo: VpnReconnectInfo?
+        var reconnectInfo: ReconnectInfo?
         
         self.disconnect {
             self.vpnApiService.clientCredentials { result in
@@ -496,7 +497,7 @@ fileprivate extension VpnGateway {
                         reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
                     }
 
-                    let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
+                    let alert = UserBecameDelinquentAlert(reconnectInfo: reconnectInfo)
                     self.alertService?.push(alert: alert)
                 case let .failure(error):
                     log.error("Error received: \(error)", category: .connectionConnect)
@@ -505,7 +506,7 @@ fileprivate extension VpnGateway {
         }
     }
     
-    private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel? ) -> VpnReconnectInfo? {
+    private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel? ) -> ReconnectInfo? {
         guard let previousServer = oldServer else { return nil }
 
         let tier = downgradeInfo.to.maxTier
@@ -526,6 +527,9 @@ fileprivate extension VpnGateway {
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
         self.connect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType, natType: request.natType, safeMode: request.safeMode)
-        return (previousServer, toServer)
+        return ReconnectInfo(fromServer: .init(name: previousServer.name,
+                                               image: .flag(countryCode: previousServer.countryCode) ?? Image()),
+                             toServer: .init(name: toServer.name,
+                                             image: .flag(countryCode: toServer.countryCode) ?? Image()))
     }
 }

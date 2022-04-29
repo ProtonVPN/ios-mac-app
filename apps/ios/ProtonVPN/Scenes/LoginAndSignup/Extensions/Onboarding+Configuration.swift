@@ -22,6 +22,6 @@ import vpncore
 
 extension Configuration {
     init(showFirstConnection: Bool) {
-        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), textAccent: .textAccent(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .brandLighten20Color(), secondaryBackground: .secondaryBackgroundColor(), textInverted: .backgroundColor(), notification: .normalTextColor()), constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount, numberOfServers: AccountPlan.plus.serversCount, numberOfFreeServers: AccountPlan.free.serversCount, numberOfFreeCountries: AccountPlan.free.countriesCount, numberOfCountries: AccountPlan.plus.countriesCount))
+        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), textAccent: .textAccent(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .brandLighten20Color(), secondaryBackground: .secondaryBackgroundColor(), textInverted: .backgroundColor(), notification: .normalTextColor(), weakInteraction: .weakInteractionColor()), constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount, numberOfServers: AccountPlan.plus.serversCount, numberOfFreeServers: AccountPlan.free.serversCount, numberOfFreeCountries: AccountPlan.free.countriesCount, numberOfCountries: AccountPlan.plus.countriesCount))
     }
 }

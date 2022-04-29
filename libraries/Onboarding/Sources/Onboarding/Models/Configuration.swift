@@ -25,12 +25,13 @@ public struct Colors {
     public let brand: UIColor
     public let weakText: UIColor
     public var textAccent: UIColor
+    public let weakInteraction: UIColor
     let activeBrandButton: UIColor
     public let secondaryBackground: UIColor
     let textInverted: UIColor
     let notification: UIColor
 
-    public init(background: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor) {
+    public init(background: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor, weakInteraction: UIColor) {
         self.background = background
         self.text = text
         self.textAccent = textAccent
@@ -40,6 +41,7 @@ public struct Colors {
         self.secondaryBackground = secondaryBackground
         self.textInverted = textInverted
         self.notification = notification
+        self.weakInteraction = weakInteraction
     }
 }
 

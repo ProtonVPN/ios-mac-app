@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Ücretsiz %@ denemeniz";
 
 /* Downgrade */
-"_from_server_title" = "%@ sunucusundan:";
+"_from_server_title" = "sunucusundan:";
 
 /* MacOS: General tab in setting window */
 "_general" = "Genel";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "OpenVPN kullanmaya geçerek yeniden deneyin";
 
 /* (No Comment) */
-"_to_server_title" = "%@ sunucusuna:";
+"_to_server_title" = "sunucusuna:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";

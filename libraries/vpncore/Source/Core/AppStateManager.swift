@@ -218,7 +218,7 @@ public class AppStateManagerImplementation: AppStateManager {
         do {
             let vpnCredentials = try vpnKeychain.fetchCached()
             if vpnCredentials.isDelinquent {
-                let alert = UserBecameDelinquentAlert(reconnectionInfo: nil)
+                let alert = UserBecameDelinquentAlert(reconnectInfo: nil)
                 alertService?.push(alert: alert)
                 connectionFailed()
                 return

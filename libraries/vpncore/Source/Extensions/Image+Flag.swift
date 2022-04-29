@@ -1,5 +1,5 @@
 //
-//  Created on 26.01.2022.
+//  Created on 03/06/2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,12 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import UIKit
 import ProtonCore_UIFoundations
 
-extension UIImage {
-    static func flag(countryCode: String) -> UIImage? {
+public extension Image {
+    static func flag(countryCode: String) -> Image? {
         return IconProvider.flag(forCountryCode: countryCode)
     }
 }

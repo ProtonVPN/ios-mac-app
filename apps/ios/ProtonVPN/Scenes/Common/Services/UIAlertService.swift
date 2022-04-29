@@ -45,12 +45,7 @@ class IosUiAlertService: UIAlertService {
         }
         
         currentAlerts.append(alert)
-        
-        if let accountAlert = alert as? UserAccountUpdateAlert {
-            displayUserUpdateAlert(alert: accountAlert)
-        } else {
-            displayTrackedAlert(alert: alert)
-        }
+        displayTrackedAlert(alert: alert)
     }
     
     func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
@@ -102,16 +97,6 @@ class IosUiAlertService: UIAlertService {
         }
         
         self.windowService.present(alert: alertController)
-    }
-    
-    private func displayUserUpdateAlert( alert: UserAccountUpdateAlert ) {
-        let viewController = UserAccountUpdateViewController(alert: alert, planService: planService)
-        viewController.modalPresentationStyle = .overFullScreen
-        viewController.dismissCompletion = self.dismissCompletion(alert)
-        alert.dismiss = {
-            viewController.dismiss(animated: true, completion: nil)
-        }
-        self.windowService.present(modal: viewController)
     }
 }
 

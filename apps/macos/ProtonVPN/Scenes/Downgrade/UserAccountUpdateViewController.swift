@@ -127,28 +127,24 @@ class UserAccountUpdateViewController: NSViewController {
     private func setupServers() {
         offsetView.isHidden = true
         serversView.isHidden = true
-        guard let fromServer = alert.reconnectionInfo?.from,
-              let toServer = alert.reconnectionInfo?.to else {
+        guard let reconnectInfo = alert.reconnectInfo else {
             return
         }
         
         offsetView.isHidden = false
         serversView.isHidden = false
-        setServerHeader(fromServer, LocalizedString.fromServerTitle, fromServerIV, fromServerLbl, fromServerTitleLbl)
-        setServerHeader(toServer, LocalizedString.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
+        setServerHeader(reconnectInfo.fromServer, LocalizedString.fromServerTitle, fromServerIV, fromServerLbl, fromServerTitleLbl)
+        setServerHeader(reconnectInfo.toServer, LocalizedString.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
     
-    private func setServerHeader( _ server: ServerModel, _ headerFormat: (String) -> String, _ flagIV: NSImageView, _ serverName: NSTextField, _ serverHeader: NSTextField ) {
+    private func setServerHeader( _ server: ReconnectInfo.Server,
+                                  _ header: String,
+                                  _ flagIV: NSImageView,
+                                  _ serverName: NSTextField,
+                                  _ serverHeader: NSTextField ) {
         serverName.stringValue = server.name
-        flagIV.image = AppTheme.Icon.flag(countryCode: server.countryCode)
-        serverHeader.stringValue = headerFormat(serverType(server))
-    }
-    
-    private func serverType( _ server: ServerModel ) -> String {
-        let tiers = [ LocalizedString.tierFree, LocalizedString.tierBasic,
-                      LocalizedString.tierPlus, LocalizedString.tierVisionary]
-        
-        return tiers[server.tier]
+        flagIV.image = server.image
+        serverHeader.stringValue = header
     }
     
     // MARK: - Actions

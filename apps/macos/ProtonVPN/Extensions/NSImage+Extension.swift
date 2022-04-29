@@ -69,8 +69,4 @@ extension NSImage {
         greyImage.addRepresentation(greyScale)
         return greyImage
     }
-
-    static func flag(countryCode: String) -> NSImage? {
-        return IconProvider.flag(forCountryCode: countryCode)
-    }
 }

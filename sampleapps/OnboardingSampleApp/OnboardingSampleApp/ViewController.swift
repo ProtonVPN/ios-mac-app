@@ -51,7 +51,8 @@ final class ViewController: UIViewController {
                             activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1),
                             secondaryBackground: UIColor(red: 41/255, green: 39/255, blue: 50/255, alpha: 1),
                             textInverted: .black,
-                            notification: .white)
+                            notification: .white,
+                            weakInteraction: UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1))
         coordinator = OnboardingCoordinator(configuration: Configuration(variant: variant, colors: colors, constants: Constants(numberOfDevices: 10, numberOfServers: 1300, numberOfFreeServers: 23, numberOfFreeCountries: 3, numberOfCountries: 61)))
 coordinator.delegate = self
         let vc = coordinator.start()

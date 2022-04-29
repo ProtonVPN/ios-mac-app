@@ -27,6 +27,7 @@ public protocol ModalsColors {
     var textAccent: UIColor { get }
     var brand: UIColor { get }
     var weakText: UIColor { get }
+    var weakInteraction: UIColor { get }
 }
 
 public struct Colors {
@@ -36,14 +37,16 @@ public struct Colors {
     public let textAccent: UIColor
     public let brand: UIColor
     public let weakText: UIColor
+    public let weakInteraction: UIColor
 
-    public init(background: UIColor, secondaryBackground: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor) {
+    public init(background: UIColor, secondaryBackground: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, weakInteraction: UIColor) {
         self.background = background
         self.secondaryBackground = secondaryBackground
         self.text = text
         self.textAccent = textAccent
         self.brand = brand
         self.weakText = weakText
+        self.weakInteraction = weakInteraction
     }
 }
 

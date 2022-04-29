@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Ваш бесплатный пробный период %@";
 
 /* Downgrade */
-"_from_server_title" = "С сервера %@:";
+"_from_server_title" = "С сервера:";
 
 /* MacOS: General tab in setting window */
 "_general" = "Общие положения";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "Переключиться на OpenVPN и повторить";
 
 /* (No Comment) */
-"_to_server_title" = "К серверу %@:";
+"_to_server_title" = "К серверу:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";

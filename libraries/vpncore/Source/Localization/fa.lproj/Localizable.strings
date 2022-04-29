@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Your free trial %@";
 
 /* Downgrade */
-"_from_server_title" = "از سرور %@:";
+"_from_server_title" = "از سرور:";
 
 /* MacOS: General tab in setting window */
 "_general" = "عمومی";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "به OpenVPN تغییر دهید و دوباره امتحان کنید";
 
 /* (No Comment) */
-"_to_server_title" = "به سرور %@:";
+"_to_server_title" = "به سرور:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";

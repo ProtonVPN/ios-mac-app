@@ -26,6 +26,7 @@ struct UpsellColors: ModalsColors {
     var textAccent: UIColor
     var brand: UIColor
     var weakText: UIColor
+    var weakInteraction: UIColor
 
     init() {
         background = UIColor.backgroundColor()
@@ -34,5 +35,6 @@ struct UpsellColors: ModalsColors {
         textAccent = UIColor.textAccent()
         brand = UIColor.brandColor()
         weakText = UIColor.weakTextColor()
+        weakInteraction = UIColor.weakInteractionColor()
     }
 }

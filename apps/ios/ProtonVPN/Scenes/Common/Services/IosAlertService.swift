@@ -25,6 +25,7 @@ import vpncore
 import Modals
 import Modals_iOS
 import UIKit
+import ProtonCore_UIFoundations
 
 class IosAlertService {
         
@@ -180,6 +181,9 @@ extension IosAlertService: CoreAlertService {
             let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
             show(upsellType: allCountriesUpsell)
 
+        case let alert as UserAccountUpdateAlert:
+            displayUserUpdateAlert(alert: alert)
+            
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)
             
@@ -192,6 +196,46 @@ extension IosAlertService: CoreAlertService {
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
+
+    // This method translates the `UserAccountUpdateAlert` subclasses to specific feature types that the Modals module expects.
+    private func displayUserUpdateAlert(alert: UserAccountUpdateAlert) {
+        let server = alert.reconnectInfo?.servers()
+        let feature: UserAccountUpdateFeature
+        switch alert {
+        case is UserBecameDelinquentAlert:
+            if let server = server {
+                feature = .pendingInvoicesReconnecting(fromServer: server.from, toServer: server.to)
+            } else {
+                feature = .pendingInvoices
+            }
+        case is UserPlanDowngradedAlert:
+            if let server = server {
+                feature = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
+                                                              numberOfDevices: AccountPlan.plus.devicesCount,
+                                                              fromServer: server.from,
+                                                              toServer: server.to)
+            } else {
+                feature = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
+                                                  numberOfDevices: AccountPlan.plus.devicesCount)
+            }
+        case let alert as MaxSessionsAlert:
+            if alert.accountPlan == .free {
+                feature = .reachedDevicePlanLimit(planName: LocalizedString.plus, numberOfDevices: AccountPlan.plus.devicesCount)
+            } else {
+                feature = .reachedDeviceLimit
+            }
+        default:
+            return
+        }
+        let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
+            self?.planService.presentPlanSelection()
+        }
+
+        let viewController = modalsFactory.userAccountUpdateViewController(feature: feature,
+                                                                           onPrimaryButtonTap: onPrimaryButtonTap)
+        viewController.modalPresentationStyle = .overFullScreen
+        self.windowService.present(modal: viewController)
+    }
 
     private func show(upsellType: Modals.UpsellType) {
         let upsellViewController = modalsFactory.upsellViewController(upsellType: upsellType)
@@ -298,4 +342,11 @@ extension IosAlertService: UpsellViewControllerDelegate {
     }
 
     func userDidTapNext() { }
+}
+
+fileprivate extension ReconnectInfo {
+    func servers() -> (from: UserAccountUpdateFeature.Server, to: UserAccountUpdateFeature.Server) {
+        (UserAccountUpdateFeature.Server(name: fromServer.name, flag: fromServer.image),
+         UserAccountUpdateFeature.Server(name: toServer.name, flag: toServer.image))
+    }
 }

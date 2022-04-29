@@ -32,6 +32,7 @@ final class ModalsSampleAppTests: XCTestCase {
 }
 
 struct MockColors: ModalsColors {
+    var weakInteraction: UIColor = .white
     let textAccent: UIColor = .white
     let secondaryBackground: UIColor = .white
     let background: UIColor = .white

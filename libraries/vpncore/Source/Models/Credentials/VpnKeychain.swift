@@ -24,7 +24,6 @@ import KeychainAccess
 import Logging
 
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
-public typealias VpnReconnectInfo = (from: ServerModel, to: ServerModel)
 
 public protocol VpnKeychainProtocol {
     
