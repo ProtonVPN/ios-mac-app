@@ -31,6 +31,7 @@ class LoginButtonCell: NSButtonCell {
 }
 
 class LoginButton: HoverDetectionButton {
+    var displayTitle: String?
     
     override var isEnabled: Bool {
         didSet {
@@ -61,6 +62,6 @@ class LoginButton: HoverDetectionButton {
         layer?.borderWidth = 2
         layer?.borderColor = isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonLightGrey().cgColor
         layer?.backgroundColor = isEnabled ? NSColor.protonGreen().cgColor : NSColor.clear.cgColor
-        attributedTitle = LocalizedString.login.attributed(withColor: isEnabled ? .protonWhite() : .protonGreyButtonBackground(), fontSize: 16)
+        attributedTitle = (displayTitle ?? LocalizedString.login).attributed(withColor: isEnabled ? .protonWhite() : .protonGreyButtonBackground(), fontSize: 16)
     }
 }

@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="LoginViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="suk-Cr-jLR" id="7Ai-cE-qB2"/>
                 <outlet property="createAccountButton" destination="sIO-81-jPa" id="7JO-Uk-siV"/>
                 <outlet property="helpLink" destination="Ara-sw-83l" id="qcA-FT-bJQ"/>
                 <outlet property="loadingLabel" destination="NOz-Sf-FlH" id="Eto-PR-mnF"/>
@@ -24,6 +25,12 @@
                 <outlet property="reachabilityCheckIndicator" destination="d4i-Va-ju2" id="3zC-EJ-5Se"/>
                 <outlet property="startOnBootButton" destination="AUK-pM-3uL" id="qPs-BD-trr"/>
                 <outlet property="startOnBootLabel" destination="rxN-J0-rur" id="43y-Lx-Xle"/>
+                <outlet property="twoFactorButton" destination="Ilj-t1-TZi" id="wDm-R0-dQa"/>
+                <outlet property="twoFactorHorizontalLine" destination="yZO-TQ-qfh" id="DuM-Zx-OP5"/>
+                <outlet property="twoFactorModeButton" destination="eDx-by-xhH" id="vPx-kk-cu7"/>
+                <outlet property="twoFactorTextField" destination="FVZ-Ea-eWp" id="uoh-EC-CRm"/>
+                <outlet property="twoFactorTitle" destination="xrt-LS-SQT" id="R8J-Fl-TKD"/>
+                <outlet property="twoFactorView" destination="BEM-Wd-CRf" id="tRp-Nr-fnY"/>
                 <outlet property="usernameHorizontalLine" destination="aw7-qm-KCg" id="ro8-Ho-Dc2"/>
                 <outlet property="usernameTextField" destination="L0d-AC-N2e" id="BlC-SP-Xpl"/>
                 <outlet property="view" destination="c22-O7-iKe" id="1ar-Gp-I5h"/>
@@ -179,6 +186,86 @@
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="8" id="zo0-Z6-KPw"/>
                     </constraints>
                 </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="BEM-Wd-CRf">
+                    <rect key="frame" x="0.0" y="0.0" width="340" height="450"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xrt-LS-SQT">
+                            <rect key="frame" x="38" y="423" width="264" height="19"/>
+                            <textFieldCell key="cell" allowsUndo="NO" alignment="center" title="Multiline Label" id="dCe-Dw-Lgr">
+                                <font key="font" metaFont="system" size="16"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="suk-Cr-jLR">
+                            <rect key="frame" x="14" y="415" width="36" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="S14-pF-SxF"/>
+                                <constraint firstAttribute="width" constant="36" id="bBU-qd-EHu"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="arrow-left" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="hLA-f9-bXh">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FVZ-Ea-eWp" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="369" width="280" height="22"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="OE6-oY-E61">
+                                <font key="font" metaFont="menu" size="14"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ilj-t1-TZi" customClass="LoginButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="105" y="296" width="130" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="ZrN-Zi-JDZ"/>
+                                <constraint firstAttribute="height" constant="40" id="iTF-c3-aYv"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Login" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="0WG-Vm-Rny">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="yZO-TQ-qfh">
+                            <rect key="frame" x="30" y="360" width="280" height="1"/>
+                            <view key="contentView" id="hD3-ZS-Tfl">
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="22A-l4-2k0"/>
+                            </constraints>
+                        </box>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eDx-by-xhH" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="111" y="261" width="118" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="jkV-Ds-kb1"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Use recovery code" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="F4q-cy-flI">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="suk-Cr-jLR" firstAttribute="centerY" secondItem="xrt-LS-SQT" secondAttribute="centerY" id="1W2-Zv-yS1"/>
+                        <constraint firstItem="FVZ-Ea-eWp" firstAttribute="leading" secondItem="BEM-Wd-CRf" secondAttribute="leading" constant="30" id="3bh-g7-R3I"/>
+                        <constraint firstItem="FVZ-Ea-eWp" firstAttribute="top" secondItem="xrt-LS-SQT" secondAttribute="bottom" constant="32" id="48F-Uu-jet"/>
+                        <constraint firstItem="eDx-by-xhH" firstAttribute="top" secondItem="Ilj-t1-TZi" secondAttribute="bottom" constant="15" id="Bku-bc-Qwm"/>
+                        <constraint firstAttribute="trailing" secondItem="FVZ-Ea-eWp" secondAttribute="trailing" constant="30" id="ChC-79-DuO"/>
+                        <constraint firstAttribute="trailing" secondItem="xrt-LS-SQT" secondAttribute="trailing" constant="40" id="FIb-6S-8Ny"/>
+                        <constraint firstItem="eDx-by-xhH" firstAttribute="centerX" secondItem="BEM-Wd-CRf" secondAttribute="centerX" id="Ik6-F3-xfw"/>
+                        <constraint firstItem="Ilj-t1-TZi" firstAttribute="top" secondItem="yZO-TQ-qfh" secondAttribute="bottom" constant="24" id="O1u-OV-a5b"/>
+                        <constraint firstItem="yZO-TQ-qfh" firstAttribute="trailing" secondItem="FVZ-Ea-eWp" secondAttribute="trailing" id="VvJ-xT-QHY"/>
+                        <constraint firstItem="yZO-TQ-qfh" firstAttribute="top" secondItem="FVZ-Ea-eWp" secondAttribute="bottom" constant="8" id="Z6X-g1-4NJ"/>
+                        <constraint firstItem="suk-Cr-jLR" firstAttribute="leading" secondItem="BEM-Wd-CRf" secondAttribute="leading" constant="14" id="eFl-rC-L0O"/>
+                        <constraint firstItem="xrt-LS-SQT" firstAttribute="leading" secondItem="BEM-Wd-CRf" secondAttribute="leading" constant="40" id="fg6-HT-Hb6"/>
+                        <constraint firstItem="yZO-TQ-qfh" firstAttribute="leading" secondItem="FVZ-Ea-eWp" secondAttribute="leading" id="tsD-EE-rO6"/>
+                        <constraint firstItem="xrt-LS-SQT" firstAttribute="top" secondItem="BEM-Wd-CRf" secondAttribute="top" constant="8" id="tvi-Ge-IuI"/>
+                        <constraint firstItem="Ilj-t1-TZi" firstAttribute="centerX" secondItem="BEM-Wd-CRf" secondAttribute="centerX" id="xgo-HR-uIh"/>
+                    </constraints>
+                </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="u4S-T4-Dh2">
                     <rect key="frame" x="0.0" y="0.0" width="340" height="450"/>
                     <subviews>
@@ -252,13 +339,17 @@
                 <constraint firstItem="u4S-T4-Dh2" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="5Ob-0B-XeH"/>
                 <constraint firstAttribute="bottom" secondItem="u4S-T4-Dh2" secondAttribute="bottom" id="76O-HL-E8O"/>
                 <constraint firstItem="u4S-T4-Dh2" firstAttribute="top" secondItem="JuR-aC-JB5" secondAttribute="bottom" constant="-12" id="7ws-Dt-te4"/>
+                <constraint firstItem="BEM-Wd-CRf" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="8Dy-Dc-8fL"/>
                 <constraint firstItem="ehd-hP-OCf" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="APF-bK-TFy"/>
+                <constraint firstAttribute="trailing" secondItem="BEM-Wd-CRf" secondAttribute="trailing" id="Apf-A8-D3p"/>
+                <constraint firstAttribute="bottom" secondItem="BEM-Wd-CRf" secondAttribute="bottom" id="JtY-aX-Lnv"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="top" secondItem="lMo-f0-lr7" secondAttribute="bottom" id="KRd-B6-aNm"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="QBq-BK-5qx"/>
                 <constraint firstAttribute="trailing" secondItem="u4S-T4-Dh2" secondAttribute="trailing" id="U6l-XP-eIs"/>
                 <constraint firstAttribute="trailing" secondItem="ehd-hP-OCf" secondAttribute="trailing" id="bQh-CJ-5Wn"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="cAe-S7-If1"/>
                 <constraint firstItem="ehd-hP-OCf" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="cHx-pB-Wz8"/>
+                <constraint firstItem="BEM-Wd-CRf" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="eCG-Vz-rxC"/>
                 <constraint firstItem="lMo-f0-lr7" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="hSe-Jd-bxV"/>
                 <constraint firstItem="lMo-f0-lr7" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="65" id="m33-4C-ROP"/>
                 <constraint firstItem="abE-ig-b2r" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="pSl-g5-cK8"/>
@@ -270,6 +361,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="arrow-left" width="5" height="8"/>
         <image name="protonvpn-white-transparent" width="121" height="21"/>
     </resources>
 </document>

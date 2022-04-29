@@ -29,6 +29,7 @@ final class LoginViewController: NSViewController {
         case username
         case password
         case passwordSecure
+        case twoFactor
     }
     
     fileprivate enum Switch: Int {
@@ -36,8 +37,17 @@ final class LoginViewController: NSViewController {
     }
     
     // MARK: - Onboarding view
-    @IBOutlet weak var onboardingView: NSView!
-    
+    @IBOutlet private weak var onboardingView: NSView!
+
+    // MARK: - Two factor view
+    @IBOutlet private weak var twoFactorView: NSView!
+    @IBOutlet private weak var twoFactorTextField: TextFieldWithFocus!
+    @IBOutlet private weak var twoFactorHorizontalLine: NSBox!
+    @IBOutlet private weak var twoFactorButton: LoginButton!
+    @IBOutlet private weak var twoFactorModeButton: GreenActionButton!
+    @IBOutlet private weak var twoFactorTitle: NSTextField!
+    @IBOutlet private weak var backButton: NSButton!
+
     @IBOutlet private weak var logoImage: NSImageView!
     @IBOutlet private weak var warningLabel: PVPNTextField!
     @IBOutlet private weak var helpLink: PVPNHyperlinkTextField!
@@ -72,6 +82,8 @@ final class LoginViewController: NSViewController {
     fileprivate var passwordEntry: String {
         return secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
     }
+
+    private var isRecoveryCodeMode = false
     
     // MARK: - Public functions
     required init?(coder: NSCoder) {
@@ -93,6 +105,7 @@ final class LoginViewController: NSViewController {
         logoImage.imageScaling = .scaleProportionallyUpOrDown
         setupLoadingView()
         setupOnboardingView()
+        setupTwoFactorView()
         setupCallbacks()
 
         viewModel.updateAvailableDomains()
@@ -114,6 +127,35 @@ final class LoginViewController: NSViewController {
         loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.attributed(withColor: .protonWhite(), font: italicizedFont)
 
         reachabilityCheckIndicator.set(tintColor: NSColor.protonGreen())
+    }
+
+    private func setupTwoFactorView() {
+        twoFactorView.isHidden = true
+        twoFactorHorizontalLine.fillColor = .protonLightGrey()
+
+        twoFactorTextField.tag = TextField.twoFactor.rawValue
+        twoFactorTextField.delegate = self
+        twoFactorTextField.focusDelegate = self
+        twoFactorTextField.textColor = .protonWhite()
+        twoFactorTextField.font = .systemFont(ofSize: 14)
+        twoFactorTextField.placeholderAttributedString = LocalizedString.twoFactorCode.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, alignment: .left)
+        twoFactorTextField.usesSingleLineMode = true
+
+        twoFactorButton.isEnabled = false
+        twoFactorButton.target = self
+        twoFactorButton.action = #selector(twoFactorButtonAction)
+
+        twoFactorButton.displayTitle = LocalizedString.authenticate
+
+        twoFactorModeButton.title = LocalizedString.useRecoveryCode
+        twoFactorModeButton.target = self
+        twoFactorModeButton.action = #selector(switchTwoFactorModeAction)
+
+        twoFactorTitle.stringValue = LocalizedString.twoFactorAuthentication
+        twoFactorTitle.textColor = .protonWhite()
+
+        backButton.target = self
+        backButton.action = #selector(backAction)
     }
     
     private func setupOnboardingView() {
@@ -220,16 +262,36 @@ final class LoginViewController: NSViewController {
                 self?.reachabilityCheckIndicator.stopAnimation(nil)
             }
         }
+        viewModel.twoFactorRequired = { [weak self] in self?.presentTwoFactorScreen(withErrorDescription: nil) }
     }
     
-    fileprivate func attemptLogin() {
+    private func attemptLogin() {
         viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
+    }
+
+    private func attemptTwoFactor() {
+        viewModel.provide2FACode(code: twoFactorTextField.stringValue)
+    }
+
+    private func presentTwoFactorScreen(withErrorDescription description: String?) {
+        if let description = description {
+            warningLabel.attributedStringValue = description.attributed(withColor: .protonRed(), fontSize: 14)
+            warningLabel.isHidden = false
+        }
+
+        _ = twoFactorTextField.becomeFirstResponder()
+        onboardingView.isHidden = true
+        twoFactorView.isHidden = false
+
+        loadingView.isHidden = true
+        loadingSymbol.animate(false)
     }
     
     private func presentLoadingScreen() {
         warningLabel.isHidden = true
         helpLink.isHidden = true
         onboardingView.isHidden = true
+        twoFactorView.isHidden = true
         
         loadingView.isHidden = false
         loadingSymbol.animate(true)
@@ -240,7 +302,11 @@ final class LoginViewController: NSViewController {
     }
     
     private func handleLoginFailureWithSupport(_ errorMessage: String?) {
-        presentOnboardingScreen(withErrorDescription: errorMessage)
+        if viewModel.isTwoFactorStep {
+            presentTwoFactorScreen(withErrorDescription: errorMessage)
+        } else {
+            presentOnboardingScreen(withErrorDescription: errorMessage)
+        }
         helpLink.isHidden = false
     }
     
@@ -252,6 +318,7 @@ final class LoginViewController: NSViewController {
 
         _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false
+        twoFactorView.isHidden = true
         loadingView.isHidden = true
         loadingSymbol.animate(false)
     }
@@ -276,6 +343,10 @@ final class LoginViewController: NSViewController {
     @objc private func loginButtonAction() {
         attemptLogin()
     }
+
+    @objc private func twoFactorButtonAction() {
+        attemptTwoFactor()
+    }
     
     @objc private func createAccountButtonAction() {
         viewModel.createAccountAction()
@@ -291,33 +362,59 @@ final class LoginViewController: NSViewController {
         helpPopover!.show(relativeTo: needHelpButton.bounds, of: needHelpButton, preferredEdge: .maxX)
         helpPopover!.delegate = self
     }
+
+    @objc private func switchTwoFactorModeAction() {
+        isRecoveryCodeMode.toggle()
+
+        twoFactorModeButton.title = isRecoveryCodeMode ? LocalizedString.useTwoFactorCode : LocalizedString.useRecoveryCode
+        twoFactorTextField.placeholderString = isRecoveryCodeMode ? LocalizedString.recoveryCode : LocalizedString.twoFactorCode
+    }
+
+    @objc private func backAction() {
+        presentOnboardingScreen(withErrorDescription: nil)
+        viewModel.cancelTwoFactor()
+    }
 }
 
 extension LoginViewController: NSTextFieldDelegate {
-    
     func controlTextDidChange(_ obj: Notification) {
         loginButton.isEnabled = !usernameTextField.stringValue.isEmpty && !passwordEntry.isEmpty
+        twoFactorButton.isEnabled = !twoFactorTextField.stringValue.isEmpty
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        if control == twoFactorTextField {
+            if commandSelector == #selector(NSResponder.insertNewline(_:)) && twoFactorButton.isEnabled {
+                attemptTwoFactor()
+                return true
+            }
+            return false
+        }
+
         if commandSelector == #selector(NSResponder.insertNewline(_:)) && loginButton.isEnabled {
             attemptLogin()
             return true
         }
+
         return false
     }
 }
 
 extension LoginViewController: TextFieldFocusDelegate {
-    
     func didReceiveFocus(_ textField: NSTextField) {
         switch textField.tag {
         case TextField.username.rawValue:
             usernameHorizontalLine.fillColor = .protonGreen()
             passwordHorizontalLine.fillColor = .protonLightGrey()
+            twoFactorHorizontalLine.fillColor = .protonLightGrey()
         case TextField.password.rawValue, TextField.passwordSecure.rawValue:
             usernameHorizontalLine.fillColor = .protonLightGrey()
             passwordHorizontalLine.fillColor = .protonGreen()
+            twoFactorHorizontalLine.fillColor = .protonLightGrey()
+        case TextField.twoFactor.rawValue:
+            usernameHorizontalLine.fillColor = .protonLightGrey()
+            passwordHorizontalLine.fillColor = .protonLightGrey()
+            twoFactorHorizontalLine.fillColor = .protonGreen()
         default:
             break
         }
@@ -325,7 +422,6 @@ extension LoginViewController: TextFieldFocusDelegate {
 }
 
 extension LoginViewController: SwitchButtonDelegate {
-    
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
         case Switch.startOnBoot.rawValue:
@@ -337,7 +433,6 @@ extension LoginViewController: SwitchButtonDelegate {
 }
 
 extension LoginViewController: NSPopoverDelegate {
-    
     func popoverDidClose(_ notification: Notification) {
         helpPopover = nil
     }

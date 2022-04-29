@@ -17,10 +17,6 @@ final class NetworkingMock: Networking {
         fatalError()
     }
 
-    func request(_ route: LoginRequest, completion: @escaping (Result<Authenticator.Status, AuthErrors>) -> Void) {
-
-    }
-
     func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
 
     }

@@ -23,10 +23,12 @@
 import AppKit
 import Foundation
 import vpncore
+import ProtonCore_Login
+import ProtonCore_Networking
 
 final class LoginViewModel {
     
-    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & AuthApiServiceFactory & ProtonReachabilityCheckerFactory
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & ProtonReachabilityCheckerFactory & NetworkingFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -34,13 +36,17 @@ final class LoginViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
-    private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
+    private lazy var authManager = AuthManager()
+    private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService, authManager: authManager, sessionId: "LoginSessionId", minimumAccountType: AccountType.username)
     
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
     var logInFailureWithSupport: ((String?) -> Void)?
     var checkInProgress: ((Bool) -> Void)?
+    var twoFactorRequired: (() -> Void)?
+
+    private(set) var isTwoFactorStep: Bool = false
 
     init (factory: Factory) {
         self.factory = factory
@@ -83,30 +89,88 @@ final class LoginViewModel {
     
     func logIn(username: String, password: String) {
         logInInProgress?()
-        appSessionManager.logIn(username: username, password: password, success: { [weak self] in
-            self?.silentlyCheckForUpdates()
-        }, failure: { [weak self] error in
-            guard let `self` = self else { return }
-            self.specialErrorCaseNotification(error)
+        loginService.login(username: username, password: password) { [weak self] result in
+            self?.handleLoginResult(result: result)
+        }
+    }
 
-            let nsError = error as NSError
-            if nsError.isTlsError || nsError.isNetworkError {
-                let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
-                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
-                })
-                self.alertService.push(alert: alert)
-                self.logInFailure?(nil)
-            } else if case ProtonVpnError.subuserWithoutSessions = error {
-                self.alertService.push(alert: SubuserWithoutConnectionsAlert())
-                self.logInFailure?(nil)
-            } else {
-                self.logInFailure?(error.localizedDescription)
-            }
-        })
+    func provide2FACode(code: String) {
+        logInInProgress?()
+        loginService.provide2FACode(code) { [weak self] result in
+            self?.handleLoginResult(result: result)
+        }
+    }
+
+    func cancelTwoFactor() {
+        isTwoFactorStep = false
     }
 
     func updateAvailableDomains() {
-        authApiService.getAvailableDomains { _ in }
+        loginService.updateAllAvailableDomains(type: AvailableDomainsType.login) { _ in }
+    }
+
+    private func handleLoginResult(result: Result<LoginStatus, LoginError>) {
+        switch result {
+        case let .success(status):
+            switch status {
+            case let .finished(data):
+                appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: { [weak self] in
+                    self?.silentlyCheckForUpdates()
+                }, failure: { [weak self] error in
+                    self?.handleError(error: error)
+                })
+            case .ask2FA:
+                isTwoFactorStep = true
+                twoFactorRequired?()
+            case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress:
+                log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
+                logInFailure?(LocalizedString.loginUnsupportedState)
+            }
+        case let .failure(error):
+            handleError(error: error)
+        }
+    }
+
+    private func extractLoginError(error: Error) -> Error {
+        guard let loginError = error as? LoginError else {
+            return error
+        }
+
+        switch loginError {
+        case .generic(_, _, ProtonVpnError.subuserWithoutSessions):
+            return ProtonVpnError.subuserWithoutSessions
+        case let .generic(_, code: _, originalError: originalError):
+            guard let responseError = originalError as? ResponseError, let underlyingError = responseError.underlyingError, underlyingError.isNetworkError || underlyingError.isTlsError else {
+                return NSError(code: loginError.bestShotAtReasonableErrorCode, localizedDescription: loginError.userFacingMessageInLogin)
+            }
+            return NetworkError.error(forCode: underlyingError.code)
+        default:
+            return NSError(code: loginError.bestShotAtReasonableErrorCode, localizedDescription: loginError.userFacingMessageInLogin)
+        }
+    }
+
+    private func handleError(error: Error) {
+        let error = extractLoginError(error: error)
+
+        specialErrorCaseNotification(error)
+
+        let nsError = error as NSError
+        if nsError.isTlsError || nsError.isNetworkError {
+            let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
+                self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+            })
+            alertService.push(alert: alert)
+            logInFailure?(nil)
+        } else if case ProtonVpnError.subuserWithoutSessions = error {
+            alertService.push(alert: SubuserWithoutConnectionsAlert())
+            logInFailure?(nil)
+        } else {
+            logInFailure?(error.localizedDescription)
+        }
+
+        if isTwoFactorStep { // back to 2FA form
+            twoFactorRequired?()
+        }
     }
     
     private func specialErrorCaseNotification(_ error: Error) {

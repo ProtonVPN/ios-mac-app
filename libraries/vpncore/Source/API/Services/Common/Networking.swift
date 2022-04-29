@@ -16,11 +16,6 @@ public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
 public typealias ErrorCallback = GenericCallback<Error>
 
-public struct LoginRequest {
-    let username: String
-    let password: String
-}
-
 public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func set(apiService: APIService)
     func onLogout()
@@ -47,7 +42,6 @@ public protocol Networking: APIServiceDelegate {
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
-    func request(_ route: LoginRequest, completion: @escaping (_ result: Result<Authenticator.Status, AuthErrors>) -> Void)
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
 }
 
@@ -159,13 +153,6 @@ public final class CoreNetworking: Networking {
             completion(.success(""))
         }
         task.resume()
-    }
-
-    public func request(_ route: LoginRequest, completion: @escaping (_ result: Result<Authenticator.Status, AuthErrors>) -> Void) {
-        let authenticator = Authenticator(api: apiService)
-        authenticator.authenticate(username: route.username, password: route.password) { result in
-            completion(result)
-        }
     }
 
     public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
