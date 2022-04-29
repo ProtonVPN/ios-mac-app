@@ -41,7 +41,8 @@ final class ViewController: UIViewController {
                             text: .white,
                             textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
                             brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
-                            weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1))
+                            weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
+                            weakInteraction: UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1))
         return ModalsFactory(colors: colors)
     }()
 

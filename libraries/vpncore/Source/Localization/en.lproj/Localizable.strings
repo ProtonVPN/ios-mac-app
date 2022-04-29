@@ -1710,8 +1710,8 @@
 
 // Downgrade
 
-"_from_server_title" = "From %@ Server:";
-"_to_server_title" = "To %@ Server:";
+"_from_server_title" = "From Server:";
+"_to_server_title" = "To Server:";
 
 "_update_billing" = "UPDATE MY BILLING";
 "_upgrade_again" = "UPGRADE AGAIN";
@@ -1721,8 +1721,8 @@
 "_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
 
 "_maximum_device_title" = "You have reached your maximum device limit";
-"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to %@ to get up to %d devices connected at the same time.";
-"_maximum_device_reached_description" = "Please disconnect another device to connect this one.";
+"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
+"_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
 "_reconnect_title" = "We are reconnecting to the fastest server available.";
 "_subscription_expired_title" = "Your VPN subscription plan has expired";
 "_subscription_expired_description" = "Your subscription has been downgraded.";

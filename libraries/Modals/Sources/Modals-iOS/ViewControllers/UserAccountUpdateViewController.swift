@@ -30,68 +30,78 @@ class UserAccountUpdateViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLbl: UILabel!
     @IBOutlet private weak var descriptionLbl: UILabel!
-    
+
     @IBOutlet private weak var featuresTitleLbl: UILabel!
-    
+
     @IBOutlet private weak var primaryActionBtn: UIButton!
     @IBOutlet private weak var secondActionBtn: UIButton!
-    
+
     @IBOutlet private weak var feature1View: UIView!
     @IBOutlet private weak var feature1Lbl: UILabel!
-    
+
     @IBOutlet private weak var feature2View: UIView!
     @IBOutlet private weak var feature2Lbl: UILabel!
-    
+
     @IBOutlet private weak var feature3View: UIView!
     @IBOutlet private weak var feature3Lbl: UILabel!
-    
+
     @IBOutlet private weak var fromServerTitleLbl: UILabel!
     @IBOutlet private weak var fromServerIV: UIImageView!
     @IBOutlet private weak var fromServerLbl: UILabel!
-    
+
     @IBOutlet private weak var toServerTitleLbl: UILabel!
     @IBOutlet private weak var toServerIV: UIImageView!
     @IBOutlet private weak var toServerLbl: UILabel!
-    
-//    var alert: UserAccountUpdateAlert?
-    var planService: PlanService?
+
+    @IBOutlet private var checkmarks: [UIImageView]!
+
     var feature: UserAccountUpdateFeature!
-    
-    var dismissCompletion: (() -> Void)?
+
     var onPrimaryButtonTap: (() -> Void)?
-    
-//    init(alert: UserAccountUpdateAlert, planService: PlanService?) {
-//        self.alert = alert
-//        self.planService = planService
-//        super.init(nibName: nil, bundle: nil)
-//    }
 
     // MARK: - View Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        serversView.layer.cornerRadius = 12
+
+        // Remove the title on start, it caused an animation of the title changing to show from the one defined in xib to the target one.
+        primaryActionBtn.setTitle(nil, for: .normal)
+        secondActionBtn.setTitle(nil, for: .normal)
+
+        serversView.layer.cornerRadius = 8
         serversView.layer.borderWidth = 1
-        serversView.layer.borderColor = colors.secondaryBackground.cgColor
+        serversView.layer.borderColor = colors.weakInteraction.cgColor
         titleLbl.text = feature.title
         descriptionLbl.text = feature.subtitle
 
+        baseViewStyle(view)
+        titleStyle(titleLbl)
+        subtitleStyle(descriptionLbl)
         actionButtonStyle(primaryActionBtn)
         actionTextButtonStyle(secondActionBtn)
+        baseTextStyle(featuresTitleLbl)
+
+        featureTextStyle(feature1Lbl)
+        featureTextStyle(feature2Lbl)
+        featureTextStyle(feature3Lbl)
 
          if let image = feature.image {
              imageView.image = image
          } else {
              imageView.isHidden = true
          }
-        
+
+        checkmarks.forEach {
+            $0.image = feature.checkmark
+        }
+
         setupFeatures()
         setupActions()
         setupServers()
     }
-    
+
     // MARK: - Private
-    
+
     private func setupFeatures() {
         guard let options = feature.options, !options.isEmpty else {
             [feature1View, feature2View, feature3View, featuresTitleLbl].forEach {
@@ -103,18 +113,17 @@ class UserAccountUpdateViewController: UIViewController {
         feature2Lbl.text = options[1]
         feature3Lbl.text = options[2]
     }
-    
+
     private func setupActions() {
         primaryActionBtn.setTitle(feature.primaryButtonTitle, for: .normal)
-        
+
         if let title = feature.secondaryButtonTitle {
             secondActionBtn.setTitle(title, for: .normal)
-            secondActionBtn.isHidden = false
         } else {
             secondActionBtn.isHidden = true
         }
     }
-    
+
     private func setupServers() {
         guard let fromServer = feature.fromServer,
               let toServer = feature.toServer else {
@@ -128,22 +137,21 @@ class UserAccountUpdateViewController: UIViewController {
         fromServerTitleLbl.text = feature.fromServerTitle
         toServerTitleLbl.text = feature.toServerTitle
     }
-    
+
     private func setServerHeader( _ server: UserAccountUpdateFeature.Server, _ flag: UIImageView, _ serverName: UILabel) {
         serverName.text = server.name
         flag.image = server.flag
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction private func didTapPrimaryAction(_ sender: Any) {
-//        planService?.presentPlanSelection()
-        onPrimaryButtonTap?()
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: { [weak self] in
+            self?.onPrimaryButtonTap?()
+        })
     }
-    
+
     @IBAction private func didTapSecondAction(_ sender: Any) {
-        dismissCompletion?()
         dismiss(animated: true, completion: nil)
     }
 }

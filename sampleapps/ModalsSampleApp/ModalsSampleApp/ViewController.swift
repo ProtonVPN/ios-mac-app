@@ -36,7 +36,7 @@ class ViewController: UITableViewController {
                                              toServer: ViewController.toServer), "Subscription Downgraded Reconnecting"),
         (.subscriptionDowngraded(numberOfCountries: 63, numberOfDevices: 5), "Subscription Downgraded"),
         (.reachedDeviceLimit, "Reached Device Limit"),
-        (.reachedDevicePlanLimit(numberOfDevices: 5), "Reached Device Plan Limit"),
+        (.reachedDevicePlanLimit(planName: "Plus", numberOfDevices: 5), "Reached Device Plan Limit"),
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
         (.pendingInvoices, "Pending Invoices")]
 
@@ -101,9 +101,7 @@ class ViewController: UITableViewController {
             viewController = modalVC
         } else  if indexPath.section == 3 {
             let modalVC = modalsFactory.userAccountUpdateViewController(feature: upgrades[indexPath.row].type,
-                                                                        onPrimaryButtonTap: nil,
-                                                                        onSecondaryButtonTap: nil)
-            modalVC.modalPresentationStyle = .overFullScreen
+                                                                        onPrimaryButtonTap: nil)
             viewController = modalVC
         } else {
             fatalError()
@@ -138,6 +136,7 @@ struct Colors: ModalsColors {
     var textAccent: UIColor
     var brand: UIColor
     var weakText: UIColor
+    var weakInteraction: UIColor
 
     init() {
         background = UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1)
@@ -146,6 +145,7 @@ struct Colors: ModalsColors {
         textAccent = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
         brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
         weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
+        weakInteraction = UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1)
     }
 }
 

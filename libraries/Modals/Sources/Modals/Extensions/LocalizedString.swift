@@ -16,11 +16,11 @@ public enum LocalizedString {
   public static var delinquentReconnectionDescription: String { return LocalizedString.tr("Localizable", "delinquent_reconnection_description") }
   /// Your VPN account has pending invoices
   public static var delinquentTitle: String { return LocalizedString.tr("Localizable", "delinquent_title") }
-  /// From Server:
+  /// From server:
   public static var fromServerTitle: String { return LocalizedString.tr("Localizable", "from_server_title") }
-  /// Please disconnect another device to connect this one.
+  /// Please disconnect another device to connect to this one.
   public static var maximumDeviceLimit: String { return LocalizedString.tr("Localizable", "maximum_device_limit") }
-  /// Please disconnect another device to connect this one or upgrade to %@ to get up to %d devices connected at the same time.
+  /// Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.
   public static func maximumDevicePlanLimit(_ p1: Any, _ p2: Int) -> String {
     return LocalizedString.tr("Localizable", "maximum_device_plan_limit", String(describing: p1), p2)
   }
@@ -72,9 +72,9 @@ public enum LocalizedString {
   /// 
   /// Unlock this and other features with a Plus plan.
   public static var modalsUpsellFeaturesModerateNatSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_moderate_nat_subtitle") }
-  /// Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network.
+  /// Have advanced or professional computing needs that require non-standard ports?
   /// 
-  /// Unlock this and other features with a Plus plan.
+  /// Upgrade to VPN Plus to access this and other premium features.
   public static var modalsUpsellFeaturesSafeModeSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_safe_mode_subtitle") }
   /// When you upgrade to VPN Plus
   public static var modalsUpsellFeaturesSubtitle: String { return LocalizedString.tr("Localizable", "modals_upsell_features_subtitle") }
@@ -104,8 +104,13 @@ public enum LocalizedString {
   public static var modalsUpsellSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_secure_core_title") }
   /// Not now
   public static var modalsUpsellStayFree: String { return LocalizedString.tr("Localizable", "modals_upsell_stay_free") }
-  /// We are reconnecting to the fastest server available.
-  public static var reconnectTitle: String { return LocalizedString.tr("Localizable", "reconnect_title") }
+  /// Got it
+  public static var newPlansBrandGotIt: String { return LocalizedString.tr("Localizable", "new_plans_brand_got_it") }
+  /// Introducing Proton’s refreshed look.
+  /// Many services, one mission. Welcome to an internet where privacy is the default.
+  public static var newPlansBrandSubtitle: String { return LocalizedString.tr("Localizable", "new_plans_brand_subtitle") }
+  /// Updated Proton, unified protection
+  public static var newPlansBrandTitle: String { return LocalizedString.tr("Localizable", "new_plans_brand_title") }
   /// Your subscription has been downgraded.
   public static var subscriptionExpiredDescription: String { return LocalizedString.tr("Localizable", "subscription_expired_description") }
   /// Your subscription has been downgraded, so we are reconnecting to the fastest available server.
@@ -122,9 +127,7 @@ public enum LocalizedString {
   }
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return LocalizedString.tr("Localizable", "subscription_upgrade_option3") }
-  /// Upgrade again to enjoy all the features:
-  public static var subscriptionUpgradeTitle: String { return LocalizedString.tr("Localizable", "subscription_upgrade_title") }
-  /// To Server:
+  /// To server:
   public static var toServerTitle: String { return LocalizedString.tr("Localizable", "to_server_title") }
   /// Update My Billing
   public static var updateBilling: String { return LocalizedString.tr("Localizable", "update_billing") }
@@ -132,13 +135,6 @@ public enum LocalizedString {
   public static var upgradeAgain: String { return LocalizedString.tr("Localizable", "upgrade_again") }
   /// No Thanks
   public static var upgradeNoThanks: String { return LocalizedString.tr("Localizable", "upgrade_no_thanks") }
-  /// Got it
-  public static var newPlansBrandGotIt: String { return LocalizedString.tr("Localizable", "new_plans_brand_got_it") }
-  /// Introducing Proton’s refreshed look.
-  /// Many services, one mission. Welcome to an internet where privacy is the default.
-  public static var newPlansBrandSubtitle: String { return LocalizedString.tr("Localizable", "new_plans_brand_subtitle") }
-  /// Updated Proton, unified protection
-  public static var newPlansBrandTitle: String { return LocalizedString.tr("Localizable", "new_plans_brand_title") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces

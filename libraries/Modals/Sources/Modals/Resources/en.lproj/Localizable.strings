@@ -108,32 +108,42 @@
 
 // Downgrade
 
-"from_server_title" = "From Server:";
-"to_server_title" = "To Server:";
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "From server:";
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "To server:";
 
+/* Button action title in user account update screen */
 "update_billing" = "Update My Billing";
+/* Button action title in user account update screen */
 "upgrade_again" = "Upgrade Again";
+/* Button action title in user account update screen */
 "upgrade_no_thanks" = "No Thanks";
 
+/* Title of user account update screen */
 "subscription_expired_title" = "Your VPN subscription plan has expired";
+/* Description of user account update screen */
 "subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
+/* Description of user account update screen */
 "subscription_expired_description" = "Your subscription has been downgraded.";
 
-"subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
+/* Feature list element in user account update screen */
 "subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
+/* Feature list element in user account update screen */
 "subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
+/* Feature list element in user account update screen */
 "subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
 
+/* Title of user account update screen */
 "delinquent_title" = "Your VPN account has pending invoices";
+/* Description of user account update screen */
 "delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
+/* Description of user account update screen */
 "delinquent_description" = "You will be able to access premium features again after these are paid.";
 
+/* Title of user account update screen */
 "maximum_device_title" = "You have reached your maximum device limit";
-"maximum_device_plan_limit" = "Please disconnect another device to connect this one or upgrade to %@ to get up to %d devices connected at the same time.";
-"maximum_device_limit" = "Please disconnect another device to connect this one.";
-"reconnect_title" = "We are reconnecting to the fastest server available.";
-//
-//"tier_free" = "Free";
-//"tier_basic" = "Basic";
-//"tier_plus" = "Plus";
-//"tier_visionary" = "Visionary";
+/* Description of user account update screen */
+"maximum_device_plan_limit" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
+/* Description of user account update screen */
+"maximum_device_limit" = "Please disconnect another device to connect to this one.";

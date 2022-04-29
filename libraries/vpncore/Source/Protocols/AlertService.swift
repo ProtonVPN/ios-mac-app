@@ -78,10 +78,30 @@ public protocol SystemAlert: AnyObject {
     var dismiss: (() -> Void)? { get set }
 }
 
+public struct ReconnectInfo {
+    public let fromServer: Server
+    public let toServer: Server
+
+    public struct Server {
+        public let name: String
+        public let image: Image
+
+        public init(name: String, image: Image) {
+            self.name = name
+            self.image = image
+        }
+    }
+
+    public init(fromServer: Server, toServer: Server) {
+        self.fromServer = fromServer
+        self.toServer = toServer
+    }
+}
+
 public protocol UserAccountUpdateAlert: SystemAlert {
     var imageName: String? { get }
-    var reconnectionInfo: VpnReconnectInfo? { get }
     var displayFeatures: Bool { get }
+    var reconnectInfo: ReconnectInfo? { get set }
 }
 
 public protocol ExpandableSystemAlert: SystemAlert {
@@ -559,16 +579,18 @@ public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
 }
 
 public class MaxSessionsAlert: UserAccountUpdateAlert {
+    public var reconnectInfo: ReconnectInfo?
     public var imageName: String? = "sessions_limit"
     public var displayFeatures: Bool = false
-    public var reconnectionInfo: VpnReconnectInfo?
     public var title: String? = LocalizedString.maximumDeviceTitle
     public var message: String?
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
+    public var accountPlan: AccountPlan
     
     public init(accountPlan: AccountPlan) {
+        self.accountPlan = accountPlan
         switch accountPlan {
         case .free, .basic:
             message = LocalizedString.maximumDeviceDescription(LocalizedString.tierPlus, AccountPlan.plus.devicesCount)
@@ -584,18 +606,18 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
 public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     public var imageName: String?
     public var displayFeatures: Bool = true
-    public var reconnectionInfo: VpnReconnectInfo?
     public var title: String? = LocalizedString.subscriptionExpiredTitle
     public var message: String? = LocalizedString.subscriptionExpiredDescription
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
+    public var reconnectInfo: ReconnectInfo?
     
-    public init(accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo?) {
+    public init(reconnectInfo: ReconnectInfo?) {
         actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
-        self.reconnectionInfo = reconnectionInfo
-        if reconnectionInfo?.to != nil {
+        self.reconnectInfo = reconnectInfo
+        if reconnectInfo != nil {
             message = LocalizedString.subscriptionExpiredReconnectionDescription
         }
     }
@@ -604,18 +626,18 @@ public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
 public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     public var imageName: String?
     public var displayFeatures: Bool = false
-    public var reconnectionInfo: VpnReconnectInfo?
+    public var reconnectInfo: ReconnectInfo?
     public var title: String? = LocalizedString.delinquentTitle
     public var message: String? = LocalizedString.delinquentDescription
     public var actions: [AlertAction] = []
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(reconnectionInfo: VpnReconnectInfo?) {
+    public init(reconnectInfo: ReconnectInfo?) {
         actions.append(AlertAction(title: LocalizedString.updateBilling, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
-        self.reconnectionInfo = reconnectionInfo
-        if reconnectionInfo?.to != nil {
+        self.reconnectInfo = reconnectInfo
+        if reconnectInfo != nil {
             message = LocalizedString.delinquentReconnectionDescription
         }
     }

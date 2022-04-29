@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 
 public enum UserAccountUpdateFeature {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: Server, toServer: Server)
@@ -25,7 +24,7 @@ public enum UserAccountUpdateFeature {
     case pendingInvoicesReconnecting(fromServer: Server, toServer: Server)
     case pendingInvoices
     case reachedDeviceLimit
-    case reachedDevicePlanLimit(numberOfDevices: Int)
+    case reachedDevicePlanLimit(planName: String, numberOfDevices: Int)
 }
 
 extension UserAccountUpdateFeature {
@@ -51,7 +50,7 @@ extension UserAccountUpdateFeature {
         case .pendingInvoicesReconnecting, .pendingInvoices:
             return LocalizedString.updateBilling
         case .reachedDeviceLimit:
-            return LocalizedString.modalsNewBrandGotIt
+            return LocalizedString.newPlansBrandGotIt
         case .reachedDevicePlanLimit:
             return LocalizedString.modalsGetPlus
         }
@@ -99,8 +98,8 @@ extension UserAccountUpdateFeature {
             return LocalizedString.delinquentReconnectionDescription
         case .pendingInvoices:
             return LocalizedString.delinquentDescription
-        case .reachedDevicePlanLimit(let numberOfDevices):
-            return LocalizedString.maximumDevicePlanLimit("Plus", numberOfDevices)
+        case .reachedDevicePlanLimit(let planName, let numberOfDevices):
+            return LocalizedString.maximumDevicePlanLimit(planName, numberOfDevices)
         case .reachedDeviceLimit:
             return LocalizedString.maximumDeviceLimit
         }
@@ -115,6 +114,10 @@ extension UserAccountUpdateFeature {
         default:
             return nil
         }
+    }
+
+    public var checkmark: Image? {
+        Asset.checkmarkCircle.image
     }
 
     public var fromServer: Server? {

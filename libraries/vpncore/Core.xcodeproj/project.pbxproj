@@ -382,6 +382,8 @@
 		E53D64C1281169550060C463 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C0281169550060C463 /* Modals */; };
 		E53D64C728116B910060C463 /* VPNSessionsCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0262465A4190042145A /* VPNSessionsCountRequest.swift */; };
 		E53D64C828116C4A0060C463 /* VPNSessionsCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0262465A4190042145A /* VPNSessionsCountRequest.swift */; };
+		E55046432849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
+		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
@@ -894,6 +896,7 @@
 		E534EA4B2806B68D00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
 		E53D64B728115B580060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
+		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
@@ -1715,6 +1718,7 @@
 				4C4D898227BD0BE800548523 /* Array+Extension.swift */,
 				E5FFC89B2816C61500E355DA /* Countries+Extension.swift */,
 				E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */,
+				E55046422849F45A00E4BFC2 /* Image+Flag.swift */,
 				F327A9992821763B00848E42 /* Codable+Default.swift */,
 				CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */,
 			);
@@ -2599,6 +2603,7 @@
 				E1B5F67921B824A500B558B0 /* Arithmetic.swift in Sources */,
 				F349B1F42680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */,
 				E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */,
+				E55046432849F45A00E4BFC2 /* Image+Flag.swift in Sources */,
 				E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */,
 				F307F7B827C3C205004FD4A7 /* SafeModePropertyProviderMock.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
@@ -2819,6 +2824,7 @@
 				F30B9EA92629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
 				E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
 				E1616C0721C95DD200F42D79 /* ProfileUtility.swift in Sources */,
+				E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */,
 				D5DC52C5252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				F38F7BEA2795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
 				D5DCCAC2252B4BAF004CB353 /* CoreApiService.swift in Sources */,
