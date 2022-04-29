@@ -197,7 +197,7 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     var sessionChanged: Notification.Name = Notification.Name("AppSessionManagerSessionChanged")
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
-    func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
+    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) { }
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func logOut(force: Bool) {}
     func logOut() {}

@@ -166,6 +166,7 @@ target 'ProtonVPN-mac' do
   vpn_core
   
   pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Login/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
 
   # Third party pods
   pod 'SDWebImage', '5.10.0'

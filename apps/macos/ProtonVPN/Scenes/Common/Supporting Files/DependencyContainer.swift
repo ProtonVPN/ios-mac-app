@@ -80,9 +80,6 @@ final class DependencyContainer {
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
-    // Hold it in memory so it's possible to refresh token any time
-    private var authApiService: AuthApiService!
-    
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh,
                                                            serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh, canRefreshLoads: { return NSApp.isActive })
@@ -188,16 +185,6 @@ extension DependencyContainer: WindowServiceFactory {
 extension DependencyContainer: VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService {
         return VpnApiService(networking: makeNetworking())
-    }
-}
-
-// MARK: AuthApiServiceFactory
-extension DependencyContainer: AuthApiServiceFactory {
-    func makeAuthApiService() -> AuthApiService {
-        if authApiService == nil {
-            authApiService = AuthApiServiceImplementation(networking: makeNetworking())
-        }
-        return authApiService
     }
 }
 

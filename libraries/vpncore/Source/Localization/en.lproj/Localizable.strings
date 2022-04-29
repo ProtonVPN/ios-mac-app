@@ -1919,3 +1919,18 @@
 "coupon_applied" = "Coupon has been applied successfully.";
 /* Banner shown after coupon is applied but the plan is not yet upgraded */
 "coupon_applied_plan_not_upgraded_yet" = "Coupon has been applied successfully. Your subscription will be upgraded within a few minutes.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Two-factor authentication";
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Two-factor code";
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Use two-factor code";
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Recovery code";
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Use recovery code";
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Authenticate";
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Invalid login method. Please contact support.";

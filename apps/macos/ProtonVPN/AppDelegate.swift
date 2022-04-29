@@ -58,8 +58,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
             
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
-            
-            _ = self.container.makeAuthApiService() // Prepare auth service for 401 response on the first request
+
             self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
             self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
             self.helpMenu.update(with: self.container.makeHelpMenuViewModel())

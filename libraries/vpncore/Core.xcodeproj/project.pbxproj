@@ -48,8 +48,6 @@
 		4242B0352465A41A0042145A /* VPNLogicalServicesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0292465A41A0042145A /* VPNLogicalServicesRequest.swift */; };
 		4242B0382465A41A0042145A /* VPNClientConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B02B2465A41A0042145A /* VPNClientConfigRequest.swift */; };
 		4242B0392465A41A0042145A /* VPNClientConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B02B2465A41A0042145A /* VPNClientConfigRequest.swift */; };
-		4242B06E2465A48B0042145A /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0692465A48A0042145A /* AuthApiService.swift */; };
-		4242B06F2465A48B0042145A /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0692465A48A0042145A /* AuthApiService.swift */; };
 		4242B0742465A48B0042145A /* VpnApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B06C2465A48B0042145A /* VpnApiService.swift */; };
 		4242B0752465A48B0042145A /* VpnApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B06C2465A48B0042145A /* VpnApiService.swift */; };
 		4242B0762465A48B0042145A /* ReportsApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B06D2465A48B0042145A /* ReportsApiService.swift */; };
@@ -614,7 +612,6 @@
 		4242B0282465A41A0042145A /* VPNLoadsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNLoadsRequest.swift; sourceTree = "<group>"; };
 		4242B0292465A41A0042145A /* VPNLogicalServicesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNLogicalServicesRequest.swift; sourceTree = "<group>"; };
 		4242B02B2465A41A0042145A /* VPNClientConfigRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPNClientConfigRequest.swift; sourceTree = "<group>"; };
-		4242B0692465A48A0042145A /* AuthApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthApiService.swift; sourceTree = "<group>"; };
 		4242B06C2465A48B0042145A /* VpnApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnApiService.swift; sourceTree = "<group>"; };
 		4242B06D2465A48B0042145A /* ReportsApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportsApiService.swift; sourceTree = "<group>"; };
 		4242B07B2465A4D10042145A /* HumanVerificationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanVerificationToken.swift; sourceTree = "<group>"; };
@@ -1578,7 +1575,6 @@
 				F36ECB4C2610A8260089B898 /* SmartProtocols */,
 				F36ECB4B2610A81D0089B898 /* Common */,
 				F36ECB4A2610A8120089B898 /* Network helpers */,
-				4242B0692465A48A0042145A /* AuthApiService.swift */,
 				D5DCCABF252B4BAF004CB353 /* CoreApiService.swift */,
 				4242B06D2465A48B0042145A /* ReportsApiService.swift */,
 				F330F00E27FC814400C3AA33 /* PaymentsApiService.swift */,
@@ -2573,7 +2569,6 @@
 				4242B0852465A4D10042145A /* VpnProperties.swift in Sources */,
 				E1B5F65721B81E4000B558B0 /* ServerModel.swift in Sources */,
 				E1B5F66021B81E7800B558B0 /* LocationUtility.swift in Sources */,
-				4242B06E2465A48B0042145A /* AuthApiService.swift in Sources */,
 				E1616BEF21C951DB00F42D79 /* HexColor.swift in Sources */,
 				E1616B8821C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				4242B0742465A48B0042145A /* VpnApiService.swift in Sources */,
@@ -2859,7 +2854,6 @@
 				E1616BE621C9392600F42D79 /* VpnGateway.swift in Sources */,
 				F349B1F62680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */,
 				E1B5F65821B81E4000B558B0 /* ServerModel.swift in Sources */,
-				4242B06F2465A48B0042145A /* AuthApiService.swift in Sources */,
 				E1B5F66121B81E7800B558B0 /* LocationUtility.swift in Sources */,
 				E1616BF021C951DB00F42D79 /* HexColor.swift in Sources */,
 				E977A78E268206B30013495A /* AuthCredentials+vpncore.swift in Sources */,

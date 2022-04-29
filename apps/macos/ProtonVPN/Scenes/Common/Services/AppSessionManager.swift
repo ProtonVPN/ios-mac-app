@@ -24,7 +24,6 @@ import Cocoa
 import vpncore
 
 enum SessionStatus {
-    
     case notEstablished
     case established
 }
@@ -41,20 +40,19 @@ protocol AppSessionManager {
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool)
     func logOut()
     
     func replyToApplicationShouldTerminate()
 }
 
-class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
+final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & ProfileManagerFactory & AppCertificateRefreshManagerFactory & SystemExtensionManagerFactory & PlanServiceFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & ProfileManagerFactory & AppCertificateRefreshManagerFactory & SystemExtensionManagerFactory & PlanServiceFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
@@ -93,28 +91,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             self?.finishLogin(success: { completion(.success) }, failure: failureWrapper)
         }, failure: failureWrapper)
     }
-    
-    func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        authApiService.authenticate(username: username, password: password) { [weak self] result in
-            switch result {
-            case let .success(authCredentials):
-                do {
-                    try AuthKeychain.store(authCredentials)
-                } catch {
-                    DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
-                    return
-                }
-                self?.retrieveProperties(success: {
-                    self?.checkForSubuserWithoutSessions(success: { [weak self] in
-                        self?.finishLogin(success: success, failure: failure)
-                    }, failure: failure)
-                }, failure: failure)
-            case let .failure(error):
-                log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
-                DispatchQueue.main.async { failure(error) }
-            }
-        }
-    }
 
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         guard loggedIn else {
@@ -130,6 +106,20 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 failure(error)
             }
         }
+    }
+
+    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        do {
+            try AuthKeychain.store(authCredentials)
+        } catch {
+            DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
+            return
+        }
+        retrieveProperties(success: { [weak self] in
+            self?.checkForSubuserWithoutSessions(success: { [weak self] in
+                self?.finishLogin(success: success, failure: failure)
+            }, failure: failure)
+        }, failure: failure)
     }
     
     private func retrieveProperties(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
