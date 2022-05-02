@@ -22,6 +22,7 @@ final class ExtensionCertificateRefreshManager {
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
+    private var workQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
 
     init(storage: Storage, connectionFactory: ConnectionSessionFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
@@ -29,24 +30,65 @@ final class ExtensionCertificateRefreshManager {
     }
     
     func start() {
-        startTimer(at: Date())
+        log.info("Starting ExtensionCertificateRefreshManager.", category: .userCert)
+        startTimer()
+        startNetworkMonitor()
+    }
+
+    func stop() {
+        log.info("Stoping ExtensionCertificateRefreshManager.", category: .userCert)
+        stopTimer()
+        stopNetworkMonitor()
     }
     
     // MARK: - Timer
 
     private var timer: BackgroundTimer?
-    private var timerQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
-    
-    private func startTimer(at nextRunTime: Date) {
-        timerQueue.async {
-            self.timer = BackgroundTimer(runAt: nextRunTime, repeating: self.checkInterval, queue: self.timerQueue) { [weak self] in
-                self?.timerFired()
+
+    /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time, to make sure we don't miss the time when certificate has to be refreshed.
+    private func startTimer() {
+        workQueue.async {
+            self.timer = BackgroundTimer(runAt: Date(), repeating: self.checkInterval, queue: self.workQueue) { [weak self] in
+                self?.checkCertificatesNow()
             }
-            log.info("Timer setup for \(nextRunTime)", category: .userCert)
         }
     }
-    
-    @objc private func timerFired() {
+
+    private func stopTimer() {
+        workQueue.async {
+            self.timer = nil
+        }
+    }
+
+    // MARK: - Network monitor
+
+    private let networkMonitor = NWPathMonitor()
+
+    /// Starts monitoring network to check if we have valid certificate rigth after we have working network connection.
+    /// This allows to rely less on timers and refresh certificate if needed before user starts to use the internet.
+    private func startNetworkMonitor() {
+        networkMonitor.pathUpdateHandler = { [weak self] path in
+            guard path.status == .satisfied || path.status == .requiresConnection else {
+                log.info("Connection is not satisfiable. Will not check for certificate now.", category: .userCert)
+                return
+            }
+            log.info("Connection bacame satisfiable. Will check for certificate now.", category: .userCert)
+            self?.checkCertificatesNow()
+        }
+        networkMonitor.start(queue: self.workQueue)
+    }
+
+    private func stopNetworkMonitor() {
+        networkMonitor.cancel()
+    }
+
+    // MARK: - Certificate
+
+    private var certificateRefreshStarted: Date? // Using date instead of boolean flag to be able to reset it after the timeout passes
+    private var certificateRefreshTimeout: TimeInterval = 3 * 60
+
+    /// Checks certificate refresh time to make sure we don't refresh them too early and too often.
+    @objc private func checkCertificatesNow() {
         guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
             log.info("No current certificate. Starting refresh.", category: .userCert)
             refreshCertificate()
@@ -62,13 +104,29 @@ final class ExtensionCertificateRefreshManager {
         log.info("Starting certificate refresh.", category: .userCert)
         refreshCertificate()
     }
-    
+
+    /// Does actual certificate refresh with API and saves new certificate using `vpnAuthenticationStorage`.
+    /// This code uses `certificateRefreshStarted` to not run more than one refresh at the same time. Please make sure you always call this code on `workQueue`.
     private func refreshCertificate() {
+        #if DEBUG
+        dispatchPrecondition(condition: .onQueue(workQueue))
+        #endif
+
+        if let certificateRefreshStarted = certificateRefreshStarted {
+            if certificateRefreshStarted.timeIntervalSinceNow < certificateRefreshTimeout {
+                log.debug("Certificate refresh is in progress. Skipping.", category: .userCert, event: .refreshError, metadata: ["certificateRefreshStarted": "\(certificateRefreshStarted)"])
+                return
+            }
+            log.debug("Certificate refresh took too long. Will reset the flag and continue with certificate refresh.", category: .userCert, event: .refreshError)
+            self.certificateRefreshStarted = nil
+        }
+
         guard let currentKeys = vpnAuthenticationStorage.getStoredKeys() else {
             log.error("Can't load current keys. Nothing to refresh. Giving up.", category: .userCert, event: .refreshError)
             return
         }
-        
+
+        self.certificateRefreshStarted = Date()
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
         apiService.refreshCertificate(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
             switch result {
@@ -79,6 +137,7 @@ final class ExtensionCertificateRefreshManager {
             case .failure(let error):
                 log.error("Failed to refresh certificate through API: \(error)", category: .userCert)
             }
+            self.certificateRefreshStarted = nil
         }
     }
 

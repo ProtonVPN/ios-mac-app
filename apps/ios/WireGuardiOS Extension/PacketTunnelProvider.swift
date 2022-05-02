@@ -34,6 +34,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
+    private func connectionEstablished() {
+        certificateRefreshManager.start()
+    }
+
     private lazy var adapter: WireGuardAdapter = {
         return WireGuardAdapter(with: self) { logLevel, message in
             wg_log(.info, message: message)
@@ -75,7 +79,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
                 completionHandler(nil)
                 
-                self.certificateRefreshManager.start()
+                self.connectionEstablished()
                 
                 return
             }
@@ -113,6 +117,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, staticMessage: "Stopping tunnel")
+        certificateRefreshManager.stop()
 
         adapter.stop { error in
             ErrorNotifier.removeLastErrorFile()
