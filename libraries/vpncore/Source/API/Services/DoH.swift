@@ -55,7 +55,7 @@ public class DoHVPN: DoH, ServerConfig {
             return verifyHost
         }
 
-        guard let url = URL(string: defaultHost), let host = url.host else {
+        guard let url = URL(string: defaultHost.replacingOccurrences(of: "vpn.", with: "")), let host = url.host else {
             return ""
         }
 
@@ -79,7 +79,7 @@ public class DoHVPN: DoH, ServerConfig {
             return "https://account.protonvpn.com"
         }
 
-        guard let url = URL(string: defaultHost), let host = url.host else {
+        guard let url = URL(string: defaultHost.replacingOccurrences(of: "vpn.", with: "")), let host = url.host else {
             return ""
         }
 
