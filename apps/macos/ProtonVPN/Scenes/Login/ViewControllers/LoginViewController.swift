@@ -123,6 +123,7 @@ final class LoginViewController: NSViewController {
         logoImage.imageScaling = .scaleProportionallyUpOrDown
         setupLoadingView()
         setupOnboardingView()
+        setupTwoFactorView()
         setupCallbacks()
 
         viewModel.updateAvailableDomains()
@@ -166,12 +167,13 @@ final class LoginViewController: NSViewController {
     
     private func setupUsernameSection() {
         usernameTextField.style(placeholder: LocalizedString.username)
-
         usernameTextField.usesSingleLineMode = true
         usernameTextField.tag = TextField.username.rawValue
         usernameTextField.delegate = self
         usernameTextField.focusDelegate = self
         usernameTextField.setAccessibilityIdentifier("UsernameTextField")
+        
+        usernameHorizontalLine.fillColor = .color(.border, .weak)
     }
     
     private func setupPasswordSection() {
@@ -190,7 +192,7 @@ final class LoginViewController: NSViewController {
         passwordTextField.focusDelegate = self
         
         passwordSecureTextField.setAccessibilityIdentifier("PasswordTextField")
-
+        
         passwordRevealButton.setButtonType(.toggle)
         passwordRevealButton.image = AppTheme.Icon.eye
         passwordRevealButton.alternateImage = AppTheme.Icon.eyeSlash
@@ -240,9 +242,10 @@ final class LoginViewController: NSViewController {
                 self?.reachabilityCheckIndicator.stopAnimation(nil)
             }
         }
+        viewModel.twoFactorRequired = { [weak self] in self?.presentTwoFactorScreen(withErrorDescription: nil) }
     }
     
-    fileprivate func attemptLogin() {
+    private func attemptLogin() {
         viewModel.logIn(username: usernameTextField.stringValue, password: passwordEntry)
     }
 
@@ -274,7 +277,11 @@ final class LoginViewController: NSViewController {
     }
     
     private func handleLoginFailureWithSupport(_ errorMessage: String?) {
-        presentOnboardingScreen(withErrorDescription: errorMessage)
+        if viewModel.isTwoFactorStep {
+            presentTwoFactorScreen(withErrorDescription: errorMessage)
+        } else {
+            presentOnboardingScreen(withErrorDescription: errorMessage)
+        }
         helpLink.isHidden = false
     }
     
@@ -287,7 +294,6 @@ final class LoginViewController: NSViewController {
         _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false
         twoFactorView.isHidden = true
-
         loadingView.isHidden = true
         loadingView.animate(false)
     }
@@ -330,16 +336,17 @@ final class LoginViewController: NSViewController {
 }
 
 extension LoginViewController: NSTextFieldDelegate {
-    
     func controlTextDidChange(_ obj: Notification) {
         loginButton.isEnabled = !usernameTextField.stringValue.isEmpty && !passwordEntry.isEmpty
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+
         if commandSelector == #selector(NSResponder.insertNewline(_:)) && loginButton.isEnabled {
             attemptLogin()
             return true
         }
+
         return false
     }
 }
@@ -373,7 +380,6 @@ extension LoginViewController: TextFieldFocusDelegate {
 }
 
 extension LoginViewController: SwitchButtonDelegate {
-    
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
         case Switch.startOnBoot.rawValue:
@@ -385,7 +391,6 @@ extension LoginViewController: SwitchButtonDelegate {
 }
 
 extension LoginViewController: NSPopoverDelegate {
-    
     func popoverDidClose(_ notification: Notification) {
         helpPopover = nil
     }
