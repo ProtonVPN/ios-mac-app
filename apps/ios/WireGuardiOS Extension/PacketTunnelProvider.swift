@@ -36,6 +36,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     private func connectionEstablished() {
         certificateRefreshManager.start()
+        #if CHECK_CONNECTIVITY
+        startTestingConnectivity()
+        #endif
     }
 
     private lazy var adapter: WireGuardAdapter = {
@@ -118,6 +121,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, staticMessage: "Stopping tunnel")
         certificateRefreshManager.stop()
+        #if CHECK_CONNECTIVITY
+        self.stopTestingConnectivity()
+        #endif
 
         adapter.stop { error in
             ErrorNotifier.removeLastErrorFile()
@@ -172,6 +178,58 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             wg_log(.info, message: "flushLogsToFile error while writing to file \(path) ")
         }
     }
+
+    // MARK: - Connection tests
+
+#if CHECK_CONNECTIVITY
+    // Enable this in build settings if you want to debug connectivitiy issues.
+    // It will ping API as well as 3rd party ip check site to check if we have the internet and are still connected to the proper server.
+    // Please make sure this is NEVER enabled on Release builds!
+
+    private var connectivityTimer: Timer?
+    private var lastConnectivityCheck: Date = Date()
+
+    private func startTestingConnectivity() {
+        DispatchQueue.main.async {
+            self.connectivityTimer?.invalidate()
+            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+        }
+    }
+
+    private func stopTestingConnectivity() {
+        DispatchQueue.main.async {
+            self.connectivityTimer?.invalidate()
+            self.connectivityTimer = nil
+        }
+    }
+
+    @objc private func checkConnectivity() {
+        let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
+        if timeDiff > 60 * 3 {
+            log.error("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
+        } else {
+            log.info("Last connectivity check time diff: \(timeDiff)")
+        }
+        check(url: "https://api.protonvpn.ch/vpn/location")
+        check(url: "https://api64.ipify.org/")
+        lastConnectivityCheck = Date()
+    }
+
+    private func check(url urlString: String) {
+        guard let url = URL(string: urlString), let host = url.host else {
+            log.error("Can't get API endpoint hostname.", category: .api)
+            return
+        }
+        let urlRequest = URLRequest(url: url)
+        let connectionFactory = NEPacketTunnelConnectionSessionFactory(provider: self)
+        let connection = connectionFactory.connect(hostname: host, port: "443", useTLS: true)
+        connection.request(urlRequest) { data, response, error in
+            let responseData = data != nil ? String(data:data!, encoding: .utf8) : "nil"
+            log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data":"\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
+        }
+    }
+
+#endif
     
 }
 
