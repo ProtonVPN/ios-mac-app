@@ -265,6 +265,7 @@ final class LoginViewController: NSViewController {
     
     private func presentLoadingScreen() {
         warningView.isHidden = true
+        warningView.showSupport = false
         onboardingView.isHidden = true
         logoImage.isHidden = true
         twoFactorView.isHidden = true
@@ -274,16 +275,17 @@ final class LoginViewController: NSViewController {
     }
     
     private func handleLoginFailure(_ errorMessage: String?) {
-        presentOnboardingScreen(withErrorDescription: errorMessage)
-    }
-    
-    private func handleLoginFailureWithSupport(_ errorMessage: String?) {
         if viewModel.isTwoFactorStep {
             presentTwoFactorScreen(withErrorDescription: errorMessage)
         } else {
             presentOnboardingScreen(withErrorDescription: errorMessage)
         }
         warningView.isHidden = false
+    }
+    
+    private func handleLoginFailureWithSupport(_ errorMessage: String?) {
+        handleLoginFailure(errorMessage)
+        warningView.showSupport = true
     }
     
     private func presentOnboardingScreen(withErrorDescription description: String?) {
