@@ -74,7 +74,7 @@
 			<key>one</key>
 			<string>%d устройство</string>
 			<key>other</key>
-			<string>%d устройств</string>
+			<string>%d устройства</string>
 		</dict>
 	</dict>
 	<key>onboarding_upsell_title</key>
@@ -109,7 +109,7 @@
 			<key>one</key>
 			<string>%d сервер</string>
 			<key>other</key>
-			<string>%d серверов</string>
+			<string>%d сервера</string>
 		</dict>
 	</dict>
 </dict>

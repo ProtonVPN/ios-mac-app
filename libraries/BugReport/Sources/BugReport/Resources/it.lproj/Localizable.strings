@@ -23,7 +23,7 @@
 "_br_3_button_sending" = "Invio in corso";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "Email";
+"_br_3_email" = "Posta elettronica";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Un registro è un tipo di file che ci mostra le azioni intraprese che hanno portato a un errore. Li useremo solo per aiutare i nostri ingegneri a correggere i bug.";

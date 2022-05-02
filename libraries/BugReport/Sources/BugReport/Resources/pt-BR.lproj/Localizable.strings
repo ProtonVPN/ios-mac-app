@@ -59,7 +59,7 @@
 "_update_view_button" = "Atualizar";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "You’re more likely to have issues on older versions of ProtonVPN.";
+"_update_view_description" = "É mais provável você ter problemas em versões mais antigas do ProtonVPN.";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Atualizar ProtonVPN";

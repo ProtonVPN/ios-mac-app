@@ -575,7 +575,7 @@
 "_feature" = "Özellik";
 
 /* iOS plan feature */
-"_feature_blocked_content" = "Engellenmiş içeriğe erişin";
+"_feature_blocked_content" = "Engellenen içeriğe erişin";
 
 /* (No Comment) */
 "_feature_bt" = "BitTorrent/dosya paylaşımı desteği";
@@ -626,7 +626,7 @@
 "_forgot_username" = "Kullanıcı adımı unuttum";
 
 /* Used instead of price for free plans. */
-"_free" = "Free";
+"_free" = "Ücretsiz";
 
 /* Account plan description */
 "_free_countries" = "3 ülke";
@@ -1019,7 +1019,7 @@
 "_need_help" = "Yardım gerekiyor mu?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Yine de bağlan";
+"_neks_t2_connect" = "Gene de etkinleştir";
 
 /* (No Comment) */
 "_neks_t2_description" = "Bu aygıt üzerinde Kill Switch kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN Kill Switch özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Uygula";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Kimliği doğrula";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Kupon uygulandı.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "ProtonVPN kullanarak başlat";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Oturum açma yöntemi geçersiz. Lütfen destek ekibi ile görüşün.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle ProtonVPN web sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Kurtarma kodu";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "İki aşamalı kimlik doğrulama";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "İki aşamalı kimlik doğrulama kodu";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Kupon kullan";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Kurtarma kodu kullanılsın";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "İki aşamalı kimlik doğrulama kodu kullanılsın";
 

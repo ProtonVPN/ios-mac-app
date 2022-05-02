@@ -1019,7 +1019,7 @@
 "_need_help" = "Need Help?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connect Anyway";
+"_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
 "_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Apply";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Authenticate";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Coupon has been applied successfully.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "Start using ProtonVPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Invalid login method. Please contact support.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Recovery code";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Two-factor authentication";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Two-factor code";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Use coupon";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Use recovery code";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Use two-factor code";
 

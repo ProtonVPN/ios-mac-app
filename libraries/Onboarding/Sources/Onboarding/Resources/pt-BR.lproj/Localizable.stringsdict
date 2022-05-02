@@ -56,9 +56,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d device</string>
+			<string>%d dispositivo</string>
 			<key>other</key>
-			<string>%d devices</string>
+			<string>%d dispositivos</string>
 		</dict>
 	</dict>
 	<key>onboarding_upsell_title</key>

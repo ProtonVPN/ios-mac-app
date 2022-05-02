@@ -41,40 +41,40 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Navegue com velocidade máxima (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with Netshield";
+"modals_upsell_all_countries_feature_netshield" = "Bloqueie anúncios e malware com o Netshield";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Acesse os serviços de streaming globais";
 
 /* Footer of the All Countries upsell screen */
-"modals_upsell_features_footer" = "And many more premium features";
+"modals_upsell_features_footer" = "E muitos outros recursos premium";
 
 /* Subtitle of the Moderate NAT upsell screen */
-"modals_upsell_features_moderate_nat_subtitle" = "Moderate NAT, also known as Nat Type 2, can improve your online experience with various applications and online video games.\n\nUnlock this and other features with a Plus plan.";
+"modals_upsell_features_moderate_nat_subtitle" = "NAT moderado, também conhecido como Nat Tipo 2, pode melhorar sua experiência online com várias aplicações e videogames online. \n\nDesbloqueie esse e outros recursos com um plano Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Use ProtonVPN for any special need by allowing traffic to non-standard ports through the VPN network.\n\nUnlock this and other features with a Plus plan.";
+"modals_upsell_features_safe_mode_subtitle" = "Use o ProtonVPN para qualquer necessidade especial, permitindo o tráfego para portas não padrão através da rede VPN. \n\nDesbloqueie este e outros recursos com um plano Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "When you upgrade to Plus";
+"modals_upsell_features_subtitle" = "Ao atualizar para o Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_learn_more" = "What is Moderate NAT?";
+"modals_upsell_moderate_nat_learn_more" = "O que é NAT moderado?";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Enable Moderate NAT";
+"modals_upsell_moderate_nat_title" = "Ativar NAT moderado";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_ads" = "Block ads and trackers";
+"modals_upsell_net_shield_ads" = "Bloqueie anúncios e rastreadores";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_highSpeed" = "Browse at the highest speeds";
+"modals_upsell_net_shield_highSpeed" = "Navegue nas velocidades mais altas";
 
 /* Feature of the NetShield upsell screen */
-"modals_upsell_net_shield_malware" = "Protect your device from malware";
+"modals_upsell_net_shield_malware" = "Proteja seu dispositivo contra malware";
 
 /* Title of the NetShield upsell screen */
-"modals_upsell_net_shield_title" = "Enjoy ad-free browsing with NetShield";
+"modals_upsell_net_shield_title" = "Desfrute de navegação sem anúncios com o NetShield";
 
 /* Learn more button title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_learn_more" = "Saiba mais";
@@ -83,16 +83,16 @@
 "modals_upsell_safe_mode_title" = "Permitir tráfego para portas não padrão";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";
+"modals_upsell_secure_core_attacks" = "Proteja-se contra ataques de rede";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Add another layer of encryption to your VPN connection";
+"modals_upsell_secure_core_layer" = "Adicione outra camada de criptografia à sua conexão VPN";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_route" = "Route through ultra secure servers in Switzerland, Sweden, and Iceland";
+"modals_upsell_secure_core_route" = "Roteie por servidores ultra seguros na Suíça, Suécia e Islândia";
 
 /* Title of the Secure Core upsell screen */
-"modals_upsell_secure_core_title" = "Double the encryption with Secure Core";
+"modals_upsell_secure_core_title" = "Duplique a criptografia com o Secure Core";
 
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Agora não";
