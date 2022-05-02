@@ -132,31 +132,38 @@ final class LoginViewModel {
                 logInFailure?(LocalizedString.loginUnsupportedState)
             }
         case let .failure(error):
-            handleError(error: error)
+            handleLoginError(error: error)
         }
     }
 
-    private func extractLoginError(error: Error) -> Error {
-        guard let loginError = error as? LoginError else {
-            return error
-        }
-
-        switch loginError {
-        case .generic(_, _, ProtonVpnError.subuserWithoutSessions):
-            return ProtonVpnError.subuserWithoutSessions
+    private func handleLoginError(error: LoginError) {
+        // some login errors need to be handle in a specific way
+        switch error {
+        case let .invalidAccessToken(message: message):
+            // after entering wrong 2FA code 3 times the access token gets invalidated
+            // the users cannot continue entering the 2FA code, they need to start over
+            // the state is reset back to the username + password form and error is shown
+            isTwoFactorStep = false
+            logInFailure?(message)
+        case let .invalidCredentials(message: message), let .invalid2FACode(message: message):
+            // invalid credentials or 2FA code entered, show the most specific error message
+            logInFailure?(message)
         case let .generic(_, code: _, originalError: originalError):
-            guard let responseError = originalError as? ResponseError, let underlyingError = responseError.underlyingError, underlyingError.isNetworkError || underlyingError.isTlsError else {
-                return NSError(code: loginError.bestShotAtReasonableErrorCode, localizedDescription: loginError.userFacingMessageInLogin)
+            // if the error is a response error and the underlying error is a network or TLS error convert it to the app network error
+            // this is needed so the basic error handling logic shows an alert that offers troubleshooting to the users
+            if let responseError = originalError as? ResponseError, let underlyingError = responseError.underlyingError, underlyingError.isNetworkError || underlyingError.isTlsError {
+                handleError(error: NetworkError.error(forCode: underlyingError.code))
+                return
             }
-            return NetworkError.error(forCode: underlyingError.code)
+
+            // otherwise just convert the login error to a classic error with the error code and the user facing error message
+            handleError(error: NSError(code: error.bestShotAtReasonableErrorCode, localizedDescription: error.userFacingMessageInLogin))
         default:
-            return NSError(code: loginError.bestShotAtReasonableErrorCode, localizedDescription: loginError.userFacingMessageInLogin)
+            handleError(error: NSError(code: error.bestShotAtReasonableErrorCode, localizedDescription: error.userFacingMessageInLogin))
         }
     }
 
     private func handleError(error: Error) {
-        let error = extractLoginError(error: error)
-
         specialErrorCaseNotification(error)
 
         let nsError = error as NSError
@@ -168,13 +175,10 @@ final class LoginViewModel {
             logInFailure?(nil)
         } else if case ProtonVpnError.subuserWithoutSessions = error {
             alertService.push(alert: SubuserWithoutConnectionsAlert())
+            isTwoFactorStep = false
             logInFailure?(nil)
         } else {
             logInFailure?(error.localizedDescription)
-        }
-
-        if isTwoFactorStep { // back to 2FA form
-            twoFactorRequired?()
         }
     }
     

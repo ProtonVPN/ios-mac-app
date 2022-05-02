@@ -32,6 +32,12 @@ class WarningView: NSStackView {
 
     weak var helpDelegate: WarningViewDelegate?
 
+    var showSupport: Bool = false {
+        didSet {
+            helpLink.isHidden = !showSupport
+        }
+    }
+
     var message: String? {
         didSet {
             guard let message = message else {
