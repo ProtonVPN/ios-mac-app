@@ -278,15 +278,15 @@ final class LoginViewController: NSViewController {
     }
     
     private func handleLoginFailure(_ errorMessage: String?) {
-        presentOnboardingScreen(withErrorDescription: errorMessage)
-    }
-    
-    private func handleLoginFailureWithSupport(_ errorMessage: String?) {
         if viewModel.isTwoFactorStep {
             presentTwoFactorScreen(withErrorDescription: errorMessage)
         } else {
             presentOnboardingScreen(withErrorDescription: errorMessage)
         }
+    }
+    
+    private func handleLoginFailureWithSupport(_ errorMessage: String?) {
+        handleLoginFailure(errorMessage)
         helpLink.isHidden = false
     }
     
