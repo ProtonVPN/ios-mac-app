@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView identifier="TwoFactorView" id="koe-KL-0cZ" customClass="TwoFactorView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="450"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r1d-Rv-ZgZ">
+                    <rect key="frame" x="38" y="423" width="264" height="19"/>
+                    <textFieldCell key="cell" allowsUndo="NO" alignment="center" title="Multiline Label" id="Me2-mM-6H6">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bdZ-wc-cJB">
+                    <rect key="frame" x="14" y="415" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="8ji-dl-wPl"/>
+                        <constraint firstAttribute="width" constant="36" id="bcq-5o-9Sd"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="arrow-left" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="ESL-A5-f0v">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X4u-LD-CIk" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="30" y="369" width="280" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Ht7-g5-ojq">
+                        <font key="font" metaFont="menu" size="14"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ksG-gv-wOB" customClass="LoginButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="105" y="296" width="130" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="URF-H8-sin"/>
+                        <constraint firstAttribute="width" constant="130" id="mUr-7C-YKZ"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="Login" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="EeH-Wy-iIx">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="eJ2-bU-8K2">
+                    <rect key="frame" x="30" y="360" width="280" height="1"/>
+                    <view key="contentView" id="qpd-GS-bip">
+                        <rect key="frame" x="0.0" y="0.0" width="280" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="TpX-5C-YXW"/>
+                    </constraints>
+                </box>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1d6-YI-AS3" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="111" y="261" width="118" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Vbk-lX-DhG"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="Use recovery code" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Aiw-3C-n8x">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="1d6-YI-AS3" firstAttribute="top" secondItem="ksG-gv-wOB" secondAttribute="bottom" constant="15" id="2hl-S1-bRU"/>
+                <constraint firstItem="eJ2-bU-8K2" firstAttribute="trailing" secondItem="X4u-LD-CIk" secondAttribute="trailing" id="40w-yk-wvG"/>
+                <constraint firstItem="X4u-LD-CIk" firstAttribute="leading" secondItem="koe-KL-0cZ" secondAttribute="leading" constant="30" id="4Dj-dP-m8K"/>
+                <constraint firstItem="eJ2-bU-8K2" firstAttribute="leading" secondItem="X4u-LD-CIk" secondAttribute="leading" id="8lr-HO-NCi"/>
+                <constraint firstItem="eJ2-bU-8K2" firstAttribute="top" secondItem="X4u-LD-CIk" secondAttribute="bottom" constant="8" id="9xB-qB-KeL"/>
+                <constraint firstItem="1d6-YI-AS3" firstAttribute="centerX" secondItem="koe-KL-0cZ" secondAttribute="centerX" id="GCg-s1-HdR"/>
+                <constraint firstItem="ksG-gv-wOB" firstAttribute="centerX" secondItem="koe-KL-0cZ" secondAttribute="centerX" id="GJG-IL-GKf"/>
+                <constraint firstAttribute="trailing" secondItem="X4u-LD-CIk" secondAttribute="trailing" constant="30" id="M9l-bz-YPs"/>
+                <constraint firstItem="X4u-LD-CIk" firstAttribute="top" secondItem="r1d-Rv-ZgZ" secondAttribute="bottom" constant="32" id="V2b-b5-GD4"/>
+                <constraint firstItem="ksG-gv-wOB" firstAttribute="top" secondItem="eJ2-bU-8K2" secondAttribute="bottom" constant="24" id="Y9E-2C-Oed"/>
+                <constraint firstItem="bdZ-wc-cJB" firstAttribute="leading" secondItem="koe-KL-0cZ" secondAttribute="leading" constant="14" id="bIg-lO-uwW"/>
+                <constraint firstItem="bdZ-wc-cJB" firstAttribute="centerY" secondItem="r1d-Rv-ZgZ" secondAttribute="centerY" id="g04-kX-pzj"/>
+                <constraint firstAttribute="trailing" secondItem="r1d-Rv-ZgZ" secondAttribute="trailing" constant="40" id="ldE-VU-7ie"/>
+                <constraint firstItem="r1d-Rv-ZgZ" firstAttribute="top" secondItem="koe-KL-0cZ" secondAttribute="top" constant="8" id="pk4-4u-N2E"/>
+                <constraint firstItem="r1d-Rv-ZgZ" firstAttribute="leading" secondItem="koe-KL-0cZ" secondAttribute="leading" constant="40" id="ubr-4Y-kcF"/>
+            </constraints>
+            <connections>
+                <outlet property="backButton" destination="bdZ-wc-cJB" id="ZjF-RW-2SC"/>
+                <outlet property="twoFactorButton" destination="ksG-gv-wOB" id="nLx-C3-dcf"/>
+                <outlet property="twoFactorHorizontalLine" destination="eJ2-bU-8K2" id="Zqb-wt-A1e"/>
+                <outlet property="twoFactorModeButton" destination="1d6-YI-AS3" id="HUi-cH-z8R"/>
+                <outlet property="twoFactorTextField" destination="X4u-LD-CIk" id="kk5-tf-WZk"/>
+                <outlet property="twoFactorTitle" destination="r1d-Rv-ZgZ" id="gjz-wY-Xmz"/>
+            </connections>
+            <point key="canvasLocation" x="224" y="262"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="arrow-left" width="5" height="8"/>
+    </resources>
+</document>
