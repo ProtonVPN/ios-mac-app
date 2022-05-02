@@ -42,11 +42,11 @@ final class TwoFactorView: NSView {
     }
 
     private func setup() {
-        twoFactorHorizontalLine.fillColor = .protonLightGrey()
+        twoFactorHorizontalLine.fillColor = .color(.border, .weak)
 
         twoFactorTextField.delegate = self
-        twoFactorTextField.textColor = .protonWhite()
-        twoFactorTextField.font = .systemFont(ofSize: 14)
+        twoFactorTextField.textColor = .color(.text)
+        twoFactorTextField.font = .themeFont(.paragraph)
         twoFactorTextField.placeholderAttributedString = LocalizedString.twoFactorCode.styled(.weak, font: .themeFont(.small), alignment: .left)
         twoFactorTextField.usesSingleLineMode = true
 
@@ -61,7 +61,7 @@ final class TwoFactorView: NSView {
         twoFactorModeButton.action = #selector(switchTwoFactorModeAction)
 
         twoFactorTitle.stringValue = LocalizedString.twoFactorAuthentication
-        twoFactorTitle.textColor = .protonWhite()
+        twoFactorTitle.textColor = .color(.text)
 
         backButton.target = self
         backButton.action = #selector(backAction)
@@ -70,7 +70,7 @@ final class TwoFactorView: NSView {
     override func becomeFirstResponder() -> Bool {
         super.becomeFirstResponder()
 
-        twoFactorHorizontalLine.fillColor = .protonGreen()
+        twoFactorHorizontalLine.fillColor = .color(.border, .interactive)
 
         return twoFactorTextField.becomeFirstResponder()
     }
