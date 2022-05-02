@@ -11,6 +11,7 @@
 		02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0112A1878C3C8F142EEB7F /* Pods_Core_vpncore_macosTests.framework */; };
 		04EC05A4145232174D32DAA2 /* Optional+stringForLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DD6EB6DCFD2331D821683A /* Optional+stringForLog.swift */; };
 		04F14CFDA91FF552B57D0677 /* Pods-Core-vpncore-ios-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */; };
+		0758C14C734BC9DA0EC26C26 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B7281FCFE9008404E4 /* SessionService.swift */; };
 		08D99AC826BEE6B2BC66F9C5 /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */; };
 		0BA3D3AADFF443B29614D954 /* ConsoleLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA60AD5A3ABB7BED5473A5D /* ConsoleLogFormatter.swift */; };
 		179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2F5ECE24133CF5914BB05 /* Pods_Core_vpncore_ios.framework */; };
@@ -114,6 +115,7 @@
 		90400A48BBED6C2C09C2A90D /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */; };
 		9499B57E16D12D1C10014635 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
 		963AC1AED691DDAF9BA69AC0 /* Bundle+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC60F8D6F15BEB1582DE310 /* Bundle+vpncore.swift */; };
+		97B54C05ED0E25AEFFE4D970 /* ForkSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */; };
 		9836884258CAA9078015A0E6 /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC8D5390AD2CD74301D6C54 /* Logger+Categories.swift */; };
 		9D21B1DE838FA2A4CF835924 /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */; };
 		A2F4E02AB3A069EBDBACBF1D /* String+Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F0015F0BEB0E5E1ADB08B /* String+Email.swift */; };
@@ -590,6 +592,7 @@
 		F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 		F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
+		F7A34C7B242AADF7A4FA750B /* ForkSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */; };
 		FEDA0212F8DF7B00D9D4B9ED /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -631,6 +634,7 @@
 		1690F8DE128B31DEF327B7AE /* SentryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryHelper.swift; sourceTree = "<group>"; };
 		1985A7A2814D3A45F2314A67 /* Pods-Core-vpncore-macosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1C6698E4F6F75C8FEB2FE3A3 /* Pods-Core-vpncore-macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.release.xcconfig"; sourceTree = "<group>"; };
+		1FF46E08575622A159ABB005 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
 		251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Extensions.swift"; sourceTree = "<group>"; };
 		3188A2F56FE0184CB2A391D4 /* Pods-Core-vpncore-ios.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-ios.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-ios/Pods-Core-vpncore-ios.staging.xcconfig"; sourceTree = "<group>"; };
 		42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureCellViewModel.swift; sourceTree = "<group>"; };
@@ -707,6 +711,7 @@
 		75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macos-metadata.plist"; sourceTree = "<group>"; };
 		75E96E5ECA25882D1AF0C240 /* LogHandler+Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogHandler+Metadata.swift"; sourceTree = "<group>"; };
 		7FA60AD5A3ABB7BED5473A5D /* ConsoleLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogFormatter.swift; sourceTree = "<group>"; };
+		8380898B6C5E5AB04D1E71E7 /* ForkSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkSessionRequest.swift; sourceTree = "<group>"; };
 		86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macosTests-metadata.plist"; sourceTree = "<group>"; };
 		930A01A257410DBC7881F187 /* FileLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogFormatter.swift; sourceTree = "<group>"; };
 		95C1A4F6A12C707BAA9F5358 /* Pods-Core-vpncore-macos.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.staging.xcconfig"; sourceTree = "<group>"; };
@@ -735,6 +740,7 @@
 		C39EE8D2272FA13F008DAC54 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = Localization/tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C39EE8D3272FA13F008DAC54 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoHHostsParsingTests.swift; sourceTree = "<group>"; };
+		CA9BE9EE985B9C26AD94B7AA /* ForkSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkSessionResponse.swift; sourceTree = "<group>"; };
 		CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLArray+Extension.swift"; sourceTree = "<group>"; };
 		D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PropertiesManager+Log.swift"; sourceTree = "<group>"; };
 		D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimer.swift; sourceTree = "<group>"; };
@@ -1157,6 +1163,22 @@
 				4CF40BA12833C0F300C3C501 /* WireguardProviderMessage.swift */,
 			);
 			path = ProviderMessage;
+			sourceTree = "<group>";
+		};
+		502EFD3F0040E7F0DD694DAC /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				CA9BE9EE985B9C26AD94B7AA /* ForkSessionResponse.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		B22826C86DC21FC4E16EA1EF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				8380898B6C5E5AB04D1E71E7 /* ForkSessionRequest.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		C13CF157E79D07C8924BAB1F /* Reports */ = {
@@ -1588,6 +1610,7 @@
 				4243631E26555D590027EAEE /* SessionsResponse.swift */,
 				F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */,
 				C13CF157E79D07C8924BAB1F /* Reports */,
+				502EFD3F0040E7F0DD694DAC /* Auth */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -1610,6 +1633,7 @@
 				F330F00A27FC811700C3AA33 /* Payment */,
 				F36ECB482610A7EE0089B898 /* VPN */,
 				F30B9CDA2626F6F40094C65E /* VpnAuth */,
+				B22826C86DC21FC4E16EA1EF /* Auth */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1654,6 +1678,7 @@
 				F3B225B7281FCFE9008404E4 /* SessionService.swift */,
 				4242B06C2465A48B0042145A /* VpnApiService.swift */,
 				F31321A625E3AA7A006F414F /* DoH.swift */,
+				1FF46E08575622A159ABB005 /* SessionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2576,7 +2601,6 @@
 				4242B0992465A4E60042145A /* TrustKitHelper.swift in Sources */,
 				E1B5F63B21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
-				D5906F1D22D46469001BC074 /* AttachmentRowViewModel.swift in Sources */,
 				F3B225B1281FCCD3008404E4 /* ForkSessionRequest.swift in Sources */,
 				F3E5787127CCCE91000E48E3 /* AvailableDomainResponse.swift in Sources */,
 				F389189126C3E55A006214A8 /* SmartProtocolConfig.swift in Sources */,
@@ -2790,6 +2814,9 @@
 				E9607000283B635800983E3B /* LogContentProvider.swift in Sources */,
 				403D438B4B6E524D1808DD5D /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
 				9499B57E16D12D1C10014635 /* VPNConnectionFeatures.swift in Sources */,
+				F7A34C7B242AADF7A4FA750B /* ForkSessionRequest.swift in Sources */,
+				0758C14C734BC9DA0EC26C26 /* SessionService.swift in Sources */,
+				97B54C05ED0E25AEFFE4D970 /* ForkSessionResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
