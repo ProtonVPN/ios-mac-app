@@ -161,7 +161,7 @@ extension URLRequest {
         if let body = httpBody {
             try addToRequest("Content-Length: \(body.count)\r\n\r\n")
             request.append(body)
-        }else {
+        } else {
             try addToRequest("\r\n")
         }
 

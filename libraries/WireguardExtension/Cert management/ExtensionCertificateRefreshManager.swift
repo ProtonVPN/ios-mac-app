@@ -14,15 +14,15 @@ import NetworkExtension
 final class ExtensionCertificateRefreshManager {
 
     /// Check certificate every this number of seconds
-    private var checkInterval: TimeInterval = 2 * 60
+    private let checkInterval: TimeInterval = 2 * 60
 
     /// Certificate will be refreshed this number of seconds earlier than requested to lessen the possibility of refreshing it by both app and extension.
     /// Its better for this time to be greater than value of `checkInterval`, so check happens at least once during this period.
-    private var refreshEarlierBy: TimeInterval = -3 * 60
+    private let refreshEarlierBy: TimeInterval = -3 * 60
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
-    private var workQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
+    private let workQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
 
     init(storage: Storage, connectionFactory: ConnectionSessionFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
@@ -85,7 +85,7 @@ final class ExtensionCertificateRefreshManager {
     // MARK: - Certificate
 
     private var certificateRefreshStarted: Date? // Using date instead of boolean flag to be able to reset it after the timeout passes
-    private var certificateRefreshTimeout: TimeInterval = 3 * 60
+    private let certificateRefreshTimeout: TimeInterval = 3 * 60
 
     /// Checks certificate refresh time to make sure we don't refresh them too early and too often.
     @objc private func checkCertificatesNow() {
@@ -94,6 +94,7 @@ final class ExtensionCertificateRefreshManager {
             refreshCertificate()
             return
         }
+
         let nextRefreshTime = certificate.refreshTime.addingTimeInterval(refreshEarlierBy)
         log.info("Current cert is valid until: \(certificate.validUntil); refresh time: \(certificate.refreshTime). Will be refreshed after: \(nextRefreshTime).", category: .userCert)
 
@@ -112,13 +113,14 @@ final class ExtensionCertificateRefreshManager {
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        if let certificateRefreshStarted = certificateRefreshStarted {
-            if certificateRefreshStarted.timeIntervalSinceNow < certificateRefreshTimeout {
-                log.debug("Certificate refresh is in progress. Skipping.", category: .userCert, event: .refreshError, metadata: ["certificateRefreshStarted": "\(certificateRefreshStarted)"])
+        if let certificateRefreshStartedAt = certificateRefreshStarted {
+            if certificateRefreshStartedAt.timeIntervalSinceNow < certificateRefreshTimeout {
+                log.debug("Certificate refresh is in progress. Skipping.", category: .userCert, event: .refreshError, metadata: ["certificateRefreshStarted": "\(certificateRefreshStartedAt)"])
                 return
             }
+
             log.debug("Certificate refresh took too long. Will reset the flag and continue with certificate refresh.", category: .userCert, event: .refreshError)
-            self.certificateRefreshStarted = nil
+            certificateRefreshStarted = nil
         }
 
         guard let currentKeys = vpnAuthenticationStorage.getStoredKeys() else {
@@ -126,7 +128,7 @@ final class ExtensionCertificateRefreshManager {
             return
         }
 
-        self.certificateRefreshStarted = Date()
+        certificateRefreshStarted = Date()
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
         apiService.refreshCertificate(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
             switch result {
