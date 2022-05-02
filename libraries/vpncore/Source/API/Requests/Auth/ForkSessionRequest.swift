@@ -23,10 +23,16 @@ import ProtonCore_Networking
 final class ForkSessionRequest: Request {
     let clientId: String
     let independent: Bool
+    let timeout: TimeInterval
 
-    init(clientId: String, independent: Bool) {
+    init(clientId: String, independent: Bool, timeout: TimeInterval) {
         self.clientId = clientId
         self.independent = independent
+        self.timeout = timeout
+    }
+
+    var nonDefaultTimeout: TimeInterval? {
+        return timeout
     }
 
     var path: String {
