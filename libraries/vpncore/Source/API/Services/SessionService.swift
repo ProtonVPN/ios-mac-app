@@ -23,7 +23,7 @@ public protocol SessionServiceFactory {
 }
 
 public protocol SessionService {
-    func getSelector(completion: @escaping (Result<String, Error>) -> Void)
+    func getUpgradePlanSession(completion: @escaping (String) -> Void)
 }
 
 public final class SessionServiceImplementation: SessionService {
@@ -33,8 +33,22 @@ public final class SessionServiceImplementation: SessionService {
         self.networking = networking
     }
 
-    public func getSelector(completion: @escaping (Result<String, Error>) -> Void) {
-        let request = ForkSessionRequest(clientId: "web-account-lite", independent: false)
+    public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
+        let accounHost = networking.apiService.doh.accountHost
+
+        getSelector(timeout: 3) { result in
+            switch result {
+            case let .success(selector):
+                completion("\(accounHost)/lite?action=subscribe-account#selector=\(selector)")
+            case let .failure(error):
+                log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
+                completion("\(accounHost)/dashboard")
+            }
+        }
+    }
+
+    private func getSelector(timeout: TimeInterval, completion: @escaping (Result<String, Error>) -> Void) {
+        let request = ForkSessionRequest(clientId: "web-account-lite", independent: false, timeout: timeout)
         networking.request(request) { (result: Result<ForkSessionResponse, Error>) in
              switch result {
              case let .success(data):
