@@ -565,6 +565,11 @@
 		F3A3D6C927C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3D6C627C015BE00B474D7 /* NATTypePropertyProviderMock.swift */; };
 		F3A3D6D827C0174C00B474D7 /* NetShieldPropertyProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3D6D727C0174C00B474D7 /* NetShieldPropertyProviderMock.swift */; };
 		F3A3D6DA27C0174C00B474D7 /* NetShieldPropertyProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3D6D727C0174C00B474D7 /* NetShieldPropertyProviderMock.swift */; };
+		F3B225B1281FCCD3008404E4 /* ForkSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */; };
+		F3B225B6281FCE96008404E4 /* ForkSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */; };
+		F3B225B8281FCFE9008404E4 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B7281FCFE9008404E4 /* SessionService.swift */; };
+		F3B225BC281FE0B6008404E4 /* DoHHostsParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B9281FDF90008404E4 /* DoHHostsParsingTests.swift */; };
+		F3B225BD281FE0B7008404E4 /* DoHHostsParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B9281FDF90008404E4 /* DoHHostsParsingTests.swift */; };
 		F3B2AB1527622CCC0081D65F /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2AB1427622CCC0081D65F /* AppInfo.swift */; };
 		F3B2AB1627622CCC0081D65F /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2AB1427622CCC0081D65F /* AppInfo.swift */; };
 		F3C1413127BBF6C9009B881E /* SafeModePropertyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C1413027BBF6C9009B881E /* SafeModePropertyProvider.swift */; };
@@ -990,6 +995,10 @@
 		F3A3D6D727C0174C00B474D7 /* NetShieldPropertyProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldPropertyProviderMock.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
+		F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkSessionRequest.swift; sourceTree = "<group>"; };
+		F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForkSessionResponse.swift; sourceTree = "<group>"; };
+		F3B225B7281FCFE9008404E4 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
+		F3B225B9281FDF90008404E4 /* DoHHostsParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoHHostsParsingTests.swift; sourceTree = "<group>"; };
 		F3B2AB1427622CCC0081D65F /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		F3C1413027BBF6C9009B881E /* SafeModePropertyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeModePropertyProvider.swift; sourceTree = "<group>"; };
 		F3E5786D27CCCE4B000E48E3 /* AvailableDomainsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableDomainsRequest.swift; sourceTree = "<group>"; };
@@ -1553,6 +1562,7 @@
 		F36ECB3A2610A7860089B898 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				F3B225B2281FCDE1008404E4 /* Auth */,
 				F330F01127FC820D00C3AA33 /* Payments */,
 				42370604262DA21300A920CF /* VPN */,
 				F36ECB3F2610A78F0089B898 /* Core */,
@@ -1576,6 +1586,7 @@
 		F36ECB402610A7A00089B898 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				F3B225AD281FCC25008404E4 /* Auth */,
 				F36ECB442610A7BF0089B898 /* Core */,
 				F330F00A27FC811700C3AA33 /* Payment */,
 				F36ECB482610A7EE0089B898 /* VPN */,
@@ -1621,6 +1632,7 @@
 				D5DCCABF252B4BAF004CB353 /* CoreApiService.swift */,
 				4242B06D2465A48B0042145A /* ReportsApiService.swift */,
 				F330F00E27FC814400C3AA33 /* PaymentsApiService.swift */,
+				F3B225B7281FCFE9008404E4 /* SessionService.swift */,
 				4242B06C2465A48B0042145A /* VpnApiService.swift */,
 				F31321A625E3AA7A006F414F /* DoH.swift */,
 			);
@@ -2051,6 +2063,22 @@
 				D5BCDC9425303E56004BAEE8 /* AnnouncementManager.swift */,
 			);
 			path = Announcements;
+			sourceTree = "<group>";
+		};
+		F3B225AD281FCC25008404E4 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		F3B225B2281FCDE1008404E4 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2528,6 +2556,8 @@
 				4242B0992465A4E60042145A /* TrustKitHelper.swift in Sources */,
 				E1B5F63B21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
+				D5906F1D22D46469001BC074 /* AttachmentRowViewModel.swift in Sources */,
+				F3B225B1281FCCD3008404E4 /* ForkSessionRequest.swift in Sources */,
 				F3E5787127CCCE91000E48E3 /* AvailableDomainResponse.swift in Sources */,
 				F389189126C3E55A006214A8 /* SmartProtocolConfig.swift in Sources */,
 				F30B9CF3262705B50094C65E /* VpnAuthenticationMock.swift in Sources */,
@@ -2651,6 +2681,7 @@
 				D5D2944F25A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3A3D6C727C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */,
 				F30B9CDC2626F7000094C65E /* CertificateRequest.swift in Sources */,
+				F3B225B8281FCFE9008404E4 /* SessionService.swift in Sources */,
 				4242B0382465A41A0042145A /* VPNClientConfigRequest.swift in Sources */,
 				E9606FFD283B62BE00983E3B /* AppLogContent.swift in Sources */,
 				E976FB2B2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */,
@@ -2721,6 +2752,7 @@
 				2B08815511366A3226FB58B2 /* URLArray+Extension.swift in Sources */,
 				30286CAD085C66549A6EEBEF /* LogHandler+Metadata.swift in Sources */,
 				248FB9E2C6B4BCFEB0B350E5 /* Optional+stringForLog.swift in Sources */,
+				F3B225B6281FCE96008404E4 /* ForkSessionResponse.swift in Sources */,
 				E51C6079AB893075B8713F74 /* Logger+Categories.swift in Sources */,
 				AB57945EC650CD0E34161E65 /* Logger+Callers.swift in Sources */,
 				F119A8ECC9C89EA82B01A696 /* Level+Print.swift in Sources */,
