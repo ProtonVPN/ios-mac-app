@@ -30,15 +30,17 @@ final class AccountViewModel {
     private(set) var accountPlan: AccountPlan?
 
     var canUsePromo: Bool {
-        return (try? vpnKeychain.fetchCached())?.canUsePromoCode ?? false
+        return propertiesManager.featureFlags.promoCode && (try? vpnKeychain.fetchCached())?.canUsePromoCode ?? false
     }
 
     private let vpnKeychain: VpnKeychainProtocol
+    private let propertiesManager: PropertiesManagerProtocol
 
     var reloadNeeded: (() -> Void)?
     
-    init(vpnKeychain: VpnKeychainProtocol) {
+    init(vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol) {
         self.vpnKeychain = vpnKeychain
+        self.propertiesManager = propertiesManager
 
         username = LocalizedString.unavailable
         accountType = LocalizedString.unavailable
