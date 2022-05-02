@@ -222,6 +222,8 @@
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
 		E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */; };
+		E5EB08C9281FDF4800F29B20 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB08C7281FDF4800F29B20 /* LoadingView.swift */; };
+		E5EB08CA281FDF4800F29B20 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C8281FDF4800F29B20 /* LoadingView.xib */; };
 		E5F1112C27CE184A007DEC0D /* SettingsTickboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */; };
 		E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */; };
 		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
@@ -839,6 +841,8 @@
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
 		E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TwoFactorView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.swift; sourceTree = "<group>"; };
+		E5EB08C7281FDF4800F29B20 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		E5EB08C8281FDF4800F29B20 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
 		E5FFC8992816AEFC00E355DA /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../macos/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
@@ -1979,6 +1983,8 @@
 				E1454CEC206FC6A900E6D396 /* HelpPopover.xib */,
 				E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */,
 				E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */,
+				E5EB08C7281FDF4800F29B20 /* LoadingView.swift */,
+				E5EB08C8281FDF4800F29B20 /* LoadingView.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3082,6 +3088,7 @@
 				EE4943EC1F29BE3600CF980F /* Login.xib in Resources */,
 				851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */,
 				BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */,
+				E5EB08CA281FDF4800F29B20 /* LoadingView.xib in Resources */,
 				62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */,
 				4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */,
 			);
@@ -3651,6 +3658,7 @@
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
+				E5EB08C9281FDF4800F29B20 /* LoadingView.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
 				F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */,

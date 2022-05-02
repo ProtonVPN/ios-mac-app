@@ -10,9 +10,6 @@
             <connections>
                 <outlet property="createAccountButton" destination="sIO-81-jPa" id="7JO-Uk-siV"/>
                 <outlet property="helpLink" destination="Ara-sw-83l" id="qcA-FT-bJQ"/>
-                <outlet property="loadingLabel" destination="NOz-Sf-FlH" id="Eto-PR-mnF"/>
-                <outlet property="loadingSymbol" destination="abE-ig-b2r" id="f6z-B9-fRf"/>
-                <outlet property="loadingView" destination="u4S-T4-Dh2" id="cQH-gc-lCO"/>
                 <outlet property="loginButton" destination="doA-fK-3JY" id="2p4-B6-fyK"/>
                 <outlet property="logoImage" destination="lMo-f0-lr7" id="OWj-wd-TpX"/>
                 <outlet property="needHelpButton" destination="Mvc-5H-vVI" id="BHA-oa-iTf"/>
@@ -179,31 +176,6 @@
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="8" id="zo0-Z6-KPw"/>
                     </constraints>
                 </customView>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="u4S-T4-Dh2">
-                    <rect key="frame" x="0.0" y="0.0" width="340" height="450"/>
-                    <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NOz-Sf-FlH" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="152" y="100" width="37" height="16"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="fIf-Oa-kdW">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="abE-ig-b2r" customClass="LoadingAnimationView" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="110" y="240" width="120" height="120"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="abE-ig-b2r" secondAttribute="height" multiplier="1:1" id="571-mp-FSK"/>
-                                <constraint firstAttribute="height" constant="120" id="pKC-5b-Tvn"/>
-                            </constraints>
-                        </customView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="NOz-Sf-FlH" secondAttribute="bottom" constant="100" id="5HU-O9-bVK"/>
-                        <constraint firstItem="NOz-Sf-FlH" firstAttribute="centerX" secondItem="u4S-T4-Dh2" secondAttribute="centerX" id="KiU-UB-9XP"/>
-                    </constraints>
-                    <accessibility identifier="loader"/>
-                </customView>
                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="lMo-f0-lr7">
                     <rect key="frame" x="70" y="495" width="200" height="40"/>
                     <constraints>
@@ -213,10 +185,10 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="protonvpn-white-transparent" id="nl5-nA-nZA"/>
                 </imageView>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuR-aC-JB5">
-                    <rect key="frame" x="106" y="438" width="129" height="57"/>
+                    <rect key="frame" x="106" y="479" width="129" height="16"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="R2H-lD-KeK" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="-2" y="21" width="87" height="16"/>
+                            <rect key="frame" x="-2" y="0.0" width="87" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Warning label" id="Eqy-sR-yNP">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -224,7 +196,7 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ara-sw-83l" customClass="PVPNHyperlinkTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="83" y="21" width="46" height="13"/>
+                            <rect key="frame" x="83" y="0.0" width="46" height="13"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="13" id="P70-l9-e1L"/>
                             </constraints>
@@ -249,22 +221,15 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="u4S-T4-Dh2" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="5Ob-0B-XeH"/>
-                <constraint firstAttribute="bottom" secondItem="u4S-T4-Dh2" secondAttribute="bottom" id="76O-HL-E8O"/>
-                <constraint firstItem="u4S-T4-Dh2" firstAttribute="top" secondItem="JuR-aC-JB5" secondAttribute="bottom" constant="-12" id="7ws-Dt-te4"/>
                 <constraint firstItem="ehd-hP-OCf" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="APF-bK-TFy"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="top" secondItem="lMo-f0-lr7" secondAttribute="bottom" id="KRd-B6-aNm"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="QBq-BK-5qx"/>
-                <constraint firstAttribute="trailing" secondItem="u4S-T4-Dh2" secondAttribute="trailing" id="U6l-XP-eIs"/>
                 <constraint firstAttribute="trailing" secondItem="ehd-hP-OCf" secondAttribute="trailing" id="bQh-CJ-5Wn"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="cAe-S7-If1"/>
                 <constraint firstItem="ehd-hP-OCf" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="cHx-pB-Wz8"/>
                 <constraint firstItem="lMo-f0-lr7" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="hSe-Jd-bxV"/>
                 <constraint firstItem="lMo-f0-lr7" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="65" id="m33-4C-ROP"/>
-                <constraint firstItem="abE-ig-b2r" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="pSl-g5-cK8"/>
                 <constraint firstAttribute="bottom" secondItem="ehd-hP-OCf" secondAttribute="bottom" id="r0i-kb-EOs"/>
-                <constraint firstItem="abE-ig-b2r" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="uUk-N7-pHc"/>
-                <constraint firstItem="u4S-T4-Dh2" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="vT8-jf-4yv"/>
             </constraints>
             <point key="canvasLocation" x="140" y="154"/>
         </customView>
