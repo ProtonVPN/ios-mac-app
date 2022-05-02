@@ -75,9 +75,21 @@ final class LoginViewController: NSViewController {
     @IBOutlet private weak var needHelpButton: GreenActionButton!
     
     // MARK: - Loading view
-    @IBOutlet private weak var loadingView: NSView!
-    @IBOutlet private weak var loadingSymbol: LoadingAnimationView!
-    @IBOutlet private weak var loadingLabel: PVPNTextField!
+    private lazy var loadingView: LoadingView = {
+        var nibObjects: NSArray?
+        guard Bundle.main.loadNibNamed("LoadingView", owner: nil, topLevelObjects: &nibObjects),
+              let view = nibObjects?.first(where: { $0 is LoadingView }) as? LoadingView else {
+            fatalError()
+        }
+        self.view.addSubview(view)
+        view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        let topConstraint = view.topAnchor.constraint(equalTo: self.view.topAnchor)
+        topConstraint.constant = 150
+        topConstraint.isActive = true
+        view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        return view
+    }()
 
     @IBOutlet private weak var reachabilityCheckIndicator: NSProgressIndicator!
     
@@ -101,7 +113,7 @@ final class LoginViewController: NSViewController {
     }
     
     deinit {
-        loadingSymbol.animate(false)
+        loadingView.animate(false)
     }
     
     override func viewDidLoad() {
@@ -124,13 +136,6 @@ final class LoginViewController: NSViewController {
     
     // MARK: - Private functions
     private func setupLoadingView() {
-        loadingView.isHidden = true
-        
-        let font = NSFont.systemFont(ofSize: 18)
-        let fontManager = NSFontManager()
-        let italicizedFont = fontManager.convert(font, toHaveTrait: [.italicFontMask])
-        loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.attributed(withColor: .protonWhite(), font: italicizedFont)
-
         reachabilityCheckIndicator.set(tintColor: NSColor.protonGreen())
     }
 
@@ -260,8 +265,7 @@ final class LoginViewController: NSViewController {
         onboardingView.isHidden = true
         twoFactorView.isHidden = false
 
-        loadingView.isHidden = true
-        loadingSymbol.animate(false)
+        loadingView.animate(false)
     }
     
     private func presentLoadingScreen() {
@@ -269,9 +273,8 @@ final class LoginViewController: NSViewController {
         helpLink.isHidden = true
         onboardingView.isHidden = true
         twoFactorView.isHidden = true
-        
-        loadingView.isHidden = false
-        loadingSymbol.animate(true)
+
+        loadingView.animate(true)
     }
     
     private func handleLoginFailure(_ errorMessage: String?) {
@@ -296,8 +299,7 @@ final class LoginViewController: NSViewController {
         _ = usernameTextField.becomeFirstResponder()
         onboardingView.isHidden = false
         twoFactorView.isHidden = true
-        loadingView.isHidden = true
-        loadingSymbol.animate(false)
+        loadingView.animate(false)
     }
     
     @objc private func keychainHelpAction() {
