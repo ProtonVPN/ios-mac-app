@@ -1,7 +1,7 @@
 //
-//  Created on 2021-11-19.
+//  Created on 2022-05-03.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -19,23 +19,20 @@
 import Foundation
 import Logging
 
-public class FileLogFormatter: PMLogFormatter {
-    
-    internal let dateFormatter = ISO8601DateFormatter()
+public class OSLogFormatter: PMLogFormatter {
+
     private let jsonEncoder = JSONEncoder()
 
     public init() {
-        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     }
-    
+
     public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {// swiftlint:disable:this function_parameter_count
-        let dateTime = dateFormatter.string(from: date)
         let (category, event, meta) = extract(metadata: metadata)
         var metaString = ""
         if !meta.isEmpty, let metaJsonData = try? jsonEncoder.encode(meta) {
             metaString = String(data: metaJsonData, encoding: .utf8) ?? ""
         }
-        return "\(dateTime) | \(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
+        return "\(level.emoji) \(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
-    
+
 }

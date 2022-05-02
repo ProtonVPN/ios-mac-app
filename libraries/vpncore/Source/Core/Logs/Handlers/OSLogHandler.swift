@@ -26,7 +26,7 @@ public struct OSLogHandler: LogHandler {
     public var logLevel: Logging.Logger.Level = .trace
     public var metadata = Logging.Logger.Metadata()
 
-    public init(formatter: PMLogFormatter = ConsoleLogFormatter()) {
+    public init(formatter: PMLogFormatter = OSLogFormatter()) {
         self.formatter = formatter
     }
 
