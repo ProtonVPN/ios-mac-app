@@ -55,7 +55,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
         #if FREQUENT_AUTH_CERT_REFRESH
-        CertificateConstants.certificateDuration = "15 minutes"
+        CertificateConstants.certificateDuration = "30 minutes"
         #endif
 
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly" : "app"))

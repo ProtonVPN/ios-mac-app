@@ -83,7 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func setupDebugHelpers() {
         #if FREQUENT_AUTH_CERT_REFRESH
-        CertificateConstants.certificateDuration = "15 minutes"
+        CertificateConstants.certificateDuration = "30 minutes"
         #endif
     }
     
