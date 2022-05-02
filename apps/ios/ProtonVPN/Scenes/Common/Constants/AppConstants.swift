@@ -23,14 +23,16 @@
 import UIKit
 
 class AppConstants {
+
+    static var appBundleId: String = (Bundle.main.bundleIdentifier ?? "ch.protonmail.vpn").asMainAppBundleIdentifier
     
     struct AppGroups {
         static let main = "group.ch.protonmail.vpn"
     }
     
     struct NetworkExtensions {
-        static let openVpn = "ch.protonmail.vpn.OpenVPN-Extension"
-        static let wireguard = "ch.protonmail.vpn.WireGuardiOS-Extension"
+        static let openVpn = "\(appBundleId).OpenVPN-Extension"
+        static let wireguard = "\(appBundleId).WireGuardiOS-Extension"
     }
     
     struct Time {
@@ -51,5 +53,15 @@ class AppConstants {
     
     struct Filenames {
         static let appLogFilename = "ProtonVPN.log"
+    }
+}
+
+extension String {
+    var asMainAppBundleIdentifier: String {
+        var result = self.replacingOccurrences(of: ".widget", with: "")
+        result = result.replacingOccurrences(of: ".Siri-Shortcut-Handler", with: "")
+        result = result.replacingOccurrences(of: ".OpenVPN-Extension", with: "")
+        result = result.replacingOccurrences(of: ".WireGuardiOS-Extension", with: "")
+        return result
     }
 }
