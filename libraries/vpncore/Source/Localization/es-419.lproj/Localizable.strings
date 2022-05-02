@@ -1019,7 +1019,7 @@
 "_need_help" = "¿Necesita ayuda?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Conectar de todos modos";
+"_neks_t2_connect" = "Activar de todos modos";
 
 /* (No Comment) */
 "_neks_t2_description" = "El uso de interruptor de apagado es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Aplicar";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Autenticar";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "El cupón ha sido aplicado con éxito.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "Comience a usar ProtonVPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Método de inicio de sesión inválido. Contacte con soporte.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "El sitio web de ProtonVPN podría estar temporalmente inaccesible debido a restricciones de red. Use la aplicación móvil para crear una cuenta nueva de Proton.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Código de recuperación";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Autenticación de dos factores";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Código de dos factores";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Usar cupón";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Usar código de recuperación";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Usar código de dos factores";
 

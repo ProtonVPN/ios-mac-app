@@ -23,7 +23,7 @@
 "search_countries_sample" = "Suíça, Estados Unidos, Itália...";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Please try a different keyword";
+"search_no_results_subtitle" = "Tente uma palavra chave diferente";
 
 /* Title shown when nothing is found in search */
 "search_no_results_title" = "Nenhum resultado encontrado";
@@ -38,10 +38,10 @@
 "search_recent_clear_continue" = "Continuar";
 
 /* Title for the alert asking for confirmation before deleting recent searches */
-"search_recent_clear_title" = "Your search history will be lost. Continue?";
+"search_recent_clear_title" = "Seu histórico de pesquisa será perdido. Continuar?";
 
 /* Header for the recent searches section in search */
-"search_recent_header" = "Recently viewed";
+"search_recent_header" = "Visto recentemente";
 
 /* Section header in search */
 "search_results_cities" = "Cidades";

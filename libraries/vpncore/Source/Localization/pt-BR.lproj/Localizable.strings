@@ -944,10 +944,10 @@
 "_menu_window" = "Janela";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Enable Moderate NAT";
+"_moderate_nat_change_title" = "Ativar NAT moderado";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Enable Moderate NAT";
+"_moderate_nat_enable_title" = "Ativar NAT moderado";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
 "_moderate_nat_explanation" = "NAT moderado desativa a aleatoriedade do seu mapeamento de endereço. Isso pode reduzir ligeiramente sua segurança, mas permite que aplicações peer-to-peer como jogos online estabeleçam conexões diretas.\nSaiba mais";
@@ -1019,7 +1019,7 @@
 "_need_help" = "Precisa de ajuda?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connect Anyway";
+"_neks_t2_connect" = "Ativar sempre";
 
 /* (No Comment) */
 "_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
@@ -1691,7 +1691,7 @@
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
 
 /* (No Comment) */
-"_sysex_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
+"_sysex_settings_description" = "ProtonVPN precisa carregar uma Extensão do Sistema para impulsionar o Smart Protocol, OpenVPN e o WireGuard.";
 
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_title" = "Extensão do sistema necessária";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Aplicar";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Autenticar";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Cupom aplicado com sucesso.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "Iniciar usando o ProtonVPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Invalid login method. Please contact support.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "The ProtonVPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Código de recuperação";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Autenticação de dois fatores";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Código de dois fatores";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Usar cupom";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Usar código de recuperação";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Usar código de autenticação de dois fatores";
 

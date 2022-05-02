@@ -23,7 +23,7 @@
 "_br_3_button_sending" = "Wird gesendet";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "E-Mail";
+"_br_3_email" = "E-Mail-Adresse";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Ein Protokoll ist eine Art von Datei, die uns zeigt, welche Aktionen du durchgeführt hast, die zu einem Fehler geführt haben. Wir verwenden sie nur, um unseren Ingenieuren bei der Fehlerbehebung zu helfen.";

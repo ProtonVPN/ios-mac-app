@@ -62,7 +62,7 @@
 "_all_servers_in_profile_under_maintenance" = "Server profil dalam pemeliharaan";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Seluruh server dalam pemeliharaan. Secara umum berarti ada kesulitan teknis di pihak ProtonVPN, atau jaringan Anda sedang terbatas.";
+"_all_servers_under_maintenance" = "Seluruh server sedang berada dalam pemeliharaan. Pada umumnya, hal ini menandakan bahwa ProtonVPN sedang mengalami kesalahan teknis atau Anda sedang berada pada jaringan yang terbatas.";
 
 /* (No Comment) */
 "_allow" = "Izinkan";
@@ -230,7 +230,7 @@
 "_create_profile" = "Buat Profil";
 
 /* MacOS: profile creation cancel alert text */
-"_current_selection_will_be_lost" = "Dengan melanjutkan, pilihan-pilihan yang ada saat ini tidak akan tersimpan. Apakah Anda ingin melanjutkan?";
+"_current_selection_will_be_lost" = "Dengan melanjutkan, pilihan saat ini tidak akan tersimpan. Apakah Anda ingin melanjutkan?";
 
 /* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Setuju & Lanjutkan";
@@ -626,7 +626,7 @@
 "_forgot_username" = "Lupa Nama Pengguna";
 
 /* Used instead of price for free plans. */
-"_free" = "Free";
+"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 Negara";
@@ -1019,7 +1019,7 @@
 "_need_help" = "Butuh Bantuan?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Tetap Hubungkan";
+"_neks_t2_connect" = "Aktifkan Saja";
 
 /* (No Comment) */
 "_neks_t2_description" = "Kill Switch tidak dapat digunakan secara stabil pada perangkat ini.\n\nPerangkat Anda memiliki Chip Keamanan T2, yang dapat memicu masalah stabilitas pada sistem Anda apabila fungsionalitas Kill Switch yang dimiliki oleh macOS digunakan oleh Proton VPN.";
@@ -1424,7 +1424,7 @@
 "_report_placeholder_email" = "Email kontak";
 
 /* Bug report: Placeholder for text form field */
-"_report_placeholder_message" = "Pesan anda...";
+"_report_placeholder_message" = "Pesan Anda...";
 
 /* iOS bug report: Title before report bug form */
 "_report_report" = "Laporkan pesan";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Terapkan";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Otentikasi";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Kupon telah berhasil digunakan.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "Mulai gunakan ProtonVPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Metode login tidak valid. Mohon hubungi layanan dukungan.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Situs web ProtonVPN terindikasi sedang tidak dapat dijangkau karena batasan jaringan. Mohon gunakan aplikasi mobile kami untuk membuat akun Proton yang baru.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Kode pemulihan";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Otentikasi dua-faktor";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Kode dua faktor";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Gunakan kupon";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Gunakan kode pemulihan";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Gunakan kode dua faktor";
 

@@ -24,9 +24,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>of %d</string>
+			<string>de %d</string>
 			<key>other</key>
-			<string>of %d</string>
+			<string>de %d</string>
 		</dict>
 	</dict>
 </dict>

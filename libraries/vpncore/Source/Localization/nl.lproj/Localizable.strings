@@ -626,7 +626,7 @@
 "_forgot_username" = "Gebruikersnaam vergeten";
 
 /* Used instead of price for free plans. */
-"_free" = "Free";
+"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 Landen";
@@ -911,7 +911,7 @@
 "_maybe_later" = "Misschien Later";
 
 /* Value of speed in _speed */
-"_medium" = "Gemiddeld";
+"_medium" = "Medium";
 
 /* Main mac app menu item */
 "_menu_about" = "Over ProtonVPN";
@@ -1019,7 +1019,7 @@
 "_need_help" = "Hulp nodig?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Toch Verbinden";
+"_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
 "_neks_t2_description" = "Het gebruik van Kill Switch is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de Kill Switch-functionaliteit van macOS gebruikt wordt door ProtonVPN.";
@@ -1172,7 +1172,7 @@
 "_performance_load_low" = "Laag";
 
 /* (No Comment) */
-"_performance_load_medium" = "Gemiddeld";
+"_performance_load_medium" = "Medium";
 
 /* (No Comment) */
 "_performance_title" = "Prestaties";
@@ -1980,7 +1980,7 @@
 "_update_required_support" = "Neem contact op met ondersteuning";
 
 /* (No Comment) */
-"_update_required_update" = "Update";
+"_update_required_update" = "Bijwerken";
 
 /* Button in many places in both iOS and MacOS apps */
 "_upgrade" = "Upgraden";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Pas toe";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Authenticeren";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Kortingscode werd succesvol toegepast.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "Aan de slag met ProtonVPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Ingeldig loginmethode. Contacteer ondersteuning.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "De ProtonVPN website zou tijdelijk onbereikbaar kunnen zijn wegens netwerkbeperkingen. Gebruik de mobiele app om een nieuw Proton-account aan te maken.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Herstelcode";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Tweestapsverificatie";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Tweestapsverificatie code";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Gebruik kortingscode";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Herstelcode gebruiken";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Tweestapsverificatiecode gebruiken";
 

@@ -23,7 +23,7 @@
 "_br_3_button_sending" = "Gönderiliyor";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "E-posta adresi";
+"_br_3_email" = "E-posta";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Bir günlük, soruna neden olan olayları görmemizi sağlayan bir dosya türüdür. Bunları yalnızca mühendislerimizin hataları düzeltmesine yardımcı olmaları için kullanacağız.";

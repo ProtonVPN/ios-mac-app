@@ -23,7 +23,7 @@
 "_br_3_button_sending" = "Envoi en cours";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "Adresse e-mail";
+"_br_3_email" = "E-mail";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Un journal est un type de fichier qui nous montre les actions que vous avez effectuées et qui ont conduit à une erreur. Nous ne les utiliserons que pour aider nos ingénieurs à corriger des bugs.";
@@ -56,7 +56,7 @@
 "_br_window_title" = "Signaler un problème";
 
 /* Action button of the view nudging users to update before filling Bug Report */
-"_update_view_button" = "Ajuster";
+"_update_view_button" = "Mettre à jour";
 
 /* Description text of the view nudging users to update before filling Bug Report */
 "_update_view_description" = "Vous avez plus de chance d'avoir des problèmes sur les anciennes versions de ProtonVPN.";

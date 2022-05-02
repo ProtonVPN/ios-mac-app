@@ -626,7 +626,7 @@
 "_forgot_username" = "Nome utente dimenticato";
 
 /* Used instead of price for free plans. */
-"_free" = "Free";
+"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 paesi";
@@ -674,7 +674,7 @@
 "_hide" = "NASCONDI";
 
 /* Value of speed in _speed */
-"_high" = "Alta";
+"_high" = "Alto";
 
 /* Value of speed in _speed */
 "_highest" = "Il più alto";
@@ -911,7 +911,7 @@
 "_maybe_later" = "Forse più tardi";
 
 /* Value of speed in _speed */
-"_medium" = "Media";
+"_medium" = "Medio";
 
 /* Main mac app menu item */
 "_menu_about" = "Informazioni su ProtonVPN";
@@ -1019,7 +1019,7 @@
 "_need_help" = "Hai bisogno di aiuto?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Connetti Comunque";
+"_neks_t2_connect" = "Abilita comunque";
 
 /* (No Comment) */
 "_neks_t2_description" = "L'uso di Kill Switch è instabile su questo dispositivo.\n\nIl tuo dispositivo ha un chip di sicurezza T2, che può causare problemi di stabilità del sistema se la funzionalità Kill Switch di macOS viene utilizzata da Proton VPN.";
@@ -1166,13 +1166,13 @@
 "_performance_load_description" = "I server ad alto carico sono più lenti dei server a basso carico.";
 
 /* (No Comment) */
-"_performance_load_high" = "Alta";
+"_performance_load_high" = "Alto";
 
 /* (No Comment) */
 "_performance_load_low" = "Basso";
 
 /* (No Comment) */
-"_performance_load_medium" = "Media";
+"_performance_load_medium" = "Medio";
 
 /* (No Comment) */
 "_performance_title" = "Prestazioni";
@@ -2150,6 +2150,9 @@
 /* Button to apply coupon */
 "apply_coupon" = "Applica";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Autentica";
+
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Il coupon è stato applicato con successo.";
 
@@ -2165,9 +2168,27 @@
 /* (No Comment) */
 "login_summary_button" = "Inizia a usare ProtonVPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Metodo di accesso non valido. Si prega di contattare l'assistenza.";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Il sito Web di ProtonVPN potrebbe essere temporaneamente irraggiungibile a causa di restrizioni di rete. Utilizza l'app mobile per creare un nuovo account Proton.";
 
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Codice di recupero";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Autenticazione a due fattori";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Codice a due fattori";
+
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Utilizza coupon";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Utilizza un codice di recupero";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Utilizza autenticazione in due passaggi";
 
