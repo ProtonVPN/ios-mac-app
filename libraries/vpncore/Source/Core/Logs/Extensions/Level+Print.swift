@@ -37,4 +37,23 @@ extension Logging.Logger.Level {
             return "💥"
         }
     }
+
+    var stringValue: String {
+        switch self {
+        case .trace:
+            return "TRACE"
+        case .debug:
+            return "DEBUG"
+        case .info:
+            return "INFO "
+        case .notice:
+            return "NOTIC"
+        case .warning:
+            return "WARN "
+        case .error:
+            return "ERROR"
+        case .critical:
+            return "FATAL"
+        }
+    }
 }
