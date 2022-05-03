@@ -27,9 +27,16 @@ public struct NewBrandModalIcons: NewBrandIcons {
     public let mailMain: Image
 
     public init() {
-        vpnMain = IconProvider.vpnMain
-        driveMain = IconProvider.driveMain
-        calendarMain = IconProvider.calendarMain
-        mailMain = IconProvider.mailMain
+        #if os(macOS)
+        vpnMain = Bundle.vpnCore.image(forResource: Image.Name("VPN app logo"))!
+        driveMain = Bundle.vpnCore.image(forResource: Image.Name("Drive app logo"))!
+        calendarMain = Bundle.vpnCore.image(forResource: Image.Name("Calendar app logo"))!
+        mailMain = Bundle.vpnCore.image(forResource: Image.Name("Mail app logo"))!
+        #elseif os(iOS)
+        vpnMain = UIImage(named: "VPN app logo", in: Bundle.vpnCore, compatibleWith: nil)!
+        driveMain = UIImage(named: "Drive app logo", in: Bundle.vpnCore, compatibleWith: nil)!
+        calendarMain = UIImage(named: "Calendar app logo", in: Bundle.vpnCore, compatibleWith: nil)!
+        mailMain = UIImage(named: "Mail app logo", in: Bundle.vpnCore, compatibleWith: nil)!
+        #endif
     }
 }

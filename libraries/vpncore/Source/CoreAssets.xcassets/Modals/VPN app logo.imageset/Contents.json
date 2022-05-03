@@ -10,7 +10,7 @@
     "version" : 1
   },
   "properties" : {
-    "preserves-vector-representation" : true,
-    "template-rendering-intent" : "original"
+    "compression-type" : "lossless",
+    "preserves-vector-representation" : true
   }
 }
