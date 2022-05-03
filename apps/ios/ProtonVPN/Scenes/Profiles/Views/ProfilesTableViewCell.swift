@@ -94,8 +94,8 @@ class ProfilesTableViewCell: UITableViewCell {
     private func renderConnectButton() {
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)
-            let attribbutes: [NSAttributedString.Key: UIFont] = [.font: .systemFont(ofSize: 13)]
-            let attributedText = NSAttributedString(string: text, attributes: attribbutes)
+            let attributes: [NSAttributedString.Key: UIFont] = [.font: .systemFont(ofSize: 13)]
+            let attributedText = NSAttributedString(string: text, attributes: attributes)
             connectButton.setAttributedTitle(attributedText, for: .normal)
             connectButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
             connectButton.layer.cornerRadius = 8

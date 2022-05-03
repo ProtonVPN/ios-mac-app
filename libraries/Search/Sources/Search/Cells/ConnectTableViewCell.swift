@@ -85,8 +85,8 @@ extension ConnectTableViewCellMode {
         case .connect:
             return nil
         case .upgrade(let text):
-            let attribbutes: [NSAttributedString.Key: UIFont] = [.font: .systemFont(ofSize: 13)]
-            return NSAttributedString(string: text, attributes: attribbutes)
+            let attributes: [NSAttributedString.Key: UIFont] = [.font: .systemFont(ofSize: 13)]
+            return NSAttributedString(string: text, attributes: attributes)
         }
     }
 }

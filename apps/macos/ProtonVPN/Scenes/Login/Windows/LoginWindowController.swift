@@ -45,7 +45,7 @@ class LoginWindowController: WindowController {
         window.title = "Proton VPN"
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        window.backgroundColor = .color(.background, .normal)
+        window.backgroundColor = .color(.background)
     }
     
     private func setupControls() {

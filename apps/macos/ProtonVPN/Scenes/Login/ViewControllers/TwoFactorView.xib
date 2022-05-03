@@ -22,10 +22,10 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bdZ-wc-cJB">
-                    <rect key="frame" x="14" y="415" width="36" height="36"/>
+                    <rect key="frame" x="30" y="425" width="16" height="16"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="36" id="8ji-dl-wPl"/>
-                        <constraint firstAttribute="width" constant="36" id="bcq-5o-9Sd"/>
+                        <constraint firstAttribute="width" constant="16" id="WTG-kG-RPb"/>
+                        <constraint firstAttribute="height" constant="16" id="Zaq-uG-ebr"/>
                     </constraints>
                     <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="arrow-left" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="ESL-A5-f0v">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -41,15 +41,19 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ksG-gv-wOB" customClass="LoginButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="105" y="296" width="130" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="URF-H8-sin"/>
-                        <constraint firstAttribute="width" constant="130" id="mUr-7C-YKZ"/>
-                    </constraints>
+                    <rect key="frame" x="151" y="136" width="38" height="16"/>
                     <buttonCell key="cell" type="bevel" title="Login" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="EeH-Wy-iIx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                            <real key="value" value="48"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="verticalPadding">
+                            <real key="value" value="21"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="eJ2-bU-8K2">
                     <rect key="frame" x="30" y="360" width="280" height="1"/>
@@ -61,8 +65,8 @@
                         <constraint firstAttribute="height" constant="1" id="TpX-5C-YXW"/>
                     </constraints>
                 </box>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1d6-YI-AS3" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="111" y="261" width="118" height="20"/>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1d6-YI-AS3" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="111" y="101" width="118" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="Vbk-lX-DhG"/>
                     </constraints>
@@ -82,9 +86,9 @@
                 <constraint firstItem="ksG-gv-wOB" firstAttribute="centerX" secondItem="koe-KL-0cZ" secondAttribute="centerX" id="GJG-IL-GKf"/>
                 <constraint firstAttribute="trailing" secondItem="X4u-LD-CIk" secondAttribute="trailing" constant="30" id="M9l-bz-YPs"/>
                 <constraint firstItem="X4u-LD-CIk" firstAttribute="top" secondItem="r1d-Rv-ZgZ" secondAttribute="bottom" constant="32" id="V2b-b5-GD4"/>
-                <constraint firstItem="ksG-gv-wOB" firstAttribute="top" secondItem="eJ2-bU-8K2" secondAttribute="bottom" constant="24" id="Y9E-2C-Oed"/>
-                <constraint firstItem="bdZ-wc-cJB" firstAttribute="leading" secondItem="koe-KL-0cZ" secondAttribute="leading" constant="14" id="bIg-lO-uwW"/>
+                <constraint firstItem="bdZ-wc-cJB" firstAttribute="leading" secondItem="koe-KL-0cZ" secondAttribute="leading" constant="30" id="bIg-lO-uwW"/>
                 <constraint firstItem="bdZ-wc-cJB" firstAttribute="centerY" secondItem="r1d-Rv-ZgZ" secondAttribute="centerY" id="g04-kX-pzj"/>
+                <constraint firstAttribute="bottom" secondItem="ksG-gv-wOB" secondAttribute="bottom" constant="136" id="lbs-qy-11L"/>
                 <constraint firstAttribute="trailing" secondItem="r1d-Rv-ZgZ" secondAttribute="trailing" constant="40" id="ldE-VU-7ie"/>
                 <constraint firstItem="r1d-Rv-ZgZ" firstAttribute="top" secondItem="koe-KL-0cZ" secondAttribute="top" constant="8" id="pk4-4u-N2E"/>
                 <constraint firstItem="r1d-Rv-ZgZ" firstAttribute="leading" secondItem="koe-KL-0cZ" secondAttribute="leading" constant="40" id="ubr-4Y-kcF"/>

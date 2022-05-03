@@ -18,8 +18,9 @@
 
 import AppKit
 import vpncore
+import ProtonCore_UIFoundations
 
-protocol TwoFactorDelegate: class {
+protocol TwoFactorDelegate: WarningViewDelegate {
     func twoFactorButtonAction(code: String)
     func backAction()
 }
@@ -31,10 +32,33 @@ final class TwoFactorView: NSView {
     @IBOutlet private weak var twoFactorModeButton: InteractiveActionButton!
     @IBOutlet private weak var twoFactorTitle: NSTextField!
     @IBOutlet private weak var backButton: NSButton!
+    private lazy var warningView: WarningView = {
+        var nibObjects: NSArray?
+        guard Bundle.main.loadNibNamed("WarningView", owner: nil, topLevelObjects: &nibObjects),
+              let view = nibObjects?.first(where: { $0 is WarningView }) as? WarningView else {
+            fatalError()
+        }
+        view.helpDelegate = delegate
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        view.leadingAnchor.constraint(equalTo: twoFactorTextField.leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: twoFactorTextField.trailingAnchor).isActive = true
+        let topConstraint = view.topAnchor.constraint(equalTo: twoFactorTextField.bottomAnchor)
+        topConstraint.constant = 42
+        topConstraint.isActive = true
+        view.bottomAnchor.constraint(greaterThanOrEqualTo: twoFactorButton.topAnchor).isActive = true
+        return view
+    }()
 
     private var isRecoveryCodeMode = false
 
     weak var delegate: TwoFactorDelegate?
+
+    var warningMessage: String? {
+        didSet {
+            warningView.message = warningMessage
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -65,6 +89,8 @@ final class TwoFactorView: NSView {
 
         backButton.target = self
         backButton.action = #selector(backAction)
+        backButton.image = IconProvider.arrowLeft
+        backButton.contentTintColor = .color(.text, .weak)
     }
 
     override func becomeFirstResponder() -> Bool {
