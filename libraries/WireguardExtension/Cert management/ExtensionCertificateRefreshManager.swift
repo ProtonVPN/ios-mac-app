@@ -24,9 +24,9 @@ final class ExtensionCertificateRefreshManager {
     private let apiService: ExtensionAPIService
     private let workQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
 
-    init(storage: Storage, connectionFactory: ConnectionSessionFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
+    init(storage: Storage, dataTaskFactory: DataTaskFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
-        self.apiService = ExtensionAPIService(storage: storage, connectionFactory: connectionFactory, keychain: keychain)
+        self.apiService = ExtensionAPIService(storage: storage, dataTaskFactory: dataTaskFactory, keychain: keychain)
     }
     
     func start() {

@@ -19,21 +19,21 @@
 import XCTest
 
 class RequestParsingTests: XCTestCase {
-    func makeHeaders(headers: [String: String]) -> String {
+    static func makeHeaders(headers: [String: String]) -> String {
         // sort header keys for reproducibility between test runs
         headers.keys.sorted().reduce("") { result, key in
             result.appending("\(key): \(headers[key]!)\r\n")
         }
     }
 
-    func makeResponse(preamble: String = "HTTP/1.1 200 OK", headers: [String: String], body: String?) -> Data {
+    static func makeResponse(preamble: String = "HTTP/1.1 200 OK", headers: [String: String], body: String?) -> Data {
         """
         \(preamble)\r
         \(makeHeaders(headers: headers))\(body?.prepending("\r\n") ?? "")
         """.data(using: .utf8)!
     }
 
-    func makeRequest(preamble: String, host: String, headers: [String: String], body: String?) -> Data {
+    static func makeRequest(preamble: String, host: String, headers: [String: String], body: String?) -> Data {
         var body: String? = body
         if body != nil {
             body = body!.prepending("Content-Length: \(body!.count)\r\n\r\n")
@@ -59,7 +59,7 @@ class RequestParsingTests: XCTestCase {
         // test response with body
         do {
             let responseBody = "Response body data"
-            let response = makeResponse(headers: headers, body: responseBody)
+            let response = Self.makeResponse(headers: headers, body: responseBody)
 
             let (httpResponse, body) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
 
@@ -81,7 +81,7 @@ class RequestParsingTests: XCTestCase {
 
         // test response without body
         do {
-            let response = makeResponse(preamble: "HTTP/1.1 420 Enhance Your Calm", headers: headers, body: nil)
+            let response = Self.makeResponse(preamble: "HTTP/1.1 420 Enhance Your Calm", headers: headers, body: nil)
             let (httpResponse, body) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
 
             guard let httpResponse = httpResponse else {
@@ -116,14 +116,35 @@ class RequestParsingTests: XCTestCase {
     func testHTTPErrorResponseParsing() {
         let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
 
-        let data = "HTTP/1.1 400 Bad Request\r\ndate: Mon, 25 Apr 2022 15:20:39 GMT\r\ncache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\nexpires: Fri, 04 May 1984 22:15:00 GMT\r\naccess: application/vnd.protonmail.api+json;apiversion=1\r\nset-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=protonvpn.ch; Path=/; HttpOnly; Secure; Max-Age=7776000\r\nset-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\ncontent-length: 97\r\ncontent-type: application/json\r\ncontent-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\nexpect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\npublic-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\nx-content-type-options: nosniff\r\nx-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\nreferrer-policy: strict-origin-when-cross-origin\r\nx-permitted-cross-domain-policies: none\r\n\r\n{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\nContent-length: 90\r\nCache-Control: no-cache\r\nConnection: close\r\nContent-Type: text/html\r\n\r\n<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n".data(using: .utf8)!
+        let body = "{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\n" +
+                   "Content-length: 90\r\n" +
+                   "Cache-Control: no-cache\r\n" +
+                   "Connection: close\r\n" +
+                   "Content-Type: text/html\r\n" +
+                   "\r\n" +
+                   "<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n"
 
-        let expectedBody = "{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\nContent-length: 90\r\nCache-Control: no-cache\r\nConnection: close\r\nContent-Type: text/html\r\n\r\n<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n".data(using: .utf8)!
+        let data = ("HTTP/1.1 400 Bad Request\r\ndate: Mon, 25 Apr 2022 15:20:39 GMT\r\n" +
+                   "cache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\n" +
+                   "expires: Fri, 04 May 1984 22:15:00 GMT\r\n" +
+                   "access: application/vnd.protonmail.api+json;apiversion=1\r\n" +
+                   "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=protonvpn.ch; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
+                   "set-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\n" +
+                   "content-length: 97\r\n + " +
+                   "content-type: application/json\r\n" +
+                   "content-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\n" +
+                   "expect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
+                   "public-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
+                   "x-content-type-options: nosniff\r\n" +
+                   "x-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\n" +
+                   "referrer-policy: strict-origin-when-cross-origin\r\n" +
+                   "x-permitted-cross-domain-policies: none\r\n" +
+                   "\r\n" + body).data(using: .utf8)!
 
         do {
-            let (response, body) = try HTTPURLResponse.parse(responseFromURL: url, data: data)
+            let (response, responseBody) = try HTTPURLResponse.parse(responseFromURL: url, data: data)
             XCTAssertEqual(response!.statusCode, 400)
-            XCTAssertEqual(body, expectedBody)
+            XCTAssertEqual(responseBody, body.data(using: .utf8)!)
         } catch {
             XCTFail("Shouldn't fail")
         }
@@ -148,7 +169,7 @@ class RequestParsingTests: XCTestCase {
             request.httpBody = requestBody.data(using: .utf8)!
 
             let data = try request.data()
-            let expected = makeRequest(preamble: "POST /vpn HTTP/1.1", host: url.host!, headers: headers, body: requestBody)
+            let expected = Self.makeRequest(preamble: "POST /vpn HTTP/1.1", host: url.host!, headers: headers, body: requestBody)
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
 
@@ -161,7 +182,7 @@ class RequestParsingTests: XCTestCase {
             request.httpMethod = "GET"
 
             let data = try request.data()
-            let expected = makeRequest(preamble: "GET /vpn HTTP/1.1", host: url.host!, headers: headers, body: nil)
+            let expected = Self.makeRequest(preamble: "GET /vpn HTTP/1.1", host: url.host!, headers: headers, body: nil)
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
     }

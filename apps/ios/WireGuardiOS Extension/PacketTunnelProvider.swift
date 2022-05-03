@@ -20,11 +20,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         super.init()
         let storage = Storage()
 
-        let connectionFactory = NEPacketTunnelConnectionSessionFactory(provider: self)
+        let dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self)
         let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
                                                                  storage: storage)
         certificateRefreshManager = ExtensionCertificateRefreshManager(storage: storage,
-                                                                       connectionFactory: connectionFactory,
+                                                                       dataTaskFactory: dataTaskFactory,
                                                                        vpnAuthenticationStorage: vpnAuthenticationStorage,
                                                                        keychain: AuthKeychain())
         setupLogging()
@@ -221,12 +221,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
         let urlRequest = URLRequest(url: url)
-        let connectionFactory = NEPacketTunnelConnectionSessionFactory(provider: self)
-        let connection = connectionFactory.connect(hostname: host, port: "443", useTLS: true)
-        connection.request(urlRequest) { data, response, error in
+        let dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self)
+
+        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             let responseData = data != nil ? String(data:data!, encoding: .utf8) : "nil"
             log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data":"\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
         }
+        task.resume()
     }
 
 #endif

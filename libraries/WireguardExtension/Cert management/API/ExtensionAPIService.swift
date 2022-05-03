@@ -28,9 +28,9 @@ final class ExtensionAPIService {
         refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
     }
 
-    init(storage: Storage, connectionFactory: ConnectionSessionFactory, keychain: AuthKeychainHandle) {
+    init(storage: Storage, dataTaskFactory: DataTaskFactory, keychain: AuthKeychainHandle) {
         self.storage = storage
-        self.connectionFactory = connectionFactory
+        self.dataTaskFactory = dataTaskFactory
         self.keychain = keychain
     }
 
@@ -48,7 +48,7 @@ final class ExtensionAPIService {
     }
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
-    private let connectionFactory: ConnectionSessionFactory
+    private let dataTaskFactory: DataTaskFactory
     private let keychain: AuthKeychainHandle
 
     enum ExtensionAPIServiceError: Error {
@@ -76,19 +76,12 @@ final class ExtensionAPIService {
 
         let certificateRequest = CertificateRefreshRequest(params: params)
         var urlRequest = makeUrlRequest(certificateRequest)
-        guard let url = urlRequest.url, let host = url.host else {
-            log.error("Could not get API endpoint hostname.", category: .api)
-            completionHandler(.failure(ExtensionAPIServiceError.parseError))
-            return
-        }
 
         // Auth Headers
         urlRequest.setValue("Bearer \(authCredentials.accessToken)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
-        let port = url.port ?? 443
-        let session = connectionFactory.connect(hostname: host, port: "\(port)", useTLS: true)
-        session.request(urlRequest) { data, response, error in
+        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             if response?.statusCode == 401 {
                 guard refreshApiTokenIfNeeded else {
                     log.error("Will not refresh API token.", category: .api)
@@ -142,6 +135,7 @@ final class ExtensionAPIService {
                 return
             }
         }
+        task.resume()
     }
 
     private func makeUrlRequest(_ apiRequest: APIRequest) -> URLRequest {
@@ -182,18 +176,11 @@ final class ExtensionAPIService {
         ))
 
         var urlRequest = makeUrlRequest(tokenRequest)
-        guard let url = urlRequest.url, let host = url.host else {
-            log.error("Could not get API endpoint hostname.", category: .api)
-            completionHandler(.failure(ExtensionAPIServiceError.parseError))
-            return
-        }
 
         // Auth Headers (without the auth token)
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
-        let port = url.port ?? 443
-        let connection = connectionFactory.connect(hostname: host, port: "\(port)", useTLS: true)
-        connection.request(urlRequest) { data, response, error in
+        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             guard response?.statusCode == 200, error == nil else {
                 completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
                 return
@@ -215,6 +202,7 @@ final class ExtensionAPIService {
                 completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
             }
         }
+        task.resume()
     }
 
     // MARK: - Mandatory fields for sending to API
