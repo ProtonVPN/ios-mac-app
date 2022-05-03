@@ -23,12 +23,13 @@
 import Cocoa
 import vpncore
 
-class LoginButtonCell: NSButtonCell {
-    
-    override func drawTitle(_ title: NSAttributedString, withFrame frame: NSRect, in controlView: NSView) -> NSRect {
-        return super.drawTitle(isEnabled ? title : attributedTitle, withFrame: frame, in: controlView)
-    }
-}
+// This class was introduces with `1a14cc444` and it prevents the LoginButton from being clickable in the TwoFactor view for some reason.
+// I'm commenting it out for now as it fixes the problem, but I'll keep it here for future reference if it in fact breaks something else.
+// class LoginButtonCell: NSButtonCell {
+//    override func drawTitle(_ title: NSAttributedString, withFrame frame: NSRect, in controlView: NSView) -> NSRect {
+//        return super.drawTitle(isEnabled ? title : attributedTitle, withFrame: frame, in: controlView)
+//    }
+// }
 
 class LoginButton: HoverDetectionButton {
     var displayTitle: String?
@@ -40,7 +41,7 @@ class LoginButton: HoverDetectionButton {
     }
     
     override func awakeFromNib() {
-        cell = LoginButtonCell()
+//        cell = LoginButtonCell()
         super.awakeFromNib()
     }
     
