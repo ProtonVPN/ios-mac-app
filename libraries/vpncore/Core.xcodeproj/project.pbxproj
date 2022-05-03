@@ -495,6 +495,8 @@
 		F3256AC126B98EF4003F073C /* WireguardAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3256ABE26B98EF4003F073C /* WireguardAvailabilityChecker.swift */; };
 		F3256AC426B993C2003F073C /* SmartProtocol+Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */; };
 		F3256AC626B993C2003F073C /* SmartProtocol+Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */; };
+		F327A99A2821763B00848E42 /* Codable+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F327A9992821763B00848E42 /* Codable+Default.swift */; };
+		F327A99B2821763B00848E42 /* Codable+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F327A9992821763B00848E42 /* Codable+Default.swift */; };
 		F330F00C27FC812700C3AA33 /* PromoCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F00B27FC812700C3AA33 /* PromoCodeRequest.swift */; };
 		F330F00D27FC812900C3AA33 /* PromoCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F00B27FC812700C3AA33 /* PromoCodeRequest.swift */; };
 		F330F00F27FC814400C3AA33 /* PaymentsApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330F00E27FC814400C3AA33 /* PaymentsApiService.swift */; };
@@ -937,6 +939,7 @@
 		F3256AB926B98CB3003F073C /* OpenVPNUDPAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNUDPAvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3256ABE26B98EF4003F073C /* WireguardAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardAvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SmartProtocol+Priority.swift"; sourceTree = "<group>"; };
+		F327A9992821763B00848E42 /* Codable+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Default.swift"; sourceTree = "<group>"; };
 		F330F00B27FC812700C3AA33 /* PromoCodeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeRequest.swift; sourceTree = "<group>"; };
 		F330F00E27FC814400C3AA33 /* PaymentsApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiService.swift; sourceTree = "<group>"; };
 		F330F01227FC821B00C3AA33 /* PromoCodeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeResponse.swift; sourceTree = "<group>"; };
@@ -1681,6 +1684,7 @@
 				F7DD6EB6DCFD2331D821683A /* Optional+stringForLog.swift */,
 				4C4D898227BD0BE800548523 /* Array+Extension.swift */,
 				E5FFC89B2816C61500E355DA /* Countries+Extension.swift */,
+				F327A9992821763B00848E42 /* Codable+Default.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2531,6 +2535,7 @@
 				D523F11124B7543C007DB086 /* String+Url.swift in Sources */,
 				F3256AC426B993C2003F073C /* SmartProtocol+Priority.swift in Sources */,
 				F331EA2A2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
+				F327A99A2821763B00848E42 /* Codable+Default.swift in Sources */,
 				E91201FD27BBA7100058BE94 /* FolderLogFilesProvider.swift in Sources */,
 				E1B5F66921B81F8500B558B0 /* Dictionary+Extension.swift in Sources */,
 				E1616BB321C7BCD100F42D79 /* KeychainError.swift in Sources */,
@@ -2922,6 +2927,7 @@
 				E148AE6321C29818007AB65A /* ErrorCodes.swift in Sources */,
 				D5DCCADE252B5C2B004CB353 /* GetApiNotificationsResponse.swift in Sources */,
 				E1B5F64221B6B86200B558B0 /* CoreAppConstants.swift in Sources */,
+				F327A99B2821763B00848E42 /* Codable+Default.swift in Sources */,
 				D5D2948925A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
 				E129C6C822A9101B00D8437E /* ServerStorageMock.swift in Sources */,
