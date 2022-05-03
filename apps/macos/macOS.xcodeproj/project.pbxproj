@@ -226,6 +226,8 @@
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
+		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
+		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
 		E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */; };
@@ -850,6 +852,8 @@
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E565986728200ADA004F2240 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/LoadingView.swift; sourceTree = "<group>"; };
+		E56598692820FECE004F2240 /* WarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = WarningView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.xib; sourceTree = "<group>"; };
+		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
 		E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TwoFactorView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.swift; sourceTree = "<group>"; };
@@ -2020,6 +2024,8 @@
 				E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */,
 				E5EB08C8281FDF4800F29B20 /* LoadingView.xib */,
 				E565986728200ADA004F2240 /* LoadingView.swift */,
+				E56598692820FECE004F2240 /* WarningView.xib */,
+				E565986B2820FEDD004F2240 /* WarningView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3080,6 +3086,7 @@
 				D557D57E264AC337007E4396 /* Localizable.strings in Resources */,
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
+				E565986A2820FECE004F2240 /* WarningView.xib in Resources */,
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItem.xib in Resources */,
 				42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */,
@@ -3723,6 +3730,7 @@
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
 				4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */,
 				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
+				E565986C2820FEDD004F2240 /* WarningView.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				4C8641E727DE35A500EEFB1D /* OptionSet+Extension.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,

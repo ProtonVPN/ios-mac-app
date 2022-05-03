@@ -9,7 +9,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="LoginViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="createAccountButton" destination="sIO-81-jPa" id="7JO-Uk-siV"/>
-                <outlet property="helpLink" destination="Ara-sw-83l" id="qcA-FT-bJQ"/>
                 <outlet property="loginButton" destination="doA-fK-3JY" id="2p4-B6-fyK"/>
                 <outlet property="logoImage" destination="lMo-f0-lr7" id="OWj-wd-TpX"/>
                 <outlet property="needHelpButton" destination="Mvc-5H-vVI" id="BHA-oa-iTf"/>
@@ -24,9 +23,6 @@
                 <outlet property="usernameHorizontalLine" destination="aw7-qm-KCg" id="ro8-Ho-Dc2"/>
                 <outlet property="usernameTextField" destination="L0d-AC-N2e" id="BlC-SP-Xpl"/>
                 <outlet property="view" destination="c22-O7-iKe" id="1ar-Gp-I5h"/>
-                <outlet property="warningIcon" destination="EyI-KC-O3v" id="gPh-Gf-VxA"/>
-                <outlet property="warningLabel" destination="R2H-lD-KeK" id="J2T-Mz-h41"/>
-                <outlet property="warningStack" destination="JuR-aC-JB5" id="IXA-jS-8aF"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
@@ -86,21 +82,21 @@
                             </constraints>
                         </box>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mvc-5H-vVI" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="133" y="64" width="75" height="16"/>
+                            <rect key="frame" x="133" y="62" width="75" height="16"/>
                             <buttonCell key="cell" type="bevel" title="Need Help?" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="PBv-vy-Yeq">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sIO-81-jPa" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="121" y="98" width="98" height="16"/>
+                            <rect key="frame" x="121" y="96" width="98" height="16"/>
                             <buttonCell key="cell" type="bevel" title="Create Account" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="t7k-bT-K1x">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doA-fK-3JY" customClass="LoginButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="147" y="138" width="46" height="16"/>
+                            <rect key="frame" x="147" y="136" width="46" height="16"/>
                             <buttonCell key="cell" type="bevel" title="Sign In" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="yml-Pq-g1u">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -115,7 +111,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="d4i-Va-ju2">
-                            <rect key="frame" x="223" y="98" width="16" height="16"/>
+                            <rect key="frame" x="223" y="96" width="16" height="16"/>
                         </progressIndicator>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhT-rA-7Im">
                             <rect key="frame" x="280" y="370" width="30" height="18"/>
@@ -143,69 +139,16 @@
                                 <constraint firstAttribute="width" constant="40" id="nfK-Js-dR9"/>
                             </constraints>
                         </customView>
-                        <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuR-aC-JB5">
-                            <rect key="frame" x="30" y="240" width="280" height="37"/>
-                            <subviews>
-                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EyI-KC-O3v">
-                                    <rect key="frame" x="0.0" y="21" width="16" height="16"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="16" id="4Pa-Ga-9Dy"/>
-                                        <constraint firstAttribute="width" constant="16" id="Qbn-Dv-UIo"/>
-                                    </constraints>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-exclamation-circle-filled" id="1Jn-oh-eMF"/>
-                                </imageView>
-                                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uOS-wC-72F">
-                                    <rect key="frame" x="24" y="0.0" width="256" height="37"/>
-                                    <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="R2H-lD-KeK" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="-2" y="21" width="87" height="16"/>
-                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="Warning label" id="Eqy-sR-yNP">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ara-sw-83l" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="46" height="13"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="13" id="P70-l9-e1L"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="bevel" title="Help link" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="KJn-aD-Rcl">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system" size="10"/>
-                                            </buttonCell>
-                                        </button>
-                                    </subviews>
-                                    <visibilityPriorities>
-                                        <integer value="1000"/>
-                                        <integer value="1000"/>
-                                    </visibilityPriorities>
-                                    <customSpacing>
-                                        <real value="3.4028234663852886e+38"/>
-                                        <real value="3.4028234663852886e+38"/>
-                                    </customSpacing>
-                                </stackView>
-                            </subviews>
-                            <visibilityPriorities>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
-                            </visibilityPriorities>
-                            <customSpacing>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
-                            </customSpacing>
-                        </stackView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="JuR-aC-JB5" firstAttribute="trailing" secondItem="AUK-pM-3uL" secondAttribute="trailing" id="5LY-Ro-yD3"/>
                         <constraint firstItem="rxN-J0-rur" firstAttribute="centerY" secondItem="AUK-pM-3uL" secondAttribute="centerY" id="6iO-Qv-TjH"/>
+                        <constraint firstAttribute="bottom" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="136" id="7Qq-te-s4f"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="1Vt-py-EJy" secondAttribute="trailing" constant="5" id="7mw-aU-jiO"/>
                         <constraint firstItem="d4i-Va-ju2" firstAttribute="centerY" secondItem="sIO-81-jPa" secondAttribute="centerY" id="8aq-RB-uAp"/>
                         <constraint firstItem="doA-fK-3JY" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="9et-Q8-vPP"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="leading" id="B4b-qe-cM9"/>
                         <constraint firstItem="Mvc-5H-vVI" firstAttribute="top" secondItem="sIO-81-jPa" secondAttribute="bottom" constant="18" id="E2Z-co-zZo"/>
                         <constraint firstItem="L0d-AC-N2e" firstAttribute="leading" secondItem="ehd-hP-OCf" secondAttribute="leading" constant="30" id="GBA-6J-iQs"/>
-                        <constraint firstItem="JuR-aC-JB5" firstAttribute="top" secondItem="rxN-J0-rur" secondAttribute="bottom" constant="42" id="HIH-Zt-cLV"/>
                         <constraint firstItem="AUK-pM-3uL" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="HPW-4P-4m3"/>
                         <constraint firstItem="Oat-9Y-92S" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="JMA-IK-byM"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="top" secondItem="Oat-9Y-92S" secondAttribute="bottom" constant="8" id="K1B-3J-erB"/>
@@ -215,16 +158,13 @@
                         <constraint firstItem="sIO-81-jPa" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="gp4-fv-asJ"/>
                         <constraint firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" constant="30" id="gqA-PK-32W"/>
                         <constraint firstItem="Oat-9Y-92S" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="36" id="jJY-ny-AXh"/>
-                        <constraint firstAttribute="bottom" secondItem="Mvc-5H-vVI" secondAttribute="bottom" constant="64" id="jN1-0H-n7M"/>
                         <constraint firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" constant="30" id="jgs-ne-SwS"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="trailing" constant="5" id="lFH-Ha-6Fl"/>
                         <constraint firstItem="1Vt-py-EJy" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="36" id="ofV-I3-fl2"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" id="pU1-s6-Zq9"/>
                         <constraint firstItem="d4i-Va-ju2" firstAttribute="leading" secondItem="sIO-81-jPa" secondAttribute="trailing" constant="4" id="pcI-mb-dqa"/>
-                        <constraint firstItem="JuR-aC-JB5" firstAttribute="leading" secondItem="rxN-J0-rur" secondAttribute="leading" id="q8v-Lc-GZ6"/>
                         <constraint firstItem="rxN-J0-rur" firstAttribute="leading" secondItem="dhf-WW-VSQ" secondAttribute="leading" id="qDY-6g-qgs"/>
                         <constraint firstItem="FhT-rA-7Im" firstAttribute="centerY" secondItem="Oat-9Y-92S" secondAttribute="centerY" id="rE6-pk-GEh"/>
-                        <constraint firstItem="doA-fK-3JY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JuR-aC-JB5" secondAttribute="bottom" constant="8" id="s6L-ie-Bow"/>
                         <constraint firstItem="dhf-WW-VSQ" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="sfn-b2-xtR"/>
                         <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="24" id="w49-BC-M9Z"/>
                         <constraint firstItem="aw7-qm-KCg" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="x2f-Zn-Nlc"/>
@@ -255,6 +195,5 @@
     </objects>
     <resources>
         <image name="VPNWordmarkNoBackground" width="1676" height="356"/>
-        <image name="ic-exclamation-circle-filled" width="24" height="24"/>
     </resources>
 </document>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" id="iXH-ka-0Bi" customClass="WarningView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="280" height="37"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wNs-fb-ROc">
+                    <rect key="frame" x="0.0" y="21" width="16" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="16" id="5w0-op-caW"/>
+                        <constraint firstAttribute="height" constant="16" id="dPe-R2-t05"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-exclamation-circle-filled" id="LSr-Lo-GCf"/>
+                </imageView>
+                <stackView distribution="equalSpacing" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0KI-iT-lfu">
+                    <rect key="frame" x="24" y="0.0" width="256" height="37"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="YPu-Eq-w94" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="-2" y="21" width="87" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" alignment="left" title="Warning label" id="Kuh-Bk-qPZ">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rUQ-kX-eaq" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="46" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="zmt-K7-05T"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Help link" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="RgU-5a-G0v">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system" size="10"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <visibilityPriorities>
+                <integer value="1000"/>
+                <integer value="1000"/>
+            </visibilityPriorities>
+            <customSpacing>
+                <real value="3.4028234663852886e+38"/>
+                <real value="3.4028234663852886e+38"/>
+            </customSpacing>
+            <connections>
+                <outlet property="helpLink" destination="rUQ-kX-eaq" id="WmL-5l-62b"/>
+                <outlet property="warningIcon" destination="wNs-fb-ROc" id="mFg-ew-XwV"/>
+                <outlet property="warningLabel" destination="YPu-Eq-w94" id="c1J-HE-cAj"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="149"/>
+        </stackView>
+    </objects>
+    <resources>
+        <image name="ic-exclamation-circle-filled" width="24" height="24"/>
+    </resources>
+</document>
