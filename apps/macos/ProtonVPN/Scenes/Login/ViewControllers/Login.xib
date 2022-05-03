@@ -185,10 +185,10 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="protonvpn-white-transparent" id="nl5-nA-nZA"/>
                 </imageView>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuR-aC-JB5">
-                    <rect key="frame" x="106" y="479" width="129" height="16"/>
+                    <rect key="frame" x="106" y="440" width="129" height="55"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="R2H-lD-KeK" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="-2" y="0.0" width="87" height="16"/>
+                            <rect key="frame" x="-2" y="20" width="87" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Warning label" id="Eqy-sR-yNP">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -196,7 +196,7 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ara-sw-83l" customClass="PVPNHyperlinkTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="83" y="0.0" width="46" height="13"/>
+                            <rect key="frame" x="83" y="20" width="46" height="13"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="13" id="P70-l9-e1L"/>
                             </constraints>
@@ -224,6 +224,7 @@
                 <constraint firstItem="ehd-hP-OCf" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="APF-bK-TFy"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="top" secondItem="lMo-f0-lr7" secondAttribute="bottom" id="KRd-B6-aNm"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="QBq-BK-5qx"/>
+                <constraint firstItem="JuR-aC-JB5" firstAttribute="bottom" secondItem="ehd-hP-OCf" secondAttribute="top" constant="10" id="TyP-Hw-c6b"/>
                 <constraint firstAttribute="trailing" secondItem="ehd-hP-OCf" secondAttribute="trailing" id="bQh-CJ-5Wn"/>
                 <constraint firstItem="JuR-aC-JB5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="cAe-S7-If1"/>
                 <constraint firstItem="ehd-hP-OCf" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="cHx-pB-Wz8"/>
