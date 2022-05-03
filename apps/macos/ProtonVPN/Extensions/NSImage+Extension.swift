@@ -35,7 +35,9 @@ extension NSImage {
                   fraction: CGFloat(1))
         newImage.unlockFocus()
         newImage.size = destSize
-        return NSImage(data: newImage.tiffRepresentation!)!
+        let newResized = NSImage(data: newImage.tiffRepresentation!)!
+        newResized.isTemplate = isTemplate
+        return newResized
     }
     
     func colored(_ color: NSColor) -> NSImage {
