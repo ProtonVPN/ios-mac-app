@@ -19,110 +19,15 @@
 import Foundation
 import NetworkExtension
 
+/// Errors specific *only* to HTTP request/response generation/parsing. Connection errors above should conform to
+/// POSIXError to approximate normal NSError OS error cases.
 enum HTTPError: Error {
-    case requestHasNoURL
     case parseError
-    case noData
     case encodingError(String)
     case responseError(String)
 
     static func httpUrlResponseError(response: HTTPURLResponse) -> Self {
         .responseError(HTTPURLResponse.localizedString(forStatusCode: response.statusCode))
-    }
-}
-
-/// A wrapper protocol for making requests with NWTCPConnection.
-protocol ConnectionSession {
-    func request(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
-}
-
-/// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
-protocol ConnectionSessionFactory {
-    func connect(hostname: String, port: String, useTLS: Bool) -> ConnectionSession
-}
-
-/// Generate NWTCPConnections by connecting to endpoints through the NEPacketTunnelProvider's tunnel.
-class NEPacketTunnelConnectionSessionFactory: ConnectionSessionFactory {
-    let provider: NEPacketTunnelProvider
-
-    init(provider: NEPacketTunnelProvider) {
-        self.provider = provider
-    }
-
-    func connect(hostname: String, port: String, useTLS: Bool) -> ConnectionSession {
-        let endpoint = NWHostEndpoint(hostname: hostname, port: port)
-        log.debug("Connecting to endpoint \(hostname):\(port)", category: .net)
-        let connection = provider.createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: nil)
-        return NWTCPConnectionSession(connection: connection)
-    }
-}
-
-/// A wrapper class around NWTCPConnection for generating HTTP requests and receiving responses.
-class NWTCPConnectionSession: ConnectionSession {
-    let connection: NWTCPConnection
-    var observation: NSKeyValueObservation!
-    let ready = DispatchGroup()
-
-    init(connection: NWTCPConnection) {
-        self.connection = connection
-        ready.enter()
-
-        // Look for changes in the NWTCPConnection's state. When the connection is established, leave
-        // the dispatch group to indicate that the connection is ready to receive data, and invalidate
-        // the observation since our work is done.
-        self.observation = connection.observe(\.state, options: [.initial, .new]) { _, _ in
-            if self.connection.state == .connected {
-                self.ready.leave()
-                self.observation?.invalidate()
-            }
-        }
-    }
-
-    func request(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
-        guard let url = request.url else {
-            completionHandler(nil, nil, HTTPError.requestHasNoURL)
-            return
-        }
-
-        let requestData: Data
-        do {
-            requestData = try request.data()
-        } catch {
-            completionHandler(nil, nil, error)
-            return
-        }
-
-        // When the connection is ready, go ahead and send the request/process the response.
-        ready.notify(queue: .global()) {
-            self.connection.write(requestData) { error in
-                if let error = error {
-                    completionHandler(nil, nil, error)
-                    return
-                }
-
-                self.connection.writeClose()
-
-                // XXX: if our JSON responses ever get above 8KB, we should do something about this :)
-                let (min, max) = (1, 8192)
-                self.connection.readMinimumLength(min, maximumLength: max) { responseData, error in
-                    if let error = error {
-                        log.debug("Received error. State: \(self.connection.state)", category: .net)
-                        completionHandler(nil, nil, error)
-                        return
-                    }
-                    guard let responseData = responseData else {
-                        completionHandler(nil, nil, HTTPError.noData)
-                        return
-                    }
-                    guard let (response, body) = try? HTTPURLResponse.parse(responseFromURL: url, data: responseData) else {
-                        completionHandler(nil, nil, HTTPError.parseError)
-                        return
-                    }
-                    completionHandler(body, response, nil)
-                    return
-                }
-            }
-        }
     }
 }
 
