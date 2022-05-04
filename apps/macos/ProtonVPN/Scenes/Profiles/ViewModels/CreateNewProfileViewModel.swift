@@ -331,8 +331,5 @@ extension CreateNewProfileViewModel: CustomStyleContext {
         case .border, .background:
             return .weak
         }
-
-        assertionFailure("Context not handled: \(context)")
-        return .normal
     }
 }
