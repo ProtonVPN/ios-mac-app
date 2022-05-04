@@ -79,7 +79,7 @@ final class CoreLoginService {
 
     private func show() {
         let signupAvailability = SignupAvailability.available(parameters: SignupParameters(passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
-        let login = LoginAndSignup(appName: "Proton VPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
+        let login = LoginAndSignup(appName: "Proton VPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, humanVerificationVersion: networkingDelegate.version, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
         self.login = login
 
         var onboardingShowFirstConnection = true
@@ -105,7 +105,7 @@ final class CoreLoginService {
             }
         }
 
-        let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
+        let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(body: LocalizedString.welcomeBody))
         let customization = LoginCustomizationOptions(username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self, helpDecorator: { input in
             let reportBugItem = HelpItem.custom(icon: UIImage(named: "ic-bug")!, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
                 self?.settingsService.presentReportBug()
