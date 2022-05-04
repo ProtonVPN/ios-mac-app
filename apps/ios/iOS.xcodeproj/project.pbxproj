@@ -443,6 +443,7 @@
 		E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */; };
 		E95E8E792696F822001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E782696F822001AE3FA /* CertificateConstants.swift */; };
 		E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
+		E96061A728226C7F008199C4 /* PacketTunnelProvider+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96061A628226C7F008199C4 /* PacketTunnelProvider+Logging.swift */; };
 		E977A77F2681DADA0013495A /* VpnCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A77E2681DADA0013495A /* VpnCertificate.swift */; };
 		E977A7812681F0D90013495A /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7802681F0D90013495A /* Dictionary+Extension.swift */; };
 		E977A7882681FE2B0013495A /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7872681FE2B0013495A /* AuthCredentials.swift */; };
@@ -985,6 +986,7 @@
 		E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockLogFilesProvider.swift; path = ../../../ios/ProtonVPNTests/Mocks/MockLogFilesProvider.swift; sourceTree = "<group>"; };
 		E95E8E782696F822001AE3FA /* CertificateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/CertificateConstants.swift; sourceTree = "<group>"; };
 		E95F81E627B1474800A2458A /* iOSUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSUpdateManager.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSUpdateManager.swift; sourceTree = "<group>"; };
+		E96061A628226C7F008199C4 /* PacketTunnelProvider+Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PacketTunnelProvider+Logging.swift"; path = "../../ios/OpenVPN Extension/PacketTunnelProvider+Logging.swift"; sourceTree = "<group>"; };
 		E977A77E2681DADA0013495A /* VpnCertificate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnCertificate.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnCertificate.swift; sourceTree = "<group>"; };
 		E977A7802681F0D90013495A /* Dictionary+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dictionary+Extension.swift"; path = "../../../../libraries/vpncore/Source/Extensions/Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		E977A7872681FE2B0013495A /* AuthCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthCredentials.swift; path = ../../../../libraries/vpncore/Source/Models/Credentials/AuthCredentials.swift; sourceTree = "<group>"; };
@@ -1869,6 +1871,7 @@
 			isa = PBXGroup;
 			children = (
 				E14414F922EF38ED00894DD0 /* PacketTunnelProvider.swift */,
+				E96061A628226C7F008199C4 /* PacketTunnelProvider+Logging.swift */,
 				E14414FB22EF38ED00894DD0 /* Info.plist */,
 				E14414FC22EF38ED00894DD0 /* OpenVPN_Extension.entitlements */,
 			);
@@ -3789,6 +3792,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E14414FA22EF38ED00894DD0 /* PacketTunnelProvider.swift in Sources */,
+				E96061A728226C7F008199C4 /* PacketTunnelProvider+Logging.swift in Sources */,
 				E9492ED82669178000500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

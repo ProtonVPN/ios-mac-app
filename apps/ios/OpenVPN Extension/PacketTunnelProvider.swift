@@ -10,4 +10,10 @@
 import TunnelKit
 
 class PacketTunnelProvider: OpenVPNTunnelProvider {
+
+    override init() {
+        super.init()
+        setupLogging()
+    }
+
 }
