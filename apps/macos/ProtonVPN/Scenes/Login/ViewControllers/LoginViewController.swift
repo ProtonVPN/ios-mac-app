@@ -49,9 +49,7 @@ final class LoginViewController: NSViewController {
         self.view.addSubview(view)
         view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        let topConstraint = view.topAnchor.constraint(equalTo: self.view.topAnchor)
-        topConstraint.constant = 150
-        topConstraint.isActive = true
+        view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         return view
     }()
@@ -100,9 +98,7 @@ final class LoginViewController: NSViewController {
         self.view.addSubview(view)
         view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        let topConstraint = view.topAnchor.constraint(equalTo: self.view.topAnchor)
-        topConstraint.constant = 150
-        topConstraint.isActive = true
+        view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         return view
     }()
@@ -262,6 +258,7 @@ final class LoginViewController: NSViewController {
         _ = twoFactorView.becomeFirstResponder()
         onboardingView.isHidden = true
         twoFactorView.isHidden = false
+        logoImage.isHidden = false
 
         loadingView.animate(false)
     }
@@ -296,6 +293,7 @@ final class LoginViewController: NSViewController {
         onboardingView.isHidden = false
         twoFactorView.isHidden = true
         loadingView.isHidden = true
+        logoImage.isHidden = false
         loadingView.animate(false)
     }
     
