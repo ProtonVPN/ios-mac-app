@@ -29,5 +29,21 @@
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).PacketTunnelProvider</string>
 	</dict>
+    <key>OSLogPreferences</key>
+    <dict>
+        <key>PROTON-WG</key>
+        <dict>
+            <key>DEFAULT-OPTIONS</key>
+            <dict>
+                <key>Level</key>
+                <dict>
+                    <key>Enable</key>
+                    <string>$(OSLOG_LEVEL_ENABLE)</string>
+                    <key>Persist</key>
+                    <string>$(OSLOG_LEVEL_PERSIST)</string>
+                </dict>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>
