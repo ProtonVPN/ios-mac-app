@@ -23,9 +23,9 @@
 import Cocoa
 import vpncore
 
-class ProfilesContainerViewController: NSViewController {
+final class ProfilesContainerViewController: NSViewController {
     
-    typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory
+    typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory & SessionServiceFactory
     private let factory: Factory
     
     @IBOutlet weak var profilesTabBarControllerViewContainer: NSView!
@@ -39,7 +39,7 @@ class ProfilesContainerViewController: NSViewController {
     private var activeController: NSViewController?
     
     private lazy var overviewVC: OverviewViewController = { [unowned self] in
-        let viewModel = OverviewViewModel(vpnGateway: self.viewModel.vpnGateway, profileManager: factory.makeProfileManager())
+        let viewModel = OverviewViewModel(vpnGateway: self.viewModel.vpnGateway, profileManager: factory.makeProfileManager(), sessionService: factory.makeSessionService())
         self.setUpCallbacks(overview: viewModel)
         let viewController = OverviewViewController(viewModel: viewModel)
         return viewController

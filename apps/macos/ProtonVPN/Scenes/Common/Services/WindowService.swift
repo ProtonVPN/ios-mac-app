@@ -86,6 +86,8 @@ class WindowServiceImplementation: WindowService {
         & LogFileManagerFactory
         & BugReportCreatorFactory
         & DynamicBugReportManagerFactory
+        & VpnKeychainFactory
+        & SessionServiceFactory
 
     private let factory: Factory
     
