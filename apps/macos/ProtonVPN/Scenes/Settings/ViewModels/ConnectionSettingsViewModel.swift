@@ -323,23 +323,18 @@ final class ConnectionSettingsViewModel {
     }
         
     func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
-        let transport: String
-        
         switch vpnProtocol {
         case .smartProtocol:
             return LocalizedString.smartTitle.styled(font: .themeFont(.heading4), alignment: .left)
         case .vpnProtocol(.openVpn(.tcp)):
-            transport = " (" + LocalizedString.tcp + ")"
+            return ("\(LocalizedString.openvpn) (\(LocalizedString.tcp))").styled(font: .themeFont(.heading4), alignment: .left)
         case .vpnProtocol(.openVpn(.udp)):
-            transport = " (" + LocalizedString.udp + ")"
+            return ("\(LocalizedString.openvpn) (\(LocalizedString.udp))").styled(font: .themeFont(.heading4), alignment: .left)
         case .vpnProtocol(.wireGuard):
             return LocalizedString.wireguard.styled(font: .themeFont(.heading4), alignment: .left)
         case .vpnProtocol(.ike):
             return LocalizedString.ikev2.styled(font: .themeFont(.heading4), alignment: .left)
-        default:
-            return LocalizedString.notConnected.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        return (LocalizedString.openvpn + transport).styled(font: .themeFont(.heading4), alignment: .left)
     }
     
     // MARK: - Values
