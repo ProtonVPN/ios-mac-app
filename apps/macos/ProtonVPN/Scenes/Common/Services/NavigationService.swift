@@ -55,6 +55,7 @@ class NavigationService {
         & ProtonReachabilityCheckerFactory
         & NetworkingFactory
         & CouponViewModelFactory
+        & SessionServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
