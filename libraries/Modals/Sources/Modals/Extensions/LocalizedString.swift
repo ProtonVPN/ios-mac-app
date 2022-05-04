@@ -26,13 +26,6 @@ public enum LocalizedString {
   public static var modalsDiscourageSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_discourage_secure_core_title") }
   /// Upgrade
   public static var modalsGetPlus: String { return LocalizedString.tr("Localizable", "modals_get_plus") }
-  /// Got it
-  public static var modalsNewBrandGotIt: String { return LocalizedString.tr("Localizable", "modals_new_brand_got_it") }
-  /// Introducing Proton’s refreshed look.
-  /// Many services, one mission. Welcome to an Internet where privacy is the default.
-  public static var modalsNewBrandSubtitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_subtitle") }
-  /// Updated Proton, unified protection
-  public static var modalsNewBrandTitle: String { return LocalizedString.tr("Localizable", "modals_new_brand_title") }
   /// Proton VPN's strict no-log policy is certified by an external audit.
   public static var modalsNoLogsExternalAudit: String { return LocalizedString.tr("Localizable", "modals_no_logs_external_audit") }
   /// We do not log your internet activity
@@ -95,6 +88,13 @@ public enum LocalizedString {
   public static var modalsUpsellSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_secure_core_title") }
   /// Not now
   public static var modalsUpsellStayFree: String { return LocalizedString.tr("Localizable", "modals_upsell_stay_free") }
+  /// Got it
+  public static var newPlansBrandGotIt: String { return LocalizedString.tr("Localizable", "new_plans_brand_got_it") }
+  /// Introducing Proton’s refreshed look.
+  /// Many services, one mission. Welcome to an internet where privacy is the default.
+  public static var newPlansBrandSubtitle: String { return LocalizedString.tr("Localizable", "new_plans_brand_subtitle") }
+  /// Updated Proton, unified protection
+  public static var newPlansBrandTitle: String { return LocalizedString.tr("Localizable", "new_plans_brand_title") }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
