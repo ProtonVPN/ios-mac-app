@@ -374,11 +374,6 @@
 		E169D52C21E5075100D35312 /* ElectronViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E169D52A21E5075100D35312 /* ElectronViewContainer.swift */; };
 		E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */ = {isa = PBXBuildFile; fileRef = E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */; };
 		E16A7E702374C150008A0DA0 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16A7E6F2374C150008A0DA0 /* AlertTests.swift */; };
-		E16C2926239E673500E7B61D /* CustomServersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16C2924239E673500E7B61D /* CustomServersViewController.swift */; };
-		E16C2927239E673500E7B61D /* CustomServers.xib in Resources */ = {isa = PBXBuildFile; fileRef = E16C2925239E673500E7B61D /* CustomServers.xib */; };
-		E16C2929239E68E200E7B61D /* CustomServersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */; };
-		E16C292A239EBA2D00E7B61D /* CustomServersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16C2924239E673500E7B61D /* CustomServersViewController.swift */; };
-		E16C292B239EBA4700E7B61D /* CustomServersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */; };
 		E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */; };
 		E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */; };
 		E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DB1B721592772006B3617 /* ProtonButton.swift */; };
@@ -427,7 +422,6 @@
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
-		E593B96C27BA4D3000AFCA8C /* Upsell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B96B27BA4D3000AFCA8C /* Upsell.swift */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
@@ -934,9 +928,6 @@
 		E169D52A21E5075100D35312 /* ElectronViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElectronViewContainer.swift; sourceTree = "<group>"; };
 		E169FC3C2289AE9900FDC933 /* phone_country_code.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = phone_country_code.geojson; sourceTree = "<group>"; };
 		E16A7E6F2374C150008A0DA0 /* AlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
-		E16C2924239E673500E7B61D /* CustomServersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomServersViewController.swift; sourceTree = "<group>"; };
-		E16C2925239E673500E7B61D /* CustomServers.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomServers.xib; sourceTree = "<group>"; };
-		E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomServersViewModel.swift; sourceTree = "<group>"; };
 		E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewDataSource.swift; sourceTree = "<group>"; };
 		E17DB1B721592772006B3617 /* ProtonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonButton.swift; sourceTree = "<group>"; };
 		E18006E6218B0B7B009E01E3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -971,7 +962,6 @@
 		E534EA432806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E534EA442806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
-		E593B96B27BA4D3000AFCA8C /* Upsell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upsell.swift; sourceTree = "<group>"; };
 		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E86A799CCEC040F563446F6F /* Pods-WireGuardNetworkExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1440,7 +1430,6 @@
 				D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */,
 				F330F01527FC85AE00C3AA33 /* CouponViewController.swift */,
 				F330F01727FC884700C3AA33 /* CouponViewController.xib */,
-				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
 				F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */,
@@ -2295,7 +2284,6 @@
 		F36ECCAF2611C75E0089B898 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */,
 				E1EB9E7822FF0B30009E704F /* LogSelectionViewModel.swift */,
 				E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */,
 				F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */,
@@ -2344,7 +2332,6 @@
 				E1D187F02301AB2E00C5F492 /* CheckmarkTableViewCell.xib */,
 				E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */,
 				E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */,
-				E16C2925239E673500E7B61D /* CustomServers.xib */,
 				E13EDF6C21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift */,
 				E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */,
 				E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */,
@@ -2912,7 +2899,6 @@
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
 				7905995C212AB3A800C0E401 /* CreateProfileTableViewCell.xib in Resources */,
-				E16C2927239E673500E7B61D /* CustomServers.xib in Resources */,
 				7995FAAC209080E70030E1EB /* Countries.storyboard in Resources */,
 				793ECF3A2148DCF900C186A7 /* KeyValueTableViewCell.xib in Resources */,
 				E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */,
@@ -3455,7 +3441,6 @@
 				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */,
-				E16C2926239E673500E7B61D /* CustomServersViewController.swift in Sources */,
 				79AFDA9820DC31ED002F8751 /* NSAttributedString+Extension.swift in Sources */,
 				F316A07526DFBCB600669386 /* PlanService.swift in Sources */,
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
@@ -3514,7 +3499,6 @@
 				F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */,
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
 				F34AC17D27F439B40007FF93 /* Review+Configuration.swift in Sources */,
-				E16C2929239E68E200E7B61D /* CustomServersViewModel.swift in Sources */,
 				F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */,
 				F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */,
 				F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */,
@@ -3587,7 +3571,6 @@
 				D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */,
 				D5136C30228592E80002C095 /* UIView+constraints.swift in Sources */,
 				D5136C31228592E80002C095 /* ServerUtility.swift in Sources */,
-				E16C292A239EBA2D00E7B61D /* CustomServersViewController.swift in Sources */,
 				E16A7E702374C150008A0DA0 /* AlertTests.swift in Sources */,
 				D550A1B3256551F900FE2D54 /* ConnectionStatusServiceMock.swift in Sources */,
 				D5136C32228592E80002C095 /* ConnectionBarViewController.swift in Sources */,
@@ -3637,7 +3620,6 @@
 				D5136C55228592E80002C095 /* ServerItemViewModel.swift in Sources */,
 				D5136C56228592E80002C095 /* ConnectionViewModel.swift in Sources */,
 				D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */,
-				E5C035B627BAA930003196F5 /* UpsellMock.swift in Sources */,
 				D5136C57228592E80002C095 /* MapViewModel.swift in Sources */,
 				D5136C58228592E80002C095 /* SecureCoreEntryCountryModel.swift in Sources */,
 				D5136C59228592E80002C095 /* CreateOrEditProfileViewModel.swift in Sources */,
@@ -3678,7 +3660,6 @@
 				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,
 				D5136C74228592E80002C095 /* SelectionTableViewCell.swift in Sources */,
 				D5136C75228592E80002C095 /* CreateProfileTableViewCell.swift in Sources */,
-				E16C292B239EBA4700E7B61D /* CustomServersViewModel.swift in Sources */,
 				42066FCE2630491A001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
 				D5136C76228592E80002C095 /* DefaultProfileTableViewCell.swift in Sources */,
 				D5136C77228592E80002C095 /* AppVersionView.swift in Sources */,
