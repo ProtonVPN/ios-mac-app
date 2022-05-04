@@ -24,15 +24,15 @@ import Cocoa
 import vpncore
 
 protocol OverviewItemViewModelDelegate: class {
-    
     func showDeleteWarning(_ viewModel: WarningPopupViewModel)
 }
 
-class OverviewItemViewModel: AbstractProfileViewModel {
+final class OverviewItemViewModel: AbstractProfileViewModel {
     
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
+    private let sessionService: SessionService
     
     weak var delegate: OverviewItemViewModelDelegate?
     
@@ -60,10 +60,11 @@ class OverviewItemViewModel: AbstractProfileViewModel {
         return formConnectButtonTitle()
     }
     
-    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int) {
+    init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int, sessionService: SessionService) {
         self.editProfile = editProfile
         self.profileManager = profileManager
         self.vpnGateway = vpnGateway
+        self.sessionService = sessionService
         super.init(profile: profile, userTier: userTier)
     }
     
@@ -72,7 +73,9 @@ class OverviewItemViewModel: AbstractProfileViewModel {
         
         guard !isUsersTierTooLow else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            sessionService.getUpgradePlanSession { url in
+                SafariService.openLink(url: url)
+            }
             completion()
             return
         }

@@ -23,18 +23,20 @@
 import Cocoa
 import vpncore
 
-class OverviewViewModel {
+final class OverviewViewModel {
     
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
+    private let sessionService: SessionService
     
     var contentChanged: (() -> Void)?
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
     
-    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
+    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, sessionService: SessionService) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
+        self.sessionService = sessionService
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
                                                name: profileManager.contentChanged, object: nil)
     }
@@ -64,7 +66,8 @@ class OverviewViewModel {
                                      editProfile: editProfile,
                                      profileManager: profileManager,
                                      vpnGateway: vpnGateway,
-                                     userTier: userTier
+                                     userTier: userTier,
+                                     sessionService: sessionService
         )
     }
     
