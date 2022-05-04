@@ -142,12 +142,6 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
     }
 }
 
-fileprivate class CustomServersViewModelFactoryMock: CustomServersViewModel.Factory {
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManagerMock()
-    }
-}
-
 fileprivate class SettingsServiceMock: SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController {
         let viewModel = LogSelectionViewModel(logFileProvider: MockLogFilesProvider())
@@ -157,11 +151,6 @@ fileprivate class SettingsServiceMock: SettingsService {
     func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
         let viewModel = LogsViewModel(title: "", logFile: URL(fileURLWithPath: ""))
         return LogsViewController(viewModel: viewModel)
-    }
-    
-    func makeCustomServerViewController() -> CustomServersViewController {
-        let viewModel = CustomServersViewModel(factory: CustomServersViewModelFactoryMock(), vpnGateway: nil)
-        return CustomServersViewController(viewModel: viewModel)
     }
     
     func makeSettingsViewController() -> SettingsViewController? {

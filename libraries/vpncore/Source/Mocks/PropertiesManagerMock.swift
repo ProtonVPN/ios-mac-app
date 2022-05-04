@@ -64,7 +64,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var ratingSettings: RatingSettings = RatingSettings()
     public var vpnProtocol: VpnProtocol = .ike
     public var apiEndpoint: String?
-    public var customServers: [ServerModel]?
     public var lastAppVersion = "0.0.0"
     public var lastTimeForeground: Date?
     public var featureFlags: FeatureFlags = FeatureFlags()

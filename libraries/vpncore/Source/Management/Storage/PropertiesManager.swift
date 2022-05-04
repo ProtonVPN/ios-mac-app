@@ -75,7 +75,6 @@ public protocol PropertiesManagerProtocol: class {
     
     // Development properties
     var apiEndpoint: String? { get set }
-    var customServers: [ServerModel]? { get set }
     
     var lastAppVersion: String { get set }
     var lastTimeForeground: Date? { get set }
@@ -130,7 +129,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case currentSubscription = "currentSubscription"
         case defaultPlanDetails = "defaultPlanDetails"
         case isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
-        case customServers = "CustomServers"
         
         // Trial
         case trialWelcomed = "TrialWelcomed"
@@ -379,15 +377,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             storage.setValue(newValue, forKey: Keys.apiEndpoint.rawValue)
-        }
-    }
-    
-    public var customServers: [ServerModel]? {
-        get {
-            return storage.getDecodableValue(Array<ServerModel>.self, forKey: Keys.customServers.rawValue)
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.customServers.rawValue)
         }
     }
     

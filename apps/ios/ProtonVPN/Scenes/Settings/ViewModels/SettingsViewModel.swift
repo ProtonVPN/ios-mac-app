@@ -81,10 +81,6 @@ final class SettingsViewModel {
         sections.append(logSection)
         sections.append(bottomSection)
         
-        #if !RELEASE
-        sections.append(developerSection)
-        #endif
-        
         return sections
     }
     
@@ -545,16 +541,6 @@ final class SettingsViewModel {
         
         return TableViewSection(title: "", cells: cells)
     }
-
-    private var developerSection: TableViewSection {
-        let cells: [TableViewCellModel] = [
-            .pushStandard(title: "Custom VPN Servers", handler: { [pushCustomServerViewController] in
-                pushCustomServerViewController()
-            })
-        ]
-        
-        return TableViewSection(title: "Developer", cells: cells)
-    }
     
     private var bottomSection: TableViewSection {
         let cells: [TableViewCellModel] = [
@@ -620,10 +606,6 @@ final class SettingsViewModel {
     
     private func pushLogSelectionViewController() {
         pushHandler?(settingsService.makeLogSelectionViewController())
-    }
-    
-    private func pushCustomServerViewController() {
-        pushHandler?(settingsService.makeCustomServerViewController())
     }
     
     private func pushNetshieldSelectionViewController(selectedFeature: NetShieldType, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<NetShieldType>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<NetShieldType>.FeatureChangeCallback) {
