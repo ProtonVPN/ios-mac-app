@@ -21,9 +21,9 @@ import Foundation
 public struct NewBrandFeature {
     public let artImage: Image = Asset.newBrandBackground.image
     public let iconImage: Image = Asset.vpnMain.image
-    public let title: String = LocalizedString.modalsNewBrandTitle
-    public let subtitle: String = LocalizedString.modalsNewBrandSubtitle
-    public let gotIt: String = LocalizedString.modalsNewBrandGotIt
+    public let title: String = LocalizedString.newPlansBrandTitle
+    public let subtitle: String = LocalizedString.newPlansBrandSubtitle
+    public let gotIt: String = LocalizedString.newPlansBrandGotIt
     public let readMoreLink: String = "fake-read-more-link" // only used to intercept the tap on URL
     public let learnMore: String = LocalizedString.modalsCommonLearnMore.replacingOccurrences(of: " ", with: "\u{00a0}") // non-breaking space
 
