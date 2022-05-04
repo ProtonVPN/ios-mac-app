@@ -57,10 +57,13 @@ class UserAccountUpdateViewController: NSViewController {
 
     private lazy var serverManager: ServerManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: ServerStorageConcrete())
     private let alert: UserAccountUpdateAlert
+    private let sessionService: SessionService
+
     var dismissCompletion: (() -> Void)?
     
-    init( alert: UserAccountUpdateAlert ) {
+    init(alert: UserAccountUpdateAlert, sessionService: SessionService) {
         self.alert = alert
+        self.sessionService = sessionService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -151,7 +154,9 @@ class UserAccountUpdateViewController: NSViewController {
     
     @IBAction func didTapPrimaryAction(_ sender: Any) {
         alert.actions.first?.handler?()
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+        sessionService.getUpgradePlanSession { url in
+            SafariService.openLink(url: url)
+        }
         dismissCompletion?()
         dismiss(nil)
     }
