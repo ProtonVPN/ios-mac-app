@@ -13,7 +13,7 @@
                 <outlet property="errorLabel" destination="gwn-bt-UPe" id="xg7-n3-pmr"/>
                 <outlet property="progressIndicator" destination="cWc-OW-tBM" id="khx-Nw-ddI"/>
                 <outlet property="textField" destination="JSe-k5-uXE" id="yvb-1g-ck2"/>
-                <outlet property="textFieldFieldHorizontalLine" destination="Sdp-xD-nYo" id="NR8-IC-tnf"/>
+                <outlet property="textFieldHorizontalLine" destination="Sdp-xD-nYo" id="NR8-IC-tnf"/>
                 <outlet property="view" destination="c22-O7-iKe" id="aqx-qP-jeE"/>
             </connections>
         </customObject>

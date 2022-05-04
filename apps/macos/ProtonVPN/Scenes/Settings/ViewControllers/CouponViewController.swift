@@ -29,7 +29,7 @@ final class CouponViewController: NSViewController {
     @IBOutlet private weak var applyButton: PrimaryActionButton!
     @IBOutlet private weak var errorLabel: NSTextField!
     @IBOutlet private weak var textField: TextFieldWithFocus!
-    @IBOutlet private weak var textFieldFieldHorizontalLine: NSBox!
+    @IBOutlet private weak var textFieldHorizontalLine: NSBox!
     @IBOutlet private weak var progressIndicator: NSProgressIndicator!
 
     weak var delegate: CouponViewControllerDelegate?
@@ -137,7 +137,7 @@ final class CouponViewController: NSViewController {
         } else {
             color = .color(.border, .weak)
         }
-        textFieldFieldHorizontalLine.fillColor = color
+        textFieldHorizontalLine.fillColor = color
     }
 
     func focus() {
