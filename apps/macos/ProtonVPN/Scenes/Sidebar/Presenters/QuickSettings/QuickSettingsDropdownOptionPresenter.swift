@@ -51,8 +51,6 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
 
 final class QuickSettingNetshieldOption: QuickSettingGenericOption {
     init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, vpnStateConfiguration: VpnStateConfiguration, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
-        var netShieldPropertyProvider = netShieldPropertyProvider
-
         let text: String
         switch level {
         case .level1:
