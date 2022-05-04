@@ -354,12 +354,9 @@
 		EE6E61D81F4C4F5300638F9B /* ExpandCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */; };
 		EE7041701F239DB4008BC5AD /* PrefillInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */; };
 		EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */; };
-		EE74FCAA1F5DD23400E266BC /* SCUpgradePopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE74FCA91F5DD23400E266BC /* SCUpgradePopup.xib */; };
-		EE74FCAC1F5DD4E900E266BC /* SCUpgradePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */; };
 		EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */; };
 		EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */; };
 		EE74FCB21F5DD9E500E266BC /* PopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE74FCB11F5DD9E500E266BC /* PopUp.xib */; };
-		EE74FCB41F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */; };
 		EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE78749E1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift */; };
 		EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE7874A11F3B63C7001E261E /* WarningPopup.xib */; };
 		EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */; };
@@ -987,12 +984,9 @@
 		EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandCellButton.swift; sourceTree = "<group>"; };
 		EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefillInformation.swift; sourceTree = "<group>"; };
 		EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
-		EE74FCA91F5DD23400E266BC /* SCUpgradePopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCUpgradePopup.xib; sourceTree = "<group>"; };
-		EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUpgradePopupViewController.swift; sourceTree = "<group>"; };
 		EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewModel.swift; sourceTree = "<group>"; };
 		EE74FCB11F5DD9E500E266BC /* PopUp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopUp.xib; sourceTree = "<group>"; };
-		EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCUpgradePopUpViewModel.swift; sourceTree = "<group>"; };
 		EE78749E1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OverviewItemViewModel+Descriptors.swift"; sourceTree = "<group>"; };
 		EE7874A11F3B63C7001E261E /* WarningPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WarningPopup.xib; sourceTree = "<group>"; };
 		EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningPopupViewController.swift; sourceTree = "<group>"; };
@@ -2567,8 +2561,6 @@
 				E14475312093A52A00F4C641 /* NeagentHelpPopUpViewController.swift */,
 				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
 				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
-				EE74FCA91F5DD23400E266BC /* SCUpgradePopup.xib */,
-				EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */,
 				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
 				F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */,
 				F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */,
@@ -2584,7 +2576,6 @@
 			isa = PBXGroup;
 			children = (
 				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
-				EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */,
 				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
 				42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */,
 			);
@@ -3121,7 +3112,6 @@
 				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
 				EE98CFE11F15100F000D6688 /* About.xib in Resources */,
 				E18262AF21302ED100A6A48F /* dsa_pub.pem in Resources */,
-				EE74FCAA1F5DD23400E266BC /* SCUpgradePopup.xib in Resources */,
 				E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */,
 				EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */,
 				EE4943EC1F29BE3600CF980F /* Login.xib in Resources */,
@@ -3511,7 +3501,6 @@
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
 				F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
-				EE74FCB41F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift in Sources */,
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
 				EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */,
 				F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */,
@@ -3737,7 +3726,6 @@
 				EE35FC431F1CD2DA00CFE26F /* SidebarTabBarView.swift in Sources */,
 				E180D16A2126FCE500F4D1C7 /* TourPreviousButton.swift in Sources */,
 				42710D9C264929A000D70B92 /* StreamOptionCVItemViewModel.swift in Sources */,
-				EE74FCAC1F5DD4E900E266BC /* SCUpgradePopupViewController.swift in Sources */,
 				E15DE7D22029EA6F00BFA78D /* PassThroughView.swift in Sources */,
 				4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */,
 				E1454CF2206FE2C300E6D396 /* HelpPopoverBackgroundView.swift in Sources */,
