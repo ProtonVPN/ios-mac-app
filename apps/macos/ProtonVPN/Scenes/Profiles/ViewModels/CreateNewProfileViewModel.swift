@@ -283,8 +283,10 @@ class CreateNewProfileViewModel {
     
     func checkNetshieldOption( _ netshieldIndex: Int ) -> Bool {
         guard let netshieldType = NetShieldType(rawValue: netshieldIndex), !netshieldType.isUserTierTooLow(userTier) else {
-            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
-                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: { [weak self] in
+                self?.sessionService.getUpgradePlanSession { url in
+                    SafariService.openLink(url: url)
+                }
             })
             self.alertService.push(alert: upgradeAlert)
             return false
