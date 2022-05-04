@@ -54,6 +54,7 @@ public protocol PropertiesManagerProtocol: class {
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
     var newBrandModalShown: Bool { get set }
+    var lastActiveNetShieldOption: Int { get set }
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -149,6 +150,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         // Discourage Secure Core
         case discourageSecureCore = "DiscourageSecureCore"
+
+        // Last Active NetShield Option
+        case lastActiveNetShieldOption = "LastActiveNetShieldOption"
 
         // Did Show New Brand Modal
         case newBrandModalShown = "NewBrandModalShown"
@@ -487,6 +491,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
+    public var lastActiveNetShieldOption: Int {
+        get {
+            return storage.defaults.integer(forKey: Keys.lastActiveNetShieldOption.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.lastActiveNetShieldOption.rawValue)
+        }
+    }
+
     public var newBrandModalShown: Bool {
         get {
             return storage.defaults.bool(forKey: Keys.newBrandModalShown.rawValue)
@@ -588,7 +601,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
             Keys.smartProtocol.rawValue: defaultSmartProtocol,
-            Keys.discourageSecureCore.rawValue: true
+            Keys.discourageSecureCore.rawValue: true,
+            Keys.lastActiveNetShieldOption.rawValue: 1
         ])
     }
     
@@ -608,6 +622,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
         killSwitch = false
+        lastActiveNetShieldOption = 1
     }
     
     func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {

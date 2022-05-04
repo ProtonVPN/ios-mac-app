@@ -96,7 +96,7 @@ class StatusViewModel {
         sections.append(connectionStatusSection)
         
         if propertiesManager.featureFlags.netShield {
-            sections.append(netshieldSection)
+            sections.append(netShieldSection)
         }
 
         switch appStateManager.displayState {
@@ -294,9 +294,9 @@ class StatusViewModel {
     
     // MARK: - NetShield
     
-    private var netshieldSection: TableViewSection {
+    private var netShieldSection: TableViewSection {
         guard netShieldPropertyProvider.isUserEligibleForNetShield else {
-            return netshieldUnavailableSection
+            return netShieldUnavailableSection
         }
         
         let isConnected: Bool
@@ -307,16 +307,20 @@ class StatusViewModel {
             isConnected = false
         }
         let activeConnection = appStateManager.activeConnection()
-        let currentNetshieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
-        let isNetshieldOn = currentNetshieldType != .off
+        let currentNetShieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
+        let isNetShieldOn = currentNetShieldType != .off
+        if isNetShieldOn {
+            propertiesManager.lastActiveNetShieldOption = (currentNetShieldType ?? .level1).rawValue
+        }
         
         var cells = [TableViewCellModel]()
         
-        cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetshieldOn }, enabled: true, handler: { (toggleOn, _) in
-            self.changeNetshield(to: toggleOn ? .level1 : .off)
+        cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
+            let lastUsedType = NetShieldType(rawValue: self.propertiesManager.lastActiveNetShieldOption) ?? .level1
+            self.changeNetShield(to: toggleOn ? lastUsedType : .off)
         }))
         
-        if isNetshieldOn {
+        if isNetShieldOn {
             [NetShieldType.level1, NetShieldType.level2].forEach { type in
                 guard !type.isUserTierTooLow(userTier) else {
                     cells.append(.invertedKeyValue(key: type.name, value: LocalizedString.upgrade, handler: { [weak self] in
@@ -324,8 +328,8 @@ class StatusViewModel {
                     }))
                     return
                 }
-                cells.append(.checkmarkStandard(title: type.name, checked: currentNetshieldType == type, handler: { [weak self] in
-                    self?.changeNetshield(to: type)
+                cells.append(.checkmarkStandard(title: type.name, checked: currentNetShieldType == type, handler: { [weak self] in
+                    self?.changeNetShield(to: type)
                     return false
                 }))
             }
@@ -334,7 +338,7 @@ class StatusViewModel {
         return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
     }
     
-    private var netshieldUnavailableSection: TableViewSection {
+    private var netShieldUnavailableSection: TableViewSection {
         var cells = [TableViewCellModel]()
         
         cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
@@ -350,7 +354,7 @@ class StatusViewModel {
         return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
     }
     
-    private func changeNetshield(to newValue: NetShieldType) {
+    private func changeNetShield(to newValue: NetShieldType) {
         vpnStateConfiguration.getInfo { info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
