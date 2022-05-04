@@ -280,7 +280,6 @@ final class LoginViewController: NSViewController {
         } else {
             presentOnboardingScreen(withErrorDescription: errorMessage)
         }
-        warningView.isHidden = false
     }
     
     private func handleLoginFailureWithSupport(_ errorMessage: String?) {
