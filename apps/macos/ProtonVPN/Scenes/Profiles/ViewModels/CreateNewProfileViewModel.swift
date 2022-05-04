@@ -54,7 +54,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & ProfileManagerFactory & SystemExtensionsStateCheckFactory
+    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & ProfileManagerFactory & SystemExtensionsStateCheckFactory & SessionServiceFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -72,6 +72,7 @@ class CreateNewProfileViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
+    private lazy var sessionService: SessionService = factory.makeSessionService()
 
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
@@ -320,6 +321,10 @@ class CreateNewProfileViewModel {
                 completion(result)
             }
         }
+    }
+
+    func createSecureCoreWarningViewController() -> SecureCoreWarningViewController {
+        return SecureCoreWarningViewController(sessionService: sessionService)
     }
 }
 

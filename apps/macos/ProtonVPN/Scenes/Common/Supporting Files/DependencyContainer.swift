@@ -145,6 +145,7 @@ final class DependencyContainer {
         return doh
     }()
     private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
+    private lazy var sessionService = SessionServiceImplementation(networking: makeNetworking())
 }
 
 // MARK: PlanServiceFactory
@@ -545,9 +546,16 @@ extension DependencyContainer: LogContentProviderFactory {
     }
 }
 
+// MARK: StatusMenuViewModelFactory
+extension DependencyContainer: StatusMenuViewModelFactory {
+    func makeStatusMenuViewModel() -> StatusMenuViewModel {
+        return StatusMenuViewModel(factory: self)
+    }
+}
+
 // MARK: SessionServiceFactory
 extension DependencyContainer: SessionServiceFactory {
     func makeSessionService() -> SessionService {
-        return SessionServiceImplementation(factory: self)
+        return sessionService
     }
 }

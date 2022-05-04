@@ -23,17 +23,20 @@
 import Cocoa
 import vpncore
 
-class SecureCoreWarningViewController: NSViewController {
+final class SecureCoreWarningViewController: NSViewController {
     
     @IBOutlet weak var descriptionLabel: NSTextField!
     @IBOutlet weak var upgradeButton: PrimaryActionButton!
     @IBOutlet weak var learnMoreButton: InteractiveActionButton!
+
+    private let sessionService: SessionService
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
-    required init() {
+    required init(sessionService: SessionService) {
+        self.sessionService = sessionService
         super.init(nibName: NSNib.Name("SecureCoreWarning"), bundle: nil)
     }
     
@@ -70,7 +73,9 @@ class SecureCoreWarningViewController: NSViewController {
     }
     
     @objc private func upgradeButtonAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade)
+        sessionService.getUpgradePlanSession { url in
+            SafariService.openLink(url: url)
+        }
         dismiss(nil)
     }
     
