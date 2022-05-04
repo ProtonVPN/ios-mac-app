@@ -84,9 +84,7 @@ final class LoginViewController: NSViewController {
         self.view.addSubview(view)
         view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        let topConstraint = view.topAnchor.constraint(equalTo: self.view.topAnchor)
-        topConstraint.constant = 150
-        topConstraint.isActive = true
+        view.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         return view
     }()
