@@ -424,7 +424,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func secureCoreWarning() {
-        presentAsModalWindow(SecureCoreWarningViewController())
+        presentAsModalWindow(viewModel.createSecureCoreWarningViewController())
     }
 }
 

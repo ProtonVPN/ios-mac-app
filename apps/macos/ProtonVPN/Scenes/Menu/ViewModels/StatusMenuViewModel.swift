@@ -27,13 +27,7 @@ protocol StatusMenuViewModelFactory {
      func makeStatusMenuViewModel() -> StatusMenuViewModel
 }
 
-extension DependencyContainer: StatusMenuViewModelFactory {
-    func makeStatusMenuViewModel() -> StatusMenuViewModel {
-        return StatusMenuViewModel(factory: self)
-    }
-}
-
-class StatusMenuViewModel {
+final class StatusMenuViewModel {
     
     typealias Factory = AppSessionManagerFactory
         & NavigationServiceFactory
@@ -43,6 +37,7 @@ class StatusMenuViewModel {
         & AppStateManagerFactory
         & WiFiSecurityMonitorFactory
         & ProfileManagerFactory
+        & SessionServiceFactory
 
     private let factory: Factory
     
@@ -54,6 +49,7 @@ class StatusMenuViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
+    private lazy var sessionService: SessionService = factory.makeSessionService()
 
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
@@ -256,7 +252,9 @@ class StatusMenuViewModel {
     
     // MARK: - Footer section - Inputs
     func upgradeAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade)
+        sessionService.getUpgradePlanSession { url in
+            SafariService.openLink(url: url)
+        }
     }
     
     func showApplicationAction() {
