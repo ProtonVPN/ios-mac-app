@@ -28,6 +28,7 @@ import vpncore
 fileprivate let navigationService = NavigationService(DependencyContainer())
 fileprivate let windowService = WindowServiceMock()
 fileprivate let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
+fileprivate let sessionService = SessionServiceMock()
 
 class AlertTests: XCTestCase {
 
@@ -89,6 +90,12 @@ class AlertTests: XCTestCase {
     
 }
 
+fileprivate class SessionServiceMock: SessionService {
+    func getUpgradePlanSession(completion: @escaping (String) -> Void) {
+        completion(CoreAppConstants.ProtonVpnLinks.accountDashboard)
+    }
+}
+
 fileprivate class WindowServiceMock: WindowService {
     var displayCount = 0
     
@@ -144,9 +151,17 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     func makeWindowService() -> WindowService {
         return windowService
     }
+
+    func makeSessionService() -> SessionService {
+        return sessionService
+    }
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+    func makeSessionService() -> SessionService {
+        return sessionService
+    }
+
     func makePlanService() -> PlanService {
         return PlanServiceMock()
     }

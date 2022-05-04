@@ -26,9 +26,9 @@ import AppKit
 import Modals
 import Modals_macOS
 
-class MacAlertService {
+final class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -38,8 +38,9 @@ class MacAlertService {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var sessionService: SessionService = factory.makeSessionService()
     
-    fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
+    private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
     init(factory: Factory) {
         self.factory = factory
@@ -319,7 +320,12 @@ extension MacAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, upsellType: UpsellType) {
         let factory = ModalsFactory(colors: UpsellColors())
 
-        let upsellViewController = factory.upsellViewController(upsellType: upsellType, upgradeAction: alert.upgradeAction, learnMoreAction: alert.learnMore)
+        let upgradeAction = { [weak self] () -> Void in
+            self?.sessionService.getUpgradePlanSession { url in
+                SafariService.openLink(url: url)
+            }
+        }
+        let upsellViewController = factory.upsellViewController(upsellType: upsellType, upgradeAction: upgradeAction, learnMoreAction: alert.learnMore)
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 

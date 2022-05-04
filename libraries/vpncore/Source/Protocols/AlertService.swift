@@ -711,9 +711,6 @@ public class UpsellAlert: SystemAlert {
     public let isError = false
     public var dismiss: (() -> Void)?
     public func learnMore() { }
-    public func upgradeAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-    }
 
     public init() { }
 
