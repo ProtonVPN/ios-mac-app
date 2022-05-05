@@ -79,6 +79,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.navigationService.launched()
             }
         }
+
+        NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+    }
+
+    @objc private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
+        guard let url = event.paramDescriptor(forKeyword: keyDirectObject)?.stringValue, url.starts(with: "protonvpn://refresh") else {
+            log.debug("App activated with invalid url", category: .app)
+            return
+        }
+
+        log.debug("App activated with the refresh url, refreshing data", category: .app, metadata: ["url": "\(url)"])
+        guard AuthKeychain.fetch() != nil else {
+            log.debug("User not is logged in, not refreshing user data", category: .app)
+            return
+        }
+
+        log.debug("User is logged in, refreshing user data", category: .app)
+        container.makeAppSessionManager().attemptSilentLogIn { result in
+            switch result {
+            case .success:
+                log.debug("User data refreshed after url activation", category: .app)
+            case let .failure(error):
+                log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
+            }
+        }
     }
     
     private func setupDebugHelpers() {
