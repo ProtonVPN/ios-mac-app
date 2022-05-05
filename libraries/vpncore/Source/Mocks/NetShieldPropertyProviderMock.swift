@@ -19,6 +19,8 @@
 import Foundation
 
 public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
+    public var lastActiveNetShieldType: NetShieldType = .level1
+
     public var factory: Factory
 
     public static var netShieldNotification: Notification.Name = Notification.Name("")

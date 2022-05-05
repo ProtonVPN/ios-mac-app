@@ -273,9 +273,6 @@ final class SettingsViewModel {
                         }
                     }
                 }, onFeatureChange: { [weak self] type in
-                    if type != .off {
-                        self?.propertiesManager.lastActiveNetShieldOption = type
-                    }
                     self?.netShieldPropertyProvider.netShieldType = type
                 })
             }))

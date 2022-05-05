@@ -313,8 +313,7 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
         
         cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
-            let lastUsedType = self.propertiesManager.lastActiveNetShieldOption
-            self.changeNetShield(to: toggleOn ? lastUsedType : .off)
+            self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off)
         }))
         
         if isNetShieldOn {
@@ -356,9 +355,6 @@ class StatusViewModel {
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 self.netShieldPropertyProvider.netShieldType = newValue
-                if newValue != .off {
-                    self.propertiesManager.lastActiveNetShieldOption = newValue
-                }
                 self.vpnManager.set(netShieldType: newValue)
                 self.contentChanged?()
             case .withReconnect:
