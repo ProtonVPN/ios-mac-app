@@ -26,6 +26,9 @@ public protocol NetShieldPropertyProvider: PaidFeaturePropertyProvider {
     /// Current NetShield type
     var netShieldType: NetShieldType { get set }
 
+    /// Last active NetShield type
+    var lastActiveNetShieldType: NetShieldType { get }
+
     /// Check if current user can use NetShield
     var isUserEligibleForNetShield: Bool { get }
 
@@ -43,6 +46,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
     private let storage: Storage
     private let key = "NetShield"
+    private let lastActiveKey = "LastActiveNetShield"
     private let userInfoProvider: UserInfoProvider
 
     public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
@@ -50,22 +54,14 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         self.storage = storage
         self.userInfoProvider = userInfoProvider
     }
+
+    public var lastActiveNetShieldType: NetShieldType {
+        getNetShieldValue(key: lastActiveKey)
+    }
     
     public var netShieldType: NetShieldType {
         get {
-            guard let username = type(of: userInfoProvider).username else {
-                return defaultNetShieldType
-            }
-
-            guard let current = storage.defaults.value(forKey: key + username) as? Int, let type = NetShieldType.init(rawValue: current) else {
-                return defaultNetShieldType
-            }
-
-            if type.isUserTierTooLow(currentUserTier) {
-                return defaultNetShieldType
-            }
-
-            return type
+            getNetShieldValue(key: key)
         }
         set {
             guard let username = type(of: userInfoProvider).username else {
@@ -73,6 +69,9 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             }
 
             storage.setValue(newValue.rawValue, forKey: key + username)
+            if newValue != .off {
+                storage.setValue(newValue.rawValue, forKey: lastActiveKey + username)
+            }
             executeOnUIThread {
                 NotificationCenter.default.post(name: type(of: self).netShieldNotification, object: newValue, userInfo: nil)
             }
@@ -93,6 +92,23 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 
     public func resetForIneligibleUser() {
         netShieldType = .off
+    }
+
+    private func getNetShieldValue(key: String) -> NetShieldType {
+        guard let username = type(of: userInfoProvider).username else {
+            return defaultNetShieldType
+        }
+
+        guard let current = storage.defaults.value(forKey: key + username) as? Int,
+                let type = NetShieldType.init(rawValue: current) else {
+            return defaultNetShieldType
+        }
+
+        if type.isUserTierTooLow(currentUserTier) {
+            return defaultNetShieldType
+        }
+
+        return type
     }
     
     private var defaultNetShieldType: NetShieldType {

@@ -76,7 +76,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             onAlternativeRoutingChange?(alternativeRouting)
         }
     }
-    public var lastActiveNetShieldOption: NetShieldType = .level1
     public var smartProtocol: Bool = false
     public var streamingServices: StreamingDictServices = [:]
     public var excludeLocalNetworks: Bool = true

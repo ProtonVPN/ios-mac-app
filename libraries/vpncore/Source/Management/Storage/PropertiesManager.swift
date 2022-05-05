@@ -54,7 +54,6 @@ public protocol PropertiesManagerProtocol: class {
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
     var newBrandModalShown: Bool { get set }
-    var lastActiveNetShieldOption: NetShieldType { get set }
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -150,9 +149,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         // Discourage Secure Core
         case discourageSecureCore = "DiscourageSecureCore"
-
-        // Last Active NetShield Option
-        case lastActiveNetShieldOption = "LastActiveNetShieldOption"
 
         // Did Show New Brand Modal
         case newBrandModalShown = "NewBrandModalShown"
@@ -491,16 +487,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    public var lastActiveNetShieldOption: NetShieldType {
-        get {
-            let rawValue = storage.defaults.integer(forKey: Keys.lastActiveNetShieldOption.rawValue)
-            return NetShieldType(rawValue: rawValue) ?? .level1
-        }
-        set {
-            storage.setValue(newValue.rawValue, forKey: Keys.lastActiveNetShieldOption.rawValue)
-        }
-    }
-
     public var newBrandModalShown: Bool {
         get {
             return storage.defaults.bool(forKey: Keys.newBrandModalShown.rawValue)
@@ -602,8 +588,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
             Keys.smartProtocol.rawValue: defaultSmartProtocol,
-            Keys.discourageSecureCore.rawValue: true,
-            Keys.lastActiveNetShieldOption.rawValue: NetShieldType.level1.rawValue
+            Keys.discourageSecureCore.rawValue: true
         ])
     }
     
@@ -623,7 +608,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
         killSwitch = false
-        lastActiveNetShieldOption = .level1
     }
     
     func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {
