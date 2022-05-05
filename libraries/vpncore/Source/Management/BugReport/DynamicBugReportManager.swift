@@ -133,7 +133,7 @@ public class DynamicBugReportManager {
                                plan: (try? vpnKeychain.fetchCached().accountPlan.description) ?? "")
         
         if data.logs {
-            report.files = logFilesProvider.logFiles.compactMap { $0.1 }.reachable()
+            report.files = prepareLog(files: logFilesProvider.logFiles.compactMap { $0.1 }.reachable())
         }
         
         return report
@@ -151,6 +151,8 @@ extension DynamicBugReportManager: BugReportDelegate {
         }
         let report = fillReportBug(withData: form)
         api.report(bug: report) { requestResult in
+            self.deleteTempLog(files: report.files)
+
             switch requestResult {
             case .success:
                 self.prefilledEmail = report.email
@@ -177,6 +179,37 @@ extension DynamicBugReportManager: BugReportDelegate {
     public func checkUpdateAvailability() {
         self.updateChecker.isUpdateAvailable { available in
             self.updateAvailabilityChanged?(available)
+        }
+    }
+
+    // MARK: - Log files
+
+    private var temporaryDirectory: URL {
+        return FileManager.default.temporaryDirectory
+    }
+
+    /// Moves log files to temp folder so they are not changed/deleted before networking lib uploads them
+    private func prepareLog(files: [URL]) -> [URL] {
+        let fileManager = FileManager.default
+        return files.compactMap { fileUrl -> URL? in
+            do {
+                let tempFile = temporaryDirectory.appendingPathComponent(fileUrl.lastPathComponent)
+                if fileManager.fileExists(atPath: tempFile.path) {
+                    try fileManager.removeItem(at: tempFile)
+                }
+                try fileManager.copyItem(at: fileUrl, to: tempFile)
+                return tempFile
+            } catch {
+                log.error("Can't move log file", category: .app, event: .error, metadata: ["error": "\(error)"])
+            }
+            return nil
+        }
+    }
+
+    /// Deletes temp log files after upload is done
+    private func deleteTempLog(files: [URL]) {
+        files.forEach { file in
+            try? FileManager.default.removeItem(at: file)
         }
     }
 }

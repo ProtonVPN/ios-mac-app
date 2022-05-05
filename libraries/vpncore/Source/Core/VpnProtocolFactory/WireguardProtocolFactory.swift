@@ -105,7 +105,24 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     private func flushLogs(_ manager: NEVPNManager?) {
         try? ((manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession)?.sendProviderMessage(Message.flushLogsToFile.data, responseHandler: nil)
     }
-        
+
+    /// Tries to flish logs to a logfile. Call handler with true if flush succeeded of false otherwise.
+    public func flushLogs(responseHandler: @escaping (_ success: Bool) -> Void) {
+        vpnProviderManager(for: .status) { manager, error in
+            guard let manager = manager, let connection = (manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession else {
+                responseHandler(false)
+                return
+            }
+            do {
+                try connection.sendProviderMessage(Message.flushLogsToFile.data) { _ in
+                    responseHandler(true)
+                }
+            } catch {
+                responseHandler(false)
+            }
+        }
+    }
+
 }
 
 extension VpnManagerConfiguration {

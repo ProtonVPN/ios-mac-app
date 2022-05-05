@@ -88,7 +88,15 @@ final class DependencyContainer {
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesIncludingRotatedProvider(), updateChecker: makeUpdateManager(), vpnKeychain: makeVpnKeychain())
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(
+        api: makeReportsApiService(),
+        storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()),
+        alertService: makeCoreAlertService(),
+        propertiesManager: makePropertiesManager(),
+        logFilesProvider: makeLogFilesIncludingRotatedProvider(),
+        updateChecker: makeUpdateManager(),
+        vpnKeychain: makeVpnKeychain()
+    )
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil

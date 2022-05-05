@@ -81,7 +81,15 @@ final class DependencyContainer {
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesIncludingRotatedProvider(), updateChecker: makeUpdateChecker(), vpnKeychain: makeVpnKeychain())
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(
+        api: makeReportsApiService(),
+        storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()),
+        alertService: makeCoreAlertService(),
+        propertiesManager: makePropertiesManager(),
+        logFilesProvider: makeLogFilesIncludingRotatedProvider(),
+        updateChecker: makeUpdateChecker(),
+        vpnKeychain: makeVpnKeychain()
+    )
 
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -493,5 +501,14 @@ extension DependencyContainer: PaymentsApiServiceFactory {
 extension DependencyContainer: CouponViewModelFactory {
     func makeCouponViewModel() -> CouponViewModel {
         return CouponViewModel(paymentsApiService: makePaymentsApiService(), appSessionRefresher: appSessionManager)
+    }
+}
+
+// MARK: LogContentProviderFactory
+extension DependencyContainer: LogContentProviderFactory {
+    func makeLogDataProvider() -> LogContentProvider {
+        return LogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
+                                  appGroup: AppConstants.AppGroups.main,
+                                  wireguardProtocolFactory: wireguardFactory)
     }
 }

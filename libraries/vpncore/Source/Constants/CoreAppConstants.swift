@@ -102,5 +102,13 @@ public class CoreAppConstants {
         
     // Pause between reconnection with another protocol
     static let protocolChangeDelay: Int = 1 // seconds
-    
+
+    public struct LogFiles {
+
+        // Name of the log file from OpenVPN NE. Can't change this as it is set inside the TunnelKit pod.
+        public static var openVpn = "debug.log"
+
+        // Name of the log file from WireGuard NE.
+        public static var wireGuard = "WireGuard.log"
+    }
 }

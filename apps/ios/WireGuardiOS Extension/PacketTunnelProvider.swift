@@ -131,6 +131,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             if let error = error {
                 wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
             }
+            self.flushLogsToFile()
             completionHandler()
         }
     }
