@@ -309,14 +309,11 @@ class StatusViewModel {
         let activeConnection = appStateManager.activeConnection()
         let currentNetShieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
         let isNetShieldOn = currentNetShieldType != .off
-        if isNetShieldOn {
-            propertiesManager.lastActiveNetShieldOption = (currentNetShieldType ?? .level1).rawValue
-        }
         
         var cells = [TableViewCellModel]()
         
         cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
-            let lastUsedType = NetShieldType(rawValue: self.propertiesManager.lastActiveNetShieldOption) ?? .level1
+            let lastUsedType = self.propertiesManager.lastActiveNetShieldOption
             self.changeNetShield(to: toggleOn ? lastUsedType : .off)
         }))
         
@@ -359,6 +356,9 @@ class StatusViewModel {
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 self.netShieldPropertyProvider.netShieldType = newValue
+                if newValue != .off {
+                    self.propertiesManager.lastActiveNetShieldOption = newValue
+                }
                 self.vpnManager.set(netShieldType: newValue)
                 self.contentChanged?()
             case .withReconnect:
