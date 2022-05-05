@@ -12,15 +12,12 @@ import vpncore
 
 final class LogSelectionViewModel {
     
-    var pushHandler: ((LogsViewModel) -> Void)?
+    var pushHandler: ((LogSource) -> Void)?
     
     init(logFileProvider: LogFilesProvider) {
-        let fileManager = FileManager()
-        logCells = logFileProvider.logFiles.compactMap { (title, url) -> TableViewCellModel? in
-            guard let url = url, fileManager.fileExists(atPath: url.path) else { return nil }
-                        
-            return TableViewCellModel.pushStandard(title: title, handler: {
-                self.pushApplicationLogsViewController(withUrl: url, titled: title)
+        logCells = LogSource.allCases.compactMap { source in
+            return TableViewCellModel.pushStandard(title: source.title, handler: {
+                self.pushApplicationLogsViewController(source: source)
             })
         }
     }
@@ -34,8 +31,8 @@ final class LogSelectionViewModel {
     
     private var logCells = [TableViewCellModel]()
         
-    private func pushApplicationLogsViewController(withUrl url: URL, titled title: String) {
-        pushHandler?(LogsViewModel(title: title, logFile: url))
+    private func pushApplicationLogsViewController(source: LogSource) {
+        pushHandler?(source)
     }
         
 }

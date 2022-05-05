@@ -19,7 +19,7 @@
 import Foundation
 
 /// Merges other LogFileProviders results into one array.
-/// Removed duplicates by checking URL's. First added entry takes precedence in case of two entries with the same path.
+/// Removes duplicates by checking URLs. First added entry takes precedence in case of two entries with the same path.
 public class MergeLogFilesProvider: LogFilesProvider {
 
     private let providers: [LogFilesProvider]

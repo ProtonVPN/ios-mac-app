@@ -124,7 +124,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
             log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "OpenVPN"])
             return nil
         }
-        return sharedFolderURL.appendingPathComponent("debug.log")
+        return sharedFolderURL.appendingPathComponent(CoreAppConstants.LogFiles.openVpn)
     }
     
     // MARK: - Private stuff

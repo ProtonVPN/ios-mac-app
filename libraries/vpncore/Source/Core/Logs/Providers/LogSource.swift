@@ -8,6 +8,20 @@
 
 import Foundation
 
+public enum LogSource: CaseIterable {
+    case app
+    case openvpn
+    case wireguard
+
+    public var title: String {
+        switch self {
+        case .app: return LocalizedString.applicationLogs
+        case .openvpn: return LocalizedString.openVpnLogs
+        case .wireguard: return LocalizedString.wireguardLogs
+        }
+    }
+}
+
 /// Provides all available log files together with their names
 public protocol LogFilesProvider {
     var logFiles: [(String, URL?)] { get }

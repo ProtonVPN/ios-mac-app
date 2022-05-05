@@ -54,7 +54,7 @@ protocol SettingsService {
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeBatteryUsageViewController() -> BatteryUsageViewController
-    func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController
+    func makeLogsViewController(logSource: LogSource) -> LogsViewController
     func presentReportBug()
 }
 
@@ -304,6 +304,7 @@ extension NavigationService: SettingsService {
     }
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
+        
         return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: factory.makeLogFilesProvider()), settingsService: self)
     }
     
@@ -311,8 +312,8 @@ extension NavigationService: SettingsService {
         return BatteryUsageViewController()
     }
     
-    func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
-        return LogsViewController(viewModel: viewModel)
+    func makeLogsViewController(logSource: LogSource) -> LogsViewController {
+        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogDataProvider().getLogData(for: logSource)))
     }
     
     func presentReportBug() {

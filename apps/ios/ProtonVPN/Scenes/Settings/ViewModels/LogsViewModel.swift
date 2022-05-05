@@ -11,17 +11,12 @@ import Foundation
 import vpncore
 
 struct LogsViewModel {
-    
+
     let title: String
-    let logFile: URL
-    
-    var logs: String {
-        do {
-            return try String(contentsOf: logFile, encoding: .ascii)
-        } catch {
-            log.error("Error reading log file (\(logFile): \(error)", category: .ui)
-            return ""
-        }
+    let logContent: LogContent
+
+    func loadLogs(callback: @escaping (String) -> Void) {
+        logContent.loadContent(callback: callback)
     }
     
 }
