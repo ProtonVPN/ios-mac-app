@@ -132,7 +132,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     
     private func retrieveProperties(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
-                                    lastKnownIp: propertiesManager.userIp) { [weak self] result in
+                                    lastKnownLocation: propertiesManager.userLocation) { [weak self] result in
             switch result {
             case let .success(properties):
                 guard let self = self else {
@@ -145,7 +145,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 self.serverStorage.store(properties.serverModels)
 
                 if self.appStateManager.state.isDisconnected {
-                    self.propertiesManager.userIp = properties.ip
+                    self.propertiesManager.userLocation = properties.location
                 }
                 self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
                 self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
@@ -167,7 +167,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
                 guard let self = self, // only fail if there is a major reason
                       !self.serverStorage.fetch().isEmpty,
-                      self.propertiesManager.userIp != nil,
+                      self.propertiesManager.userLocation?.ip != nil,
                       !(error is KeychainError) else {
 
                     failure(error)

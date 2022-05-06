@@ -399,7 +399,7 @@ class StatusMenuViewModel {
         if isConnected {
             return appStateManager.activeConnection()?.serverIp.exitIp
         } else {
-            return propertiesManager.userIp
+            return propertiesManager.userLocation?.ip
         }
     }
     

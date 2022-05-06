@@ -112,7 +112,7 @@ public class DynamicBugReportManager {
         let os = "MacOS"
         let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
         #endif
-        
+
         var report = ReportBug(os: os,
                                osVersion: osVersion,
                                client: "App",
@@ -122,8 +122,8 @@ public class DynamicBugReportManager {
                                description: data.text,
                                username: username,
                                email: data.email,
-                               country: "",
-                               ISP: "",
+                               country: propertiesManager.userLocation?.country ?? "",
+                               ISP: propertiesManager.userLocation?.isp ?? "",
                                plan: planname)
         
         if data.logs {

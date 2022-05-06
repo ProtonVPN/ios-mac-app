@@ -57,7 +57,7 @@ public protocol PropertiesManagerProtocol: class {
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
-    var userIp: String? { get set }
+    var userLocation: UserLocation? { get set }
     var userDataDisclaimerAgreed: Bool { get set }
     
     var trialWelcomed: Bool { get set }
@@ -120,7 +120,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case quickConnectProfile = "QuickConnect_"
         case secureCoreToggle = "SecureCoreToggle"
         case intentionallyDisconnected = "IntentionallyDisconnected"
-        case userIp = "UserIp"
+        case userLocation = "UserLocation"
         case userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
         case lastBugReportEmail = "LastBugReportEmail"
 
@@ -324,14 +324,14 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(newValue, forKey: Keys.intentionallyDisconnected.rawValue)
         }
     }
-    
-    public var userIp: String? {
+
+    public var userLocation: UserLocation? {
         get {
-            return storage.defaults.object(forKey: Keys.userIp.rawValue) as? String
+            return storage.getDecodableValue(UserLocation.self, forKey: Keys.userLocation.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.userIp.rawValue)
-            postNotificationOnUIThread(type(of: self).userIpNotification, object: userIp)
+            storage.setEncodableValue(newValue, forKey: Keys.userLocation.rawValue)
+            postNotificationOnUIThread(type(of: self).userIpNotification, object: userLocation)
         }
     }
     

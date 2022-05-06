@@ -50,7 +50,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         return secureCoreToggle ? .secureCore : .standard
     }
     public var intentionallyDisconnected: Bool = false
-    public var userIp: String?
+    public var userLocation: UserLocation?
     public var userDataDisclaimerAgreed: Bool = false
     public var trialWelcomed: Bool = false
     public var warnedTrialExpiring: Bool = false

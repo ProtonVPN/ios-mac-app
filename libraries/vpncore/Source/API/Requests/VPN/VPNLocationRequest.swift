@@ -31,3 +31,15 @@ final class VPNLocationRequest: Request {
         return false
     }
 }
+
+public struct UserLocation: Codable {
+    public let ip: String
+    public let country: String
+    public let isp: String
+
+    public init(dic: JSONDictionary) throws {
+        ip = try dic.stringOrThrow(key: "IP")
+        country = try dic.stringOrThrow(key: "Country")
+        isp = try dic.stringOrThrow(key: "ISP")
+    }
+}

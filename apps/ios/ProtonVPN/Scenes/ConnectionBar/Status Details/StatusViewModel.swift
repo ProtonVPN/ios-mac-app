@@ -168,7 +168,7 @@ class StatusViewModel {
     
     private var technicalDetailsSectionDisconnected: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
+            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userLocation?.ip ?? LocalizedString.unavailable),
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.notConnected),
         ]
         
@@ -177,7 +177,7 @@ class StatusViewModel {
 
     private var technicalDetailsSectionConnecting: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
+            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userLocation?.ip ?? LocalizedString.unavailable),
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.connecting),
         ]
 
@@ -186,7 +186,7 @@ class StatusViewModel {
 
     private var technicalDetailsSectionLoadingConnectionInfo: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
+            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userLocation?.ip ?? LocalizedString.unavailable),
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.loadingConnectionInfo),
         ]
 
