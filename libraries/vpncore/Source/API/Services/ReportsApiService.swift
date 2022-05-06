@@ -37,14 +37,12 @@ public class ReportsApiService {
     }
     
     public func report(bug: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
-        
-        var i = 0
-        var files = [String: URL]()
-        for file in bug.files.reachable() {
-            files["File\(i)"] = file
-            i += 1
-        }
-        
+        let files = bug.files.reachable()
+            .enumerated()
+            .reduce(into: [String: URL]()) { result, file in
+                result["File\(file.offset)"] = file.element
+            }
+
         let request = ReportsBugs(bug)
         networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
             switch result {

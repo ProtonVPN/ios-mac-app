@@ -33,13 +33,13 @@ public class VpnApiService {
     }
     
     // swiftlint:disable function_body_length cyclomatic_complexity
-    public func vpnProperties(isDisconnected: Bool, lastKnownIp: String?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
+    public func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         var rCredentials: VpnCredentials?
         var rServerModels: [ServerModel]?
         var rStreamingServices: VPNStreamingResponse?
-        var rUserIp: String?
+        var rLocation: UserLocation?
         var rClientConfig: ClientConfig?
         var rError: Error?
 
@@ -52,10 +52,10 @@ public class VpnApiService {
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure = { [weak self] (ip: String?) in
-            rUserIp = ip
+        let ipResolvedClosure = { [weak self] (location: UserLocation?) in
+            rLocation = location
             
-            self?.serverInfo(for: rUserIp) { result in
+            self?.serverInfo(for: location?.ip) { result in
                 switch result {
                 case let .success(serverModels):
                     rServerModels = serverModels
@@ -70,16 +70,16 @@ public class VpnApiService {
         dispatchGroup.enter()
         if isDisconnected {
             // Just use last known IP if getting new one failed
-            userIp { result in
+            userLocation { result in
                 switch result {
-                case let .success(ip):
-                    ipResolvedClosure(ip)
+                case let .success(location):
+                    ipResolvedClosure(location)
                 case .failure:
-                    ipResolvedClosure(lastKnownIp)
+                    ipResolvedClosure(lastKnownLocation)
                 }
             }
         } else {
-            ipResolvedClosure(lastKnownIp)
+            ipResolvedClosure(lastKnownLocation)
         }
         
         dispatchGroup.enter()
@@ -117,7 +117,7 @@ public class VpnApiService {
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
+                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, location: rLocation, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
             } else if let error = rError {
                 completion(.failure(error))
             } else {
@@ -131,7 +131,7 @@ public class VpnApiService {
         
         var rServerModels: [ServerModel]?
         var rStreamingServices: VPNStreamingResponse?
-        var rUserIp: String?
+        var rLocation: UserLocation?
         var rClientConfig: ClientConfig?
         var rError: Error?
 
@@ -140,16 +140,16 @@ public class VpnApiService {
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure = { [weak self] (ip: String) in
-            rUserIp = ip
+        let ipResolvedClosure = { [weak self] (location: UserLocation) in
+            rLocation = location
             
             // Only update servers if the user's IP has changed
-            guard lastKnownIp != rUserIp else {
+            guard lastKnownIp != rLocation?.ip else {
                 dispatchGroup.leave()
                 return
             }
 
-            self?.serverInfo(for: rUserIp) { result in
+            self?.serverInfo(for: rLocation?.ip) { result in
                 switch result {
                 case let .success(serverModels):
                     rServerModels = serverModels
@@ -172,10 +172,10 @@ public class VpnApiService {
         }
 
         dispatchGroup.enter()
-        userIp { result in
+        userLocation { result in
             switch result {
-            case let .success(ip):
-                ipResolvedClosure(ip)
+            case let .success(location):
+                ipResolvedClosure(location)
             case let.failure(error):
                 failureClosure(error)
             }
@@ -194,7 +194,7 @@ public class VpnApiService {
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
+                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: nil, location: rLocation, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
             } else if let error = rError {
                 completion(.failure(error))
             } else {
@@ -278,17 +278,17 @@ public class VpnApiService {
         }
     }
     
-    public func userIp(completion: @escaping (Result<String, Error>) -> Void) {
+    public func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
         networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
-                guard let ip = response.string("IP") else {
+                guard let userLocation = try? UserLocation(dic: response) else {
                     let error = ParseError.userIpParse
                     log.error("'IP' field not present in user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
                     completion(.failure(error))
                     return
                 }
-                completion(.success(ip))
+                completion(.success(userLocation))
             case let .failure(error):
                 completion(.failure(error))
             }

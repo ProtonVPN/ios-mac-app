@@ -122,7 +122,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     func loadDataWithoutFetching() -> Bool {
         let models = serverStorage.fetch()
         guard !models.isEmpty,
-              self.propertiesManager.userIp != nil else {
+              self.propertiesManager.userLocation?.ip != nil else {
             return false
         }
 
@@ -136,7 +136,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     func canPreviewApp() -> Bool {
         let models = serverStorage.fetch()
-        guard !models.isEmpty, self.propertiesManager.userIp != nil else {
+        guard !models.isEmpty, self.propertiesManager.userLocation?.ip != nil else {
             return false
         }
         return true
@@ -144,7 +144,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
-                                    lastKnownIp: propertiesManager.userIp) { [weak self] result in
+                                    lastKnownLocation: propertiesManager.userLocation) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -158,7 +158,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.serverStorage.store(properties.serverModels)
-                self.propertiesManager.userIp = properties.ip
+                self.propertiesManager.userLocation = properties.location
 
                 self.resolveActiveSession(success: {
                     self.refreshVpnAuthCertificate(success: success, failure: failure)
@@ -170,7 +170,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
                 let models = self.serverStorage.fetch()
                 guard !models.isEmpty, // only fail if there is a major reason
-                    self.propertiesManager.userIp != nil,
+                      self.propertiesManager.userLocation?.ip != nil,
                       !(error is vpncore.KeychainError) else {
                         failure(error)
                         return
@@ -204,7 +204,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         var vpnPropertiesError: Error?
         group.enter()
         vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
-                                    lastKnownIp: propertiesManager.userIp) { [weak self] result in
+                                    lastKnownLocation: propertiesManager.userLocation) { [weak self] result in
             let fail = { (error: Error) in
                 vpnPropertiesError = error
                 group.leave()
@@ -227,7 +227,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.serverStorage.store(properties.serverModels)
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
-                self.propertiesManager.userIp = properties.ip
+                self.propertiesManager.userLocation = properties.location
                 self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
                 self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
                 self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
@@ -251,7 +251,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
                 let models = self.serverStorage.fetch()
                 guard !models.isEmpty, // only fail if there is a major reason
-                      self.propertiesManager.userIp != nil,
+                      self.propertiesManager.userLocation?.ip != nil,
                       !(error is vpncore.KeychainError) else {
                           fail(error)
                           return

@@ -352,14 +352,14 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
             
-            self.vpnApiService.refreshServerInfoIfIpChanged(lastKnownIp: self.propertiesManager.userIp) { [weak self] result in
+            self.vpnApiService.refreshServerInfoIfIpChanged(lastKnownIp: self.propertiesManager.userLocation?.ip) { [weak self] result in
                 guard let self = self else {
                     return
                 }
 
                 switch result {
                 case let .success(properties):
-                    self.propertiesManager.userIp = properties.ip
+                    self.propertiesManager.userLocation = properties.location
                     self.serverStorage.store(properties.serverModels)
                     self.profileManager.refreshProfiles()
                 case .failure:

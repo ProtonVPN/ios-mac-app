@@ -21,7 +21,7 @@ import Foundation
 public extension PropertiesManager {
     
     func logCurrentState() {
-        let keysToLog = Set(Keys.allCases).subtracting([Keys.userIp, Keys.streamingServices, Keys.servicePlans, Keys.defaultPlanDetails, Keys.streamingResourcesUrl])
+        let keysToLog = Set(Keys.allCases).subtracting([Keys.userLocation, Keys.streamingServices, Keys.servicePlans, Keys.defaultPlanDetails, Keys.streamingResourcesUrl])
         
         var message = ""
         for key in keysToLog {

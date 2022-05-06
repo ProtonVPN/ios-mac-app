@@ -85,7 +85,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         guard loggedIn else { return }
         lastServerLoadsRefresh = Date()
         
-        vpnApiService.loads(lastKnownIp: propertiesManager.userIp) { result in
+        vpnApiService.loads(lastKnownIp: propertiesManager.userLocation?.ip) { result in
             switch result {
             case let .success(properties):
                 self.serverStorage.update(continuousServerProperties: properties)

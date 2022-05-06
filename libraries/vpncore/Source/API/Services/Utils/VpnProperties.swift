@@ -25,13 +25,13 @@ public struct VpnProperties {
     public let serverModels: [ServerModel]
     public let streamingResponse: VPNStreamingResponse?
     public let vpnCredentials: VpnCredentials?
-    public let ip: String?
+    public let location: UserLocation?
     public let clientConfig: ClientConfig
 
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, streamingResponse: VPNStreamingResponse?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, location: UserLocation?, clientConfig: ClientConfig?, streamingResponse: VPNStreamingResponse?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
-        self.ip = ip
+        self.location = location
         self.clientConfig = clientConfig ?? ClientConfig()
         self.streamingResponse = streamingResponse
     }
