@@ -24,9 +24,7 @@ class LoadingView: NSView {
     @IBOutlet private weak var loadingLabel: PVPNTextField! {
         didSet {
             let font = NSFont.themeFont(.heading3)
-            let fontManager = NSFontManager()
-            let italicizedFont = fontManager.convert(font, toHaveTrait: [.italicFontMask])
-            loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.styled(font: italicizedFont)
+            loadingLabel.attributedStringValue = LocalizedString.loadingScreenSlogan.styled(font: font)
         }
     }
 
