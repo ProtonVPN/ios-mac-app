@@ -88,10 +88,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="500" height="55"/>
                     <subviews>
                         <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nZr-XJ-b9a">
-                            <rect key="frame" x="358" y="20" width="122" height="35"/>
+                            <rect key="frame" x="360" y="20" width="120" height="35"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKc-w2-Gxb" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="35"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="49" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="ytC-EH-AwR"/>
                                     </constraints>
@@ -101,12 +101,12 @@
                                     </buttonCell>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                            <real key="value" value="10"/>
+                                            <real key="value" value="30"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MgT-bO-XvA" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="58" y="0.0" width="64" height="35"/>
+                                    <rect key="frame" x="57" y="0.0" width="63" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="Z8b-Em-jty"/>
                                     </constraints>
@@ -116,7 +116,7 @@
                                     </buttonCell>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                            <real key="value" value="10"/>
+                                            <real key="value" value="30"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </button>
