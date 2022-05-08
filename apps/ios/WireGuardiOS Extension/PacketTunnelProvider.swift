@@ -153,6 +153,27 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
+    override func sleep(completionHandler: @escaping () -> Void) {
+        log.info("sleep()")
+
+        #if CHECK_CONNECTIVITY
+        self.stopTestingConnectivity()
+        #endif
+
+        certificateRefreshManager.stop {
+            completionHandler()
+        }
+    }
+
+    override func wake() {
+        log.info("wake()")
+        certificateRefreshManager.start()
+
+        #if CHECK_CONNECTIVITY
+        startTestingConnectivity()
+        #endif
+    }
+
     // MARK: - Logs
 
     // LoggingSystem crashes if bootstrap is called more than once during process lifetime, so we have to remember it was already set up

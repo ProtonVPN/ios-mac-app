@@ -24,21 +24,33 @@ final class ExtensionCertificateRefreshManager {
     private let apiService: ExtensionAPIService
     private let workQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
 
+    // Save stop handler for when certificate refresh finishes
+    private var stopHandler: (() -> Void)?
+
     init(storage: Storage, dataTaskFactory: DataTaskFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
         self.apiService = ExtensionAPIService(storage: storage, dataTaskFactory: dataTaskFactory, keychain: keychain)
     }
-    
+
+    /// Start timer that will check if certificate is due for refresh. First run will be executed asap (but on another thread).
     func start() {
         log.info("Starting ExtensionCertificateRefreshManager.", category: .userCert)
         startTimer()
         startNetworkMonitor()
     }
 
-    func stop() {
-        log.info("Stoping ExtensionCertificateRefreshManager.", category: .userCert)
-        stopTimer()
-        stopNetworkMonitor()
+    /// Stop all activity and call handler when finished
+    func stop(handler: (() -> Void)? = nil) {
+        workQueue.async {
+            log.info("Stoping ExtensionCertificateRefreshManager.", category: .userCert)
+            self.stopTimer()
+            guard self.certificateRefreshStarted != nil else {
+                handler?()
+                return
+            }
+            log.info("Waiting for certificate refresh before declaring ExtensionCertificateRefreshManager as fully stopped.", category: .userCert)
+            self.stopHandler = handler
+        }
     }
     
     // MARK: - Timer
@@ -55,9 +67,7 @@ final class ExtensionCertificateRefreshManager {
     }
 
     private func stopTimer() {
-        workQueue.async {
-            self.timer = nil
-        }
+        self.timer = nil
     }
 
     // MARK: - Network monitor
@@ -125,6 +135,7 @@ final class ExtensionCertificateRefreshManager {
 
         guard let currentKeys = vpnAuthenticationStorage.getStoredKeys() else {
             log.error("Can't load current keys. Nothing to refresh. Giving up.", category: .userCert, event: .refreshError)
+            certificateRefreshFinished()
             return
         }
 
@@ -139,8 +150,14 @@ final class ExtensionCertificateRefreshManager {
             case .failure(let error):
                 log.error("Failed to refresh certificate through API: \(error)", category: .userCert)
             }
-            self.certificateRefreshStarted = nil
+            self.certificateRefreshFinished()
         }
+    }
+    
+    private func certificateRefreshFinished() {
+        certificateRefreshStarted = nil
+        stopHandler?()
+        stopHandler = nil
     }
 
 }
