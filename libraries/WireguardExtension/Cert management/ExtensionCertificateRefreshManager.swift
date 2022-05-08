@@ -36,7 +36,6 @@ final class ExtensionCertificateRefreshManager {
     func start() {
         log.info("Starting ExtensionCertificateRefreshManager.", category: .userCert)
         startTimer()
-        startNetworkMonitor()
     }
 
     /// Stop all activity and call handler when finished
@@ -68,28 +67,6 @@ final class ExtensionCertificateRefreshManager {
 
     private func stopTimer() {
         self.timer = nil
-    }
-
-    // MARK: - Network monitor
-
-    private let networkMonitor = NWPathMonitor()
-
-    /// Starts monitoring network to check if we have valid certificate rigth after we have working network connection.
-    /// This allows to rely less on timers and refresh certificate if needed before user starts to use the internet.
-    private func startNetworkMonitor() {
-        networkMonitor.pathUpdateHandler = { [weak self] path in
-            guard path.status == .satisfied || path.status == .requiresConnection else {
-                log.info("Connection is not satisfiable. Will not check for certificate now.", category: .userCert)
-                return
-            }
-            log.info("Connection bacame satisfiable. Will check for certificate now.", category: .userCert)
-            self?.checkCertificatesNow()
-        }
-        networkMonitor.start(queue: self.workQueue)
-    }
-
-    private func stopNetworkMonitor() {
-        networkMonitor.cancel()
     }
 
     // MARK: - Certificate
@@ -124,7 +101,8 @@ final class ExtensionCertificateRefreshManager {
         #endif
 
         if let certificateRefreshStartedAt = certificateRefreshStarted {
-            if certificateRefreshStartedAt.timeIntervalSinceNow < certificateRefreshTimeout {
+            // `timeIntervalSinceNow` is negative in case the date is in the past, so always in our case.
+            if -certificateRefreshStartedAt.timeIntervalSinceNow < certificateRefreshTimeout {
                 log.debug("Certificate refresh is in progress. Skipping.", category: .userCert, event: .refreshError, metadata: ["certificateRefreshStarted": "\(certificateRefreshStartedAt)"])
                 return
             }
