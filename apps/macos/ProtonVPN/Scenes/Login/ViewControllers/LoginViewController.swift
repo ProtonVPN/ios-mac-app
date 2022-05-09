@@ -212,7 +212,8 @@ final class LoginViewController: NSViewController {
         startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.styled(alignment: .left)
         startOnBootButton.setAccessibilityLabel(LocalizedString.startOnBoot)
         
-        startOnBootButton.drawsUnderOverlay = false
+        startOnBootButton.drawsUnderOverlay = true
+        startOnBootButton.maskColor = .cgColor(.background)
         startOnBootButton.buttonView?.tag = Switch.startOnBoot.rawValue
         startOnBootButton.setState(viewModel.startOnBoot ? .on : .off)
         startOnBootButton.delegate = self
