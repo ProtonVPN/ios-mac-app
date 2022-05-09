@@ -50,4 +50,10 @@
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:apps/iOS/iOS.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:apps/macOS/macOS.xcodeproj">
+   </FileRef>
 </Workspace>
