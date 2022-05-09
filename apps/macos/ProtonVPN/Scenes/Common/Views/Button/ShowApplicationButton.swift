@@ -38,6 +38,6 @@ class ShowApplicationButton: HoverDetectionButton {
     
     private func configureView() {
         let hover: AppTheme.Style = isHovered ? .hovered : []
-        attributedTitle = LocalizedString.showProtonvpn.styled([.interactive] + hover)
+        attributedTitle = LocalizedString.showProtonvpn.styled([.interactive, .hint] + hover)
     }
 }
