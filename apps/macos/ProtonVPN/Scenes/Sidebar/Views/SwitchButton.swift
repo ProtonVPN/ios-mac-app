@@ -100,8 +100,6 @@ class SwitchButton: NSView, CAAnimationDelegate {
         buttonHeight = Int(super.frame.height)
         knobPadding = 4
         knobSize = buttonHeight - 2 * knobPadding
-        mask = ButtonMask(frame: bounds)
-        mask.drawBorder = !isOn
         
         initialSetup()
     }
@@ -141,6 +139,9 @@ class SwitchButton: NSView, CAAnimationDelegate {
         buttonView = getButtonView()
         
         buttonView?.addSubview(innerView!)
+
+        mask = ButtonMask(frame: bounds)
+        mask.drawBorder = !isOn
         
         if drawsUnderOverlay {
             buttonView?.addSubview(mask)
