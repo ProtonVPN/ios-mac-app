@@ -23,7 +23,6 @@
 import vpncore
 import UIKit
 import Foundation
-import TunnelKit
 import Search
 import Review
 

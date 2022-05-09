@@ -177,7 +177,8 @@ end
 
 target 'ProtonVPN OpenVPN' do
   project 'apps/macOS/macOS.xcodeproj'
-  vpn_core
+  use_frameworks!
+  openvpn
 end
 
 target 'ProtonVPN WireGuard' do

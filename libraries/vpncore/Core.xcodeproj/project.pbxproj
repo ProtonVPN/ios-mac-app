@@ -891,9 +891,9 @@
 		E534EA4A2806B68700BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "Localization/es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4B2806B68D00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
-		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E53D64B728115B580060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
+		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E91201F527BB96260058BE94 /* FolderLogFilesProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProviderTests.swift; sourceTree = "<group>"; };
 		E91201F927BBA6F80058BE94 /* DefaultLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLogFilesProvider.swift; sourceTree = "<group>"; };
 		E91201FC27BBA7100058BE94 /* FolderLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderLogFilesProvider.swift; sourceTree = "<group>"; };
@@ -2619,8 +2619,6 @@
 				E9DC79C1262DBF01001A0FC0 /* SmartProtocolAvailabilityChecker.swift in Sources */,
 				F31321A725E3AA7A006F414F /* DoH.swift in Sources */,
 				E1616C0321C95DB500F42D79 /* ProfileStorage.swift in Sources */,
-				4242B02E2465A41A0042145A /* VPNSessionsCountRequest.swift in Sources */,
-				4242B02E2465A41A0042145A /* VPNSessionsCountRequest.swift in Sources */,
 				F38432F3281ACDFF00850EAA /* PaidFeaturePropertyProviderFactoryMock.swift in Sources */,
 				423705E1262D9E8100A920CF /* VPNStreamingRequest.swift in Sources */,
 				E97579D1282128ED0029C9E2 /* OSLogFormatter.swift in Sources */,
