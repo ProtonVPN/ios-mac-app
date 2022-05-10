@@ -31,6 +31,7 @@ final class CouponViewController: NSViewController {
     @IBOutlet private weak var textField: TextFieldWithFocus!
     @IBOutlet private weak var textFieldHorizontalLine: NSBox!
     @IBOutlet private weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet private weak var tooltipTriangle: NSImageCell!
 
     weak var delegate: CouponViewControllerDelegate?
 
@@ -70,6 +71,7 @@ final class CouponViewController: NSViewController {
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
 
+        tooltipTriangle.image = NSImage(named: "ReverseTriangle")?.colored(context: .background)
         applyButton.title = LocalizedString.applyCoupon
 
         textField.textColor = .color(.text)
@@ -78,6 +80,8 @@ final class CouponViewController: NSViewController {
         textField.usesSingleLineMode = true
         textField.delegate = self
         textField.focusDelegate = self
+
+        closeButton.image = AppTheme.Icon.crossSmall
 
         setLineColors(isFirstResponder: false)
         errorLabel.textColor = .color(.text, .danger)
@@ -116,11 +120,14 @@ final class CouponViewController: NSViewController {
             return
         }
 
-        let icon = NSAttributedString.imageAttachment(named: "ic-exclamation-circle", width: 16, height: 16)!
+        let font: NSFont = .themeFont()
+        let icon = AppTheme.Icon.exclamationCircleFilled.asAttachment(style: .danger,
+                                                                      size: .square(16),
+                                                                      centeredVerticallyForFont: font)
         let text = NSMutableAttributedString(
             string: " " + message,
             attributes: [
-                .font: NSFont.themeFont(),
+                .font: font,
                 .baselineOffset: 3,
                 .foregroundColor: NSColor.color(.text, .danger)
             ]

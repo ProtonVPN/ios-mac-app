@@ -693,7 +693,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
             message = LocalizedString.maximumDeviceReachedDescription
         }
         
-        actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
     }
 }

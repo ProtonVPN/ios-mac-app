@@ -14,6 +14,7 @@
                 <outlet property="progressIndicator" destination="cWc-OW-tBM" id="khx-Nw-ddI"/>
                 <outlet property="textField" destination="JSe-k5-uXE" id="yvb-1g-ck2"/>
                 <outlet property="textFieldHorizontalLine" destination="Sdp-xD-nYo" id="NR8-IC-tnf"/>
+                <outlet property="tooltipTriangle" destination="qiX-tc-acS" id="7IE-hb-V7I"/>
                 <outlet property="view" destination="c22-O7-iKe" id="aqx-qP-jeE"/>
             </connections>
         </customObject>
@@ -36,8 +37,8 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pXG-Rm-2Ab">
-                                            <rect key="frame" x="412" y="368" width="20" height="20"/>
-                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-cross" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="VeX-aO-h1j">
+                                            <rect key="frame" x="408" y="364" width="24" height="24"/>
+                                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-cross-small" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="VeX-aO-h1j">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -170,6 +171,6 @@
     </objects>
     <resources>
         <image name="ReverseTriangle" width="64" height="8"/>
-        <image name="ic-cross" width="20" height="20"/>
+        <image name="ic-cross-small" width="24" height="24"/>
     </resources>
 </document>

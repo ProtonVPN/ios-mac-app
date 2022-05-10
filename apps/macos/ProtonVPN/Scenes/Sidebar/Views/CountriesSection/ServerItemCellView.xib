@@ -22,7 +22,7 @@
                                 <constraint firstAttribute="width" constant="22" id="7C3-AU-qai"/>
                                 <constraint firstAttribute="height" constant="22" id="S0t-gY-fJc"/>
                             </constraints>
-                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_maintenance" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="AZ1-gW-NzA">
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-wrench" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="AZ1-gW-NzA">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -60,14 +60,14 @@
                                 <constraint firstAttribute="width" constant="16" id="6QB-6f-Fdv"/>
                                 <constraint firstAttribute="height" constant="16" id="gFA-OU-rtc"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="double-arrow-right-green" id="25F-RR-AXu"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-chevrons-right" id="25F-RR-AXu"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="61R-2Y-fBC">
                             <rect key="frame" x="162" y="0.0" width="16" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="cKi-1L-PQn"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_smart-routing" id="YEC-V1-OMH"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-globe" id="YEC-V1-OMH"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Meu-TF-bG3">
@@ -75,7 +75,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="IaS-xx-SrL"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_p2p" id="ZZQ-lv-SkV"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-arrows-switch" id="ZZQ-lv-SkV"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Vh-5IW">
@@ -83,7 +83,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="0cJ-0y-Rxt"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_tor" id="in4-Bp-Qe5"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-brand-tor" id="in4-Bp-Qe5"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="xnJ-CI-Tms">
@@ -91,7 +91,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="16" id="z2R-cG-iyr"/>
                             </constraints>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_streaming" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="rmO-kh-wEA">
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic-play" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="rmO-kh-wEA">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -203,11 +203,11 @@
         </customView>
     </objects>
     <resources>
-        <image name="double-arrow-right-green" width="60" height="60"/>
-        <image name="ic_maintenance" width="16" height="16"/>
-        <image name="ic_p2p" width="16" height="16"/>
-        <image name="ic_smart-routing" width="16" height="16"/>
-        <image name="ic_streaming" width="16" height="16"/>
-        <image name="ic_tor" width="16" height="16"/>
+        <image name="ic-arrows-switch" width="24" height="24"/>
+        <image name="ic-brand-tor" width="24" height="24"/>
+        <image name="ic-chevrons-right" width="24" height="24"/>
+        <image name="ic-globe" width="24" height="24"/>
+        <image name="ic-play" width="24" height="24"/>
+        <image name="ic-wrench" width="24" height="24"/>
     </resources>
 </document>

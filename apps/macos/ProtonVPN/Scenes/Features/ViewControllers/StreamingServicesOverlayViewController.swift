@@ -32,6 +32,7 @@ class StreamingServicesOverlayViewController: NSViewController {
     @IBOutlet private weak var servicesCV: NSCollectionView!
     @IBOutlet private weak var extraLbl: NSTextField!
     @IBOutlet private weak var servicesCVHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var dismissButton: HoverDetectionButton!
     
     private let viewModel: StreamingServicesOverlayViewModelProtocol
     private let cellIdentifier = NSUserInterfaceItemIdentifier("StreamOptionCVItem")
@@ -58,6 +59,7 @@ class StreamingServicesOverlayViewController: NSViewController {
         servicesCV.delegate = self
         servicesCV.dataSource = self
         servicesCV.backgroundColors = [backgroundColor]
+        dismissButton.image = AppTheme.Icon.crossSmall
         view.wantsLayer = true
         view.layer?.backgroundColor = backgroundColor.cgColor
     }

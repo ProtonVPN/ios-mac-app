@@ -29,7 +29,8 @@ class FeaturesOverlayViewController: NSViewController {
     @IBOutlet private weak var p2pRow: FeatureRowView!
     @IBOutlet private weak var torRow: FeatureRowView!
     @IBOutlet private weak var featuresTitleTF: NSTextField!
-    
+    @IBOutlet private weak var dismissButton: HoverDetectionButton!
+
     private let viewModel: FeaturesOverlayViewModelProtocol
     
     init(viewModel: FeaturesOverlayViewModelProtocol) {
@@ -48,6 +49,7 @@ class FeaturesOverlayViewController: NSViewController {
         streamingRow.viewModel = viewModel.streamingViewModel
         p2pRow.viewModel = viewModel.p2pViewModel
         torRow.viewModel = viewModel.torViewModel
+        dismissButton.image = AppTheme.Icon.crossSmall
         view.wantsLayer = true
         view.layer?.backgroundColor = .cgColor(.background)
     }
