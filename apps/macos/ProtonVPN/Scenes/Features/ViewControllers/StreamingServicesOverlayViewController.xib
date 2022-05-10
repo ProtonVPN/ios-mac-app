@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="StreamingServicesOverlayViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="countryLbl" destination="0Ev-RC-2z1" id="7Wo-pF-VcS"/>
+                <outlet property="dismissButton" destination="4Kx-Va-rYd" id="kiR-Ma-jya"/>
                 <outlet property="extraLbl" destination="L7D-I2-BMb" id="4Ks-CZ-0jg"/>
                 <outlet property="featuresLbl" destination="MD5-AI-XTA" id="ek5-68-eHf"/>
                 <outlet property="instructionLbl" destination="IHU-yC-LzD" id="swR-nT-Kz5"/>
@@ -42,7 +43,7 @@
                         <constraint firstAttribute="width" constant="24" id="akp-g2-Xus"/>
                         <constraint firstAttribute="width" secondItem="4Kx-Va-rYd" secondAttribute="height" multiplier="1:1" id="rtd-0T-yDB"/>
                     </constraints>
-                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_cross" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="dW2-P9-RfH">
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-cross-small" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="dW2-P9-RfH">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -173,7 +174,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="ic-cross-small" width="24" height="24"/>
         <image name="ic-play" width="24" height="24"/>
-        <image name="ic_cross" width="10" height="10"/>
     </resources>
 </document>

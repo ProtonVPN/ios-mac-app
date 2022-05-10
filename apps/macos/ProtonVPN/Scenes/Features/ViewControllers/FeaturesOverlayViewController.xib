@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FeaturesOverlayViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="dismissButton" destination="pRH-L7-IDZ" id="pqx-6h-uss"/>
                 <outlet property="featuresTitleTF" destination="6Os-YE-DFA" id="Na4-Zw-nIF"/>
                 <outlet property="p2pRow" destination="sqQ-MB-qqN" id="Q7B-Ho-hR6"/>
                 <outlet property="smartRoutingRow" destination="OyF-qf-P1d" id="cq4-nP-ZIe"/>
@@ -39,7 +40,7 @@
                         <constraint firstAttribute="width" secondItem="pRH-L7-IDZ" secondAttribute="height" multiplier="1:1" id="LUw-l1-5Nj"/>
                         <constraint firstAttribute="width" constant="24" id="UrF-YI-p14"/>
                     </constraints>
-                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_cross" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="8g6-8I-jfS">
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic-cross-small" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="8g6-8I-jfS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -88,7 +89,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LFa-P4-Wyk" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Uj9-Co-OLZ">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -148,7 +149,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="U5v-FO-2Gz" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="MqE-nR-CST">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -208,7 +209,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-j9-uMt" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2FF-cV-VWv">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -268,7 +269,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fci-sX-PEJ" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="24" y="0.0" width="73" height="16"/>
+                                    <rect key="frame" x="24" y="0.0" width="74" height="16"/>
                                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="r0F-nl-u8E">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -339,7 +340,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="ic-cross-small" width="24" height="24"/>
         <image name="ic-globe" width="24" height="24"/>
-        <image name="ic_cross" width="10" height="10"/>
     </resources>
 </document>
