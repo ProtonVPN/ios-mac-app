@@ -51,6 +51,8 @@ public class VpnManagerMock: VpnManagerProtocol {
     public func connectedDate(completion: @escaping (Date?) -> Void) {}
     
     public func refreshState() {}
+
+    public func appBackgroundStateDidChange(isBackground: Bool) { }
         
     public func removeConfigurations(completionHandler: ((Error?) -> Void)? = nil) {
         completionHandler?(removeConfigurationError)

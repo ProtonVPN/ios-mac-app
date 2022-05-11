@@ -28,7 +28,8 @@ public protocol VpnManagerProtocol {
     var localAgentStateChanged: ((Bool?) -> Void)? { get set }
     var isLocalAgentConnected: Bool? { get }
     var currentVpnProtocol: VpnProtocol? { get }
-    
+
+    func appBackgroundStateDidChange(isBackground: Bool)
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     func setOnDemand(_ enabled: Bool)
     func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
@@ -58,7 +59,7 @@ public class VpnManager: VpnManagerProtocol {
         
     private var quickReconnection = false
     
-    private let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
+    internal let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
     
     private let ikeProtocolFactory: VpnProtocolFactory
     private let openVpnProtocolFactory: VpnProtocolFactory
@@ -82,6 +83,7 @@ public class VpnManager: VpnManagerProtocol {
     }
     
     private var connectAllowed = true
+    internal var disconnectOnCertRefreshError = true
     private var disconnectCompletion: (() -> Void)?
     
     // Holds a request for connection/disconnection etc for after the VPN frameworks are loaded
@@ -157,6 +159,12 @@ public class VpnManager: VpnManagerProtocol {
         self.safeModePropertyProvider = safeModePropertyProvider
         
         prepareManagers(forSetup: true)
+    }
+
+    public func appBackgroundStateDidChange(isBackground: Bool) {
+        connectionQueue.sync { [weak self] in
+            self?.disconnectOnCertRefreshError = !isBackground
+        }
     }
     
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
