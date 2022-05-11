@@ -81,17 +81,17 @@ final class ExtensionAPIService {
         urlRequest.setValue("Bearer \(authCredentials.accessToken)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
-        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+        let task = dataTaskFactory.dataTask(urlRequest) { [weak self] data, response, error in
             if response?.statusCode == 401 {
                 guard refreshApiTokenIfNeeded else {
                     log.error("Will not refresh API token.", category: .api)
                     completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(nil)))
                     return
                 }
-                self.handleTokenExpired(publicKey: publicKey, features: features) { result in
+                self?.handleTokenExpired(publicKey: publicKey, features: features) { result in
                     switch result {
                     case .success:
-                        self.refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
+                        self?.refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
 
                     case .failure(let error):
                         log.error("Error refreshing certificate: \(error)", category: .userCert)
@@ -180,7 +180,7 @@ final class ExtensionAPIService {
         // Auth Headers (without the auth token)
         urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
 
-        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+        let task = dataTaskFactory.dataTask(urlRequest) { [weak self] data, response, error in
             guard response?.statusCode == 200, error == nil else {
                 completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
                 return
@@ -195,7 +195,7 @@ final class ExtensionAPIService {
             do {
                 let response = try JSONDecoder().decode(TokenRefreshRequest.Response.self, from: data)
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)
-                try self.keychain.store(updatedCreds)
+                try self?.keychain.store(updatedCreds)
                 log.debug("API token updated", category: .api, metadata: ["authCredentials": "\(updatedCreds.description)"])
                 completionHandler(.success(Void()))
             } catch {
