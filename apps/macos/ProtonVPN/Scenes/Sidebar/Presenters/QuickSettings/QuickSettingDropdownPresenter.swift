@@ -58,6 +58,8 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         self.appStateManager = appStateManager
         self.alertService = alertService
         super.init()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnPlanChanged), name: VpnKeychain.vpnPlanChanged, object: nil)
     }
     
     var options: [QuickSettingsDropdownOptionPresenter] {
@@ -86,6 +88,10 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
             guard self.vpnGateway.connection == .connected else { return }
             self.vpnGateway.quickConnect()
         }
+    }
+
+    @objc private func vpnPlanChanged() {
+        viewController?.reloadOptions()
     }
     
     // MARK: - Actions
