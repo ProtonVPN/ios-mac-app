@@ -82,6 +82,7 @@ protocol DataTaskFactory {
 class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     let provider: ConnectionTunnelFactory
     let timeoutInterval: TimeInterval
+    private var tasks: [UUID: NWTCPDataTask] = [:]
 
     init(provider: ConnectionTunnelFactory, connectionTimeoutInterval: TimeInterval = 60) {
         self.provider = provider
@@ -89,10 +90,22 @@ class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     }
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) -> DataTaskProtocol {
-        return NWTCPDataTask(provider: provider,
-                             request: request,
-                             timeoutInterval: timeoutInterval,
-                             completionHandler: completionHandler)
+        let id = UUID()
+        let task =  NWTCPDataTask(provider: provider,
+                                  request: request,
+                                  timeoutInterval: timeoutInterval,
+                                  taskId: id,
+                                  completionHandler: { data, response, error in
+            if let error = error {
+                log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+            } else {
+                log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+            }
+            completionHandler(data, response, error)
+            self.tasks.removeValue(forKey: id)
+        })
+        tasks[id] = task
+        return task
     }
 }
 
@@ -124,6 +137,8 @@ class NWTCPDataTask: DataTaskProtocol {
             timeoutTimer?.invalidate()
         }
     }
+    /// Id used to identify tasks for exmaple in logs
+    let taskId: UUID
 
     /// The handle to the object observing state changes on the network connection.
     private var observation: ObservationHandle?
@@ -131,12 +146,14 @@ class NWTCPDataTask: DataTaskProtocol {
     init(provider: ConnectionTunnelFactory,
          request: URLRequest,
          timeoutInterval: TimeInterval,
+         taskId: UUID,
          completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
     {
         self.provider = provider
         self.request = request
         self.timeoutInterval = timeoutInterval
         self.completionHandler = completionHandler
+        self.taskId = taskId
 
         let host = request.url?.host ?? "unknown-host"
         let path = request.url?.path ?? "/"
@@ -144,6 +161,9 @@ class NWTCPDataTask: DataTaskProtocol {
     }
 
     deinit {
+        #if DEBUG
+        log.debug("NWTCPDataTask.deinit", category: .net, metadata: ["id": "\(taskId)"])
+        #endif
         self.observation?.invalidate()
         self.timeoutTimer?.invalidate()
     }
@@ -167,7 +187,8 @@ class NWTCPDataTask: DataTaskProtocol {
         // Resolve the caller's request either by calling their completion handler with the specified error or by
         // sending the request if we reach a success condition (which will then call the completion handler with
         // the server's response data, assuming it is well-formed).
-        let resolveRequest = { (result: Result<(), Error>) in
+        let resolveRequest = { [weak self] (result: Result<(), Error>) in
+            guard let `self` = self else { return }
             guard !self.resolved, let connection = self.connection else { return }
 
             defer { self.resolved = true }
@@ -184,7 +205,8 @@ class NWTCPDataTask: DataTaskProtocol {
 
         // Look for changes in the NWTCPConnection's state, adding a timeout if we stay waiting in
         // `.connecting` or `.waiting` for too long.
-        self.observation = connection?.observeStateChange { state in
+        self.observation = connection?.observeStateChange { [weak self] state in
+            guard let `self` = self else { return }
             self.queue.sync {
                 switch state {
                 case .connected:
@@ -240,7 +262,7 @@ class NWTCPDataTask: DataTaskProtocol {
             throw POSIXError(.ENOTSUP)
         }
 
-        log.debug("Connecting to endpoint \(host):\(port)", category: .net)
+        log.debug("Connecting to endpoint \(host):\(port)", category: .net, metadata: ["id": "\(taskId)"])
         return provider.createTunnel(hostname: host, port: "\(port)", useTLS: useTLS)
     }
 
