@@ -88,9 +88,20 @@ extension VpnManager {
             case let .failure(error):
                 log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting", category: .localAgent, event: .error)
                 self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
-                self?.disconnect { [weak self] in
-                    localAgentQueue.sync {
-                        self?.localAgent?.disconnect()
+
+                self?.connectionQueue.async { [weak self] in
+                    // Don't disconnect the VPN on iOS if the app is in the background - our app could be getting
+                    // "pre-warmed," and we may not have the necessary privileges to successfully execute a cert refresh.
+                    #if os(iOS)
+                    guard self?.disconnectOnCertRefreshError == true else {
+                        return
+                    }
+                    #endif
+
+                    self?.disconnect { [weak self] in
+                        localAgentQueue.sync {
+                            self?.localAgent?.disconnect()
+                        }
                     }
                 }
             }

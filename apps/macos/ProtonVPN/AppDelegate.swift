@@ -98,7 +98,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if propertiesManager.featureFlags.pollNotificationAPI, AuthKeychain.fetch() != nil {
             self.container.makeAnnouncementRefresher().refresh()
         }
-
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
