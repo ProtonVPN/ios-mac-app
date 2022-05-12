@@ -44,16 +44,18 @@ struct FormiOSView: View {
                     VStack(spacing: 20) {
 
                         ForEach($viewModel.fields) { $field in
-                            switch field.inputField.type {
-                            case .textSingleLine:
-                                SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
-                            case .textMultiLine:
+                            if !field.hidden {
+                                switch field.inputField.type {
+                                case .textSingleLine:
+                                    SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
+                                case .textMultiLine:
 #if os(iOS)
-                                MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
-                                    .frame(height: 155, alignment: .top)
+                                    MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
+                                        .frame(height: 155, alignment: .top)
 #endif
-                            case .switch:
-                                SwitchInputView(field: field.inputField, value: $field.boolValue)
+                                case .switch:
+                                    SwitchInputView(field: field.inputField, value: $field.boolValue)
+                                }
                             }
                         }
 
@@ -130,7 +132,7 @@ struct FormView_Previews: PreviewProvider {
                        placeholder: "Loerp ipsum speed"),
         ]
 
-        return FormiOSView(viewModel: FormViewModel(fields: fields))
+        return FormiOSView(viewModel: FormViewModel(fields: fields, category: "Connecting to VPN"))
             .preferredColorScheme(.dark)
     }
 }

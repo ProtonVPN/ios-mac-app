@@ -50,7 +50,7 @@ public struct BugReportiOSView: View {
                     List(delegate?.model.categories ?? []) { category in
                         if category.suggestions?.isEmpty ?? true { // If no suggestions found skip directly to the form
                             NavigationLink(destination: {
-                                FormiOSView(viewModel: FormViewModel(fields: category.inputFields))
+                                FormiOSView(viewModel: FormViewModel(fields: category.inputFields, category: category.label))
                                     .navigationTitle(Text(LocalizedString.brWindowTitle))
                             }, label: { Text(category.label) })
                             .listRowBackground(colors.background)

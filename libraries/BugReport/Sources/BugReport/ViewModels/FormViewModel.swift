@@ -94,7 +94,7 @@ final class FormViewModel: ObservableObject {
     private let emailFieldName = "_email"
     private let logsFieldName = "_logs"
 
-    init(fields: [InputField]) {
+    init(fields: [InputField], category: String?) {
         var formFields: [FormInputField] = []
 
         // Email field is always first
@@ -108,6 +108,10 @@ final class FormViewModel: ObservableObject {
             ),
             stringValue: delegate?.prefilledEmail ?? ""
         ))
+
+        if let categoryField = Self.categoryFormInputField(category) {
+            formFields.append(categoryField)
+        }
 
         formFields.append(contentsOf: fields.map { FormInputField(inputField: $0) })
 
@@ -123,6 +127,21 @@ final class FormViewModel: ObservableObject {
         )
 
         self.fields = formFields
+    }
+
+    private static func categoryFormInputField(_ category: String?) -> FormInputField? {
+        guard let category = category else {
+            return nil
+        }
+        let inputField = InputField(label: "",
+                                    submitLabel: "Category",
+                                    type: .textSingleLine,
+                                    isMandatory: false,
+                                    placeholder: nil)
+        return FormInputField(inputField: inputField,
+                              stringValue: category,
+                              boolValue: false,
+                              hidden: true)
     }
 
     private func makeResult() -> BugReportResult {

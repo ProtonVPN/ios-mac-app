@@ -30,11 +30,13 @@ final class FormViewModelTests: XCTestCase {
             InputField.init(label: "2", submitLabel: "", type: .textMultiLine, isMandatory: nil, placeholder: nil),
             InputField.init(label: "3", submitLabel: "", type: .switch, isMandatory: nil, placeholder: nil),
         ]
-        let vm = FormViewModel(fields: inputData)
+        let vm = FormViewModel(fields: inputData, category: "Connection issues")
         
-        XCTAssertEqual(vm.fields.count, inputData.count + 2)
+        XCTAssertEqual(vm.fields.count, inputData.count + 3)
         XCTAssertEqual(vm.fields.first?.inputField.submitLabel, "_email")
         XCTAssertEqual(vm.fields.last?.inputField.submitLabel, "_logs")
+        XCTAssertEqual(vm.fields[1].inputField.submitLabel, "Category")
+        XCTAssertEqual(vm.fields[1].stringValue, "Connection issues")
     }
     
     func testEmailIsAddedToResult() {
@@ -50,7 +52,7 @@ final class FormViewModelTests: XCTestCase {
         let vm = FormViewModel(fields: [
             InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil),
             InputField.init(label: "1", submitLabel: "", type: .switch, isMandatory: false, placeholder: nil),
-        ])
+        ], category: "Connection issues")
         vm.fields[0].stringValue = emailValue
         vm.sendTapped()
         
@@ -70,7 +72,7 @@ final class FormViewModelTests: XCTestCase {
         let vm = FormViewModel(fields: [
             InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: true, placeholder: nil),
             InputField.init(label: "1", submitLabel: "", type: .switch, isMandatory: true, placeholder: nil),
-        ])
+        ], category: "Connection issues")
         vm.fields[0].stringValue = emailValue
         
         XCTAssertFalse(vm.canBeSent)
@@ -80,11 +82,11 @@ final class FormViewModelTests: XCTestCase {
     }
     
     func testMissingMandatoryFlagMeansFieldIsMandatory() {
-        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: nil, placeholder: nil)])
+        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: nil, placeholder: nil)], category: "Connection issues")
         vm.fields[0].stringValue = emailValue
         
         XCTAssertFalse(vm.canBeSent)
-        vm.fields[1].stringValue = "value"
+        vm.fields[2].stringValue = "value"
         XCTAssertTrue(vm.canBeSent)
     }
     
@@ -95,7 +97,7 @@ final class FormViewModelTests: XCTestCase {
         }
         CurrentEnv.bugReportDelegate = delegate
         
-        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)])
+        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)], category: "Connection issues")
         vm.fields[0].stringValue = emailValue
         
         XCTAssertNil(vm.sendResultError)
@@ -120,7 +122,7 @@ final class FormViewModelTests: XCTestCase {
         }
         CurrentEnv.bugReportDelegate = delegate
         
-        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)])
+        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)], category: "Connection issues")
         vm.fields[0].stringValue = emailValue
         vm.sendTapped()
         vm.troubleshootingTapped()
@@ -136,7 +138,7 @@ final class FormViewModelTests: XCTestCase {
         }
         CurrentEnv.bugReportDelegate = delegate
         
-        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)])
+        let vm = FormViewModel(fields: [InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil)], category: "Connection issues")
         vm.fields[0].stringValue = emailValue
         
         XCTAssertFalse(vm.shouldShowResultView)

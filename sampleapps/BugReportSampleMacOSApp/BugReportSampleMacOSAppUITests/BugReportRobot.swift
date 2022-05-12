@@ -93,12 +93,12 @@ class BugReportRobot {
     }
     
     func fillDetails(_ text: String) -> BugReportRobot {
-        let whatAreYouTringToDoTextField = app.scrollViews[whatAreYouTringToDoTextField].children(matching: .textView).element
+        let whatAreYouTryingToDoTextField = app.scrollViews[whatAreYouTringToDoTextField].children(matching: .textView).element
 
         app.textFields[networkTypeTextField].click()
         app.textFields[networkTypeTextField].typeText(text)
-        whatAreYouTringToDoTextField.click()
-        whatAreYouTringToDoTextField.typeText(text)
+        whatAreYouTryingToDoTextField.click()
+        whatAreYouTryingToDoTextField.typeText(text)
         app.textFields[whatIsTheSpeedTextField].click()
         app.textFields[whatIsTheSpeedTextField].typeText(text)
         app.textFields[connectionSpeedTextField].click()
@@ -112,9 +112,9 @@ class BugReportRobot {
     }
     
     func toggleSendLogs() -> BugReportRobot {
-        app.checkBoxes[toggleLogs].click()
+        app.switches[toggleLogs].click()
         XCTAssertTrue(app.staticTexts[logsWarning].exists)
-        app.checkBoxes[toggleLogs].click()
+        app.switches[toggleLogs].click()
         return BugReportRobot()
     }
     

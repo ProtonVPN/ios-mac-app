@@ -23,6 +23,7 @@ struct FormInputField {
     let inputField: InputField
     var stringValue: String = ""
     var boolValue: Bool = false
+    var hidden: Bool = false
 }
 
 extension FormInputField: Identifiable {

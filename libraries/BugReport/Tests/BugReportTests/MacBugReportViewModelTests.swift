@@ -45,7 +45,7 @@ final class MacBugReportViewModelTests: XCTestCase {
         viewModel.categorySelected(category)
         
         // Form
-        let formViewModel = FormViewModel(fields: category.inputFields)
+        let formViewModel = FormViewModel(fields: category.inputFields, category: "Category")
         viewModel.suggestionsFinished()
         XCTAssertEqual(viewModel.page, .form(formViewModel))
         XCTAssertEqual(viewModel.step, 3)
@@ -84,7 +84,7 @@ final class MacBugReportViewModelTests: XCTestCase {
         
         // Not Suggestions but Form
         let category = model.categories.last! // Last category in test json is without suggestions
-        let formViewModel = FormViewModel(fields: category.inputFields)
+        let formViewModel = FormViewModel(fields: category.inputFields, category: "Category")
         viewModel.categorySelected(category)
         XCTAssertEqual(viewModel.page, .form(formViewModel))
         
