@@ -97,7 +97,7 @@ struct QuickFixesiOSList: View {
 
                 VStack {
                     Button(action: {}, label: {
-                        NavigationLink(destination: FormiOSView(viewModel: FormViewModel(fields: category.inputFields)).navigationTitle(Text(LocalizedString.brWindowTitle))) {
+                        NavigationLink(destination: FormiOSView(viewModel: FormViewModel(fields: category.inputFields, category: category.label)).navigationTitle(Text(LocalizedString.brWindowTitle))) {
                             Text(LocalizedString.br2ButtonNext)
                                 .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
                                 .padding(.horizontal, 16)

@@ -33,14 +33,16 @@ struct FormMacOSView: View {
             VStack(spacing: 20) {
 
                 ForEach($viewModel.fields) { $field in
-                    switch field.inputField.type {
-                    case .textSingleLine:
-                        SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
-                    case .textMultiLine:
-                        MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
-                            .frame(height: 155, alignment: .top)
-                    case .switch:
-                        SwitchInputView(field: field.inputField, value: $field.boolValue)
+                    if !field.hidden {
+                        switch field.inputField.type {
+                        case .textSingleLine:
+                            SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
+                        case .textMultiLine:
+                            MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
+                                .frame(height: 155, alignment: .top)
+                        case .switch:
+                            SwitchInputView(field: field.inputField, value: $field.boolValue)
+                        }
                     }
                 }
 
@@ -98,7 +100,7 @@ struct FormMacOSView_Previews: PreviewProvider {
                        placeholder: "Loerp ipsum speed"),
         ]
 
-        return FormMacOSView(viewModel: FormViewModel(fields: fields))
+        return FormMacOSView(viewModel: FormViewModel(fields: fields, category: "Connecting with VPN"))
             .frame(width: 400.0, height: 800)
             .preferredColorScheme(.dark)
     }
