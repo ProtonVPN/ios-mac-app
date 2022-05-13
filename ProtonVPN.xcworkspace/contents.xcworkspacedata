@@ -39,12 +39,6 @@
       location = "group:libraries/Review">
    </FileRef>
    <FileRef
-      location = "group:apps/ios/iOS.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:apps/macos/macOS.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:libraries/vpncore/Core.xcodeproj">
    </FileRef>
    <FileRef
