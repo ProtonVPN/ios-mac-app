@@ -86,7 +86,8 @@ public protocol VpnGatewayProtocol: class {
     func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
-    func disconnect(completion: @escaping () -> Void)    
+    func disconnect(completion: @escaping () -> Void)
+    func postConnectionInformation()
 }
 
 public protocol VpnGatewayFactory {
@@ -434,19 +435,22 @@ public class VpnGateway: VpnGatewayProtocol {
             }
         }
     }
+
+    public func postConnectionInformation() {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            NotificationCenter.default.post(name: VpnGateway.connectionChanged,
+                                            object: self.connection,
+                                            userInfo: [AppState.appStateKey: self.appStateManager.state])
+        }
+    }
     
     private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
-
-        self.connection = ConnectionStatus.forAppState(state)
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            NotificationCenter.default.post(name: VpnGateway.connectionChanged,
-                                            object: self.connection,
-                                            userInfo: [AppState.appStateKey: state])
-        }
+        connection = ConnectionStatus.forAppState(state)
+        postConnectionInformation()
     }
 
     private func reconnectOnNotification(_ notification: Notification) {

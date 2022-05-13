@@ -109,4 +109,8 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public func reconnect(with connectionProtocol: ConnectionProtocol) {
         
     }
+
+    public func postConnectionInformation() {
+
+    }
 }
