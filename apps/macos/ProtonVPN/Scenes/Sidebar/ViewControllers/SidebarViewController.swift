@@ -143,6 +143,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         } else {
             overlayViewModel = nil
         }
+        vpnGateway.postConnectionInformation()
     }
 
     override func mouseDown(with event: NSEvent) {
