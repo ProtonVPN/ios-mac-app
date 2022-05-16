@@ -1,8 +1,8 @@
 /* Section header in search */
-"_basic_servers" = "Servidores Basic";
+"_basic_servers" = "Servidores básicos";
 
 /* Section header in search */
-"_free_servers" = "Servidores Free";
+"_free_servers" = "Servidores gratuitos";
 
 /* Section header in search */
 "_plus_servers" = "Servidores Plus";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Procurar";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Connect to what you are searching for";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Mais localizações = mais conteúdo desbloqueado + segurança adicional + velocidade superior";
 
 /* Section header in search */
 "search_us_regions" = "Regiões americanas";

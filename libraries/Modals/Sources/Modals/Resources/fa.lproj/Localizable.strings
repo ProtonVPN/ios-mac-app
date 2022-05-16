@@ -41,7 +41,7 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Browse at the highest speeds (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with NetShield";
+"modals_upsell_all_countries_feature_netshield" = "مسدود کردن تبلیغات و بدافزارها با NetShield";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Access global streaming services";
@@ -80,7 +80,7 @@
 "modals_upsell_safe_mode_learn_more" = "بیشتر بدانید";
 
 /* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Allow traffic to non-standard ports";
+"modals_upsell_safe_mode_title" = "امکان عبور ترافیک از پورت‌های غیر استاندارد";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Protect yourself from network attacks";

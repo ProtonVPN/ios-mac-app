@@ -5,7 +5,7 @@
 	<key>onboarding_establish_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Тарифний план Free пропонує %#@num_servers@ у %#@num_countries@</string>
+		<string>Безплатний тарифний план пропонує %#@num_servers@ у %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -60,7 +60,7 @@
 	<key>onboarding_upsell_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Під&apos;єднайте %#@NUM_DEVICES@ одночасно</string>
+		<string>Під'єднайте %#@NUM_DEVICES@ одночасно</string>
 		<key>NUM_DEVICES</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

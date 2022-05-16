@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Rechercher";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Connectez-vous à ce que vous recherchez";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Plus d'emplacements = plus de contenu débloqué + sécurité supplémentaire + vitesses plus rapides";
 
 /* Section header in search */
 "search_us_regions" = "Régions des États-Unis";

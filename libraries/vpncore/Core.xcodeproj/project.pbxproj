@@ -1674,12 +1674,9 @@
 		F36ECB672610A8870089B898 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4C4D898227BD0BE800548523 /* Array+Extension.swift */,
 				5EC60F8D6F15BEB1582DE310 /* Bundle+vpncore.swift */,
 				E129C6D522A9488900D8437E /* CLLocationCoordinate2D+Extension.swift */,
-				F327A9992821763B00848E42 /* Codable+Default.swift */,
 				E196BE4B23742116003E5832 /* Collection+Extension.swift */,
-				E5FFC89B2816C61500E355DA /* Countries+Extension.swift */,
 				4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */,
 				D5E853DD2428F863002EBF05 /* Date+Misc.swift */,
 				E1B5F66821B81F8500B558B0 /* Dictionary+Extension.swift */,
@@ -1688,7 +1685,6 @@
 				E1B5F68321B840C900B558B0 /* NSCoding+Extension.swift */,
 				E148AE7521C2B12C007AB65A /* NSError+Extension.swift */,
 				F3021D7F25E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift */,
-				F7DD6EB6DCFD2331D821683A /* Optional+stringForLog.swift */,
 				D55D79132498F63C009669E0 /* String+Cleanup.swift */,
 				125F0015F0BEB0E5E1ADB08B /* String+Email.swift */,
 				E1B5F67B21B8253500B558B0 /* String+Extension.swift */,

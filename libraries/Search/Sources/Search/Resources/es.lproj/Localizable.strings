@@ -1,8 +1,8 @@
 /* Section header in search */
-"_basic_servers" = "Servidores Basic";
+"_basic_servers" = "Basic Servers";
 
 /* Section header in search */
-"_free_servers" = "Servidores Gratuitos";
+"_free_servers" = "Free Servers";
 
 /* Section header in search */
 "_plus_servers" = "Servidores Plus";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Buscar";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Connect to what you are searching for";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "More locations = more unblocked content + extra security + faster speeds";
 
 /* Section header in search */
 "search_us_regions" = "US regions";

@@ -5,7 +5,7 @@
 	<key>onboarding_establish_subtitle</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Akun GRATIS kami menawarkan %#@num_servers@ di %#@num_countries@</string>
+		<string>Akun Gratis kami menawarkan %#@num_servers@ server di %#@num_countries@ negara</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

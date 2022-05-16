@@ -59,7 +59,7 @@
 "_update_view_button" = "Обновить";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Вероятность возникновения проблем выше на старых версиях Proton VPN.";
+"_update_view_description" = "Вероятность возникновения проблем на старых версиях Proton VPN выше.";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Обновить Proton VPN";

@@ -53,10 +53,10 @@
 "modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat, yang juga dikenal sebagai NAT Type 2, merupakan sebuah fitur yang dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Gunakan Proton VPN untuk berbagai keperluan khusus yang memerlukan Anda untuk mengalihkan koneksi VPN melalui port-port non-standar.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Gunakan Proton VPN untuk berbagai keperluan khusus yang mengharuskan Anda untuk mengalihkan koneksi VPN yang aktif melalui port non-standar.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke Plus";
+"modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke VPN Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "Apa itu NAT Moderat?";
@@ -89,7 +89,7 @@
 "modals_upsell_secure_core_layer" = "Terapkan lapisan perlindungan tambahan pada koneksi VPN Anda";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_route" = "Alihkan lalu lintas jaringan Anda melalui server-server super aman di Swiss, Swedia, dan Islandia";
+"modals_upsell_secure_core_route" = "Alihkan lalu lintas jaringan Anda melalui berbagai server ultra aman di Swiss, Swedia, dan Islandia";
 
 /* Title of the Secure Core upsell screen */
 "modals_upsell_secure_core_title" = "Enkripsi berganda dengan Secure Core";
