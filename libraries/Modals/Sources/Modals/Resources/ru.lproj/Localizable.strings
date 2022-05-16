@@ -23,7 +23,7 @@
 "modals_get_plus" = "Улучшить";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Строгая политика отсутствия журналов активности Proton VPN подтверждена внешней проверкой.";
+"modals_no_logs_external_audit" = "Строгая политика отсутствия журналов активности Proton VPN подтверждена внешним аудитом.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Мы не ведем журналы ваших действий в Интернете";
@@ -41,7 +41,7 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Просматривайте сайты на самых высоких скоростях (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Блокируйте рекламу и вредоносные программы с помощью NetShield";
+"modals_upsell_all_countries_feature_netshield" = "Блокировка рекламы и вредоносного ПО с помощь NetShield";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Получите доступ к глобальным службам трансляции";
@@ -56,7 +56,7 @@
 "modals_upsell_features_safe_mode_subtitle" = "Используйте Proton VPN для любых особых нужд, разрешая трафик на нестандартные порты через VPN.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Когда вы улучшите до Plus";
+"modals_upsell_features_subtitle" = "Когда вы улучшите до VPN Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "Что такое Умеренный NAT?";

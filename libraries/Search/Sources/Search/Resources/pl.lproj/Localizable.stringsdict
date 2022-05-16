@@ -5,7 +5,7 @@
 	<key>search_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Uzyskaj pełny dostęp do %#@num_countries@</string>
+		<string>Dostęp do wszystkich %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

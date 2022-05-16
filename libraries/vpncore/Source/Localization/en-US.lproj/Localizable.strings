@@ -644,7 +644,7 @@
 "_free_trial_expired_description" = "Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "YOUR FREE TRIAL %@";
+"_free_trial_expired_title" = "Your free trial %@";
 
 /* Downgrade */
 "_from_server_title" = "From %@ Server:";
@@ -857,7 +857,7 @@
 "_log_out_warning_long" = "Logging out of the application will disconnect the active VPN connection. Do you want to continue?";
 
 /* MacOS: Login button */
-"_login" = "Login";
+"_login" = "Sign in";
 
 /* iOS logs screen title */
 "_logs" = "Logs";
@@ -1082,7 +1082,7 @@
 "_non_standard_ports_change_title" = "Enable Non-standard ports";
 
 /* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network.\nLearn more";
+"_non_standard_ports_explanation" = "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network. \nLearn more";
 
 /* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
 "_non_standard_ports_explanation_link" = "Learn more";

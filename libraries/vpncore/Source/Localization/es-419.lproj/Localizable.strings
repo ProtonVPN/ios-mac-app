@@ -62,7 +62,7 @@
 "_all_servers_in_profile_under_maintenance" = "Servidor(es) del perfil en mantenimiento";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Todos los servidores están en mantenimiento. Esto generalmente significa que hay dificultades técnicas por parte de Proton VPN o que su red es limitada.";
+"_all_servers_under_maintenance" = "Todos los servidores están en mantenimiento. Esto generalmente significa que hay dificultades técnicas por parte de Proton VPN o que su red está limitada.";
 
 /* (No Comment) */
 "_allow" = "Permitir";
@@ -272,7 +272,7 @@
 "_delinquent_description" = "Podrá acceder a las funciones premium de nuevo luego de pagar por ellas.";
 
 /* (No Comment) */
-"_delinquent_reconnection_description" = "Podrá acceder a las funciones premium de nuevo luego de pagar por ellas. Por ahora, le estamos conectando al servidor del plan GRATIS más rápido disponible.";
+"_delinquent_reconnection_description" = "Podrá acceder a las funciones premium de nuevo luego de pagar por ellas. Por ahora, le estamos conectando al servidor del plan gratuito más rápido disponible.";
 
 /* (No Comment) */
 "_delinquent_title" = "Su cuenta VPN tiene facturas pendientes";
@@ -332,7 +332,7 @@
 "_end_tour" = "Terminar recorrido";
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "¡DISFRUTE %@ GRATIS!";
+"_enjoy_for_free" = "¡Disfrute de %@ gratis!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
 "_enter_email_address" = "Ingrese el correo electrónico";
@@ -467,7 +467,7 @@
 "_error_session_count_parser" = "No se puede analizar el número de sesiones";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Su cuenta de ProtonMail ya está configurada para VPN. Inicie sesión con sus credenciales existentes.";
+"_error_signup_using_protonmail_address" = "Su cuenta de Proton Mail ya está configurada para VPN. Inicie sesión con sus credenciales existentes.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "No se puede analizar la información de suscripción";
@@ -626,25 +626,25 @@
 "_forgot_username" = "Nombre de usuario olvidado";
 
 /* Used instead of price for free plans. */
-"_free" = "Gratuito";
+"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 países";
 
 /* iOS: section header in countries list */
-"_free_servers" = "Servidores GRATUITOS";
+"_free_servers" = "Servidores gratuitos";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Upgrade to Proton VPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Mejore a %@ y siga disfrutando de estas funciones:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "¡Su prueba gratuita está a punto de expirar!";
 
-/* %@ is always 'Proton VPN PLUS' e.g. Your account has been downgraded to Proton VPN FREE.\nHere's what you will miss from Proton VPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Su cuenta ha sido degradada a Proton VPN Free.\nAquí tiene lo que perderá de %@:";
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Su cuenta ha sido degradada a Proton VPN Fre.\nAquí tiene lo que perderá de %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "SU PRUEBA GRATUITA HA %@";
+"_free_trial_expired_title" = "Su prueba gratuita %@";
 
 /* Downgrade */
 "_from_server_title" = "Del servidor %@:";
@@ -698,7 +698,7 @@
 "_invalid_refresh_token_please_login" = "Ha pasado un tiempo desde la última vez que usó la aplicación Proton VPN. Inicie sesión nuevamente.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "De los científicos e ingenieros que crearon ProtonMail, bienvenidos a un internet más seguro y privado.";
+"_ios_onboarding_page1_description" = "De los científicos e ingenieros que crearon Proton Mail, bienvenidos a un internet más seguro y privado.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Bienvenido a un mejor internet";
@@ -935,7 +935,7 @@
 "_menu_preferences" = "Preferencias";
 
 /* Main mac app menu item */
-"_menu_quit" = "Salir de Proton VPN";
+"_menu_quit" = "Cerrar Proton VPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Mostrar todo";
@@ -1049,7 +1049,7 @@
 "_netshield_off" = "Desactivado";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "MALWARE & BLOQUEADOR DE AVISOS";
+"_netshield_section_title" = "Malware y bloqueador de anuncios";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1198,8 +1198,8 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Al confirmar su compra de un plan de pago, la cantidad mostrada se cargará a su cuenta de iTunes, la cual incluye impuestos y cargos adicionales de Apple (que no son cobrados directamente por Proton). Después de realizar la compra, su cuenta será automáticamente cambiada al plan seleccionado por un periodo de 1 año, después de ese plazo podrá renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
 
-/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Servidores Plus\nSecure Core\nServidores Tor";
@@ -1298,7 +1298,7 @@
 "_quick_connect_tour_title" = "Conexión rápida";
 
 /* (No Comment) */
-"_quick_settings_get_plus" = "OBTENER PLUS";
+"_quick_settings_get_plus" = "Obtener Plus";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_description" = "Deshabilita Internet si la conexión VPN cae para evitar fugas accidentales de IP.";
@@ -1822,7 +1822,7 @@
 "_trial_expired_alert_title_iOS" = "Prueba de Proton VPN Plus expirada";
 
 /* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Para tener acceso permanente a las funciones de Proton VPN Plus, puede mejorar su plan.";
+"_trial_popup_call_to_upgrade" = "Para tener acceso permanente a las funciones de Proton VPN Plus, puede actualizar su plan.";
 
 /* (No Comment) */
 "_trial_popup_enjoy" = "Disfrute de todos los beneficios de un internet seguro en cualquier lugar con Proton VPN";
@@ -1834,7 +1834,7 @@
 "_trial_popup_explanation" = "Como regalo de bienvenida, ¡le damos acceso a una %@, que incluye funciones avanzadas durante el periodo inicial! Su prueba de bienvenida termina el";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "mejora gratuita a Proton VPN Plus";
+"_trial_popup_free_upgrade" = "actualización gratuita a Proton VPN Plus";
 
 /* (No Comment) */
 "_trial_popup_full_subscription" = "suscripción completa a Proton VPN";
@@ -2022,7 +2022,7 @@
 "_upgrade_to_plus" = "Actualizar a Plus";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Su suscripción de Proton VPN no puede mejorarse desde la aplicación, visite account.protonvpn.com para mejorarla.";
+"_upgrade_unavailable_body" = "Su suscripción de Proton VPN no puede mejorarse desde la aplicación, visite account.protonvpn.com para actualizarla.";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Mejora no disponible en la app";
@@ -2114,7 +2114,7 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Gracias por usar Proton VPN. Eche un vistazo rápido\na las funciones principales de la aplicación.";
 
-/* %@ is always 'Proton VPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Como regalo de bienvenida, le concedemos un acceso de 7 días a una suscripción de\n%@ que le da:";
 
 /* Shown on the Welcome screen as the screen headline */
@@ -2166,7 +2166,7 @@
 "login_fetch_vpn_data" = "Configurando su acceso VPN";
 
 /* (No Comment) */
-"login_summary_button" = "Comience a usar Proton VPN";
+"login_summary_button" = "Comenzar con Proton VPN";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Método de inicio de sesión inválido. Contacte con soporte.";

@@ -2,7 +2,7 @@
 "_basic_servers" = "Servidores Basic";
 
 /* Section header in search */
-"_free_servers" = "Servidores Gratuitos";
+"_free_servers" = "Servidores gratuitos";
 
 /* Section header in search */
 "_plus_servers" = "Servidores Plus";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Buscar";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Conéctese a lo que está buscando";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Más ubicaciones = más contenido desbloqueado + seguridad adicional + velocidades altas";
 
 /* Section header in search */
 "search_us_regions" = "Regiones de EU";

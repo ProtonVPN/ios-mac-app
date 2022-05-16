@@ -41,7 +41,7 @@
 "modals_upsell_all_countries_feature_highSpeed" = "Browse aan de hoogste snelheden (10 Gbps)";
 
 /* Feature of the All Countries upsell screen */
-"modals_upsell_all_countries_feature_netshield" = "Block ads and malware with NetShield";
+"modals_upsell_all_countries_feature_netshield" = "Blokkeer advertenties en malware met NetShield";
 
 /* Feature of the All Countries upsell screen */
 "modals_upsell_all_countries_feature_streaming" = "Krijg toegang tot wereldwijde streamingdiensten";
@@ -53,10 +53,10 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Gemiddelde NAT (ook gekend als NAT Type 2) kan uw online ervaring met verschillende applicaties en online videogames verbeteren.\n\nOntgrendel dit en andere functies met een Plus-abonnement.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Gebruiken Proton voor elke speciale nood door verkeer naar niet-standaard poorten toe te laten via het VPN-netwerk.\n\nOntgrendel deze en andere functies met een Plus-abonnement.";
+"modals_upsell_features_safe_mode_subtitle" = "Gebruik Proton VPN voor elke speciale nood door verkeer naar niet-standaard poorten toe te laten via het VPN-netwerk.\n\nOntgrendel deze en andere functies met een Plus-abonnement.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Wanneer u upgrade naar Plus";
+"modals_upsell_features_subtitle" = "Wanneer u upgrade naar VPN Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "Wat is Gemiddelde NAT?";

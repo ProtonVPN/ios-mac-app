@@ -23,7 +23,7 @@
 "modals_get_plus" = "Yükselt";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "Proton VPN'in katı kayıt tutmama ilkesi bir dış denetim tarafından belgelenmiştir.";
+"modals_no_logs_external_audit" = "Proton VPN tarafından uygulanan sıkı kayıt tutmama ilkesi bir dış denetçi tarafından belgelenmiştir.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "İnternetteki etkinliklerinizi kaydetmeyiz";
@@ -53,10 +53,10 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT, 2. tür Nat olarak da bilinir ve çeşitli uygulamalar ve çevrimiçi video oyunlarıyla ilgili çevrimiçi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Proton VPN ile özel durumlar için VPN ağında standart dışı kapı numaralarından trafik akışına izin verebilirsiniz. \n\nPlus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
+"modals_upsell_features_safe_mode_subtitle" = "Proton VPN ile özel durumlar için VPN ağında standart dışı bağlantı noktalarından trafik geçişine izin verebilirsiniz. \n\nPlus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Plus tarifesine yükselttiğinizde";
+"modals_upsell_features_subtitle" = "VPN Plus tarifesine yükselttiğinizde";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "Ilımlı NAT nedir?";
@@ -80,7 +80,7 @@
 "modals_upsell_safe_mode_learn_more" = "Ayrıntılı bilgi alın";
 
 /* Title of the Safe Mode upsell screen */
-"modals_upsell_safe_mode_title" = "Standart olmayan kapı numaralarından trafik akabilsin";
+"modals_upsell_safe_mode_title" = "Standart olmayan bağlantı noktalarından trafik geçebilsin";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Kendinizi ağ saldırılarından koruyabilirsiniz";

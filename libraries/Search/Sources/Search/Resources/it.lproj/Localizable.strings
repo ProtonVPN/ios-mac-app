@@ -1,8 +1,8 @@
 /* Section header in search */
-"_basic_servers" = "Server di Base";
+"_basic_servers" = "Server Basic";
 
 /* Section header in search */
-"_free_servers" = "Server Gratis";
+"_free_servers" = "Server Gratuiti";
 
 /* Section header in search */
 "_plus_servers" = "Server Plus";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Cerca";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Collegati a ciò che stai cercando";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Più località = più contenuti sbloccati + sicurezza extra + velocità più elevate";
 
 /* Section header in search */
 "search_us_regions" = "Regioni degli Stati Uniti";

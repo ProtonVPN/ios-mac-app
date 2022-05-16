@@ -8,13 +8,13 @@
 "_br_2_button_next" = "تماس با ما";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
-"_br_2_footer" = "Didn't work?";
+"_br_2_footer" = "کار نکرد؟";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
 "_br_2_subtitle" = "These tips could help to solve your issue faster.";
 
 /* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Quick fixes";
+"_br_2_title" = "راه‌حل‌های سریع";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "ارسال گزارش";
@@ -32,7 +32,7 @@
 "_br_3_logs_disabled" = "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Send error logs";
+"_br_3_logs_field" = "ارسال لاگ خطا";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "تلاش دوباره";

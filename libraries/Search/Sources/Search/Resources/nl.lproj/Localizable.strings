@@ -1,11 +1,11 @@
 /* Section header in search */
-"_basic_servers" = "Basic-servers";
+"_basic_servers" = "Basic servers";
 
 /* Section header in search */
 "_free_servers" = "Gratis servers";
 
 /* Section header in search */
-"_plus_servers" = "Plus servers";
+"_plus_servers" = "Plus Servers";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Land, stad of server";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Zoek";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Verbind met u aan het zoeken bent";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Meer locaties = meer ongeblokkeerde inhoud + extra beveiliging + hogere snelheden";
 
 /* Section header in search */
 "search_us_regions" = "VS regio's";

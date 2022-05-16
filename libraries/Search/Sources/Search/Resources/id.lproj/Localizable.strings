@@ -5,7 +5,7 @@
 "_free_servers" = "Server Gratis";
 
 /* Section header in search */
-"_plus_servers" = "Server-server Plus";
+"_plus_servers" = "Server Plus";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Negara, Kota, atau Server";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Pencarian";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Terhubunglah ke lokasi manapun yang Anda cari";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Lebih banyak lokasi = lebih banyak konten yang tidak terblokir + keamanan ekstra + kecepatan yang lebih";
 
 /* Section header in search */
 "search_us_regions" = "Wilayah AS";

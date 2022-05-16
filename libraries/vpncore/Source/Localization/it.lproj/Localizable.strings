@@ -35,7 +35,7 @@
 "_activate_widget_step_2" = "Scorri fino in fondo e tocca il pulsante di modifica.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Aggiungi il widget di Proton VPN all'elenco dei widget attivi.";
+"_activate_widget_step_3" = "Aggiungi il widget Proton VPN all'elenco dei widget attivi.";
 
 /* Plan information */
 "_adblocker_netshield_feature" = "Adblocker (NetShield)";
@@ -107,10 +107,10 @@
 "_auto_connect_tooltip" = "All'avvio dell'app, sei connesso al profilo selezionato";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "Server di BASE";
+"_basic_servers" = "Server Basic";
 
 /* Battery usages screen description */
-"_battery_description" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'uso della batteria di altre app a Proton VPN.";
+"_battery_description" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'utilizzo della batteria di altre app a Proton VPN.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Vuoi saperne di più?";
@@ -272,7 +272,7 @@
 "_delinquent_description" = "Potrai accedere di nuovo alle funzionalità premium dopo che saranno state pagate.";
 
 /* (No Comment) */
-"_delinquent_reconnection_description" = "Potrai nuovamente accedere alle funzionalità premium dopo il pagamento. Per ora, ci stiamo riconnettendo al server del piano GRATUITO più veloce disponibile.";
+"_delinquent_reconnection_description" = "Potrai nuovamente accedere alle funzionalità premium dopo il pagamento. Per ora, ci stiamo riconnettendo al server del piano Gratuito più veloce disponibile.";
 
 /* (No Comment) */
 "_delinquent_title" = "Il tuo account VPN ha fatture in sospeso";
@@ -332,7 +332,7 @@
 "_end_tour" = "Termina tour";
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "DIVENTA %@ GRATIS!";
+"_enjoy_for_free" = "Goditi %@ gratis!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
 "_enter_email_address" = "Inserisci l'indirizzo email";
@@ -632,7 +632,7 @@
 "_free_countries" = "3 paesi";
 
 /* iOS: section header in countries list */
-"_free_servers" = "Server GRATIS";
+"_free_servers" = "Server Gratuiti";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Effettua l'upgrade a %@ e continua a godere di queste funzionalità:";
@@ -641,10 +641,10 @@
 "_free_trial_about_to_expire_title" = "La tua prova gratuita sta per scadere!";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Il tuo account è stato declassato a Proton VPN GRATIS.\nEcco quello che perderai da %@:";
+"_free_trial_expired_description" = "Il tuo account è stato declassato a Proton VPN Gratis.\nEcco quello che perderai da %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "LA TUA PROVA FREE %@";
+"_free_trial_expired_title" = "La tua prova gratuita %@";
 
 /* Downgrade */
 "_from_server_title" = "Dal server %@:";
@@ -830,13 +830,13 @@
 "_locations_all" = "Tutte le Località";
 
 /* (No Comment) */
-"_locations_basic" = "Località DI BASE";
+"_locations_basic" = "Località Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Località di BASE e Plus";
+"_locations_basic_plus" = "Località Basic & Plus";
 
 /* (No Comment) */
-"_locations_free" = "Località GRATIS";
+"_locations_free" = "Località Gratuite";
 
 /* (No Comment) */
 "_locations_plus" = "Località Plus";
@@ -923,7 +923,7 @@
 "_menu_hide_others" = "Nascondi altri";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "Nascondi Proton VPN";
+"_menu_hide_self" = "Nascondi VPN Proton";
 
 /* Main mac app menu item */
 "_menu_logout" = "Disconnetti";
@@ -935,7 +935,7 @@
 "_menu_preferences" = "Preferenze";
 
 /* Main mac app menu item */
-"_menu_quit" = "Esci da Proton VPN";
+"_menu_quit" = "Chiudi Proton VPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Mostra tutto";
@@ -1049,7 +1049,7 @@
 "_netshield_off" = "Disattivo";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Malware & Ads Blocker";
+"_netshield_section_title" = "Malware & Blocco annunci";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1298,7 +1298,7 @@
 "_quick_connect_tour_title" = "Connessione rapida";
 
 /* (No Comment) */
-"_quick_settings_get_plus" = "OTTIENI PLUS";
+"_quick_settings_get_plus" = "Ottieni Plus";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_description" = "Disabilita Internet se la connessione VPN cade per evitare perdite accidentali di IP.";
@@ -1780,10 +1780,10 @@
 "_test_servers" = "Server di PROVA";
 
 /* (No Comment) */
-"_tier_basic" = "Basic";
+"_tier_basic" = "Base";
 
 /* (No Comment) */
-"_tier_free" = "GRATIS";
+"_tier_free" = "Gratis";
 
 /* (No Comment) */
 "_tier_plus" = "Plus";
@@ -1848,7 +1848,7 @@
 "_trial_popup_thanks" = "Grazie per utilizzare Proton VPN!";
 
 /* (No Comment) */
-"_trial_popup_title" = "Prova Proton VPN";
+"_trial_popup_title" = "Prova VPN Proton";
 
 /* iOS trial welcome screen */
 "_trial_welcome_description_iOS" = "Come regalo di benvenuto hai accesso ad un abbonamento completo a Proton VPN, comprese le funzionalità avanzate per i primi giorni!";
@@ -2166,7 +2166,7 @@
 "login_fetch_vpn_data" = "Configurazione del tuo accesso VPN";
 
 /* (No Comment) */
-"login_summary_button" = "Inizia a usare Proton VPN";
+"login_summary_button" = "Inizia a utilizzare Proton VPN";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Metodo di accesso non valido. Si prega di contattare l'assistenza.";

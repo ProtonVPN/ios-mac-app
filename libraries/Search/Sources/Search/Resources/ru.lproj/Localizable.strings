@@ -2,7 +2,7 @@
 "_basic_servers" = "Серверы Basic";
 
 /* Section header in search */
-"_free_servers" = "БЕСПЛАТНЫЕ серверы";
+"_free_servers" = "Серверы Free";
 
 /* Section header in search */
 "_plus_servers" = "Серверы Plus";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Поиск";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Подключитесь к тому, что вы ищите";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Больше местоположений = больше разблокированного содержимого + дополнительная безопасность + более высокая скорость";
 
 /* Section header in search */
 "search_us_regions" = "Регионы США";

@@ -5,7 +5,7 @@
 	<key>search_upsell_title</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@num_countries@ için tam erişim</string>
+		<string>%#@num_countries@ erişin</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

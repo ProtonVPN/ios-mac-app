@@ -5,7 +5,7 @@
 "_free_servers" = "Free-Server";
 
 /* Section header in search */
-"_plus_servers" = "Plus-Server";
+"_plus_servers" = "Plus‐Server";
 
 /* Placeholder text showing in the search bar on the search screen */
 "search_bar_placeholder" = "Land, Stadt oder Server";
@@ -64,8 +64,8 @@
 /* Title of the search screen */
 "search_title" = "Suchen";
 
-/* Title for the upsell banner shown to free users in search */
-"search_upsell_subtitle" = "Verbinde dich mit dem, wonach du suchst";
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Mehr Standorte = mehr ungeblockte Inhalte + zusätzliche Sicherheit + höhere Geschwindigkeiten";
 
 /* Section header in search */
 "search_us_regions" = "US Regionen";

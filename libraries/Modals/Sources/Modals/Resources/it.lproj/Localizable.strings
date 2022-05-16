@@ -56,7 +56,7 @@
 "modals_upsell_features_safe_mode_subtitle" = "Usa Proton VPN per qualsiasi bisogno speciale consentendo il traffico alle porte non standard tramite la rete VPN.\n\nSblocca queste e altre funzionalità con un piano Plus.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
-"modals_upsell_features_subtitle" = "Quando esegui l'upgrade a Plus";
+"modals_upsell_features_subtitle" = "Quando esegui l'upgrade a VPN Plus";
 
 /* Learn more button title of the Moderate NAT upsell screen */
 "modals_upsell_moderate_nat_learn_more" = "Cos'è il NAT Moderato?";
