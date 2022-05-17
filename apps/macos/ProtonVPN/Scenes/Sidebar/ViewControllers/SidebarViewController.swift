@@ -397,6 +397,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     self.loading(show: false)
                 }
             }
+        case .disconnected:
+            loading(show: false)
         default:
             break
         }
