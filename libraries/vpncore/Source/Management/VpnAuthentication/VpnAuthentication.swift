@@ -49,6 +49,9 @@ public protocol VpnAuthentication {
     
     /// Deletes all the generated and stored data, so keys and certificate
     func clearEverything()
+
+    /// Set the vpn provider for the purpose of sending vpn messages.
+    func setConnectionProvider(forProtocol: VpnProtocol, provider: ProviderMessageSender)
 }
 
 public extension VpnAuthentication {
@@ -64,14 +67,21 @@ public extension VpnAuthentication {
 }
 
 public final class VpnAuthenticationManager {
+    public var connectionProvider: ProviderMessageSender?
+
     private let queue = OperationQueue()
+    private let sessionService: SessionService
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
     private let safeModePropertyProvider: SafeModePropertyProvider
 
-    public init(networking: Networking, storage: VpnAuthenticationStorage, safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(networking: Networking,
+                storage: VpnAuthenticationStorage,
+                sessionService: SessionService,
+                safeModePropertyProvider: SafeModePropertyProvider) {
         self.networking = networking
         self.storage = storage
+        self.sessionService = sessionService
         self.safeModePropertyProvider = safeModePropertyProvider
         queue.maxConcurrentOperationCount = 1
 
@@ -93,6 +103,34 @@ public final class VpnAuthenticationManager {
 
         // and get new certificates
         queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: features, networking: networking, safeModePropertyProvider: safeModePropertyProvider))
+    }
+
+    /// Fork a child API session in the network extension that will manage this connection.
+    ///
+    /// This allows the network extension to refresh certificates separately from the main application.
+    private func pushSelectorToProvider(extensionContext: AppContext) {
+        sessionService.getExtensionSessionSelector(extensionContext: extensionContext) { [weak self] apiResult in
+            guard case let .success(selector) = apiResult else {
+                if case let .failure(error) = apiResult {
+                    log.error("Received error forking API session: \(error)")
+                }
+                return
+            }
+            
+            self?.connectionProvider?.send(WireguardProviderRequest.setApiSelector(selector), completion: { result in
+                switch result {
+                case .success(let response):
+                    switch response {
+                    case .ok:
+                        log.info("Sent selector to extension successfully.")
+                    case .error(let message):
+                        log.error("Received error from remote provider: \(message)")
+                    }
+                case .failure(let error):
+                    log.error("Encountered error sending message to provider: \(error)")
+                }
+            })
+        }
     }
 }
 
@@ -130,7 +168,8 @@ extension VpnAuthenticationManager: VpnAuthentication {
             if existingCertificate.isExpired {
                 log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
             }
-            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
+            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey,
+                                                      clientCertificate: existingCertificate.certificate)))
             return
         }
 
@@ -138,5 +177,12 @@ extension VpnAuthenticationManager: VpnAuthentication {
         refreshCertificates(features: features, completion: { result in
             executeOnUIThread { completion(result) }
         })
+    }
+
+    public func setConnectionProvider(forProtocol vpnProtocol: VpnProtocol, provider: ProviderMessageSender) {
+        connectionProvider = provider
+        if vpnProtocol == .wireGuard {
+            pushSelectorToProvider(extensionContext: .wireGuardExtension)
+        }
     }
 }
