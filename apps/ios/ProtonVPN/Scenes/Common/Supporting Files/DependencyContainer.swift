@@ -108,7 +108,7 @@ final class DependencyContainer {
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
     private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), storage: storage)
-    private lazy var appInfo = AppInfoImplementation()
+    private lazy var appInfo = makeAppInfo()
     private lazy var doh: DoHVPN = {
         #if !RELEASE
         let atlasSecret: String? = ObfuscatedConstants.atlasSecret
@@ -418,8 +418,8 @@ extension DependencyContainer: LogFileManagerFactory {
 
 // MARK: AppInfoFactory
 extension DependencyContainer: AppInfoFactory {
-    func makeAppInfo() -> AppInfo {
-        return appInfo
+    func makeAppInfo(context: AppContext) -> AppInfo {
+        return AppInfoImplementation(context: context)
     }
 }
 
