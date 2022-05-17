@@ -572,6 +572,10 @@ public class VpnManager: VpnManagerProtocol {
             self.disconnectCompletion = nil
             disconnectLocalAgent()
         case .connected:
+            if let currentVpnProtocol = currentVpnProtocol, let provider = vpnManager.connection as? ProviderMessageSender {
+                vpnAuthentication.setConnectionProvider(forProtocol: currentVpnProtocol,
+                                                        provider: provider)
+            }
             self.connectLocalAgent()
         default:
             break

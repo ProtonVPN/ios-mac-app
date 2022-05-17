@@ -37,13 +37,29 @@ class SiriHandlerViewModel {
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let profileManager: ProfileManager
     private let doh: DoHVPN
+    private let sessionService: SessionService
     
     private let alertService = ExtensionAlertService()
     
     lazy var appStateManager: AppStateManager = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: Storage())
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain, safeModePropertyProvider: safeModePropertyProvider), doh: doh, natTypePropertyProvider: natTypePropertyProvider, netShieldPropertyProvider: netShieldPropertyProvider, safeModePropertyProvider: safeModePropertyProvider)
+        return AppStateManagerImplementation(vpnApiService: vpnApiService,
+                                             vpnManager: vpnManager,
+                                             networking: networking,
+                                             alertService: alertService,
+                                             timerFactory: TimerFactory(),
+                                             propertiesManager: propertiesManager,
+                                             vpnKeychain: vpnKeychain,
+                                             configurationPreparer: configurationPreparer,
+                                             vpnAuthentication: VpnAuthenticationManager(networking: networking,
+                                                                                         storage: vpnAuthKeychain,
+                                                                                         sessionService: sessionService,
+                                                                                         safeModePropertyProvider: safeModePropertyProvider),
+                                             doh: doh,
+                                             natTypePropertyProvider: natTypePropertyProvider,
+                                             netShieldPropertyProvider: netShieldPropertyProvider,
+                                             safeModePropertyProvider: safeModePropertyProvider)
         }()
     
     private var _vpnGateway: VpnGatewayProtocol?
@@ -53,12 +69,31 @@ class SiriHandlerViewModel {
             return nil
         }
         if _vpnGateway == nil {
-            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper(), netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, safeModePropertyProvider: safeModePropertyProvider, propertiesManager: propertiesManager, profileManager: profileManager)
+            _vpnGateway = VpnGateway(vpnApiService: vpnApiService,
+                                     appStateManager: appStateManager,
+                                     alertService: alertService,
+                                     vpnKeychain: vpnKeychain,
+                                     siriHelper: SiriHelper(),
+                                     netShieldPropertyProvider: netShieldPropertyProvider,
+                                     natTypePropertyProvider: natTypePropertyProvider,
+                                     safeModePropertyProvider: safeModePropertyProvider,
+                                     propertiesManager: propertiesManager,
+                                     profileManager: profileManager)
         }
         return _vpnGateway
     }
     
-    init(networking: Networking, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, profileManager: ProfileManager, doh: DoHVPN) {
+    init(networking: Networking,
+         vpnApiService: VpnApiService,
+         vpnManager: VpnManager,
+         vpnKeychain: VpnKeychainProtocol,
+         propertiesManager: PropertiesManagerProtocol,
+         sessionService: SessionService,
+         netShieldPropertyProvider: NetShieldPropertyProvider,
+         natTypePropertyProvider: NATTypePropertyProvider,
+         safeModePropertyProvider: SafeModePropertyProvider,
+         profileManager: ProfileManager,
+         doh: DoHVPN) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
@@ -69,10 +104,13 @@ class SiriHandlerViewModel {
         self.vpnManager = vpnManager
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
+        self.sessionService = sessionService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
+        self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain,
+                                                                     alertService: alertService,
+                                                                     propertiesManager: propertiesManager)
         
         self.alertService.delegate = self
     }

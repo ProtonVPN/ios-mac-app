@@ -24,19 +24,32 @@ public protocol SessionServiceFactory {
 
 public protocol SessionService {
     func getUpgradePlanSession(completion: @escaping (String) -> Void)
+    func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping (Result<String, Error>) -> Void)
 }
 
 public final class SessionServiceImplementation: SessionService {
+    static let requestTimeout: TimeInterval = 3
+
+    public typealias Factory = AppInfoFactory & NetworkingFactory
+    private let appInfoFactory: AppInfoFactory
     private let networking: Networking
 
-    public init(networking: Networking) {
+    public init(factory: Factory) {
+        self.appInfoFactory = factory
+
+        self.networking = factory.makeNetworking()
+    }
+
+    // Exists for contexts that are allergic to factories
+    public init(appInfoFactory: AppInfoFactory, networking: Networking) {
         self.networking = networking
+        self.appInfoFactory = appInfoFactory
     }
 
     public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
         let accounHost = networking.apiService.doh.accountHost
 
-        getSelector(timeout: 3) { result in
+        getSelector(clientId: "web-account-lite", independent: false) { result in
             switch result {
             case let .success(selector):
                 completion("\(accounHost)/lite?action=subscribe-account#selector=\(selector)")
@@ -47,8 +60,18 @@ public final class SessionServiceImplementation: SessionService {
         }
     }
 
-    private func getSelector(timeout: TimeInterval, completion: @escaping (Result<String, Error>) -> Void) {
-        let request = ForkSessionRequest(clientId: "web-account-lite", independent: false, timeout: timeout)
+    public func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping ((Result<String, Error>) -> Void)) {
+        getSelector(clientId: appInfoFactory.makeAppInfo(context: extensionContext).clientId,
+                    independent: true,
+                    completion: completion)
+    }
+
+    private func getSelector(clientId: String,
+                             independent: Bool,
+                             timeout: TimeInterval? = nil,
+                             completion: @escaping (Result<String, Error>) -> Void) {
+        let timeout = timeout ?? Self.requestTimeout
+        let request = ForkSessionRequest(clientId: clientId, independent: independent, timeout: timeout)
         networking.request(request) { (result: Result<ForkSessionResponse, Error>) in
              switch result {
              case let .success(data):

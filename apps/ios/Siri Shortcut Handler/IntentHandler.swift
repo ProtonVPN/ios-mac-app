@@ -51,11 +51,15 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
+        let sessionService = SessionServiceImplementation(appInfoFactory: appInfoFactory, networking: networking)
         let vpnManager = VpnManager(ikeFactory: ikeFactory,
                                     openVpnFactory: openVpnFactory,
                                     wireguardProtocolFactory: wireguardVpnFactory,
                                     appGroup: appGroup,
-                                    vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain, safeModePropertyProvider: safeModePropertyProvider),
+                                    vpnAuthentication: VpnAuthenticationManager(networking: networking,
+                                                                                storage: vpnAuthKeychain,
+                                                                                sessionService: sessionService,
+                                                                                safeModePropertyProvider: safeModePropertyProvider),
                                     vpnKeychain: vpnKeychain,
                                     propertiesManager: propertiesManager,
                                     vpnStateConfiguration: vpnStateConfiguration,
@@ -69,6 +73,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,
                                                     propertiesManager: propertiesManager,
+                                                    sessionService: sessionService,
                                                     netShieldPropertyProvider: netShieldPropertyProvider,
                                                     natTypePropertyProvider: natTypePropertyProvider,
                                                     safeModePropertyProvider: safeModePropertyProvider,

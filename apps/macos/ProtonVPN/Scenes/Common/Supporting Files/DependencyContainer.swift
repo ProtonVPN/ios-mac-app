@@ -114,7 +114,10 @@ final class DependencyContainer {
     private lazy var updateManager = UpdateManager(self)
 
     private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthenticationKeychain, safeModePropertyProvider: makeSafeModePropertyProvider())
+        return VpnAuthenticationManager(networking: makeNetworking(),
+                                        storage: vpnAuthenticationKeychain,
+                                        sessionService: makeSessionService(),
+                                        safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
     private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos", storage: storage)
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: vpnAuthenticationKeychain)
@@ -540,5 +543,12 @@ extension DependencyContainer: LogContentProviderFactory {
         return MacOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
                                        wireguardProtocolFactory: wireguardFactory,
                                        openVpnProtocolFactory: openVpnFactory)
+    }
+}
+
+// MARK: SessionServiceFactory
+extension DependencyContainer: SessionServiceFactory {
+    func makeSessionService() -> SessionService {
+        return SessionServiceImplementation(factory: self)
     }
 }

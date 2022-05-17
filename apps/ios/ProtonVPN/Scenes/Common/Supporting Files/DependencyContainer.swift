@@ -94,7 +94,10 @@ final class DependencyContainer {
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
-        return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain, safeModePropertyProvider: makeSafeModePropertyProvider())
+        return VpnAuthenticationManager(networking: makeNetworking(),
+                                        storage: vpnAuthKeychain,
+                                        sessionService: makeSessionService(),
+                                        safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
     
     #if TLS_PIN_DISABLE
@@ -499,5 +502,12 @@ extension DependencyContainer: LogContentProviderFactory {
         return IOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
                                      appGroup: AppConstants.AppGroups.main,
                                      wireguardProtocolFactory: wireguardFactory)
+    }
+}
+
+// MARK: SessionServiceFactory
+extension DependencyContainer: SessionServiceFactory {
+    func makeSessionService() -> SessionService {
+        return SessionServiceImplementation(factory: self)
     }
 }

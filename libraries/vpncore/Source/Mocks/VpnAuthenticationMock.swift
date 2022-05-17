@@ -29,4 +29,5 @@ public final class VpnAuthenticationMock: VpnAuthentication {
     public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) { }
     public func clearCertificate() { }
     public func clearEverything() { }
+    public func setConnectionProvider(forProtocol: VpnProtocol, provider: ProviderMessageSender) { }
 }

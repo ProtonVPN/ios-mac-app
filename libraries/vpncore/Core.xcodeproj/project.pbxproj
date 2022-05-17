@@ -82,6 +82,9 @@
 		4CA0977D28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
+		4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B7281FCFE9008404E4 /* SessionService.swift */; };
+		4CF40B9B2833B30300C3C501 /* ForkSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */; };
+		4CF40B9C2833B3F600C3C501 /* ForkSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */; };
 		4D4332C6866D800580B9EE64 /* CoreAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02FBA70177FC11A4749DBDD3 /* CoreAssets.xcassets */; };
 		507B573219411E448ADE32C8 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E67878BD1357CC3626EE946 /* Pods_Core_vpncore_iosTests.framework */; };
@@ -2842,6 +2845,7 @@
 				E977A799268215A70013495A /* KeychainConstants.swift in Sources */,
 				D5A8811E22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
 				F389189326C3E55A006214A8 /* SmartProtocolConfig.swift in Sources */,
+				4CF40B9B2833B30300C3C501 /* ForkSessionRequest.swift in Sources */,
 				F3747BF226D3B93300EF2F00 /* Networking.swift in Sources */,
 				F3D4DA0D263015400032B752 /* VpnAuthenticationData.swift in Sources */,
 				E9DC79EE262DBF62001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */,
@@ -2859,6 +2863,7 @@
 				E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */,
 				D5DC52C5252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				F38F7BEA2795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
+				4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */,
 				D5DCCAC2252B4BAF004CB353 /* CoreApiService.swift in Sources */,
 				F3256AC126B98EF4003F073C /* WireguardAvailabilityChecker.swift in Sources */,
 				F31E91212758F9E800140B2E /* LogSource.swift in Sources */,
@@ -2929,6 +2934,7 @@
 				4242B0A52465A7E20042145A /* Data+JSONDictionary.swift in Sources */,
 				E1B5F67A21B824A500B558B0 /* Arithmetic.swift in Sources */,
 				F365355D2638522E001B7E88 /* LocalAgentState.swift in Sources */,
+				4CF40B9C2833B3F600C3C501 /* ForkSessionResponse.swift in Sources */,
 				E151127222F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				F331EA2C2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
 				E1616BEA21C93ACA00F42D79 /* Profile.swift in Sources */,
