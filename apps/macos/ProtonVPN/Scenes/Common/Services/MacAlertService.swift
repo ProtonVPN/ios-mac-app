@@ -120,15 +120,6 @@ extension MacAlertService: CoreAlertService {
         case is VpnNetworkUnreachableAlert:
             showDefaultSystemAlert(alert)
             
-        case is SessionCountLimitAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is StoreKitErrorAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is StoreKitUserValidationByPassAlert:
-            showDefaultSystemAlert(alert)
-            
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
             
@@ -172,9 +163,6 @@ extension MacAlertService: CoreAlertService {
             show(connectionTroubleshootingAlert)
 
         case is UnreachableNetworkAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is SysexInstallationRequiredAlert:
             showDefaultSystemAlert(alert)
             
         case is SysexEnabledAlert:

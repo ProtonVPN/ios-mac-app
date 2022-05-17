@@ -210,40 +210,6 @@ public class VpnNetworkUnreachableAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 }
 
-public class SessionCountLimitAlert: SystemAlert {
-    public var title: String? = LocalizedString.sessionCountReachedTitle
-    public var message: String? = LocalizedString.sessionCountReachedDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-}
-
-public class StoreKitErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorOccured
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(withMessage: String?) {
-        self.message = withMessage
-    }
-}
-
-public class StoreKitUserValidationByPassAlert: SystemAlert {
-    public var title: String? = LocalizedString.warning
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(withMessage: String?, confirmHandler: @escaping () -> Void) {
-        self.message = withMessage
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
-    }
-}
-
 public class MaintenanceAlert: SystemAlert {
     public var title: String? = LocalizedString.allServersInProfileUnderMaintenance
     public var message: String?
@@ -450,33 +416,6 @@ public class UserVerificationAlert: SystemAlert {
     }
 }
 
-public class ApplyCreditAfterRegistrationFailedAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorApplyPaymentFailedOnRegistrationTitle
-    public var message: String? = LocalizedString.errorApplyPaymentFailedOnRegistrationMessage
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(type: MessageType, retryHandler: @escaping () -> Void, supportHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.retry, style: .confirmative, handler: retryHandler))
-        actions.append(AlertAction(title: LocalizedString.errorApplyPaymentFailedOnRegistrationSupport, style: .confirmative, handler: supportHandler))
-        
-        switch type {
-        case .registration:
-            title = LocalizedString.errorApplyPaymentFailedOnRegistrationTitle
-            message = LocalizedString.errorApplyPaymentFailedOnRegistrationMessage
-        case .upgrade:
-            title = LocalizedString.errorApplyPaymentFailedOnUpgradeTitle
-            message = LocalizedString.errorApplyPaymentFailedOnUpgradeMessage
-        }
-    }
-    
-    public enum MessageType {
-        case registration
-        case upgrade
-    }
-}
-
 public class ReportBugAlert: SystemAlert {
     public var title: String? = LocalizedString.errorUnknownTitle
     public var message: String?
@@ -509,19 +448,6 @@ public class MITMAlert: SystemAlert {
     }
 }
 
-public class InvalidHumanVerificationCodeAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorInvalidHumanVerificationCodeTitle
-    public var message: String? = LocalizedString.errorInvalidHumanVerificationCodeMessage
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(tryAnother: @escaping () -> Void, resend: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.errorInvalidHumanVerificationCodeTryOther, style: .cancel, handler: tryAnother))
-        actions.append(AlertAction(title: LocalizedString.errorInvalidHumanVerificationCodeResend, style: .confirmative, handler: resend))
-    }    
-}
-
 public class UnreachableNetworkAlert: SystemAlert {
     public var title: String? = LocalizedString.warning
     public var message: String? = LocalizedString.neUnableToConnectToHost
@@ -544,34 +470,6 @@ public class ConnectionTroubleshootingAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init() {}
-}
-
-public class RegistrationUserAlreadyExistsAlert: SystemAlert {
-    public var title: String? = LocalizedString.warning
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(error: Error, forgotCallback: @escaping () -> Void, resetCallback: @escaping () -> Void ) {
-        message = error.localizedDescription
-        actions.append(AlertAction(title: LocalizedString.forgotUsername, style: .confirmative, handler: forgotCallback))
-        actions.append(AlertAction(title: LocalizedString.resetPassword, style: .confirmative, handler: resetCallback))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
-    }
-}
-
-public class PaymentFailedAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorApplyPaymentFailedTitle
-    public var message: String? = LocalizedString.errorApplyPaymentFailedMessage
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(retryHandler: @escaping () -> Void, freeHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.errorApplyPaymentFailedRetry, style: .confirmative, handler: retryHandler))
-        actions.append(AlertAction(title: LocalizedString.errorApplyPaymentFailedFree, style: .cancel, handler: freeHandler))
-    }
 }
 
 public class VpnServerOnMaintenanceAlert: SystemAlert {
@@ -608,19 +506,6 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
     public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
-    }
-}
-
-public class SysexInstallationRequiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.sysexSettingsTitle
-    public var message: String? = LocalizedString.sysexSettingsDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
 }
 

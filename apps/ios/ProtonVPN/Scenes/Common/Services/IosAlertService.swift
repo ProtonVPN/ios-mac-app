@@ -85,15 +85,6 @@ extension IosAlertService: CoreAlertService {
         case is VpnNetworkUnreachableAlert:
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
             
-        case is SessionCountLimitAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is StoreKitErrorAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is StoreKitUserValidationByPassAlert:
-            showDefaultSystemAlert(alert)
-            
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
             
@@ -112,29 +103,17 @@ extension IosAlertService: CoreAlertService {
         case is UnknownErrortAlert:
             showDefaultSystemAlert(alert)
             
-        case is ApplyCreditAfterRegistrationFailedAlert:
-            showDefaultSystemAlert(alert)
-            
         case let reportBugAlert as ReportBugAlert:
             show(reportBugAlert)
 
         case is MITMAlert:
             showDefaultSystemAlert(alert)
-
-        case is InvalidHumanVerificationCodeAlert:
-            showDefaultSystemAlert(alert)
             
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
             
-        case is ConnectionTroubleshootingAlert:
-            show(alert as! ConnectionTroubleshootingAlert)
-            
-        case is RegistrationUserAlreadyExistsAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is PaymentFailedAlert:
-            showDefaultSystemAlert(alert)
+        case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
+            show(connectionTroubleshootingAlert)
             
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
