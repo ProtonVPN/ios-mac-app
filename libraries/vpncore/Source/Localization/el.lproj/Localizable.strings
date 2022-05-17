@@ -292,15 +292,6 @@
 /* API error */
 "_error_api_offline" = "Το API του Proton VPN, είναι προσωρινά εκτός σύνδεσης";
 
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_message" = "Έχετε εγγραφεί επιτυχώς, αλλά η πληρωμή σας δεν υποβλήθηκε σε επεξεργασία. Για να στείλετε ξανά τα στοιχεία πληρωμής σας, κάντε κλικ στο Επανάληψη. Θα χρεωθείτε μόνο μία φορά. Εάν το πρόβλημα παραμένει, επικοινωνήστε με την υποστήριξη πελατών.";
-
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_support" = "Επικοινωνήστε με την υποστήριξη πελατών";
-
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_title" = "Η πληρωμή απέτυχε";
-
 /* In App Purchase error */
 "_error_credit_applied" = "Επικοινωνήστε με το support@protonvpn.com για να ολοκληρώσετε την αγορά σας.";
 
@@ -337,18 +328,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Εσωτερικό σφάλμα API";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Θέλετε να λάβετε έναν νέο κωδικό επαλήθευσης ή να χρησιμοποιήσετε μια εναλλακτική μέθοδο επαλήθευσης;";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Αποστολή ξανά";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Μη έγκυρος κωδικός επαλήθευσης";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Δοκιμάστε άλλη μέθοδο";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Σφάλμα κλειδιού.";
 
@@ -369,9 +348,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Η αναβάθμιση της συνδρομής σας ήταν επιτυχής. Κάντε επανεκκίνηση της εφαρμογής για να επωφεληθείτε από το νέο σας service πλάνο.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Παρουσιάστηκε σφάλμα";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Δεν ήμασταν σε θέση να αντιστοιχίσουμε το προϊόν του App Store με τα προϊόντα στον διακομιστή μας. Παρακαλώ επικοινωνήστε με την υποστήριξη.";
@@ -1167,12 +1143,6 @@
 
 /* Under maintenance alert */
 "_server_under_maintenance" = "Διακομιστής υπό συντήρηση";
-
-/* Session count limit alert */
-"_session_count_reached_description" = "Έχετε φτάσει τον μέγιστο αριθμό ταυτόχρονων συνδέσεων που επιτρέπονται για το λογαριασμό σας. Κάντε αναβάθμιση του πακέτου Proton VPN για περισσότερες συνδέσεις.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Το όριο συνεδριών έχει επιτευχθεί";
 
 /* iOS status view */
 "_session_time" = "Διάρκεια Συνεδρίας";

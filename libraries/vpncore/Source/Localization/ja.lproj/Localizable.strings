@@ -292,15 +292,6 @@
 /* API error */
 "_error_api_offline" = "Proton VPNは現在オフラインです";
 
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_message" = "登録は完了しましたが、支払いが未完了です。支払い情報を再送するには【再試行】をタップしてください。重複して課金されることはありません。問題が発生した場合は、カスタマーサポートへご連絡ください。";
-
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_support" = "カスタマーサポートに連絡する";
-
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_title" = "支払いに失敗しました";
-
 /* In App Purchase error */
 "_error_credit_applied" = "support@protonvpn.com へ連絡し、購入手続きを完了してください。";
 
@@ -337,18 +328,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "内部 API エラー";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "新しい確認コードを受け取るか、他の検証方法を使用しますか？";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "再送信";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "無効な検証コード";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "他の方法を試してください";
-
 /* Keychain error */
 "_error_keychain_fetch" = "キーチェーンでエラーが発生しました。";
 
@@ -369,9 +348,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "サブスクリプションのアップグレードが完了しました。アプリを再起動して新しいサービスプランを有効にしてください。";
-
-/* In App Purchase error alert */
-"_error_occured" = "エラーが発生しました";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "App Storeのプロダクトと同社サーバー上のプロダクトが一致しません。サポートへご連絡ください。";
@@ -1167,12 +1143,6 @@
 
 /* Under maintenance alert */
 "_server_under_maintenance" = "サーバーはメンテナンス中です";
-
-/* Session count limit alert */
-"_session_count_reached_description" = "現在のアカウントに設定されている同時接続の最大数に達しました。接続数を増やすにはProton VPNプランをアップグレードしてください。";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "セッション数制限に達しました";
 
 /* iOS status view */
 "_session_time" = "接続時間";

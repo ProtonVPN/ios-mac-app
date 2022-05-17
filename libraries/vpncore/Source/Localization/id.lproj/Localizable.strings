@@ -347,33 +347,6 @@
 "_error_api_offline" = "API Proton VPN sedang offline";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Lanjutkan dengan akun gratis";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Pembayaran Anda tidak diproses. Untuk mencoba lagi, klik Coba lagi. Anda akan ditagih sekali saja.\nUntuk melanjutkan dengan akun gratis, klik Lanjut dengan akun gratis. Anda dapat meningkatkan ke paket berbayar kemudian hari.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Anda telah berhasil terdaftar, namun pembayaran Anda tidak diproses. Untuk mengirim ulang informasi pembayaran Anda, klik Coba Lagi. Anda hanya akan ditagih sekali. Jika masalah berlanjut, silakan hubungi layanan dukungan.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Hubungi layanan dukungan";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Pembayaran gagal";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "Anda telah sukses membayar namun pembelian Anda tidak diproses. Untuk mengirim ulang informasi pembayaran Anda, klik Coba lagi. Anda akan ditagih sekali saja. Jika masalah masih terjadi, silakan hubungi dukungan pelanggan.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Pembayaran gagal";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Coba lagi";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Pembayaran gagal";
-
-/* (No Comment) */
 "_error_credit_applied" = "Hubungi support@protonvpn.com untuk menuntaskan pembayaran Anda.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Kesalahan API Internal";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Apakah Anda mau menerima kode verifikasi baru atau menggunakan metode verifikasi alternatif?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Kirim ulang";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Kode verifikasi tidak valid";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Coba metode lain";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Terdapat kesalahan pada keychain.";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Peningkatan paket langganan Anda berhasil. Silahkan luncurkan ulang aplikasi untuk mendapatkan manfaat dari paket layanan baru Anda.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Terjadi kesalahan";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Kami tidak dapat mencocokkan produk yang ada di App Store dengan produk yang ada di server kami. Silakan hubungi layanan dukungan.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Server sedang dalam pemeliharaan";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "Anda telah mencapai jumlah sambungan maksimum yang diizinkan bagi akun Anda. Mohon tingkatkan jenis akun ProtonVPN Anda untuk mendapatkan sambungan tembahan.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Batas sesi tercapai";
-
 /* iOS status view */
 "_session_time" = "Waktu Sesi";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "Modul Ekstensi Sistem dibutuhkan";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Mulai konfigurasi";

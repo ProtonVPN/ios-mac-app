@@ -717,19 +717,6 @@
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We have not been able to verify that you are human. Please try again or purchase a premium plan.";
 
-"_error_apply_payment_failed_on_registration_title" = "Payment failed";
-"_error_apply_payment_failed_on_registration_message" = "You have successfully registered but your payment was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
-"_error_apply_payment_failed_on_registration_support" = "Contact customer support";
-
-"_error_apply_payment_failed_on_upgrade_title" = "Payment failed";
-"_error_apply_payment_failed_on_upgrade_message" = "You have successfully paid but your purchase was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
-"_error_apply_payment_failed_on_registration_support" = "Contact customer support";
-
-"_error_apply_payment_failed_title" = "Payment failed";
-"_error_apply_payment_failed_message" = "Your payment was not processed. To try again, click Retry. You will only be charged once.\nTo continue with a free account, click Continue with free account. You can upgrade to a paid plan at a later date.";
-"_error_apply_payment_failed_retry" = "Retry";
-"_error_apply_payment_failed_free" = "Continue with free account";
-
 /* Error decoding an object */
 "_error_decode" = "Failed to decode archived data in class: %@";
 
@@ -819,9 +806,6 @@
 
 // IAP errors
 
-/* In App Purchase error alert */
-"_error_occured" = "Error occured";
-
 /* In App Purchase error */
 "_error_unavailable_product" = "Failed to get list of available products from App Store.";
 
@@ -875,12 +859,6 @@
 
 /* Under maintenance alert */
 "_server_under_maintenance" = "Server under maintenance";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Session limit reached";
-
-/* Session count limit alert */
-"_session_count_reached_description" = "You have hit the maximum number of simultaneous connections allowed for your account. Please upgrade your Proton VPN plan to get more connections.";
 
 /* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_country" = "Sorry, no servers available for your subscription tier in this country right now. If you would like to access more servers, consider upgrading your subscription.";
@@ -989,19 +967,6 @@
 
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Server certificate can't be verified.";
-
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Invalid verification code";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Would you like to receive a new verification code or use an alternative verification method?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Try other method";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Resend";
 
 /* Final string with filled in variables looks like this:
  
@@ -1679,7 +1644,6 @@
 
 // OpenVPN /  WireGuard / System Extensions
 
-"_sysex_settings_title" = "System Extension required";
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
 "_sysex_enabled_title" = "Configuration completed";

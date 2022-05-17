@@ -347,33 +347,6 @@
 "_error_api_offline" = "API Proton VPN в настоящее время отключён";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Продолжить с бесплатным аккаунтом";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Ваш платеж не был обработан. Чтобы попробовать еще раз, нажмите Повторить. Платеж будет списан только один раз.\nЧтобы продолжить с бесплатным аккаунтом, нажмите «Продолжить с бесплатным аккаунтом». Вы можете перейти на платный тариф позднее.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Вы успешно зарегистрированы, но ваш платеж не был обработан. Чтобы повторно отправить платежную информацию, нажмите «Повторить». Плата взимается только один раз. Если проблема не устранена, обратитесь в службу поддержки.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Обратитесь в службу поддержки клиентов";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Ошибка платежа";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "Вы успешно оплатили, но Ваша покупка не была обработана. Чтобы повторно отправить платежную информацию, нажмите «Повторить». Плата взимается только один раз. Если проблема не устранена, обратитесь в службу поддержки.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Ошибка платежа";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Повторить";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Ошибка платежа";
-
-/* (No Comment) */
 "_error_credit_applied" = "Для завершения покупки свяжитесь с нами по адресу support@protonvpn.com.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Внутренняя ошибка API";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Вы хотите получить новый проверочный код или использовать альтернативный метод проверки?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Отправить заново";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Неверный проверочный код";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Попробуйте другой метод";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Ошибка \"Связки Ключей\".";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Повышение вашей подписки успешно. Пожалуйста, перезапустите приложение, чтобы воспользоваться вашим новым тарифным планом.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Произошла ошибка";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Мы не смогли сопоставить продукты из AppStore с продуктами на нашем сервере. Пожалуйста, свяжитесь с поддержкой.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Сервер на обслуживании";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "Вы достигли максимального количества одновременных подключений, разрешенных для вашего аккаунта. Пожалуйста, улучшите свой тарифный план Proton VPN, чтобы иметь большее количество одновременных подключений.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Достигнут лимит сеансов";
-
 /* iOS status view */
 "_session_time" = "Время сеанса";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN потребуется загрузить системное расширение для использования Smart Protocol, OpenVPN и WireGuard.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "Требуется расширение системы";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Начать настройку";

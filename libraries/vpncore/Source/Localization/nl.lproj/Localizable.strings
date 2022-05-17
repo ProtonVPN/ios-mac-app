@@ -347,33 +347,6 @@
 "_error_api_offline" = "De Proton VPN-API is momenteel offline";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Doorgaan met gratis account";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Uw betaling is niet verwerkt. Om het opnieuw te proberen, klik op Opnieuw. Er wordt slechts één keer in rekening gebracht.\nOm door te gaan met een gratis account, klik op Doorgaan met gratis account. U kunt op een later tijdstip upgraden naar een betaald abonnement.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "U heeft succesvol geregistreerd maar uw betaling is niet verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenondersteuning.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Neem contact op met de klantondersteuning";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Betaling mislukt";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "U heeft succesvol betaald maar uw betaling is niet correct verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenondersteuning.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Betaling mislukt";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Opnieuw proberen";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Betaling mislukt";
-
-/* (No Comment) */
 "_error_credit_applied" = "Neem contact op met support@protonvpn.com om uw aankoop te voltooien.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Interne API fout";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Wilt u een nieuwe verificatiecode ontvangen of een alternatieve verificatiemethode gebruiken?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Opnieuw versturen";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Ongeldige verificatiecode";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Probeer een andere methode";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Fout met keychain.";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Uw abonnementsupgrade is succesvol. Herstart de app om gebruik te maken van uw nieuwe abonnement.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Er is iets fout gegaan";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Wij konden het App Store product niet vergelijken met de producten op onze server. Neem contact op met ons ondersteuningsteam.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Server ondergaat onderhoud";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "You have hit the maximum number of simultaneous connections allowed for your account. Please upgrade your Proton VPN plan to get more connections.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Sessielimiet bereikt";
-
 /* iOS status view */
 "_session_time" = "Sessieduur";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "Systeemextensie vereist";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Begin configuratie";

@@ -347,33 +347,6 @@
 "_error_api_offline" = "The Proton VPN API is currently offline";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Continue with free account";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Your payment was not processed. To try again, click Retry. You will only be charged once.\nTo continue with a free account, click Continue with free account. You can upgrade to a paid plan at a later date.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "You have successfully registered but your payment was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Contact customer support";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Payment failed";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "You have successfully paid but your purchase was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Payment failed";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Retry";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Payment failed";
-
-/* (No Comment) */
 "_error_credit_applied" = "Contact support@protonvpn.com to complete your purchase.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Internal API error";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Would you like to receive a new verification code or use an alternative verification method?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Resend";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Invalid verification code";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Try other method";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Keychain error.";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Your subscription upgrade was successful. Please relaunch the app to benefit from your new service plan.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Error occured";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "We were not available to match App Store product with products on our server. Please contact support.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Server under maintenance";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "You have hit the maximum number of simultaneous connections allowed for your account. Please upgrade your Proton VPN plan to get more connections.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Session limit reached";
-
 /* iOS status view */
 "_session_time" = "Session Time";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "System Extension required";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Begin configuration";

@@ -347,33 +347,6 @@
 "_error_api_offline" = "La API de Proton VPN está actualmente fuera de línea";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Continuar con la cuenta gratuita";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Su pago no fue procesado. Para intentarlo de nuevo, haga clic en Reintentar. Solo se le cobrará una vez. Para continuar con una cuenta gratuita, haga clic en Continuar con una cuenta gratuita. Puede actualizar a un plan de pago en una fecha posterior.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Se ha registrado con éxito pero su pago no ha sido procesado. Para reenviar su información de pago, haga clic en reintentar. Sólo se le cobrará una vez. Si el problema persiste, póngase en contacto con soporte al cliente.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Contáctese con soporte al cliente";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Pago fallido";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "Ha pagado con éxito pero su compra no ha sido procesada. Para reenviar su información de pago, haga clic en Reintentar. Sólo se le cobrará una vez. Si el problema persiste, por favor póngase en contacto con el servicio de atención al cliente.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Pago fallido";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Reintentar";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Pago fallido";
-
-/* (No Comment) */
 "_error_credit_applied" = "Póngase en contacto con support@protonvpn.com para completar su compra.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Error interno de la API";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "¿Desea recibir un código de verificación nuevo o usar un método de verificación alternativo?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Reenviar";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Código de verificación inválido";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Intente otro método";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Error del llavero.";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "La mejora de su suscripción fue exitosa. Vuelva a iniciar la aplicación para beneficiarse de su nuevo plan de servicio.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Ocurrió un error";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "No estábamos disponibles para hacer coincidir el producto de App Store con los productos de nuestro servidor. Póngase en contacto con soporte.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Servidor en mantenimiento";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "Ha alcanzado el número máximo de conexiones simultáneas permitidas para su cuenta. Mejore su plan de Proton VPN para obtener más conexiones.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Límite de sesión alcanzado";
-
 /* iOS status view */
 "_session_time" = "Tiempo de sesión";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN requiere cargar una extensión del sistema para aprovechar Smart Protocol, OpenVPN y WireGuard.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "Extensión del sistema requerida";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Iniciar configuración";
