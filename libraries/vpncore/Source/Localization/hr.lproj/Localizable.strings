@@ -347,33 +347,6 @@
 "_error_api_offline" = "The Proton VPN API is currently offline";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Nastavi s besplatnim računom";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Vaša uplata nije obrađena. Da biste pokušali ponovo, pritisnite Pokušaj ponovno. Naplatit će vam se samo jednom.\nZa nastavak korištenja besplatnog računa, pritisnite Nastavi s besplatnim računom. Kasnije možete nadograditi na plaćeni plan.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Uspješno ste se registrirali, ali plaćanje nije obrađeno. Da biste ponovo poslali podatke o plaćanju, pritisnite Pokušaj ponovno. Naplatit će vam se samo jednom. Ako se problem nastavi, obratite se korisničkoj službi.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Kontaktirajte službu za korisnike";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Neuspješno plaćanje";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "Uspješno ste se platili, ali plaćanje nije obrađeno. Da biste ponovo poslali podatke o plaćanju, pritisnite Pokušaj ponovno. Naplatit će vam se samo jednom. Ako se problem nastavi, obratite se korisničkoj službi.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Neuspješno plaćanje";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Pokušaj ponovno";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Neuspješno plaćanje";
-
-/* (No Comment) */
 "_error_credit_applied" = "Kontaktirajte support@protonvpn.com da biste dovršili kupovinu.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Unutarnja API pogreška";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Želite li dobiti novi potvrdni kôd ili koristiti alternativnu metodu potvrde?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Ponovno pošalji";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Nevažeći kôd za provjeru";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Pokušajte neki drugi način";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Pogreška privjeska ključeva.";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Nadogradnja pretplate bila je uspješna. Ponovo pokrenite aplikaciju da biste iskoristili svoj novi plan usluga.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Došlo je do pogreške";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Nismo uspjeli upariti proizvod s App Store-a s proizvodima na našem poslužitelju. Molimo kontaktirajte podršku.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Održavanje poslužitelja u tijeku";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "You have hit the maximum number of simultaneous connections allowed for your account. Please upgrade your Proton VPN plan to get more connections.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Dosegnuto je ograničenje sesije";
-
 /* iOS status view */
 "_session_time" = "Trajanje sesije";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "Potrebna je proširenje sustava";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Begin configuration";

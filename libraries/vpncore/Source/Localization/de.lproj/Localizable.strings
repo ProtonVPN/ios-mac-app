@@ -347,33 +347,6 @@
 "_error_api_offline" = "Die Proton VPN‐API ist derzeit offline";
 
 /* (No Comment) */
-"_error_apply_payment_failed_free" = "Weiter mit kostenlosem Konto";
-
-/* (No Comment) */
-"_error_apply_payment_failed_message" = "Ihre Zahlung konnte nicht verarbeitet werden. Um es erneut zu versuchen, klicken Sie auf „Wiederholen”. Ihr Konto wird nur einmalig belastet.\nUm mit einem kostenlosen Konto fortzufahren, klicken Sie auf „Weiter mit kostenlosem Konto”. Sie können zu einem späteren Zeitpunkt zu einem kostenpflichtigen Paket wechseln.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Du hast dich erfolgreich registriert, aber deine Zahlung wurde nicht verarbeitet. Um deine Zahlungsinformationen erneut zu senden, klicke auf „Wiederholen”. Es erfolgt nur eine einmalige Belastung. Wenn das Problem weiterhin besteht, wende dich bitte an den Kundendienst.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_support" = "Kundensupport kontaktieren";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_registration_title" = "Zahlung fehlgeschlagen";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_message" = "Sie haben erfolgreich bezahlt, aber Ihr Kauf konnte nicht verarbeitet werden. Um Ihre Zahlungsinformationen erneut zu senden, klicken Sie auf „Erneut senden”. Ihr Konto wird nur einmalig belastet. Sollte das Problem weiterhin bestehen, wenden Sie sich bitte an den Support.";
-
-/* (No Comment) */
-"_error_apply_payment_failed_on_upgrade_title" = "Zahlung fehlgeschlagen";
-
-/* (No Comment) */
-"_error_apply_payment_failed_retry" = "Erneut versuchen";
-
-/* (No Comment) */
-"_error_apply_payment_failed_title" = "Zahlung fehlgeschlagen";
-
-/* (No Comment) */
 "_error_credit_applied" = "Kontaktiere support@protonvpn.com, um deinen Kauf abzuschließen.";
 
 /* Error decoding an object */
@@ -409,18 +382,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Interner API‐Fehler";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Möchtest du einen neuen Verifizierungscode anfordern oder eine alternative Verifizierungsmethode verwenden?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Erneut senden";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Ungültiger Bestätigungscode";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Eine andere Methode verwenden";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Schlüsselbund‐Fehler.";
 
@@ -447,9 +408,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Dein Abonnement-Upgrade war erfolgreich. Bitte starte die Anwendung neu, um alle neuen Funktionen zu aktivieren.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Fehler aufgetreten";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Es war nicht möglich, das App Store Produkt mit Produkten auf unserem Server abzugleichen. Bitte wende dich an den Support.";
@@ -1528,12 +1486,6 @@
 /* Under maintenance alert */
 "_server_under_maintenance" = "Server wird gewartet";
 
-/* Session count limit alert */
-"_session_count_reached_description" = "Du hast das Maximum an gleichzeitigen Verbindungen für dein Konto erreicht. Führe ein Upgrade deines Proton VPN‐Abonnements durch, um zusätzliche Verbindungen zu erhalten.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Sitzungslimit erreicht";
-
 /* iOS status view */
 "_session_time" = "Sitzungszeit";
 
@@ -1692,9 +1644,6 @@
 
 /* (No Comment) */
 "_sysex_settings_description" = "Proton VPN erfordert das Laden einer Systemerweiterung, um Smart Protocol, OpenVPN und WireGuard zu nutzen.";
-
-/* OpenVPN /  WireGuard / System Extensions */
-"_sysex_settings_title" = "Systemerweiterung erforderlich";
 
 /* System extension wizard in mac: Button */
 "_sysex_wizard_button" = "Konfiguration starten";

@@ -292,15 +292,6 @@
 /* API error */
 "_error_api_offline" = "A Proton Mail API jelenleg nem elérhető";
 
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_message" = "Sikeresen regisztráltál, de a fizetés nem került feldolgozásra. A fizetési információk újbóli elküldéséhez kattints az Újra gombra. A díj csak egyszer kerül felszámolásra. Ha a probléma továbbra is fennáll, fordulj az ügyfélszolgálatunkhoz.";
-
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_support" = "Ügyfélszolgálat elérése";
-
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_title" = "Sikertelen fizetés";
-
 /* In App Purchase error */
 "_error_credit_applied" = "Vedd fel velünk a kapcsolatot a support@protonvpn.com címen a vásárlás befejezéséhez.";
 
@@ -337,18 +328,6 @@
 /* Unknown error that has no better description */
 "_error_internal_error" = "Belső API hiba";
 
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_message" = "Szeretnél egy új ellenőrző kódot kapni, vagy alternatív ellenőrzési módszert használnál?";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_resend" = "Újraküldés";
-
-/* Invalid human verification code alert */
-"_error_invalid_human_verification_code_title" = "Érvénytelen ellenőrző kód";
-
-/* Invalid human verification code alert button */
-"_error_invalid_human_verification_code_try_other" = "Próbálj meg más módszert";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Kulcstár-hiba.";
 
@@ -369,9 +348,6 @@
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Az előfizetés frissítése sikeres volt. Indítsd újra az alkalmazást, hogy használhasd az új szolgáltatásokat.";
-
-/* In App Purchase error alert */
-"_error_occured" = "Hiba történt";
 
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Nem voltunk képesek egyeztetni az App Store terméket a szerverünkön található termékekkel. Kérlek vedd fel a kapcsolatot az ügyfélszolgálattal.";
@@ -1170,9 +1146,6 @@
 
 /* Session count limit alert */
 "_session_count_reached_description" = "Elérted a csomagban engedélyezett egyidejű csatlakozások maximális számát. Válts magasabb csomagra, ha egyidejűleg több eszközről szeretnéd használni a szolgáltatást.";
-
-/* Session count limit alert */
-"_session_count_reached_title" = "Elérted a munkamenet limitet";
 
 /* iOS status view */
 "_session_time" = "Eltelt idő";
