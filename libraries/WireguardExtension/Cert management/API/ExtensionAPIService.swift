@@ -247,7 +247,7 @@ final class ExtensionAPIService {
     }
 
     private var clientId: String {
-        return clientDictionary.object(forKey: "Id") as? String ?? ""
+        return clientDictionary.object(forKey: "WireGuardId") as? String ?? ""
     }
 
     private var clientDictionary: NSDictionary {

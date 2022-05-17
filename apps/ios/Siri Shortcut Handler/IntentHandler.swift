@@ -29,8 +29,11 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() {
+        let appInfoFactory = SiriIntentHandlerAppInfoFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(), doh: doh)
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()),
+                                        appInfo: appInfoFactory.makeAppInfo(context: .siriIntentHandler),
+                                        doh: doh)
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
@@ -124,5 +127,11 @@ fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factor
     
     func makeVpnKeychain() -> VpnKeychainProtocol {
         return vpnKeychainProtocol
+    }
+}
+
+fileprivate class SiriIntentHandlerAppInfoFactory: AppInfoFactory {
+    func makeAppInfo(context: AppContext) -> AppInfo {
+        AppInfoImplementation(context: context)
     }
 }

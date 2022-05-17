@@ -19,63 +19,118 @@
 import Foundation
 import ProtonCore_Doh
 
+public enum AppContext: String {
+    case mainApp
+    case siriIntentHandler
+    case wireGuardExtension
+
+    fileprivate var clientIdKey: String {
+        switch self {
+        case .mainApp, .siriIntentHandler:
+            return "Id"
+        case .wireGuardExtension:
+            return "WireGuardId"
+        }
+    }
+}
+
 public protocol AppInfoFactory {
-    func makeAppInfo() -> AppInfo
+    func makeAppInfo(context: AppContext) -> AppInfo
+}
+
+extension AppInfoFactory {
+    public func makeAppInfo() -> AppInfo {
+        makeAppInfo(context: .mainApp)
+    }
 }
 
 public protocol AppInfo {
-    var clientId: String { get }
-    var bundleShortVersion: String { get }
-    var bundleVersion: String { get }
-    var appVersion: String { get }
-    var userAgent: String { get }
+    var context: AppContext { get }
+    var bundleInfoDictionary: [String: Any] { get }
+    var clientInfoDictionary: [String: Any] { get }
+
+    var processName: String { get }
+    var modelName: String? { get }
+    var osVersion: OperatingSystemVersion { get }
 }
 
-public class AppInfoImplementation: AppInfo {
-    private let clientDictionary: NSDictionary
-
-    public init() {
-        guard let file = Bundle.main.path(forResource: "Client", ofType: "plist"), let dict = NSDictionary(contentsOfFile: file) else {
-            clientDictionary = NSDictionary()
-            return
-        }
-
-        clientDictionary = dict
+extension AppInfo {
+    public var appVersion: String {
+        clientId + "_" + bundleShortVersion
     }
 
     public var clientId: String {
-        return clientDictionary.object(forKey: "Id") as? String ?? ""
+        return clientInfoDictionary[context.clientIdKey] as? String ?? ""
     }
 
     public var bundleShortVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+        return bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
     }
 
     public var bundleVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+        return bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
     }
 
-    public var appVersion: String {
-        return clientId + "_" + bundleShortVersion
+    private var platformName: String {
+        #if os(iOS)
+            return "iOS"
+        #elseif os(macOS)
+            return "Mac OS X"
+        #elseif os(watchOS)
+            return "watchOS"
+        #elseif os(tvOS)
+            return "tvOS"
+        #else
+            return "unknown"
+        #endif
+    }
+
+    private var osVersionString: String {
+        "\(platformName) \(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
     }
 
     public var userAgent: String {
-        let info = ProcessInfo()
-        let osVersion = info.operatingSystemVersion
-        let processName = info.processName
-        var os = "unknown"
-        var device = ""
-        #if os(iOS)
-            os = "iOS"
-            device = "; \(UIDevice.current.modelName)"
-        #elseif os(macOS)
-            os = "Mac OS X"
-        #elseif os(watchOS)
-            os = "watchOS"
-        #elseif os(tvOS)
-            os = "tvOS"
-        #endif
+        var modelString: String = ""
+        if let modelName = modelName {
+            modelString = "; \(modelName)"
+        }
 
-        return "\(processName)/\(bundleShortVersion) (\(os) \(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)\(device))"
+        return "\(processName)/\(bundleShortVersion) (\(osVersionString)\(modelString))"
+    }
+}
+
+public class AppInfoImplementation: AppInfo {
+    public let bundleInfoDictionary: [String: Any]
+    public let clientInfoDictionary: [String: Any]
+    public let processName: String
+    public let modelName: String?
+    public let osVersion: OperatingSystemVersion
+    public let context: AppContext
+
+    public init(context: AppContext, bundle: Bundle = Bundle.main, processInfo: ProcessInfo = ProcessInfo(), modelName: String? = nil) {
+        self.context = context
+        processName = processInfo.processName
+        osVersion = processInfo.operatingSystemVersion
+
+        if let modelName = modelName {
+            self.modelName = modelName
+        } else {
+            #if os(iOS)
+            self.modelName = UIDevice.current.modelName
+            #else
+            self.modelName = nil
+            #endif
+        }
+
+        guard let file = bundle.path(forResource: "Client", ofType: "plist"),
+              let clientDict = NSDictionary(contentsOfFile: file) as? [String: Any],
+              let infoDict = bundle.infoDictionary else {
+            clientInfoDictionary = [:]
+            bundleInfoDictionary = [:]
+            return
+        }
+
+        clientInfoDictionary = clientDict
+        bundleInfoDictionary = infoDict
     }
 }

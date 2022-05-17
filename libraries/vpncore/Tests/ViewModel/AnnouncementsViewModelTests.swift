@@ -36,7 +36,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         storage = AnnouncementStorageMock()
         manager = AnnouncementManagerImplementation(factory: AnnouncementManagerImplementationFactoryMock(announcementStorage: storage))
         safariService = SafariServiceMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock(), appInfo: AppInfoImplementation()))
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock(), appInfo: AppInfoImplementation(context: .mainApp)))
         
     }
     
@@ -103,8 +103,11 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
         return coreAlertService
     }
 
-    func makeAppInfo() -> AppInfo {
-        return appInfo
+    func makeAppInfo(context: AppContext) -> AppInfo {
+        if appInfo.context == context {
+            return appInfo
+        }
+        return AppInfoImplementation(context: context)
     }
 }
 
