@@ -36,7 +36,7 @@ final class ForkSessionRequest: Request {
     }
 
     var path: String {
-        return "/auth/sessions/forks"
+        return "/auth/v4/sessions/forks"
     }
 
     var method: HTTPMethod {

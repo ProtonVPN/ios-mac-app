@@ -85,6 +85,10 @@
 		4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B7281FCFE9008404E4 /* SessionService.swift */; };
 		4CF40B9B2833B30300C3C501 /* ForkSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */; };
 		4CF40B9C2833B3F600C3C501 /* ForkSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */; };
+		4CF40B9F2833BDE100C3C501 /* ProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40B9E2833BDE100C3C501 /* ProviderMessage.swift */; };
+		4CF40BA02833BDE100C3C501 /* ProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40B9E2833BDE100C3C501 /* ProviderMessage.swift */; };
+		4CF40BA22833C0F300C3C501 /* WireguardProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BA12833C0F300C3C501 /* WireguardProviderMessage.swift */; };
+		4CF40BA32833C0F300C3C501 /* WireguardProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BA12833C0F300C3C501 /* WireguardProviderMessage.swift */; };
 		4D4332C6866D800580B9EE64 /* CoreAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02FBA70177FC11A4749DBDD3 /* CoreAssets.xcassets */; };
 		507B573219411E448ADE32C8 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E67878BD1357CC3626EE946 /* Pods_Core_vpncore_iosTests.framework */; };
@@ -658,6 +662,8 @@
 		4C4D898227BD0BE800548523 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
 		4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnConnectionIntercept.swift; sourceTree = "<group>"; };
+		4CF40B9E2833BDE100C3C501 /* ProviderMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMessage.swift; sourceTree = "<group>"; };
+		4CF40BA12833C0F300C3C501 /* WireguardProviderMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardProviderMessage.swift; sourceTree = "<group>"; };
 		53EBB65215BA5F5CD6AD30E9 /* FileLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogHandler.swift; sourceTree = "<group>"; };
 		5EACE8D146A9ED639115AD4A /* Logger+Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Logger+Main.swift"; sourceTree = "<group>"; };
 		5EC60F8D6F15BEB1582DE310 /* Bundle+vpncore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+vpncore.swift"; sourceTree = "<group>"; };
@@ -1142,6 +1148,15 @@
 				4241A8DC24C9EEDA005412FB /* MigrationVersionTest.swift */,
 			);
 			path = Migration;
+			sourceTree = "<group>";
+		};
+		4CF40B9D2833BDCC00C3C501 /* ProviderMessage */ = {
+			isa = PBXGroup;
+			children = (
+				4CF40B9E2833BDE100C3C501 /* ProviderMessage.swift */,
+				4CF40BA12833C0F300C3C501 /* WireguardProviderMessage.swift */,
+			);
+			path = ProviderMessage;
 			sourceTree = "<group>";
 		};
 		C13CF157E79D07C8924BAB1F /* Reports */ = {
@@ -1812,6 +1827,7 @@
 		F36ECB722610A96A0089B898 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				4CF40B9D2833BDCC00C3C501 /* ProviderMessage */,
 				F36ECB752610A98B0089B898 /* Client Config */,
 				F36ECB742610A9820089B898 /* Data refresh */,
 				F36ECB732610A9780089B898 /* VpnProtocolFactory */,
@@ -2644,11 +2660,13 @@
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
 				E9B98510284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */,
 				E1828573236C74D400E397A5 /* Intents.intentdefinition in Sources */,
+				4CF40B9F2833BDE100C3C501 /* ProviderMessage.swift in Sources */,
 				D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */,
 				D5DC543B252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
 				E9DC79EA262DBF61001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */,
 				42066EF9263040E0001F86DB /* FeatureCellViewModel.swift in Sources */,
 				E1616C0021C95D1E00F42D79 /* ProfileManager.swift in Sources */,
+				4CF40BA22833C0F300C3C501 /* WireguardProviderMessage.swift in Sources */,
 				E1616BE521C9392600F42D79 /* VpnGateway.swift in Sources */,
 				4242B0302465A41A0042145A /* VPNClientCredentialsRequest.swift in Sources */,
 				F39E71CA26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
@@ -2882,6 +2900,7 @@
 				4243632126555D590027EAEE /* SessionsResponse.swift in Sources */,
 				E1616C1621CBF68B00F42D79 /* PropertiesManager.swift in Sources */,
 				E1B5F67D21B8253500B558B0 /* String+Extension.swift in Sources */,
+				4CF40BA32833C0F300C3C501 /* WireguardProviderMessage.swift in Sources */,
 				E129C6C522A90E6600D8437E /* VpnGatewayMock.swift in Sources */,
 				D58874B624FE69260022E438 /* AppSessionRefresher.swift in Sources */,
 				E9AF94C326B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */,
@@ -2945,6 +2964,7 @@
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,
 				E97CBDC728118891004D2989 /* OSLogHandler.swift in Sources */,
 				42066EFB263040E0001F86DB /* FeatureCellViewModel.swift in Sources */,
+				4CF40BA02833BDE100C3C501 /* ProviderMessage.swift in Sources */,
 				E1616C0121C95D1E00F42D79 /* ProfileManager.swift in Sources */,
 				E9606FFE283B62BE00983E3B /* AppLogContent.swift in Sources */,
 				F31A46FB26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */,

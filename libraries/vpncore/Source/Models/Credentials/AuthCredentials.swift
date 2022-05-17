@@ -22,7 +22,7 @@
 import Foundation
 
 public class AuthCredentials: NSObject, NSCoding {
-    let VERSION: Int = 0 // Current build version.
+    static let VERSION: Int = 0 // Current build version.
     
     public let cacheVersion: Int // Cached version default is 0
     public let username: String
@@ -44,8 +44,8 @@ public class AuthCredentials: NSObject, NSCoding {
             "Scopes: \(scopes)\n"
     }
     
-    public init(version: Int, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, expiration: Date, scopes: [String]) {
-        self.cacheVersion = version
+    public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, expiration: Date, scopes: [String]) {
+        self.cacheVersion = version ?? Self.VERSION
         self.username = username
         self.accessToken = accessToken
         self.refreshToken = refreshToken
@@ -57,7 +57,7 @@ public class AuthCredentials: NSObject, NSCoding {
     }
     
     public init(username: String, dic: JSONDictionary) throws {
-        self.cacheVersion = self.VERSION
+        self.cacheVersion = Self.VERSION
         self.username = username
         accessToken = try dic.stringOrThrow(key: "AccessToken")
         refreshToken = try dic.stringOrThrow(key: "RefreshToken")
@@ -98,7 +98,7 @@ public class AuthCredentials: NSObject, NSCoding {
     }
     
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(self.VERSION, forKey: CoderKey.authCacheVersion)
+        aCoder.encode(Self.VERSION, forKey: CoderKey.authCacheVersion)
         aCoder.encode(username, forKey: CoderKey.username)
         aCoder.encode(accessToken, forKey: CoderKey.accessToken)
         aCoder.encode(refreshToken, forKey: CoderKey.refreshToken)

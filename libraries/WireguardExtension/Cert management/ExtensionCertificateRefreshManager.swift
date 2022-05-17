@@ -33,9 +33,26 @@ final class ExtensionCertificateRefreshManager {
     }
 
     /// Start timer that will check if certificate is due for refresh. First run will be executed asap (but on another thread).
-    func start() {
+    func start(withNewSession sessionSelector: String? = nil, completionHandler: ((Result<(), Error>) -> Void)? = nil) {
         log.info("Starting ExtensionCertificateRefreshManager.", category: .userCert)
-        startTimer()
+
+        guard let sessionSelector = sessionSelector else {
+            startTimer()
+            completionHandler?(.success(()))
+            return
+        }
+
+        apiService.startSession(withSelector: sessionSelector) { [weak self] result in
+            switch result {
+            case .success:
+                log.info("Session started successfully. Starting certificate timer.")
+                self?.startTimer()
+                completionHandler?(.success(()))
+            case .failure(let error):
+                log.error("Encountered error starting session: \(error)")
+                completionHandler?(.failure(error))
+            }
+        }
     }
 
     /// Stop all activity and call handler when finished

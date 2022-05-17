@@ -29,6 +29,13 @@ struct TokenRefreshRequest: APIRequest {
         let grantType: String
         let refreshToken: String
         let redirectURI: String
+
+        public static func withRefreshToken(_ token: String) -> Self {
+            Self(responseType: "token",
+                 grantType: "refresh_token",
+                 refreshToken: token,
+                 redirectURI: "http://protonmail.ch")
+        }
     }
 
     struct Response: Codable {

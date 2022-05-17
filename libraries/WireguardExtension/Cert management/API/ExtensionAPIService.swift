@@ -28,6 +28,48 @@ final class ExtensionAPIService {
         refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, completionHandler: completionHandler)
     }
 
+    func startSession(withSelector selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+        let authRequest = SessionAuthRequest(params: .init(selector: selector))
+
+        request(authRequest) { [weak self] result in
+            switch result {
+            case .success(let refreshTokenResponse):
+                // This endpoint only gives us a refresh token with a limited lifetime - immediately turn around and send another
+                // request for a new access + refresh token, and store those credentials with the UID we get from this response
+                // if the second request succeeds.
+                let tokenRequest = TokenRefreshRequest(params: .withRefreshToken(refreshTokenResponse.refreshToken))
+                self?.request(tokenRequest, headers: [.sessionId: refreshTokenResponse.uid]) { [weak self] result in
+                    switch result {
+                    case .success(let accessTokenResponse):
+                        // We don't need certain credentials for the operations we're performing, so just save
+                        // some placeholder values instead.
+                        let creds = AuthCredentials(username: "",
+                                                    accessToken: accessTokenResponse.accessToken,
+                                                    refreshToken: accessTokenResponse.refreshToken,
+                                                    sessionId: refreshTokenResponse.uid,
+                                                    userId: nil,
+                                                    expiration: Date().addingTimeInterval(accessTokenResponse.expiresIn),
+                                                    scopes: [])
+
+                        do {
+                            try self?.keychain.store(creds)
+                            self?.sessionExpired = false
+                            completionHandler(.success(()))
+                        } catch {
+                            completionHandler(.failure(error))
+                        }
+                    case .failure(let error):
+                        completionHandler(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                log.error("Error starting session: \(error)")
+                completionHandler(.failure(error))
+                break
+            }
+        }
+    }
+
     init(storage: Storage, dataTaskFactory: DataTaskFactory, keychain: AuthKeychainHandle) {
         self.storage = storage
         self.dataTaskFactory = dataTaskFactory

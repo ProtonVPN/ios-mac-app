@@ -62,7 +62,7 @@ public final class SessionServiceImplementation: SessionService {
 
     public func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping ((Result<String, Error>) -> Void)) {
         getSelector(clientId: appInfoFactory.makeAppInfo(context: extensionContext).clientId,
-                    independent: true,
+                    independent: false,
                     completion: completion)
     }
 
