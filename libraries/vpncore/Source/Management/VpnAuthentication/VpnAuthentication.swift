@@ -116,7 +116,10 @@ public final class VpnAuthenticationManager {
                 }
                 return
             }
-            
+
+            // The network extension needs this selector in order to start its own API session. It is waiting on us
+            // to send this before it can start refreshing certificates. It will close its session when the tunnel is
+            // closed.
             self?.connectionProvider?.send(WireguardProviderRequest.setApiSelector(selector), completion: { result in
                 switch result {
                 case .success(let response):

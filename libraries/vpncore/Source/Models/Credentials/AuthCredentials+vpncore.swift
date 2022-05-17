@@ -11,11 +11,11 @@ import ProtonCore_Networking
 
 extension AuthCredentials {
     public func updatedWithAuth(auth: Credential) -> AuthCredentials {
-        return AuthCredentials(version: VERSION, username: username, accessToken: auth.accessToken, refreshToken: auth.refreshToken, sessionId: sessionId, userId: userId, expiration: auth.expiration, scopes: auth.scope)
+        return AuthCredentials(username: username, accessToken: auth.accessToken, refreshToken: auth.refreshToken, sessionId: sessionId, userId: userId, expiration: auth.expiration, scopes: auth.scope)
     }
 
     public convenience init(_ credential: Credential) {
-        self.init(version: 0, username: credential.userName, accessToken: credential.accessToken, refreshToken: credential.refreshToken, sessionId: credential.UID, userId: credential.userID, expiration: credential.expiration, scopes: credential.scope)
+        self.init(username: credential.userName, accessToken: credential.accessToken, refreshToken: credential.refreshToken, sessionId: credential.UID, userId: credential.userID, expiration: credential.expiration, scopes: credential.scope)
     }
 }
 

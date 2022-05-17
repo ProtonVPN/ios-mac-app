@@ -1,5 +1,5 @@
 //
-//  Created on 2022-03-01.
+//  Created on 2022-05-13.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,40 +18,23 @@
 
 import Foundation
 
-struct TokenRefreshRequest: APIRequest {
-    let endpointUrl = "auth/refresh"
-    let httpMethod = "POST"
+class SessionAuthRequest: APIRequest {
+    var endpointUrl: String { "auth/sessions/forks/\(params.selector)" }
+    let httpMethod = "GET"
 
     let params: Params
 
     struct Params: Codable {
-        let responseType: String
-        let grantType: String
-        let refreshToken: String
-        let redirectURI: String
-
-        public static func withRefreshToken(_ token: String) -> Self {
-            Self(responseType: "token",
-                 grantType: "refresh_token",
-                 refreshToken: token,
-                 redirectURI: "http://protonmail.ch")
-        }
+        let selector: String
     }
 
     struct Response: Codable {
-        let accessToken: String
+        let uid: String
         let refreshToken: String
-        let expiresIn: Double
-
-        /// Important! This is useful only right after the response was received
-        var expirationDate: Date {
-            return Date(timeIntervalSinceNow: expiresIn)
-        }
 
         enum CodingKeys: String, CodingKey {
-            case accessToken = "AccessToken"
+            case uid = "UID"
             case refreshToken = "RefreshToken"
-            case expiresIn = "ExpiresIn"
         }
     }
 

@@ -35,7 +35,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     private func connectionEstablished() {
-        certificateRefreshManager.start()
         #if CHECK_CONNECTIVITY
         startTestingConnectivity()
         #endif
@@ -138,19 +137,38 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         wg_log(.info, message: "Handle App Message size: \(messageData.count)")
-        
-        if messageData.count == 1 && messageData[0] == 101 {
-            flushLogsToFile()
-        } else if let completionHandler = completionHandler, messageData.count == 1 && messageData[0] == 0 {
-            adapter.getRuntimeConfiguration { settings in
-                var data: Data?
-                if let settings = settings {
-                    data = settings.data(using: .utf8)!
-                }
-                completionHandler(data)
+        do {
+            let message = try WireguardProviderRequest.decode(data: messageData)
+            handleProviderMessage(message) { response in
+                completionHandler?(response.asData)
             }
-        } else {
-            completionHandler?(nil)
+        } catch {
+            let response = WireguardProviderRequest.Response.error(message: "Unknown provider message.")
+            completionHandler?(response.asData)
+        }
+    }
+
+    func handleProviderMessage(_ message: WireguardProviderRequest,
+                               completionHandler: ((WireguardProviderRequest.Response) -> Void)?) {
+        switch message {
+        case .getRuntimeTunnelConfiguration:
+            adapter.getRuntimeConfiguration { settings in
+                if let settings = settings, let data = settings.data(using: .utf8) {
+                    completionHandler?(.ok(data: data))
+                }
+                completionHandler?(.error(message: "Could not retrieve tunnel configuration."))
+            }
+        case .flushLogsToFile:
+            flushLogsToFile()
+        case .setApiSelector(let selector):
+            certificateRefreshManager.start(withNewSession: selector) { result in
+                switch result {
+                case .success:
+                    completionHandler?(.ok(data: nil))
+                case .failure(let error):
+                    completionHandler?(.error(message: String(describing: error)))
+                }
+            }
         }
     }
 
