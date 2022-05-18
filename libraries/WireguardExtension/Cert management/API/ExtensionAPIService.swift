@@ -338,6 +338,6 @@ final class ExtensionAPIService {
 
 extension AuthCredentials {
     func updatedWithAccessToken(response: TokenRefreshRequest.Response) -> AuthCredentials {
-        return AuthCredentials(version: VERSION, username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, expiration: response.expirationDate, scopes: scopes)
+        return AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, expiration: response.expirationDate, scopes: scopes)
     }
 }

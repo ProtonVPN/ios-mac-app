@@ -34,7 +34,9 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     public weak var delegate: VpnAuthenticationStorageDelegate?
 
     public init(accessGroup: String, storage: Storage) {
-        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
+        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain,
+                                              accessGroup: accessGroup)
+            .accessibility(.afterFirstUnlockThisDeviceOnly)
         self.storage = storage
     }
 
