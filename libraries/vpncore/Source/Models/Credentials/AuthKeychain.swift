@@ -25,23 +25,55 @@ import KeychainAccess
 public protocol AuthKeychainHandle {
     func fetch() -> AuthCredentials?
     func store(_ credentials: AuthCredentials) throws
+    func clear()
 }
 
 public class AuthKeychain {
-    
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
     
     private struct StorageKey {
         static let authCredentials = "authCredentials"
+
+        static let contextKeys: [AppContext: String] = [
+            .mainApp: authCredentials,
+            .wireGuardExtension: "\(authCredentials)_\(AppContext.wireGuardExtension)"
+        ]
+    }
+
+    private static let `default`: AuthKeychain = AuthKeychain(context: .mainApp)
+
+    public static func fetch() -> AuthCredentials? {
+        `default`.fetch()
     }
     
-    private static let appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
+    public static func store(_ credentials: AuthCredentials) throws {
+        try `default`.store(credentials)
+    }
     
-    public static func fetch() -> AuthCredentials? {
+    public static func clear() {
+        `default`.clear()
+    }
+
+    private let keychain: KeychainAccess.Keychain
+    private let context: AppContext
+
+    public init(context: AppContext = .mainApp) {
+        self.keychain = .init(service: KeychainConstants.appKeychain)
+            .accessibility(.afterFirstUnlockThisDeviceOnly)
+        self.context = context
+    }
+}
+
+extension AuthKeychain: AuthKeychainHandle {
+    private var storageKey: String {
+        StorageKey.contextKeys[context] ?? StorageKey.authCredentials
+    }
+
+    public func fetch() -> AuthCredentials? {
         NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
 
         do {
-            if let data = try appKeychain.getData(StorageKey.authCredentials) {
+            if let data = try keychain.getData(storageKey) {
                 if let authCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredentials {
                     return authCredentials
                 }
@@ -49,26 +81,26 @@ public class AuthKeychain {
         } catch let error {
             log.error("Keychain (auth) read error: \(error)", category: .keychain)
         }
-        
+
         return nil
     }
-    
-    public static func store(_ credentials: AuthCredentials) throws {
+
+    public func store(_ credentials: AuthCredentials) throws {
         NSKeyedArchiver.setClassName("ProtonVPN.AuthCredentials", for: AuthCredentials.self)
 
         do {
-            try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+            try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: storageKey)
         } catch let error {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
-                try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+                try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: storageKey)
             } catch let error2 {
                 #if os(macOS)
                     log.error("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", category: .keychain, metadata: ["error": "\(error2)"])
                     do { // Last chance. Locking/unlocking keychain sometimes helps.
-                        SecKeychainLock(nil) 
-                        try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+                        SecKeychainLock(nil)
+                        try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: storageKey)
                     } catch let error3 {
                         log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error3)"])
                         throw error3
@@ -80,23 +112,13 @@ public class AuthKeychain {
             }
         }
     }
-    
-    public static func clear() {
-        appKeychain[data: StorageKey.authCredentials] = nil
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: clearNotification, object: nil, userInfo: nil)
+
+    public func clear() {
+        for storageKey in StorageKey.contextKeys.values {
+            keychain[data: storageKey] = nil
         }
-    }
-
-    public init() { }
-}
-
-extension AuthKeychain: AuthKeychainHandle {
-    public func fetch() -> AuthCredentials? {
-        Self.fetch()
-    }
-
-    public func store(_ credentials: AuthCredentials) throws {
-        try Self.store(credentials)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Self.clearNotification, object: nil, userInfo: nil)
+        }
     }
 }

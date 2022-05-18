@@ -28,4 +28,8 @@ class MockAuthKeychain: AuthKeychainHandle {
     func store(_ credentials: AuthCredentials) throws {
         self.credentials = credentials
     }
+
+    func clear() {
+        self.credentials = nil
+    }
 }

@@ -9,7 +9,5 @@
 import Foundation
 
 public class KeychainConstants {
-        
     public static let appKeychain = "ProtonVPN"
-    
 }

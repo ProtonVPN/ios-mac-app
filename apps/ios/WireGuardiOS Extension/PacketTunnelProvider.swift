@@ -26,7 +26,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         certificateRefreshManager = ExtensionCertificateRefreshManager(storage: storage,
                                                                        dataTaskFactory: dataTaskFactory,
                                                                        vpnAuthenticationStorage: vpnAuthenticationStorage,
-                                                                       keychain: AuthKeychain())
+                                                                       keychain: AuthKeychain(context: .wireGuardExtension))
         setupLogging()
     }
     
