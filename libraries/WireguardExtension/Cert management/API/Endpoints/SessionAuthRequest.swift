@@ -21,6 +21,7 @@ import Foundation
 class SessionAuthRequest: APIRequest {
     var endpointUrl: String { "auth/sessions/forks/\(params.selector)" }
     let httpMethod = "GET"
+    let hasBody = false
 
     let params: Params
 
@@ -40,15 +41,5 @@ class SessionAuthRequest: APIRequest {
 
     init(params: Params) {
         self.params = params
-    }
-
-    var body: Data? {
-        return try? encoder.encode(params)
-    }
-
-    private var encoder: JSONEncoder {
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .custom(capitalizeFirstLetter)
-        return encoder
     }
 }

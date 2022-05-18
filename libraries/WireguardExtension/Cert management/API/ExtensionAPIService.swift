@@ -65,7 +65,7 @@ final class ExtensionAPIService {
             case .failure(let error):
                 log.error("Error starting session: \(error)")
                 completionHandler(.failure(error))
-                break
+                return
             }
         }
     }
@@ -93,12 +93,99 @@ final class ExtensionAPIService {
     private let dataTaskFactory: DataTaskFactory
     private let keychain: AuthKeychainHandle
 
-    enum ExtensionAPIServiceError: Error {
+    enum ExtensionAPIServiceError: Error, CustomStringConvertible {
         case noCredentials
-        case requestError(Error)
+        case requestError(APIHTTPErrorCode?)
+        case apiError(APIError)
         case noData
-        case parseError
+        case parseError(Error?)
         case apiTokenRefreshError(Error?)
+        case endpointHttpError(code: Int, message: String)
+        case networkError(Error)
+
+        var description: String {
+            switch self {
+            case .noCredentials:
+                return "No credentials"
+            case .requestError(let errorCode):
+                var requestErrorString: String?
+                if let errorCode = errorCode {
+                    requestErrorString = HTTPURLResponse.localizedString(forStatusCode: errorCode.rawValue)
+                }
+                return "API HTTP request error: \(requestErrorString ?? "(unknown)"))"
+            case .apiError(let apiError):
+                return "API request error: \(apiError.message) (\(apiError.code))"
+            case .noData:
+                return "No data received"
+            case .parseError(let error):
+                var parseErrorString: String?
+                if let error = error {
+                    parseErrorString = String(describing: error)
+                }
+                return "Parse error: \(parseErrorString ?? "(unknown)")"
+            case .apiTokenRefreshError(let error):
+                var apiTokenErrorString: String?
+                if let error = error {
+                    apiTokenErrorString = String(describing: error)
+                }
+                return "API token refresh error: \(apiTokenErrorString ?? "(unknown)")"
+            case .endpointHttpError(let code, let message):
+                return "Endpoint http error: \(code), \(message)"
+            case .networkError(let error):
+                return "Network error: \(error)"
+            }
+        }
+    }
+
+    private func request<R: APIRequest>(_ request: R,
+                                        headers: [APIHeader: String?] = [:],
+                                        refreshApiTokenIfNeeded: Bool = true,
+                                        completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {
+        var urlRequest = makeUrlRequest(request)
+
+        for (header, value) in headers {
+            urlRequest.setHeader(header, value)
+        }
+
+        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+            if let error = error {
+                completion(.failure(.networkError(error)))
+            }
+
+            guard let response = response else {
+                completion(.failure(.noData))
+                return
+            }
+
+            if let data = data, let apiError = APIError.decode(errorResponse: data) {
+                completion(.failure(.apiError(apiError)))
+                return
+            }
+
+            if let knownHttpError = APIHTTPErrorCode(rawValue: response.statusCode) {
+                completion(.failure(.requestError(knownHttpError)))
+                return
+            }
+
+            guard response.statusCode == 200 else {
+                log.error("Unknown error response code: \(response.statusCode)")
+                completion(.failure(.requestError(nil)))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+
+            do {
+                let response = try R.decode(responseData: data)
+                completion(.success(response))
+            } catch {
+                completion(.failure(.parseError(error)))
+            }
+        }
+        task.resume()
     }
 
     private func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
@@ -145,7 +232,7 @@ final class ExtensionAPIService {
 
             if let error = error {
                 log.error("Error refreshing certificate: \(error)", category: .userCert)
-                completionHandler(.failure(ExtensionAPIServiceError.requestError(error)))
+                completionHandler(.failure(ExtensionAPIServiceError.requestError(nil)))
                 return
             }
 
@@ -173,23 +260,23 @@ final class ExtensionAPIService {
 
             } catch {
                 log.error("Can't parse response JSON: \(error)", category: .userCert)
-                completionHandler(.failure(ExtensionAPIServiceError.parseError))
+                completionHandler(.failure(ExtensionAPIServiceError.parseError(nil)))
                 return
             }
         }
         task.resume()
     }
 
-    private func makeUrlRequest(_ apiRequest: APIRequest) -> URLRequest {
+    private func makeUrlRequest<R: APIRequest>(_ apiRequest: R) -> URLRequest {
         var request = URLRequest(url: URL(string: "\(apiUrl)/\(apiRequest.endpointUrl)")!)
         request.httpMethod = apiRequest.httpMethod
 
         // Headers
-        request.setValue(appVersion, forHTTPHeaderField: "x-pm-appversion")
-        request.setValue("3", forHTTPHeaderField: "x-pm-apiversion")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
-        request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        request.setHeader(.appVersion, appVersion)
+        request.setHeader(.apiVersion, "3")
+        request.setHeader(.contentType, "application/json")
+        request.setHeader(.accept, "application/vnd.protonmail.v1+json")
+        request.setHeader(.userAgent, userAgent)
 
         // Body
         if let body = apiRequest.body {
