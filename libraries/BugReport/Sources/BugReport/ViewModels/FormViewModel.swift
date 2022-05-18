@@ -92,6 +92,7 @@ final class FormViewModel: ObservableObject {
 
     private weak var delegate: BugReportDelegate? = CurrentEnv.bugReportDelegate
     private let emailFieldName = "_email"
+    private let usernameFieldName = "_username"
     private let logsFieldName = "_logs"
 
     init(fields: [InputField], category: String?) {
@@ -107,6 +108,18 @@ final class FormViewModel: ObservableObject {
                 placeholder: nil
             ),
             stringValue: delegate?.prefilledEmail ?? ""
+        ))
+
+        // Username field is always second
+        formFields.append(FormInputField(
+            inputField: InputField(
+                label: LocalizedString.br3Username,
+                submitLabel: usernameFieldName,
+                type: .textSingleLine,
+                isMandatory: false,
+                placeholder: nil
+            ),
+            stringValue: delegate?.prefilledUsername ?? ""
         ))
 
         if let categoryField = Self.categoryFormInputField(category) {
@@ -150,6 +163,7 @@ final class FormViewModel: ObservableObject {
         }
 
         let email = find(emailFieldName)?.stringValue ?? ""
+        let username = find(usernameFieldName)?.stringValue ?? ""
         let logs = find(logsFieldName)?.boolValue ?? false
         let text = fields.filter({ ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }).reduce("") { prev, field in
             switch field.inputField.type {
@@ -160,6 +174,6 @@ final class FormViewModel: ObservableObject {
             }
         }
 
-        return BugReportResult(email: email, text: text, logs: logs)
+        return BugReportResult(email: email, username: username, text: text, logs: logs)
     }
 }

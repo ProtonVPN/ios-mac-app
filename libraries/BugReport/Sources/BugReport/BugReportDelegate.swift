@@ -27,6 +27,9 @@ public protocol BugReportDelegate: AnyObject {
     /// If app knows users email, it should be returned here.
     var prefilledEmail: String { get }
 
+    /// If app knows the username, it should be returned here.
+    var prefilledUsername: String { get }
+
     /// This method should send filled-in form to API and call `result` callback when finished.
     func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void)
     typealias SendReportResult = Result<Void, Error>

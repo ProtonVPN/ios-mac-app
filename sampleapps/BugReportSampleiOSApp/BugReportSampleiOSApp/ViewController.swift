@@ -91,6 +91,7 @@ class MockBugReportDelegate: BugReportDelegate {
     
     var model: BugReportModel
     var prefilledEmail: String = ""
+    var prefilledUsername: String = ""
     
     public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?, updateAppCallback: (() -> Void)?) {
         self.model = model

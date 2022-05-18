@@ -20,6 +20,7 @@ import Foundation
 
 public struct BugReportResult {
     public let email: String
+    public let username: String
     public let text: String
     public let logs: Bool
 }
