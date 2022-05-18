@@ -22,6 +22,7 @@ class MockBugReportDelegate: BugReportDelegate {
 
     var model: BugReportModel
     var prefilledEmail: String = ""
+    var prefilledUsername: String = ""
 
     public init(model: BugReportModel) {
         self.model = model

@@ -23,6 +23,7 @@ import XCTest
 final class FormViewModelTests: XCTestCase {
     
     private let emailValue = "elon@tesla.com"
+    private let usernameValue = "elon"
     
     func testAddsEmailAndLogs() throws {
         let inputData = [
@@ -32,11 +33,11 @@ final class FormViewModelTests: XCTestCase {
         ]
         let vm = FormViewModel(fields: inputData, category: "Connection issues")
         
-        XCTAssertEqual(vm.fields.count, inputData.count + 3)
+        XCTAssertEqual(vm.fields.count, inputData.count + 4)
         XCTAssertEqual(vm.fields.first?.inputField.submitLabel, "_email")
         XCTAssertEqual(vm.fields.last?.inputField.submitLabel, "_logs")
-        XCTAssertEqual(vm.fields[1].inputField.submitLabel, "Category")
-        XCTAssertEqual(vm.fields[1].stringValue, "Connection issues")
+        XCTAssertEqual(vm.fields[2].inputField.submitLabel, "Category")
+        XCTAssertEqual(vm.fields[2].stringValue, "Connection issues")
     }
     
     func testEmailIsAddedToResult() {
@@ -56,6 +57,27 @@ final class FormViewModelTests: XCTestCase {
         vm.fields[0].stringValue = emailValue
         vm.sendTapped()
         
+        wait(for: [expectation], timeout: 2)
+    }
+
+    func testUsernameIsAddedToResult() {
+        let expectation = XCTestExpectation(description: "Username field is present")
+
+        let delegate = MockBugReportDelegate(model: .mock)
+        delegate.sendCallback = { form, _ in
+            if form.username == self.usernameValue {
+                expectation.fulfill()
+            }
+        }
+        CurrentEnv.bugReportDelegate = delegate
+        let vm = FormViewModel(fields: [
+            InputField.init(label: "1", submitLabel: "", type: .textSingleLine, isMandatory: false, placeholder: nil),
+            InputField.init(label: "1", submitLabel: "", type: .switch, isMandatory: false, placeholder: nil),
+        ], category: "Connection issues")
+        vm.fields[0].stringValue = emailValue
+        vm.fields[1].stringValue = usernameValue
+        vm.sendTapped()
+
         wait(for: [expectation], timeout: 2)
     }
     
@@ -86,7 +108,7 @@ final class FormViewModelTests: XCTestCase {
         vm.fields[0].stringValue = emailValue
         
         XCTAssertFalse(vm.canBeSent)
-        vm.fields[2].stringValue = "value"
+        vm.fields[3].stringValue = "value"
         XCTAssertTrue(vm.canBeSent)
     }
     

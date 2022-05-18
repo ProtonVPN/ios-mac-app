@@ -34,6 +34,8 @@ public enum LocalizedString {
   public static var br3LogsDisabled: String { return LocalizedString.tr("Localizable", "_br_3_logs_disabled") }
   /// Send error logs
   public static var br3LogsField: String { return LocalizedString.tr("Localizable", "_br_3_logs_field") }
+  /// Username
+  public static var br3Username: String { return LocalizedString.tr("Localizable", "_br_3_username") }
   /// Try again
   public static var brFailureButtonRetry: String { return LocalizedString.tr("Localizable", "_br_failure_button_retry") }
   /// Troubleshoot

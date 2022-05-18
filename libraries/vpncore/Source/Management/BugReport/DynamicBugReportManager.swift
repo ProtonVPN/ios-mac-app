@@ -41,6 +41,9 @@ public class DynamicBugReportManager {
             self.propertiesManager.reportBugEmail = newValue
         }
     }
+    public var prefilledUsername: String {
+        return AuthKeychain.fetch()?.username ?? ""
+    }
     
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
     
@@ -120,7 +123,7 @@ public class DynamicBugReportManager {
                                clientType: 2,
                                title: "Report from \(os) app",
                                description: data.text,
-                               username: AuthKeychain.fetch()?.username ?? "",
+                               username: data.username,
                                email: data.email,
                                country: propertiesManager.userLocation?.country ?? "",
                                ISP: propertiesManager.userLocation?.isp ?? "",
@@ -139,7 +142,6 @@ public class DynamicBugReportManager {
 }
 
 extension DynamicBugReportManager: BugReportDelegate {
-        
     public func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
         if form.logs {
             propertiesManager.logCurrentState()
