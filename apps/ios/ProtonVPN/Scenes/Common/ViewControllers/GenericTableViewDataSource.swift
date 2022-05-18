@@ -285,6 +285,9 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard !(indexPath.row == 0 && indexPath.section == 0) else {
+            return UIConstants.connectionStatusCellHeight
+        }
         switch sections[indexPath.section].cells[indexPath.row] {
         case .tooltip, .attributedTooltip:
             return -1 // allows for self sizing
