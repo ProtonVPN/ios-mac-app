@@ -188,7 +188,7 @@ class RequestParsingTests: XCTestCase {
     }
 
     func testJsonRequestKeysArePascalCased() throws {
-        let requests: [APIRequest] = [CertificateRefreshRequest(params: .init(clientPublicKey: "hello",
+        checkKeysArePascalCasedForRequest(CertificateRefreshRequest(params: .init(clientPublicKey: "hello",
                                                                 clientPublicKeyMode: "world",
                                                                 deviceName: "Johnny Appleseed's JetPack Pro",
                                                                 mode: "Fun Mode",
@@ -197,25 +197,25 @@ class RequestParsingTests: XCTestCase {
                                                                                 vpnAccelerator: true,
                                                                                 bouncing: "bouncing",
                                                                                 natType: .moderateNAT,
-                                                                                safeMode: true))),
-                                      TokenRefreshRequest(params: .init(responseType: "response",
+                                                                                safeMode: true))))
+        checkKeysArePascalCasedForRequest(TokenRefreshRequest(params: .init(responseType: "response",
                                                                         grantType: "grant",
                                                                         refreshToken: "refresh",
-                                                                        redirectURI: "example.org"))]
+                                                                        redirectURI: "example.org")))
+    }
 
-        for request in requests {
-            guard let body = request.body else {
-                XCTFail("Request \(request) should have a body")
-                return
-            }
-
-            guard let dict = body.jsonDictionary else {
-                XCTFail("Could not decode json dictionary for \(request)")
-                return
-            }
-
-            recursivelyCheckKeys(dict: dict)
+    func checkKeysArePascalCasedForRequest<R: APIRequest>(_ request: R) {
+        guard let body = request.body else {
+            XCTFail("Request \(request) should have a body")
+            return
         }
+
+        guard let dict = body.jsonDictionary else {
+            XCTFail("Could not decode json dictionary for \(request)")
+            return
+        }
+
+        recursivelyCheckKeys(dict: dict)
     }
 
     func recursivelyCheckKeys(dict: [String: Any], stack: String = "") {

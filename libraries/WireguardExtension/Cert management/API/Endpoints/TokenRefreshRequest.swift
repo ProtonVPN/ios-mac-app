@@ -21,6 +21,7 @@ import Foundation
 struct TokenRefreshRequest: APIRequest {
     let endpointUrl = "auth/refresh"
     let httpMethod = "POST"
+    let hasBody = true
 
     let params: Params
 
@@ -57,15 +58,5 @@ struct TokenRefreshRequest: APIRequest {
 
     init(params: Params) {
         self.params = params
-    }
-
-    var body: Data? {
-        return try? encoder.encode(params)
-    }
-
-    private var encoder: JSONEncoder {
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .custom(capitalizeFirstLetter)
-        return encoder
     }
 }
