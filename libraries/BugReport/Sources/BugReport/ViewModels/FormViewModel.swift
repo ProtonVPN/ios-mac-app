@@ -33,7 +33,7 @@ final class FormViewModel: ObservableObject {
         return fields.last?.boolValue == false
     }
 
-    // Lint is disbled here, because swiftui doesn't like get-only properties
+    // Lint is disabled here, because SwiftUI doesn't like get-only properties
     var shouldShowResultView: Bool { get { sendResult != nil } set {} } // swiftlint:disable:this unused_setter_value
     var sendResultError: Error? {
         if case .failure(let error) = sendResult {
@@ -43,26 +43,16 @@ final class FormViewModel: ObservableObject {
     }
 
     var canBeSent: Bool {
-        var result = true
-
-        // Check if any of mandatory fields are not filled in
-        for field in fields {
-            // IsMandatory - optional boolean, if the field is absent, the input field is mandatory
-            guard field.inputField.isMandatory ?? true else { continue }
-
-            switch field.inputField.type {
+        // Make sure that none of the mandatory fields contains empty value or unchecked switch
+        // IsMandatory - optional boolean, if the field is absent, the input field is mandatory
+        return !fields.filter({ $0.inputField.isMandatory ?? true }).contains(where: {
+            switch $0.inputField.type {
             case .textSingleLine, .textMultiLine:
-                if field.stringValue.isEmpty {
-                    result = false
-                }
+                return $0.stringValue.isEmpty
             case .switch:
-                if !field.boolValue {
-                    result = false
-                }
+                return !$0.boolValue
             }
-        }
-
-        return result
+        })
     }
 
     var sendResultChanged: (() -> Void)?
