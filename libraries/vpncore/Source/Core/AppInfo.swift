@@ -17,7 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCore_Doh
+#if os(iOS)
+import UIKit
+#endif
 
 public enum AppContext: String {
     case mainApp
@@ -118,7 +120,7 @@ public class AppInfoImplementation: AppInfo {
             #if os(iOS)
             self.modelName = UIDevice.current.modelName
             #else
-            self.modelName = nil
+            self.modelName = Host.current().localizedName ?? nil
             #endif
         }
 
