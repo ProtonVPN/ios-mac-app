@@ -145,29 +145,18 @@ final class FormViewModel: ObservableObject {
     }
 
     private func makeResult() -> BugReportResult {
-        var email = ""
-        var text = ""
-        var logs = false
+        let find = { (submitLabel: String) -> FormInputField? in
+            return self.fields.first(where: { $0.inputField.submitLabel == submitLabel })
+        }
 
-        for field in fields {
-            // Custom pre-set fields
-            if field.inputField.submitLabel == emailFieldName {
-                email = field.stringValue
-                continue
-            }
-            if field.inputField.submitLabel == logsFieldName {
-                logs = field.boolValue
-                continue
-            }
-
-            // Fields from the outside
+        let email = find(emailFieldName)?.stringValue ?? ""
+        let logs = find(logsFieldName)?.boolValue ?? false
+        let text = fields.filter({ ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }).reduce("") { prev, field in
             switch field.inputField.type {
             case .textSingleLine, .textMultiLine:
-                text += "\(field.inputField.submitLabel)\n"
-                text += "\(field.stringValue)\n---\n"
+                return prev + "\(field.inputField.submitLabel)\n\(field.stringValue)\n---\n"
             case .switch:
-                text += "\(field.inputField.submitLabel): "
-                text += "\(field.boolValue ? "YES" : "NO")\n---\n"
+                return prev + "\(field.inputField.submitLabel): \(field.boolValue ? "YES" : "NO")\n---\n"
             }
         }
 
