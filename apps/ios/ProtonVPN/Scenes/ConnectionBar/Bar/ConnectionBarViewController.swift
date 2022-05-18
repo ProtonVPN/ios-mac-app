@@ -71,8 +71,9 @@ class ConnectionBarViewController: UIViewController {
         willMove(toParent: parentViewController)
         if let connectionBarView = view {
             containerView.addSubview(connectionBarView)
-            connectionBarView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            connectionBarView.frame = containerView.bounds
+            connectionBarView.translatesAutoresizingMaskIntoConstraints = false
+            connectionBarView.heightAnchor.constraint(equalTo: containerView.heightAnchor, multiplier: 1).isActive = true
+            connectionBarView.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1).isActive = true
         }
         parentViewController.addChild(self)
         didMove(toParent: parentViewController)

@@ -27,6 +27,7 @@ import vpncore
 class UIConstants {
     
     // MARK: - Cell constants
+    static let connectionStatusCellHeight: CGFloat = 48
     static let cellHeight: CGFloat = 52.5
     static let headerHeight: CGFloat = 56
     static let countriesHeaderHeight: CGFloat = 40

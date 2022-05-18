@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nde-1b-wub">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -13,50 +13,50 @@
             <objects>
                 <viewController storyboardIdentifier="ConnectionBarViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nde-1b-wub" customClass="ConnectionBarViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="lxd-B5-qQS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="798" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vx6-lh-0Na">
-                                <rect key="frame" x="-8" y="0.0" width="383" height="50"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="Not Connected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vx6-lh-0Na">
+                                <rect key="frame" x="341" y="0.0" width="116" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="khp-mB-Wn5"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsL-EG-ZOw">
-                                <rect key="frame" x="20" y="0.0" width="227" height="50"/>
+                                <rect key="frame" x="119" y="14" width="84" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khb-sG-pRQ">
-                                <rect key="frame" x="255" y="0.0" width="71" height="50"/>
+                                <rect key="frame" x="575" y="14" width="71" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="251" placeholderIntrinsicWidth="13" placeholderIntrinsicHeight="13" image="placeholdertext.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v5z-Fv-isN">
-                                <rect key="frame" x="346" y="19.5" width="13" height="10.5"/>
+                                <rect key="frame" x="666" y="18.5" width="13" height="10.5"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1es-tg-I6Q"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="vx6-lh-0Na" firstAttribute="height" secondItem="lxd-B5-qQS" secondAttribute="height" id="2ZO-7x-dXY"/>
-                            <constraint firstItem="khb-sG-pRQ" firstAttribute="top" secondItem="lxd-B5-qQS" secondAttribute="top" id="7Ud-4K-8wY"/>
-                            <constraint firstItem="khb-sG-pRQ" firstAttribute="leading" secondItem="gsL-EG-ZOw" secondAttribute="trailing" constant="8" id="FgY-dh-A6i"/>
-                            <constraint firstItem="1es-tg-I6Q" firstAttribute="bottom" secondItem="gsL-EG-ZOw" secondAttribute="bottom" id="FpW-A8-awh"/>
+                            <constraint firstItem="gsL-EG-ZOw" firstAttribute="centerY" secondItem="lxd-B5-qQS" secondAttribute="centerY" id="VFb-9H-c8f"/>
                             <constraint firstItem="v5z-Fv-isN" firstAttribute="centerY" secondItem="lxd-B5-qQS" secondAttribute="centerY" id="ZRw-FH-PhV"/>
                             <constraint firstItem="v5z-Fv-isN" firstAttribute="leading" secondItem="khb-sG-pRQ" secondAttribute="trailing" constant="20" id="cKN-uL-3La"/>
-                            <constraint firstItem="gsL-EG-ZOw" firstAttribute="top" secondItem="lxd-B5-qQS" secondAttribute="top" id="hRc-m5-jDA"/>
-                            <constraint firstItem="vx6-lh-0Na" firstAttribute="top" secondItem="lxd-B5-qQS" secondAttribute="top" id="kFI-4o-Tr9"/>
-                            <constraint firstItem="1es-tg-I6Q" firstAttribute="bottom" secondItem="khb-sG-pRQ" secondAttribute="bottom" id="lk9-t5-6A8"/>
-                            <constraint firstItem="vx6-lh-0Na" firstAttribute="leadingMargin" secondItem="1es-tg-I6Q" secondAttribute="leading" id="n9O-AH-kJJ"/>
-                            <constraint firstAttribute="leading" secondItem="gsL-EG-ZOw" secondAttribute="leading" constant="-20" id="ngg-1Y-bib"/>
-                            <constraint firstItem="1es-tg-I6Q" firstAttribute="trailing" secondItem="vx6-lh-0Na" secondAttribute="trailing" id="qqv-H2-pTF"/>
+                            <constraint firstAttribute="bottom" secondItem="vx6-lh-0Na" secondAttribute="bottom" id="hG9-qb-tkN"/>
+                            <constraint firstItem="khb-sG-pRQ" firstAttribute="centerY" secondItem="lxd-B5-qQS" secondAttribute="centerY" id="jOI-ca-5KO"/>
+                            <constraint firstItem="gsL-EG-ZOw" firstAttribute="leading" secondItem="lxd-B5-qQS" secondAttribute="leadingMargin" id="ngg-1Y-bib"/>
+                            <constraint firstItem="vx6-lh-0Na" firstAttribute="centerX" secondItem="lxd-B5-qQS" secondAttribute="centerX" id="vJ1-LQ-A7E"/>
                             <constraint firstAttribute="trailingMargin" secondItem="v5z-Fv-isN" secondAttribute="trailing" id="wYu-Jd-zyb"/>
+                            <constraint firstItem="vx6-lh-0Na" firstAttribute="top" secondItem="lxd-B5-qQS" secondAttribute="top" id="yPf-82-oUx"/>
                         </constraints>
                     </view>
-                    <size key="freeformSize" width="375" height="50"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="798" height="48"/>
                     <connections>
                         <outlet property="arrowImage" destination="v5z-Fv-isN" id="sCJ-0r-0OJ"/>
                         <outlet property="connectedLabel" destination="gsL-EG-ZOw" id="A1v-aq-l5b"/>
@@ -66,18 +66,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qDh-fe-pur" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="664.79999999999995" y="-248.27586206896552"/>
+            <point key="canvasLocation" x="788.671875" y="-232.79648609077597"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="1PR-XU-Q2c">
             <objects>
                 <viewController storyboardIdentifier="StatusViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="EEf-4z-VLe" customClass="StatusViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NEq-Nq-nYA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1Fo-0s-96R">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="24" width="1024" height="1322"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
