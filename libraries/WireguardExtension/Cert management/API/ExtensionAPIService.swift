@@ -92,6 +92,7 @@ final class ExtensionAPIService {
     private let storage: Storage
     private let dataTaskFactory: DataTaskFactory
     private let keychain: AuthKeychainHandle
+    private let appInfo = AppInfoImplementation(context: .wireGuardExtension)
 
     enum ExtensionAPIServiceError: Error, CustomStringConvertible {
         case noCredentials
@@ -198,7 +199,7 @@ final class ExtensionAPIService {
 
         let params = CertificateRefreshRequest.Params(clientPublicKey: publicKey,
                                                       clientPublicKeyMode: "EC",
-                                                      deviceName: deviceName,
+                                                      deviceName: appInfo.modelName ?? "",
                                                       mode: "session",
                                                       duration: CertificateConstants.certificateDuration,
                                                       features: features)
@@ -272,11 +273,11 @@ final class ExtensionAPIService {
         request.httpMethod = apiRequest.httpMethod
 
         // Headers
-        request.setHeader(.appVersion, appVersion)
+        request.setHeader(.appVersion, appInfo.appVersion)
         request.setHeader(.apiVersion, "3")
         request.setHeader(.contentType, "application/json")
         request.setHeader(.accept, "application/vnd.protonmail.v1+json")
-        request.setHeader(.userAgent, userAgent)
+        request.setHeader(.userAgent, appInfo.userAgent)
 
         // Body
         if let body = apiRequest.body {
@@ -332,59 +333,6 @@ final class ExtensionAPIService {
             }
         }
         task.resume()
-    }
-
-    // MARK: - Mandatory fields for sending to API
-
-    private var deviceName: String {
-        #if os(iOS)
-        return UIDevice.current.name
-        #else
-        return Host.current().localizedName ?? ""
-        #endif
-    }
-
-    private var userAgent: String {
-        let info = ProcessInfo()
-        let osVersion = info.operatingSystemVersion
-        let processName = info.processName
-        var os = "unknown"
-        var device = ""
-        #if os(iOS)
-        os = "iOS"
-        device = "; \(UIDevice.current.modelName)"
-        #elseif os(macOS)
-        os = "Mac OS X"
-        #elseif os(watchOS)
-        os = "watchOS"
-        #elseif os(tvOS)
-        os = "tvOS"
-        #endif
-        return "\(processName)/\(bundleShortVersion) (\(os) \(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)\(device))"
-    }
-
-    private var bundleShortVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-    }
-
-    private var bundleVersion: String {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
-    }
-
-    private var appVersion: String {
-        return clientId + "_" + bundleShortVersion
-    }
-
-    private var clientId: String {
-        return clientDictionary.object(forKey: "WireGuardId") as? String ?? ""
-    }
-
-    private var clientDictionary: NSDictionary {
-        guard let file = Bundle.main.path(forResource: "Client", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: file) else {
-            return NSDictionary()
-        }
-        return dict
     }
 }
 
