@@ -86,14 +86,12 @@ class WindowServiceImplementation: WindowService {
         & LogFileManagerFactory
         & BugReportCreatorFactory
         & DynamicBugReportManagerFactory
-        & VpnKeychainFactory
 
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
@@ -218,8 +216,6 @@ class WindowServiceImplementation: WindowService {
         let manager = factory.makeDynamicBugReportManager()
         
         if #available(macOS 11, *), let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
-            manager.username = AuthKeychain.fetch()?.username ?? ""
-            manager.planname = (try? vpnKeychain.fetchCached().accountPlan.description) ?? ""
             manager.closeBugReportHandler = { [weak self] in
                 self?.closeWindow(withController: ReportBugWindowController.self)
             }

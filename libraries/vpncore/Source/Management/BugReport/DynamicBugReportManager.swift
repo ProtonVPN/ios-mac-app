@@ -43,8 +43,6 @@ public class DynamicBugReportManager {
     }
     
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
-    public var username: String = ""
-    public var planname: String = ""
     
     private var api: ReportsApiService
     private var storage: DynamicBugReportStorage
@@ -53,14 +51,16 @@ public class DynamicBugReportManager {
     private var logFilesProvider: LogFilesProvider
     private var timer: Timer?
     private let updateChecker: UpdateChecker
+    private let vpnKeychain: VpnKeychainProtocol
     
-    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, logFilesProvider: LogFilesProvider, updateChecker: UpdateChecker) {
+    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, logFilesProvider: LogFilesProvider, updateChecker: UpdateChecker, vpnKeychain: VpnKeychainProtocol) {
         self.api = api
         self.storage = storage
         self.alertService = alertService
         self.propertiesManager = propertiesManager
         self.logFilesProvider = logFilesProvider
         self.updateChecker = updateChecker
+        self.vpnKeychain = vpnKeychain
         
         model = storage.fetch() ?? getDefaultConfig()
         setupRefresh()
@@ -120,11 +120,11 @@ public class DynamicBugReportManager {
                                clientType: 2,
                                title: "Report from \(os) app",
                                description: data.text,
-                               username: username,
+                               username: AuthKeychain.fetch()?.username ?? "",
                                email: data.email,
                                country: propertiesManager.userLocation?.country ?? "",
                                ISP: propertiesManager.userLocation?.isp ?? "",
-                               plan: planname)
+                               plan: (try? vpnKeychain.fetchCached().accountPlan.description) ?? "")
         
         if data.logs {
             report.files = logFilesProvider.logFiles.compactMap { $0.1 }.reachable()
