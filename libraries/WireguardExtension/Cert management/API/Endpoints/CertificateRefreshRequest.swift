@@ -24,6 +24,15 @@ struct CertificateRefreshRequest: APIRequest {
         let mode: String
         let duration: String?
         let features: VPNConnectionFeatures?
+
+        static func withPublicKey(_ publicKey: String, deviceName: String?, features: VPNConnectionFeatures?) -> Self {
+            Self(clientPublicKey: publicKey,
+                 clientPublicKeyMode: "EC",
+                 deviceName: deviceName ?? "",
+                 mode: "session",
+                 duration: CertificateConstants.certificateDuration,
+                 features: features)
+        }
     }
 
     typealias Response = VpnCertificate

@@ -60,6 +60,7 @@ public enum APIHeader: String {
     case contentType = "Content-Type"
     case accept = "Accept"
     case userAgent = "User-Agent"
+    case retryAfter = "retry-after"
 }
 
 extension URLRequest {
@@ -68,17 +69,62 @@ extension URLRequest {
     }
 }
 
-enum APIHTTPErrorCode: Int, Error {
+enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
+    /// The request is badly formatted. The client must log in again and the developer should take action.
     case badRequest = 400
+    /// Token expired. Client should refresh its access token and try again.
     case tokenExpired = 401
     // case retryRequest = 409 (Unimplemented, retry request immediately)
+    /// The session is expired, and the user must log in again (or session needs re-forking.)
     case sessionExpired = 422
+    /// The client has been jailed for sending too many requests. Retry the request after a reasonable time,
+    /// respecting the `Retry-After` header.
     case tooManyRequests = 429
+    /// The server is experiencing internal issues and the user should be notified. Refresh should be held.
     case internalError = 500
+    /// The server is experiencing internal issues and the user should be notified. Client may receive (and should
+    /// respect if sent) a `Retry-After` header.
     case serviceUnavailable = 503
+
+    var description: String {
+        switch self {
+        case .badRequest:
+            return "The application sent a badly-formatted request. Please contact the developer."
+        case .tokenExpired:
+            return "The current access token has expired. Please refresh the token."
+        case .sessionExpired:
+            return "The current session has expired. Please log in again."
+        case .tooManyRequests:
+            return "The client has sent too many requests in one period and should try again after a reasonable time."
+        case .internalError:
+            return "The remote service has experienced an internal error."
+        case .serviceUnavailable:
+            return "The remote service is currently unavailable. Please try again after a reasonable time."
+        }
+    }
 }
 
-struct APIError: Codable {
+extension HTTPURLResponse {
+    var apiHttpErrorCode: APIHTTPErrorCode? {
+        APIHTTPErrorCode(rawValue: self.statusCode)
+    }
+
+    func value(forApiHeader header: APIHeader) -> String? {
+        if #available(iOSApplicationExtension 13.0, *) {
+            return value(forHTTPHeaderField: header.rawValue)
+        } else {
+            let kvPair = self.allHeaderFields.first { (key, _) in
+                (key as? String)?.lowercased() == header.rawValue.lowercased()
+            }
+            guard let kvPair = kvPair else {
+                return nil
+            }
+            return kvPair.value as? String
+        }
+    }
+}
+
+struct APIError: Error, Codable, CustomStringConvertible {
     let code: Int
     let message: String
 
@@ -91,5 +137,9 @@ struct APIError: Codable {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return try? decoder.decode(Self.self, from: errorResponse)
+    }
+
+    var description: String {
+        "Error \(code): \"\(message)\""
     }
 }
