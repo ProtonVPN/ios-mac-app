@@ -94,7 +94,6 @@
 		66835CD1375221C55BF4610B /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */; };
 		6B98DC90360CC2606595D272 /* URLArray+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */; };
 		7538034CFD760B83386F6FEA /* SentryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1690F8DE128B31DEF327B7AE /* SentryHelper.swift */; };
-		76875591C80BAD34685C0BE0 /* ConsoleLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9ACAF7DD1B9A7C7F48F43E /* ConsoleLogHandler.swift */; };
 		77BF10C45A2119E8240BF3E9 /* FileLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EBB65215BA5F5CD6AD30E9 /* FileLogHandler.swift */; };
 		7C5807DAE63741A463939240 /* CoreAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02FBA70177FC11A4749DBDD3 /* CoreAssets.xcassets */; };
 		8137B3D333109A17DEEA1041 /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */; };
@@ -108,7 +107,6 @@
 		9D21B1DE838FA2A4CF835924 /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */; };
 		A2F4E02AB3A069EBDBACBF1D /* String+Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F0015F0BEB0E5E1ADB08B /* String+Email.swift */; };
 		A5118A2340EE6F5C87183934 /* FileLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EBB65215BA5F5CD6AD30E9 /* FileLogHandler.swift */; };
-		A7CC21A264ECEBAFC3EE243A /* ConsoleLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9ACAF7DD1B9A7C7F48F43E /* ConsoleLogHandler.swift */; };
 		AB57945EC650CD0E34161E65 /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB70420DCBF91084914A1135 /* Logger+Callers.swift */; };
 		B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
@@ -688,7 +686,6 @@
 		75E96E5ECA25882D1AF0C240 /* LogHandler+Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogHandler+Metadata.swift"; sourceTree = "<group>"; };
 		7FA60AD5A3ABB7BED5473A5D /* ConsoleLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogFormatter.swift; sourceTree = "<group>"; };
 		86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macosTests-metadata.plist"; sourceTree = "<group>"; };
-		8A9ACAF7DD1B9A7C7F48F43E /* ConsoleLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogHandler.swift; sourceTree = "<group>"; };
 		930A01A257410DBC7881F187 /* FileLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogFormatter.swift; sourceTree = "<group>"; };
 		95C1A4F6A12C707BAA9F5358 /* Pods-Core-vpncore-macos.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.staging.xcconfig"; sourceTree = "<group>"; };
 		9BC4350A67B269190E142741 /* Pods-Core-vpncore-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-ios.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-ios/Pods-Core-vpncore-ios.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1132,7 +1129,6 @@
 		C62E1E091E727BC144AE7C6C /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				8A9ACAF7DD1B9A7C7F48F43E /* ConsoleLogHandler.swift */,
 				53EBB65215BA5F5CD6AD30E9 /* FileLogHandler.swift */,
 				E97CBDC528118891004D2989 /* OSLogHandler.swift */,
 			);
@@ -2696,7 +2692,6 @@
 				30286CAD085C66549A6EEBEF /* LogHandler+Metadata.swift in Sources */,
 				248FB9E2C6B4BCFEB0B350E5 /* Optional+stringForLog.swift in Sources */,
 				E51C6079AB893075B8713F74 /* Logger+Categories.swift in Sources */,
-				A7CC21A264ECEBAFC3EE243A /* ConsoleLogHandler.swift in Sources */,
 				AB57945EC650CD0E34161E65 /* Logger+Callers.swift in Sources */,
 				F119A8ECC9C89EA82B01A696 /* Level+Print.swift in Sources */,
 				A5118A2340EE6F5C87183934 /* FileLogHandler.swift in Sources */,
@@ -2979,7 +2974,6 @@
 				F397EA5F280561400072D511 /* CouponViewModel.swift in Sources */,
 				507B573219411E448ADE32C8 /* PropertiesManager+Log.swift in Sources */,
 				262328404A30662F306A590A /* URL+String.swift in Sources */,
-				76875591C80BAD34685C0BE0 /* ConsoleLogHandler.swift in Sources */,
 				04EC05A4145232174D32DAA2 /* Optional+stringForLog.swift in Sources */,
 				9836884258CAA9078015A0E6 /* Logger+Categories.swift in Sources */,
 				1E03CB319771138C7E1C9299 /* FileHandler+New.swift in Sources */,
