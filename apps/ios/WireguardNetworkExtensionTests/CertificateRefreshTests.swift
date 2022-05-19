@@ -148,11 +148,18 @@ class NWTCPConnectionTests: XCTestCase {
 }
 
 class CertificateRefreshTests: XCTestCase {
-    var certRefreshCallback: ((URLRequest, MockDataTask.CompletionCallback) -> ())?
-    var tokenRefreshCallback: ((URLRequest, MockDataTask.CompletionCallback) -> ())?
+    typealias MockEndpointBlock = ((URLRequest, @escaping MockDataTask.CompletionCallback) -> ())
+
+    static let sessionSelector = "SELECTOR"
+
+    var certRefreshCallback: MockEndpointBlock?
+    var tokenRefreshCallback: MockEndpointBlock?
+    var sessionAuthCallback: MockEndpointBlock?
 
     var authenticationStorage: MockVpnAuthenticationStorage!
     var manager: ExtensionCertificateRefreshManager!
+
+    let testQueue = DispatchQueue(label: "ch.protonvpn.tests.certificaterefresh")
 
     override func setUpWithError() throws {
         let mockFactory = MockDataTaskFactory { session, request, completionHandler in
@@ -161,6 +168,8 @@ class CertificateRefreshTests: XCTestCase {
                 self.certRefreshCallback?(request, completionHandler)
             case "/auth/refresh":
                 self.tokenRefreshCallback?(request, completionHandler)
+            case "/auth/sessions/forks/\(Self.sessionSelector)":
+                self.sessionAuthCallback?(request, completionHandler)
             case nil:
                 XCTFail("Received request with no path")
             default:
@@ -172,8 +181,7 @@ class CertificateRefreshTests: XCTestCase {
         authenticationStorage = MockVpnAuthenticationStorage()
         authenticationStorage.keys = VpnKeys()
         let authKeychain = MockAuthKeychain()
-        authKeychain.credentials = AuthCredentials(version: 1,
-                                                   username: "johnny",
+        authKeychain.credentials = AuthCredentials(username: "johnny",
                                                    accessToken: "12345",
                                                    refreshToken: "54321",
                                                    sessionId: "15213",
@@ -187,62 +195,100 @@ class CertificateRefreshTests: XCTestCase {
 
     }
 
-    func fakeCertificateData() -> (VpnCertificate, Data?) {
-        let oneHour = Double(60 * 60)
-        let fiveMinutes = Double(5 * 60)
-        let certificate = VpnCertificate(fakeCertExpiringAfterInterval: oneHour,
-                                         refreshBeforeExpiring: fiveMinutes)
+    /// Returns a callback that will mock an HTTP 200 response.
+    ///
+    /// - Parameter cls: The response type to use.
+    /// - Parameter responseData: What data to fill the response with, if applicable.
+    /// - Parameter expectationToFulfill: When the returned callback gets called, it will fulfill the passed expectation.
+    func defaultMockEndpoint<M: MockableRequest>(_ cls: M.Type,
+                                                 responseData: [PartialKeyPath<M.Response>: Any],
+                                                 expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {
+        return { request, completionHandler in
+            let response = HTTPURLResponse(url: request.url!,
+                                           statusCode: 200,
+                                           httpVersion: nil,
+                                           headerFields: nil)
 
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .secondsSince1970
-        return (certificate, try? encoder.encode(certificate))
-    }
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .secondsSince1970
+            let data = try! encoder.encode(M.Response(fakeData: responseData))
 
-    func fakeTokenData() -> Data? {
-        let encoder = JSONEncoder()
-        let oneHour = Double(60 * 60)
-        return try? encoder.encode(TokenRefreshRequest.Response(fakeTokenExpiringIn: oneHour))
+            self.testQueue.async {
+                completionHandler(data, response, nil)
+                expectationToFulfill.fulfill()
+            }
+        }
     }
 
     func testNormalCertRefresh() {
-        let expectation = XCTestExpectation(description: "Wait for certificate refresh")
+        let expectationForSessionAuth = XCTestExpectation(description: "Wait for session auth (happens first)")
+        let expectationForTokenRefresh = XCTestExpectation(description: "Wait for token refresh (happens after session auth)")
+        let expectationForCertRefresh = XCTestExpectation(description: "Wait for certificate refresh (happens after token refresh)")
+        let expectationForManagerStart = XCTestExpectation(description: "Wait for the manager to finish starting up")
 
-        certRefreshCallback = { request, completionHandler in
-            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)
+        let testValues = (
+            refreshToken: "abc123",
+            accessToken: "def456",
+            uid: "15213",
+            cert: "This is a certificate",
+            refreshTime: Date().addingTimeInterval(15),
+            validUntil: Date().addingTimeInterval(20)
+        )
 
-            let (certificate, data) = self.fakeCertificateData()
-            guard let data = data else {
-                XCTFail("Couldn't generate fake certificate")
+        sessionAuthCallback = defaultMockEndpoint(SessionAuthRequest.self,
+                                                  responseData: [\.refreshToken: testValues.refreshToken,
+                                                                  \.uid: testValues.uid],
+                                                  expectationToFulfill: expectationForSessionAuth)
+
+        certRefreshCallback = defaultMockEndpoint(CertificateRefreshRequest.self,
+                                                  responseData: [\.certificate: testValues.cert,
+                                                                 \.refreshTime: testValues.refreshTime,
+                                                                 \.validUntil: testValues.validUntil],
+                                                  expectationToFulfill: expectationForCertRefresh)
+
+        tokenRefreshCallback = defaultMockEndpoint(TokenRefreshRequest.self,
+                                                   responseData: [\.refreshToken: testValues.refreshToken,
+                                                                  \.accessToken: testValues.accessToken,
+                                                                  \.expiresIn: 15213],
+                                                   expectationToFulfill: expectationForTokenRefresh)
+
+        manager.start(withNewSession: Self.sessionSelector) { result in
+            if case let .failure(error) = result {
+                XCTFail("Manager start failed with error: \(error)")
                 return
             }
-            completionHandler(data, response, nil)
 
-            XCTAssertEqual(self.authenticationStorage.cert?.certificate, certificate.certificate)
-            XCTAssertEqual(self.authenticationStorage.cert?.validUntil.formatted(),
-                           certificate.validUntil.formatted())
-            XCTAssertEqual(self.authenticationStorage.cert?.refreshTime.formatted(),
-                           certificate.refreshTime.formatted())
-            expectation.fulfill()
+            expectationForManagerStart.fulfill()
         }
 
-        tokenRefreshCallback = { _, _ in
-            XCTFail("Should not have tried to refresh token")
+        wait(for: [expectationForSessionAuth, expectationForCertRefresh, expectationForTokenRefresh, expectationForManagerStart], timeout: 10)
+
+        guard let cert = self.authenticationStorage.getStoredCertificate() else {
+            XCTFail("No certificate stored")
+            return
         }
 
-        manager.start()
-
-        wait(for: [expectation], timeout: 10)
+        XCTAssertEqual(cert.certificate, testValues.cert)
+        XCTAssertEqual(cert.validUntil.formatted(), testValues.validUntil.formatted())
+        XCTAssertEqual(cert.refreshTime.formatted(), testValues.refreshTime.formatted())
     }
 
     func testError401LeadingToTokenRefresh() {
+        let expectationForSessionAuth = XCTestExpectation(description: "Wait for session authentication")
         let expectationForFirstCertRefresh = XCTestExpectation(description: "Wait for first certificate refresh")
         let expectationForRetryCertRefresh = XCTestExpectation(description: "Wait for subsequent certificate refresh")
         let expectationForAuthTokenRefresh = XCTestExpectation(description: "Wait to request new token from API")
-        var askedForRefresh = false
+        let expectationForManagerStart = XCTestExpectation(description: "Wait for cert refresh manager to start")
+        var certRefreshRequests = 0
+        var tokenRefreshRequests = 0
+
+        sessionAuthCallback = defaultMockEndpoint(SessionAuthRequest.self,
+                                                  responseData: [:],
+                                                  expectationToFulfill: expectationForSessionAuth)
 
         certRefreshCallback = { request, completionHandler in
-            if !askedForRefresh {
-                askedForRefresh = true
+            if certRefreshRequests == 0 {
+                certRefreshRequests = 1
                 let response = HTTPURLResponse(url: request.url!,
                                                statusCode: 401,
                                                httpVersion: nil,
@@ -250,57 +296,82 @@ class CertificateRefreshTests: XCTestCase {
                 completionHandler(nil, response, nil)
                 expectationForFirstCertRefresh.fulfill()
             } else {
-                let response = HTTPURLResponse(url: request.url!,
-                                               statusCode: 200,
-                                               httpVersion: nil,
-                                               headerFields: nil)
+                XCTAssertEqual(certRefreshRequests, 1, "Should have only asked for cert refresh one other time")
+                certRefreshRequests += 1
 
-                let (_, certData) = self.fakeCertificateData()
-                guard let certData = certData else {
-                    XCTFail("Couldn't generate fake certificate")
-                    return
-                }
-                completionHandler(certData, response, nil)
-                expectationForRetryCertRefresh.fulfill()
+                let callback = self.defaultMockEndpoint(CertificateRefreshRequest.self,
+                                                        responseData: [:],
+                                                        expectationToFulfill: expectationForRetryCertRefresh)
+                callback(request, completionHandler)
             }
         }
 
         tokenRefreshCallback = { request, completionHandler in
-            XCTAssert(askedForRefresh, "Should have asked for cert refresh first")
+            if tokenRefreshRequests == 0 {
+                tokenRefreshRequests = 1
+                XCTAssertEqual(certRefreshRequests, 0, "Shouldn't have asked for cert refresh yet")
+            } else {
+                XCTAssertEqual(tokenRefreshRequests, 1, "Should have only asked for token refresh one other time")
+                tokenRefreshRequests += 1
+            }
+            let callback = self.defaultMockEndpoint(TokenRefreshRequest.self,
+                                                    responseData: [:],
+                                                    expectationToFulfill: expectationForAuthTokenRefresh)
+            callback(request, completionHandler)
+        }
 
-            let response = HTTPURLResponse(url: request.url!,
-                                           statusCode: 200,
-                                           httpVersion: nil,
-                                           headerFields: nil)!
-            guard let data = self.fakeTokenData() else {
-                XCTFail("Couldn't generate fake token")
+        manager.start(withNewSession: Self.sessionSelector) { result in
+            if case let .failure(error) = result {
+                XCTFail("Manager start failed with error: \(error)")
                 return
             }
 
-            completionHandler(data, response, nil)
-            expectationForAuthTokenRefresh.fulfill()
+            expectationForManagerStart.fulfill()
         }
-
-        manager.start()
 
         wait(for: [expectationForFirstCertRefresh,
                    expectationForRetryCertRefresh,
-                   expectationForAuthTokenRefresh], timeout: 10)
+                   expectationForAuthTokenRefresh,
+                   expectationForManagerStart], timeout: 10)
     }
 }
 
-extension CertificateRefreshRequest.Response {
-    init(fakeCertExpiringAfterInterval interval: TimeInterval, refreshBeforeExpiring refreshBefore: TimeInterval) {
-        self.certificate = "This is a fake certificate"
-        self.validUntil = Date() + interval
-        self.refreshTime = validUntil - refreshBefore
+protocol MockableAPIResponse: Codable {
+    init(fakeData: [PartialKeyPath<Self>: Any])
+}
+
+protocol MockableRequest {
+    associatedtype Response: MockableAPIResponse
+}
+
+extension CertificateRefreshRequest.Response: MockableAPIResponse {
+    init(fakeData: [PartialKeyPath<Self>: Any]) {
+        self.certificate = fakeData[\.certificate] as? String ?? "certificate"
+        self.validUntil = fakeData[\.validUntil] as? Date ?? Date()
+        self.refreshTime = fakeData[\.refreshTime] as? Date ?? Date()
     }
 }
 
-extension TokenRefreshRequest.Response {
-    init(fakeTokenExpiringIn expiresIn: TimeInterval) {
-        self.accessToken = "abcd1234"
-        self.refreshToken = "15213rox"
-        self.expiresIn = expiresIn
+extension CertificateRefreshRequest: MockableRequest {
+}
+
+extension TokenRefreshRequest.Response: MockableAPIResponse {
+    init(fakeData: [PartialKeyPath<Self>: Any]) {
+        self.accessToken = fakeData[\.accessToken] as? String ?? "accessToken"
+        self.refreshToken = fakeData[\.refreshToken] as? String ?? "refreshToken"
+        self.expiresIn = fakeData[\.expiresIn] as? TimeInterval ?? 15
     }
+}
+
+extension TokenRefreshRequest: MockableRequest {
+}
+
+extension SessionAuthRequest.Response: MockableAPIResponse {
+    init(fakeData: [PartialKeyPath<Self>: Any]) {
+        self.uid = fakeData[\.uid] as? String ?? "uid"
+        self.refreshToken = fakeData[\.refreshToken] as? String ?? "refreshToken"
+    }
+}
+
+extension SessionAuthRequest: MockableRequest {
 }
