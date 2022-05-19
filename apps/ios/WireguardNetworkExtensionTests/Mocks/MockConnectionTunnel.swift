@@ -21,7 +21,7 @@ import NetworkExtension
 import XCTest
 
 struct MockDataTaskFactory: DataTaskFactory {
-    typealias RequestCallback = (DataTaskProtocol, URLRequest, MockDataTask.CompletionCallback) -> Void
+    typealias RequestCallback = (DataTaskProtocol, URLRequest, @escaping MockDataTask.CompletionCallback) -> Void
     let requestCallback: RequestCallback
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping MockDataTask.CompletionCallback) -> DataTaskProtocol {
