@@ -52,6 +52,7 @@ final class ExtensionAPIService {
                                                     scopes: [])
 
                         do {
+                            self?.sessionExpired = false
                             try self?.keychain.store(creds)
                             self?.sessionExpired = false
                             completionHandler(.success(()))
@@ -76,7 +77,7 @@ final class ExtensionAPIService {
         self.keychain = keychain
     }
 
-    // MARK: -
+    // MARK: - Private variables
 
     private var apiUrl: String {
         #if !RELEASE
@@ -88,59 +89,30 @@ final class ExtensionAPIService {
 
         return "https://api.protonvpn.ch"
     }
+
+    private var sessionExpired = true
+    private var lastUnhandledError: Error?
+
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
     private let dataTaskFactory: DataTaskFactory
     private let keychain: AuthKeychainHandle
     private let appInfo = AppInfoImplementation(context: .wireGuardExtension)
 
-    enum ExtensionAPIServiceError: Error, CustomStringConvertible {
-        case noCredentials
-        case requestError(APIHTTPErrorCode?)
-        case apiError(APIError)
-        case noData
-        case parseError(Error?)
-        case apiTokenRefreshError(Error?)
-        case endpointHttpError(code: Int, message: String)
-        case networkError(Error)
+    private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 
-        var description: String {
-            switch self {
-            case .noCredentials:
-                return "No credentials"
-            case .requestError(let errorCode):
-                var requestErrorString: String?
-                if let errorCode = errorCode {
-                    requestErrorString = HTTPURLResponse.localizedString(forStatusCode: errorCode.rawValue)
-                }
-                return "API HTTP request error: \(requestErrorString ?? "(unknown)"))"
-            case .apiError(let apiError):
-                return "API request error: \(apiError.message) (\(apiError.code))"
-            case .noData:
-                return "No data received"
-            case .parseError(let error):
-                var parseErrorString: String?
-                if let error = error {
-                    parseErrorString = String(describing: error)
-                }
-                return "Parse error: \(parseErrorString ?? "(unknown)")"
-            case .apiTokenRefreshError(let error):
-                var apiTokenErrorString: String?
-                if let error = error {
-                    apiTokenErrorString = String(describing: error)
-                }
-                return "API token refresh error: \(apiTokenErrorString ?? "(unknown)")"
-            case .endpointHttpError(let code, let message):
-                return "Endpoint http error: \(code), \(message)"
-            case .networkError(let error):
-                return "Network error: \(error)"
-            }
-        }
+    /// The default amount of time to wait after a request has failed (before adding `jitter`).
+    private static let defaultRetryIntervalInSeconds = 45
+    /// A value to be added to API retry wait times to avoid DDoS'ing endpoints.
+    private var jitter: Int {
+        let jitterMaxInSeconds: UInt32 = 30
+
+        return Int(arc4random_uniform(jitterMaxInSeconds))
     }
 
+    // MARK: - Base API request handling
     private func request<R: APIRequest>(_ request: R,
                                         headers: [APIHeader: String?] = [:],
-                                        refreshApiTokenIfNeeded: Bool = true,
                                         completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {
         var urlRequest = makeUrlRequest(request)
 
@@ -148,121 +120,41 @@ final class ExtensionAPIService {
             urlRequest.setHeader(header, value)
         }
 
-        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
-            if let error = error {
-                completion(.failure(.networkError(error)))
-            }
-
-            guard let response = response else {
-                completion(.failure(.noData))
-                return
-            }
-
-            if let data = data, let apiError = APIError.decode(errorResponse: data) {
-                completion(.failure(.apiError(apiError)))
-                return
-            }
-
-            if let knownHttpError = APIHTTPErrorCode(rawValue: response.statusCode) {
-                completion(.failure(.requestError(knownHttpError)))
-                return
-            }
-
-            guard response.statusCode == 200 else {
-                log.error("Unknown error response code: \(response.statusCode)")
-                completion(.failure(.requestError(nil)))
-                return
-            }
-
-            guard let data = data else {
-                completion(.failure(.noData))
-                return
-            }
-
-            do {
-                let response = try R.decode(responseData: data)
-                completion(.success(response))
-            } catch {
-                completion(.failure(.parseError(error)))
-            }
-        }
-        task.resume()
-    }
-
-    private func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
-
-        guard let authCredentials = keychain.fetch() else {
-            log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
-            completionHandler(.failure(ExtensionAPIServiceError.noCredentials))
-            return
-        }
-
-        let params = CertificateRefreshRequest.Params(clientPublicKey: publicKey,
-                                                      clientPublicKeyMode: "EC",
-                                                      deviceName: appInfo.modelName ?? "",
-                                                      mode: "session",
-                                                      duration: CertificateConstants.certificateDuration,
-                                                      features: features)
-
-        let certificateRequest = CertificateRefreshRequest(params: params)
-        var urlRequest = makeUrlRequest(certificateRequest)
-
-        // Auth Headers
-        urlRequest.setValue("Bearer \(authCredentials.accessToken)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
-
         let task = dataTaskFactory.dataTask(urlRequest) { [weak self] data, response, error in
-            if response?.statusCode == 401 {
-                guard refreshApiTokenIfNeeded else {
-                    log.error("Will not refresh API token.", category: .api)
-                    completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(nil)))
+            self?.requestQueue.async {
+                if let error = error {
+                    completion(.failure(.networkError(error)))
                     return
                 }
-                self?.handleTokenExpired(publicKey: publicKey, features: features) { result in
-                    switch result {
-                    case .success:
-                        self?.refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: false, completionHandler: completionHandler)
 
-                    case .failure(let error):
-                        log.error("Error refreshing certificate: \(error)", category: .userCert)
-                        completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
-                    }
-                }
-                return
-            }
-
-            if let error = error {
-                log.error("Error refreshing certificate: \(error)", category: .userCert)
-                completionHandler(.failure(ExtensionAPIServiceError.requestError(nil)))
-                return
-            }
-
-            guard response?.statusCode == 200 else {
                 guard let response = response else {
-                    completionHandler(.failure(ExtensionAPIServiceError.noData))
+                    completion(.failure(.noData))
                     return
                 }
 
-                completionHandler(.failure(HTTPError.httpUrlResponseError(response: response)))
-                return
-            }
+                guard response.statusCode == 200 else {
+                    log.error("Endpoint /\(request.endpointUrl) received error: \(response.statusCode)")
 
-            guard let data = data else {
-                completionHandler(.failure(ExtensionAPIServiceError.noData))
-                return
-            }
+                    var apiError: APIError?
+                    if let data = data, let error = APIError.decode(errorResponse: data) {
+                        apiError = error
+                    }
 
-            do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                let certificate = try decoder.decode(CertificateRefreshRequest.Response.self, from: data)
-                log.info("Response cert is valid until: \(certificate.validUntil)", category: .userCert)
-                completionHandler(.success(certificate))
+                    completion(.failure(.requestError(response, apiError: apiError)))
+                    return
+                }
 
-            } catch {
-                log.error("Can't parse response JSON: \(error)", category: .userCert)
-                completionHandler(.failure(ExtensionAPIServiceError.parseError(nil)))
-                return
+                guard let data = data else {
+                    completion(.failure(.noData))
+                    return
+                }
+
+                do {
+                    let response = try R.decode(responseData: data)
+                    completion(.success(response))
+                } catch {
+                    completion(.failure(.parseError(error)))
+                }
             }
         }
         task.resume()
@@ -288,9 +180,93 @@ final class ExtensionAPIService {
         return request
     }
 
+    private func handleHttpError(response: HTTPURLResponse, apiError: APIError?, retryBlock: @escaping (() -> Void)) {
+        // If no retry-header specified (or we're unsure of what to do), retry the request after a default time + jitter.
+        let defaultRetryAfter = { [weak self] in
+            self?.requestQueue.asyncAfter(deadline: .now() + .seconds(Self.defaultRetryIntervalInSeconds + (self?.jitter ?? 0))) {
+                retryBlock()
+            }
+        }
+
+        guard let code = response.apiHttpErrorCode else {
+            log.error("Unknown error code: \(response.statusCode).")
+            defaultRetryAfter()
+            return
+        }
+
+        switch code {
+        case .sessionExpired:
+            sessionExpired = true
+        case .internalError, .tooManyRequests, .serviceUnavailable:
+            guard let retryAfter = response.value(forApiHeader: .retryAfter), let seconds = Int(retryAfter) else {
+                log.error("\(APIHeader.retryAfter) was missing or had an unknown format.")
+                // XXX JOHN: retry-after default interval depends on the code received
+                defaultRetryAfter()
+                break
+            }
+
+            requestQueue.asyncAfter(deadline: .now() + .seconds(seconds + jitter)) {
+                retryBlock()
+            }
+        case .badRequest:
+            if let apiError = apiError {
+                lastUnhandledError = apiError
+            } else {
+                lastUnhandledError = code
+            }
+        case .tokenExpired:
+            handleTokenExpired { result in
+                if case let .failure(error) = result {
+                    log.error("Unable to retry request after refreshing token: \(error)")
+                    return
+                }
+
+                retryBlock()
+                return
+            }
+        }
+    }
+
+    // MARK: - Certificate refresh
+
+    private func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, refreshApiTokenIfNeeded: Bool, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+
+        guard let authCredentials = keychain.fetch() else {
+            log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
+            completionHandler(.failure(ExtensionAPIServiceError.noCredentials))
+            return
+        }
+
+        let certificateRequest = CertificateRefreshRequest(params: .withPublicKey(publicKey,
+                                                                                  deviceName: appInfo.modelName,
+                                                                                  features: features))
+
+        request(certificateRequest, headers: [.authorization: "Bearer \(authCredentials.accessToken)",
+                                              .sessionId: authCredentials.sessionId]) { [weak self] result in
+            switch result {
+            case .success(let certificate):
+                completionHandler(.success(certificate))
+            case .failure(let error):
+                switch error {
+                case let .requestError(response, apiError):
+                    self?.handleHttpError(response: response, apiError: apiError, retryBlock: { [weak self] in
+                        self?.refreshCertificate(publicKey: publicKey,
+                                                 features: features,
+                                                 refreshApiTokenIfNeeded: false,
+                                                 completionHandler: completionHandler)
+                    })
+                    return
+                default:
+                    // XXX JOHN: handle other errors here
+                    break
+                }
+            }
+        }
+    }
+
     // MARK: - API Token refresh
 
-    private func handleTokenExpired(publicKey: String, features: VPNConnectionFeatures?, completionHandler: @escaping (Result<Void, Error>) -> Void) {
+    private func handleTokenExpired(completionHandler: @escaping (Result<Void, Error>) -> Void) {
         log.debug("Will try to refresh API token", category: .api)
         guard let authCredentials = keychain.fetch() else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .api)
@@ -298,41 +274,82 @@ final class ExtensionAPIService {
             return
         }
 
-        let tokenRequest = TokenRefreshRequest(params: TokenRefreshRequest.Params(
-            responseType: "token",
-            grantType: "refresh_token",
-            refreshToken: authCredentials.refreshToken,
-            redirectURI: "http://protonmail.ch"
-        ))
+        let tokenRequest = TokenRefreshRequest(params: .withRefreshToken(authCredentials.refreshToken))
 
-        var urlRequest = makeUrlRequest(tokenRequest)
-
-        // Auth Headers (without the auth token)
-        urlRequest.setValue(authCredentials.sessionId, forHTTPHeaderField: "x-pm-uid")
-
-        let task = dataTaskFactory.dataTask(urlRequest) { [weak self] data, response, error in
-            guard response?.statusCode == 200, error == nil else {
-                completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
-                return
-            }
-
-            guard let data = data else {
-                log.error("No response data", category: .api)
-                completionHandler(.failure(ExtensionAPIServiceError.noData))
-                return
-            }
-
-            do {
-                let response = try JSONDecoder().decode(TokenRefreshRequest.Response.self, from: data)
+        request(tokenRequest, headers: [.sessionId: authCredentials.sessionId]) { [weak self] result in
+            switch result {
+            case .success(let response):
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)
-                try self?.keychain.store(updatedCreds)
-                log.debug("API token updated", category: .api, metadata: ["authCredentials": "\(updatedCreds.description)"])
-                completionHandler(.success(Void()))
-            } catch {
-                completionHandler(.failure(ExtensionAPIServiceError.apiTokenRefreshError(error)))
+
+                do {
+                    try self?.keychain.store(updatedCreds)
+                    log.debug("API token updated", category: .api, metadata: ["authCredentials": "\(updatedCreds.description)"])
+                    completionHandler(.success(()))
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            case .failure(let error):
+                switch error {
+                case let .requestError(response, apiError):
+                    guard response.apiHttpErrorCode != .tokenExpired else {
+                        break
+                    }
+                    self?.handleHttpError(response: response, apiError: apiError, retryBlock: {
+                        self?.handleTokenExpired(completionHandler: completionHandler)
+                    })
+                default:
+                    // XXX JOHN: Handle other error cases
+                    break
+                }
+                // XXX JOHN: this used to be wrapped in an apiTokenRefreshError
+                completionHandler(.failure(error))
             }
         }
-        task.resume()
+    }
+}
+
+enum ExtensionAPIServiceError: Error, CustomStringConvertible {
+    case noCredentials
+    case requestError(HTTPURLResponse, apiError: APIError?)
+    case noData
+    case parseError(Error?)
+    case apiTokenRefreshError(Error?)
+    case networkError(Error)
+
+    var description: String {
+        switch self {
+        case .noCredentials:
+            return "No credentials"
+        case let .requestError(response, apiError):
+            var requestErrorString: String?
+            if let errorCode = response.apiHttpErrorCode {
+                requestErrorString = errorCode.description
+            } else {
+                requestErrorString = HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
+            }
+
+            if let apiError = apiError {
+                requestErrorString = (requestErrorString?.appending(" ") ?? "")
+                    .appending("(\(apiError.description))")
+            }
+            return "API HTTP request error: \(requestErrorString ?? "(unknown)"))"
+        case .noData:
+            return "No data received"
+        case .parseError(let error):
+            var parseErrorString: String?
+            if let error = error {
+                parseErrorString = String(describing: error)
+            }
+            return "Parse error: \(parseErrorString ?? "(unknown)")"
+        case .apiTokenRefreshError(let error):
+            var apiTokenErrorString: String?
+            if let error = error {
+                apiTokenErrorString = String(describing: error)
+            }
+            return "API token refresh error: \(apiTokenErrorString ?? "(unknown)")"
+        case .networkError(let error):
+            return "Network error: \(error)"
+        }
     }
 }
 
