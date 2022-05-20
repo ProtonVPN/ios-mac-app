@@ -102,6 +102,19 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
             return "The remote service is currently unavailable. Please try again after a reasonable time."
         }
     }
+
+    var defaultRetryAfterIntervalInSeconds: Int? {
+        let secondsInAMinute = 60
+
+        switch self {
+        case .serviceUnavailable, .internalError:
+            return 15 * secondsInAMinute
+        case .tooManyRequests:
+            return 5 * secondsInAMinute
+        default:
+            return nil
+        }
+    }
 }
 
 extension HTTPURLResponse {
@@ -124,6 +137,10 @@ extension HTTPURLResponse {
     }
 }
 
+enum APIJSONErrorCode: Int, Error {
+    case invalidRefreshToken = 10013
+}
+
 struct APIError: Error, Codable, CustomStringConvertible {
     let code: Int
     let message: String
@@ -141,5 +158,9 @@ struct APIError: Error, Codable, CustomStringConvertible {
 
     var description: String {
         "Error \(code): \"\(message)\""
+    }
+
+    var knownErrorCode: APIJSONErrorCode? {
+        APIJSONErrorCode(rawValue: code)
     }
 }

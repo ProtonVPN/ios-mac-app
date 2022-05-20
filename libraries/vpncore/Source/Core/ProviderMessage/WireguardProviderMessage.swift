@@ -26,6 +26,7 @@ enum WireguardProviderRequest: ProviderRequest {
         // Proton messages
         case flushLogsToFile = 101
         case setApiSelector = 102
+        case refreshCertificate = 103
     }
 
     /// Return the current WireGuard tunnel configuration string.
@@ -34,6 +35,9 @@ enum WireguardProviderRequest: ProviderRequest {
     case flushLogsToFile
     /// Pass a selector representing an API session recently forked by the app.
     case setApiSelector(String)
+    /// Refresh the certificate used by the LocalAgent in the main app, and
+    /// save it to the keychain before calling the completion.
+    case refreshCertificate(features: VPNConnectionFeatures?)
 
     public var asData: Data {
         switch self {
@@ -43,6 +47,14 @@ enum WireguardProviderRequest: ProviderRequest {
             return datagram(.flushLogsToFile)
         case .setApiSelector(let selector):
             return datagram(.setApiSelector) + (selector.data(using: .utf8) ?? Data())
+        case .refreshCertificate(let features):
+            let encoder = JSONEncoder()
+            var featuresData: Data?
+            if let features = features, let encodedFeatures = try? encoder.encode(features) {
+                featuresData = encodedFeatures
+            }
+
+            return datagram(.refreshCertificate) + (featuresData ?? Data())
         }
     }
 
@@ -52,7 +64,7 @@ enum WireguardProviderRequest: ProviderRequest {
         }
 
         guard let code = MessageCode(rawValue: datagram) else {
-            throw ProviderMessageError.unknownMessage
+            throw ProviderMessageError.unknownRequest
         }
 
         switch code {
@@ -66,30 +78,58 @@ enum WireguardProviderRequest: ProviderRequest {
                 throw ProviderMessageError.decodingError
             }
             return .setApiSelector(selector)
+        case .refreshCertificate:
+            var features: VPNConnectionFeatures?
+            if let messageData = Self.messageData(rawData: data),
+               let decodedFeatures = try? JSONDecoder().decode(VPNConnectionFeatures.self, from: messageData) {
+                features = decodedFeatures
+            }
+
+            return .refreshCertificate(features: features)
         }
+    }
+
+    private enum ResponseCode: UInt8 {
+        case ok
+        case sessionExpired
+        case unrecoverableError
     }
 
     public enum Response: ProviderMessage {
         case ok(data: Data?)
+        case errorSessionExpired
         case error(message: String)
+
+        private func datagram(_ code: ResponseCode) -> Data {
+            Data([code.rawValue])
+        }
 
         public var asData: Data {
             switch self {
             case .ok(let data):
-                return Data([0]) + (data ?? Data())
+                return datagram(.ok) + (data ?? Data())
+            case .errorSessionExpired:
+                return datagram(.sessionExpired)
             case .error(let message):
-                return Data([255]) + (message.data(using: .utf8) ?? Data())
+                return datagram(.unrecoverableError) + (message.data(using: .utf8) ?? Data())
             }
         }
 
         public static func decode(data: Data) throws -> WireguardProviderRequest.Response {
-            if data.first == 0 {
+            guard let byte = data.first else {
+                throw ProviderMessageError.decodingError
+            }
+
+            switch ResponseCode(rawValue: byte) {
+            case .ok:
                 var responseData: Data?
                 if data.count > 1 {
                     responseData = data[1...]
                 }
                 return .ok(data: responseData)
-            } else if data.first == 255 {
+            case .sessionExpired:
+                return .errorSessionExpired
+            case .unrecoverableError:
                 let message: String
                 if data.count > 1 {
                     message = String(data: data[1...], encoding: .utf8) ?? ""
@@ -97,8 +137,8 @@ enum WireguardProviderRequest: ProviderRequest {
                     message = ""
                 }
                 return .error(message: message)
-            } else {
-                throw ProviderMessageError.decodingError
+            case nil:
+                throw ProviderMessageError.unknownResponse
             }
         }
     }

@@ -37,7 +37,9 @@ public enum ProviderMessageError: Error {
     case noDataReceived
     case decodingError
     case sendingError
-    case unknownMessage
+    case unknownRequest
+    case unknownResponse
+    case remoteError(message: String)
 }
 
 extension NETunnelProviderSession: ProviderMessageSender {
