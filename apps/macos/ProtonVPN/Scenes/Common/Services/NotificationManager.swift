@@ -68,7 +68,6 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private func connectedNotification(for server: ServerModel) -> NSUserNotification {
         let notification = NSUserNotification()
-        notification.contentImage = AppTheme.Icon.appIconConnected
         notification.title = "Proton VPN " + LocalizedString.connected
         notification.subtitle = connectSubtitle(forServer: server)
         notification.informativeText = connectInformativeText(forServer: server)
@@ -107,7 +106,6 @@ extension NotificationManager: NSUserNotificationCenterDelegate {
 extension NotificationManager {
     func displayServerGoingOnMaintenance() {
         let notification = NSUserNotification()
-        notification.contentImage = AppTheme.Icon.appIconDisconnected
         notification.title = LocalizedString.maintenanceOnServerDetectedTitle
         notification.subtitle = LocalizedString.maintenanceOnServerDetectedSubtitle
         notification.informativeText = LocalizedString.maintenanceOnServerDetectedSubtitle
