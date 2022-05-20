@@ -21,12 +21,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let storage = Storage()
 
         let dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self)
+        let timerFactory = TimerFactoryImplementation()
         let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
                                                                  storage: storage)
-        certificateRefreshManager = ExtensionCertificateRefreshManager(storage: storage,
-                                                                       dataTaskFactory: dataTaskFactory,
+        let authKeychain = AuthKeychain(context: .wireGuardExtension)
+        let apiService = ExtensionAPIService(storage: storage,
+                                             dataTaskFactory: dataTaskFactory,
+                                             timerFactory: timerFactory,
+                                             keychain: authKeychain)
+
+        certificateRefreshManager = ExtensionCertificateRefreshManager(apiService: apiService,
+                                                                       timerFactory: timerFactory,
                                                                        vpnAuthenticationStorage: vpnAuthenticationStorage,
-                                                                       keychain: AuthKeychain(context: .wireGuardExtension))
+                                                                       keychain: authKeychain)
         setupLogging()
     }
     
@@ -35,9 +42,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     private func connectionEstablished() {
-        #if CHECK_CONNECTIVITY
-        startTestingConnectivity()
-        #endif
+        certificateRefreshManager.start {
+            #if CHECK_CONNECTIVITY
+            self.startTestingConnectivity()
+            #endif
+        }
     }
 
     private lazy var adapter: WireGuardAdapter = {
@@ -119,19 +128,20 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, staticMessage: "Stopping tunnel")
-        certificateRefreshManager.stop()
-        #if CHECK_CONNECTIVITY
-        self.stopTestingConnectivity()
-        #endif
+        certificateRefreshManager.stop { [weak self] in
+            #if CHECK_CONNECTIVITY
+            self?.stopTestingConnectivity()
+            #endif
 
-        adapter.stop { error in
-            ErrorNotifier.removeLastErrorFile()
+            self?.adapter.stop { error in
+                ErrorNotifier.removeLastErrorFile()
 
-            if let error = error {
-                wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
+                if let error = error {
+                    wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
+                }
+                self?.flushLogsToFile()
+                completionHandler()
             }
-            self.flushLogsToFile()
-            completionHandler()
         }
     }
 
@@ -161,7 +171,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         case .flushLogsToFile:
             flushLogsToFile()
         case .setApiSelector(let selector):
-            certificateRefreshManager.start(withNewSession: selector) { result in
+            certificateRefreshManager.newSession(withSelector: selector) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
@@ -169,6 +179,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                     completionHandler?(.error(message: String(describing: error)))
                 }
             }
+        case .refreshCertificate(let features):
+            break
         }
     }
 
@@ -186,11 +198,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func wake() {
         log.info("wake()")
-        certificateRefreshManager.start()
-
-        #if CHECK_CONNECTIVITY
-        startTestingConnectivity()
-        #endif
+        certificateRefreshManager.start { [weak self] in
+            #if CHECK_CONNECTIVITY
+            self?.startTestingConnectivity()
+            #endif
+        }
     }
 
     // MARK: - Logs

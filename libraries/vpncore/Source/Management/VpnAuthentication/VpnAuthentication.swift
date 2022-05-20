@@ -26,7 +26,7 @@ public protocol VpnAuthenticationFactory {
     func makeVpnAuthentication() -> VpnAuthentication
 }
 
-public typealias CertificateRefreshCompletion = (Result<(VpnAuthenticationData), Error>) -> Void
+public typealias CertificateRefreshCompletion = (Result<VpnAuthenticationData, Error>) -> Void
 public typealias AuthenticationDataCompletion = (Result<VpnAuthenticationData, Error>) -> Void
 
 public protocol VpnAuthentication {
@@ -105,10 +105,59 @@ public final class VpnAuthenticationManager {
         queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: features, networking: networking, safeModePropertyProvider: safeModePropertyProvider))
     }
 
+    /// Ask the WireGuard network extension to refresh the certificate, and save the result to the keychain.
+    ///
+    /// If the network extension does not have a valid API session, it will return a message asking the app to "fork" the
+    /// app's API session, and send the selector representing this forked session to the network extension. The extension
+    /// will then authenticate with the API, establish its session, and tell the app that it's ready to try again,
+    /// at which point the app is welcome to do so. When the network extension returns success after being asked to refresh
+    /// the certificate, the updated certificate should be available in the keychain.
+    private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures? = nil, retryingForExpiredSessions: Bool = true, completionHandler: @escaping CertificateRefreshCompletion) {
+        guard let connectionProvider = connectionProvider else {
+            completionHandler(.failure(ProviderMessageError.sendingError))
+            return
+        }
+
+        connectionProvider.send(WireguardProviderRequest.refreshCertificate(features: features)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                switch response {
+                case .ok:
+                    // Extension has updated the certificate and placed it in the keychain. Let's fetch it on our end.
+                    guard let keys = self?.storage.getStoredKeys(),
+                          let certificate = self?.storage.getStoredCertificate() else {
+                        completionHandler(.failure(ProtonVpnErrorConst.userCredentialsMissing))
+                        return
+                    }
+                    completionHandler(.success(VpnAuthenticationData(clientKey: keys.privateKey,
+                                                                     clientCertificate: certificate.certificate)))
+                    return
+                case .error(let message):
+                    completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
+                case .errorSessionExpired:
+                    self?.pushSelectorToProvider { [weak self] pushResult in
+                        if case let .failure(error) = pushResult {
+                            completionHandler(.failure(error))
+                            return
+                        }
+                        guard retryingForExpiredSessions else {
+                            completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
+                            return
+                        }
+                        self?.promptExtensionForCertificateRefresh(retryingForExpiredSessions: false,
+                                                                   completionHandler: completionHandler)
+                    }
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
+    }
+
     /// Fork a child API session in the network extension that will manage this connection.
     ///
     /// This allows the network extension to refresh certificates separately from the main application.
-    private func pushSelectorToProvider(extensionContext: AppContext) {
+    private func pushSelectorToProvider(extensionContext: AppContext = .wireGuardExtension, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         sessionService.getExtensionSessionSelector(extensionContext: extensionContext) { [weak self] apiResult in
             guard case let .success(selector) = apiResult else {
                 if case let .failure(error) = apiResult {
@@ -117,20 +166,26 @@ public final class VpnAuthenticationManager {
                 return
             }
 
-            // The network extension needs this selector in order to start its own API session. It is waiting on us
-            // to send this before it can start refreshing certificates. It will close its session when the tunnel is
-            // closed.
+            // The network extension maintains its own API session. When we ask it to refresh certificates for us, it
+            // may find that its session has expired, or that it does not have any session saved in its keychain. In such
+            // a case, it will reply to refresh requests with `.errorSessionExpired`, at which point it will be the
+            // main app's responsability to (re)fork its session and send the selector to the extension.
             self?.connectionProvider?.send(WireguardProviderRequest.setApiSelector(selector), completion: { result in
                 switch result {
                 case .success(let response):
                     switch response {
                     case .ok:
-                        log.info("Sent selector to extension successfully.")
+                        completionHandler(.success(()))
                     case .error(let message):
-                        log.error("Received error from remote provider: \(message)")
+                        completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
+                    case .errorSessionExpired:
+                        // We should only ever expect this response for cert refreshes, not for this entry point.
+                        // If we're hitting this, something is very wrong.
+                        assertionFailure("Received session expired error after trying to renew session?")
+                        completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
                     }
                 case .failure(let error):
-                    log.error("Encountered error sending message to provider: \(error)")
+                    completionHandler(.failure(error))
                 }
             })
         }
@@ -184,8 +239,5 @@ extension VpnAuthenticationManager: VpnAuthentication {
 
     public func setConnectionProvider(forProtocol vpnProtocol: VpnProtocol, provider: ProviderMessageSender) {
         connectionProvider = provider
-        if vpnProtocol == .wireGuard {
-            pushSelectorToProvider(extensionContext: .wireGuardExtension)
-        }
     }
 }

@@ -91,6 +91,8 @@
 		4CB0A3582822A71100BF95C3 /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */; };
 		4CB0A3592822A71100BF95C3 /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */; };
 		4CB432062834E7A900DC437B /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB432052834E7A900DC437B /* APIRequest.swift */; };
+		4CCE9F85283D2AA60090E234 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */; };
+		4CCE9F86283D2AA60090E234 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */; };
 		4CF40BA62833D64D00C3C501 /* ProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BA42833D64D00C3C501 /* ProviderMessage.swift */; };
 		4CF40BA72833D64D00C3C501 /* WireguardProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BA52833D64D00C3C501 /* WireguardProviderMessage.swift */; };
 		4CF40BA82833D65A00C3C501 /* WireguardProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BA52833D64D00C3C501 /* WireguardProviderMessage.swift */; };
@@ -728,6 +730,7 @@
 		4CAF943E281144680050C8B4 /* RequestParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestParsingTests.swift; sourceTree = "<group>"; };
 		4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NWTCPConnection+DataTask.swift"; sourceTree = "<group>"; };
 		4CB432052834E7A900DC437B /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsyncOperation.swift; path = ../../../../libraries/vpncore/Source/Utilities/AsyncOperation.swift; sourceTree = "<group>"; };
 		4CF40BA42833D64D00C3C501 /* ProviderMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderMessage.swift; path = ../../vpncore/Source/Core/ProviderMessage/ProviderMessage.swift; sourceTree = "<group>"; };
 		4CF40BA52833D64D00C3C501 /* WireguardProviderMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardProviderMessage.swift; path = ../../vpncore/Source/Core/ProviderMessage/WireguardProviderMessage.swift; sourceTree = "<group>"; };
 		4CF40BAA2833D9C600C3C501 /* SessionAuthRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionAuthRequest.swift; sourceTree = "<group>"; };
@@ -1956,6 +1959,7 @@
 		E977A77D2681DABB0013495A /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
+				4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */,
 				4C2AE85528364C24005F37E6 /* AppInfo.swift */,
 				E977A7872681FE2B0013495A /* AuthCredentials.swift */,
 				E977A7892681FEF50013495A /* AuthKeychain.swift */,
@@ -3389,6 +3393,7 @@
 				4C4A303628118D6100768AD9 /* Storage.swift in Sources */,
 				4CA0977628118EAF00F4ABA9 /* VpnKeys+Generation.swift in Sources */,
 				4CAF9461281148A30050C8B4 /* ringlogger.c in Sources */,
+				4CCE9F86283D2AA60090E234 /* AsyncOperation.swift in Sources */,
 				4C4A30292811582800768AD9 /* URLRequest+HTTP.swift in Sources */,
 				4C4A303328118D6100768AD9 /* Logger+Categories.swift in Sources */,
 				4C4A304228118D6100768AD9 /* Dictionary+Extension.swift in Sources */,
@@ -3853,6 +3858,7 @@
 				4CF40BA72833D64D00C3C501 /* WireguardProviderMessage.swift in Sources */,
 				B852A68D0753D7E0C978943E /* ExtensionAPIService.swift in Sources */,
 				4C2AE85628364C24005F37E6 /* AppInfo.swift in Sources */,
+				4CCE9F85283D2AA60090E234 /* AsyncOperation.swift in Sources */,
 				A151FBB3766B3D14030BCB58 /* JSONKeyCoder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

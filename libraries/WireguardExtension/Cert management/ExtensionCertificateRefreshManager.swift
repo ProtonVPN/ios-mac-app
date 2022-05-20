@@ -9,9 +9,20 @@
 import Foundation
 import NetworkExtension
 
+public enum CertificateRefreshError: Error {
+    case timedOut
+    case cancelled
+    case missingKeys
+    case sessionExpiredOrMissing
+    case internalError(message: String)
+}
+
+typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshError>) -> Void)
+
 /// Class for making sure there is always up-to-date certificate.
 /// After running `start()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
 final class ExtensionCertificateRefreshManager {
+    fileprivate static let refreshWaitTimeoutInSeconds: Int = 2 * 60
 
     /// Check certificate every this number of seconds
     private let checkInterval: TimeInterval = 2 * 60
@@ -22,174 +33,267 @@ final class ExtensionCertificateRefreshManager {
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
-    private let workQueue = DispatchQueue(label: "ExtensionCertificateRefreshManager.Timer", qos: .background)
+    private let timerFactory: TimerFactory
+    private var timer: RepeatingTimerProtocol?
 
-    // Save stop handler for when certificate refresh finishes
-    private var stopHandler: (() -> Void)?
+    /// Use an operation queue so we can cancel any pending work items if needed.
+    private let operationQueue = OperationQueue()
+    /// The underlying queue for the operation queue.
+    private let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
-    init(storage: Storage, dataTaskFactory: DataTaskFactory, vpnAuthenticationStorage: VpnAuthenticationStorage, keychain: AuthKeychainHandle) {
-        self.vpnAuthenticationStorage = vpnAuthenticationStorage
-        self.apiService = ExtensionAPIService(storage: storage, dataTaskFactory: dataTaskFactory, keychain: keychain)
+    /// Ensures only one request is processed at a time. Before sending a request, decrement the semaphore. When
+    /// the completion is called and the request is processed, increment the semaphore so the next request can be made.
+    fileprivate let semaphore = DispatchSemaphore(value: 1)
+
+    enum State {
+        case running
+        case stopped
     }
 
-    /// Start timer that will check if certificate is due for refresh. First run will be executed asap (but on another thread).
-    func start(withNewSession sessionSelector: String? = nil, completionHandler: ((Result<(), Error>) -> Void)? = nil) {
-        log.info("Starting ExtensionCertificateRefreshManager.", category: .userCert)
+    public private(set) var state: State = .stopped
 
-        guard let sessionSelector = sessionSelector else {
-            startTimer()
-            completionHandler?(.success(()))
+    init(apiService: ExtensionAPIService,
+         timerFactory: TimerFactory,
+         vpnAuthenticationStorage: VpnAuthenticationStorage,
+         keychain: AuthKeychainHandle) {
+        self.vpnAuthenticationStorage = vpnAuthenticationStorage
+        self.timerFactory = timerFactory
+        self.apiService = apiService
+
+        operationQueue.maxConcurrentOperationCount = 1
+        operationQueue.qualityOfService = .default
+        operationQueue.underlyingQueue = workQueue
+    }
+
+    /// Check the refresh conditions for certificate refresh, and refresh it if necessary.
+    ///
+    /// This function gets called in several places:
+    ///     - At extension startup
+    ///     - On firing of the `backgroundTimer`
+    ///     - From the app, via the `WireguardProviderMessage.refreshCertificate` remote procedure call
+    ///
+    /// Because of this, all requests to refresh the certificate are serialized to avoid races. Calls may
+    /// take a while to complete (or time out) due to network conditions, or because multiple API calls are
+    /// occasionally necessary to refresh the cert (because of session management).
+    public func checkRefreshCertificateNow(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+        operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
+                                                                     manager: self,
+                                                                     completion: completion))
+    }
+
+    /// If the cert refresh manager's session expires, this function needs to be called with a forked session selector
+    /// in order to start it back up again with a fresh API session.
+    public func newSession(withSelector selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+        let timeOutInterval = ExtensionCertificateRefreshManager.refreshWaitTimeoutInSeconds
+        guard semaphore.wait(wallTimeout: .now() + .seconds(timeOutInterval)) == .success else {
+            assertionFailure("Timed out waiting for semaphore while starting new session")
+            completionHandler(.failure(CertificateRefreshError.timedOut))
             return
         }
 
-        apiService.startSession(withSelector: sessionSelector) { [weak self] result in
-            switch result {
-            case .success:
-                log.info("Session started successfully. Starting certificate timer.")
-                self?.startTimer()
-                completionHandler?(.success(()))
-            case .failure(let error):
-                log.error("Encountered error starting session: \(error)")
-                completionHandler?(.failure(error))
-            }
-        }
-    }
+        apiService.startSession(withSelector: selector) { [weak self] result in
+            defer { self?.semaphore.signal() }
 
-    /// Stop all activity and call handler when finished
-    func stop(handler: (() -> Void)? = nil) {
-        workQueue.async {
-            log.info("Stoping ExtensionCertificateRefreshManager.", category: .userCert)
-            self.stopTimer()
-            guard self.certificateRefreshStarted != nil else {
-                handler?()
+            // If we're starting a new session, it's likely we've been idle for a while (or were just trying an operation
+            // and got back a 422). Opportunistically try to refresh the cert before returning.
+            
+            guard let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures() else {
                 return
             }
-            log.info("Waiting for certificate refresh before declaring ExtensionCertificateRefreshManager as fully stopped.", category: .userCert)
-            self.stopHandler = handler
+
+            self?.checkRefreshCertificateNow(features: features, completion: { result in
+                completionHandler(result.mapError({ $0 }))
+            })
         }
     }
-    
-    // MARK: - Timer
 
-    private var timer: BackgroundTimer?
+    public func start(completion: @escaping (() -> Void)) {
+        workQueue.async { [weak self] in
+            self?.state = .running
+            self?.startTimer()
+            completion()
+        }
+    }
 
-    /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time, to make sure we don't miss the time when certificate has to be refreshed.
-    private func startTimer() {
-        workQueue.async {
-            self.timer = BackgroundTimer(runAt: Date(), repeating: self.checkInterval, queue: self.workQueue) { [weak self] in
-                self?.checkCertificatesNow()
+    public func stop(completion: @escaping (() -> Void)) {
+        workQueue.async { [weak self] in
+            self?.operationQueue.cancelAllOperations()
+            self?.stopTimer()
+            self?.state = .stopped
+            completion()
+        }
+    }
+
+    // MARK: - Private
+    private func certificateDoesNeedRefreshing(features: VPNConnectionFeatures?) -> Bool {
+        // If we're able to get a certificate from the keychain...
+        guard let storedCert = vpnAuthenticationStorage.getStoredCertificate() else {
+            log.info("Could not find stored certificate, refreshing.")
+            return true
+        }
+
+        if let features = features {
+            // and we're also able to retrieve the features stored from the last request...
+            guard let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures() else {
+                log.info("Could not find stored certificate features, refreshing.")
+                return true
+            }
+
+            // and the features we stored from the last request are the same as the ones for this request...
+            guard storedFeatures.equals(other: features, safeModeEnabled: true) else {
+                log.info("Features have been updated (or haven't been stored), refreshing.")
+                return true
             }
         }
-    }
 
-    private func stopTimer() {
-        self.timer = nil
-    }
-
-    // MARK: - Certificate
-
-    private var certificateRefreshStarted: Date? // Using date instead of boolean flag to be able to reset it after the timeout passes
-    private let certificateRefreshTimeout: TimeInterval = 3 * 60
-
-    /// Checks certificate refresh time to make sure we don't refresh them too early and too often.
-    @objc private func checkCertificatesNow() {
-        guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
-            log.info("No current certificate. Starting refresh.", category: .userCert)
-            refreshCertificate()
-            return
+        // and the certificate isn't going to expire anytime soon, then...
+        guard Date() < storedCert.refreshTime.addingTimeInterval(refreshEarlierBy) else {
+            log.info("Certificate might expire soon or has already expired, refreshing.")
+            return true
         }
 
-        let nextRefreshTime = certificate.refreshTime.addingTimeInterval(refreshEarlierBy)
-        log.info("Current cert is valid until: \(certificate.validUntil); refresh time: \(certificate.refreshTime). Will be refreshed after: \(nextRefreshTime).", category: .userCert)
-
-        guard nextRefreshTime <= Date() else {
-            return
-        }
-
-        log.info("Starting certificate refresh.", category: .userCert)
-        refreshCertificate()
+        // don't actually refresh the certificate, just leave it be.
+        log.info("Certificate seems up to date!")
+        return false
     }
 
-    /// Does actual certificate refresh with API and saves new certificate using `vpnAuthenticationStorage`.
-    /// This code uses `certificateRefreshStarted` to not run more than one refresh at the same time. Please make sure you always call this code on `workQueue`.
-    private func refreshCertificate() {
+
+    /// Check the refresh conditions for certificate refresh, and refresh if necessary, with no
+    /// synchronization performed.
+    ///
+    /// - Note: *Do not* call this function. Call `checkRefreshCertificateNow` instead. Because of the nature
+    ///         of the synchronization in the encapsulating function, it's important to always call the completion
+    ///         in error cases, otherwise the operation queue will get stuck.
+    fileprivate func checkRefreshCertificateNowNoSync(features: VPNConnectionFeatures?,
+                                                      asPartOf operation: CertificateRefreshAsyncOperation,
+                                                      completion: @escaping CertificateRefreshCompletion) {
         #if DEBUG
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        if let certificateRefreshStartedAt = certificateRefreshStarted {
-            // `timeIntervalSinceNow` is negative in case the date is in the past, so always in our case.
-            if -certificateRefreshStartedAt.timeIntervalSinceNow < certificateRefreshTimeout {
-                log.debug("Certificate refresh is in progress. Skipping.", category: .userCert, event: .refreshError, metadata: ["certificateRefreshStarted": "\(certificateRefreshStartedAt)"])
-                return
-            }
-
-            log.debug("Certificate refresh took too long. Will reset the flag and continue with certificate refresh.", category: .userCert, event: .refreshError)
-            certificateRefreshStarted = nil
-        }
-
-        guard let currentKeys = vpnAuthenticationStorage.getStoredKeys() else {
-            log.error("Can't load current keys. Nothing to refresh. Giving up.", category: .userCert, event: .refreshError)
-            certificateRefreshFinished()
+        guard certificateDoesNeedRefreshing(features: features) else {
+            completion(.success(()))
             return
         }
 
-        certificateRefreshStarted = Date()
-        let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
-        apiService.refreshCertificate(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
+        guard let keys = vpnAuthenticationStorage.getStoredKeys() else {
+            completion(.failure(.missingKeys))
+            return
+        }
+
+        let der = keys.publicKey.derRepresentation
+        apiService.refreshCertificate(publicKey: der, features: features, asPartOf: operation) { [weak self] result in
             switch result {
-            case .success(let certificate):
-                log.debug("Certificate refreshed. Saving to keychain.", category: .userCert)
-                self.vpnAuthenticationStorage.store(certificate: VpnCertificateWithFeatures(certificate: certificate, features: features))
-                
+            case .success(let cert):
+                let certAndFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
+                self?.vpnAuthenticationStorage.store(certificate: certAndFeatures)
+                completion(.success(()))
             case .failure(let error):
-                log.error("Failed to refresh certificate through API: \(error)", category: .userCert)
+                guard let certError = error as? CertificateRefreshError else {
+                    completion(.failure(.internalError(message: String(describing: error))))
+                    return
+                }
+
+                switch certError {
+                // If the session has expired, then we need to wait for the app to give us a new session
+                // before we can start again. The app should receive this error to know it needs to send us something.
+                case .sessionExpiredOrMissing:
+                    break
+                // This should happen rarely in times of network congestion or connectivity issues, and should
+                // be handled directly by the caller, who should swallow & log the error to avoid confusing the app.
+                case .cancelled:
+                    break
+                // This shouldn't happen from here; the caller should be managing the semaphore.
+                case .timedOut:
+                    assertionFailure("Should not encounter \(certError) here; we aren't managing synchronization")
+                    break
+                // These errors should "never happen" in practice.
+                case .missingKeys, .internalError:
+                    assertionFailure("Encountered internal error: \(error)")
+                    break
+                }
+
+                completion(.failure(certError))
+                break
             }
-            self.certificateRefreshFinished()
         }
     }
-    
-    private func certificateRefreshFinished() {
-        certificateRefreshStarted = nil
-        stopHandler?()
-        stopHandler = nil
+
+    // MARK: - Timer
+
+    /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time,
+    /// to make sure we don't miss the time when certificate has to be refreshed.
+    /// - Note: Call this function on `workQueue`.
+    private func startTimer() {
+        #if DEBUG
+        dispatchPrecondition(condition: .onQueue(workQueue))
+        #endif
+
+        timer = timerFactory.repeatingTimer(runAt: Date(), repeating: checkInterval, queue: workQueue) { [weak self] in
+            let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
+            
+            self?.checkRefreshCertificateNow(features: features, completion: { result in
+                if case let .failure(error) = result {
+                    log.error("Encountered error \(error) while refreshing in background.")
+                    return
+                }
+                log.info("Background refresh of certificate completed successfully.")
+            })
+        }
     }
 
+    /// Stop the timer by deinit'ing it.
+    /// - Note: Call this function on `workQueue`.
+    private func stopTimer() {
+        #if DEBUG
+        dispatchPrecondition(condition: .onQueue(workQueue))
+        #endif
+
+        self.timer = nil
+    }
 }
 
-private final class BackgroundTimer {
-    
-    private let timerSource: DispatchSourceTimer
-    private let closure: () -> Void
-    
-    private enum State {
-        case suspended
-        case resumed
-    }
-    private var state: State = .resumed
+class CertificateRefreshAsyncOperation: AsyncOperation {
+    let features: VPNConnectionFeatures?
+    let completion: CertificateRefreshCompletion
+    unowned let manager: ExtensionCertificateRefreshManager
 
-    init(runAt nextRunTime: Date, repeating: Double, queue: DispatchQueue, _ closure: @escaping () -> Void) {
-        self.closure = closure
-        timerSource = DispatchSource.makeTimerSource(queue: queue)
-        
-        timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)), repeating: repeating, leeway: .seconds(10)) // We have at least minute before app (if in foreground) may start refreshing cert. So 10 seconds later is ok.
-        timerSource.setEventHandler { [weak self] in
-            if repeating <= 0 { // Timer should not repeat, so lets suspend it
-                self?.timerSource.suspend()
-                self?.state = .suspended
-            }
-            self?.closure()
-        }
-        timerSource.resume()
-        state = .resumed
+    init(features: VPNConnectionFeatures?,
+         manager: ExtensionCertificateRefreshManager,
+         completion: @escaping CertificateRefreshCompletion) {
+        self.features = features
+        self.manager = manager
+        self.completion = completion
     }
-    
-    deinit {
-        timerSource.setEventHandler {}
-        if state == .suspended {
-            timerSource.resume()
-        }
-        timerSource.cancel()
+
+    private func finish(_ result: Result<(), CertificateRefreshError>) {
+        completion(result)
+        finish()
     }
-    
+
+    override func main() {
+        guard !isCancelled else {
+            finish(.failure(.cancelled))
+            return
+        }
+
+        let timeOutInterval = ExtensionCertificateRefreshManager.refreshWaitTimeoutInSeconds
+        guard manager.semaphore.wait(wallTimeout: .now() + .seconds(timeOutInterval)) == .success else {
+            assertionFailure("Timed out waiting for semaphore while performing certificate refresh")
+            finish(.failure(.timedOut))
+            return
+        }
+
+        // we could have been blocked for a little while, let's double-check we aren't cancelled
+        guard !isCancelled else {
+            manager.semaphore.signal()
+            finish(.failure(.cancelled))
+            return
+        }
+
+        manager.checkRefreshCertificateNowNoSync(features: features, asPartOf: self) { result in
+            self.finish(result)
+            self.manager.semaphore.signal()
+        }
+    }
 }
