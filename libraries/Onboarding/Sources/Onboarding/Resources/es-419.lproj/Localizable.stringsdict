@@ -13,9 +13,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d countries</string>
+			<string>%d país</string>
 			<key>other</key>
-			<string>%d countries</string>
+			<string>%d países</string>
 		</dict>
 		<key>num_servers</key>
 		<dict>
@@ -24,9 +24,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d servers</string>
+			<string>%d servidores</string>
 			<key>other</key>
-			<string>%d servers</string>
+			<string>%d servidores</string>
 		</dict>
 	</dict>
 	<key>onboarding_purchased_subtitle</key>

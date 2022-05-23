@@ -97,3 +97,12 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Non ora";
 
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "OK";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Ti presentiamo il nuovo look di Proton.\nMolti servizi, una sola missione: una nuova versione di internet, dove la privacy è la regola.";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Nuovo Proton, protezione unificata";
+

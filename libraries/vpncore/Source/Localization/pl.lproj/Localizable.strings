@@ -239,7 +239,7 @@
 "_data_disclaimer_device_details" = "Model urządzenia i wersja systemu operacyjnego";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN is committed to protecting and respecting your privacy. It is our overriding policy to collect as little user data as possible to ensure a private and anonymous user experience in the use of the App, specifically:\n\n%@ – to log you in, help to recover a lost password, and send important service updates.\n\n%@ – for crash reports and errors only.\n\nThe Proton VPN App does not process any user information besides this data. We don't log your online activity nor any personal identifiable information. All data listed above is stored and processed on Proton VPN's own system, with no third party ever having access to it.";
+"_data_disclaimer_text" = "Proton VPN jest całkowicie zaangażowany w ochronę Twojej prywatności. Aby zapewnić bezpieczne i anonimowe korzystanie z aplikacji, naszym nadrzędnym celem jest gromadzenie jak najmniejszej ilości danych o użytkownikach, wyłącznie:\n\n%@ - w celach logowania, pomocy w odzyskiwaniu hasła lub przesyłania ważnych aktualizacji\n\n %@ - do powiadomień o awariach i błędach\n\nPoza tymi informacjami, aplikacja Proton VPN nie przetwarza żadnych danych o użytkownikach, ani nie rejestruje aktywności w sieci, które mogłyby pozwolić na ich zidentyfikowanie. Powyższe dane są przetrzymywane i przetwarzane wyłącznie przez wewnętrzny system Proton VPN, bez dostępu stron trzecich.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Zadbaj o bezpieczeństwo w sieci";
@@ -719,7 +719,7 @@
 "_kill_switch_helper_update_popup_body" = "Najnowsza aktualizacja wymaga wpisania hasła do konta użytkownika. Po pojawieniu się komunikatu, wpisz swoje %@ i zatwierdź.\n\nJeśli nie wpiszesz swojego hasła Mac, funkcja Kill Switch zostanie wyłączona.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Your internet connection will resume as soon as Proton VPN reconnects to a server.\nTo use the internet without VPN and Kill Switch protection, cancel the reconnection to the server.";
+"_kill_switch_reconnection" = "Połączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem.\nAby korzystać z Internetu bez ochrony VPN i funkcji Kill Switch, anuluj ponowne łączenie z serwerem.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "bez";
@@ -743,7 +743,7 @@
 "_ks_requires_swift5_popup_msg" = "Aby włączyć funkcję Kill Switch, musisz najpierw pobrać i zainstalować bibliotekę %@.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN couldn't detect the %@. To enable Kill Switch, please install software first.";
+"_ks_requires_swift5_popup_msg2" = "Aplikacja Proton VPN nie może wykryć biblioteki %@. Musisz ją zainstalować, aby włączyć funkcję Kill Switch.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "środowiska Swift 5";
@@ -962,7 +962,7 @@
 "_neagent_always_allow" = "Zawsze zezwalaj";
 
 /* Mac: neagent help screen */
-"_neagent_description" = "You may be asked to provide your %@\nto connect to the Proton VPN service. If this request appears,\nenter your %@ %@ and click ‘%@’ %@.";
+"_neagent_description" = "Możesz zostać poproszony o wpisanie swojego %@, \naby połączyć się z usługą Proton VPN. Jeśli ta prośba się pojawi,\nwpisz swoje %@ %@ i kliknij przycisk ‘%@’ %@.";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -977,7 +977,7 @@
 "_need_help" = "Potrzebujesz pomocy?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Włącz mimo to";
+"_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
 "_neks_t2_description" = "Funkcja Kill Switch jest niestabilna na tym urządzeniu.\n\nTwoje urządzenia posiada czip zabezpieczeń T2, który może powodować problemy ze stabilnością tej funkcji.";
@@ -1040,7 +1040,7 @@
 "_non_standard_ports_change_title" = "Włącz niestandardowe porty";
 
 /* Explanation for the Non-standard ports feature shown next to the feature in Settings */
-"_non_standard_ports_explanation" = "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network. \nLearn more";
+"_non_standard_ports_explanation" = "Używaj aplikacji Proton VPN do wszelkich specjalnych potrzeb, zezwalając na ruch do niestandardowych portów przez sieć VPN.\nDowiedz się więcej";
 
 /* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
 "_non_standard_ports_explanation_link" = "Dowiedz się więcej";
@@ -1358,7 +1358,7 @@
 "_report_bug" = "Zgłoś problem";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi aplikacji Proton VPN\n• Logi protokołu OpenVPN\n• Logi protokołu WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1642,7 +1642,7 @@
 /* (No Comment) */
 "_sysex_error_description" = "Wystąpił błąd podczas instalacji rozszerzenia systemu.\nAby rozwiązać problem, zainstaluj ponownie aplikację Proton VPN, upewniając się, że znajduje się w folderze Aplikacje. Alternatywnie, skontaktuj się z naszym wsparciem technicznym.";
 
-/* (No Comment) */
+/* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Aplikacja Proton VPN musi załadować rozszerzenie systemowe, aby korzystać z funkcji Smart Protocol, protokołu OpenVPN i WireGuard.";
 
 /* System extension wizard in mac: Button */

@@ -977,7 +977,7 @@
 "_need_help" = "Hai bisogno di aiuto?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Abilita comunque";
+"_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
 "_neks_t2_description" = "L'uso di Kill Switch è instabile su questo dispositivo.\n\nIl tuo dispositivo ha un chip di sicurezza T2, che può causare problemi di stabilità del sistema se la funzionalità Kill Switch di macOS viene utilizzata da Proton VPN.";
@@ -1642,7 +1642,7 @@
 /* (No Comment) */
 "_sysex_error_description" = "Si è verificato un errore installando l'Estensione del Sistema.\nReinstalla Proton VPN, assicurandoti che sia situata nella cartella delle Applicazioni, per risolvere questo problema. Altrimenti, contatta il nostro supporto.";
 
-/* (No Comment) */
+/* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN richiede di caricare un'Estensione del Sistema per sfruttare lo Smart Protocol, OpenVPN e WireGuard.";
 
 /* System extension wizard in mac: Button */
