@@ -1642,7 +1642,7 @@
 /* (No Comment) */
 "_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang ProtonVPN dan pastikan ProtonVPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
 
-/* (No Comment) */
+/* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
 
 /* System extension wizard in mac: Button */

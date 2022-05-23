@@ -584,7 +584,7 @@
 "_forgot_username" = "Nombre de usuario olvidado";
 
 /* Used instead of price for free plans. */
-"_free" = "Gratuito";
+"_free" = "Gratuita";
 
 /* Account plan description */
 "_free_countries" = "3 Países";
@@ -977,7 +977,7 @@
 "_need_help" = "¿Necesitas Ayuda?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Enable Anyway";
+"_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
 "_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
@@ -1642,7 +1642,7 @@
 /* (No Comment) */
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
 
-/* (No Comment) */
+/* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
 /* System extension wizard in mac: Button */
@@ -1732,7 +1732,7 @@
 "_tier_basic" = "Basic";
 
 /* (No Comment) */
-"_tier_free" = "Gratuito";
+"_tier_free" = "Gratuita";
 
 /* (No Comment) */
 "_tier_plus" = "Plus";

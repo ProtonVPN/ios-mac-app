@@ -1642,7 +1642,7 @@
 /* (No Comment) */
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
 
-/* (No Comment) */
+/* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
 /* System extension wizard in mac: Button */

@@ -977,7 +977,7 @@
 "_need_help" = "Yardım gerekiyor mu?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Gene de etkinleştir";
+"_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
 "_neks_t2_description" = "Bu aygıt üzerinde Kill Switch kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN Kill Switch özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
@@ -1642,7 +1642,7 @@
 /* (No Comment) */
 "_sysex_error_description" = "Sistem eklentisi kurulurken bir sorun çıktı.\nBu sorunu gidermek için uygulamalar klasöründe olacağından emin olarak yeniden Proton VPN kurun. Alternatif olarak, destek ekibimizle görüşebilirsiniz.";
 
-/* (No Comment) */
+/* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN uygulamasının, Smart Protocol, OpenVPN ve WireGuard özelliklerini kullanabilmesi için bir sistem eklentisi yüklenmelidir.";
 
 /* System extension wizard in mac: Button */
