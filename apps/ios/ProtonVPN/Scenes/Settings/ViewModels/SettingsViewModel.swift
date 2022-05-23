@@ -44,7 +44,6 @@ final class SettingsViewModel {
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private let protocolService: ProtocolService
     
-    let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     var reloadNeeded: (() -> Void)?
     
     private var vpnGateway: VpnGatewayProtocol?
@@ -124,19 +123,19 @@ final class SettingsViewModel {
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
                                                name: appSessionManager.sessionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: appSessionManager.dataReloaded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: propertiesManager).featureFlagsNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: safeModePropertyProvider).safeModeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: type(of: vpnKeychain).vpnCredentialsChanged, object: nil)
     }
     
@@ -147,7 +146,7 @@ final class SettingsViewModel {
             sessionEnded()
         }
         
-        NotificationCenter.default.post(name: contentChanged, object: nil)
+        reloadNeeded?()
     }
     
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
@@ -158,11 +157,11 @@ final class SettingsViewModel {
         serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
         profileManager = factory.makeProfileManager()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: profileManager!.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
                                                name: serverManager!.contentChanged, object: nil)
     }
     
@@ -180,10 +179,6 @@ final class SettingsViewModel {
         vpnGateway = nil
         profileManager = nil
         serverManager = nil
-    }
-    
-    @objc private func handleChange() {
-        NotificationCenter.default.post(name: contentChanged, object: nil)
     }
 
     @objc private func reload() {
