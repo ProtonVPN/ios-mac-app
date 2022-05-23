@@ -93,11 +93,10 @@ final class DependencyContainer {
         storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()),
         alertService: makeCoreAlertService(),
         propertiesManager: makePropertiesManager(),
-        logFilesProvider: makeLogFilesIncludingRotatedProvider(),
         updateChecker: makeUpdateManager(),
         vpnKeychain: makeVpnKeychain()
     )
-    
+
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
     #else
@@ -448,18 +447,6 @@ extension DependencyContainer: XPCConnectionsRepositoryFactory {
 extension DependencyContainer: LogFileManagerFactory {
     func makeLogFileManager() -> LogFileManager {
         return LogFileManagerImplementation()
-    }
-}
-
-// MARK: LogFilesProviderFactory
-extension DependencyContainer: LogFilesProviderFactory {
-    func makeLogFilesProvider() -> LogFilesProvider {
-        return DefaultLogFilesProvider(vpnManager: makeVpnManager(), logFileManager: makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)
-    }
-
-    // This provider includes rotated logfiles
-    func makeLogFilesIncludingRotatedProvider() -> LogFilesProvider {
-        return MergeLogFilesProvider(providers: makeLogFilesProvider(), FolderLogFilesProvider(appLogFilename: makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename).path))
     }
 }
 
