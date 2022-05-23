@@ -328,7 +328,7 @@ class StatusMenuViewModel {
         
         if tier == CoreAppConstants.VpnTiers.free {
             standardCountries = standardCountries?.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
-                countryGroup1.0.countryCode > countryGroup2.0.countryCode
+                countryGroup1.0.countryCode < countryGroup2.0.countryCode
             })
         }
         
