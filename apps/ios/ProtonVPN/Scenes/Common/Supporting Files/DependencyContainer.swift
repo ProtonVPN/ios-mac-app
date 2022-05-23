@@ -86,7 +86,6 @@ final class DependencyContainer {
         storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()),
         alertService: makeCoreAlertService(),
         propertiesManager: makePropertiesManager(),
-        logFilesProvider: makeLogFilesIncludingRotatedProvider(),
         updateChecker: makeUpdateChecker(),
         vpnKeychain: makeVpnKeychain()
     )
@@ -412,18 +411,6 @@ extension DependencyContainer: PlanServiceFactory {
 extension DependencyContainer: LogFileManagerFactory {
     func makeLogFileManager() -> LogFileManager {
         return LogFileManagerImplementation()
-    }
-}
-
-// MARK: LogFilesProviderFactory
-extension DependencyContainer: LogFilesProviderFactory {
-    func makeLogFilesProvider() -> LogFilesProvider {
-        return DefaultLogFilesProvider(vpnManager: makeVpnManager(), logFileManager: makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)
-    }
-
-    // This provider includes rotated logfiles
-    func makeLogFilesIncludingRotatedProvider() -> LogFilesProvider {
-        return MergeLogFilesProvider(providers: makeLogFilesProvider(), FolderLogFilesProvider(appLogFilename: makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename).path))
     }
 }
 

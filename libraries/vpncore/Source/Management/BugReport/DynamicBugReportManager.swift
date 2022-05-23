@@ -51,17 +51,15 @@ public class DynamicBugReportManager {
     private var storage: DynamicBugReportStorage
     private var alertService: CoreAlertService
     private var propertiesManager: PropertiesManagerProtocol
-    private var logFilesProvider: LogFilesProvider
     private var timer: Timer?
     private let updateChecker: UpdateChecker
     private let vpnKeychain: VpnKeychainProtocol
     
-    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, logFilesProvider: LogFilesProvider, updateChecker: UpdateChecker, vpnKeychain: VpnKeychainProtocol) {
+    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, updateChecker: UpdateChecker, vpnKeychain: VpnKeychainProtocol) {
         self.api = api
         self.storage = storage
         self.alertService = alertService
         self.propertiesManager = propertiesManager
-        self.logFilesProvider = logFilesProvider
         self.updateChecker = updateChecker
         self.vpnKeychain = vpnKeychain
         
@@ -133,7 +131,7 @@ public class DynamicBugReportManager {
                                plan: (try? vpnKeychain.fetchCached().accountPlan.description) ?? "")
         
         if data.logs {
-            report.files = prepareLog(files: logFilesProvider.logFiles.compactMap { $0.1 }.reachable())
+//            report.files = prepareLog(files: logFilesProvider.logFiles.compactMap { $0.1 }.reachable())
         }
         
         return report
@@ -184,16 +182,12 @@ extension DynamicBugReportManager: BugReportDelegate {
 
     // MARK: - Log files
 
-    private var temporaryDirectory: URL {
-        return FileManager.default.temporaryDirectory
-    }
-
     /// Moves log files to temp folder so they are not changed/deleted before networking lib uploads them
     private func prepareLog(files: [URL]) -> [URL] {
         let fileManager = FileManager.default
         return files.compactMap { fileUrl -> URL? in
             do {
-                let tempFile = temporaryDirectory.appendingPathComponent(fileUrl.lastPathComponent)
+                let tempFile = FileManager.default.temporaryDirectory.appendingPathComponent(fileUrl.lastPathComponent)
                 if fileManager.fileExists(atPath: tempFile.path) {
                     try fileManager.removeItem(at: tempFile)
                 }

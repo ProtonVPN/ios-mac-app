@@ -21,13 +21,3 @@ public enum LogSource: CaseIterable {
         }
     }
 }
-
-/// Provides all available log files together with their names
-public protocol LogFilesProvider {
-    var logFiles: [(String, URL?)] { get }
-}
-
-public protocol LogFilesProviderFactory {
-    func makeLogFilesProvider() -> LogFilesProvider
-    func makeLogFilesIncludingRotatedProvider() -> LogFilesProvider
-}

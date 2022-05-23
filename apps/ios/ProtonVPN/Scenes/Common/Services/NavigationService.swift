@@ -305,7 +305,7 @@ extension NavigationService: SettingsService {
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
         
-        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: factory.makeLogFilesProvider()), settingsService: self)
+        return LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
     }
     
     func makeBatteryUsageViewController() -> BatteryUsageViewController {

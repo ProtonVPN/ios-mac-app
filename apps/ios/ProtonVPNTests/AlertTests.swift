@@ -145,13 +145,12 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
 
 fileprivate class SettingsServiceMock: SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        let viewModel = LogSelectionViewModel(logFileProvider: MockLogFilesProvider())
+        let viewModel = LogSelectionViewModel()
         return LogSelectionViewController(viewModel: viewModel, settingsService: self)
     }
     
-    func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
-        let viewModel = LogsViewModel(title: "", logFile: URL(fileURLWithPath: ""))
-        return LogsViewController(viewModel: viewModel)
+    func makeLogsViewController(logSource: LogSource) -> LogsViewController {
+        return LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
     }
     
     func makeSettingsViewController() -> SettingsViewController? {
@@ -168,5 +167,17 @@ fileprivate class SettingsServiceMock: SettingsService {
     
     func makeBatteryUsageViewController() -> BatteryUsageViewController {
         return BatteryUsageViewController()
+    }
+}
+
+fileprivate class LogContentMock: LogContent {
+    var isEmpty: Bool
+
+    init(isEmpty: Bool) {
+        self.isEmpty = isEmpty
+    }
+
+    func loadContent(callback: @escaping (String) -> Void) {
+        callback("")
     }
 }
