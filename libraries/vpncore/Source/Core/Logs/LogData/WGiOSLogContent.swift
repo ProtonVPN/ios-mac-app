@@ -29,10 +29,6 @@ class WGiOSLogContent: LogContent {
         self.wireguardProtocolFactory = wireguardProtocolFactory
     }
 
-    var isEmpty: Bool {
-        return fileLogContent.isEmpty
-    }
-
     func loadContent(callback: @escaping (String) -> Void) {
         // We don't care if flush succeeded or not. In case NE is not up and runnning it means latest logs were already saved to file.
         wireguardProtocolFactory.flushLogs { _ in

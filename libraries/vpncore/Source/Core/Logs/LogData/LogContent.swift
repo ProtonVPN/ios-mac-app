@@ -20,6 +20,5 @@ import Foundation
 
 /// Classes implementing this protocol can provide logs from various sources like reading from files, `os_log` subsystem or network extensions.
 public protocol LogContent {
-    var isEmpty: Bool { get }
     func loadContent(callback: @escaping (String) -> Void)
 }

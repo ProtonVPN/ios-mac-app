@@ -391,6 +391,7 @@
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
+		E9380F61283E6BE0008065C8 /* NELogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F60283E6BE0008065C8 /* NELogContent.swift */; };
 		E939EEE827954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
 		E939EEE927954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
 		E939EEEB27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
@@ -411,11 +412,8 @@
 		E9607003283B672B00983E3B /* FileLogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9607002283B672B00983E3B /* FileLogContent.swift */; };
 		E9607004283B672B00983E3B /* FileLogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9607002283B672B00983E3B /* FileLogContent.swift */; };
 		E9607006283BA2F900983E3B /* WGiOSLogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9607005283BA2F900983E3B /* WGiOSLogContent.swift */; };
-		E9607007283BA2F900983E3B /* WGiOSLogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9607005283BA2F900983E3B /* WGiOSLogContent.swift */; };
 		E96B765F27AC010F00079B04 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96B765E27AC010F00079B04 /* UpdateChecker.swift */; };
 		E96B766027AC010F00079B04 /* UpdateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96B765E27AC010F00079B04 /* UpdateChecker.swift */; };
-		E9716FCA2837895D00890810 /* URL+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9716FC92837895D00890810 /* URL+Size.swift */; };
-		E9716FCB2837895D00890810 /* URL+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9716FC92837895D00890810 /* URL+Size.swift */; };
 		E97579D1282128ED0029C9E2 /* OSLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97579D0282128ED0029C9E2 /* OSLogFormatter.swift */; };
 		E97579D2282128ED0029C9E2 /* OSLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97579D0282128ED0029C9E2 /* OSLogFormatter.swift */; };
 		E976C6286E41A6496964C105 /* String+Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F0015F0BEB0E5E1ADB08B /* String+Email.swift */; };
@@ -894,6 +892,7 @@
 		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E92CCE3127D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
+		E9380F60283E6BE0008065C8 /* NELogContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NELogContent.swift; sourceTree = "<group>"; };
 		E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportStorage.swift; sourceTree = "<group>"; };
 		E939EEEA27955317006E4305 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
@@ -906,7 +905,6 @@
 		E9607002283B672B00983E3B /* FileLogContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogContent.swift; sourceTree = "<group>"; };
 		E9607005283BA2F900983E3B /* WGiOSLogContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGiOSLogContent.swift; sourceTree = "<group>"; };
 		E96B765E27AC010F00079B04 /* UpdateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateChecker.swift; sourceTree = "<group>"; };
-		E9716FC92837895D00890810 /* URL+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Size.swift"; sourceTree = "<group>"; };
 		E97579D0282128ED0029C9E2 /* OSLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSLogFormatter.swift; sourceTree = "<group>"; };
 		E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportConfigRequest.swift; sourceTree = "<group>"; };
 		E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
@@ -1403,6 +1401,7 @@
 				E9606FFC283B62BE00983E3B /* AppLogContent.swift */,
 				E9607002283B672B00983E3B /* FileLogContent.swift */,
 				E9607005283BA2F900983E3B /* WGiOSLogContent.swift */,
+				E9380F60283E6BE0008065C8 /* NELogContent.swift */,
 			);
 			path = LogData;
 			sourceTree = "<group>";
@@ -1693,7 +1692,6 @@
 				E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */,
 				F327A9992821763B00848E42 /* Codable+Default.swift */,
 				CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */,
-				E9716FC92837895D00890810 /* URL+Size.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2475,7 +2473,6 @@
 			files = (
 				E53D64C828116C4A0060C463 /* VPNSessionsCountRequest.swift in Sources */,
 				4242B0322465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
-				E9716FCA2837895D00890810 /* URL+Size.swift in Sources */,
 				F3747BF026D3B93300EF2F00 /* Networking.swift in Sources */,
 				E9DC7A07262DBFAA001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
 				E129C6CD22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
@@ -2752,7 +2749,6 @@
 			files = (
 				E53D64C728116B910060C463 /* VPNSessionsCountRequest.swift in Sources */,
 				4242B0332465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
-				E9716FCB2837895D00890810 /* URL+Size.swift in Sources */,
 				F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				E9607004283B672B00983E3B /* FileLogContent.swift in Sources */,
 				F330F00D27FC812900C3AA33 /* PromoCodeRequest.swift in Sources */,
@@ -2872,7 +2868,6 @@
 				D5D2955425A5D551000FBD74 /* NetShieldPropertyProvider.swift in Sources */,
 				F30B9E7B262886C90094C65E /* VpnKeys.swift in Sources */,
 				D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */,
-				E9607007283BA2F900983E3B /* WGiOSLogContent.swift in Sources */,
 				F30B9EB12629B1BC0094C65E /* AsyncOperation.swift in Sources */,
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,
 				E97CBDC728118891004D2989 /* OSLogHandler.swift in Sources */,
@@ -2898,6 +2893,7 @@
 				E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */,
 				E1B5F63F21B6B5E000B558B0 /* VpnManager.swift in Sources */,
 				E160845A21DE1E9100E34D04 /* SafariService.swift in Sources */,
+				E9380F61283E6BE0008065C8 /* NELogContent.swift in Sources */,
 				D5BCDEAC25359F68004BAEE8 /* Offer.swift in Sources */,
 				E1B5F68221B839A300B558B0 /* ServerStorage.swift in Sources */,
 				F30B9CEA262705550094C65E /* VpnAuthentication.swift in Sources */,

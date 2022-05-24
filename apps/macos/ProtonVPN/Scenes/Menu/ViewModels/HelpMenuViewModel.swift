@@ -42,6 +42,7 @@ class HelpMenuViewModel {
                         & SystemExtensionManagerFactory
                         & PropertiesManagerFactory
                         & LogFileManagerFactory
+                        & LogContentProviderFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -51,6 +52,7 @@ class HelpMenuViewModel {
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
+    private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
     
     init(factory: Factory) {
         self.factory = factory
@@ -62,20 +64,16 @@ class HelpMenuViewModel {
     
     func openOpenVpnLogsFolderAction() {
         // Save log to file
-        vpnManager.logsContent(for: .openVpn(.tcp)) { logs in
-            if let content = logs {
-                self.logFileManager.dump(logs: content, toFile: AppConstants.Filenames.openVpnLogFilename)
-            }
+        logContentProvider.getLogData(for: .openvpn).loadContent { logContent in
+            self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.openVpnLogFilename)
             self.navService.openLogsFolder(filename: AppConstants.Filenames.openVpnLogFilename)
         }
     }
     
     func openWGVpnLogsFolderAction() {
         // Save log to file
-        vpnManager.logsContent(for: .wireGuard) { logs in
-            if let content = logs {
-                self.logFileManager.dump(logs: content, toFile: AppConstants.Filenames.wireGuardLogFilename)
-            }
+        logContentProvider.getLogData(for: .wireguard).loadContent { logContent in
+            self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.wireGuardLogFilename)
             self.navService.openLogsFolder(filename: AppConstants.Filenames.wireGuardLogFilename)
         }
     }

@@ -495,8 +495,8 @@ extension DependencyContainer: CouponViewModelFactory {
 // MARK: LogContentProviderFactory
 extension DependencyContainer: LogContentProviderFactory {
     func makeLogContentProvider() -> LogContentProvider {
-        return LogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
-                                  appGroup: AppConstants.AppGroups.main,
-                                  wireguardProtocolFactory: wireguardFactory)
+        return IOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
+                                     appGroup: AppConstants.AppGroups.main,
+                                     wireguardProtocolFactory: wireguardFactory)
     }
 }
