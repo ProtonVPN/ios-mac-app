@@ -88,22 +88,12 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         }
     }
     
-    public func logFile() -> URL? {
+    private func logFile() -> URL? {
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
             log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "WireGuard"])
             return nil
         }
-        // Flush logs to file. Async, but should be done before user gets the file.
-        vpnProviderManager(for: .configuration) { manager, error in 
-            guard let manager = manager else { return }
-            self.flushLogs(manager)
-        }
-        
-        return sharedFolderURL.appendingPathComponent("WireGuard.log")
-    }
-    
-    private func flushLogs(_ manager: NEVPNManager?) {
-        try? ((manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession)?.sendProviderMessage(Message.flushLogsToFile.data, responseHandler: nil)
+        return sharedFolderURL.appendingPathComponent(CoreAppConstants.LogFiles.wireGuard)
     }
 
     /// Tries to flish logs to a logfile. Call handler with true if flush succeeded of false otherwise.

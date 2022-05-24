@@ -119,7 +119,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         }
     }
     
-    public func logFile() -> URL? {
+    private func logFile() -> URL? {
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
             log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "OpenVPN"])
             return nil

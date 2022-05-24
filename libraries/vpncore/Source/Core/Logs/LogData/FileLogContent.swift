@@ -27,10 +27,6 @@ class FileLogContent: LogContent {
         self.file = file
     }
 
-    var isEmpty: Bool {
-        return file.isEmpty
-    }
-
     func loadContent(callback: @escaping (String) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let contents = try? String(contentsOf: self.file)

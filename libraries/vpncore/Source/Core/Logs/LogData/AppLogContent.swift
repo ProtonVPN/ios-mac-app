@@ -34,10 +34,6 @@ public class AppLogContent: LogContent {
         return files ?? []
     }
 
-    public var isEmpty: Bool {
-        return urls.hasContent()
-    }
-
     public func loadContent(callback: @escaping (String) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let result = self.urls.reduce("", { prev, url in

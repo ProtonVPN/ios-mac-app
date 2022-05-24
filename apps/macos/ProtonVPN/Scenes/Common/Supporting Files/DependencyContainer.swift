@@ -94,7 +94,8 @@ final class DependencyContainer {
         alertService: makeCoreAlertService(),
         propertiesManager: makePropertiesManager(),
         updateChecker: makeUpdateManager(),
-        vpnKeychain: makeVpnKeychain()
+        vpnKeychain: makeVpnKeychain(),
+        logContentProvider: makeLogContentProvider()
     )
 
     #if TLS_PIN_DISABLE
@@ -524,5 +525,14 @@ extension DependencyContainer: PaymentsApiServiceFactory {
 extension DependencyContainer: CouponViewModelFactory {
     func makeCouponViewModel() -> CouponViewModel {
         return CouponViewModel(paymentsApiService: makePaymentsApiService(), appSessionRefresher: appSessionManager)
+    }
+}
+
+// MARK: LogContentProviderFactory
+extension DependencyContainer: LogContentProviderFactory {
+    func makeLogContentProvider() -> LogContentProvider {
+        return MacOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
+                                       wireguardProtocolFactory: wireguardFactory,
+                                       openVpnProtocolFactory: openVpnFactory)
     }
 }

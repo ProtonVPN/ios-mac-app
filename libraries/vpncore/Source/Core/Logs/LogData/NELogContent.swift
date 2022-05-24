@@ -1,5 +1,5 @@
 //
-//  Created on 2022-05-20.
+//  Created on 2022-05-25.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,27 +18,17 @@
 
 import Foundation
 
-extension URL {
+class NELogContent: LogContent {
 
-    /// File size in bytes
-    var fileSize: Int? {
-        guard let values = try? self.resourceValues(forKeys: [.fileSizeKey]) else {
-            return nil
+    private let protocolFactory: VpnProtocolFactory
+
+    init(protocolFactory: VpnProtocolFactory) {
+        self.protocolFactory = protocolFactory
+    }
+
+    func loadContent(callback: @escaping (String) -> Void) {
+        protocolFactory.logs { content in
+            callback(content ?? "")
         }
-        return values.fileSize
     }
-
-    /// Check if file is not empty
-    var isEmpty: Bool {
-        return fileSize ?? 0 > 0
-    }
-}
-
-extension Array where Element == URL {
-
-    /// Check if any of given files is not empty
-    public func hasContent() -> Bool {
-        return self.first { !$0.isEmpty } != nil
-    }
-
 }
