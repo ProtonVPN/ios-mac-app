@@ -87,7 +87,8 @@ final class DependencyContainer {
         alertService: makeCoreAlertService(),
         propertiesManager: makePropertiesManager(),
         updateChecker: makeUpdateChecker(),
-        vpnKeychain: makeVpnKeychain()
+        vpnKeychain: makeVpnKeychain(),
+        logContentProvider: makeLogContentProvider()
     )
 
     private lazy var vpnAuthentication: VpnAuthentication = {
@@ -493,7 +494,7 @@ extension DependencyContainer: CouponViewModelFactory {
 
 // MARK: LogContentProviderFactory
 extension DependencyContainer: LogContentProviderFactory {
-    func makeLogDataProvider() -> LogContentProvider {
+    func makeLogContentProvider() -> LogContentProvider {
         return LogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
                                   appGroup: AppConstants.AppGroups.main,
                                   wireguardProtocolFactory: wireguardFactory)

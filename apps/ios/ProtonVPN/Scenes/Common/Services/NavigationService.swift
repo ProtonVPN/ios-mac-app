@@ -313,7 +313,7 @@ extension NavigationService: SettingsService {
     }
     
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogDataProvider().getLogData(for: logSource)))
+        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogContentProvider().getLogData(for: logSource)))
     }
     
     func presentReportBug() {

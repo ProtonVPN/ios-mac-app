@@ -18,7 +18,7 @@
 
 import Foundation
 
-/// Extracts logs from given file(s)
+/// App logs can be split into several files. This class collects logs from all of them.
 public class AppLogContent: LogContent {
 
     private let folder: URL
