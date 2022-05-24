@@ -778,3 +778,28 @@ public class ProtonUnreachableAlert: SystemAlert {
     public init() {
     }
 }
+
+public class LocalAgentSystemErrorAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    init(error: LocalAgentErrorSystemError) {
+        switch error {
+        case .splitTcp:
+            title = LocalizedString.vpnAcceleratorTitle
+            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.vpnAcceleratorTitle)
+        case .netshield:
+            title = LocalizedString.netshieldTitle
+            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.netshieldTitle)
+        case .nonRandomizedNat:
+            title = LocalizedString.moderateNatTitle
+            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.moderateNatTitle)
+        case .safeMode:
+            title = LocalizedString.nonStandardPortsTitle
+            message = LocalizedString.vpnFeatureCannotBeSetError(LocalizedString.nonStandardPortsTitle)
+        }
+    }
+}

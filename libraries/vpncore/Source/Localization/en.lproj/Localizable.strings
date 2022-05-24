@@ -1898,3 +1898,6 @@
 "authenticate" = "Authenticate";
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Invalid login method. Please contact support.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ setting could not be changed. Please try again later or connect to a different server";

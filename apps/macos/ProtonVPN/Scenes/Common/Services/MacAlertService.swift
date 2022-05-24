@@ -221,7 +221,10 @@ extension MacAlertService: CoreAlertService {
 
         case is ProtonUnreachableAlert:
             showDefaultSystemAlert(alert)
-            
+
+        case is LocalAgentSystemErrorAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

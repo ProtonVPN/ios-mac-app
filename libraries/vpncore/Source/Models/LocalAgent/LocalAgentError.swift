@@ -27,8 +27,6 @@ enum LocalAgentErrorSystemError {
     case splitTcp
     case netshield
     case nonRandomizedNat
-    case bouncing
-    case portForwarding
     case safeMode
 }
 
@@ -104,10 +102,6 @@ extension LocalAgentError {
             return .serverSessionDoesNotMatch
         case 86211:
             return .systemError(.netshield)
-        case 86216:
-            return .systemError(.bouncing)
-        case 86221:
-            return .systemError(.portForwarding)
         case 86226:
             return .systemError(.nonRandomizedNat)
         case 86231:
