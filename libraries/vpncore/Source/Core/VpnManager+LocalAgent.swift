@@ -209,7 +209,8 @@ extension VpnManager: LocalAgentDelegate {
             log.error("Server session does not match, trying to generate new key and certificate and reconnect", category: .localAgent, event: .error)
             reconnectWithNewKeyAndCertificate()
         case let .systemError(error):
-            log.error("Local agent reported system error for \(error)", category: .localAgent, event: .error)
+            log.error("Local agent reported system error for \(error), the setting will be reverted, showing alert to the user", category: .localAgent, event: .error)
+            alertService?.push(alert: LocalAgentSystemErrorAlert(error: error))
         }
     }
     // swiftlint:enable cyclomatic_complexity
