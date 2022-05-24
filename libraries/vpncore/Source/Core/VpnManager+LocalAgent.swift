@@ -190,13 +190,13 @@ extension VpnManager: LocalAgentDelegate {
             }
             alertService?.push(alert: MaxSessionsAlert(accountPlan: credentials.accountPlan))
         case .serverError:
-            log.error("Server error occured, showing the user an alert and disconnecting", category: .localAgent, event: .error)
+            log.error("Server error occurred, showing the user an alert and disconnecting", category: .localAgent, event: .error)
             disconnectWithAlert(alert: VpnServerErrorAlert())
         case .guestSession:
             log.error("Internal status that should never be seen, check the app implementation", category: .localAgent, event: .error)
             disconnect { }
         case .policyViolationDelinquent:
-            log.error("Disconnecting because of unpaid invoces", category: .localAgent, event: .error)
+            log.error("Disconnecting because of unpaid invoices", category: .localAgent, event: .error)
             disconnectWithAlert(alert: DelinquentUserAlert())
         case .policyViolationLowPlan:
             disconnectWithAlert(alert: VpnServerSubscriptionErrorAlert())
@@ -206,7 +206,7 @@ extension VpnManager: LocalAgentDelegate {
         case .restrictedServer:
             log.error("Local agent reported restricted server error, waiting for the local agent to recover", category: .localAgent, event: .error)
         case .serverSessionDoesNotMatch:
-            log.error("Server session doesn't match, trying to generate new key and certificate and reconnect", category: .localAgent, event: .error)
+            log.error("Server session does not match, trying to generate new key and certificate and reconnect", category: .localAgent, event: .error)
             reconnectWithNewKeyAndCertificate()
         case let .systemError(error):
             log.error("Local agent reported system error for \(error)", category: .localAgent, event: .error)
