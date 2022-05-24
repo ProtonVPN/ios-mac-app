@@ -19,7 +19,7 @@
 import Foundation
 
 public protocol LogContentProviderFactory {
-    func makeLogDataProvider() -> LogContentProvider
+    func makeLogContentProvider() -> LogContentProvider
 }
 
 /// Create and return a proper LogData implementation for a given log source

@@ -1398,10 +1398,10 @@
 		E9606FF8283B629200983E3B /* LogData */ = {
 			isa = PBXGroup;
 			children = (
+				E9606FFF283B635800983E3B /* LogContentProvider.swift */,
 				E9606FF9283B62AA00983E3B /* LogContent.swift */,
 				E9606FFC283B62BE00983E3B /* AppLogContent.swift */,
 				E9607002283B672B00983E3B /* FileLogContent.swift */,
-				E9606FFF283B635800983E3B /* LogContentProvider.swift */,
 				E9607005283BA2F900983E3B /* WGiOSLogContent.swift */,
 			);
 			path = LogData;
