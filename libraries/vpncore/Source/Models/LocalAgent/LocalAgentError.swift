@@ -23,6 +23,15 @@
 import Foundation
 import Crypto_VPN
 
+enum LocalAgentErrorSystemError {
+    case splitTcp
+    case netshield
+    case nonRandomizedNat
+    case bouncing
+    case portForwarding
+    case safeMode
+}
+
 enum LocalAgentError: Error {
     case restrictedServer
     case certificateExpired
@@ -42,7 +51,8 @@ enum LocalAgentError: Error {
     case guestSession
     case badCertificateSignature
     case certificateNotProvided
-    case serverSessionDoesntMatch
+    case serverSessionDoesNotMatch
+    case systemError(LocalAgentErrorSystemError)
 }
 
 extension LocalAgentError {
@@ -91,7 +101,19 @@ extension LocalAgentError {
         case consts.errorCodeCertNotProvided:
             return .certificateNotProvided
         case 86202: // Server session doesn't match: Use the correct ed25519/x25519 key
-            return .serverSessionDoesntMatch
+            return .serverSessionDoesNotMatch
+        case 86211:
+            return .systemError(.netshield)
+        case 86216:
+            return .systemError(.bouncing)
+        case 86221:
+            return .systemError(.portForwarding)
+        case 86226:
+            return .systemError(.nonRandomizedNat)
+        case 86231:
+            return .systemError(.splitTcp)
+        case 86241:
+            return .systemError(.safeMode)
         default:
             log.error("Trying to parse unknown local agent error \(code)", category: .localAgent)
             return nil
