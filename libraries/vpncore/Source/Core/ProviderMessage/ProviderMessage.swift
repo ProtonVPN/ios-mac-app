@@ -59,6 +59,7 @@ extension NETunnelProviderSession: ProviderMessageSender {
                 }
             }
         } catch {
+            log.error("Received error while attempting to send provider message: \(error)")
             completion?(.failure(.sendingError))
         }
     }

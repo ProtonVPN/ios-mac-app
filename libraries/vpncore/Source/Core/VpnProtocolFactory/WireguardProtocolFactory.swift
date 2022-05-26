@@ -124,8 +124,8 @@ extension VpnManagerConfiguration {
     public func asWireguardConfiguration(config: WireguardConfig) -> String {
         var output = "[Interface]\n"
         
-        if let authData = authData {
-            output.append("PrivateKey = \(authData.clientKey.base64X25519Representation)\n")
+        if let clientPrivateKey = clientPrivateKey {
+            output.append("PrivateKey = \(clientPrivateKey)\n")
         }
         output.append("Address = \(config.address)\n")
         output.append("DNS = \(config.dns)\n")

@@ -27,6 +27,9 @@ enum WireguardProviderRequest: ProviderRequest {
         case flushLogsToFile = 101
         case setApiSelector = 102
         case refreshCertificate = 103
+
+        case cancelRefreshOperations = 104
+        case restartRefreshingCerts = 105
     }
 
     /// Return the current WireGuard tunnel configuration string.
@@ -38,6 +41,14 @@ enum WireguardProviderRequest: ProviderRequest {
     /// Refresh the certificate used by the LocalAgent in the main app, and
     /// save it to the keychain before calling the completion.
     case refreshCertificate(features: VPNConnectionFeatures?)
+    /// Cancel refresh operations and stop all timers. (Used on client's end to
+    /// be able to manipulate objects in storage with guarantee that keychain won't
+    /// be interfered with)
+    case cancelRefreshes
+    /// Restart certificate refreshes and reset timers. Used symmetrically with the above
+    /// case, when the app has finished manipulating objects in storage and wants to
+    /// let the extension continue with its normal refresh operations.
+    case restartRefreshes
 
     public var asData: Data {
         switch self {
@@ -53,8 +64,11 @@ enum WireguardProviderRequest: ProviderRequest {
             if let features = features, let encodedFeatures = try? encoder.encode(features) {
                 featuresData = encodedFeatures
             }
-
             return datagram(.refreshCertificate) + (featuresData ?? Data())
+        case .cancelRefreshes:
+            return datagram(.cancelRefreshOperations)
+        case .restartRefreshes:
+            return datagram(.restartRefreshingCerts)
         }
     }
 
@@ -84,8 +98,12 @@ enum WireguardProviderRequest: ProviderRequest {
                let decodedFeatures = try? JSONDecoder().decode(VPNConnectionFeatures.self, from: messageData) {
                 features = decodedFeatures
             }
-
+            
             return .refreshCertificate(features: features)
+        case .cancelRefreshOperations:
+            return .cancelRefreshes
+        case .restartRefreshingCerts:
+            return .restartRefreshes
         }
     }
 

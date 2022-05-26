@@ -286,8 +286,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         
         AuthKeychain.clear()
         vpnKeychain.clear()
-        vpnAuthentication.clearEverything()
         announcementRefresher.clear()
+
+        let vpnAuthenticationTimeoutInSeconds = 2
+        let group = DispatchGroup()
+        group.enter()
+        vpnAuthentication.clearEverything {
+            group.leave()
+        }
+        _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
         
         propertiesManager.logoutCleanup()
     }
