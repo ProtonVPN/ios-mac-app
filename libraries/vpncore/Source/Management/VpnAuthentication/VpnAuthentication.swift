@@ -63,25 +63,19 @@ public extension VpnAuthentication {
     func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
         loadAuthenticationData(features: nil, completion: completion)
     }
-    
 }
 
 public final class VpnAuthenticationManager {
-    public var connectionProvider: ProviderMessageSender?
-
     private let queue = OperationQueue()
-    private let sessionService: SessionService
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
     private let safeModePropertyProvider: SafeModePropertyProvider
 
     public init(networking: Networking,
                 storage: VpnAuthenticationStorage,
-                sessionService: SessionService,
                 safeModePropertyProvider: SafeModePropertyProvider) {
         self.networking = networking
         self.storage = storage
-        self.sessionService = sessionService
         self.safeModePropertyProvider = safeModePropertyProvider
         queue.maxConcurrentOperationCount = 1
 
@@ -99,10 +93,94 @@ public final class VpnAuthenticationManager {
         let features = storage.getStoredCertificateFeatures()
 
         // then delete evertyhing
-        clearEverything()
+        clearEverything { [weak self] in
+            guard let `self` = self else { return }
 
-        // and get new certificates
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: features, networking: networking, safeModePropertyProvider: safeModePropertyProvider))
+            // and get new certificates
+            self.queue.addOperation(CertificateRefreshAsyncOperation(storage: self.storage,
+                                                                     features: features,
+                                                                     networking: self.networking,
+                                                                     safeModePropertyProvider: self.safeModePropertyProvider))
+        }
+    }
+
+    /// Created for the purposes of sharing refresh logic between VpnAuthenticationManager and VpnAuthenticationRemoteClient. When VpnAuthenticationManager
+    /// is fully replaced by VpnAuthenticationRemoteClient on macOS, this function will be absorbed into VpnAuthenticationRemoteClient.
+    fileprivate static func loadAuthenticationDataBase(storage: VpnAuthenticationStorage,
+                                                       safeModePropertyProvider: SafeModePropertyProvider,
+                                                       features: VPNConnectionFeatures? = nil,
+                                                       completion: @escaping AuthenticationDataCompletion) {
+        // keys are generated, certificate is stored, use it
+        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features?.equals(other: storage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
+            log.debug("Loading stored vpn authentication data", category: .userCert)
+            if existingCertificate.isExpired {
+                log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
+            }
+            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey,
+                                                      clientCertificate: existingCertificate.certificate)))
+            return
+        }
+
+        completion(.failure(ProtonVpnErrorConst.vpnCredentialsMissing))
+    }
+}
+
+extension VpnAuthenticationManager: VpnAuthentication {
+    public func clearEverything(completion: @escaping (() -> Void)) {
+        // First cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
+        queue.cancelAllOperations()
+
+        // Delete everything from the keychain
+        storage.deleteKeys()
+        storage.deleteCertificate()
+
+        completion()
+    }
+
+    public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+        // If new ferature set is given, use it, otherwise try to get certificate with the same features as previous
+        let newFeatures = features ?? storage.getStoredCertificateFeatures()
+
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, safeModePropertyProvider: safeModePropertyProvider, completion: { result in
+            executeOnUIThread { completion(result) }
+        }))
+    }
+
+    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
+        Self.loadAuthenticationDataBase(storage: storage, safeModePropertyProvider: safeModePropertyProvider, features: features) { result in
+            guard case let .failure(error) = result, (error as NSError) == ProtonVpnErrorConst.vpnCredentialsMissing else {
+                completion(result)
+                return
+            }
+
+            // certificate is missing or no longer valid, refresh it and use
+            self.refreshCertificates(features: features, completion: { result in
+                executeOnUIThread { completion(result) }
+            })
+        }
+    }
+
+    public func loadClientPrivateKey() -> PrivateKey {
+        return storage.getKeys().privateKey
+    }
+}
+
+public final class VpnAuthenticationRemoteClient {
+    private var connectionProvider: ProviderMessageSender?
+    private let sessionService: SessionService
+    private let authenticationStorage: VpnAuthenticationStorage
+    private let safeModePropertyProvider: SafeModePropertyProvider
+
+    public init(sessionService: SessionService,
+                authenticationStorage: VpnAuthenticationStorage,
+                safeModePropertyProvider: SafeModePropertyProvider) {
+        self.sessionService = sessionService
+        self.authenticationStorage = authenticationStorage
+        self.safeModePropertyProvider = safeModePropertyProvider
+    }
+
+    public func setConnectionProvider(provider: ProviderMessageSender?) {
+        connectionProvider = provider
     }
 
     /// Ask the WireGuard network extension to refresh the certificate, and save the result to the keychain.
@@ -112,8 +190,9 @@ public final class VpnAuthenticationManager {
     /// will then authenticate with the API, establish its session, and tell the app that it's ready to try again,
     /// at which point the app is welcome to do so. When the network extension returns success after being asked to refresh
     /// the certificate, the updated certificate should be available in the keychain.
-    private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures? = nil, retryingForExpiredSessions: Bool = true, completionHandler: @escaping CertificateRefreshCompletion) {
+    private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures?, retryingForExpiredSessions: Bool = true, completionHandler: @escaping CertificateRefreshCompletion) {
         guard let connectionProvider = connectionProvider else {
+            log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.")
             completionHandler(.failure(ProviderMessageError.sendingError))
             return
         }
@@ -124,8 +203,8 @@ public final class VpnAuthenticationManager {
                 switch response {
                 case .ok:
                     // Extension has updated the certificate and placed it in the keychain. Let's fetch it on our end.
-                    guard let keys = self?.storage.getStoredKeys(),
-                          let certificate = self?.storage.getStoredCertificate() else {
+                    guard let keys = self?.authenticationStorage.getStoredKeys(),
+                          let certificate = self?.authenticationStorage.getStoredCertificate() else {
                         completionHandler(.failure(ProtonVpnErrorConst.userCredentialsMissing))
                         return
                     }
@@ -144,7 +223,8 @@ public final class VpnAuthenticationManager {
                             completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
                             return
                         }
-                        self?.promptExtensionForCertificateRefresh(retryingForExpiredSessions: false,
+                        self?.promptExtensionForCertificateRefresh(features: features,
+                                                                   retryingForExpiredSessions: false,
                                                                    completionHandler: completionHandler)
                     }
                 }
