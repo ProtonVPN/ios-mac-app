@@ -19,7 +19,7 @@ class WireguardMacProtocolFactory: WireguardProtocolFactory {
         super.init(bundleId: bundleId, appGroup: appGroup, propertiesManager: propertiesManager)
     }
     
-    override public func logs(completion: @escaping (String?) -> Void) {        
+    override public func logs(completion: @escaping (String?) -> Void) {
         xpcConnectionsRepository.getXpcConnection(for: SystemExtensionType.wireGuard.machServiceName).getLogs { logsData in
             guard let data = logsData, let logs = String(data: data, encoding: .utf8) else {
                 completion(nil)

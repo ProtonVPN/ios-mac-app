@@ -11,8 +11,8 @@ import Foundation
 import NetworkExtension
 import TunnelKit
 
-public class OpenVpnProtocolFactory: VpnProtocolFactory {
-    
+open class OpenVpnProtocolFactory: VpnProtocolFactory {
+
     private static let certificateAuthority = OpenVPN.CryptoContainer(pem: """
 -----BEGIN CERTIFICATE-----
 MIIFozCCA4ugAwIBAgIBATANBgkqhkiG9w0BAQ0FADBAMQswCQYDVQQGEwJDSDEV
@@ -108,7 +108,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         }
     }
     
-    public func logs(completion: @escaping (String?) -> Void) {
+    open func logs(completion: @escaping (String?) -> Void) {
         logData { [appGroup, emptyTunnelConfiguration] (data) in
             guard let data = data, let log = String(data: data, encoding: .utf8) else {
                 let log = emptyTunnelConfiguration.existingLog(in: appGroup)
