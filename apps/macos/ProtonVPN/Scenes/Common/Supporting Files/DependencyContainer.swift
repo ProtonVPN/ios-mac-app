@@ -116,7 +116,6 @@ final class DependencyContainer {
     private lazy var vpnAuthentication: VpnAuthentication = {
         return VpnAuthenticationManager(networking: makeNetworking(),
                                         storage: vpnAuthenticationKeychain,
-                                        sessionService: makeSessionService(),
                                         safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
     private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos", storage: storage)
