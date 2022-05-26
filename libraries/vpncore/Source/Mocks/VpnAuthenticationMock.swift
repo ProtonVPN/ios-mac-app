@@ -27,7 +27,9 @@ public final class VpnAuthenticationMock: VpnAuthentication {
 
     public func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) { }
     public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) { }
-    public func clearCertificate() { }
-    public func clearEverything() { }
-    public func setConnectionProvider(forProtocol: VpnProtocol, provider: ProviderMessageSender) { }
+    public func clearEverything(completion: @escaping (() -> Void)) { completion() }
+    
+    public func loadClientPrivateKey() -> PrivateKey {
+        VpnKeys().privateKey
+    }
 }

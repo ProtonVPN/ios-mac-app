@@ -43,19 +43,15 @@ public protocol VpnAuthentication {
      Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
      */
     func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion)
-    
-    /// Deletes current certificate
-    func clearCertificate()
-    
-    /// Deletes all the generated and stored data, so keys and certificate
-    func clearEverything()
 
-    /// Set the vpn provider for the purpose of sending vpn messages.
-    func setConnectionProvider(forProtocol: VpnProtocol, provider: ProviderMessageSender)
+    /// Loads the client private key needed for establishing a connection. Generates keypair if the keys are missing.
+    func loadClientPrivateKey() -> PrivateKey
+
+    /// Deletes all the generated and stored data, so keys and certificate
+    func clearEverything(completion: @escaping (() -> Void))
 }
 
 public extension VpnAuthentication {
-    
     func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
         refreshCertificates(features: nil, completion: completion)
     }
@@ -177,6 +173,11 @@ public final class VpnAuthenticationRemoteClient {
         self.sessionService = sessionService
         self.authenticationStorage = authenticationStorage
         self.safeModePropertyProvider = safeModePropertyProvider
+
+        NotificationCenter.default.addObserver(forName: VpnKeychain.vpnPlanChanged, object: nil, queue: nil,
+                                               using: userDowngradedPlanOrBecameDelinquent(_:))
+        NotificationCenter.default.addObserver(forName: VpnKeychain.vpnUserDelinquent, object: nil, queue: nil,
+                                               using: userDowngradedPlanOrBecameDelinquent(_:))
     }
 
     public func setConnectionProvider(provider: ProviderMessageSender?) {
@@ -270,54 +271,77 @@ public final class VpnAuthenticationRemoteClient {
             })
         }
     }
-}
 
-extension VpnAuthenticationManager: VpnAuthentication {
-    public func clearEverything() {
-        // First cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
-        queue.cancelAllOperations()
-
-        // Delete everything from the keychain
-        storage.deleteKeys()
-        storage.deleteCertificate()
-    }
-    
-    public func clearCertificate() {
-        // First cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
-        queue.cancelAllOperations()
-        
-        // Felete only certificate
-        storage.deleteCertificate()
-    }
-
-    public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-        // If new ferature set is given, use it, otherwise try to get certificate with the same features as previous
-        let newFeatures = features ?? storage.getStoredCertificateFeatures()
-
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, safeModePropertyProvider: safeModePropertyProvider, completion: { result in
-            executeOnUIThread { completion(result) }
-        }))
-    }
-
-    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
-        // keys are generated, certificate is stored, use it
-        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features?.equals(other: storage.getStoredCertificateFeatures(), safeModeEnabled: safeModePropertyProvider.safeModeFeatureEnabled) == true {
-            log.debug("Loading stored vpn authentication data", category: .userCert)
-            if existingCertificate.isExpired {
-                log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
-            }
-            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey,
-                                                      clientCertificate: existingCertificate.certificate)))
+    private func syncStorageManipulationWithExtension(closure: @escaping (() -> Void), finished: (() -> Void)? = nil) {
+        guard let connectionProvider = connectionProvider else {
+            closure()
             return
         }
 
-        // certificate is missing or no longer valid, refresh it and use
-        refreshCertificates(features: features, completion: { result in
-            executeOnUIThread { completion(result) }
+        connectionProvider.send(WireguardProviderRequest.cancelRefreshes, completion: { [weak self] result in
+            // This is not great, but we should still continue with removing the items from the keychain if it fails.
+            if case let .failure(error) = result {
+                log.error("Could not stop manager remotely: \(error)")
+                assertionFailure("Could not stop manager remotely: \(error)")
+            }
+
+            closure()
+
+            self?.connectionProvider?.send(WireguardProviderRequest.restartRefreshes, completion: { result in
+                if case let .failure(error) = result {
+                    log.error("Could not stop manager remotely: \(error)")
+                    assertionFailure("Could not stop manager remotely: \(error)")
+                }
+            })
         })
     }
 
-    public func setConnectionProvider(forProtocol vpnProtocol: VpnProtocol, provider: ProviderMessageSender) {
-        connectionProvider = provider
+    private func userDowngradedPlanOrBecameDelinquent(_ notification: Notification) {
+        log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
+
+        var features: VPNConnectionFeatures?
+        syncStorageManipulationWithExtension { [weak self] in
+            features = self?.authenticationStorage.getStoredCertificateFeatures() // save the old features before clearing them
+            self?.authenticationStorage.deleteKeys()
+            self?.authenticationStorage.deleteCertificate()
+
+        } finished: { [weak self] in
+            _ = self?.authenticationStorage.getKeys() // generate new keys
+            self?.refreshCertificates(features: features) { _ in }
+        }
+    }
+}
+
+extension VpnAuthenticationRemoteClient: VpnAuthentication {
+    public func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) {
+        VpnAuthenticationManager.loadAuthenticationDataBase(storage: authenticationStorage,
+                                                            safeModePropertyProvider: safeModePropertyProvider,
+                                                            features: features) { result in
+            guard case let .failure(error) = result, (error as NSError) == ProtonVpnErrorConst.vpnCredentialsMissing else {
+                completion(result)
+                return
+            }
+
+            // certificate is missing or no longer valid, refresh it and use
+            self.refreshCertificates(features: features, completion: { result in
+                executeOnUIThread { completion(result) }
+            })
+        }
+    }
+
+    public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+        promptExtensionForCertificateRefresh(features: features, completionHandler: completion)
+    }
+
+    public func clearEverything(completion: @escaping (() -> Void)) {
+        syncStorageManipulationWithExtension { [weak self] in
+            self?.authenticationStorage.deleteKeys()
+            self?.authenticationStorage.deleteCertificate()
+            completion()
+        }
+    }
+
+    public func loadClientPrivateKey() -> PrivateKey {
+        return authenticationStorage.getKeys().privateKey
     }
 }

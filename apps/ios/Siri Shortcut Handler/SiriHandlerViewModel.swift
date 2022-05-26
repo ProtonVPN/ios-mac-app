@@ -52,16 +52,15 @@ class SiriHandlerViewModel {
                                              propertiesManager: propertiesManager,
                                              vpnKeychain: vpnKeychain,
                                              configurationPreparer: configurationPreparer,
-                                             vpnAuthentication: VpnAuthenticationManager(networking: networking,
-                                                                                         storage: vpnAuthKeychain,
-                                                                                         sessionService: sessionService,
-                                                                                         safeModePropertyProvider: safeModePropertyProvider),
+                                             vpnAuthentication: VpnAuthenticationRemoteClient(sessionService: sessionService,
+                                                                                              authenticationStorage: vpnAuthKeychain,
+                                                                                              safeModePropertyProvider: safeModePropertyProvider),
                                              doh: doh,
                                              natTypePropertyProvider: natTypePropertyProvider,
                                              netShieldPropertyProvider: netShieldPropertyProvider,
                                              safeModePropertyProvider: safeModePropertyProvider)
         }()
-    
+
     private var _vpnGateway: VpnGatewayProtocol?
     var vpnGateway: VpnGatewayProtocol? {
         guard let _ = try? vpnKeychain.fetch() else {

@@ -192,6 +192,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             case .success:
                 success()
             case let .failure(error):
+                if let providerError = error as? ProviderMessageError, case .sendingError = providerError {
+                    // The vpn isn't connected yet and the provider can't refresh the certificate.
+                    // Fake success and the extension can handle refresh itself once we're connected.
+                    success()
+                    return
+                }
                 failure(error)
             }
         }
@@ -357,12 +363,19 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         
         AuthKeychain.clear()
         vpnKeychain.clear()
-        vpnAuthentication.clearEverything()
         announcementRefresher.clear()
         planService.clear()
         searchStorage.clear()
         review.clear()
-        
+
+        let vpnAuthenticationTimeoutInSeconds = 2
+        let group = DispatchGroup()
+        group.enter()
+        vpnAuthentication.clearEverything {
+            group.leave()
+        }
+        _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
+
         propertiesManager.logoutCleanup()
     }
     // End of the logout logic

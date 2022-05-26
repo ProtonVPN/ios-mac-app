@@ -94,10 +94,9 @@ final class DependencyContainer {
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
-        return VpnAuthenticationManager(networking: makeNetworking(),
-                                        storage: vpnAuthKeychain,
-                                        sessionService: makeSessionService(),
-                                        safeModePropertyProvider: makeSafeModePropertyProvider())
+        return VpnAuthenticationRemoteClient(sessionService: makeSessionService(),
+                                             authenticationStorage: vpnAuthKeychain,
+                                             safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
     
     #if TLS_PIN_DISABLE

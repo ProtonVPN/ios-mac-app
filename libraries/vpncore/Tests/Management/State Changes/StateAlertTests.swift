@@ -24,7 +24,7 @@ import XCTest
 
 class StateAlertTests: XCTestCase {
 
-    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), authData: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [], serverPublicKey: nil)
+    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), clientPrivateKey: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [], serverPublicKey: nil)
     let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
     

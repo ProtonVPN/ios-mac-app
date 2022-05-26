@@ -109,11 +109,12 @@ extension VpnManager {
     }
 
     func reconnectWithNewKeyAndCertificate() {
-        vpnAuthentication.clearEverything()
-        refreshCertificateWithError { _ in
-            log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
-            executeOnUIThread {
-                NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+        vpnAuthentication.clearEverything { [weak self] in
+            self?.refreshCertificateWithError { _ in
+                log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+                }
             }
         }
     }

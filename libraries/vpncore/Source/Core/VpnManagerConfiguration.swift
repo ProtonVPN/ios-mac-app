@@ -52,7 +52,7 @@ public struct VpnManagerConfiguration {
     public let username: String
     public let password: String
     public let passwordReference: Data
-    public let authData: VpnAuthenticationData?
+    public let clientPrivateKey: String?
     public let vpnProtocol: VpnProtocol
     public let ports: [Int]
     public let netShield: NetShieldType
@@ -62,7 +62,7 @@ public struct VpnManagerConfiguration {
     public let natType: NATType
     public let safeMode: Bool?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, ports: [Int], serverPublicKey: String?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, clientPrivateKey: String?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, ports: [Int], serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -70,7 +70,7 @@ public struct VpnManagerConfiguration {
         self.username = username
         self.password = password
         self.passwordReference = passwordReference
-        self.authData = authData
+        self.clientPrivateKey = clientPrivateKey
         self.vpnProtocol = vpnProtocol
         self.netShield = netShield
         self.vpnAccelerator = vpnAccelerator
@@ -98,7 +98,7 @@ public class VpnManagerConfigurationPreparer {
         self.propertiesManager = propertiesManager
     }
     
-    public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, authData: VpnAuthenticationData?) -> VpnManagerConfiguration? {
+    public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, clientPrivateKey: PrivateKey?) -> VpnManagerConfiguration? {
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             let passwordRef = try vpnKeychain.fetchOpenVpnPassword()
@@ -113,7 +113,7 @@ public class VpnManagerConfigurationPreparer {
                                            username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
                                            password: vpnCredentials.password,
                                            passwordReference: passwordRef,
-                                           authData: authData,
+                                           clientPrivateKey: clientPrivateKey?.base64X25519Representation,
                                            vpnProtocol: connectionConfig.vpnProtocol,
                                            netShield: connectionConfig.netShieldType,
                                            vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,

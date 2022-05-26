@@ -180,7 +180,27 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 }
             }
         case .refreshCertificate(let features):
-            break
+            certificateRefreshManager.checkRefreshCertificateNow(features: features) { result in
+                switch result {
+                case .success:
+                    completionHandler?(.ok(data: nil))
+                case .failure(let error):
+                    switch error {
+                    case .sessionExpiredOrMissing:
+                        completionHandler?(.errorSessionExpired)
+                    default:
+                        completionHandler?(.error(message: String(describing: error)))
+                    }
+                }
+            }
+        case .cancelRefreshes:
+            certificateRefreshManager.stop {
+                completionHandler?(.ok(data: nil))
+            }
+        case .restartRefreshes:
+            certificateRefreshManager.start {
+                completionHandler?(.ok(data: nil))
+            }
         }
     }
 

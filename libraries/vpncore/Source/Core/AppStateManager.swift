@@ -243,8 +243,8 @@ public class AppStateManagerImplementation: AppStateManager {
             log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
             makeConnection(configuration)
         case .certificate:
-            log.info("Checking vpn auth keys and certificates", category: .connectionConnect)
-            makeCertificateConnection(configuration)
+            let clientKey = vpnAuthentication.loadClientPrivateKey()
+            makeConnection(configuration, clientPrivateKey: clientKey)
         }
     }
 
@@ -324,38 +324,8 @@ public class AppStateManagerImplementation: AppStateManager {
         }
     }
 
-    private func makeCertificateConnection(_ configuration: ConnectionConfiguration) {
-        let features = VPNConnectionFeatures(propertiesManager: propertiesManager,
-                                             natTypePropertyProvider: natTypePropertyProvider,
-                                             netShieldPropertyProvider: netShieldPropertyProvider,
-                                             safeModePropertyProvider: safeModePropertyProvider,
-                                             vpnProtocol: configuration.vpnProtocol)
-        
-        vpnAuthentication.loadAuthenticationData(features: features) { result in
-            switch result {
-            case let .success(data):
-                log.info("VPN connect started", category: .connectionConnect,
-                         metadata: ["protocol": "\(configuration.vpnProtocol)",
-                                    "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
-                self.makeConnection(configuration, authData: data)
-            case .failure(let error):
-                log.error("Failed to load vpn auth data", category: .connectionConnect,
-                          metadata: ["protocol": "\(configuration.vpnProtocol)",
-                                     "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
-                self.connectionFailed()
-
-                let nsError = error as NSError
-                if nsError.code == 429 || nsError.code == 85092 {
-                    self.alertService?.push(alert: TooManyCertificateRequestsAlert())
-                } else {
-                    self.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
-                }
-            }
-        }
-    }
-    
-    private func makeConnection(_ connectionConfiguration: ConnectionConfiguration, authData: VpnAuthenticationData? = nil) {
-        guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration, authData: authData) else {
+    private func makeConnection(_ connectionConfiguration: ConnectionConfiguration, clientPrivateKey: PrivateKey? = nil) {
+        guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration, clientPrivateKey: clientPrivateKey) else {
             cancelConnectionAttempt()
             return
         }

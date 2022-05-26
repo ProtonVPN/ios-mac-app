@@ -570,18 +570,22 @@ public class VpnManager: VpnManagerProtocol {
         case .disconnected, .invalid:
             self.disconnectCompletion?()
             self.disconnectCompletion = nil
+            setRemoteAuthenticationEndpoint(provider: nil)
             disconnectLocalAgent()
         case .connected:
-            if let currentVpnProtocol = currentVpnProtocol, let provider = vpnManager.connection as? ProviderMessageSender {
-                vpnAuthentication.setConnectionProvider(forProtocol: currentVpnProtocol,
-                                                        provider: provider)
-            }
+            setRemoteAuthenticationEndpoint(provider: vpnManager.connection as? ProviderMessageSender)
             self.connectLocalAgent()
         default:
             break
         }
 
         self.stateChanged?()
+    }
+
+    private func setRemoteAuthenticationEndpoint(provider: ProviderMessageSender?) {
+        if let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient {
+            remoteVpnAuthentication.setConnectionProvider(provider: provider)
+        }
     }
     
     // swiftlint:enable cyclomatic_complexity function_body_length
