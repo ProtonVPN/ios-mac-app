@@ -245,6 +245,8 @@
 		E928093326B43704008C9F2C /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
 		E928093426B43704008C9F2C /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
 		E928093626B445A4008C9F2C /* ExtensionInfo+comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */; };
+		E9380F63283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F62283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift */; };
+		E9380F65283FA761008065C8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F64283FA761008065C8 /* Logging.swift */; };
 		E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		E93D023626A1C90A0098520D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E93D023126A1C90A0098520D /* Info.plist */; };
 		E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */; };
@@ -870,6 +872,8 @@
 		E928092F26B42B63008C9F2C /* IPCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCHelper.swift; path = ../../macos/ExtensionsIPC/IPCHelper.swift; sourceTree = "<group>"; };
 		E928093226B43704008C9F2C /* ExtensionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../macos/ExtensionsIPC/ExtensionInfo.swift; sourceTree = "<group>"; };
 		E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ExtensionInfo+comparison.swift"; path = "../../../macos/ProtonVPN/Extensions/ExtensionInfo+comparison.swift"; sourceTree = "<group>"; };
+		E9380F62283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnMacProtocolFactory.swift; sourceTree = "<group>"; };
+		E9380F64283FA761008065C8 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.WireGuard-Extension.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93D023126A1C90A0098520D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../../macos/ProtonVPN WireGuard/Info.plist"; sourceTree = "<group>"; };
 		E93D023226A1C90A0098520D /* WireGuard-develop.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = "WireGuard-develop.entitlements"; path = "../../macos/ProtonVPN WireGuard/WireGuard-develop.entitlements"; sourceTree = "<group>"; };
@@ -1219,6 +1223,7 @@
 			isa = PBXGroup;
 			children = (
 				42EF09DE257A713F00E2EDCA /* PacketTunnelProvider.swift */,
+				E9380F64283FA761008065C8 /* Logging.swift */,
 				42EF09E0257A713F00E2EDCA /* main.swift */,
 				E9036B3D26C1042E00EDFDA4 /* IPC */,
 				42EF09E2257A713F00E2EDCA /* Info.plist */,
@@ -1727,6 +1732,7 @@
 				E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */,
 				E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */,
 				9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */,
+				E9380F62283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift */,
 			);
 			path = VPN;
 			sourceTree = "<group>";
@@ -3347,6 +3353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C8641C127D261A000EEFB1D /* CodeSignatureComparitor.swift in Sources */,
+				E9380F65283FA761008065C8 /* Logging.swift in Sources */,
 				E9AF94B526B7C2FE00AA1A5F /* IPCBaseConnection.swift in Sources */,
 				42EF09E1257A713F00E2EDCA /* main.swift in Sources */,
 				E9AF94B726B7C30400AA1A5F /* ExtensionInfo.swift in Sources */,
@@ -3510,6 +3517,7 @@
 				EE4E7E051F62B27A000F7D5E /* ProfilesContainerViewModel.swift in Sources */,
 				E195C0D9204301900002021B /* ButtonMask.swift in Sources */,
 				E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */,
+				E9380F63283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift in Sources */,
 				E17C1CDD20E5297400DCC687 /* StatusMenuWindowModel.swift in Sources */,
 				EE3B38001F436E14008DF9E7 /* ProfilesTabBarViewController.swift in Sources */,
 				EE35FC451F1CD70700CFE26F /* TabBarButton.swift in Sources */,

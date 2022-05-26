@@ -64,7 +64,8 @@ class HelpMenuViewModel {
     
     func openOpenVpnLogsFolderAction() {
         // Save log to file
-        logContentProvider.getLogData(for: .openvpn).loadContent { logContent in
+        let logData = logContentProvider.getLogData(for: .openvpn)
+        logData.loadContent { logContent in
             self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.openVpnLogFilename)
             self.navService.openLogsFolder(filename: AppConstants.Filenames.openVpnLogFilename)
         }

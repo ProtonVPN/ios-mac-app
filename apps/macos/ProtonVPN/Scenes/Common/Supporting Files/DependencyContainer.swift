@@ -53,9 +53,15 @@ final class DependencyContainer {
                                                                  natTypePropertyProvider: makeNATTypePropertyProvider(),
                                                                  netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                                  safeModePropertyProvider: makeSafeModePropertyProvider())
-    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager(), xpcConnectionsRepository: makeXPCConnectionsRepository())
     private lazy var ikeFactory = IkeProtocolFactory()
-    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
+    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
+                                                                    appGroup: appGroup,
+                                                                    propertiesManager: makePropertiesManager(),
+                                                                    xpcConnectionsRepository: makeXPCConnectionsRepository())
+    private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
+                                                                appGroup: appGroup,
+                                                                propertiesManager: makePropertiesManager(),
+                                                                xpcConnectionsRepository: makeXPCConnectionsRepository())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
