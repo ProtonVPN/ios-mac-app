@@ -11,7 +11,7 @@
 "modals_upsell_features_subtitle" = "When you upgrade to VPN Plus";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Use Proton VPN for any special need by allowing traffic to non-standard ports through the VPN network.\n\nUnlock this and other features with a Plus plan.";
+"modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
 
 /* Learn more button title of the Safe Mode upsell screen */
 "modals_upsell_safe_mode_learn_more" = "Learn More";
