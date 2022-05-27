@@ -14,7 +14,7 @@ public class LogViewHelper {
         let message: String
 
         func text() -> String {
-            return timestamp + " " + message
+            return timestamp + " | " + message
         }
     }
 
