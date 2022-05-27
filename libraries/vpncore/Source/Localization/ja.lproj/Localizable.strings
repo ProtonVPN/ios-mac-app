@@ -712,9 +712,6 @@
 /* Main mac app menu item */
 "_menu_window" = "ウィンドウ";
 
-/* Label in several trial screens on MacOS */
-"_money_back_guarantee" = "30日間返金保証";
-
 /* Label in Plan information */
 "_most_popular" = "最も人気";
 
@@ -882,12 +879,6 @@
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Plus サーバー";
-
-/* MacOS: Upgrade screen text */
-"_plus_upgrade_description" = "Secure Core、お気に入りのテレビ番組のストリーミング、複数デバイス（最大5台）からのアクセスなど、さまざまな機能が利用できます！";
-
-/* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Proton VPNを気に入っていただけましたか？\nPlusプランは月額わずか8ドルです";
 
 /* MacOS: Settings screen title */
 "_preferences" = "設定";

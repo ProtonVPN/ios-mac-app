@@ -712,9 +712,6 @@
 /* Main mac app menu item */
 "_menu_window" = "Παράθυρο";
 
-/* Label in several trial screens on MacOS */
-"_money_back_guarantee" = "Εγγύηση Επιστροφής Χρημάτων εντός 30 ημερών";
-
 /* Label in Plan information */
 "_most_popular" = "Τα πιο δημοφιλή";
 
@@ -882,12 +879,6 @@
 
 /* iOS: section header in countries list */
 "_plus_servers" = "ΔΙΑΚΟΜΙΣΤΕΣ PLUS";
-
-/* MacOS: Upgrade screen text */
-"_plus_upgrade_description" = "Χρησιμοποιήστε το Secure Core, μεταδώστε τις αγαπημένες σας τηλεοπτικές εκπομπές,\nχρήση σε έως και 5 διαφορετικές συσκευές και πολλά άλλα!";
-
-/* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Απολαμβάνετε το Proton VPN;\nΠάρτε Plus για μόνο 8 $ /μήνα";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Προτιμήσεις";
