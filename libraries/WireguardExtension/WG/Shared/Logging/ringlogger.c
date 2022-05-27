@@ -53,7 +53,7 @@ void write_msg_to_log(struct log *log, const char *tag, const char *msg)
 	atomic_store(&line->time_ns, 0);
 	memset(line->line, 0, MAX_LOG_LINE_LENGTH);
 
-	snprintf(line->line, MAX_LOG_LINE_LENGTH, "protocol [%s] %s", tag, msg);
+	snprintf(line->line, MAX_LOG_LINE_LENGTH, "%s", msg);
 	atomic_store(&line->time_ns, ts.tv_sec * 1000000000ULL + ts.tv_nsec);
 
 	msync(&log->next_index, sizeof(log->next_index), MS_ASYNC);
@@ -90,7 +90,7 @@ int write_log_to_file(const char *file_name, const struct log *input_log)
 		if (!gmtime_r(&seconds, &tm))
 			goto err;
 
-		if (fprintf(file, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ: %s\n",
+		if (fprintf(file, "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ | %s\n",
 				  tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
 				  tm.tm_hour, tm.tm_min, tm.tm_sec, useconds,
 				  line->line) < 0)

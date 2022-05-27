@@ -60,10 +60,27 @@ extension OSLog {
 
 func wg_log(_ type: OSLogType, staticMessage msg: StaticString) {
     os_log("%{public}s", log: OSLog.wg, type: type, String(describing: msg))
-    Logger.global?.log(message: "\(msg)")
+    Logger.global?.log(message: "\(type.stringValue.uppercased()) | PROTOCOL | \(msg)")
 }
 
 func wg_log(_ type: OSLogType, message msg: String) {
     os_log("%{public}s", log: OSLog.wg, type: type, msg)
-    Logger.global?.log(message: msg)
+    Logger.global?.log(message: "\(type.stringValue.uppercased()) | PROTOCOL | \(msg)")
+}
+
+extension OSLogType {
+    var stringValue: String {
+        switch self {
+        case .info:
+            return "Info"
+        case .debug:
+            return "Debug"
+        case .error:
+            return "Error"
+        case .fault:
+            return "Fatal"
+        default:
+            return "Debug"
+        }
+    }
 }
