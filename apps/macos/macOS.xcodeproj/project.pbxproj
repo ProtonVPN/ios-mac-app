@@ -59,7 +59,7 @@
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C2FC57427E1DE6000101912 /* NSGradient+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
-		4C7CADE2280056090008778E /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
 		4C8313A727DE5D7200648797 /* NSTextField+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8313A627DE5D7200648797 /* NSTextField+AppTheme.swift */; };
@@ -456,9 +456,7 @@
 		F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
 		F397EA61280564980072D511 /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F397EA60280564980072D511 /* CouponViewController.swift */; };
 		F397EA67280565E50072D511 /* CouponViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F397EA66280565E50072D511 /* CouponViewController.xib */; };
-		F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */; };
 		F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */; };
-		F3B3BEB9279EBD5700F85BDF /* Upsell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3B3BEB8279EBD5600F85BDF /* Upsell.xib */; };
 		F3F48B1D2806D76500E0B814 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F48B1C2806D76500E0B814 /* BannerView.swift */; };
 		FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C16264DDB60F80353FA5CA /* LogViewHelper.swift */; };
 /* End PBXBuildFile section */
@@ -1091,9 +1089,7 @@
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
 		F397EA60280564980072D511 /* CouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CouponViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/CouponViewController.swift; sourceTree = "<group>"; };
 		F397EA66280565E50072D511 /* CouponViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CouponViewController.xib; path = ../../../../../macos/ProtonVPN/Scenes/Settings/Views/CouponViewController.xib; sourceTree = "<group>"; };
-		F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellViewController.swift; sourceTree = "<group>"; };
 		F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellGradientView.swift; sourceTree = "<group>"; };
-		F3B3BEB8279EBD5600F85BDF /* Upsell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upsell.xib; sourceTree = "<group>"; };
 		F3F48B1C2806D76500E0B814 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BannerView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Views/BannerView.swift; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1849,7 +1845,6 @@
 			children = (
 				F320E02726F08D7A00336F7A /* TourNumberViewController.swift */,
 				F320E02626F08D7A00336F7A /* TourViewController.swift */,
-				F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */,
 				F320E02526F08D7A00336F7A /* WelcomeViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1872,7 +1867,6 @@
 				F320E03326F08DBD00336F7A /* TourNumber.xib */,
 				F320E03526F08DEC00336F7A /* TourNumberRingView.swift */,
 				F320E03926F08E1400336F7A /* TourNumberView.swift */,
-				F3B3BEB8279EBD5600F85BDF /* Upsell.xib */,
 				F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */,
 				F320E02C26F08D7A00336F7A /* Welcome.xib */,
 			);
@@ -2971,7 +2965,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -3074,7 +3068,6 @@
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				D557D580264AC337007E4396 /* Intents.strings in Resources */,
-				F3B3BEB9279EBD5700F85BDF /* Upsell.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
 				F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
@@ -3476,7 +3469,6 @@
 				E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */,
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
-				F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
@@ -3495,7 +3487,7 @@
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
 				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
-				4C7CADE2280056090008778E /* BuildFile in Sources */,
+				4C7CADE2280056090008778E /* (null) in Sources */,
 				4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */,
 				EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */,
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
@@ -4777,7 +4769,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4790,7 +4782,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 		E53D64C2281169880060C463 /* Modals-macOS */ = {

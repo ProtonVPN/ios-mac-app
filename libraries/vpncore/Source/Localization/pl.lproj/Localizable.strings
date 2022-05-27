@@ -916,9 +916,6 @@
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Umiarkowany NAT";
 
-/* Label in several trial screens on MacOS */
-"_money_back_guarantee" = "30-dniowa gwarancja zwrotu pieniędzy";
-
 /* Display more information */
 "_more_info" = "Więcej informacji";
 
@@ -1167,12 +1164,6 @@
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Serwery planu Plus";
-
-/* MacOS: Upgrade screen text */
-"_plus_upgrade_description" = "Korzystaj z trybu Secure Core, oglądaj ulubione programy telewizyjne, używaj na maksymalnie 5 różnych urządzeniach i nie tylko!";
-
-/* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Podoba Ci się Proton VPN?\nWybierz plan Plus za 8$ miesięcznie";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Ustawienia";

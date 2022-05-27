@@ -712,9 +712,6 @@
 /* Main mac app menu item */
 "_menu_window" = "Ablak";
 
-/* Label in several trial screens on MacOS */
-"_money_back_guarantee" = "30 napos pénz-visszafizetési garancia";
-
 /* Label in Plan information */
 "_most_popular" = "Legnépszerűbb";
 
@@ -882,12 +879,6 @@
 
 /* iOS: section header in countries list */
 "_plus_servers" = "PLUSZ SZERVEREK";
-
-/* MacOS: Upgrade screen text */
-"_plus_upgrade_description" = "Használd a biztonsági mag szolgáltatást, nézd kedvenc TV műsoraid,\nhasználj akár 5 különböző eszközt, stb!";
-
-/* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "Tettszik a Proton VPN?\nVálaszd a Plus csomagunkat, mindössze 8$/hó áron";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Beállítások";

@@ -69,7 +69,6 @@ class NavigationService {
     var vpnGateway: VpnGatewayProtocol?
     
     var appHasPresented = false
-    var upsellPresented = false
     var isSystemLoggingOff = false
     
     init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
@@ -121,14 +120,6 @@ class NavigationService {
             
             if appHasPresented {
                 showSidebar()
-
-                do {
-                    let vpnCredentials = try vpnKeychain.fetchCached()
-                    // show upsell advert 15% of launches if no other models have been shown and account is free tier
-                    if vpnCredentials.accountPlan == .free && !upsellPresented && arc4random() % 100 < 15 {
-                        showUpsell()
-                    }
-                } catch {} // ignore vpn fetch error
             }
         } else {
             self.vpnGateway = nil
@@ -293,14 +284,7 @@ extension NavigationService {
 
         let welcomeViewController = WelcomeViewController(navService: self)
         windowService.presentKeyModal(viewController: welcomeViewController)
-        upsellPresented = true
 
         Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
-    }
-
-    private func showUpsell() {
-        let upsellViewController = UpsellViewController()
-        windowService.presentKeyModal(viewController: upsellViewController)
-        upsellPresented = true
     }
 }
