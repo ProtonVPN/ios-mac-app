@@ -47,7 +47,7 @@ protocol AppSessionManager {
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void)
-    func logOut(force: Bool)
+    func logOut(force: Bool, reason: String?)
     
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
@@ -127,9 +127,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
 
         if (try? vpnKeychain.fetchCached()) != nil {
-            setAndNotify(for: .established)
+            setAndNotify(for: .established, reason: nil)
         } else {
-            setAndNotify(for: .notEstablished)
+            setAndNotify(for: .notEstablished, reason: nil)
         }
         return true
     }
@@ -240,7 +240,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 }
 
                 self.resolveActiveSession(success: { [weak self] in
-                    self?.setAndNotify(for: .established)
+                    self?.setAndNotify(for: .established, reason: nil)
                     self?.profileManager.refreshProfiles()
                     self?.refreshVpnAuthCertificate(success: ok, failure: fail)
                 }, failure: { error in
@@ -257,7 +257,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                           return
                 }
 
-                self.setAndNotify(for: .established)
+                self.setAndNotify(for: .established, reason: nil)
                 self.profileManager.refreshProfiles()
                 self.refreshVpnAuthCertificate(success: ok, failure: fail)
             }
@@ -323,11 +323,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     // MARK: - Log out
-    func logOut(force: Bool = false) {
+    func logOut(force: Bool = false, reason: String?) {
         let logOutRoutine: () -> Void = { [weak self] in
             self?.loggedIn = false
             self?.logOutCleanup()
-            self?.setAndNotify(for: .notEstablished)
+            self?.setAndNotify(for: .notEstablished, reason: reason)
         }
         
         if appStateManager.state.isSafeToEnd {
@@ -369,28 +369,28 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // MARK: -
     
     // Updates the status of the app, including refreshing the VpnGateway object if the VPN creds change
-    private func setAndNotify(for state: SessionStatus) {
+    private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
         
         sessionStatus = state
-        
-        var object: VpnGatewayProtocol?
         if state == .established {
             loggedIn = true
-            object = factory.makeVpnGateway()            
+            vpnGateway = factory.makeVpnGateway()
             propertiesManager.hasConnected = true
+            postNotification(name: sessionChanged, object: vpnGateway)
         } else if state == .notEstablished {
             // Clear auth token and vpn creds to ensure they won't be used
             logOutCleanup()
-        }
-        vpnGateway = object
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            NotificationCenter.default.post(name: self.sessionChanged, object: object)
+            postNotification(name: sessionChanged, object: reason)
         }
         
         refreshTimer.start()
+    }
+
+    private func postNotification(name: Notification.Name, object: Any?) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: name, object: object)
+        }
     }
 }
 

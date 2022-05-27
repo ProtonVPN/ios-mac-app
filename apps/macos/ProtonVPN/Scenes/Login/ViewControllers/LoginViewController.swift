@@ -143,7 +143,7 @@ final class LoginViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        viewModel.logInApperared()
+        viewModel.logInAppeared()
     }
     
     // MARK: - Private functions

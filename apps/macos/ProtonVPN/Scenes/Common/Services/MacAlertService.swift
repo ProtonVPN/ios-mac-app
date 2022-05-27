@@ -261,11 +261,8 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
-        guard appSessionManager.sessionStatus == .established else { // already logged out
-            return
-        }
-        self.appSessionManager.logOut(force: true)
-        showDefaultSystemAlert(alert)
+        guard appSessionManager.sessionStatus == .established else { return } // already logged out
+        appSessionManager.logOut(force: true, reason: LocalizedString.failedToAccessVpnCredentialsDescription)
     }
     
     private func show(_ alert: FirstTimeConnectingAlert) {
@@ -291,12 +288,7 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: RefreshTokenExpiredAlert) {
-        let logoutAction = AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { 
-            self.appSessionManager.logOut(force: true)
-        })
-        alert.actions.append(logoutAction)
-            
-        uiAlertService.displayAlert(alert)
+        appSessionManager.logOut(force: true, reason: LocalizedString.invalidRefreshTokenPleaseLogin)
     }
 
     private func show( _ alert: KillSwitchRequiresSwift5Alert ) {

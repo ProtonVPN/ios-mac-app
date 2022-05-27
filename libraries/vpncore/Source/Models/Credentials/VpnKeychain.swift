@@ -80,7 +80,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     public func fetch() throws -> VpnCredentials {
         do {
             if let data = try appKeychain.getData(StorageKey.vpnCredentials) {
-                if let vpnCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? VpnCredentials {
+                if let vpnCredentials = try NSKeyedUnarchiver.unarchivedObject(ofClass: VpnCredentials.self, from: data) {
                     cached = CachedVpnCredentials(credentials: vpnCredentials)
                     return vpnCredentials
                 }
@@ -123,7 +123,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
 
         do {
-            try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials), key: StorageKey.vpnCredentials)
+            try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials, requiringSecureCoding: true), key: StorageKey.vpnCredentials)
             cached = CachedVpnCredentials(credentials: vpnCredentials)
         } catch let error {
             log.error("Keychain (vpn) write error", metadata: ["error": "\(error)"])

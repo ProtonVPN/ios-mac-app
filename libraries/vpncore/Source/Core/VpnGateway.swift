@@ -95,7 +95,6 @@ public protocol VpnGatewayFactory {
 }
 
 public class VpnGateway: VpnGatewayProtocol {
-    
     private enum ConnectionType {
         case quick
         case auto

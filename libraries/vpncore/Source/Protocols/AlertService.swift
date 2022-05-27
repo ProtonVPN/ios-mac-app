@@ -113,15 +113,13 @@ public class AppUpdateRequiredAlert: SystemAlert {
 }
 
 public class CannotAccessVpnCredentialsAlert: SystemAlert {
-    public var title: String? = LocalizedString.failedToAccessVpnCredentialsTitle
-    public var message: String? = LocalizedString.failedToAccessVpnCredentialsDescription
+    public var title: String?
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
-    }
+
+    public init() { }
 }
 
 public class ExistingConnectionAlert: SystemAlert {
@@ -157,8 +155,8 @@ public class P2pForwardedAlert: SystemAlert {
 }
 
 public class RefreshTokenExpiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.invalidRefreshToken
-    public var message: String? = LocalizedString.invalidRefreshTokenPleaseLogin
+    public var title: String?
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?

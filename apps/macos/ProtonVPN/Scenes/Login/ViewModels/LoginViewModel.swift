@@ -45,6 +45,7 @@ final class LoginViewModel {
     var logInFailureWithSupport: ((String?) -> Void)?
     var checkInProgress: ((Bool) -> Void)?
     var twoFactorRequired: (() -> Void)?
+    var initialError: String?
 
     private(set) var isTwoFactorStep: Bool = false
 
@@ -74,7 +75,11 @@ final class LoginViewModel {
         }
     }
     
-    func logInApperared() {
+    func logInAppeared() {
+        guard initialError == nil else {
+            logInFailure?(initialError)
+            return
+        }
         logInInProgress?()
         appSessionManager.attemptSilentLogIn { [weak self] result in
             switch result {

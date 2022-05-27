@@ -41,7 +41,7 @@ protocol AppSessionManager {
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    func logOut(force: Bool)
+    func logOut(force: Bool, reason: String?)
     func logOut()
     
     func replyToApplicationShouldTerminate()
@@ -181,7 +181,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     
     private func finishLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         refreshVpnAuthCertificate(success: { [weak self] in
-            self?.setAndNotify(for: .established)
+            self?.setAndNotify(for: .established, reason: nil)
             self?.profileManager.refreshProfiles()
             self?.appCertificateRefreshManager.planNextRefresh()
             success()
@@ -227,9 +227,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 failure(ProtonVpnErrorConst.vpnSessionInProgress)
             }))
         } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: {
-                failure(ProtonVpnError.fetchSession)
-            }))
+            failure(ProtonVpnError.fetchSession)
+            alertService.push(alert: CannotAccessVpnCredentialsAlert())
             return
         }
     }
@@ -250,34 +249,34 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
     
     // MARK: - Log out
-    func logOut(force: Bool) {
+    func logOut(force: Bool, reason: String?) {
         loggedIn = false
         
         if force || !appStateManager.state.isConnected {
-            confirmLogout()
+            confirmLogout(reason: reason)
         } else {
             let logoutAlert = LogoutWarningLongAlert(confirmHandler: { [confirmLogout] in
-                confirmLogout()
+                confirmLogout(reason)
             })
             alertService.push(alert: logoutAlert)
         }
     }
     
     func logOut() {
-        logOut(force: false)
+        logOut(force: false, reason: nil)
     }
     
-    private func confirmLogout() {
+    private func confirmLogout(reason: String?) {
         switch appStateManager.state {
         case .connecting:
-            appStateManager.cancelConnectionAttempt { [logoutRoutine] in logoutRoutine() }
+            appStateManager.cancelConnectionAttempt { [logoutRoutine] in logoutRoutine(reason) }
         default:
-            appStateManager.disconnect { [logoutRoutine] in logoutRoutine() }
+            appStateManager.disconnect { [logoutRoutine] in logoutRoutine(reason) }
         }
     }
     
-    private func logoutRoutine() {
-        setAndNotify(for: .notEstablished)
+    private func logoutRoutine(reason: String?) {
+        setAndNotify(for: .notEstablished, reason: reason)
         logOutCleanup()
     }
     
@@ -295,28 +294,32 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // End of the logout logic
     // MARK: -
     
-    private func setAndNotify(for state: SessionStatus) {
+    private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
-        
-        loggedIn = true
+
         sessionStatus = state
         
         var object: Any?
         if state == .established {
+            loggedIn = true
             object = factory.makeVpnGateway()
             
             // No need to connect twice
             propertiesManager.hasConnected = true
-        }
-        
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            NotificationCenter.default.post(name: self.sessionChanged, object: object)
+
+            postNotification(name: sessionChanged, object: object)
+        } else if state == .notEstablished {
+            postNotification(name: sessionChanged, object: reason)
         }
         
         refreshTimer.start()
     }
-    
+
+    private func postNotification(name: Notification.Name, object: Any?) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: name, object: object)
+        }
+    }
     // MARK: - AppDelegate quit behaviour
     
     func replyToApplicationShouldTerminate() {
