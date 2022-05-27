@@ -159,13 +159,13 @@ final class NavigationService {
             case .loggedIn:
                 self?.presentMainInterface()
             case .notLoggedIn:
-                self?.presentWelcome()
+                self?.presentWelcome(initialError: nil)
             }
         }
     }
 
-    func presentWelcome() {
-        loginService.showWelcome()
+    func presentWelcome(initialError: String?) {
+        loginService.showWelcome(initialError: initialError)
     }
 
     private func presentMainInterface() {
@@ -174,10 +174,15 @@ final class NavigationService {
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
-        if appSessionManager.sessionStatus == .notEstablished {
-            presentWelcome()
+        guard appSessionManager.sessionStatus == .notEstablished else {
             return
         }
+        guard let reasonForSessionChange = notification.object as? String else {
+            presentWelcome(initialError: nil)
+            return
+        }
+
+        presentWelcome(initialError: reasonForSessionChange)
     }
     
     @objc private func refreshVpnManager(_ notification: Notification) {

@@ -617,7 +617,7 @@ final class SettingsViewModel {
     }
     
     private func logOut() {
-        appSessionManager.logOut(force: false)
+        appSessionManager.logOut(force: false, reason: nil)
     }
 
     private func pushCouponViewController() {

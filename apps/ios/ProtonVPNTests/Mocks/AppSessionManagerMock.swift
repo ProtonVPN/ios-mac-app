@@ -56,7 +56,7 @@ class AppSessionManagerMock: AppSessionManager {
         callbackLogIn?(username, password, success, failure)
     }
     
-    func logOut(force: Bool) {
+    func logOut(force: Bool, reason: String?) {
         callbackLogOut?()
     }
 

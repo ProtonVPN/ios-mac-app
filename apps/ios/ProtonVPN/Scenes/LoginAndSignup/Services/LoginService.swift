@@ -13,12 +13,13 @@ import ProtonCore_Login
 import ProtonCore_LoginUI
 import ProtonCore_Networking
 import ProtonCore_Payments
+import UIKit
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
 }
 
-enum SilengLoginResult {
+enum SilentLoginResult {
     case loggedIn
     case notLoggedIn
 }
@@ -31,8 +32,8 @@ protocol LoginServiceDelegate: AnyObject {
 protocol LoginService: AnyObject {
     var delegate: LoginServiceDelegate? { get set }
 
-    func attemptSilentLogIn(completion: @escaping (SilengLoginResult) -> Void)
-    func showWelcome()
+    func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void)
+    func showWelcome(initialError: String?)
 }
 
 // MARK: CoreLoginService
@@ -60,9 +61,25 @@ final class CoreLoginService {
     private let coreApiService: CoreApiService
     private let settingsService: SettingsService
 
-    private var login: LoginAndSignupInterface?
+    private lazy var loginInterface: LoginAndSignupInterface = {
+        let signupParameters = SignupParameters(passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
+        let signupAvailability = SignupAvailability.available(parameters: signupParameters)
+        let login = LoginAndSignup(appName: "Proton VPN",
+                                   clientApp: .vpn,
+                                   doh: doh,
+                                   apiServiceDelegate: networking,
+                                   forceUpgradeDelegate: networkingDelegate,
+                                   humanVerificationVersion: networkingDelegate.version,
+                                   minimumAccountType: AccountType.username,
+                                   isCloseButtonAvailable: false,
+                                   paymentsAvailability: PaymentsAvailability.notAvailable,
+                                   signupAvailability: signupAvailability)
+        return login
+    }()
 
     weak var delegate: LoginServiceDelegate?
+
+    var onboardingShowFirstConnection = true
 
     init(factory: Factory) {
         appSessionManager = factory.makeAppSessionManager()
@@ -77,13 +94,8 @@ final class CoreLoginService {
         settingsService = factory.makeSettingsService()
     }
 
-    private func show() {
-        let signupAvailability = SignupAvailability.available(parameters: SignupParameters(passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
-        let login = LoginAndSignup(appName: "Proton VPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, humanVerificationVersion: networkingDelegate.version, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
-        self.login = login
-
-        var onboardingShowFirstConnection = true
-        let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
+    private func finishFlow() -> WorkBeforeFlow {
+        WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to use the login data to log in the app
             let authCredentials = AuthCredentials(data)
             self?.appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
@@ -92,7 +104,7 @@ final class CoreLoginService {
                     self?.coreApiService.getApiFeature(feature: .onboardingShowFirstConnection) { (result: Result<Bool, Error>) in
                         switch result {
                         case let .success(flag):
-                            onboardingShowFirstConnection = flag
+                            self?.onboardingShowFirstConnection = flag
                             completion(.success(()))
                         case let .failure(error):
                             log.error("Failed to get onboardingShowFirstConnection flag, using default value", category: .app, metadata: ["error": "\(error)"])
@@ -104,34 +116,49 @@ final class CoreLoginService {
                 }
             }
         }
+    }
 
-        let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(body: LocalizedString.welcomeBody))
-        let customization = LoginCustomizationOptions(username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self, helpDecorator: { input in
-            let reportBugItem = HelpItem.custom(icon: UIImage(named: "ic-bug")!, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
-                self?.settingsService.presentReportBug()
-            })
-            var result = input
-            if !result.isEmpty {
-                result[0].append(reportBugItem)
-            } else {
-                result = [[reportBugItem]]
-            }
-            return result
+    private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
+        let reportBugItem = HelpItem.custom(icon: UIImage(named: "ic-bug")!, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
+            self?.settingsService.presentReportBug()
         })
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, customization: customization) { [weak self] (result: LoginResult) -> Void in
-            switch result {
-            case .dismissed:
-                log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
-            case .loggedIn:
-                self?.delegate?.userDidLogIn()
-            case .signedUp:
-                self?.delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
-            }
-
-            self?.login = nil
+        var result = input
+        if !result.isEmpty {
+            result[0].append(reportBugItem)
+        } else {
+            result = [[reportBugItem]]
         }
+        return result
+    }
 
+    private func processLoginResult(result: LoginResult) {
+        switch result {
+        case .dismissed:
+            log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
+        case .loggedIn:
+            delegate?.userDidLogIn()
+        case .signedUp:
+            delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
+        }
+    }
+
+    private func show(initialError: String?) {
+        let loginResultCompletion = { [weak self] (result: LoginResult) -> Void in
+            self?.processLoginResult(result: result)
+        }
+        let customization = LoginCustomizationOptions(username: nil,
+                                                      performBeforeFlow: finishFlow(),
+                                                      customErrorPresenter: self,
+                                                      initialError: initialError,
+                                                      helpDecorator: helpDecorator)
+        let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: LocalizedString.welcomeBody))
+        let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(variant: variant,
+                                                                                  customization: customization,
+                                                                                  completion: loginResultCompletion)
         windowService.show(viewController: welcomeViewController)
+        if initialError != nil {
+            loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, completion: loginResultCompletion)
+        }
     }
 
     private func convertError(from error: Error) -> Error {
@@ -211,7 +238,7 @@ extension CoreLoginService: LoginErrorPresenter {
 // MARK: LoginService
 
 extension CoreLoginService: LoginService {
-    func attemptSilentLogIn(completion: @escaping (SilengLoginResult) -> Void) {
+    func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void) {
         if appSessionManager.loadDataWithoutFetching() {
             appSessionRefresher.refreshData()
         } else { // if no data is stored already, then show spinner and wait for data from the api
@@ -234,11 +261,11 @@ extension CoreLoginService: LoginService {
         }
     }
 
-    func showWelcome() {
+    func showWelcome(initialError: String?) {
         #if !RELEASE
         showEnvironmentSelection()
         #else
-        show()
+        show(initialError: initialError)
         #endif
     }
 }
@@ -256,7 +283,7 @@ extension CoreLoginService: EnvironmentsViewControllerDelegate {
     }
 
     func userDidSelectContinue() {
-        show()
+        show(initialError: nil)
     }
 }
 #endif

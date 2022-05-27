@@ -213,7 +213,7 @@ extension IosAlertService: CoreAlertService {
 
     private func show(_ alert: AppUpdateRequiredAlert) {
         alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
-            self?.appSessionManager.logOut(force: true)
+            self?.appSessionManager.logOut(force: true, reason: nil)
         }))
         
         uiAlertService.displayAlert(alert)
@@ -221,16 +221,11 @@ extension IosAlertService: CoreAlertService {
     
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
-        self.appSessionManager.logOut(force: true)
-        showDefaultSystemAlert(alert)
+        appSessionManager.logOut(force: true, reason: LocalizedString.failedToAccessVpnCredentialsDescription)
     }
     
     private func show(_ alert: RefreshTokenExpiredAlert) {
-        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
-            self?.appSessionManager.logOut(force: true)
-        }))
-        
-        uiAlertService.displayAlert(alert)
+        appSessionManager.logOut(force: true, reason: LocalizedString.invalidRefreshTokenPleaseLogin)
     }
     
     private func show(_ alert: MaintenanceAlert) {

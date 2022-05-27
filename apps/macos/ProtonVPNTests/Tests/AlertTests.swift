@@ -46,10 +46,10 @@ class AlertTests: XCTestCase {
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
         
-        alertService.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: nil))
+        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
         XCTAssert(windowService.displayCount == 2)
         
-        alertService.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: nil))
+        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
         XCTAssert(windowService.displayCount == 2)
     }
     
@@ -199,7 +199,7 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) { }
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
-    func logOut(force: Bool) {}
+    func logOut(force: Bool, reason: String?) {}
     func logOut() {}
     func replyToApplicationShouldTerminate() {}
 }

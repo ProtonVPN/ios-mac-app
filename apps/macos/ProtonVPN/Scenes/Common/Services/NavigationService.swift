@@ -123,7 +123,7 @@ class NavigationService {
             }
         } else {
             self.vpnGateway = nil
-            showLogIn()
+            showLogIn(initialError: notification.object as? String)
         }
     }
 
@@ -131,10 +131,11 @@ class NavigationService {
         showWelcomeDialog()
     }
     
-    private func showLogIn() {
+    private func showLogIn(initialError: String? = nil) {
         appHasPresented = true
         
         let viewModel = LoginViewModel(factory: factory)
+        viewModel.initialError = initialError
         windowService.showLogin(viewModel: viewModel)
         NSApp.activate(ignoringOtherApps: true)
     }

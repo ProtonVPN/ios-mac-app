@@ -46,10 +46,10 @@ class AlertTests: XCTestCase {
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
         
-        alertService.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: nil))
+        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
         XCTAssert(windowService.displayCount == 2)
         
-        alertService.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: nil))
+        alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
         XCTAssert(windowService.displayCount == 2)
     }
     
@@ -109,6 +109,7 @@ fileprivate class WindowServiceMock: WindowService {
     }
     
     var navigationStackAvailable: Bool = true
+    var topmostPresentedViewController: UIViewController?
 }
 
 fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {

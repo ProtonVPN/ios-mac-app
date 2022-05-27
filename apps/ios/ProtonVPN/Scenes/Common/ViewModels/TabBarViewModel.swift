@@ -64,7 +64,7 @@ class TabBarViewModel {
                 
         guard let vpnGateway = vpnGateway else {
             log.debug("Will not connect because user is not logged in", category: .connectionConnect, event: .trigger)
-            navigationService.presentWelcome()
+            navigationService.presentWelcome(initialError: nil)
             return
         }
         
@@ -86,7 +86,7 @@ class TabBarViewModel {
         if sessionManager.loggedIn {
             return true
         } else {
-            navigationService.presentWelcome()
+            navigationService.presentWelcome(initialError: nil)
             return false
         }
     }

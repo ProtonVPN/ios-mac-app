@@ -21,7 +21,10 @@
 
 import Foundation
 
-public class VpnCredentials: NSObject, NSCoding {
+public class VpnCredentials: NSObject, NSSecureCoding {
+
+    public static var supportsSecureCoding: Bool = true
+
     public let status: Int
     public let expirationTime: Date
     public let accountPlan: AccountPlan
@@ -121,23 +124,30 @@ public class VpnCredentials: NSObject, NSCoding {
         static let subscribed = "subscribed"
     }
     
-    public required convenience init(coder aDecoder: NSCoder) {
-        let plan = AccountPlan(coder: aDecoder)
+    public required convenience init?(coder aDecoder: NSCoder) {
+        guard let expirationTime = aDecoder.decodeObject(of: NSDate.self, forKey: CoderKey.expirationTime),
+              let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
+              let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
+              let password = aDecoder.decodeObject(forKey: CoderKey.password) as? String,
+              let planName = aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
+              let subscribed = aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int else {
+            return nil
+        }
         self.init(status: aDecoder.decodeInteger(forKey: CoderKey.status),
-                  expirationTime: aDecoder.decodeObject(forKey: CoderKey.expirationTime) as! Date,
-                  accountPlan: plan,
+                  expirationTime: expirationTime as Date,
+                  accountPlan: AccountPlan(coder: aDecoder),
                   maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
                   maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
                   services: aDecoder.decodeInteger(forKey: CoderKey.services),
-                  groupId: aDecoder.decodeObject(forKey: CoderKey.groupId) as! String,
-                  name: aDecoder.decodeObject(forKey: CoderKey.name) as! String,
-                  password: aDecoder.decodeObject(forKey: CoderKey.password) as! String,
+                  groupId: groupId,
+                  name: name,
+                  password: password,
                   delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent),
                   credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
                   currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
                   hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
-                  planName: aDecoder.decodeObject(forKey: CoderKey.planName) as? String,
-                  subscribed: aDecoder.decodeObject(forKey: CoderKey.subscribed) as? Int
+                  planName: planName,
+                  subscribed: subscribed
         )
     }
 
