@@ -86,7 +86,7 @@ class ProtonVPNUITests: XCTestCase {
         XCTAssert(app.staticTexts[plan].exists)
 
         switch plan {
-        case "Proton Plus", "Proton Unlimited", "Proton Visionary":
+        case "VPN Plus", "Proton Unlimited", "Proton Visionary":
             XCTAssert(app.buttons["Manage subscription"].exists)
         default:
             XCTAssertFalse(app.buttons["Manage subscription"].exists)
