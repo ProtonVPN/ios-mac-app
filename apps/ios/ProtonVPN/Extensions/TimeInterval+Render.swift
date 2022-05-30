@@ -25,10 +25,16 @@ import Foundation
 extension TimeInterval {
     
     public var asString: String {
-        let hours = Int(self) / 3600
+        let days = Int(self) / (60 * 60 * 24)
+        let hours = Int(self) / (60 * 60) % 24
         let minutes = Int(self) / 60 % 60
         let seconds = Int(self) % 60
-        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+
+        if days > 0 {
+            return String(format: "%02i:%02i:%02i:%02i", days, hours, minutes, seconds)
+        } else {
+            return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+        }
     }
     
 }
