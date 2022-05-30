@@ -206,15 +206,16 @@ final class ExtensionCertificateRefreshManager {
                 // This shouldn't happen from here; the caller should be managing the semaphore.
                 case .timedOut:
                     assertionFailure("Should not encounter \(certError) here; we aren't managing synchronization")
+                    log.error("Should not encounter \(certError) here; we aren't managing synchronization")
                     break
                 // These errors should "never happen" in practice.
                 case .missingKeys, .internalError:
                     assertionFailure("Encountered internal error: \(error)")
+                    log.error("Encountered internal error: \(error)")
                     break
                 }
 
                 completion(.failure(certError))
-                break
             }
         }
     }
