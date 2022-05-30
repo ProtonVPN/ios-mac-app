@@ -686,7 +686,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch beschermt uw IP\n\nUw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server. Om te hervatten zonder VPN-bescherming, schakelt u Kill Switch uit.";
+"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch blokkeert alle verbindingen";
@@ -1747,7 +1747,7 @@
 "_tor" = "Tor";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Verbinding maken met het Tor-netwerk";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor-Server";
@@ -2109,7 +2109,7 @@
 "login_summary_button" = "Start using Proton VPN";
 
 /* Error message shown when tryng to log in with an unsupported method */
-"login_unsupported_state" = "Ingeldig loginmethode. Contacteer ondersteuning.";
+"login_unsupported_state" = "Ongeldige loginmethode. Contacteer ondersteuning.";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Tweestapsverificatiecode gebruiken";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ instelling kon gewijzigd worden. Probeer later opnieuw of verbind met een andere server";
 

@@ -560,7 +560,7 @@
 "_feature_speed" = "سرعت";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Plus servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";
+"_feature_streaming_description" = "سرورهای Plus از پخش آنلاین (Netflix، Disney+ و ...) از هر جایی در جهان پشتیبانی می‌کنند.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor بر روی VPN";
@@ -902,10 +902,10 @@
 "_menu_window" = "پنجره";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_change_title" = "Enable Moderate NAT";
+"_moderate_nat_change_title" = "فعالسازی NAT متوسط";
 
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
-"_moderate_nat_enable_title" = "Enable Moderate NAT";
+"_moderate_nat_enable_title" = "فعالسازی NAT متوسط";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
 "_moderate_nat_explanation" = "Moderate NAT disables randomization of local address mapping. This can slightly reduce your security, but allows peer-to-peer applications such as online games to establish direct connections. \nLearn more";
@@ -914,7 +914,7 @@
 "_moderate_nat_explanation_link" = "بیشتر بدانید";
 
 /* Moderate NAT feature title in Settings */
-"_moderate_nat_title" = "Moderate NAT";
+"_moderate_nat_title" = "تنظیم NAT متوسط";
 
 /* Display more information */
 "_more_info" = "اطلاعات بیشتر";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Use two-factor code";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ setting could not be changed. Please try again later or connect to a different server";
 

@@ -23,7 +23,7 @@
 "modals_get_plus" = "Changer d'offre";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "La politique stricte de non-journalisation (no-logs) Proton VPN est certifiée par un audit externe.";
+"modals_no_logs_external_audit" = "La politique stricte d'absence de journaux de Proton VPN est certifiée par un audit externe.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_log_activity" = "Nous n'enregistrons pas votre activité sur Internet";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Le NAT modéré, aussi connu comme NAT Type 2, peut améliorer votre expérience en ligne avec différentes applications et jeux vidéos en ligne.\n\nDéverrouillez cette fonctionnalité et d'autres avec un abonnement Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Utilisez Proton VPN pour tout besoin particulier en autorisant le trafic vers les ports non standards à travers le réseau VPN.\n\nDébloquez cette fonctionnalité et bien d'autres avec l'abonnement Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Vous avez des besoins informatiques avancés ou professionnels qui nécessitent des ports non standard ? Passez à VPN Plus pour accéder à cette fonctionnalité et à d'autres fonctionnalités premium.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Lorsque vous passez à VPN Plus";
@@ -101,7 +101,7 @@
 "new_plans_brand_got_it" = "J'ai compris";
 
 /* Subtitle of the New Brand screen */
-"new_plans_brand_subtitle" = "Voici le nouveau look de Proton.\nPlusieurs services, une seule mission. Bienvenue sur un internet où la confidentialité est la règle absolue.";
+"new_plans_brand_subtitle" = "Voici le nouveau look de Proton.\nPlusieurs services, une seule mission. Bienvenue sur un internet où la vie privée est la règle absolue.";
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Nouvelle version, protection unifiée";

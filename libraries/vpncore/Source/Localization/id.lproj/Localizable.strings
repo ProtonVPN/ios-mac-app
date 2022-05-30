@@ -23,7 +23,7 @@
 "_action" = "Tindakan";
 
 /* (No Comment) */
-"_action_requires_reconnect" = "Anda perlu menyambungkan ulang koneksi internet Anda untuk dapat menerapkan perubahan ini";
+"_action_requires_reconnect" = "Koneksi internet Anda harus disambungkan ulang agar perubahan ini dapat diterapkan";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Aktifkan Widget";
@@ -158,19 +158,19 @@
 "_common_issues" = "Masalah pada saat masuk secara umum";
 
 /* Common word */
-"_connect" = "Sambungkan";
+"_connect" = "Hubungkan";
 
 /* Common word */
 "_connected" = "Terhubung";
 
 /* iOS status view */
-"_connected_to" = "Tersambung ke";
+"_connected_to" = "Terhubung ke";
 
 /* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
 "_connected_to_vpn" = "Tersambung ke %@";
 
 /* iOS: main button in tabbar during connecting to vpn phase */
-"_connecting" = "Menyambungkan";
+"_connecting" = "Menghubungkan";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "Menyambungkan ke %@";
@@ -179,7 +179,7 @@
 "_connecting_vpn" = "%@ menyambungkan";
 
 /* (No Comment) */
-"_connectingDotDotDot" = "Menyambungkan...";
+"_connectingDotDotDot" = "Menghubungkan...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Koneksi";
@@ -767,7 +767,7 @@
 "_loading_connection_info_for" = "Memuat informasi seputar koneksi %@";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Internet Aman di manapun";
+"_loading_screen_slogan" = "Internet Aman di Mana Saja";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_message" = "Anda tidak diizinkan tersambung ke server. Pilih server lain atau tingkatkan paket Anda.";
@@ -860,7 +860,7 @@
 "_maximum_device_description" = "Mohon putuskan perangkat lain untuk menyambungkan perangkat ini atau tingkatkan ke %@ untuk menyambungkan hingga %d perangkat sekaligus.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Silakan putuskan perangkat lain untuk menyambung ke sini.";
+"_maximum_device_reached_description" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Anda telah mencapai batas perangkat maksimum Anda";
@@ -1400,7 +1400,7 @@
 "_reset_password" = "Setel Ulang Kata Sandi";
 
 /* Button in some alerts */
-"_retry" = "Coba lagi";
+"_retry" = "Coba Lagi";
 
 /* Common word */
 "_save" = "Simpan";
@@ -1863,7 +1863,7 @@
 "_troubleshoot_item_proton_title" = "Proton sedang offline";
 
 /* (No Comment) */
-"_troubleshoot_item_proxy_description" = "Nonaktifkan proksi atau firewall apa pun, atau hubungi pegelola jaringan anda.";
+"_troubleshoot_item_proxy_description" = "Nonaktifkan seluruh proxy atau firewall yang aktif, atau hubungi pengelola jaringan Anda.";
 
 /* (No Comment) */
 "_troubleshoot_item_proxy_title" = "Halangan dari Proxy/Firewall";
@@ -1923,7 +1923,7 @@
 "_update_required_update" = "Perbarui";
 
 /* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Tingkatkan";
+"_upgrade" = "Tingkatkan Akun";
 
 /* (No Comment) */
 "_upgrade_again" = "TINGKATKAN LAGI";
@@ -2085,7 +2085,7 @@
 "_wireguard_logs" = "Log WireGuard";
 
 /* MacOS: text in main window */
-"_you_are_not_connected" = "Anda tidak tersambung";
+"_you_are_not_connected" = "Anda tidak terhubung";
 
 /* Button to apply coupon */
 "apply_coupon" = "Terapkan";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Gunakan kode dua faktor";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Pengaturan %@ tidak dapat diubah. Silakan coba lagi nanti atau hubungkan ke server lain";
 

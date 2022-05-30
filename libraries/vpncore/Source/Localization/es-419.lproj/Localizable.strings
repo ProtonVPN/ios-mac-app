@@ -791,7 +791,7 @@
 "_locations_basic" = "Ubicaciones Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Ubicaciones Basic y Plus";
+"_locations_basic_plus" = "Ubicaciones Plus";
 
 /* (No Comment) */
 "_locations_free" = "Ubicaciones Gratuitas";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Usar código de dos factores";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "No se pudo cambiar el ajuste de %@. Intente más tarde o conéctese a otro servidor";
 

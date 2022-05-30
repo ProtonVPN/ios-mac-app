@@ -398,7 +398,7 @@
 "_error_mitm_title" = "Connexion non sécurisée";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion au serveur VPN. Votre connexion Internet actuelle est peut-être surveillée. Pour garder vos données sécurisées, nous empêchons l'application d'accéder à ce serveur VPN.\nVeuillez sélectionner un autre serveur.";
+"_error_mitm_vpn_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion au serveur VPN. Votre connexion internet actuelle est peut-être surveillée. Pour garder vos données sécurisées, nous empêchons l'application d'accéder à ce serveur VPN.\nVeuillez sélectionner un autre serveur.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La signature Modulus est vide";
@@ -566,7 +566,7 @@
 "_feature_tor" = "Tor via VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Routez votre trafic Internet à travers le réseau Tor. Plus lent, mais plus privé.";
+"_feature_tor_description" = "Routez votre trafic internet à travers le réseau Tor. Plus lent, mais plus privé.";
 
 /* (No Comment) */
 "_features_title" = "Fonctionnalités";
@@ -659,13 +659,13 @@
 "_ios_onboarding_page1_description" = "Par les scientifiques et les ingénieurs qui ont créé Proton Mail, bienvenue dans un Internet plus sécurisé et privé.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenue sur un Internet meilleur";
+"_ios_onboarding_page1_title" = "Bienvenue sur un meilleur internet";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Combattre la censure et les restrictions régionales. Nous n’avons aucune publicité, aucune limite de bande passante et nous ne vendons pas vos données.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Nous pensons qu'Internet devrait être gratuit";
+"_ios_onboarding_page2_title" = "Nous pensons qu'internet devrait être libre";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_description" = "Nous sommes une entreprise de sécurité. Qu’il s’agisse de notre architecture Secure Core ou du chiffrement avancé, la sécurité est toujours notre priorité.";
@@ -686,7 +686,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch protège votre adresse IP\n\nVotre connexion Internet reprendra dès que Proton VPN se reconnectera à un serveur. Pour reprendre sans protection VPN, désactivez kill switch.";
+"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "La fonction kill switch bloque toutes les connexions";
@@ -743,7 +743,7 @@
 "_ks_requires_swift5_popup_msg" = "Pour activer Kill Switch, vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer Kill Switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer Kill Switch, veuillez d'abord installer le logiciel.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer kill switch, veuillez d'abord installer le logiciel.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Bibliothèque de prise en charge de Swift 5 RunTime";
@@ -806,7 +806,7 @@
 "_log_in_to_use_widget" = "Veuillez vous connecter pour commencer";
 
 /* iOS: button in settings screen */
-"_log_out" = "Log Out";
+"_log_out" = "Se déconnecter";
 
 /* iOS: Logout alert */
 "_log_out_warning" = "La déconnexion mettra fin à votre session VPN.";
@@ -872,7 +872,7 @@
 "_medium" = "Moyenne";
 
 /* Main mac app menu item */
-"_menu_about" = "A propos de Proton VPN";
+"_menu_about" = "À propos de Proton VPN";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Vérifier les mises à jour...";
@@ -884,7 +884,7 @@
 "_menu_hide_self" = "Masquer Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Log Out";
+"_menu_logout" = "Se déconnecter";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Réduire";
@@ -944,7 +944,7 @@
 "_ne_network_connection_lost" = "Connexion au réseau perdue";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Non connecté à Internet";
+"_ne_not_connected_to_the_internet" = "Non connecté à internet";
 
 /* Network error */
 "_ne_request_timed_out" = "La requête réseau a expiré";
@@ -1049,7 +1049,7 @@
 "_not_connected" = "Non connecté";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Impossible d'établir une connexion au VPN. Vous n'êtes pas connecté à Internet.";
+"_not_connected_to_the_internet" = "Impossible d'établir une connexion au VPN. Vous n'êtes pas connecté à internet.";
 
 /* (No Comment) */
 "_not_now" = "Pas maintenant";
@@ -1250,16 +1250,16 @@
 "_quick_settings_get_plus" = "Obtenir l’offre Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Désactive Internet si la connexion VPN tombe afin d’éviter une fuite accidentelle d'IP.";
+"_quick_settings_killSwitch_description" = "Désactive internet si la connexion VPN tombe afin d’éviter une fuite accidentelle d'IP.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Si vous ne pouvez pas vous connecter aux périphériques de votre réseau local, essayez de désactiver Kill Switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Naviguez sur Internet sans publicités ni logiciels malveillants.";
+"_quick_settings_netShield_description" = "Naviguez sur internet sans publicités ni logiciels malveillants.";
 
 /* (No Comment) */
-"_quick_settings_netShield_note" = "Si les sites Web ne se chargent pas, essayez de désactiver NetShield";
+"_quick_settings_netShield_note" = "Si les sites web ne se chargent pas, essayez de désactiver NetShield";
 
 /* (No Comment) */
 "_quick_settings_netshield_option_level1" = "Bloquer uniquement les logiciels malveillants";
@@ -1283,7 +1283,7 @@
 "_quick_settings_tour_feature_1" = "Ajoutez une couche de sécurité supplémentaire avec Secure Core.";
 
 /* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Naviguez sur le Web libéré des logiciels malveillants et des publicités avec NetShield.";
+"_quick_settings_tour_feature_2" = "Naviguez sur le web sans logiciels malveillants ni publicités avec NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Empêchez votre IP d'être exposée en activant Kill Switch.";
@@ -1625,7 +1625,7 @@
 "_sysex_cannot_enable" = "Impossible d'activer l'extension système";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configuration terminée. Vous pouvez désormais naviguer sur Internet plus rapidement avec les meilleures technologies VPN.";
+"_sysex_enabled_description" = "Configuration terminée. Vous pouvez désormais naviguer sur internet plus rapidement avec les meilleures technologies VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Configuration terminée";
@@ -1747,7 +1747,7 @@
 "_tor" = "TOR";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Se connecter au réseau TOR";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serveur Tor";
@@ -1830,10 +1830,10 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problème de fournisseur d'accès Internet (FAI)";
+"_troubleshoot_item_isp_title" = "Problème de fournisseur d'accès internet (FAI)";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Veuillez vérifier que votre connexion Internet fonctionne.";
+"_troubleshoot_item_nointernet_description" = "Veuillez vérifier que votre connexion internet fonctionne.";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_title" = "Aucune connexion internet";
@@ -2049,7 +2049,7 @@
 "_warning_vpn_session_is_active" = "Une autre session Proton VPN de l'utilisateur est active sur cet appareil. Continuer avec le processus de connexion va entraîner la fin de la session actuelle. Voulez-vous continuer ?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN suisse haute vitesse qui protège votre vie privée en chiffrant votre connexion Internet.";
+"_welcome_body" = "VPN suisse haut débit qui protège votre vie privée en chiffrant votre connexion internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Merci d’utiliser Proton VPN. Jetez un coup d’œil\naux principales fonctionnalités de l'application.";
@@ -2064,7 +2064,7 @@
 "_welcome_title" = "BIENVENUE À BORD !";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch empêche le VPN de se connecter à Internet. Cela peut être dû à une incompatibilité avec votre système d'exploitation (macOS Catalina 10.15).\n\nPour résoudre ce problème, mettez à jour votre système d'exploitation vers la dernière version.\n\nAlternativement, vous pouvez passer au protocole OpenVPN ou désactiver kill switch.";
+"_wgks_description" = "Kill switch empêche le VPN de se connecter à internet. Cela peut être dû à une incompatibilité avec votre système d'exploitation (macOS Catalina 10.15).\n\nPour résoudre ce problème, mettez à jour votre système d'exploitation vers la dernière version.\n\nAlternativement, vous pouvez passer au protocole OpenVPN ou désactiver kill switch.";
 
 /* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Désactiver Kill Switch";
@@ -2073,7 +2073,7 @@
 "_wgks_ovpn" = "Passer à OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch empêche le VPN de se connecter à Internet";
+"_wgks_title" = "Kill switch empêche le VPN de se connecter à internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Utiliser un code à deux facteurs";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Le paramètre %@ ne peut pas être modifié. Veuillez réessayer plus tard ou vous connecter à un serveur différent";
 

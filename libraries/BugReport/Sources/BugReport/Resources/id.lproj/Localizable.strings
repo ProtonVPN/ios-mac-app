@@ -8,7 +8,7 @@
 "_br_2_button_next" = "Hubungi kami";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
-"_br_2_footer" = "Apakah langkah-langkah di atas tidak membantu?";
+"_br_2_footer" = "Apakah solusi di atas tidak membantu?";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
 "_br_2_subtitle" = "Tips-tips berikut dapat membantu Anda untuk menyelesaikan masalah yang Anda hadapi dengan cepat.";
@@ -33,6 +33,9 @@
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Kirimkan log-log error";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Nama Pengguna";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "Coba lagi";

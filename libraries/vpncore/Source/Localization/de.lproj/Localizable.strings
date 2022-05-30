@@ -269,13 +269,13 @@
 "_delete_profile_warning" = "Das Profil wird dauerhaft gelöscht. Möchten Sie fortfahren?";
 
 /* (No Comment) */
-"_delinquent_description" = "Nachdem diese beglichen sind, werden Sie wieder auf Premium-Funktionen zugreifen können.";
+"_delinquent_description" = "Nachdem diese beglichen sind, wirst du wieder auf Premium-Funktionen zugreifen können.";
 
 /* (No Comment) */
 "_delinquent_reconnection_description" = "Nachdem diese beglichen sind, wirst du wieder auf Premium-Funktionen zugreifen können. Bis dahin wirst du mit dem schnellsten verfügbaren Free-Abonnement-Server verbunden.";
 
 /* (No Comment) */
-"_delinquent_title" = "Ihr VPN-Konto enthält noch offene Rechnungen";
+"_delinquent_title" = "Dein VPN-Konto enthält noch offene Rechnungen";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "Dein Konto hat derzeit eine überfällige Rechnung. Bitte zahle alle unbezahlten Rechnungen auf account.protonvpn.com";
@@ -371,7 +371,7 @@
 "_error_field_required" = "Dieses Feld ist erforderlich";
 
 /* Form validation error */
-"_error_field_unknown" = "Bitte dieses Feld überprüfen";
+"_error_field_unknown" = "Bitte überprüfe dieses Feld";
 
 /* Error when generate srp clint */
 "_error_generate_srp" = "SRP‐Generierung fehlgeschlagen";
@@ -566,7 +566,7 @@
 "_feature_tor" = "Tor über VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Leiten Sie Ihren Internetverkehr durch das Tor-Netzwerk. Langsamer, aber besser geschützt.";
+"_feature_tor_description" = "Leite deinen Internetverkehr durch das Tor-Netzwerk. Langsamer, aber besser geschützt.";
 
 /* (No Comment) */
 "_features_title" = "Funktionen";
@@ -593,7 +593,7 @@
 "_free_servers" = "Free-Server";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Upgrade auf %@ und nutze weiterhin diese Funktionen:";
+"_free_trial_about_to_expire_description" = "Führe ein Upgrade auf %@ aus und nutze weiterhin diese Funktionen:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Ihre Gratis‐Probephase endet bald!";
@@ -647,7 +647,7 @@
 "_information_title" = "Information";
 
 /* MacOS: connecting overlay */
-"_initializing_connection" = "Verbindung wird hergestellt…";
+"_initializing_connection" = "Verbindung wird hergestellt …";
 
 /* (No Comment) */
 "_invalid_refresh_token" = "Sitzung abgelaufen";
@@ -662,7 +662,7 @@
 "_ios_onboarding_page1_title" = "Willkommen in einem besseren Internet";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Lassen Sie Zensur und regionale Beschränkungen hinter sich. Wir schalten keine Werbung, haben keine Bandweitenbeschränkungen und verkaufen auch keinerlei Daten an Dritte.";
+"_ios_onboarding_page2_description" = "Lasse Zensur und regionale Beschränkungen hinter dir. Wir schalten keine Werbung, haben keine Bandbreitenbeschränkungen und verkaufen auch keinerlei Daten an Dritte.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_title" = "Wir glauben daran, dass das Internet frei sein sollte";
@@ -686,7 +686,7 @@
 "_kill_switch" = "Kill Switch (Risiko-Trennung)";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch schützt deine IP\n\nDeine Internetverbindung wird wieder aufgenommen, sobald Proton VPN sich wieder mit einem Server verbunden hat. Um ohne VPN-Schutz fortzufahren, deaktiviere Kill Switch.";
+"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch (Not‐Trennung) sperrt alle Ihre Verbindungen";
@@ -860,10 +860,10 @@
 "_maximum_device_description" = "Bitte trenne ein anderes Gerät, um dieses verbinden zu können, oder aktualisiere auf %@, um bis zu %d Geräte gleichzeitig nutzen zu können.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Bitte trennen Sie erst ein anderes Gerät, um dieses zu verbinden.";
+"_maximum_device_reached_description" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dieses zu verbinden.";
 
 /* (No Comment) */
-"_maximum_device_title" = "Sie haben die max. mögliche Anzahl von Geräten erreicht";
+"_maximum_device_title" = "Du hast die max. mögliche Anzahl von Geräten erreicht";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Vielleicht später";
@@ -1079,13 +1079,13 @@
 "_p2p_description" = "Unterstützt P2P‐Verkehr";
 
 /* (No Comment) */
-"_p2p_detected_popup_body" = "Ihre Verbindung wurde deaktiviert, weil Sie einen Server verwenden, der keinen Peer‐to‐Peer‐Kommunikation (P2P) unterstützt. P2P wird nicht auf kostenlosen Servern oder Servern mit einer Anzahl von 100 oder mehr unterstützt.";
+"_p2p_detected_popup_body" = "Deine Verbindung wurde deaktiviert, weil du einen Server verwendest, der keinen Peer‐to‐Peer‐Kommunikation (P2P) unterstützt. P2P wird nicht auf kostenlosen Servern oder Servern mit einer Anzahl von 100 oder mehr unterstützt.";
 
 /* (No Comment) */
-"_p2p_detected_popup_title" = "P2P‐Verkehr ist auf diesem nicht erlaubt";
+"_p2p_detected_popup_title" = "P2P‐Verkehr ist auf diesem Server nicht erlaubt";
 
 /* (No Comment) */
-"_p2p_forwarded_popup_body" = "Ihre Verbindung wurde automatisch durch einen anderen Server umgeleitet, da einige Server kein P2P‐Verkehr unterstützen. Dies könnte zur möglichen Verlangsamung Ihrer Verbindung führen. Bitte verwenden Sie Server mit dem P2P‐Symbol, um Umleitungen in Zukunft zu vermeiden.";
+"_p2p_forwarded_popup_body" = "Deine Verbindung wurde automatisch durch einen anderen Server umgeleitet, da einige Server kein P2P‐Verkehr unterstützen. Dies könnte zur möglichen Verlangsamung deiner Verbindung führen. Bitte verwende Server mit dem P2P‐Symbol, um Umleitungen in Zukunft zu vermeiden.";
 
 /* (No Comment) */
 "_p2p_forwarded_popup_body_p1" = "Ihre Verbindung wurde automatisch über einen anderen Server umgeleitet, da bestimmte Server keinen P2P-Verkehr unterstützen. Dadurch kann sich Ihre Verbindungsgeschwindigkeit verringern. Bitte verwenden Sie Server mit dem";
@@ -1199,7 +1199,7 @@
 "_profile_edited_successfully" = "Profil aktualisiert";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Bitte geben Sie einen Namen ein";
+"_profile_name_is_required" = "Bitte gib einen Namen ein";
 
 /* Error in profile create/change form */
 "_profile_name_is_too_long" = "Länge des Profilnamens darf 25 Zeichen nicht überschreiten";
@@ -1454,7 +1454,7 @@
 "_select_server" = "Server wählen";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option" = "Bitte wählen Sie eine Bestätigungsoption, um fortzufahren:";
+"_select_verification_option" = "Bitte wähle eine Bestätigungsoption, um fortzufahren:";
 
 /* iOS: text in human verification options screen */
 "_select_verification_option_top_message" = "Um Missbrauch zu verhindern, muss festgestellt werden, dass Sie ein Mensch sind.";
@@ -1550,7 +1550,7 @@
 "_streaming_servers_extra" = "und mehr";
 
 /* (No Comment) */
-"_streaming_servers_note" = "Hinweis: Deaktivieren Sie den Ortungsdienst und löschen Sie den Cache der Streaming-Apps, damit neue Inhalte angezeigt werden.";
+"_streaming_servers_note" = "Hinweis: Deaktiviere den Ortungsdienst und lösche den Cache der Streaming-Apps, damit neue Inhalte angezeigt werden.";
 
 /* (No Comment) */
 "_streaming_title" = "Streaming";
@@ -1565,13 +1565,13 @@
 "_subscription_description" = "Sie können weiteres Guthaben erwerben, um Ihr aktuelles Abonnement automatisch zu verlängern. Am Ende Ihrer aktuellen Abonnementperiode wird dieses Guthaben zur Fortsetzung Ihres Abos verwendet.";
 
 /* (No Comment) */
-"_subscription_expired_description" = "Ihr Abonnement wurde herabgestuft.";
+"_subscription_expired_description" = "Dein Abonnement wurde herabgestuft.";
 
 /* (No Comment) */
-"_subscription_expired_reconnection_description" = "Ihr Abonnement wurde herabgestuft. Daher wird die Verbindung mit dem schnellsten verfügbaren Server wiederhergestellt.";
+"_subscription_expired_reconnection_description" = "Dein Abonnement wurde herabgestuft. Daher wird die Verbindung mit dem schnellsten verfügbaren Server wiederhergestellt.";
 
 /* (No Comment) */
-"_subscription_expired_title" = "Ihr VPN-Abonnement ist ausgelaufen";
+"_subscription_expired_title" = "Dein VPN-Abonnement ist ausgelaufen";
 
 /* (No Comment) */
 "_subscription_extended_success" = "Sie haben erfolgreich Guthaben erworben, um Ihr aktuelles Abonnement verlängern zu können.";
@@ -1589,7 +1589,7 @@
 "_subscription_upgrade_option3" = "Erweiterte Funktionen: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
-"_subscription_upgrade_title" = "Erneut aufwerten, um alle Funktionen nutzen zu können:";
+"_subscription_upgrade_title" = "Erneut upgraden, um alle Funktionen nutzen zu können:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Das derzeitige Abonnement ist nur noch bis zum %@ gültig.";
@@ -1744,10 +1744,10 @@
 "_to_server_title" = "Zu %@-Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Mit TOR‐Netzwerk verbinden";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor‐Server";
@@ -1938,7 +1938,7 @@
 "_upgrade_now" = "Jetzt upgraden";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Leider sind derzeit keine Server für Ihr Abonnement in diesem Land verfügbar. Wenn Sie Zugriff auf mehr Server erhalten möchten, sollten Sie Ihr Abonnement upgraden.";
+"_upgrade_plan_to_access_country" = "Leider sind derzeit keine Server für dein Abonnement in diesem Land verfügbar. Wenn du Zugriff auf mehr Server erhalten möchtest, solltest du dein Abonnement upgraden.";
 
 /* (No Comment) */
 "_upgrade_plan_to_access_secure_core_p1" = "Secure Core ist eine Premium‐Funktion, welche mindestens Proton VPN Plus benötigt. Secure Core fügt erweiterten Schutz gegen die Überwachung von VPN‐Servern hinzu.";
@@ -2007,7 +2007,7 @@
 "_vpn_accelerator_change_title" = "VPN-Accelerator ändern";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator ermöglicht eine Reihe einzigartiger leistungssteigernder Technologien, die die VPN-Geschwindigkeit um bis zu 400%% erhöhen können.\nMehr erfahren";
+"_vpn_accelerator_description" = "VPN Accelerator ermöglicht eine Reihe einzigartiger leistungssteigernder Technologien, die die VPN-Geschwindigkeit um bis zu 400 %% erhöhen können.\nMehr erfahren";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Mehr erfahren";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Zwei-Faktor-Code verwenden";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Die Einstellung von %@ konnte nicht geändert werden. Bitte versuche es später erneut oder stelle eine Verbindung zu einem anderen Server her";
 
