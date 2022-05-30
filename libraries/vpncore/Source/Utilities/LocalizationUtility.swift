@@ -34,19 +34,33 @@ public class LocalizationUtility {
         return namesToShorten[name] ?? name
     }
 
+    /// First, try and get the country name from the current locale.
+    ///
+    /// - If that fails, try and get the country name from the locale represented by the first preferred language.
+    /// - If *that* fails, standardize the language by removing the bits after the "-" in the language name
+    ///   (for example, fr-CH becomes fr, en-US becomes en, etc), then try getting the country name with that.
+    /// - Finally, if that fails, return nothing.
+    private func countryNameUncached(forCode countryCode: String) -> String? {
+        if let countryName = Locale.current.localizedString(forRegionCode: countryCode) {
+            return countryName
+        } else if let language = Locale.preferredLanguages.first {
+            if let countryName = Locale(identifier: language).localizedString(forRegionCode: countryCode) {
+                return countryName
+            } else if let standardLanguage = language.components(separatedBy: "-").first,
+                      let countryName = Locale(identifier: standardLanguage).localizedString(forRegionCode: countryCode) {
+                return countryName
+            }
+        }
+
+        return nil
+    }
+
     public func countryName(forCode countryCode: String) -> String? {
         if let name = countryNameCache[countryCode] {
             return name
         }
 
-        let locale: Locale
-        if let language = Locale.preferredLanguages.first?.components(separatedBy: "-").first {
-            locale = Locale(identifier: language)
-        } else {
-            locale = Locale.current
-        }
-        
-        guard let name = locale.localizedString(forRegionCode: countryCode) else {
+        guard let name = countryNameUncached(forCode: countryCode) else {
             return nil
         }
 
