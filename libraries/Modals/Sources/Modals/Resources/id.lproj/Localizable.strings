@@ -20,7 +20,7 @@
 "modals_discourage_secure_core_title" = "Catatan mengenai kecepatan...";
 
 /* Upgrade plan button title */
-"modals_get_plus" = "Tingkatkan";
+"modals_get_plus" = "Tingkatkan Akun";
 
 /* Learn more of the No Logs screen */
 "modals_no_logs_external_audit" = "Kebijakan tanpa log ketat yang diusung oleh Proton VPN telah tersertifikasi oleh audit eksternal.";
@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "NAT Moderat, yang juga dikenal sebagai NAT Type 2, merupakan sebuah fitur yang dapat memperkaya pengalaman online Anda dalam berbagai aplikasi dan permainan online.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Gunakan Proton VPN untuk berbagai keperluan khusus yang mengharuskan Anda untuk mengalihkan koneksi VPN yang aktif melalui port non-standar.\n\nNikmati fitur ini dan berbagai fitur lainnya dengan akun Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Memiliki keperluan tertentu yang memerlukan penggunaan port non-standar?\n\nTingkatkan akun Anda ke VPN Plus untuk menggunakan fitur ini dan berbagai fitur premium lainnya.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Pada saat Anda meningkatkan akun Anda ke VPN Plus";

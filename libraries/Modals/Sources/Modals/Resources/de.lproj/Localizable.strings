@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Moderates NAT, auch bekannt als NAT Typ 2, kann dein Online-Erlebnis mit verschiedenen Anwendungen und Online-Videospielen verbessern.\n\nSchalte diese und andere Funktionen mit einem Plus-Abonnement frei.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Nutze Proton VPN für jeden speziellen Bedarf, indem du Datenverkehr zu nicht standardisierten Ports durch das VPN-Netzwerk erlaubst.\n\nSchalte diese und andere Funktionen mit einem Plus-Abonnement frei.";
+"modals_upsell_features_safe_mode_subtitle" = "Du benötigst fortgeschrittene oder professionelle Computer, die nicht standardisierte Ports erfordern?\n\nMit einem Umstieg auf VPN Plus erhältst du Zugang zu diesen und anderen Premium-Funktionen.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Wenn du auf VPN Plus umsteigst";

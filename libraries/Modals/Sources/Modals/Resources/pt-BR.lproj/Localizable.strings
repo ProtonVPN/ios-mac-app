@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "NAT moderado, também conhecido como Nat Tipo 2, pode melhorar sua experiência online com várias aplicações e videogames online. \n\nDesbloqueie esse e outros recursos com um plano Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Use o Proton VPN para qualquer necessidade especial, permitindo o tráfego para portas não padrão através da rede VPN. \n\nDesbloqueie este e outros recursos com um plano Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Ao atualizar para o VPN Plus";

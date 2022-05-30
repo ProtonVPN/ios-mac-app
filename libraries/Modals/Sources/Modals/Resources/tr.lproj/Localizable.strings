@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Ilımlı NAT, 2. tür Nat olarak da bilinir ve çeşitli uygulamalar ve çevrimiçi video oyunlarıyla ilgili çevrimiçi deneyiminizi iyileştirebilir.\n\nPlus tarifesi ile bu ve başka özellikleri kullanabilirsiniz.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Proton VPN ile özel durumlar için VPN ağında standart dışı bağlantı noktalarından trafik geçişine izin verebilirsiniz. \n\nPlus tarifesine geçerek bu ve diğer özellikleri kullanabilirsiniz.";
+"modals_upsell_features_safe_mode_subtitle" = "Standart olmayan bağlantı noktaları kullanmanızı gerektiren gelişmiş veya profesyonel bilgi işlem gereksinimleriniz mi var? \n\nBu ve diğer ücretli özelliklere erişmek için VPN Plus tarifesine yükseltin.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "VPN Plus tarifesine yükselttiğinizde";

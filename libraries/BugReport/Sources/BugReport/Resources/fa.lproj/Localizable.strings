@@ -34,6 +34,9 @@
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "ارسال لاگ خطا";
 
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "نام کاربری";
+
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "تلاش دوباره";
 

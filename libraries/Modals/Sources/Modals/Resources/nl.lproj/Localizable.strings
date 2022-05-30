@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Gemiddelde NAT (ook gekend als NAT Type 2) kan uw online ervaring met verschillende applicaties en online videogames verbeteren.\n\nOntgrendel dit en andere functies met een Plus-abonnement.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Gebruik Proton VPN voor elke speciale nood door verkeer naar niet-standaard poorten toe te laten via het VPN-netwerk.\n\nOntgrendel deze en andere functies met een Plus-abonnement.";
+"modals_upsell_features_safe_mode_subtitle" = "Heeft u geavanceerde professionele IT-noden die niet-standaard poorten vereisen?\n\nUpgrade naar VPN Plus om toegang te krijgen tot deze en meer premium functies.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Wanneer u upgrade naar VPN Plus";

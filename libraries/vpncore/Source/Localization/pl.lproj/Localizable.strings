@@ -491,7 +491,7 @@
 "_error_wrong_payment_token_status" = "Status tokena płatności jest nieprawidłowy. Uruchom ponownie aplikację. Jeśli błąd będzie się powtarzał, skontaktuj się ze wsparciem klienta.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN uses a packet filter firewall to implement a Kill Switch. By enabling Kill Switch, you will overwrite your device's current firewall settings. If you rely on this firewall configuration, you should not use Kill Switch.\n\nTo use Kill Switch and overwrite your current firewall settings, select CONTINUE.\n\nTo turn off Kill Switch and continue using your current firewall, select CANCEL.";
+"_existing_firewall_popup_body" = "Proton VPN wykorzystuje zaporę sieciową z filtrem pakietów do implementacji funkcji Kill Switch. Włączenie tej funkcji nadpisze aktualne ustawienia zapory na Twoim urządzeniu. Jeśli korzystasz z tej konfiguracji, nie powinieneś używać funkcji Kill Switch.\n\nAby włączyć funkcję Kill Switch i nadpisać aktualne ustawienia zapory, kliknij KONTYNUUJ.\n\nAby wyłączyć funkcję Kill Switch i kontynuować używanie aktualnej zapory sieciowej, kliknij ANULUJ.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Zapora sieciowa została wykryta";
@@ -653,7 +653,7 @@
 "_invalid_refresh_token" = "Sesja wygasła";
 
 /* (No Comment) */
-"_invalid_refresh_token_please_login" = "It's been a while since you last used the Proton VPN app. Please log back in.";
+"_invalid_refresh_token_please_login" = "Minęło trochę czasu, odkąd ostatnio używałeś aplikacji Proton VPN. Zaloguj się ponownie.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_description" = "Naukowcy i inżynierowie, którzy stworzyli pocztę Proton Mail, witają w bezpieczniejszym i bardziej prywatnym Internecie.";
@@ -686,7 +686,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Funkcja Kill Switch chroni Twój adres IP\n\nPołączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem. Aby wznowić połączenie bez ochrony VPN, wyłącz funkcję Kill Switch.";
+"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Funkcja Kill Switch blokuje wszystkie połączenia";
@@ -713,7 +713,7 @@
 "_kill_switch_helper_install_issue_popup_body" = "Wystąpił problem podczas instalacji lub aktualizacji funkcji Kill Switch. \n\nAby spróbować ponownie, kliknij PONÓW PRÓBĘ.\n\nAby kontynuować bez funkcji Kill Switch, kliknij WYŁĄCZ.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "To enable Kill Switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the Proton VPN app receives updates.";
+"_kill_switch_helper_install_popup_body" = "Zanim włączysz funkcję Kill Switch, możesz zostać poproszony o wpisanie hasła użytkownika. Po pojawieniu się komunikatu, wpisz swoje %@ i zatwierdź.\n\nKomunikat może się powtarzać co jakiś czas, gdy aplikacja Proton VPN otrzyma aktualizację.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "Najnowsza aktualizacja wymaga wpisania hasła do konta użytkownika. Po pojawieniu się komunikatu, wpisz swoje %@ i zatwierdź.\n\nJeśli nie wpiszesz swojego hasła Mac, funkcja Kill Switch zostanie wyłączona.";
@@ -791,7 +791,7 @@
 "_locations_basic" = "Lokalizacje planu Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Lokalizacje planu Basic i Plus";
+"_locations_basic_plus" = "Lokalizacje planu Plus";
 
 /* (No Comment) */
 "_locations_free" = "Lokalizacje planu Free";
@@ -1747,7 +1747,7 @@
 "_tor" = "Tor";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Łączy się z siecią TOR";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serwer Tor";
@@ -2131,4 +2131,7 @@
 
 /* Title for the button to switch to entering two-factor code */
 "use_two_factor_code" = "Użyj kodu uwierzytelniającego";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "Ustawienia %@ nie mogą zostać zmienione. Spróbuj ponownie później lub połącz się z innym serwerem";
 

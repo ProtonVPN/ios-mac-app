@@ -17,7 +17,7 @@
 "_br_2_title" = "Schnelle Lösungen";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_send" = "Meldung senden";
+"_br_3_button_send" = "Bericht senden";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_sending" = "Wird gesendet";
@@ -33,6 +33,9 @@
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Fehlerprotokolle senden";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Benutzername";
 
 /* ReportBug success window: retry button */
 "_br_failure_button_retry" = "Erneut versuchen";

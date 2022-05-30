@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Помірне NAT або NAT 2 типу може вдосконалити вашу онлайн-роботу з різними застосунками та онлайн-відеоіграми.\n\nРозблокуйте цю та інші функції за допомогою тарифного плану Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Використовуйте Proton VPN для будь-якої спеціальної потреби, дозволяючи трафік до нестандартних портів через мережу VPN.\n\nРозблокуйте цю та інші функції передплативши тарифний план Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Маєте додаткові чи професійні обчислювальні потреби, які потребують нестандартних портів?\n\nПередплатіть VPN Plus, щоб отримати доступ до цієї та інших преміальних функцій.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "У разі оновлення до тарифного плану VPN Plus";

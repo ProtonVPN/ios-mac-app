@@ -53,7 +53,7 @@
 "modals_upsell_features_moderate_nat_subtitle" = "Umiarkowany NAT (znany również jako NAT typ 2) może poprawić jakość korzystania z Internetu w różnych aplikacjach i grach online.\n\nOdblokuj tę i inne funkcje dzięki planowi Plus.";
 
 /* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Używaj aplikacji Proton VPN do wszelkich specjalnych potrzeb, zezwalając na ruch do niestandardowych portów przez sieć VPN.\n\nOdblokuj tę i inne funkcje dzięki planowi Plus.";
+"modals_upsell_features_safe_mode_subtitle" = "Masz zaawansowane lub profesjonalne potrzeby, które wymagają niestandardowych portów?\n\nUlepsz do planu VPN Plus, aby uzyskać dostęp do funkcji premium.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Po ulepszeniu planu do wersji VPN Plus";
