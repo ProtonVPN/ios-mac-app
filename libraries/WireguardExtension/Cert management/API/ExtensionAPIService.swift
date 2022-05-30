@@ -24,7 +24,7 @@ import UIKit
 
 final class ExtensionAPIService {
     /// If a retry-after header is not sent, this should be the default retry interval.
-    /// See: https://confluence.protontech.ch/pages/viewpage.action?spaceKey=CP&title=When+and+How+to+Retry+API+Requests
+    /// See the documentation page titled "When and How to Retry API Requests."
     public static var defaultRetryInterval = 30
     /// If a retry-after header is not sent, this should be the maximum jitter value added to the retry interval.
     public static var defaultJitterMaxInSeconds = 90
@@ -35,6 +35,7 @@ final class ExtensionAPIService {
 
     func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, asPartOf operation: CertificateRefreshAsyncOperation, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
         guard !sessionExpired else {
+            log.info("Not starting certificate refresh: session is expired.")
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
             return
         }
@@ -147,6 +148,7 @@ final class ExtensionAPIService {
     private func request<R: APIRequest>(_ request: R,
                                         headers: [APIHeader: String?] = [:],
                                         completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {
+        log.info("Proceeding with request at url \(request.endpointUrl)")
         var urlRequest = makeUrlRequest(request)
 
         for (header, value) in headers {
@@ -156,11 +158,13 @@ final class ExtensionAPIService {
         let task = dataTaskFactory.dataTask(urlRequest) { [weak self] data, response, error in
             self?.requestQueue.async {
                 if let error = error {
+                    log.info("Network error: \(error)")
                     completion(.failure(.networkError(error)))
                     return
                 }
 
                 guard let response = response else {
+                    log.info("Response error: no response received. (Data is \(data == nil ? "" : "non-")nil)")
                     completion(.failure(.noData))
                     return
                 }
@@ -178,6 +182,7 @@ final class ExtensionAPIService {
                 }
 
                 guard let data = data else {
+                    log.info("Response error: received response, but no data.")
                     completion(.failure(.noData))
                     return
                 }

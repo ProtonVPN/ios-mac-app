@@ -146,13 +146,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
-        wg_log(.info, message: "Handle App Message size: \(messageData.count)")
         do {
             let message = try WireguardProviderRequest.decode(data: messageData)
+            wg_log(.info, message: "Handle App Message: \(message)")
             handleProviderMessage(message) { response in
                 completionHandler?(response.asData)
             }
         } catch {
+            wg_log(.info, message: "App message decode error: \(error)")
             let response = WireguardProviderRequest.Response.error(message: "Unknown provider message.")
             completionHandler?(response.asData)
         }
