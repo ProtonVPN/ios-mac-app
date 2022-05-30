@@ -42,11 +42,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     private func connectionEstablished() {
-        certificateRefreshManager.start {
-            #if CHECK_CONNECTIVITY
-            self.startTestingConnectivity()
-            #endif
-        }
+        certificateRefreshManager.start { }
+
+        #if CHECK_CONNECTIVITY
+        self.startTestingConnectivity()
+        #endif
     }
 
     private lazy var adapter: WireGuardAdapter = {
@@ -128,11 +128,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, staticMessage: "Stopping tunnel")
-        certificateRefreshManager.stop { [weak self] in
-            #if CHECK_CONNECTIVITY
-            self?.stopTestingConnectivity()
-            #endif
+        #if CHECK_CONNECTIVITY
+        self.stopTestingConnectivity()
+        #endif
 
+        certificateRefreshManager.stop { [weak self] in
             self?.adapter.stop { error in
                 ErrorNotifier.removeLastErrorFile()
 
@@ -218,11 +218,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func wake() {
         log.info("wake()")
-        certificateRefreshManager.start { [weak self] in
-            #if CHECK_CONNECTIVITY
-            self?.startTestingConnectivity()
-            #endif
-        }
+
+        #if CHECK_CONNECTIVITY
+        self.startTestingConnectivity()
+        #endif
+
+        certificateRefreshManager.start { }
     }
 
     // MARK: - Logs
