@@ -82,20 +82,6 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.upsellMessage()
     }
     
-    func testBasicUserCannotCreateProfileWithSecureCore() {
-        let profileName = StringUtils().randomAlphanumericString(length: 10)
-    
-        logoutIfNeeded()
-        changeEnvToProdIfNedded()
-        openLoginScreen()
-        loginAsBasicUser()
-        mainRobot
-            .goToProfilesTab()
-            .addNewProfile()
-            .setSecureCoreProfile(profileName)
-            .verify.upsellMessage()
-    }
-    
     func testMakeDefaultAndSecureCoreProfilePlusUser() {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
