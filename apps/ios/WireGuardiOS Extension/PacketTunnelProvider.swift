@@ -14,17 +14,20 @@ import Logging
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
+    private var dataTaskFactory: DataTaskFactory!
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
 
     override init() {
         super.init()
         let storage = Storage()
 
-        let dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self)
-        let timerFactory = TimerFactoryImplementation()
         let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
                                                                  storage: storage)
         let authKeychain = AuthKeychain(context: .wireGuardExtension)
+
+        let timerFactory = TimerFactoryImplementation()
+        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
+
         let apiService = ExtensionAPIService(storage: storage,
                                              dataTaskFactory: dataTaskFactory,
                                              timerFactory: timerFactory,
@@ -295,7 +298,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
         let urlRequest = URLRequest(url: url)
-        let dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self)
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             let responseData = data != nil ? String(data:data!, encoding: .utf8) : "nil"

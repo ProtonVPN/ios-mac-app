@@ -81,17 +81,20 @@ protocol DataTaskFactory {
 /// Generate NWTCPConnections by connecting to endpoints through the NEPacketTunnelProvider's tunnel.
 class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     let provider: ConnectionTunnelFactory
+    let timerFactory: TimerFactory
     let timeoutInterval: TimeInterval
     private var tasks: [UUID: NWTCPDataTask] = [:]
 
-    init(provider: ConnectionTunnelFactory, connectionTimeoutInterval: TimeInterval = 60) {
+    init(provider: ConnectionTunnelFactory, timerFactory: TimerFactory, connectionTimeoutInterval: TimeInterval = 10) {
         self.provider = provider
         self.timeoutInterval = connectionTimeoutInterval
+        self.timerFactory = timerFactory
     }
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         let id = UUID()
         let task =  NWTCPDataTask(provider: provider,
+                                  timerFactory: timerFactory,
                                   request: request,
                                   timeoutInterval: timeoutInterval,
                                   taskId: id,
@@ -119,6 +122,8 @@ class NWTCPDataTask: DataTaskProtocol {
 
     /// The provider (NEPacketTunnelProvider, or a mocked equivalent) that can create connections through the tunnel.
     private let provider: ConnectionTunnelFactory
+    /// The object that lets us create background timers.
+    private let timerFactory: TimerFactory
     /// The completion handler for data returned by the HTTP request.
     private let completionHandler: ((Data?, HTTPURLResponse?, Error?) -> Void)
     /// The request timeout interval.
@@ -129,7 +134,7 @@ class NWTCPDataTask: DataTaskProtocol {
     /// The current network connection (NWTCPConnection, or a mocked equivalent), if any.
     private var connection: ConnectionTunnel?
     /// The countdown until we consider this network request to have "timed out."
-    private var timeoutTimer: Timer?
+    private var timeoutTimer: BackgroundTimerProtocol?
     /// Whether or not this request has been "resolved," whether it resulted in an error or success.
     private var resolved: Bool = false {
         didSet {
@@ -144,12 +149,14 @@ class NWTCPDataTask: DataTaskProtocol {
     private var observation: ObservationHandle?
 
     init(provider: ConnectionTunnelFactory,
+         timerFactory: TimerFactory,
          request: URLRequest,
          timeoutInterval: TimeInterval,
          taskId: UUID,
          completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
     {
         self.provider = provider
+        self.timerFactory = timerFactory
         self.request = request
         self.timeoutInterval = timeoutInterval
         self.completionHandler = completionHandler
@@ -157,7 +164,7 @@ class NWTCPDataTask: DataTaskProtocol {
 
         let host = request.url?.host ?? "unknown-host"
         let path = request.url?.path ?? "/"
-        self.queue = DispatchQueue(label: "ch.protonvpn.tunneled-request:\(host)\(path)")
+        self.queue = DispatchQueue(label: "ch.protonvpn.tunneled-request:\(host)\(path):\(taskId)")
     }
 
     deinit {
@@ -191,12 +198,18 @@ class NWTCPDataTask: DataTaskProtocol {
             guard let `self` = self else { return }
             guard !self.resolved, let connection = self.connection else { return }
 
-            defer { self.resolved = true }
+            defer {
+                self.resolved = true
+                self.timeoutTimer?.invalidate()
+                self.timeoutTimer = nil
+            }
+
 
             if case let .failure(error) = result {
                 self.completionHandler(nil, nil, error)
                 return
             }
+
             Self.sendRequest(to: url,
                              data: requestData,
                              over: connection,
@@ -207,7 +220,9 @@ class NWTCPDataTask: DataTaskProtocol {
         // `.connecting` or `.waiting` for too long.
         self.observation = connection?.observeStateChange { [weak self] state in
             guard let `self` = self else { return }
-            self.queue.sync {
+            self.queue.async {
+                log.info("Connection state for \(self.taskId): \(state)")
+                
                 switch state {
                 case .connected:
                     // Success: send the request.
@@ -222,16 +237,15 @@ class NWTCPDataTask: DataTaskProtocol {
                     // Begin countdown to connection timeout error. If state changes from `.waiting` to `.connecting`
                     // or vice-versa, invalidate the timer and set a new one, since at least we're making progress.
 
-                    if self.timeoutTimer != nil {
-                        self.timeoutTimer?.invalidate()
-                        self.timeoutTimer = nil
+                    self.timeoutTimer?.invalidate()
+                    self.timeoutTimer = nil
+
+                    let timeoutDeadline = Date().addingTimeInterval(self.timeoutInterval)
+                    self.timeoutTimer = self.timerFactory.scheduledTimer(runAt: timeoutDeadline, queue: self.queue) {
+                        log.info("Request timed out! Invoking timeout error.")
+                        resolveRequest(.failure(POSIXError(.ETIMEDOUT)))
                     }
 
-                    self.timeoutTimer = .scheduledTimer(withTimeInterval: self.timeoutInterval, repeats: false) { timer in
-                        self.queue.sync {
-                            resolveRequest(.failure(POSIXError(.ETIMEDOUT)))
-                        }
-                    }
                     break
                 default:
                     break
@@ -298,6 +312,20 @@ class NWTCPDataTask: DataTaskProtocol {
                     completionHandler(nil, nil, error)
                 }
             }
+        }
+    }
+}
+
+extension NWTCPConnectionState: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .cancelled: return "cancelled"
+        case .connected: return "connected"
+        case .connecting: return "connecting"
+        case .disconnected: return "disconnected"
+        case .invalid: return "invalid"
+        case .waiting: return "waiting"
+        @unknown default: return "???"
         }
     }
 }

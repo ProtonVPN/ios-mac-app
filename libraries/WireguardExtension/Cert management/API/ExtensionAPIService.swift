@@ -26,6 +26,8 @@ final class ExtensionAPIService {
     /// If a retry-after header is not sent, this should be the default retry interval.
     /// See the documentation page titled "When and How to Retry API Requests."
     public static var defaultRetryInterval = 30
+    /// If an error is encountered due to network conditions, this is the retry interval to use (without jitter).
+    public static var networkErrorRetryInterval = 5
     /// If a retry-after header is not sent, this should be the maximum jitter value added to the retry interval.
     public static var defaultJitterMaxInSeconds = 90
     /// If a retry-after header is sent, this value should be multiplied by the retry-after value, and that value
@@ -251,7 +253,7 @@ final class ExtensionAPIService {
             // No need to add jitter here - this state is due to adverse network conditions, and is more
             // likely a local network issue than something related to the API. (Since we're not reaching
             // the API as it is, there's a low chance that we'd DDoS it anyhow.)
-            retryAfterInterval = Self.defaultRetryInterval
+            retryAfterInterval = Self.networkErrorRetryInterval
         }
 
         log.info("Retrying request in \(retryAfterInterval) seconds.")

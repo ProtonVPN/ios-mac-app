@@ -38,7 +38,9 @@ class NWTCPConnectionTests: XCTestCase {
         }, dataWriteCallback: { tunnel, dataWritten in
             try self.dataWriteCallback(tunnel, dataWritten)
         })
-        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: connectionTunnelFactory, connectionTimeoutInterval: 1)
+        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: connectionTunnelFactory,
+                                                          timerFactory: TimerFactoryImplementation(),
+                                                          connectionTimeoutInterval: 1)
     }
 
     func testBasicConnection() {

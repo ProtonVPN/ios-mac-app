@@ -34,7 +34,7 @@ final class ExtensionCertificateRefreshManager {
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
     private let timerFactory: TimerFactory
-    private var timer: RepeatingTimerProtocol?
+    private var timer: BackgroundTimerProtocol?
 
     /// Use an operation queue so we can cancel any pending work items if needed.
     private let operationQueue = OperationQueue()
@@ -230,7 +230,7 @@ final class ExtensionCertificateRefreshManager {
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        timer = timerFactory.repeatingTimer(runAt: Date(), repeating: checkInterval, queue: workQueue) { [weak self] in
+        timer = timerFactory.scheduledTimer(runAt: Date(), repeating: checkInterval, queue: workQueue) { [weak self] in
             let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
             
             self?.checkRefreshCertificateNow(features: features, completion: { result in

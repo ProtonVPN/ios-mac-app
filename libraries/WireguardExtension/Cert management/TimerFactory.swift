@@ -18,25 +18,34 @@
 
 import Foundation
 
-protocol RepeatingTimerProtocol {
+protocol BackgroundTimerProtocol {
+    mutating func invalidate()
 }
 
 protocol TimerFactory {
-    func repeatingTimer(runAt nextRunTime: Date,
-                        repeating: Double,
+    func scheduledTimer(runAt nextRunTime: Date,
+                        repeating: Double?,
                         queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> RepeatingTimerProtocol
+                        _ closure: @escaping (() -> Void)) -> BackgroundTimerProtocol
 
     func scheduleAfter(seconds: Int,
                        on queue: DispatchQueue,
                        _ closure: @escaping (() -> Void))
 }
 
-final class TimerFactoryImplementation: TimerFactory {
-    func repeatingTimer(runAt nextRunTime: Date,
-                        repeating: Double,
+extension TimerFactory {
+    func scheduledTimer(runAt nextRunTime: Date,
                         queue: DispatchQueue,
-                        _ closure: @escaping (() -> Void)) -> RepeatingTimerProtocol {
+                        _ closure: @escaping (() -> Void)) -> BackgroundTimerProtocol {
+        scheduledTimer(runAt: nextRunTime, repeating: nil, queue: queue, closure)
+    }
+}
+
+final class TimerFactoryImplementation: TimerFactory {
+    func scheduledTimer(runAt nextRunTime: Date,
+                        repeating: Double?,
+                        queue: DispatchQueue,
+                        _ closure: @escaping (() -> Void)) -> BackgroundTimerProtocol {
         BackgroundTimer(runAt: nextRunTime, repeating: repeating, queue: queue, closure)
     }
 
@@ -45,37 +54,36 @@ final class TimerFactoryImplementation: TimerFactory {
     }
 }
 
-final class BackgroundTimer: RepeatingTimerProtocol {
+final class BackgroundTimer: BackgroundTimerProtocol {
+    private static let repeatingTimerLeewayInSeconds = 10
+
     private let timerSource: DispatchSourceTimer
     private let closure: () -> Void
 
-    private enum State {
-        case suspended
-        case resumed
-    }
-    private var state: State = .resumed
-
-    init(runAt nextRunTime: Date, repeating: Double, queue: DispatchQueue, _ closure: @escaping () -> Void) {
+    init(runAt nextRunTime: Date, repeating: Double?, queue: DispatchQueue, _ closure: @escaping () -> Void) {
         self.closure = closure
         timerSource = DispatchSource.makeTimerSource(queue: queue)
 
-        timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)), repeating: repeating, leeway: .seconds(10)) // We have at least minute before app (if in foreground) may start refreshing cert. So 10 seconds later is ok.
+        if let repeating = repeating {
+            timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)),
+                                 repeating: repeating,
+                                 leeway: .seconds(Self.repeatingTimerLeewayInSeconds))
+        } else {
+            timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)))
+        }
+
         timerSource.setEventHandler { [weak self] in
-            if repeating <= 0 { // Timer should not repeat, so lets suspend it
-                self?.timerSource.suspend()
-                self?.state = .suspended
-            }
             self?.closure()
         }
         timerSource.resume()
-        state = .resumed
+    }
+
+    func invalidate() {
+        timerSource.setEventHandler {}
+        timerSource.cancel()
     }
 
     deinit {
-        timerSource.setEventHandler {}
-        if state == .suspended {
-            timerSource.resume()
-        }
-        timerSource.cancel()
+        invalidate()
     }
 }
