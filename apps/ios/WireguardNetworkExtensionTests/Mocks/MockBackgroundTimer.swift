@@ -19,8 +19,21 @@
 import Foundation
 import XCTest
 
-final class MockTimerFactory: TimerFactory & RepeatingTimerProtocol {
-    public var repeatingTimers: [(nextRunTime: Date, repeating: Double, closure: (() -> Void))] = []
+struct MockBackgroundTimer: BackgroundTimerProtocol {
+    let nextRunTime: Date
+    let repeating: Double?
+    let queue: DispatchQueue
+    let closure: (() -> Void)
+
+    var isValid: Bool = true
+
+    mutating func invalidate() {
+        isValid = false
+    }
+}
+
+final class MockTimerFactory: TimerFactory {
+    public var repeatingTimers: [MockBackgroundTimer] = []
     public var scheduledWork: [(seconds: Int, closure: (() -> Void))] = []
 
     public var timerWasAdded: (() -> Void)?
@@ -30,7 +43,9 @@ final class MockTimerFactory: TimerFactory & RepeatingTimerProtocol {
 
     func runRepeatingTimers() {
         for timer in repeatingTimers {
-            lastQueueWorkWasScheduledOn!.async {
+            guard timer.isValid else { continue }
+
+            timer.queue.async {
                 timer.closure()
             }
         }
@@ -44,12 +59,13 @@ final class MockTimerFactory: TimerFactory & RepeatingTimerProtocol {
         }
     }
 
-    func repeatingTimer(runAt nextRunTime: Date, repeating: Double, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> RepeatingTimerProtocol {
+    func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimerProtocol {
         lastQueueWorkWasScheduledOn = queue
 
-        repeatingTimers.append((nextRunTime, repeating, closure))
+        let timer = MockBackgroundTimer(nextRunTime: nextRunTime, repeating: repeating, queue: queue, closure: closure)
+        repeatingTimers.append(timer)
         timerWasAdded?()
-        return self
+        return timer
     }
 
     func scheduleAfter(seconds: Int, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
