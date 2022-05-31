@@ -573,12 +573,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
     
-    #if os(iOS)
-    private let defaultSmartProtocol = true
-    #else
-    private let defaultSmartProtocol = false
-    #endif
-    
     private let storage: Storage
         
     public init(storage: Storage) {
@@ -587,7 +581,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         storage.defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
-            Keys.smartProtocol.rawValue: defaultSmartProtocol,
+            Keys.smartProtocol.rawValue: true,
             Keys.discourageSecureCore.rawValue: true
         ])
     }
@@ -605,7 +599,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpired = false
         reportBugEmail = nil
         alternativeRouting = true
-        smartProtocol = defaultSmartProtocol
+        smartProtocol = true
         excludeLocalNetworks = true
         killSwitch = false
     }
