@@ -108,7 +108,6 @@ final class MapViewController: UIViewController {
         secureCoreBar.backgroundColor = .backgroundColor()
         secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = LocalizedString.useSecureCore
-        secureCoreSwitch.onTintColor = .brandColor()
         if let viewModel = viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn

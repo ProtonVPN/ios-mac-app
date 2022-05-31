@@ -187,7 +187,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
                 return UITableViewCell()
             }
             cell.label.text = title
-            cell.switchControl.onTintColor = .brandColor()
             cell.switchControl.isOn = on()
             cell.switchControl.isEnabled = enabled
             cell.toggled = handler
