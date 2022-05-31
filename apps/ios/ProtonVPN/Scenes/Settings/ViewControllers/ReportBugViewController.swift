@@ -66,7 +66,6 @@ class ReportBugViewController: UIViewController {
         super.viewDidLoad()
 
         logsSwitch.accessibilityIdentifier = "vpn logs"
-        logsSwitch.onTintColor = .brandColor()
         view.backgroundColor = .backgroundColor()
         lineView.backgroundColor = .secondaryBackgroundColor()
         navigationController?.navigationBar.backgroundColor = .secondaryBackgroundColor()

@@ -82,6 +82,8 @@ class WindowServiceImplementation: WindowService {
         UITabBar.appearance().tintColor = .iconAccent()
         UITabBar.appearance().unselectedItemTintColor = .iconWeak()
         UITabBar.appearance().isTranslucent = false
+
+        UISwitch.appearance().onTintColor = .brandColor()
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
