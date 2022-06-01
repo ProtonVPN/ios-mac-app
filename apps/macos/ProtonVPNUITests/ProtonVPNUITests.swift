@@ -118,7 +118,7 @@ class ProtonVPNUITests: XCTestCase {
         logoutButton.click()
         
         // Make sure app is fully logged out
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Login"], handler: nil)
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Sign in"], handler: nil)
         waitForExpectations(timeout: 5, handler: nil)
     }
     
@@ -153,7 +153,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func dismissPopups() {
-        let dismissButtons = ["Maybe Later", "Cancel", "No thanks", "Take a Tour"]
+        let dismissButtons = ["Cancel", "No thanks", "Take a Tour"]
         
         for button in dismissButtons {
             if app.buttons[button].exists {

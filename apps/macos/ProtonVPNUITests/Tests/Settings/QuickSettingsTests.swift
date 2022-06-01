@@ -40,18 +40,6 @@ class QuickSettingsTests: ProtonVPNUITests {
             .verify.checkDropdownIsOpen()
     }
     
-    func testSecureCoreNotAvailableForBasicUser() {
-        
-        logoutIfNeeded()
-        loginAsBasicUser()
-        quickSettingsRobot
-            .secureCoreDropdown()
-            .verify.checkDropdownIsOpen()
-            .verify.checkUpgradeRequired()
-            .upgradeFeature()
-            .verify.checkUpsellModalIsOpen()
-    }
-    
     func testSecureCoreAndNetshieldAreNotAvailableForFreeUser() {
         
         logoutIfNeeded()
