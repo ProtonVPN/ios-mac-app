@@ -30,7 +30,7 @@ struct MockDataTaskFactory: DataTaskFactory {
 }
 
 struct MockDataTask: DataTaskProtocol {
-    typealias CompletionCallback = ((Data?, HTTPURLResponse?, Error?) -> Void)
+    typealias CompletionCallback = ((Data?, URLResponse?, Error?) -> Void)
 
     let request: URLRequest
     let dataTaskFactory: MockDataTaskFactory

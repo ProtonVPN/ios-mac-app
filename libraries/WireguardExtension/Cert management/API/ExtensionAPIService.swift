@@ -165,7 +165,7 @@ final class ExtensionAPIService {
                     return
                 }
 
-                guard let response = response else {
+                guard let response = response as? HTTPURLResponse else {
                     log.info("Response error: no response received. (Data is \(data == nil ? "" : "non-")nil)")
                     completion(.failure(.noData))
                     return
