@@ -75,8 +75,11 @@ final class ExtensionCertificateRefreshManager {
     /// Because of this, all requests to refresh the certificate are serialized to avoid races. Calls may
     /// take a while to complete (or time out) due to network conditions, or because multiple API calls are
     /// occasionally necessary to refresh the cert (because of session management).
-    public func checkRefreshCertificateNow(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+    public func checkRefreshCertificateNow(features: VPNConnectionFeatures?,
+                                           forceRefreshDueToExpiredSession: Bool = false,
+                                           completion: @escaping CertificateRefreshCompletion) {
         operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
+                                                                     forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
                                                                      manager: self,
                                                                      completion: completion))
     }
@@ -94,14 +97,12 @@ final class ExtensionCertificateRefreshManager {
         apiService.startSession(withSelector: selector) { [weak self] result in
             defer { self?.semaphore.signal() }
 
-            // If we're starting a new session, it's likely we've been idle for a while (or were just trying an operation
-            // and got back a 422). Opportunistically try to refresh the cert before returning.
-            
+            // If we're starting a new session, we need to get a new certificate to avoid getting a 409 Key Conflict error.
             guard let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures() else {
                 return
             }
 
-            self?.checkRefreshCertificateNow(features: features, completion: { result in
+            self?.checkRefreshCertificateNow(features: features, forceRefreshDueToExpiredSession: true, completion: { result in
                 completionHandler(result.mapError({ $0 }))
             })
         }
@@ -165,13 +166,14 @@ final class ExtensionCertificateRefreshManager {
     ///         of the synchronization in the encapsulating function, it's important to always call the completion
     ///         in error cases, otherwise the operation queue will get stuck.
     fileprivate func checkRefreshCertificateNowNoSync(features: VPNConnectionFeatures?,
+                                                      forceRefreshDueToExpiredSession: Bool,
                                                       asPartOf operation: CertificateRefreshAsyncOperation,
                                                       completion: @escaping CertificateRefreshCompletion) {
         #if DEBUG
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        guard certificateDoesNeedRefreshing(features: features) else {
+        guard forceRefreshDueToExpiredSession || certificateDoesNeedRefreshing(features: features) else {
             completion(.success(()))
             return
         }
@@ -256,13 +258,16 @@ final class ExtensionCertificateRefreshManager {
 
 class CertificateRefreshAsyncOperation: AsyncOperation {
     let features: VPNConnectionFeatures?
+    let forceRefreshDueToExpiredSession: Bool
     let completion: CertificateRefreshCompletion
     unowned let manager: ExtensionCertificateRefreshManager
 
     init(features: VPNConnectionFeatures?,
+         forceRefreshDueToExpiredSession: Bool,
          manager: ExtensionCertificateRefreshManager,
          completion: @escaping CertificateRefreshCompletion) {
         self.features = features
+        self.forceRefreshDueToExpiredSession = forceRefreshDueToExpiredSession
         self.manager = manager
         self.completion = completion
     }
@@ -292,7 +297,9 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
             return
         }
 
-        manager.checkRefreshCertificateNowNoSync(features: features, asPartOf: self) { result in
+        manager.checkRefreshCertificateNowNoSync(features: features,
+                                                 forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
+                                                 asPartOf: self) { result in
             self.finish(result)
             self.manager.semaphore.signal()
         }
