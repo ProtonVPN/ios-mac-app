@@ -89,7 +89,7 @@ class NWTCPConnectionTests: XCTestCase {
 
         let dataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
             XCTAssertNil(error, "Unexpected response error")
-            XCTAssertEqual(response?.statusCode, 200, "Http response error code should be 200")
+            XCTAssertEqual((response as! HTTPURLResponse).statusCode, 200, "Http response error code should be 200")
 
             guard let data = data else {
                 XCTFail("No response data received")

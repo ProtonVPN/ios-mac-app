@@ -27,6 +27,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
         let timerFactory = TimerFactoryImplementation()
         dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
+        // Used for testing purposes
+        // dataTaskFactory = URLSession.shared
 
         let apiService = ExtensionAPIService(storage: storage,
                                              dataTaskFactory: dataTaskFactory,

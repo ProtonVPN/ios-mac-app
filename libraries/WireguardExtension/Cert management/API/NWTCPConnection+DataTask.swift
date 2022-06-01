@@ -68,14 +68,21 @@ extension NSKeyValueObservation: ObservationHandle {
 
 /// A wrapper protocol for making HTTP requests with NWTCPConnection.
 protocol DataTaskProtocol {
-    var request: URLRequest { get }
-
     func resume()
+}
+
+extension URLSessionDataTask: DataTaskProtocol {
 }
 
 /// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
 protocol DataTaskFactory {
-    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) -> DataTaskProtocol
+    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol
+}
+
+extension URLSession: DataTaskFactory {
+    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
+        dataTask(with: request, completionHandler: completionHandler)
+    }
 }
 
 /// Generate NWTCPConnections by connecting to endpoints through the NEPacketTunnelProvider's tunnel.
@@ -91,7 +98,7 @@ class ConnectionTunnelDataTaskFactory: DataTaskFactory {
         self.timerFactory = timerFactory
     }
 
-    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) -> DataTaskProtocol {
+    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         let id = UUID()
         let task =  NWTCPDataTask(provider: provider,
                                   timerFactory: timerFactory,
