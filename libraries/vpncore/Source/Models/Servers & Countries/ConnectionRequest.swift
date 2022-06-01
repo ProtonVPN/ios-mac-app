@@ -62,6 +62,15 @@ public enum ConnectionProtocol: Codable, Equatable {
             try container.encode(vpnProtocol, forKey: .vpnProtocol)
         }
     }
+
+    public var localizedString: String {
+        switch self {
+        case let .vpnProtocol(vpnProtocol):
+            return vpnProtocol.localizedString
+        case .smartProtocol:
+            return "Smart"
+        }
+    }
 }
 
 public struct ConnectionRequest {
