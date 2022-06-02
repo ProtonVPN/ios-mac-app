@@ -21,7 +21,7 @@
 
 import Foundation
 
-public enum ConnectionProtocol: Codable, Equatable {
+public enum ConnectionProtocol: Codable, Equatable, CustomStringConvertible {
     case vpnProtocol(VpnProtocol)
     case smartProtocol
 
@@ -63,7 +63,7 @@ public enum ConnectionProtocol: Codable, Equatable {
         }
     }
 
-    public var localizedString: String {
+    public var description: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
             return vpnProtocol.localizedString
