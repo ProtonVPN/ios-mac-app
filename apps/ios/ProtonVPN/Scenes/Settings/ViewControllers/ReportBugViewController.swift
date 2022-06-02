@@ -92,8 +92,7 @@ class ReportBugViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        logsSwitch.isOn = true
-        logsSwitchChanged()
+        logsSwitch.isOn = viewModel.logsEnabled
         renderButton()
         emailField.text = viewModel.getEmail()
         
@@ -105,22 +104,7 @@ class ReportBugViewController: UIViewController {
     }
     
     @IBAction func logsSwitchChanged() {
-        if logsSwitch.isOn {
-            if let applicationLogFile = appLogFileUrl {
-                viewModel.add(files: [applicationLogFile])
-            }
-            
-            if let fileUrl = vpnManager.logFile(for: .openVpn(.tcp)) {
-                viewModel.add(files: [fileUrl])
-            }
-            
-            if let fileUrl = vpnManager.logFile(for: .wireGuard) {
-                viewModel.add(files: [fileUrl])
-            }
-            
-        } else {
-            viewModel.removeAllFiles()
-        }
+        viewModel.logsEnabled = logsSwitch.isOn
     }
     
     @IBAction func emailChanged() {

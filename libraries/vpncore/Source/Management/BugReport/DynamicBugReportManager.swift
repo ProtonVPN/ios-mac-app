@@ -56,7 +56,7 @@ public class DynamicBugReportManager {
     private let vpnKeychain: VpnKeychainProtocol
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
-
+    
     public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, updateChecker: UpdateChecker, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
         self.api = api
         self.storage = storage
@@ -148,13 +148,14 @@ extension DynamicBugReportManager: BugReportDelegate {
 
         if form.logs {
             propertiesManager.logCurrentState()
-            prepareLogs(responseHandler: { logFiles in
+            let tempLogFilesStorage = LogFilesTemporaryStorage(logContentProvider: logContentProvider, logSources: logSources)
+            tempLogFilesStorage.prepareLogs { logFiles in
                 report.files = logFiles
                 self.send(report: report) { reportResult in
-                    self.deleteTempLog(files: logFiles)
+                    tempLogFilesStorage.deleteTempLogs()
                     result(reportResult)
                 }
-            })
+            }
             return
         }
 
@@ -163,8 +164,6 @@ extension DynamicBugReportManager: BugReportDelegate {
 
     private func send(report: ReportBug, result: @escaping (SendReportResult) -> Void) {
         api.report(bug: report) { requestResult in
-            self.deleteTempLog(files: report.files)
-
             switch requestResult {
             case .success:
                 self.prefilledEmail = report.email
@@ -194,54 +193,4 @@ extension DynamicBugReportManager: BugReportDelegate {
         }
     }
 
-    // MARK: - Log files
-
-    /// Writes logs to temporary files that can be uploaded to API
-    private func prepareLogs(responseHandler: @escaping ([URL]) -> Void) {
-        let fileManager = FileManager.default
-        var result: [URL] = []
-        let dispatchGroup = DispatchGroup()
-        let queue = DispatchQueue.global(qos: .userInitiated) // For writing to array without race conditions
-
-        logSources.forEach { source in
-            dispatchGroup.enter()
-
-            let contentProvider = self.logContentProvider.getLogData(for: source)
-            contentProvider.loadContent { content in
-                guard !content.isEmpty else {
-                    dispatchGroup.leave()
-                    return
-                }
-
-                let tempFile = FileManager.default.temporaryDirectory.appendingPathComponent("\(source.title).log")
-                do {
-                    if fileManager.fileExists(atPath: tempFile.path) {
-                        try fileManager.removeItem(at: tempFile)
-                    }
-
-                    try content.write(to: tempFile, atomically: true, encoding: .utf8)
-
-                    queue.async {
-                        result.append(tempFile)
-                        dispatchGroup.leave()
-                    }
-
-                } catch {
-                    log.error("Can't save temporary log file", category: .app, event: .error, metadata: ["error": "\(error)", "source": "\(source.title)", "file": "\(tempFile)"])
-                    dispatchGroup.leave()
-                }
-            }
-        }
-
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            responseHandler(result)
-        }
-    }
-
-    /// Deletes temp log files after upload is done
-    private func deleteTempLog(files: [URL]) {
-        files.forEach { file in
-            try? FileManager.default.removeItem(at: file)
-        }
-    }
 }
