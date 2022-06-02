@@ -1820,8 +1820,8 @@
 "_neks_t2_title" = "Kill Switch Stability Warning";
 // Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the
 // `_neks_t2_description' localized string.
-"_neks_t2_hyperlink" = "T2 Security Chip";
-"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
+"_neks_t2_hyperlink" = "Learn more...";
+"_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN. Learn more...";
 "_neks_t2_connect" = "Enable Anyway";
 
 

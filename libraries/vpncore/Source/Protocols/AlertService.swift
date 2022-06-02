@@ -748,7 +748,7 @@ public class WireguardKSOnCatalinaAlert: SystemAlert {
 }
 
 public class NEKSOnT2Alert: SystemAlert {
-    public static let t2kbUrlString = "https://support.apple.com/en-us/HT208862"
+    public static let t2kbUrlString = "https://protonvpn.com/support/macos-t2-chip-kill-switch/"
 
     public var title: String? = LocalizedString.neksT2Title
     public var message: String? = LocalizedString.neksT2Description
