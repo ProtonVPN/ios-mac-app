@@ -30,7 +30,7 @@ struct SwitchInputView: View {
             HStack {
                 Toggle(field.label, isOn: $value)
                     .accessibilityIdentifier("Toggle \(field.submitLabel)")
-                    .toggleStyle(SwitchToggleStyle(tint: colors.interactiveActive))
+                    .toggleStyle(SwitchToggleStyle(tint: colors.interactive))
             }
             .padding()
             #if os(iOS)
