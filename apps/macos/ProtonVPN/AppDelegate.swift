@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            self.checkSystemExtension()
+            self.container.makeSystemExtensionsStateCheck().checkSystemExtensionRequiredAndInstallIfNeeded()
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
@@ -149,37 +149,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         return false
-    }
-    
-    private func checkSystemExtension() {
-        // only install the extension if OpenVPN/WireGuard is selected or Smart Protocol is enabled
-        let needsInstallExtension: Bool = {
-            switch propertiesManager.connectionProtocol {
-            case .smartProtocol:
-                return true
-            case let .vpnProtocol(vpnProtocol):
-                switch vpnProtocol {
-                case .ike:
-                    return false
-                case .wireGuard, .openVpn:
-                    return true
-                }
-            }
-        }()
-
-        guard needsInstallExtension else {
-            log.debug("No need to install system extension (protocol is \(propertiesManager.connectionProtocol.localizedString)), bailing.", category: .sysex)
-
-            return
-        }
-
-        systemExtensionStateCheck.startCheckAndInstallIfNeeded(userInitiated: false) { result in
-            if case .failure = result {
-                self.propertiesManager.vpnProtocol = .ike
-                self.propertiesManager.smartProtocol = false
-            }
-        }
-    }
+    }    
     
     private func setupLogsForApp() {
         LoggingSystem.bootstrap {_ in

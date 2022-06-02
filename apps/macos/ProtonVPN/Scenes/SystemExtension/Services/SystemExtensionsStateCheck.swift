@@ -15,7 +15,7 @@ protocol SystemExtensionsStateCheckFactory {
 
 extension DependencyContainer: SystemExtensionsStateCheckFactory {
     func makeSystemExtensionsStateCheck() -> SystemExtensionsStateCheck {
-        return SystemExtensionsStateCheck(systemExtensionManager: makeSystemExtensionManager(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
+        return SystemExtensionsStateCheck(systemExtensionManager: makeSystemExtensionManager(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), vpnKeychain: makeVpnKeychain())
     }
 }
 
@@ -35,11 +35,13 @@ class SystemExtensionsStateCheck {
     private let systemExtensionManager: SystemExtensionManager
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
+    private let vpnKeychain: VpnKeychainProtocol
     
-    init(systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
+    init(systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol) {
         self.systemExtensionManager = systemExtensionManager
         self.alertService = alertService
         self.propertiesManager = propertiesManager
+        self.vpnKeychain = vpnKeychain
     }
 
     // swiftlint:disable function_body_length
@@ -75,7 +77,6 @@ class SystemExtensionsStateCheck {
             
             guard !self.propertiesManager.sysexSuccessWasShown else {
                 log.debug("Already showed Sysex success, bailing.", category: .sysex)
-
                 return // Dirty workaround for a problem where after restart macos doesn't want to give us XPC connection on the first try and app thinks sysex is not yet installed.
             }
             
@@ -127,6 +128,46 @@ class SystemExtensionsStateCheck {
                 log.debug("User cancelled system extension install", category: .sysex)
                 actionHandler(.failure(UserCancelledInstall()))
             }))
+        }
+    }
+
+    func checkSystemExtensionRequiredAndInstallIfNeeded() {
+        // do not check if the user is not logged in to avoid showing the installation prompt on the login screen on first start
+        guard (try? vpnKeychain.fetch()) != nil else {
+            return
+        }
+
+        // only install the extension if OpenVPN/WireGuard is selected or Smart Protocol is enabled
+        let needsInstallExtension: Bool = {
+            switch propertiesManager.connectionProtocol {
+            case .smartProtocol:
+                return true
+            case let .vpnProtocol(vpnProtocol):
+                switch vpnProtocol {
+                case .ike:
+                    return false
+                case .wireGuard, .openVpn:
+                    return true
+                }
+            }
+        }()
+
+        guard needsInstallExtension else {
+            log.debug("No need to install system extension (protocol is \(propertiesManager.connectionProtocol.description)), bailing.", category: .sysex)
+            return
+        }
+
+        log.debug("Checking system extensions because \(self.propertiesManager.connectionProtocol) is set sa default protocol")
+
+        startCheckAndInstallIfNeeded(userInitiated: false) { result in
+            switch result {
+            case .success:
+                log.debug("System extensions are OK, keeping \(self.propertiesManager.connectionProtocol) as default protocol", category: .app)
+            case let .failure(error):
+                log.error("Checking system extensions failed with \(error). Switching default protocol to IKEv2", category: .app)
+                self.propertiesManager.vpnProtocol = .ike
+                self.propertiesManager.smartProtocol = false
+            }
         }
     }
 }

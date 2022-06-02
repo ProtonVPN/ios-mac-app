@@ -28,7 +28,7 @@ import ProtonCore_Networking
 
 final class LoginViewModel {
     
-    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & ProtonReachabilityCheckerFactory & NetworkingFactory
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory & ProtonReachabilityCheckerFactory & NetworkingFactory & SystemExtensionsStateCheckFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -39,6 +39,7 @@ final class LoginViewModel {
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
     private lazy var authManager = AuthManager()
     private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService, authManager: authManager, sessionId: "LoginSessionId", minimumAccountType: AccountType.username)
+    private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
     
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
@@ -124,6 +125,7 @@ final class LoginViewModel {
                     // they are most likely new to Proton VPN and don't need to see the brand refresh modal.
                     self?.propertiesManager.newBrandModalShown = true
                     self?.silentlyCheckForUpdates()
+                    self?.systemExtensionsStateCheck.checkSystemExtensionRequiredAndInstallIfNeeded()
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })
