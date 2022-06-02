@@ -194,6 +194,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                     switch error {
                     case .sessionExpiredOrMissing:
                         completionHandler?(.errorSessionExpired)
+                    case .needNewKeys:
+                        completionHandler?(.errorNeedKeyRegeneration)
                     default:
                         completionHandler?(.error(message: String(describing: error)))
                     }

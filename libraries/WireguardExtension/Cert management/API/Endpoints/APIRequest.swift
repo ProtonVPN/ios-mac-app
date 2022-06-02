@@ -74,6 +74,8 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
     case badRequest = 400
     /// Token expired. Client should refresh its access token and try again.
     case tokenExpired = 401
+    /// If we're dealing with a certificate refresh, this error code means that the keys should be regenerated.
+    case conflict = 409
     // case retryRequest = 409 (Unimplemented, retry request immediately)
     /// The session is expired, and the user must log in again (or session needs re-forking.)
     case sessionExpired = 422
@@ -92,6 +94,8 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
             return "The application sent a badly-formatted request. Please contact the developer."
         case .tokenExpired:
             return "The current access token has expired. Please refresh the token."
+        case .conflict:
+            return "Database conflict - please retry your request, or try logging out and back in again."
         case .sessionExpired:
             return "The current session has expired. Please log in again."
         case .tooManyRequests:
@@ -126,6 +130,7 @@ extension HTTPURLResponse {
 
 enum APIJSONErrorCode: Int, Error {
     case invalidRefreshToken = 10013
+    case fingerprintConflict = 2500
 }
 
 struct APIError: Error, Codable, CustomStringConvertible {

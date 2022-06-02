@@ -50,12 +50,14 @@ extension VpnManager {
         }
 
         // load last authentication data (that should be available)
-        vpnAuthentication.loadAuthenticationData { result in
+        vpnAuthentication.loadAuthenticationData { [weak self] result in
             switch result {
             case .failure(let error):
                 log.error("Failed to initialize local agent because of missing authentication data", category: .localAgent, event: .error)
                 let nsError = error as NSError
-                if nsError.code == 429 || nsError.code == 85092 {
+                if nsError == ProtonVpnErrorConst.vpnCredentialsMissing {
+                    self?.reconnectWithNewKeyAndCertificate()
+                } else if nsError.code == 429 || nsError.code == 85092 {
                     self.alertService?.push(alert: TooManyCertificateRequestsAlert())
                 }
             case let .success(data):
@@ -86,6 +88,11 @@ extension VpnManager {
             case let .success(data):
                 completion(data)
             case let .failure(error):
+                guard (error as NSError) != ProtonVpnErrorConst.vpnCredentialsMissing else {
+                    self?.reconnectWithNewKeyAndCertificate()
+                    return
+                }
+
                 log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting", category: .localAgent, event: .error)
                 self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
 
@@ -238,11 +245,13 @@ extension VpnManager: LocalAgentDelegate {
         didReceiveFeature(safeMode: features.safeMode)
 
         // Try refreshing certificate in case features are different from the ones we have in current certificate
-        vpnAuthentication.refreshCertificates(features: features, completion: { result in
+        vpnAuthentication.refreshCertificates(features: features, completion: { [weak self] result in
             switch result {
             case .failure(let error):
                 let nsError = error as NSError
-                if nsError.code == 429 || nsError.code == 85092 {
+                if nsError == ProtonVpnErrorConst.vpnCredentialsMissing {
+                    self?.reconnectWithNewKeyAndCertificate()
+                } else if nsError.code == 429 || nsError.code == 85092 {
                     self.alertService?.push(alert: TooManyCertificateRequestsAlert())
                 }
             case .success:
