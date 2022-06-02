@@ -110,12 +110,14 @@ enum WireguardProviderRequest: ProviderRequest {
     private enum ResponseCode: UInt8 {
         case ok
         case sessionExpired
+        case needKeyRegen
         case unrecoverableError
     }
 
     public enum Response: ProviderMessage {
         case ok(data: Data?)
         case errorSessionExpired
+        case errorNeedKeyRegeneration
         case error(message: String)
 
         private func datagram(_ code: ResponseCode) -> Data {
@@ -128,6 +130,8 @@ enum WireguardProviderRequest: ProviderRequest {
                 return datagram(.ok) + (data ?? Data())
             case .errorSessionExpired:
                 return datagram(.sessionExpired)
+            case .errorNeedKeyRegeneration:
+                return datagram(.needKeyRegen)
             case .error(let message):
                 return datagram(.unrecoverableError) + (message.data(using: .utf8) ?? Data())
             }
@@ -147,6 +151,8 @@ enum WireguardProviderRequest: ProviderRequest {
                 return .ok(data: responseData)
             case .sessionExpired:
                 return .errorSessionExpired
+            case .needKeyRegen:
+                return .errorNeedKeyRegeneration
             case .unrecoverableError:
                 let message: String
                 if data.count > 1 {

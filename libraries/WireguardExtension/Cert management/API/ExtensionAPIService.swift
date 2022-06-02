@@ -273,8 +273,10 @@ final class ExtensionAPIService {
                                  asPartOf operation: CertificateRefreshAsyncOperation?,
                                  retryBlock: @escaping (() -> Void),
                                  errorHandler: @escaping ((Error) -> Void)) {
-        let retryAfter = { [weak self] (seconds: Int) in
+        let retryAfter = { [weak self] (seconds: Int?) in
             guard let `self` = self else { return }
+
+            let seconds = seconds ?? Self.defaultRetryInterval + self.jitter()
             log.info("Will retry request in \(seconds) seconds.")
 
             self.timerFactory.scheduleAfter(seconds: seconds, on: self.requestQueue) {
@@ -289,7 +291,7 @@ final class ExtensionAPIService {
 
         guard let code = response.apiHttpErrorCode else {
             log.error("Unknown HTTP error code: \(response.statusCode).")
-            retryAfter(Self.defaultRetryInterval + self.jitter())
+            retryAfter(nil)
             return
         }
 
@@ -300,14 +302,21 @@ final class ExtensionAPIService {
         case .internalError, .tooManyRequests, .serviceUnavailable:
             guard let retryAfterResponse = response.value(forApiHeader: .retryAfter), let retryAfterInterval = Int(retryAfterResponse) else {
                 log.error("\(APIHeader.retryAfter) was missing or had an unknown format.")
-                retryAfter(Self.defaultRetryInterval + self.jitter())
+                retryAfter(nil)
                 break
             }
 
             let jitter = jitter(forRetryAfterInterval: retryAfterInterval)
-            timerFactory.scheduleAfter(seconds: retryAfterInterval + jitter, on: requestQueue) {
-                retryBlock()
+            log.info("Retry-After header says to retry in \(retryAfterResponse) seconds. Adding \(jitter) seconds of jitter.")
+            retryAfter(retryAfterInterval + jitter)
+        case .conflict:
+            guard let apiError = apiError, apiError.knownErrorCode == .fingerprintConflict else {
+                log.error("Received conflict error: \(apiError?.description ?? "(unknown)")")
+                retryAfter(nil)
+                break
             }
+            log.info("Need to regenerate new keys & retry connection.")
+            errorHandler(CertificateRefreshError.needNewKeys)
         case .badRequest:
             let badRequestError: Error
             if let apiError = apiError {

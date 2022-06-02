@@ -228,6 +228,10 @@ public final class VpnAuthenticationRemoteClient {
                                                                    retryingForExpiredSessions: false,
                                                                    completionHandler: completionHandler)
                     }
+                case .errorNeedKeyRegeneration:
+                    self?.authenticationStorage.deleteKeys()
+                    self?.authenticationStorage.deleteCertificate()
+                    completionHandler(.failure(ProtonVpnErrorConst.vpnCredentialsMissing))
                 }
             case .failure(let error):
                 completionHandler(.failure(error))
@@ -259,10 +263,10 @@ public final class VpnAuthenticationRemoteClient {
                         completionHandler(.success(()))
                     case .error(let message):
                         completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
-                    case .errorSessionExpired:
-                        // We should only ever expect this response for cert refreshes, not for this entry point.
+                    case .errorSessionExpired, .errorNeedKeyRegeneration:
+                        // We should only ever expect these responses for cert refreshes, not for this entry point.
                         // If we're hitting this, something is very wrong.
-                        assertionFailure("Received session expired error after trying to renew session?")
+                        assertionFailure("Received \(response) after trying to renew session?")
                         completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
                     }
                 case .failure(let error):

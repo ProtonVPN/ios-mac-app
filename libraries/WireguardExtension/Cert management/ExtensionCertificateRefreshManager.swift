@@ -12,7 +12,7 @@ import NetworkExtension
 public enum CertificateRefreshError: Error {
     case timedOut
     case cancelled
-    case missingKeys
+    case needNewKeys
     case sessionExpiredOrMissing
     case internalError(message: String)
 }
@@ -179,7 +179,7 @@ final class ExtensionCertificateRefreshManager {
         }
 
         guard let keys = vpnAuthenticationStorage.getStoredKeys() else {
-            completion(.failure(.missingKeys))
+            completion(.failure(.needNewKeys))
             return
         }
 
@@ -197,9 +197,10 @@ final class ExtensionCertificateRefreshManager {
                 }
 
                 switch certError {
-                // If the session has expired, then we need to wait for the app to give us a new session
-                // before we can start again. The app should receive this error to know it needs to send us something.
-                case .sessionExpiredOrMissing:
+                // If the session has expired or our keys need regenerating, then we need to wait for the app to give
+                // us a new session or regenerate our keys before we can start again. The app should receive these errors
+                // to know it needs to send us something.
+                case .sessionExpiredOrMissing, .needNewKeys:
                     break
                 // This should happen rarely in times of network congestion or connectivity issues, and should
                 // be handled directly by the caller, who should swallow & log the error to avoid confusing the app.
@@ -211,7 +212,7 @@ final class ExtensionCertificateRefreshManager {
                     log.error("Should not encounter \(certError) here; we aren't managing synchronization")
                     break
                 // These errors should "never happen" in practice.
-                case .missingKeys, .internalError:
+                case .internalError:
                     assertionFailure("Encountered internal error: \(error)")
                     log.error("Encountered internal error: \(error)")
                     break
