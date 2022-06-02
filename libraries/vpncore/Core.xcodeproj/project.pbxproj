@@ -149,8 +149,6 @@
 		D585B5122447074300E901F3 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853DD2428F863002EBF05 /* Date+Misc.swift */; };
 		D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874B424FE69260022E438 /* AppSessionRefresher.swift */; };
 		D58874B624FE69260022E438 /* AppSessionRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874B424FE69260022E438 /* AppSessionRefresher.swift */; };
-		D5906F1D22D46469001BC074 /* AttachmentRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1C22D46469001BC074 /* AttachmentRowViewModel.swift */; };
-		D5906F1E22D46714001BC074 /* AttachmentRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1C22D46469001BC074 /* AttachmentRowViewModel.swift */; };
 		D5966F3B2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */; };
 		D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */; };
 		D59671CE253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59671CD253D5D440061A75F /* AnnouncementManagerImplementationTests.swift */; };
@@ -434,6 +432,8 @@
 		E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94C126B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
 		E9AF94C326B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
+		E9B98510284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9850F284907060012EF32 /* LogFilesTemporaryStorage.swift */; };
+		E9B98511284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B9850F284907060012EF32 /* LogFilesTemporaryStorage.swift */; };
 		E9C9FDC7268C8755005665C6 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */; };
 		E9C9FDC9268C8755005665C6 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */; };
 		E9DC79B9262DBEDC001A0FC0 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
@@ -730,7 +730,6 @@
 		D582A7E023F2D7A100B5FD77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		D582A7E123F2D7B200B5FD77 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = es; path = es.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D58874B424FE69260022E438 /* AppSessionRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefresher.swift; sourceTree = "<group>"; };
-		D5906F1C22D46469001BC074 /* AttachmentRowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentRowViewModel.swift; sourceTree = "<group>"; };
 		D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewModel.swift; sourceTree = "<group>"; };
 		D59671CD253D5D440061A75F /* AnnouncementManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementManagerImplementationTests.swift; sourceTree = "<group>"; };
 		D59671DD253D5E3A0061A75F /* AnnouncementStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementStorageMock.swift; sourceTree = "<group>"; };
@@ -914,6 +913,7 @@
 		E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
 		E9B32EAFAF2F48F27AE34B86 /* FileLogHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogHandlerTests.swift; sourceTree = "<group>"; };
+		E9B9850F284907060012EF32 /* LogFilesTemporaryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorage.swift; sourceTree = "<group>"; };
 		E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+ModelName.swift"; sourceTree = "<group>"; };
 		E9ECF998261C8B81004501AE /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = "Pods/OpenSSL-Apple/frameworks/openssl.xcframework"; sourceTree = "<group>"; };
 		EA4DEB81BCB1EC4098C3F10E /* Pods-Core-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1380,6 +1380,7 @@
 			children = (
 				E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */,
 				E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */,
+				E9B9850F284907060012EF32 /* LogFilesTemporaryStorage.swift */,
 				E939EEEA27955317006E4305 /* BugReportConfig.json */,
 			);
 			path = BugReport;
@@ -1833,7 +1834,6 @@
 			children = (
 				F397EA5D280561400072D511 /* CouponViewModel.swift */,
 				D5A8811C22CCE400009B63D1 /* ReportBugViewModel.swift */,
-				D5906F1C22D46469001BC074 /* AttachmentRowViewModel.swift */,
 				D5966F3A2538396B0061A75F /* AnnouncementsViewModel.swift */,
 				F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */,
 				42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */,
@@ -2500,7 +2500,6 @@
 				4242B0992465A4E60042145A /* TrustKitHelper.swift in Sources */,
 				E1B5F63B21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
-				D5906F1D22D46469001BC074 /* AttachmentRowViewModel.swift in Sources */,
 				F3E5787127CCCE91000E48E3 /* AvailableDomainResponse.swift in Sources */,
 				F389189126C3E55A006214A8 /* SmartProtocolConfig.swift in Sources */,
 				F30B9CF3262705B50094C65E /* VpnAuthenticationMock.swift in Sources */,
@@ -2580,6 +2579,7 @@
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
+				E9B98510284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */,
 				E1828573236C74D400E397A5 /* Intents.intentdefinition in Sources */,
 				D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */,
 				D5DC543B252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
@@ -2788,7 +2788,6 @@
 				E1B5F68521B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
 				E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */,
 				F30B9EA92629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
-				D5906F1E22D46714001BC074 /* AttachmentRowViewModel.swift in Sources */,
 				E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
 				E1616C0721C95DD200F42D79 /* ProfileUtility.swift in Sources */,
 				D5DC52C5252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
@@ -2914,6 +2913,7 @@
 				F38F7BED27956674005B9EA2 /* CoreApiFeatureRespone.swift in Sources */,
 				D5DC543D252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
 				E1616B8221C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
+				E9B98511284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */,
 				E1B5F67721B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
 				F3B2AB1627622CCC0081D65F /* AppInfo.swift in Sources */,
 				F314141427B1410A007424E9 /* PaidFeaturePropertyProvider.swift in Sources */,

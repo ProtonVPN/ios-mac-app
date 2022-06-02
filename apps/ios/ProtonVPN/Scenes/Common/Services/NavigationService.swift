@@ -329,7 +329,7 @@ extension NavigationService: SettingsService {
         }
 
         let viewController = ReportBugViewController(vpnManager: vpnManager)
-        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain)
+        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain, logContentProvider: factory.makeLogContentProvider())
         viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
         let navigationController = UINavigationController(rootViewController: viewController)
         windowService.present(modal: navigationController)

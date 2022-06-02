@@ -62,29 +62,6 @@ class ReportBugViewController: NSViewController {
         
         // Add app log file
         self.logs.append(logFileManager.getFileUrl(named: AppConstants.Filenames.appLogFilename))
-        
-        // Add ovpn log file
-        vpnManager.logsContent(for: .openVpn(.tcp)) { logs in
-            let file = logFileManager.getFileUrl(named: AppConstants.Filenames.openVpnLogFilename)
-            if let content = logs {
-                self.logFileManager.dump(logs: content, toFile: file.path)
-            }
-            // This is NOT inside the last `if`, because there may already be a log file
-            if FileManager.default.fileExists(atPath: file.path) {
-                self.logs.append(file)
-            }
-        }
-        // Add wireguard log file
-        vpnManager.logsContent(for: .wireGuard) { logs in
-            let file = logFileManager.getFileUrl(named: AppConstants.Filenames.wireGuardLogFilename)
-            if let content = logs {
-                self.logFileManager.dump(logs: content, toFile: file.path)
-            }
-            // This is NOT inside the last `if`, because there may already be a log file
-            if FileManager.default.fileExists(atPath: file.path) {
-                self.logs.append(file)
-            }
-        }
     }
     
     deinit {
@@ -168,14 +145,8 @@ class ReportBugViewController: NSViewController {
     }
     
     @objc func sendButtonPressed() {
-        
-        if attachFilesCheckBox.state == .on {
-            viewModel.add(files: logs)
-        } else {
-            viewModel.removeAllFiles()
-        }
-        
         presentLoadingScreen()
+        viewModel.logsEnabled = attachFilesCheckBox.state == .on
         viewModel.send { result in
             switch result {
             case .success:

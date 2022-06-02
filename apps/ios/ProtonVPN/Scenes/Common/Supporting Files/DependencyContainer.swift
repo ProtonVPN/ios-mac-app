@@ -243,7 +243,8 @@ extension DependencyContainer: ReportBugViewModelFactory {
                                   propertiesManager: makePropertiesManager(),
                                   reportsApiService: makeReportsApiService(),
                                   alertService: makeCoreAlertService(),
-                                  vpnKeychain: makeVpnKeychain())
+                                  vpnKeychain: makeVpnKeychain(),
+                                  logContentProvider: makeLogContentProvider())
     }
 }
 

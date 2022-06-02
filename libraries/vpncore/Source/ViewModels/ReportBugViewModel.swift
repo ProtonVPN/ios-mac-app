@@ -27,21 +27,23 @@ public protocol ReportBugViewModelFactory {
 }
 
 open class ReportBugViewModel {
-    
-    public var attachmentsListRefreshed: (() -> Void)?
-    
+
     private var bug: ReportBug
     private var sendingBug: Bool = false
     private let propertiesManager: PropertiesManagerProtocol
     private let reportsApiService: ReportsApiService
     private let alertService: CoreAlertService
+    private let logContentProvider: LogContentProvider
+    private let logSources: [LogSource]
     
     private var plan: AccountPlan?
     
-    public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol) {
+    public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
         self.propertiesManager = propertiesManager
         self.reportsApiService = reportsApiService
         self.alertService = alertService
+        self.logContentProvider = logContentProvider
+        self.logSources = logSources
         
         var username = ""
         if let authCredentials = AuthKeychain.fetch() {
@@ -103,43 +105,35 @@ open class ReportBugViewModel {
         return plan
     }
     
-    public func add(files: [URL]) {
-        for file in files where !bug.files.contains(file) {
-            bug.files.append(file)
-        }
-        attachmentsListRefreshed?()
-    }
-    
-    public func remove(file: URL) {
-        bug.files.removeAll(where: { $0 == file })
-        attachmentsListRefreshed?()
-    }
-    
-    public func removeAllFiles() {
-        bug.files.removeAll()
-        attachmentsListRefreshed?()
-    }
-    
-    public var filesCount: Int {
-        return bug.files.count
-    }
-    
-    public func fileAttachment(atRow row: Int) -> AttachmentRowViewModel {
-        return AttachmentRowViewModel(url: bug.files[row], parent: self)
-    }
-    
     public var isSendingPossible: Bool {
         return bug.canBeSent
     }
-    
+
+    public var logsEnabled: Bool = true
+
     public func send(completion: @escaping (Result<(), Error>) -> Void) {
         // Debounce multiple attempts to send a bug report (i.e., by mashing a button)
         guard !sendingBug else {
             return
         }
 
+        guard !logsEnabled else {
+            send(report: bug, completion: completion)
+            return
+        }
+
+        let tempLogFilesStorage = LogFilesTemporaryStorage(logContentProvider: logContentProvider, logSources: logSources)
+        tempLogFilesStorage.prepareLogs { files in
+            self.send(report: self.bug) { result in
+                tempLogFilesStorage.deleteTempLogs()
+                completion(result)
+            }
+        }
+    }
+
+    private func send(report: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
         sendingBug = true
-        reportsApiService.report(bug: bug) { [weak self] result in
+        reportsApiService.report(bug: report) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async { [weak self] in
