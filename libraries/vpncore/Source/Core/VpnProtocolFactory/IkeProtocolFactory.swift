@@ -75,8 +75,4 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         completion(nil)
     }
     
-    public func logFile() -> URL? {
-        return nil
-    }
-    
 }
