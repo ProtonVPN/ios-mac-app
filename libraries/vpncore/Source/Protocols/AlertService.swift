@@ -750,10 +750,29 @@ public class SubuserWithoutConnectionsAlert: SystemAlert {
 
 public class TooManyCertificateRequestsAlert: SystemAlert {
     public var title: String? = LocalizedString.vpnauthTooManyCertsTitle
-    public var message: String? = LocalizedString.vpnauthTooManyCertsDescription
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
+
+    public init(retryAfter: TimeInterval?) {
+        guard let retryAfter = retryAfter else {
+            message = LocalizedString.vpnauthTooManyCertsDescription
+            return
+        }
+
+        let (_, hours, minutes, seconds) = retryAfter.components
+
+        var minutesToWait = minutes
+
+        if hours > 0 {
+            minutesToWait += 60 * hours
+        }
+        if seconds > 0 {
+            minutesToWait += 1
+        }
+        message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
+    }
 }
 
 public class WireguardKSOnCatalinaAlert: SystemAlert {
