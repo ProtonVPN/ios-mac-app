@@ -53,6 +53,7 @@
 		4C30C0A52812A3E500B6E333 /* MockVpnAuthenticationStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30C0A22812A3E500B6E333 /* MockVpnAuthenticationStorage.swift */; };
 		4C30C0A62812A3E500B6E333 /* MockAuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30C0A32812A3E500B6E333 /* MockAuthKeychain.swift */; };
 		4C30C0A92812A3F400B6E333 /* CertificateRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30C0A72812A3F400B6E333 /* CertificateRefreshTests.swift */; };
+		4C4439AA284A38CA007391A8 /* ProviderMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4439A9284A38CA007391A8 /* ProviderMessageTests.swift */; };
 		4C4A30292811582800768AD9 /* URLRequest+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF941A28103C2B0050C8B4 /* URLRequest+HTTP.swift */; };
 		4C4A303128118D6100768AD9 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7872681FE2B0013495A /* AuthCredentials.swift */; };
 		4C4A303228118D6100768AD9 /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911B2758F5CF00140B2E /* Logger+Callers.swift */; };
@@ -724,6 +725,7 @@
 		4C30C0A32812A3E500B6E333 /* MockAuthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockAuthKeychain.swift; path = ../../../ios/WireguardNetworkExtensionTests/Mocks/MockAuthKeychain.swift; sourceTree = "<group>"; };
 		4C30C0A72812A3F400B6E333 /* CertificateRefreshTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateRefreshTests.swift; path = ../../ios/WireguardNetworkExtensionTests/CertificateRefreshTests.swift; sourceTree = "<group>"; };
 		4C30C0A82812A3F400B6E333 /* WireguardNetworkExtensionTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WireguardNetworkExtensionTests-Bridging-Header.h"; path = "../../ios/WireguardNetworkExtensionTests/WireguardNetworkExtensionTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		4C4439A9284A38CA007391A8 /* ProviderMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProviderMessageTests.swift; path = ../../ios/WireguardNetworkExtensionTests/ProviderMessageTests.swift; sourceTree = "<group>"; };
 		4CA0977528118EAF00F4ABA9 /* VpnKeys+Generation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VpnKeys+Generation.swift"; path = "../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnKeys+Generation.swift"; sourceTree = "<group>"; };
 		4CA0977728118ECD00F4ABA9 /* Crypto_VPN.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Crypto_VPN.xcframework; path = "../../../Pods/ProtonCore-Crypto-VPN/vendor/Crypto_VPN/Crypto_VPN.xcframework"; sourceTree = "<group>"; };
 		4CA0977E28119E8200F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnAuthenticationKeychain.swift; path = ../../../../libraries/vpncore/Source/Management/VpnAuthentication/VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
@@ -1308,6 +1310,7 @@
 				4CAF943E281144680050C8B4 /* RequestParsingTests.swift */,
 				4CCE9F7C283BCC750090E234 /* ConnectionTests.swift */,
 				4C30C0A72812A3F400B6E333 /* CertificateRefreshTests.swift */,
+				4C4439A9284A38CA007391A8 /* ProviderMessageTests.swift */,
 				4C30C0A82812A3F400B6E333 /* WireguardNetworkExtensionTests-Bridging-Header.h */,
 				4CA0977428118E6C00F4ABA9 /* vpncore */,
 				4C4A302C28117E0500768AD9 /* Mocks */,
@@ -3395,6 +3398,7 @@
 				4CCE9F83283CCE850090E234 /* MockBackgroundTimer.swift in Sources */,
 				4C4A303C28118D6100768AD9 /* VPNConnectionFeatures.swift in Sources */,
 				4C4A303828118D6100768AD9 /* Data+JSONDictionary.swift in Sources */,
+				4C4439AA284A38CA007391A8 /* ProviderMessageTests.swift in Sources */,
 				4C4A304028118D6100768AD9 /* VpnAuthenticationStorage.swift in Sources */,
 				4C4A303E28118D6100768AD9 /* CertificateConstants.swift in Sources */,
 				4C4A303428118D6100768AD9 /* NetShieldType.swift in Sources */,

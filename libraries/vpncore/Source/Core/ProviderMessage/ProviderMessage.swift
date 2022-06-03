@@ -19,7 +19,7 @@
 import Foundation
 import NetworkExtension
 
-public protocol ProviderMessage {
+public protocol ProviderMessage: Equatable {
     var asData: Data { get }
 
     static func decode(data: Data) throws -> Self
