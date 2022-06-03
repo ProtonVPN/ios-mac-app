@@ -74,7 +74,7 @@ public class DynamicBugReportManager {
     // Refresh config on every app start and then once a day
     private func setupRefresh() {
         loadConfig()
-        timer = Timer(fire: Date().addingTimeInterval(.day), interval: .day, repeats: true, block: { _ in self.loadConfig() })
+        timer = Timer(fire: Date().addingTimeInterval(.days(1)), interval: .days(1), repeats: true, block: { _ in self.loadConfig() })
     }
     
     private func loadConfig() {

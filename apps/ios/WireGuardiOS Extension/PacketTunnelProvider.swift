@@ -186,7 +186,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 }
             }
         case .refreshCertificate(let features):
-            certificateRefreshManager.checkRefreshCertificateNow(features: features) { result in
+            certificateRefreshManager.checkRefreshCertificateNow(features: features, userInitiated: true) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
@@ -196,6 +196,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                         completionHandler?(.errorSessionExpired)
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
+                    case .tooManyCertRequests(let retryAfter):
+                        if let retryAfter = retryAfter {
+                            completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
+                        } else {
+                            completionHandler?(.errorTooManyCertRequests(retryAfter: nil))
+                        }
                     default:
                         completionHandler?(.error(message: String(describing: error)))
                     }

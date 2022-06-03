@@ -14,6 +14,7 @@ public enum CertificateRefreshError: Error {
     case cancelled
     case needNewKeys
     case sessionExpiredOrMissing
+    case tooManyCertRequests(retryAfter: TimeInterval?)
     case internalError(message: String)
 }
 
@@ -80,9 +81,11 @@ final class ExtensionCertificateRefreshManager {
     /// take a while to complete (or time out) due to network conditions, or because multiple API calls are
     /// occasionally necessary to refresh the cert (because of session management).
     public func checkRefreshCertificateNow(features: VPNConnectionFeatures?,
+                                           userInitiated: Bool = false,
                                            forceRefreshDueToExpiredSession: Bool = false,
                                            completion: @escaping CertificateRefreshCompletion) {
         operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
+                                                                     userInitiated: userInitiated,
                                                                      forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
                                                                      manager: self,
                                                                      completion: completion))
@@ -170,6 +173,7 @@ final class ExtensionCertificateRefreshManager {
     ///         of the synchronization in the encapsulating function, it's important to always call the completion
     ///         in error cases, otherwise the operation queue will get stuck.
     fileprivate func checkRefreshCertificateNowNoSync(features: VPNConnectionFeatures?,
+                                                      userInitiated: Bool,
                                                       forceRefreshDueToExpiredSession: Bool,
                                                       asPartOf operation: CertificateRefreshAsyncOperation,
                                                       completion: @escaping CertificateRefreshCompletion) {
@@ -188,7 +192,7 @@ final class ExtensionCertificateRefreshManager {
         }
 
         let der = keys.publicKey.derRepresentation
-        apiService.refreshCertificate(publicKey: der, features: features, asPartOf: operation) { [weak self] result in
+        apiService.refreshCertificate(publicKey: der, asPartOf: operation) { [weak self] result in
             switch result {
             case .success(let cert):
                 let certAndFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
@@ -205,6 +209,9 @@ final class ExtensionCertificateRefreshManager {
                 // us a new session or regenerate our keys before we can start again. The app should receive these errors
                 // to know it needs to send us something.
                 case .sessionExpiredOrMissing, .needNewKeys:
+                    break
+                // If the API tells us we need to calm down, display this error to the user.
+                case .tooManyCertRequests:
                     break
                 // This should happen rarely in times of network congestion or connectivity issues, and should
                 // be handled directly by the caller, who should swallow & log the error to avoid confusing the app.
@@ -263,15 +270,18 @@ final class ExtensionCertificateRefreshManager {
 
 class CertificateRefreshAsyncOperation: AsyncOperation {
     let features: VPNConnectionFeatures?
+    let isUserInitiated: Bool
     let forceRefreshDueToExpiredSession: Bool
     let completion: CertificateRefreshCompletion
     unowned let manager: ExtensionCertificateRefreshManager
 
     init(features: VPNConnectionFeatures?,
+         userInitiated: Bool,
          forceRefreshDueToExpiredSession: Bool,
          manager: ExtensionCertificateRefreshManager,
          completion: @escaping CertificateRefreshCompletion) {
         self.features = features
+        self.isUserInitiated = userInitiated
         self.forceRefreshDueToExpiredSession = forceRefreshDueToExpiredSession
         self.manager = manager
         self.completion = completion
@@ -303,6 +313,7 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
         }
 
         manager.checkRefreshCertificateNowNoSync(features: features,
+                                                 userInitiated: isUserInitiated,
                                                  forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
                                                  asPartOf: self) { result in
             self.finish(result)

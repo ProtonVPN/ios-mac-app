@@ -40,7 +40,9 @@ final class ExtensionAPIService {
     /// For example: Retry-After: 60 => 60 * 0.2 = 12, time spent waiting = 60 + random(12)
     public static var retryAfterJitterRate = 0.2
 
-    func refreshCertificate(publicKey: String, features: VPNConnectionFeatures?, asPartOf operation: CertificateRefreshAsyncOperation, completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    func refreshCertificate(publicKey: String,
+                            asPartOf operation: CertificateRefreshAsyncOperation,
+                            completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
         guard !sessionExpired else {
             log.info("Not starting certificate refresh: session is expired.")
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
@@ -48,7 +50,10 @@ final class ExtensionAPIService {
         }
 
         // On the first try we allow refreshing API token
-        refreshCertificate(publicKey: publicKey, features: features, refreshApiTokenIfNeeded: true, asPartOf: operation, completionHandler: completionHandler)
+        refreshCertificate(publicKey: publicKey,
+                           refreshApiTokenIfNeeded: true,
+                           asPartOf: operation,
+                           completionHandler: completionHandler)
     }
 
     /// Start a new session with the API service. This function should only be called by the refresh manager and the
@@ -301,16 +306,33 @@ final class ExtensionAPIService {
         case .sessionExpired:
             sessionExpired = true
             errorHandler(CertificateRefreshError.sessionExpiredOrMissing)
-        case .internalError, .tooManyRequests, .serviceUnavailable:
-            guard let retryAfterResponse = response.value(forApiHeader: .retryAfter), let retryAfterInterval = TimeInterval(retryAfterResponse) else {
-                log.error("\(APIHeader.retryAfter) was missing or had an unknown format.")
-                retryAfter(nil)
-                break
+        case .internalError, .serviceUnavailable, .tooManyRequests:
+            var retryAfterInterval: TimeInterval?
+            if let retryAfterResponse = response.value(forApiHeader: .retryAfter) {
+                retryAfterInterval = TimeInterval(retryAfterResponse)
             }
 
-            let jitter = jitter(forRetryAfterInterval: retryAfterInterval)
-            log.info("Retry-After header says to retry in \(retryAfterResponse) seconds. Adding \(jitter) seconds of jitter.")
-            retryAfter(retryAfterInterval + jitter)
+            if retryAfterInterval == nil {
+                log.error("\(APIHeader.retryAfter) was missing or had an unknown format for \(code.rawValue) response.")
+            }
+
+            // If the operation was user-initiated, then we want to show the alert to the user instead of silently
+            // retrying in the background.
+            if code == .tooManyRequests,
+               apiError?.knownErrorCode == .tooManyCertRefreshRequests,
+               operation?.isUserInitiated == true {
+                log.info("Returning cert refresh error to app.")
+                errorHandler(CertificateRefreshError.tooManyCertRequests(retryAfter: retryAfterInterval))
+                return
+            }
+
+            if retryAfterInterval != nil {
+                let jitter = jitter(forRetryAfterInterval: retryAfterInterval)
+                log.info("Retry-After header says to retry in \(retryAfterInterval!) seconds. Adding \(jitter) seconds of jitter.")
+                retryAfterInterval! += jitter
+            }
+
+            retryAfter(retryAfterInterval)
         case .conflict:
             guard let apiError = apiError, apiError.knownErrorCode == .fingerprintConflict else {
                 log.error("Received conflict error: \(apiError?.description ?? "(unknown)")")
@@ -357,7 +379,6 @@ final class ExtensionAPIService {
     // MARK: - Certificate refresh
 
     private func refreshCertificate(publicKey: String,
-                                    features: VPNConnectionFeatures?,
                                     refreshApiTokenIfNeeded: Bool,
                                     asPartOf operation: CertificateRefreshAsyncOperation,
                                     completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
@@ -371,7 +392,7 @@ final class ExtensionAPIService {
 
         let certificateRequest = CertificateRefreshRequest(params: .withPublicKey(publicKey,
                                                                                   deviceName: appInfo.modelName,
-                                                                                  features: features))
+                                                                                  features: operation.features))
 
         request(certificateRequest, headers: [.authorization: "Bearer \(authCredentials.accessToken)",
                                               .sessionId: authCredentials.sessionId]) { [weak self] result in
@@ -393,7 +414,6 @@ final class ExtensionAPIService {
                     }
 
                     self?.refreshCertificate(publicKey: publicKey,
-                                             features: features,
                                              refreshApiTokenIfNeeded: handleTokenRefreshInRetry,
                                              asPartOf: operation,
                                              completionHandler: completionHandler)

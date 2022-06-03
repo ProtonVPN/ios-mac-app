@@ -755,23 +755,28 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init(retryAfter: TimeInterval?) {
+    public init(retryAfter: TimeInterval? = nil) {
         guard let retryAfter = retryAfter else {
             message = LocalizedString.vpnauthTooManyCertsDescription
             return
         }
 
+        // If we get a retry interval, display a more helpful message to the user regarding how long they
+        // should wait before trying again.
         let (_, hours, minutes, seconds) = retryAfter.components
-
         var minutesToWait = minutes
-
         if hours > 0 {
             minutesToWait += 60 * hours
         }
         if seconds > 0 {
             minutesToWait += 1
         }
-        message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
+
+        if minutesToWait == 1 {
+            message = LocalizedString.vpnauthTooManyCertsRetryAfter1Minute
+        } else {
+            message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
+        }
     }
 }
 

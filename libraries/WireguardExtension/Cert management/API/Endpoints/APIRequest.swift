@@ -131,6 +131,7 @@ extension HTTPURLResponse {
 enum APIJSONErrorCode: Int, Error {
     case invalidRefreshToken = 10013
     case fingerprintConflict = 2500
+    case tooManyCertRefreshRequests = 85092
 }
 
 struct APIError: Error, Codable, CustomStringConvertible {
