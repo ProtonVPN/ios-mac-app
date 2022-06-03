@@ -34,7 +34,7 @@ struct MockBackgroundTimer: BackgroundTimerProtocol {
 
 final class MockTimerFactory: TimerFactory {
     public var repeatingTimers: [MockBackgroundTimer] = []
-    public var scheduledWork: [(seconds: Int, closure: (() -> Void))] = []
+    public var scheduledWork: [(interval: DispatchTimeInterval, closure: (() -> Void))] = []
 
     public var timerWasAdded: (() -> Void)?
     public var workWasScheduled: (() -> Void)?
@@ -68,10 +68,10 @@ final class MockTimerFactory: TimerFactory {
         return timer
     }
 
-    func scheduleAfter(seconds: Int, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
+    func scheduleAfter(_ interval: DispatchTimeInterval, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
         lastQueueWorkWasScheduledOn = queue
         
-        scheduledWork.append((seconds, closure))
+        scheduledWork.append((interval, closure))
         workWasScheduled?()
     }
 }

@@ -22,14 +22,18 @@ typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshError>) 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `start()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
 final class ExtensionCertificateRefreshManager {
-    fileprivate static let refreshWaitTimeoutInSeconds: Int = 2 * 60
-
-    /// Check certificate every this number of seconds
-    private let checkInterval: TimeInterval = 2 * 60
-
-    /// Certificate will be refreshed this number of seconds earlier than requested to lessen the possibility of refreshing it by both app and extension.
-    /// Its better for this time to be greater than value of `checkInterval`, so check happens at least once during this period.
-    private let refreshEarlierBy: TimeInterval = -3 * 60
+    /// All intervals are in seconds unless otherwise mentioned.
+    struct Intervals {
+        /// How long to wait for another enqueued operation to complete before timing it out.
+        var refreshWaitTimeout: DispatchTimeInterval = .seconds(2 * 60)
+        /// Check certificate every this number of seconds
+        var checkInterval: TimeInterval = 2 * 60
+        /// Certificate will be refreshed this number of seconds earlier than requested to lessen the possibility of
+        /// refreshing it by both app and extension. It's better for this time to be greater than value of
+        /// `checkInterval`, so check happens at least once during this period.
+        var refreshEarlierBy: TimeInterval = -3 * 60
+    }
+    fileprivate static var intervals = Intervals()
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
@@ -87,8 +91,8 @@ final class ExtensionCertificateRefreshManager {
     /// If the cert refresh manager's session expires, this function needs to be called with a forked session selector
     /// in order to start it back up again with a fresh API session.
     public func newSession(withSelector selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
-        let timeOutInterval = ExtensionCertificateRefreshManager.refreshWaitTimeoutInSeconds
-        guard semaphore.wait(wallTimeout: .now() + .seconds(timeOutInterval)) == .success else {
+        let timeOutInterval = Self.intervals.refreshWaitTimeout
+        guard semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
             assertionFailure("Timed out waiting for semaphore while starting new session")
             completionHandler(.failure(CertificateRefreshError.timedOut))
             return
@@ -148,7 +152,7 @@ final class ExtensionCertificateRefreshManager {
         }
 
         // and the certificate isn't going to expire anytime soon, then...
-        guard Date() < storedCert.refreshTime.addingTimeInterval(refreshEarlierBy) else {
+        guard Date() < storedCert.refreshTime.addingTimeInterval(Self.intervals.refreshEarlierBy) else {
             log.info("Certificate might expire soon or has already expired, refreshing.")
             return true
         }
@@ -233,7 +237,7 @@ final class ExtensionCertificateRefreshManager {
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        timer = timerFactory.scheduledTimer(runAt: Date(), repeating: checkInterval, queue: workQueue) { [weak self] in
+        timer = timerFactory.scheduledTimer(runAt: Date(), repeating: Self.intervals.checkInterval, queue: workQueue) { [weak self] in
             let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
             
             self?.checkRefreshCertificateNow(features: features, completion: { result in
@@ -284,8 +288,8 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
             return
         }
 
-        let timeOutInterval = ExtensionCertificateRefreshManager.refreshWaitTimeoutInSeconds
-        guard manager.semaphore.wait(wallTimeout: .now() + .seconds(timeOutInterval)) == .success else {
+        let timeOutInterval = ExtensionCertificateRefreshManager.intervals.refreshWaitTimeout
+        guard manager.semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
             assertionFailure("Timed out waiting for semaphore while performing certificate refresh")
             finish(.failure(.timedOut))
             return
