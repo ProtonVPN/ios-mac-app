@@ -25,20 +25,20 @@ import vpncore
 
 class TimeIntervalTests: XCTestCase {
     
-    func testRendersAsString() throws {
+    func testRendersasColonSeparatedString() throws {
         let minute: TimeInterval = 60
         let hour = 60 * minute
         let day = 24 * hour
 
-        XCTAssertEqual(TimeInterval(1).asString,              "00:00:01")
-        XCTAssertEqual(minute.asString,                       "00:01:00")
-        XCTAssertEqual(TimeInterval(61).asString,             "00:01:01")
-        XCTAssertEqual(TimeInterval(59).asString,             "00:00:59")
-        XCTAssertEqual(hour.asString,                         "01:00:00")
-        XCTAssertEqual((hour + 1).asString,                   "01:00:01")
-        XCTAssertEqual((hour + 61).asString,                  "01:01:01")
-        XCTAssertEqual((1 * day + 1 * hour + 61).asString,    "01:01:01:01")
-        XCTAssertEqual((2 * day + 25 * hour + 61 * minute + 30).asString, "03:02:01:30")
+        XCTAssertEqual(TimeInterval(1).asColonSeparatedString,              "00:00:01")
+        XCTAssertEqual(minute.asColonSeparatedString,                       "00:01:00")
+        XCTAssertEqual(TimeInterval(61).asColonSeparatedString,             "00:01:01")
+        XCTAssertEqual(TimeInterval(59).asColonSeparatedString,             "00:00:59")
+        XCTAssertEqual(hour.asColonSeparatedString,                         "01:00:00")
+        XCTAssertEqual((hour + 1).asColonSeparatedString,                   "01:00:01")
+        XCTAssertEqual((hour + 61).asColonSeparatedString,                  "01:01:01")
+        XCTAssertEqual((1 * day + 1 * hour + 61).asColonSeparatedString,    "01:01:01:01")
+        XCTAssertEqual((2 * day + 25 * hour + 61 * minute + 30).asColonSeparatedString, "03:02:01:30")
     }
 
 }

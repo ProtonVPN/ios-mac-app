@@ -53,12 +53,17 @@ extension VpnManager {
         vpnAuthentication.loadAuthenticationData { [weak self] result in
             switch result {
             case .failure(let error):
-                log.error("Failed to initialize local agent because of missing authentication data", category: .localAgent, event: .error)
-                let nsError = error as NSError
-                if nsError == ProtonVpnErrorConst.vpnCredentialsMissing {
+                log.error("Failed to initialize local agent because of missing authentication data",
+                          category: .localAgent, event: .error, metadata: ["error": .string(.init(describing: error))])
+                guard let remoteClientError = error as? AuthenticationRemoteClientError else {
+                    return
+                }
+
+                switch remoteClientError {
+                case .needNewKeys:
                     self?.reconnectWithNewKeyAndCertificate()
-                } else if nsError.code == 429 || nsError.code == 85092 {
-                    self?.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                case .tooManyCertRequests(let retryAfter):
+                    self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                 }
             case let .success(data):
                 connect(data)
@@ -88,9 +93,17 @@ extension VpnManager {
             case let .success(data):
                 completion(data)
             case let .failure(error):
-                guard (error as NSError) != ProtonVpnErrorConst.vpnCredentialsMissing else {
-                    self?.reconnectWithNewKeyAndCertificate()
-                    return
+                log.error("Failed to refresh certificate in local agent",
+                          category: .localAgent, event: .error,
+                          metadata: ["error": .string(.init(describing: error))])
+
+                if let remoteClientError = error as? AuthenticationRemoteClientError {
+                    switch remoteClientError {
+                    case .needNewKeys:
+                        self?.reconnectWithNewKeyAndCertificate()
+                    case .tooManyCertRequests(let retryAfter):
+                        self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
+                    }
                 }
 
                 log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting", category: .localAgent, event: .error)
@@ -248,11 +261,19 @@ extension VpnManager: LocalAgentDelegate {
         vpnAuthentication.refreshCertificates(features: features, completion: { [weak self] result in
             switch result {
             case .failure(let error):
-                let nsError = error as NSError
-                if nsError == ProtonVpnErrorConst.vpnCredentialsMissing {
+                log.error("Failed to refresh certificate in local agent after receiving features",
+                          category: .localAgent, event: .error,
+                          metadata: ["error": .string(.init(describing: error))])
+
+                guard let remoteClientError = error as? AuthenticationRemoteClientError else {
+                    return
+                }
+
+                switch remoteClientError {
+                case .needNewKeys:
                     self?.reconnectWithNewKeyAndCertificate()
-                } else if nsError.code == 429 || nsError.code == 85092 {
-                    self?.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                case .tooManyCertRequests(let retryAfter):
+                    self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                 }
             case .success:
                 break

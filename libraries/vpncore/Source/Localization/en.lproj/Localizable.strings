@@ -1707,7 +1707,8 @@
 
 "_vpnauth_too_many_certs_title" = "Authentication error";
 "_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
-"_vpnauth_too_many_certs_retry_after" = "You reached the maximum number of setting changes. Please try again after at least %@ minutes."
+"_vpnauth_too_many_certs_retry_after_1_minute" = "You reached the maximum number of setting changes. Please try again after at least 1 minute.";
+"_vpnauth_too_many_certs_retry_after" = "You reached the maximum number of setting changes. Please try again after at least %@ minutes.";
 
 // Downgrade
 

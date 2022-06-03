@@ -111,6 +111,7 @@ enum WireguardProviderRequest: ProviderRequest {
         case ok
         case sessionExpired
         case needKeyRegen
+        case tooManyCertRequests
         case unrecoverableError
     }
 
@@ -118,6 +119,7 @@ enum WireguardProviderRequest: ProviderRequest {
         case ok(data: Data?)
         case errorSessionExpired
         case errorNeedKeyRegeneration
+        case errorTooManyCertRequests(retryAfter: Int?)
         case error(message: String)
 
         private func datagram(_ code: ResponseCode) -> Data {
@@ -132,6 +134,16 @@ enum WireguardProviderRequest: ProviderRequest {
                 return datagram(.sessionExpired)
             case .errorNeedKeyRegeneration:
                 return datagram(.needKeyRegen)
+            case .errorTooManyCertRequests(let retryAfter):
+                var data = datagram(.tooManyCertRequests)
+                if let retryAfter = retryAfter {
+                    let intData = withUnsafeBytes(of: retryAfter) { bufPtr -> Data? in
+                        guard let ptr = bufPtr.baseAddress else { return nil }
+                        return Data(bytes: ptr, count: MemoryLayout<Int>.size)
+                    }
+                    data += intData ?? Data()
+                }
+                return data
             case .error(let message):
                 return datagram(.unrecoverableError) + (message.data(using: .utf8) ?? Data())
             }
@@ -154,16 +166,29 @@ enum WireguardProviderRequest: ProviderRequest {
             case .needKeyRegen:
                 return .errorNeedKeyRegeneration
             case .unrecoverableError:
-                let message: String
-                if data.count > 1 {
-                    message = String(data: data[1...], encoding: .utf8) ?? ""
-                } else {
-                    message = ""
-                }
-                return .error(message: message)
+                return .error(message: decodeMessage(data: data))
+            case .tooManyCertRequests:
+                return .errorTooManyCertRequests(retryAfter: decodeInteger(Int.self, data: data))
             case nil:
                 throw ProviderMessageError.unknownResponse
             }
+        }
+    }
+
+    private static func decodeMessage(data: Data) -> String {
+        guard data.count > 1 else {
+            return ""
+        }
+        return String(data: data[1...], encoding: .utf8) ?? ""
+    }
+
+    private static func decodeInteger<N: BinaryInteger>(_ type: N.Type, data: Data) -> N? {
+        let width = MemoryLayout<N>.size
+        guard data.count == 1 + width else { return nil }
+
+        return data[1...].withUnsafeBytes { bufPtr -> N? in
+            guard let ptr = bufPtr.baseAddress else { return nil }
+            return ptr.bindMemory(to: N.self, capacity: 1).pointee
         }
     }
 

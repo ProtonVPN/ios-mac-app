@@ -31,6 +31,7 @@ public extension TimeInterval {
         Self(days) * .hours(24)
     }
 
+    // swiftlint:disable large_tuple
     var components: (days: Int, hours: Int, minutes: Int, seconds: Int) {
         let days = Int(self) / (60 * 60 * 24)
         let hours = Int(self) / (60 * 60) % 24
@@ -39,6 +40,7 @@ public extension TimeInterval {
 
         return (days, hours, minutes, seconds)
     }
+    // swiftlint:enable large_tuple
 
     var asColonSeparatedString: String {
         let time = components

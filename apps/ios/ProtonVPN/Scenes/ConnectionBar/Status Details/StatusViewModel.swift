@@ -71,10 +71,10 @@ class StatusViewModel {
     private var currentTime: String {
         let time: TimeInterval
         guard case AppState.connected = appStateManager.state else {
-            return TimeInterval(0).asString
+            return TimeInterval(0).asColonSeparatedString
         }
         time = Date().timeIntervalSince(connectedDate)
-        return time.asString
+        return time.asColonSeparatedString
     }
     
     init(factory: Factory) {

@@ -161,6 +161,11 @@ extension VpnAuthenticationManager: VpnAuthentication {
     }
 }
 
+public enum AuthenticationRemoteClientError: Error {
+    case needNewKeys
+    case tooManyCertRequests(retryAfter: TimeInterval?)
+}
+
 public final class VpnAuthenticationRemoteClient {
     private var connectionProvider: ProviderMessageSender?
     private let sessionService: SessionService
@@ -191,7 +196,9 @@ public final class VpnAuthenticationRemoteClient {
     /// will then authenticate with the API, establish its session, and tell the app that it's ready to try again,
     /// at which point the app is welcome to do so. When the network extension returns success after being asked to refresh
     /// the certificate, the updated certificate should be available in the keychain.
-    private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures?, retryingForExpiredSessions: Bool = true, completionHandler: @escaping CertificateRefreshCompletion) {
+    private func promptExtensionForCertificateRefresh(features: VPNConnectionFeatures?,
+                                                      retryingForExpiredSessions: Bool = true,
+                                                      completionHandler: @escaping CertificateRefreshCompletion) {
         guard let connectionProvider = connectionProvider else {
             log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.")
             completionHandler(.failure(ProviderMessageError.sendingError))
@@ -215,27 +222,43 @@ public final class VpnAuthenticationRemoteClient {
                 case .error(let message):
                     completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
                 case .errorSessionExpired:
-                    self?.pushSelectorToProvider { [weak self] pushResult in
-                        if case let .failure(error) = pushResult {
-                            completionHandler(.failure(error))
-                            return
-                        }
-                        guard retryingForExpiredSessions else {
-                            completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
-                            return
-                        }
-                        self?.promptExtensionForCertificateRefresh(features: features,
-                                                                   retryingForExpiredSessions: false,
-                                                                   completionHandler: completionHandler)
-                    }
+                    self?.handleSessionExpired(features: features,
+                                               retryingForExpiredSessions: retryingForExpiredSessions,
+                                               completionHandler: completionHandler)
                 case .errorNeedKeyRegeneration:
                     self?.authenticationStorage.deleteKeys()
                     self?.authenticationStorage.deleteCertificate()
-                    completionHandler(.failure(ProtonVpnErrorConst.vpnCredentialsMissing))
+                    completionHandler(.failure(AuthenticationRemoteClientError.needNewKeys))
+                case .errorTooManyCertRequests(let retryAfter):
+                    if let retryAfter = retryAfter {
+                        completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: TimeInterval(retryAfter))))
+                    } else {
+                        completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
+                    }
                 }
             case .failure(let error):
                 completionHandler(.failure(error))
             }
+        }
+    }
+
+    /// Handle the session expiring in the network extension by forking a new API session, pushing that session selector
+    /// to the provider, and then prompting the extension to once again renew its certificate.
+    private func handleSessionExpired(features: VPNConnectionFeatures?,
+                                      retryingForExpiredSessions: Bool,
+                                      completionHandler: @escaping CertificateRefreshCompletion) {
+        pushSelectorToProvider { [weak self] pushResult in
+            if case let .failure(error) = pushResult {
+                completionHandler(.failure(error))
+                return
+            }
+            guard retryingForExpiredSessions else {
+                completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
+                return
+            }
+            self?.promptExtensionForCertificateRefresh(features: features,
+                                                       retryingForExpiredSessions: false,
+                                                       completionHandler: completionHandler)
         }
     }
 
@@ -263,6 +286,9 @@ public final class VpnAuthenticationRemoteClient {
                         completionHandler(.success(()))
                     case .error(let message):
                         completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
+                    case .errorTooManyCertRequests:
+                        assertionFailure("Received \(response) after trying to renew session?")
+                        completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
                     case .errorSessionExpired, .errorNeedKeyRegeneration:
                         // We should only ever expect these responses for cert refreshes, not for this entry point.
                         // If we're hitting this, something is very wrong.

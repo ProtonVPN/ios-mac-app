@@ -126,6 +126,6 @@ final class ConnectionBarViewModel {
             time = 0
         }
         
-        return time.asString
+        return time.asColonSeparatedString
     }
 }
