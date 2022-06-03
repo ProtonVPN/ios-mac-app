@@ -58,7 +58,7 @@ extension VpnManager {
                 if nsError == ProtonVpnErrorConst.vpnCredentialsMissing {
                     self?.reconnectWithNewKeyAndCertificate()
                 } else if nsError.code == 429 || nsError.code == 85092 {
-                    self.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                    self?.alertService?.push(alert: TooManyCertificateRequestsAlert())
                 }
             case let .success(data):
                 connect(data)
@@ -252,7 +252,7 @@ extension VpnManager: LocalAgentDelegate {
                 if nsError == ProtonVpnErrorConst.vpnCredentialsMissing {
                     self?.reconnectWithNewKeyAndCertificate()
                 } else if nsError.code == 429 || nsError.code == 85092 {
-                    self.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                    self?.alertService?.push(alert: TooManyCertificateRequestsAlert())
                 }
             case .success:
                 break
