@@ -692,8 +692,8 @@ class CertificateRefreshTests: XCTestCase {
         let oldJitterRate = ExtensionAPIService.retryAfterJitterRate
         ExtensionAPIService.retryAfterJitterRate = 0
 
-        let oldJitterDefault = ExtensionAPIService.defaultJitterMaxInSeconds
-        ExtensionAPIService.defaultJitterMaxInSeconds = 0
+        let oldJitterDefault = ExtensionAPIService.intervals.defaultJitterMax
+        ExtensionAPIService.intervals.defaultJitterMax = 0
 
         // immediately run the first timer added.
         timerFactory.timerWasAdded = {
@@ -717,7 +717,7 @@ class CertificateRefreshTests: XCTestCase {
                 return
             }
 
-            XCTAssertEqual(scheduledWork.seconds, 30, "Expected refresh manager to respect 30-second retry-after header")
+            XCTAssertEqual(scheduledWork.interval, .seconds(30), "Expected refresh manager to respect 30-second retry-after header")
         }
 
         // second cert refresh attempt returns 500 + retry after
@@ -737,7 +737,7 @@ class CertificateRefreshTests: XCTestCase {
                 return
             }
 
-            XCTAssertEqual(scheduledWork.seconds, 60, "Expected refresh manager to respect 60-second retry-after header")
+            XCTAssertEqual(scheduledWork.interval, .seconds(60), "Expected refresh manager to respect 60-second retry-after header")
         }
 
         // third cert refresh attempt returns 401, then token refresh endpoint returns 429 + retry after
@@ -758,7 +758,7 @@ class CertificateRefreshTests: XCTestCase {
                 return
             }
 
-            XCTAssertEqual(scheduledWork.seconds, 90, "Expected refresh manager to respect 90-second retry-after header")
+            XCTAssertEqual(scheduledWork.interval, .seconds(90), "Expected refresh manager to respect 90-second retry-after header")
         }
 
         // second token refresh attempt returns 422. manager should stop & wait for app to perform session auth
@@ -809,7 +809,7 @@ class CertificateRefreshTests: XCTestCase {
                 return
             }
 
-            XCTAssertEqual(scheduledWork.seconds, 120, "Expected refresh manager to respect 120-second retry-after header")
+            XCTAssertEqual(scheduledWork.interval, .seconds(120), "Expected refresh manager to respect 120-second retry-after header")
         }
 
         // second session auth attempt returns success, resulting in a successful token refresh,
@@ -839,7 +839,7 @@ class CertificateRefreshTests: XCTestCase {
                 return
             }
 
-            XCTAssertEqual(scheduledWork.seconds, 30, "Expected refresh manager to default to 30-second retry-after interval")
+            XCTAssertEqual(scheduledWork.interval, .seconds(30), "Expected refresh manager to default to 30-second retry-after interval")
         }
 
         // finally, last cert refresh request ends in success.
@@ -853,7 +853,7 @@ class CertificateRefreshTests: XCTestCase {
         }
 
         ExtensionAPIService.retryAfterJitterRate = oldJitterRate
-        ExtensionAPIService.defaultJitterMaxInSeconds = oldJitterDefault
+        ExtensionAPIService.intervals.defaultJitterMax = oldJitterDefault
     }
 
     /// Simulates a network timeout and checks that the request is rescheduled.
@@ -885,7 +885,7 @@ class CertificateRefreshTests: XCTestCase {
             return
         }
 
-        XCTAssertEqual(scheduledWork.seconds, 30, "Expected refresh manager to default to 30-second retry-after interval")
+        XCTAssertEqual(scheduledWork.interval, .seconds(5), "Expected refresh manager to default to 30-second retry-after interval")
     }
 
     /// An operation begins, gets a network timeout, schedules a retry, wakes up, and should realize it's cancelled.

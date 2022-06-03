@@ -28,7 +28,7 @@ protocol TimerFactory {
                         queue: DispatchQueue,
                         _ closure: @escaping (() -> Void)) -> BackgroundTimerProtocol
 
-    func scheduleAfter(seconds: Int,
+    func scheduleAfter(_ interval: DispatchTimeInterval,
                        on queue: DispatchQueue,
                        _ closure: @escaping (() -> Void))
 }
@@ -49,13 +49,13 @@ final class TimerFactoryImplementation: TimerFactory {
         BackgroundTimer(runAt: nextRunTime, repeating: repeating, queue: queue, closure)
     }
 
-    func scheduleAfter(seconds: Int, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
-        queue.asyncAfter(deadline: .now() + .seconds(seconds), execute: closure)
+    func scheduleAfter(_ interval: DispatchTimeInterval, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
+        queue.asyncAfter(deadline: .now() + interval, execute: closure)
     }
 }
 
 final class BackgroundTimer: BackgroundTimerProtocol {
-    private static let repeatingTimerLeewayInSeconds = 10
+    private static let repeatingTimerLeeway: DispatchTimeInterval = .seconds(10)
 
     private let timerSource: DispatchSourceTimer
     private let closure: () -> Void
@@ -65,11 +65,11 @@ final class BackgroundTimer: BackgroundTimerProtocol {
         timerSource = DispatchSource.makeTimerSource(queue: queue)
 
         if let repeating = repeating {
-            timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)),
+            timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow,
                                  repeating: repeating,
-                                 leeway: .seconds(Self.repeatingTimerLeewayInSeconds))
+                                 leeway: Self.repeatingTimerLeeway)
         } else {
-            timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)))
+            timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow)
         }
 
         timerSource.setEventHandler { [weak self] in

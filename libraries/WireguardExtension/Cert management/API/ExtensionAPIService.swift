@@ -23,13 +23,18 @@ import UIKit
 #endif
 
 final class ExtensionAPIService {
-    /// If a retry-after header is not sent, this should be the default retry interval.
-    /// See the documentation page titled "When and How to Retry API Requests."
-    public static var defaultRetryInterval = 30
-    /// If an error is encountered due to network conditions, this is the retry interval to use (without jitter).
-    public static var networkErrorRetryInterval = 5
-    /// If a retry-after header is not sent, this should be the maximum jitter value added to the retry interval.
-    public static var defaultJitterMaxInSeconds = 90
+    /// Intervals are in seconds unless otherwise specified.
+    public struct Intervals {
+        /// If a retry-after header is not sent, this should be the default retry interval.
+        /// See the documentation page titled "When and How to Retry API Requests."
+        var defaultRetryInterval: TimeInterval = 30
+        /// If an error is encountered due to network conditions, this is the retry interval to use (without jitter).
+        var networkErrorRetryInterval: TimeInterval = 5
+        /// If a retry-after header is not sent, this should be the maximum jitter value added to the retry interval.
+        var defaultJitterMax: TimeInterval = 90
+    }
+    public static var intervals = Intervals()
+
     /// If a retry-after header is sent, this value should be multiplied by the retry-after value, and that value
     /// should be the maximum jitter value added to the retry interval.
     /// For example: Retry-After: 60 => 60 * 0.2 = 12, time spent waiting = 60 + random(12)
@@ -123,10 +128,7 @@ final class ExtensionAPIService {
 
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 
-    /// The default amount of time to wait after a request has failed (before adding `jitter`).
-    private static let defaultRetryIntervalInSeconds = 45
-
-    private func jitter(forRetryAfterInterval retryAfter: Int? = nil) -> Int {
+    private func jitter(forRetryAfterInterval retryAfter: TimeInterval? = nil) -> TimeInterval {
         let jitterMax: UInt32
 
         if let retryAfter = retryAfter {
@@ -134,16 +136,16 @@ final class ExtensionAPIService {
                 return 0
             }
 
-            jitterMax = UInt32(Self.retryAfterJitterRate * Double(retryAfter))
+            jitterMax = UInt32(Self.retryAfterJitterRate * retryAfter)
         } else {
-            guard Self.defaultJitterMaxInSeconds > 0 else {
+            guard Self.intervals.defaultJitterMax > 0 else {
                 return 0
             }
 
-            jitterMax = UInt32(Self.defaultJitterMaxInSeconds)
+            jitterMax = UInt32(Self.intervals.defaultJitterMax)
         }
 
-        return Int(arc4random_uniform(jitterMax))
+        return TimeInterval(arc4random_uniform(jitterMax))
     }
 
     // MARK: - Base API request handling
@@ -232,7 +234,7 @@ final class ExtensionAPIService {
                                     errorHandler: @escaping ((Error) -> Void)) {
         log.error("Encountered error while processing request in \(caller): \(error)")
 
-        let retryAfterInterval: Int
+        let retryAfterInterval: TimeInterval
 
         switch error {
         case let .requestError(response, apiError):
@@ -248,16 +250,16 @@ final class ExtensionAPIService {
             // gone screwy on our end and is calling us back with no error and a `nil` HTTPURLResponse, or
             // the API is returning us garbage or incorrectly formatted data. Retry with the default jitter,
             // in case it has something to do with the API.
-            retryAfterInterval = Self.defaultRetryInterval + jitter()
+            retryAfterInterval = Self.intervals.defaultRetryInterval + jitter()
         case .networkError:
             // No need to add jitter here - this state is due to adverse network conditions, and is more
             // likely a local network issue than something related to the API. (Since we're not reaching
             // the API as it is, there's a low chance that we'd DDoS it anyhow.)
-            retryAfterInterval = Self.networkErrorRetryInterval
+            retryAfterInterval = Self.intervals.networkErrorRetryInterval
         }
 
         log.info("Retrying request in \(retryAfterInterval) seconds.")
-        timerFactory.scheduleAfter(seconds: retryAfterInterval, on: requestQueue) {
+        timerFactory.scheduleAfter(.seconds(Int(retryAfterInterval)), on: requestQueue) {
             guard operation?.isCancelled != true else {
                 errorHandler(CertificateRefreshError.cancelled)
                 return
@@ -273,13 +275,13 @@ final class ExtensionAPIService {
                                  asPartOf operation: CertificateRefreshAsyncOperation?,
                                  retryBlock: @escaping (() -> Void),
                                  errorHandler: @escaping ((Error) -> Void)) {
-        let retryAfter = { [weak self] (seconds: Int?) in
+        let retryAfter = { [weak self] (seconds: TimeInterval?) in
             guard let `self` = self else { return }
 
-            let seconds = seconds ?? Self.defaultRetryInterval + self.jitter()
+            let seconds = Int(seconds ?? Self.intervals.defaultRetryInterval + self.jitter())
             log.info("Will retry request in \(seconds) seconds.")
 
-            self.timerFactory.scheduleAfter(seconds: seconds, on: self.requestQueue) {
+            self.timerFactory.scheduleAfter(.seconds(seconds), on: self.requestQueue) {
                 guard operation?.isCancelled != true else {
                     errorHandler(CertificateRefreshError.cancelled)
                     return
@@ -300,7 +302,7 @@ final class ExtensionAPIService {
             sessionExpired = true
             errorHandler(CertificateRefreshError.sessionExpiredOrMissing)
         case .internalError, .tooManyRequests, .serviceUnavailable:
-            guard let retryAfterResponse = response.value(forApiHeader: .retryAfter), let retryAfterInterval = Int(retryAfterResponse) else {
+            guard let retryAfterResponse = response.value(forApiHeader: .retryAfter), let retryAfterInterval = TimeInterval(retryAfterResponse) else {
                 log.error("\(APIHeader.retryAfter) was missing or had an unknown format.")
                 retryAfter(nil)
                 break
