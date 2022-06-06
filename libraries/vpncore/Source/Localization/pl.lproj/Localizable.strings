@@ -392,7 +392,7 @@
 "_error_loads" = "Nie można zaktualizować obciążenia serwera";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "Podczas próby połączenia z interfejsem API Proton VPN weryfikacja certyfikatu TLS nie powiodła się. Twoje obecne połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do interfejsu API został tymczasowo zablokowany.\nAby zalogować się lub uzyskać dostęp do konta, wybierz nową sieć i spróbuj połączyć się ponownie.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Niezabezpieczone połączenie";
@@ -599,7 +599,7 @@
 "_free_trial_about_to_expire_title" = "Twoja darmowa wersja próbna wkrótce wygaśnie!";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from %@:";
+"_free_trial_expired_description" = "Twoje konto zostało obniżone do planu Proton VPN Free.\nUtracisz następujące funkcje planu %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "Twoja darmowa wersja próbna %@";
@@ -2007,7 +2007,7 @@
 "_vpn_accelerator_change_title" = "Zmień ustawienia funkcji VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "Funkcja VPN Accelerator udostępnia zestaw unikalnych technologii zwiększających wydajność, które mogą przyśpieszyć prędkość połączenia VPN do 400%%.\nDowiedz się więcej\n";
+"_vpn_accelerator_description" = "Funkcja VPN Accelerator udostępnia zestaw unikalnych technologii zwiększających wydajność, które mogą przyśpieszyć prędkość połączenia VPN do 400%%.\nDowiedz się więcej";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Dowiedz się więcej";
