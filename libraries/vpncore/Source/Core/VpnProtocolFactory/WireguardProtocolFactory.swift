@@ -96,7 +96,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         return sharedFolderURL.appendingPathComponent(CoreAppConstants.LogFiles.wireGuard)
     }
 
-    /// Tries to flush logs to a logfile. Call handler with true if flush succeeded of false otherwise.
+    /// Tries to flush logs to a logfile. Call handler with true if flush succeeded or false otherwise.
     public func flushLogs(responseHandler: @escaping (_ success: Bool) -> Void) {
         vpnProviderManager(for: .status) { manager, error in
             guard let manager = manager, let connection = (manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession else {

@@ -18,7 +18,7 @@
 
 import Foundation
 
-/// Reads and returns contetc of log file
+/// Reads and returns content of log file
 class FileLogContent: LogContent {
 
     private let file: URL

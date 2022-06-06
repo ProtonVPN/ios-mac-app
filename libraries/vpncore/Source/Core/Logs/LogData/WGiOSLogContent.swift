@@ -18,7 +18,8 @@
 
 import Foundation
 
-/// For WireGuard on iOS if app is connected to WireGuard at the moment and we want to get logs, first of all we should ask WG NE to flush logs to file. Afterward we can proceed as if it's a simple log file.
+/// For WireGuard on iOS, if the app is connected to WireGuard at the moment when we want to get the logs, we should first ask WG NE to flush the logs to a file. 
+/// After that we can proceed as if it's a simple log file.
 class WGiOSLogContent: LogContent {
 
     private var fileLogContent: FileLogContent
