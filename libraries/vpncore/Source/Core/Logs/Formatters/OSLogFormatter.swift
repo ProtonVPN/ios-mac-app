@@ -32,7 +32,12 @@ public class OSLogFormatter: PMLogFormatter {
         if !meta.isEmpty, let metaJsonData = try? jsonEncoder.encode(meta) {
             metaString = String(data: metaJsonData, encoding: .utf8) ?? ""
         }
-        return "\(level.emoji) \(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
+        #if DEBUG
+        let prepend = "\(level.emoji) \(level.stringValue) | "
+        #else
+        let prepend = ""
+        #endif
+        return "\(prepend)\(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
 
 }

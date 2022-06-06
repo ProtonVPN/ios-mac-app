@@ -29,7 +29,7 @@ class LogFilesTemporaryStorage {
 
     private let timeout: TimeInterval
 
-    init(logContentProvider: LogContentProvider, logSources: [LogSource], timeout: TimeInterval = 5) {
+    init(logContentProvider: LogContentProvider, logSources: [LogSource], timeout: TimeInterval = 15) {
         self.logContentProvider = logContentProvider
         self.logSources = logSources
         self.timeout = timeout

@@ -15,7 +15,7 @@ final class LogSelectionViewModel {
     var pushHandler: ((LogSource) -> Void)?
     
     init() {
-        logCells = LogSource.allCases.compactMap { source in
+        logCells = LogSource.visibleAppSources.compactMap { source in
             return TableViewCellModel.pushStandard(title: source.title, handler: {
                 self.pushApplicationLogsViewController(source: source)
             })
