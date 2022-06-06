@@ -97,3 +97,12 @@
 /* Dismiss upsell screen button title */
 "modals_upsell_stay_free" = "Şimdi değil";
 
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Anladım";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Yenilenmiş Proton böyle görünüyor. \nBirçok hizmet, tek amaç. Kişisel gizliliğin doğal sayıldığı internet fikrine hoş geldiniz.";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Güncellenmiş Proton, birleşik koruma";
+

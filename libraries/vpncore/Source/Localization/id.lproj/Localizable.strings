@@ -1809,10 +1809,10 @@
 "_troubleshoot_item_alt_title" = "Izinkan perutean alternatif";
 
 /* (No Comment) */
-"_troubleshoot_item_antivirus_description" = "Mohon nonaktifkan sementara atau hapus perangkat lunak antivirus Anda.";
+"_troubleshoot_item_antivirus_description" = "Nonaktifkan atau hapus perangkat lunak antivirus Anda untuk sementara waktu.";
 
 /* (No Comment) */
-"_troubleshoot_item_antivirus_title" = "Halangan dari Antivirus";
+"_troubleshoot_item_antivirus_title" = "Halangan antivirus";
 
 /* (No Comment) */
 "_troubleshoot_item_gov_description" = "Negara Anda mungkin memblokir akses ke Proton. Coba gunakan Tor untuk mengakses Proton.";
@@ -1821,7 +1821,7 @@
 "_troubleshoot_item_gov_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_gov_title" = "Blokir dari Pemerintah";
+"_troubleshoot_item_gov_title" = "Pemblokiran pemerintah";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_description" = "Coba menyambung kembali ke Proton dari jaringan berbeda (atau Tor).";
@@ -1836,7 +1836,7 @@
 "_troubleshoot_item_nointernet_description" = "Pastikan koneksi internet anda berfungsi.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Tidak ada sambungan Internet";
+"_troubleshoot_item_nointernet_title" = "Tidak ada koneksi internet";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Hubungin kami secara langsung melalui formulir layanan dukungan, email (%@), atau akun Twitter kami.";
@@ -1866,7 +1866,7 @@
 "_troubleshoot_item_proxy_description" = "Nonaktifkan seluruh proxy atau firewall yang aktif, atau hubungi pengelola jaringan Anda.";
 
 /* (No Comment) */
-"_troubleshoot_item_proxy_title" = "Halangan dari Proxy/Firewall";
+"_troubleshoot_item_proxy_title" = "Halangan Proxy/Firewall";
 
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Penyelesaian Masalah";

@@ -1502,7 +1502,7 @@
 "_show_instructions" = "Instructies tonen";
 
 /* (No Comment) */
-"_show_protonvpn" = "Show Proton VPN";
+"_show_protonvpn" = "Toon Proton VPN";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Registreren";
@@ -1759,7 +1759,7 @@
 "_trial_expired_alert_body_iOS" = "Your 7 day free trial of Proton VPN Plus has expired. You can continue to use Proton VPN Free, but if you would like to support the project and have access to more countries and features, please upgrade to a paid plan.";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Proton VPN Plus trial expired";
+"_trial_expired_alert_title_iOS" = "Proton VPN Plus proefperiode verlopen";
 
 /* (No Comment) */
 "_trial_popup_call_to_upgrade" = "To have permanent access to Proton VPN Plus features, you can upgrade your plan.";
@@ -1774,10 +1774,10 @@
 "_trial_popup_explanation" = "Als welkomstgeschenk, heeft u toegang tot een %@, inclusief geavanceerde functies in de eerste paar dagen! Uw proefperiode eindigt over";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "free upgrade to Proton VPN Plus";
+"_trial_popup_free_upgrade" = "upgrade gratis naar Proton VPN Plus";
 
 /* (No Comment) */
-"_trial_popup_full_subscription" = "full Proton VPN subscription";
+"_trial_popup_full_subscription" = "volledig Proton VPN abonnement";
 
 /* Final text:
  
@@ -1785,10 +1785,10 @@
 "_trial_popup_introduction" = "We have given you a %@ which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days.";
 
 /* (No Comment) */
-"_trial_popup_thanks" = "Thank you for using Proton VPN!";
+"_trial_popup_thanks" = "Bedankt voor het gebruik van Proton VPN!";
 
 /* (No Comment) */
-"_trial_popup_title" = "Proton VPN Trial";
+"_trial_popup_title" = "Proton VPN Proef";
 
 /* iOS trial welcome screen */
 "_trial_welcome_description_iOS" = "As a welcome gift you have access to a full Proton VPN subscription including advanced features for the first days!";
@@ -2106,7 +2106,7 @@
 "login_fetch_vpn_data" = "VPN-toegang aan het configureren";
 
 /* (No Comment) */
-"login_summary_button" = "Start using Proton VPN";
+"login_summary_button" = "Begin Proton VPN te gebruiken";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Ongeldige loginmethode. Contacteer ondersteuning.";
