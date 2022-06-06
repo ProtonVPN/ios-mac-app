@@ -18,8 +18,8 @@
 
 import Foundation
 
-/// Class for savinglog to temporary files, so they can be uploaded with a bug report or used in any other way.
-/// Object should be retained as long as you need the files. WHen object is deallocated, temporary files are deleted.
+/// Class for saving logs to temporary files, so they can be uploaded with a bug report or used in any other way.
+/// Object should be retained as long as you need the files. When object is deallocated, temporary files are deleted.
 class LogFilesTemporaryStorage {
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
