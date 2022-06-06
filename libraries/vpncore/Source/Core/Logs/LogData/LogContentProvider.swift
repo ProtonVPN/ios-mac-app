@@ -44,10 +44,17 @@ public class IOSLogContentProvider: LogContentProvider {
         switch source {
         case .app:
             return AppLogContent(folder: folder)
-            // Or os_log provider if ios 15+
+
+        case .osLog:
+            guard #available(iOS 15, *) else {
+                return EmptyLogContent()
+            }
+            return OSLogContent()
+
         case .openvpn:
             let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
             return FileLogContent(file: folder.appendingPathComponent(CoreAppConstants.LogFiles.openVpn))
+
         case .wireguard:
             let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
             return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(CoreAppConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
@@ -75,7 +82,13 @@ public class MacOSLogContentProvider: LogContentProvider {
         switch source {
         case .app:
             return AppLogContent(folder: folder)
-            
+
+        case .osLog:
+            guard #available(macOS 12, *) else {
+                return EmptyLogContent()
+            }
+            return OSLogContent()
+
         case .openvpn:
             return NELogContent(protocolFactory: openVpnProtocolFactory)
 
