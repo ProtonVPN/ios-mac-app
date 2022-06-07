@@ -387,6 +387,8 @@
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
+		E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
+		E9037D31284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
 		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E9380F61283E6BE0008065C8 /* NELogContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F60283E6BE0008065C8 /* NELogContent.swift */; };
@@ -888,6 +890,7 @@
 		E53D64B728115B580060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
+		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
 		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E92CCE3127D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
@@ -1232,6 +1235,7 @@
 		D5D606A52292DC5B00394CF9 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				E9037D2E284F6F0B00151180 /* BugReport */,
 				D5D2957425A5D95E000FBD74 /* Providers */,
 				D59671CC253D5D1E0061A75F /* Announcements */,
 				E19CE84C22C9FC69002595D0 /* State Changes */,
@@ -1357,6 +1361,14 @@
 				E9B32EAFAF2F48F27AE34B86 /* FileLogHandlerTests.swift */,
 			);
 			path = Logs;
+			sourceTree = "<group>";
+		};
+		E9037D2E284F6F0B00151180 /* BugReport */ = {
+			isa = PBXGroup;
+			children = (
+				E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */,
+			);
+			path = BugReport;
 			sourceTree = "<group>";
 		};
 		E935183D2617535600AB4C7C /* Protocols */ = {
@@ -2713,6 +2725,7 @@
 			files = (
 				D5D2958125A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift in Sources */,
 				F307F7B527C38B98004FD4A7 /* NATTypePropertyProviderImplementationTests.swift in Sources */,
+				E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */,
 				F3747C1926D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,
 				F307F7BE27C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
 				D59671FD253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
@@ -2988,6 +3001,7 @@
 			files = (
 				F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */,
 				F307F7B627C38B98004FD4A7 /* NATTypePropertyProviderImplementationTests.swift in Sources */,
+				E9037D31284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */,
 				D5D2957725A5D979000FBD74 /* UserTierProviderImplementationTests.swift in Sources */,
 				F307F7C027C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
 				E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */,

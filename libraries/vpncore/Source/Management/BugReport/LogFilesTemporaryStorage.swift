@@ -27,20 +27,20 @@ class LogFilesTemporaryStorage {
     private let fileManager = FileManager.default
     private var savedFiles: [URL] = []
 
-    init(logContentProvider: LogContentProvider, logSources: [LogSource]) {
+    private let timeout: TimeInterval
+
+    init(logContentProvider: LogContentProvider, logSources: [LogSource], timeout: TimeInterval = 5) {
         self.logContentProvider = logContentProvider
         self.logSources = logSources
-    }
-
-    deinit {
-        log.error("LogFilesTemporaryStorage.deinit")
+        self.timeout = timeout
     }
 
     /// Writes logs to temporary files that can be uploaded to API and saves that list internally to clean up after object is deallocated
+    ///  - Note: `responseHandler` is called on the main thread
     func prepareLogs(responseHandler: @escaping ([URL]) -> Void) {
         assert(savedFiles.isEmpty, "Do not call prepareLogs on a non-clean state")
         let dispatchGroup = DispatchGroup()
-        let queue = DispatchQueue.global(qos: .userInitiated) // For writing to array without race conditions
+        let queue = DispatchQueue(label: "ch.protonvpn.prepare-logs", qos: .userInitiated) // For writing to array without race conditions
 
         logSources.forEach { source in
             dispatchGroup.enter()
@@ -72,8 +72,15 @@ class LogFilesTemporaryStorage {
             }
         }
 
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            responseHandler(self.savedFiles)
+        // In case of LogData class not returning the result, lets stop waiting for dispatchGroup and return what was gathered up to now.
+        // `dispatchGroup.wait` is synchronous method, it has to wait on a separate queue.
+        DispatchQueue.global(qos: .userInitiated).async {
+            if case .timedOut = dispatchGroup.wait(timeout: .now() + self.timeout) {
+                log.error("Saving logs to temporary files timed out. Returning everything that was gathered up to now.", category: .app, event: .error)
+            }
+            DispatchQueue.main.async {
+                responseHandler(self.savedFiles)
+            }
         }
     }
 
