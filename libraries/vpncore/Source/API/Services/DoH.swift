@@ -33,7 +33,9 @@ public class DoHVPN: DoH, ServerConfig {
     public let defaultPath: String = ""
     public var defaultHost: String {
         #if RELEASE
-        return liveURL
+        if !Bundle.isTestflightBeta {
+            return liveURL
+        }
         #endif
 
         return customHost ?? liveURL
