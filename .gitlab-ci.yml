@@ -318,10 +318,13 @@ ios_unit_tests:
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+    - slather coverage -x --output-directory fastlane/test_output --scheme ProtonVPN-iOS --workspace ProtonVPN.xcworkspace apps/ios/iOS.xcodeproj
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
+      cobertura:
+        - fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
