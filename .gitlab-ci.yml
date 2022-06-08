@@ -430,6 +430,7 @@ macos_unit_tests:
     - fastlane create_macos_keychain
     - fastlane macos_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
+    - slather coverage -x --output-directory fastlane/test_output --scheme ProtonVPN-macOS --workspace ProtonVPN.xcworkspace apps/macos/macOS.xcodeproj
   after_script: # Cleanup
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
@@ -444,6 +445,8 @@ macos_unit_tests:
       - fastlane/test_output/
     expire_in: 3 days
     reports:
+      cobertura:
+        - fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
