@@ -193,10 +193,13 @@ core_ios_unit_tests:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
+    - slather coverage -x --output-directory fastlane/test_output --scheme vpncore-ios --workspace ProtonVPN.xcworkspace libraries/vpncore/Core.xcodeproj
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
+      cobertura: 
+        - fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
@@ -277,10 +280,13 @@ core_macos_unit_tests:
     - fastlane create_macos_keychain
     - fastlane macos_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
+    - slather coverage -x --output-directory fastlane/test_output --scheme vpncore-macos --workspace ProtonVPN.xcworkspace libraries/vpncore/Core.xcodeproj
   after_script: # Cleanup
     - fastlane delete_macos_keychain
   artifacts:
     reports:
+      cobertura:
+        - fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
