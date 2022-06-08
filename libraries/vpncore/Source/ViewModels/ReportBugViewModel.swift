@@ -117,13 +117,15 @@ open class ReportBugViewModel {
             return
         }
 
-        guard !logsEnabled else {
+        guard logsEnabled else {
+            self.bug.files = []
             send(report: bug, completion: completion)
             return
         }
 
         let tempLogFilesStorage = LogFilesTemporaryStorage(logContentProvider: logContentProvider, logSources: logSources)
         tempLogFilesStorage.prepareLogs { files in
+            self.bug.files = files
             self.send(report: self.bug) { result in
                 tempLogFilesStorage.deleteTempLogs()
                 completion(result)
