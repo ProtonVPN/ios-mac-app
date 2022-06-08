@@ -157,7 +157,7 @@ class SystemExtensionsStateCheck {
             return
         }
 
-        log.debug("Checking system extensions because \(self.propertiesManager.connectionProtocol) is set sa default protocol")
+        log.debug("Checking system extensions because \(self.propertiesManager.connectionProtocol) is set as default protocol")
 
         startCheckAndInstallIfNeeded(userInitiated: false) { result in
             switch result {
