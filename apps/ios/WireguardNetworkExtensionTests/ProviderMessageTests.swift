@@ -56,7 +56,9 @@ class ProviderMessageTests: XCTestCase {
                                                 safeMode: true)),
             .refreshCertificate(features: nil),
             .flushLogsToFile,
-            .setApiSelector("SELECTOR")
+            .setApiSelector("SELECTOR", withSessionCookie: "YUM YUM COOKIE"),
+            .setApiSelector("SELECTOR", withSessionCookie: nil),
+            .setApiSelector("abcdefghijklmnopqrstuvwxyz", withSessionCookie: "ABCDEFGHIJKLMNOP@QRSTUVWXYZ")
         ]
 
         for message in messages {

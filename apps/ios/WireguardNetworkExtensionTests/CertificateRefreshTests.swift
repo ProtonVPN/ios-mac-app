@@ -25,6 +25,7 @@ class CertificateRefreshTests: XCTestCase {
     let expectationTimeout: TimeInterval = 10
 
     static let sessionSelector = "SELECTOR"
+    static let sessionCookie = "COOOKIEE, OM NOM NOM"
     static let defaultVpnFeatures = VPNConnectionFeatures(netshield: .off,
                                                           vpnAccelerator: true,
                                                           bouncing: "bouncing",
@@ -350,7 +351,7 @@ class CertificateRefreshTests: XCTestCase {
                                                \.validUntil: testValues.validUntil]),
                                            expectationToFulfill: expectations.thirdCertRefresh)
 
-        manager.newSession(withSelector: Self.sessionSelector) { result in
+        manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in
             defer { expectations.managerRestart.fulfill() }
 
             if case let .failure(error) = result {
@@ -789,7 +790,7 @@ class CertificateRefreshTests: XCTestCase {
             }
 
             sessionAuthCallback = sessionAuthError503WithRetryAfter
-            manager.newSession(withSelector: Self.sessionSelector) { result in
+            manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in
                 if case let .failure(error) = result {
                     XCTFail("Should not return error here. This should be called with success when the " +
                             "completion handler is rescheduled and returns successfully (got '\(error)')")

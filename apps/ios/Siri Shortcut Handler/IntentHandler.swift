@@ -51,7 +51,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
-        let sessionService = SessionServiceImplementation(appInfoFactory: appInfoFactory, networking: networking)
+        let sessionService = SessionServiceImplementation(appInfoFactory: appInfoFactory, networking: networking, doh: doh)
         let vpnManager = VpnManager(ikeFactory: ikeFactory,
                                     openVpnFactory: openVpnFactory,
                                     wireguardProtocolFactory: wireguardVpnFactory,

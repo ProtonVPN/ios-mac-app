@@ -23,6 +23,8 @@ public protocol SessionServiceFactory {
 }
 
 public protocol SessionService {
+    var sessionCookie: String? { get }
+
     func getUpgradePlanSession(completion: @escaping (String) -> Void)
     func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping (Result<String, Error>) -> Void)
 }
@@ -30,20 +32,32 @@ public protocol SessionService {
 public final class SessionServiceImplementation: SessionService {
     static let requestTimeout: TimeInterval = 3
 
-    public typealias Factory = AppInfoFactory & NetworkingFactory
+    public typealias Factory = AppInfoFactory & NetworkingFactory & DoHVPNFactory
     private let appInfoFactory: AppInfoFactory
+    private let doh: DoHVPN
     private let networking: Networking
+
+    public var sessionCookie: String? {
+        guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
+
+        return HTTPCookieStorage.shared
+            .cookies(for: apiUrl)?
+            .first(where: { $0.name == UserProperties.sessionIdCookieName })?
+            .value
+    }
 
     public init(factory: Factory) {
         self.appInfoFactory = factory
 
         self.networking = factory.makeNetworking()
+        self.doh = factory.makeDoHVPN()
     }
 
     // Exists for contexts that are allergic to factories
-    public init(appInfoFactory: AppInfoFactory, networking: Networking) {
+    public init(appInfoFactory: AppInfoFactory, networking: Networking, doh: DoHVPN) {
         self.networking = networking
         self.appInfoFactory = appInfoFactory
+        self.doh = doh
     }
 
     public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
