@@ -89,7 +89,7 @@ class PopUpViewController: NSViewController {
             leadingDescriptionConstraint.constant = 20
         }
         
-        // HACK: Because the text view is inside a scroll view, it doesn't correctly. To address this, the text view is aligned to the text field, which forces the resizing of the dialog.
+        // HACK: Because the text view is inside a scroll view, it doesn't resize correctly. To address this, the text view is aligned to the text field, which forces the resizing of the dialog.
         popUpDescription.attributedStringValue = viewModel.attributedDescription
         
         popUpDescriptionTextView.backgroundColor = .color(.background, .weak)
