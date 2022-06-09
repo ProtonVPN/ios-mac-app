@@ -26,8 +26,24 @@ include:
     ref: feat/github-app
     file: '/jobs/release.gitlab-ci.yml'
 
-core_lint:
+  - template: Code-Quality.gitlab-ci.yml
+
+code_quality:
+  dependencies: []
   stage: linting
+  artifacts:
+    paths:
+      - codequality_report.json
+    reports:
+      codequality: codequality_report.json
+  script:    
+    - fastlane/code_quality.sh
+  tags:
+    - iOS_ARM  
+
+core_lint:  
+  stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
@@ -45,6 +61,7 @@ core_lint:
 
 ios_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
@@ -62,6 +79,7 @@ ios_lint:
 
 macos_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - macOS_ARM
   script:
@@ -75,11 +93,11 @@ macos_lint:
     reports:
       junit:
         - swiftlint.xml
-    expire_in: 90 days
-    
+    expire_in: 90 days    
     
 bugreport_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
@@ -97,6 +115,7 @@ bugreport_lint:
 
 onboarding_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
@@ -114,6 +133,7 @@ onboarding_lint:
 
 search_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
@@ -131,6 +151,7 @@ search_lint:
 
 modals_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
@@ -148,6 +169,7 @@ modals_lint:
 
 review_lint:
   stage: linting
+  dependencies: [code_quality]
   tags:
     - iOS_ARM
   script:
