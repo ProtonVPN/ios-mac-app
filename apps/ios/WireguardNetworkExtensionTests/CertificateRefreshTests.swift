@@ -894,7 +894,8 @@ class CertificateRefreshTests: XCTestCase {
         let expectations = (
             certRefreshRequest: XCTestExpectation(description: "Cert refresh request"),
             certRefreshReschedule: XCTestExpectation(description: "Cert refresh request was rescheduled"),
-            certRefreshCancelled: XCTestExpectation(description: "Cert refresh should be cancelled")
+            certRefreshCancelled: XCTestExpectation(description: "Cert refresh should be cancelled"),
+            managerStop: XCTestExpectation(description: "Manager should stop")
         )
 
         certRefreshCallback = { request, completionHandler in
@@ -926,7 +927,9 @@ class CertificateRefreshTests: XCTestCase {
             self.certRefreshCallback = { _, _ in
                 XCTFail("Shouldn't have tried to refresh; operation should have been cancelled")
             }
+            expectations.managerStop.fulfill()
         }
+        wait(for: [expectations.managerStop], timeout: expectationTimeout)
 
         timerFactory.runAllScheduledWork()
         wait(for: [expectations.certRefreshCancelled], timeout: expectationTimeout)
