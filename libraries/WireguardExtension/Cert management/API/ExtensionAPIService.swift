@@ -58,7 +58,7 @@ final class ExtensionAPIService {
 
     /// Start a new session with the API service. This function should only be called by the refresh manager and the
     /// ExtensionAPIService. Call `startSession(withSelector:)` on `ExtensionCertificateRefreshManager` instead.
-    func startSession(withSelector selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    func startSession(withSelector selector: String, sessionCookie: String?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         let authRequest = SessionAuthRequest(params: .init(selector: selector))
 
         // Avoid starting multiple sessions, unnecessarily approaching our client session limit.
@@ -67,7 +67,12 @@ final class ExtensionAPIService {
             return
         }
 
-        request(authRequest) { [weak self] result in
+        var headers: [(APIHeader, String?)] = []
+        if let sessionCookie = sessionCookie {
+            headers.append((.cookie, "Session-Id=\(sessionCookie)"))
+        }
+
+        request(authRequest, headers: headers) { [weak self] result in
             switch result {
             case .success(let refreshTokenResponse):
                 // This endpoint only gives us a refresh token with a limited lifetime - immediately turn around and
@@ -94,7 +99,9 @@ final class ExtensionAPIService {
                 }
             case .failure(let error):
                 self?.handleRequestError(error: error, retryBlock: {
-                    self?.startSession(withSelector: selector, completionHandler: completionHandler)
+                    self?.startSession(withSelector: selector,
+                                       sessionCookie: sessionCookie,
+                                       completionHandler: completionHandler)
                 }, errorHandler: { unhandledError in
                     completionHandler(.failure(unhandledError))
                 })
@@ -155,7 +162,7 @@ final class ExtensionAPIService {
 
     // MARK: - Base API request handling
     private func request<R: APIRequest>(_ request: R,
-                                        headers: [APIHeader: String?] = [:],
+                                        headers: [(APIHeader, String?)] = [],
                                         completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {
         log.info("Proceeding with request at url \(request.endpointUrl)")
         var urlRequest = makeUrlRequest(request)
@@ -304,6 +311,11 @@ final class ExtensionAPIService {
 
         switch code {
         case .sessionExpired:
+            guard apiError?.knownErrorCode != .invalidSelector else {
+                log.info("Got invalid selector.")
+                errorHandler(CertificateRefreshError.internalError(message: "Invalid selector"))
+                return
+            }
             sessionExpired = true
             errorHandler(CertificateRefreshError.sessionExpiredOrMissing)
         case .internalError, .serviceUnavailable, .tooManyRequests:
@@ -394,8 +406,8 @@ final class ExtensionAPIService {
                                                                                   deviceName: appInfo.modelName,
                                                                                   features: operation.features))
 
-        request(certificateRequest, headers: [.authorization: "Bearer \(authCredentials.accessToken)",
-                                              .sessionId: authCredentials.sessionId]) { [weak self] result in
+        request(certificateRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
+                                              (.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
             case .success(let certificate):
                 completionHandler(.success(certificate))
@@ -437,7 +449,7 @@ final class ExtensionAPIService {
 
         let tokenRequest = TokenRefreshRequest(params: .withRefreshToken(authCredentials.refreshToken))
 
-        request(tokenRequest, headers: [.sessionId: authCredentials.sessionId]) { [weak self] result in
+        request(tokenRequest, headers: [(.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
             case .success(let response):
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)

@@ -176,8 +176,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             }
         case .flushLogsToFile:
             flushLogsToFile()
-        case .setApiSelector(let selector):
-            certificateRefreshManager.newSession(withSelector: selector) { result in
+        case let .setApiSelector(selector, sessionCookie):
+            certificateRefreshManager.newSession(withSelector: selector, sessionCookie: sessionCookie) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))

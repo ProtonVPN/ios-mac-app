@@ -23,6 +23,7 @@
 import Foundation
 
 public struct UserProperties {
+    public static let sessionIdCookieName = "Session-Id"
     
     public let email: String
     public let username: String

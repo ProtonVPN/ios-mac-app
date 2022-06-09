@@ -53,6 +53,7 @@ extension APIRequest {
 }
 
 public enum APIHeader: String {
+    case cookie = "Cookie"
     case authorization = "Authorization"
     case sessionId = "x-pm-uid"
     case appVersion = "x-pm-appversion"
@@ -129,8 +130,9 @@ extension HTTPURLResponse {
 }
 
 enum APIJSONErrorCode: Int, Error {
-    case invalidRefreshToken = 10013
+    case invalidSelector = 2001
     case fingerprintConflict = 2500
+    case invalidRefreshToken = 10013
     case tooManyCertRefreshRequests = 85092
 }
 

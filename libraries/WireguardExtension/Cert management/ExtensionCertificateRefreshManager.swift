@@ -93,7 +93,7 @@ final class ExtensionCertificateRefreshManager {
 
     /// If the cert refresh manager's session expires, this function needs to be called with a forked session selector
     /// in order to start it back up again with a fresh API session.
-    public func newSession(withSelector selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    public func newSession(withSelector selector: String, sessionCookie: String?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         let timeOutInterval = Self.intervals.refreshWaitTimeout
         guard semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
             assertionFailure("Timed out waiting for semaphore while starting new session")
@@ -101,14 +101,17 @@ final class ExtensionCertificateRefreshManager {
             return
         }
 
-        apiService.startSession(withSelector: selector) { [weak self] result in
+        apiService.startSession(withSelector: selector, sessionCookie: sessionCookie) { [weak self] result in
             defer { self?.semaphore.signal() }
 
-            // If we're starting a new session, we need to get a new certificate to avoid getting a 409 Key Conflict error.
-            guard let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures() else {
+            if case let .failure(error) = result {
+                log.error("Could not start session due to error: \(error)")
+                completionHandler(result)
                 return
             }
 
+            let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
+            // If we're starting a new session, we need to get a new certificate to avoid getting a 409 Key Conflict error.
             self?.checkRefreshCertificateNow(features: features, forceRefreshDueToExpiredSession: true, completion: { result in
                 completionHandler(result.mapError({ $0 }))
             })

@@ -264,7 +264,10 @@ public final class VpnAuthenticationRemoteClient {
 
     /// Fork a child API session in the network extension that will manage this connection.
     ///
-    /// This allows the network extension to refresh certificates separately from the main application.
+    /// The network extension maintains its own API session. When we ask it to refresh certificates for us, it
+    /// may find that its session has expired, or that it does not have any session saved in its keychain. In such
+    /// a case, it will reply to refresh requests with `.errorSessionExpired`, at which point it will be the
+    /// main app's responsability to (re)fork its session and send the selector to the extension.
     private func pushSelectorToProvider(extensionContext: AppContext = .wireGuardExtension, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         sessionService.getExtensionSessionSelector(extensionContext: extensionContext) { [weak self] apiResult in
             guard case let .success(selector) = apiResult else {
@@ -274,11 +277,14 @@ public final class VpnAuthenticationRemoteClient {
                 return
             }
 
-            // The network extension maintains its own API session. When we ask it to refresh certificates for us, it
-            // may find that its session has expired, or that it does not have any session saved in its keychain. In such
-            // a case, it will reply to refresh requests with `.errorSessionExpired`, at which point it will be the
-            // main app's responsability to (re)fork its session and send the selector to the extension.
-            self?.connectionProvider?.send(WireguardProviderRequest.setApiSelector(selector), completion: { result in
+            // If we get a success condition, we should look at the session cookie, because the network extension is going
+            // to need to send it to the server to avoid getting a 422. Sending a session cookie is required if the two
+            // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.
+            // The network extension will always send requests from behind the tunnel.
+            let sessionId = self?.sessionService.sessionCookie
+            let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: sessionId)
+
+            self?.connectionProvider?.send(request, completion: { result in
                 switch result {
                 case .success(let response):
                     switch response {

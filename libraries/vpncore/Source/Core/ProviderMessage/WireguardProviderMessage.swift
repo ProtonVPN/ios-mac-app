@@ -37,7 +37,7 @@ enum WireguardProviderRequest: ProviderRequest {
     /// Flush extension's logs to its log file.
     case flushLogsToFile
     /// Pass a selector representing an API session recently forked by the app.
-    case setApiSelector(String)
+    case setApiSelector(String, withSessionCookie: String?)
     /// Refresh the certificate used by the LocalAgent in the main app, and
     /// save it to the keychain before calling the completion.
     case refreshCertificate(features: VPNConnectionFeatures?)
@@ -56,8 +56,16 @@ enum WireguardProviderRequest: ProviderRequest {
             return datagram(.getRuntimeTunnelConfiguration)
         case .flushLogsToFile:
             return datagram(.flushLogsToFile)
-        case .setApiSelector(let selector):
-            return datagram(.setApiSelector) + (selector.data(using: .utf8) ?? Data())
+        case let .setApiSelector(selector, sessionCookie):
+            let selectorData = selector.data(using: .utf8) ?? Data()
+            assert(selectorData.count < UInt8.max, "Selector too large to fit in serialized data")
+            let cookieData = sessionCookie?.data(using: .utf8) ?? Data()
+            assert(cookieData.count < UInt8.max, "Session cookie too large to fit in serialized data")
+
+            let data = datagram(.setApiSelector) +
+                Data([UInt8(selectorData.count)]) + selectorData +
+                Data([UInt8(cookieData.count)]) + cookieData
+            return data
         case .refreshCertificate(let features):
             let encoder = JSONEncoder()
             var featuresData: Data?
@@ -87,11 +95,7 @@ enum WireguardProviderRequest: ProviderRequest {
         case .flushLogsToFile:
             return .flushLogsToFile
         case .setApiSelector:
-            guard let message = Self.messageData(rawData: data),
-                  let selector = String(data: message, encoding: .utf8) else {
-                throw ProviderMessageError.decodingError
-            }
-            return .setApiSelector(selector)
+            return try decodeApiSelector(data)
         case .refreshCertificate:
             var features: VPNConnectionFeatures?
             if let messageData = Self.messageData(rawData: data),
@@ -105,6 +109,22 @@ enum WireguardProviderRequest: ProviderRequest {
         case .restartRefreshingCerts:
             return .restartRefreshes
         }
+    }
+
+    static func decodeApiSelector(_ data: Data) throws -> Self {
+        guard let messageData = Self.messageData(rawData: data),
+              let (selectorData, remainder) = Self.delineatedData(rawData: messageData),
+              let selector = String(data: selectorData, encoding: .utf8),
+              let (sessionCookieData, _) = Self.delineatedData(rawData: remainder) else {
+            throw ProviderMessageError.decodingError
+        }
+
+        var sessionCookie: String?
+        if !sessionCookieData.isEmpty {
+            sessionCookie = String(data: sessionCookieData, encoding: .utf8)
+        }
+
+        return .setApiSelector(selector, withSessionCookie: sessionCookie)
     }
 
     private enum ResponseCode: UInt8 {
@@ -198,10 +218,31 @@ enum WireguardProviderRequest: ProviderRequest {
         Data([code.rawValue])
     }
 
+    /// Returns all data after the "datagram" value.
     private static func messageData(rawData: Data) -> Data? {
         guard rawData.count > 1 else {
             return nil
         }
         return rawData[1...]
+    }
+
+    /// Some data is serialized by using a byte to describe the length of a block of data,
+    /// followed by that block of data. This function reads one byte and returns the block
+    /// of data contained in `rawData`, along with the remaining data in `rawData` if any
+    /// is left.
+    private static func delineatedData(rawData: Data) -> (item: Data, remaining: Data)? {
+        guard let blockCount = rawData.first else {
+            return nil
+        }
+
+        guard blockCount <= rawData.count - 1 else {
+            assertionFailure("Data is badly structured: block size is greater than data count")
+            return nil
+        }
+
+        let block = rawData.advanced(by: 1)
+        let item = block[..<blockCount]
+        let remaining = block[blockCount...]
+        return (item, remaining)
     }
 }
