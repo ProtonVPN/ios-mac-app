@@ -131,7 +131,7 @@ class SystemExtensionsStateCheck {
         }
     }
 
-    func checkSystemExtensionRequiredAndInstallIfNeeded() {
+    func checkSystemExtensionRequiredAndInstallIfNeeded(userInitiated: Bool) {
         // do not check if the user is not logged in to avoid showing the installation prompt on the login screen on first start
         guard (try? vpnKeychain.fetch()) != nil else {
             return
@@ -159,7 +159,7 @@ class SystemExtensionsStateCheck {
 
         log.debug("Checking system extensions because \(self.propertiesManager.connectionProtocol) is set as default protocol")
 
-        startCheckAndInstallIfNeeded(userInitiated: false) { result in
+        startCheckAndInstallIfNeeded(userInitiated: userInitiated) { result in
             switch result {
             case .success:
                 log.debug("System extensions are OK, keeping \(self.propertiesManager.connectionProtocol) as default protocol", category: .app)

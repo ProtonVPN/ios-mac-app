@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            self.container.makeSystemExtensionsStateCheck().checkSystemExtensionRequiredAndInstallIfNeeded()
+            self.container.makeSystemExtensionsStateCheck().checkSystemExtensionRequiredAndInstallIfNeeded(userInitiated: false)
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
