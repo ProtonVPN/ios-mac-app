@@ -55,7 +55,7 @@ class UserAccountUpdateViewController: UIViewController {
 
     @IBOutlet private var checkmarks: [UIImageView]!
 
-    var feature: UserAccountUpdateFeature!
+    var viewModel: UserAccountUpdateViewModel!
 
     var onPrimaryButtonTap: (() -> Void)?
 
@@ -71,8 +71,8 @@ class UserAccountUpdateViewController: UIViewController {
         serversView.layer.cornerRadius = 8
         serversView.layer.borderWidth = 1
         serversView.layer.borderColor = colors.weakInteraction.cgColor
-        titleLbl.text = feature.title
-        descriptionLbl.text = feature.subtitle
+        titleLbl.text = viewModel.title
+        descriptionLbl.text = viewModel.subtitle
 
         baseViewStyle(view)
         titleStyle(titleLbl)
@@ -85,14 +85,14 @@ class UserAccountUpdateViewController: UIViewController {
         featureTextStyle(feature2Lbl)
         featureTextStyle(feature3Lbl)
 
-         if let image = feature.image {
+         if let image = viewModel.image {
              imageView.image = image
          } else {
              imageView.isHidden = true
          }
 
         checkmarks.forEach {
-            $0.image = feature.checkmark
+            $0.image = viewModel.checkmark
         }
 
         setupFeatures()
@@ -103,7 +103,7 @@ class UserAccountUpdateViewController: UIViewController {
     // MARK: - Private
 
     private func setupFeatures() {
-        guard let options = feature.options, !options.isEmpty else {
+        guard let options = viewModel.options, !options.isEmpty else {
             [feature1View, feature2View, feature3View, featuresTitleLbl].forEach {
                 $0?.isHidden = true
             }
@@ -115,9 +115,9 @@ class UserAccountUpdateViewController: UIViewController {
     }
 
     private func setupActions() {
-        primaryActionBtn.setTitle(feature.primaryButtonTitle, for: .normal)
+        primaryActionBtn.setTitle(viewModel.primaryButtonTitle, for: .normal)
 
-        if let title = feature.secondaryButtonTitle {
+        if let title = viewModel.secondaryButtonTitle {
             secondActionBtn.setTitle(title, for: .normal)
         } else {
             secondActionBtn.isHidden = true
@@ -125,8 +125,8 @@ class UserAccountUpdateViewController: UIViewController {
     }
 
     private func setupServers() {
-        guard let fromServer = feature.fromServer,
-              let toServer = feature.toServer else {
+        guard let fromServer = viewModel.fromServer,
+              let toServer = viewModel.toServer else {
             reconnectionView.isHidden = true
             return
         }
@@ -134,11 +134,11 @@ class UserAccountUpdateViewController: UIViewController {
         setServerHeader(fromServer, fromServerIV, fromServerLbl)
         setServerHeader(toServer, toServerIV, toServerLbl)
 
-        fromServerTitleLbl.text = feature.fromServerTitle
-        toServerTitleLbl.text = feature.toServerTitle
+        fromServerTitleLbl.text = viewModel.fromServerTitle
+        toServerTitleLbl.text = viewModel.toServerTitle
     }
 
-    private func setServerHeader( _ server: UserAccountUpdateFeature.Server, _ flag: UIImageView, _ serverName: UILabel) {
+    private func setServerHeader( _ server: UserAccountUpdateViewModel.Server, _ flag: UIImageView, _ serverName: UILabel) {
         serverName.text = server.name
         flag.image = server.flag
     }

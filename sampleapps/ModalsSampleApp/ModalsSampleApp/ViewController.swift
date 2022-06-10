@@ -29,7 +29,7 @@ class ViewController: UITableViewController {
         (.safeMode, "Safe Mode"),
         (.moderateNAT, "Moderate NAT"),
         (.noLogs, "No Logs")]
-    let upgrades: [(type: UserAccountUpdateFeature, title: String)] = [
+    let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
         (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
                                              numberOfDevices: 5,
                                              fromServer: ViewController.fromServer,
@@ -40,8 +40,8 @@ class ViewController: UITableViewController {
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
         (.pendingInvoices, "Pending Invoices")]
 
-    static let fromServer = UserAccountUpdateFeature.Server(name: "US-CA#63", flag: UIImage(named: "Flag")!)
-    static let toServer = UserAccountUpdateFeature.Server(name: "US-CA#78", flag: UIImage(named: "Flag")!)
+    static let fromServer = UserAccountUpdateViewModel.Server(name: "US-CA#63", flag: UIImage(named: "Flag")!)
+    static let toServer = UserAccountUpdateViewModel.Server(name: "US-CA#78", flag: UIImage(named: "Flag")!)
 
     let modalsFactory = ModalsFactory(colors: Colors())
 
@@ -100,7 +100,7 @@ class ViewController: UITableViewController {
             modalVC.modalPresentationStyle = .overFullScreen
             viewController = modalVC
         } else  if indexPath.section == 3 {
-            let modalVC = modalsFactory.userAccountUpdateViewController(feature: upgrades[indexPath.row].type,
+            let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
             viewController = modalVC
         } else {
