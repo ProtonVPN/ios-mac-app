@@ -43,9 +43,9 @@ public struct ModalsFactory {
         return newBrandViewController
     }
 
-    public func userAccountUpdateViewController(feature: UserAccountUpdateFeature, onPrimaryButtonTap: (() -> Void)?) -> UIViewController {
+    public func userAccountUpdateViewController(viewModel: UserAccountUpdateViewModel, onPrimaryButtonTap: (() -> Void)?) -> UIViewController {
         let userAccountUpdateViewController = userAccountUpdateStoryboard.instantiate(controllerType: UserAccountUpdateViewController.self)
-        userAccountUpdateViewController.feature = feature
+        userAccountUpdateViewController.viewModel = viewModel
         userAccountUpdateViewController.onPrimaryButtonTap = onPrimaryButtonTap
         return userAccountUpdateViewController
     }

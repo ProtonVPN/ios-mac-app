@@ -200,29 +200,29 @@ extension IosAlertService: CoreAlertService {
     // This method translates the `UserAccountUpdateAlert` subclasses to specific feature types that the Modals module expects.
     private func displayUserUpdateAlert(alert: UserAccountUpdateAlert) {
         let server = alert.reconnectInfo?.servers()
-        let feature: UserAccountUpdateFeature
+        let viewModel: UserAccountUpdateViewModel
         switch alert {
         case is UserBecameDelinquentAlert:
             if let server = server {
-                feature = .pendingInvoicesReconnecting(fromServer: server.from, toServer: server.to)
+                viewModel = .pendingInvoicesReconnecting(fromServer: server.from, toServer: server.to)
             } else {
-                feature = .pendingInvoices
+                viewModel = .pendingInvoices
             }
         case is UserPlanDowngradedAlert:
             if let server = server {
-                feature = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
+                viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
                                                               numberOfDevices: AccountPlan.plus.devicesCount,
                                                               fromServer: server.from,
                                                               toServer: server.to)
             } else {
-                feature = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
+                viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
                                                   numberOfDevices: AccountPlan.plus.devicesCount)
             }
         case let alert as MaxSessionsAlert:
             if alert.accountPlan == .free {
-                feature = .reachedDevicePlanLimit(planName: LocalizedString.plus, numberOfDevices: AccountPlan.plus.devicesCount)
+                viewModel = .reachedDevicePlanLimit(planName: LocalizedString.plus, numberOfDevices: AccountPlan.plus.devicesCount)
             } else {
-                feature = .reachedDeviceLimit
+                viewModel = .reachedDeviceLimit
             }
         default:
             return
@@ -231,7 +231,7 @@ extension IosAlertService: CoreAlertService {
             self?.planService.presentPlanSelection()
         }
 
-        let viewController = modalsFactory.userAccountUpdateViewController(feature: feature,
+        let viewController = modalsFactory.userAccountUpdateViewController(viewModel: viewModel,
                                                                            onPrimaryButtonTap: onPrimaryButtonTap)
         viewController.modalPresentationStyle = .overFullScreen
         self.windowService.present(modal: viewController)
@@ -345,8 +345,8 @@ extension IosAlertService: UpsellViewControllerDelegate {
 }
 
 fileprivate extension ReconnectInfo {
-    func servers() -> (from: UserAccountUpdateFeature.Server, to: UserAccountUpdateFeature.Server) {
-        (UserAccountUpdateFeature.Server(name: fromServer.name, flag: fromServer.image),
-         UserAccountUpdateFeature.Server(name: toServer.name, flag: toServer.image))
+    func servers() -> (from: UserAccountUpdateViewModel.Server, to: UserAccountUpdateViewModel.Server) {
+        (UserAccountUpdateViewModel.Server(name: fromServer.name, flag: fromServer.image),
+         UserAccountUpdateViewModel.Server(name: toServer.name, flag: toServer.image))
     }
 }

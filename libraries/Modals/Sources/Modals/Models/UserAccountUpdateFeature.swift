@@ -18,7 +18,7 @@
 
 import Foundation
 
-public enum UserAccountUpdateFeature {
+public enum UserAccountUpdateViewModel {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: Server, toServer: Server)
     case subscriptionDowngraded(numberOfCountries: Int, numberOfDevices: Int)
     case pendingInvoicesReconnecting(fromServer: Server, toServer: Server)
@@ -27,7 +27,7 @@ public enum UserAccountUpdateFeature {
     case reachedDevicePlanLimit(planName: String, numberOfDevices: Int)
 }
 
-extension UserAccountUpdateFeature {
+extension UserAccountUpdateViewModel {
     public struct Server {
         public let name: String
         public let flag: Image
@@ -39,7 +39,7 @@ extension UserAccountUpdateFeature {
     }
 }
 
-extension UserAccountUpdateFeature {
+extension UserAccountUpdateViewModel {
     public var fromServerTitle: String { LocalizedString.fromServerTitle }
     public var toServerTitle: String { LocalizedString.toServerTitle }
 
