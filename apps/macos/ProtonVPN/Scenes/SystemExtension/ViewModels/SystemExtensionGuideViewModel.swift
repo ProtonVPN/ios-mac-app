@@ -92,13 +92,12 @@ class SystemExtensionGuideViewModel: NSObject {
     }
     
     private func finish(_ notification: Notification) {
-        guard let request = notification.object as? SystemExtensionRequest, request.userInitiated else {
-            return
-        }
-
         finishedTour = true
-        alertService.push(alert: SysexEnabledAlert())
         close?()
+
+        if let request = notification.object as? SystemExtensionRequest, request.userInitiated {
+            alertService.push(alert: SysexEnabledAlert())
+        }
     }
 
     private func userTriedToSupersedeRequest(_ notification: Notification) {
