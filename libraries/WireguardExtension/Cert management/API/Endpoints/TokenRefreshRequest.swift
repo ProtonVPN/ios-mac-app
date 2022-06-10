@@ -57,8 +57,8 @@ struct TokenRefreshRequest: APIRequest {
     }
 
     private var encoder: JSONEncoder {
-        let encored = JSONEncoder()
-        encored.keyEncodingStrategy = .custom(capitalizeFirstLetter)
-        return encored
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .custom(capitalizeFirstLetter)
+        return encoder
     }
 }

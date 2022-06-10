@@ -37,7 +37,13 @@ struct CertificateRefreshRequest: APIRequest {
         self.params = params
     }
 
+    var encoder: JSONEncoder {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .custom(capitalizeFirstLetter)
+        return encoder
+    }
+
     var body: Data? {
-        return try? JSONEncoder().encode(params)
+        return try? encoder.encode(params)
     }
 }
