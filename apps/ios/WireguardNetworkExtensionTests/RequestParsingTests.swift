@@ -186,6 +186,47 @@ class RequestParsingTests: XCTestCase {
             XCTAssertEqual(String(data: data, encoding: .utf8)!, String(data: expected, encoding: .utf8)!)
         }
     }
+
+    func testJsonRequestKeysArePascalCased() throws {
+        let requests: [APIRequest] = [CertificateRefreshRequest(params: .init(clientPublicKey: "hello",
+                                                                clientPublicKeyMode: "world",
+                                                                deviceName: "Johnny Appleseed's JetPack Pro",
+                                                                mode: "Fun Mode",
+                                                                duration: "4000 years",
+                                                                features: .init(netshield: .level1,
+                                                                                vpnAccelerator: true,
+                                                                                bouncing: "bouncing",
+                                                                                natType: .moderateNAT,
+                                                                                safeMode: true))),
+                                      TokenRefreshRequest(params: .init(responseType: "response",
+                                                                        grantType: "grant",
+                                                                        refreshToken: "refresh",
+                                                                        redirectURI: "example.org"))]
+
+        for request in requests {
+            guard let body = request.body else {
+                XCTFail("Request \(request) should have a body")
+                return
+            }
+
+            guard let dict = body.jsonDictionary else {
+                XCTFail("Could not decode json dictionary for \(request)")
+                return
+            }
+
+            recursivelyCheckKeys(dict: dict)
+        }
+    }
+
+    func recursivelyCheckKeys(dict: [String: Any], stack: String = "") {
+        for key in dict.keys {
+            XCTAssert(key.first?.isUppercase == true, "Key \(key) should have first letter uppercased\(stack)")
+
+            if let innerDict = dict[key] as? [String: Any] {
+                recursivelyCheckKeys(dict: innerDict, stack: " in dict \(key)" + stack)
+            }
+        }
+    }
 }
 
 private extension String {
