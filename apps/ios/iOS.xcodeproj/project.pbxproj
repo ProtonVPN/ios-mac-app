@@ -30,13 +30,10 @@
 		42066FDA263049C5001F86DB /* ServersStreamingFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */; };
 		42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF9B3262F126600944379 /* StreamingServiceCell.swift */; };
 		42066FE626304A0C001F86DB /* FeatureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */; };
-		421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
-		421B3BD9261B2C2200670A7C /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */; };
 		422395822446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395832446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395842446EF660089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
-		4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
 		428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */; };
 		428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 428DF977262EFCDE00944379 /* ServersStreamingFeaturesVC.xib */; };
 		428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF98A262F031600944379 /* ServersStreamingFeaturesViewModel.swift */; };
@@ -464,7 +461,6 @@
 		E9492ED92669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492EDA2669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
-		E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */; };
 		E95E8E792696F822001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E782696F822001AE3FA /* CertificateConstants.swift */; };
 		E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
 		E96061A728226C7F008199C4 /* PacketTunnelProvider+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96061A628226C7F008199C4 /* PacketTunnelProvider+Logging.swift */; };
@@ -548,8 +544,6 @@
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
-		F36AF0A127A1680C009DD36C /* UIImage+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */; };
-		F36AF0A227A1681D009DD36C /* UIImage+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */; };
 		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
@@ -720,8 +714,6 @@
 		42066E8D2630240F001F86DB /* ServersFeaturesInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationVC.swift; sourceTree = "<group>"; };
 		42066E8E2630240F001F86DB /* ServersFeaturesInformationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServersFeaturesInformationVC.xib; sourceTree = "<group>"; };
 		42066E96263025E0001F86DB /* ServersFeaturesInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationViewModel.swift; sourceTree = "<group>"; };
-		421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
-		421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		422395812446E9E00089002F /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersStreamingFeaturesVC.swift; sourceTree = "<group>"; };
 		428DF977262EFCDE00944379 /* ServersStreamingFeaturesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServersStreamingFeaturesVC.xib; sourceTree = "<group>"; };
@@ -1021,7 +1013,6 @@
 		E9445D6326528A790075FD31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9445D6426528A790075FD31 /* WireGuardiOS_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WireGuardiOS_Extension.entitlements; sourceTree = "<group>"; };
 		E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogSelectionViewModelTests.swift; path = ../../../../ios/ProtonVPNTests/ViewModels/Settings/LogSelectionViewModelTests.swift; sourceTree = "<group>"; };
-		E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockLogFilesProvider.swift; path = ../../../ios/ProtonVPNTests/Mocks/MockLogFilesProvider.swift; sourceTree = "<group>"; };
 		E95E8E782696F822001AE3FA /* CertificateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/CertificateConstants.swift; sourceTree = "<group>"; };
 		E95F81E627B1474800A2458A /* iOSUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSUpdateManager.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSUpdateManager.swift; sourceTree = "<group>"; };
 		E96061A628226C7F008199C4 /* PacketTunnelProvider+Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PacketTunnelProvider+Logging.swift"; path = "../../ios/OpenVPN Extension/PacketTunnelProvider+Logging.swift"; sourceTree = "<group>"; };
@@ -1121,7 +1112,6 @@
 		F34AC17C27F439B40007FF93 /* Review+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Review+Configuration.swift"; path = "../../../ios/ProtonVPN/Extensions/Review+Configuration.swift"; sourceTree = "<group>"; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
-		F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Flag.swift"; path = "../../../ios/ProtonVPN/Extensions/UIImage+Flag.swift"; sourceTree = "<group>"; };
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
 		F377835F26E644BC00392958 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
@@ -1252,23 +1242,6 @@
 				4CF40BAA2833D9C600C3C501 /* SessionAuthRequest.swift */,
 			);
 			path = Endpoints;
-			sourceTree = "<group>";
-		};
-		421B3BD4261B2B7A00670A7C /* Downgrade */ = {
-			isa = PBXGroup;
-			children = (
-				421B3BD5261B2BDA00670A7C /* ViewControllers */,
-			);
-			path = Downgrade;
-			sourceTree = "<group>";
-		};
-		421B3BD5261B2BDA00670A7C /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */,
-				421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		428DF974262EFC8C00944379 /* Features */ = {
@@ -1528,7 +1501,6 @@
 				D594A964227C466F0041D423 /* UIView+constraints.swift */,
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */,
-				F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */,
 				F34AC17C27F439B40007FF93 /* Review+Configuration.swift */,
 				F330F01B27FD752E00C3AA33 /* UINavigationController+Extensions.swift */,
 			);
@@ -1702,7 +1674,6 @@
 				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
 				D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */,
 				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
-				E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1799,7 +1770,6 @@
 				F36ECC8B2611C5DF0089B898 /* Common */,
 				D50342602472C82A005F6B90 /* ConnectionBar */,
 				F36ECC842611C4D60089B898 /* Countries */,
-				421B3BD4261B2B7A00670A7C /* Downgrade */,
 				428DF974262EFC8C00944379 /* Features */,
 				F36ECCC62611C7F10089B898 /* Launch */,
 				F36ECD3B2611C9A40089B898 /* Map */,
@@ -2953,7 +2923,6 @@
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
 				793ECF442149041A00C186A7 /* AppVersionView.xib in Resources */,
-				421B3BD9261B2C2200670A7C /* UserAccountUpdateViewController.xib in Resources */,
 				428DF9B6262F126600944379 /* StreamingServiceCell.xib in Resources */,
 				E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */,
 				42066E902630240F001F86DB /* ServersFeaturesInformationVC.xib in Resources */,
@@ -3591,11 +3560,9 @@
 				E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */,
 				793ECF462149045400C186A7 /* AppVersionView.swift in Sources */,
 				79848BB020D2011500EF6F9F /* CountryAnnotationViewModel.swift in Sources */,
-				F36AF0A127A1680C009DD36C /* UIImage+Flag.swift in Sources */,
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
-				421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */,
 				428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */,
 				D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
@@ -3753,7 +3720,6 @@
 				E197BD4422C0DFD6004E0FE7 /* PlanServiceMock.swift in Sources */,
 				42066FC826304914001F86DB /* ServersFeaturesInformationViewModel.swift in Sources */,
 				E1D187F22301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
-				F36AF0A227A1681D009DD36C /* UIImage+Flag.swift in Sources */,
 				F314142327B19B5B007424E9 /* PaidFeature.swift in Sources */,
 				D5136C8E2285A2620002C095 /* ColorPickerViewModelTests.swift in Sources */,
 				F316A07626DFC57D00669386 /* PlanService.swift in Sources */,
@@ -3761,9 +3727,7 @@
 				D5136C79228592E80002C095 /* InstructionStepTableViewCell.swift in Sources */,
 				E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */,
 				D5136C7A228592E80002C095 /* KeyValueTableViewCell.swift in Sources */,
-				E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */,
 				D5136C7B228592E80002C095 /* StandardTableViewCell.swift in Sources */,
-				4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */,
 				E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */,
 				D5136C7C228592E80002C095 /* TooltipTableViewCell.swift in Sources */,
 				D5136C7D228592E80002C095 /* InstructionStepView.swift in Sources */,
