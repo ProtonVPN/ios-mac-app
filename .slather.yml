@@ -1,1 +1,8 @@
 build_directory: DerivedData
+ignore:
+  - 'DerivedData/*'
+  - 'libraries/vpncore/Tests/*'
+  - 'apps/macos/ProtonVPNTests/*'
+  - 'apps/macos/ProtonVPNUITests/*'
+  - 'apps/macos/ProtonVPNTests/*'
+  - 'apps/macos/ProtonVPNUITests/*'
