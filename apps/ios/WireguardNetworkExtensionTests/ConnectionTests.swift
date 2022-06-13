@@ -31,6 +31,9 @@ class NWTCPConnectionTests: XCTestCase {
     var dataTaskFactory: ConnectionTunnelDataTaskFactory!
 
     override func setUpWithError() throws {
+        // Clear all cookies in our namespace to reset state
+        HTTPCookieStorage.shared.removeCookies(since: .init(timeIntervalSince1970: 0))
+
         connectionTunnelFactory = MockConnectionTunnelFactory(stateObservingCallback: { tunnel in
             self.stateObservingCallback(tunnel)
         }, dataReadCallback: { tunnel in
@@ -44,7 +47,7 @@ class NWTCPConnectionTests: XCTestCase {
     }
 
     func testBasicConnection() {
-        var urlRequest = URLRequest(url: URL(string: "https://api.protonmail.ch/vpn")!)
+        var urlRequest = URLRequest(url: URL(string: "https://api.protonvpn.ch/vpn")!)
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
         urlRequest.httpMethod = "GET"
@@ -106,8 +109,143 @@ class NWTCPConnectionTests: XCTestCase {
         wait(for: [stateChangeExpectation, writeExpectation, readExpectation, dataTaskExpectation], timeout: 10)
     }
 
+    /// Test how the data task factory handles receiving and sending of cookies.
+    ///
+    /// First, start the first request with two cookies already in cookie storage. When the request is sent,
+    /// assert that those cookies show up in the request. Respond to this request with a Set-Cookie directive
+    /// containing two extra cookies. Assert that those show up on the client side. Then, start a second request
+    /// and assert that the two cookies initially in storage at the beginning of the test are still present
+    /// in the request, along with the cookies specified in the response.
+    func testCookieParsing() {
+        let expectations = (
+            stateChange: XCTestExpectation(description: "State changes to connected"),
+            firstRequest: XCTestExpectation(description: "First success write succeeds"),
+            secondRequest: XCTestExpectation(description: "Second success write succeeds"),
+            read: XCTestExpectation(description: "Read succeeds"),
+            firstDataTask: XCTestExpectation(description: "First data task callback should be invoked"),
+            secondDataTask: XCTestExpectation(description: "Second data task callback should be invoked")
+        )
+
+        let apiUrl = URL(string: "https://api.protonvpn.ch/vpn")!
+        var urlRequest = URLRequest(url: apiUrl)
+        urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
+        urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
+        urlRequest.httpBody = "Hello, world!".data(using: .utf8)
+        urlRequest.httpMethod = "GET"
+
+        var numRequests = 0
+
+        let cookie1 = HTTPCookie(properties: [.name: "testing",
+                                              .value: "12345",
+                                              .version: 2,
+                                              .domain: apiUrl.host!,
+                                              .path: "/",
+                                              .maximumAge: "420"])!
+        let cookie2 = HTTPCookie(properties: [.name: "johnny",
+                                              .value: "appleseed",
+                                              .version: 2,
+                                              .domain: apiUrl.host!,
+                                              .path: "/",
+                                              .maximumAge: "\(60 * 60 * 4)"])!
+        dataTaskFactory.cookieStorage.setCookies([cookie1, cookie2], for: apiUrl, mainDocumentURL: nil)
+
+        stateObservingCallback = { tunnel in
+            // Simulate a network queue by asyncing this to the background
+            self.networkQueue.async {
+                tunnel.state = .connecting
+            }
+
+            self.networkQueue.async {
+                tunnel.state = .connected
+                expectations.stateChange.fulfill()
+            }
+        }
+
+        dataWriteCallback = { tunnel, requestData in
+            XCTAssertEqual(tunnel.state, .connected, "Tunnel state should have been connected before writing")
+
+            guard let requestDataString = String(data: requestData, encoding: .utf8) else {
+                XCTFail("Encoding error in requestData")
+                return
+            }
+
+            guard let cookieLine = requestDataString.components(separatedBy: "\r\n").filter({ $0.starts(with: "Cookie: ") }).first else {
+                XCTFail("Could not find cookie header")
+                return
+            }
+
+            if numRequests == 0 {
+                XCTAssert(cookieLine.contains("johnny=appleseed") &&
+                          cookieLine.contains("testing=12345"))
+                expectations.firstRequest.fulfill()
+            } else {
+                XCTAssertEqual(numRequests, 1, "Should only run two requests")
+                XCTAssert(cookieLine.contains("johnny=appleseed") &&
+                          cookieLine.contains("testing=12345") &&
+                          cookieLine.contains("Tag=vpn-a") &&
+                          cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM"))
+                expectations.secondRequest.fulfill()
+            }
+
+            numRequests += 1
+        }
+
+        dataReadCallback = { tunnel in
+            XCTAssert(tunnel.closedForWriting, "Should have closed for writing before reading")
+            XCTAssertEqual(tunnel.state, .connected, "Tunnel state should have been connected before reading")
+
+            tunnel.state = .disconnected
+            expectations.read.fulfill()
+
+            return RequestParsingTests.actual400ErrorResponse
+        }
+
+        let firstDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+            XCTAssertNil(error, "Unexpected response error")
+            XCTAssertEqual((response as! HTTPURLResponse).statusCode, 400, "Http response error code should be 200")
+
+            expectations.firstDataTask.fulfill()
+        }
+
+        firstDataTask.resume()
+        XCTAssertNotNil(connectionTunnelFactory.connections.first, "Connection should be created after task is resumed")
+
+        wait(for: [expectations.stateChange, expectations.firstRequest, expectations.read, expectations.firstDataTask], timeout: 10)
+
+        guard let cookies = dataTaskFactory.cookieStorage.cookies(for: apiUrl) else {
+            XCTFail("No cookies found for \(apiUrl)")
+            return
+        }
+
+        XCTAssert(cookies.contains(where: {
+            $0.name == "Session-Id" &&
+            $0.value == "Yma8R9WZUcufgnz4wI1LIAAAAQM" &&
+            $0.domain == ".protonvpn.ch" &&
+            $0.path == "/" &&
+            $0.isHTTPOnly &&
+            $0.isSecure
+        }), "Session-Id cookie not found or does not match expected values")
+
+        XCTAssert(cookies.contains(where: {
+            $0.name == "Tag" &&
+            $0.value == "vpn-a" &&
+            $0.path == "/" &&
+            $0.isSecure
+        }), "Tag cookie not found or does not match expected values")
+
+        let secondDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+            XCTAssertNil(error, "Unexpected response error")
+            XCTAssertEqual((response as! HTTPURLResponse).statusCode, 400, "Http response error code should be 200")
+
+            expectations.secondDataTask.fulfill()
+        }
+
+        secondDataTask.resume()
+        wait(for: [expectations.secondRequest, expectations.secondDataTask], timeout: 10)
+    }
+
     func testConnectionTimeout() {
-        var urlRequest = URLRequest(url: URL(string: "https://api.protonmail.ch/vpn")!)
+        var urlRequest = URLRequest(url: URL(string: "https://api.protonvpn.ch/vpn")!)
         urlRequest.httpMethod = "GET"
 
         let stateChangeExpectation = XCTestExpectation(description: "Expected to observe state changes")

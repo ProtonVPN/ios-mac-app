@@ -45,6 +45,13 @@ class ProviderMessageTests: XCTestCase {
     }
 
     func testProviderRequests() {
+        let cookie = HTTPCookie(properties: [.name: "testing",
+                                             .value: "12345",
+                                             .version: 2,
+                                             .domain: "piv.pivpiv.dk",
+                                             .path: "/",
+                                             .maximumAge: "420"])!
+
         let messages: [WireguardProviderRequest] = [
             .getRuntimeTunnelConfiguration,
             .cancelRefreshes,
@@ -56,9 +63,8 @@ class ProviderMessageTests: XCTestCase {
                                                 safeMode: true)),
             .refreshCertificate(features: nil),
             .flushLogsToFile,
-            .setApiSelector("SELECTOR", withSessionCookie: "YUM YUM COOKIE"),
+            .setApiSelector("SELECTOR", withSessionCookie: cookie),
             .setApiSelector("SELECTOR", withSessionCookie: nil),
-            .setApiSelector("abcdefghijklmnopqrstuvwxyz", withSessionCookie: "ABCDEFGHIJKLMNOP@QRSTUVWXYZ")
         ]
 
         for message in messages {

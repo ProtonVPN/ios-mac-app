@@ -76,7 +76,10 @@ extension URLRequest {
 
 extension HTTPURLResponse {
     @available(iOS, introduced: 10, deprecated: 13)
-    private static func oldParseHelper(scanner: Scanner, encoding: String.Encoding, requestData: Data) throws -> (httpVersion: String, statusCode: Int, headers: [String: String], body: Data?) {
+    private static func oldParseHelper(scanner: Scanner, encoding: String.Encoding, requestData: Data) throws -> (httpVersion: String,
+                                                                                                                  statusCode: Int,
+                                                                                                                  headers: [(header: String, value: String)],
+                                                                                                                  body: Data?) {
         let parseError = HTTPError.parseError
 
         let space = CharacterSet(charactersIn: " ")
@@ -114,14 +117,14 @@ extension HTTPURLResponse {
 
         let headersScanner = Scanner(string: allHeaders as String)
         headersScanner.charactersToBeSkipped = skip
-        var headers: [String: String] = [:]
+        var headers: [(String, String)] = []
         do {
             var _header, _value: NSString?
 
             while headersScanner.scanUpToCharacters(from: colon, into: &_header) &&
                     headersScanner.scanUpToCharacters(from: newline, into: &_value),
                     let header = _header as? String, let value = _value as? String {
-                headers[header] = value
+                headers.append((header, value))
             }
         }
 
@@ -136,7 +139,10 @@ extension HTTPURLResponse {
     }
 
     @available(iOS 13, *)
-    private static func parseHelper(scanner: Scanner, encoding: String.Encoding) throws -> (httpVersion: String, statusCode: Int, headers: [String: String], body: Data?) {
+    private static func parseHelper(scanner: Scanner, encoding: String.Encoding) throws -> (httpVersion: String,
+                                                                                            statusCode: Int,
+                                                                                            headers: [(header: String, value: String)],
+                                                                                            body: Data?) {
         let parseError = HTTPError.parseError
 
         let space = CharacterSet(charactersIn: " ")
@@ -152,7 +158,7 @@ extension HTTPURLResponse {
             throw parseError
         }
 
-        var headers: [String: String] = [:]
+        var headers: [(String, String)] = []
         var headerEnd: String.Index = scanner.currentIndex
 
         let doubleNewline = "\r\n\r\n"
@@ -169,7 +175,7 @@ extension HTTPURLResponse {
         headersScanner.charactersToBeSkipped = skip
         while let header = headersScanner.scanUpToCharacters(from: colon),
               let value = headersScanner.scanUpToCharacters(from: newline) {
-            headers[header] = value
+            headers.append((header, value))
         }
 
         var body: Data?
@@ -186,7 +192,8 @@ extension HTTPURLResponse {
     }
 
     /// Parse an HTTP response, returning the response object and the response body, if it exists.
-    static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (response: HTTPURLResponse?, body: Data?) {
+    static func parse(responseFromURL url: URL, data: Data, encoding: String.Encoding = .utf8) throws -> (response: HTTPURLResponse?,
+                                                                                                          body: Data?) {
         let parseError = HTTPError.parseError
         guard let string = String(data: data, encoding: encoding) else {
             throw parseError
@@ -196,7 +203,7 @@ extension HTTPURLResponse {
 
         let httpVersion: String
         let statusCode: Int
-        let headers: [String: String]
+        let headers: [(header: String, value: String)]
         let body: Data?
 
         if #available(iOS 13, *) {
@@ -208,7 +215,32 @@ extension HTTPURLResponse {
                                                                           requestData: data)
         }
 
-        let response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: httpVersion as String?, headerFields: headers)
+        // For some nonsensical reason, Foundation likes to assume that headers and their values can
+        // be represented as dictionaries, despite the fact that including multiple copies of the same
+        // header is perfectly valid HTTP. This is particularly troublesome when it comes to the `Set-Cookie`
+        // header, since there are frequently multiple cookies set by the server in an HTTP response. We
+        // address this by concatenating the `Set-Cookie` directives into a comma-separated string, which
+        // is specified by RFC 2109.
+        var setCookies = ""
+        for (header, value) in headers {
+            guard header.lowercased() == APIHeader.setCookie.rawValue else { continue }
+
+            if !setCookies.isEmpty {
+                setCookies.append(", ")
+            }
+
+            setCookies.append(value)
+        }
+
+        var headersDict = headers.reduce(into: [:]) { partialResult, kvPair in
+            partialResult[kvPair.0] = kvPair.1
+        }
+        headersDict[APIHeader.setCookie.rawValue] = setCookies
+
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: statusCode,
+                                       httpVersion: httpVersion as String?,
+                                       headerFields: headersDict)
         return (response, body)
     }
 }

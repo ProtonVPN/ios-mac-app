@@ -58,7 +58,7 @@ final class ExtensionAPIService {
 
     /// Start a new session with the API service. This function should only be called by the refresh manager and the
     /// ExtensionAPIService. Call `startSession(withSelector:)` on `ExtensionCertificateRefreshManager` instead.
-    func startSession(withSelector selector: String, sessionCookie: String?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    func startSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         let authRequest = SessionAuthRequest(params: .init(selector: selector))
 
         // Avoid starting multiple sessions, unnecessarily approaching our client session limit.
@@ -67,12 +67,11 @@ final class ExtensionAPIService {
             return
         }
 
-        var headers: [(APIHeader, String?)] = []
         if let sessionCookie = sessionCookie {
-            headers.append((.cookie, "Session-Id=\(sessionCookie)"))
+            dataTaskFactory.cookieStorage.setCookies([sessionCookie], for: URL(string: apiUrl), mainDocumentURL: nil)
         }
 
-        request(authRequest, headers: headers) { [weak self] result in
+        request(authRequest) { [weak self] result in
             switch result {
             case .success(let refreshTokenResponse):
                 // This endpoint only gives us a refresh token with a limited lifetime - immediately turn around and

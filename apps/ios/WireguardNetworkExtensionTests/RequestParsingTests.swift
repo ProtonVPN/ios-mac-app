@@ -113,10 +113,7 @@ class RequestParsingTests: XCTestCase {
         }
     }
 
-    func testHTTPErrorResponseParsing() {
-        let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
-
-        let body = "{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\n" +
+    static let actual400ErrorResponseBody = "{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\n" +
                    "Content-length: 90\r\n" +
                    "Cache-Control: no-cache\r\n" +
                    "Connection: close\r\n" +
@@ -124,22 +121,27 @@ class RequestParsingTests: XCTestCase {
                    "\r\n" +
                    "<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n"
 
-        let data = ("HTTP/1.1 400 Bad Request\r\ndate: Mon, 25 Apr 2022 15:20:39 GMT\r\n" +
-                   "cache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\n" +
-                   "expires: Fri, 04 May 1984 22:15:00 GMT\r\n" +
-                   "access: application/vnd.protonmail.api+json;apiversion=1\r\n" +
-                   "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=protonvpn.ch; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
-                   "set-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\n" +
-                   "content-length: 97\r\n + " +
-                   "content-type: application/json\r\n" +
-                   "content-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\n" +
-                   "expect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
-                   "public-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
-                   "x-content-type-options: nosniff\r\n" +
-                   "x-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\n" +
-                   "referrer-policy: strict-origin-when-cross-origin\r\n" +
-                   "x-permitted-cross-domain-policies: none\r\n" +
-                   "\r\n" + body).data(using: .utf8)!
+    static let actual400ErrorResponse = ("HTTP/1.1 400 Bad Request\r\ndate: Mon, 25 Apr 2022 15:20:39 GMT\r\n" +
+           "cache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\n" +
+           "expires: Fri, 04 May 1984 22:15:00 GMT\r\n" +
+           "access: application/vnd.protonmail.api+json;apiversion=1\r\n" +
+           "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=protonvpn.ch; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
+           "set-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\n" +
+           "content-length: 97\r\n + " +
+           "content-type: application/json\r\n" +
+           "content-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\n" +
+           "expect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
+           "public-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
+           "x-content-type-options: nosniff\r\n" +
+           "x-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\n" +
+           "referrer-policy: strict-origin-when-cross-origin\r\n" +
+           "x-permitted-cross-domain-policies: none\r\n" +
+           "\r\n" + actual400ErrorResponseBody).data(using: .utf8)!
+
+    func testHTTPErrorResponseParsing() {
+        let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
+
+        let (body, data) = (Self.actual400ErrorResponseBody, Self.actual400ErrorResponse)
 
         do {
             let (response, responseBody) = try HTTPURLResponse.parse(responseFromURL: url, data: data)
