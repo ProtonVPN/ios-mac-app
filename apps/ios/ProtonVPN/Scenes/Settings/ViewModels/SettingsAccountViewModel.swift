@@ -195,7 +195,7 @@ final class SettingsAccountViewModel {
     }
     
     private func handleAccountDeletionSuccess() {
-        appSessionManager.logOut(force: true)
+        appSessionManager.logOut(force: true, reason: nil)
     }
     
     private func handleAccountDeletionFailure(_ error: AccountDeletionError) {
