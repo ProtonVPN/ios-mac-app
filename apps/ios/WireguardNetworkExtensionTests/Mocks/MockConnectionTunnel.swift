@@ -21,6 +21,8 @@ import NetworkExtension
 import XCTest
 
 struct MockDataTaskFactory: DataTaskFactory {
+    let cookieStorage: CookieStorageProtocol = HTTPCookieStorage()
+
     typealias RequestCallback = (DataTaskProtocol, URLRequest, @escaping MockDataTask.CompletionCallback) -> Void
     let requestCallback: RequestCallback
 

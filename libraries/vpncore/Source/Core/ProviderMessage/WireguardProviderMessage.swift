@@ -37,7 +37,7 @@ enum WireguardProviderRequest: ProviderRequest {
     /// Flush extension's logs to its log file.
     case flushLogsToFile
     /// Pass a selector representing an API session recently forked by the app.
-    case setApiSelector(String, withSessionCookie: String?)
+    case setApiSelector(String, withSessionCookie: HTTPCookie?)
     /// Refresh the certificate used by the LocalAgent in the main app, and
     /// save it to the keychain before calling the completion.
     case refreshCertificate(features: VPNConnectionFeatures?)
@@ -57,15 +57,7 @@ enum WireguardProviderRequest: ProviderRequest {
         case .flushLogsToFile:
             return datagram(.flushLogsToFile)
         case let .setApiSelector(selector, sessionCookie):
-            let selectorData = selector.data(using: .utf8) ?? Data()
-            assert(selectorData.count < UInt8.max, "Selector too large to fit in serialized data")
-            let cookieData = sessionCookie?.data(using: .utf8) ?? Data()
-            assert(cookieData.count < UInt8.max, "Session cookie too large to fit in serialized data")
-
-            let data = datagram(.setApiSelector) +
-                Data([UInt8(selectorData.count)]) + selectorData +
-                Data([UInt8(cookieData.count)]) + cookieData
-            return data
+            return encodeApiSelector(selector: selector, sessionCookie: sessionCookie)
         case .refreshCertificate(let features):
             let encoder = JSONEncoder()
             var featuresData: Data?
@@ -111,7 +103,20 @@ enum WireguardProviderRequest: ProviderRequest {
         }
     }
 
-    static func decodeApiSelector(_ data: Data) throws -> Self {
+    private func encodeApiSelector(selector: String, sessionCookie: HTTPCookie?) -> Data {
+        let selectorData = selector.data(using: .utf8) ?? Data()
+        assert(selectorData.count < UInt8.max, "Selector too large to fit in serialized data")
+
+        let cookieData = sessionCookie?.asProviderMessageData ?? Data()
+        assert(cookieData.count < UInt8.max, "Session cookie too large to fit in serialized data")
+
+        let data = datagram(.setApiSelector) +
+            Data([UInt8(selectorData.count)]) + selectorData +
+            Data([UInt8(cookieData.count)]) + cookieData
+        return data
+    }
+
+    private static func decodeApiSelector(_ data: Data) throws -> Self {
         guard let messageData = Self.messageData(rawData: data),
               let (selectorData, remainder) = Self.delineatedData(rawData: messageData),
               let selector = String(data: selectorData, encoding: .utf8),
@@ -119,11 +124,7 @@ enum WireguardProviderRequest: ProviderRequest {
             throw ProviderMessageError.decodingError
         }
 
-        var sessionCookie: String?
-        if !sessionCookieData.isEmpty {
-            sessionCookie = String(data: sessionCookieData, encoding: .utf8)
-        }
-
+        let sessionCookie = HTTPCookie.fromProviderMessageData(sessionCookieData)
         return .setApiSelector(selector, withSessionCookie: sessionCookie)
     }
 
@@ -244,5 +245,44 @@ enum WireguardProviderRequest: ProviderRequest {
         let item = block[..<blockCount]
         let remaining = block[blockCount...]
         return (item, remaining)
+    }
+}
+
+private extension HTTPCookiePropertyKey {
+    var hasDateRepresentation: Bool {
+        return rawValue.lowercased() == "created" || rawValue.lowercased() == "expires"
+    }
+}
+
+private extension HTTPCookie {
+    var asProviderMessageData: Data? {
+        guard let properties = properties else { return nil }
+
+        let dict: JSONDictionary = properties.reduce(into: [:], { partialResult, kvPair in
+            if kvPair.key.hasDateRepresentation, let date = kvPair.value as? Date {
+                partialResult[kvPair.key.rawValue] = Int(date.timeIntervalSince1970) as AnyObject
+            } else {
+                partialResult[kvPair.key.rawValue] = kvPair.value as AnyObject
+            }
+        })
+
+        return try? JSONSerialization.data(withJSONObject: dict, options: [])
+    }
+
+    static func fromProviderMessageData(_ data: Data) -> HTTPCookie? {
+        guard !data.isEmpty, let dict = data.jsonDictionary else {
+            return nil
+        }
+
+        let cookieProperties: [HTTPCookiePropertyKey: Any] = dict.reduce(into: [:]) { partialResult, kvPair in
+            let propertyKey = HTTPCookiePropertyKey(kvPair.key)
+            if propertyKey.hasDateRepresentation, let value = kvPair.value as? Int {
+                partialResult[propertyKey] = Date(timeIntervalSince1970: TimeInterval(value))
+            } else {
+                partialResult[propertyKey] = kvPair.value
+            }
+        }
+
+        return HTTPCookie(properties: cookieProperties)
     }
 }

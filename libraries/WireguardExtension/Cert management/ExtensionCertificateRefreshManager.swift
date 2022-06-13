@@ -93,7 +93,7 @@ final class ExtensionCertificateRefreshManager {
 
     /// If the cert refresh manager's session expires, this function needs to be called with a forked session selector
     /// in order to start it back up again with a fresh API session.
-    public func newSession(withSelector selector: String, sessionCookie: String?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    public func newSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
         let timeOutInterval = Self.intervals.refreshWaitTimeout
         guard semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
             assertionFailure("Timed out waiting for semaphore while starting new session")

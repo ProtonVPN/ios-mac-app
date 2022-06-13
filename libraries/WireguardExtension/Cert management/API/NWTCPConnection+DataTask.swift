@@ -64,6 +64,17 @@ protocol ObservationHandle {
 extension NSKeyValueObservation: ObservationHandle {
 }
 
+// MARK: Cookie storage
+
+/// A wrapper protocol for HTTPCookieStorage.
+protocol CookieStorageProtocol {
+    func setCookies(_ cookies: [HTTPCookie], for URL: URL?, mainDocumentURL: URL?)
+    func cookies(for: URL) -> [HTTPCookie]?
+}
+
+extension HTTPCookieStorage: CookieStorageProtocol {
+}
+
 // MARK: DataTask protocols
 
 /// A wrapper protocol for making HTTP requests with NWTCPConnection.
@@ -76,10 +87,16 @@ extension URLSessionDataTask: DataTaskProtocol {
 
 /// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
 protocol DataTaskFactory {
+    var cookieStorage: CookieStorageProtocol { get }
+
     func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol
 }
 
 extension URLSession: DataTaskFactory {
+    var cookieStorage: CookieStorageProtocol {
+        HTTPCookieStorage.shared
+    }
+
     func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         dataTask(with: request, completionHandler: completionHandler)
     }
@@ -89,7 +106,9 @@ extension URLSession: DataTaskFactory {
 class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     let provider: ConnectionTunnelFactory
     let timerFactory: TimerFactory
+    let cookieStorage: CookieStorageProtocol = HTTPCookieStorage.shared
     let timeoutInterval: TimeInterval
+
     private var tasks: [UUID: NWTCPDataTask] = [:]
 
     init(provider: ConnectionTunnelFactory, timerFactory: TimerFactory, connectionTimeoutInterval: TimeInterval = 10) {
@@ -100,19 +119,35 @@ class ConnectionTunnelDataTaskFactory: DataTaskFactory {
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         let id = UUID()
-        let task =  NWTCPDataTask(provider: provider,
-                                  timerFactory: timerFactory,
-                                  request: request,
-                                  timeoutInterval: timeoutInterval,
-                                  taskId: id,
-                                  completionHandler: { data, response, error in
+
+        let cookies: [HTTPCookie]
+        if let url = request.url {
+            cookies = cookieStorage.cookies(for: url) ?? []
+        } else {
+            cookies = []
+        }
+
+        let task = NWTCPDataTask(provider: provider,
+                                 timerFactory: timerFactory,
+                                 request: request,
+                                 cookiesToSend: cookies,
+                                 timeoutInterval: timeoutInterval,
+                                 taskId: id,
+                                 completionHandler: { [weak self] data, response, error in
             if let error = error {
                 log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
             } else {
                 log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
             }
+
+            if let response = response, let url = request.url {
+                let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
+                let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
+                self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
+            }
+
             completionHandler(data, response, error)
-            self.tasks.removeValue(forKey: id)
+            self?.tasks.removeValue(forKey: id)
         })
         tasks[id] = task
         return task
@@ -133,6 +168,8 @@ class NWTCPDataTask: DataTaskProtocol {
     private let timerFactory: TimerFactory
     /// The completion handler for data returned by the HTTP request.
     private let completionHandler: ((Data?, HTTPURLResponse?, Error?) -> Void)
+    /// The cookies to send to the server as part of the HTTP request.
+    private let cookiesToSend: [HTTPCookie]
     /// The request timeout interval.
     private let timeoutInterval: TimeInterval
     /// Dispatch queue used for synchronizing operations performed during network connection state transitions.
@@ -158,6 +195,7 @@ class NWTCPDataTask: DataTaskProtocol {
     init(provider: ConnectionTunnelFactory,
          timerFactory: TimerFactory,
          request: URLRequest,
+         cookiesToSend: [HTTPCookie],
          timeoutInterval: TimeInterval,
          taskId: UUID,
          completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
@@ -165,6 +203,7 @@ class NWTCPDataTask: DataTaskProtocol {
         self.provider = provider
         self.timerFactory = timerFactory
         self.request = request
+        self.cookiesToSend = cookiesToSend
         self.timeoutInterval = timeoutInterval
         self.completionHandler = completionHandler
         self.taskId = taskId
@@ -187,6 +226,11 @@ class NWTCPDataTask: DataTaskProtocol {
             // invalid argument.
             completionHandler(nil, nil, POSIXError(.EINVAL))
             return
+        }
+
+        var request = request
+        for (header, value) in HTTPCookie.requestHeaderFields(with: cookiesToSend) {
+            request.addValue(value, forHTTPHeaderField: header)
         }
 
         let requestData: Data

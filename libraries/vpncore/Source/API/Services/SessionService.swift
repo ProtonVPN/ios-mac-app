@@ -23,7 +23,7 @@ public protocol SessionServiceFactory {
 }
 
 public protocol SessionService {
-    var sessionCookie: String? { get }
+    var sessionCookie: HTTPCookie? { get }
 
     func getUpgradePlanSession(completion: @escaping (String) -> Void)
     func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping (Result<String, Error>) -> Void)
@@ -37,13 +37,12 @@ public final class SessionServiceImplementation: SessionService {
     private let doh: DoHVPN
     private let networking: Networking
 
-    public var sessionCookie: String? {
+    public var sessionCookie: HTTPCookie? {
         guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
 
         return HTTPCookieStorage.shared
             .cookies(for: apiUrl)?
-            .first(where: { $0.name == UserProperties.sessionIdCookieName })?
-            .value
+            .first(where: { $0.name == UserProperties.sessionIdCookieName })
     }
 
     public init(factory: Factory) {

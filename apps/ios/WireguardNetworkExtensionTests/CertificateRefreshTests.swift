@@ -25,7 +25,13 @@ class CertificateRefreshTests: XCTestCase {
     let expectationTimeout: TimeInterval = 10
 
     static let sessionSelector = "SELECTOR"
-    static let sessionCookie = "COOOKIEE, OM NOM NOM"
+    static let sessionCookie = HTTPCookie(properties: [.name: "COOOKIEE",
+                                                       .value: "OM NOM NOM NOM",
+                                                       .version: 2,
+                                                       .path: "/",
+                                                       .domain: "piv.pivpiv.dk",
+                                                       .maximumAge: "420"])!
+
     static let defaultVpnFeatures = VPNConnectionFeatures(netshield: .off,
                                                           vpnAccelerator: true,
                                                           bouncing: "bouncing",

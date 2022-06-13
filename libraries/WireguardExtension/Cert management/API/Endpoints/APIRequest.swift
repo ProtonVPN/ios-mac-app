@@ -53,7 +53,7 @@ extension APIRequest {
 }
 
 public enum APIHeader: String {
-    case cookie = "Cookie"
+    case setCookie = "set-cookie"
     case authorization = "Authorization"
     case sessionId = "x-pm-uid"
     case appVersion = "x-pm-appversion"
