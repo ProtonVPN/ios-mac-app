@@ -125,8 +125,8 @@ extension IosAlertService: CoreAlertService {
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
             
-        case is UserAccountUpdateAlert:
-            showDefaultSystemAlert(alert)
+        case let alert as UserAccountUpdateAlert:
+            displayUserUpdateAlert(alert: alert)
 
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
@@ -180,9 +180,6 @@ extension IosAlertService: CoreAlertService {
             let plus = AccountPlan.plus
             let allCountriesUpsell = UpsellType.allCountries(numberOfDevices: plus.devicesCount, numberOfServers: plus.serversCount, numberOfCountries: planService.countriesCount)
             show(upsellType: allCountriesUpsell)
-
-        case let alert as UserAccountUpdateAlert:
-            displayUserUpdateAlert(alert: alert)
             
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)
