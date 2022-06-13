@@ -91,6 +91,12 @@ class AlertTests: XCTestCase {
 }
 
 fileprivate class SessionServiceMock: SessionService {
+    var sessionCookie: HTTPCookie?
+
+    func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping (Result<String, Error>) -> Void) {
+
+    }
+
     func getUpgradePlanSession(completion: @escaping (String) -> Void) {
         completion(CoreAppConstants.ProtonVpnLinks.accountDashboard)
     }
