@@ -35,12 +35,14 @@ final class AccountViewModel {
 
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
+    private let sessionService: SessionService
 
     var reloadNeeded: (() -> Void)?
     
-    init(vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol) {
+    init(vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, sessionService: SessionService) {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
+        self.sessionService = sessionService
 
         username = LocalizedString.unavailable
         accountType = LocalizedString.unavailable
@@ -50,7 +52,9 @@ final class AccountViewModel {
     }
     
     func manageSubscriptionAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+        sessionService.getUpgradePlanSession { url in
+            SafariService.openLink(url: url)
+        }
     }
 
     func reload() {
