@@ -37,7 +37,7 @@ final class DependencyContainer {
         return "\(teamId)group.ch.protonvpn.mac"
     }
     private let wireguardVpnExtensionBundleIdentifier = "ch.protonvpn.mac.WireGuard-Extension"
-    
+
     // Singletons
     private lazy var navigationService = NavigationService(self)
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
@@ -80,19 +80,19 @@ final class DependencyContainer {
         safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
-   
+
     private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
-    
+
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
-    
+
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh,
                                                            serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh, canRefreshLoads: { return NSApp.isActive })
-    
+
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
-    
+
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(
         api: makeReportsApiService(),
@@ -109,7 +109,7 @@ final class DependencyContainer {
     #else
     private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
     #endif
-    
+
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
 
@@ -145,7 +145,6 @@ final class DependencyContainer {
         return doh
     }()
     private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
-    private lazy var sessionService = SessionServiceImplementation(networking: makeNetworking())
 }
 
 // MARK: PlanServiceFactory
@@ -546,16 +545,16 @@ extension DependencyContainer: LogContentProviderFactory {
     }
 }
 
+// MARK: SessionServiceFactory
+extension DependencyContainer: SessionServiceFactory {
+    func makeSessionService() -> SessionService {
+        return SessionServiceImplementation(factory: self)
+    }
+}
+
 // MARK: StatusMenuViewModelFactory
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         return StatusMenuViewModel(factory: self)
-    }
-}
-
-// MARK: SessionServiceFactory
-extension DependencyContainer: SessionServiceFactory {
-    func makeSessionService() -> SessionService {
-        return sessionService
     }
 }

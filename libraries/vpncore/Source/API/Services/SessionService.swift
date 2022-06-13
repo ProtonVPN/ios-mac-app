@@ -61,16 +61,11 @@ public final class SessionServiceImplementation: SessionService {
 
     public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
         let accountHost = networking.apiService.doh.accountHost
-        #if os(macOS)
-        let platform = "macOS"
-        #else
-        let platform = "iOS"
-        #endif
 
         getSelector(clientId: "web-account-lite", independent: false) { result in
             switch result {
             case let .success(selector):
-                completion("\(accountHost)/lite?action=subscribe-account&client=\(platform)#selector=\(selector)")
+                completion("\(accountHost)/lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=\(selector)")
             case let .failure(error):
                 log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
                 completion("\(accountHost)/dashboard")
