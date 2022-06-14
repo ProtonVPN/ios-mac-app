@@ -24,7 +24,7 @@ class DoHHostsParsingTests: XCTestCase {
     func testHostParsingForLiveEnvironment() {
         let doh = DoHVPN(apiHost: "", verifyHost: "verify.proton", alternativeRouting: true, appState: AppState.disconnected)
         XCTAssertEqual(doh.defaultHost, "https://api.protonvpn.ch")
-        XCTAssertEqual(doh.accountHost, "https://account.protonvpn.com")
+        XCTAssertEqual(doh.accountHost, "https://account.proton.me")
         XCTAssertEqual(doh.humanVerificationV3Host, "verify.proton")
         XCTAssertFalse(doh.isAtlasRequest)
     }
