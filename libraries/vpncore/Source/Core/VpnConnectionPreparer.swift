@@ -48,27 +48,37 @@ class VpnConnectionPreparer {
         self.wireguardConfig = wireguardConfig
     }
     
-    func connect(with connectionProtocol: ConnectionProtocol, to server: ServerModel, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
+    func determineServerParametersAndConnect(with connectionProtocol: ConnectionProtocol,
+                                             to server: ServerModel,
+                                             netShieldType: NetShieldType,
+                                             natType: NATType,
+                                             safeMode: Bool?) {
         guard let serverIp = selectServerIp(server: server) else {
             return
         }
         
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
             log.info("Connecting with \(vpnProtocol) to \(server.name) via \(serverIp.entryIp):\(ports)", category: .connectionConnect)
-            self.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+            self.formConfigurationWithParametersAndConnect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
         }
     }
     
     // MARK: - Private functions
 
     // swiftlint:disable:next function_parameter_count
-    private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, ports: [Int]) {
+    private func formConfigurationWithParametersAndConnect(withProtocol vpnProtocol: VpnProtocol,
+                                                           server: ServerModel,
+                                                           serverIp: ServerIp,
+                                                           netShieldType: NetShieldType,
+                                                           natType: NATType,
+                                                           safeMode: Bool?,
+                                                           ports: [Int]) {
         guard let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports) else {
             return
         }
 
         DispatchQueue.main.async { [weak self] in
-            self?.appStateManager.connect(withConfiguration: configuration)
+            self?.appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
         }
     }
 

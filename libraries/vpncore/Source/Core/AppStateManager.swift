@@ -45,7 +45,7 @@ public protocol AppStateManager {
     func cancelConnectionAttempt(completion: @escaping () -> Void)
         
     func prepareToConnect()
-    func connect(withConfiguration configuration: ConnectionConfiguration)
+    func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration)
     
     func disconnect()
     func disconnect(completion: @escaping () -> Void)
@@ -206,7 +206,7 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnManager.refreshState()
     }
         
-    public func connect(withConfiguration configuration: ConnectionConfiguration) {
+    public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
         
@@ -241,10 +241,10 @@ public class AppStateManagerImplementation: AppStateManager {
         switch configuration.vpnProtocol.authenticationType {
         case .credentials:
             log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
-            makeConnection(configuration)
+            configureVPNManagerAndConnect(configuration)
         case .certificate:
             let clientKey = vpnAuthentication.loadClientPrivateKey()
-            makeConnection(configuration, clientPrivateKey: clientKey)
+            configureVPNManagerAndConnect(configuration, clientPrivateKey: clientKey)
         }
     }
 
@@ -324,7 +324,7 @@ public class AppStateManagerImplementation: AppStateManager {
         }
     }
 
-    private func makeConnection(_ connectionConfiguration: ConnectionConfiguration, clientPrivateKey: PrivateKey? = nil) {
+    private func configureVPNManagerAndConnect(_ connectionConfiguration: ConnectionConfiguration, clientPrivateKey: PrivateKey? = nil) {
         guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration, clientPrivateKey: clientPrivateKey) else {
             cancelConnectionAttempt()
             return
@@ -339,7 +339,7 @@ public class AppStateManagerImplementation: AppStateManager {
             self.propertiesManager.lastWireguardConnection = connectionConfiguration
         }
         
-        vpnManager.connect(configuration: vpnManagerConfiguration, completion: {
+        vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: vpnManagerConfiguration, completion: {
             // COMPLETION
         })
     }
@@ -525,7 +525,7 @@ public class AppStateManagerImplementation: AppStateManager {
                     self.isOnDemandEnabled { enabled in
                         guard !enabled else { return }
                         log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
-                        self.connect(withConfiguration: lastConfiguration)
+                        self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfiguration)
                     }
                 }
             }
@@ -571,7 +571,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
             self.reconnectingAfterStuckDisconnecting = true
             log.info("Attempt connection after vpn stuck", category: .connectionConnect, event: .trigger)
-            self.connect(withConfiguration: lastConfig) // Retry connection
+            self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfig) // Retry connection
         })
     }
 
