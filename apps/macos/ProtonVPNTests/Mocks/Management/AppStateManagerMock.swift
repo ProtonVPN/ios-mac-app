@@ -58,7 +58,7 @@ class AppStateManagerMock: AppStateManager {
         
     }
     
-    func connect(withConfiguration configuration: ConnectionConfiguration) {
+    func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
         
     }
     

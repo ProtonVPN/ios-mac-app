@@ -60,7 +60,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     }
     
     func startConnection() {
-        appStateManager.connect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         vpnManager.state = .connecting(serverDescriptor)
 
         let state = self.appStateManager.state

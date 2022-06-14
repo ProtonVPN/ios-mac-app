@@ -32,7 +32,7 @@ public protocol VpnManagerProtocol {
     func appBackgroundStateDidChange(isBackground: Bool)
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     func setOnDemand(_ enabled: Bool)
-    func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
+    func disconnectAnyExistingConnectionAndPrepareToConnect(with configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
     func disconnect(completion: @escaping () -> Void)
     func connectedDate(completion: @escaping (Date?) -> Void)
     func refreshState()
@@ -187,7 +187,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+    public func disconnectAnyExistingConnectionAndPrepareToConnect(with configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
         let pause = state != .disconnected ? 0.2 : 0 // Magical fix for strange crash of go mobile and/or LocagAgent lib + KS
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol

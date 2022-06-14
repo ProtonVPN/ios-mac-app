@@ -48,7 +48,7 @@ class StateAlertTests: XCTestCase {
         
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
@@ -59,7 +59,7 @@ class StateAlertTests: XCTestCase {
         
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 0)
         
@@ -73,7 +73,7 @@ class StateAlertTests: XCTestCase {
     func testFirstTimeConnectingAlert() {
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is FirstTimeConnectingAlert)
@@ -82,7 +82,7 @@ class StateAlertTests: XCTestCase {
     func testNormalConnectingNoAlerts() {
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 0)
     }

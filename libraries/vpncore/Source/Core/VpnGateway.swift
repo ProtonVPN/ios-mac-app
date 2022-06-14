@@ -301,11 +301,11 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastConnectionRequest = request
         
         guard let request = request else {
-            connect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
+            gatherParametersAndConnect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             return
         }
         
-        connect(with: request.connectionProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType, safeMode: safeMode)
+        gatherParametersAndConnect(with: request.connectionProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, natType: natType, safeMode: safeMode)
     }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -380,8 +380,13 @@ public class VpnGateway: VpnGatewayProtocol {
         stopConnecting(userInitiated: false)
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
-    
-    private func connect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
+
+    /// Determine all of the different features we want to use for the connection, and then go on to the next connection step.
+    ///
+    /// Gathers the connection protocol (including smart protocol details) and kill switch setting. According to these set values and the
+    /// configuration of the hardware, the options specified in `VpnConnectionInterceptPolicyItem` may change this configuration fetched
+    /// from settings, possibly according to alerts displayed to the user whether they want to proceed with their normal settings.
+    private func gatherParametersAndConnect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
         guard let server = server else {
             return
         }
@@ -430,7 +435,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
             DispatchQueue.main.async {
                 self.appStateManager.prepareToConnect()
-                self.connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
+                self.connectionPreparer?.determineServerParametersAndConnect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             }
         }
     }
@@ -526,7 +531,7 @@ fileprivate extension VpnGateway {
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
-        self.connect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType, natType: request.natType, safeMode: request.safeMode)
+        self.gatherParametersAndConnect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType, natType: request.natType, safeMode: request.safeMode)
         return ReconnectInfo(fromServer: .init(name: previousServer.name,
                                                image: .flag(countryCode: previousServer.countryCode) ?? Image()),
                              toServer: .init(name: toServer.name,
