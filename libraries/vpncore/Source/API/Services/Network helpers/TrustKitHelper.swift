@@ -50,6 +50,19 @@ public final class TrustKitHelper {
                         "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw="
                     ]
                 ],
+                "proton.me": [
+                    kTSKEnforcePinning: hardfail,
+                    kTSKIncludeSubdomains: true,
+                    kTSKDisableDefaultReportUri: true,
+                    kTSKReportUris: [
+                        "https://api.protonvpn.ch/reports/tls"
+                    ],
+                    kTSKPublicKeyHashes: [
+                        "CT56BhOTmj5ZIPgb/xD5mH8rY3BLo/MlhP7oPyJUEDo=",
+                        "35Dx28/uzN3LeltkCBQ8RHK0tlNSa2kCpCRGNp34Gxc=",
+                        "qYIukVc63DEITct8sFT7ebIq5qsWmuscaIKeJx+5J5A="
+                    ]
+                ],
                 ".compute.amazonaws.com": [ // <- cert pinning for alternative routes, needs to be addeed to `NSExceptionDomains` in `Info.plist`
                     kTSKEnforcePinning: true,
                     kTSKIncludeSubdomains: true,
