@@ -1073,7 +1073,7 @@
 "_account" = "Account";
 
 /* Alert title for account deletion error */
-"_account_deletion_error" = "Deleting your account will end your VPN session.";
+"_account_deletion_error" = "Error";
 
 /* iOS: Message explaining that deleting account closes the VPN connection */
 "_account_deletion_connection_warning" = "Deleting your account will end your VPN session.";
