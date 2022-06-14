@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import NetworkExtension
 
 final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
@@ -37,11 +38,34 @@ final class WidgetFactory {
     }
 
     func makeTodayViewModel() -> TodayViewModel {
-        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
-        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
-        let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: IkeProtocolFactory(), openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
+        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
+                                                    appGroup: appGroup,
+                                                    propertiesManager: propertiesManager,
+                                                    vpnManagerFactory: self)
+        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
+                                                           appGroup: appGroup,
+                                                           propertiesManager: propertiesManager,
+                                                           vpnManagerFactory: self)
+        let ikeVpnFactory = IkeProtocolFactory(factory: self)
+        let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeVpnFactory,
+                                                                 openVpnProtocolFactory: openVpnFactory,
+                                                                 wireguardProtocolFactory: wireguardVpnFactory,
+                                                                 propertiesManager: propertiesManager,
+                                                                 appGroup: appGroup)
         let viewModel = TodayViewModel(vpnStateConfiguration: vpnStateConfiguration)
         alertService.delegate = viewModel
         return viewModel
+    }
+}
+
+extension WidgetFactory: NEVPNManagerWrapperFactory {
+    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+        NEVPNManager.shared()
+    }
+}
+
+extension WidgetFactory: NETunnelProviderManagerWrapperFactory {
+    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences(completionHandler: completionHandler)
     }
 }

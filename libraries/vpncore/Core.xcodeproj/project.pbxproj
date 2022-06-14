@@ -86,6 +86,8 @@
 		4CA0977D28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
+		4CE300C7285877B100FBD249 /* NEVPNWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */; };
+		4CE300C8285877B100FBD249 /* NEVPNWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */; };
 		4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B7281FCFE9008404E4 /* SessionService.swift */; };
 		4CF40B9B2833B30300C3C501 /* ForkSessionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B0281FCCD3008404E4 /* ForkSessionRequest.swift */; };
 		4CF40B9C2833B3F600C3C501 /* ForkSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */; };
@@ -672,6 +674,7 @@
 		4C4D898227BD0BE800548523 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
 		4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnConnectionIntercept.swift; sourceTree = "<group>"; };
+		4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNWrappers.swift; sourceTree = "<group>"; };
 		4CF40B9E2833BDE100C3C501 /* ProviderMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMessage.swift; sourceTree = "<group>"; };
 		4CF40BA12833C0F300C3C501 /* WireguardProviderMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardProviderMessage.swift; sourceTree = "<group>"; };
 		53EBB65215BA5F5CD6AD30E9 /* FileLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogHandler.swift; sourceTree = "<group>"; };
@@ -1160,6 +1163,14 @@
 				4241A8DC24C9EEDA005412FB /* MigrationVersionTest.swift */,
 			);
 			path = Migration;
+			sourceTree = "<group>";
+		};
+		4CE300C52858777E00FBD249 /* DependencyWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */,
+			);
+			path = DependencyWrappers;
 			sourceTree = "<group>";
 		};
 		4CF40B9D2833BDCC00C3C501 /* ProviderMessage */ = {
@@ -1859,6 +1870,7 @@
 		F36ECB722610A96A0089B898 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				4CE300C52858777E00FBD249 /* DependencyWrappers */,
 				4CF40B9D2833BDCC00C3C501 /* ProviderMessage */,
 				F36ECB752610A98B0089B898 /* Client Config */,
 				F36ECB742610A9820089B898 /* Data refresh */,
@@ -2623,6 +2635,7 @@
 				4237064D262DA3BE00A920CF /* VpnStreamingOption.swift in Sources */,
 				E1236C64224A6214002FD9A7 /* CodingErrors.swift in Sources */,
 				D5D2955225A5D551000FBD74 /* NetShieldPropertyProvider.swift in Sources */,
+				4CE300C7285877B100FBD249 /* NEVPNWrappers.swift in Sources */,
 				F3E5786E27CCCE4B000E48E3 /* AvailableDomainsRequest.swift in Sources */,
 				E1616BCB21C7D89C00F42D79 /* TimerFactory.swift in Sources */,
 				D5D2948725A46B8D000FBD74 /* String+SemVer.swift in Sources */,
@@ -3085,6 +3098,7 @@
 				BF14CD08F6B9E950E8375F53 /* LocalAgentNativeClientImplementation.swift in Sources */,
 				C3214C39216F6871EA6F0D27 /* SentryHelper.swift in Sources */,
 				A2F4E02AB3A069EBDBACBF1D /* String+Email.swift in Sources */,
+				4CE300C8285877B100FBD249 /* NEVPNWrappers.swift in Sources */,
 				E9607001283B635800983E3B /* LogContentProvider.swift in Sources */,
 				EC6B47126B111E78B21B786F /* Bundle+vpncore.swift in Sources */,
 				42D0F2998B9EE05DAFAC59E7 /* Level+Print.swift in Sources */,

@@ -17,3 +17,82 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import NetworkExtension
+
+public protocol NEVPNManagerWrapper {
+    var vpnConnection: NEVPNConnectionWrapper { get }
+    var protocolConfiguration: NEVPNProtocol? { get set }
+    var isEnabled: Bool { get set }
+    var isOnDemandEnabled: Bool { get set }
+    var onDemandRules: [NEOnDemandRule]? { get set }
+
+    func loadFromPreferences(completionHandler: @escaping (Error?) -> Void)
+    func saveToPreferences(completionHandler: ((Error?) -> Void)?)
+    func removeFromPreferences(completionHandler: ((Error?) -> Void)?)
+}
+
+extension NEVPNManager: NEVPNManagerWrapper {
+    public var vpnConnection: NEVPNConnectionWrapper {
+        self.connection
+    }
+}
+
+public protocol NEVPNManagerWrapperFactory {
+    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper
+}
+
+public protocol NETunnelProviderManagerWrapper: NEVPNManagerWrapper {
+}
+
+extension NETunnelProviderManager: NETunnelProviderManagerWrapper {
+}
+
+public protocol NETunnelProviderManagerWrapperFactory {
+    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void)
+}
+
+extension NETunnelProviderManagerWrapperFactory {
+    static func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
+        Self.loadAllFromPreferences { (managers, error) in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            guard let managers = managers else {
+                completionHandler(nil, ProtonVpnError.vpnManagerUnavailable)
+                return
+            }
+
+            let vpnManager = managers.first(where: { (manager) -> Bool in
+                return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
+            }) ?? NETunnelProviderManager()
+
+            completionHandler(vpnManager, nil)
+        }
+    }
+}
+
+extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
+}
+
+public protocol NEVPNConnectionWrapper {
+    var vpnManager: NEVPNManagerWrapper { get }
+    var status: NEVPNStatus { get }
+    var connectedDate: Date? { get }
+
+    func startVPNTunnel() throws
+    func stopVPNTunnel()
+}
+
+extension NEVPNConnection: NEVPNConnectionWrapper {
+    public var vpnManager: NEVPNManagerWrapper {
+        self.manager
+    }
+}
+
+public protocol NETunnelProviderSessionWrapper: NEVPNConnectionWrapper {
+    func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws
+}
+
+extension NETunnelProviderSession: NETunnelProviderSessionWrapper {
+}

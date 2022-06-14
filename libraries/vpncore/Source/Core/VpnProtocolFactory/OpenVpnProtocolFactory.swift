@@ -74,7 +74,9 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     private let bundleId: String
     private let appGroup: String
     private let propertiesManager: PropertiesManagerProtocol
-    private var vpnManager: NETunnelProviderManager?
+    private let vpnManagerFactory: NETunnelProviderManagerWrapperFactory
+
+    private var vpnManager: NEVPNManagerWrapper?
     
     private let debugLogFormat = "$Dyyyy-MM-dd'T'HH:mm:ss.SSSZ$d $L protocol $N.$F:$l - $M"
     
@@ -87,10 +89,14 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         return emptyTunnelBuilder.build()
     }()
     
-    public init(bundleId: String, appGroup: String, propertiesManager: PropertiesManagerProtocol) {
+    public init(bundleId: String,
+                appGroup: String,
+                propertiesManager: PropertiesManagerProtocol,
+                vpnManagerFactory: NETunnelProviderManagerWrapperFactory) {
         self.bundleId = bundleId
         self.appGroup = appGroup
         self.propertiesManager = propertiesManager
+        self.vpnManagerFactory = vpnManagerFactory
     }
     
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
@@ -100,11 +106,16 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         return neProtocol
     }
     
-    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
         if requirement == .status, let vpnManager = vpnManager {
             completion(vpnManager, nil)
         } else {
-            loadManager(completion: completion)
+            type(of: vpnManagerFactory).tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
+                if let manager = manager {
+                    self.vpnManager = manager
+                }
+                completion(manager, error)
+            }
         }
     }
     
@@ -120,28 +131,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     }
     
     // MARK: - Private stuff
-    private func loadManager(completion: @escaping (NEVPNManager?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { [weak self] (managers, error) in
-            guard let `self` = self else {
-                completion(nil, ProtonVpnError.vpnManagerUnavailable)
-                return
-            }
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            guard let managers = managers else {
-                completion(nil, ProtonVpnError.vpnManagerUnavailable)
-                return
-            }
-            
-            self.vpnManager = managers.first(where: { [unowned self] (manager) -> Bool in
-                return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == self.bundleId
-            }) ?? NETunnelProviderManager()
-
-            completion(self.vpnManager, nil)
-        }
-    }
     
     private func openVpnConfiguration(for connectionConfiguration: VpnManagerConfiguration) -> OpenVPN.Configuration {
         var configurationBuilder = OpenVPN.ConfigurationBuilder()
@@ -196,7 +185,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     }
     
     private func logData(completion: @escaping (Data?) -> Void) {
-        guard let connection = vpnManager?.connection as? NETunnelProviderSession else {
+        guard let connection = vpnManager?.vpnConnection as? NETunnelProviderSessionWrapper else {
             completion(nil)
             return
         }
