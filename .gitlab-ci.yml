@@ -239,7 +239,7 @@ review_unit_tests:
   artifacts:
     reports:
       cobertura:
-        - fastlane/test_output/BugReport.xml        
+        - fastlane/test_output/Review.xml        
 
 search_ios_unit_tests:
   stage: core_unit_tests
