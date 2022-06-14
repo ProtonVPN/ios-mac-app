@@ -26,6 +26,7 @@ import KeychainAccess
 import BugReport
 import Search
 import Review
+import NetworkExtension
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -59,9 +60,9 @@ final class DependencyContainer {
                                                                      natTypePropertyProvider: makeNATTypePropertyProvider(),
                                                                      netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                                      safeModePropertyProvider: makeSafeModePropertyProvider())
-    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: appGroup, propertiesManager: makePropertiesManager())
-    private lazy var ikeFactory = IkeProtocolFactory()
-    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager())
+    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
+    private lazy var ikeFactory = IkeProtocolFactory(factory: self)
+    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
@@ -509,5 +510,19 @@ extension DependencyContainer: LogContentProviderFactory {
 extension DependencyContainer: SessionServiceFactory {
     func makeSessionService() -> SessionService {
         return SessionServiceImplementation(factory: self)
+    }
+}
+
+// MARK: NEVPNManagerWrapperFactory
+extension DependencyContainer: NEVPNManagerWrapperFactory {
+    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+        NEVPNManager.shared()
+    }
+}
+
+// MARK: NETunnelProviderManagerWrapperFactory
+extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
+    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences(completionHandler: completionHandler)
     }
 }

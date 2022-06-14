@@ -22,6 +22,7 @@
 
 import Intents
 import vpncore
+import NetworkExtension
 
 @available(iOSApplicationExtension 12.0, *)
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
@@ -47,9 +48,10 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
         let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
         let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
-        let ikeFactory = IkeProtocolFactory()
-        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
-        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
+        let vpnWrapperFactory = VPNWrapperFactory()
+        let ikeFactory = IkeProtocolFactory(factory: vpnWrapperFactory)
+        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
+        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
         let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
         let sessionService = SessionServiceImplementation(appInfoFactory: appInfoFactory, networking: networking, doh: doh)
         let vpnManager = VpnManager(ikeFactory: ikeFactory,
@@ -137,5 +139,15 @@ fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factor
 fileprivate class SiriIntentHandlerAppInfoFactory: AppInfoFactory {
     func makeAppInfo(context: AppContext) -> AppInfo {
         AppInfoImplementation(context: context)
+    }
+}
+
+fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory & NETunnelProviderManagerWrapperFactory {
+    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences(completionHandler: completionHandler)
+    }
+
+    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+        NEVPNManager.shared()
     }
 }

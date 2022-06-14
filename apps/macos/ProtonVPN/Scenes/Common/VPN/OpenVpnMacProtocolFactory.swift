@@ -21,12 +21,20 @@ import vpncore
 
 // Overriden to make use of XPC connection, available only on macOS.
 class OpenVpnMacProtocolFactory: OpenVpnProtocolFactory {
+    public typealias Factory = PropertiesManagerFactory &
+                                XPCConnectionsRepositoryFactory &
+                                NETunnelProviderManagerWrapperFactory
 
     private let xpcConnectionsRepository: XPCConnectionsRepository
 
-    public init(bundleId: String, appGroup: String, propertiesManager: PropertiesManagerProtocol, xpcConnectionsRepository: XPCConnectionsRepository) {
-        self.xpcConnectionsRepository = xpcConnectionsRepository
-        super.init(bundleId: bundleId, appGroup: appGroup, propertiesManager: propertiesManager)
+    public init(bundleId: String,
+                appGroup: String,
+                factory: Factory) {
+        self.xpcConnectionsRepository = factory.makeXPCConnectionsRepository()
+        super.init(bundleId: bundleId,
+                   appGroup: appGroup,
+                   propertiesManager: factory.makePropertiesManager(),
+                   vpnManagerFactory: factory)
     }
 
     override public func logs(completion: @escaping (String?) -> Void) {

@@ -35,8 +35,8 @@ public struct VpnStateConfigurationInfo {
 
 public protocol VpnStateConfiguration {
     func determineActiveVpnProtocol(defaultToIke: Bool, completion: @escaping ((VpnProtocol?) -> Void))
-    func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManager, VpnState), Error>) -> Void))
-    func determineNewState(vpnManager: NEVPNManager) -> VpnState
+    func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void))
+    func determineNewState(vpnManager: NEVPNManagerWrapper) -> VpnState
     func getInfo(completion: @escaping ((VpnStateConfigurationInfo) -> Void))
 }
 
@@ -57,8 +57,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         self.appGroup = appGroup
     }
 
-    public func determineNewState(vpnManager: NEVPNManager) -> VpnState {
-        let status = vpnManager.connection.status
+    public func determineNewState(vpnManager: NEVPNManagerWrapper) -> VpnState {
+        let status = vpnManager.vpnConnection.status
         let username = vpnManager.protocolConfiguration?.username ?? ""
         let serverAddress = vpnManager.protocolConfiguration?.serverAddress ?? ""
 
@@ -133,7 +133,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         }
     }
 
-    public func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManager, VpnState), Error>) -> Void)) {
+    public func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void)) {
         getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] vpnManager, error in
             if let error = error {
                 completion(.failure(error))

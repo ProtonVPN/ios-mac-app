@@ -14,12 +14,18 @@ open class WireguardProtocolFactory {
     private let bundleId: String
     private let appGroup: String
     private let propertiesManager: PropertiesManagerProtocol
-    private var vpnManager: NETunnelProviderManager?
+    private let vpnManagerFactory: NETunnelProviderManagerWrapperFactory
+
+    private var vpnManager: NETunnelProviderManagerWrapper?
     
-    public init(bundleId: String, appGroup: String, propertiesManager: PropertiesManagerProtocol) {
+    public init(bundleId: String,
+                appGroup: String,
+                propertiesManager: PropertiesManagerProtocol,
+                vpnManagerFactory: NETunnelProviderManagerWrapperFactory) {
         self.bundleId = bundleId
         self.appGroup = appGroup
         self.propertiesManager = propertiesManager
+        self.vpnManagerFactory = vpnManagerFactory
     }
         
     open func logs(completion: @escaping (String?) -> Void) {
@@ -38,18 +44,6 @@ open class WireguardProtocolFactory {
 }
 
 extension WireguardProtocolFactory: VpnProtocolFactory {
-    
-    private enum Message: UInt8 {
-        // Standard messages
-        case getRuntimeTunnelConfiguration = 0
-        // Proton messages
-        case flushLogsToFile = 101
-        
-        var data: Data {
-            return Data([self.rawValue])
-        }        
-    }
-            
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleId
@@ -57,34 +51,16 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         return protocolConfiguration
     }
     
-    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
         if requirement == .status, let vpnManager = vpnManager {
             completion(vpnManager, nil)
         } else {
-            loadManager(completion: completion)
-        }
-    }
-    
-    private func loadManager(completion: @escaping (NEVPNManager?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { [weak self] (managers, error) in
-            guard let `self` = self else {
-                completion(nil, ProtonVpnError.vpnManagerUnavailable)
-                return
+            type(of: vpnManagerFactory).tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
+                if let manager = manager {
+                    self.vpnManager = manager
+                }
+                completion(manager, error)
             }
-            if let error = error {
-                completion(nil, error)
-                return
-            }
-            guard let managers = managers else {
-                completion(nil, ProtonVpnError.vpnManagerUnavailable)
-                return
-            }
-            
-            self.vpnManager = managers.first(where: { [unowned self] (manager) -> Bool in
-                return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == self.bundleId
-            }) ?? NETunnelProviderManager()
-
-            completion(self.vpnManager, nil)
         }
     }
     
@@ -99,12 +75,12 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     /// Tries to flush logs to a logfile. Call handler with true if flush succeeded or false otherwise.
     public func flushLogs(responseHandler: @escaping (_ success: Bool) -> Void) {
         vpnProviderManager(for: .status) { manager, error in
-            guard let manager = manager, let connection = (manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession else {
+            guard let manager = manager, let connection = manager.vpnConnection as? NETunnelProviderSessionWrapper else {
                 responseHandler(false)
                 return
             }
             do {
-                try connection.sendProviderMessage(Message.flushLogsToFile.data) { _ in
+                try connection.sendProviderMessage(WireguardProviderRequest.flushLogsToFile.asData) { _ in
                     responseHandler(true)
                 }
             } catch {

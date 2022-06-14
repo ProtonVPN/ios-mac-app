@@ -261,7 +261,7 @@ public class VpnManager: VpnManagerProtocol {
             
             // Returns a date if currently connected
             if case VpnState.connected(_) = self.state {
-                completion(vpnManager.connection.connectedDate)
+                completion(vpnManager.vpnConnection.connectedDate)
             } else {
                 completion(nil)
             }
@@ -362,9 +362,10 @@ public class VpnManager: VpnManagerProtocol {
     }
     
     private func configureConnection(forProtocol configuration: NEVPNProtocol,
-                                     vpnManager: NEVPNManager,
+                                     vpnManager: NEVPNManagerWrapper,
                                      completion: @escaping () -> Void) {
         guard connectAllowed else { return }
+        var vpnManager = vpnManager
         
         log.info("Configuring connection", category: .connectionConnect)
         
@@ -427,7 +428,7 @@ public class VpnManager: VpnManagerProtocol {
             guard self.connectAllowed else { return }
             do {
                 log.info("Starting VPN tunnel", category: .connectionConnect)
-                try vpnManager.connection.startVPNTunnel()
+                try vpnManager.vpnConnection.startVPNTunnel()
                 completion()
             } catch {
                 self.setState(withError: error)
@@ -447,18 +448,18 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    private func stopTunnelOrRunCompletion(vpnManager: NEVPNManager) {
+    private func stopTunnelOrRunCompletion(vpnManager: NEVPNManagerWrapper) {
         switch self.state {
         case .disconnected, .error, .invalid:
             disconnectCompletion?() // ensures the completion handler is run already disconnected
             disconnectCompletion = nil
         default:
-            vpnManager.connection.stopVPNTunnel()
+            vpnManager.vpnConnection.stopVPNTunnel()
         }
     }
     
     // MARK: - Connect on demand
-    private func setOnDemand(_ enabled: Bool, completion: @escaping (NEVPNManager) -> Void) {
+    private func setOnDemand(_ enabled: Bool, completion: @escaping (NEVPNManagerWrapper) -> Void) {
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
         }
@@ -469,7 +470,7 @@ public class VpnManager: VpnManagerProtocol {
                 self.setState(withError: error)
                 return
             }
-            guard let vpnManager = vpnManager else {
+            guard var vpnManager = vpnManager else {
                 self.setState(withError: ProtonVpnError.vpnManagerUnavailable)
                 return
             }
@@ -538,7 +539,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    private func updateState(_ vpnManager: NEVPNManager) {
+    private func updateState(_ vpnManager: NEVPNManagerWrapper) {
         quickReconnection = false
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != self.state else { return }
@@ -573,7 +574,7 @@ public class VpnManager: VpnManagerProtocol {
             setRemoteAuthenticationEndpoint(provider: nil)
             disconnectLocalAgent()
         case .connected:
-            setRemoteAuthenticationEndpoint(provider: vpnManager.connection as? ProviderMessageSender)
+            setRemoteAuthenticationEndpoint(provider: vpnManager.vpnConnection as? ProviderMessageSender)
             self.connectLocalAgent()
         default:
             break
@@ -631,7 +632,7 @@ public class VpnManager: VpnManagerProtocol {
                 completionHandler?(ProtonVpnError.removeVpnProfileFailed)
                 return
             }
-            guard let vpnManager = vpnManager else {
+            guard var vpnManager = vpnManager else {
                 completionHandler?(ProtonVpnError.removeVpnProfileFailed)
                 return
             }

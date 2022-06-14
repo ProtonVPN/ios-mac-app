@@ -24,6 +24,7 @@ import AppKit
 import Foundation
 import vpncore
 import BugReport
+import NetworkExtension
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -53,15 +54,13 @@ final class DependencyContainer {
                                                                  natTypePropertyProvider: makeNATTypePropertyProvider(),
                                                                  netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                                  safeModePropertyProvider: makeSafeModePropertyProvider())
-    private lazy var ikeFactory = IkeProtocolFactory()
+    private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
                                                                     appGroup: appGroup,
-                                                                    propertiesManager: makePropertiesManager(),
-                                                                    xpcConnectionsRepository: makeXPCConnectionsRepository())
+                                                                    factory: self)
     private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
                                                                 appGroup: appGroup,
-                                                                propertiesManager: makePropertiesManager(),
-                                                                xpcConnectionsRepository: makeXPCConnectionsRepository())
+                                                                factory: self)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
@@ -556,5 +555,18 @@ extension DependencyContainer: SessionServiceFactory {
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         return StatusMenuViewModel(factory: self)
+    }
+}
+
+// MARK: NEVPNManagerWrapperFactory
+extension DependencyContainer: NEVPNManagerWrapperFactory {
+    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+        NEVPNManager.shared()
+    }
+}
+
+extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
+    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences(completionHandler: completionHandler)
     }
 }

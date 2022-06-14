@@ -23,8 +23,13 @@ import Foundation
 import NetworkExtension
 
 public class IkeProtocolFactory: VpnProtocolFactory {
+    public typealias Factory = NEVPNManagerWrapperFactory
+
+    private let vpnManager: NEVPNManagerWrapper
     
-    public init() {}
+    public init(factory: Factory) {
+        self.vpnManager = factory.makeNEVPNManagerWrapper()
+    }
     
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
@@ -60,14 +65,14 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         return config
     }
     
-    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
-        NEVPNManager.shared().loadFromPreferences { loadError in
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
+        vpnManager.loadFromPreferences { loadError in
             if let loadError = loadError {
                 completion(nil, loadError)
                 return
             }
             
-            completion(NEVPNManager.shared(), nil)
+            completion(self.vpnManager, nil)
         }
     }
     
