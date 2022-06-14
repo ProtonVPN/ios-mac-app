@@ -8,6 +8,16 @@ PODS:
   - lottie-ios (3.3.0)
   - OpenSSL-Apple (1.1.1k.11)
   - pmtest (1.0.0)
+  - "ProtonCore-AccountDeletion-V5/UsingCryptoVPN+Alamofire (3.18.0)":
+    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.18.0)"
+    - ProtonCore-CoreTranslation (= 3.18.0)
+    - ProtonCore-Doh (= 3.18.0)
+    - ProtonCore-Foundations (= 3.18.0)
+    - ProtonCore-Log (= 3.18.0)
+    - ProtonCore-Networking/Alamofire (= 3.18.0)
+    - ProtonCore-Services/Alamofire (= 3.18.0)
+    - ProtonCore-UIFoundations-V5 (= 3.18.0)
+    - ProtonCore-Utilities (= 3.18.0)
   - ProtonCore-APIClient/Alamofire (3.18.0):
     - ProtonCore-DataModel (= 3.18.0)
     - ProtonCore-Networking/Alamofire (= 3.18.0)
@@ -159,6 +169,7 @@ DEPENDENCIES:
   - KeychainAccess (= 3.2.1)
   - Logging (= 1.4.0)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
+  - "ProtonCore-AccountDeletion-V5/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.18.0`)"
   - "ProtonCore-APIClient/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.18.0`)"
   - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.18.0`)"
   - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.18.0`)"
@@ -214,6 +225,9 @@ EXTERNAL SOURCES:
   pmtest:
     :commit: 579ef5f66deea4231784614d936956982f53ee30
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
+  ProtonCore-AccountDeletion-V5:
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 3.18.0
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
     :tag: 3.18.0
@@ -303,6 +317,9 @@ CHECKOUT OPTIONS:
   pmtest:
     :commit: 579ef5f66deea4231784614d936956982f53ee30
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
+  ProtonCore-AccountDeletion-V5:
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 3.18.0
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
     :tag: 3.18.0
@@ -397,6 +414,7 @@ SPEC CHECKSUMS:
   lottie-ios: 6ac74dcc09904798f59b18cb3075c089d76be9ae
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
+  ProtonCore-AccountDeletion-V5: b7335a32750f2249942500ddb750f465dc0f7845
   ProtonCore-APIClient: efe870d05d551f853e973b04d4ce8001580cfc37
   ProtonCore-Authentication: 4f69e07f0c77c061c339ff0561fd160d988743f1
   ProtonCore-Authentication-KeyGeneration: 1521daaf809eea90cd85441a6883b705c1d3be24
@@ -431,6 +449,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 05346d14a45e4f1b8f87380dfee6b971474264ca
+PODFILE CHECKSUM: 8de8f75cd35a84c3ec251f21b2c0f184d1a58885
 
 COCOAPODS: 1.11.3
