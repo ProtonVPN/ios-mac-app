@@ -249,12 +249,16 @@ search_ios_unit_tests:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_search_test
     - fastlane/print-coverage.sh fastlane/test_output/Search.xcresult Search 1
+    - xcrun xccov view --report --json fastlane/test_output/Search.xcresult > coverage.json
+    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
       junit:
-        - fastlane/test_output/report.junit   
+        - fastlane/test_output/report.junit
+      cobertura: 
+        - fastlane/test_output/cobertura.xml
 
 modals_ios_unit_tests:
   stage: core_unit_tests
@@ -264,12 +268,16 @@ modals_ios_unit_tests:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
     - fastlane/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
+    - xcrun xccov view --report --json fastlane/test_output/Modals.xcresult > coverage.json
+    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
       junit:
-        - fastlane/test_output/report.junit        
+        - fastlane/test_output/report.junit
+      cobertura: 
+        - fastlane/test_output/cobertura.xml
 
 core_macos_unit_tests:
   stage: core_unit_tests

@@ -180,6 +180,7 @@ lane :ios_search_test do
     result_bundle: true,
     derived_data_path: $derived_data_path,
     skip_slack: true,
+    code_coverage: true,
     devices: [simulator_name],
     clean: true)
 end
