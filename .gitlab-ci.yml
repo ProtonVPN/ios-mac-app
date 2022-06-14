@@ -193,7 +193,8 @@ core_ios_unit_tests:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
-    - slather coverage -x --output-directory fastlane/test_output --scheme vpncore-ios --workspace ProtonVPN.xcworkspace libraries/vpncore/Core.xcodeproj
+    - xcrun xccov view --report --json fastlane/test_output/vpncore-ios.xcresult > coverage.json
+    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -288,7 +289,8 @@ core_macos_unit_tests:
     - fastlane create_macos_keychain
     - fastlane macos_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
-    - slather coverage -x --output-directory fastlane/test_output --scheme vpncore-macos --workspace ProtonVPN.xcworkspace libraries/vpncore/Core.xcodeproj
+    - xcrun xccov view --report --json fastlane/test_output/vpncore-macos.xcresult > coverage.json
+    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script: # Cleanup
     - fastlane delete_macos_keychain
   artifacts:
@@ -326,7 +328,8 @@ ios_unit_tests:
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
-    - slather coverage -x --output-directory fastlane/test_output --scheme ProtonVPN-iOS --workspace ProtonVPN.xcworkspace apps/ios/iOS.xcodeproj
+    - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-iOS.xcresult > coverage.json
+    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -438,7 +441,8 @@ macos_unit_tests:
     - fastlane create_macos_keychain
     - fastlane macos_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
-    - slather coverage -x --output-directory fastlane/test_output --scheme ProtonVPN-macOS --workspace ProtonVPN.xcworkspace apps/macos/macOS.xcodeproj
+    - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-macOS.xcresult > coverage.json
+    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script: # Cleanup
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
