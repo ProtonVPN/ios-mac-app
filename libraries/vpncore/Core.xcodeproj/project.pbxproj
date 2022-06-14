@@ -378,8 +378,8 @@
 		E51C6079AB893075B8713F74 /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFC8D5390AD2CD74301D6C54 /* Logger+Categories.swift */; };
 		E53D64B828115B580060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B728115B580060C463 /* NewBrandModalIcons.swift */; };
 		E53D64B928115B7A0060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B728115B580060C463 /* NewBrandModalIcons.swift */; };
-		E53D64BF2811694F0060C463 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64BE2811694F0060C463 /* Modals */; };
-		E53D64C1281169550060C463 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C0281169550060C463 /* Modals */; };
+		E53D64BF2811694F0060C463 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64BE2811694F0060C463 /* SwiftPackageProductDependency */; };
+		E53D64C1281169550060C463 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C0281169550060C463 /* SwiftPackageProductDependency */; };
 		E53D64C728116B910060C463 /* VPNSessionsCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0262465A4190042145A /* VPNSessionsCountRequest.swift */; };
 		E53D64C828116C4A0060C463 /* VPNSessionsCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0262465A4190042145A /* VPNSessionsCountRequest.swift */; };
 		E55046432849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
@@ -402,7 +402,7 @@
 		E939EEEC27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
 		E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEEF27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
-		E939EEF3279561EE006E4305 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* BugReport */; };
+		E939EEF3279561EE006E4305 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */; };
 		E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E9550E152850DE7B00616DB5 /* Bundle+isTestflightBeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9550E142850DE7B00616DB5 /* Bundle+isTestflightBeta.swift */; };
@@ -437,7 +437,7 @@
 		E97CBDC728118891004D2989 /* OSLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97CBDC528118891004D2989 /* OSLogHandler.swift */; };
 		E992F27E26675C3200169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
 		E992F27F26675C3300169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
-		E99F266027A1A7A5003C4586 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E986F007279843F9003A745D /* BugReport */; };
+		E99F266027A1A7A5003C4586 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E986F007279843F9003A745D /* SwiftPackageProductDependency */; };
 		E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94C126B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
@@ -1006,8 +1006,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
-				E53D64BF2811694F0060C463 /* Modals in Frameworks */,
+				E939EEF3279561EE006E4305 /* BuildFile in Frameworks */,
+				E53D64BF2811694F0060C463 /* BuildFile in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1026,8 +1026,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */,
-				E53D64C1281169550060C463 /* Modals in Frameworks */,
-				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
+				E53D64C1281169550060C463 /* BuildFile in Frameworks */,
+				E99F266027A1A7A5003C4586 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2094,8 +2094,8 @@
 			);
 			name = "vpncore-ios";
 			packageProductDependencies = (
-				E939EEF2279561EE006E4305 /* BugReport */,
-				E53D64BE2811694F0060C463 /* Modals */,
+				E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */,
+				E53D64BE2811694F0060C463 /* SwiftPackageProductDependency */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2139,8 +2139,8 @@
 			);
 			name = "vpncore-macos";
 			packageProductDependencies = (
-				E986F007279843F9003A745D /* BugReport */,
-				E53D64C0281169550060C463 /* Modals */,
+				E986F007279843F9003A745D /* SwiftPackageProductDependency */,
+				E53D64C0281169550060C463 /* SwiftPackageProductDependency */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -3855,19 +3855,19 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E53D64BE2811694F0060C463 /* Modals */ = {
+		E53D64BE2811694F0060C463 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;
 		};
-		E53D64C0281169550060C463 /* Modals */ = {
+		E53D64C0281169550060C463 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Modals;
 		};
-		E939EEF2279561EE006E4305 /* BugReport */ = {
+		E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
 		};
-		E986F007279843F9003A745D /* BugReport */ = {
+		E986F007279843F9003A745D /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
 		};
