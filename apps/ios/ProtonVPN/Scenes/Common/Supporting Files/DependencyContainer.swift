@@ -35,7 +35,17 @@ final class DependencyContainer {
     
     // Singletons
     private lazy var navigationService = NavigationService(self)
-     
+
+    private lazy var vpnGateway: VpnGateway = VpnGateway(vpnApiService: makeVpnApiService(),
+                                                         appStateManager: makeAppStateManager(),
+                                                         alertService: makeCoreAlertService(),
+                                                         vpnKeychain: makeVpnKeychain(),
+                                                         siriHelper: SiriHelper(),
+                                                         netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                                                         natTypePropertyProvider: makeNATTypePropertyProvider(),
+                                                         safeModePropertyProvider: makeSafeModePropertyProvider(),
+                                                         propertiesManager: makePropertiesManager(),
+                                                         profileManager: makeProfileManager())
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
                                                                      openVpnFactory: openVpnFactory,
                                                                      wireguardProtocolFactory: wireguardFactory,
@@ -224,16 +234,7 @@ extension DependencyContainer: ServerStorageFactory {
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
-        return VpnGateway(vpnApiService: makeVpnApiService(),
-                          appStateManager: makeAppStateManager(),
-                          alertService: makeCoreAlertService(),
-                          vpnKeychain: makeVpnKeychain(),
-                          siriHelper: SiriHelper(),
-                          netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                          natTypePropertyProvider: makeNATTypePropertyProvider(),
-                          safeModePropertyProvider: makeSafeModePropertyProvider(),
-                          propertiesManager: makePropertiesManager(),
-                          profileManager: makeProfileManager())
+        return vpnGateway
     }
 }
 
