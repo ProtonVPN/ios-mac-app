@@ -82,7 +82,7 @@ end
 # iOS
 
 target 'ProtonVPN' do
-  project 'apps/iOS/iOS.xcodeproj'
+  project 'apps/ios/iOS.xcodeproj'
   platform :ios, '12.1'
   use_frameworks!
 
@@ -144,7 +144,7 @@ target 'ProtonVPN' do
 end
 
 target 'WireGuardiOS Extension' do
-  project 'apps/iOS/iOS.xcodeproj'
+  project 'apps/ios/iOS.xcodeproj'
   platform :ios, '12.1'
   use_frameworks!
   
@@ -153,7 +153,7 @@ target 'WireGuardiOS Extension' do
 end
 
 target 'WireGuardNetworkExtensionTests' do
-  project 'apps/iOS/iOS.xcodeproj'
+  project 'apps/ios/iOS.xcodeproj'
   platform :ios, '12.1'
   use_frameworks!
   
@@ -164,7 +164,7 @@ end
 # macOS
 
 target 'ProtonVPN-mac' do
-  project 'apps/macOS/macOS.xcodeproj'
+  project 'apps/macos/macOS.xcodeproj'
 
   vpn_core
   
@@ -177,20 +177,20 @@ target 'ProtonVPN-mac' do
 end
 
 target 'ProtonVPN OpenVPN' do
-  project 'apps/macOS/macOS.xcodeproj'
+  project 'apps/macos/macOS.xcodeproj'
   use_frameworks!
   openvpn
 end
 
 target 'ProtonVPN WireGuard' do
-  project 'apps/macOS/macOS.xcodeproj'
+  project 'apps/macos/macOS.xcodeproj'
   use_frameworks!
   keychain_access
   logs
 end
 
 target 'ProtonVPNmacOSTests' do
-  project 'apps/macOS/macOS.xcodeproj'
+  project 'apps/macos/macOS.xcodeproj'
   inherit! :search_paths
   vpn_core
 end
