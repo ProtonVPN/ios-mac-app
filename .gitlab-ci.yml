@@ -194,7 +194,7 @@ core_ios_unit_tests:
     - fastlane ios_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-ios.xcresult > coverage.json
-    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -251,7 +251,7 @@ search_ios_unit_tests:
     - fastlane ios_search_test
     - fastlane/print-coverage.sh fastlane/test_output/Search.xcresult Search 1
     - xcrun xccov view --report --json fastlane/test_output/Search.xcresult > coverage.json
-    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -270,7 +270,7 @@ modals_ios_unit_tests:
     - fastlane ios_modals_test
     - fastlane/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
     - xcrun xccov view --report --json fastlane/test_output/Modals.xcresult > coverage.json
-    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -290,7 +290,7 @@ core_macos_unit_tests:
     - fastlane macos_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-macos.xcresult > coverage.json
-    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
+    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script: # Cleanup
     - fastlane delete_macos_keychain
   artifacts:
@@ -310,6 +310,7 @@ wireguard_unit_tests:
     - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane wireguard_networkextension_tests
+    - xcrun xccov view --report --json fastlane/test_output/WireGuardNetworkExtensionTests.xcresult > coverage.json
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -329,7 +330,7 @@ ios_unit_tests:
     - fastlane ios_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
     - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-iOS.xcresult > coverage.json
-    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
+    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   artifacts:
@@ -442,7 +443,7 @@ macos_unit_tests:
     - fastlane macos_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
     - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-macOS.xcresult > coverage.json
-    - /usr/local/bin/xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
+    - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script: # Cleanup
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
