@@ -99,7 +99,7 @@ extension UserAccountUpdateViewModel {
         case .pendingInvoices:
             return LocalizedString.delinquentDescription
         case .reachedDevicePlanLimit(let planName, let numberOfDevices):
-            return LocalizedString.maximumDevicePlanLimit(planName, numberOfDevices)
+            return LocalizedString.maximumDevicePlanLimitPart1(planName) + LocalizedString.maximumDevicePlanLimitPart2(numberOfDevices)
         case .reachedDeviceLimit:
             return LocalizedString.maximumDeviceLimit
         }

@@ -128,10 +128,6 @@
 "subscription_expired_description" = "Your subscription has been downgraded.";
 
 /* Feature list element in user account update screen */
-"subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
-/* Feature list element in user account update screen */
-"subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
-/* Feature list element in user account update screen */
 "subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
 
 /* Title of user account update screen */
@@ -143,7 +139,7 @@
 
 /* Title of user account update screen */
 "maximum_device_title" = "You have reached your maximum device limit";
-/* Description of user account update screen */
-"maximum_device_plan_limit" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
+/* Description of user account update screen part 1*/
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
 /* Description of user account update screen */
 "maximum_device_limit" = "Please disconnect another device to connect to this one.";
