@@ -23,9 +23,19 @@ import Foundation
 import KeychainAccess
 
 public protocol AuthKeychainHandle {
-    func fetch() -> AuthCredentials?
-    func store(_ credentials: AuthCredentials) throws
+    func fetch(forContext: AppContext?) -> AuthCredentials?
+    func store(_ credentials: AuthCredentials, forContext: AppContext?) throws
     func clear()
+}
+
+extension AuthKeychainHandle {
+    func fetch() -> AuthCredentials? {
+        fetch(forContext: nil)
+    }
+
+    func store(_ credentials: AuthCredentials) throws {
+        try store(credentials, forContext: nil)
+    }
 }
 
 public class AuthKeychain {
@@ -40,7 +50,7 @@ public class AuthKeychain {
         ]
     }
 
-    private static let `default`: AuthKeychain = AuthKeychain(context: .mainApp)
+    private static let `default`: AuthKeychainHandle = AuthKeychain(context: .mainApp)
 
     public static func fetch() -> AuthCredentials? {
         `default`.fetch()
@@ -65,15 +75,23 @@ public class AuthKeychain {
 }
 
 extension AuthKeychain: AuthKeychainHandle {
-    private var storageKey: String {
-        StorageKey.contextKeys[context] ?? StorageKey.authCredentials
+    private var defaultStorageKey: String {
+        storageKey(forContext: context) ?? StorageKey.authCredentials
     }
 
-    public func fetch() -> AuthCredentials? {
+    private func storageKey(forContext context: AppContext) -> String? {
+        StorageKey.contextKeys[context]
+    }
+
+    public func fetch(forContext context: AppContext?) -> AuthCredentials? {
         NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
+        var key = defaultStorageKey
+        if let context = context, let contextKey = storageKey(forContext: context) {
+            key = contextKey
+        }
 
         do {
-            if let data = try keychain.getData(storageKey) {
+            if let data = try keychain.getData(key) {
                 if let authCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredentials {
                     return authCredentials
                 }
@@ -85,22 +103,27 @@ extension AuthKeychain: AuthKeychainHandle {
         return nil
     }
 
-    public func store(_ credentials: AuthCredentials) throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         NSKeyedArchiver.setClassName("ProtonVPN.AuthCredentials", for: AuthCredentials.self)
 
+        var key = defaultStorageKey
+        if let context = context, let contextKey = storageKey(forContext: context) {
+            key = contextKey
+        }
+
         do {
-            try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: storageKey)
+            try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: key)
         } catch let error {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
-                try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: storageKey)
+                try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: key)
             } catch let error2 {
                 #if os(macOS)
                     log.error("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", category: .keychain, metadata: ["error": "\(error2)"])
                     do { // Last chance. Locking/unlocking keychain sometimes helps.
                         SecKeychainLock(nil)
-                        try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: storageKey)
+                        try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: key)
                     } catch let error3 {
                         log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error3)"])
                         throw error3
