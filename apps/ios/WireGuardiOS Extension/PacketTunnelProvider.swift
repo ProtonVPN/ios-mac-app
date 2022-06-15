@@ -153,7 +153,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         do {
             let message = try WireguardProviderRequest.decode(data: messageData)
-            wg_log(.info, message: "Handle App Message: \(message)")
             handleProviderMessage(message) { response in
                 completionHandler?(response.asData)
             }
@@ -168,6 +167,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                completionHandler: ((WireguardProviderRequest.Response) -> Void)?) {
         switch message {
         case .getRuntimeTunnelConfiguration:
+            wg_log(.info, message: "Handle message: getRuntimeTunnelConfiguration")
             adapter.getRuntimeConfiguration { settings in
                 if let settings = settings, let data = settings.data(using: .utf8) {
                     completionHandler?(.ok(data: data))
@@ -175,8 +175,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler?(.error(message: "Could not retrieve tunnel configuration."))
             }
         case .flushLogsToFile:
+            wg_log(.info, message: "Handle message: flushLogsToFile")
             flushLogsToFile()
         case let .setApiSelector(selector, sessionCookie):
+            wg_log(.info, message: "Handle message: setApiSelector")
             certificateRefreshManager.newSession(withSelector: selector, sessionCookie: sessionCookie) { result in
                 switch result {
                 case .success:
@@ -186,6 +188,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 }
             }
         case .refreshCertificate(let features):
+            wg_log(.info, message: "Handle message: refreshCertificate")
             certificateRefreshManager.checkRefreshCertificateNow(features: features, userInitiated: true) { result in
                 switch result {
                 case .success:
@@ -208,10 +211,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 }
             }
         case .cancelRefreshes:
+            wg_log(.info, message: "Handle message: cancelRefreshes")
             certificateRefreshManager.stop {
                 completionHandler?(.ok(data: nil))
             }
         case .restartRefreshes:
+            wg_log(.info, message: "Handle message: restartRefreshes")
             certificateRefreshManager.start {
                 completionHandler?(.ok(data: nil))
             }

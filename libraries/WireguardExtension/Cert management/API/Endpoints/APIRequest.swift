@@ -130,9 +130,9 @@ extension HTTPURLResponse {
 }
 
 enum APIJSONErrorCode: Int, Error {
-    case invalidSelector = 2001
-    case fingerprintConflict = 2500
-    case invalidRefreshToken = 10013
+    case invalidValue = 2001
+    case alreadyExists = 2500
+    case invalidAuthRefreshToken = 10013
     case tooManyCertRefreshRequests = 85092
 }
 

@@ -96,15 +96,14 @@ class CertificateRefreshTests: XCTestCase {
         tokenRefreshCallback = failCallback
         sessionAuthCallback = failCallback
 
-        keychain = MockAuthKeychain()
-        keychain.credentials = AuthCredentials(username: "johnny",
-                                               accessToken: "12345",
-                                               refreshToken: "54321",
-                                               sessionId: "15213",
-                                               userId: "bravo",
-                                               expiration: Date().addingTimeInterval(60 * 20),
-                                               scopes: [])
-
+        keychain = MockAuthKeychain(context: .wireGuardExtension)
+        try! keychain.store(AuthCredentials(username: "johnny",
+                                            accessToken: "12345",
+                                            refreshToken: "54321",
+                                            sessionId: "15213",
+                                            userId: "bravo",
+                                            expiration: Date().addingTimeInterval(60 * 20),
+                                            scopes: []))
         timerFactory = MockTimerFactory()
 
         apiService = ExtensionAPIService(storage: storage,
@@ -369,35 +368,6 @@ class CertificateRefreshTests: XCTestCase {
                    expectations.tokenRefresh,
                    expectations.managerRestart,
                    expectations.thirdCertRefresh], timeout: expectationTimeout)
-    }
-
-    /// If the network extension starts up and realizes it has no credentials in the keychain, it should
-    /// immediately stop and wait for the main app to check in and provide it with a session selector.
-    func testManagerStartWithEmptyAPICredentials() {
-        keychain.credentials = nil
-        let expectations = (
-            firstCertRefresh: XCTestExpectation(description: "First certificate refresh"),
-            managerStart: XCTestExpectation(description: "Certificate manager start")
-        )
-
-        manager.start {
-            expectations.managerStart.fulfill()
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
-                defer { expectations.firstCertRefresh.fulfill() }
-
-                guard case let .failure(error) = result else {
-                    XCTFail("Shouldn't be able to refresh cert with missing credentials")
-                    return
-                }
-
-                guard case .sessionExpiredOrMissing = error else {
-                    XCTFail("Expected 'sessionExpired' error but got \(error)")
-                    return
-                }
-            }
-        }
-
-        wait(for: [expectations.managerStart, expectations.firstCertRefresh], timeout: expectationTimeout)
     }
 
     /// If the certificate doesn't meet the refresh requirements (see `certificateDoesNeedRefreshing(features:)`),
@@ -939,6 +909,127 @@ class CertificateRefreshTests: XCTestCase {
 
         timerFactory.runAllScheduledWork()
         wait(for: [expectations.certRefreshCancelled], timeout: expectationTimeout)
+    }
+
+    /// The network extension should use the main app's credentials if it can't find any of its own in the keychain.
+    /// Furthermore, if the network extension encounters an "invalid api token" error, it should only attempt to
+    /// refresh the token if the main app has not yet sent it a message.
+    func testExtensionUsesMainAppCredentialsIfNoExtensionCredsInKeychain() {
+        let expectations = (
+            firstCertRefresh: XCTestExpectation(description: "first cert refresh"),
+            secondCertRefresh: XCTestExpectation(description: "second cert refresh"),
+            thirdCertRefresh: XCTestExpectation(description: "third cert refresh"),
+            tokenRefresh: XCTestExpectation(description: "token refresh"),
+            sessionExpiredResult: XCTestExpectation(description: "session expired result"),
+            credentialsStored: XCTestExpectation(description: "credentials stored"),
+            managerStart: XCTestExpectation(description: "manager did start")
+        )
+
+        let testData = (
+            updatedAccessToken: "new access token",
+            updatedRefreshToken: "new refresh token"
+        )
+
+        keychain.credentials = [
+            .mainApp: .init(username: "me",
+                            accessToken: "access",
+                            refreshToken: "refresh",
+                            sessionId: "session",
+                            userId: "user",
+                            expiration: Date().addingTimeInterval(60 * 60 * 24 * 3),
+                            scopes: [])
+        ]
+
+        var numCertRequests = 0
+        certRefreshCallback = { request, completionHandler in
+            switch numCertRequests {
+            // initial request, which should return an invalid token.
+            case 0:
+                XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), "Bearer access")
+                XCTAssertEqual(request.value(forHTTPHeaderField: "x-pm-uid"), "session")
+                fallthrough
+            // the third request should respond with "invalid token" after the app has checked in with the extension.
+            case 2:
+                let expectation = numCertRequests == 0 ? expectations.firstCertRefresh : expectations.thirdCertRefresh
+                let callback = self.mockEndpoint(CertificateRefreshRequest.self,
+                                                 apiFailure: .tokenExpired,
+                                                 expectationToFulfill: expectation)
+                callback(request, completionHandler)
+            // the request after the first one, which should provide a valid access token.
+            case 1:
+                let callback = self.mockEndpoint(CertificateRefreshRequest.self,
+                                                 result: .success([:]),
+                                                 expectationToFulfill: expectations.secondCertRefresh)
+                callback(request, completionHandler)
+            default:
+                DispatchQueue.main.async {
+                    XCTFail("Should perform at most 3 cert refresh requests (performed \(numCertRequests + 1))")
+                }
+            }
+            numCertRequests += 1
+        }
+
+        tokenRefreshCallback = mockEndpoint(TokenRefreshRequest.self,
+                                            result: .success([
+                                                \.accessToken: testData.updatedAccessToken,
+                                                \.refreshToken: testData.updatedRefreshToken,
+                                            ]),
+                                            expectationToFulfill: expectations.tokenRefresh)
+
+        timerFactory.timerWasAdded = {
+            self.timerFactory.runRepeatingTimers()
+        }
+
+        keychain.credentialsWereStored = {
+            expectations.credentialsStored.fulfill()
+        }
+
+        manager.start {
+            expectations.managerStart.fulfill()
+        }
+
+        // Sequence of operations: manager starts, then checks certificate, gets token refresh error,
+        // tries to refresh token, succeeds & stores credentials, then asks successfully for second cert refresh.
+        wait(for: [expectations.managerStart,
+                   expectations.firstCertRefresh,
+                   expectations.tokenRefresh,
+                   expectations.credentialsStored,
+                   expectations.secondCertRefresh], timeout: 10)
+
+        // The new credentials should be stored in the main app's keychain, not in the extension's
+        XCTAssertEqual(keychain.credentials[.mainApp]?.accessToken, testData.updatedAccessToken)
+        XCTAssertEqual(keychain.credentials[.mainApp]?.refreshToken, testData.updatedRefreshToken)
+
+        let callback = certRefreshCallback
+        certRefreshCallback = failCallback // shouldn't try to refresh for next request
+
+        // initiate a request on behalf of the app. refresh manager should take this to mean that
+        // the app is alive and well, and should be able to create a new session for it, so it will
+        // reply saying that its session has expired.
+        manager.checkRefreshCertificateNow(features: nil, userInitiated: true) { result in
+            guard case let .failure(error) = result else {
+                XCTFail("Should have gotten session expired error, but got success")
+                return
+            }
+
+            guard case .sessionExpiredOrMissing = error else {
+                XCTFail("Should have gotten session expired but got \(error)")
+                return
+            }
+            expectations.sessionExpiredResult.fulfill()
+        }
+
+        wait(for: [expectations.sessionExpiredResult], timeout: 10)
+
+        certRefreshCallback = callback
+        tokenRefreshCallback = { _, _ in
+            XCTFail("Extension should not try to refresh token if the app has checked in.")
+        }
+
+        // Run another certificate refresh in the background. Should get a token refresh error, but should
+        // not try to refresh the token, since the app has already checked in.
+        timerFactory.runRepeatingTimers()
+        wait(for: [expectations.thirdCertRefresh], timeout: 10)
     }
 }
 

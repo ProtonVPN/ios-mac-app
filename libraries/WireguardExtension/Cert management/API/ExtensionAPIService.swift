@@ -43,7 +43,7 @@ final class ExtensionAPIService {
     func refreshCertificate(publicKey: String,
                             asPartOf operation: CertificateRefreshAsyncOperation,
                             completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
-        guard !sessionExpired else {
+        guard !sessionExpired || usingMainAppSessionUntilForkReceived else {
             log.info("Not starting certificate refresh: session is expired.")
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
             return
@@ -91,6 +91,7 @@ final class ExtensionAPIService {
                     switch result {
                     case .success:
                         self?.sessionExpired = false
+                        self?.usingMainAppSessionUntilForkReceived = false
                         completionHandler(.success(()))
                     case .failure(let error):
                         completionHandler(.failure(error))
@@ -130,6 +131,9 @@ final class ExtensionAPIService {
 
     /// Whether or not the current session is expired.
     public private(set) var sessionExpired = false
+    private var userInitiatedRequestHasNotYetBeenMade = true
+    private var usingMainAppSessionUntilForkReceived = false
+
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
     private let dataTaskFactory: DataTaskFactory
@@ -240,6 +244,7 @@ final class ExtensionAPIService {
     private func handleRequestError(caller: StaticString = #function,
                                     error: ExtensionAPIServiceError,
                                     handleTokenRefresh: Bool = true,
+                                    usingCredentialsFrom context: AppContext = .wireGuardExtension,
                                     asPartOf operation: CertificateRefreshAsyncOperation? = nil,
                                     retryBlock: @escaping (() -> Void),
                                     errorHandler: @escaping ((Error) -> Void)) {
@@ -252,6 +257,7 @@ final class ExtensionAPIService {
             self.handleHttpError(response: response,
                                  apiError: apiError,
                                  handleTokenRefresh: handleTokenRefresh,
+                                 usingCredentialsFrom: context,
                                  asPartOf: operation,
                                  retryBlock: retryBlock,
                                  errorHandler: errorHandler)
@@ -283,6 +289,7 @@ final class ExtensionAPIService {
     private func handleHttpError(response: HTTPURLResponse,
                                  apiError: APIError?,
                                  handleTokenRefresh: Bool,
+                                 usingCredentialsFrom context: AppContext,
                                  asPartOf operation: CertificateRefreshAsyncOperation?,
                                  retryBlock: @escaping (() -> Void),
                                  errorHandler: @escaping ((Error) -> Void)) {
@@ -310,7 +317,7 @@ final class ExtensionAPIService {
 
         switch code {
         case .sessionExpired:
-            guard apiError?.knownErrorCode != .invalidSelector else {
+            guard apiError?.knownErrorCode != .invalidValue else {
                 log.info("Got invalid selector.")
                 errorHandler(CertificateRefreshError.internalError(message: "Invalid selector"))
                 return
@@ -345,7 +352,7 @@ final class ExtensionAPIService {
 
             retryAfter(retryAfterInterval)
         case .conflict:
-            guard let apiError = apiError, apiError.knownErrorCode == .fingerprintConflict else {
+            guard let apiError = apiError, apiError.knownErrorCode == .alreadyExists else {
                 log.error("Received conflict error: \(apiError?.description ?? "(unknown)")")
                 retryAfter(nil)
                 break
@@ -357,7 +364,7 @@ final class ExtensionAPIService {
             if let apiError = apiError {
                 badRequestError = apiError
 
-                if apiError.knownErrorCode == .invalidRefreshToken {
+                if apiError.knownErrorCode == .invalidAuthRefreshToken {
                     log.info("Received invalid refresh token error. Invalidating session.")
 
                     sessionExpired = true
@@ -375,7 +382,7 @@ final class ExtensionAPIService {
                 return
             }
 
-            handleTokenExpired(asPartOf: operation) { result in
+            handleTokenExpired(asPartOf: operation, usingCredentialsFrom: context) { result in
                 if case let .failure(error) = result {
                     log.error("Unable to retry request after refreshing token: \(error)")
                     errorHandler(error)
@@ -387,14 +394,46 @@ final class ExtensionAPIService {
         }
     }
 
+    // MARK: - API credential storage
+
+    /// Fetch API credentials from the keychain.
+    ///
+    /// If the request is user initiated and the credentials for the WireGuard extension are missing from the keychain,
+    /// immediately throw a `sessionExpiredOrMissing` error. Otherwise, if the request has been initiated in the
+    /// background (as part of a routine cert refresh), fetch the credentials from the main app instead.
+    ///
+    /// This is done in order to avoid a situation where the app is not running, but we still need API credentials to
+    /// refresh the certificate because they're missing from the keychain for whatever reason (most likely an app
+    /// upgrade occurred, and the user hasn't launched the app yet).
+    private func fetchApiCredentials(asPartOf operation: CertificateRefreshAsyncOperation) -> (AuthCredentials, AppContext)? {
+        if let authCredentials = keychain.fetch() {
+            return (authCredentials, .wireGuardExtension)
+        }
+
+        guard !operation.isUserInitiated else {
+            return nil
+        }
+
+        guard let authCredentials = keychain.fetch(forContext: .mainApp) else {
+            return nil
+        }
+
+        usingMainAppSessionUntilForkReceived = true
+        return (authCredentials, .mainApp)
+    }
+
+
     // MARK: - Certificate refresh
 
     private func refreshCertificate(publicKey: String,
                                     refreshApiTokenIfNeeded: Bool,
                                     asPartOf operation: CertificateRefreshAsyncOperation,
                                     completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
+        if operation.isUserInitiated && userInitiatedRequestHasNotYetBeenMade {
+            userInitiatedRequestHasNotYetBeenMade = false
+        }
 
-        guard let authCredentials = keychain.fetch() else {
+        guard let (authCredentials, credentialContext) = fetchApiCredentials(asPartOf: operation) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
             sessionExpired = true
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
@@ -411,14 +450,25 @@ final class ExtensionAPIService {
             case .success(let certificate):
                 completionHandler(.success(certificate))
             case .failure(let error):
-                // We only want to handle token refresh once. If we get a second one, we should bail
-                // to avoid retry loops.
-                var handleTokenRefreshInRetry = true
+                var refreshApiTokenIfNeeded = refreshApiTokenIfNeeded
+                if credentialContext == .mainApp && self?.userInitiatedRequestHasNotYetBeenMade == false {
+                    // If the app has already checked in with the extension, and we're using its credentials,
+                    // we should avoid changing the main app's API credentials in the keychain.
+                    refreshApiTokenIfNeeded = false
+                }
+
+                var handleTokenRefreshInRetry = refreshApiTokenIfNeeded
                 if case let .requestError(httpError, _) = error, httpError.apiHttpErrorCode == .tokenExpired {
+                    // We only want to handle token refresh once. If we get a second one, we should bail
+                    // to avoid retry loops.
                     handleTokenRefreshInRetry = false
                 }
 
-                self?.handleRequestError(error: error, handleTokenRefresh: refreshApiTokenIfNeeded, asPartOf: operation, retryBlock: {
+                self?.handleRequestError(error: error,
+                                         handleTokenRefresh: refreshApiTokenIfNeeded,
+                                         usingCredentialsFrom: credentialContext,
+                                         asPartOf: operation,
+                                         retryBlock: {
                     guard !operation.isCancelled else {
                         completionHandler(.failure(CertificateRefreshError.cancelled))
                         return
@@ -437,9 +487,12 @@ final class ExtensionAPIService {
 
     // MARK: - API Token refresh
 
-    private func handleTokenExpired(authCredentials: AuthCredentials? = nil, asPartOf operation: CertificateRefreshAsyncOperation? = nil, completionHandler: @escaping (Result<Void, Error>) -> Void) {
+    private func handleTokenExpired(authCredentials: AuthCredentials? = nil,
+                                    asPartOf operation: CertificateRefreshAsyncOperation? = nil,
+                                    usingCredentialsFrom context: AppContext = .wireGuardExtension,
+                                    completionHandler: @escaping (Result<Void, Error>) -> Void) {
         log.debug("Will try to refresh API token", category: .api)
-        guard let authCredentials = authCredentials ?? keychain.fetch() else {
+        guard let authCredentials = authCredentials ?? keychain.fetch(forContext: context) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .api)
             sessionExpired = true
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
@@ -454,20 +507,24 @@ final class ExtensionAPIService {
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)
 
                 do {
-                    try self?.keychain.store(updatedCreds)
-                    log.debug("API token updated", category: .api, metadata: ["authCredentials": "\(updatedCreds.description)"])
+                    try self?.keychain.store(updatedCreds, forContext: context)
                     completionHandler(.success(()))
                 } catch {
                     completionHandler(.failure(error))
                 }
             case .failure(let error):
-                self?.handleRequestError(error: error, asPartOf: operation, retryBlock: {
+                self?.handleRequestError(error: error,
+                                         usingCredentialsFrom: context,
+                                         asPartOf: operation,
+                                         retryBlock: {
                     guard operation?.isCancelled != true else {
                         completionHandler(.failure(CertificateRefreshError.cancelled))
                         return
                     }
 
-                    self?.handleTokenExpired(asPartOf: operation, completionHandler: completionHandler)
+                    self?.handleTokenExpired(asPartOf: operation,
+                                             usingCredentialsFrom: context,
+                                             completionHandler: completionHandler)
                 }, errorHandler: { unhandledError in
                     completionHandler(.failure(unhandledError))
                 })
