@@ -197,6 +197,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     // Fake success and the extension can handle refresh itself once we're connected.
                     success()
                     return
+                } else if case AuthenticationRemoteClientError.needNewKeys = error {
+                    // The network extension tried to refresh certificates, but the server responded saying
+                    // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
+                    // we just need to attempt to reconnect, since that will generate new keys for us.
+                    executeOnUIThread {
+                        NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+                        success()
+                    }
+                    return
                 }
                 failure(error)
             }
