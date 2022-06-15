@@ -20,9 +20,13 @@ public enum LocalizedString {
   public static var fromServerTitle: String { return LocalizedString.tr("Localizable", "from_server_title") }
   /// Please disconnect another device to connect to this one.
   public static var maximumDeviceLimit: String { return LocalizedString.tr("Localizable", "maximum_device_limit") }
-  /// Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.
-  public static func maximumDevicePlanLimit(_ p1: Any, _ p2: Int) -> String {
-    return LocalizedString.tr("Localizable", "maximum_device_plan_limit", String(describing: p1), p2)
+  /// Please disconnect another device to connect to this one or upgrade to %@
+  public static func maximumDevicePlanLimitPart1(_ p1: Any) -> String {
+    return LocalizedString.tr("Localizable", "maximum_device_plan_limit_part_1", String(describing: p1))
+  }
+  /// Plural format key: " to get up to %#@num_devices@ connected at the same time."
+  public static func maximumDevicePlanLimitPart2(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "maximum_device_plan_limit_part_2", p1)
   }
   /// You have reached your maximum device limit
   public static var maximumDeviceTitle: String { return LocalizedString.tr("Localizable", "maximum_device_title") }
@@ -117,13 +121,13 @@ public enum LocalizedString {
   public static var subscriptionExpiredReconnectionDescription: String { return LocalizedString.tr("Localizable", "subscription_expired_reconnection_description") }
   /// Your VPN subscription plan has expired
   public static var subscriptionExpiredTitle: String { return LocalizedString.tr("Localizable", "subscription_expired_title") }
-  /// Hundreds of servers in %@ countries
-  public static func subscriptionUpgradeOption1(_ p1: Any) -> String {
-    return LocalizedString.tr("Localizable", "subscription_upgrade_option1", String(describing: p1))
+  /// Plural format key: "Hundreds of servers in %#@num_countries@"
+  public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "subscription_upgrade_option1", p1)
   }
-  /// Connect up to %@ devices at the same time
-  public static func subscriptionUpgradeOption2(_ p1: Any) -> String {
-    return LocalizedString.tr("Localizable", "subscription_upgrade_option2", String(describing: p1))
+  /// Plural format key: "Connect up to %#@num_devices@ at the same time"
+  public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
+    return LocalizedString.tr("Localizable", "subscription_upgrade_option2", p1)
   }
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return LocalizedString.tr("Localizable", "subscription_upgrade_option3") }
