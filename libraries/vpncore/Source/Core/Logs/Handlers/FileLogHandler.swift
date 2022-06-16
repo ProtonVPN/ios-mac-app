@@ -42,7 +42,7 @@ public class FileLogHandler: LogHandler {
     private let fileUrl: URL
     private var fileHandle: FileHandle?
     private var currentSize: UInt64 = 0
-    private var fileManager: FileManager = FileManager.default
+    private var fileManager: FileManagerWrapper
     
     private var logsDirectory: URL {
         return fileUrl.deletingLastPathComponent()
@@ -50,9 +50,10 @@ public class FileLogHandler: LogHandler {
     
     private var queue: DispatchQueue = DispatchQueue.init(label: "FileLogHandler", qos: .background)
     
-    public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter()) {
+    public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter(), fileManager: FileManagerWrapper = FileManager.default) {
         self.fileUrl = fileUrl
         self.formatter = formatter
+        self.fileManager = fileManager
     }
     
     deinit {
