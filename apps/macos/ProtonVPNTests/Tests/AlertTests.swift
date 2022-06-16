@@ -91,14 +91,15 @@ class AlertTests: XCTestCase {
 }
 
 fileprivate class SessionServiceMock: SessionService {
+    let accountHost: String = "account host"
     var sessionCookie: HTTPCookie?
 
-    func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping (Result<String, Error>) -> Void) {
-
+    func clientSessionId(forContext context: AppContext) -> String {
+        return context.rawValue
     }
 
-    func getUpgradePlanSession(completion: @escaping (String) -> Void) {
-        completion(CoreAppConstants.ProtonVpnLinks.accountDashboard)
+    func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?, completion: @escaping (Result<String, Error>) -> Void) {
+        completion(.success(CoreAppConstants.ProtonVpnLinks.accountDashboard))
     }
 }
 

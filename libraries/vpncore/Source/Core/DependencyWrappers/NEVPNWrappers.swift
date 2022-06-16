@@ -48,12 +48,13 @@ extension NETunnelProviderManager: NETunnelProviderManagerWrapper {
 }
 
 public protocol NETunnelProviderManagerWrapperFactory {
-    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void)
+    func makeNewManager() -> NETunnelProviderManagerWrapper
+    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void)
 }
 
 extension NETunnelProviderManagerWrapperFactory {
-    static func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
-        Self.loadAllFromPreferences { (managers, error) in
+    func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
+        loadManagersFromPreferences { (managers, error) in
             if let error = error {
                 completionHandler(nil, error)
                 return
@@ -65,7 +66,7 @@ extension NETunnelProviderManagerWrapperFactory {
 
             let vpnManager = managers.first(where: { (manager) -> Bool in
                 return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-            }) ?? NETunnelProviderManager()
+            }) ?? self.makeNewManager()
 
             completionHandler(vpnManager, nil)
         }
@@ -73,6 +74,15 @@ extension NETunnelProviderManagerWrapperFactory {
 }
 
 extension NETunnelProviderManager: NETunnelProviderManagerWrapperFactory {
+    public func makeNewManager() -> NETunnelProviderManagerWrapper {
+        NETunnelProviderManager()
+    }
+
+    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
+        Self.loadAllFromPreferences { managers, error in
+            completionHandler(managers, error)
+        }
+    }
 }
 
 public protocol NEVPNConnectionWrapper {
