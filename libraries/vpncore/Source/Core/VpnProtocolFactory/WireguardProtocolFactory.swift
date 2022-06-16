@@ -55,7 +55,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         if requirement == .status, let vpnManager = vpnManager {
             completion(vpnManager, nil)
         } else {
-            type(of: vpnManagerFactory).tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
+            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
                 if let manager = manager {
                     self.vpnManager = manager
                 }

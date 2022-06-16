@@ -110,7 +110,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         if requirement == .status, let vpnManager = vpnManager {
             completion(vpnManager, nil)
         } else {
-            type(of: vpnManagerFactory).tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
+            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
                 if let manager = manager {
                     self.vpnManager = manager
                 }

@@ -24,9 +24,40 @@ public protocol SessionServiceFactory {
 
 public protocol SessionService {
     var sessionCookie: HTTPCookie? { get }
+    var accountHost: String { get }
 
-    func getUpgradePlanSession(completion: @escaping (String) -> Void)
-    func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping (Result<String, Error>) -> Void)
+    func clientSessionId(forContext: AppContext) -> String
+
+    func getSelector(clientId: String,
+                     independent: Bool,
+                     timeout: TimeInterval?,
+                     completion: @escaping (Result<String, Error>) -> Void)
+}
+
+extension SessionService {
+    func getSelector(clientId: String,
+                     independent: Bool,
+                     completion: @escaping (Result<String, Error>) -> Void) {
+        getSelector(clientId: clientId, independent: independent, timeout: nil, completion: completion)
+    }
+
+    public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
+        getSelector(clientId: "web-account-lite", independent: false) { result in
+            switch result {
+            case let .success(selector):
+                completion("\(self.accountHost)/lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=\(selector)")
+            case let .failure(error):
+                log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
+                completion("\(self.accountHost)/dashboard")
+            }
+        }
+    }
+
+    public func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping ((Result<String, Error>) -> Void)) {
+        getSelector(clientId: clientSessionId(forContext: extensionContext),
+                    independent: false,
+                    completion: completion)
+    }
 }
 
 public final class SessionServiceImplementation: SessionService {
@@ -45,6 +76,14 @@ public final class SessionServiceImplementation: SessionService {
             .first(where: { $0.name == UserProperties.sessionIdCookieName })
     }
 
+    public var accountHost: String {
+        networking.apiService.doh.accountHost
+    }
+
+    public func clientSessionId(forContext context: AppContext) -> String {
+        appInfoFactory.makeAppInfo(context: context).clientId
+    }
+
     public init(factory: Factory) {
         self.appInfoFactory = factory
 
@@ -59,30 +98,10 @@ public final class SessionServiceImplementation: SessionService {
         self.doh = doh
     }
 
-    public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
-        let accountHost = networking.apiService.doh.accountHost
-
-        getSelector(clientId: "web-account-lite", independent: false) { result in
-            switch result {
-            case let .success(selector):
-                completion("\(accountHost)/lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=\(selector)")
-            case let .failure(error):
-                log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
-                completion("\(accountHost)/dashboard")
-            }
-        }
-    }
-
-    public func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping ((Result<String, Error>) -> Void)) {
-        getSelector(clientId: appInfoFactory.makeAppInfo(context: extensionContext).clientId,
-                    independent: false,
-                    completion: completion)
-    }
-
-    private func getSelector(clientId: String,
-                             independent: Bool,
-                             timeout: TimeInterval? = nil,
-                             completion: @escaping (Result<String, Error>) -> Void) {
+    public func getSelector(clientId: String,
+                            independent: Bool,
+                            timeout: TimeInterval? = nil,
+                            completion: @escaping (Result<String, Error>) -> Void) {
         let timeout = timeout ?? Self.requestTimeout
         let request = ForkSessionRequest(clientId: clientId, independent: independent, timeout: timeout)
         networking.request(request) { (result: Result<ForkSessionResponse, Error>) in

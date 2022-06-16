@@ -65,7 +65,13 @@ extension WidgetFactory: NEVPNManagerWrapperFactory {
 }
 
 extension WidgetFactory: NETunnelProviderManagerWrapperFactory {
-    static func loadAllFromPreferences(completionHandler: @escaping ([NETunnelProviderManager]?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences(completionHandler: completionHandler)
+    func makeNewManager() -> NETunnelProviderManagerWrapper {
+        NETunnelProviderManager()
+    }
+
+    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences { managers, error in
+            completionHandler(managers, error)
+        }
     }
 }
