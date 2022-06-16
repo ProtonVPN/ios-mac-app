@@ -154,7 +154,7 @@ extension HTTPURLResponse {
         guard let httpVersion = scanner.scanUpToCharacters(from: space),
               let statusCode = scanner.scanInt(),
               // status message (e.g., "OK", "Not Found", "Unauthorized")
-              let _ = scanner.scanUpToCharacters(from: newline) else {
+              scanner.scanUpToCharacters(from: newline) != nil else {
             throw parseError
         }
 

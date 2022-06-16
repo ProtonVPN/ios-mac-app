@@ -9,13 +9,13 @@
 import Foundation
 
 struct WGConstants {
-    
+
     static var keychainAccessGroup: String = "\(Self.appIdentifierPrefix)prt.ProtonVPN"
-    
+
     static var appIdentifierPrefix: String {
         return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     }
-    
+
     static var appGroupId: String {
         #if os(iOS)
         return AppConstants.AppGroups.main
@@ -25,5 +25,5 @@ struct WGConstants {
         #error("Unimplemented")
         #endif
     }
-    
+
 }

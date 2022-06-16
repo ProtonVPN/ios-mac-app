@@ -422,7 +422,6 @@ final class ExtensionAPIService {
         return (authCredentials, .mainApp)
     }
 
-
     // MARK: - Certificate refresh
 
     private func refreshCertificate(publicKey: String,

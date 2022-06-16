@@ -13,7 +13,7 @@ extension String {
                 } else {
                     return String($0)
                 }
-        }
+            }
     }
 
 }

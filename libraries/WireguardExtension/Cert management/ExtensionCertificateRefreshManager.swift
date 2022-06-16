@@ -168,7 +168,6 @@ final class ExtensionCertificateRefreshManager {
         return false
     }
 
-
     /// Check the refresh conditions for certificate refresh, and refresh if necessary, with no
     /// synchronization performed.
     ///
@@ -224,12 +223,10 @@ final class ExtensionCertificateRefreshManager {
                 case .timedOut:
                     assertionFailure("Should not encounter \(certError) here; we aren't managing synchronization")
                     log.error("Should not encounter \(certError) here; we aren't managing synchronization")
-                    break
                 // These errors should "never happen" in practice.
                 case .internalError:
                     assertionFailure("Encountered internal error: \(error)")
                     log.error("Encountered internal error: \(error)")
-                    break
                 }
 
                 completion(.failure(certError))
@@ -249,7 +246,7 @@ final class ExtensionCertificateRefreshManager {
 
         timer = timerFactory.scheduledTimer(runAt: Date(), repeating: Self.intervals.checkInterval, queue: workQueue) { [weak self] in
             let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
-            
+
             self?.checkRefreshCertificateNow(features: features, completion: { result in
                 if case let .failure(error) = result {
                     log.error("Encountered error \(error) while refreshing in background.")
