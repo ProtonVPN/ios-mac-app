@@ -5,13 +5,14 @@ import Foundation
 import Security
 
 class Keychain {
-    
+
     static func openReference(called ref: Data) -> String? {
         var result: CFTypeRef?
-        let ret = SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
-                                        kSecValuePersistentRef: ref,
-                                        kSecReturnData: true] as CFDictionary,
-                                       &result)
+        let ret = SecItemCopyMatching([
+            kSecClass: kSecClassGenericPassword,
+            kSecValuePersistentRef: ref,
+            kSecReturnData: true
+        ] as CFDictionary, &result)
         if ret != errSecSuccess || result == nil {
             wg_log(.error, message: "Unable to open config from keychain: \(ret)")
             return nil
@@ -27,12 +28,14 @@ class Keychain {
             return nil
         }
         let itemLabel = "ProtonVPN WireGuard: \(name)"
-        var items: [CFString: Any] = [kSecClass: kSecClassGenericPassword,
-                                    kSecAttrLabel: itemLabel,
-                                    kSecAttrDescription: "wg-quick(8) config",
-                                    kSecAttrService: bundleIdentifier,
-                                    kSecValueData: value.data(using: .utf8) as Any,
-                                    kSecReturnPersistentRef: true]
+        var items: [CFString: Any] = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrLabel: itemLabel,
+            kSecAttrDescription: "wg-quick(8) config",
+            kSecAttrService: bundleIdentifier,
+            kSecValueData: value.data(using: .utf8) as Any,
+            kSecReturnPersistentRef: true
+        ]
 
         #if os(iOS)
         items[kSecAttrAccessGroup] = FileManager.appGroupId
@@ -87,14 +90,14 @@ class Keychain {
                                     kSecValuePersistentRef: ref] as CFDictionary,
                                    nil) != errSecItemNotFound
     }
-    
+
     // MARK: - By name (for macOS sysex)
-        
+
     static func loadWgConfig() -> String? {
         var query = getDefaultQuery()
         query[kSecMatchLimit] = kSecMatchLimitOne
         query[kSecReturnData] = true
-        
+
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
         switch status {
@@ -104,13 +107,13 @@ class Keychain {
                 return nil
             }
             return password
-            
+
         default:
             wg_log(.error, message: "Error reading from keychain: \(status).")
             return nil
         }
     }
-    
+
     static func saveWgConfig(value: String) -> Bool {
         if let oldValue = Self.loadWgConfig() {
             if oldValue == value {
@@ -123,7 +126,7 @@ class Keychain {
         } else {
             wg_log(.debug, staticMessage: "No config in the keychain. Will write new.")
         }
-        
+
         var query = getDefaultQuery()
         query[kSecClass] = kSecClassGenericPassword
         query[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
@@ -137,16 +140,16 @@ class Keychain {
         }
         return true
     }
-    
+
     static func deleteWgConfig() {
         let query = getDefaultQuery()
-        
+
         let ret = SecItemDelete(query as CFDictionary)
         if ret != errSecSuccess {
             wg_log(.error, message: "Unable to delete config from keychain: \(ret)")
         }
     }
-    
+
     private static var bundleIdentifier: String? {
         guard var bundleIdentifier = Bundle.main.bundleIdentifier else {
             wg_log(.error, staticMessage: "Unable to determine bundle identifier")
@@ -157,18 +160,18 @@ class Keychain {
         }
         return bundleIdentifier
     }
-    
+
     private static func getDefaultQuery() -> [CFString: Any] {
         var query = [CFString: Any]()
-        
+
         query[kSecAttrAccount] = "ProtonVPN WG"
         query[kSecClass as CFString] = kSecClassGenericPassword
-        
+
         if let bundleIdentifier = bundleIdentifier {
             query[kSecAttrService as CFString] = bundleIdentifier
         }
-        
+
         return query
     }
-    
+
 }

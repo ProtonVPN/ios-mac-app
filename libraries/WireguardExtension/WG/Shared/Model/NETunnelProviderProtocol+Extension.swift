@@ -18,7 +18,7 @@ extension NETunnelProviderProtocol {
 
         guard let name = tunnelConfiguration.name else { return nil }
         guard let appId = Bundle.main.bundleIdentifier else { return nil }
-        providerBundleIdentifier = "\(appId).WireGuardiOS-Extension"        
+        providerBundleIdentifier = "\(appId).WireGuardiOS-Extension"
         passwordReference = Keychain.makeReference(containing: tunnelConfiguration.asWgQuickConfig(), called: name, previouslyReferencedBy: old?.passwordReference)
         if passwordReference == nil {
             return nil

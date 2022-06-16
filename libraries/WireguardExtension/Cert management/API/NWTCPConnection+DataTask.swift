@@ -45,13 +45,13 @@ protocol ConnectionTunnel {
     /// Observe changes in network connection state. Needed because `ConnectionTunnel` won't conform to `NSKeyValueObserving`,
     /// which is an "informal protocol" despite being present in Apple's official documentation:
     /// https://developer.apple.com/documentation/objectivec/nsobject/nskeyvalueobserving
-    func observeStateChange(withCallback: @escaping ((NWTCPConnectionState) -> ())) -> ObservationHandle
+    func observeStateChange(withCallback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle
 }
 
 /// Note: adding `.initial` to the options passed to `observe` means that the callback will immediately be invoked with
 /// `state`'s initial value.
 extension NWTCPConnection: ConnectionTunnel {
-    func observeStateChange(withCallback stateChangeCallback: @escaping ((NWTCPConnectionState) -> ())) -> ObservationHandle {
+    func observeStateChange(withCallback stateChangeCallback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
         return self.observe(\.state, options: [.initial, .new]) { _, _ in stateChangeCallback(self.state) }
     }
 }
@@ -198,8 +198,7 @@ class NWTCPDataTask: DataTaskProtocol {
          cookiesToSend: [HTTPCookie],
          timeoutInterval: TimeInterval,
          taskId: UUID,
-         completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
-    {
+         completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
         self.provider = provider
         self.timerFactory = timerFactory
         self.request = request
@@ -255,7 +254,6 @@ class NWTCPDataTask: DataTaskProtocol {
                 self.timeoutTimer = nil
             }
 
-
             if case let .failure(error) = result {
                 self.completionHandler(nil, nil, error)
                 return
@@ -273,7 +271,7 @@ class NWTCPDataTask: DataTaskProtocol {
             guard let `self` = self else { return }
             self.queue.async {
                 log.info("Connection state for \(self.taskId): \(state)")
-                
+
                 switch state {
                 case .connected:
                     // Success: send the request.
@@ -296,8 +294,6 @@ class NWTCPDataTask: DataTaskProtocol {
                         log.info("Request timed out! Invoking timeout error.")
                         resolveRequest(.failure(POSIXError(.ETIMEDOUT)))
                     }
-
-                    break
                 default:
                     break
                 }
@@ -334,8 +330,7 @@ class NWTCPDataTask: DataTaskProtocol {
     private static func sendRequest(to url: URL,
                                     data: Data,
                                     over connection: ConnectionTunnel,
-                                    completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void))
-    {
+                                    completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
         // When the connection is ready, go ahead and send the request/process the response.
         connection.write(data) { error in
             if let error = error {

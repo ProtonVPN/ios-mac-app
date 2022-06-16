@@ -34,7 +34,7 @@ public class LogViewHelper {
 
     func fetchLogEntriesSinceLastFetch(completion: @escaping ([LogViewHelper.LogEntry]) -> Void) {
         var logEntries = LogEntries()
-        
+
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             _ = view_lines_from_cursor(self.log, UINT32_MAX, &logEntries) { cStr, timestamp, ctx in
