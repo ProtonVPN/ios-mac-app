@@ -73,9 +73,11 @@ abstract_target 'Core' do
     end
     target 'vpncore-iosTests' do
         platform :ios, '12.1'
+        pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macosTests' do
         platform :osx, '10.15'
+        pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
 end
 

@@ -128,6 +128,8 @@ PODS:
   - ProtonCore-TestingToolkit/UITests/PaymentsUI (3.19.1):
     - pmtest
     - ProtonCore-CoreTranslation (= 3.19.1)
+  - ProtonCore-TestingToolkit/UnitTests/Core (3.19.1):
+    - ProtonCore-Utilities (= 3.19.1)
   - ProtonCore-UIFoundations-V5 (3.19.1):
     - ProtonCore-CoreTranslation (= 3.19.1)
     - ProtonCore-CoreTranslation-V5 (= 3.19.1)
@@ -196,6 +198,7 @@ DEPENDENCIES:
   - "ProtonCore-TestingToolkit/UITests/HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.19.1`)"
   - "ProtonCore-TestingToolkit/UITests/Login (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.19.1`)"
   - "ProtonCore-TestingToolkit/UITests/PaymentsUI (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.19.1`)"
+  - "ProtonCore-TestingToolkit/UnitTests/Core (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.19.1`)"
   - "ProtonCore-UIFoundations-V5 (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.19.1`)"
   - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.19.1`)"
   - ReachabilitySwift (= 5.0.0)
@@ -449,6 +452,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 79cba1b9310c1f1c25002c6427af5e65d75fe5f8
+PODFILE CHECKSUM: cd38cb56bfe34e3d048cb99ad863e5cb45cd0fb0
 
 COCOAPODS: 1.11.3
