@@ -183,7 +183,25 @@ review_lint:
     reports:
       junit:
         - swiftlint.xml
-    expire_in: 90 days    
+    expire_in: 90 days
+
+wireguard_extension_lint:
+  stage: linting
+  dependencies: [code_quality]
+  tags:
+    - iOS_ARM
+  script:
+    - cd libraries/WireguardExtension
+    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+  allow_failure: false
+  artifacts:
+    name: "wireguard_extension-report-lint-$CI_COMMIT_TAG"
+    paths:
+      - swiftlint.xml
+    reports:
+      junit:
+        - swiftlint.xml
+    expire_in: 90 days       
 
 core_ios_unit_tests:
   stage: core_unit_tests
