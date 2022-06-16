@@ -440,6 +440,10 @@
 		E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEEF27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEF3279561EE006E4305 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* BugReport */; };
+		E94274FF285B5CCA003CACA8 /* FileManagerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94274FE285B5CCA003CACA8 /* FileManagerWrapper.swift */; };
+		E9427500285B5CCA003CACA8 /* FileManagerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94274FE285B5CCA003CACA8 /* FileManagerWrapper.swift */; };
+		E9427509285B69BC003CACA8 /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9427502285B602F003CACA8 /* FileManagerMock.swift */; };
+		E942750A285B69BD003CACA8 /* FileManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9427502285B602F003CACA8 /* FileManagerMock.swift */; };
 		E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E9550E152850DE7B00616DB5 /* Bundle+isTestflightBeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9550E142850DE7B00616DB5 /* Bundle+isTestflightBeta.swift */; };
@@ -963,6 +967,8 @@
 		E939EEEA27955317006E4305 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		E939EEF1279561B1006E4305 /* BugReport */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BugReport; path = ../BugReport; sourceTree = "<group>"; };
+		E94274FE285B5CCA003CACA8 /* FileManagerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerWrapper.swift; sourceTree = "<group>"; };
+		E9427502285B602F003CACA8 /* FileManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerMock.swift; sourceTree = "<group>"; };
 		E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardProtocolFactory.swift; sourceTree = "<group>"; };
 		E9550E142850DE7B00616DB5 /* Bundle+isTestflightBeta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+isTestflightBeta.swift"; sourceTree = "<group>"; };
 		E95E8E732696F76F001AE3FA /* CertificateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateConstants.swift; sourceTree = "<group>"; };
@@ -1523,6 +1529,15 @@
 				E939EEF1279561B1006E4305 /* BugReport */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		E9427501285B5FA7003CACA8 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				E94274FE285B5CCA003CACA8 /* FileManagerWrapper.swift */,
+				E9427502285B602F003CACA8 /* FileManagerMock.swift */,
+			);
+			path = FileManager;
 			sourceTree = "<group>";
 		};
 		E9606FF8283B629200983E3B /* LogData */ = {
@@ -2088,8 +2103,9 @@
 		F36ECB9A2610AA530089B898 /* Management */ = {
 			isa = PBXGroup;
 			children = (
-				E939EEE627954D4D006E4305 /* BugReport */,
 				F36ECBA22610AA960089B898 /* Announcements */,
+				E939EEE627954D4D006E4305 /* BugReport */,
+				E9427501285B5FA7003CACA8 /* FileManager */,
 				F36535642638566F001B7E88 /* LocalAgent */,
 				F36ECBA12610AA8F0089B898 /* Maintenance */,
 				F36ECBA02610AA870089B898 /* Migration */,
@@ -2729,6 +2745,7 @@
 				F30B9D8926281F840094C65E /* VpnCertificate.swift in Sources */,
 				E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
 				F30B9D8E26281F990094C65E /* VpnKeys.swift in Sources */,
+				E94274FF285B5CCA003CACA8 /* FileManagerWrapper.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
 				4257B21224EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
 				424A012A24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
@@ -2912,6 +2929,7 @@
 				E10155D4230988C600A4B5CB /* AppStateManagerImplementationTests.swift in Sources */,
 				F327A9A028217AB100848E42 /* CodableExtensionsTests.swift in Sources */,
 				E1B5F60621B6953200B558B0 /* AppStateTests.swift in Sources */,
+				E9427509285B69BC003CACA8 /* FileManagerMock.swift in Sources */,
 				E19CE84E22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
 				D59671EA253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift in Sources */,
 				D5967208253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
@@ -2944,6 +2962,7 @@
 				D5DCCACC252B4E0A004CB353 /* Announcement.swift in Sources */,
 				D5BCDC9725303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
 				E1616BD221C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
+				E9427500285B5CCA003CACA8 /* FileManagerWrapper.swift in Sources */,
 				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3A3D6C927C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */,
 				4237064F262DA3BE00A920CF /* VpnStreamingOption.swift in Sources */,
@@ -3213,6 +3232,7 @@
 				E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				F327A99F28217AB000848E42 /* CodableExtensionsTests.swift in Sources */,
 				E19CE84F22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
+				E942750A285B69BD003CACA8 /* FileManagerMock.swift in Sources */,
 				D5967210253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
 				D5ADFBD223A0D09600C28CFF /* URLArrayTests.swift in Sources */,
 				D59671DF253D5E3A0061A75F /* AnnouncementStorageMock.swift in Sources */,
