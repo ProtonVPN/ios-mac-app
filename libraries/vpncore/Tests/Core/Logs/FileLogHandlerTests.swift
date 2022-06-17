@@ -20,54 +20,58 @@ import XCTest
 @testable import vpncore
 
 class FileLogHandlerTests: XCTestCase {
-    
-    private let manager = FileManager.default
-    private var folder: URL!
+
+    private var folder: URL = URL(string: "/tmp")!
     private var file: URL!
     
     override func setUpWithError() throws {
-        folder = manager.temporaryDirectory.appendingPathComponent("log-tests", isDirectory: true)
         file = folder.appendingPathComponent("ProtonVPNtest.log", isDirectory: false)
-        try? manager.removeItem(at: folder)
-    }
-
-    override func tearDownWithError() throws {
-        try manager.removeItem(at: folder)
     }
 
     func testCreatesFile() {
-        let handler = FileLogHandler(file)
-        let expectation = XCTestExpectation(description: "File created")
+        let expectationDelegate = XCTestExpectation(description: "Delegate called after file created")
+        let expectationCreateFile = XCTestExpectation(description: "File creation requested from OS")
+
+        let fileManager = FileManagerMock()
+        fileManager.createFileStub.addToBody { _, _, _, _ in
+            expectationCreateFile.fulfill()
+            return true
+        }
+
         let delegate = LogDelegate()
         delegate.newFileCallback = {
-            if self.manager.fileExists(atPath: self.folder.path), self.manager.fileExists(atPath: self.file.path) {
-                expectation.fulfill()
-            }
+            expectationDelegate.fulfill()
         }
+
+        let handler = FileLogHandler(file, fileManager: fileManager)
         handler.delegate = delegate
-        
         handler.log(level: .info, message: "Message", metadata: nil, source: "", file: "", function: "", line: 1)
 
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectationDelegate, expectationCreateFile], timeout: 1)
     }
     
     func testRotatesFiles() {
-        let expectationFileCount = XCTestExpectation(description: "3 Files are created")
-        
         let expectationRotation = XCTestExpectation(description: "Files are rotated 2 times")
         expectationRotation.expectedFulfillmentCount = 2
         expectationRotation.assertForOverFulfill = true
-        
-        let handler = FileLogHandler(file)
+
+        let expectationMoveFileCount = XCTestExpectation(description: "Files were moved/copied 2 times")
+        expectationMoveFileCount.expectedFulfillmentCount = 2
+        expectationMoveFileCount.assertForOverFulfill = true
+
+        let expectationNewFileCount = XCTestExpectation(description: "3 new files created")
+        expectationNewFileCount.expectedFulfillmentCount = 3
+        expectationNewFileCount.assertForOverFulfill = true
+
+        let fileSystem = FileSystemMock()
+        fileSystem.createFileCallback = { expectationNewFileCount.fulfill() }
+        fileSystem.moveFileCallback = { expectationMoveFileCount.fulfill() }
+
+        let handler = FileLogHandler(file, fileManager: fileSystem.fileManager)
         handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 50
         
         let delegate = LogDelegate()
-        delegate.newFileCallback = {
-            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 3 {
-                expectationFileCount.fulfill()
-            }
-        }
         delegate.rotationCallback = {
             expectationRotation.fulfill()
         }
@@ -77,24 +81,36 @@ class FileLogHandlerTests: XCTestCase {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        wait(for: [expectationFileCount, expectationRotation], timeout: 2)
+        wait(for: [expectationRotation, expectationNewFileCount, expectationMoveFileCount], timeout: 1)
     }
     
     func testDeletesOldFiles() {
         let expectationFileCount = XCTestExpectation(description: "Max 2 files are present an the same time")
-        
+
         let expectationRotation = XCTestExpectation(description: "Files are rotated 3 times")
         expectationRotation.expectedFulfillmentCount = 3
         expectationRotation.assertForOverFulfill = true
+
+        let expectationDeletion = XCTestExpectation(description: "2 files are deleted")
+        expectationDeletion.expectedFulfillmentCount = 2
+        expectationDeletion.assertForOverFulfill = true
+
+        let fileSystem = FileSystemMock()
+        fileSystem.removeFileCallback = { expectationDeletion.fulfill() }
         
-        let handler = FileLogHandler(file)
+        let handler = FileLogHandler(file, fileManager: fileSystem.fileManager)
         handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 1
         
         let delegate = LogDelegate()
         delegate.newFileCallback = {
-            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 2 { // maxArchivedFilesCount + current logfile
+            guard let files = try? fileSystem.fileManager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else {
+                return
+            }
+            if files.count == 2 { // maxArchivedFilesCount + current logfile
                 expectationFileCount.fulfill()
+            } else if files.count > 2 {
+                XCTFail("More than 2 files present")
             }
         }
         delegate.rotationCallback = {
@@ -106,7 +122,7 @@ class FileLogHandlerTests: XCTestCase {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        wait(for: [expectationFileCount, expectationRotation], timeout: 2)
+        wait(for: [expectationFileCount, expectationRotation, expectationDeletion], timeout: 1)
     }
 
 }
