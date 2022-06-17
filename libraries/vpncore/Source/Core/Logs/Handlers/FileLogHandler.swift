@@ -40,7 +40,7 @@ public class FileLogHandler: LogHandler {
     public weak var delegate: FileLogHandlerDelegate?
     
     private let fileUrl: URL
-    private var fileHandle: FileHandle?
+    private var fileHandle: FileHandleWrapper?
     private var currentSize: UInt64 = 0
     private var fileManager: FileManagerWrapper
     
@@ -90,7 +90,7 @@ public class FileLogHandler: LogHandler {
             delegate?.didCreateNewLogFile()
         }
 
-        fileHandle = try FileHandle(forWritingTo: fileUrl)
+        fileHandle = try fileManager.createFileHandle(forWritingTo: fileUrl)
     }
     
     private func closeFile() {
@@ -103,7 +103,7 @@ public class FileLogHandler: LogHandler {
         self.fileHandle = nil
     }
     
-    private func getFileHandleAtTheEndOfFile() -> FileHandle? {
+    private func getFileHandleAtTheEndOfFile() -> FileHandleWrapper? {
         if fileHandle == nil {
             do {
                 try openFile()
