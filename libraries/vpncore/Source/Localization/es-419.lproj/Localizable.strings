@@ -857,10 +857,10 @@
 "_map_show" = "Mostrar mapa";
 
 /* (No Comment) */
-"_maximum_device_description" = "Desconecte otro dispositivo para conectar éste o actualice a un %@ para conectar hasta %d dispositivos al mismo tiempo.";
+"_maximum_device_description" = "Desconecte otro dispositivo para conectarse a éste o actualice a un %@ para conectar hasta %d dispositivos al mismo tiempo.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Desconecte otro dispositivo para conectar éste.";
+"_maximum_device_reached_description" = "Desconecte otro dispositivo para conectarse a éste.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Ha alcanzado el límite máximo de dispositivos";
@@ -977,7 +977,7 @@
 "_neks_t2_connect" = "Activar de todos modos";
 
 /* (No Comment) */
-"_neks_t2_description" = "El uso de interruptor de apagado es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";
+"_neks_t2_description" = "El uso del interruptor de apagado es inestable en este dispositivo.\n\nSu dispositivo tiene un chip de seguridad T2, lo que puede provocar problemas de estabilidad del sistema si Proton VPN usa la funcionalidad del interruptor de macOS.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Chip de seguridad T2";

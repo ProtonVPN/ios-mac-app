@@ -857,10 +857,10 @@
 "_map_show" = "Karte anzeigen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Bitte trenne ein anderes Gerät, um dieses verbinden zu können, oder aktualisiere auf %@, um bis zu %d Geräte gleichzeitig nutzen zu können.";
+"_maximum_device_description" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden, oder führe ein Upgrade auf %@ aus, um bis zu %d Geräte gleichzeitig zu verbinden.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dieses zu verbinden.";
+"_maximum_device_reached_description" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Du hast die max. mögliche Anzahl von Geräten erreicht";

@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d dispositivo</string>
+			<key>other</key>
+			<string>%d dispositivos</string>
+		</dict>
+	</dict>
 	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -43,6 +59,38 @@
 			<string>%d servidor seguro</string>
 			<key>other</key>
 			<string>%d servidores seguros</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Centenas de servidores em %#@num_countries@ países</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d país</string>
+			<key>other</key>
+			<string>%d países</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Conecte até %#@num_devices@ dispositivos ao mesmo tempo</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d dispositivo</string>
+			<key>other</key>
+			<string>%d dispositivos</string>
 		</dict>
 	</dict>
 </dict>

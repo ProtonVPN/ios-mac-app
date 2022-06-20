@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d urządzenia</string>
+			<key>many</key>
+			<string>%d urządzeń</string>
+			<key>one</key>
+			<string>%d urządzenie</string>
+			<key>other</key>
+			<string>%d urządzeń</string>
+		</dict>
+	</dict>
 	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -55,6 +75,46 @@
 			<string>%d bezpiecznego serweru</string>
 			<key>other</key>
 			<string>%d bezpiecznych serwerów</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Hundreds of servers in %#@num_countries@</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d kraje</string>
+			<key>many</key>
+			<string>%d krajów</string>
+			<key>one</key>
+			<string>%d kraj</string>
+			<key>other</key>
+			<string>%d krajów</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Connect up to %#@num_devices@ at the same time</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d urządzenia</string>
+			<key>many</key>
+			<string>%d urządzeń</string>
+			<key>one</key>
+			<string>%d urządzenie</string>
+			<key>other</key>
+			<string>%d urządzeń</string>
 		</dict>
 	</dict>
 </dict>

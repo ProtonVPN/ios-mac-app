@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Your free trial %@";
 
 /* Downgrade */
-"_from_server_title" = "Do servidor:";
+"_from_server_title" = "From Server:";
 
 /* MacOS: General tab in setting window */
 "_general" = "Geral";
@@ -857,10 +857,10 @@
 "_map_show" = "Mostrar mapa";
 
 /* (No Comment) */
-"_maximum_device_description" = "Por favor desligue outro dispositivo para ligar este ou actualize para %@ para ter até %d dispositivos ligados em simultâneo.";
+"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Por favor, desligue outro dispositivo para ligar este.";
+"_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Atingiu o seu limite máximo de dispositivos";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "Mude para o OpenVPN e tente novamente";
 
 /* (No Comment) */
-"_to_server_title" = "Do servidor:";
+"_to_server_title" = "To Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";

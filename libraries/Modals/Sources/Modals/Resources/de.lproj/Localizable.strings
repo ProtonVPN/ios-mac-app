@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Nachdem diese beglichen sind, wirst du wieder auf Premium-Funktionen zugreifen können.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Nachdem diese beglichen sind, wirst du wieder auf Premium-Funktionen zugreifen können. Bis dahin wirst du mit dem schnellsten verfügbaren Free-Abonnement-Server verbunden.";
+
+/* Title of user account update screen */
+"delinquent_title" = "Dein VPN-Konto enthält noch offene Rechnungen";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Von Server:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden, oder führe ein Upgrade auf %@ durch";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Du hast die max. mögliche Anzahl von Geräten erreicht";
+
 /* Common button title */
 "modals_common_cancel" = "Abbrechen";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Verbessertes Proton, einheitlicher Schutz";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Dein Abonnement wurde herabgestuft.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Dein Abonnement wurde herabgestuft. Daher wird die Verbindung mit dem schnellsten verfügbaren Server wiederhergestellt.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Dein VPN-Abonnement ist ausgelaufen";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Erweiterte Funktionen: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Zu Server:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Meine Rechnungen aktualisieren";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Erneut upgraden";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Nein, danke";
 

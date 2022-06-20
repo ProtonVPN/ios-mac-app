@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "U hebt weer toegang tot premium functies nadat deze betaald zijn.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "U hebt weer toegang tot premium functies nadat deze zijn betaald. Op dit moment maken we opnieuw verbinding met de snelste beschikbare Gratis abonnement-server.";
+
+/* Title of user account update screen */
+"delinquent_title" = "Uw VPN-account heeft openstaande facturen";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Van server:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Verbreek verbinding met een ander apparaat om deze te verbinden.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Verbreek verbinding met een ander apparaat om deze te verbinden of upgrade naar %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "U hebt uw maximum apparaat limiet bereikt";
+
 /* Common button title */
 "modals_common_cancel" = "Annuleer";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Vernieuwde Proton, uniforme beveiliging";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Uw abonnement is gedegradeerd.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Uw abonnement is gedegradeerd, dus we maken opnieuw verbinding met de snelst beschikbare server.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Uw VPN-abonnement is verlopen";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Geavanceerde functies: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Naar server:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Mijn facturering bijwerken";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Opnieuw upgraden";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Nee, bedankt";
 

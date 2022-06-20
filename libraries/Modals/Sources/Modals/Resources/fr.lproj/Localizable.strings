@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Vous pourrez à nouveau accéder aux fonctionnalités premium une fois que celles-ci auront été payées.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Vous pourrez à nouveau accéder aux fonctionnalités premium une fois que celles-ci auront été payées. Pour l'instant, nous vous reconnectons au serveur de l'offre Free le plus rapide disponible.";
+
+/* Title of user account update screen */
+"delinquent_title" = "Votre compte VPN comporte des factures en attente";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Depuis le serveur :";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Veuillez déconnecter un autre appareil pour connecter celui-ci.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Déconnectez un autre appareil pour connecter celui-ci ou passez à l'abonnement %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Vous avez atteint votre limite maximale d'appareils";
+
 /* Common button title */
 "modals_common_cancel" = "Annuler";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Nouvelle version, protection unifiée";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Votre abonnement a été rétrogradé.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Votre abonnement a été rétrogradé, nous sommes donc en train de vous reconnecter au serveur le plus rapide disponible.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Votre abonnement VPN a expiré";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Fonctionnalités avancées : NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Vers le serveur :";
+
+/* Button action title in user account update screen */
+"update_billing" = "Mettre à jour ma facturation";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Repasser à une offre supérieure";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Non merci";
 

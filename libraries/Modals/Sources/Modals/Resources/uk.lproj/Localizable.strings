@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Ви зможете знову отримати доступ до преміум функцій після оплати.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати. А зараз ми встановлюємо з'єднання з найшвидшим БЕЗПЛАТНИМ сервером.";
+
+/* Title of user account update screen */
+"delinquent_title" = "У вашому VPN обліковому записі є несплачені рахунки";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Із сервера:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Від’єднайте інший пристрій, щоб під'єднатися до цього.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Від’єднайте інший пристрій, щоб під'єднатися до цього або передплатіть %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Ви досягли обмеження кількості пристроїв";
+
 /* Common button title */
 "modals_common_cancel" = "Скасувати";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Оновлений Proton, єдиний захист";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Ваша передплата була понижена.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Ваша передплата була понижена, тому ми повторно з'єднуємось із найшвидшим доступним сервером.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Ваша передплата тарифного плану VPN завершилась";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Додаткові функції: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "До сервера:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Оновити мій рахунок";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Оновити знову";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Ні, дякую";
 

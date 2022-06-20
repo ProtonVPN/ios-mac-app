@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Your free trial %@";
 
 /* Downgrade */
-"_from_server_title" = "Od poslužitelj:";
+"_from_server_title" = "From Server:";
 
 /* MacOS: General tab in setting window */
 "_general" = "Općenito";
@@ -857,10 +857,10 @@
 "_map_show" = "Prikaži kartu";
 
 /* (No Comment) */
-"_maximum_device_description" = "Odspojite drugi uređaj da biste povezali ovaj ili nadogradite na %@ plan za istovremeno povezivanje %d uređaja uređaja.";
+"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Odspojite drugi uređaj da biste povezali ovaj.";
+"_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Dostigli ste maksimalno ograničenje broja uređaja";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "Prebacite se na OpenVPN i ponovno pokušajte";
 
 /* (No Comment) */
-"_to_server_title" = "Za poslužitelj:";
+"_to_server_title" = "To Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";

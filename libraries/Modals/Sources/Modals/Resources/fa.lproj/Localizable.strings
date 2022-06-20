@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "پس از پرداخت شدن این‌ها شما دوباره قادر به دسترسی به قابلیت‌های ویژه خواهید بود.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
+
+/* Title of user account update screen */
+"delinquent_title" = "حساب کاربری VPN شما دارای صورت‌حساب‌های در حال انتظار است";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "از سرور:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "شما به حداکثر محدودیت دستگاه خود رسیدید";
+
 /* Common button title */
 "modals_common_cancel" = "لغو";
 
@@ -104,5 +125,29 @@
 "new_plans_brand_subtitle" = "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Updated Proton, unified protection";
+"new_plans_brand_title" = "Proton به روز شده، محافظت یکپارچه";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "اشتراک شما تنزل یافته است.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "اشتراک شما تنزل یافته است، بنابراین ما در حال اتصال اتصال دوباره به سریع‌ترین سرور موجود هستیم.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "اشتراک VPN شما به پایان رسیده است";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "قابلیت‌های پیشرفته: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "به سرور:";
+
+/* Button action title in user account update screen */
+"update_billing" = "به‌روزرسانی صورت حساب من";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "دوباره ارتقا دهید";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "نه متشکرم";
 

@@ -2,6 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> aynı anda %#@num_devices@ aygıta kadar bağlayın.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d aygıt</string>
+			<key>other</key>
+			<string>%d aygıt</string>
+		</dict>
+	</dict>
 	<key>modals_upsell_all_countries_feature_multipleDevices</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -43,6 +59,38 @@
 			<string>%d güvenli sunucu</string>
 			<key>other</key>
 			<string>%d güvenli sunucu</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@num_countries@ ülkede yüzlerce sunucu</string>
+		<key>num_countries</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d ülke</string>
+			<key>other</key>
+			<string>%d ülke</string>
+		</dict>
+	</dict>
+	<key>subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>Aynı anda %#@num_devices@ aygıta kadar bağlanın</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d aygıt</string>
+			<key>other</key>
+			<string>%d aygıt</string>
 		</dict>
 	</dict>
 </dict>

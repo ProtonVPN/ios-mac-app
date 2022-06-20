@@ -545,7 +545,7 @@
 "_feature_p2p_description" = "Esses servidores oferecem o melhor desempenho para BitTorrent e compartilhamento de arquivos.";
 
 /* iOS plan feature */
-"_feature_secure_core" = "Seguro Core";
+"_feature_secure_core" = "Secure Core";
 
 /* iOS plan feature */
 "_feature_secure_streaming" = "Streaming seguro";
@@ -857,10 +857,10 @@
 "_map_show" = "Mostrar mapa";
 
 /* (No Comment) */
-"_maximum_device_description" = "Por favor, desconecte outro dispositivo para conectar esse ou atualize para o PLUS para conectar %@ dispositivos ao mesmo tempo.";
+"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Por favor, desconecte outro dispositivo para conectar esse.";
+"_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Você atingiu o número máximo de dispositivos";
@@ -1415,7 +1415,7 @@
 "_search_phone_country_code_placeholder" = "Procurar país";
 
 /* Used in many places in MacOS app */
-"_secure_core" = "Seguro Core";
+"_secure_core" = "Secure Core";
 
 /* %@ is a country e.g. Secure Core Switzerland */
 "_secure_core_country" = "Secure Core %@";
@@ -1622,7 +1622,7 @@
 "_switch_side_button_on" = "ON";
 
 /* (No Comment) */
-"_sysex_cannot_enable" = "Cannot enable System Extension";
+"_sysex_cannot_enable" = "Não é possível ativar a extensão do sistema";
 
 /* (No Comment) */
 "_sysex_enabled_description" = "Configuração concluída. Agora você pode navegar na Internet mais rápido com as melhores tecnologias de VPN.";
@@ -1640,10 +1640,10 @@
 "_sysex_wizard_button" = "Iniciar configuração";
 
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Clique em \"Iniciar configuração\". Duas caixas de diálogo aparecerão, então clique em \"Abrir Preferências de Segurança\".\nAlternativamente, clique aqui para abrir as mesmas configurações.";
 
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "Clique em \"Iniciar configuração\". Uma caixa de diálogo aparecerá, então clique em \"Abrir Preferências de Segurança\".\nAlternativamente, clique aqui para abrir as mesmas configurações.";
 
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
@@ -1974,7 +1974,7 @@
 "_use_other_email_address" = "Verificar com e-mail";
 
 /* Profile create/change form */
-"_use_secure_core" = "Seguro Core";
+"_use_secure_core" = "Secure Core";
 
 /* (No Comment) */
 "_use_sms_verification" = "Verificar com SMS";

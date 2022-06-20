@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Вы снова получите доступ к платным функциям, когда это буден оплачено.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Вы снова получите доступ к платным функциям, когда эти счета будут оплачены. А пока, мы подключаем Вас к самому быстрому доступному бесплатному серверу.";
+
+/* Title of user account update screen */
+"delinquent_title" = "В Вашем аккаунте VPN есть неоплаченные счета";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "С сервера:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Пожалуйста, отключите другое устройство, чтобы подключить на это.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Вы достигли максимального лимита устройств";
+
 /* Common button title */
 "modals_common_cancel" = "Отмена";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Обновленный Proton и комплексная защита";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Вы перешли на более дешевую версию подписки.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Вы перешли на более дешевую подписку, поэтому мы переподключаемся к самому быстрому доступному серверу.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Срок вашей подписки на VPN истек";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Дополнительные возможности: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "На сервер:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Обновить мои счета";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Улучшить снова";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Нет, спасибо";
 

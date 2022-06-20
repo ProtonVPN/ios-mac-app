@@ -272,13 +272,13 @@
 "_delinquent_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan-tagihan ini dilunasi.";
 
 /* (No Comment) */
-"_delinquent_reconnection_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi. Untuk saat ini, kami akan menghubungkan Anda ke server Gratis tercepat yang tersedia.";
+"_delinquent_reconnection_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi. Untuk saat ini, kami akan menghubungkan Anda ke server Free tercepat yang tersedia.";
 
 /* (No Comment) */
-"_delinquent_title" = "Akun VPN Anda memiliki tagihan-tagihan yang belum dilunasi";
+"_delinquent_title" = "Akun VPN anda memiliki tagihan tertunda";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Tagihan akun Anda telah melewati tanggal jatuh tempo. Mohon bayar seluruh tagihan yang belum lunas di account.protonvpn.com";
+"_delinquent_user_description" = "Akun Anda memiliki tagihan yang telah melewati tanggal jatuh tempo. Silakan bayar seluruh tagihan yang belum lunas di account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Tagihan belum dibayar";
@@ -857,7 +857,7 @@
 "_map_show" = "Tampilkan peta";
 
 /* (No Comment) */
-"_maximum_device_description" = "Mohon putuskan perangkat lain untuk menyambungkan perangkat ini atau tingkatkan ke %@ untuk menyambungkan hingga %d perangkat sekaligus.";
+"_maximum_device_description" = "Mohon putuskan sambungan yang telah ada agar perangkat ini dapat tersambung atau tingkatkan akun Anda ke %@ untuk dapat menyambungkan hingga %d perangkat dalam satu waktu.";
 
 /* (No Comment) */
 "_maximum_device_reached_description" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
@@ -977,7 +977,7 @@
 "_neks_t2_connect" = "Aktifkan Saja";
 
 /* (No Comment) */
-"_neks_t2_description" = "Kill Switch tidak dapat digunakan secara stabil pada perangkat ini.\n\nPerangkat Anda memiliki Chip Keamanan T2, yang dapat memicu masalah stabilitas pada sistem Anda apabila fungsionalitas Kill Switch yang dimiliki oleh macOS digunakan oleh Proton VPN.";
+"_neks_t2_description" = "Kill Switch tidak dapat digunakan secara stabil pada perangkat ini.\n\nPerangkat Anda memiliki Chip Keamanan T2, yang dapat membuat sistem Anda menjadi tidak stabil apabila fungsionalitas Kill Switch yang dimiliki oleh macOS digunakan oleh Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Chip Keamanan T2";
@@ -1118,7 +1118,7 @@
 "_per_year_short" = "/ tahun";
 
 /* (No Comment) */
-"_performance_load_description" = "Server dengan beban tinggi lebih lambat daripada server dengan beban rendah.";
+"_performance_load_description" = "Server dengan beban yang tinggi akan memberikan koneksi yang lebih lambat dibanding server dengan beban yang rendah.";
 
 /* (No Comment) */
 "_performance_load_high" = "Tinggi";
@@ -1148,7 +1148,7 @@
 "_plan_speed_high" = "Kecepatan tinggi";
 
 /* Plan speed */
-"_plan_speed_medium" = "Kecepatan sedang";
+"_plan_speed_medium" = "Kecepatan menengah";
 
 /* Text description in plan selection screen */
 "_plans_footer" = "Apabila paket pilihan Anda telah dikonfirmasi, akun iTunes Anda akan ditagih sesuai harga yang tertera, termasuk harga paket dan biaya transaksi aplikasi Apple (tidak ditarik oleh Proton). Usai pembayaran, Anda bisa segera menikmati paket yang dipilih selama 1 tahun. Setelah itu, Anda bisa memperpanjang atau membatalkan paket melalui web atau aplikasi kami di iOS.";
@@ -1523,7 +1523,7 @@
 "_smart_protocol_title" = "Smart Protocol";
 
 /* (No Comment) */
-"_smart_routing_title" = "Pengalihan Cerdas";
+"_smart_routing_title" = "Smart Routing";
 
 /* Shortened title for Smart Protocol on Settings configuration */
 "_smart_title" = "Smart";

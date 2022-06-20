@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Podrá acceder a las funciones premium de nuevo luego de pagar por ellas.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Podrá acceder a las funciones premium de nuevo luego de pagar por ellas. Por ahora, le estamos conectando al servidor del plan gratuito más rápido disponible.";
+
+/* Title of user account update screen */
+"delinquent_title" = "Su cuenta VPN tiene facturas pendientes";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Del servidor:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Desconecte otro dispositivo para conectarse a éste.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Desconecte otro dispositivo para conectar éste o actualice a %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Ha alcanzado el límite máximo de dispositivos";
+
 /* Common button title */
 "modals_common_cancel" = "Cancelar";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Nuevo diseño y protección unificada de Proton";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Su suscripción ha sido degradada.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Su suscripción ha sido degradada, volveremos a reconectar al servidor más rápido disponible.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Su suscripción de VPN ha expirado";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Funciones avanzadas: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Al servidor:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Actualizar mi facturación";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Mejorar de nuevo";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "No, gracias";
 
