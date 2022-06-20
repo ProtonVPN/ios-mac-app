@@ -141,7 +141,8 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
         
     private func setupSecureCoreSection() {
-        secureCoreSwitch.drawsUnderOverlay = false
+        secureCoreSwitch.drawsUnderOverlay = true
+        secureCoreSwitch.maskColor = .cgColor(.background)
         secureCoreSwitch.registerDelegate(self)
         secureCoreSwitch.setState(.off)
         
