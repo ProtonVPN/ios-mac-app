@@ -32,7 +32,7 @@
 "_br_3_logs_disabled" = "Log-log error yang ada akan membantu kami untuk dapat menumpaskan masalah Anda hingga ke akar-akarnya. Apabila Anda tidak menyertakan log-log error tersebut, kami tidak akan dapat menganalisa masalah Anda secara maksimal.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Kirimkan log-log error";
+"_br_3_logs_field" = "Kirimkan log error";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "Nama Pengguna";

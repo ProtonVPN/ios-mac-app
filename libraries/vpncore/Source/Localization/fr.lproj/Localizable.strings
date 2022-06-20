@@ -278,7 +278,7 @@
 "_delinquent_title" = "Votre compte VPN comporte des factures en attente";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Votre compte possède actuellement une facture en retard. Veuillez régler les factures impayées en vous rendant sur account.protonvpn.com";
+"_delinquent_user_description" = "Votre compte présente une facture impayée. Veuillez la régler en vous rendant sur account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Facture impayée";
@@ -488,7 +488,7 @@
 "_error_vpn_session_is_active" = "La session Proton VPN est active";
 
 /* In App Purchase error */
-"_error_wrong_payment_token_status" = "Statut incorrect du jeton de paiement. Veuillez relancer l'application. Si l'erreur persiste, contactez l’assistance.";
+"_error_wrong_payment_token_status" = "Statut incorrect du jeton de paiement. Veuillez relancer l'application. Si l'erreur persiste, contactez le support.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "Proton VPN utilise un pare-feu de filtrage de paquets pour implémenter un kill switch. En activant le kill switch, vous écraserez les paramètres actuels de pare-feu de votre appareil. Si vous comptez sur cette configuration de pare-feu, vous ne devriez pas utiliser le kill switch.\n\nPour utiliser le kill switch et écraser vos paramètres de pare-feu actuels, sélectionnez CONTINUER.\n\nPour désactiver le kill switch et continuer à utiliser votre pare-feu actuel, sélectionnez ANNULER.";
@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Votre essai gratuit %@";
 
 /* Downgrade */
-"_from_server_title" = "Du serveur:";
+"_from_server_title" = "Du serveur :";
 
 /* MacOS: General tab in setting window */
 "_general" = "Général";
@@ -716,7 +716,7 @@
 "_kill_switch_helper_install_popup_body" = "Pour activer Kill Switch, il est possible que l'on vous demande le mot de passe du compte de votre ordinateur. Si cette demande se présente, entrez votre %@ et acceptez.\n\nCette demande pourrait réapparaître occasionnellement, lorsque l'app Proton VPN reçoit des mises à jour.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "La mise à jour la plus récente que vous avez téléchargée nécessite que vous fournissiez le mot de passe de votre compte d'ordinateur. Lorsque la requête apparaît, veuillez entrer votre %@ et accepter.\n\nSi vous ne saisissez pas votre mot de passe Mac, Kill Switch sera désactivé.";
+"_kill_switch_helper_update_popup_body" = "La dernière mise à jour que vous avez téléchargée vous demande de fournir le mot de passe de votre compte d'ordinateur. Lorsque la requête apparaît, veuillez entrer votre %@ et accepter.\n\nSi vous ne saisissez pas votre mot de passe Mac, la fonction kill switch sera désactivée.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Votre connexion internet sera rétablie dès que Proton VPN se reconnectera à un serveur.\nPour utiliser internet sans VPN et sans la protection Kill Switch, annulez la reconnexion au serveur.";
@@ -740,7 +740,7 @@
 "_ks_dont_ask" = "Ne plus me demander";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Pour activer Kill Switch, vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Pour activer fonction kill switch, vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer fonction kill switch.";
 
 /* (No Comment) */
 "_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer kill switch, veuillez d'abord installer le logiciel.";
@@ -857,7 +857,7 @@
 "_map_show" = "Afficher la carte";
 
 /* (No Comment) */
-"_maximum_device_description" = "Veuillez déconnecter un autre appareil pour connecter celui-ci ou mettre à niveau vers %@ pour obtenir jusqu'à %d appareils connectés en même temps.";
+"_maximum_device_description" = "Veuillez déconnecter un autre appareil pour connecter celui-ci ou mettre à niveau vers %@ pour pouvoir connecter jusqu'à %d appareils en même temps.";
 
 /* (No Comment) */
 "_maximum_device_reached_description" = "Veuillez déconnecter un autre appareil pour connecter celui-ci.";
@@ -977,7 +977,7 @@
 "_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
-"_neks_t2_description" = "L'utilisation du kill switch est instable sur cet appareil.\n\nVotre appareil possède une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si la fonctionnalité kill switch est utilisée par ProtonVPN.";
+"_neks_t2_description" = "L'utilisation de la fonction kill switch est instable sur cet appareil.\n\nVotre appareil est doté d'une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si la fonctionnalité kill switch est utilisée par Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Puce de sécurité T2";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "Basculer vers OpenVPN et réessayer";
 
 /* (No Comment) */
-"_to_server_title" = "Vers le serveur:";
+"_to_server_title" = "Vers le serveur :";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";

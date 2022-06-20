@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Bunları ödedikten sonra ücretli özelliklere yeniden erişebilirsiniz. Şimdilik bağlantınızı, var olan en hızlı Free tarife sunucusuna geçiriyoruz.";
+
+/* Title of user account update screen */
+"delinquent_title" = "VPN hesabınızda ödenmemiş faturalar var";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Şu sunucudan:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin ya da %@ tarifesine yükseltin";
+
+/* Title of user account update screen */
+"maximum_device_title" = "En fazla aygıt sınırınıza ulaştınız";
+
 /* Common button title */
 "modals_common_cancel" = "İptal";
 
@@ -105,4 +126,28 @@
 
 /* Title of the New Brand screen */
 "new_plans_brand_title" = "Güncellenmiş Proton, birleşik koruma";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Aboneliğiniz düşürüldü.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Abonelik tarifeniz düşürüldü. Bu nedenle kullanılabilecek en hızlı sunucuya yeniden bağlanıyoruz.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "VPN abonelik tarifenizin süresi dolmuş";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Gelişmiş özellikler: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Şu sunucuya:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Faturalarımı güncelle";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Yeniden yükselt";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Hayır, teşekkürler";
 

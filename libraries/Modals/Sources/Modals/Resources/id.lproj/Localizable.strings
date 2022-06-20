@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "Anda akan kembali dapat mengakses berbagai fitur premium setelah tagihan berikut dilunasi. Untuk saat ini, kami akan menghubungkan Anda ke server Free tercepat yang tersedia.";
+
+/* Title of user account update screen */
+"delinquent_title" = "Akun VPN Anda memiliki tagihan yang belum dilunasi";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Dari server:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung atau tingkatkan akun Anda ke %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Anda telah mencapai batas jumlah perangkat maksimum yang dapat Anda sambungkan";
+
 /* Common button title */
 "modals_common_cancel" = "Batal";
 
@@ -101,8 +122,32 @@
 "new_plans_brand_got_it" = "Mengerti";
 
 /* Subtitle of the New Brand screen */
-"new_plans_brand_subtitle" = "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.";
+"new_plans_brand_subtitle" = "Memperkenalkan tampilan Proton yang baru.\nBerbagai layanan, satu misi. Selamat datang di internet yang menjunjung privasi sebagai hal yang baku.";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Updated Proton, unified protection";
+"new_plans_brand_title" = "Proton yang baru, dengan perlindungan yang tersatukan";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Paket langganan Anda telah diturunkan.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Paket langganan Anda telah diturunkan, sehingga kami akan menghubungkan Anda kembali ke server tercepat yang tersedia.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Paket langganan VPN Anda telah berakhir";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Fitur lanjutan: Netshield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Ke server:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Perbarui Tagihan Saya";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Tingkatkan Lagi";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Tidak, Terima Kasih";
 

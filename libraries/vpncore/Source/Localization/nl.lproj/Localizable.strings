@@ -605,7 +605,7 @@
 "_free_trial_expired_title" = "Uw gratis proefversie %@";
 
 /* Downgrade */
-"_from_server_title" = "Van server:";
+"_from_server_title" = "Van Server:";
 
 /* MacOS: General tab in setting window */
 "_general" = "Algemeen";
@@ -857,10 +857,10 @@
 "_map_show" = "Kaart tonen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Verbreek verbinding met een ander apparaat om deze te verbinden of upgrade naar %@ om tegelijkertijd maximaal %d apparaten aangesloten te krijgen.";
+"_maximum_device_description" = "Verbreek verbinding met een ander apparaat om deze te verbinden of upgrade naar %@ om tegelijkertijd tot %d apparaten te verbinden.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Verbreek een ander apparaat om deze te verbinden.";
+"_maximum_device_reached_description" = "Verbreek verbinding met een ander apparaat om deze te verbinden.";
 
 /* (No Comment) */
 "_maximum_device_title" = "U hebt uw maximum apparaat limiet bereikt";
@@ -1741,7 +1741,7 @@
 "_timeout_ks_ike_switch_protocol" = "Overschakelen naar OpenVPN en probeer het opnieuw";
 
 /* (No Comment) */
-"_to_server_title" = "Naar server:";
+"_to_server_title" = "Naar Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";

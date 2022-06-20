@@ -1,3 +1,24 @@
+/* Description of user account update screen */
+"delinquent_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama.";
+
+/* Description of user account update screen */
+"delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
+
+/* Title of user account update screen */
+"delinquent_title" = "Vaš VPN račun ima neplaćene fakture";
+
+/* Header of the view containing information about the server, from which the user will be disconnected */
+"from_server_title" = "Od poslužitelj:";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Please disconnect another device to connect to this one.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+
+/* Title of user account update screen */
+"maximum_device_title" = "Dostigli ste maksimalno ograničenje broja uređaja";
+
 /* Common button title */
 "modals_common_cancel" = "Poništi";
 
@@ -104,5 +125,29 @@
 "new_plans_brand_subtitle" = "Introducing Proton’s refreshed look.\nMany services, one mission. Welcome to an internet where privacy is the default.";
 
 /* Title of the New Brand screen */
-"new_plans_brand_title" = "Updated Proton, unified protection";
+"new_plans_brand_title" = "Ažurirani Proton, jedinstvena zaštita";
+
+/* Description of user account update screen */
+"subscription_expired_description" = "Vaša pretplata je snižena na niži plan.";
+
+/* Description of user account update screen */
+"subscription_expired_reconnection_description" = "Vaša pretplata je snižena, stoga vas povezujemo s najbržim dostupnim poslužiteljem.";
+
+/* Title of user account update screen */
+"subscription_expired_title" = "Vaš VPN pretplatnički plan je istekao";
+
+/* Feature list element in user account update screen */
+"subscription_upgrade_option3" = "Napredne značajke: NetShield, Secure Core, Tor, P2P";
+
+/* Header of the view containing information about the server, to which the user will be connected */
+"to_server_title" = "Za poslužitelj:";
+
+/* Button action title in user account update screen */
+"update_billing" = "Ažuriraj podatke za naplatu";
+
+/* Button action title in user account update screen */
+"upgrade_again" = "Nadogradi ponovno";
+
+/* Button action title in user account update screen */
+"upgrade_no_thanks" = "Ne, hvala";
 
