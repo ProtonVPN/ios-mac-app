@@ -273,6 +273,8 @@ final class StatusMenuViewModel {
                                                name: type(of: propertiesManager).userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
                                                name: type(of: propertiesManager).hasConnectedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePlanChange),
+                                               name: VpnKeychain.vpnPlanChanged, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -379,6 +381,16 @@ final class StatusMenuViewModel {
     @objc private func handleVpnChange() {
         serverType = propertiesManager.serverTypeToggle
         contentChanged?()
+    }
+
+    @objc private func handlePlanChange() {
+        do {
+            let tier = try vpnKeychain.fetchCached().maxTier
+            serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
+            updateCountryList()
+        } catch {
+            alertService.push(alert: CannotAccessVpnCredentialsAlert())
+        }
     }
     
     @objc private func handleDataChange() {
