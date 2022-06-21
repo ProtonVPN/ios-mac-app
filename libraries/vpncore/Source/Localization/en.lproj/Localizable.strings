@@ -1713,8 +1713,6 @@
 
 "_vpnauth_too_many_certs_title" = "Authentication error";
 "_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
-"_vpnauth_too_many_certs_retry_after_1_minute" = "You reached the maximum number of setting changes. Please try again after at least 1 minute.";
-"_vpnauth_too_many_certs_retry_after" = "You reached the maximum number of setting changes. Please try again after at least %@ minutes.";
 
 // Downgrade
 
@@ -1729,16 +1727,17 @@
 "_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
 
 "_maximum_device_title" = "You have reached your maximum device limit";
-"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
 "_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+
 "_reconnect_title" = "We are reconnecting to the fastest server available.";
 "_subscription_expired_title" = "Your VPN subscription plan has expired";
 "_subscription_expired_description" = "Your subscription has been downgraded.";
 "_subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
 
 "_subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
-"_subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
-"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
 "_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
 
 "_tier_free" = "Free";

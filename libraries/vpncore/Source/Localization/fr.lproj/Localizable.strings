@@ -857,9 +857,6 @@
 "_map_show" = "Afficher la carte";
 
 /* (No Comment) */
-"_maximum_device_description" = "Veuillez déconnecter un autre appareil pour connecter celui-ci ou mettre à niveau vers %@ pour pouvoir connecter jusqu'à %d appareils en même temps.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Veuillez déconnecter un autre appareil pour connecter celui-ci.";
 
 /* (No Comment) */

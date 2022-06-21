@@ -619,7 +619,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
         self.accountPlan = accountPlan
         switch accountPlan {
         case .free, .basic:
-            message = LocalizedString.maximumDeviceDescription(LocalizedString.tierPlus, AccountPlan.plus.devicesCount)
+            message = LocalizedString.maximumDevicePlanLimitPart1(LocalizedString.tierPlus) + LocalizedString.maximumDevicePlanLimitPart2(AccountPlan.plus.devicesCount)
         default:
             message = LocalizedString.maximumDeviceReachedDescription
         }
@@ -795,11 +795,7 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
             minutesToWait += 1
         }
 
-        if minutesToWait == 1 {
-            message = LocalizedString.vpnauthTooManyCertsRetryAfter1Minute
-        } else {
-            message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
-        }
+        message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
     }
 }
 

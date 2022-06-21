@@ -857,9 +857,6 @@
 "_map_show" = "Tampilkan peta";
 
 /* (No Comment) */
-"_maximum_device_description" = "Mohon putuskan sambungan yang telah ada agar perangkat ini dapat tersambung atau tingkatkan akun Anda ke %@ untuk dapat menyambungkan hingga %d perangkat dalam satu waktu.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
 
 /* (No Comment) */

@@ -857,9 +857,6 @@
 "_map_show" = "Haritayı göster";
 
 /* (No Comment) */
-"_maximum_device_description" = "Lütfen bu aygıtı bağlamak için başka bir aygıtın bağlantısını kesin ya da aynı anda %d aygıtı bağlamak için %@ tarifesine yükseltin.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin.";
 
 /* (No Comment) */

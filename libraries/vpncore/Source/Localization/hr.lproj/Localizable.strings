@@ -857,9 +857,6 @@
 "_map_show" = "Prikaži kartu";
 
 /* (No Comment) */
-"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
 
 /* (No Comment) */

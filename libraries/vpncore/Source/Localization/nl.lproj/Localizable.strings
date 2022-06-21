@@ -857,9 +857,6 @@
 "_map_show" = "Kaart tonen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Verbreek verbinding met een ander apparaat om deze te verbinden of upgrade naar %@ om tegelijkertijd tot %d apparaten te verbinden.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Verbreek verbinding met een ander apparaat om deze te verbinden.";
 
 /* (No Comment) */
