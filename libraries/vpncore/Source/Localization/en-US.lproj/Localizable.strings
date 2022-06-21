@@ -857,10 +857,10 @@
 "_map_show" = "Show map";
 
 /* (No Comment) */
-"_maximum_device_description" = "Please disconnect another device to connect to this one or upgrade to %@ to get up to %d devices connected at the same time.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Please disconnect another device to connect to this one.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
 
 /* (No Comment) */
 "_maximum_device_title" = "You have reached your maximum device limit";
@@ -1578,12 +1578,6 @@
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Subscription Plan";
-
-/* (No Comment) */
-"_subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
-
-/* (No Comment) */
-"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
 
 /* (No Comment) */
 "_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";

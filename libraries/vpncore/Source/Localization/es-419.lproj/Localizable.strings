@@ -857,9 +857,6 @@
 "_map_show" = "Mostrar mapa";
 
 /* (No Comment) */
-"_maximum_device_description" = "Desconecte otro dispositivo para conectarse a éste o actualice a un %@ para conectar hasta %d dispositivos al mismo tiempo.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Desconecte otro dispositivo para conectarse a éste.";
 
 /* (No Comment) */

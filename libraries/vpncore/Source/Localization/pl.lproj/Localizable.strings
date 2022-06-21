@@ -857,9 +857,6 @@
 "_map_show" = "Pokaż mapę";
 
 /* (No Comment) */
-"_maximum_device_description" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@ w celu połączenia %d urządzeń jednocześnie.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Aby połączyć się, rozłącz inne urządzenie.";
 
 /* (No Comment) */

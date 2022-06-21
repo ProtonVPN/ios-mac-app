@@ -857,9 +857,6 @@
 "_map_show" = "Karte anzeigen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden, oder führe ein Upgrade auf %@ aus, um bis zu %d Geräte gleichzeitig zu verbinden.";
-
-/* (No Comment) */
 "_maximum_device_reached_description" = "Bitte trenne zuerst die Verbindung auf einem anderen Gerät, um dich mit diesem zu verbinden.";
 
 /* (No Comment) */
