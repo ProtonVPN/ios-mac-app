@@ -398,7 +398,7 @@
 "_error_mitm_title" = "Conexión no segura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Tu conexión actual a Internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de Proton VPN. Tu conexión actual a Internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de Proton VPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
