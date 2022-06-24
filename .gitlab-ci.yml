@@ -1,4 +1,4 @@
-stages:
+stages:  
   - linting
   - core_unit_tests
   - apps_unit_tests
@@ -42,8 +42,7 @@ code_quality:
     - iOS_ARM  
 
 core_lint:  
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -60,8 +59,7 @@ core_lint:
     expire_in: 90 days
 
 ios_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -78,8 +76,7 @@ ios_lint:
     expire_in: 90 days
 
 macos_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - macOS_ARM
   script:
@@ -96,8 +93,7 @@ macos_lint:
     expire_in: 90 days    
     
 bugreport_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -114,8 +110,7 @@ bugreport_lint:
     expire_in: 90 days
 
 onboarding_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -132,8 +127,7 @@ onboarding_lint:
     expire_in: 90 days
 
 search_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -150,8 +144,7 @@ search_lint:
     expire_in: 90 days      
 
 modals_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -168,8 +161,7 @@ modals_lint:
     expire_in: 90 days
 
 review_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -186,8 +178,7 @@ review_lint:
     expire_in: 90 days
 
 wireguard_extension_lint:
-  stage: linting
-  dependencies: [code_quality]
+  stage: linting  
   tags:
     - iOS_ARM
   script:
@@ -633,3 +624,21 @@ github-push-tag:
   only:
     <<: *onlyTagsFilterOpenSource
 
+sonarqube-check:
+  stage: linting
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task    
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  allow_failure: true
+  only:
+    - merge_requests
+    - develop
