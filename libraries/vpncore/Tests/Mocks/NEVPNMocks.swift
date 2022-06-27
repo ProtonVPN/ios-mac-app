@@ -24,6 +24,8 @@ enum NEMockError: Error {
 }
 
 class NEVPNManagerMock: NEVPNManagerWrapper {
+    var connectionWasCreated: ((NEVPNConnectionMock) -> Void)?
+
     struct SavedPreferences {
         let protocolConfiguration: NEVPNProtocol?
         let isEnabled: Bool
@@ -39,7 +41,9 @@ class NEVPNManagerMock: NEVPNManagerWrapper {
     var onDemandRules: [NEOnDemandRule]?
 
     lazy var vpnConnection: NEVPNConnectionWrapper = {
-        NEVPNConnectionMock(vpnManager: self)
+        let connection = NEVPNConnectionMock(vpnManager: self)
+        connectionWasCreated?(connection)
+        return connection
     }()
 
     init() {
@@ -55,16 +59,20 @@ class NEVPNManagerMock: NEVPNManagerWrapper {
     }
 
     func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
+        defer { completionHandler(nil) }
+
         guard let prefs = Self.whatIsSavedToPreferences else { return }
         setSavedConfiguration(prefs)
     }
 
     func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
         Self.whatIsSavedToPreferences = SavedPreferences(self)
+        completionHandler?(nil)
     }
 
     func removeFromPreferences(completionHandler: ((Error?) -> Void)?) {
         Self.whatIsSavedToPreferences = nil
+        completionHandler?(nil)
     }
 }
 
@@ -78,46 +86,41 @@ extension NEVPNManagerMock.SavedPreferences {
 }
 
 class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperFactory {
-    var tunnelProvidersInPreferences: [String: NETunnelProviderManagerWrapper] = [:]
+    var tunnelProvidersInPreferences: [UUID: NETunnelProviderManagerWrapper] = [:]
+    var newManagerCreated: ((NETunnelProviderManagerMock) -> ())?
 
     func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
         completionHandler(tunnelProvidersInPreferences.values.map { $0 }, nil)
     }
 
     func makeNewManager() -> NETunnelProviderManagerWrapper {
-        NETunnelProviderManagerMock(factory: self)
+        let manager = NETunnelProviderManagerMock(factory: self)
+        newManagerCreated?(manager)
+        return manager
     }
 }
 
 class NETunnelProviderManagerMock: NEVPNManagerMock, NETunnelProviderManagerWrapper {
+    let uuid: UUID
+
     weak var factory: NETunnelProviderManagerFactoryMock?
 
     init(factory: NETunnelProviderManagerFactoryMock?) {
+        self.uuid = UUID()
         self.factory = factory
     }
 
-    static var tunnelProviderPreferencesData: [String: NEVPNManagerMock.SavedPreferences] = [:]
+    static var tunnelProviderPreferencesData: [UUID: NEVPNManagerMock.SavedPreferences] = [:]
 
     override func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
-        guard let config = self.protocolConfiguration as? NETunnelProviderProtocol,
-            let bundleId = config.providerBundleIdentifier else {
-            completionHandler?(NEMockError.invalidProviderConfiguration)
-            return
-        }
-
         let prefs = NEVPNManagerMock.SavedPreferences(self)
-        factory?.tunnelProvidersInPreferences[bundleId] = self
-        NETunnelProviderManagerMock.tunnelProviderPreferencesData[bundleId] = prefs
+        factory?.tunnelProvidersInPreferences[uuid] = self
+        NETunnelProviderManagerMock.tunnelProviderPreferencesData[uuid] = prefs
+        completionHandler?(nil)
     }
 
     override func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
-        guard let config = self.protocolConfiguration as? NETunnelProviderProtocol,
-            let bundleId = config.providerBundleIdentifier else {
-            completionHandler(NEMockError.invalidProviderConfiguration)
-            return
-        }
-
-        guard let prefs = Self.tunnelProviderPreferencesData[bundleId] else {
+        guard let prefs = Self.tunnelProviderPreferencesData[uuid] else {
             completionHandler(nil)
             return
         }
@@ -127,18 +130,16 @@ class NETunnelProviderManagerMock: NEVPNManagerMock, NETunnelProviderManagerWrap
     }
 
     override func removeFromPreferences(completionHandler: ((Error?) -> Void)?) {
-        guard let config = self.protocolConfiguration as? NETunnelProviderProtocol,
-            let bundleId = config.providerBundleIdentifier else {
-            completionHandler?(NEMockError.invalidProviderConfiguration)
-            return
-        }
-
-        factory?.tunnelProvidersInPreferences[bundleId] = nil
-        Self.tunnelProviderPreferencesData[bundleId] = nil
+        factory?.tunnelProvidersInPreferences[uuid] = nil
+        Self.tunnelProviderPreferencesData[uuid] = nil
+        completionHandler?(nil)
     }
 }
 
 class NEVPNConnectionMock: NEVPNConnectionWrapper {
+    var tunnelStateDidChange: ((NEVPNStatus) -> ())?
+    var tunnelStartError: NEVPNError?
+
     let vpnManager: NEVPNManagerWrapper
     var status: NEVPNStatus
     var connectedDate: Date?
@@ -150,11 +151,47 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
     }
 
     func startVPNTunnel() throws {
+        if let tunnelStartError = tunnelStartError {
+            throw tunnelStartError
+        }
+
         connectedDate = Date()
+
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+
+            self.status = .connecting
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            self.tunnelStateDidChange?(self.status)
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+
+            self.status = .connected
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            self.tunnelStateDidChange?(self.status)
+        }
     }
 
     func stopVPNTunnel() {
         connectedDate = nil
+
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+
+            self.status = .disconnecting
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            self.tunnelStateDidChange?(self.status)
+        }
+
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+
+            self.status = .disconnected
+            NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
+            self.tunnelStateDidChange?(self.status)
+        }
     }
 }
 
