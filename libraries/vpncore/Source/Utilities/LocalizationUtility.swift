@@ -24,6 +24,8 @@ import Foundation
 public class LocalizationUtility {
     public static let `default` = LocalizationUtility()
 
+    /// This needs to be public so the tests can set this property to a mock implementation if needed.
+    public static var localeResolver: LocaleResolver = LocaleResolverImplementation()
     private var countryNameCache: [String: String] = [:]
 
     public init() {
@@ -34,22 +36,24 @@ public class LocalizationUtility {
         return namesToShorten[name] ?? name
     }
 
-    /// First, try and get the country name from the current locale.
+    /// First, try to get the user's first preferred language, and return the country name for that language.
     ///
-    /// - If that fails, try and get the country name from the locale represented by the first preferred language.
-    /// - If *that* fails, standardize the language by removing the bits after the "-" in the language name
-    ///   (for example, fr-CH becomes fr, en-US becomes en, etc), then try getting the country name with that.
-    /// - Finally, if that fails, return nothing.
+    /// - If we can't find the country name for the user's first language, try finding the country name for a more standard
+    ///   variant of that language.
+    /// - If somehow there isn't any first preferred language, or the above country lookup fails, fallback on the current locale.
+    /// - Finally, if all else fails, return nothing.
     private func countryNameUncached(forCode countryCode: String) -> String? {
-        if let countryName = Locale.current.localizedString(forRegionCode: countryCode) {
-            return countryName
-        } else if let language = Locale.preferredLanguages.first {
-            if let countryName = Locale(identifier: language).localizedString(forRegionCode: countryCode) {
+        if let language = Self.localeResolver.preferredLanguages.first {
+            if let countryName = Self.localeResolver.locale(withIdentifier: language).localizedString(forRegionCode: countryCode) {
                 return countryName
             } else if let standardLanguage = language.components(separatedBy: "-").first,
-                      let countryName = Locale(identifier: standardLanguage).localizedString(forRegionCode: countryCode) {
+                      let countryName = Self.localeResolver.locale(withIdentifier: standardLanguage).localizedString(forRegionCode: countryCode) {
                 return countryName
             }
+        }
+
+        if let countryName = Self.localeResolver.currentLocale.localizedString(forRegionCode: countryCode) {
+            return countryName
         }
 
         return nil
@@ -75,7 +79,11 @@ public class LocalizationUtility {
     
     private func loadShortNames() {
         do {
-            let data = try Data(contentsOf: Bundle.main.url(forResource: "country-names", withExtension: "plist")!)
+            guard let resource = Bundle.main.url(forResource: "country-names", withExtension: "plist") else {
+                return
+            }
+
+            let data = try Data(contentsOf: resource)
             let decoder = PropertyListDecoder()
             namesToShorten = try decoder.decode([String: String].self, from: data)
         } catch {
