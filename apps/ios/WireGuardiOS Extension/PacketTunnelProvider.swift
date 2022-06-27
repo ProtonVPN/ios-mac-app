@@ -302,7 +302,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         } else {
             log.info("Last connectivity check time diff: \(timeDiff)")
         }
-        check(url: "https://api.protonvpn.ch/vpn/location")
         check(url: "https://api64.ipify.org/")
         lastConnectivityCheck = Date()
     }
