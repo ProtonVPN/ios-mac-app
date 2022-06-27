@@ -18,8 +18,8 @@
 
 import Foundation
 
-/// Creates `FileManager` mock and adds `FileHandleMock` from `SizeWatchingFileHandleMockFactory` so
-/// files that are used via `FileHandler` track theirs sizes and can return creation date.
+/// Creates a `FileManager` mock and adds `FileHandleMock` from `SizeWatchingFileHandleMockFactory`,
+/// so that files that are used via the `FileHandler` can track their sizes and return creation dates.
 ///
 /// Expectations can be set in case they are needed for async testing.
 class FileSystemMock {
@@ -64,8 +64,8 @@ class FileSystemMock {
 
 }
 
-/// Creates FileHandleMocks and tracks their size by adding the size of written data to its curent size counter.
-/// It also keeps track of URLs and returns the same instanse for the same URL.
+/// Creates FileHandleMocks and tracks their size by adding the size of written data to its current size counter.
+/// It also keeps track of URLs and returns the same instance for the same URL.
 class SizeWatchingFileHandleMockFactory {
 
     var files = [URL: (FileHandleMock, Date)]()
