@@ -213,27 +213,19 @@ public class VpnManager: VpnManagerProtocol {
         let dispatchGroup = DispatchGroup()
         var error: Error?
         var successful = false // mark as success if at least one removal succeeded
-        
-        dispatchGroup.enter()
-        removeConfiguration(ikeProtocolFactory) { e in
-            if e != nil {
-                error = e
-            } else {
-                successful = true
+
+        for factory in [ikeProtocolFactory, openVpnProtocolFactory, wireguardProtocolFactory] {
+            dispatchGroup.enter()
+            removeConfiguration(factory) { e in
+                if e != nil {
+                    error = e
+                } else {
+                    successful = true
+                }
+                dispatchGroup.leave()
             }
-            dispatchGroup.leave()
         }
-        
-        dispatchGroup.enter()
-        removeConfiguration(openVpnProtocolFactory) { e in
-            if e != nil {
-                error = e
-            } else {
-                successful = true
-            }
-            dispatchGroup.leave()
-        }
-        
+
         dispatchGroup.notify(queue: DispatchQueue.main) {
             completionHandler?(successful ? nil : error)
         }
