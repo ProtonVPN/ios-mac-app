@@ -38,6 +38,8 @@ class SiriHandlerViewModel {
     private let profileManager: ProfileManager
     private let doh: DoHVPN
     private let sessionService: SessionService
+    private let serverStorage: ServerStorage
+    private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
     
     private let alertService = ExtensionAlertService()
     
@@ -56,6 +58,7 @@ class SiriHandlerViewModel {
                                                                                               authenticationStorage: vpnAuthKeychain,
                                                                                               safeModePropertyProvider: safeModePropertyProvider),
                                              doh: doh,
+                                             serverStorage: serverStorage,
                                              natTypePropertyProvider: natTypePropertyProvider,
                                              netShieldPropertyProvider: netShieldPropertyProvider,
                                              safeModePropertyProvider: safeModePropertyProvider)
@@ -77,7 +80,9 @@ class SiriHandlerViewModel {
                                      natTypePropertyProvider: natTypePropertyProvider,
                                      safeModePropertyProvider: safeModePropertyProvider,
                                      propertiesManager: propertiesManager,
-                                     profileManager: profileManager)
+                                     profileManager: profileManager,
+                                     availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
+                                     serverStorage: serverStorage)
         }
         return _vpnGateway
     }
@@ -92,7 +97,9 @@ class SiriHandlerViewModel {
          natTypePropertyProvider: NATTypePropertyProvider,
          safeModePropertyProvider: SafeModePropertyProvider,
          profileManager: ProfileManager,
-         doh: DoHVPN) {
+         doh: DoHVPN,
+         serverStorage: ServerStorage,
+         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
@@ -110,6 +117,8 @@ class SiriHandlerViewModel {
         self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain,
                                                                      alertService: alertService,
                                                                      propertiesManager: propertiesManager)
+        self.serverStorage = serverStorage
+        self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
         
         self.alertService.delegate = self
     }

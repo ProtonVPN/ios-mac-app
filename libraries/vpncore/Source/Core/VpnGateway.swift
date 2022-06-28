@@ -108,8 +108,9 @@ public class VpnGateway: VpnGatewayProtocol {
     private let profileManager: ProfileManager
     private let serverTierChecker: ServerTierChecker
     private let vpnKeychain: VpnKeychainProtocol
+    private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
     
-    private let serverStorage: ServerStorage = ServerStorageConcrete()
+    private let serverStorage: ServerStorage
     private let propertiesManager: PropertiesManagerProtocol
 
     private let siriHelper: SiriHelperProtocol?
@@ -119,7 +120,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     private var serverManager: ServerManager {
-        return ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
+        return ServerManagerImplementation.instance(forTier: tier, serverStorage: serverStorage)
     }
    
     private var serverTypeToggle: ServerType {
@@ -170,7 +171,7 @@ public class VpnGateway: VpnGatewayProtocol {
     let interceptPolicies: [VpnConnectionInterceptPolicyItem]
 
     // FUTUREDO: Use factory
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, vpnInterceptPolicies: [VpnConnectionInterceptPolicyItem] = []) {
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory, vpnInterceptPolicies: [VpnConnectionInterceptPolicyItem] = [], serverStorage: ServerStorage) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
@@ -181,11 +182,13 @@ public class VpnGateway: VpnGatewayProtocol {
         self.safeModePropertyProvider = safeModePropertyProvider
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
+        self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
 
         let state = appStateManager.state
         self.connection = ConnectionStatus.forAppState(state)
         self.interceptPolicies = vpnInterceptPolicies
+        self.serverStorage = serverStorage
 
         if case .connected = state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
@@ -359,7 +362,12 @@ public class VpnGateway: VpnGatewayProtocol {
 
                 switch result {
                 case let .success(properties):
-                    self.propertiesManager.userLocation = properties.location
+                    if let userLocation = properties.location {
+                        self.propertiesManager.userLocation = userLocation
+                    }
+                    if let services = properties.streamingServices {
+                        self.propertiesManager.streamingServices = services.streamingServices
+                    }
                     self.serverStorage.store(properties.serverModels)
                     self.profileManager.refreshProfiles()
                 case .failure:
@@ -424,11 +432,18 @@ public class VpnGateway: VpnGatewayProtocol {
             }
 
             self.propertiesManager.lastPreparedServer = server
+
+            let availabilityCheckerResolver = self.availabilityCheckerResolverFactory
+                .makeAvailabilityCheckerResolver(openVpnConfig: self.propertiesManager.openVpnConfig,
+                                                 wireguardConfig: self.propertiesManager.wireguardConfig)
+
             self.connectionPreparer = VpnConnectionPreparer(appStateManager: self.appStateManager,
                                                             vpnApiService: self.vpnApiService,
                                                             alertService: self.alertService,
                                                             serverTierChecker: self.serverTierChecker,
                                                             vpnKeychain: self.vpnKeychain,
+                                                            serverStorage: self.serverStorage,
+                                                            availabilityCheckerResolver: availabilityCheckerResolver,
                                                             smartProtocolConfig: smartProtocolConfig,
                                                             openVpnConfig: self.propertiesManager.openVpnConfig,
                                                             wireguardConfig: self.propertiesManager.wireguardConfig)
@@ -515,7 +530,7 @@ fileprivate extension VpnGateway {
         guard let previousServer = oldServer else { return nil }
 
         let tier = downgradeInfo.to.maxTier
-        let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: ServerStorageConcrete())
+        let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: serverStorage)
         let selector = VpnServerSelector(serverType: .unspecified, userTier: tier, serverGrouping: serverManager.grouping(for: serverTypeToggle), appStateGetter: {
             return self.appStateManager.state
         })

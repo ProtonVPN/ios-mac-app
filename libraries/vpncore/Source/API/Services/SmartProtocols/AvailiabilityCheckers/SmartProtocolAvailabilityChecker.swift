@@ -23,14 +23,14 @@
 import Foundation
 import Crypto_VPN
 
-enum SmartProtocolAvailabilityCheckerResult {
+public enum SmartProtocolAvailabilityCheckerResult {
     case unavailable
     case available(ports: [Int])
 }
 
-typealias SmartProtocolAvailabilityCheckerCompletion = (SmartProtocolAvailabilityCheckerResult) -> Void
+public typealias SmartProtocolAvailabilityCheckerCompletion = (SmartProtocolAvailabilityCheckerResult) -> Void
 
-protocol SmartProtocolAvailabilityChecker: AnyObject {
+public protocol SmartProtocolAvailabilityChecker: AnyObject {
     var timeout: TimeInterval { get }
     var protocolName: String { get }
 

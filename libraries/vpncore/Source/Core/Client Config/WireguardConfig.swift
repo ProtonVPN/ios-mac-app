@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct WireguardConfig: Codable {
+public struct WireguardConfig: Codable, Equatable {
     public let defaultPorts: [Int]
     public var dns: String {
         return "10.2.0.1"

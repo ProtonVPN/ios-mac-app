@@ -9,7 +9,7 @@
 
 import Foundation
 
-public struct OpenVpnConfig: Codable {
+public struct OpenVpnConfig: Codable, Equatable {
     let defaultTcpPorts: [Int]
     let defaultUdpPorts: [Int]
 

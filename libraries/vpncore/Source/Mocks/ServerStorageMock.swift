@@ -24,23 +24,33 @@ import Foundation
 public class ServerStorageMock: ServerStorage {
     
     public var servers: [ServerModel]!
+
+    public var age: TimeInterval = .hours(1)
     
     public var contentChanged = Notification.Name("ServerStorageContentChanged")
     
     public init(fileName: String, bundle: Bundle) {
         parseFromJsonFile(fileName, bundle: bundle)
     }
+
+    public init(servers: [ServerModel] = []) {
+        self.servers = servers
+    }
     
     public func fetch() -> [ServerModel] {
         return servers
     }
+
+    public func fetchAge() -> TimeInterval {
+        age
+    }
     
     public func store(_ newServers: [ServerModel]) {
-        fatalError("Not implemented")
+        servers = newServers
     }
     
     public func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {
-        fatalError("Not implemented")
+        fatalError("\(#function) not implemented")
     }
     
     // MARK: - Private

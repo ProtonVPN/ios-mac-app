@@ -74,6 +74,7 @@ final class DependencyContainer {
         configurationPreparer: makeVpnManagerConfigurationPreparer(),
         vpnAuthentication: vpnAuthentication,
         doh: makeDoHVPN(),
+        serverStorage: makeServerStorage(),
         natTypePropertyProvider: makeNATTypePropertyProvider(),
         netShieldPropertyProvider: makeNetShieldPropertyProvider(),
         safeModePropertyProvider: makeSafeModePropertyProvider())
@@ -242,7 +243,19 @@ extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
         let connectionIntercepts = ConnectionIntercepts(factory: self).intercepts
 
-        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper(), netShieldPropertyProvider: makeNetShieldPropertyProvider(), natTypePropertyProvider: makeNATTypePropertyProvider(), safeModePropertyProvider: makeSafeModePropertyProvider(), propertiesManager: makePropertiesManager(), profileManager: makeProfileManager(), vpnInterceptPolicies: connectionIntercepts)
+        return VpnGateway(vpnApiService: makeVpnApiService(),
+                          appStateManager: makeAppStateManager(),
+                          alertService: makeCoreAlertService(),
+                          vpnKeychain: makeVpnKeychain(),
+                          siriHelper: SiriHelper(),
+                          netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                          natTypePropertyProvider: makeNATTypePropertyProvider(),
+                          safeModePropertyProvider: makeSafeModePropertyProvider(),
+                          propertiesManager: makePropertiesManager(),
+                          profileManager: makeProfileManager(),
+                          availabilityCheckerResolverFactory: self,
+                          vpnInterceptPolicies: connectionIntercepts,
+                          serverStorage: makeServerStorage())
     }
 }
 
@@ -574,5 +587,11 @@ extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
         NETunnelProviderManager.loadAllFromPreferences { managers, error in
             completionHandler(managers, error)
         }
+    }
+}
+
+extension DependencyContainer: AvailabilityCheckerResolverFactory {
+    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
     }
 }

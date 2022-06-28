@@ -96,6 +96,12 @@
 		4C83C4652869ACB5000A3FB4 /* LocalizationUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */; };
 		4C83C4672869ACC5000A3FB4 /* LocaleResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C4662869ACC5000A3FB4 /* LocaleResolverMock.swift */; };
 		4C83C4682869ACC5000A3FB4 /* LocaleResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C4662869ACC5000A3FB4 /* LocaleResolverMock.swift */; };
+		4C83C46A2869C830000A3FB4 /* CoreConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C4692869C830000A3FB4 /* CoreConnectionTests.swift */; };
+		4C83C46B2869C830000A3FB4 /* CoreConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C4692869C830000A3FB4 /* CoreConnectionTests.swift */; };
+		4C83C46D2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46C2869F956000A3FB4 /* AvailabilityCheckerFactory.swift */; };
+		4C83C46E2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46C2869F956000A3FB4 /* AvailabilityCheckerFactory.swift */; };
+		4C83C4722869FCAD000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */; };
+		4C83C4732869FCAF000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */; };
 		4CA0977C28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CA0977D28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
@@ -705,6 +711,9 @@
 		4C4E0B2B285B72A5001657FD /* MockVpnAuthenticationStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVpnAuthenticationStorage.swift; sourceTree = "<group>"; };
 		4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtilityTests.swift; sourceTree = "<group>"; };
 		4C83C4662869ACC5000A3FB4 /* LocaleResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleResolverMock.swift; sourceTree = "<group>"; };
+		4C83C4692869C830000A3FB4 /* CoreConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreConnectionTests.swift; sourceTree = "<group>"; };
+		4C83C46C2869F956000A3FB4 /* AvailabilityCheckerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCheckerFactory.swift; sourceTree = "<group>"; };
+		4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCheckerResolverMock.swift; sourceTree = "<group>"; };
 		4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
 		4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnConnectionIntercept.swift; sourceTree = "<group>"; };
 		4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleWrapper.swift; sourceTree = "<group>"; };
@@ -1208,6 +1217,7 @@
 			isa = PBXGroup;
 			children = (
 				4C0961F9285B4FC600556E07 /* VpnManagerTests.swift */,
+				4C83C4692869C830000A3FB4 /* CoreConnectionTests.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -1341,6 +1351,7 @@
 				4C096203285B648900556E07 /* SessionServiceMock.swift */,
 				4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */,
 				4C83C4662869ACC5000A3FB4 /* LocaleResolverMock.swift */,
+				4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1618,6 +1629,7 @@
 		F3256AB326B98BD2003F073C /* AvailiabilityCheckers */ = {
 			isa = PBXGroup;
 			children = (
+				4C83C46C2869F956000A3FB4 /* AvailabilityCheckerFactory.swift */,
 				F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */,
 				F352FDA625F3970E005E83A2 /* OpenVPNTCPAvailabilityChecker.swift */,
 				F3256AB926B98CB3003F073C /* OpenVPNUDPAvailabilityChecker.swift */,
@@ -2721,6 +2733,7 @@
 				E1616BF521C95BC400F42D79 /* ServerOffering.swift in Sources */,
 				E1B5F65A21B81E4800B558B0 /* CountryModel.swift in Sources */,
 				4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */,
+				4C83C46D2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */,
 				D52585272507D4DD00657B80 /* FeatureFlags.swift in Sources */,
 				E1616B8B21C7ACC300F42D79 /* AccountPlan.swift in Sources */,
 				E148AE5E21C28CF4007AB65A /* AlertService.swift in Sources */,
@@ -2924,6 +2937,8 @@
 				F3747C1926D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,
 				F307F7BE27C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
 				4C83C4672869ACC5000A3FB4 /* LocaleResolverMock.swift in Sources */,
+				4C83C46A2869C830000A3FB4 /* CoreConnectionTests.swift in Sources */,
+				4C83C4722869FCAD000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */,
 				D59671FD253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
 				E9BC5DA8285CAAD400B6BD2F /* FileSystemMock.swift in Sources */,
 				D59671CE253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
@@ -3111,6 +3126,7 @@
 				E1616BF021C951DB00F42D79 /* HexColor.swift in Sources */,
 				E977A78E268206B30013495A /* AuthCredentials+vpncore.swift in Sources */,
 				4242B0752465A48B0042145A /* VpnApiService.swift in Sources */,
+				4C83C46E2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */,
 				4C096208285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */,
 				E9DC79C5262DBF02001A0FC0 /* SmartProtocolAvailabilityChecker.swift in Sources */,
 				E1616B8921C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
@@ -3230,6 +3246,8 @@
 				D5D2957725A5D979000FBD74 /* UserTierProviderImplementationTests.swift in Sources */,
 				F307F7C027C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
 				4C83C4682869ACC5000A3FB4 /* LocaleResolverMock.swift in Sources */,
+				4C83C46B2869C830000A3FB4 /* CoreConnectionTests.swift in Sources */,
+				4C83C4732869FCAF000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */,
 				E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				E9BC5DA9285CAAD400B6BD2F /* FileSystemMock.swift in Sources */,
 				D5D2958225A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift in Sources */,

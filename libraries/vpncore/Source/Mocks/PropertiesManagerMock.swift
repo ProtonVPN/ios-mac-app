@@ -23,20 +23,24 @@ import Foundation
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     
-    public static var killSwitchNotification: Notification.Name = Notification.Name("")
-    public static var hasConnectedNotification: Notification.Name = Notification.Name("")
-    public static var userIpNotification: Notification.Name = Notification.Name("")
-    public static var earlyAccessNotification: Notification.Name = Notification.Name("")
-    public static var vpnProtocolNotification: Notification.Name = Notification.Name("")
-    public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("")
-    public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("")
-    public static var smartProtocolNotification: Notification.Name = Notification.Name("")
-    public static let featureFlagsNotification: Notification.Name = Notification.Name("")
+    public static var killSwitchNotification: Notification.Name = Notification.Name("killSwitch")
+    public static var hasConnectedNotification: Notification.Name = Notification.Name("hasConnected")
+    public static var userIpNotification: Notification.Name = Notification.Name("userIp")
+    public static var earlyAccessNotification: Notification.Name = Notification.Name("earlyAccess")
+    public static var vpnProtocolNotification: Notification.Name = Notification.Name("vpnProtocol")
+    public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("excludeLocalNetworks")
+    public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("vpnAccelerator")
+    public static var smartProtocolNotification: Notification.Name = Notification.Name("smartProtocol")
+    public static let featureFlagsNotification: Notification.Name = Notification.Name("featureFlags")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
     public var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
-    public var hasConnected: Bool = false
+    public var hasConnected: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
+        }
+    }
     public var lastIkeConnection: ConnectionConfiguration?
     public var lastOpenVpnConnection: ConnectionConfiguration?
     public var lastWireguardConnection: ConnectionConfiguration?
@@ -50,7 +54,11 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         return secureCoreToggle ? .secureCore : .standard
     }
     public var intentionallyDisconnected: Bool = false
-    public var userLocation: UserLocation?
+    public var userLocation: UserLocation? {
+        didSet {
+            NotificationCenter.default.post(name: Self.userIpNotification, object: userLocation)
+        }
+    }
     public var userDataDisclaimerAgreed: Bool = false
     public var trialWelcomed: Bool = false
     public var warnedTrialExpiring: Bool = false
@@ -62,25 +70,53 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var wireguardConfig: WireguardConfig = WireguardConfig()
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
     public var ratingSettings: RatingSettings = RatingSettings()
-    public var vpnProtocol: VpnProtocol = .ike
+    public var vpnProtocol: VpnProtocol = .ike {
+        didSet {
+            NotificationCenter.default.post(name: Self.vpnProtocolNotification, object: vpnProtocol)
+        }
+    }
     public var apiEndpoint: String?
     public var lastAppVersion = "0.0.0"
     public var lastTimeForeground: Date?
-    public var featureFlags: FeatureFlags = FeatureFlags()
+    public var featureFlags: FeatureFlags = FeatureFlags() {
+        didSet {
+            NotificationCenter.default.post(name: Self.featureFlagsNotification, object: featureFlags)
+        }
+    }
     public var maintenanceServerRefreshIntereval: Int = 1
-    public var vpnAcceleratorEnabled: Bool = false
-    public var killSwitch: Bool = false
+    public var vpnAcceleratorEnabled: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: Self.vpnAcceleratorNotification, object: vpnAcceleratorEnabled)
+        }
+    }
+    public var killSwitch: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: Self.killSwitchNotification, object: killSwitch)
+        }
+    }
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false {
         didSet {
             onAlternativeRoutingChange?(alternativeRouting)
         }
     }
-    public var smartProtocol: Bool = false
+    public var smartProtocol: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: Self.smartProtocolNotification, object: smartProtocol)
+        }
+    }
     public var streamingServices: StreamingDictServices = [:]
-    public var excludeLocalNetworks: Bool = true
+    public var excludeLocalNetworks: Bool = true {
+        didSet {
+            NotificationCenter.default.post(name: Self.excludeLocalNetworksNotification, object: excludeLocalNetworks)
+        }
+    }
     public var streamingResourcesUrl: String?
-    var earlyAccess: Bool = false
+    var earlyAccess: Bool = false {
+        didSet {
+            NotificationCenter.default.post(name: Self.earlyAccessNotification, object: earlyAccess)
+        }
+    }
     public var connectionProtocol: ConnectionProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
