@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct SmartProtocolConfig: Codable {
+public struct SmartProtocolConfig: Codable, Equatable {
     public let openVPN: Bool
     public let iKEv2: Bool
     public let wireGuard: Bool

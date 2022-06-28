@@ -125,14 +125,16 @@ public class VpnApiService {
             }
         }
     }
-    
-    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
+
+    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, // swiftlint:disable:next large_tuple operator_usage_whitespace
+                                             completion: @escaping (Result<(serverModels: [ServerModel],
+                                                                            location: UserLocation?,
+                                                                            streamingServices: VPNStreamingResponse?), Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         var rServerModels: [ServerModel]?
         var rStreamingServices: VPNStreamingResponse?
         var rLocation: UserLocation?
-        var rClientConfig: ClientConfig?
         var rError: Error?
 
         let failureClosure: ErrorCallback = { error in
@@ -180,21 +182,10 @@ public class VpnApiService {
                 failureClosure(error)
             }
         }
-        
-        dispatchGroup.enter()
-        clientConfig { result in
-            switch result {
-            case let .success(config):
-                rClientConfig = config
-                dispatchGroup.leave()
-            case let .failure(error):
-                failureClosure(error)
-            }
-        }
-        
+
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: nil, location: rLocation, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
+                completion(.success((servers, rLocation, rStreamingServices)))
             } else if let error = rError {
                 completion(.failure(error))
             } else {

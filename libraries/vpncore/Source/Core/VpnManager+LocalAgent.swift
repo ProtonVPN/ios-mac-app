@@ -104,6 +104,7 @@ extension VpnManager {
                     case .tooManyCertRequests(let retryAfter):
                         self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                     }
+                    return
                 }
 
                 log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting", category: .localAgent, event: .error)

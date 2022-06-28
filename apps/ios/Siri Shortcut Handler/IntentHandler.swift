@@ -30,15 +30,16 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() {
-        let appInfoFactory = SiriIntentHandlerAppInfoFactory()
+        let dependencyFactory = SiriIntentHandlerDependencyFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()),
-                                        appInfo: appInfoFactory.makeAppInfo(context: .siriIntentHandler),
+                                        appInfo: dependencyFactory.makeAppInfo(context: .siriIntentHandler),
                                         doh: doh)
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
         let storage = Storage()
+        let serverStorage = ServerStorageConcrete()
         let propertiesManager = PropertiesManager(storage: storage)
         let vpnKeychain = VpnKeychain()
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -53,7 +54,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
         let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
-        let sessionService = SessionServiceImplementation(appInfoFactory: appInfoFactory, networking: networking, doh: doh)
+        let sessionService = SessionServiceImplementation(appInfoFactory: dependencyFactory, networking: networking, doh: doh)
         let vpnManager = VpnManager(ikeFactory: ikeFactory,
                                     openVpnFactory: openVpnFactory,
                                     wireguardProtocolFactory: wireguardVpnFactory,
@@ -79,7 +80,9 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     natTypePropertyProvider: natTypePropertyProvider,
                                                     safeModePropertyProvider: safeModePropertyProvider,
                                                     profileManager: ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager),
-                                                    doh: doh)
+                                                    doh: doh,
+                                                    serverStorage: serverStorage,
+                                                    availabilityCheckerResolverFactory: dependencyFactory)
         
         super.init()
     }
@@ -136,12 +139,6 @@ fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factor
     }
 }
 
-fileprivate class SiriIntentHandlerAppInfoFactory: AppInfoFactory {
-    func makeAppInfo(context: AppContext) -> AppInfo {
-        AppInfoImplementation(context: context)
-    }
-}
-
 fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory & NETunnelProviderManagerWrapperFactory {
     func makeNewManager() -> NETunnelProviderManagerWrapper {
         NETunnelProviderManager()
@@ -155,5 +152,20 @@ fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory & NETunnelProvid
 
     func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
         NEVPNManager.shared()
+    }
+}
+
+fileprivate class SiriIntentHandlerDependencyFactory {
+}
+
+extension SiriIntentHandlerDependencyFactory: AppInfoFactory {
+    func makeAppInfo(context: AppContext) -> AppInfo {
+        AppInfoImplementation(context: context)
+    }
+}
+
+extension SiriIntentHandlerDependencyFactory: AvailabilityCheckerResolverFactory {
+    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
     }
 }

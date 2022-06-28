@@ -62,6 +62,25 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.x25519PublicKey = dic["X25519PublicKey"] as? String
         super.init()
     }
+
+    public var asDict: [String: Any] {
+        var result: [String: Any] = [
+            "ID": id,
+            "EntryIP": entryIp,
+            "ExitIP": exitIp,
+            "Domain": domain,
+            "Status": status,
+        ]
+
+        if let x25519PublicKey = x25519PublicKey {
+            result["X25519PublicKey"] = x25519PublicKey
+        }
+        if let label = label {
+            result["Label"] = label
+        }
+
+        return result
+    }
     
     // MARK: - NSCoding
     private enum CoderKey: String, CodingKey {

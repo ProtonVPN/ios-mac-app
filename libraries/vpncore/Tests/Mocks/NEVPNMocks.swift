@@ -41,7 +41,15 @@ class NEVPNManagerMock: NEVPNManagerWrapper {
     var onDemandRules: [NEOnDemandRule]?
 
     lazy var vpnConnection: NEVPNConnectionWrapper = {
-        let connection = NEVPNConnectionMock(vpnManager: self)
+        let connection: NEVPNConnectionMock
+
+        // this is a bit of a hack, since we can't override the stored property in NETunnelProviderManagerMock
+        if self is NETunnelProviderManagerMock {
+            connection = NETunnelProviderSessionMock(vpnManager: self)
+        } else {
+            connection = NEVPNConnectionMock(vpnManager: self)
+        }
+
         connectionWasCreated?(connection)
         return connection
     }()
@@ -155,8 +163,6 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
             throw tunnelStartError
         }
 
-        connectedDate = Date()
-
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
 
@@ -169,6 +175,8 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
             guard let `self` = self else { return }
 
             self.status = .connected
+            self.connectedDate = Date()
+
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
             self.tunnelStateDidChange?(self.status)
         }

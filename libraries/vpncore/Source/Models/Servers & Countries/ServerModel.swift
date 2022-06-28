@@ -169,6 +169,37 @@ public class ServerModel: NSObject, NSCoding, Codable {
         super.init()
         try setupIps(fromArray: try dic.jsonArrayOrThrow(key: "Servers"))
     }
+
+    public var asDict: [String: Any] {
+        var result: [String: Any] = [
+            "ID": id,
+            "Name": name,
+            "Domain": domain,
+            "Load": load,
+            "EntryCountry": entryCountryCode,
+            "ExitCountry": exitCountryCode,
+            "Tier": tier,
+            "Score": score,
+            "Status": status,
+            "Features": feature.rawValue,
+            "Location": location.asDict,
+            "Servers": ips.map { $0.asDict },
+        ]
+
+        if let city = city {
+            result["City"] = city
+        }
+        if let hostCountry = hostCountry {
+            result["HostCountry"] = hostCountry
+        }
+        if let translatedCity = translatedCity {
+            result["Translations"] = [
+                "City": translatedCity
+            ]
+        }
+
+        return result
+    }
     
     public func matches(searchQuery: String) -> Bool {
         let query = searchQuery.lowercased()

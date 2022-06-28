@@ -29,7 +29,7 @@ public protocol ProviderRequest: ProviderMessage {
     associatedtype Response: ProviderMessage
 }
 
-public protocol ProviderMessageSender {
+public protocol ProviderMessageSender: AnyObject {
     func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
 }
 
@@ -42,7 +42,7 @@ public enum ProviderMessageError: Error {
     case remoteError(message: String)
 }
 
-extension NETunnelProviderSession: ProviderMessageSender {
+extension NETunnelProviderSessionWrapper {
     public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
         send(message, maxRetries: 5, completion: completion)
     }

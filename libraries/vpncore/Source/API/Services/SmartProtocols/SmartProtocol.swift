@@ -29,24 +29,27 @@ protocol SmartProtocol {
 }
 
 final class SmartProtocolImplementation: SmartProtocol {
+    private let availabilityCheckerResolver: AvailabilityCheckerResolver
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let fallback: (SmartProtocolProtocol, [Int])
 
-    init(smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
+    init(availabilityCheckerResolver: AvailabilityCheckerResolver, smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
+        self.availabilityCheckerResolver = availabilityCheckerResolver
+
         var checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker] = [:]
         var fallbackCandidates: [(SmartProtocolProtocol, [Int])] = []
 
         if smartProtocolConfig.iKEv2 {
             log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
-            checkers[.ikev2] = IKEv2AvailabilityChecker()
+            checkers[.ikev2] = availabilityCheckerResolver.availabilityChecker(for: .ike)
 
             fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
         }
 
         if smartProtocolConfig.openVPN {
             log.debug("OpenVPN will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
-            checkers[.openVpnUdp] = OpenVPNUDPAvailabilityChecker(config: openVpnConfig)
-            checkers[.openVpnTcp] = OpenVPNTCPAvailabilityChecker(config: openVpnConfig)
+            checkers[.openVpnUdp] = availabilityCheckerResolver.availabilityChecker(for: .openVpn(.udp))
+            checkers[.openVpnTcp] = availabilityCheckerResolver.availabilityChecker(for: .openVpn(.tcp))
 
             fallbackCandidates.append((SmartProtocolProtocol.openVpnUdp, openVpnConfig.defaultUdpPorts))
             fallbackCandidates.append((SmartProtocolProtocol.openVpnTcp, openVpnConfig.defaultTcpPorts))
@@ -54,7 +57,7 @@ final class SmartProtocolImplementation: SmartProtocol {
 
         if smartProtocolConfig.wireGuard {
             log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
-            checkers[.wireguard] = WireguardAvailabilityChecker(config: wireguardConfig)
+            checkers[.wireguard] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard)
 
             fallbackCandidates.append((SmartProtocolProtocol.wireguard, wireguardConfig.defaultPorts))
         }

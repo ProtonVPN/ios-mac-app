@@ -43,5 +43,8 @@ class ServerStorageArrayMock: ServerStorage {
     func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {
         
     }
-    
+
+    func fetchAge() -> TimeInterval {
+        1
+    }
 }

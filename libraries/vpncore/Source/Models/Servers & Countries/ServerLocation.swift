@@ -43,6 +43,13 @@ public class ServerLocation: NSObject, NSCoding {
         long = try dic.doubleOrThrow(key: "Long")
         super.init()
     }
+
+    var asDict: [String: Any] {
+        [
+            "Lat": lat,
+            "Long": long,
+        ]
+    }
     
     // MARK: - NSCoding
     private struct CoderKey {

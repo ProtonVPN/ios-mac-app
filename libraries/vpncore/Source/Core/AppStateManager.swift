@@ -66,7 +66,7 @@ public class AppStateManagerImplementation: AppStateManager {
     private let vpnApiService: VpnApiService
     private var vpnManager: VpnManagerProtocol
     private let propertiesManager: PropertiesManagerProtocol
-    private let serverStorage: ServerStorage = ServerStorageConcrete()
+    private let serverStorage: ServerStorage
     private let timerFactory: TimerFactoryProtocol
     private let vpnKeychain: VpnKeychainProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
@@ -131,7 +131,7 @@ public class AppStateManagerImplementation: AppStateManager {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, serverStorage: ServerStorage, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.networking = networking
@@ -142,10 +142,11 @@ public class AppStateManagerImplementation: AppStateManager {
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
         self.doh = doh
+        self.serverStorage = serverStorage
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
-        
+
         handleVpnStateChange(vpnManager.state)
         reachability = try? Reachability()
         setupReachability()
@@ -232,7 +233,7 @@ public class AppStateManagerImplementation: AppStateManager {
         
         attemptingConnection = true
         
-        let serverAge = ServerStorageConcrete().fetchAge()
+        let serverAge = serverStorage.fetchAge()
         if Date().timeIntervalSince1970 - serverAge > (2 * 60 * 60) {
             // if this is too common, then we should pick a random server instead of using really old score values
             log.warning("Connecting with scores older than 2 hours", category: .app, metadata: ["serverAge": "\(serverAge)"])

@@ -100,7 +100,7 @@ extension NEVPNConnection: NEVPNConnectionWrapper {
     }
 }
 
-public protocol NETunnelProviderSessionWrapper: NEVPNConnectionWrapper {
+public protocol NETunnelProviderSessionWrapper: NEVPNConnectionWrapper & ProviderMessageSender {
     func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws
 }
 

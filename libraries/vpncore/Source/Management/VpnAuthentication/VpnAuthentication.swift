@@ -216,6 +216,8 @@ public final class VpnAuthenticationRemoteClient {
                         completionHandler(.failure(ProtonVpnErrorConst.userCredentialsMissing))
                         return
                     }
+                    
+                    log.info("Certificate retrieved from extension. Expires on \(certificate.validUntil), should refresh before \(certificate.refreshTime)")
                     completionHandler(.success(VpnAuthenticationData(clientKey: keys.privateKey,
                                                                      clientCertificate: certificate.certificate)))
                     return

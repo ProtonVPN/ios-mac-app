@@ -26,7 +26,7 @@ typealias VpnManagerDependencyFactories = NEVPNManagerWrapperFactory &
                                             NETunnelProviderManagerWrapperFactory &
                                             VpnCredentialsConfiguratorFactory
 
-class VpnManagerDependencies {
+fileprivate class VpnManagerDependencies {
     static let appGroup = "test"
     static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
     static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
@@ -92,7 +92,7 @@ extension VpnManagerDependencies: VpnManagerDependencyFactories {
 }
 
 class VpnManagerTests: XCTestCase {
-    var container: VpnManagerDependencies!
+    fileprivate var container: VpnManagerDependencies!
     var vpnManager: VpnManager!
 
     let expectationTimeout: TimeInterval = 10

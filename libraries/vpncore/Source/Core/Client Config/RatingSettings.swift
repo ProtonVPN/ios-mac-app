@@ -18,7 +18,7 @@
 
 import Foundation
 
-public struct RatingSettings: Codable {
+public struct RatingSettings: Codable, Equatable {
     public let eligiblePlans: [String]
     public let successConnections: Int
     public let daysLastReviewPassed: Int

@@ -46,7 +46,9 @@ final class DependencyContainer {
                                                          natTypePropertyProvider: makeNATTypePropertyProvider(),
                                                          safeModePropertyProvider: makeSafeModePropertyProvider(),
                                                          propertiesManager: makePropertiesManager(),
-                                                         profileManager: makeProfileManager())
+                                                         profileManager: makeProfileManager(),
+                                                         availabilityCheckerResolverFactory: self,
+                                                         serverStorage: makeServerStorage())
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
                                                                      openVpnFactory: openVpnFactory,
                                                                      wireguardProtocolFactory: wireguardFactory,
@@ -76,6 +78,7 @@ final class DependencyContainer {
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer(),
                                                                         vpnAuthentication: makeVpnAuthentication(),
                                                                         doh: makeDoHVPN(),
+                                                                        serverStorage: makeServerStorage(),
                                                                         natTypePropertyProvider: makeNATTypePropertyProvider(),
                                                                         netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                                         safeModePropertyProvider: makeSafeModePropertyProvider())
@@ -140,7 +143,7 @@ final class DependencyContainer {
         }
         return doh
     }()
-    lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
+    lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager())
     private lazy var searchStorage = SearchModuleStorage(storage: storage)
     private lazy var review = Review(configuration: Configuration(settings: propertiesManager.ratingSettings), plan: (try? vpnKeychain.fetchCached().accountPlan.description), logger: { message in log.debug("\(message)", category: .review) })
 }
@@ -530,5 +533,11 @@ extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
         NETunnelProviderManager.loadAllFromPreferences { managers, error in
             completionHandler(managers, error)
         }
+    }
+}
+
+extension DependencyContainer: AvailabilityCheckerResolverFactory {
+    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
     }
 }

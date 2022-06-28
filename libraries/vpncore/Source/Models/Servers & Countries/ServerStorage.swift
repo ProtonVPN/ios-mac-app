@@ -26,6 +26,8 @@ public protocol ServerStorage {
     var contentChanged: Notification.Name { get }
     
     func fetch() -> [ServerModel]
+    func fetchAge() -> TimeInterval
+
     func store(_ newServers: [ServerModel])
     func update(continuousServerProperties: ContinuousServerPropertiesDictionary)
 }

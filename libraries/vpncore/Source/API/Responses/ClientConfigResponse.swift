@@ -22,7 +22,7 @@
 
 import Foundation
 
-struct ClientConfigResponse: Decodable {
+struct ClientConfigResponse {
     enum PortType {
         static let UDP = "UDP"
         static let TCP = "TCP"
@@ -41,17 +41,19 @@ struct ClientConfigResponse: Decodable {
         case smartProtocol
         case ratingSettings
     }
+}
 
+extension ClientConfigResponse: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let featureFlags = try container.decode(FeatureFlags.self, forKey: .featureFlags)
         let serverRefreshInterval = try container.decode(Int.self, forKey: .serverRefreshInterval)
         let defaultPorts = try container.decode([String: [String: [Int]]].self, forKey: .defaultPorts)
-        let openVPnConfig: OpenVpnConfig
+        let openVpnConfig: OpenVpnConfig
         if let openVpnPorts = defaultPorts[ProtocolType.OpenVPN], let openVpnUDP = openVpnPorts[PortType.UDP], let openVpnTCP = openVpnPorts[PortType.TCP] {
-            openVPnConfig = OpenVpnConfig(defaultTcpPorts: openVpnTCP, defaultUdpPorts: openVpnUDP)
+            openVpnConfig = OpenVpnConfig(defaultTcpPorts: openVpnTCP, defaultUdpPorts: openVpnUDP)
         } else {
-            openVPnConfig = OpenVpnConfig()
+            openVpnConfig = OpenVpnConfig()
         }
         let wireguardConfig: WireguardConfig
         if let wireguardPorts = defaultPorts[ProtocolType.WireGuard], let wireguardUDP = wireguardPorts[PortType.UDP] {
@@ -62,6 +64,26 @@ struct ClientConfigResponse: Decodable {
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
         let ratingSettings = try container.decodeIfPresent(RatingSettings.self, forKey: .ratingSettings) ?? RatingSettings()
 
-        clientConfig = ClientConfig(openVPNConfig: openVPnConfig, featureFlags: featureFlags, serverRefreshInterval: serverRefreshInterval, wireGuardConfig: wireguardConfig, smartProtocolConfig: smartProtocolConfig, ratingSettings: ratingSettings)
+        clientConfig = ClientConfig(openVPNConfig: openVpnConfig, featureFlags: featureFlags, serverRefreshInterval: serverRefreshInterval, wireGuardConfig: wireguardConfig, smartProtocolConfig: smartProtocolConfig, ratingSettings: ratingSettings)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(clientConfig.featureFlags, forKey: .featureFlags)
+        try container.encode(clientConfig.serverRefreshInterval, forKey: .serverRefreshInterval)
+        try container.encode(clientConfig.smartProtocolConfig, forKey: .smartProtocol)
+        try container.encode(clientConfig.ratingSettings, forKey: .ratingSettings)
+
+        let defaultPorts = [
+            ProtocolType.WireGuard: [
+                PortType.UDP: clientConfig.wireGuardConfig.defaultPorts
+            ],
+            ProtocolType.OpenVPN: [
+                PortType.UDP: clientConfig.openVPNConfig.defaultUdpPorts,
+                PortType.TCP: clientConfig.openVPNConfig.defaultTcpPorts
+            ]
+        ]
+        try container.encode(defaultPorts, forKey: .defaultPorts)
     }
 }
