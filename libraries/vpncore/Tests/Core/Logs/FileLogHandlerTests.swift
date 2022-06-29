@@ -47,7 +47,7 @@ class FileLogHandlerTests: XCTestCase {
         handler.delegate = delegate
         handler.log(level: .info, message: "Message", metadata: nil, source: "", file: "", function: "", line: 1)
 
-        wait(for: [expectationDelegate, expectationCreateFile], timeout: 1)
+        wait(for: [expectationDelegate, expectationCreateFile], timeout: 3)
     }
     
     func testRotatesFiles() {
@@ -81,7 +81,7 @@ class FileLogHandlerTests: XCTestCase {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        wait(for: [expectationRotation, expectationNewFileCount, expectationMoveFileCount], timeout: 1)
+        wait(for: [expectationRotation, expectationNewFileCount, expectationMoveFileCount], timeout: 3)
     }
     
     func testDeletesOldFiles() {
@@ -122,7 +122,7 @@ class FileLogHandlerTests: XCTestCase {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        wait(for: [expectationFileCount, expectationRotation, expectationDeletion], timeout: 1)
+        wait(for: [expectationFileCount, expectationRotation, expectationDeletion], timeout: 3)
     }
 
 }
