@@ -36,6 +36,7 @@ class CoreConnectionTests: XCTestCase {
     fileprivate var container: Container!
 
     private var apiServerList: [ServerModel] = []
+    private var apiCredentials: VpnCredentials?
 
     private lazy var responseEncoder: JSONEncoder = {
         let encoder = JSONEncoder()
@@ -49,6 +50,13 @@ class CoreConnectionTests: XCTestCase {
 
         apiServerList = [testData.server1]
         container.serverStorage.servers = apiServerList
+
+        container.neTunnelProviderFactory.tunnelProvidersInPreferences.removeAll()
+        container.neTunnelProviderFactory.tunnelProviderPreferencesData.removeAll()
+    }
+
+    override func tearDown() {
+        apiCredentials = nil
     }
 
     func callOnTunnelProviderStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
@@ -78,6 +86,14 @@ class CoreConnectionTests: XCTestCase {
 
     func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error> {
         switch request.url?.path {
+        case "/vpn":
+            // for fetching client credentials
+            guard let apiCredentials = apiCredentials else {
+                return .failure(ApiError(httpStatusCode: 400, code: 2000))
+            }
+
+            let data = try! JSONSerialization.data(withJSONObject: apiCredentials.asDict)
+            return .success(data)
         case "/vpn_status":
             // for checking p2p state
             return .success(Data())
@@ -299,12 +315,13 @@ class CoreConnectionTests: XCTestCase {
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.appStateManager.state.isConnected)
 
-        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.stateChange, object: nil, queue: nil) { notification in
-
+        let stateChangeNotification = AppStateManagerNotification.stateChange
+        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
             if let appState = notification.object as? AppState, appState.isDisconnected {
                 expectations.disconnectAppStateChange.fulfill()
             }
         }
+        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
 
         apiServerList = [testData.server1, testData.server2UnderMaintenance]
 
@@ -347,6 +364,174 @@ class CoreConnectionTests: XCTestCase {
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server1.ips.first?.entryIp)
         XCTAssert(container.alertService.alerts.isEmpty)
+    }
+
+    /// Tests user connected to a plus server. Then the plan gets downgraded to free. Supposing the user then realizes
+    /// the error of their ways and upgrades back to plus, the test will then exercise the app in the case where that
+    /// same user then becomes delinquent on their plan payment.
+    func testUserPlanChangingThenBecomingDelinquentWithWireGuard() {
+        container.serverStorage.servers = [testData.server1, testData.server3]
+        container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+        container.propertiesManager.vpnProtocol = .wireGuard
+        container.propertiesManager.hasConnected = true
+
+        let (totalConnections, totalDisconnections) = (4, 3)
+        let expectations = (
+            connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
+            appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
+            disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
+            downgradeAlert: XCTestExpectation(description: "downgraded alert"),
+            delinquentAlert: XCTestExpectation(description: "delinquent alert"),
+            upgradeNotification: XCTestExpectation(description: "notify upgrade state")
+        )
+
+        var downgradedAlert: UserPlanDowngradedAlert?
+        var delinquentAlert: UserBecameDelinquentAlert?
+
+        container.alertService.alertAdded = { alert in
+            if let downgraded = alert as? UserPlanDowngradedAlert {
+                downgradedAlert = downgraded
+                expectations.downgradeAlert.fulfill()
+            } else if let delinquent = alert as? UserBecameDelinquentAlert {
+                delinquentAlert = delinquent
+                expectations.delinquentAlert.fulfill()
+            } else {
+                XCTFail("Unexpected alert.")
+            }
+        }
+
+        let request = ConnectionRequest(serverType: .standard,
+                                        connectionType: .country("CH", .fastest),
+                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        netShieldType: .level1,
+                                        natType: .moderateNAT,
+                                        safeMode: true,
+                                        profileId: nil)
+
+        var (nConnections, nDisconnections, nAppStateTransitions) = (0, 0, 0)
+        let stateChangeNotification = AppStateManagerNotification.stateChange
+        var lastObservedState: AppState?
+        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
+            guard let appState = notification.object as? AppState else { return }
+            // debounce multiple "connected" notifications... we should probably fix that
+            if appState.isConnected, lastObservedState?.isConnected != true {
+                guard nAppStateTransitions < totalConnections else {
+                    XCTFail("Didn't expect that many connection transitions")
+                    return
+                }
+
+                expectations.appStateConnectedTransitions[nAppStateTransitions].fulfill()
+                nAppStateTransitions += 1
+            }
+            lastObservedState = appState
+        }
+        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
+
+        var currentManager: NEVPNManagerMock?
+        callOnTunnelProviderStateChange { vpnManager, _, vpnStatus in
+            currentManager = vpnManager
+
+            switch vpnStatus {
+            case .connected:
+                guard nConnections < totalConnections else {
+                    XCTFail("Didn't expect that many connection transitions")
+                    return
+                }
+                expectations.connections[nConnections].fulfill()
+                nConnections += 1
+            case .disconnected:
+                guard nDisconnections < totalDisconnections else {
+                    XCTFail("Didn't expect that many disconnection transitions")
+                    return
+                }
+                expectations.disconnections[nDisconnections].fulfill()
+                nDisconnections += 1
+            default:
+                break
+            }
+
+        }
+        container.vpnGateway.connect(with: request)
+
+        wait(for: [expectations.connections[0], expectations.appStateConnectedTransitions[0]], timeout: expectationTimeout)
+
+        // should be connected to plus server
+        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server3.ips.first?.entryIp)
+
+        let plusCreds = try! container.vpnKeychain.fetch()
+        XCTAssertEqual(plusCreds.accountPlan, .plus)
+        XCTAssertEqual(plusCreds.maxTier, CoreAppConstants.VpnTiers.plus)
+
+        let freeCreds = VpnKeychainMock.vpnCredentials(accountPlan: .free,
+                                                       maxTier: CoreAppConstants.VpnTiers.free)
+        apiCredentials = freeCreds
+
+        let downgrade: VpnDowngradeInfo = (plusCreds, freeCreds)
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: downgrade)
+            self.container.vpnKeychain.credentials = freeCreds
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
+        }
+
+        wait(for: [expectations.disconnections[0], expectations.downgradeAlert], timeout: expectationTimeout)
+        container.alertService.alerts.removeAll()
+
+        guard let downgradedAlert = downgradedAlert, let reconnectInfo = downgradedAlert.reconnectInfo else {
+            XCTFail("Downgraded alert not found or reconnect info not found in downgraded alert")
+            return
+        }
+
+        XCTAssertEqual(reconnectInfo.fromServer.name, testData.server3.name)
+        XCTAssertEqual(reconnectInfo.toServer.name, testData.server1.name)
+
+        wait(for: [expectations.connections[1], expectations.appStateConnectedTransitions[1]], timeout: expectationTimeout)
+
+        // Should have reconnected to server1 now that the user tier has changed
+        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server1.ips.first?.entryIp)
+
+        // Even if it's an upgrade, it's still called "VpnDowngradeInfo" *shrug*
+        let upgrade: VpnDowngradeInfo = (freeCreds, plusCreds)
+        apiCredentials = plusCreds
+
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnPlanChanged, object: upgrade)
+            self.container.vpnKeychain.credentials = plusCreds
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: plusCreds)
+            expectations.upgradeNotification.fulfill()
+        }
+
+        wait(for: [expectations.upgradeNotification], timeout: expectationTimeout)
+
+        container.vpnGateway.disconnect()
+        wait(for: [expectations.disconnections[1]], timeout: expectationTimeout)
+
+        container.vpnGateway.connect(with: request)
+        wait(for: [expectations.connections[2]], timeout: expectationTimeout)
+
+        // Should have reconnected to server3 now that the user is again eligible
+        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server3.ips.first?.entryIp)
+
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnUserDelinquent, object: downgrade)
+            self.container.vpnKeychain.credentials = freeCreds
+            NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
+        }
+
+        wait(for: [expectations.disconnections[2],
+                   expectations.connections[3],
+                   expectations.appStateConnectedTransitions[3],
+                   expectations.delinquentAlert], timeout: expectationTimeout)
+
+        // Should have reconnected to server1 now that user is delinquent
+        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server1.ips.first?.entryIp)
+
+        // and should have received an alert stating which server the app reconnected to
+        XCTAssertEqual(delinquentAlert?.reconnectInfo?.fromServer.name, testData.server3.name)
+        XCTAssertEqual(delinquentAlert?.reconnectInfo?.toServer.name, testData.server1.name)
     }
 }
 
@@ -470,13 +655,14 @@ fileprivate struct TestData {
 
     var vpnLocation = VPNLocationResponse(ip: "123.123.123.123", country: "USA", isp: "GreedyCorp, Inc.")
 
+    /// free server with relatively high latency score and not under maintenance.
     var server1 = ServerModel(id: "abcd",
-                              name: "server",
+                              name: "free server",
                               domain: "swiss.protonvpn.ch",
                               load: 15,
                               entryCountryCode: "CH",
                               exitCountryCode: "CH",
-                              tier: 0,
+                              tier: CoreAppConstants.VpnTiers.free,
                               feature: .zero,
                               city: "Palézieux",
                               ips: [.init(id: "abcd", entryIp: "10.0.0.1", exitIp: "10.0.0.2",
@@ -488,13 +674,14 @@ fileprivate struct TestData {
                               hostCountry: "Switzerland",
                               translatedCity: "Not The Eyes")
 
+    /// free server with relatively low latency score and not under maintenance.
     var server2 = ServerModel(id: "efgh",
-                              name: "server2",
+                              name: "other free server",
                               domain: "swiss2.protonvpn.ch",
                               load: 80,
                               entryCountryCode: "CH",
                               exitCountryCode: "CH",
-                              tier: 0,
+                              tier: CoreAppConstants.VpnTiers.free,
                               feature: .zero,
                               city: "Gland",
                               ips: [.init(id: "efgh", entryIp: "10.0.0.3", exitIp: "10.0.0.4",
@@ -506,14 +693,15 @@ fileprivate struct TestData {
                               hostCountry: "Switzerland",
                               translatedCity: "Anatomy")
 
+    /// same server as server 2, but placed under maintenance.
     var server2UnderMaintenance = ServerModel(
                               id: "efgh",
-                              name: "server2",
+                              name: "other free server",
                               domain: "swiss2.protonvpn.ch",
                               load: 80,
                               entryCountryCode: "CH",
                               exitCountryCode: "CH",
-                              tier: 0,
+                              tier: CoreAppConstants.VpnTiers.free,
                               feature: .zero,
                               city: "Gland",
                               ips: [.init(id: "efgh", entryIp: "10.0.0.3", exitIp: "10.0.0.4",
@@ -524,6 +712,25 @@ fileprivate struct TestData {
                               location: ServerLocation(lat: 46.25, long: 6.16),
                               hostCountry: "Switzerland",
                               translatedCity: "Anatomy")
+
+    /// plus server with low latency score and p2p feature. not under maintenance.
+    var server3 = ServerModel(id: "ijkl",
+                              name: "plus server",
+                              domain: "swissplus.protonvpn.ch",
+                              load: 42,
+                              entryCountryCode: "CH",
+                              exitCountryCode: "CH",
+                              tier: CoreAppConstants.VpnTiers.plus,
+                              feature: .zero,
+                              city: "Zurich",
+                              ips: [.init(id: "ijkl", entryIp: "10.0.0.5", exitIp: "10.0.0.6",
+                                          domain: "swissplus.protonvpn.ch", status: 1,
+                                          x25519PublicKey: "plus public key".data(using: .utf8)!.base64EncodedString())],
+                              score: 10,
+                              status: 1,
+                              location: .init(lat: 47.22, long: 8.32),
+                              hostCountry: "Switzerland",
+                              translatedCity: nil)
 
     var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
                                                                 defaultUdpPorts: [2345, 6789]),

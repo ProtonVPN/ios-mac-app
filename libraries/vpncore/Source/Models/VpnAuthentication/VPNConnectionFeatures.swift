@@ -32,7 +32,8 @@ public struct VPNConnectionFeatures: Equatable {
         self.natType = natType
         self.safeMode = safeMode
     }
-    
+
+    /// Used for testing purposes.
     var asDict: [String: Any] {
         var result = [String: Any]()
         result[CodingKeys.netshield.rawValue] = netshield.rawValue

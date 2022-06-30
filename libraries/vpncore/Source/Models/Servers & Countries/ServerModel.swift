@@ -170,6 +170,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         try setupIps(fromArray: try dic.jsonArrayOrThrow(key: "Servers"))
     }
 
+    /// Used for testing purposes.
     public var asDict: [String: Any] {
         var result: [String: Any] = [
             "ID": id,

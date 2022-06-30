@@ -94,11 +94,16 @@ extension NEVPNManagerMock.SavedPreferences {
 }
 
 class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperFactory {
+    static let queue = DispatchQueue(label: "mock tunnel provider factory queue")
     var tunnelProvidersInPreferences: [UUID: NETunnelProviderManagerWrapper] = [:]
+    var tunnelProviderPreferencesData: [UUID: NEVPNManagerMock.SavedPreferences] = [:]
+
     var newManagerCreated: ((NETunnelProviderManagerMock) -> ())?
 
     func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        completionHandler(tunnelProvidersInPreferences.values.map { $0 }, nil)
+        Self.queue.async { [unowned self] in
+            completionHandler(self.tunnelProvidersInPreferences.values.map { $0 }, nil)
+        }
     }
 
     func makeNewManager() -> NETunnelProviderManagerWrapper {
@@ -118,29 +123,33 @@ class NETunnelProviderManagerMock: NEVPNManagerMock, NETunnelProviderManagerWrap
         self.factory = factory
     }
 
-    static var tunnelProviderPreferencesData: [UUID: NEVPNManagerMock.SavedPreferences] = [:]
-
     override func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
-        let prefs = NEVPNManagerMock.SavedPreferences(self)
-        factory?.tunnelProvidersInPreferences[uuid] = self
-        NETunnelProviderManagerMock.tunnelProviderPreferencesData[uuid] = prefs
-        completionHandler?(nil)
+        NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
+            let prefs = NEVPNManagerMock.SavedPreferences(self)
+            self.factory?.tunnelProvidersInPreferences[uuid] = self
+            self.factory?.tunnelProviderPreferencesData[self.uuid] = prefs
+            completionHandler?(nil)
+        }
     }
 
     override func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
-        guard let prefs = Self.tunnelProviderPreferencesData[uuid] else {
-            completionHandler(nil)
-            return
-        }
+        NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
+            guard let prefs = self.factory?.tunnelProviderPreferencesData[self.uuid] else {
+                completionHandler(nil)
+                return
+            }
 
-        setSavedConfiguration(prefs)
-        completionHandler(nil)
+            self.setSavedConfiguration(prefs)
+            completionHandler(nil)
+        }
     }
 
     override func removeFromPreferences(completionHandler: ((Error?) -> Void)?) {
-        factory?.tunnelProvidersInPreferences[uuid] = nil
-        Self.tunnelProviderPreferencesData[uuid] = nil
-        completionHandler?(nil)
+        NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
+            self.factory?.tunnelProvidersInPreferences[self.uuid] = nil
+            self.factory?.tunnelProviderPreferencesData[self.uuid] = nil
+            completionHandler?(nil)
+        }
     }
 }
 
@@ -183,11 +192,10 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
     }
 
     func stopVPNTunnel() {
-        connectedDate = nil
-
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
 
+            self.connectedDate = nil
             self.status = .disconnecting
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
             self.tunnelStateDidChange?(self.status)

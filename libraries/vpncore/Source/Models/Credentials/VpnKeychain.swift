@@ -29,7 +29,6 @@ public protocol VpnKeychainProtocol {
     
     static var vpnCredentialsChanged: Notification.Name { get }
     static var vpnPlanChanged: Notification.Name { get }
-    static var vpnMaxDevicesReached: Notification.Name { get }
     static var vpnUserDelinquent: Notification.Name { get }
 
     func fetch() throws -> VpnCredentials
@@ -68,8 +67,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
     public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
-    public static let vpnMaxDevicesReached = Notification.Name("VpnMaxDevicesReached")
-        
+
     private let log = Logger.instance(withCategory: .keychain)
     
     public init() {}

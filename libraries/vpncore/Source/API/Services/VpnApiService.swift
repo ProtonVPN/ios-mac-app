@@ -126,6 +126,8 @@ public class VpnApiService {
         }
     }
 
+    /// If the user IP has changed since the last connection, refresh the server information. This is a subset of what
+    /// is returned from the `vpnProperties` method in the `VpnProperties` object, so just return an anonymous tuple.
     public func refreshServerInfoIfIpChanged(lastKnownIp: String?, // swiftlint:disable:next large_tuple operator_usage_whitespace
                                              completion: @escaping (Result<(serverModels: [ServerModel],
                                                                             location: UserLocation?,
@@ -196,26 +198,26 @@ public class VpnApiService {
     
     // swiftlint:enable function_body_length
 
-    public func clientCredentials(comletion: @escaping (Result<VpnCredentials, Error>) -> Void) {
+    public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
         networking.request(VPNClientCredentialsRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 do {
                     let vpnCredential = try VpnCredentials(dic: json)
-                    comletion(.success(vpnCredential))
+                    completion(.success(vpnCredential))
                 } catch {
                     let error = error as NSError
                     if error.code != -1 {
                         log.error("clientCredentials error", category: .api, event: .response, metadata: ["error": "\(error)"])
-                        comletion(.failure(error))
+                        completion(.failure(error))
                     } else {
                         log.error("Error occurred during user's VPN credentials parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
                         let error = ParseError.vpnCredentialsParse
-                        comletion(.failure(error))
+                        completion(.failure(error))
                     }
                 }
             case let .failure(error):
-                comletion(.failure(error))
+                completion(.failure(error))
             }
         }
     }

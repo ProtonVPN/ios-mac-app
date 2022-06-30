@@ -506,17 +506,21 @@ fileprivate extension VpnGateway {
     
     func userBecameDelinquent(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
-        var reconnectInfo: ReconnectInfo?
-        
+
+        var oldServer: ServerModel?
+        if case .connected = self.connection,
+           let server = self.appStateManager.activeConnection()?.server,
+           server.tier > downgradeInfo.to.maxTier {
+            oldServer = server
+        }
+
         self.disconnect {
-            self.vpnApiService.clientCredentials { result in
+            self.vpnApiService.clientCredentials { [unowned self] result in
                 switch result {
                 case let .success(credentials):
                     self.vpnKeychain.store(vpnCredentials: credentials)
-                    if case .connected = self.connection, let server = self.appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
-                        reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
-                    }
-
+                    
+                    let reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: oldServer)
                     let alert = UserBecameDelinquentAlert(reconnectInfo: reconnectInfo)
                     self.alertService?.push(alert: alert)
                 case let .failure(error):

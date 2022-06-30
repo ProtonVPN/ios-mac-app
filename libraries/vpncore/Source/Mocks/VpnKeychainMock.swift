@@ -30,12 +30,11 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     
     public var throwsOnFetch: Bool = false
     
-    public static var vpnCredentialsChanged = Notification.Name("")
-    public static var vpnPlanChanged = Notification.Name("")
-    public static var vpnMaxDevicesReached = Notification.Name("")
-    public static var vpnUserDelinquent = Notification.Name("")
+    public static var vpnCredentialsChanged = Notification.Name("vpnCredentialsChanged")
+    public static var vpnPlanChanged = Notification.Name("vpnPlanChanged")
+    public static var vpnUserDelinquent = Notification.Name("vpnUserDelinquent")
     
-    private var credentials: VpnCredentials
+    public var credentials: VpnCredentials
     
     public init(accountPlan: AccountPlan = .free, maxTier: Int = 0) {
         credentials = VpnKeychainMock.vpnCredentials(accountPlan: accountPlan, maxTier: maxTier)
@@ -56,21 +55,40 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         return Data()
     }
     
-    public func store(vpnCredentials: VpnCredentials) {}
+    public func store(vpnCredentials: VpnCredentials) {
+        let newCredentials = vpnCredentials
+        let oldCredentials = credentials
+
+        if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
+            let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
+            NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
+        }
+        if oldCredentials.accountPlan != newCredentials.accountPlan {
+            let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
+            NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)
+        }
+
+        credentials = newCredentials
+
+        if oldCredentials != newCredentials {
+            NotificationCenter.default.post(name: Self.vpnCredentialsChanged, object: newCredentials)
+        }
+    }
     
     public func getServerCertificate() throws -> SecCertificate {
         throw KeychainMockError.getCertificateError
     }
     
     public func storeServerCertificate() throws {}
-    
+
+    // XXX: This should be implemented
     public func clear() {}
     
     public func setVpnCredentials(with accountPlan: AccountPlan, maxTier: Int = 0) {
         credentials = VpnKeychainMock.vpnCredentials(accountPlan: accountPlan, maxTier: maxTier)
     }
     
-    private static func vpnCredentials(accountPlan: AccountPlan, maxTier: Int) -> VpnCredentials {
+    public static func vpnCredentials(accountPlan: AccountPlan, maxTier: Int) -> VpnCredentials {
         return VpnCredentials(
             status: 0,
             expirationTime: Date(),
