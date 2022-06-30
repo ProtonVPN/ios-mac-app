@@ -44,6 +44,7 @@ public class ServerLocation: NSObject, NSCoding {
         super.init()
     }
 
+    /// Used for testing purposes.
     var asDict: [String: Any] {
         [
             "Lat": lat,

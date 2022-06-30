@@ -63,6 +63,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         super.init()
     }
 
+    /// Used for testing purposes.
     public var asDict: [String: Any] {
         var result: [String: Any] = [
             "ID": id,

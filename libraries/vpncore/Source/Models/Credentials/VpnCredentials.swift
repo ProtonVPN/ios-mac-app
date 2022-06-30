@@ -104,6 +104,28 @@ public class VpnCredentials: NSObject, NSSecureCoding {
         subscribed = dic.int(key: "Subscribed")
         super.init()
     }
+
+    /// Used for testing purposes.
+    var asDict: JSONDictionary {
+        [
+            "VPN": [
+                "PlanName": accountPlan.rawValue,
+                "Status": status,
+                "ExpirationTime": Int(expirationTime.timeIntervalSince1970),
+                "MaxConnect": maxConnect,
+                "MaxTier": maxTier,
+                "GroupID": groupId,
+                "Name": name,
+                "Password": password,
+            ],
+            "Services": services,
+            "Delinquent": delinquent,
+            "Credit": credit,
+            "Currency": currency,
+            "HasPaymentMethod": hasPaymentMethod,
+            "Subscribed": subscribed ?? 0,
+        ].mapValues({ $0 as AnyObject })
+    }
     
     // MARK: - NSCoding
     private struct CoderKey {

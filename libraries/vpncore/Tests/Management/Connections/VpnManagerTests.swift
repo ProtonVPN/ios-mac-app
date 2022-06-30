@@ -118,6 +118,9 @@ class VpnManagerTests: XCTestCase {
         // in the IKEv2 tests. Why onDemand should be set to false in the first IKEv2 connection
         // is currently beyond my understanding.
         container.preferences.hasConnected = true
+
+        container.neTunnelProviderFactory.tunnelProvidersInPreferences.removeAll()
+        container.neTunnelProviderFactory.tunnelProviderPreferencesData.removeAll()
     }
 
     func callOnTunnelProviderStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
@@ -217,6 +220,7 @@ class VpnManagerTests: XCTestCase {
         wait(for: [expectations.wireguardTunnelStarted,
                    expectations.vpnManagerWireguardConnect], timeout: expectationTimeout)
 
+        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
         XCTAssertEqual(vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
         vpnManager.connectedDate(completion: { date in
             XCTAssertNotNil(date)
@@ -299,6 +303,7 @@ class VpnManagerTests: XCTestCase {
 
         wait(for: [expectations.openVpnTunnelStarted, expectations.vpnManagerOpenVpnConnect], timeout: expectationTimeout)
 
+        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
         XCTAssertEqual(vpnManager.state, .connected(.init(username: "openVpnUser", address: "127.0.0.3")))
         vpnManager.connectedDate(completion: { date in
             XCTAssertNotNil(date)
@@ -372,6 +377,7 @@ class VpnManagerTests: XCTestCase {
 
         wait(for: [expectations.ikeTunnelStarted, expectations.vpnManagerIkeConnect], timeout: expectationTimeout)
 
+        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
         XCTAssertEqual(vpnManager.state, .connected(.init(username: "", address: "127.0.0.5")))
         vpnManager.connectedDate(completion: { date in
             XCTAssertNotNil(date)
@@ -393,6 +399,7 @@ class VpnManagerTests: XCTestCase {
 
         wait(for: [expectations.ikeDisconnected], timeout: expectationTimeout)
         XCTAssertEqual(vpnManager.state, .disconnected)
+        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
 
         vpnManager.connectedDate { nilDate in
             XCTAssertNil(nilDate)
@@ -409,7 +416,7 @@ class VpnManagerTests: XCTestCase {
 
         XCTAssertNotNil(NEVPNManagerMock.whatIsSavedToPreferences)
         XCTAssertFalse(container.neTunnelProviderFactory.tunnelProvidersInPreferences.isEmpty)
-        XCTAssertFalse(NETunnelProviderManagerMock.tunnelProviderPreferencesData.isEmpty)
+        XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
 
         vpnManager.removeConfigurations { error in
             XCTAssertNil(error, "Should not receive error removing configurations")
@@ -420,6 +427,6 @@ class VpnManagerTests: XCTestCase {
 
         XCTAssertNil(NEVPNManagerMock.whatIsSavedToPreferences, "should have removed config from preferences")
         XCTAssert(container.neTunnelProviderFactory.tunnelProvidersInPreferences.isEmpty)
-        XCTAssert(NETunnelProviderManagerMock.tunnelProviderPreferencesData.isEmpty)
+        XCTAssert(container.neTunnelProviderFactory.tunnelProviderPreferencesData.isEmpty)
     }
 }
