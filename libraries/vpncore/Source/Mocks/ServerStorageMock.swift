@@ -22,6 +22,7 @@
 import Foundation
 
 public class ServerStorageMock: ServerStorage {
+    public var didStoreNewServers: (([ServerModel]) -> Void)?
     
     public var servers: [ServerModel]!
 
@@ -47,6 +48,7 @@ public class ServerStorageMock: ServerStorage {
     
     public func store(_ newServers: [ServerModel]) {
         servers = newServers
+        didStoreNewServers?(newServers)
     }
     
     public func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {
