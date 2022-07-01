@@ -246,10 +246,13 @@ class CoreConnectionTests: XCTestCase {
             initialConnection: XCTestExpectation(description: "initial connection"),
             connectedDate: XCTestExpectation(description: "connected date"),
             reconnection: XCTestExpectation(description: "reconnection"),
+            reconnectionAppStateChange: XCTestExpectation(description: "reconnect app state change"),
             disconnect: XCTestExpectation(description: "disconnect"),
             disconnectAppStateChange: XCTestExpectation(description: "disconnect app state change"),
+            serverListFetch: XCTestExpectation(description: "fetch and store new servers"),
             reconnectionAfterServerInfoFetch: XCTestExpectation(description: "reconnect after manual disconnect + server info fetch"),
-            wireguardCertRefresh: XCTestExpectation(description: "should refresh certificate with wireguard protocol")
+            wireguardCertRefresh: XCTestExpectation(description: "should refresh certificate with wireguard protocol"),
+            finalConnection: XCTestExpectation(description: "final app state transition to connected")
         )
 
         var currentStatus: NEVPNStatus?
@@ -307,30 +310,53 @@ class CoreConnectionTests: XCTestCase {
             expectations.reconnection.fulfill()
         }
 
+        var observedState: AppState?
+        var hasReconnected = false
+        let stateChangeNotification = AppStateManagerNotification.stateChange
+        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
+            guard let appState = notification.object as? AppState else {
+                XCTFail("Did not send app state as part of notification")
+                return
+            }
+
+            if observedState?.isDisconnected == false, appState.isDisconnected {
+                expectations.disconnectAppStateChange.fulfill()
+            } else if observedState?.isConnected == false, appState.isConnected {
+                if !hasReconnected {
+                    expectations.reconnectionAppStateChange.fulfill()
+                    hasReconnected = true
+                } else {
+                    expectations.finalConnection.fulfill()
+                }
+            }
+            observedState = appState
+        }
+        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
+
         // reconnect with netshield settings change
         container.vpnGateway.reconnect(with: NATType.strictNAT)
 
-        wait(for: [expectations.reconnection], timeout: expectationTimeout)
+        wait(for: [expectations.reconnection, expectations.reconnectionAppStateChange], timeout: expectationTimeout)
 
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.appStateManager.state.isConnected)
 
-        let stateChangeNotification = AppStateManagerNotification.stateChange
-        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
-            if let appState = notification.object as? AppState, appState.isDisconnected {
-                expectations.disconnectAppStateChange.fulfill()
-            }
-        }
-        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
-
         apiServerList = [testData.server1, testData.server2UnderMaintenance]
+
+        var storedServers: [ServerModel] = []
+        container.serverStorage.didStoreNewServers = { newServers in
+            storedServers = newServers
+            expectations.serverListFetch.fulfill()
+        }
 
         container.vpnGateway.disconnect {
             expectations.disconnect.fulfill()
         }
 
         // After disconnect, check that the results fetched from the API match the local server storage
-        wait(for: [expectations.disconnect, expectations.disconnectAppStateChange], timeout: expectationTimeout)
+        wait(for: [expectations.disconnect,
+                   expectations.disconnectAppStateChange,
+                   expectations.serverListFetch], timeout: expectationTimeout)
 
         XCTAssertEqual(currentStatus, .disconnected, "VPN status should be disconnected")
 
@@ -355,7 +381,9 @@ class CoreConnectionTests: XCTestCase {
         tunnelProviderExpectation = expectations.reconnectionAfterServerInfoFetch
         container.vpnGateway.connect(with: request)
 
-        wait(for: [tunnelProviderExpectation, expectations.wireguardCertRefresh], timeout: expectationTimeout)
+        wait(for: [tunnelProviderExpectation,
+                   expectations.wireguardCertRefresh,
+                   expectations.finalConnection], timeout: expectationTimeout)
 
         // wireguard protocol now available for smart protocol to pick
         XCTAssertEqual((currentManager?.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier, Container.wireguardProviderBundleId)
