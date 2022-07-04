@@ -41,12 +41,10 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
 
     private let storage: Storage
     private let key = "SafeMode"
-    private let userInfoProvider: UserInfoProvider
 
-    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
+    public required init(_ factory: Factory, storage: Storage) {
         self.factory = factory
         self.storage = storage
-        self.userInfoProvider = userInfoProvider
     }
 
     public var safeMode: Bool? {
@@ -56,7 +54,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
                 return nil
             }
 
-            guard let username = type(of: userInfoProvider).username else {
+            guard let username = username else {
                 return nil
             }
 
@@ -72,7 +70,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
             return current
         }
         set {
-            guard let username = type(of: userInfoProvider).username else {
+            guard let username = username else {
                 return
             }
 

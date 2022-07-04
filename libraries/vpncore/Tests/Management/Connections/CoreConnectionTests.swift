@@ -580,17 +580,83 @@ class CoreConnectionTests: XCTestCase {
         }
 
         wait(for: [expectations.disconnections[2],
-                   expectations.connections[3],
-                   expectations.appStateConnectedTransitions[3],
                    expectations.delinquentAlert], timeout: expectationTimeout)
+        XCTAssertEqual(nDisconnections, 3)
+        // and should have received an alert stating which server the app reconnected to
+        XCTAssertEqual(delinquentAlert?.reconnectInfo?.fromServer.name, testData.server3.name)
+        XCTAssertEqual(delinquentAlert?.reconnectInfo?.toServer.name, testData.server1.name)
+
+        wait(for: [expectations.connections[3],
+                   expectations.appStateConnectedTransitions[3]], timeout: expectationTimeout)
+        XCTAssertEqual(nConnections, 4)
 
         // Should have reconnected to server1 now that user is delinquent
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server1.ips.first?.entryIp)
+    }
 
-        // and should have received an alert stating which server the app reconnected to
-        XCTAssertEqual(delinquentAlert?.reconnectInfo?.fromServer.name, testData.server3.name)
-        XCTAssertEqual(delinquentAlert?.reconnectInfo?.toServer.name, testData.server1.name)
+    func testLocalAgentErrorHandling() {
+        guard let consts = LocalAgentConstants() else {
+            XCTFail("Could not initialize local agent constants")
+            return
+        }
+
+        let (totalConnections, totalDisconnections) = (3, 3)
+
+        let expectations = (
+            vpnConnection: (1...totalConnections).map { XCTestExpectation(description: "vpn tunnel start \($0)") },
+            newLAConnection: (1...totalConnections).map { XCTestExpectation(description: "new client for connection \($0)") },
+            vpnDisconnection: (1...totalDisconnections).map { XCTestExpectation(description: "vpn tunnel stop \($0)") }
+        )
+
+        var localAgentConnection: LocalAgentConnectionMock?
+        let (laState, laError) = ({ (state: String?) in
+            DispatchQueue.main.async {
+                localAgentConnection?.client.onState(state)
+            }
+        }, { (code: Int, description: String?) in
+            DispatchQueue.main.async {
+                localAgentConnection?.client.onError(code, description: description)
+            }
+        })
+
+        var nLAConnections = 0
+        container.localAgentConnectionFactory.connectionWasCreated = { connection in
+            localAgentConnection = connection
+
+            guard nLAConnections < totalConnections else {
+                XCTFail("Didn't expect this number of connections")
+                return
+            }
+
+            expectations.newLAConnection[nLAConnections].fulfill()
+            nLAConnections += 1
+        }
+
+        callOnTunnelProviderStateChange { manager, connection, status in
+            if status == .connected {
+                expectations.vpnConnection[0].fulfill()
+            }
+            if status == .disconnected {
+                expectations.vpnDisconnection[0].fulfill()
+            }
+        }
+
+        let request = ConnectionRequest(serverType: .standard,
+                                        connectionType: .country("CH", .fastest),
+                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        netShieldType: .level1,
+                                        natType: .moderateNAT,
+                                        safeMode: true,
+                                        profileId: nil)
+        container.vpnGateway.connect(with: request)
+
+        wait(for: [expectations.newLAConnection[0], expectations.vpnConnection[0]], timeout: expectationTimeout)
+        laState(consts.stateConnecting)
+        laState(consts.stateConnected)
+
+        laError(consts.errorCodeUserBadBehavior, "bad user, bad")
+        wait(for: [expectations.vpnDisconnection[0]], timeout: expectationTimeout)
     }
 }
 
@@ -689,10 +755,13 @@ fileprivate class Container {
 
     lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
 
+    lazy var authKeychain = MockAuthKeychain(context: .mainApp)
+
     lazy var vpnGateway = VpnGateway(vpnApiService: vpnApiService,
                                      appStateManager: appStateManager,
                                      alertService: alertService,
                                      vpnKeychain: vpnKeychain,
+                                     authKeychain: authKeychain,
                                      netShieldPropertyProvider: netShieldProvider,
                                      natTypePropertyProvider: natProvider,
                                      safeModePropertyProvider: safeModeProvider,

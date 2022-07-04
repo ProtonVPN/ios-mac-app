@@ -23,12 +23,12 @@ public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
 
     public var factory: Factory
 
-    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
+    public required init(_ factory: Factory, storage: Storage) {
         self.factory = factory
     }
 
     public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock(), storage: Storage(), userInfoProvider: AuthKeychain())
+        self.init(PaidFeaturePropertyProviderFactoryMock(), storage: Storage())
     }
 
     public var natType: NATType = .default

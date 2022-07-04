@@ -68,16 +68,16 @@ public protocol LocalAgentConnectionFactory {
                                   connectivity: Bool) throws -> LocalAgentConnectionWrapper
 }
 
-final class LocalAgentConnectionFactoryImplementation: LocalAgentConnectionFactory {
+public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnectionFactory {
     // swiftlint:disable:next function_parameter_count
-    func makeLocalAgentConnection(clientCertPEM: String,
-                                  clientKeyPEM: String,
-                                  serverCAsPEM: String,
-                                  host: String,
-                                  certServerName: String,
-                                  client: LocalAgentNativeClientProtocol,
-                                  features: LocalAgentFeatures?,
-                                  connectivity: Bool) throws -> LocalAgentConnectionWrapper {
+    public func makeLocalAgentConnection(clientCertPEM: String,
+                                         clientKeyPEM: String,
+                                         serverCAsPEM: String,
+                                         host: String,
+                                         certServerName: String,
+                                         client: LocalAgentNativeClientProtocol,
+                                         features: LocalAgentFeatures?,
+                                         connectivity: Bool) throws -> LocalAgentConnectionWrapper {
         var error: NSError?
         let result = LocalAgentNewAgentConnection(clientCertPEM,
                                                   clientKeyPEM,
@@ -100,6 +100,8 @@ final class LocalAgentConnectionFactoryImplementation: LocalAgentConnectionFacto
 
         return result
     }
+
+    public init() { }
 }
 
 final class LocalAgentImplementation: LocalAgent {

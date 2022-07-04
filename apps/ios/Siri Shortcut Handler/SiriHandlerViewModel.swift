@@ -30,6 +30,7 @@ class SiriHandlerViewModel {
     private let vpnApiService: VpnApiService
     private let vpnManager: VpnManager
     private let vpnKeychain: VpnKeychainProtocol
+    private let authKeychain: AuthKeychainHandle
     private let propertiesManager: PropertiesManagerProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
     private let netShieldPropertyProvider: NetShieldPropertyProvider
@@ -75,6 +76,7 @@ class SiriHandlerViewModel {
                                      appStateManager: appStateManager,
                                      alertService: alertService,
                                      vpnKeychain: vpnKeychain,
+                                     authKeychain: authKeychain,
                                      siriHelper: SiriHelper(),
                                      netShieldPropertyProvider: netShieldPropertyProvider,
                                      natTypePropertyProvider: natTypePropertyProvider,
@@ -91,6 +93,7 @@ class SiriHandlerViewModel {
          vpnApiService: VpnApiService,
          vpnManager: VpnManager,
          vpnKeychain: VpnKeychainProtocol,
+         authKeychain: AuthKeychainHandle,
          propertiesManager: PropertiesManagerProtocol,
          sessionService: SessionService,
          netShieldPropertyProvider: NetShieldPropertyProvider,
@@ -109,6 +112,7 @@ class SiriHandlerViewModel {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.vpnKeychain = vpnKeychain
+        self.authKeychain = authKeychain
         self.propertiesManager = propertiesManager
         self.sessionService = sessionService
         self.netShieldPropertyProvider = netShieldPropertyProvider
