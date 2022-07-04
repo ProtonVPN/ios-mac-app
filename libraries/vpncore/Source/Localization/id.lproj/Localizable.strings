@@ -692,7 +692,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch melindungi IP Anda\n\nKoneksi internet Anda akan kembali pulih segera setelah ProtonVPN tersambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan Kill Switch.";
+"_kill_switch_blocking_body" = "Kill Switch melindungi IP Anda\n\nKoneksi internet Anda akan kembali pulih segera setelah Proton VPN tersambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan Kill Switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch memblokir seluruh koneksi";
@@ -896,7 +896,7 @@
 "_menu_preferences" = "Preferensi";
 
 /* Main mac app menu item */
-"_menu_quit" = "Keluar Dari ProtonVPN";
+"_menu_quit" = "Keluar Dari Proton VPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Tampilkan Semua";
@@ -941,7 +941,7 @@
 "_name" = "Nama";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server ProtonVPN";
+"_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server Proton VPN";
 
 /* Network error */
 "_ne_network_connection_lost" = "Koneksi internet terputus";
@@ -1625,7 +1625,7 @@
 "_sysex_enabled_title" = "Konfigurasi selesai";
 
 /* (No Comment) */
-"_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang ProtonVPN dan pastikan ProtonVPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
+"_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang Proton VPN dan pastikan Proton VPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
 
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";

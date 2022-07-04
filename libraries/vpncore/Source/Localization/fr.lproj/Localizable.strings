@@ -2052,7 +2052,7 @@
 "_welcome_description" = "Merci d’utiliser Proton VPN. Jetez un coup d’œil\naux principales fonctionnalités de l'application.";
 
 /* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "En guise de cadeau de bienvenue, vous obtenez accès de 7 jours à l’abonnement ProtonVPN %@ qui vous offre :";
+"_welcome_gift_description" = "En guise de cadeau de bienvenue, vous obtenez accès de 7 jours à l’abonnement Proton VPN %@ qui vous offre :";
 
 /* Shown on the Welcome screen as the screen headline */
 "_welcome_headline" = "Protégez-vous en ligne";

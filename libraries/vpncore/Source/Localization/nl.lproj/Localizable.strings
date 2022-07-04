@@ -980,7 +980,7 @@
 "_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
-"_neks_t2_description" = "Het gebruik van Kill Switch is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de Kill Switch-functionaliteit van macOS gebruikt wordt door ProtonVPN.";
+"_neks_t2_description" = "Het gebruik van Kill Switch is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de Kill Switch-functionaliteit van macOS gebruikt wordt door Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2-beveiligingschip";
