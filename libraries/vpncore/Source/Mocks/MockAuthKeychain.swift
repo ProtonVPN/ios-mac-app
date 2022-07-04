@@ -21,7 +21,7 @@ import Foundation
 class MockAuthKeychain: AuthKeychainHandle {
     let defaultContext: AppContext
 
-    var credentialsWereStored: (() -> Void)? = nil
+    var credentialsWereStored: (() -> Void)?
 
     init(context: AppContext) {
         self.defaultContext = context
@@ -42,5 +42,17 @@ class MockAuthKeychain: AuthKeychainHandle {
 
     func clear() {
         self.credentials = [:]
+    }
+}
+
+extension MockAuthKeychain {
+    func setMockUsername(_ username: String) {
+        self.credentials[defaultContext] = .init(username: username,
+                                                 accessToken: "",
+                                                 refreshToken: "",
+                                                 sessionId: "",
+                                                 userId: "",
+                                                 expiration: Date().addingTimeInterval(2 * 60),
+                                                 scopes: [])
     }
 }

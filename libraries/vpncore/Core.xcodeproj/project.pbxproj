@@ -108,6 +108,8 @@
 		4CA0977D28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CAAEC3D286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
 		4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
+		4CAAEC44287323A90029F13A /* MockAuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */; };
+		4CAAEC45287323AA0029F13A /* MockAuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */; };
 		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
@@ -721,6 +723,7 @@
 		4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCheckerResolverMock.swift; sourceTree = "<group>"; };
 		4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
 		4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NEVPNStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
+		4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthKeychain.swift; sourceTree = "<group>"; };
 		4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnConnectionIntercept.swift; sourceTree = "<group>"; };
 		4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleWrapper.swift; sourceTree = "<group>"; };
 		4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNWrappers.swift; sourceTree = "<group>"; };
@@ -1888,6 +1891,7 @@
 		F36ECB682610A8950089B898 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */,
 				D5EF8F982293D4E400B713BD /* AlertServiceMock.swift */,
 				D59671DD253D5E3A0061A75F /* AnnouncementStorageMock.swift */,
 				D59671FC253D747A0061A75F /* CoreApiServiceMock.swift */,
@@ -2928,6 +2932,7 @@
 				DD0969B7000F4DC02C628AE6 /* NetShieldType+Extensions.swift in Sources */,
 				E9607000283B635800983E3B /* LogContentProvider.swift in Sources */,
 				403D438B4B6E524D1808DD5D /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
+				4CAAEC45287323AA0029F13A /* MockAuthKeychain.swift in Sources */,
 				9499B57E16D12D1C10014635 /* VPNConnectionFeatures.swift in Sources */,
 				F7A34C7B242AADF7A4FA750B /* ForkSessionRequest.swift in Sources */,
 				0758C14C734BC9DA0EC26C26 /* SessionService.swift in Sources */,
@@ -3011,6 +3016,7 @@
 				E976FB292791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */,
 				D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */,
+				4CAAEC44287323A90029F13A /* MockAuthKeychain.swift in Sources */,
 				D56B68E02507A1CF00796E0C /* NetShieldType.swift in Sources */,
 				E53D64B928115B7A0060C463 /* NewBrandModalIcons.swift in Sources */,
 				E15367E722663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,

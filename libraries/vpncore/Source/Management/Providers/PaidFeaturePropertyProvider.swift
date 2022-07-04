@@ -19,36 +19,33 @@
 import Foundation
 
 public protocol PaidFeaturePropertyProvider: AnyObject {
-    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory
+    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory & AuthKeychainHandleFactory
     var factory: Factory { get }
-    var propertiesManager: PropertiesManagerProtocol { get }
     var currentUserTier: Int { get }
 
-    init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider)
+    init(_ factory: Factory, storage: Storage)
 
     func resetForIneligibleUser()
 }
 
 extension PaidFeaturePropertyProvider {
-    var userTierProvider: UserTierProvider {
-        return factory.makeUserTierProvider()
+    var propertiesManager: PropertiesManagerProtocol {
+        factory.makePropertiesManager()
     }
 
-    public var propertiesManager: PropertiesManagerProtocol {
-        factory.makePropertiesManager()
+    var authKeychainHandle: AuthKeychainHandle {
+        factory.makeAuthKeychainHandle()
+    }
+
+    var userTierProvider: UserTierProvider {
+        return factory.makeUserTierProvider()
     }
 
     public var currentUserTier: Int {
         return userTierProvider.currentUserTier
     }
-}
 
-public protocol UserInfoProvider: AnyObject {
-    static var username: String? { get }
-}
-
-extension AuthKeychain: UserInfoProvider {
-    public static var username: String? {
-        return AuthKeychain.fetch()?.username
+    public var username: String? {
+        return authKeychainHandle.fetch()?.username
     }
 }

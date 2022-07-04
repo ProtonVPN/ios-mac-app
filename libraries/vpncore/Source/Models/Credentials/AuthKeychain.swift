@@ -38,6 +38,10 @@ extension AuthKeychainHandle {
     }
 }
 
+public protocol AuthKeychainHandleFactory {
+    func makeAuthKeychainHandle() -> AuthKeychainHandle
+}
+
 public class AuthKeychain {
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
     

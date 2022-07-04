@@ -43,12 +43,13 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let propertiesManager = PropertiesManager(storage: storage)
         let vpnKeychain = VpnKeychain()
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        let authKeychain = AuthKeychain()
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
-        let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider)
-        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
-        let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
-        let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage, userInfoProvider: AuthKeychain())
+        let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider, authKeychain: authKeychain)
+        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage)
+        let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage)
+        let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage)
         let vpnWrapperFactory = VPNWrapperFactory()
         let ikeFactory = IkeProtocolFactory(factory: vpnWrapperFactory)
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
@@ -75,6 +76,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     vpnApiService: VpnApiService(networking: networking),
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,
+                                                    authKeychain: authKeychain,
                                                     propertiesManager: propertiesManager,
                                                     sessionService: sessionService,
                                                     netShieldPropertyProvider: netShieldPropertyProvider,
@@ -112,14 +114,20 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
 fileprivate class PaidFeaturePropertyProviderFactory: PaidFeaturePropertyProvider.Factory {
     private let propertiesManager: PropertiesManagerProtocol
     private let userTierProvider: UserTierProvider
+    private let authKeychain: AuthKeychainHandle
     
-    init(propertiesManager: PropertiesManagerProtocol, userTierProvider: UserTierProvider) {
+    init(propertiesManager: PropertiesManagerProtocol, userTierProvider: UserTierProvider, authKeychain: AuthKeychainHandle) {
         self.propertiesManager = propertiesManager
         self.userTierProvider = userTierProvider
+        self.authKeychain = authKeychain
     }
     
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManager
+    }
+
+    func makeAuthKeychainHandle() -> AuthKeychainHandle {
+        return authKeychain
     }
     
     func makeUserTierProvider() -> UserTierProvider {

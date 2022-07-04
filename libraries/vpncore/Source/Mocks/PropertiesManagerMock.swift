@@ -22,7 +22,6 @@
 import Foundation
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
-    
     public static var killSwitchNotification: Notification.Name = Notification.Name("killSwitch")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("hasConnected")
     public static var userIpNotification: Notification.Name = Notification.Name("userIp")
@@ -35,7 +34,15 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
-    public var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
+    var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
+    public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
+        return autoConnect
+    }
+
+    public func setAutoConnect(for username: String, enabled: Bool, profileId: String?) {
+        autoConnect = (enabled, profileId)
+    }
+
     public var hasConnected: Bool = false {
         didSet {
             NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
@@ -47,8 +54,25 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastPreparedServer: ServerModel?
     public var lastConnectedTimeStamp: Double = 0
     public var lastConnectionRequest: ConnectionRequest?
-    public var lastUserAccountPlan: AccountPlan?
+
+    var lastUserAccountPlan: AccountPlan?
+    public func getLastAccountPlan(for username: String) -> AccountPlan? {
+        lastUserAccountPlan
+    }
+
+    public func setLastAccountPlan(for username: String, plan: AccountPlan?) {
+        lastUserAccountPlan = plan
+    }
+
     public var quickConnect: String?
+    public func getQuickConnect(for username: String) -> String? {
+        quickConnect
+    }
+
+    public func setQuickConnect(for username: String, quickConnect: String?) {
+        self.quickConnect = quickConnect
+    }
+
     public var secureCoreToggle: Bool = false
     public var serverTypeToggle: ServerType {
         return secureCoreToggle ? .secureCore : .standard

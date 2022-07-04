@@ -39,12 +39,10 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
 
     private let storage: Storage
     private let key = "NATType"
-    private let userInfoProvider: UserInfoProvider
 
-    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
+    public required init(_ factory: Factory, storage: Storage) {
         self.factory = factory
         self.storage = storage
-        self.userInfoProvider = userInfoProvider
     }
 
     public var natType: NATType {
@@ -53,7 +51,7 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
                 return .default
             }
 
-            guard let username = type(of: userInfoProvider).username else {
+            guard let username = username else {
                 return .default
             }
 
@@ -64,7 +62,7 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
             return .default
         }
         set {
-            guard let username = type(of: userInfoProvider).username else {
+            guard let username = username else {
                 return
             }
 

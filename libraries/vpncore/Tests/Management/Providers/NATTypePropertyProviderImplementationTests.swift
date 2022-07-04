@@ -20,13 +20,14 @@ import XCTest
 @testable import vpncore
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {
-    let testDefauls = UserDefaults(suiteName: "test")!
+    static let username = "user1"
+    let testDefaults = UserDefaults(suiteName: "test")!
 
     override func setUp() {
         super.setUp()
 
-        testDefauls.removeObject(forKey: "NATType\(Self.username!)")
-        Storage.setSpecificDefaults(defaults: testDefauls)
+        testDefaults.removeObject(forKey: "NATType\(Self.username)")
+        Storage.setSpecificDefaults(defaults: testDefaults)
     }
 
     func testReturnsSettingFromProperties() throws {
@@ -34,17 +35,17 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
 
         for type in variants {
             let (factory, storage) = getFactory(natType: type, tier: CoreAppConstants.VpnTiers.plus)
-            XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).natType, type)
+            XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage).natType, type)
         }
     }
 
     func testWhenNothingIsSetReturnsStrict() throws {
         var (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).natType, NATType.strictNAT)
+        XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage).natType, NATType.strictNAT)
         (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).natType, NATType.strictNAT)
+        XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage).natType, NATType.strictNAT)
         (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).natType, NATType.strictNAT)
+        XCTAssertEqual(NATTypePropertyProviderImplementation(factory, storage: storage).natType, NATType.strictNAT)
     }
 
     func testSavesValueToStorage() {
@@ -52,27 +53,27 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.plus)
         let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider)
 
-        let provider = NATTypePropertyProviderImplementation(factory, storage: Storage(), userInfoProvider: self)
+        let provider = NATTypePropertyProviderImplementation(factory, storage: Storage())
 
         for type in NATType.allCases {
             provider.natType = type
-            XCTAssertEqual(testDefauls.integer(forKey: "NATType\(Self.username!)"), type.rawValue)
+            XCTAssertEqual(testDefaults.integer(forKey: "NATType\(Self.username)"), type.rawValue)
             XCTAssertEqual(provider.natType, type)
         }
     }
 
     func testFreeUserCantTurnModerateNATOn() throws {
         let (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.free)
-        XCTAssertFalse(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
+        XCTAssertFalse(NATTypePropertyProviderImplementation(factory, storage: storage).isUserEligibleForNATTypeChange)
     }
 
     func testPaidUserCanTurnModerateNATOn() throws {
         var (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
+        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage).isUserEligibleForNATTypeChange)
         (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
+        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage).isUserEligibleForNATTypeChange)
         (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage, userInfoProvider: self).isUserEligibleForNATTypeChange)
+        XCTAssertTrue(NATTypePropertyProviderImplementation(factory, storage: storage).isUserEligibleForNATTypeChange)
     }
 
     // MARK: -
@@ -80,13 +81,10 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     private func getFactory(natType: NATType?, tier: Int) -> (PaidFeaturePropertyProviderFactoryMock, Storage) {
         let propertiesManager = PropertiesManagerMock()
         let userTierProvider = UserTierProviderMock(tier)
-        testDefauls.set(natType?.rawValue, forKey: "NATType\(Self.username!)")
-        return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider), Storage())
-    }
-}
+        let authKeychain = MockAuthKeychain(context: .mainApp)
+        authKeychain.setMockUsername(Self.username)
 
-extension NATTypePropertyProviderImplementationTests: UserInfoProvider {
-    static var username: String? {
-        return "user1"
+        testDefaults.set(natType?.rawValue, forKey: "NATType\(Self.username)")
+        return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain), Storage())
     }
 }

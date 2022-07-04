@@ -21,10 +21,14 @@ import Foundation
 final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.Factory {
     let propertiesManager: PropertiesManagerMock
     let userTierProviderMock: UserTierProviderMock
+    let authKeychain: AuthKeychainHandle
 
-    init(propertiesManager: PropertiesManagerMock = PropertiesManagerMock(), userTierProviderMock: UserTierProviderMock = UserTierProviderMock(CoreAppConstants.VpnTiers.basic)) {
+    init(propertiesManager: PropertiesManagerMock = PropertiesManagerMock(),
+         userTierProviderMock: UserTierProviderMock = UserTierProviderMock(CoreAppConstants.VpnTiers.basic),
+         authKeychainMock: MockAuthKeychain = MockAuthKeychain(context: .mainApp)) {
         self.propertiesManager = propertiesManager
         self.userTierProviderMock = userTierProviderMock
+        self.authKeychain = authKeychainMock
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
@@ -33,5 +37,9 @@ final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.
 
     func makeUserTierProvider() -> UserTierProvider {
         return userTierProviderMock
+    }
+
+    func makeAuthKeychainHandle() -> AuthKeychainHandle {
+        return authKeychain
     }
 }

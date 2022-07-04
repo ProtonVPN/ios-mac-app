@@ -47,12 +47,10 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     private let storage: Storage
     private let key = "NetShield"
     private let lastActiveKey = "LastActiveNetShield"
-    private let userInfoProvider: UserInfoProvider
 
-    public required init(_ factory: Factory, storage: Storage, userInfoProvider: UserInfoProvider) {
+    public required init(_ factory: Factory, storage: Storage) {
         self.factory = factory
         self.storage = storage
-        self.userInfoProvider = userInfoProvider
     }
 
     public var lastActiveNetShieldType: NetShieldType {
@@ -64,7 +62,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             getNetShieldValue(key: key)
         }
         set {
-            guard let username = type(of: userInfoProvider).username else {
+            guard let username = username else {
                 return
             }
 
@@ -95,7 +93,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     }
 
     private func getNetShieldValue(key: String) -> NetShieldType {
-        guard let username = type(of: userInfoProvider).username else {
+        guard let username = username else {
             return defaultNetShieldType
         }
 

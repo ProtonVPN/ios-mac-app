@@ -39,7 +39,9 @@ public protocol PropertiesManagerProtocol: class {
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
-    var autoConnect: (enabled: Bool, profileId: String?) { get set }
+    func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?)
+    func setAutoConnect(for username: String, enabled: Bool, profileId: String?)
+
     var hasConnected: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
@@ -47,8 +49,13 @@ public protocol PropertiesManagerProtocol: class {
     var lastPreparedServer: ServerModel? { get set }
     var lastConnectedTimeStamp: Double { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
-    var lastUserAccountPlan: AccountPlan? { get set }
-    var quickConnect: String? { get set } // profile + username (incase multiple users are using the app)
+
+    func getLastAccountPlan(for username: String) -> AccountPlan?
+    func setLastAccountPlan(for username: String, plan: AccountPlan?)
+
+    func getQuickConnect(for username: String) -> String? // profile + username (incase multiple users are using the app)
+    func setQuickConnect(for username: String, quickConnect: String?)
+
     var secureCoreToggle: Bool { get set }
     var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
@@ -104,7 +111,6 @@ public protocol PropertiesManagerProtocol: class {
 }
 
 public class PropertiesManager: PropertiesManagerProtocol {
-    
     internal enum Keys: String, CaseIterable {
         
         case autoConnect = "AutoConnect"
@@ -184,27 +190,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
-    
-    public var autoConnect: (enabled: Bool, profileId: String?) {
-        get {
-            let autoConnectEnabled = storage.defaults.bool(forKey: Keys.autoConnect.rawValue)
-            if autoConnectEnabled {
-                guard let authCredentials = AuthKeychain.fetch() else { return (autoConnectEnabled, nil) }
-                let profileId = storage.defaults.string(forKey: Keys.autoConnectProfile.rawValue + authCredentials.username)
-                return (autoConnectEnabled, profileId)
-            } else {
-                return (false, nil)
-            }
-        }
-        set {
-            storage.setValue(newValue.enabled, forKey: Keys.autoConnect.rawValue)
-            
-            if let profileId = newValue.profileId, let authCredentials = AuthKeychain.fetch() {
-                storage.setValue(profileId, forKey: Keys.autoConnectProfile.rawValue + authCredentials.username)
-            }
+
+    public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
+        let autoConnectEnabled = storage.defaults.bool(forKey: Keys.autoConnect.rawValue)
+        let profileId = storage.defaults.string(forKey: Keys.autoConnectProfile.rawValue + username)
+        return (autoConnectEnabled, profileId)
+    }
+
+    public func setAutoConnect(for username: String, enabled: Bool, profileId: String?) {
+        storage.setValue(enabled, forKey: Keys.autoConnect.rawValue)
+        if let profileId = profileId {
+            storage.setValue(profileId, forKey: Keys.autoConnectProfile.rawValue + username)
         }
     }
-    
+
     // Use to do first time connecting stuff if needed
     public var hasConnected: Bool {
         get {
@@ -269,30 +268,26 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setEncodableValue(newValue, forKey: Keys.lastConnectionRequest.rawValue)
         }
     }
-    
-    public var lastUserAccountPlan: AccountPlan? {
-        get {
-            guard let authCredentials = AuthKeychain.fetch() else { return nil }
-            let result = storage.defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + authCredentials.username)
-            return result != nil ? AccountPlan(rawValue: result!) : nil
+
+    public func getLastAccountPlan(for username: String) -> AccountPlan? {
+        guard let result = storage.defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username) else {
+            return nil
         }
-        set {
-            guard let authCredentials = AuthKeychain.fetch() else { return }
-            storage.setValue(newValue?.rawValue, forKey: Keys.lastUserAccountPlan.rawValue + authCredentials.username)
-        }
+        return AccountPlan(rawValue: result)
     }
-    
-    public var quickConnect: String? {
-        get {
-            guard let authCredentials = AuthKeychain.fetch() else { return nil }
-            return storage.defaults.string(forKey: Keys.quickConnectProfile.rawValue + authCredentials.username)
-        }
-        set {
-            guard let authCredentials = AuthKeychain.fetch() else { return }
-            storage.setValue(newValue, forKey: Keys.quickConnectProfile.rawValue + authCredentials.username)
-        }
+
+    public func setLastAccountPlan(for username: String, plan: AccountPlan?) {
+        storage.setValue(plan?.rawValue, forKey: Keys.lastUserAccountPlan.rawValue + username)
     }
-    
+
+    public func getQuickConnect(for username: String) -> String? {
+        storage.defaults.string(forKey: Keys.quickConnectProfile.rawValue + username)
+    }
+
+    public func setQuickConnect(for username: String, quickConnect: String?) {
+        storage.setValue(quickConnect, forKey: Keys.quickConnectProfile.rawValue + username)
+    }
+
     public var secureCoreToggle: Bool {
         get {
             return storage.defaults.bool(forKey: Keys.secureCoreToggle.rawValue)
