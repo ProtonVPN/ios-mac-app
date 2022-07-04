@@ -31,14 +31,14 @@ extension VpnManager {
         }
 
         let connect = { (data: VpnAuthenticationData) in
-            localAgentQueue.sync {
+            localAgentQueue.sync { [unowned self] in
                 guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, safeModePropertyProvider: self.safeModePropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
                     log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                     return
                 }
 
                 self.disconnectLocalAgentNoSync()
-                self.localAgent = LocalAgentImplementation()
+                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory)
                 self.localAgent?.delegate = self
                 self.localAgent?.connect(data: data, configuration: configuration)
             }

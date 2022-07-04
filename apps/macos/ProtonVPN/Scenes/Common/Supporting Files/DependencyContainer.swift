@@ -51,6 +51,7 @@ final class DependencyContainer {
                                                                  vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                  alertService: macAlertService,
                                                                  vpnCredentialsConfiguratorFactory: MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()),
+                                                                 localAgentConnectionFactory: LocalAgentConnectionFactory(),
                                                                  natTypePropertyProvider: makeNATTypePropertyProvider(),
                                                                  netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                                  safeModePropertyProvider: makeSafeModePropertyProvider())

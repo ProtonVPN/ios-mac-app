@@ -23,9 +23,12 @@
 import Foundation
 
 final class OpenVPNUDPAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
-    var protocolName: String {
-        return "OpenVPN UDP"
+    let vpnProtocol: VpnProtocol = .openVpn(.udp)
+
+    var defaultPorts: [Int] {
+        config.defaultUdpPorts
     }
+
     private let config: OpenVpnConfig
 
     init(config: OpenVpnConfig) {

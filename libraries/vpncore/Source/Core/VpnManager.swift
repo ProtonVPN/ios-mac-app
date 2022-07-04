@@ -62,6 +62,8 @@ public class VpnManager: VpnManagerProtocol {
     private let ikeProtocolFactory: VpnProtocolFactory
     private let openVpnProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
+
+    internal let localAgentConnectionFactory: LocalAgentConnectionFactory
     
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
     
@@ -139,7 +141,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, localAgentConnectionFactory: LocalAgentConnectionFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         readyGroup?.enter()
 
         self.ikeProtocolFactory = ikeFactory
@@ -152,6 +154,7 @@ public class VpnManager: VpnManagerProtocol {
         self.propertiesManager = propertiesManager
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
+        self.localAgentConnectionFactory = localAgentConnectionFactory
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider

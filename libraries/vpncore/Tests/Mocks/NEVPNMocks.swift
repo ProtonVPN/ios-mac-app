@@ -161,6 +161,8 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
     var status: NEVPNStatus
     var connectedDate: Date?
 
+    let queue = DispatchQueue(label: "vpn connection")
+
     init(vpnManager: NEVPNManagerWrapper) {
         self.vpnManager = vpnManager
         self.status = .invalid
@@ -175,7 +177,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
 
-            self.status = .connecting
+            self.queue.sync { self.status = .connecting }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
             self.tunnelStateDidChange?(self.status)
         }
@@ -183,7 +185,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
 
-            self.status = .connected
+            self.queue.sync { self.status = .connected }
             self.connectedDate = Date()
 
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
@@ -192,11 +194,19 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
     }
 
     func stopVPNTunnel() {
+        let debounce = self.queue.sync { () -> Bool in
+            guard self.status != .disconnecting && self.status != .disconnected else {
+                return true
+            }
+            return false
+        }
+        guard !debounce else { return }
+
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
 
             self.connectedDate = nil
-            self.status = .disconnecting
+            self.queue.sync { self.status = .disconnecting }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
             self.tunnelStateDidChange?(self.status)
         }
@@ -204,7 +214,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
 
-            self.status = .disconnected
+            self.queue.sync { self.status = .disconnected }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
             self.tunnelStateDidChange?(self.status)
         }

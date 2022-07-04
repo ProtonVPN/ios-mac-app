@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import NetworkExtension
+import Crypto_VPN
 
 @testable import vpncore
 
@@ -160,6 +161,8 @@ class CoreConnectionTests: XCTestCase {
             didRequestCertRefresh?()
         case .setApiSelector:
             mockProviderState.needNewSession = false
+        case .cancelRefreshes, .restartRefreshes:
+            break
         case nil:
             XCTFail("Decoding failed for data: \(messageData)")
             return nil
@@ -361,8 +364,8 @@ class CoreConnectionTests: XCTestCase {
         XCTAssertEqual(currentStatus, .disconnected, "VPN status should be disconnected")
 
         XCTAssertEqual(container.serverStorage.servers.count, 2)
-        let fetchedServer1 = container.serverStorage.servers.first(where: { $0.name == testData.server1.name })
-        let fetchedServer2 = container.serverStorage.servers.first(where: { $0.name == testData.server2.name })
+        let fetchedServer1 = storedServers.first(where: { $0.name == testData.server1.name })
+        let fetchedServer2 = storedServers.first(where: { $0.name == testData.server2.name })
 
         XCTAssertEqual(fetchedServer1?.id, testData.server1.id)
         XCTAssertEqual(fetchedServer1?.status, testData.server1.status)
@@ -428,6 +431,16 @@ class CoreConnectionTests: XCTestCase {
             }
         }
 
+        container.localAgentConnectionFactory.connectionWasCreated = { connection in
+            let consts = LocalAgentConstants()!
+            DispatchQueue.main.async {
+                connection.client.onState(consts.stateConnecting)
+            }
+            DispatchQueue.main.async {
+                connection.client.onState(consts.stateConnected)
+            }
+        }
+
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
                                         connectionProtocol: .vpnProtocol(.wireGuard),
@@ -436,52 +449,63 @@ class CoreConnectionTests: XCTestCase {
                                         safeMode: true,
                                         profileId: nil)
 
-        var (nConnections, nDisconnections, nAppStateTransitions) = (0, 0, 0)
+        var (nConnections,
+             nDisconnections,
+             nAppStateConnectTransitions) = (0, 0, 0)
+
         let stateChangeNotification = AppStateManagerNotification.stateChange
-        var lastObservedState: AppState?
+        var observedStates: [AppState] = []
         let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else { return }
+            defer { observedStates.append(appState) }
             // debounce multiple "connected" notifications... we should probably fix that
-            if appState.isConnected, lastObservedState?.isConnected != true {
-                guard nAppStateTransitions < totalConnections else {
-                    XCTFail("Didn't expect that many connection transitions")
+            if case .connected = appState {
+                if case .connected = observedStates.last { return }
+
+                guard nAppStateConnectTransitions < totalConnections else {
+                    XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
+                            "previous observed states \(observedStates.map { $0.description })")
                     return
                 }
 
-                expectations.appStateConnectedTransitions[nAppStateTransitions].fulfill()
-                nAppStateTransitions += 1
+                expectations.appStateConnectedTransitions[nAppStateConnectTransitions].fulfill()
+                nAppStateConnectTransitions += 1
             }
-            lastObservedState = appState
         }
         defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
 
+        var observedStatuses: [NEVPNStatus] = []
         var currentManager: NEVPNManagerMock?
         callOnTunnelProviderStateChange { vpnManager, _, vpnStatus in
             currentManager = vpnManager
+            defer { observedStatuses.append(vpnStatus) }
 
             switch vpnStatus {
             case .connected:
+                defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
-                    XCTFail("Didn't expect that many connection transitions")
+                    XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
+                            "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
-                nConnections += 1
             case .disconnected:
+                defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
-                    XCTFail("Didn't expect that many disconnection transitions")
+                    XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
+                            "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
-                nDisconnections += 1
             default:
                 break
             }
 
         }
         container.vpnGateway.connect(with: request)
-
-        wait(for: [expectations.connections[0], expectations.appStateConnectedTransitions[0]], timeout: expectationTimeout)
+        wait(for: [expectations.connections[0],
+                   expectations.appStateConnectedTransitions[0]], timeout: expectationTimeout)
+        XCTAssertEqual(nConnections, 1)
 
         // should be connected to plus server
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
@@ -502,7 +526,9 @@ class CoreConnectionTests: XCTestCase {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
 
-        wait(for: [expectations.disconnections[0], expectations.downgradeAlert], timeout: expectationTimeout)
+        wait(for: [expectations.disconnections[0],
+                   expectations.downgradeAlert], timeout: expectationTimeout)
+        XCTAssertEqual(nDisconnections, 1)
         container.alertService.alerts.removeAll()
 
         guard let downgradedAlert = downgradedAlert, let reconnectInfo = downgradedAlert.reconnectInfo else {
@@ -513,7 +539,9 @@ class CoreConnectionTests: XCTestCase {
         XCTAssertEqual(reconnectInfo.fromServer.name, testData.server3.name)
         XCTAssertEqual(reconnectInfo.toServer.name, testData.server1.name)
 
-        wait(for: [expectations.connections[1], expectations.appStateConnectedTransitions[1]], timeout: expectationTimeout)
+        wait(for: [expectations.connections[1],
+                   expectations.appStateConnectedTransitions[1]], timeout: expectationTimeout)
+        XCTAssertEqual(nConnections, 2)
 
         // Should have reconnected to server1 now that the user tier has changed
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
@@ -534,9 +562,12 @@ class CoreConnectionTests: XCTestCase {
 
         container.vpnGateway.disconnect()
         wait(for: [expectations.disconnections[1]], timeout: expectationTimeout)
+        XCTAssertEqual(nDisconnections, 2)
 
         container.vpnGateway.connect(with: request)
-        wait(for: [expectations.connections[2]], timeout: expectationTimeout)
+        wait(for: [expectations.connections[2],
+                   expectations.appStateConnectedTransitions[2]], timeout: expectationTimeout)
+        XCTAssertEqual(nConnections, 3)
 
         // Should have reconnected to server3 now that the user is again eligible
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
@@ -609,6 +640,8 @@ fileprivate class Container {
                                                                propertiesManager: propertiesManager,
                                                                appGroup: Self.appGroup)
 
+    let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
+
     lazy var vpnManager = VpnManager(ikeFactory: ikeFactory,
                                      openVpnFactory: openVpnFactory,
                                      wireguardProtocolFactory: wireguardFactory,
@@ -619,6 +652,7 @@ fileprivate class Container {
                                      vpnStateConfiguration: stateConfiguration,
                                      alertService: alertService,
                                      vpnCredentialsConfiguratorFactory: self,
+                                     localAgentConnectionFactory: localAgentConnectionFactory,
                                      natTypePropertyProvider: natProvider,
                                      netShieldPropertyProvider: netShieldProvider,
                                      safeModePropertyProvider: safeModeProvider)

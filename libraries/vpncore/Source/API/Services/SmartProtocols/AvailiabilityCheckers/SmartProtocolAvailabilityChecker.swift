@@ -32,13 +32,18 @@ public typealias SmartProtocolAvailabilityCheckerCompletion = (SmartProtocolAvai
 
 public protocol SmartProtocolAvailabilityChecker: AnyObject {
     var timeout: TimeInterval { get }
-    var protocolName: String { get }
+    var vpnProtocol: VpnProtocol { get }
+    var defaultPorts: [Int] { get }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion)
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void)
 }
 
 extension SmartProtocolAvailabilityChecker {
+    var protocolName: String {
+        vpnProtocol.localizedString
+    }
+
     var timeout: TimeInterval {
         return 3
     }
@@ -70,9 +75,47 @@ extension SmartProtocolAvailabilityChecker {
             completion(availablePorts.isEmpty ? .unavailable : .available(ports: availablePorts))
         }
     }
+
+    /// Pings all the ports and returns on the first successful try.
+    func getFirstToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
+        log.debug("Getting best port for \(server.entryIp) on Wireguard", category: .connectionConnect, event: .scan)
+
+        DispatchQueue.global().async { [unowned self] in
+            let group = DispatchGroup()
+            let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(self.protocolName)")
+            var portAlreadyFound = false // Prevents several calls to completion closure
+
+            for port in self.defaultPorts.shuffled() {
+                group.enter()
+                self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { success in
+                    defer { group.leave() }
+
+                    let go = lockQueue.sync { () -> Bool in
+                        guard success && !portAlreadyFound else {
+                            return false
+                        }
+                        portAlreadyFound = true
+                        log.debug("First port to respond is \(port). Returning this port to be used on Wireguard.", category: .connectionConnect, event: .scan)
+                        return true
+                    }
+
+                    guard go else { return }
+                    completion(port)
+                }
+            }
+
+            // don't use group.notify here - the dispatch group in this block will be freed
+            // when execution leaves this scope
+            group.wait()
+            if !portAlreadyFound {
+                log.error("No working port found on Wireguard", category: .connectionConnect, event: .scan)
+                completion(nil)
+            }
+        }
+    }
 }
 
-protocol SharedLibraryUDPAvailabilityChecker: SmartProtocolAvailabilityChecker { }
+protocol SharedLibraryUDPAvailabilityChecker: SmartProtocolAvailabilityChecker {}
 
 extension SharedLibraryUDPAvailabilityChecker {
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {

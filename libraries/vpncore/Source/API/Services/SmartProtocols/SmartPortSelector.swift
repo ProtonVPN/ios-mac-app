@@ -15,36 +15,38 @@ protocol SmartPortSelector {
 }
 
 final class SmartPortSelectorImplementation {
-    
-    private let openVpnConfig: OpenVpnConfig
-    private let wireguardConfig: WireguardConfig
-    
-    init(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
-        self.openVpnConfig = openVpnConfig
-        self.wireguardConfig = wireguardConfig
+    private let openVpnTcpChecker: SmartProtocolAvailabilityChecker
+    private let openVpnUdpChecker: SmartProtocolAvailabilityChecker
+    private let wireguardChecker: SmartProtocolAvailabilityChecker
+
+    init(openVpnTcpChecker: SmartProtocolAvailabilityChecker,
+         openVpnUdpChecker: SmartProtocolAvailabilityChecker,
+         wireguardChecker: SmartProtocolAvailabilityChecker) {
+        self.openVpnTcpChecker = openVpnTcpChecker
+        self.openVpnUdpChecker = openVpnUdpChecker
+        self.wireguardChecker = wireguardChecker
     }
     
     func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
         switch vpnProtocol {
         case .wireGuard: // Ping all the ports to determine which are available
-            let checker = WireguardAvailabilityChecker(config: wireguardConfig)
-            checker.getFirstToRespondPort(server: serverIp) { result in
+            wireguardChecker.getFirstToRespondPort(server: serverIp) { result in
                 if let port = result {
                     completion([port])
                 } else {
-                    completion(self.wireguardConfig.defaultPorts.shuffled())
+                    completion(self.wireguardChecker.defaultPorts.shuffled())
                 }
             }
             
         case .ike: // Only port is used, so nothing to select
             completion(DefaultConstants.ikeV2Ports)
             
-        case .openVpn(let transportProtocol): // TunnelKit accepts array of ports and select appropriate port by itself
-            switch transportProtocol {
-            case .udp:
-                completion(openVpnConfig.defaultUdpPorts.shuffled())
+        case .openVpn(let transport): // TunnelKit accepts array of ports and select appropriate port by itself
+            switch transport {
             case .tcp:
-                completion(openVpnConfig.defaultTcpPorts.shuffled())
+                completion(openVpnTcpChecker.defaultPorts.shuffled())
+            case .udp:
+                completion(openVpnUdpChecker.defaultPorts.shuffled())
             }
         }
     }

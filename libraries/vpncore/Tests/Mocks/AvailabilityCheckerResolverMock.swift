@@ -58,8 +58,8 @@ class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
     let vpnProtocol: VpnProtocol
     let availablePorts: [Int]
 
-    var protocolName: String {
-        vpnProtocol.localizedString
+    var defaultPorts: [Int] {
+        availablePorts
     }
 
     init(vpnProtocol: VpnProtocol, availablePorts: [Int]) {
@@ -68,7 +68,7 @@ class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
     }
 
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
-        fatalError("Shouldn't be called")
+        completion(true)
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
