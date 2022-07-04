@@ -10,6 +10,12 @@
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Cuenta";
 
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Eliminar su cuenta terminará la sesión VPN.";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Error";
+
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Plan de la cuenta";
 
@@ -1577,12 +1583,6 @@
 "_subscription_plan" = "Plan de suscripción";
 
 /* (No Comment) */
-"_subscription_upgrade_option1" = "Cientos de servidores en %@ países";
-
-/* (No Comment) */
-"_subscription_upgrade_option2" = "Conecte hasta %@ dispositivos al mismo tiempo";
-
-/* (No Comment) */
 "_subscription_upgrade_option3" = "Funciones avanzadas: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
@@ -2107,6 +2107,9 @@
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Método de inicio de sesión inválido. Contacte con soporte.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Desconecte otro dispositivo para conectar éste o actualice a %@";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "El sitio web de Proton VPN podría estar temporalmente inaccesible debido a restricciones de red. Use la aplicación móvil para crear una cuenta nueva de Proton.";

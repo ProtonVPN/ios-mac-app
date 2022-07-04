@@ -10,6 +10,12 @@
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Profilo";
 
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "L'eliminazione del tuo account interromperà la tua sessione VPN.";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Errore";
+
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Piano del profilo";
 
@@ -1577,12 +1583,6 @@
 "_subscription_plan" = "Abbonamento";
 
 /* (No Comment) */
-"_subscription_upgrade_option1" = "Centinaia di server in %@ paesi";
-
-/* (No Comment) */
-"_subscription_upgrade_option2" = "Connetti fino a %@ dispositivi contemporaneamente";
-
-/* (No Comment) */
 "_subscription_upgrade_option3" = "Funzioni avanzate: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
@@ -2108,6 +2108,9 @@
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Metodo di accesso non valido. Si prega di contattare l'assistenza.";
 
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Scollega un altro dispositivo per connetterti a questo o esegui l'upgrade a %@";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Il sito Web di Proton VPN potrebbe essere temporaneamente irraggiungibile a causa di restrizioni di rete. Utilizza l'app mobile per creare un nuovo account Proton.";
 
@@ -2130,5 +2133,5 @@
 "use_two_factor_code" = "Utilizza autenticazione in due passaggi";
 
 /* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
-"vpn_feature_cannot_be_set_error" = "%@ setting could not be changed. Please try again later or connect to a different server";
+"vpn_feature_cannot_be_set_error" = "Impossibile modificare l'impostazione %@. Riprova più tardi o connettiti a un altro server";
 

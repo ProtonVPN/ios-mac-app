@@ -11,16 +11,7 @@
 "cQ4Mju" = "قطع اتصال";
 
 /* (No Comment) */
-"hIcJsr" = "دریافت وضعیت اتصال Proton VPN";
-
-/* (No Comment) */
-"jf696t" = "Connect to Proton VPN";
-
-/* (No Comment) */
-"JOCERT" = "Get Proton VPN Connection Status";
-
-/* (No Comment) */
-"ksQcRb" = "Disconnect from Proton VPN";
+"hIcJsr" = "دریافت وضعیت اتصال ProtonVPN";
 
 /* (No Comment) */
 "NzUfmp" = "${status}";

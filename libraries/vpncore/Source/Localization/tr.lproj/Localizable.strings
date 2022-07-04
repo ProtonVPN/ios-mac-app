@@ -10,6 +10,12 @@
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Hesap";
 
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Hesabınızı silmek VPN oturumunuzu sonlandıracak.";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Hata";
+
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Hesap tarifesi";
 
@@ -1499,7 +1505,7 @@
 "_show_instructions" = "Yönergeleri göster";
 
 /* (No Comment) */
-"_show_protonvpn" = "Proton VPN uygulamasını görüntüle";
+"_show_protonvpn" = "Proton VPN penceresini aç";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Hesap açın";
@@ -1575,12 +1581,6 @@
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Abonelik tarifesi";
-
-/* (No Comment) */
-"_subscription_upgrade_option1" = "%@ ülkede yüzlerce sunucu";
-
-/* (No Comment) */
-"_subscription_upgrade_option2" = "Aynı anda %@ aygıta kadar bağlanın";
 
 /* (No Comment) */
 "_subscription_upgrade_option3" = "Gelişmiş özellikler: NetShield, Secure Core, Tor, P2P";
@@ -1896,13 +1896,13 @@
 "_unprotected_network_tooltip" = "Proton VPN korunmayan bir ağa bağlı olduğunuzu algıladığında bir bildirim görüntülenir.";
 
 /* (No Comment) */
-"_unsecure_wifi" = "Güvenli olmayan Wi-Fi bağlantısı algılandı";
+"_unsecure_wifi" = "Güvenli olmayan WiFi bağlantısı algılandı";
 
 /* (No Comment) */
 "_unsecure_wifi_learn_more" = "Ayrıntılı bilgi alın";
 
 /* (No Comment) */
-"_unsecure_wifi_title" = "Güvenli olmayan Wi-Fi algılandı";
+"_unsecure_wifi_title" = "Güvenli olmayan WiFi algılandı";
 
 /* (No Comment) */
 "_update_billing" = "FATURAMI GÜNCELLE";
@@ -2107,6 +2107,9 @@
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Oturum açma yöntemi geçersiz. Lütfen destek ekibi ile görüşün.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Lütfen bu aygıtı bağlayabilmek için başka bir aygıtın bağlantısını kesin ya da %@ tarifesine yükseltin";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Ağ kısıtlamaları nedeniyle Proton VPN web sitesine geçici olarak erişlemeyebilir. Lütfen yeni bir Proton hesabı açmak için mobil uygulamayı kullanın.";

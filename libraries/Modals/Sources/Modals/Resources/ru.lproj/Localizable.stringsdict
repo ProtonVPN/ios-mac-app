@@ -5,7 +5,7 @@
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<string> чтобы подключить до %#@num_devices@ одновременно.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -80,7 +80,7 @@
 	<key>subscription_upgrade_option1</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Hundreds of servers in %#@num_countries@</string>
+		<string>Сотни серверов в %#@num_countries@</string>
 		<key>num_countries</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -100,7 +100,7 @@
 	<key>subscription_upgrade_option2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>Connect up to %#@num_devices@ at the same time</string>
+		<string>Подключайте до %#@num_devices@ одновременно</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

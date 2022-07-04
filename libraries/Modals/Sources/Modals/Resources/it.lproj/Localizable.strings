@@ -14,7 +14,7 @@
 "maximum_device_limit" = "Disconnetti un altro dispositivo per connettere questo.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
+"maximum_device_plan_limit_part_1" = "Scollega un altro dispositivo per connetterti a questo o esegui l'upgrade a %@";
 
 /* Title of user account update screen */
 "maximum_device_title" = "Hai raggiunto il limite massimo di dispositivi";
