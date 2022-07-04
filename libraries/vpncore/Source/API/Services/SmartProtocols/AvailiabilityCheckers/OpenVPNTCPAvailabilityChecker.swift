@@ -25,9 +25,12 @@ import Foundation
 import Network
 
 final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
-    var protocolName: String {
-        return "OpenVPN TCP"
+    let vpnProtocol: VpnProtocol = .openVpn(.tcp)
+
+    var defaultPorts: [Int] {
+        return config.defaultTcpPorts
     }
+
     private let config: OpenVpnConfig
     private var connections: [String: NWConnection] = [:]
 

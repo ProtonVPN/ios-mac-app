@@ -1,5 +1,5 @@
 //
-//  Created on 2022-05-17.
+//  Created on 2022-07-01.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -19,25 +19,21 @@
 import Foundation
 import NetworkExtension
 
-public protocol ProviderMessage: Equatable {
-    var asData: Data { get }
-
-    static func decode(data: Data) throws -> Self
-}
-
-public protocol ProviderRequest: ProviderMessage {
-    associatedtype Response: ProviderMessage
-}
-
-public protocol ProviderMessageSender: AnyObject {
-    func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
-}
-
-public enum ProviderMessageError: Error {
-    case noDataReceived
-    case decodingError
-    case sendingError
-    case unknownRequest
-    case unknownResponse
-    case remoteError(message: String)
+extension NEVPNStatus: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .disconnecting:
+            return "disconnecting"
+        case .disconnected:
+            return "disconnected"
+        case .connecting:
+            return "connecting"
+        case .connected:
+            return "connected"
+        case .reasserting:
+            return "reasserting"
+        case .invalid:
+            return "invalid"
+        }
+    }
 }

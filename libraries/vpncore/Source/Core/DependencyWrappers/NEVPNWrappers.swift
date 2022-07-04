@@ -104,5 +104,45 @@ public protocol NETunnelProviderSessionWrapper: NEVPNConnectionWrapper & Provide
     func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws
 }
 
+/// For `ProviderMessageSender`
+extension NETunnelProviderSessionWrapper {
+    public func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
+        send(message, maxRetries: 5, completion: completion)
+    }
+
+    private func send<R>(_ message: R, maxRetries: Int, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest {
+        do {
+            try sendProviderMessage(message.asData) { [weak self] maybeData in
+                guard let data = maybeData else {
+                    // From documentation: "If this method can’t start sending the message it throws an error. If an
+                    // error occurs while sending the message or returning the result, `nil` should be sent to the
+                    // response handler as notification." If we encounter an xpc error, try sleeping for a second and
+                    // then trying again - the extension could still be launching, or we could be coming out of sleep.
+                    // If we retry enough times and still get nowhere, return an error.
+
+                    guard maxRetries > 0 else {
+                        completion?(.failure(.noDataReceived))
+                        return
+                    }
+
+                    sleep(1)
+                    self?.send(message, maxRetries: maxRetries - 1, completion: completion)
+                    return
+                }
+
+                do {
+                    let response = try R.Response.decode(data: data)
+                    completion?(.success(response))
+                } catch {
+                    completion?(.failure(.decodingError))
+                }
+            }
+        } catch {
+            log.error("Received error while attempting to send provider message: \(error)")
+            completion?(.failure(.sendingError))
+        }
+    }
+}
+
 extension NETunnelProviderSession: NETunnelProviderSessionWrapper {
 }

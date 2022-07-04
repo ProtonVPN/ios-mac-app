@@ -38,6 +38,8 @@ fileprivate class VpnManagerDependencies {
 
     var preferences = PropertiesManagerMock()
 
+    let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
+
     lazy var ikeFactory = IkeProtocolFactory(factory: self)
     lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: Self.openvpnProviderBundleId,
                                                      appGroup: Self.appGroup,
@@ -110,6 +112,7 @@ class VpnManagerTests: XCTestCase {
                                 vpnStateConfiguration: container.stateConfiguration,
                                 alertService: container.alertService,
                                 vpnCredentialsConfiguratorFactory: container,
+                                localAgentConnectionFactory: container.localAgentConnectionFactory,
                                 natTypePropertyProvider: container.natProvider,
                                 netShieldPropertyProvider: container.netShieldProvider,
                                 safeModePropertyProvider: container.safeModeProvider)

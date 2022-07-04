@@ -24,9 +24,12 @@ import Foundation
 import Network
 
 final class IKEv2AvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
-    var protocolName: String {
-        return "IKEv2"
+    let vpnProtocol: VpnProtocol = .ike
+
+    var defaultPorts: [Int] {
+        [port]
     }
+
     let port: Int
 
     init(port: Int = 500) {

@@ -43,16 +43,80 @@ protocol LocalAgent {
     func unjail()
 }
 
+public protocol LocalAgentConnectionWrapper {
+    var state: String { get }
+    var status: LocalAgentStatusMessage? { get }
+
+    func close()
+    func setConnectivity(_: Bool)
+    func setFeatures(_: LocalAgentFeatures?)
+}
+
+extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {
+}
+
+public protocol LocalAgentConnectionFactory {
+    // Wrapper function for LocalAgentAgentConnection for unit testing.
+    // swiftlint:disable:next function_parameter_count
+    func makeLocalAgentConnection(clientCertPEM: String,
+                                  clientKeyPEM: String,
+                                  serverCAsPEM: String,
+                                  host: String,
+                                  certServerName: String,
+                                  client: LocalAgentNativeClientProtocol,
+                                  features: LocalAgentFeatures?,
+                                  connectivity: Bool) throws -> LocalAgentConnectionWrapper
+}
+
+final class LocalAgentConnectionFactoryImplementation: LocalAgentConnectionFactory {
+    // swiftlint:disable:next function_parameter_count
+    func makeLocalAgentConnection(clientCertPEM: String,
+                                  clientKeyPEM: String,
+                                  serverCAsPEM: String,
+                                  host: String,
+                                  certServerName: String,
+                                  client: LocalAgentNativeClientProtocol,
+                                  features: LocalAgentFeatures?,
+                                  connectivity: Bool) throws -> LocalAgentConnectionWrapper {
+        var error: NSError?
+        let result = LocalAgentNewAgentConnection(clientCertPEM,
+                                                  clientKeyPEM,
+                                                  serverCAsPEM,
+                                                  host,
+                                                  certServerName,
+                                                  client,
+                                                  features,
+                                                  connectivity,
+                                                  &error)
+
+        if let error = error {
+            throw error
+        }
+
+        guard let result = result else {
+            assertionFailure("LocalAgentNewAgentConnection should have returned error")
+            throw LocalAgentError.serverError
+        }
+
+        return result
+    }
+}
+
 final class LocalAgentImplementation: LocalAgent {
-    private var agent: LocalAgentAgentConnection?
+    private static let localAgentHostname = "10.2.0.1:65432"
+
+    private var agentConnectionFactory: LocalAgentConnectionFactory
+
+    private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
     private let reachability: Reachability?
 
     private var previousState: LocalAgentState?
 
-    init() {
+    init(factory: LocalAgentConnectionFactory) {
         reachability = try? Reachability()
         client = LocalAgentNativeClientImplementation()
+        agentConnectionFactory = factory
         client.delegate = self
 
         try? reachability?.startNotifier()
@@ -78,11 +142,17 @@ final class LocalAgentImplementation: LocalAgent {
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
         log.debug("Local agent connecting to \(configuration.hostname)", category: .localAgent, metadata: ["config": "\(configuration)"])
 
-        var error: NSError?
-        agent = LocalAgentNewAgentConnection(data.clientCertificate, data.clientKey.derRepresentation, rootCerts, "10.2.0.1:65432", configuration.hostname, client, LocalAgentNewFeatures()?.with(configuration: configuration), true, &error)
-
-        if let agentInitError = error {
-            log.error("Creating Go local agent connection failed with \(agentInitError)", category: .localAgent)
+        do {
+            agent = try agentConnectionFactory.makeLocalAgentConnection(clientCertPEM: data.clientCertificate,
+                                                                        clientKeyPEM: data.clientKey.derRepresentation,
+                                                                        serverCAsPEM: rootCerts,
+                                                                        host: Self.localAgentHostname,
+                                                                        certServerName: configuration.hostname,
+                                                                        client: client,
+                                                                        features: LocalAgentNewFeatures()?.with(configuration: configuration),
+                                                                        connectivity: true)
+        } catch {
+            log.error("Creating local agent connection failed with \(error)", category: .localAgent)
         }
     }
 
