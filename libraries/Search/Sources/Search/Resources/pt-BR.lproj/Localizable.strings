@@ -55,9 +55,6 @@
 /* Section header in Search */
 "search_servers" = "Servidores";
 
-/* Sample servers the user can search for */
-"search_servers_sample" = "JP#50, CA#3, IT#14...";
-
 /* Title of the Search screen infographic */
 "search_subtitle" = "Pesquisar qualquer localização";
 

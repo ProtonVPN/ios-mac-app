@@ -1,7 +1,4 @@
 /* (No Comment) */
-"onboarding_beprotected_subtitle" = "Proton VPN supports all devices, including Windows, macOS, and many others.";
-
-/* (No Comment) */
 "onboarding_beprotected_title" = "همه‌جا محافظت شوید";
 
 /* (No Comment) */
@@ -14,12 +11,6 @@
 "onboarding_connected_connected_to" = "متصل به:";
 
 /* (No Comment) */
-"onboarding_connected_note" = "Safely.";
-
-/* (No Comment) */
-"onboarding_connected_subtitle" = "Your connection is protected and you’re ready to browse the web.";
-
-/* (No Comment) */
 "onboarding_connected_title" = "تبریک";
 
 /* (No Comment) */
@@ -30,9 +21,6 @@
 
 /* (No Comment) */
 "onboarding_establish_connect_now" = "اتصال";
-
-/* (No Comment) */
-"onboarding_establish_note" = "We will connect you to the fastest and most stable server depending on your location.";
 
 /* (No Comment) */
 "onboarding_establish_title" = "اولین اتصال خود را برقرار کنید";
@@ -50,12 +38,6 @@
 "onboarding_next" = "بعدی";
 
 /* (No Comment) */
-"onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
-
-/* (No Comment) */
-"onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
-
-/* (No Comment) */
 "onboarding_plus_only" = "در دسترس برای Plus";
 
 /* (No Comment) */
@@ -65,17 +47,5 @@
 "onboarding_skip" = "رد شدن";
 
 /* (No Comment) */
-"onboarding_take_tour" = "Take a tour";
-
-/* (No Comment) */
-"onboarding_unblockstreaming_subtitle" = "Secure access your favourite content from other countries, now also on AndroidTV.";
-
-/* (No Comment) */
 "onboarding_unblockstreaming_title" = "رفع انسداد پخش آنلاین";
-
-/* (No Comment) */
-"onboarding_welcome_subtitle" = "Learn how to get the most out of Proton VPN in just a few seconds";
-
-/* (No Comment) */
-"onboarding_welcome_title" = "Welcome to Proton VPN";
 

@@ -10,6 +10,12 @@
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Akun";
 
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Dengan menghapus akun, sesi VPN Anda akan berakhir.";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Error";
+
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Jenis akun";
 
@@ -98,7 +104,7 @@
 "_applying_settings_" = "Menerapkan pengaturan";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
-"_auto_assigned" = "Tetapkan secara otomatis";
+"_auto_assigned" = "Ditetapkan secara otomatis";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_auto_connect" = "Terhubung Otomatis";
@@ -125,7 +131,7 @@
 "_cancel_reconnection" = "Ini akan membatalkan usaha menyambung ulang dan membiarkan Anda terputus sambungan";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Sambungan VPN ini akan diputus apabila protokolnya diubah.";
+"_change_protocol_disconnect_warning" = "Dengan mengubah protokol, sesi VPN Anda saat ini akan berakhir.";
 
 /* Changing settings title */
 "_change_settings" = "Ubah pengaturan";
@@ -290,7 +296,7 @@
 "_disable" = "Nonaktifkan";
 
 /* Common word */
-"_disabled" = "Nonaktifkan";
+"_disabled" = "Dinonaktifkan";
 
 /* Common word */
 "_disconnect" = "Putuskan";
@@ -320,7 +326,7 @@
 "_early_access" = "Akses Dini";
 
 /* MacOS: Settings -> General: description. */
-"_early_access_tooltip" = "Jadilah yang pertama mendapatkan pembaruan terkini. Tolong perhatikan, versi awal mungkin saja kurang stabil.";
+"_early_access_tooltip" = "Jadilah yang pertama mendapatkan berbagai pembaruan terbaru. Harap diperhatikan bahwa versi aplikasi ini tidak dijamin akan selalu stabil sepanjang waktu.";
 
 /* Common word */
 "_edit" = "Sunting";
@@ -446,7 +452,7 @@
 "_error_unavailable_product" = "Gagal memperoleh daftar produk-produk yang tersedia dari App Store.";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Kesalahan tidak diketahui";
+"_error_unknown_title" = "Kesalahan yang tidak diketahui";
 
 /* user cancelled human validation procedure */
 "_error_user_cancelled" = "Operasi dibatalkan";
@@ -686,7 +692,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch melindungi IP Anda\n\nKoneksi internet Anda akan kembali pulih segera setelah Proton VPN tersambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan Kill Switch.";
+"_kill_switch_blocking_body" = "Kill Switch melindungi IP Anda\n\nKoneksi internet Anda akan kembali pulih segera setelah ProtonVPN tersambung ulang ke server. Untuk lanjut tanpa perlindungan VPN, nonaktifkan Kill Switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch memblokir seluruh koneksi";
@@ -809,10 +815,10 @@
 "_log_out" = "Keluar";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Keluar akan mengakhiri sesi VPN Anda.";
+"_log_out_warning" = "Dengan keluar dari akun, sesi VPN Anda akan berakhir.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Keluar dari aplikasi akan memutuskan koneksi VPN yang sedang aktif. Apakah anda ingin melanjutkan?";
+"_log_out_warning_long" = "Dengan keluar dari aplikasi, koneksi VPN yang sedang aktif akan terputus. Apakah Anda ingin melanjutkan?";
 
 /* MacOS: Login button */
 "_login" = "Masuk";
@@ -860,7 +866,7 @@
 "_maximum_device_reached_description" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung.";
 
 /* (No Comment) */
-"_maximum_device_title" = "Anda telah mencapai batas perangkat maksimum Anda";
+"_maximum_device_title" = "Anda telah mencapai batas jumlah perangkat yang dapat Anda sambungkan";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Nanti Saja";
@@ -890,7 +896,7 @@
 "_menu_preferences" = "Preferensi";
 
 /* Main mac app menu item */
-"_menu_quit" = "Keluar Dari Proton VPN";
+"_menu_quit" = "Keluar Dari ProtonVPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Tampilkan Semua";
@@ -935,7 +941,7 @@
 "_name" = "Nama";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server Proton VPN";
+"_ne_couldnt_reach_server" = "Kami tidak dapat menjangkau server ProtonVPN";
 
 /* Network error */
 "_ne_network_connection_lost" = "Koneksi internet terputus";
@@ -1238,7 +1244,7 @@
 "_quick_connect_tooltip" = "Tombol Sambung Cepat menyambungkan Anda ke profil yang terpilih";
 
 /* MacOS app tour: quick connect description */
-"_quick_connect_tour_description" = "Secara otomatis terhubung ke server yang akan memberikan anda koneksi tercepat.";
+"_quick_connect_tour_description" = "Menghubungkan Anda ke server tercepat yang tersedia bagi Anda secara otomatis.";
 
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Quick Connect";
@@ -1271,7 +1277,7 @@
 "_quick_settings_secureCore_description" = "Alihkan data paling sensitif Anda melalui server teraman kami di negara ramah privasi.";
 
 /* (No Comment) */
-"_quick_settings_secureCore_note" = "Secure Core mungkin mengurangi kecepatan VPN";
+"_quick_settings_secureCore_note" = "Secure Core dapat menurunkan kecepatan VPN";
 
 /* MacOS app tour: quick settings description */
 "_quick_settings_tour_description" = "Tingkatkan keamanan Anda dengan sekali klik:";
@@ -1532,7 +1538,7 @@
 "_standard" = "Standar";
 
 /* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "Mulai dengan Minimalkan";
+"_start_minimized" = "Minimalkan Aplikasi";
 
 /* MacOS: label in login and settings screens */
 "_start_on_boot" = "Mulai saat Boot";
@@ -1541,7 +1547,7 @@
 "_status" = "Status";
 
 /* (No Comment) */
-"_streaming_servers_description" = "Sambungkan ke server Plus di negara ini untuk mulai pengaliran.";
+"_streaming_servers_description" = "Hubungkan diri Anda ke server Plus di negara ini untuk mulai menonton tayangan streaming.";
 
 /* (No Comment) */
 "_streaming_servers_extra" = "dan banyak lagi";
@@ -1577,12 +1583,6 @@
 "_subscription_plan" = "Paket Berlangganan";
 
 /* (No Comment) */
-"_subscription_upgrade_option1" = "Ratusan server di %@ negara";
-
-/* (No Comment) */
-"_subscription_upgrade_option2" = "Terhubung hingga %@ perangkat secara bersamaan";
-
-/* (No Comment) */
 "_subscription_upgrade_option3" = "Fitur lanjutan: Netshield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
@@ -1596,9 +1596,6 @@
 
 /* (No Comment) */
 "_subuser_alert_assign_connections_button" = "Tetapkan koneksi VPN";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Untuk memulai perjalanan Proton VPN Anda, harap tetapkan koneksi VPN pada akun Anda atau sub-akun lainnya.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Langkah ini akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
@@ -1628,7 +1625,7 @@
 "_sysex_enabled_title" = "Konfigurasi selesai";
 
 /* (No Comment) */
-"_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang Proton VPN dan pastikan Proton VPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
+"_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang ProtonVPN dan pastikan ProtonVPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
 
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
@@ -2107,6 +2104,9 @@
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Metode login tidak valid. Mohon hubungi layanan dukungan.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Mohon putuskan perangkat lain agar perangkat ini dapat terhubung atau tingkatkan akun Anda ke %@";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Situs web Proton VPN terindikasi sedang tidak dapat dijangkau karena batasan jaringan. Mohon gunakan aplikasi mobile kami untuk membuat akun Proton yang baru.";

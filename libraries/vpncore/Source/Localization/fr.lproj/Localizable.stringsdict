@@ -2,54 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
-		</dict>
-	</dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> pour connecter en même temps jusqu&apos;à %#@num_devices@.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>one</key>
-			<string>%d appareil</string>
-			<key>other</key>
-			<string>%d appareils</string>
-		</dict>
-	</dict>
 	<key>_countries_count</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -96,6 +48,70 @@
 			<string>%d connexion</string>
 			<key>other</key>
 			<string>%d connexions</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Des centaines de serveurs dans %d pays</string>
+			<key>other</key>
+			<string>Des centaines de serveurs dans %d pays</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Connectez %d appareil</string>
+			<key>other</key>
+			<string>Connectez jusqu'à %d appareils en même temps</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Vous avez atteint le nombre maximum de changements de paramètres. Nous vous invitons à attendre au moins %d minute puis à réessayer.</string>
+			<key>other</key>
+			<string>Vous avez atteint le nombre maximum de changements de paramètres. Nous vous invitons à attendre au moins %d minutes puis à réessayer.</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> pour connecter jusqu'à %#@num_devices@ appareils en même temps.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d appareil</string>
+			<key>other</key>
+			<string>%d appareils</string>
 		</dict>
 	</dict>
 </dict>

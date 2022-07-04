@@ -2,58 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
-		</dict>
-	</dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> щоб одночасно під&apos;єднати до %#@num_devices@.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d пристрої</string>
-			<key>many</key>
-			<string>%d пристроїв</string>
-			<key>one</key>
-			<string>%d пристрій</string>
-			<key>other</key>
-			<string>%d пристроїв</string>
-		</dict>
-	</dict>
 	<key>_countries_count</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -105,13 +53,93 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d з&apos;єднання</string>
+			<string>%d з'єднання</string>
 			<key>many</key>
-			<string>%d з&apos;єднань</string>
+			<string>%d з'єднань</string>
 			<key>one</key>
-			<string>%d з&apos;єднання</string>
+			<string>%d з'єднання</string>
 			<key>other</key>
-			<string>%d з&apos;єднань</string>
+			<string>%d з'єднань</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Сотні серверів у %d країнах</string>
+			<key>many</key>
+			<string>Сотні серверів у %d країнах</string>
+			<key>one</key>
+			<string>Сотні серверів у %d країні</string>
+			<key>other</key>
+			<string>Сотні серверів у %d країнах</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Приєднайте до %d пристроїв одночасно</string>
+			<key>many</key>
+			<string>Приєднайте до %d пристроїв одночасно</string>
+			<key>one</key>
+			<string>Під'єднайте до %d пристрою одночасно</string>
+			<key>other</key>
+			<string>Приєднайте до %d пристроїв одночасно</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Ви досягли максимальної кількості змін параметрів. Повторіть спробу принаймні за %d хвилини.</string>
+			<key>many</key>
+			<string>Ви досягли максимальної кількості змін параметрів. Повторіть спробу принаймні за %d хвилин.</string>
+			<key>one</key>
+			<string>Ви досягли максимальної кількості змін параметрів. Повторіть спробу принаймні за %d хвилину.</string>
+			<key>other</key>
+			<string>Ви досягли максимальної кількості змін параметрів. Повторіть спробу принаймні за %d хвилин.</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> щоб одночасно під'єднати до %#@num_devices@.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d пристрої</string>
+			<key>many</key>
+			<string>%d пристроїв</string>
+			<key>one</key>
+			<string>%d пристрій</string>
+			<key>other</key>
+			<string>%d пристроїв</string>
 		</dict>
 	</dict>
 </dict>

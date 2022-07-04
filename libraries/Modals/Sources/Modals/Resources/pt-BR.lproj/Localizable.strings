@@ -1,20 +1,11 @@
 /* Description of user account update screen */
 "delinquent_description" = "Você será capaz de acessar os recursos premium novamente após pagar as faturas pendentes.";
 
-/* Description of user account update screen */
-"delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest Free plan server available.";
-
 /* Title of user account update screen */
 "delinquent_title" = "Sua conta VPN possui faturas pendentes";
 
 /* Header of the view containing information about the server, from which the user will be disconnected */
 "from_server_title" = "Do servidor:";
-
-/* Description of user account update screen */
-"maximum_device_limit" = "Please disconnect another device to connect to this one.";
-
-/* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Please disconnect another device to connect to this one or upgrade to %@";
 
 /* Title of user account update screen */
 "maximum_device_title" = "Você atingiu o número máximo de dispositivos";
@@ -72,9 +63,6 @@
 
 /* Subtitle of the Moderate NAT upsell screen */
 "modals_upsell_features_moderate_nat_subtitle" = "NAT moderado, também conhecido como Nat Tipo 2, pode melhorar sua experiência online com várias aplicações e videogames online. \n\nDesbloqueie esse e outros recursos com um plano Plus.";
-
-/* Subtitle of the Safe Mode upsell screen */
-"modals_upsell_features_safe_mode_subtitle" = "Have advanced or professional computing needs that require non-standard ports?\n\nUpgrade to VPN Plus to access this and other premium features.";
 
 /* Subtitle of All Countries, NetShield and Secure Core upsell screens */
 "modals_upsell_features_subtitle" = "Ao atualizar para o VPN Plus";

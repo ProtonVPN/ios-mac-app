@@ -2,58 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>_subscription_upgrade_option2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
-		</dict>
-	</dict>
-	<key>_subscription_upgrade_option1</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@VARIABLE@</string>
-		<key>VARIABLE</key>
-		<dict>
-			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
-		</dict>
-	</dict>
-	<key>maximum_device_plan_limit_part_2</key>
-	<dict>
-		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
-		<key>num_devices</key>
-		<dict>
-			<key>NSStringFormatSpecTypeKey</key>
-			<string>NSStringPluralRuleType</string>
-			<key>NSStringFormatValueTypeKey</key>
-			<string>d</string>
-			<key>few</key>
-			<string>%d urządzenia</string>
-			<key>many</key>
-			<string>%d urządzeń</string>
-			<key>one</key>
-			<string>%d urządzenie</string>
-			<key>other</key>
-			<string>%d urządzeń</string>
-		</dict>
-	</dict>
 	<key>_countries_count</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -112,6 +60,86 @@
 			<string>%d połączenie</string>
 			<key>other</key>
 			<string>%d połączeń</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Setki serwerów w %d krajach</string>
+			<key>many</key>
+			<string>Setki serwerów w %d krajach</string>
+			<key>one</key>
+			<string>Setki serwerów w %d kraju</string>
+			<key>other</key>
+			<string>Setki serwerów w %d krajach</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Połącz do %d urządzeń jednocześnie</string>
+			<key>many</key>
+			<string>Połącz do %d urządzeń jednocześnie</string>
+			<key>one</key>
+			<string>Połącz do %d urządzenia jednocześnie</string>
+			<key>other</key>
+			<string>Połącz do %d urządzeń jednocześnie</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za %d minuty.</string>
+			<key>many</key>
+			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za %d minut.</string>
+			<key>one</key>
+			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za minutę.</string>
+			<key>other</key>
+			<string>Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za %d minuty.</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> , aby połączyć %#@num_devices@ jednocześnie.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d urządzenia</string>
+			<key>many</key>
+			<string>%d urządzeń</string>
+			<key>one</key>
+			<string>%d urządzenie</string>
+			<key>other</key>
+			<string>%d urządzeń</string>
 		</dict>
 	</dict>
 </dict>

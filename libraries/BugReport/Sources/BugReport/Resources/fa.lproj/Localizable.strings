@@ -1,6 +1,3 @@
-/* ReportBug 1st step title */
-"_br_1_title" = "What's the issue?";
-
 /* ReportBug 2nd step (Quick fixes) cancel button */
 "_br_2_button_cancel" = "لغو";
 
@@ -9,9 +6,6 @@
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
 "_br_2_footer" = "کار نکرد؟";
-
-/* ReportBug 2nd step (Quick fixes) subtitle */
-"_br_2_subtitle" = "These tips could help to solve your issue faster.";
 
 /* ReportBug 2nd step (Quick fixes) title */
 "_br_2_title" = "راه‌حل‌های سریع";
@@ -25,12 +19,6 @@
 /* ReportBug 3rd step (form) email field name */
 "_br_3_email" = "ایمیل";
 
-/* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "A log is a type of file that shows us the actions you took that led to an error. We’ll only ever use them to help our engineers fix bugs.";
-
-/* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully.";
-
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "ارسال لاگ خطا";
 
@@ -43,27 +31,12 @@
 /* ReportBug success window: troubleshoot button */
 "_br_failure_button_troubleshoot" = "عیب یابی";
 
-/* ReportBug success window: title text */
-"_br_failure_title" = "Your report wasn’t sent";
-
 /* ReportBug success window: button */
 "_br_success_button" = "فهمیدم";
-
-/* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "We’ll get back to you as soon as we can.";
 
 /* ReportBug success window: title text */
 "_br_success_title" = "از بازخوردتان سپاس گزاریم";
 
-/* ReportBugwindow title */
-"_br_window_title" = "Report an issue";
-
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "بروزرسانی";
-
-/* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "You’re more likely to have issues on older versions of Proton VPN.";
-
-/* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "Update Proton VPN";
 

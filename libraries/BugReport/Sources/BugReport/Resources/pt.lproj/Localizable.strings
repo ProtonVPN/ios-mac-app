@@ -7,9 +7,6 @@
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
 "_br_2_button_next" = "Contacte-nos";
 
-/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
-"_br_2_footer" = "Didn't work?";
-
 /* ReportBug 2nd step (Quick fixes) subtitle */
 "_br_2_subtitle" = "Estas dicas poderão ajudá-lo a resolver o seu problema mais rapidamente.";
 
@@ -60,10 +57,4 @@
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Actualizar";
-
-/* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "You’re more likely to have issues on older versions of Proton VPN.";
-
-/* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "Update Proton VPN";
 

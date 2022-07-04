@@ -5,10 +5,16 @@
 "_5_connections_description" = "Połącz do 5 urządzeń\njednocześnie";
 
 /* MacOS: About window title */
-"_about" = "O Proton VPN";
+"_about" = "O ProtonVPN";
 
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Konto";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Usunięcie konta zakończy sesję VPN.";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Błąd";
 
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Plan konta";
@@ -605,7 +611,7 @@
 "_free_trial_expired_title" = "Twoja darmowa wersja próbna %@";
 
 /* Downgrade */
-"_from_server_title" = "From Server:";
+"_from_server_title" = "Z serwera:";
 
 /* MacOS: General tab in setting window */
 "_general" = "Ogólne";
@@ -1577,12 +1583,6 @@
 "_subscription_plan" = "Plan subskrypcji";
 
 /* (No Comment) */
-"_subscription_upgrade_option1" = "Setki serwerów w %@ krajach";
-
-/* (No Comment) */
-"_subscription_upgrade_option2" = "Połącz do %@ urządzeń jednocześnie";
-
-/* (No Comment) */
 "_subscription_upgrade_option3" = "Zaawansowane funkcje: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
@@ -1711,7 +1711,7 @@
 "_terms_and_conditions" = "regulamin";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Korzystając z usługi Proton VPN, akceptujesz nasz %@ i %@";
+"_terms_and_conditions_disclaimer" = "Korzystając z usługi ProtonVPN, akceptujesz nasz %@ i %@";
 
 /* iOS: section header in countries list */
 "_test_servers" = "Serwery TESTOWE";
@@ -1738,7 +1738,7 @@
 "_timeout_ks_ike_switch_protocol" = "Zmień na OpenVPN i ponów próbę";
 
 /* (No Comment) */
-"_to_server_title" = "To Server:";
+"_to_server_title" = "Do serwera:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
@@ -1753,7 +1753,7 @@
 "_tor_title" = "Tor";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Twoja 7-dniowa wersja próbna planu Proton VPN Plus wygasła. Możesz nadal korzystać z planu Proton VPN Free. Ulepsz do płatnego planu, aby wesprzeć projekt oraz uzyskać dostęp do większej liczby krajów i funkcji.";
+"_trial_expired_alert_body_iOS" = "Twoja 7-dniowa wersja próbna planu Proton VPN Plus wygasła. Możesz nadal korzystać z planu ProtonVPN Free. Ulepsz do płatnego planu, aby wesprzeć projekt oraz uzyskać dostęp do większej liczby krajów i funkcji.";
 
 /* iOS trial expired screen */
 "_trial_expired_alert_title_iOS" = "Okres próbny planu Proton VPN Plus wygasł";
@@ -2049,7 +2049,7 @@
 "_welcome_body" = "Szybka szwajcarska usługa VPN, która chroni Twoją prywatność, szyfrując Twoje połączenie internetowe.";
 
 /* MacOS welcome screen: description */
-"_welcome_description" = "Dziękujemy za skorzystanie z usługi Proton VPN. Rzuć okiem na główne funkcje aplikacji.";
+"_welcome_description" = "Dziękujemy za skorzystanie z usługi ProtonVPN. Rzuć okiem na główne funkcje aplikacji.";
 
 /* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "W ramach prezentu powitalnego, otrzymujesz 7-dniowy dostęp do subskrypcji %@, która obejmuje:";
