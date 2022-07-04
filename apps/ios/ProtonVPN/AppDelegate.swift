@@ -51,7 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupCoreIntegration()
         
-        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
+//        Waiting for https://github.com/getsentry/sentry-cocoa/issues/1892 to be fixed
+//        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
