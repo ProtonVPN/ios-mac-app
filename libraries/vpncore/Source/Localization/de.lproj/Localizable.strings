@@ -725,7 +725,7 @@
 "_kill_switch_helper_update_popup_body" = "Für die letzte heruntergeladene Aktualisierung, müssen Sie Ihr Computerkonten‐Passwort eingeben. Wenn die Anfrage angezeigt wird, geben Sie bitte Ihr %@ ein und bestätigen Sie es.\n\nWenn Sie Ihr Mac‐Passwort nicht eingeben, wird Kill Switch (Not‐Trennung) deaktiviert.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Deine Internetverbindung wird wiederhergestellt, sobald ProtonVPN die Verbindung zu einem Server wiederherstellen konnte.\nUm das Internet ohne VPN und ohne „Kill Switch”-Schutz (Not‐Trennung) zu nutzen, breche das erneute Verbinden mit dem Server ab.";
+"_kill_switch_reconnection" = "Deine Internetverbindung wird wiederhergestellt, sobald Proton VPN die Verbindung zu einem Server wiederherstellen konnte.\nUm das Internet ohne VPN und ohne „Kill Switch”-Schutz (Not‐Trennung) zu nutzen, breche das erneute Verbinden mit dem Server ab.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "ohne";
@@ -749,7 +749,7 @@
 "_ks_requires_swift5_popup_msg" = "Um Kill Switch (Not‐Trennung) zu aktivieren, müssen Sie %@ herunterladen und installieren.\nBitte dies zuerst installieren, bevor Sie Kill Switch aktivieren.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN konnte %@ nicht ermitteln. Um Kill Switch zu aktivieren, installiere bitte zuerst die Anwendung.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN konnte %@ nicht ermitteln. Um Kill Switch zu aktivieren, installiere bitte zuerst die Anwendung.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Swift 5-Bibliothek zur Laufzeitunterstützung";
@@ -875,7 +875,7 @@
 "_medium" = "Mittel";
 
 /* Main mac app menu item */
-"_menu_about" = "Über ProtonVPN";
+"_menu_about" = "Über Proton VPN";
 
 /* Main mac app menu item */
 "_menu_check_updates" = "Nach Aktualisierungen suchen …";
@@ -884,7 +884,7 @@
 "_menu_hide_others" = "Andere ausblenden";
 
 /* Main mac app menu item */
-"_menu_hide_self" = "ProtonVPN verbergen";
+"_menu_hide_self" = "Proton VPN verbergen";
 
 /* Main mac app menu item */
 "_menu_logout" = "Abmelden";
@@ -896,7 +896,7 @@
 "_menu_preferences" = "Einstellungen";
 
 /* Main mac app menu item */
-"_menu_quit" = "ProtonVPN beenden";
+"_menu_quit" = "Proton VPN beenden";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Alles anzeigen";
@@ -2037,7 +2037,7 @@
 "_vpnauth_too_many_certs_title" = "Authentifizierungsfehler";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "Du bist nicht bei ProtonVPN angemeldet. Öffne die Proton VPN-App und melde dich an.";
+"_vpnstatus_not_loggedin" = "Du bist nicht bei Proton VPN angemeldet. Öffne die Proton VPN-App und melde dich an.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Warnung";
