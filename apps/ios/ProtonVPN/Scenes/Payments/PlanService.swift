@@ -56,6 +56,7 @@ final class CorePlanService: PlanService {
     private var paymentsUI: PaymentsUI?
     private let payments: Payments
     private let alertService: CoreAlertService
+    private let authKeychain: AuthKeychainHandle
     private let userCachedStatus: UserCachedStatus
 
     var countriesCount: Int = AccountPlan.plus.countriesCount
@@ -68,8 +69,9 @@ final class CorePlanService: PlanService {
         return userCachedStatus.paymentsBackendStatusAcceptsIAP
     }
 
-    init(networking: Networking, alertService: CoreAlertService, storage: Storage) {
+    init(networking: Networking, alertService: CoreAlertService, storage: Storage, authKeychain: AuthKeychainHandle) {
         self.alertService = alertService
+        self.authKeychain = authKeychain
 
         tokenStorage = TokenStorage()
         userCachedStatus = UserCachedStatus(storage: storage)
@@ -207,11 +209,11 @@ extension CorePlanService: StoreKitManagerDelegate {
     }
 
     var isSignedIn: Bool {
-        return AuthKeychain.fetch() != nil
+        return authKeychain.fetch() != nil
     }
 
     var activeUsername: String? {
-        guard let credentials = AuthKeychain.fetch() else {
+        guard let credentials = authKeychain.fetch() else {
             return nil
         }
 
@@ -219,7 +221,7 @@ extension CorePlanService: StoreKitManagerDelegate {
     }
 
     var userId: String? {
-        guard let credentials = AuthKeychain.fetch() else {
+        guard let credentials = authKeychain.fetch() else {
             return nil
         }
 

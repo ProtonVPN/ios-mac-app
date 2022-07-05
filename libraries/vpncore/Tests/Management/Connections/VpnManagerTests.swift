@@ -129,7 +129,16 @@ class VpnManagerTests: XCTestCase {
     func callOnTunnelProviderStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
         container.neTunnelProviderFactory.newManagerCreated = { manager in
             manager.connectionWasCreated = { connection in
-                connection.tunnelStateDidChange = { status in
+                guard let tunnelConnection = connection as? NETunnelProviderSessionMock else {
+                    XCTFail("Incorrect connection type for object")
+                    return
+                }
+
+                tunnelConnection.providerMessageSent = { _ in
+                    return Data()
+                }
+
+                tunnelConnection.tunnelStateDidChange = { status in
                     closure(manager, connection, status)
                 }
             }

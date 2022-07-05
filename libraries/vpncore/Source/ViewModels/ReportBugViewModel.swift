@@ -38,7 +38,7 @@ open class ReportBugViewModel {
     
     private var plan: AccountPlan?
     
-    public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
+    public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {
         self.propertiesManager = propertiesManager
         self.reportsApiService = reportsApiService
         self.alertService = alertService
@@ -46,7 +46,7 @@ open class ReportBugViewModel {
         self.logSources = logSources
         
         var username = ""
-        if let authCredentials = AuthKeychain.fetch() {
+        if let authCredentials = authKeychain.fetch() {
             username = authCredentials.username
         }
         

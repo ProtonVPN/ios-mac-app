@@ -69,7 +69,9 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     func testSavesValueToStorage() {
         let propertiesManager = PropertiesManagerMock()
         let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.basic)
-        let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider)
+        let keychain = MockAuthKeychain()
+        keychain.setMockUsername(Self.username)
+        let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: keychain)
         
         let provider = NetShieldPropertyProviderImplementation(factory, storage: Storage())
         
@@ -103,6 +105,6 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         authKeychain.setMockUsername(Self.username)
 
         testDefaults.set(netShieldType?.rawValue, forKey: "NetShield\(Self.username)")
-        return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider), Storage())
+        return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain), Storage())
     }
 }

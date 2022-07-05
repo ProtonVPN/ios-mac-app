@@ -90,7 +90,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         log.debug("App activated with the refresh url, refreshing data", category: .app, metadata: ["url": "\(url)"])
-        guard AuthKeychain.fetch() != nil else {
+        guard container.makeAuthKeychainHandle().fetch() != nil else {
             log.debug("User not is logged in, not refreshing user data", category: .app)
             return
         }
@@ -120,7 +120,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.info("applicationDidBecomeActive", category: .os)
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
-        if propertiesManager.featureFlags.pollNotificationAPI, AuthKeychain.fetch() != nil {
+        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
             self.container.makeAnnouncementRefresher().refresh()
         }
     }

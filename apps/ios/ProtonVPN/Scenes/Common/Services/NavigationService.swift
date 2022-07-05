@@ -109,6 +109,7 @@ final class NavigationService {
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -274,11 +275,29 @@ extension NavigationService: ProfileService {
     }
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
-        if let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController {
-            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete()), appStateManager: appStateManager, vpnGateway: vpnGateway!, profileManager: profileManager, propertiesManager: propertiesManager)
-            return createProfileViewController
+        guard let username = authKeychain.fetch()?.username else {
+            return nil
         }
-        return nil
+
+        guard let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController else {
+            return nil
+        }
+
+        let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary,
+                                                                 serverStorage: ServerStorageConcrete())
+
+        createProfileViewController.viewModel = CreateOrEditProfileViewModel(username: username,
+                                                                             for: profile,
+                                                                             profileService: self,
+                                                                             protocolSelectionService: self,
+                                                                             alertService: alertService,
+                                                                             vpnKeychain: vpnKeychain,
+                                                                             serverManager: serverManager,
+                                                                             appStateManager: appStateManager,
+                                                                             vpnGateway: vpnGateway!,
+                                                                             profileManager: profileManager,
+                                                                             propertiesManager: propertiesManager)
+        return createProfileViewController
     }
     
     func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController {
@@ -336,7 +355,15 @@ extension NavigationService: SettingsService {
         }
 
         let viewController = ReportBugViewController(vpnManager: vpnManager)
-        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain, logContentProvider: factory.makeLogContentProvider())
+        viewController.viewModel = ReportBugViewModel(os: "iOS",
+                                                      osVersion: UIDevice.current.systemVersion,
+                                                      propertiesManager: propertiesManager,
+                                                      reportsApiService: ReportsApiService(networking: networking,
+                                                                                           authKeychain: authKeychain),
+                                                      alertService: alertService,
+                                                      vpnKeychain: vpnKeychain,
+                                                      logContentProvider: factory.makeLogContentProvider(),
+                                                      authKeychain: authKeychain)
         viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
         let navigationController = UINavigationController(rootViewController: viewController)
         windowService.present(modal: navigationController)

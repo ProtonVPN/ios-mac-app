@@ -43,6 +43,7 @@ class HelpMenuViewModel {
                         & PropertiesManagerFactory
                         & LogFileManagerFactory
                         & LogContentProviderFactory
+                        & AuthKeychainHandleFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -53,6 +54,7 @@ class HelpMenuViewModel {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     
     init(factory: Factory) {
         self.factory = factory
@@ -99,7 +101,7 @@ class HelpMenuViewModel {
 
             // keychain
             self.vpnKeychain.clear()
-            AuthKeychain.clear()
+            self.authKeychain.clear()
 
             // app data
             if let bundleIdentifier = Bundle.main.bundleIdentifier {

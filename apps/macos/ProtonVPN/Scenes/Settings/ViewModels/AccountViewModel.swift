@@ -36,13 +36,18 @@ final class AccountViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let sessionService: SessionService
+    private let authKeychain: AuthKeychainHandle
 
     var reloadNeeded: (() -> Void)?
     
-    init(vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, sessionService: SessionService) {
+    init(vpnKeychain: VpnKeychainProtocol,
+         propertiesManager: PropertiesManagerProtocol,
+         sessionService: SessionService,
+         authKeychain: AuthKeychainHandle) {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
         self.sessionService = sessionService
+        self.authKeychain = authKeychain
 
         username = LocalizedString.unavailable
         accountType = LocalizedString.unavailable
@@ -58,7 +63,7 @@ final class AccountViewModel {
     }
 
     func reload() {
-        if let authCredentials = AuthKeychain.fetch() {
+        if let authCredentials = authKeychain.fetch() {
             username = authCredentials.username
             do {
                 let vpnCredentials = try vpnKeychain.fetchCached()

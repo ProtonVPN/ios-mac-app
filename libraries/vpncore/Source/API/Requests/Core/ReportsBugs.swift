@@ -21,11 +21,12 @@ import ProtonCore_APIClient
 import ProtonCore_Networking
 
 public final class ReportsBugs: Request {
-
     public let bug: ReportBug
+    private let authKeychain: AuthKeychainHandle
 
-    public init( _ bug: ReportBug) {
+    public init( _ bug: ReportBug, authKeychain: AuthKeychainHandle) {
         self.bug = bug
+        self.authKeychain = authKeychain
     }
 
     public var path: String {
@@ -54,6 +55,6 @@ public final class ReportsBugs: Request {
     }
 
     public var isAuth: Bool {
-        return AuthKeychain.fetch() != nil
+        return authKeychain.fetch() != nil
     }
 }

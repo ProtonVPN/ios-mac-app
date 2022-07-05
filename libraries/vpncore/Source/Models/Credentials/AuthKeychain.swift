@@ -28,7 +28,7 @@ public protocol AuthKeychainHandle {
     func clear()
 }
 
-extension AuthKeychainHandle {
+public extension AuthKeychainHandle {
     func fetch() -> AuthCredentials? {
         fetch(forContext: nil)
     }

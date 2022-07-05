@@ -56,7 +56,24 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory & ProfileManagerFactory & SearchStorageFactory & ReviewFactory
+    typealias Factory = VpnApiServiceFactory &
+                        AppStateManagerFactory &
+                        VpnKeychainFactory &
+                        PropertiesManagerFactory &
+                        ServerStorageFactory &
+                        VpnGatewayFactory &
+                        CoreAlertServiceFactory &
+                        NavigationServiceFactory &
+                        NetworkingFactory &
+                        AppSessionRefreshTimerFactory &
+                        AnnouncementRefresherFactory &
+                        VpnAuthenticationFactory &
+                        PlanServiceFactory &
+                        ProfileManagerFactory &
+                        SearchStorageFactory &
+                        ReviewFactory &
+                        AuthKeychainHandleFactory
+
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -72,6 +89,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     private lazy var review: Review = factory.makeReview()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     var vpnGateway: VpnGatewayProtocol?
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -91,7 +109,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        guard AuthKeychain.fetch() != nil else {
+        guard authKeychain.fetch() != nil else {
             completion(.failure(ProtonVpnErrorConst.userCredentialsMissing))
             return
         }
@@ -103,7 +121,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
         do {
-            try AuthKeychain.store(authCredentials)
+            try authKeychain.store(authCredentials)
         } catch {
             DispatchQueue.main.async {
                 completion(.failure(ProtonVpnError.keychainWriteFailed))
@@ -370,7 +388,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         refreshTimer.stop()
         loggedIn = false
         
-        AuthKeychain.clear()
+        authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
         planService.clear()
@@ -419,7 +437,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 // MARK: - Plan change
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     func paymentTransactionDidFinish() {
-        guard AuthKeychain.fetch() != nil else {
+        guard authKeychain.fetch() != nil else {
             return
         }
 

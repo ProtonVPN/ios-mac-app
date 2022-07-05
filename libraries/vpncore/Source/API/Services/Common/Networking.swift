@@ -51,11 +51,13 @@ public final class CoreNetworking: Networking {
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let appInfo: AppInfo
     private let doh: DoHVPN
+    private let authKeychain: AuthKeychainHandle
 
-    public init(delegate: NetworkingDelegate, appInfo: AppInfo, doh: DoHVPN) {
+    public init(delegate: NetworkingDelegate, appInfo: AppInfo, doh: DoHVPN, authKeychain: AuthKeychainHandle) {
         self.delegate = delegate
         self.appInfo = appInfo
         self.doh = doh
+        self.authKeychain = authKeychain
 
         apiService = PMAPIService(doh: doh)
         apiService.authDelegate = self
@@ -216,7 +218,7 @@ extension CoreNetworking: APIServiceDelegate {
 // MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
     public func getToken(bySessionUID uid: String) -> AuthCredential? {
-        guard let credentials = AuthKeychain.fetch() else {
+        guard let credentials = authKeychain.fetch() else {
             return nil
         }
         // the app stores credentials in an old format for compatibility reasons, conversion is needed
@@ -229,19 +231,19 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onUpdate(auth: Credential) {
-        guard let credentials = AuthKeychain.fetch() else {
+        guard let credentials = authKeychain.fetch() else {
             return
         }
 
         do {
-            try AuthKeychain.store(credentials.updatedWithAuth(auth: auth))
+            try authKeychain.store(credentials.updatedWithAuth(auth: auth))
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
 
     public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
-        guard let credentials = AuthKeychain.fetch() else {
+        guard let credentials = authKeychain.fetch() else {
             log.error("Cannot refresh token when credentials are not available", category: .keychain, event: .change)
             return
         }

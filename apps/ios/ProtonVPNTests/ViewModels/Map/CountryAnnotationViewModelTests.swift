@@ -75,7 +75,7 @@ class CountryAnnotationViewModelTests: XCTestCase {
             translatedCity: nil
             )
         )
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock)
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain())
         let vpnApiService = VpnApiService(networking: networking)
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),

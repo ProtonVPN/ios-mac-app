@@ -45,15 +45,20 @@ public class ProfileManager {
     public let contentChanged = Notification.Name("ProfileManagerContentChanged")
     
     public var customProfiles: [Profile] = []
+
     private var servers: [ServerModel] = []
     private let propertiesManager: PropertiesManagerProtocol
+    private let profileStorage: ProfileStorage
 
     public var allProfiles: [Profile] {
         return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol) + customProfiles
     }
     
-    public init(serverStorage: ServerStorage, propertiesManager: PropertiesManagerProtocol) {
+    public init(serverStorage: ServerStorage,
+                propertiesManager: PropertiesManagerProtocol,
+                profileStorage: ProfileStorage) {
         self.propertiesManager = propertiesManager
+        self.profileStorage = profileStorage
 
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged(_:)),
                                                name: ProfileStorage.contentChanged, object: nil)
@@ -63,7 +68,7 @@ public class ProfileManager {
     }
     
     public func refreshProfiles() {
-        customProfiles = ProfileStorage.fetch()
+        customProfiles = profileStorage.fetch()
     }
     
     public func profile(withServer server: ServerModel) -> Profile? {
@@ -84,7 +89,7 @@ public class ProfileManager {
         let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, netShield: netShield, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):
-            ProfileStorage.store(updatedProfiles)
+            profileStorage.store(updatedProfiles)
         default:
             break
         }
@@ -95,7 +100,7 @@ public class ProfileManager {
         let result = ProfileUtility.createProfile(profile, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):
-            ProfileStorage.store(updatedProfiles)
+            profileStorage.store(updatedProfiles)
         default:
             break
         }
@@ -106,7 +111,7 @@ public class ProfileManager {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):
-            ProfileStorage.store(updatedProfiles)
+            profileStorage.store(updatedProfiles)
         default:
             break
         }
@@ -116,7 +121,7 @@ public class ProfileManager {
     public func deleteProfile(_ profile: Profile) {
         let updatedProfiles = ProfileUtility.delete(profile: profile, in: customProfiles)
         customProfiles = updatedProfiles
-        ProfileStorage.store(updatedProfiles)
+        profileStorage.store(updatedProfiles)
     }
     
     // MARK: - Private functions

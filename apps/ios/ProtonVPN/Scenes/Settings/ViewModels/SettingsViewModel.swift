@@ -25,7 +25,25 @@ import vpncore
 import ProtonCore_UIFoundations
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory & PaymentsApiServiceFactory & CouponViewModelFactory
+    typealias Factory = AppStateManagerFactory &
+                        AppSessionManagerFactory &
+                        VpnGatewayFactory &
+                        CoreAlertServiceFactory &
+                        SettingsServiceFactory &
+                        VpnKeychainFactory &
+                        ConnectionStatusServiceFactory &
+                        NetShieldPropertyProviderFactory &
+                        VpnManagerFactory &
+                        VpnStateConfigurationFactory &
+                        PlanServiceFactory &
+                        PropertiesManagerFactory &
+                        AppInfoFactory &
+                        ProfileManagerFactory &
+                        NATTypePropertyProviderFactory &
+                        SafeModePropertyProviderFactory &
+                        PaymentsApiServiceFactory &
+                        CouponViewModelFactory &
+                        AuthKeychainHandleFactory
 
     private let factory: Factory
     
@@ -43,6 +61,7 @@ final class SettingsViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private let protocolService: ProtocolService
     
     var reloadNeeded: (() -> Void)?
@@ -180,7 +199,7 @@ final class SettingsViewModel {
         let username: String
         let accountPlanName: String
         
-        if let authCredentials = AuthKeychain.fetch(),
+        if let authCredentials = authKeychain.fetch(),
             let vpnCredentials = try? vpnKeychain.fetchCached() {
 
             username = authCredentials.username

@@ -49,11 +49,8 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testSavesValueToStorage() {
-        let propertiesManager = PropertiesManagerMock()
-        let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.plus)
-        let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider)
-
-        let provider = NATTypePropertyProviderImplementation(factory, storage: Storage())
+        let (factory, storage) = getFactory(natType: nil, tier: CoreAppConstants.VpnTiers.plus)
+        let provider = NATTypePropertyProviderImplementation(factory, storage: storage)
 
         for type in NATType.allCases {
             provider.natType = type
