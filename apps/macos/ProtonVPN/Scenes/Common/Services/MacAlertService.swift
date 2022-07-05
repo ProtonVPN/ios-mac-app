@@ -50,15 +50,14 @@ final class MacAlertService {
 
 extension MacAlertService: CoreAlertService {
     
-    // swiftlint:disable cyclomatic_complexity function_body_length
     func push(alert: SystemAlert) {
-        guard Thread.isMainThread else { // Protects from running UI code on background threads
-            DispatchQueue.main.async {
-                self.push(alert: alert)
-            }
-            return
+        executeOnUIThread {
+            self.pushOnUIThread(alert: alert)
         }
-        
+    }
+
+    // swiftlint:disable cyclomatic_complexity function_body_length
+    func pushOnUIThread(alert: SystemAlert) {
         log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
         
         switch alert {
