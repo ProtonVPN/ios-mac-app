@@ -36,9 +36,6 @@ class IosUiAlertService: UIAlertService {
     }
     
     func displayAlert(_ alert: SystemAlert) {
-        // Allows easier unit testing
-        guard Thread.isMainThread else { return DispatchQueue.main.async { [unowned self] in self.displayAlert(alert) } }
-        
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
             return
@@ -54,9 +51,6 @@ class IosUiAlertService: UIAlertService {
     }
     
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
-        // Allows easier unit testing
-        guard Thread.isMainThread else { return DispatchQueue.main.async { [unowned self] in self.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier) } }
-        
         windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }
     

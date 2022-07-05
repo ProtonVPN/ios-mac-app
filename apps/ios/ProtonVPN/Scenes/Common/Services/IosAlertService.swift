@@ -47,13 +47,18 @@ class IosAlertService {
 }
 
 extension IosAlertService: CoreAlertService {
-    
-    // swiftlint:disable cyclomatic_complexity function_body_length
+
     func push(alert: SystemAlert) {
+        executeOnUIThread {
+            self.pushOnUIThread(alert: alert)
+        }
+    }
+
+    // swiftlint:disable cyclomatic_complexity function_body_length
+    func pushOnUIThread(alert: SystemAlert) {
         log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
 
         switch alert {
-        
         case is AccountDeletionErrorAlert:
             showDefaultSystemAlert(alert)
             
@@ -290,8 +295,6 @@ extension IosAlertService: CoreAlertService {
     }
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
-        guard Thread.isMainThread else { return DispatchQueue.main.async { self.showDefaultSystemAlert(alert) } }
-        
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
         }
