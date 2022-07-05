@@ -21,21 +21,26 @@
 
 import Foundation
 
-class ProfileStorage {
-    
+public class ProfileStorage {
     private static let storageVersion = 1
     private static let versionKey     = "profileCacheVersion"
     
     static let contentChanged = Notification.Name("ProfileStorageContentChanged")
+
+    private let authKeychain: AuthKeychainHandle
+
+    public init(authKeychain: AuthKeychainHandle) {
+        self.authKeychain = authKeychain
+    }
     
-    static func fetch() -> [Profile] {
+    func fetch() -> [Profile] {
         guard let storageKey = storageKey() else {
             return []
         }
         
-        let version = Storage.userDefaults().integer(forKey: versionKey)
+        let version = Storage.userDefaults().integer(forKey: Self.versionKey)
         var profiles = [Profile]()
-        if version == storageVersion {
+        if version == Self.storageVersion {
             profiles = fetchFromMemory(storageKey: storageKey)
         }
         
@@ -47,19 +52,19 @@ class ProfileStorage {
         return profiles
     }
     
-    static func store(_ profiles: [Profile]) {
+    func store(_ profiles: [Profile]) {
         guard let storageKey = storageKey() else { return }
         storeInMemory(profiles, storageKey: storageKey)
-        DispatchQueue.main.async { NotificationCenter.default.post(name: contentChanged, object: profiles) }
+        DispatchQueue.main.async { NotificationCenter.default.post(name: Self.contentChanged, object: profiles) }
     }
     
-    // MARK: - Private static functions
-    private static func storageKey() -> String? {
-        guard let authCredentials = AuthKeychain.fetch() else { return nil }
+    // MARK: - Private functions
+    private func storageKey() -> String? {
+        guard let authCredentials = authKeychain.fetch() else { return nil }
         return "profiles_" + authCredentials.username
     }
     
-    private static func fetchFromMemory(storageKey: String) -> [Profile] {
+    private func fetchFromMemory(storageKey: String) -> [Profile] {
         if let data = Storage.userDefaults().data(forKey: storageKey),
             let userProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
                 return userProfiles
@@ -67,16 +72,16 @@ class ProfileStorage {
         return []
     }
     
-    private static func storeInMemory(_ profiles: [Profile], storageKey: String) {
-        Storage.userDefaults().set(self.storageVersion, forKey: versionKey)
+    private func storeInMemory(_ profiles: [Profile], storageKey: String) {
+        Storage.userDefaults().set(Self.storageVersion, forKey: Self.versionKey)
         Storage.userDefaults().set(NSKeyedArchiver.archivedData(withRootObject: profiles), forKey: storageKey)
     }
     
-    private static func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {
+    private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {
         return profiles.filter({ $0.profileType != .system })
     }
     
-    private static func systemProfilesPresent(in profiles: [Profile]) -> Bool {
+    private func systemProfilesPresent(in profiles: [Profile]) -> Bool {
         return !profiles.filter({ $0.profileType == .system }).isEmpty
     }
     

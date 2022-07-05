@@ -27,7 +27,16 @@ import ProtonCore_Networking
 
 final class SettingsAccountViewModel {
     
-    typealias Factory = AppSessionManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory & NetworkingFactory & PlanServiceFactory & PropertiesManagerFactory & VpnKeychainFactory & CouponViewModelFactory
+    typealias Factory = AppSessionManagerFactory &
+                        AppStateManagerFactory &
+                        CoreAlertServiceFactory &
+                        NetworkingFactory &
+                        PlanServiceFactory &
+                        PropertiesManagerFactory &
+                        VpnKeychainFactory &
+                        CouponViewModelFactory &
+                        AuthKeychainHandleFactory
+
     private var factory: Factory
     
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
@@ -36,6 +45,7 @@ final class SettingsAccountViewModel {
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
@@ -63,7 +73,7 @@ final class SettingsAccountViewModel {
         let allowUpgrade: Bool
         let allowPlanManagement: Bool
         
-        if let authCredentials = AuthKeychain.fetch(),
+        if let authCredentials = authKeychain.fetch(),
             let vpnCredentials = try? vpnKeychain.fetch() {
 
             let accountPlan = vpnCredentials.accountPlan

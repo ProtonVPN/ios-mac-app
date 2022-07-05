@@ -32,6 +32,7 @@ fileprivate enum ModelState {
 
 class CreateOrEditProfileViewModel: NSObject {
     
+    private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
     private let serverManager: ServerManager
@@ -76,7 +77,8 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
     
-    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
+    init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
+        self.username = username
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
@@ -92,7 +94,10 @@ class CreateOrEditProfileViewModel: NSObject {
         
         self.colorPickerViewModel = ColorPickerViewModel()
         
-        if let profile = profile, let quickConnectProfileId = propertiesManager.quickConnect, let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
+        if let profile = profile,
+           let username = username,
+           let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
+           let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
             self.isDefaultProfile = profile == quickConnectProfile
         }
         
@@ -186,12 +191,18 @@ class CreateOrEditProfileViewModel: NSObject {
             completion(false)
             return
         }
-        
+
+        guard let username = username else {
+            messageHandler?(LocalizedString.vpnstatusNotLoggedin, GSMessageType.warning, UIConstants.messageOptions)
+            completion(false)
+            return
+        }
+
         state = .standard
         if isDefaultProfile {
-            propertiesManager.quickConnect = profile.id
-        } else if let quickConnectId = propertiesManager.quickConnect, quickConnectId == profile.id { // default was on and has now been turned off for this profile
-            propertiesManager.quickConnect = nil
+            propertiesManager.setQuickConnect(for: username, quickConnect: profile.id)
+        } else if let quickConnectId = propertiesManager.getQuickConnect(for: username), quickConnectId == profile.id { // default was on and has now been turned off for this profile
+            propertiesManager.setQuickConnect(for: username, quickConnect: nil)
         }
         
         completion(true)

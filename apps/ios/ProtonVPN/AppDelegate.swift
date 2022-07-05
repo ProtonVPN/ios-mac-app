@@ -121,7 +121,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
-        if propertiesManager.featureFlags.pollNotificationAPI, AuthKeychain.fetch() != nil {
+        if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
             announcementRefresher.refresh()
         }
 

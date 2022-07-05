@@ -31,9 +31,11 @@ public protocol ReportsApiServiceFactory {
 
 public class ReportsApiService {
     private let networking: Networking
+    private let authKeychain: AuthKeychainHandle
     
-    public init(networking: Networking) {
+    public init(networking: Networking, authKeychain: AuthKeychainHandle) {
         self.networking = networking
+        self.authKeychain = authKeychain
     }
     
     public func report(bug: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
@@ -43,7 +45,7 @@ public class ReportsApiService {
                 result["File\(file.offset)"] = file.element
             }
 
-        let request = ReportsBugs(bug)
+        let request = ReportsBugs(bug, authKeychain: authKeychain)
         networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
             switch result {
             case .success:

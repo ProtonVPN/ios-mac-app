@@ -26,7 +26,7 @@ import XCTest
 
 class MapViewModelTests: XCTestCase {
 
-    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock)
+    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain())
 
     var serverStorage: ServerStorage!
     var appStateManager: AppStateManager!

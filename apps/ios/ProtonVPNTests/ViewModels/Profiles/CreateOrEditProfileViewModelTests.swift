@@ -41,8 +41,10 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
 
     lazy var appInfo = AppInfoImplementation(context: .mainApp)
-    
-    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: appInfo, doh: .mock)
+
+    lazy var authKeychain: AuthKeychainHandle = MockAuthKeychain()
+
+    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: appInfo, doh: .mock, authKeychain: authKeychain)
     var vpnApiService: VpnApiService {
         return VpnApiService(networking: networking)
     }
@@ -56,10 +58,11 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
     }
 
-    lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager)
+    lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
     lazy var propertiesManager = PropertiesManagerMock()
     
-    lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,
+    lazy var standardViewModel = CreateOrEditProfileViewModel(username: "user1",
+                                                              for: standardProfile,
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
@@ -69,7 +72,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                                                               profileManager: profileManager,
                                                               propertiesManager: propertiesManager)
-    lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
+    lazy var secureCoreViewModel = CreateOrEditProfileViewModel(username: "user1",
+                                                              for: secureCoreProfile,
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),

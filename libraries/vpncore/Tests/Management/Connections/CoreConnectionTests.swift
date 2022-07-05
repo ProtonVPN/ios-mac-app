@@ -60,7 +60,9 @@ class CoreConnectionTests: XCTestCase {
         apiCredentials = nil
     }
 
-    func callOnTunnelProviderStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
+    typealias VPNStateChangeCallback = (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void
+
+    func callOnTunnelProviderStateChange(closure: @escaping VPNStateChangeCallback) {
         container.neTunnelProviderFactory.newManagerCreated = { manager in
             manager.connectionWasCreated = { connection in
                 guard let tunnelConnection = connection as? NETunnelProviderSessionMock else {
@@ -79,7 +81,7 @@ class CoreConnectionTests: XCTestCase {
         }
     }
 
-    func callOnManagerStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
+    func callOnManagerStateChange(closure: @escaping VPNStateChangeCallback) {
         container.neVpnManagerConnectionStateChangeCallback = { (connection, status) in
             closure(self.container.neVpnManager, connection, status)
         }
@@ -271,13 +273,15 @@ class CoreConnectionTests: XCTestCase {
                                         profileId: nil)
 
         var tunnelProviderExpectation = expectations.initialConnection
-        callOnTunnelProviderStateChange { vpnManager, vpnConnection, vpnStatus in
+        let connectionCallback: VPNStateChangeCallback = { vpnManager, vpnConnection, vpnStatus in
             (currentManager, currentConnection, currentStatus) = (vpnManager, vpnConnection, vpnStatus)
 
             if vpnStatus == .connected {
                 tunnelProviderExpectation.fulfill()
             }
         }
+        callOnTunnelProviderStateChange(closure: connectionCallback)
+        callOnManagerStateChange(closure: connectionCallback)
 
         didRequestCertRefresh = {
             XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
@@ -289,8 +293,14 @@ class CoreConnectionTests: XCTestCase {
         wait(for: [tunnelProviderExpectation], timeout: expectationTimeout)
 
         XCTAssert(container.appStateManager.state.isConnected)
+
+        #if os(iOS)
         // wireguard was made unavailable above. protocol should fallback to openvpn
         XCTAssertEqual((currentManager?.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier, Container.openvpnProviderBundleId)
+        #elseif os(macOS)
+        // on macos, protocol should fallback to IKEv2
+        XCTAssert(currentManager?.protocolConfiguration is NEVPNProtocolIKEv2)
+        #endif
 
         // server2 has a lower score, so it should connect instead of server1
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
@@ -303,15 +313,22 @@ class CoreConnectionTests: XCTestCase {
         }
         wait(for: [expectations.connectedDate], timeout: expectationTimeout)
 
-        // now also force openvpn to be unavailable
         let unavailableCallback = container.availabilityCheckerResolverFactory.checkers[.wireGuard]!.availabilityCallback
+        #if os(iOS)
+        // on iOS, force openvpn to be unavailable to force it to fallback to ike
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.tcp)]?.availabilityCallback = unavailableCallback
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.udp)]?.availabilityCallback = unavailableCallback
+        #elseif os(macOS)
+        // on macOS, force ike to be unavailable to force it to fallback to openvpn
+        container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
+        #endif
 
-        callOnManagerStateChange { manager, connection, vpnStatus in
+        let reconnectionCallback: VPNStateChangeCallback = { manager, connection, vpnStatus in
             (currentManager, currentConnection, currentStatus) = (manager, connection, vpnStatus)
             expectations.reconnection.fulfill()
         }
+        callOnManagerStateChange(closure: reconnectionCallback)
+        callOnTunnelProviderStateChange(closure: reconnectionCallback)
 
         var observedState: AppState?
         var hasReconnected = false
@@ -340,6 +357,14 @@ class CoreConnectionTests: XCTestCase {
         container.vpnGateway.reconnect(with: NATType.strictNAT)
 
         wait(for: [expectations.reconnection, expectations.reconnectionAppStateChange], timeout: expectationTimeout)
+
+        #if os(iOS)
+        // on ios, protocol should fallback to IKEv2
+        XCTAssert(currentManager?.protocolConfiguration is NEVPNProtocolIKEv2)
+        #elseif os(macOS)
+        // on macos, protocol should fallback to OpenVPN
+        XCTAssertEqual((currentManager?.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier, Container.openvpnProviderBundleId)
+        #endif
 
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.appStateManager.state.isConnected)
@@ -376,11 +401,15 @@ class CoreConnectionTests: XCTestCase {
         container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.availabilityCallback = nil
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.tcp)]?.availabilityCallback = nil
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.udp)]?.availabilityCallback = nil
+        container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = nil
 
         didRequestCertRefresh = {
             expectations.wireguardCertRefresh.fulfill()
         }
 
+        callOnTunnelProviderStateChange(closure: connectionCallback)
+        callOnManagerStateChange(closure: connectionCallback)
+        
         tunnelProviderExpectation = expectations.reconnectionAfterServerInfoFetch
         container.vpnGateway.connect(with: request)
 
@@ -744,7 +773,9 @@ fileprivate class Container {
                                                              netShieldPropertyProvider: netShieldProvider,
                                                              safeModePropertyProvider: safeModeProvider)
 
-    lazy var profileManager = ProfileManager(serverStorage: serverStorage, propertiesManager: propertiesManager)
+    lazy var authKeychain = MockAuthKeychain(context: .mainApp)
+
+    lazy var profileManager = ProfileManager(serverStorage: serverStorage, propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
 
     lazy var checkers = [
         AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
@@ -754,8 +785,6 @@ fileprivate class Container {
     ].reduce(into: [:], { $0[$1.vpnProtocol] = $1 })
 
     lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
-
-    lazy var authKeychain = MockAuthKeychain(context: .mainApp)
 
     lazy var vpnGateway = VpnGateway(vpnApiService: vpnApiService,
                                      appStateManager: appStateManager,

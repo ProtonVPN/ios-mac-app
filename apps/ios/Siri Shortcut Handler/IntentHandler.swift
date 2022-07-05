@@ -34,7 +34,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()),
                                         appInfo: dependencyFactory.makeAppInfo(context: .siriIntentHandler),
-                                        doh: doh)
+                                        doh: doh,
+                                        authKeychain: dependencyFactory.makeAuthKeychainHandle())
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
@@ -82,7 +83,9 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     netShieldPropertyProvider: netShieldPropertyProvider,
                                                     natTypePropertyProvider: natTypePropertyProvider,
                                                     safeModePropertyProvider: safeModePropertyProvider,
-                                                    profileManager: ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager),
+                                                    profileManager: ProfileManager(serverStorage: ServerStorageConcrete(),
+                                                                                   propertiesManager: propertiesManager,
+                                                                                   profileStorage: ProfileStorage(authKeychain: dependencyFactory.makeAuthKeychainHandle())),
                                                     doh: doh,
                                                     serverStorage: serverStorage,
                                                     availabilityCheckerResolverFactory: dependencyFactory)
@@ -176,5 +179,11 @@ extension SiriIntentHandlerDependencyFactory: AppInfoFactory {
 extension SiriIntentHandlerDependencyFactory: AvailabilityCheckerResolverFactory {
     func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
+    }
+}
+
+extension SiriIntentHandlerDependencyFactory: AuthKeychainHandleFactory {
+    func makeAuthKeychainHandle() -> AuthKeychainHandle {
+        AuthKeychain()
     }
 }

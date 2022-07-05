@@ -18,29 +18,29 @@
 
 import Foundation
 
-class MockAuthKeychain: AuthKeychainHandle {
+public class MockAuthKeychain: AuthKeychainHandle {
     let defaultContext: AppContext
 
     var credentialsWereStored: (() -> Void)?
 
-    init(context: AppContext) {
+    public init(context: AppContext = .mainApp) {
         self.defaultContext = context
     }
 
     var credentials: [AppContext: AuthCredentials] = [:]
 
-    func fetch(forContext context: AppContext?) -> AuthCredentials? {
+    public func fetch(forContext context: AppContext?) -> AuthCredentials? {
         let context = context ?? defaultContext
         return credentials[context]
     }
 
-    func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
+    public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         let context = context ?? defaultContext
         self.credentials[context] = credentials
         credentialsWereStored?()
     }
 
-    func clear() {
+    public func clear() {
         self.credentials = [:]
     }
 }

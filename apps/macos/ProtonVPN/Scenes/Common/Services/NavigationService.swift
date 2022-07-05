@@ -56,6 +56,7 @@ class NavigationService {
         & NetworkingFactory
         & CouponViewModelFactory
         & SessionServiceFactory
+        & AuthKeychainHandleFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -66,6 +67,7 @@ class NavigationService {
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
 
     var vpnGateway: VpnGatewayProtocol?
     
@@ -99,9 +101,19 @@ class NavigationService {
     
     @objc private func sessionBecameActive(_ notification: NSNotification) {
         log.debug("User session did become active", category: .app)
-        if let vpnGateway = vpnGateway, vpnGateway.connection == .disconnected, propertiesManager.autoConnect.enabled {
-            vpnGateway.autoConnect()
+        guard let vpnGateway = vpnGateway, vpnGateway.connection == .disconnected else {
+            return
         }
+
+        guard let username = authKeychain.fetch()?.username else {
+            return
+        }
+
+        guard propertiesManager.getAutoConnect(for: username).enabled else {
+            return
+        }
+
+        vpnGateway.autoConnect()
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -112,9 +124,14 @@ class NavigationService {
             
             switch appStateManager.state {
             case .disconnected, .aborted:
-                if propertiesManager.autoConnect.enabled {
-                    vpnGateway.autoConnect()
+                guard let username = authKeychain.fetch()?.username else {
+                    return
                 }
+                guard propertiesManager.getAutoConnect(for: username).enabled else {
+                    return
+                }
+
+                vpnGateway.autoConnect()
             default:
                 break
             }
@@ -191,7 +208,7 @@ extension NavigationService {
     func openSettings(to tab: SettingsTab) {        
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab), accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(), propertiesManager: factory.makePropertiesManager(), sessionService: factory.makeSessionService()), couponViewModel: factory.makeCouponViewModel())
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab), accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(), propertiesManager: factory.makePropertiesManager(), sessionService: factory.makeSessionService(), authKeychain: factory.makeAuthKeychainHandle()), couponViewModel: factory.makeCouponViewModel())
     }
     
     func logOutRequested() {

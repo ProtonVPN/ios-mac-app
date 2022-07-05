@@ -67,12 +67,8 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
     }
 
     func testSavesValueToStorage() {
-        let propertiesManager = PropertiesManagerMock()
-        propertiesManager.featureFlags = FeatureFlags(smartReconnect: true, vpnAccelerator: true, netShield: true, streamingServicesLogos: true, portForwarding: true, moderateNAT: true, pollNotificationAPI: true, serverRefresh: true, guestHoles: true, safeMode: true, promoCode: true)
-        let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.plus)
-        let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider)
-
-        let provider = SafeModePropertyProviderImplementation(factory, storage: Storage())
+        let (factory, storage) = getFactory(safeMode: nil, tier: CoreAppConstants.VpnTiers.plus)
+        let provider = SafeModePropertyProviderImplementation(factory, storage: storage)
 
         for type in [true, false] {
             provider.safeMode = type

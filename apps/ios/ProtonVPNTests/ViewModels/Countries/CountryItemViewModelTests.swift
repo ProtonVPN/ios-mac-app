@@ -61,7 +61,7 @@ class CountryItemViewModelTests: XCTestCase {
     private func viewModel(withServers servers: [ServerModel]) -> CountryItemViewModel {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
         let group: CountryGroup = (country, servers)
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock)
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain())
         let vpnApiService = VpnApiService(networking: networking)
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),

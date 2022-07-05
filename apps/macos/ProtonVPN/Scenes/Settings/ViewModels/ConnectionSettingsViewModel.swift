@@ -34,6 +34,7 @@ final class ConnectionSettingsViewModel {
         & VpnManagerFactory
         & VpnStateConfigurationFactory
         & UserTierProviderFactory
+        & AuthKeychainHandleFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -45,6 +46,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
 
     private var sysexPending = false
     private var featureFlags: FeatureFlags {
@@ -63,29 +65,53 @@ final class ConnectionSettingsViewModel {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+
+    // MARK: - Quick and auto connect for current user
+    var username: String? {
+        authKeychain.fetch()?.username
+    }
+
+    var autoConnect: (enabled: Bool, profileId: String?)? {
+        get {
+            guard let username = username else { return nil }
+            return propertiesManager.getAutoConnect(for: username)
+        }
+        set {
+            guard let newValue = newValue else { return }
+            guard let username = username else { return }
+            propertiesManager.setAutoConnect(for: username, enabled: newValue.enabled, profileId: newValue.profileId)
+        }
+    }
+
+    var quickConnect: String? {
+        get {
+            guard let username = username else { return nil }
+            return propertiesManager.getQuickConnect(for: username)
+        }
+        set {
+            guard let username = username else { return }
+            propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
+        }
+    }
     
     // MARK: - Current Index
     
     var autoConnectProfileIndex: Int {
-        let autoConnect = propertiesManager.autoConnect
+        guard let autoConnect = autoConnect, autoConnect.enabled else { return 0 }
         
-        if autoConnect.enabled {
-            guard let profileId = autoConnect.profileId else { return 1 }
-            let index = profileManager.allProfiles.index {
-                $0.id == profileId
-            }
-            
-            guard let profileIndex = index else { return 1 }
-            let listIndex = profileIndex + 1
-            guard listIndex < autoConnectItemCount else { return 1 }
-            return listIndex
-        } else {
-            return 0
+        guard let profileId = autoConnect.profileId else { return 1 }
+        let index = profileManager.allProfiles.index {
+            $0.id == profileId
         }
+
+        guard let profileIndex = index else { return 1 }
+        let listIndex = profileIndex + 1
+        guard listIndex < autoConnectItemCount else { return 1 }
+        return listIndex
     }
     
     var quickConnectProfileIndex: Int {
-        guard let profileId = propertiesManager.quickConnect else { return 0 }
+        guard let profileId = quickConnect else { return 0 }
         let index = profileManager.allProfiles.index {
             $0.id == profileId
         }
@@ -135,10 +161,10 @@ final class ConnectionSettingsViewModel {
         
         if index > 0 {
             let selectedProfile = profileManager.allProfiles[index - 1]
-            propertiesManager.autoConnect = (enabled: true, profileId: selectedProfile.id)
+            autoConnect = (enabled: true, profileId: selectedProfile.id)
             log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
         } else {
-            propertiesManager.autoConnect = (enabled: false, profileId: nil)
+            autoConnect = (enabled: false, profileId: nil)
             log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "nil"])
         }
     }
@@ -149,7 +175,7 @@ final class ConnectionSettingsViewModel {
         }
         
         let selectedProfile = profileManager.allProfiles[index]
-        propertiesManager.quickConnect = selectedProfile.id
+        quickConnect = selectedProfile.id
         log.debug("Quick connect profiles changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
     }
 

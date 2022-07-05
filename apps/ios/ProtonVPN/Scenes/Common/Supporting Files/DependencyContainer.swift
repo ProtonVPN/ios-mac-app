@@ -41,6 +41,7 @@ final class DependencyContainer {
                                                          appStateManager: makeAppStateManager(),
                                                          alertService: makeCoreAlertService(),
                                                          vpnKeychain: makeVpnKeychain(),
+                                                         authKeychain: makeAuthKeychainHandle(),
                                                          siriHelper: SiriHelper(),
                                                          netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                          natTypePropertyProvider: makeNATTypePropertyProvider(),
@@ -50,18 +51,19 @@ final class DependencyContainer {
                                                          availabilityCheckerResolverFactory: self,
                                                          serverStorage: makeServerStorage())
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
-                                                                     openVpnFactory: openVpnFactory,
-                                                                     wireguardProtocolFactory: wireguardFactory,
-                                                                     appGroup: appGroup,
-                                                                     vpnAuthentication: makeVpnAuthentication(),
-                                                                     vpnKeychain: vpnKeychain,
-                                                                     propertiesManager: makePropertiesManager(),
-                                                                     vpnStateConfiguration: makeVpnStateConfiguration(),
-                                                                     alertService: iosAlertService,
-                                                                     vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()),
-                                                                     natTypePropertyProvider: makeNATTypePropertyProvider(),
-                                                                     netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                                                                     safeModePropertyProvider: makeSafeModePropertyProvider())
+                                                                 openVpnFactory: openVpnFactory,
+                                                                 wireguardProtocolFactory: wireguardFactory,
+                                                                 appGroup: appGroup,
+                                                                 vpnAuthentication: makeVpnAuthentication(),
+                                                                 vpnKeychain: vpnKeychain,
+                                                                 propertiesManager: makePropertiesManager(),
+                                                                 vpnStateConfiguration: makeVpnStateConfiguration(),
+                                                                 alertService: iosAlertService,
+                                                                 vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()),
+                                                                 localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
+                                                                 natTypePropertyProvider: makeNATTypePropertyProvider(),
+                                                                 netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                                                                 safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
@@ -105,6 +107,8 @@ final class DependencyContainer {
         logContentProvider: makeLogContentProvider()
     )
 
+    private lazy var authKeychain: AuthKeychainHandle = AuthKeychain()
+
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
@@ -122,8 +126,8 @@ final class DependencyContainer {
     private lazy var storage = Storage()
     private lazy var propertiesManager = PropertiesManager(storage: storage)
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
-    private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
-    private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), storage: storage)
+    private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN(), authKeychain: makeAuthKeychainHandle())
+    private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), storage: storage, authKeychain: makeAuthKeychainHandle())
     private lazy var appInfo = makeAppInfo()
     private lazy var doh: DoHVPN = {
         #if !RELEASE
@@ -143,7 +147,7 @@ final class DependencyContainer {
         }
         return doh
     }()
-    lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager())
+    lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
     private lazy var searchStorage = SearchModuleStorage(storage: storage)
     private lazy var review = Review(configuration: Configuration(settings: propertiesManager.ratingSettings), plan: (try? vpnKeychain.fetchCached().accountPlan.description), logger: { message in log.debug("\(message)", category: .review) })
 }
@@ -251,14 +255,15 @@ extension DependencyContainer: ReportBugViewModelFactory {
                                   reportsApiService: makeReportsApiService(),
                                   alertService: makeCoreAlertService(),
                                   vpnKeychain: makeVpnKeychain(),
-                                  logContentProvider: makeLogContentProvider())
+                                  logContentProvider: makeLogContentProvider(),
+                                  authKeychain: makeAuthKeychainHandle())
     }
 }
 
 // MARK: ReportsApiServiceFactory
 extension DependencyContainer: ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService {
-        return ReportsApiService(networking: makeNetworking())
+        return ReportsApiService(networking: makeNetworking(), authKeychain: makeAuthKeychainHandle())
     }
 }
 
@@ -363,7 +368,7 @@ extension DependencyContainer: UserTierProviderFactory {
 // MARK: - NetShieldPropertyProviderFactory
 extension DependencyContainer: NetShieldPropertyProviderFactory {
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        return NetShieldPropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
+        return NetShieldPropertyProviderImplementation(self, storage: storage)
     }
 }
 
@@ -461,14 +466,14 @@ extension DependencyContainer: DynamicBugReportManagerFactory {
 // MARK: NATTypePropertyProviderFactory
 extension DependencyContainer: NATTypePropertyProviderFactory {
     func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
-        return NATTypePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
+        return NATTypePropertyProviderImplementation(self, storage: storage)
     }
 }
 
 // MARK: SafeModePropertyProviderFactory
 extension DependencyContainer: SafeModePropertyProviderFactory {
     func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
-        return SafeModePropertyProviderImplementation(self, storage: storage, userInfoProvider: AuthKeychain())
+        return SafeModePropertyProviderImplementation(self, storage: storage)
     }
 }
 
@@ -536,8 +541,16 @@ extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
     }
 }
 
+// MARK: AvailabilityCheckerResolverFactory
 extension DependencyContainer: AvailabilityCheckerResolverFactory {
     func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
+    }
+}
+
+// MARK: AuthKeychainHandleFactory
+extension DependencyContainer: AuthKeychainHandleFactory {
+    func makeAuthKeychainHandle() -> AuthKeychainHandle {
+        return authKeychain
     }
 }
