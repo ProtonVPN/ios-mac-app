@@ -386,6 +386,15 @@ final class StatusMenuViewModel {
     @objc private func handlePlanChange() {
         do {
             let tier = try vpnKeychain.fetchCached().maxTier
+
+            // if Secure Core was enabled but the tier no longer allows its use
+            if propertiesManager.secureCoreToggle, tier < CoreAppConstants.VpnTiers.plus {
+                log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
+                propertiesManager.secureCoreToggle = false
+                serverType = .standard
+                vpnGateway?.changeActiveServerType(.standard)
+            }
+
             serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
             updateCountryList()
         } catch {
