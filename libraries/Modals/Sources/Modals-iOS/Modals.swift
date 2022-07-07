@@ -9,12 +9,14 @@ public struct ModalsFactory {
     private let discourageStoryboard: UIStoryboard
     private let newBrandStoryboard: UIStoryboard
     private let userAccountUpdateStoryboard: UIStoryboard
+    private let informativeStoryboard: UIStoryboard
 
     public init(colors: ModalsColors) {
         upsellStoryboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
         discourageStoryboard = UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
         newBrandStoryboard = UIStoryboard(name: "NewBrandViewController", bundle: Bundle.module)
         userAccountUpdateStoryboard = UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
+        informativeStoryboard = UIStoryboard(name: "InformativeViewController", bundle: Bundle.module)
         Modals_iOS.colors = colors
     }
 
@@ -48,6 +50,12 @@ public struct ModalsFactory {
         userAccountUpdateViewController.viewModel = viewModel
         userAccountUpdateViewController.onPrimaryButtonTap = onPrimaryButtonTap
         return userAccountUpdateViewController
+    }
+
+    public func informativeViewController(onPrimaryButtonTap: (() -> Void)?) -> UIViewController {
+        let informativeViewController = informativeStoryboard.instantiate(controllerType: InformativeViewController.self)
+        informativeViewController.onPrimaryButtonTap = onPrimaryButtonTap
+        return informativeViewController
     }
 }
 
