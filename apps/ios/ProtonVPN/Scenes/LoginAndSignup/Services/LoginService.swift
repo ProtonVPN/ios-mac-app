@@ -131,19 +131,21 @@ final class CoreLoginService {
         return result
     }
 
-    private func processLoginResult(result: LoginResult) {
+    private func processLoginResult(result: LoginAndSignupResult) {
         switch result {
         case .dismissed:
             log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
-        case .loggedIn:
+        case .loginStateChanged(.loginFinished):
             delegate?.userDidLogIn()
-        case .signedUp:
+        case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
+        case .loginStateChanged(.dataIsAvailable), .signupStateChanged(.dataIsAvailable):
+            log.debug("Login or signup process in progress")
         }
     }
 
     private func show(initialError: String?) {
-        let loginResultCompletion = { [weak self] (result: LoginResult) -> Void in
+        let loginResultCompletion = { [weak self] (result: LoginAndSignupResult) -> Void in
             self?.processLoginResult(result: result)
         }
         let customization = LoginCustomizationOptions(username: nil,
@@ -154,10 +156,10 @@ final class CoreLoginService {
         let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: LocalizedString.welcomeBody))
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(variant: variant,
                                                                                   customization: customization,
-                                                                                  completion: loginResultCompletion)
+                                                                                  updateBlock: loginResultCompletion)
         windowService.show(viewController: welcomeViewController)
         if initialError != nil {
-            loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, completion: loginResultCompletion)
+            loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
         }
     }
 
