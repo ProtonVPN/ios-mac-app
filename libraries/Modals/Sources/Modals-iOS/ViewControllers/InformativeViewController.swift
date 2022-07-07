@@ -18,9 +18,8 @@
 
 import Modals
 import UIKit
-import CoreTelephony
 
-final class InformativeViewController: UIViewController {
+public final class InformativeViewController: UIViewController {
 
     var viewModel = InformativeViewModel()
 
@@ -32,18 +31,12 @@ final class InformativeViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var primaryButton: UIButton!
-    @IBAction func acknowledgmentTapped(_ sender: UIButton) {
-        onPrimaryButtonTap?()
-    }
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupFeature()
-
-        let networkProviders = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders
-        let countryCode = networkProviders?.first?.value.isoCountryCode
-        print(countryCode)
     }
 
     private func setupUI() {
@@ -52,8 +45,20 @@ final class InformativeViewController: UIViewController {
         titleStyle(titleLabel)
         subtitleStyle(descriptionLabel)
 
+        setIsLoading(true)
+
         primaryButton.accessibilityIdentifier = "primaryButton"
         titleLabel.accessibilityIdentifier = "TitleLabel"
+    }
+
+    public func setIsLoading(_ isLoading: Bool) {
+        primaryButton.isHidden = isLoading
+        stackView.isHidden = isLoading
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
 
     private func setupFeature() {
@@ -61,5 +66,9 @@ final class InformativeViewController: UIViewController {
         descriptionLabel.text = viewModel.description
         imageView.image = viewModel.image
         primaryButton.setTitle(viewModel.acknowledgeButtonTitle, for: .normal)
+    }
+
+    @IBAction func acknowledgmentTapped(_ sender: UIButton) {
+        onPrimaryButtonTap?()
     }
 }

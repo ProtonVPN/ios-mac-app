@@ -52,7 +52,7 @@ public struct ModalsFactory {
         return userAccountUpdateViewController
     }
 
-    public func informativeViewController(onPrimaryButtonTap: (() -> Void)?) -> UIViewController {
+    public func informativeViewController(onPrimaryButtonTap: (() -> Void)?) -> InformativeViewController {
         let informativeViewController = informativeStoryboard.instantiate(controllerType: InformativeViewController.self)
         informativeViewController.onPrimaryButtonTap = onPrimaryButtonTap
         return informativeViewController
