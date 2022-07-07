@@ -161,6 +161,7 @@ final class CoreLoginService {
         if initialError != nil {
             loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
         }
+        InformativeModalChecker().presentInformativeViewController(on: welcomeViewController)
     }
 
     private func convertError(from error: Error) -> Error {
@@ -264,11 +265,11 @@ extension CoreLoginService: LoginService {
     }
 
     func showWelcome(initialError: String?) {
-        #if !RELEASE
-        showEnvironmentSelection()
-        #else
+//        #if !RELEASE
+//        showEnvironmentSelection()
+//        #else
         show(initialError: initialError)
-        #endif
+//        #endif
     }
 }
 
