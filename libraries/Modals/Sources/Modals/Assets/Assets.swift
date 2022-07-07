@@ -44,6 +44,7 @@ internal enum Asset {
   internal static let maximumDeviceLimitWarning = ImageAsset(name: "maximum-device-limit-warning")
   internal static let netshieldIOS = ImageAsset(name: "netshield-iOS")
   internal static let netshieldMacOS = ImageAsset(name: "netshield-macOS")
+  internal static let russiaEmergency = ImageAsset(name: "russia-emergency")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
