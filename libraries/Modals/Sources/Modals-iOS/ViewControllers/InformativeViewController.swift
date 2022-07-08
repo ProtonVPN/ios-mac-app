@@ -21,7 +21,7 @@ import UIKit
 
 public final class InformativeViewController: UIViewController {
 
-    var viewModel = InformativeViewModel()
+    var viewModel = RoskomBlockWarningViewModel()
 
     var onPrimaryButtonTap: (() -> Void)?
 
@@ -31,7 +31,6 @@ public final class InformativeViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var primaryButton: UIButton!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -44,21 +43,7 @@ public final class InformativeViewController: UIViewController {
         actionButtonStyle(primaryButton)
         titleStyle(titleLabel)
         subtitleStyle(descriptionLabel)
-
-        setIsLoading(true)
-
-        primaryButton.accessibilityIdentifier = "primaryButton"
-        titleLabel.accessibilityIdentifier = "TitleLabel"
-    }
-
-    public func setIsLoading(_ isLoading: Bool) {
-        primaryButton.isHidden = isLoading
-        stackView.isHidden = isLoading
-        if isLoading {
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-        }
+        descriptionLabel.textAlignment = .natural
     }
 
     private func setupFeature() {

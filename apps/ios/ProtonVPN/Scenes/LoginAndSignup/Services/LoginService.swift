@@ -49,6 +49,7 @@ final class CoreLoginService {
         & DoHVPNFactory
         & CoreApiServiceFactory
         & SettingsServiceFactory
+        & VpnApiServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -60,6 +61,7 @@ final class CoreLoginService {
     private let doh: DoHVPN
     private let coreApiService: CoreApiService
     private let settingsService: SettingsService
+    private let informativeModalChecker: InformativeModalChecker
 
     private lazy var loginInterface: LoginAndSignupInterface = {
         let signupParameters = SignupParameters(passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
@@ -92,6 +94,7 @@ final class CoreLoginService {
         doh = factory.makeDoHVPN()
         coreApiService = factory.makeCoreApiService()
         settingsService = factory.makeSettingsService()
+        informativeModalChecker = InformativeModalChecker(factory: factory)
     }
 
     private func finishFlow() -> WorkBeforeFlow {
@@ -161,7 +164,7 @@ final class CoreLoginService {
         if initialError != nil {
             loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
         }
-        InformativeModalChecker().presentInformativeViewController(on: welcomeViewController)
+        informativeModalChecker.presentInformativeViewController(on: welcomeViewController)
     }
 
     private func convertError(from error: Error) -> Error {
@@ -265,11 +268,11 @@ extension CoreLoginService: LoginService {
     }
 
     func showWelcome(initialError: String?) {
-//        #if !RELEASE
-//        showEnvironmentSelection()
-//        #else
+        #if !RELEASE
+        showEnvironmentSelection()
+        #else
         show(initialError: initialError)
-//        #endif
+        #endif
     }
 }
 
