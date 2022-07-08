@@ -17,9 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="d7W-6G-Cuc">
-                                <rect key="frame" x="188.5" y="434.5" width="37" height="37"/>
-                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bca-a0-QtZ">
                                 <rect key="frame" x="16" y="790" width="382" height="48"/>
                                 <constraints>
@@ -51,7 +48,7 @@
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnL-xU-HOV">
                                                         <rect key="frame" x="0.0" y="217" width="382" height="264"/>
-                                                        <mutableString key="text">И хотя мы не можем магическим образом избавиться от этой блокировки, мы делаем все возможное, чтобы помочь вам ее обойти. Из-за данной блокировки подключение к нашему VPN сервису иногда может быть затруднено. Уверяем вас, что мы по-прежнему защищаем ваше право на свободный доступ к информации и что наши инженеры работают над решением этой проблемы. Искренне просим вас не ставить нам плохие оценки в App Store: мы должны сохранить рейтинг 4+, иначе мы будем вынуждены прекратить работу нашего сервиса в России.</mutableString>
+                                                        <string key="text">И хотя мы не можем магическим образом избавиться от этой блокировки, мы делаем все возможное, чтобы помочь вам ее обойти. Из-за данной блокировки подключение к нашему VPN сервису иногда может быть затруднено. Уверяем вас, что мы по-прежнему защищаем ваше право на свободный доступ к информации и что наши инженеры работают над решением этой проблемы. Искренне просим вас не ставить нам плохие оценки в App Store: мы должны сохранить рейтинг 4+, иначе мы будем вынуждены прекратить работу нашего сервиса в России.</string>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -84,9 +81,7 @@
                         <constraints>
                             <constraint firstItem="lXO-ur-bQW" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="1QI-Rg-Itz"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="bca-a0-QtZ" secondAttribute="trailing" constant="16" id="1xb-k2-uPC"/>
-                            <constraint firstItem="d7W-6G-Cuc" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="KFm-CV-lBb"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="lXO-ur-bQW" secondAttribute="trailing" constant="16" id="P9G-IV-82b"/>
-                            <constraint firstItem="d7W-6G-Cuc" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="Qp6-QV-Ogf"/>
                             <constraint firstItem="lXO-ur-bQW" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="16" id="ePj-Af-vUn"/>
                             <constraint firstItem="bca-a0-QtZ" firstAttribute="top" secondItem="lXO-ur-bQW" secondAttribute="bottom" constant="8" symbolic="YES" id="hiT-Nl-VvO"/>
                             <constraint firstItem="bca-a0-QtZ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="ibG-g9-kyC"/>
@@ -94,7 +89,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="d7W-6G-Cuc" id="Epe-5F-wsi"/>
                         <outlet property="descriptionLabel" destination="YnL-xU-HOV" id="u3W-AT-jcb"/>
                         <outlet property="imageView" destination="B6i-9Z-d2v" id="hc4-pZ-iN1"/>
                         <outlet property="primaryButton" destination="bca-a0-QtZ" id="v2z-qN-UI8"/>

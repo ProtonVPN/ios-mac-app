@@ -448,6 +448,7 @@
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
+		E5A5C39D28785DE200C11A9E /* InformativeModalChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE128E28772894005AC737 /* InformativeModalChecker.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E5CE128F28772894005AC737 /* InformativeModalChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE128E28772894005AC737 /* InformativeModalChecker.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
@@ -3707,6 +3708,7 @@
 				D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */,
 				D5136C65228592E80002C095 /* TabBar.swift in Sources */,
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
+				E5A5C39D28785DE200C11A9E /* InformativeModalChecker.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
 				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
 				D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */,

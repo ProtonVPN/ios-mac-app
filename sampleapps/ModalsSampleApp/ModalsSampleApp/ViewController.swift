@@ -107,6 +107,7 @@ class ViewController: UITableViewController {
             viewController = modalVC
         } else if indexPath.section == 4 {
             let modalVC = modalsFactory.informativeViewController(onPrimaryButtonTap: nil)
+            modalVC.modalPresentationStyle = .fullScreen
             viewController = modalVC
         } else {
             fatalError()

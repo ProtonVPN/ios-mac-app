@@ -19,11 +19,19 @@
 import UIKit
 import Modals_iOS
 import CoreTelephony
+import vpncore
 
 /// The logic for showing or not showing the informative modal for Russian users.
 /// - Don't worsen the non-Russian experience of the app
 /// - Try our best to show the modal to users in Russia
 final class InformativeModalChecker {
+    typealias Factory = PropertiesManagerFactory
+
+    private let propertiesManager: PropertiesManagerProtocol
+
+    init(factory: Factory) {
+        propertiesManager = factory.makePropertiesManager()
+    }
 
     func presentInformativeViewController(on viewController: UIViewController ) {
         guard shouldPresentInformativeModal() else {
@@ -34,64 +42,35 @@ final class InformativeModalChecker {
         }
         informativeViewController.modalPresentationStyle = .fullScreen
         viewController.present(informativeViewController, animated: false)
-        isLocationInRussia { isInRussia in
-            if isInRussia {
-                informativeViewController.setIsLoading(false)
-            } else {
-                viewController.dismiss(animated: true)
-            }
-        }
     }
 
     private func shouldPresentInformativeModal() -> Bool {
+        let expectedCountryCode = "RU"
+
         let networkProviders = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders
-        let isoCountryCode = networkProviders?.first?.value.isoCountryCode
+        let isoCountryCode = networkProviders?.first?.value.isoCountryCode?.uppercased()
+        let isLanguageCodeRU = Locale.current.languageCode?.uppercased() == expectedCountryCode
+        let isRegionCodeRU = Locale.current.regionCode?.uppercased() == expectedCountryCode
+        let isLocaleRU = isLanguageCodeRU && isRegionCodeRU
 
-        let isLocaleRU = Locale.current.languageCode == "RU" && Locale.current.regionCode == "RU"
-
-        if let homeCountryCode = isoCountryCode {
-            if homeCountryCode == "RU" {
-                return true
+        if let userLocation = propertiesManager.userLocation?.country.uppercased() {
+            if userLocation == expectedCountryCode {
+                return true // We're quite sure the user is in Russia
             } else {
-                return false // false negative: A foreign user travels to Russia, won't get the modal
+                return false // We're quite sure the user is not in Russia
             }
-        } else if isLocaleRU {
-            return true
+        }
+        if let homeCountryCode = isoCountryCode {
+            if homeCountryCode == expectedCountryCode {
+                return true // The sim card is from Russia, but the user can be anywhere, will still get the modal
+            } else {
+                return false // possible false negative: A foreign user travels to Russia, won't get the modal
+            }
+        }
+        if isLocaleRU {
+            return true // possible false positive: Anyone located anywhere can set these to Russia and they'll see the modal
         } else {
-            return false // false negative: User in Russia with non-Russian sim card (or without sim card) that set the locale to other then RU will not see the modal
+            return false // possible false negative: User in Russia with non-Russian sim card (or without sim card) that set the locale to other then RU will not see the modal
         }
-    }
-
-    func isLocationInRussia(callback: (Bool) -> Void) {
-        locationCheck { result in
-            switch result {
-            case .success(let location):
-                if location == "RU" {
-                    callback(true)
-                    // show modal <- we're sure user is in Russia
-                } else {
-                    callback(false)
-                    // don't show <- we're sure user is not in Russia
-                }
-            case .failure(let error):
-                switch error {
-                case .network:
-                    callback(false)
-                    // don't show <- disconnected from network
-                case .timeout:
-                    callback(true)
-                    // show error <- blocked by network provider
-                }
-            }
-        }
-    }
-
-    private enum LocationError: Error {
-        case timeout
-        case network
-    }
-
-    private func locationCheck(completion: (Result<String, LocationError>) -> Void) {
-        completion(.success("RU"))
     }
 }
