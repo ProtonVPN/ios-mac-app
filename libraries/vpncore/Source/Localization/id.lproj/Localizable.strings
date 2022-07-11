@@ -1598,6 +1598,9 @@
 "_subuser_alert_assign_connections_button" = "Tetapkan koneksi VPN";
 
 /* (No Comment) */
+"_subuser_alert_description1" = "Untuk memulai perjalanan Anda di Proton VPN, harap tetapkan koneksi VPN ke akun Anda atau sub-akun lainnya.";
+
+/* (No Comment) */
 "_subuser_alert_description2" = "Langkah ini akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
 
 /* (No Comment) */
