@@ -137,7 +137,11 @@ final class NavigationService {
     private lazy var tabBarController = {
         return makeTabBarController()
     }()
-    
+
+    private lazy var informativeModalChecker = {
+        return InformativeModalChecker(factory: factory)
+    }()
+
     var vpnGateway: VpnGatewayProtocol? {
         return appSessionManager.vpnGateway
     }
@@ -167,7 +171,7 @@ final class NavigationService {
     }
 
     func presentWelcome(initialError: String?) {
-        loginService.showWelcome(initialError: initialError)
+        loginService.showWelcome(initialError: initialError, withOverlayViewController: informativeModalChecker.informativeViewController())
     }
 
     private func presentMainInterface() {

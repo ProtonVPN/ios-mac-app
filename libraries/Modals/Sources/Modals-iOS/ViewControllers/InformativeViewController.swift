@@ -23,8 +23,6 @@ public final class InformativeViewController: UIViewController {
 
     var viewModel = RoskomBlockWarningViewModel()
 
-    var onPrimaryButtonTap: (() -> Void)?
-
     @IBOutlet weak var scrollView: CenteringScrollView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -54,6 +52,6 @@ public final class InformativeViewController: UIViewController {
     }
 
     @IBAction func acknowledgmentTapped(_ sender: UIButton) {
-        onPrimaryButtonTap?()
+        presentingViewController?.dismiss(animated: true)
     }
 }
