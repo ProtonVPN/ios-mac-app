@@ -2108,6 +2108,9 @@
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Metoda logowania jest nieprawidłowa. Skontaktuj się ze wsparciem.";
 
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "By połączyć się z tym urządzeniem, odłącz inne lub ulepsz do %@";
+
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Strona internetowa Proton VPN może być tymczasowo niedostępna z powodu ograniczeń sieciowych. Użyj aplikacji mobilnej, aby utworzyć nowe konto Proton.";
 

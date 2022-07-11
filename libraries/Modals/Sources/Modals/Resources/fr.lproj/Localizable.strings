@@ -14,7 +14,7 @@
 "maximum_device_limit" = "Veuillez déconnecter un autre appareil pour connecter celui-ci.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Déconnectez un autre appareil pour connecter celui-ci ou passez à l'abonnement %@";
+"maximum_device_plan_limit_part_1" = "Déconnectez un autre appareil pour connecter celui-ci ou passez à l'abonnement %@.";
 
 /* Title of user account update screen */
 "maximum_device_title" = "Vous avez atteint votre limite maximale d'appareils";
@@ -44,16 +44,16 @@
 "modals_get_plus" = "Changer d'offre";
 
 /* Learn more of the No Logs screen */
-"modals_no_logs_external_audit" = "La politique stricte d'absence de journaux de Proton VPN est certifiée par un audit externe.";
+"modals_no_logs_external_audit" = "La politique stricte de non-journalisation (no logs) Proton VPN est certifiée par un audit externe.";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_log_activity" = "Nous n'enregistrons pas votre activité sur Internet";
+"modals_no_logs_log_activity" = "Nous n'enregistrons pas votre activité sur internet.";
 
 /* Feature of the No Logs screen */
 "modals_no_logs_privacy_first" = "Proton VPN : priorité à la confidentialité";
 
 /* Feature of the No Logs screen */
-"modals_no_logs_third_parties" = "Nous ne partageons aucune donnée avec des tierces parties";
+"modals_no_logs_third_parties" = "Nous ne partageons aucune donnée avec des tierces parties.";
 
 /* Title of the No Logs screen */
 "modals_no_logs_title" = "Aucun journaux et basé en Suisse";

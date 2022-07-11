@@ -11,7 +11,7 @@
 "_account" = "Обліковий запис";
 
 /* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "Видалення вашого облікового запису завершить ваш сенс VPN.";
+"_account_deletion_connection_warning" = "Видалення облікового запису завершить ваш сенс VPN.";
 
 /* Alert title for account deletion error */
 "_account_deletion_error" = "Помилка";
