@@ -33,15 +33,13 @@ final class InformativeModalChecker {
         propertiesManager = factory.makePropertiesManager()
     }
 
-    func presentInformativeViewController(on viewController: UIViewController ) {
+    func informativeViewController() -> UIViewController? {
         guard shouldPresentInformativeModal() else {
-            return
+            return nil
         }
-        let informativeViewController = ModalsFactory(colors: UpsellColors()).informativeViewController {
-            viewController.dismiss(animated: true)
-        }
+        let informativeViewController = ModalsFactory(colors: UpsellColors()).informativeViewController()
         informativeViewController.modalPresentationStyle = .fullScreen
-        viewController.present(informativeViewController, animated: false)
+        return informativeViewController
     }
 
     private func shouldPresentInformativeModal() -> Bool {

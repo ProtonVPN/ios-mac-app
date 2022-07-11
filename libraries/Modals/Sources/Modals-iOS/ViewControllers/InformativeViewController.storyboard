@@ -32,10 +32,10 @@
                                 <rect key="frame" x="16" y="60" width="382" height="722"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DBw-Qq-Qh6">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="1203"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="1223.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="9Qn-y9-MEe">
-                                                <rect key="frame" x="0.0" y="0.0" width="382" height="481"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="501.5"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="382" placeholderIntrinsicHeight="128" translatesAutoresizingMaskIntoConstraints="NO" id="B6i-9Z-d2v">
                                                         <rect key="frame" x="0.0" y="0.0" width="382" height="128"/>
@@ -47,8 +47,12 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YnL-xU-HOV">
-                                                        <rect key="frame" x="0.0" y="217" width="382" height="264"/>
-                                                        <string key="text">И хотя мы не можем магическим образом избавиться от этой блокировки, мы делаем все возможное, чтобы помочь вам ее обойти. Из-за данной блокировки подключение к нашему VPN сервису иногда может быть затруднено. Уверяем вас, что мы по-прежнему защищаем ваше право на свободный доступ к информации и что наши инженеры работают над решением этой проблемы. Искренне просим вас не ставить нам плохие оценки в App Store: мы должны сохранить рейтинг 4+, иначе мы будем вынуждены прекратить работу нашего сервиса в России.</string>
+                                                        <rect key="frame" x="0.0" y="217" width="382" height="284.5"/>
+                                                        <mutableString key="text">С 31 мая 2022 года предпринимаются активные попытки блокировки Proton VPN в сегментах интернет, подконтрольных РФ.
+
+Мы боремся с этими блокировками и Proton VPN продолжает работать для большинства пользователей. Ситуация постоянно меняется, поэтому если у вас возникнут проблемы с логином или подключением - просто попробуйте повторить это позднее.
+
+Знайте, мы работаем не покладая рук над тем, чтобы победить цензуру. Спасибо за ваше терпение и поддержку!</mutableString>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>

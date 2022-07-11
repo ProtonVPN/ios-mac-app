@@ -33,7 +33,7 @@ protocol LoginService: AnyObject {
     var delegate: LoginServiceDelegate? { get set }
 
     func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void)
-    func showWelcome(initialError: String?)
+    func showWelcome(initialError: String?, withOverlayViewController: UIViewController?)
 }
 
 // MARK: CoreLoginService
@@ -61,7 +61,6 @@ final class CoreLoginService {
     private let doh: DoHVPN
     private let coreApiService: CoreApiService
     private let settingsService: SettingsService
-    private let informativeModalChecker: InformativeModalChecker
 
     private lazy var loginInterface: LoginAndSignupInterface = {
         let signupParameters = SignupParameters(passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
@@ -94,7 +93,6 @@ final class CoreLoginService {
         doh = factory.makeDoHVPN()
         coreApiService = factory.makeCoreApiService()
         settingsService = factory.makeSettingsService()
-        informativeModalChecker = InformativeModalChecker(factory: factory)
     }
 
     private func finishFlow() -> WorkBeforeFlow {
@@ -147,7 +145,7 @@ final class CoreLoginService {
         }
     }
 
-    private func show(initialError: String?) {
+    private func show(initialError: String?, withOverlayViewController: UIViewController?) {
         let loginResultCompletion = { [weak self] (result: LoginAndSignupResult) -> Void in
             self?.processLoginResult(result: result)
         }
@@ -164,7 +162,9 @@ final class CoreLoginService {
         if initialError != nil {
             loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
         }
-        informativeModalChecker.presentInformativeViewController(on: welcomeViewController)
+        if let overlay = withOverlayViewController {
+            welcomeViewController.present(overlay, animated: false)
+        }
     }
 
     private func convertError(from error: Error) -> Error {
@@ -267,11 +267,11 @@ extension CoreLoginService: LoginService {
         }
     }
 
-    func showWelcome(initialError: String?) {
+    func showWelcome(initialError: String?, withOverlayViewController: UIViewController?) {
         #if !RELEASE
         showEnvironmentSelection()
         #else
-        show(initialError: initialError)
+        show(initialError: initialError, withOverlayViewController: overlayViewController)
         #endif
     }
 }
@@ -289,7 +289,7 @@ extension CoreLoginService: EnvironmentsViewControllerDelegate {
     }
 
     func userDidSelectContinue() {
-        show(initialError: nil)
+        show(initialError: nil, withOverlayViewController: nil)
     }
 }
 #endif
