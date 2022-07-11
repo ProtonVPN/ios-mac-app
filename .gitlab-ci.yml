@@ -39,7 +39,11 @@ code_quality:
   script:    
     - fastlane/code_quality.sh
   tags:
-    - iOS_ARM  
+    - iOS_ARM
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
 
 core_lint:  
   stage: linting  
@@ -49,6 +53,10 @@ core_lint:
     - cd libraries/vpncore
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "core-lint-$CI_COMMIT_TAG"
     paths:
@@ -66,6 +74,10 @@ ios_lint:
     - cd apps/iOS
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "ios-lint-$CI_COMMIT_TAG"
     paths:
@@ -83,6 +95,10 @@ macos_lint:
     - cd apps/macos
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "ios-lint-$CI_COMMIT_TAG"
     paths:
@@ -100,6 +116,10 @@ bugreport_lint:
     - cd libraries/BugReport
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "bug-report-lint-$CI_COMMIT_TAG"
     paths:
@@ -117,6 +137,10 @@ onboarding_lint:
     - cd libraries/Onboarding
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "onboarding-lint-$CI_COMMIT_TAG"
     paths:
@@ -134,6 +158,10 @@ search_lint:
     - cd libraries/Search
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "search-lint-$CI_COMMIT_TAG"
     paths:
@@ -151,6 +179,10 @@ modals_lint:
     - cd libraries/Modals
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "modals-report-lint-$CI_COMMIT_TAG"
     paths:
@@ -168,6 +200,10 @@ review_lint:
     - cd libraries/Review
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "review-report-lint-$CI_COMMIT_TAG"
     paths:
@@ -185,6 +221,10 @@ wireguard_extension_lint:
     - cd libraries/WireguardExtension
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "wireguard_extension-report-lint-$CI_COMMIT_TAG"
     paths:
@@ -206,6 +246,10 @@ core_ios_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       cobertura: 
@@ -227,6 +271,10 @@ bugreport_unit_tests:
     - cd -
     - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/BugReport.lcov -o fastlane/test_output/BugReport.xml
     - Scripts/print-coverage-cobertura.sh fastlane/test_output/BugReport.xml
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       cobertura:
@@ -246,6 +294,10 @@ review_unit_tests:
     - cd -
     - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/Review.lcov -o fastlane/test_output/Review.xml
     - Scripts/print-coverage-cobertura.sh fastlane/test_output/Review.xml
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       cobertura:
@@ -263,6 +315,10 @@ search_ios_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       junit:
@@ -282,6 +338,10 @@ modals_ios_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       junit:
@@ -302,6 +362,10 @@ core_macos_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script: # Cleanup
     - fastlane delete_macos_keychain
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       cobertura:
@@ -322,6 +386,10 @@ wireguard_unit_tests:
     - xcrun xccov view --report --json fastlane/test_output/WireGuardNetworkExtensionTests.xcresult > coverage.json
   after_script:
     - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       junit:
@@ -342,6 +410,10 @@ ios_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       cobertura:
@@ -362,6 +434,10 @@ ios_ui_tests:
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
     - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   when: manual
   artifacts:
     reports:
@@ -378,6 +454,10 @@ onboarding_ui_tests:
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   when: manual
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "onboarding-tests-$CI_COMMIT_TAG"
     when: always
@@ -398,6 +478,10 @@ modals_unit_tests:
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   when: always
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "modals-tests-$CI_COMMIT_TAG"
     when: always
@@ -418,7 +502,10 @@ ios_bugreport_ui_tests:
     - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  when: manual
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       junit:
@@ -431,7 +518,10 @@ macos_bugreport_ui_tests:
   script:
     - fastlane macos_bugreport_ui_test
     - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
-  when: manual
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     reports:
       junit:
@@ -460,6 +550,10 @@ macos_unit_tests:
     - fastlane delete_macos_keychain
   tags:
     - macOS_ARM
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   artifacts:
     name: "macos-tests-$CI_COMMIT_TAG"
     when: always
@@ -491,7 +585,10 @@ macos_ui_tests:
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
     - fastlane delete_macos_keychain
-  when: manual
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
   tags:
     - macOS_ARM
   artifacts:
@@ -639,6 +736,7 @@ sonarqube-check:
   script:
     - sonar-scanner
   allow_failure: true
-  only:
-    - merge_requests
-    - develop
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - when: manual
