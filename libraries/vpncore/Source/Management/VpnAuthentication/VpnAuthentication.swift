@@ -329,7 +329,9 @@ public final class VpnAuthenticationRemoteClient {
                 if case let .failure(error) = result {
                     log.error("Could not stop manager remotely: \(error)")
                     assertionFailure("Could not stop manager remotely: \(error)")
+                    return
                 }
+                finished?()
             })
         })
     }

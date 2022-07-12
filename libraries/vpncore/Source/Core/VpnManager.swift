@@ -110,8 +110,21 @@ public class VpnManager: VpnManagerProtocol {
     }
     public var stateChanged: (() -> Void)?
 
+    private let localAgentIsConnectedQueue = DispatchQueue(label: "ch.protonvpn.local-agent.is-connected")
+    private var _isLocalAgentConnectedNoSync: Bool?
     public internal(set) var isLocalAgentConnected: Bool? {
-        didSet {
+        get {
+            return localAgentIsConnectedQueue.sync {
+                _isLocalAgentConnectedNoSync
+            }
+        }
+        set {
+            var oldValue: Bool?
+            localAgentIsConnectedQueue.sync {
+                oldValue = _isLocalAgentConnectedNoSync
+                _isLocalAgentConnectedNoSync = newValue
+            }
+
             guard isLocalAgentConnected != oldValue else {
                 return
             }

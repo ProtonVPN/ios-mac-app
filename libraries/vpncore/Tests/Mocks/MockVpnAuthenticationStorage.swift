@@ -19,6 +19,9 @@
 import Foundation
 
 class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
+    public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
+    public var keysStored: ((VpnKeys) -> ())?
+
     var keys: VpnKeys?
     var cert: VpnCertificate?
     var features: VPNConnectionFeatures?
@@ -57,12 +60,14 @@ class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
 
     func store(keys: VpnKeys) {
         self.keys = keys
+        keysStored?(keys)
     }
 
     func store(certificate: VpnCertificateWithFeatures) {
         self.cert = certificate.certificate
         self.features = certificate.features
         delegate?.certificateStored(certificate)
+        certAndFeaturesStored?(certificate)
     }
 
     var delegate: VpnAuthenticationStorageDelegate?
