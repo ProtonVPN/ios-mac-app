@@ -109,11 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
-        var appStateManager = container.makeAppStateManager()
         // If the app was on a closed state, we'll have to wait for the configuration to be established
-        appStateManager.onVpnStateChanged = { state in
-            appStateManager.onVpnStateChanged = nil
-            self.checkStuckConnection(state)
+        appStateManager.onVpnStateChanged = { [weak self] state in
+            self?.appStateManager.onVpnStateChanged = nil
+            self?.checkStuckConnection(state)
         }
         
         // Otherwise just  check directly  the connection
