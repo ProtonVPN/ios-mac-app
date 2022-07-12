@@ -35,6 +35,8 @@ class LocalAgentConnectionMock: LocalAgentConnectionWrapper {
     var state: String = ""
     var status: LocalAgentStatusMessage?
 
+    private let setterQueue = DispatchQueue(label: "ch.protonvpn.test.local-agent-connection.setter-queue")
+
     init(clientCertPEM: String,
          clientKeyPEM: String,
          serverCAsPEM: String,
@@ -54,15 +56,21 @@ class LocalAgentConnectionMock: LocalAgentConnectionWrapper {
     }
 
     func close() {
-        closed = true
+        setterQueue.sync {
+            closed = true
+        }
     }
 
     func setConnectivity(_ connectivity: Bool) {
-        self.connectivity = connectivity
+        setterQueue.sync {
+            self.connectivity = connectivity
+        }
     }
 
     func setFeatures(_ features: LocalAgentFeatures?) {
-        self.features = features
+        setterQueue.sync {
+            self.features = features
+        }
     }
 }
 

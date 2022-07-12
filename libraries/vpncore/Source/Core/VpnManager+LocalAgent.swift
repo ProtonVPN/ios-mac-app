@@ -131,7 +131,9 @@ extension VpnManager {
 
     func reconnectWithNewKeyAndCertificate() {
         vpnAuthentication.clearEverything { [weak self] in
-            self?.refreshCertificateWithError { _ in
+            // Force keygen on our end, otherwise we won't be able to fetch a certificate.
+            _ = self?.vpnAuthentication.loadClientPrivateKey()
+            self?.refreshCertificateWithError { result in
                 log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
                 executeOnUIThread {
                     NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)

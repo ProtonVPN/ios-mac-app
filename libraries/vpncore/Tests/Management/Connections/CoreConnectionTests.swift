@@ -27,11 +27,12 @@ class CoreConnectionTests: XCTestCase {
     let expectationTimeout: TimeInterval = 10
 
     var mockProviderState: (
+        forceResponse: WireguardProviderRequest.Response?,
         shouldRefresh: Bool,
         needNewSession: Bool
-    ) = (true, false)
+    ) = (nil, true, false)
 
-    var didRequestCertRefresh: (() -> ())?
+    var didRequestCertRefresh: ((VPNConnectionFeatures?) -> ())?
 
     fileprivate let testData = TestData()
     fileprivate var container: Container!
@@ -58,6 +59,7 @@ class CoreConnectionTests: XCTestCase {
 
     override func tearDown() {
         apiCredentials = nil
+        container.alertService.alertAdded = nil
     }
 
     typealias VPNStateChangeCallback = (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void
@@ -147,11 +149,15 @@ class CoreConnectionTests: XCTestCase {
 
         switch request {
         case .refreshCertificate(let features):
+            if let response = mockProviderState.forceResponse {
+                return response.asData
+            }
+
             guard !mockProviderState.needNewSession else {
                 return WireguardProviderRequest.Response.errorSessionExpired.asData
             }
 
-            guard mockProviderState.shouldRefresh else {
+            guard container.vpnAuthenticationStorage.cert == nil || mockProviderState.shouldRefresh else {
                 break
             }
 
@@ -160,7 +166,7 @@ class CoreConnectionTests: XCTestCase {
             container.vpnAuthenticationStorage.store(certificate: certAndFeatures)
 
             mockProviderState.shouldRefresh = false
-            didRequestCertRefresh?()
+            didRequestCertRefresh?(features)
         case .setApiSelector:
             mockProviderState.needNewSession = false
         case .cancelRefreshes, .restartRefreshes:
@@ -202,7 +208,7 @@ class CoreConnectionTests: XCTestCase {
             }
         }
 
-        didRequestCertRefresh = {
+        didRequestCertRefresh = { _ in
             expectations.certRefresh.fulfill()
         }
 
@@ -283,7 +289,7 @@ class CoreConnectionTests: XCTestCase {
         callOnTunnelProviderStateChange(closure: connectionCallback)
         callOnManagerStateChange(closure: connectionCallback)
 
-        didRequestCertRefresh = {
+        didRequestCertRefresh = { _ in
             XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
         }
 
@@ -403,7 +409,7 @@ class CoreConnectionTests: XCTestCase {
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.udp)]?.availabilityCallback = nil
         container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = nil
 
-        didRequestCertRefresh = {
+        didRequestCertRefresh = { _ in
             expectations.wireguardCertRefresh.fulfill()
         }
 
@@ -625,36 +631,49 @@ class CoreConnectionTests: XCTestCase {
     }
 
     func testLocalAgentErrorHandling() {
+        mockProviderState.shouldRefresh = false
+        container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+        container.propertiesManager.hasConnected = true
+
         guard let consts = LocalAgentConstants() else {
             XCTFail("Could not initialize local agent constants")
             return
         }
 
-        let (totalConnections, totalDisconnections) = (3, 3)
+        let (totalConnections,
+             totalLAConnections,
+             totalDisconnections,
+             totalCertRefreshes,
+             totalAlertsDisplayed) = (9, 11, 9, 8, 2)
+        var (nConnections, nDisconnections, nLAConnections, nAlertsDisplayed) = (0, 0, 0, 0)
+        var shouldNotDisconnect = false
 
         let expectations = (
             vpnConnection: (1...totalConnections).map { XCTestExpectation(description: "vpn tunnel start \($0)") },
-            newLAConnection: (1...totalConnections).map { XCTestExpectation(description: "new client for connection \($0)") },
-            vpnDisconnection: (1...totalDisconnections).map { XCTestExpectation(description: "vpn tunnel stop \($0)") }
+            newLAConnection: (1...totalLAConnections).map { XCTestExpectation(description: "new client for connection \($0)") },
+            vpnDisconnection: (1...totalDisconnections).map { XCTestExpectation(description: "vpn tunnel stop \($0)") },
+            certRefresh: (1...totalCertRefreshes).map { XCTestExpectation(description: "cert refresh \($0)") },
+            alertDisplayed: (1...totalAlertsDisplayed).map { XCTestExpectation(description: "alert \($0) was displayed") },
+            featuresStored: XCTestExpectation(description: "certificate and features stored")
         )
 
+        let localAgentEventQueue = DispatchQueue(label: "local agent testing event queue")
         var localAgentConnection: LocalAgentConnectionMock?
         let (laState, laError) = ({ (state: String?) in
-            DispatchQueue.main.async {
+            localAgentEventQueue.async {
                 localAgentConnection?.client.onState(state)
             }
         }, { (code: Int, description: String?) in
-            DispatchQueue.main.async {
+            localAgentEventQueue.async {
                 localAgentConnection?.client.onError(code, description: description)
             }
         })
 
-        var nLAConnections = 0
         container.localAgentConnectionFactory.connectionWasCreated = { connection in
             localAgentConnection = connection
 
-            guard nLAConnections < totalConnections else {
-                XCTFail("Didn't expect this number of connections")
+            guard nLAConnections < totalLAConnections else {
+                XCTFail("Didn't expect this number of local agent connections")
                 return
             }
 
@@ -662,15 +681,57 @@ class CoreConnectionTests: XCTestCase {
             nLAConnections += 1
         }
 
-        callOnTunnelProviderStateChange { manager, connection, status in
-            if status == .connected {
-                expectations.vpnConnection[0].fulfill()
+        var nCertRefreshes = 0
+        var certRefreshFeatures: VPNConnectionFeatures?
+        didRequestCertRefresh = { features in
+            guard nCertRefreshes < totalCertRefreshes else {
+                XCTFail("Didn't expect this many cert refreshes")
+                return
             }
-            if status == .disconnected {
-                expectations.vpnDisconnection[0].fulfill()
-            }
+
+            certRefreshFeatures = features
+            expectations.certRefresh[nCertRefreshes].fulfill()
         }
 
+        var manager: NEVPNManagerMock?
+        callOnTunnelProviderStateChange { vpnManager, vpnConnection, vpnStatus in
+            if vpnStatus == .connected {
+                expectations.vpnConnection[nConnections].fulfill()
+                nConnections += 1
+            }
+            if vpnStatus == .disconnected {
+                XCTAssertFalse(shouldNotDisconnect, "Did not expect to disconnect from VPN here")
+
+                expectations.vpnDisconnection[nDisconnections].fulfill()
+                nDisconnections += 1
+            }
+
+            manager = vpnManager
+        }
+
+        container.alertService.alertAdded = { alert in
+            guard nAlertsDisplayed < totalAlertsDisplayed else {
+                XCTFail("Didn't expect this many alerts to be displayed (showed \(type(of: alert)))")
+                return
+            }
+
+            expectations.alertDisplayed[nAlertsDisplayed].fulfill()
+            nAlertsDisplayed += 1
+        }
+
+        var keys: VpnKeys?
+        let checkKeysHaveChanged = {
+            // connection should have re-keyed and connected
+            let newKeys = self.container.vpnAuthenticationStorage.keys
+            XCTAssertNotNil(newKeys)
+
+            XCTAssertNotEqual(keys?.privateKey.derRepresentation,
+                              newKeys?.privateKey.derRepresentation)
+            XCTAssertNotEqual(keys?.publicKey.derRepresentation,
+                              newKeys?.publicKey.derRepresentation)
+            keys = newKeys
+        }
+        
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
                                         connectionProtocol: .vpnProtocol(.wireGuard),
@@ -680,12 +741,197 @@ class CoreConnectionTests: XCTestCase {
                                         profileId: nil)
         container.vpnGateway.connect(with: request)
 
-        wait(for: [expectations.newLAConnection[0], expectations.vpnConnection[0]], timeout: expectationTimeout)
+        wait(for: [expectations.newLAConnection[0],
+                   expectations.vpnConnection[0]], timeout: expectationTimeout)
         laState(consts.stateConnecting)
         laState(consts.stateConnected)
 
-        laError(consts.errorCodeUserBadBehavior, "bad user, bad")
-        wait(for: [expectations.vpnDisconnection[0]], timeout: expectationTimeout)
+        checkKeysHaveChanged()
+
+        XCTAssertEqual((manager?.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier,
+                       Container.wireguardProviderBundleId)
+
+        // MARK: Errors that should cause rekeys & reconnects
+
+        do { // bad signature
+            laError(consts.errorCodeBadCertSignature, nil)
+            wait(for: [expectations.certRefresh[0],
+                       expectations.vpnDisconnection[0],
+                       expectations.vpnConnection[1],
+                       expectations.newLAConnection[1]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            nCertRefreshes += 1
+            checkKeysHaveChanged()
+        }
+
+        do { // cert revoked
+            laError(consts.errorCodeCertificateRevoked, nil)
+            wait(for: [expectations.certRefresh[1],
+                       expectations.vpnDisconnection[1],
+                       expectations.vpnConnection[2],
+                       expectations.newLAConnection[2]], timeout: expectationTimeout)
+
+            checkKeysHaveChanged()
+            nCertRefreshes += 1
+        }
+
+        do { // reused key
+            laError(consts.errorCodeKeyUsedMultipleTimes, nil)
+
+            wait(for: [expectations.certRefresh[2],
+                       expectations.vpnDisconnection[2],
+                       expectations.vpnConnection[3],
+                       expectations.newLAConnection[3]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            checkKeysHaveChanged()
+            nCertRefreshes += 1
+        }
+
+        do { // mismatched server session
+            let errorServerSessionDoesNotMatch = 86202
+            laError(errorServerSessionDoesNotMatch, nil)
+
+            wait(for: [expectations.certRefresh[3],
+                       expectations.vpnDisconnection[3],
+                       expectations.vpnConnection[4],
+                       expectations.newLAConnection[4]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            checkKeysHaveChanged()
+        }
+
+        // MARK: Errors that should refresh certificate
+
+        // cert refreshes only: we should still stay connected to VPN, but should reconnect to LocalAgent after
+        // refreshing certificate
+        shouldNotDisconnect = true
+
+        do { // certificate expired
+            nCertRefreshes += 1
+            mockProviderState.shouldRefresh = true
+            laError(consts.errorCodeCertificateExpired, nil)
+            wait(for: [expectations.certRefresh[4],
+                       expectations.newLAConnection[5]], timeout: expectationTimeout, enforceOrder: true)
+        }
+
+        do { // no certificate provided
+            nCertRefreshes += 1
+            mockProviderState.shouldRefresh = true
+            laError(consts.errorCodeCertNotProvided, nil)
+            wait(for: [expectations.certRefresh[5],
+                       expectations.newLAConnection[6]], timeout: expectationTimeout, enforceOrder: true)
+        }
+
+        shouldNotDisconnect = false
+
+        // MARK: Errors that should disconnect
+
+        do { // max sessions exceeded
+            laError(consts.errorCodeMaxSessionsPlus, nil)
+            wait(for: [expectations.vpnDisconnection[4], expectations.alertDisplayed[0]], timeout: expectationTimeout)
+
+            XCTAssert(container.alertService.alerts.last is MaxSessionsAlert)
+        }
+
+        do { // torrenting on this server not allowed
+            container.vpnGateway.connect(with: request)
+            wait(for: [expectations.vpnConnection[5],
+                       expectations.newLAConnection[7]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            laError(consts.errorCodeUserTorrentNotAllowed, nil)
+            wait(for: [expectations.vpnDisconnection[5]], timeout: expectationTimeout)
+        }
+
+        do { // user is behaving badly (flagged as spam/abuse)
+            container.vpnGateway.connect(with: request)
+            wait(for: [expectations.vpnConnection[6],
+                       expectations.newLAConnection[8]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            laError(consts.errorCodeUserBadBehavior, nil)
+            wait(for: [expectations.vpnDisconnection[6]], timeout: expectationTimeout)
+        }
+
+        do {
+            // Mock a certificate expired error, along with a cert refresh error from the provider.
+            // Should expect LocalAgent delegate to disconnect from the VPN.
+
+            container.vpnGateway.connect(with: request)
+            wait(for: [expectations.vpnConnection[7],
+                       expectations.newLAConnection[9]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            mockProviderState.forceResponse = .error(message: "Internal server error on backend")
+            laError(consts.errorCodeCertificateExpired, nil)
+            wait(for: [expectations.vpnDisconnection[7],
+                       expectations.alertDisplayed[1]], timeout: expectationTimeout)
+
+            XCTAssert(container.alertService.alerts.last is VPNAuthCertificateRefreshErrorAlert)
+
+            mockProviderState.forceResponse = nil
+        }
+
+        // MARK: Receiving status & features from LocalAgent
+        do {
+            container.vpnGateway.connect(with: request)
+
+            wait(for: [expectations.vpnConnection[8],
+                       expectations.newLAConnection[10]], timeout: expectationTimeout)
+
+            laState(consts.stateConnecting)
+            laState(consts.stateConnected)
+
+            mockProviderState.shouldRefresh = true
+            let features = VPNConnectionFeatures(netshield: .level1,
+                                                 vpnAccelerator: true,
+                                                 bouncing: "0",
+                                                 natType: .strictNAT,
+                                                 safeMode: false)
+            let localAgentConfiguration = LocalAgentConfiguration(hostname: "10.2.0.1:65432",
+                                                                  netshield: features.netshield,
+                                                                  vpnAccelerator: features.vpnAccelerator,
+                                                                  bouncing: features.bouncing,
+                                                                  natType: features.natType,
+                                                                  safeMode: features.safeMode)
+
+            let localAgentFeatures = LocalAgentNewFeatures()!.with(configuration: localAgentConfiguration)
+            localAgentConnection?.status = LocalAgentStatusMessage()
+            localAgentConnection?.features = localAgentFeatures
+            localAgentConnection?.status?.features = localAgentFeatures
+
+            container.vpnAuthenticationStorage.certAndFeaturesStored = { _ in
+                expectations.featuresStored.fulfill()
+            }
+
+            nCertRefreshes += 1
+
+            // Hit connected again, because apparently we ignore features on the first -> connected transition?
+            laState(consts.stateConnected)
+
+            wait(for: [expectations.certRefresh[6],
+                       expectations.featuresStored], timeout: expectationTimeout)
+
+            XCTAssertEqual(container.vpnAuthenticationStorage.features, features)
+            XCTAssertEqual(certRefreshFeatures, features)
+        }
+
+        container.vpnGateway.disconnect()
+        wait(for: [expectations.vpnDisconnection[8]], timeout: expectationTimeout)
     }
 }
 
