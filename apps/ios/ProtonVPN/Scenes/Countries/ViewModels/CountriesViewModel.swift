@@ -118,7 +118,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     func headerHeight(for section: Int) -> CGFloat {
-        if numberOfSections() < 2 { return 0 }
+        if numberOfSections() < 2 {
+            return 0
+        }
+
         return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0
     }
     
@@ -135,7 +138,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     func titleFor(section: Int) -> String? {
-        if numberOfRows(in: section) == 0 { return nil }
+        if numberOfRows(in: section) == 0 {
+            return nil
+        }
+
         let totalCountries = " (\(numberOfRows(in: section)))"
         switch userTier {
         case 0:
@@ -184,13 +190,25 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private func content(for section: Int) -> [CountryGroup] {
         switch userTier {
         case 0:
-            if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 0 }) }
-            if section == 1 { return state.currentContent.filter({ $0.0.lowestTier > 0 }) }
+            if section == 0 {
+                return state.currentContent.filter({ $0.0.lowestTier == 0 })
+            }
+
+            if section == 1 {
+                return state.currentContent.filter({ $0.0.lowestTier > 0 })
+            }
         case 1:
-            if section == 0 { return state.currentContent.filter({ $0.0.lowestTier < 2 }) }
-            if section == 1 { return state.currentContent.filter({ $0.0.lowestTier == 2 }) }
+            if section == 0 {
+                return state.currentContent.filter({ $0.0.lowestTier < 2 })
+            }
+
+            if section == 1 {
+                return state.currentContent.filter({ $0.0.lowestTier == 2 })
+            }
         default:
-            if section == 0 { return state.currentContent }
+            if section == 0 {
+                return state.currentContent                
+            }
         }
         return []
     }

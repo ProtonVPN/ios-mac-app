@@ -128,8 +128,14 @@ class CountryItemViewModel {
     }
     
     var alphaOfMainElements: CGFloat {
-        if underMaintenance { return 0.25 }
-        if isUsersTierTooLow { return 0.5 }
+        if underMaintenance {
+            return 0.25
+        }
+
+        if isUsersTierTooLow {
+            return 0.5
+        }
+
         return 1.0
     }
     
