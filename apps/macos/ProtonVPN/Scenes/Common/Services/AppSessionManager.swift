@@ -233,11 +233,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             }
                         
             alertService.push(alert: ActiveSessionWarningAlert(confirmHandler: { [weak self] in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 if self.appStateManager.state.isConnected {
                     self.appStateManager.disconnect { success() }
                     return
                 }
+
                 success()
             }, cancelHandler: {
                 failure(ProtonVpnErrorConst.vpnSessionInProgress)

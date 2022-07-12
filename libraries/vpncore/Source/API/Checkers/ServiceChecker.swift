@@ -52,7 +52,9 @@ class ServiceChecker {
     
     @objc private func checkServices() {
         trafficCheckerQueue.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             if !self.p2pShown {
                 self.p2pBlocked()

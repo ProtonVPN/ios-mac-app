@@ -130,7 +130,9 @@ class CountryAnnotation: AnnotationView {
         self.iconView.tintColor = self.viewModel.connectIconTint
         
         let animationClosure = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             self.flagContainerView.frame = innerCircleFrame
             self.flagContainerView.layer.cornerRadius = innerCircleDiameter * 0.5

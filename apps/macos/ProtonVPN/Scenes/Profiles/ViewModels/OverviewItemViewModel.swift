@@ -92,10 +92,12 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     func deleteAction() {
         guard let delegate = delegate else { return }
         
-        let warningViewModel = WarningPopupViewModel(title: LocalizedString.deleteProfileHeader,
-                                              description: LocalizedString.deleteProfileWarning) { [weak self] in
-                                                guard let `self` = self else { return }
-                                                self.profileManager.deleteProfile(self.profile)
+        let warningViewModel = WarningPopupViewModel(title: LocalizedString.deleteProfileHeader, description: LocalizedString.deleteProfileWarning) { [weak self] in
+            guard let self = self else {
+                return
+            }
+
+            self.profileManager.deleteProfile(self.profile)
         }
         delegate.showDeleteWarning(warningViewModel)
     }

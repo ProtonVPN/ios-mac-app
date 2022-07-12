@@ -125,7 +125,10 @@ class MapSectionViewModel {
         connections = connections(forView: activeView)
 
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.connectionsChanged?(self.connections)
         }
     }
@@ -139,7 +142,10 @@ class MapSectionViewModel {
         connections = connections(forView: activeView)
         
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.contentChanged?(contentChange)
         }
         
@@ -218,7 +224,10 @@ class MapSectionViewModel {
                                                                                     userTier: userTier,
                                                                                   coordinate: $0.0.location)
             annotation.externalViewStateChange = { [weak self] selection in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 self.secureCoreExitSelectionChange(selection)
             }
             return annotation
@@ -241,7 +250,10 @@ class MapSectionViewModel {
                                                                               exitCountryCodes: $1,
                                                                                     coordinate: LocationUtility.coordinate(forCountry: $0))
             annotation.externalViewStateChange = { [weak self] selection in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 self.secureCoreEntrySelectionChange(selection)
             }
             return annotation

@@ -202,8 +202,11 @@ final class HeaderViewModel {
         statistics = nil
         
         statistics = NetworkStatistics(with: 1.0) { [weak self] (bitrate) in
-            guard let `self` = self, let delegate = self.delegate else { return }
-            delegate.bitrateUpdated(with: self.formBitrateLabel(with: bitrate))
+            guard let self = self else {
+                return
+            }
+
+            self.delegate?.bitrateUpdated(with: self.formBitrateLabel(with: bitrate))
         }
     }
     

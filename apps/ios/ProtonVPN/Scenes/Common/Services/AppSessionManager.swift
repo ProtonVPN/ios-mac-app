@@ -369,11 +369,15 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         
         let confirmationClosure: () -> Void = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             if self.appStateManager.state.isConnected {
                 self.appStateManager.disconnect { logOutRoutine() }
                 return
             }
+
             logOutRoutine()
         }
         

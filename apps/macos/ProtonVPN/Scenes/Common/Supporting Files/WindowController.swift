@@ -62,7 +62,9 @@ class WindowController: NSWindowController {
     
     private func addEventMonitor() {
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            guard let `self` = self else { return nil }
+            guard let self = self else {
+                return nil
+            }
             
             if event.window != self.window {
                 return event

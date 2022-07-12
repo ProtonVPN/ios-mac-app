@@ -69,7 +69,10 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
             context.duration = time
             view.animator().alphaValue = 0.0
         }, completionHandler: { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.stopAnimatingFade()
         })
     }

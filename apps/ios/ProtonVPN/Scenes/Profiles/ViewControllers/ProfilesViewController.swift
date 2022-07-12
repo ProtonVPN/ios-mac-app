@@ -174,10 +174,11 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .destructive, title: LocalizedString.delete) { [weak self] ( _, _, completionHandler) in
-            guard let `self` = self else {
+            guard let self = self else {
                 completionHandler(false)
                 return
             }
+
             tableView.beginUpdates()
             self.viewModel?.deleteProfile(for: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)

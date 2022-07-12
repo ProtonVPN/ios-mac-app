@@ -225,14 +225,19 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.secureCoreToggle = serverType == .secureCore
         
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             NotificationCenter.default.post(name: VpnGateway.activeServerTypeChanged, object: self.connection)
         }
     }
     
     public func autoConnect() {
         appStateManager.isOnDemandEnabled { [weak self] enabled in
-            guard let `self` = self, !enabled else { return }
+            guard let self = self, !enabled else {
+                return
+            }
 
             if let username = self.authKeychain.fetch()?.username,
                let autoConnectProfileId = self.propertiesManager.getAutoConnect(for: username).profileId,
@@ -357,7 +362,7 @@ public class VpnGateway: VpnGatewayProtocol {
         let completionWrapper: () -> Void = { [weak self] in
             completion()
             
-            guard let `self` = self else {
+            guard let self = self else {
                 return
             }
             
@@ -463,7 +468,10 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func postConnectionInformation() {
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             NotificationCenter.default.post(name: VpnGateway.connectionChanged,
                                             object: self.connection,
                                             userInfo: [AppState.appStateKey: self.appStateManager.state])
