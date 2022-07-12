@@ -130,7 +130,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Get ProtonVPN Connection Status</string>
+					<string>Get Proton VPN Connection Status</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>hIcJsr</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
