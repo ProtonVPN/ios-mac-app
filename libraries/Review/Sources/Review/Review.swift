@@ -148,7 +148,6 @@ public final class Review {
         if let activeConnectionStartTimestamp = dataStorage.activeConnectionStartTimestamp, activeConnectionStartTimestamp.addingTimeInterval(TimeInterval(configuration.daysConnected * 60 * 60 * 24)) <= dateProvider() {
             logger?("Review conditions met \(dateProvider().timeIntervalSince(firstSuccessConnectionStartTimestamp).days) after first successful connection for plan \(plan) with session length of \(dateProvider().timeIntervalSince(activeConnectionStartTimestamp).days)")
             show()
-            return
         }
     }
 }
