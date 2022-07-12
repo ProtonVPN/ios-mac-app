@@ -183,14 +183,12 @@ final class ProfileItemViewModel {
     }
     
     internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
-        let description: NSAttributedString
         switch profile.profileType {
         case .system:
-            description = systemProfileDescriptor(forProfile: profile)
+            return systemProfileDescriptor(forProfile: profile)
         case .user:
-            description = userProfileDescriptor(forProfile: profile)
+            return userProfileDescriptor(forProfile: profile)
         }
-        return description
     }
     
     // MARK: - Private functions
@@ -209,34 +207,30 @@ final class ProfileItemViewModel {
         guard profile.profileType == .system else {
             return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
-        
-        let description: NSAttributedString
+
         switch profile.serverOffering {
         case .fastest:
-            description = LocalizedString.fastestAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.fastestAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         case .random:
-            description = LocalizedString.randomAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.randomAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         case .custom:
-            description = LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
-        return description
     }
     
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
             return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
-        
-        let description: NSAttributedString
+
         switch profile.serverOffering {
         case .fastest(let cCode):
-            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.fastest)
+            return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.fastest)
         case .random(let cCode):
-            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.random)
+            return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: LocalizedString.random)
         case .custom(let sWrapper):
-            description = customServerDescriptor(forModel: sWrapper.server)
+            return customServerDescriptor(forModel: sWrapper.server)
         }
-        return description
     }
     
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
@@ -250,13 +244,11 @@ final class ProfileItemViewModel {
         let attributedCountryName = countryName.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let doubleArrow = NSAttributedString.imageAttachment(image: IconProvider.chevronsRight, baselineOffset: -4)
 
-        let description: NSAttributedString
         if serverType == .secureCore {
-            description = NSAttributedString.concatenate(profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
+            return  NSAttributedString.concatenate(profileDescription, buffer, doubleArrow, buffer, attributedCountryName)
         } else {
-            description = NSAttributedString.concatenate(attributedCountryName, buffer, doubleArrow, buffer, profileDescription)
+            return  NSAttributedString.concatenate(attributedCountryName, buffer, doubleArrow, buffer, profileDescription)
         }
-        return description
     }
     
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
