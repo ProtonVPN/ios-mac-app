@@ -49,17 +49,10 @@ class CountryItemViewModel {
     }
     
     private var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server {
-            if vpnGateway.connection == .connected, activeServer.countryCode == countryCode {
-                var found = false
-                serverModels.forEach { (server) in
-                    if activeServer == server {
-                        found = true // ensures part of standard or secure core
-                    }
-                }
-                return found
-            }
+        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.countryCode == countryCode {
+            return serverModels.contains(where: { $0 == activeServer })
         }
+
         return false
     }
     

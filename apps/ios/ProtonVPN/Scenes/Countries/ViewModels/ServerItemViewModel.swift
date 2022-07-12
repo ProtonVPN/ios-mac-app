@@ -44,11 +44,10 @@ class ServerItemViewModel {
     let underMaintenance: Bool
     
     var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server {
-            if vpnGateway.connection == .connected, activeServer.id == serverModel.id {
-                return true
-            }
+        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.id == serverModel.id {
+            return true
         }
+
         return false
     }
     
