@@ -74,7 +74,9 @@ class MapSectionViewController: NSViewController {
     
     private func setupMapView() {
         mapHeaderViewController.headerClicked = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             self.mapView.zoomOutAndCenter()
         }
@@ -92,7 +94,9 @@ class MapSectionViewController: NSViewController {
         setConnections(mapSectionViewModel.connections)
         
         mapView.didZoom = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             self.zoomView.zoom = (((self.mapView.zoom - self.mapView.minZoom) / (self.mapView.maxZoom - self.mapView.minZoom)) * (self.zoomLevels - 1)).rounded(.toNearestOrAwayFromZero)
         }

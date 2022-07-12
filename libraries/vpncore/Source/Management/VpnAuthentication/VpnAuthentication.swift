@@ -90,7 +90,9 @@ public final class VpnAuthenticationManager {
 
         // then delete evertyhing
         clearEverything { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             // and get new certificates
             self.queue.addOperation(CertificateRefreshAsyncOperation(storage: self.storage,

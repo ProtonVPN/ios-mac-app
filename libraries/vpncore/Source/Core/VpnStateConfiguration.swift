@@ -105,7 +105,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             dispatchGroup.enter()
             self.getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] manager, error in
                 defer { dispatchGroup.leave() }
-                guard let `self` = self, let manager = manager else {
+                guard let self = self, let manager = manager else {
                     guard let error = error else { return }
 
                     log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedString)\" is active: \"\(String(describing: error))\"", category: .connection)

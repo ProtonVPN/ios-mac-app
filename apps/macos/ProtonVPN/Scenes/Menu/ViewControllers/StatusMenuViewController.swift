@@ -103,8 +103,13 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         
         if let visualEffectView = view as? ClickDetectingVisualEffectView {
             visualEffectView.clickAction = { [weak self] in
-                guard let `self` = self else { return }
-                guard let window = self.view.window, let profilesWindow = self.profilesWindowController?.window else { return }
+                guard let self = self else {
+                    return
+                }
+
+                guard let window = self.view.window, let profilesWindow = self.profilesWindowController?.window else {
+                    return
+                }
                 
                 if let contains = window.childWindows?.contains(profilesWindow), contains {
                     self.hideProfilesList()
@@ -245,7 +250,9 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     private func contentChanged() {
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             self.connectionLabel.attributedStringValue = self.viewModel.connectionLabel
             self.ipLabel.attributedStringValue = self.viewModel.ipAddress

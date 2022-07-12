@@ -219,7 +219,10 @@ public class VpnManager: VpnManagerProtocol {
         executeDisconnectionRequestWhenReady { [weak self] in
             self?.connectAllowed = false
             self?.connectionQueue.async { [weak self] in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 self.startDisconnect(completion: completion)
             }
         }
@@ -254,14 +257,16 @@ public class VpnManager: VpnManagerProtocol {
         }
         
         currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let `self` = self else {
+            guard let self = self else {
                 completion(nil)
                 return
             }
+
             if error != nil {
                 completion(nil)
                 return
             }
+
             guard let vpnManager = vpnManager else {
                 completion(nil)
                 return
@@ -346,11 +351,15 @@ public class VpnManager: VpnManagerProtocol {
         
         log.info("Creating connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             if let error = error {
                 self.setState(withError: error)
                 return
             }
+
             guard let vpnManager = vpnManager else { return }
             
             do {
@@ -397,7 +406,10 @@ public class VpnManager: VpnManagerProtocol {
         
         let saveToPreferences = {
             vpnManager.saveToPreferences { [weak self] saveError in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 if let saveError = saveError {
                     self.setState(withError: saveError)
                     return
@@ -427,7 +439,10 @@ public class VpnManager: VpnManagerProtocol {
         
         log.info("Loading connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             if let error = error {
                 self.setState(withError: error)
                 return
@@ -473,11 +488,15 @@ public class VpnManager: VpnManagerProtocol {
         }
         
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             if let error = error {
                 self.setState(withError: error)
                 return
             }
+
             guard var vpnManager = vpnManager else {
                 self.setState(withError: ProtonVpnError.vpnManagerUnavailable)
                 return
@@ -488,7 +507,10 @@ public class VpnManager: VpnManagerProtocol {
             log.info("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)", category: .connectionConnect)
             
             vpnManager.saveToPreferences { [weak self] error in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 if let error = error {
                     self.setState(withError: error)
                     return

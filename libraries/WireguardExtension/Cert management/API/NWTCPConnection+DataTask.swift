@@ -245,8 +245,13 @@ class NWTCPDataTask: DataTaskProtocol {
         // sending the request if we reach a success condition (which will then call the completion handler with
         // the server's response data, assuming it is well-formed).
         let resolveRequest = { [weak self] (result: Result<(), Error>) in
-            guard let `self` = self else { return }
-            guard !self.resolved, let connection = self.connection else { return }
+            guard let self = self else {
+                return
+            }
+
+            guard !self.resolved, let connection = self.connection else {
+                return
+            }
 
             defer {
                 self.resolved = true
@@ -268,7 +273,10 @@ class NWTCPDataTask: DataTaskProtocol {
         // Look for changes in the NWTCPConnection's state, adding a timeout if we stay waiting in
         // `.connecting` or `.waiting` for too long.
         self.observation = connection?.observeStateChange { [weak self] state in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.queue.async {
                 log.info("Connection state for \(self.taskId): \(state)")
 

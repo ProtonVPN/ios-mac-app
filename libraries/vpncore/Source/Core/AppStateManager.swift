@@ -512,7 +512,9 @@ public class AppStateManagerImplementation: AppStateManager {
         }
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            guard let `self` = self, self.state.isDisconnected else { return }
+            guard let self = self, self.state.isDisconnected else {
+                return
+            }
             
             if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
                 let accountPlan = rVpnCredentials?.accountPlan ?? vpnCredentials.accountPlan
@@ -545,7 +547,9 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func notifyObservers() {
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             NotificationCenter.default.post(name: AppStateManagerNotification.stateChange, object: self.state)
         }
@@ -557,14 +561,20 @@ public class AppStateManagerImplementation: AppStateManager {
         connectionFailed()
         
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.alertService?.push(alert: VpnNetworkUnreachableAlert())
         }
     }
     
     private func vpnStuck() {
         vpnManager.removeConfigurations(completionHandler: { [weak self] error in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             guard error == nil, self.reconnectingAfterStuckDisconnecting == false, let lastConfig = self.lastAttemptedConfiguration else {
                 self.alertService?.push(alert: VpnStuckAlert())
                 self.connectionFailed()

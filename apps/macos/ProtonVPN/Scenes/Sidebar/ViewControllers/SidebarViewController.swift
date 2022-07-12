@@ -233,7 +233,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         if show {
             removeConnectingOverlay()
             let cancellation: (() -> Void) = { [weak self] in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 self.removeConnectingOverlay()
             }
                         
@@ -268,7 +271,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             if animated {
                 if !connectionOverlay.isHidden {
                     connectionOverlay.removeBlur(over: 0.5) { [weak self] in
-                        guard let `self` = self else { return }
+                        guard let self = self else {
+                            return
+                        }
+
                         self.connectionOverlay.isHidden = true
                     }
                 }
@@ -385,7 +391,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         case .connected:
             let delta = 3.0 as TimeInterval
             fadeOutOverlayTask = DispatchWorkItem { [weak self] in
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 if !self.connectionOverlay.isHidden {
                     self.loading(show: false)
                 }

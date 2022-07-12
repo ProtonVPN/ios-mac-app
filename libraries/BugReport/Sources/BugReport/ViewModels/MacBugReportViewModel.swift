@@ -103,7 +103,10 @@ final class MacBugReportViewModel: ObservableObject {
     private func makeFormViewModel(with fields: [InputField]) -> FormViewModel {
         let viewModel = FormViewModel(fields: category?.inputFields ?? [], category: category?.label)
         viewModel.sendResultChanged = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             withAnimation {
                 self.resultReceived()
             }

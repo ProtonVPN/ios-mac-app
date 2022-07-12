@@ -152,7 +152,10 @@ public class ServerManagerImplementation: ServerManager {
     // MARK: - Private functions
     @objc private func contentChanged(_ notification: Notification) {
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.queue.sync {
                 self._servers = []
                 self._unsortedGroups = [:]

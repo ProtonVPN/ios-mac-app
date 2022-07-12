@@ -294,7 +294,9 @@ final class ExtensionAPIService {
                                  retryBlock: @escaping (() -> Void),
                                  errorHandler: @escaping ((Error) -> Void)) {
         let retryAfter = { [weak self] (seconds: TimeInterval?) in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             let seconds = Int(seconds ?? Self.intervals.defaultRetryInterval + self.jitter())
             log.info("Will retry request in \(seconds) seconds.")

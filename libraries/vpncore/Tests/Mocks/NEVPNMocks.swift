@@ -175,7 +175,9 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         }
 
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             self.queue.sync { self.status = .connecting }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
@@ -183,7 +185,9 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         }
 
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             self.queue.sync { self.status = .connected }
             self.connectedDate = Date()
@@ -203,7 +207,9 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         guard !debounce else { return }
 
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             self.connectedDate = nil
             self.queue.sync { self.status = .disconnecting }
@@ -212,7 +218,9 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
         }
 
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             self.queue.sync { self.status = .disconnected }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)

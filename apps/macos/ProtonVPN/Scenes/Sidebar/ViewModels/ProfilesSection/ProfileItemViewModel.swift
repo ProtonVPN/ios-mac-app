@@ -74,7 +74,9 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         }
 
         let performConnection = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
 
             log.debug("Will connect to profile: \(self.profile.logDescription)", category: .connectionConnect, event: .trigger)
             self.vpnGateway.connectTo(profile: self.profile)

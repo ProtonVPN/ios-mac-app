@@ -51,7 +51,9 @@ class ConnectionOverlay: NSView {
         blurReductionCompletion = completion
         
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             self.blurReductionTimer = Timer.scheduledTimer(timeInterval: 1 / 60, target: self, selector: #selector(self.reduceBlur), userInfo: nil, repeats: true)
             self.stopAnimatingTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(self.stopAnimating), userInfo: nil, repeats: false)
@@ -109,7 +111,9 @@ class ConnectionOverlay: NSView {
         blurRadius = fullBlurRadius
         
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             self.blurReductionCompletion?()
             self.blurReductionCompletion = nil

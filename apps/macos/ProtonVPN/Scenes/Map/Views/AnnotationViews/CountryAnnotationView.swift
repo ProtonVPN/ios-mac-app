@@ -326,7 +326,10 @@ class CountryAnnotationView: MapAnnotationView {
                    reuseIdentifier: reuseIdentifier)
         
         viewModel.viewStateChange = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
+
             self.setupAnnotationView()
             self.needsDisplay = true
         }

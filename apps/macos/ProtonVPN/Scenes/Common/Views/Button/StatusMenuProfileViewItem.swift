@@ -84,7 +84,9 @@ class StatusMenuProfileViewItem: NSTableRowView {
         ])
 
         button.stateChanged = { [weak self] in
-            guard let `self` = self else { return }
+            guard let self = self else {
+                return
+            }
             
             if self.button.isHovered, let viewModel = self.viewModel, viewModel.canConnect {
                 self.button.layer?.backgroundColor = .cgColor(.background, [.transparent, .hovered])
