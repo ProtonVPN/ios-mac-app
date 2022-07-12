@@ -20,7 +20,7 @@
 			<key>INIntentCategory</key>
 			<string>generic</string>
 			<key>INIntentDescription</key>
-			<string>Connect to ProtonVPN</string>
+			<string>Connect to Proton VPN</string>
 			<key>INIntentDescriptionID</key>
 			<string>jf696t</string>
 			<key>INIntentName</key>
@@ -34,7 +34,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Connect to ProtonVPN</string>
+					<string>Connect to Proton VPN</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>8tZ81X</string>
 				</dict>
@@ -68,7 +68,7 @@
 			<key>INIntentCategory</key>
 			<string>generic</string>
 			<key>INIntentDescription</key>
-			<string>Disconnect from ProtonVPN</string>
+			<string>Disconnect from Proton VPN</string>
 			<key>INIntentDescriptionID</key>
 			<string>ksQcRb</string>
 			<key>INIntentName</key>
@@ -82,7 +82,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Disconnect from ProtonVPN</string>
+					<string>Disconnect from Proton VPN</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>cQ4Mju</string>
 				</dict>
