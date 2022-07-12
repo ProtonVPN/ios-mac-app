@@ -13,7 +13,7 @@ import vpncore
 class ExtensionInfoComparisonTests: XCTestCase {
 
     func testEquality() throws {
-        XCTAssertTrue(ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id") == ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
+        XCTAssertEqual(ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"), ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
     }
 
     func testDifferent() throws {

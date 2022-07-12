@@ -9,8 +9,7 @@
 import Foundation
 import vpncore
 
-extension ExtensionInfo {
-    
+extension ExtensionInfo: Equatable, Comparable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.compare(to: rhs) == .orderedSame
     }
@@ -24,7 +23,6 @@ extension ExtensionInfo {
     }
     
     public func compare(to other: Self) -> ComparisonResult {
-        
         guard let thisVersion = try? SemanticVersion(version) else {
             return .orderedAscending
         }
@@ -39,10 +37,10 @@ extension ExtensionInfo {
         }
         
         // Versions are the same, lets check build numbers
-        
         guard let thisBuild = Int(self.build) else {
             return .orderedAscending
         }
+
         guard let otherBuild = Int(other.build) else {
             return .orderedDescending
         }
