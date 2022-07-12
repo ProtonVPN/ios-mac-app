@@ -30,14 +30,12 @@ extension OverviewItemViewModel {
     }
     
     internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
-        let description: NSAttributedString
         switch profile.profileType {
         case .system:
-            description = systemProfileDescriptor(forProfile: profile)
+            return systemProfileDescriptor(forProfile: profile)
         case .user:
-            description = userProfileDescriptor(forProfile: profile)
+            return userProfileDescriptor(forProfile: profile)
         }
-        return description
     }
     
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
