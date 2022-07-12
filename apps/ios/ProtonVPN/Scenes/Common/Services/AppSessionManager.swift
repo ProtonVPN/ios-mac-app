@@ -336,7 +336,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
             == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
             success()
-            return
         }
     }
     
