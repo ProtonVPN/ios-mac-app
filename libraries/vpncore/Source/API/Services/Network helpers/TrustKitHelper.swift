@@ -25,7 +25,11 @@ public final class TrustKitHelper {
             "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
             "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw="
         ]
-        
+
+        let reportUris = [
+            "https://api.protonvpn.ch/reports/tls"
+        ]
+
         var config: Configuration = [
             kTSKSwizzleNetworkDelegates: false,
             kTSKPinnedDomains: [
@@ -33,9 +37,7 @@ public final class TrustKitHelper {
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: subdomainHashes
                 ],
                 "verify-api.protonvpn.com": [
@@ -51,27 +53,21 @@ public final class TrustKitHelper {
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: subdomainHashes
                 ],
                 "account.protonmail.com": [
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: subdomainHashes
                 ],
                 "protonvpn.com": [
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: [
                         "8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=",
                         "JMI8yrbc6jB1FYGyyWRLFTmDNgIszrNEMGlgy972e7w=",
@@ -82,18 +78,14 @@ public final class TrustKitHelper {
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: subdomainHashes
                 ],
                 "proton.me": [
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: [
                         "CT56BhOTmj5ZIPgb/xD5mH8rY3BLo/MlhP7oPyJUEDo=",
                         "35Dx28/uzN3LeltkCBQ8RHK0tlNSa2kCpCRGNp34Gxc=",
@@ -105,9 +97,7 @@ public final class TrustKitHelper {
                     kTSKIncludeSubdomains: true,
                     kForceSubdomains: true,
                     kTSKDisableDefaultReportUri: true,
-                    kTSKReportUris: [
-                        "https://api.protonvpn.ch/reports/tls"
-                    ],
+                    kTSKReportUris: reportUris,
                     kTSKPublicKeyHashes: [
                         "EU6TS9MO0L/GsDHvVc9D5fChYLNy5JdGYpJw0ccgetM=",
                         "iKPIHPnDNqdkvOnTClQ8zQAIKG0XavaPkcEo0LBAABA=",
