@@ -137,7 +137,7 @@ class ProtonVPNUITests: XCTestCase {
     func changeEnvToBlackIfNedded() {
         let env = app.staticTexts[ObfuscatedConstants.blackDefaultHost + ObfuscatedConstants.blackDefaultPath]
         
-        if env.waitForExistence(timeout: 4){
+        if env.waitForExistence(timeout: 10){
             return
         }
         else {
@@ -149,7 +149,7 @@ class ProtonVPNUITests: XCTestCase {
     func changeEnvToProdIfNedded() {
         let env = app.staticTexts["https://api.protonvpn.ch"]
         
-        if env.waitForExistence(timeout: 4){
+        if env.waitForExistence(timeout: 10){
             return
         }
         else {
