@@ -38,6 +38,15 @@ public final class TrustKitHelper {
                     ],
                     kTSKPublicKeyHashes: subdomainHashes
                 ],
+                "verify-api.protonvpn.com": [
+                    kTSKEnforcePinning: hardfail,
+                    kTSKIncludeSubdomains: true,
+                    kTSKDisableDefaultReportUri: true,
+                    kTSKReportUris: [
+                        "https://api.protonvpn.ch/reports/tls"
+                    ],
+                    kTSKPublicKeyHashes: subdomainHashes
+                ],
                 "verify.protonvpn.com": [
                     kTSKEnforcePinning: hardfail,
                     kTSKIncludeSubdomains: true,
