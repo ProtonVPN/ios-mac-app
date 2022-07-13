@@ -43,6 +43,8 @@ code_quality:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
 
 core_lint:  
@@ -55,6 +57,8 @@ core_lint:
   allow_failure: false
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -77,6 +81,8 @@ ios_lint:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     name: "ios-lint-$CI_COMMIT_TAG"
@@ -97,6 +103,8 @@ macos_lint:
   allow_failure: false
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -119,6 +127,8 @@ bugreport_lint:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     name: "bug-report-lint-$CI_COMMIT_TAG"
@@ -139,6 +149,8 @@ onboarding_lint:
   allow_failure: false
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -161,6 +173,8 @@ search_lint:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     name: "search-lint-$CI_COMMIT_TAG"
@@ -181,6 +195,8 @@ modals_lint:
   allow_failure: false
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -203,6 +219,8 @@ review_lint:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     name: "review-report-lint-$CI_COMMIT_TAG"
@@ -223,6 +241,8 @@ wireguard_extension_lint:
   allow_failure: false
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -249,6 +269,8 @@ core_ios_unit_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     reports:
@@ -274,6 +296,8 @@ bugreport_unit_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     reports:
@@ -297,6 +321,8 @@ review_unit_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     reports:
@@ -317,6 +343,8 @@ search_ios_unit_tests:
     - xcrun simctl delete $CI_JOB_ID
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -340,6 +368,8 @@ modals_ios_unit_tests:
     - xcrun simctl delete $CI_JOB_ID
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -365,6 +395,8 @@ core_macos_unit_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     reports:
@@ -388,6 +420,8 @@ wireguard_unit_tests:
     - xcrun simctl delete $CI_JOB_ID
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -413,6 +447,8 @@ ios_unit_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     reports:
@@ -437,6 +473,8 @@ ios_ui_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   when: manual
   artifacts:
@@ -456,6 +494,8 @@ onboarding_ui_tests:
   when: manual
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -481,6 +521,8 @@ modals_unit_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     name: "modals-tests-$CI_COMMIT_TAG"
@@ -505,6 +547,8 @@ ios_bugreport_ui_tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   artifacts:
     reports:
@@ -520,6 +564,8 @@ macos_bugreport_ui_tests:
     - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -552,6 +598,8 @@ macos_unit_tests:
     - macOS_ARM
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   artifacts:
@@ -587,6 +635,8 @@ macos_ui_tests:
     - fastlane delete_macos_keychain
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
   tags:
@@ -738,5 +788,7 @@ sonarqube-check:
   allow_failure: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
