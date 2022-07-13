@@ -84,13 +84,6 @@ class ProtonVPNUITests: XCTestCase {
         app.tabBars.buttons["Settings"].tap()
         XCTAssert(app.staticTexts[credentials.username].exists)
         XCTAssert(app.staticTexts[plan].exists)
-
-        switch plan {
-        case "VPN Plus", "Proton Unlimited", "Proton Visionary":
-            XCTAssert(app.buttons["Manage subscription"].exists)
-        default:
-            XCTAssertFalse(app.buttons["Manage subscription"].exists)
-        }
     }
  
      func openLoginScreen(){
