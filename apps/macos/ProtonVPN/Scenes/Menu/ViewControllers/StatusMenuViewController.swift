@@ -86,6 +86,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
     
     override func viewDidLoad() {
+        setupContentView()
         setupSecureCoreSection()
         setupCountryCollection()
         super.viewDidLoad()
@@ -138,6 +139,11 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         upgradeLabel.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(upgrade)))
         
         updateViewLayout()
+    }
+
+    private func setupContentView() {
+        contentView.wantsLayer = true
+        contentView.layer?.backgroundColor =  .cgColor(.background)
     }
         
     private func setupSecureCoreSection() {
