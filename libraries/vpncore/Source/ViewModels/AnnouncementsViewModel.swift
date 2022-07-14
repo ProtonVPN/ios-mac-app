@@ -75,7 +75,6 @@ public class AnnouncementsViewModel {
         
         if let url = announcement.offer?.url.urlWithAdded(utmSource: appInfo.clientId.lowercased()) {
             safariService.open(url: url)
-            return
         }
     }
         
