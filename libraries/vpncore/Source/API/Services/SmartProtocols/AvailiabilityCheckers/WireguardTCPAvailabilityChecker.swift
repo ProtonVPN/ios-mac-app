@@ -1,10 +1,7 @@
 //
-//  WireguardAvailabilityChecker.swift
-//  ProtonVPN - Created on 2020-10-21.
+//  Created on 2022-07-14.
 //
-//  Copyright (c) 2021 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,26 +15,34 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
 import Foundation
 
-final class WireguardAvailabilityChecker {
-    let vpnProtocol: VpnProtocol = .wireGuard(.udp)
+class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
+    
+    let vpnProtocol: VpnProtocol
     private let config: WireguardConfig
-
-    init(config: WireguardConfig) {
-        self.config = config
-    }
-}
-
-extension WireguardAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
+    
     var defaultPorts: [Int] {
-        config.defaultPorts
+        switch vpnProtocol {
+        case .wireGuard(let wireGuardTransport):
+            switch wireGuardTransport {
+            case .udp: return config.defaultUdpPorts
+            case .tcp: return config.defaultTcpPorts
+            case .tls: return config.defaultTlsPorts
+            }
+        default:
+            return []
+        }
     }
 
+    init(config: WireguardConfig, vpnProtocol: VpnProtocol) {
+        self.config = config
+        self.vpnProtocol = vpnProtocol
+    }
+    
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        let defaultPorts = config.defaultPorts
+        let defaultPorts = config.defaultTcpPorts
 
         checkAvailability(server: server, ports: defaultPorts) { result in
             switch result {
@@ -50,5 +55,9 @@ extension WireguardAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
                 }
             }
         }
+    }
+    
+    func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
+        completion(true) // FUTUREDO: Implement
     }
 }

@@ -23,7 +23,10 @@
 import Foundation
 
 public struct WireguardConfig: Codable, Equatable {
-    public let defaultPorts: [Int]
+    public let defaultUdpPorts: [Int]
+    public let defaultTcpPorts: [Int]
+    public let defaultTlsPorts: [Int]
+
     public var dns: String {
         return "10.2.0.1"
     }
@@ -34,7 +37,9 @@ public struct WireguardConfig: Codable, Equatable {
         return "0.0.0.0/0"
     }
 
-    init(defaultPorts: [Int] = [51820]) {
-        self.defaultPorts = defaultPorts
+    init(defaultUdpPorts: [Int] = [51820], defaultTcpPorts: [Int] = [449], defaultTlsPorts: [Int] = [450]) {
+        self.defaultUdpPorts = defaultUdpPorts
+        self.defaultTcpPorts = defaultTcpPorts
+        self.defaultTlsPorts = defaultTlsPorts
     }
 }

@@ -94,7 +94,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         let retryExpectation = XCTestExpectation()
         var seenPorts: [Int: Bool] = [:]
 
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.pingCallback = { serverIp, port in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
             if seenPorts[port] == nil {
                 seenPorts[port] = true
                 // fail all pings on first try
@@ -111,7 +111,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
@@ -130,13 +130,13 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         wait(for: [retryExpectation, tunnelProviderExpectation], timeout: 10)
         XCTAssert(container.appStateManager.state.isConnected)
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard)
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
     }
 
     /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail
     /// the checker tries one more time and if the pings for all the ports fail again the connection fails with an error
     func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() {
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.pingCallback = { serverIp, port in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
             // fail all the pings
             return false
         }
@@ -145,7 +145,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
