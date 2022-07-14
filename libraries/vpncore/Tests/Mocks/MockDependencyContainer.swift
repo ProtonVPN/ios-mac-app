@@ -1,0 +1,160 @@
+//
+//  Created on 2022-07-13.
+//
+//  Copyright (c) 2022 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+import NetworkExtension
+
+@testable import vpncore
+
+class MockDependencyContainer {
+    static let appGroup = "test"
+    static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
+    static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
+
+    lazy var neVpnManager = NEVPNManagerMock()
+    lazy var neTunnelProviderFactory = NETunnelProviderManagerFactoryMock()
+
+    lazy var networkingDelegate = FullNetworkingMockDelegate()
+
+    lazy var networking: NetworkingMock = {
+        let networking = NetworkingMock()
+        networking.delegate = networkingDelegate
+        return networking
+    }()
+
+    lazy var alertService = CoreAlertServiceMock()
+    lazy var timerFactory = TimerFactoryMock()
+    lazy var propertiesManager = PropertiesManagerMock()
+    lazy var vpnKeychain = VpnKeychainMock()
+    lazy var dohVpn = DoHVPN(apiHost: "unit-test.protonvpn.ch", verifyHost: "", alternativeRouting: true, appState: .disconnected)
+
+    lazy var natProvider = NATTypePropertyProviderMock()
+    lazy var netShieldProvider = NetShieldPropertyProviderMock()
+    lazy var safeModeProvider = SafeModePropertyProviderMock()
+
+    lazy var ikeFactory = IkeProtocolFactory(factory: self)
+    lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: Self.openvpnProviderBundleId,
+                                                     appGroup: Self.appGroup,
+                                                     propertiesManager: propertiesManager,
+                                                     vpnManagerFactory: self)
+    lazy var wireguardFactory = WireguardProtocolFactory(bundleId: Self.wireguardProviderBundleId,
+                                                         appGroup: Self.appGroup,
+                                                         propertiesManager: propertiesManager,
+                                                         vpnManagerFactory: self)
+
+    lazy var vpnApiService = VpnApiService(networking: networking)
+
+    let sessionService = SessionServiceMock()
+    let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+
+    lazy var vpnAuthentication = VpnAuthenticationRemoteClient(sessionService: sessionService,
+                                                               authenticationStorage: vpnAuthenticationStorage,
+                                                               safeModePropertyProvider: safeModeProvider)
+
+    lazy var stateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory,
+                                                               openVpnProtocolFactory: openVpnFactory,
+                                                               wireguardProtocolFactory: wireguardFactory,
+                                                               propertiesManager: propertiesManager,
+                                                               appGroup: Self.appGroup)
+
+    let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
+
+    lazy var vpnManager = VpnManager(ikeFactory: ikeFactory,
+                                     openVpnFactory: openVpnFactory,
+                                     wireguardProtocolFactory: wireguardFactory,
+                                     appGroup: Self.appGroup,
+                                     vpnAuthentication: vpnAuthentication,
+                                     vpnKeychain: vpnKeychain,
+                                     propertiesManager: propertiesManager,
+                                     vpnStateConfiguration: stateConfiguration,
+                                     alertService: alertService,
+                                     vpnCredentialsConfiguratorFactory: self,
+                                     localAgentConnectionFactory: localAgentConnectionFactory,
+                                     natTypePropertyProvider: natProvider,
+                                     netShieldPropertyProvider: netShieldProvider,
+                                     safeModePropertyProvider: safeModeProvider)
+
+    lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain,
+                                                                               alertService: alertService,
+                                                                               propertiesManager: propertiesManager)
+
+    lazy var serverStorage = ServerStorageMock(servers: [])
+
+    lazy var appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService,
+                                                             vpnManager: vpnManager,
+                                                             networking: networking,
+                                                             alertService: alertService,
+                                                             timerFactory: timerFactory,
+                                                             propertiesManager: propertiesManager,
+                                                             vpnKeychain: vpnKeychain,
+                                                             configurationPreparer: vpnManagerConfigurationPreparer,
+                                                             vpnAuthentication: vpnAuthentication,
+                                                             doh: dohVpn,
+                                                             serverStorage: serverStorage,
+                                                             natTypePropertyProvider: natProvider,
+                                                             netShieldPropertyProvider: netShieldProvider,
+                                                             safeModePropertyProvider: safeModeProvider)
+
+    lazy var authKeychain = MockAuthKeychain(context: .mainApp)
+
+    lazy var profileManager = ProfileManager(serverStorage: serverStorage, propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+
+    lazy var checkers = [
+        AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
+        AvailabilityCheckerMock(vpnProtocol: .openVpn(.tcp), availablePorts: [9000, 12345]),
+        AvailabilityCheckerMock(vpnProtocol: .openVpn(.udp), availablePorts: [9090, 8080, 9091, 8081]),
+        AvailabilityCheckerMock(vpnProtocol: .wireGuard, availablePorts: [15213, 15410, 15210])
+    ].reduce(into: [:], { $0[$1.vpnProtocol] = $1 })
+
+    lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
+
+    lazy var vpnGateway = VpnGateway(vpnApiService: vpnApiService,
+                                     appStateManager: appStateManager,
+                                     alertService: alertService,
+                                     vpnKeychain: vpnKeychain,
+                                     authKeychain: authKeychain,
+                                     netShieldPropertyProvider: netShieldProvider,
+                                     natTypePropertyProvider: natProvider,
+                                     safeModePropertyProvider: safeModeProvider,
+                                     propertiesManager: propertiesManager,
+                                     profileManager: profileManager,
+                                     availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
+                                     serverStorage: serverStorage)
+}
+
+extension MockDependencyContainer: NEVPNManagerWrapperFactory {
+    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+        return neVpnManager
+    }
+}
+
+extension MockDependencyContainer: NETunnelProviderManagerWrapperFactory {
+    func makeNewManager() -> NETunnelProviderManagerWrapper {
+        neTunnelProviderFactory.makeNewManager()
+    }
+
+    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
+        neTunnelProviderFactory.loadManagersFromPreferences(completionHandler: completionHandler)
+    }
+}
+
+extension MockDependencyContainer: VpnCredentialsConfiguratorFactory {
+    func getCredentialsConfigurator(for `protocol`: VpnProtocol) -> VpnCredentialsConfigurator {
+        return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`)
+    }
+}
