@@ -125,7 +125,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         )
 
         var currentConnection: NEVPNConnectionWrapper?
-        var currentManager: NEVPNManagerWrapper?
+        var currentManager: NEVPNManagerMock?
         var currentStatus: NEVPNStatus?
 
         let request = ConnectionRequest(serverType: .standard,
@@ -164,21 +164,24 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         XCTAssert(container.appStateManager.state.isConnected)
 
+        let platformManager: NEVPNManagerMock?
         #if os(iOS)
         // wireguard was made unavailable above. protocol should fallback to openvpn
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .openVpn(.udp))
+        platformManager = currentManager
         #elseif os(macOS)
         // on macos, protocol should fallback to IKEv2
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
+        platformManager = container.neVpnManager
         #endif
 
         // server2 has a lower score, so it should connect instead of server1
-        XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
-        XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
+        XCTAssertNotNil(platformManager?.protocolConfiguration?.serverAddress)
+        XCTAssertEqual(platformManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.alertService.alerts.isEmpty)
 
         container.vpnManager.connectedDate { date in
-            XCTAssertEqual(date, currentConnection?.connectedDate)
+            XCTAssertEqual(date, platformManager?.vpnConnection.connectedDate)
             expectations.connectedDate.fulfill()
         }
         wait(for: [expectations.connectedDate], timeout: expectationTimeout)
