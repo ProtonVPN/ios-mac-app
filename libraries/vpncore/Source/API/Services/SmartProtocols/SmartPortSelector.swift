@@ -17,20 +17,29 @@ protocol SmartPortSelector {
 final class SmartPortSelectorImplementation: SmartPortSelector {
     private let openVpnTcpChecker: SmartProtocolAvailabilityChecker
     private let openVpnUdpChecker: SmartProtocolAvailabilityChecker
-    private let wireguardChecker: SmartProtocolAvailabilityChecker
+    private let wireguardUdpChecker: SmartProtocolAvailabilityChecker
+    private let wireguardTcpChecker: SmartProtocolAvailabilityChecker
 
     init(openVpnTcpChecker: SmartProtocolAvailabilityChecker,
          openVpnUdpChecker: SmartProtocolAvailabilityChecker,
-         wireguardChecker: SmartProtocolAvailabilityChecker) {
+         wireguardUdpChecker: SmartProtocolAvailabilityChecker,
+         wireguardTcpChecker: SmartProtocolAvailabilityChecker) {
         self.openVpnTcpChecker = openVpnTcpChecker
         self.openVpnUdpChecker = openVpnUdpChecker
-        self.wireguardChecker = wireguardChecker
+        self.wireguardUdpChecker = wireguardUdpChecker
+        self.wireguardTcpChecker = wireguardTcpChecker
     }
     
     func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
         switch vpnProtocol {
-        case .wireGuard: // Ping all the ports to determine which are available
-            wireguardChecker.getFirstToRespondPort(server: serverIp) { result in
+        case .wireGuard(let transportProtocol): // Ping all the ports to determine which are available
+            guard case .udp = transportProtocol else {
+                // FUTUREDO: Implement
+                completion(self.wireguardTcpChecker.defaultPorts.shuffled())
+                return
+            }
+
+            wireguardUdpChecker.getFirstToRespondPort(server: serverIp) { result in
                 if let port = result {
                     completion([port])
                     return
@@ -43,7 +52,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
                 // This is better than returning shuffled port for the app to connect with a random one
                 // because it might cause the app to think it is connected even if it is not and result in various local agent failures
                 DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
-                    self?.wireguardChecker.getFirstToRespondPort(server: serverIp) { result in
+                    self?.wireguardUdpChecker.getFirstToRespondPort(server: serverIp) { result in
                         if let port = result {
                             completion([port])
                             return
@@ -54,7 +63,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
                     }
                 }
             }
-            
+
         case .ike: // Only port is used, so nothing to select
             completion(DefaultConstants.ikeV2Ports)
             

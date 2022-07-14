@@ -56,8 +56,8 @@ extension ClientConfigResponse: Codable {
             openVpnConfig = OpenVpnConfig()
         }
         let wireguardConfig: WireguardConfig
-        if let wireguardPorts = defaultPorts[ProtocolType.WireGuard], let wireguardUDP = wireguardPorts[PortType.UDP] {
-            wireguardConfig = WireguardConfig(defaultPorts: wireguardUDP)
+        if let wireguardPorts = defaultPorts[ProtocolType.WireGuard], let wireguardUDP = wireguardPorts[PortType.UDP], let wireguardTCP = wireguardPorts[PortType.TCP] {
+            wireguardConfig = WireguardConfig(defaultUdpPorts: wireguardUDP, defaultTcpPorts: wireguardTCP)
         } else {
             wireguardConfig = WireguardConfig()
         }
@@ -77,7 +77,8 @@ extension ClientConfigResponse: Codable {
 
         let defaultPorts = [
             ProtocolType.WireGuard: [
-                PortType.UDP: clientConfig.wireGuardConfig.defaultPorts
+                PortType.UDP: clientConfig.wireGuardConfig.defaultUdpPorts,
+                PortType.TCP: clientConfig.wireGuardConfig.defaultTcpPorts
             ],
             ProtocolType.OpenVPN: [
                 PortType.UDP: clientConfig.openVPNConfig.defaultUdpPorts,
