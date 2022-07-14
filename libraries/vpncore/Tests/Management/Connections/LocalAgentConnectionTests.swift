@@ -225,15 +225,17 @@ class LocalAgentConnectionTests: BaseConnectionTestCase {
         ]
 
         var keys: VpnKeys?
-        let checkKeysHaveChanged = {
+        let checkKeysHaveChanged = { (subcase: String) in
             // connection should have re-keyed and connected
             let newKeys = self.container.vpnAuthenticationStorage.keys
             XCTAssertNotNil(newKeys)
 
             XCTAssertNotEqual(keys?.privateKey.derRepresentation,
-                              newKeys?.privateKey.derRepresentation)
+                              newKeys?.privateKey.derRepresentation,
+                              "Private key stayed the same in subcase '\(subcase)'")
             XCTAssertNotEqual(keys?.publicKey.derRepresentation,
-                              newKeys?.publicKey.derRepresentation)
+                              newKeys?.publicKey.derRepresentation,
+                              "Public key stayed the same in subcase '\(subcase)'")
             keys = newKeys
         }
 
@@ -241,7 +243,7 @@ class LocalAgentConnectionTests: BaseConnectionTestCase {
 
         for subcase in subcases {
             driveSubcase(subcase)
-            checkKeysHaveChanged()
+            checkKeysHaveChanged(subcase.description)
         }
 
         disconnectSynchronously()
