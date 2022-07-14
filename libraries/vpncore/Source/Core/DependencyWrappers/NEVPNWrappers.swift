@@ -19,7 +19,7 @@
 import Foundation
 import NetworkExtension
 
-public protocol NEVPNManagerWrapper {
+public protocol NEVPNManagerWrapper: AnyObject {
     var vpnConnection: NEVPNConnectionWrapper { get }
     var protocolConfiguration: NEVPNProtocol? { get set }
     var isEnabled: Bool { get set }

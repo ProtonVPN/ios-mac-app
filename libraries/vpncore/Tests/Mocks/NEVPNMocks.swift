@@ -24,7 +24,7 @@ enum NEMockError: Error {
 }
 
 class NEVPNManagerMock: NEVPNManagerWrapper {
-    var connectionWasCreated: ((NEVPNConnectionMock) -> Void)?
+    static let managerCreatedNotification = NSNotification.Name("MockManagerWasCreated")
 
     struct SavedPreferences {
         let protocolConfiguration: NEVPNProtocol?
@@ -50,7 +50,7 @@ class NEVPNManagerMock: NEVPNManagerWrapper {
             connection = NEVPNConnectionMock(vpnManager: self)
         }
 
-        connectionWasCreated?(connection)
+        NotificationCenter.default.post(name: NEVPNConnectionMock.connectionCreatedNotification, object: connection)
         return connection
     }()
 
@@ -98,8 +98,6 @@ class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperFactory 
     var tunnelProvidersInPreferences: [UUID: NETunnelProviderManagerWrapper] = [:]
     var tunnelProviderPreferencesData: [UUID: NEVPNManagerMock.SavedPreferences] = [:]
 
-    var newManagerCreated: ((NETunnelProviderManagerMock) -> ())?
-
     func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
         Self.queue.async { [unowned self] in
             completionHandler(self.tunnelProvidersInPreferences.values.map { $0 }, nil)
@@ -108,7 +106,7 @@ class NETunnelProviderManagerFactoryMock: NETunnelProviderManagerWrapperFactory 
 
     func makeNewManager() -> NETunnelProviderManagerWrapper {
         let manager = NETunnelProviderManagerMock(factory: self)
-        newManagerCreated?(manager)
+        NotificationCenter.default.post(name: NEVPNManagerMock.managerCreatedNotification, object: manager)
         return manager
     }
 }
@@ -154,10 +152,12 @@ class NETunnelProviderManagerMock: NEVPNManagerMock, NETunnelProviderManagerWrap
 }
 
 class NEVPNConnectionMock: NEVPNConnectionWrapper {
-    var tunnelStateDidChange: ((NEVPNStatus) -> ())?
+    static let connectionCreatedNotification = NSNotification.Name("MockConnectionWasCreated")
+    static let tunnelStateChangeNotification = NSNotification.Name("MockTunnelStateChanged")
+
     var tunnelStartError: NEVPNError?
 
-    let vpnManager: NEVPNManagerWrapper
+    unowned let vpnManager: NEVPNManagerWrapper
     var status: NEVPNStatus
     var connectedDate: Date?
 
@@ -179,7 +179,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
 
             self.queue.sync { self.status = .connecting }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
-            self.tunnelStateDidChange?(self.status)
+            NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.connecting)
         }
 
         DispatchQueue.main.async { [weak self] in
@@ -189,7 +189,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
             self.connectedDate = Date()
 
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
-            self.tunnelStateDidChange?(self.status)
+            NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.connected)
         }
     }
 
@@ -208,7 +208,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
             self.connectedDate = nil
             self.queue.sync { self.status = .disconnecting }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
-            self.tunnelStateDidChange?(self.status)
+            NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.disconnecting)
         }
 
         DispatchQueue.main.async { [weak self] in
@@ -216,7 +216,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
 
             self.queue.sync { self.status = .disconnected }
             NotificationCenter.default.post(name: .NEVPNStatusDidChange, object: nil, userInfo: nil)
-            self.tunnelStateDidChange?(self.status)
+            NotificationCenter.default.post(name: Self.tunnelStateChangeNotification, object: NEVPNStatus.disconnected)
         }
     }
 }

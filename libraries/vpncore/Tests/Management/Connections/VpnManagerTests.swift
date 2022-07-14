@@ -22,133 +22,14 @@ import NetworkExtension
 
 @testable import vpncore
 
-typealias VpnManagerDependencyFactories = NEVPNManagerWrapperFactory &
-                                            NETunnelProviderManagerWrapperFactory &
-                                            VpnCredentialsConfiguratorFactory
-
-fileprivate class VpnManagerDependencies {
-    static let appGroup = "test"
-    static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
-    static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
-
-    var neVpnManagerConnectionStateChangeCallback: ((NEVPNConnectionMock, NEVPNStatus) -> Void)?
-    var neVpnManager = NEVPNManagerMock()
-
-    var neTunnelProviderFactory = NETunnelProviderManagerFactoryMock()
-
-    var preferences = PropertiesManagerMock()
-
-    let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
-
-    lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: Self.openvpnProviderBundleId,
-                                                     appGroup: Self.appGroup,
-                                                     propertiesManager: preferences,
-                                                     vpnManagerFactory: self)
-    lazy var wireGuardFactory = WireguardProtocolFactory(bundleId: Self.wireguardProviderBundleId,
-                                                         appGroup: Self.appGroup,
-                                                         propertiesManager: preferences,
-                                                         vpnManagerFactory: self)
-
-    lazy var vpnAuthenticationStorage = MockVpnAuthenticationStorage()
-    lazy var sessionService = SessionServiceMock()
-
-    lazy var natProvider = NATTypePropertyProviderMock()
-    lazy var netShieldProvider = NetShieldPropertyProviderMock()
-    lazy var safeModeProvider = SafeModePropertyProviderMock()
-
-    lazy var vpnAuthentication = VpnAuthenticationRemoteClient(sessionService: sessionService,
-                                                               authenticationStorage: vpnAuthenticationStorage,
-                                                               safeModePropertyProvider: safeModeProvider)
-    lazy var vpnKeychain = VpnKeychainMock(accountPlan: AccountPlan.free, maxTier: CoreAppConstants.VpnTiers.free)
-    lazy var stateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory,
-                                                               openVpnProtocolFactory: openVpnFactory,
-                                                               wireguardProtocolFactory: wireGuardFactory,
-                                                               propertiesManager: preferences,
-                                                               appGroup: Self.appGroup)
-    lazy var alertService = CoreAlertServiceMock()
-}
-
-extension VpnManagerDependencies: VpnManagerDependencyFactories {
-    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-        neVpnManager.connectionWasCreated = { connection in
-            connection.tunnelStateDidChange = { status in
-                self.neVpnManagerConnectionStateChangeCallback?(connection, status)
-            }
-        }
-
-        return neVpnManager
-    }
-
-    func makeNewManager() -> NETunnelProviderManagerWrapper {
-        neTunnelProviderFactory.makeNewManager()
-    }
-
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        neTunnelProviderFactory.loadManagersFromPreferences(completionHandler: completionHandler)
-    }
-
-    func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
-        VpnCredentialsConfiguratorMock(vpnProtocol: vpnProtocol)
-    }
-}
-
-class VpnManagerTests: XCTestCase {
-    fileprivate var container: VpnManagerDependencies!
-    var vpnManager: VpnManager!
-
-    let expectationTimeout: TimeInterval = 10
-
-    override func setUpWithError() throws {
-        container = VpnManagerDependencies()
-
-        vpnManager = VpnManager(ikeFactory: container.ikeFactory,
-                                openVpnFactory: container.openVpnFactory,
-                                wireguardProtocolFactory: container.wireGuardFactory,
-                                appGroup: VpnManagerDependencies.appGroup,
-                                vpnAuthentication: container.vpnAuthentication,
-                                vpnKeychain: container.vpnKeychain,
-                                propertiesManager: container.preferences,
-                                vpnStateConfiguration: container.stateConfiguration,
-                                alertService: container.alertService,
-                                vpnCredentialsConfiguratorFactory: container,
-                                localAgentConnectionFactory: container.localAgentConnectionFactory,
-                                natTypePropertyProvider: container.natProvider,
-                                netShieldPropertyProvider: container.netShieldProvider,
-                                safeModePropertyProvider: container.safeModeProvider)
+class VpnManagerTests: BaseConnectionTestCase {
+    override func setUp() {
+        super.setUp()
 
         // I have no idea why this is here. But we set it so that onDemand gets set to true
         // in the IKEv2 tests. Why onDemand should be set to false in the first IKEv2 connection
         // is currently beyond my understanding.
-        container.preferences.hasConnected = true
-
-        container.neTunnelProviderFactory.tunnelProvidersInPreferences.removeAll()
-        container.neTunnelProviderFactory.tunnelProviderPreferencesData.removeAll()
-    }
-
-    func callOnTunnelProviderStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
-        container.neTunnelProviderFactory.newManagerCreated = { manager in
-            manager.connectionWasCreated = { connection in
-                guard let tunnelConnection = connection as? NETunnelProviderSessionMock else {
-                    XCTFail("Incorrect connection type for object")
-                    return
-                }
-
-                tunnelConnection.providerMessageSent = { _ in
-                    return Data()
-                }
-
-                tunnelConnection.tunnelStateDidChange = { status in
-                    closure(manager, connection, status)
-                }
-            }
-        }
-    }
-
-    func callOnManagerStateChange(closure: @escaping (NEVPNManagerMock, NEVPNConnectionMock, NEVPNStatus) -> Void) {
-        container.neVpnManagerConnectionStateChangeCallback = { (connection, status) in
-            closure(self.container.neVpnManager, connection, status)
-        }
+        container.propertiesManager.hasConnected = true
     }
 
     func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() {
@@ -190,41 +71,54 @@ class VpnManagerTests: XCTestCase {
 
         var dateConnectionEstablished: Date? = nil
 
-        var preparingOpenVpnConnection = false
-        var didDisconnectWireGuard = false
-        callOnTunnelProviderStateChange { manager, connection, status in
+        var connection: NEVPNConnectionMock?
+        var tunnelManager: NETunnelProviderManagerMock?
+
+        tunnelManagerCreated = { manager in
+            tunnelManager = manager
+        }
+
+        tunnelConnectionCreated = { vpnConnection in
+            connection = vpnConnection
+        }
+
+        statusChanged = { status in
             guard status == .connected else {
-                if status == .disconnected && preparingOpenVpnConnection {
-                    didDisconnectWireGuard = true
-                }
                 return
             }
 
-            guard let providerProtocol = manager.protocolConfiguration as? NETunnelProviderProtocol else {
+            guard let tunnelManager = tunnelManager else {
+                XCTFail("No tunnelManager created yet")
+                return
+            }
+
+            guard let providerProtocol = tunnelManager.protocolConfiguration as? NETunnelProviderProtocol else {
                 XCTFail("Manager is connecting to something that does not use NETunnelProviderProtocol, definitely not WireGuard!")
                 return
             }
 
-            XCTAssertEqual(manager.onDemandRules?.count, 1, "Should contain one ondemand rule")
-            XCTAssert(manager.onDemandRules?.first is NEOnDemandRuleConnect, "Should contain on demand rules")
-            XCTAssert(manager.isEnabled, "OpenVpn manager should be enabled")
-            XCTAssert(manager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
+            XCTAssertEqual(tunnelManager.onDemandRules?.count, 1, "Should contain one ondemand rule")
+            XCTAssert(tunnelManager.onDemandRules?.first is NEOnDemandRuleConnect, "Should contain on demand rules")
+            XCTAssert(tunnelManager.isEnabled, "OpenVpn manager should be enabled")
+            XCTAssert(tunnelManager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
 
-            XCTAssertEqual(providerProtocol.providerBundleIdentifier, VpnManagerDependencies.wireguardProviderBundleId)
+            XCTAssertEqual(providerProtocol.providerBundleIdentifier, MockDependencyContainer.wireguardProviderBundleId)
             XCTAssertNil(providerProtocol.providerConfiguration)
             XCTAssertEqual(providerProtocol.serverAddress, wgConfig.entryServerAddress)
 
             if #available(iOS 14.2, *) {
-                XCTAssertEqual(providerProtocol.includeAllNetworks, self.container.preferences.killSwitch)
-                XCTAssertEqual(providerProtocol.excludeLocalNetworks, self.container.preferences.excludeLocalNetworks)
+                XCTAssertEqual(providerProtocol.includeAllNetworks, self.container.propertiesManager.killSwitch)
+                XCTAssertEqual(providerProtocol.excludeLocalNetworks, self.container.propertiesManager.excludeLocalNetworks)
             }
 
-            dateConnectionEstablished = connection.connectedDate
+            XCTAssertNotNil(connection)
+            XCTAssertNotNil(connection?.connectedDate)
+            dateConnectionEstablished = connection?.connectedDate
             expectations.wireguardTunnelStarted.fulfill()
         }
 
-        vpnManager.whenReady(queue: .main) {
-            self.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: wgConfig) {
+        container.vpnManager.whenReady(queue: .main) {
+            self.container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: wgConfig) {
                 expectations.vpnManagerWireguardConnect.fulfill()
             }
         }
@@ -232,15 +126,16 @@ class VpnManagerTests: XCTestCase {
         wait(for: [expectations.wireguardTunnelStarted,
                    expectations.vpnManagerWireguardConnect], timeout: expectationTimeout)
 
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
-        XCTAssertEqual(vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
-        vpnManager.connectedDate(completion: { date in
+        XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
+        container.vpnManager.connectedDate(completion: { date in
             XCTAssertNotNil(date)
             XCTAssertEqual(date, dateConnectionEstablished)
             expectations.wireguardConnectedDate.fulfill()
         })
 
-        vpnManager.isOnDemandEnabled { enabled in
+        container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssert(enabled, "On demand should be enabled for wireguard")
             expectations.wireguardOnDemandEnabled.fulfill()
         }
@@ -248,8 +143,7 @@ class VpnManagerTests: XCTestCase {
         wait(for: [expectations.wireguardConnectedDate,
                    expectations.wireguardOnDemandEnabled], timeout: expectationTimeout)
 
-        preparingOpenVpnConnection = true
-        container.preferences.killSwitch = !container.preferences.killSwitch
+        container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
 
         let ovpnConfig = VpnManagerConfiguration(hostname: "openvpn.protonvpn.ch",
                                                  serverId: "fghij",
@@ -259,7 +153,7 @@ class VpnManagerTests: XCTestCase {
                                                  password: "openVpnPassword",
                                                  passwordReference: Data(),
                                                  clientPrivateKey: "",
-                                                 vpnProtocol: .openVpn(.udp),
+                                                 vpnProtocol: .openVpn(.tcp),
                                                  netShield: .level2,
                                                  vpnAccelerator: true,
                                                  bouncing: "0",
@@ -269,31 +163,35 @@ class VpnManagerTests: XCTestCase {
                                                  serverPublicKey: "")
 
         dateConnectionEstablished = nil
-        var preparingIkeConnection = false
-        var didDisconnectOpenVpn = false
+        var didDisconnectWireGuard = false
 
-        callOnTunnelProviderStateChange { manager, connection, status in
+        statusChanged = { status in
             guard status == .connected else {
-                if status == .disconnected && preparingIkeConnection {
-                    didDisconnectOpenVpn = true
+                if status == .disconnected {
+                    didDisconnectWireGuard = true
                 }
+                return
+            }
+
+            guard let tunnelManager = tunnelManager else {
+                XCTFail("No tunnelManager created yet")
                 return
             }
 
             XCTAssert(didDisconnectWireGuard, "Should have disconnected from wireguard first!")
 
-            guard let providerProtocol = manager.protocolConfiguration as? NETunnelProviderProtocol else {
+            guard let providerProtocol = tunnelManager.protocolConfiguration as? NETunnelProviderProtocol else {
                 XCTFail("Manager is connecting to something that does not use NETunnelProviderProtocol, definitely not OpenVpn!")
                 return
             }
 
-            XCTAssertEqual(manager.onDemandRules?.count, 1, "Should contain one ondemand rule")
-            XCTAssert(manager.onDemandRules?.first is NEOnDemandRuleConnect, "Should contain on demand rules")
-            XCTAssert(manager.isEnabled, "OpenVpn manager should be enabled")
-            XCTAssert(manager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
+            XCTAssertEqual(tunnelManager.onDemandRules?.count, 1, "Should contain one ondemand rule")
+            XCTAssert(tunnelManager.onDemandRules?.first is NEOnDemandRuleConnect, "Should contain on demand rules")
+            XCTAssert(tunnelManager.isEnabled, "OpenVpn manager should be enabled")
+            XCTAssert(tunnelManager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
 
-            XCTAssertEqual(providerProtocol.providerBundleIdentifier, VpnManagerDependencies.openvpnProviderBundleId)
-            XCTAssertEqual(providerProtocol.providerConfiguration?["appGroup"] as? String, VpnManagerDependencies.appGroup)
+            XCTAssertEqual(providerProtocol.providerBundleIdentifier, MockDependencyContainer.openvpnProviderBundleId)
+            XCTAssertEqual(providerProtocol.providerConfiguration?["appGroup"] as? String, MockDependencyContainer.appGroup)
 
             let sessionConfig = providerProtocol.providerConfiguration?["sessionConfiguration"] as? [String: Any]
             XCTAssertNotNil(sessionConfig)
@@ -301,29 +199,32 @@ class VpnManagerTests: XCTestCase {
             XCTAssertEqual(providerProtocol.serverAddress, ovpnConfig.entryServerAddress)
 
             if #available(iOS 14.2, *) {
-                XCTAssertEqual(providerProtocol.includeAllNetworks, self.container.preferences.killSwitch)
-                XCTAssertEqual(providerProtocol.excludeLocalNetworks, self.container.preferences.excludeLocalNetworks)
+                XCTAssertEqual(providerProtocol.includeAllNetworks, self.container.propertiesManager.killSwitch)
+                XCTAssertEqual(providerProtocol.excludeLocalNetworks, self.container.propertiesManager.excludeLocalNetworks)
             }
 
-            dateConnectionEstablished = connection.connectedDate
+            XCTAssertNotNil(connection, "Connection should exist")
+            XCTAssertNotNil(connection?.connectedDate, "Connection date should exist")
+            dateConnectionEstablished = connection?.connectedDate
             expectations.openVpnTunnelStarted.fulfill()
         }
 
-        self.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ovpnConfig) {
+        self.container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ovpnConfig) {
             expectations.vpnManagerOpenVpnConnect.fulfill()
         }
 
         wait(for: [expectations.openVpnTunnelStarted, expectations.vpnManagerOpenVpnConnect], timeout: expectationTimeout)
 
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .openVpn(.tcp))
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
-        XCTAssertEqual(vpnManager.state, .connected(.init(username: "openVpnUser", address: "127.0.0.3")))
-        vpnManager.connectedDate(completion: { date in
+        XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "openVpnUser", address: "127.0.0.3")))
+        container.vpnManager.connectedDate(completion: { date in
             XCTAssertNotNil(date)
             XCTAssertEqual(date, dateConnectionEstablished)
             expectations.openVpnConnectedDate.fulfill()
         })
 
-        vpnManager.isOnDemandEnabled { enabled in
+        container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssert(enabled, "On demand should be enabled for openvpn")
             expectations.openVpnOnDemandEnabled.fulfill()
         }
@@ -331,12 +232,12 @@ class VpnManagerTests: XCTestCase {
         wait(for: [expectations.openVpnConnectedDate,
                    expectations.openVpnOnDemandEnabled], timeout: expectationTimeout)
 
-        preparingIkeConnection = true
         dateConnectionEstablished = nil
+        var didDisconnectOpenVpn = false
 
         // XXX: need to fix IKEv2 configuration bug with kill switch: gets the setting
         // from preferences instead of observing the configuration of the vpn configuration object
-        container.preferences.killSwitch = !container.preferences.killSwitch
+        container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
 
         let ikeConfig = VpnManagerConfiguration(hostname: "ike.protonvpn.ch",
                                                 serverId: "klmnop",
@@ -355,10 +256,15 @@ class VpnManagerTests: XCTestCase {
                                                 ports: [15112],
                                                 serverPublicKey: "")
 
-        callOnManagerStateChange { manager, connection, status in
+        statusChanged = { status in
             guard status == .connected else {
+                if status == .disconnected {
+                    didDisconnectOpenVpn = true
+                }
                 return
             }
+
+            let manager = self.container.neVpnManager
 
             XCTAssert(didDisconnectOpenVpn, "Should have disconnected from openvpn first!")
 
@@ -369,56 +275,60 @@ class VpnManagerTests: XCTestCase {
             XCTAssertEqual(manager.onDemandRules?.count, 1, "Should contain one ondemand rule")
             XCTAssert(manager.onDemandRules?.first is NEOnDemandRuleConnect, "Should contain on demand rules")
             XCTAssert(manager.isEnabled, "IKEv2 manager should be enabled")
+
+            XCTAssert(self.container.propertiesManager.hasConnected)
             XCTAssert(manager.isOnDemandEnabled, "IKEv2 on demand rules should be enabled")
 
             XCTAssertNil(protocolConfig?.username)
             XCTAssertNil(protocolConfig?.passwordReference)
             XCTAssertEqual(protocolConfig?.serverAddress, ikeConfig.entryServerAddress)
             if #available(iOS 14.2, *) {
-                XCTAssertEqual(protocolConfig?.includeAllNetworks, self.container.preferences.killSwitch)
-                XCTAssertEqual(protocolConfig?.excludeLocalNetworks, self.container.preferences.excludeLocalNetworks)
+                XCTAssertEqual(protocolConfig?.includeAllNetworks, self.container.propertiesManager.killSwitch)
+                XCTAssertEqual(protocolConfig?.excludeLocalNetworks, self.container.propertiesManager.excludeLocalNetworks)
             }
 
-            dateConnectionEstablished = connection.connectedDate
+            dateConnectionEstablished = manager.vpnConnection.connectedDate
             expectations.ikeTunnelStarted.fulfill()
         }
 
-        self.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ikeConfig) {
+        self.container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ikeConfig) {
             expectations.vpnManagerIkeConnect.fulfill()
         }
 
         wait(for: [expectations.ikeTunnelStarted, expectations.vpnManagerIkeConnect], timeout: expectationTimeout)
 
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
-        XCTAssertEqual(vpnManager.state, .connected(.init(username: "", address: "127.0.0.5")))
-        vpnManager.connectedDate(completion: { date in
+        XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.5")))
+        container.vpnManager.connectedDate(completion: { date in
             XCTAssertNotNil(date)
             XCTAssertEqual(date, dateConnectionEstablished)
             expectations.ikeConnectedDate.fulfill()
         })
 
-        vpnManager.isOnDemandEnabled { enabled in
-            XCTAssertEqual(enabled, self.container.preferences.hasConnected, "On demand should be enabled for ike")
+        container.vpnManager.isOnDemandEnabled { enabled in
+            XCTAssert(self.container.propertiesManager.hasConnected)
+            XCTAssertEqual(enabled, self.container.propertiesManager.hasConnected, "On demand should be enabled for ike")
             expectations.ikeOnDemandEnabled.fulfill()
         }
 
         wait(for: [expectations.ikeConnectedDate,
                    expectations.ikeOnDemandEnabled], timeout: expectationTimeout)
 
-        vpnManager.disconnect {
+        container.vpnManager.disconnect {
             expectations.ikeDisconnected.fulfill()
         }
 
         wait(for: [expectations.ikeDisconnected], timeout: expectationTimeout)
-        XCTAssertEqual(vpnManager.state, .disconnected)
+        XCTAssertEqual(container.vpnManager.state, .disconnected)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
 
-        vpnManager.connectedDate { nilDate in
+        container.vpnManager.connectedDate { nilDate in
             XCTAssertNil(nilDate)
             expectations.disconnectedNilConnectedDate.fulfill()
         }
 
-        vpnManager.isOnDemandEnabled { enabled in
+        container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssertFalse(enabled, "On demand should be disabled after disconnect")
             expectations.disconnectedOnDemandDisabled.fulfill()
         }
@@ -430,7 +340,7 @@ class VpnManagerTests: XCTestCase {
         XCTAssertFalse(container.neTunnelProviderFactory.tunnelProvidersInPreferences.isEmpty)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
 
-        vpnManager.removeConfigurations { error in
+        container.vpnManager.removeConfigurations { error in
             XCTAssertNil(error, "Should not receive error removing configurations")
             expectations.removedFromPreferences.fulfill()
         }
