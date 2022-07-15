@@ -85,6 +85,8 @@
 		4C096205285B648900556E07 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096203285B648900556E07 /* SessionServiceMock.swift */; };
 		4C096207285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */; };
 		4C096208285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */; };
+		4C1C2F2F28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
+		4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
 		4C263C3E286F0E7600F48974 /* LocalAgentConnectionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */; };
 		4C263C3F286F0E7700F48974 /* LocalAgentConnectionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */; };
 		4C4D898327BD0BE800548523 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D898227BD0BE800548523 /* Array+Extension.swift */; };
@@ -721,6 +723,7 @@
 		4C0961FD285B50C700556E07 /* NEVPNMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNMocks.swift; sourceTree = "<group>"; };
 		4C096203285B648900556E07 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsConfiguratorMock.swift; sourceTree = "<group>"; };
+		4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelProviderClientMessageTests.swift; sourceTree = "<group>"; };
 		4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConnectionMock.swift; sourceTree = "<group>"; };
 		4C4D898227BD0BE800548523 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		4C4E0B2B285B72A5001657FD /* MockVpnAuthenticationStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVpnAuthenticationStorage.swift; sourceTree = "<group>"; };
@@ -1241,6 +1244,7 @@
 				4C0961F9285B4FC600556E07 /* VpnManagerTests.swift */,
 				4CFDF0BC287EE4F300386626 /* ConnectionSwitchingTests.swift */,
 				4CFDF0BF287EE55B00386626 /* LocalAgentConnectionTests.swift */,
+				4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -2978,6 +2982,7 @@
 				D596720F253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
 				F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */,
 				4CAAEC3D286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
+				4C1C2F2F28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
 				4CFDF0B7287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				D523F11624B759A5007DB086 /* StringUrl.swift in Sources */,
@@ -3294,6 +3299,7 @@
 				D523F11724B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
+				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
 				F3747C1A26D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,
