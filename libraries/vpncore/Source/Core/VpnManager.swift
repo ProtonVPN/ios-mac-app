@@ -423,6 +423,10 @@ public class VpnManager: VpnManagerProtocol {
             configuration.excludeLocalNetworks = propertiesManager.excludeLocalNetworks
         }
         configuration.includeAllNetworks = propertiesManager.killSwitch
+        
+        if case .wireGuard(let type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
+            (configuration as? NETunnelProviderProtocol)?.providerConfiguration = ["wg-protocol": type.rawValue]
+        }
 
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]

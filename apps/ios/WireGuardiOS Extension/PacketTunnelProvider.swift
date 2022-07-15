@@ -119,6 +119,16 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             wg_log(.info, message: "Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
+        
+        var socket: String = "udp"
+        if let socketTypeInput = tunnelProviderProtocol.providerConfiguration?["wg-protocol"] as? String {
+            switch socketTypeInput {
+            case "tcp": socket = "tcp"
+            case "tls": socket = "tls"
+            default: socket = "udp"
+            }
+        }
+        
         guard let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -127,7 +137,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
 
         // Start the tunnel
-        adapter.start(tunnelConfiguration: tunnelConfiguration) { adapterError in
+        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socket) { adapterError in
             guard let adapterError = adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
