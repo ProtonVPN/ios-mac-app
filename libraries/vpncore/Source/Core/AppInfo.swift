@@ -58,7 +58,7 @@ public protocol AppInfo {
 
 extension AppInfo {
     public var appVersion: String {
-        clientId + "_" + bundleShortVersion
+        clientId + "@" + bundleShortVersion
     }
 
     public var clientId: String {

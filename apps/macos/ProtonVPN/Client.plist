@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Id</key>
-	<string>macOSVPN</string>
+	<string>macos-vpn</string>
 	<key>Secret</key>
 	<string>31e7dcced342f546df6edc7146577090</string>
 	<key>WireGuardId</key>
-	<string>macOSWireguardExtension</string>
+	<string>macos-vpn-wireguard</string>
 </dict>
 </plist>
