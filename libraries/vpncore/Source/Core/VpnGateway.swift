@@ -196,22 +196,22 @@ public class VpnGateway: VpnGatewayProtocol {
             changeActiveServerType(activeServer.serverType)
         }
 
-        NotificationCenter.default.addObserver(forName: AppStateManagerNotification.stateChange,
-                                               object: nil,
-                                               queue: nil,
-                                               using: appStateChanged)
-        NotificationCenter.default.addObserver(forName: type(of: vpnKeychain).vpnPlanChanged,
-                                               object: nil,
-                                               queue: nil,
-                                               using: userPlanChanged)
-        NotificationCenter.default.addObserver(forName: type(of: vpnKeychain).vpnUserDelinquent,
-                                               object: nil,
-                                               queue: nil,
-                                               using: userBecameDelinquent)
-        NotificationCenter.default.addObserver(forName: Self.needsReconnectNotification,
-                                               object: nil,
-                                               queue: nil,
-                                               using: reconnectOnNotification)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appStateChanged),
+                                               name: AppStateManagerNotification.stateChange,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(userPlanChanged),
+                                               name: type(of: vpnKeychain).vpnPlanChanged,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(userBecameDelinquent),
+                                               name: type(of: vpnKeychain).vpnUserDelinquent,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reconnectOnNotification),
+                                               name: Self.needsReconnectNotification,
+                                               object: nil)
     }
     
     public func userTier() throws -> Int {
@@ -470,7 +470,7 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
     
-    private func appStateChanged(_ notification: Notification) {
+    @objc private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
@@ -478,13 +478,13 @@ public class VpnGateway: VpnGatewayProtocol {
         postConnectionInformation()
     }
 
-    private func reconnectOnNotification(_ notification: Notification) {
+    @objc private func reconnectOnNotification(_ notification: Notification) {
         connect(with: lastConnectionRequest)
     }
 }
 
 fileprivate extension VpnGateway {
-    func userPlanChanged( _ notification: Notification ) {
+    @objc func userPlanChanged( _ notification: Notification ) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
 
         if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.plus {
@@ -510,7 +510,7 @@ fileprivate extension VpnGateway {
         alertService?.push(alert: alert)
     }
     
-    func userBecameDelinquent(_ notification: Notification) {
+    @objc func userBecameDelinquent(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
 
         var oldServer: ServerModel?

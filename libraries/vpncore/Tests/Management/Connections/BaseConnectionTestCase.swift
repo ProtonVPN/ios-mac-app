@@ -63,10 +63,12 @@ class BaseConnectionTestCase: XCTestCase {
     }
 
     override func tearDown() {
-        // This observer is added in NEVPNManager.prepareManagers, but we remove it here on test teardown because zombie
-        // manager objects keep responding to these notifications, supposedly even after they're deinited, and then end
+        // Remove all notifications which these objects have subscribed to. We remove these on test teardown because
+        // zombie objects keep responding to these notifications, supposedly even after they're deinited, and then end
         // up messing up subsequent test cases.
-        NotificationCenter.default.removeObserver(container.vpnManager, name: .NEVPNStatusDidChange, object: nil)
+        NotificationCenter.default.removeObserver(container.vpnManager)
+        NotificationCenter.default.removeObserver(container.vpnGateway)
+
         for name in neVpnEvents {
             NotificationCenter.default.removeObserver(self, name: name, object: nil)
         }
