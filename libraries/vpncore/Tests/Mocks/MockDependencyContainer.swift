@@ -41,26 +41,26 @@ class MockDependencyContainer {
     lazy var timerFactory = TimerFactoryMock()
     lazy var propertiesManager = PropertiesManagerMock()
     lazy var vpnKeychain = VpnKeychainMock()
-    lazy var dohVpn = DoHVPN(apiHost: "unit-test.protonvpn.ch", verifyHost: "", alternativeRouting: true, appState: .disconnected)
+    lazy var dohVpn = DoHVPN.mock
 
     lazy var natProvider = NATTypePropertyProviderMock()
     lazy var netShieldProvider = NetShieldPropertyProviderMock()
     lazy var safeModeProvider = SafeModePropertyProviderMock()
 
-    lazy var ikeFactory = IkeProtocolFactory(factory: self)
+    lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
     lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: Self.openvpnProviderBundleId,
                                                      appGroup: Self.appGroup,
                                                      propertiesManager: propertiesManager,
-                                                     vpnManagerFactory: self)
+                                                     vpnManagerFactory: neTunnelProviderFactory)
     lazy var wireguardFactory = WireguardProtocolFactory(bundleId: Self.wireguardProviderBundleId,
                                                          appGroup: Self.appGroup,
                                                          propertiesManager: propertiesManager,
-                                                         vpnManagerFactory: self)
+                                                         vpnManagerFactory: neTunnelProviderFactory)
 
     lazy var vpnApiService = VpnApiService(networking: networking)
 
     let sessionService = SessionServiceMock()
-    let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+    public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
 
     lazy var vpnAuthentication = VpnAuthenticationRemoteClient(sessionService: sessionService,
                                                                authenticationStorage: vpnAuthenticationStorage,
@@ -83,7 +83,7 @@ class MockDependencyContainer {
                                      propertiesManager: propertiesManager,
                                      vpnStateConfiguration: stateConfiguration,
                                      alertService: alertService,
-                                     vpnCredentialsConfiguratorFactory: self,
+                                     vpnCredentialsConfiguratorFactory: MockFactory(container: self),
                                      localAgentConnectionFactory: localAgentConnectionFactory,
                                      natTypePropertyProvider: natProvider,
                                      netShieldPropertyProvider: netShieldProvider,
@@ -137,23 +137,27 @@ class MockDependencyContainer {
                                      serverStorage: serverStorage)
 }
 
-extension MockDependencyContainer: NEVPNManagerWrapperFactory {
+/// This exists so that MockDependencyContainer won't create reference cycles by passing `self` as an
+/// argument to dependency initializers.
+class MockFactory {
+    unowned var container: MockDependencyContainer
+
+    unowned var neVpnManager: NEVPNManagerWrapper {
+        container.neVpnManager
+    }
+
+    init(container: MockDependencyContainer) {
+        self.container = container
+    }
+}
+
+extension MockFactory: NEVPNManagerWrapperFactory {
     func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
         return neVpnManager
     }
 }
 
-extension MockDependencyContainer: NETunnelProviderManagerWrapperFactory {
-    func makeNewManager() -> NETunnelProviderManagerWrapper {
-        neTunnelProviderFactory.makeNewManager()
-    }
-
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        neTunnelProviderFactory.loadManagersFromPreferences(completionHandler: completionHandler)
-    }
-}
-
-extension MockDependencyContainer: VpnCredentialsConfiguratorFactory {
+extension MockFactory: VpnCredentialsConfiguratorFactory {
     func getCredentialsConfigurator(for `protocol`: VpnProtocol) -> VpnCredentialsConfigurator {
         return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`)
     }
