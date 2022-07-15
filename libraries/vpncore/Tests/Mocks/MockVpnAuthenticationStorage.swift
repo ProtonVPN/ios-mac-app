@@ -41,9 +41,9 @@ class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
             return keys
         }
 
-        let keys = VpnKeys()
-        self.store(keys: keys)
-        return keys
+        let newKeys = VpnKeys()
+        self.store(keys: newKeys)
+        return newKeys
     }
 
     func getStoredCertificate() -> VpnCertificate? {
