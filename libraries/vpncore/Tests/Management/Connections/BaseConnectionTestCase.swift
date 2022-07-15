@@ -131,13 +131,13 @@ class BaseConnectionTestCase: XCTestCase {
     }
 
     func handleProviderMessage(messageData: Data) -> Data? {
-        let request = try? WireguardProviderRequest.decode(data: messageData)
+        let providerRequest = try? WireguardProviderRequest.decode(data: messageData)
         if let response = mockProviderState.forceResponse {
             mockProviderState.forceResponse = nil
             return response.asData
         }
 
-        switch request {
+        switch providerRequest {
         case .refreshCertificate(let features):
             guard !mockProviderState.needNewSession else {
                 return WireguardProviderRequest.Response.errorSessionExpired.asData
@@ -162,7 +162,7 @@ class BaseConnectionTestCase: XCTestCase {
             XCTFail("Decoding failed for data: \(messageData)")
             return nil
         default:
-            XCTFail("Case not handled: \(request!)")
+            XCTFail("Case not handled: \(providerRequest!)")
             return nil
         }
 
