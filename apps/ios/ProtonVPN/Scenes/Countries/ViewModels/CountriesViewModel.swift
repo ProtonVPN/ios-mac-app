@@ -207,7 +207,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         default:
             if section == 0 {
-                return state.currentContent                
+                return state.currentContent
             }
         }
         return []
