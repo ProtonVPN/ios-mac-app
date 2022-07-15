@@ -233,16 +233,26 @@ class AppStateManagerImplementationTests: XCTestCase {
     func testTimedOutConnecting() {
         prepareToConnect()
         startConnection()
-        
-        timerFactory.fireTimer()
+
+        let firstTimeout = XCTestExpectation(description: "first timeout")
+        timerFactory.runRepeatingTimers {
+            firstTimeout.fulfill()
+        }
+        wait(for: [firstTimeout], timeout: 5)
+
         startDisconnecting()
         successfullyDisconnect()
         
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
+
+        let secondTimeout = XCTestExpectation(description: "second timeout")
+        timerFactory.runRepeatingTimers {
+            secondTimeout.fulfill()
+        }
+        wait(for: [secondTimeout], timeout: 5)
         
-        timerFactory.fireTimer()
         startDisconnecting()
         successfullyDisconnect()
     }

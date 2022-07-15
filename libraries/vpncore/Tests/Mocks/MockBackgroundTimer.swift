@@ -17,9 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 
-struct MockBackgroundTimer: BackgroundTimerProtocol {
+public struct BackgroundTimerMock: BackgroundTimer {
     let nextRunTime: Date
     let repeating: Double?
     let queue: DispatchQueue
@@ -27,13 +26,13 @@ struct MockBackgroundTimer: BackgroundTimerProtocol {
 
     var isValid: Bool = true
 
-    mutating func invalidate() {
+    public mutating func invalidate() {
         isValid = false
     }
 }
 
-final class MockTimerFactory: TimerFactory {
-    public var repeatingTimers: [MockBackgroundTimer] = []
+public final class TimerFactoryMock: TimerFactory {
+    public var repeatingTimers: [BackgroundTimerMock] = []
     public var scheduledWork: [(interval: DispatchTimeInterval, closure: (() -> Void))] = []
 
     public var timerWasAdded: (() -> Void)?
@@ -41,17 +40,28 @@ final class MockTimerFactory: TimerFactory {
 
     public var lastQueueWorkWasScheduledOn: DispatchQueue?
 
-    func runRepeatingTimers() {
+    public func runRepeatingTimers(done: (() -> Void)? = nil) {
+        let group = DispatchGroup()
+
+        var balance = 0
         for timer in repeatingTimers {
             guard timer.isValid else { continue }
 
+            group.enter()
+            balance += 1
             timer.queue.async {
                 timer.closure()
+                group.leave()
+                balance -= 1
             }
         }
+
+        guard let done = done else { return }
+        
+        group.notify(queue: .main, execute: done)
     }
 
-    func runAllScheduledWork() {
+    public func runAllScheduledWork() {
         lastQueueWorkWasScheduledOn!.async {
             while !self.scheduledWork.isEmpty {
                 self.scheduledWork.removeFirst().closure()
@@ -59,19 +69,21 @@ final class MockTimerFactory: TimerFactory {
         }
     }
 
-    func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimerProtocol {
+    public func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, leeway: DispatchTimeInterval?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimer {
         lastQueueWorkWasScheduledOn = queue
 
-        let timer = MockBackgroundTimer(nextRunTime: nextRunTime, repeating: repeating, queue: queue, closure: closure)
+        let timer = BackgroundTimerMock(nextRunTime: nextRunTime, repeating: repeating, queue: queue, closure: closure)
         repeatingTimers.append(timer)
         timerWasAdded?()
         return timer
     }
 
-    func scheduleAfter(_ interval: DispatchTimeInterval, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
+    public func scheduleAfter(_ interval: DispatchTimeInterval, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
         lastQueueWorkWasScheduledOn = queue
         
         scheduledWork.append((interval, closure))
         workWasScheduled?()
     }
+
+    public init() { }
 }

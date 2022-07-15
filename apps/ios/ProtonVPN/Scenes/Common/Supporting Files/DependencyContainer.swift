@@ -74,7 +74,7 @@ final class DependencyContainer {
                                                                         vpnManager: makeVpnManager(),
                                                                         networking: makeNetworking(),
                                                                         alertService: makeCoreAlertService(),
-                                                                        timerFactory: TimerFactory(),
+                                                                        timerFactory: TimerFactoryImplementation(),
                                                                         propertiesManager: makePropertiesManager(),
                                                                         vpnKeychain: makeVpnKeychain(),
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer(),

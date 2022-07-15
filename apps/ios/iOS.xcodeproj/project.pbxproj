@@ -51,6 +51,8 @@
 		4C2AE85628364C24005F37E6 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AE85528364C24005F37E6 /* AppInfo.swift */; };
 		4C30C0A42812A3E500B6E333 /* MockConnectionTunnel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30C0A12812A3E500B6E333 /* MockConnectionTunnel.swift */; };
 		4C30C0A92812A3F400B6E333 /* CertificateRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C30C0A72812A3F400B6E333 /* CertificateRefreshTests.swift */; };
+		4C3CE1D52885869A00611C68 /* MockBackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9A28819E4300F8CBA1 /* MockBackgroundTimer.swift */; };
+		4C3CE1D6288586AC00611C68 /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9328819D9900F8CBA1 /* TimerFactory.swift */; };
 		4C4439AA284A38CA007391A8 /* ProviderMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4439A9284A38CA007391A8 /* ProviderMessageTests.swift */; };
 		4C4A30292811582800768AD9 /* URLRequest+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAF941A28103C2B0050C8B4 /* URLRequest+HTTP.swift */; };
 		4C4A303128118D6100768AD9 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7872681FE2B0013495A /* AuthCredentials.swift */; };
@@ -72,6 +74,8 @@
 		4C4A304228118D6100768AD9 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7802681F0D90013495A /* Dictionary+Extension.swift */; };
 		4C4A304328118D6100768AD9 /* AuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7892681FEF50013495A /* AuthKeychain.swift */; };
 		4C4E0B30285B72EB001657FD /* MockVpnAuthenticationStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E0B2E285B72E7001657FD /* MockVpnAuthenticationStorage.swift */; };
+		4C66CA9428819D9900F8CBA1 /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9328819D9900F8CBA1 /* TimerFactory.swift */; };
+		4C66CA9B28819E4300F8CBA1 /* MockBackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9A28819E4300F8CBA1 /* MockBackgroundTimer.swift */; };
 		4CA0977628118EAF00F4ABA9 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977528118EAF00F4ABA9 /* VpnKeys+Generation.swift */; };
 		4CA0977F28119E8200F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977E28119E8200F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CA0978028119E8200F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977E28119E8200F4ABA9 /* VpnAuthenticationKeychain.swift */; };
@@ -93,9 +97,6 @@
 		4CB0A3592822A71100BF95C3 /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */; };
 		4CB432062834E7A900DC437B /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB432052834E7A900DC437B /* APIRequest.swift */; };
 		4CCE9F7D283BCC750090E234 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F7C283BCC750090E234 /* ConnectionTests.swift */; };
-		4CCE9F7F283CCC210090E234 /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F7E283CCC210090E234 /* TimerFactory.swift */; };
-		4CCE9F80283CCC210090E234 /* TimerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F7E283CCC210090E234 /* TimerFactory.swift */; };
-		4CCE9F83283CCE850090E234 /* MockBackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F81283CCE850090E234 /* MockBackgroundTimer.swift */; };
 		4CCE9F85283D2AA60090E234 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */; };
 		4CCE9F86283D2AA60090E234 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */; };
 		4CF40BA62833D64D00C3C501 /* ProviderMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BA42833D64D00C3C501 /* ProviderMessage.swift */; };
@@ -737,6 +738,8 @@
 		4C30C0A82812A3F400B6E333 /* WireguardNetworkExtensionTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "WireguardNetworkExtensionTests-Bridging-Header.h"; path = "../../ios/WireguardNetworkExtensionTests/WireguardNetworkExtensionTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4C4439A9284A38CA007391A8 /* ProviderMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProviderMessageTests.swift; path = ../../ios/WireguardNetworkExtensionTests/ProviderMessageTests.swift; sourceTree = "<group>"; };
 		4C4E0B2E285B72E7001657FD /* MockVpnAuthenticationStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockVpnAuthenticationStorage.swift; path = ../../../libraries/vpncore/Tests/Mocks/MockVpnAuthenticationStorage.swift; sourceTree = "<group>"; };
+		4C66CA9328819D9900F8CBA1 /* TimerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimerFactory.swift; path = ../../vpncore/Source/Factories/TimerFactory.swift; sourceTree = "<group>"; };
+		4C66CA9A28819E4300F8CBA1 /* MockBackgroundTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MockBackgroundTimer.swift; path = ../../../libraries/vpncore/Tests/Mocks/MockBackgroundTimer.swift; sourceTree = "<group>"; };
 		4CA0977528118EAF00F4ABA9 /* VpnKeys+Generation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "VpnKeys+Generation.swift"; path = "../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnKeys+Generation.swift"; sourceTree = "<group>"; };
 		4CA0977728118ECD00F4ABA9 /* Crypto_VPN.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Crypto_VPN.xcframework; path = "../../../Pods/ProtonCore-Crypto-VPN/vendor/Crypto_VPN/Crypto_VPN.xcframework"; sourceTree = "<group>"; };
 		4CA0977E28119E8200F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnAuthenticationKeychain.swift; path = ../../../../libraries/vpncore/Source/Management/VpnAuthentication/VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
@@ -747,8 +750,6 @@
 		4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NWTCPConnection+DataTask.swift"; sourceTree = "<group>"; };
 		4CB432052834E7A900DC437B /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		4CCE9F7C283BCC750090E234 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionTests.swift; path = ../../ios/WireguardNetworkExtensionTests/ConnectionTests.swift; sourceTree = "<group>"; };
-		4CCE9F7E283CCC210090E234 /* TimerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerFactory.swift; sourceTree = "<group>"; };
-		4CCE9F81283CCE850090E234 /* MockBackgroundTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockBackgroundTimer.swift; path = ../../../ios/WireguardNetworkExtensionTests/Mocks/MockBackgroundTimer.swift; sourceTree = "<group>"; };
 		4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AsyncOperation.swift; path = ../../../../libraries/vpncore/Source/Utilities/AsyncOperation.swift; sourceTree = "<group>"; };
 		4CF40BA42833D64D00C3C501 /* ProviderMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderMessage.swift; path = ../../vpncore/Source/Core/ProviderMessage/ProviderMessage.swift; sourceTree = "<group>"; };
 		4CF40BA52833D64D00C3C501 /* WireguardProviderMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardProviderMessage.swift; path = ../../vpncore/Source/Core/ProviderMessage/WireguardProviderMessage.swift; sourceTree = "<group>"; };
@@ -1309,7 +1310,6 @@
 			children = (
 				4C4E0B2A285B7206001657FD /* vpncore */,
 				4C30C0A12812A3E500B6E333 /* MockConnectionTunnel.swift */,
-				4CCE9F81283CCE850090E234 /* MockBackgroundTimer.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1317,6 +1317,7 @@
 		4C4E0B2A285B7206001657FD /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
+				4C66CA9A28819E4300F8CBA1 /* MockBackgroundTimer.swift */,
 				4CAAEC3F287323880029F13A /* MockAuthKeychain.swift */,
 				4C4E0B2E285B72E7001657FD /* MockVpnAuthenticationStorage.swift */,
 			);
@@ -2051,7 +2052,6 @@
 			children = (
 				E997997C26A6FA870083D61E /* VpnKeys+init.swift */,
 				E997997D26A6FA870083D61E /* ExtensionCertificateRefreshManager.swift */,
-				4CCE9F7E283CCC210090E234 /* TimerFactory.swift */,
 				EDDF8650858A8182694F00A6 /* API */,
 			);
 			path = "Cert management";
@@ -2179,6 +2179,7 @@
 		F31E911E2758F5F900140B2E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
+				4C66CA9328819D9900F8CBA1 /* TimerFactory.swift */,
 				4CF40BA42833D64D00C3C501 /* ProviderMessage.swift */,
 				4CF40BA52833D64D00C3C501 /* WireguardProviderMessage.swift */,
 				F31E911F2758F5F900140B2E /* WGLogger.swift */,
@@ -3337,7 +3338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ..\n";
+			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ..\n";
 			showEnvVarsInLog = 0;
 		};
 		E2663D783ACBF70683327C59 /* [CP] Check Pods Manifest.lock */ = {
@@ -3415,6 +3416,7 @@
 				4C4A303528118D6100768AD9 /* Optional+stringForLog.swift in Sources */,
 				4CCE9F7D283BCC750090E234 /* ConnectionTests.swift in Sources */,
 				4CAF945D281148770050C8B4 /* JSONKeyCoder.swift in Sources */,
+				4C3CE1D6288586AC00611C68 /* TimerFactory.swift in Sources */,
 				4C4A303D28118D6100768AD9 /* KeychainConstants.swift in Sources */,
 				4C4A303F28118D6100768AD9 /* VpnCertificate.swift in Sources */,
 				4C4A304328118D6100768AD9 /* AuthKeychain.swift in Sources */,
@@ -3422,7 +3424,6 @@
 				4C23070C28367F5B00BA5FE1 /* APIRequest.swift in Sources */,
 				4C30C0A42812A3E500B6E333 /* MockConnectionTunnel.swift in Sources */,
 				4CAF94462811453C0050C8B4 /* ExtensionAPIService.swift in Sources */,
-				4CCE9F80283CCC210090E234 /* TimerFactory.swift in Sources */,
 				4CAF945B281148710050C8B4 /* TokenRefreshRequest.swift in Sources */,
 				4C4A303928118D6100768AD9 /* PMLogFormatter.swift in Sources */,
 				4C30C0A92812A3F400B6E333 /* CertificateRefreshTests.swift in Sources */,
@@ -3430,7 +3431,6 @@
 				4CAF943F281144680050C8B4 /* RequestParsingTests.swift in Sources */,
 				4CAF9444281144700050C8B4 /* ExtensionCertificateRefreshManager.swift in Sources */,
 				4C4A303B28118D6100768AD9 /* NATType.swift in Sources */,
-				4CCE9F83283CCE850090E234 /* MockBackgroundTimer.swift in Sources */,
 				4C4A303C28118D6100768AD9 /* VPNConnectionFeatures.swift in Sources */,
 				4C4A303828118D6100768AD9 /* Data+JSONDictionary.swift in Sources */,
 				4C4439AA284A38CA007391A8 /* ProviderMessageTests.swift in Sources */,
@@ -3451,6 +3451,7 @@
 				4CF40BAC2833D9C600C3C501 /* SessionAuthRequest.swift in Sources */,
 				4C4A304128118D6100768AD9 /* UIDevice+ModelName.swift in Sources */,
 				4C4A303128118D6100768AD9 /* AuthCredentials.swift in Sources */,
+				4C3CE1D52885869A00611C68 /* MockBackgroundTimer.swift in Sources */,
 				4C4A303228118D6100768AD9 /* Logger+Callers.swift in Sources */,
 				4CF40BA82833D65A00C3C501 /* WireguardProviderMessage.swift in Sources */,
 				4CAF945C281148710050C8B4 /* CertificateRefreshRequest.swift in Sources */,
@@ -3877,6 +3878,7 @@
 				E997998326A6FA870083D61E /* ExtensionCertificateRefreshManager.swift in Sources */,
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,
+				4C66CA9428819D9900F8CBA1 /* TimerFactory.swift in Sources */,
 				E977A7882681FE2B0013495A /* AuthCredentials.swift in Sources */,
 				4CAF941B28103C2B0050C8B4 /* URLRequest+HTTP.swift in Sources */,
 				F31E91202758F5F900140B2E /* WGLogger.swift in Sources */,
@@ -3886,6 +3888,7 @@
 				E99799A526A6FE0C0083D61E /* NotificationToken.swift in Sources */,
 				E997998626A6FA870083D61E /* WGConstants.swift in Sources */,
 				E977A7812681F0D90013495A /* Dictionary+Extension.swift in Sources */,
+				4C66CA9B28819E4300F8CBA1 /* MockBackgroundTimer.swift in Sources */,
 				4CF40BAB2833D9C600C3C501 /* SessionAuthRequest.swift in Sources */,
 				E977A791268211950013495A /* VpnAuthenticationStorage.swift in Sources */,
 				4CB0A3582822A71100BF95C3 /* NWTCPConnection+DataTask.swift in Sources */,
@@ -3908,7 +3911,6 @@
 				4CF40BA62833D64D00C3C501 /* ProviderMessage.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
 				E986BDB927D260D300BECC10 /* CertificateRefreshRequest.swift in Sources */,
-				4CCE9F7F283CCC210090E234 /* TimerFactory.swift in Sources */,
 				E986BDBA27D260D900BECC10 /* TokenRefreshRequest.swift in Sources */,
 				B16BE0B49F9E0CCCF9804853 /* VPNConnectionFeatures.swift in Sources */,
 				5159CDEF329B705491152AE6 /* Storage.swift in Sources */,

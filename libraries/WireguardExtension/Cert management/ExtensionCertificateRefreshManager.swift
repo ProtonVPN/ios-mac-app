@@ -39,7 +39,7 @@ final class ExtensionCertificateRefreshManager {
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
     private let timerFactory: TimerFactory
-    private var timer: BackgroundTimerProtocol?
+    private var timer: BackgroundTimer?
 
     /// Use an operation queue so we can cancel any pending work items if needed.
     private let operationQueue = OperationQueue()
