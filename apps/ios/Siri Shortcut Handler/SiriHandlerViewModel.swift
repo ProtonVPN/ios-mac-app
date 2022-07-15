@@ -51,7 +51,7 @@ class SiriHandlerViewModel {
                                              vpnManager: vpnManager,
                                              networking: networking,
                                              alertService: alertService,
-                                             timerFactory: TimerFactory(),
+                                             timerFactory: TimerFactoryImplementation(),
                                              propertiesManager: propertiesManager,
                                              vpnKeychain: vpnKeychain,
                                              configurationPreparer: configurationPreparer,

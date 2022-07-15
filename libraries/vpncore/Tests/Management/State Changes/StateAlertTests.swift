@@ -62,10 +62,19 @@ class StateAlertTests: XCTestCase {
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 0)
-        
-        timerFactory.fireTimer()
-        timerFactory.fireTimer() // Fire second time because appStateManager starts connecting for the second time after it deletes vpn profile
-        
+
+        let timeouts = (1...2).map { XCTestExpectation(description: "connection timeout \($0)") }
+        timerFactory.runRepeatingTimers {
+            timeouts[0].fulfill()
+        }
+
+        // Fire second time because appStateManager starts connecting for the second time after it deletes vpn profile
+        timerFactory.runRepeatingTimers {
+            timeouts[1].fulfill()
+        }
+
+        wait(for: timeouts, timeout: 10)
+
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }

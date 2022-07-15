@@ -178,7 +178,7 @@ class NWTCPDataTask: DataTaskProtocol {
     /// The current network connection (NWTCPConnection, or a mocked equivalent), if any.
     private var connection: ConnectionTunnel?
     /// The countdown until we consider this network request to have "timed out."
-    private var timeoutTimer: BackgroundTimerProtocol?
+    private var timeoutTimer: BackgroundTimer?
     /// Whether or not this request has been "resolved," whether it resulted in an error or success.
     private var resolved: Bool = false {
         didSet {

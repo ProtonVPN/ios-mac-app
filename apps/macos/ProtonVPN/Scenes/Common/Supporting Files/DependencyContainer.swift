@@ -69,7 +69,7 @@ final class DependencyContainer {
         vpnManager: vpnManager,
         networking: makeNetworking(),
         alertService: macAlertService,
-        timerFactory: TimerFactory(),
+        timerFactory: TimerFactoryImplementation(),
         propertiesManager: makePropertiesManager(),
         vpnKeychain: vpnKeychain,
         configurationPreparer: makeVpnManagerConfigurationPreparer(),

@@ -50,7 +50,7 @@ class CertificateRefreshTests: XCTestCase {
     var keychain: MockAuthKeychain!
     var dataTaskFactory: MockDataTaskFactory!
     var authenticationStorage: MockVpnAuthenticationStorage!
-    var timerFactory: MockTimerFactory!
+    var timerFactory: TimerFactoryMock!
     var apiService: ExtensionAPIService!
     var manager: ExtensionCertificateRefreshManager!
 
@@ -104,7 +104,7 @@ class CertificateRefreshTests: XCTestCase {
                                             userId: "bravo",
                                             expiration: Date().addingTimeInterval(60 * 20),
                                             scopes: []))
-        timerFactory = MockTimerFactory()
+        timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(storage: storage,
                                          dataTaskFactory: dataTaskFactory,

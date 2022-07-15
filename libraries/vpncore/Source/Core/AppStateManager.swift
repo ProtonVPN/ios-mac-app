@@ -67,7 +67,7 @@ public class AppStateManagerImplementation: AppStateManager {
     private var vpnManager: VpnManagerProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let serverStorage: ServerStorage
-    private let timerFactory: TimerFactoryProtocol
+    private let timerFactory: TimerFactory
     private let vpnKeychain: VpnKeychainProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
         
@@ -121,7 +121,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     private var reconnectingAfterStuckDisconnecting = false
     
-    private var timeoutTimer: Timer?
+    private var timeoutTimer: BackgroundTimer?
     private var serviceChecker: ServiceChecker?
 
     private let vpnAuthentication: VpnAuthentication
@@ -131,7 +131,7 @@ public class AppStateManagerImplementation: AppStateManager {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, serverStorage: ServerStorage, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactory, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, serverStorage: ServerStorage, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.networking = networking
@@ -185,7 +185,7 @@ public class AppStateManagerImplementation: AppStateManager {
         
         state = .preparingConnection
         attemptingConnection = true
-        beginTimoutCountdown()
+        beginTimeoutCountdown()
         notifyObservers()
     }
     
@@ -196,7 +196,7 @@ public class AppStateManagerImplementation: AppStateManager {
     public func cancelConnectionAttempt(completion: @escaping () -> Void) {
         state = .aborted(userInitiated: true)
         attemptingConnection = false
-        cancelTimout()
+        cancelTimeout()
         
         notifyObservers()
         
@@ -288,16 +288,17 @@ public class AppStateManagerImplementation: AppStateManager {
     
     // MARK: - Private functions
     
-    private func beginTimoutCountdown() {
-        cancelTimout()
-        timeoutTimer = timerFactory.timer(timeInterval: 30, repeats: false, block: { [weak self] _ in
+    private func beginTimeoutCountdown() {
+        cancelTimeout()
+
+        timeoutTimer = timerFactory.scheduledTimer(runAt: Date().addingTimeInterval(30),
+                                                   leeway: .seconds(5),
+                                                   queue: .main) { [weak self] in
             self?.timeout()
-        })
-        timeoutTimer?.tolerance = 5.0
-        RunLoop.current.add(timeoutTimer!, forMode: .default)
+        }
     }
     
-    private func cancelTimout() {
+    private func cancelTimeout() {
         timeoutTimer?.invalidate()
     }
     
@@ -305,14 +306,14 @@ public class AppStateManagerImplementation: AppStateManager {
         log.info("Connection attempt timed out", category: .connectionConnect)
         state = .aborted(userInitiated: false)
         attemptingConnection = false
-        cancelTimout()
+        cancelTimeout()
         stopAttemptingConnection()
         notifyObservers()
     }
     
     private func stopAttemptingConnection() {
         log.info("Stop preparing connection", category: .connectionConnect)
-        cancelTimout()
+        cancelTimeout()
         handleVpnError(vpnState)
         disconnect()
     }
@@ -426,7 +427,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
             attemptingConnection = false
             state = .connected(descriptor)
-            cancelTimout()
+            cancelTimeout()
         case .reasserting:
             return // usually this step is quick
         case .disconnecting(let descriptor):
@@ -557,7 +558,7 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func notifyNetworkUnreachable() {
         attemptingConnection = false
-        cancelTimout()
+        cancelTimeout()
         connectionFailed()
         
         DispatchQueue.main.async { [weak self] in
