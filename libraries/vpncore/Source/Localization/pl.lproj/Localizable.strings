@@ -797,7 +797,7 @@
 "_locations_basic" = "Lokalizacje planu Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Lokalizacje planu Plus";
+"_locations_basic_plus" = "Lokalizacje planu PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Lokalizacje planu Free";
@@ -1743,9 +1743,6 @@
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
 
-/* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
-
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serwer Tor";
 
@@ -2109,7 +2106,7 @@
 "login_unsupported_state" = "Metoda logowania jest nieprawidłowa. Skontaktuj się ze wsparciem.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "By połączyć się z tym urządzeniem, odłącz inne lub ulepsz do %@";
+"maximum_device_plan_limit_part_1" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Strona internetowa Proton VPN może być tymczasowo niedostępna z powodu ograniczeń sieciowych. Użyj aplikacji mobilnej, aby utworzyć nowe konto Proton.";

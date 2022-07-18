@@ -23,7 +23,7 @@
 "search_countries_sample" = "Швейцарія, США, Італія...";
 
 /* Subtitle shown when nothing is found in search */
-"search_no_results_subtitle" = "Будь ласка, спробуйте інше ключове слово";
+"search_no_results_subtitle" = "Спробуйте інше ключове слово";
 
 /* Title shown when nothing is found in search */
 "search_no_results_title" = "Результатів не знайдено";
@@ -41,7 +41,7 @@
 "search_recent_clear_title" = "Вашу історію пошуку буде втрачено. Продовжити?";
 
 /* Header for the recent searches section in search */
-"search_recent_header" = "Недавно переглянуте";
+"search_recent_header" = "Недавно переглянуті";
 
 /* Section header in search */
 "search_results_cities" = "Міста";

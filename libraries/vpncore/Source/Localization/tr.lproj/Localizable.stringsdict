@@ -101,7 +101,7 @@
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> aynı anda %#@num_devices@ aygıta kadar bağlayın.</string>
+		<string> aynı anda %#@num_devices@ aygıta kadar bağlanın.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
