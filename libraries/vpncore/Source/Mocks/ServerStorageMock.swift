@@ -23,8 +23,9 @@ import Foundation
 
 public class ServerStorageMock: ServerStorage {
     public var didStoreNewServers: (([ServerModel]) -> Void)?
+    public var didUpdateServers: (([ServerModel]) -> Void)?
     
-    public var servers: [ServerModel]!
+    public var servers: [String: ServerModel] = [:]
 
     public var age: TimeInterval = .hours(1)
     
@@ -35,24 +36,40 @@ public class ServerStorageMock: ServerStorage {
     }
 
     public init(servers: [ServerModel] = []) {
-        self.servers = servers
+        populateServers(servers)
     }
     
     public func fetch() -> [ServerModel] {
-        return servers
+        return Array(servers.values)
     }
 
     public func fetchAge() -> TimeInterval {
         age
     }
+
+    /// Different from `store`, as it doesn't call the spy function `didStoreNewServers`.
+    /// Should be used for test setup.
+    public func populateServers(_ serverModels: [ServerModel]) {
+        servers = serverModels.reduce(into: [:], { result, server in
+            result[server.id] = server
+        })
+    }
     
     public func store(_ newServers: [ServerModel]) {
-        servers = newServers
+        populateServers(newServers)
         didStoreNewServers?(newServers)
     }
     
     public func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {
-        fatalError("\(#function) not implemented")
+        var updatedServers: [ServerModel] = []
+        for (serverId, properties) in continuousServerProperties {
+            servers[serverId]?.update(continousProperties: properties)
+
+            if let server = servers[serverId] {
+                updatedServers.append(server)
+            }
+        }
+        didUpdateServers?(updatedServers)
     }
     
     // MARK: - Private
@@ -87,6 +104,6 @@ public class ServerStorageMock: ServerStorage {
             }
         }
 
-        self.servers = serverModels
+        populateServers(serverModels)
     }
 }

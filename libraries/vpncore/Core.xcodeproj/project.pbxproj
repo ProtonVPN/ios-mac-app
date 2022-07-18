@@ -98,6 +98,8 @@
 		4C4E0B2D285B72A5001657FD /* MockVpnAuthenticationStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E0B2B285B72A5001657FD /* MockVpnAuthenticationStorage.swift */; };
 		4C66CA9828819E2B00F8CBA1 /* MockBackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9528819E2600F8CBA1 /* MockBackgroundTimer.swift */; };
 		4C66CA9928819E2C00F8CBA1 /* MockBackgroundTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9528819E2600F8CBA1 /* MockBackgroundTimer.swift */; };
+		4C66CA9D2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9C2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift */; };
+		4C66CA9E2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C66CA9C2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift */; };
 		4C6C4705283FA0230064DEC9 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
 		4C6C4706283FA0240064DEC9 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
 		4C82CE7F5F5EAB7C52A0C74C /* Pods-Core-vpncore-macosTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */; };
@@ -737,6 +739,7 @@
 		4C4D898227BD0BE800548523 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		4C4E0B2B285B72A5001657FD /* MockVpnAuthenticationStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVpnAuthenticationStorage.swift; sourceTree = "<group>"; };
 		4C66CA9528819E2600F8CBA1 /* MockBackgroundTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBackgroundTimer.swift; sourceTree = "<group>"; };
+		4C66CA9C2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTests.swift; sourceTree = "<group>"; };
 		4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtilityTests.swift; sourceTree = "<group>"; };
 		4C83C4662869ACC5000A3FB4 /* LocaleResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleResolverMock.swift; sourceTree = "<group>"; };
 		4C83C4692869C830000A3FB4 /* BaseConnectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConnectionTestCase.swift; sourceTree = "<group>"; };
@@ -1332,6 +1335,7 @@
 			isa = PBXGroup;
 			children = (
 				D59671E9253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift */,
+				4C66CA9C2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift */,
 			);
 			path = "Data refresh";
 			sourceTree = "<group>";
@@ -3017,6 +3021,7 @@
 				4C0961FB285B503800556E07 /* VpnManagerTests.swift in Sources */,
 				4CFDF0BA287EE44100386626 /* MockTestData.swift in Sources */,
 				E10155D4230988C600A4B5CB /* AppStateManagerImplementationTests.swift in Sources */,
+				4C66CA9D2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				E942750F285B80A7003CACA8 /* FileHandleMock.swift in Sources */,
 				4CFDF0C0287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
 				F327A9A028217AB100848E42 /* CodableExtensionsTests.swift in Sources */,
@@ -3339,6 +3344,7 @@
 				4C0961FC285B503900556E07 /* VpnManagerTests.swift in Sources */,
 				4CFDF0BB287EE44100386626 /* MockTestData.swift in Sources */,
 				E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */,
+				4C66CA9E2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				E9427510285B80A7003CACA8 /* FileHandleMock.swift in Sources */,
 				4CFDF0C1287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
 				F327A99F28217AB000848E42 /* CodableExtensionsTests.swift in Sources */,

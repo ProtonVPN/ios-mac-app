@@ -22,6 +22,7 @@
 import Foundation
 
 public class VpnKeychainMock: VpnKeychainProtocol {
+    public var didStoreCredentials: ((VpnCredentials) -> Void)?
     
     public enum KeychainMockError: Error {
         case fetchError
@@ -34,7 +35,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public static var vpnPlanChanged = Notification.Name("vpnPlanChanged")
     public static var vpnUserDelinquent = Notification.Name("vpnUserDelinquent")
     
-    public var credentials: VpnCredentials
+    public var credentials: VpnCredentials?
     
     public init(accountPlan: AccountPlan = .free, maxTier: Int = 0) {
         credentials = VpnKeychainMock.vpnCredentials(accountPlan: accountPlan, maxTier: maxTier)
@@ -44,6 +45,11 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         if throwsOnFetch {
             throw KeychainMockError.fetchError
         }
+
+        guard let credentials = credentials else {
+            throw KeychainMockError.fetchError
+        }
+
         return credentials
     }
 
@@ -59,13 +65,15 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         let newCredentials = vpnCredentials
         let oldCredentials = credentials
 
-        if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
-            let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
-            NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
-        }
-        if oldCredentials.accountPlan != newCredentials.accountPlan {
-            let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
-            NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)
+        if let oldCredentials = oldCredentials {
+            if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
+                let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
+                NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
+            }
+            if oldCredentials.accountPlan != newCredentials.accountPlan {
+                let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
+                NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)
+            }
         }
 
         credentials = newCredentials
@@ -73,6 +81,8 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         if oldCredentials != newCredentials {
             NotificationCenter.default.post(name: Self.vpnCredentialsChanged, object: newCredentials)
         }
+
+        didStoreCredentials?(newCredentials)
     }
     
     public func getServerCertificate() throws -> SecCertificate {
@@ -81,8 +91,9 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     
     public func storeServerCertificate() throws {}
 
-    // XXX: This should be implemented
-    public func clear() {}
+    public func clear() {
+        credentials = nil
+    }
     
     public func setVpnCredentials(with accountPlan: AccountPlan, maxTier: Int = 0) {
         credentials = VpnKeychainMock.vpnCredentials(accountPlan: accountPlan, maxTier: maxTier)

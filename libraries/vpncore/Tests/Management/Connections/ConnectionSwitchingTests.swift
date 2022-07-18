@@ -108,7 +108,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             return .available(ports: [15213, 15410])
         }
 
-        container.serverStorage.servers.append(testData.server2)
+        container.serverStorage.populateServers(container.serverStorage.servers.values + [testData.server2])
 
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
@@ -124,7 +124,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             finalDisconnection: XCTestExpectation(description: "final tunnel transition to disconnected")
         )
 
-        var currentConnection: NEVPNConnectionWrapper?
         var currentManager: NEVPNManagerMock?
         var currentStatus: NEVPNStatus?
 
@@ -137,10 +136,6 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         profileId: nil)
 
         var tunnelProviderExpectation = expectations.initialConnection
-
-        tunnelConnectionCreated = { connection in
-            currentConnection = connection
-        }
 
         tunnelManagerCreated = { manager in
             currentManager = manager
@@ -313,7 +308,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// the error of their ways and upgrades back to plus, the test will then exercise the app in the case where that
     /// same user then becomes delinquent on their plan payment.
     func testUserPlanChangingThenBecomingDelinquentWithWireGuard() {
-        container.serverStorage.servers = [testData.server1, testData.server3]
+        container.serverStorage.populateServers([testData.server1, testData.server3])
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
         container.propertiesManager.vpnProtocol = .wireGuard
         container.propertiesManager.hasConnected = true

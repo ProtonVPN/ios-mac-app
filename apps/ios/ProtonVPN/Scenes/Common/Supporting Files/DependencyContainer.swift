@@ -69,12 +69,13 @@ final class DependencyContainer {
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
+    private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
                                                                         vpnApiService: makeVpnApiService(),
                                                                         vpnManager: makeVpnManager(),
                                                                         networking: makeNetworking(),
                                                                         alertService: makeCoreAlertService(),
-                                                                        timerFactory: TimerFactoryImplementation(),
+                                                                        timerFactory: timerFactory,
                                                                         propertiesManager: makePropertiesManager(),
                                                                         vpnKeychain: makeVpnKeychain(),
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer(),
@@ -92,7 +93,11 @@ final class DependencyContainer {
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh)
+    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
+                                                           timerFactory: timerFactory,
+                                                           refreshIntervals: (AppConstants.Time.fullServerRefresh,
+                                                                              AppConstants.Time.serverLoadsRefresh,
+                                                                              AppConstants.Time.userAccountRefresh))
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     

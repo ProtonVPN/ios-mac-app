@@ -42,19 +42,19 @@ public class VpnCredentials: NSObject, NSSecureCoding {
     public let subscribed: Int?
     
     override public var description: String {
-        return
-            "Status: \(status)\n" +
-            "Expiration time: \(String(describing: expirationTime))\n" +
-            "Account plan: \(accountPlan.description) (\(planName ?? "unknown"))\n" +
-            "Max connect: \(maxConnect)\n" +
-            "Max tier: \(maxTier)\n" +
-            "Services: \(services)\n" +
-            "Group ID: \(groupId)\n" +
-            "Name: \(name)\n" +
-            "Password: \(password)\n" +
-            "Delinquent: \(delinquent)\n" +
-            "Has Payment Method: \(hasPaymentMethod)\n" +
-            "Subscribed: \(String(describing: subscribed))"
+        "Status: \(status)\n" +
+        "Expiration time: \(String(describing: expirationTime))\n" +
+        "Account plan: \(accountPlan.description) (\(planName ?? "unknown"))\n" +
+        "Max connect: \(maxConnect)\n" +
+        "Max tier: \(maxTier)\n" +
+        "Services: \(services)\n" +
+        "Group ID: \(groupId)\n" +
+        "Name: \(name)\n" +
+        "Password: \(password)\n" +
+        "Delinquent: \(delinquent)\n" +
+        "Credit: \(credit) (in \(currency))" +
+        "Has Payment Method: \(hasPaymentMethod)\n" +
+        "Subscribed: \(String(describing: subscribed))"
     }
 
     public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool, planName: String?, subscribed: Int?) {

@@ -10,6 +10,7 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
+import XCTest
 @testable import vpncore
 
 final class NetworkingMock {
@@ -143,38 +144,76 @@ protocol NetworkingMockDelegate: AnyObject {
 }
 
 class FullNetworkingMockDelegate: NetworkingMockDelegate {
+    enum MockEndpoint: String {
+        case vpn = "/vpn"
+        case status = "/vpn_status"
+        case location = "/vpn/location"
+        case logicals = "/vpn/logicals"
+        case streamingServices = "/vpn/streamingservices"
+        case clientConfig = "/vpn/v2/clientconfig"
+        case loads = "/vpn/loads"
+    }
+
+    struct UnexpectedError: Error {
+        let description: String
+    }
+
     var apiServerList: [ServerModel] = []
+    var apiServerLoads: [ContinuousServerProperties] = []
     var apiCredentials: VpnCredentials?
     var apiVpnLocation: MockTestData.VPNLocationResponse?
     var apiClientConfig: ClientConfig?
 
+    var didHitRoute: ((MockEndpoint) -> Void)?
+
     func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error> {
-        switch request.url?.path {
-        case "/vpn":
+        do {
+            return try handleMockNetworkingRequestThrowingOnUnexpectedError(request)
+        } catch {
+            XCTFail("Unexpected error occurred: \(error)")
+            return .failure(error)
+        }
+    }
+
+    /// Any error returned via `Result.failure()` will be treated as a mock error, and thus part of the test.
+    /// Any error thrown from this function will be treated as an unexpected error, and will thus fail the test.
+    func handleMockNetworkingRequestThrowingOnUnexpectedError(_ request: URLRequest) throws -> Result<Data, Error> {
+        guard let path = request.url?.path else {
+            throw UnexpectedError(description: "No path provided to URL request")
+        }
+
+        guard let route = MockEndpoint(rawValue: path) else {
+            throw UnexpectedError(description: "Request not implemented: \(path)")
+        }
+
+        defer { didHitRoute?(route) }
+
+        switch route {
+        case .vpn:
             // for fetching client credentials
             guard let apiCredentials = apiCredentials else {
                 return .failure(ApiError(httpStatusCode: 400, code: 2000))
             }
 
-            let data = try! JSONSerialization.data(withJSONObject: apiCredentials.asDict)
+            let data = try JSONSerialization.data(withJSONObject: apiCredentials.asDict)
             return .success(data)
-        case "/vpn_status":
+        case .status:
             // for checking p2p state
             return .success(Data())
-        case "/vpn/location":
+        case .location:
             // for checking IP state
             let response = apiVpnLocation!
-            let data = try! responseEncoder.encode(response)
+            let data = try responseEncoder.encode(response)
             return .success(data)
-        case "/vpn/logicals":
+        case .logicals:
             // for fetching server list
             let servers = self.apiServerList.map { $0.asDict }
-            let data = try! JSONSerialization.data(withJSONObject: [
+            let data = try JSONSerialization.data(withJSONObject: [
                 "LogicalServers": servers
             ])
 
             return .success(data)
-        case "/vpn/streamingservices":
+        case .streamingServices:
             // for fetching list of streaming services & icons
             let response = VPNStreamingResponse(code: 1000,
                                                 resourceBaseURL: "https://protonvpn.com/resources",
@@ -182,15 +221,41 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
                                                     "1": [.init(name: "Rai", icon: "rai.jpg")],
                                                     "2": [.init(name: "Netflix", icon: "netflix.jpg")]
                                                 ]])
-            let data = try! responseEncoder.encode(response)
+            let data = try responseEncoder.encode(response)
             return .success(data)
-        case "/vpn/v2/clientconfig":
+        case .clientConfig:
             let response = ClientConfigResponse(clientConfig: apiClientConfig!)
-            let data = try! responseEncoder.encode(response)
+            let data = try responseEncoder.encode(response)
             return .success(data)
-        default:
-            fatalError("Request not implemented: \(request)")
+        case .loads:
+            guard verifyClientIPIsMasked(request: request) else {
+                return .failure(POSIXError(.EINVAL))
+            }
+
+            let servers = self.apiServerLoads.map { $0.asDict }
+            let data = try JSONSerialization.data(withJSONObject: [
+                "LogicalServers": servers
+            ])
+            return .success(data)
         }
+    }
+
+    func verifyClientIPIsMasked(request: URLRequest) -> Bool {
+        guard let ip = request.headers["x-pm-netzone"] else {
+            XCTFail("Didn't include IP in request dictionary?")
+            return false
+        }
+
+        let (ipDigits, dot, zero) = (#"\d{1,3}"#, #"\."#, #"0"#)
+        let pattern = ipDigits + dot +
+                      ipDigits + dot +
+                      ipDigits + dot + zero // e.g., 123.123.123.0
+
+        guard ip.hasMatches(for: pattern) else {
+            XCTFail("'\(ip)' does not match regex \(pattern), is it being masked properly?")
+            return false
+        }
+        return true
     }
 
     private lazy var responseEncoder: JSONEncoder = {
