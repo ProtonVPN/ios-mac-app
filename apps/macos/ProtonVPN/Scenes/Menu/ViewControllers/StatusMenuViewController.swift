@@ -32,32 +32,34 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     let viewModel: StatusMenuViewModel
     
-    @IBOutlet weak var contentView: NSStackView!
-    @IBOutlet weak var dynamicContentView: NSStackView!
-    @IBOutlet weak var loginLabel: NSTextField!
-    @IBOutlet weak var upgradeView: NSStackView!
-    @IBOutlet weak var upgradeLabel: NSTextField!
+    @IBOutlet private weak var contentView: NSStackView!
+    @IBOutlet private weak var dynamicContentView: NSStackView!
+    @IBOutlet private weak var loginLabel: NSTextField!
+    @IBOutlet private weak var upgradeView: NSStackView!
+    @IBOutlet private weak var upgradeLabel: NSTextField!
     
-    @IBOutlet weak var headerView: NSView!
-    @IBOutlet weak var connectionLabel: NSTextField!
-    @IBOutlet weak var ipLabel: NSTextField!
-    @IBOutlet weak var connectButton: StatusBarAppConnectButton!
-    @IBOutlet weak var profileDropDown: StatusBarAppProfileDropdownButton!
+    @IBOutlet private weak var headerView: NSView!
+    @IBOutlet private weak var connectionLabel: NSTextField!
+    @IBOutlet private weak var ipLabel: NSTextField!
+    @IBOutlet private weak var connectButton: StatusBarAppConnectButton!
+    @IBOutlet private weak var profileDropDown: StatusBarAppProfileDropdownButton!
     
     @IBOutlet weak var secureCoreSwitch: SwitchButton!
-    @IBOutlet weak var secureCoreLabel: NSTextField!
+    @IBOutlet private weak var secureCoreLabel: NSTextField!
     
-    @IBOutlet weak var countryScrollView: NSScrollView!
-    @IBOutlet weak var countryClipView: NSClipView!
-    @IBOutlet weak var countryCollection: NSCollectionView!
+    @IBOutlet private weak var countryScrollView: NSScrollView!
+    @IBOutlet private weak var countryClipView: NSClipView!
+    @IBOutlet private weak var countryCollection: NSCollectionView!
     
-    @IBOutlet weak var quitButton: NSButton!
-    @IBOutlet weak var showProtonVPNButton: NSButton!
-    
-    @IBOutlet weak var loadingViewContainer: NSView!
-    @IBOutlet weak var loadingView: LoadingAnimationView!
-    @IBOutlet weak var loadingLabel: NSTextField!
-    @IBOutlet weak var cancelConnectionButton: ConnectingOverlayButton!
+    @IBOutlet private weak var quitButton: NSButton!
+    @IBOutlet private weak var showProtonVPNButton: NSButton!
+
+    @IBOutlet private weak var loadingViewContainer: NSView!
+    @IBOutlet private weak var loadingView: LoadingAnimationView!
+    @IBOutlet private weak var loadingLabel: NSTextField!
+    @IBOutlet private weak var cancelConnectionButton: ConnectingOverlayButton!
+
+    @IBOutlet private weak var footerView: NSView!
     
     private var profilesWindowController: StatusMenuProfilesListController?
     
@@ -86,7 +88,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
     
     override func viewDidLoad() {
-        setupContentView()
+        setupBackgroundColor()
         setupSecureCoreSection()
         setupCountryCollection()
         super.viewDidLoad()
@@ -146,9 +148,11 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         updateViewLayout()
     }
 
-    private func setupContentView() {
-        contentView.wantsLayer = true
-        contentView.layer?.backgroundColor =  .cgColor(.background)
+    private func setupBackgroundColor() {
+        dynamicContentView.wantsLayer = true
+        dynamicContentView.layer?.backgroundColor = .cgColor(.background)
+        footerView.wantsLayer = true
+        footerView.layer?.backgroundColor = .cgColor(.background)
     }
         
     private func setupSecureCoreSection() {
