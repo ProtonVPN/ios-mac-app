@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,6 +16,7 @@
                 <outlet property="countryCollection" destination="Qgv-bk-Z1x" id="spZ-pa-knj"/>
                 <outlet property="countryScrollView" destination="gAI-kn-mXB" id="B63-pa-RsA"/>
                 <outlet property="dynamicContentView" destination="WYk-pE-9Vu" id="jj4-da-T7Q"/>
+                <outlet property="footerView" destination="KwC-fw-Nmk" id="T0w-PN-Y5p"/>
                 <outlet property="headerView" destination="ntN-xc-0F9" id="GIm-ly-saB"/>
                 <outlet property="ipLabel" destination="csD-Jk-NjT" id="i9a-Og-qLm"/>
                 <outlet property="loadingLabel" destination="vby-nz-cfv" id="8oZ-Fd-Hhr"/>
@@ -58,13 +59,13 @@
                             </textFieldCell>
                         </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kBn-HF-fRD" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="103" y="13" width="75" height="51"/>
+                            <rect key="frame" x="106" y="13" width="69" height="52"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="9ob-Lx-15i"/>
                             </constraints>
                             <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4M5-cY-ldz">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system" size="11"/>
+                                <font key="font" metaFont="smallSystem"/>
                             </buttonCell>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
@@ -251,11 +252,11 @@
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="KwC-fw-Nmk" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="KwC-fw-Nmk">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Za5-sz-xDc" customClass="QuitApplicationButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="14" y="8" width="66" height="32"/>
+                                    <rect key="frame" x="13" y="8" width="60" height="32"/>
                                     <buttonCell key="cell" type="push" title="Quit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="z35-lf-qN6">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -265,7 +266,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hkh-M0-H3T" customClass="ShowApplicationButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="143" y="8" width="143" height="32"/>
+                                    <rect key="frame" x="150" y="8" width="137" height="32"/>
                                     <buttonCell key="cell" type="push" title="Open ProtonVPN" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bfw-4W-2Ic">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
