@@ -29,7 +29,7 @@
 "_action" = "Action";
 
 /* (No Comment) */
-"_action_requires_reconnect" = "Votre connexion doit être relancée pour appliquer ce changement";
+"_action_requires_reconnect" = "Votre connexion doit être relancée pour appliquer ce changement.";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Activer le widget";
@@ -74,13 +74,13 @@
 "_allow" = "Autoriser";
 
 /* (No Comment) */
-"_allow_lan_description" = "Afin d'autoriser l'accès au réseau local, Kill Switch doit être désactivé.\n\nContinuer ?";
+"_allow_lan_description" = "Pour autoriser l'accès au réseau local, il faut désactiver la fonction kill switch.\n\nContinuer ?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Permet de contourner le VPN et de se connecter à des périphériques de votre réseau local, comme votre imprimante.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Notez que votre connexion doit être relancée pour appliquer ce changement";
+"_allow_lan_note" = "Notez que votre connexion doit être relancée pour appliquer ce changement.";
 
 /* (No Comment) */
 "_allow_lan_title" = "Autoriser les connexions LAN";
@@ -95,7 +95,7 @@
 "_always_on_vpn_tooltip_ios" = "Le VPN permanent rétablit une connexion VPN sécurisée rapidement et automatiquement. Pour votre sécurité, cette fonctionnalité est toujours activée.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "Le VPN permanent vous reconnectera automatiquement";
+"_always_on_will_reconnect" = "Le VPN permanent vous reconnectera automatiquement.";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Journaux de l'application";
@@ -110,7 +110,7 @@
 "_auto_connect" = "Connexion automatique";
 
 /* MacOS: Settings -> Connection: description. */
-"_auto_connect_tooltip" = "Au démarrage de l'application, vous êtes connecté au profil sélectionné";
+"_auto_connect_tooltip" = "Au démarrage de l'application, vous êtes connecté au profil sélectionné.";
 
 /* iOS: section header in countries list */
 "_basic_servers" = "Serveurs Basic";
@@ -140,7 +140,7 @@
 "_changelog" = "Journal des modifications";
 
 /* iOS: new profkle can't be created because not all required fields are filled */
-"_check_if_fields_present" = "Veuillez vérifier si tous les champs sont remplis";
+"_check_if_fields_present" = "Veuillez vérifier si tous les champs sont complétés.";
 
 /* iOS plan selection: header */
 "_choose_plan" = "Choisir un abonnement";
@@ -197,7 +197,7 @@
 "_connection_settings" = "Paramètres de connexion";
 
 /* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Contactez notre assistance";
+"_contact_our_support" = "Contactez notre support";
 
 /* (No Comment) */
 "_continue" = "Continuer";
@@ -272,7 +272,7 @@
 "_delete_profile_header" = "Supprimer le profil";
 
 /* MacOS: profile deletion warning */
-"_delete_profile_warning" = "Le profil sera définitivement supprimé. Souhaitez-vous continuer ?";
+"_delete_profile_warning" = "Le profil sera définitivement supprimé. Souhaitez-vous continuer ?";
 
 /* (No Comment) */
 "_delinquent_description" = "Vous pourrez à nouveau accéder aux fonctionnalités premium une fois que celles-ci auront été payées.";
@@ -284,7 +284,7 @@
 "_delinquent_title" = "Votre compte VPN comporte des factures en attente";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Votre compte présente une facture impayée. Veuillez la régler en vous rendant sur account.protonvpn.com";
+"_delinquent_user_description" = "Votre compte présente une facture impayée. Veuillez la régler en vous rendant sur account.protonvpn.com.";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Facture impayée";
@@ -341,7 +341,7 @@
 "_enjoy_for_free" = "Profitez de %@ gratuitement !";
 
 /* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Entrez votre adresse électronique";
+"_enter_email_address" = "Saisissez votre adresse électronique";
 
 /* Profile create/change form */
 "_enter_profile_name" = "Saisir le nom du profil";
@@ -362,13 +362,13 @@
 "_error_email_verification_disabled" = "Vérification d'adresse électronique temporairement désactivée";
 
 /* Application error */
-"_error_existing_session_to_server" = "Impossible de se connecter au serveur car il y a déjà une session active de l'utilisateur";
+"_error_existing_session_to_server" = "Impossible de se connecter au serveur car il y a déjà une session active de l'utilisateur.";
 
 /* Error try to restore user from the session */
 "_error_fetch_session" = "Impossible de trouver l'utilisateur de la session";
 
 /* (No Comment) */
-"_error_field_email_wrong_format" = "L'adresse électronique n'est pas dans le bon format";
+"_error_field_email_wrong_format" = "L'adresse électronique n'est pas dans le bon format.";
 
 /* (No Comment) */
 "_error_field_passwords_dont_match" = "Les mots de passe ne correspondent pas";
@@ -380,10 +380,10 @@
 "_error_field_unknown" = "Veuillez vérifier ce champ";
 
 /* Error when generate srp clint */
-"_error_generate_srp" = "La génération du SRP a échoué";
+"_error_generate_srp" = "La génération du SRP a échoué.";
 
 /* Error when try to hash password */
-"_error_hash_password" = "Impossible de hacher le mot de passe utilisateur";
+"_error_hash_password" = "Impossible de hacher le mot de passe utilisateur.";
 
 /* Unknown error that has no better description */
 "_error_internal_error" = "Erreur interne de l'API";
@@ -395,7 +395,7 @@
 "_error_keychain_write" = "Proton n'a pas pu communiquer avec votre appareil. Veuillez réessayer plus tard.";
 
 /* Parsing error */
-"_error_loads" = "Impossible de mettre à jour la charge des serveurs";
+"_error_loads" = "Impossible de mettre à jour la charge des serveurs.";
 
 /* (No Comment) */
 "_error_mitm_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion à l'API Proton VPN. Votre connexion Internet actuelle peut être surveillée. Pour assurer la sécurité de vos données, nous empêchons l'application d'accéder à l'API Proton VPN.\nPour vous connecter ou accéder à votre compte, passez par un nouveau réseau et essayez de vous connecter à nouveau.";
@@ -407,19 +407,19 @@
 "_error_mitm_vpn_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion au serveur VPN. Votre connexion internet actuelle est peut-être surveillée. Pour garder vos données sécurisées, nous empêchons l'application d'accéder à ce serveur VPN.\nVeuillez sélectionner un autre serveur.";
 
 /* Error when try to parse modulus signature */
-"_error_modulus_signature" = "La signature Modulus est vide";
+"_error_modulus_signature" = "La signature Modulus est vide.";
 
 /* In App Purchase error */
 "_error_no_active_username" = "Veuillez vous connecter avec le compte pour lequel vous souscrivez à une offre afin que nous puissions finaliser l'achat.";
 
 /* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "L’achat de votre abonnement a réussi. Veuillez relancer l'application pour bénéficier de vos nouvelles fonctionnalités.";
+"_error_no_new_subscription_in_successfull_response" = "Le passage à l'abonnement supérieur a réussi. Veuillez relancer l'application pour bénéficier de vos nouvelles fonctionnalités.";
 
 /* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Nous n'étions pas disponibles pour faire correspondre le produit App Store aux produits sur notre serveur. Veuillez contacter l’assistance.";
+"_error_purchased_plan_does_not_match_available" = "Nous n'étions pas disponibles pour faire correspondre le produit App Store aux produits sur notre serveur. Veuillez contacter le support.";
 
 /* In App Purchase error */
-"_error_receipt_lost" = "Reçu d'App Store perdu. Veuillez contacter l’assistance si votre abonnement n'a pas été activé.";
+"_error_receipt_lost" = "Reçu d'App Store perdu. Veuillez contacter le support si votre abonnement n'a pas été activé.";
 
 /* In App Purchase error */
 "_error_sandbox_receipt" = "Les achats ne sont pas disponibles dans la version bêta de l'application iOS. Vous n'avez pas été facturé.";
@@ -461,22 +461,22 @@
 "_error_user_creation" = "Échec lors de la création du compte";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Vos identifiants ont expiré. Veuillez vous connecter";
+"_error_user_credentials_expired" = "Vos identifiants ont expiré. Veuillez vous connecter.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Identifiants utilisateur manquants. Impossible de se connecter";
+"_error_user_credentials_missing" = "Identifiants utilisateur manquants : impossible de se connecter.";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "Nous n'avons pas pu vérifier que vous êtes humain. Veuillez réessayer ou acheter un abonnement premium.";
+"_error_user_failed_human_validation" = "Nous n'avons pas pu vérifier que vous êtes humain. Veuillez réessayer ou opter pour un abonnement premium.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Votre compte n'a pas d'accès VPN. Veuillez contacter votre administrateur de compte";
+"_error_user_has_no_vpn_access" = "Votre compte n'a pas d'accès VPN. Veuillez contacter votre administrateur de compte.";
 
 /* VPN credentials can't be loaded error */
 "_error_user_has_not_signed_up" = "Vous n'êtes pas encore inscrit à Proton VPN";
 
 /* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Vous êtes actuellement dans la liste d'attente et votre compte n'est pas encore prêt";
+"_error_user_is_on_waitlist" = "Vous êtes actuellement sur la liste d'attente et votre compte n'est pas encore prêt.";
 
 /* Username unavailable error */
 "_error_username_unavailable" = "Nom d'utilisateur déjà pris";
@@ -488,7 +488,7 @@
 "_error_vpn_credentials_missing" = "Les identifiants VPN sont absents du trousseau";
 
 /* Default error when vpn properties fetch failed */
-"_error_vpn_properties" = "Impossible de récupérer les propriétés du VPN !";
+"_error_vpn_properties" = "Impossible de récupérer les propriétés du VPN";
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "La session Proton VPN est active";
@@ -506,7 +506,7 @@
 "_existing_session" = "Serveur indisponible";
 
 /* Existing connection alert */
-"_existing_session_to_server" = "Veuillez sélectionner un serveur différent.";
+"_existing_session_to_server" = "Veuillez sélectionner un autre serveur.";
 
 /* Description of the expand/collapse button used by accessibility Voice Over */
 "_expand_list_of_servers" = "Déplier la liste des serveurs";
@@ -566,7 +566,7 @@
 "_feature_speed" = "Vitesse";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Les serveurs Plus prennent en charge le streaming (Netflix, Disney+, etc.) depuis n'importe où dans le monde.";
+"_feature_streaming_description" = "Les serveurs PLUS prennent en charge le streaming (Netflix, Disney+...) depuis n'importe où dans le monde.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -602,7 +602,7 @@
 "_free_trial_about_to_expire_description" = "Passez à %@ et continuez à profiter de ces fonctionnalités :";
 
 /* MacOS: \Trial about to expire\ screen title */
-"_free_trial_about_to_expire_title" = "Votre essai gratuit est sur le point d'expirer !";
+"_free_trial_about_to_expire_title" = "Votre essai gratuit est sur le point d'expirer.";
 
 /* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "Votre compte a été rétrogradé vers la formule Proton VPN Free.\nVoici ce que vous n'aurez plus de l’offre %@ :";
@@ -629,7 +629,7 @@
 "_get_verification_sms" = "Recevoir le SMS de vérification";
 
 /* Button in several different alerts */
-"_got_it" = "Compris !";
+"_got_it" = "J'ai compris";
 
 /* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
 "_help" = "Aide";
@@ -656,7 +656,7 @@
 "_initializing_connection" = "Établissement de la connexion...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "La session a expiré";
+"_invalid_refresh_token" = "La session a expiré.";
 
 /* (No Comment) */
 "_invalid_refresh_token_please_login" = "Cela fait un certain temps que vous n'avez pas utilisé l'application Proton VPN. Merci de vous reconnecter.";
@@ -668,7 +668,7 @@
 "_ios_onboarding_page1_title" = "Bienvenue sur un meilleur internet";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Combattre la censure et les restrictions régionales. Nous n’avons aucune publicité, aucune limite de bande passante et nous ne vendons pas vos données.";
+"_ios_onboarding_page2_description" = "Évitez la censure et les restrictions régionales. Nous n'avons pas de publicité, pas de limite de bande passante et nous ne vendons pas vos données.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_title" = "Nous pensons qu'internet devrait être libre";
@@ -695,7 +695,7 @@
 "_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "La fonction kill switch bloque toutes les connexions";
+"_kill_switch_blocking_connection" = "La fonction kill switch bloque toutes les connexions.";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill Switch";
@@ -713,7 +713,7 @@
 "_kill_switch_error_info" = "Kill switch fonctionne avec le pare-feu de macOS.\nS'il y a d'autres applications associées au pare-feu, elles peuvent interférer avec la fonction kill switch de Proton VPN. Fermez ces applications peut restaurer les règles du pare-feu définies par kill switch.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Une erreur du kill switch a été détectée";
+"_kill_switch_error_title" = "Une erreur de la fonction kill switch a été détectée.";
 
 /* MacOS: killswicth install error alert */
 "_kill_switch_helper_install_issue_popup_body" = "La fonction kill switch a rencontré un problème lors de son installation ou mise à jour.\n\nPour réessayer, cliquez sur RÉESSAYER.\n\nPour continuer sans la fonction kill switch, cliquez sur DÉSACTIVER.";
@@ -731,13 +731,13 @@
 "_kill_switch_reconnection_bold1" = "sans";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protection Kill Switch";
+"_kill_switch_reconnection_bold2" = "Protection kill switch";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Annuler la reconnexion";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch protège votre adresse IP";
+"_kill_switch_reconnection_header" = "La fonction kill switch protège votre adresse IP.";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloque tout le trafic réseau lorsque le tunnel VPN est perdu.";
@@ -746,10 +746,10 @@
 "_ks_dont_ask" = "Ne plus me demander";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Pour activer fonction kill switch, vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer fonction kill switch.";
+"_ks_requires_swift5_popup_msg" = "Pour activer la fonction kill switch, vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer la fonction kill switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer kill switch, veuillez d'abord installer le logiciel.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer la fonction kill switch, veuillez d'abord installer le logiciel.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Bibliothèque de prise en charge de Swift 5 RunTime";
@@ -776,7 +776,7 @@
 "_loading_screen_slogan" = "Pour un Internet plus sûr, partout";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Vous n'êtes pas autorisé à vous connecter au serveur. Choisissez un autre serveur ou envisagez de passer à l’offre supérieure.";
+"_local_agent_policy_violation_error_message" = "Vous n'êtes pas autorisé à vous connecter au serveur. Choisissez un autre serveur ou envisagez de passer à l'abonnement supérieur.";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_title" = "Violation des règles";
@@ -797,7 +797,7 @@
 "_locations_basic" = "Emplacements Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Emplacements Plus";
+"_locations_basic_plus" = "Emplacements PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Emplacements Free";
@@ -836,13 +836,13 @@
 "_maintenance_on_server_detected_description" = "Reconnexion au serveur le plus rapide disponible.";
 
 /* (No Comment) */
-"_maintenance_on_server_detected_subtitle" = "Le serveur auquel vous étiez connecté est en maintenance";
+"_maintenance_on_server_detected_subtitle" = "Le serveur auquel vous étiez connecté est en maintenance.";
 
 /* (No Comment) */
-"_maintenance_on_server_detected_title" = "Le serveur VPN est en maintenance";
+"_maintenance_on_server_detected_title" = "Le serveur VPN est en maintenance.";
 
 /* Profile create/change form */
-"_make_default_profile" = "Faire de ce profil celui par défaut";
+"_make_default_profile" = "Faire de ce profil celui par défaut.";
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Gérer les profils";
@@ -950,7 +950,7 @@
 "_ne_not_connected_to_the_internet" = "Non connecté à internet";
 
 /* Network error */
-"_ne_request_timed_out" = "La requête réseau a expiré";
+"_ne_request_timed_out" = "La requête réseau a expiré.";
 
 /* Button on alert after a problem with internet connection */
 "_ne_troubleshoot" = "Dépannage";
@@ -1142,7 +1142,7 @@
 "_phone_number_placeholder" = "Saisissez votre numéro de téléphone";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
-"_plan_does_not_include_secure_core" = "Votre offre n'inclut pas la fonctionnalité Secure Core.";
+"_plan_does_not_include_secure_core" = "Votre abonnement n'inclut pas la fonctionnalité Secure Core.";
 
 /* (No Comment) */
 "_plan_speed_fastest" = "Vitesse maximale";
@@ -1190,25 +1190,25 @@
 "_profile_created_successfully" = "Nouveau profil enregistré";
 
 /* iOS: failure message after profile is saved */
-"_profile_creation_failed" = "Le profil n'a pas pu être créé";
+"_profile_creation_failed" = "Le profil n'a pas pu être créé.";
 
 /* iOS: Success message on profile deletion */
-"_profile_deleted_successfully" = "Le profil a été supprimé";
+"_profile_deleted_successfully" = "Le profil a été supprimé.";
 
 /* iOS: Error message if profile can't be deleted */
-"_profile_deletion_failed" = "Le profil n'a pas pu être supprimé";
+"_profile_deletion_failed" = "Le profil n'a pas pu être supprimé.";
 
 /* iOS: success message after profile is saved */
 "_profile_edited_successfully" = "Profil mis à jour";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Veuillez saisir un nom";
+"_profile_name_is_required" = "Veuillez saisir un nom.";
 
 /* Error in profile create/change form */
-"_profile_name_is_too_long" = "La longueur maximale du nom du profil est de 25 caractères";
+"_profile_name_is_too_long" = "La longueur maximale du nom du profil est de 25 caractères.";
 
 /* (No Comment) */
-"_profile_name_needs_to_be_unique" = "Un profil avec ce nom existe déjà";
+"_profile_name_needs_to_be_unique" = "Un profil avec ce nom existe déjà.";
 
 /* Profile create/change form */
 "_profile_settings" = "Paramètres du profil";
@@ -1241,7 +1241,7 @@
 "_quick_connect" = "Connexion rapide";
 
 /* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Le bouton de connexion rapide vous connectera au profil sélectionné";
+"_quick_connect_tooltip" = "Le bouton de connexion rapide vous connectera au profil sélectionné.";
 
 /* MacOS app tour: quick connect description */
 "_quick_connect_tour_description" = "Se connecter automatiquement au serveur qui vous fournira la connexion la plus rapide.";
@@ -1256,13 +1256,13 @@
 "_quick_settings_killSwitch_description" = "Désactive internet si la connexion VPN tombe afin d’éviter une fuite accidentelle d'IP.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Si vous ne pouvez pas vous connecter aux périphériques de votre réseau local, essayez de désactiver Kill Switch.";
+"_quick_settings_killSwitch_note" = "Si vous ne pouvez pas vous connecter aux périphériques de votre réseau local, essayez de désactiver la fonction kill switch.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Naviguez sur internet sans publicités ni logiciels malveillants.";
 
 /* (No Comment) */
-"_quick_settings_netShield_note" = "Si les sites web ne se chargent pas, essayez de désactiver NetShield";
+"_quick_settings_netShield_note" = "Si les sites web ne se chargent pas, essayez de désactiver NetShield.";
 
 /* (No Comment) */
 "_quick_settings_netshield_option_level1" = "Bloquer uniquement les logiciels malveillants";
@@ -1289,7 +1289,7 @@
 "_quick_settings_tour_feature_2" = "Naviguez sur le web sans logiciels malveillants ni publicités avec NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Empêchez votre IP d'être exposée en activant Kill Switch.";
+"_quick_settings_tour_feature_3" = "Empêchez votre IP d'être exposée en activant la fonction kill switch.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Paramètres rapides";
@@ -1331,7 +1331,7 @@
 "_reestablish_vpn_connection_" = "Rétablissement de la connexion VPN.";
 
 /* MacOS: About window */
-"_release_date" = "Date de publication :";
+"_release_date" = "Date de publication  :";
 
 /* MacOS: label in login and settings screens */
 "_remember_login" = "Se souvenir de moi";
@@ -1370,7 +1370,7 @@
 "_report_logs" = "Journaux VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Activer ceci ajoutera les logs de votre client VPN à ce rapport";
+"_report_logs_description" = "Activer ceci ajoutera les logs de votre client VPN à ce rapport.";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Adresse électronique de contact";
@@ -1424,7 +1424,7 @@
 "_secure_core_country" = "Secure Core %@";
 
 /* MacOS: \Trial about to expire\ screen */
-"_secure_core_description" = "Serveurs ultrasécurisés\nque nous hébergeons";
+"_secure_core_description" = "Serveurs ultra sécurisés\nque nous hébergeons";
 
 /* MacOS: secure core tooltip */
 "_secure_core_info" = "Offre une protection supplémentaire contre la compromission de serveur VPN en redirigeant le trafic à travers notre réseau Secure Core";
@@ -1448,7 +1448,7 @@
 "_select_phone_country_code" = "Sélectionner un code de pays";
 
 /* Button in plan selection */
-"_select_plan" = "Choisissez une offre";
+"_select_plan" = "Choisissez un abonnement";
 
 /* iOS: new profile screen */
 "_select_profile_color" = "Sélectionner la couleur du profil";
@@ -1565,7 +1565,7 @@
 "_subscription_button" = "Prolonger l'abonnement pour 1 an \n%@.";
 
 /* (No Comment) */
-"_subscription_description" = "Vous pouvez acheter plus de crédits afin de prolonger automatiquement votre abonnement actuel. À la fin de votre période d'abonnement actuelle, ces crédits seront appliqués pour prolonger votre offre.";
+"_subscription_description" = "Vous pouvez acheter plus de crédits qui seront utilisés à la fin de votre abonnement actuel pour le prolonger automatiquement.";
 
 /* (No Comment) */
 "_subscription_expired_description" = "Votre abonnement a été rétrogradé.";
@@ -1732,7 +1732,7 @@
 "_timed_out" = "temps écoulé";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Une autre application peut interférer avec Kill Switch. Pour résoudre ce problème, passez au protocole OpenVPN ou désactivez Kill Switch et réessayez.";
+"_timeout_ks_ike_descritpion" = "Une autre application peut interférer avec la fonction kill switch. Pour résoudre ce problème, passez au protocole OpenVPN ou désactivez la fonction kill switch et réessayez.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Basculer vers OpenVPN et réessayer";
@@ -1742,9 +1742,6 @@
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
-
-/* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serveur Tor";

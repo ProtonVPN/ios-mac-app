@@ -14,7 +14,7 @@
 "maximum_device_limit" = "Aby połączyć się, rozłącz inne urządzenie.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "By połączyć się z tym urządzeniem, odłącz inne lub ulepsz do %@";
+"maximum_device_plan_limit_part_1" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@";
 
 /* Title of user account update screen */
 "maximum_device_title" = "Wykorzystano limit liczby podłączonych urządzeń";

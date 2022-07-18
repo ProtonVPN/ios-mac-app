@@ -1024,7 +1024,7 @@
 "_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable Kill Switch.";
+"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disable Kill Switch";
@@ -1829,7 +1829,7 @@
 // `_neks_t2_description' localized string.
 "_neks_t2_hyperlink" = "T2 Security Chip";
 "_neks_t2_description" = "The use of Kill Switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the Kill Switch functionality of macOS is used by Proton VPN.";
-"_neks_t2_connect" = "Enable Anyway";
+"_neks_t2_connect" = "Enable anyway";
 
 
 // Subuser alert

@@ -566,7 +566,7 @@
 "_feature_speed" = "Kecepatan";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Server Plus memungkinkan Anda untuk dapat mengakses berbagai layanan streaming (Netflix, Disney+, dll) di manapun Anda berada.";
+"_feature_streaming_description" = "Server PLUS memungkinkan Anda untuk mengakses berbagai layanan streaming (Netflix, Disney+, dll) di manapun Anda berada.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -797,7 +797,7 @@
 "_locations_basic" = "Lokasi Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Lokasi Plus";
+"_locations_basic_plus" = "Lokasi PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Lokasi Gratis";
@@ -1742,9 +1742,6 @@
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
-
-/* Description shown together with server info icon */
-"_tor_description" = "Sambungkan ke jaringan TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";

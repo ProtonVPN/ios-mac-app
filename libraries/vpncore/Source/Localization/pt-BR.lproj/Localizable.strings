@@ -557,7 +557,7 @@
 "_feature_speed" = "Velocidade";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Servidores Plus suportam streaming (Netflix, Disney+, etc) de qualquer lugar no mundo.";
+"_feature_streaming_description" = "Servidores PLUS suportam streaming (Netflix, Disney+, etc) de qualquer lugar do mundo.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor com VPN";
@@ -788,7 +788,7 @@
 "_locations_basic" = "Localizações Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Localizações Plus";
+"_locations_basic_plus" = "Localizações PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Localizações Free";
@@ -1703,9 +1703,6 @@
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
-
-/* Description shown together with server info icon */
-"_tor_description" = "Conecta-se a rede TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";

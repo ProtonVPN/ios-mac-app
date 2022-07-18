@@ -281,7 +281,7 @@
 "_delinquent_reconnection_description" = "Ви зможете знову отримати доступ до преміумфункцій після оплати. А зараз ми встановлюємо з'єднання з найшвидшим БЕЗПЛАТНИМ сервером.";
 
 /* (No Comment) */
-"_delinquent_title" = "У вашому VPN обліковому записі є несплачені рахунки";
+"_delinquent_title" = "У вашому обліковому записі VPN є несплачені рахунки";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "Ваш обліковий запис має протермінований рахунок. Будь ласка, сплатіть всі неоплачені рахунки на account.protonvpn.com";
@@ -290,7 +290,7 @@
 "_delinquent_user_title" = "Несплачений рахунок";
 
 /* Profile create/change form */
-"_different_server_each_time" = "Інший сервер кожного разу";
+"_different_server_each_time" = "Щоразу інший сервер";
 
 /* Button in some alerts */
 "_disable" = "Вимкнути";
@@ -314,7 +314,7 @@
 "_dns_leak_protection" = "Захист від витоку DNS";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "Запобігання витоку подробиць DNS-запитів стороннім особам. Завжди увімкнено.";
+"_dns_leak_protection_tooltip" = "Запобігання витоку подробиць DNS-запитів третім сторонам. Завжди увімкнено.";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "Ви хочете активувати придбану передплату для ";
@@ -566,7 +566,7 @@
 "_feature_speed" = "Швидкість";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Сервери Plus підтримують трансляції (Netflix, Disney+ тощо) звідусіль у світі.";
+"_feature_streaming_description" = "PLUS сервери підтримують потокове передавання (Netflix, Disney+ тощо) звідусіль у світі.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
@@ -716,7 +716,7 @@
 "_kill_switch_error_title" = "Виявлено помилку Kill Switch";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Виникла проблема при встановленні чи оновленні Kill Switch.\n\nЩоб спробувати знову, натисніть ПОВТОРИТИ.\n\nЩоб продовжити без Kill Switch, натисніть ВИМКНУТИ.";
+"_kill_switch_helper_install_issue_popup_body" = "Виникла проблема під час встановлення чи оновлення Kill Switch.\n\nЩоб спробувати знову, натисніть ПОВТОРИТИ.\n\nЩоб продовжити без Kill Switch, натисніть ВИМКНУТИ.";
 
 /* MacOS: killswitch alert */
 "_kill_switch_helper_install_popup_body" = "Щоб увімкнути Kill Switch, ви можете отримати запит про надання пароля облікового запису вашого комп'ютера. Якщо такий запит з'явиться, введіть свій %@ і схваліть.\n\nВи можете побачити цей запит знову, після оновлень вашої програми Proton VPN.";
@@ -740,7 +740,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch захищає вашу IP-адресу";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокує весь мережевий трафік при втраті VPN-тунелю.";
+"_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Надалі не запитувати";
@@ -797,7 +797,7 @@
 "_locations_basic" = "Розташування Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Розташування Plus";
+"_locations_basic_plus" = "Розташування PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Безплатні розташування";
@@ -836,7 +836,7 @@
 "_maintenance_on_server_detected_description" = "Повторне підключення до найшвидшого доступного сервера.";
 
 /* (No Comment) */
-"_maintenance_on_server_detected_subtitle" = "Сервер, з яким ви з'єднувалися, зараз обслуговується";
+"_maintenance_on_server_detected_subtitle" = "Сервер, до якого ви під'єднувалися, зараз обслуговується";
 
 /* (No Comment) */
 "_maintenance_on_server_detected_title" = "VPN-сервер зараз обслуговується";
@@ -851,7 +851,7 @@
 "_manage_subscription" = "Керувати передплатою";
 
 /* (No Comment) */
-"_manage_subscription_on_web" = "Керуйте своєю передплатою на веб панелі керування";
+"_manage_subscription_on_web" = "Керуйте своєю передплатою на панелі керування вебсайту";
 
 /* iOS: Map screen title and tabbar item */
 "_map" = "Карта";
@@ -947,7 +947,7 @@
 "_ne_network_connection_lost" = "Зв'язок з мережею втрачено";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Не підключено до Інтернету";
+"_ne_not_connected_to_the_internet" = "Немає підключення до інтернету";
 
 /* Network error */
 "_ne_request_timed_out" = "Час очікування мережі завершився";
@@ -1028,7 +1028,7 @@
 "_next_tip" = "Наступна порада";
 
 /* Text used when no active server information is available */
-"_no_description_available" = "Опис відсутній";
+"_no_description_available" = "Опис недоступний";
 
 /* (No Comment) */
 "_no_servers_to_show" = "Наразі немає серверів для показу.";
@@ -1052,7 +1052,7 @@
 "_not_connected" = "Не з'єднано";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Не вдається встановити VPN-з'єднання. Ви не підключені до Інтернету.";
+"_not_connected_to_the_internet" = "Не вдається встановити VPN-з'єднання. Ви не підключені до інтернету.";
 
 /* (No Comment) */
 "_not_now" = "Не зараз";
@@ -1742,9 +1742,6 @@
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
-
-/* Description shown together with server info icon */
-"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Сервер Tor";

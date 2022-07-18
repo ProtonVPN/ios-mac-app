@@ -797,7 +797,7 @@
 "_locations_basic" = "Ubicaciones Basic";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Ubicaciones Plus";
+"_locations_basic_plus" = "Ubicaciones PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Ubicaciones Gratuitas";
@@ -1742,9 +1742,6 @@
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
-
-/* Description shown together with server info icon */
-"_tor_description" = "Conecta a la red Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";

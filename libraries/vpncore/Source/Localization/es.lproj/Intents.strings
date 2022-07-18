@@ -11,7 +11,7 @@
 "cQ4Mju" = "Desconectar";
 
 /* (No Comment) */
-"hIcJsr" = "Obtener el Estado de Conexión de Proton VPN";
+"hIcJsr" = "Get Proton VPN connection status";
 
 /* (No Comment) */
 "NzUfmp" = "${status}";

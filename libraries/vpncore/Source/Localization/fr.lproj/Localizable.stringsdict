@@ -101,7 +101,7 @@
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> pour connecter jusqu'à %#@num_devices@ appareils en même temps.</string>
+		<string> pour connecter jusqu'à %#@num_devices@ en même temps.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
