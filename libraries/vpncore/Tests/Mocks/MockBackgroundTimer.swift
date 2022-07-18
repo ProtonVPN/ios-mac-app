@@ -18,16 +18,23 @@
 
 import Foundation
 
-public struct BackgroundTimerMock: BackgroundTimer {
+public class BackgroundTimerMock: BackgroundTimer {
     let nextRunTime: Date
     let repeating: Double?
     let queue: DispatchQueue
     let closure: (() -> Void)
 
-    var isValid: Bool = true
+    public var isValid: Bool = true
 
-    public mutating func invalidate() {
+    public func invalidate() {
         isValid = false
+    }
+
+    public init(nextRunTime: Date, repeating: Double?, queue: DispatchQueue, closure: @escaping (() -> Void)) {
+        self.nextRunTime = nextRunTime
+        self.repeating = repeating
+        self.queue = queue
+        self.closure = closure
     }
 }
 
@@ -43,16 +50,13 @@ public final class TimerFactoryMock: TimerFactory {
     public func runRepeatingTimers(done: (() -> Void)? = nil) {
         let group = DispatchGroup()
 
-        var balance = 0
         for timer in repeatingTimers {
             guard timer.isValid else { continue }
 
             group.enter()
-            balance += 1
             timer.queue.async {
                 timer.closure()
                 group.leave()
-                balance -= 1
             }
         }
 
@@ -85,5 +89,5 @@ public final class TimerFactoryMock: TimerFactory {
         workWasScheduled?()
     }
 
-    public init() { }
+    public init() { /* empty */ }
 }

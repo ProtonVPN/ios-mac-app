@@ -64,12 +64,13 @@ final class DependencyContainer {
                                                                 factory: self)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
+    private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
         vpnApiService: makeVpnApiService(),
         vpnManager: vpnManager,
         networking: makeNetworking(),
         alertService: macAlertService,
-        timerFactory: TimerFactoryImplementation(),
+        timerFactory: timerFactory,
         propertiesManager: makePropertiesManager(),
         vpnKeychain: vpnKeychain,
         configurationPreparer: makeVpnManagerConfigurationPreparer(),
@@ -88,10 +89,14 @@ final class DependencyContainer {
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
 
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh,
-                                                           serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh, canRefreshLoads: { return NSApp.isActive })
+    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
+                                                           timerFactory: timerFactory,
+                                                           refreshIntervals: (AppConstants.Time.fullServerRefresh,
+                                                                              AppConstants.Time.serverLoadsRefresh,
+                                                                              AppConstants.Time.userAccountRefresh),
+                                                           canRefreshLoads: { return NSApp.isActive })
 
-    // Refreshes announements from API
+    // Refreshes announcements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.

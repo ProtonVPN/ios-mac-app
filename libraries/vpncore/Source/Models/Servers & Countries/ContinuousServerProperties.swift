@@ -53,4 +53,13 @@ public class ContinuousServerProperties: NSObject {
         status = try dic.intOrThrow(key: "Status") // "Status": 1
         super.init()
     }
+
+    var asDict: [String: Any] {
+        [
+            "ID": serverId,
+            "Load": load,
+            "Score": score,
+            "Status": status,
+        ]
+    }
 }

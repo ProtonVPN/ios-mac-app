@@ -41,7 +41,7 @@ extension TimerFactory {
                         queue: DispatchQueue,
                         _ closure: @escaping (() -> Void)) -> BackgroundTimer {
         scheduledTimer(runAt: Date().addingTimeInterval(timeInterval),
-                       repeating: timeInterval,
+                       repeating: repeats ? timeInterval : nil,
                        queue: queue,
                        closure)
     }
@@ -91,6 +91,8 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
     private let timerSource: DispatchSourceTimer
     private let closure: () -> Void
 
+    public var isValid: Bool
+
     init(runAt nextRunTime: Date,
          repeating: Double?,
          leeway: DispatchTimeInterval?,
@@ -107,6 +109,7 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
             timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow)
         }
 
+        isValid = true
         timerSource.setEventHandler { [weak self] in
             self?.closure()
         }
@@ -116,6 +119,7 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
     public func invalidate() {
         timerSource.setEventHandler {}
         timerSource.cancel()
+        isValid = false
     }
 
     deinit {

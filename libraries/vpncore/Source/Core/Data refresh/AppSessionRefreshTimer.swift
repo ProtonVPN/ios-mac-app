@@ -33,10 +33,11 @@ public class AppSessionRefreshTimer {
     
     public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory
     private let factory: Factory
+    private let timerFactory: TimerFactory
     
-    private var timerFullRefresh: Timer?
-    private var timerLoadsRefresh: Timer?
-    private var timerAccountRefresh: Timer?
+    private var timerFullRefresh: BackgroundTimer?
+    private var timerLoadsRefresh: BackgroundTimer?
+    private var timerAccountRefresh: BackgroundTimer?
     
     public typealias RefreshCheckerCallback = () -> Bool
     private let canRefreshFull: RefreshCheckerCallback
@@ -46,15 +47,20 @@ public class AppSessionRefreshTimer {
     private var appSessionRefresher: AppSessionRefresher {
         return factory.makeAppSessionRefresher() // Do not retain it
     }
-    
-    public init(factory: Factory, fullRefresh: TimeInterval, serverLoadsRefresh: TimeInterval, accountRefresh: TimeInterval,
+
+    public init(factory: Factory,
+                timerFactory: TimerFactory,
+                // swiftlint:disable:next large_tuple
+                refreshIntervals: (full: TimeInterval, server: TimeInterval, account: TimeInterval),
                 canRefreshFull: @escaping RefreshCheckerCallback = { return true },
                 canRefreshLoads: @escaping RefreshCheckerCallback = { return true },
                 canRefreshAccount: @escaping RefreshCheckerCallback = { return true }) {
         self.factory = factory
-        self.fullServerRefreshTimeout = fullRefresh
-        self.serverLoadsRefreshTimeout = serverLoadsRefresh
-        self.accountRefreshTimeout = accountRefresh
+        self.timerFactory = timerFactory
+
+        self.fullServerRefreshTimeout = refreshIntervals.full
+        self.serverLoadsRefreshTimeout = refreshIntervals.server
+        self.accountRefreshTimeout = refreshIntervals.account
         
         self.canRefreshFull = canRefreshFull
         self.canRefreshLoads = canRefreshLoads
@@ -64,15 +70,27 @@ public class AppSessionRefreshTimer {
     public func start(now: Bool = false) {
         if timerFullRefresh == nil || !timerFullRefresh!.isValid {
             log.debug("Data refresh timer started", category: .app, metadata: ["interval": "\(fullServerRefreshTimeout)"])
-            timerFullRefresh = Timer.scheduledTimer(timeInterval: fullServerRefreshTimeout, target: self, selector: #selector(refreshFull), userInfo: nil, repeats: true)
+
+            timerFullRefresh = timerFactory.scheduledTimer(timeInterval: fullServerRefreshTimeout,
+                                                           repeats: true,
+                                                           queue: .main,
+                                                           refreshFull)
         }
         if timerLoadsRefresh == nil || !timerLoadsRefresh!.isValid {
             log.debug("Server loads refresh timer started", category: .app, metadata: ["interval": "\(serverLoadsRefreshTimeout)"])
-            timerLoadsRefresh = Timer.scheduledTimer(timeInterval: serverLoadsRefreshTimeout, target: self, selector: #selector(refreshLoads), userInfo: nil, repeats: true)
+
+            timerLoadsRefresh = timerFactory.scheduledTimer(timeInterval: serverLoadsRefreshTimeout,
+                                                            repeats: true,
+                                                            queue: .main,
+                                                            refreshLoads)
         }
         if timerAccountRefresh == nil || !timerAccountRefresh!.isValid {
             log.debug("Account refresh timer started", category: .app, metadata: ["interval": "\(accountRefreshTimeout)"])
-            timerAccountRefresh = Timer.scheduledTimer(timeInterval: accountRefreshTimeout, target: self, selector: #selector(refreshAccount), userInfo: nil, repeats: true)
+
+            timerAccountRefresh = timerFactory.scheduledTimer(timeInterval: accountRefreshTimeout,
+                                                              repeats: true,
+                                                              queue: .main,
+                                                              refreshAccount)
         }
 
         var accountRefreshed = false
@@ -96,14 +114,13 @@ public class AppSessionRefreshTimer {
     }
     
     public func stop() {
-        if let timerFullRefresh = timerFullRefresh {
-            timerFullRefresh.invalidate()
-        }
-        if let timerLoadsRefresh = timerLoadsRefresh {
-            timerLoadsRefresh.invalidate()
-        }
+        timerFullRefresh?.invalidate()
+        timerLoadsRefresh?.invalidate()
+        timerAccountRefresh?.invalidate()
+
         timerFullRefresh = nil
         timerLoadsRefresh = nil
+        timerAccountRefresh = nil
     }
     
     @objc private func refreshFull() {
