@@ -247,7 +247,7 @@ final class ConnectionSettingsViewModel {
                         completion(.success)
                         if shouldReconnect {
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
-                            self.vpnGateway.retryConnection()
+                            self.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
                         }
                     case let .failure(error):
                         completion(.failure(error))
