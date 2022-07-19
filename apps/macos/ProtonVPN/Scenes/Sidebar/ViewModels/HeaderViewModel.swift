@@ -95,22 +95,7 @@ final class HeaderViewModel {
             return nil
         }
 
-        let name: String
-        switch vpnProtocol {
-        case .ike:
-            name = LocalizedString.ikev2
-        case let .openVpn(transport):
-            switch transport {
-            case .tcp:
-                name = "\(LocalizedString.openvpn) (\(LocalizedString.tcp))"
-            case .udp:
-                name = "\(LocalizedString.openvpn) (\(LocalizedString.udp))"
-            }
-        case .wireGuard:
-            name = LocalizedString.wireguard
-        }
-
-        return name.styled(font: .themeFont(.small))
+        return vpnProtocol.localizedString.styled(font: .themeFont(.small))
     }
 
     var isVisible: Bool = false {

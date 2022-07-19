@@ -252,22 +252,7 @@ class CreateNewProfileViewModel {
     }
 
     func vpnProtocolString(for vpnProtocol: VpnProtocol) -> NSAttributedString {
-        let title: String
-        switch vpnProtocol {
-        case .ike:
-            title = LocalizedString.ikev2
-        case let .openVpn(transport):
-            switch transport {
-            case .tcp:
-                title = "\(LocalizedString.openvpn) (\(LocalizedString.tcp))"
-            case .udp:
-                title = "\(LocalizedString.openvpn) (\(LocalizedString.udp))"
-            }
-        case .wireGuard:
-            title = LocalizedString.wireguard
-        }
-
-        return self.style(title, font: .themeFont(.heading4), alignment: .left)
+        self.style(vpnProtocol.localizedString, font: .themeFont(.heading4), alignment: .left)
     }
     
     func country(for typeIndex: Int, index countryIndex: Int) -> NSAttributedString {
