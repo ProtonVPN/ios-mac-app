@@ -5200,10 +5200,10 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
+			repositoryURL = "git@gitlab.protontech.ch:apple/vpn/wireguard-apple.git";
 			requirement = {
 				kind = revision;
-				revision = 15c31a27cc098dea853a82e74ce3e042456298ff;
+				revision = d39f659ff18691751850236f54bc5bd1588ab765;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
