@@ -173,7 +173,7 @@ class BugReportRobot {
         
         @discardableResult
         func successMessageIsShown() -> BugReportRobot {
-            XCTAssert(app.staticTexts[successMessageTitle].waitForExistence(timeout: 5))
+            XCTAssert(app.staticTexts[successMessageTitle].waitForExistence(timeout: 6))
             XCTAssertTrue(app.buttons[gotItButton].isEnabled)
             app.buttons[gotItButton].tap()
             let status = app.staticTexts[statusLabel]

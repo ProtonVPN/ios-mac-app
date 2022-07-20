@@ -77,7 +77,7 @@ class ProtonVPNUITests: XCTestCase {
         _ = waitForElementToDisappear(app.otherElements["loader"])
                      
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
-             waitForExpectations(timeout: 5, handler: nil)
+             waitForExpectations(timeout: 10, handler: nil)
              
         dismissDialogs()
         dismissPopups()
@@ -86,7 +86,7 @@ class ProtonVPNUITests: XCTestCase {
                 dismissDialogs()
         }
              
-        window.typeKey(",", modifierFlags:.command)
+        app.menuBars.menuItems["Preferences"].click()
         
         let preferencesWindow = app.windows["Preferences"]
         let accountTabButton = app.tabGroups["Account"]
