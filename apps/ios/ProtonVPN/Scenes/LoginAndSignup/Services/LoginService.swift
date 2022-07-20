@@ -267,7 +267,7 @@ extension CoreLoginService: LoginService {
         }
     }
 
-    func showWelcome(initialError: String?, withOverlayViewController: UIViewController?) {
+    func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
         #if !RELEASE
         showEnvironmentSelection()
         #else
