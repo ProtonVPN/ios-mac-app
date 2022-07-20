@@ -31,6 +31,9 @@ final class VpnProtocolViewController: UIViewController {
             self?.updateTableView()
             self?.tableView.reloadData()
         }
+        viewModel.selectionFinished = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -61,10 +64,7 @@ final class VpnProtocolViewController: UIViewController {
     }
     
     private func updateTableView() {
-        let onSelectionChange: () -> Void = { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData, onSelectionChange: onSelectionChange)
+        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }

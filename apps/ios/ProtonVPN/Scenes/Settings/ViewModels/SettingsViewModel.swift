@@ -228,7 +228,7 @@ final class SettingsViewModel {
 
         let protocolValue = propertiesManager.smartProtocol ? LocalizedString.smartTitle : vpnProtocol.localizedString
         cells.append(.pushKeyValue(key: LocalizedString.protocol, value: protocolValue, handler: { [weak self] in
-            self?.protocolCellAction()
+            self?.pushProtocolViewController()
         }))
         cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
 
@@ -554,18 +554,6 @@ final class SettingsViewModel {
         return description
     }
     
-    private func protocolCellAction() {
-        if appStateManager.state.isSafeToEnd {
-            pushProtocolViewController()
-        } else {
-            alertService.push(alert: ChangeProtocolDisconnectAlert { [weak self] in
-                log.debug("Disconnect requested after changing protocol", category: .connectionDisconnect, event: .trigger)
-                self?.appStateManager.disconnect()
-                self?.pushProtocolViewController()
-            })
-        }
-    }
-    
     private func pushSettingsAccountViewController() {
         guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
@@ -574,7 +562,20 @@ final class SettingsViewModel {
     }
     
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol, featureFlags: propertiesManager.featureFlags, alertService: alertService)
+        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol, featureFlags: propertiesManager.featureFlags)
+        vpnProtocolViewModel.protocolChangeConfirmation = { [self] completion in
+            if self.appStateManager.state.isSafeToEnd {
+                completion(true)
+                return
+            }
+
+            let alert = ChangeProtocolDisconnectAlert {
+                log.debug("Disconnect requested after changing protocol", category: .connectionDisconnect, event: .trigger)
+                completion(true)
+            }
+            alert.dismiss = { completion(false) }
+            self.alertService.push(alert: alert)
+        }
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol in
             switch connectionProtocol {
             case .smartProtocol:
@@ -582,6 +583,10 @@ final class SettingsViewModel {
             case .vpnProtocol(let vpnProtocol):
                 self.propertiesManager.smartProtocol = false
                 self.propertiesManager.vpnProtocol = vpnProtocol
+            }
+
+            if !self.appStateManager.state.isSafeToEnd {
+                self.vpnGateway?.reconnect(with: connectionProtocol)
             }
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
