@@ -12,6 +12,6 @@ import vpncore
 
 class ProtocolServiceMock: ProtocolService {
     func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController {
-        return VpnProtocolViewController(viewModel: VpnProtocolViewModel(connectionProtocol: .vpnProtocol(.ike), featureFlags: FeatureFlags(), alertService: CoreAlertServiceMock()))
+        return VpnProtocolViewController(viewModel: VpnProtocolViewModel(connectionProtocol: .vpnProtocol(.ike), featureFlags: FeatureFlags()))
     }
 }

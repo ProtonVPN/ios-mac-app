@@ -315,7 +315,7 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     
     public init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: dismiss))
     }
 }
 
