@@ -50,7 +50,7 @@ class BaseConnectionTestCase: XCTestCase {
 
     var request = ConnectionRequest(serverType: .standard,
                                     connectionType: .country("CH", .fastest),
-                                    connectionProtocol: .vpnProtocol(.wireGuard),
+                                    connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
                                     netShieldType: .level1,
                                     natType: .moderateNAT,
                                     safeMode: true,

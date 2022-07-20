@@ -60,7 +60,7 @@ class VpnManagerTests: BaseConnectionTestCase {
                                                password: "",
                                                passwordReference: Data(),
                                                clientPrivateKey: "clientPrivateKey",
-                                               vpnProtocol: .wireGuard,
+                                               vpnProtocol: .wireGuard(.udp),
                                                netShield: .level1,
                                                vpnAccelerator: true,
                                                bouncing: "0",
@@ -103,7 +103,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssert(tunnelManager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
 
             XCTAssertEqual(providerProtocol.providerBundleIdentifier, MockDependencyContainer.wireguardProviderBundleId)
-            XCTAssertNil(providerProtocol.providerConfiguration)
+            XCTAssertEqual(providerProtocol.providerConfiguration?["wg-protocol"] as? String, "udp")
             XCTAssertEqual(providerProtocol.serverAddress, wgConfig.entryServerAddress)
 
             if #available(iOS 14.2, *) {
@@ -126,7 +126,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         wait(for: [expectations.wireguardTunnelStarted,
                    expectations.vpnManagerWireguardConnect], timeout: expectationTimeout)
 
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard)
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
         container.vpnManager.connectedDate(completion: { date in

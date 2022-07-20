@@ -125,7 +125,8 @@ struct MockTestData {
                                                                safeMode: true,
                                                                promoCode: true),
                                            serverRefreshInterval: 2 * 60,
-                                           wireGuardConfig: .init(defaultPorts: [12345, 65432]),
+                                           wireGuardConfig: .init(defaultUdpPorts: [12345, 65432],
+                                                                  defaultTcpPorts: [12346, 65433]),
                                            smartProtocolConfig: .init(openVPN: true, iKEv2: true, wireGuard: true),
                                            ratingSettings: .init())
 }
