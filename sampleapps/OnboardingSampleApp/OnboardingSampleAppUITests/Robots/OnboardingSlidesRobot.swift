@@ -21,7 +21,7 @@ import XCTest
 fileprivate let slideOneTitle = "Be protected everywhere"
 fileprivate let slideOneDescription = "Proton VPN supports all devices, including Windows, macOS, and many others."
 fileprivate let slideTwoTitle = "Unblock streaming"
-fileprivate let slideTwoDescription = "Secure access your favourite content from other countries, now also on AndroidTV."
+fileprivate let slideTwoDescription = "Secure access to your favorite content from other countries — Now available on Android TV."
 fileprivate let slideThreeTitle = "Block ads and much more"
 fileprivate let slideThreeDescription = "Block malware, ads, and trackers in browser and in all apps."
 fileprivate let slideFourTitle = "No logs and Swiss-based"
