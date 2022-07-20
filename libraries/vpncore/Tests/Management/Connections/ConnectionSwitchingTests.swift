@@ -186,7 +186,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// we go ahead and make all protocols available again, and check to see that the server chosen is not the one we were
     /// just connected to (i.e., the one with the higher score).
     func testFastestConnectionAndSmartProtocolFallbackAndDisconnectApiUsage() {
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.availabilityCallback = { serverIp in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = { serverIp in
             // Force server2 wireguard server to be unavailable
             if serverIp == self.testData.server2.ips.first {
                 return .unavailable
@@ -269,7 +269,9 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
         wait(for: [expectations.connectedDate], timeout: expectationTimeout)
 
-        let unavailableCallback = container.availabilityCheckerResolverFactory.checkers[.wireGuard]!.availabilityCallback
+        let unavailableCallback = container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]!.availabilityCallback
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
         #if os(iOS)
         // on iOS, force openvpn to be unavailable to force it to fallback to ike
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.tcp)]?.availabilityCallback = unavailableCallback
@@ -352,7 +354,9 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(fetchedServer2?.status, testData.server2UnderMaintenance.status)
 
         // now we make all protocols available on all servers, so wireguard should connect now.
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.availabilityCallback = nil
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = nil
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = nil
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = nil
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.tcp)]?.availabilityCallback = nil
         container.availabilityCheckerResolverFactory.checkers[.openVpn(.udp)]?.availabilityCallback = nil
         container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = nil
@@ -375,7 +379,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                    expectations.finalConnection], timeout: expectationTimeout)
 
         // wireguard protocol now available for smart protocol to pick
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard)
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
 
         // server2 has a lower score, but has been marked as going under maintenance, so server1 should be used
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
@@ -398,7 +402,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     func testUserPlanChangingThenBecomingDelinquentWithWireGuard() {
         container.serverStorage.populateServers([testData.server1, testData.server3])
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
-        container.propertiesManager.vpnProtocol = .wireGuard
+        container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
 
         let (totalConnections, totalDisconnections) = (4, 4)
@@ -438,7 +442,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let request = ConnectionRequest(serverType: .standard,
                                         connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
