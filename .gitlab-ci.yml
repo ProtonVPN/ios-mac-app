@@ -274,8 +274,9 @@ core_ios_unit_tests:
     - when: manual
   artifacts:
     reports:
-      cobertura: 
-        - fastlane/test_output/cobertura.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
@@ -301,8 +302,9 @@ bugreport_unit_tests:
     - when: manual
   artifacts:
     reports:
-      cobertura:
-        - fastlane/test_output/BugReport.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/BugReport.xml
 
 review_unit_tests:
   stage: core_unit_tests
@@ -326,8 +328,9 @@ review_unit_tests:
     - when: manual
   artifacts:
     reports:
-      cobertura:
-        - fastlane/test_output/Review.xml        
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/Review.xml    
 
 search_ios_unit_tests:
   stage: core_unit_tests
@@ -351,8 +354,9 @@ search_ios_unit_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit
-      cobertura: 
-        - fastlane/test_output/cobertura.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/cobertura.xml
 
 modals_ios_unit_tests:
   stage: core_unit_tests
@@ -376,8 +380,9 @@ modals_ios_unit_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit
-      cobertura: 
-        - fastlane/test_output/cobertura.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/cobertura.xml
 
 core_macos_unit_tests:
   stage: core_unit_tests
@@ -400,8 +405,9 @@ core_macos_unit_tests:
     - when: manual
   artifacts:
     reports:
-      cobertura:
-        - fastlane/test_output/cobertura.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
@@ -452,8 +458,9 @@ ios_unit_tests:
     - when: manual
   artifacts:
     reports:
-      cobertura:
-        - fastlane/test_output/cobertura.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
@@ -610,8 +617,9 @@ macos_unit_tests:
       - fastlane/test_output/
     expire_in: 3 days
     reports:
-      cobertura:
-        - fastlane/test_output/cobertura.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/cobertura.xml
       junit:
         - fastlane/test_output/report.junit
 
