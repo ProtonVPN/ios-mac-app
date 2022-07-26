@@ -54,10 +54,21 @@ enum SystemExtensionType: String, CaseIterable {
     }
 }
 
+struct SystemExtensionInfo: Equatable {
+    let type: SystemExtensionType
+    let bundleVersion: String
+    let buildVersion: String
+}
+
 enum SystemExtensionStatus {
     case notInstalled
     case outdated
     case ok
+}
+
+enum SystemExtensionError: String, Error {
+    case unrecognizedType
+    case mismatchedType
 }
 
 /// Wrapper class for both `OSSystemExtensionRequest` and its delegate class. This lets us keep
@@ -131,37 +142,77 @@ class SystemExtensionRequest: NSObject {
         result.delegate = self
         return result
     }
-}
 
-extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
-    func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+    func needsUserApproval() {
         state = .userActionRequired
     }
 
-    func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+    func actionForReplacing(existingExtension: SystemExtensionInfo, with: SystemExtensionInfo) -> OSSystemExtensionRequest.ReplacementAction {
         state = .replacing
         return .replace
     }
 
+    func didFinish(withResult result: Result<OSSystemExtensionRequest.Result, Error>) {
+        switch result {
+        case .success:
+            state = .succeeded
+            delegate?.requestFinished(self)
+        case .failure(let error):
+            if let sysextError = error as? OSSystemExtensionError, sysextError.code == .requestSuperseded {
+                state = .superseded
+            } else {
+                state = .failed
+            }
+            delegate?.requestFinished(self)
+
+            guard state != .superseded else {
+                return
+            }
+        }
+        completion(result)
+    }
+}
+
+extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
+    func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+        needsUserApproval()
+    }
+
+    func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+        guard let existingType = SystemExtensionType(rawValue: existing.bundleIdentifier) else {
+            log.error("Unrecognized existing extension type \(existing.bundleIdentifier)", category: .sysex)
+            didFinish(withResult: .failure(SystemExtensionError.unrecognizedType))
+            return .cancel
+        }
+
+        guard let thisType = SystemExtensionType(rawValue: ext.bundleIdentifier) else {
+            log.error("Unrecognized installing extension type \(existing.bundleIdentifier)", category: .sysex)
+            didFinish(withResult: .failure(SystemExtensionError.unrecognizedType))
+            return .cancel
+        }
+
+        guard existingType == thisType else {
+            log.error("Asked to replace existing extension \(existingType.rawValue) with different type \(thisType.rawValue)")
+            didFinish(withResult: .failure(SystemExtensionError.mismatchedType))
+            return .cancel
+        }
+
+        let existingInfo = SystemExtensionInfo(type: existingType,
+                                               bundleVersion: existing.bundleVersion,
+                                               buildVersion: existing.bundleShortVersion)
+        let thisInfo = SystemExtensionInfo(type: thisType,
+                                           bundleVersion: ext.bundleVersion,
+                                           buildVersion: ext.bundleShortVersion)
+
+        return actionForReplacing(existingExtension: existingInfo, with: thisInfo)
+    }
+
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        state = .succeeded
-        delegate?.requestFinished(self)
-        completion(.success(result))
+        didFinish(withResult: .success(result))
     }
 
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestSuperseded {
-            state = .superseded
-        } else {
-            state = .failed
-        }
-        delegate?.requestFinished(self)
-
-        guard state != .superseded else {
-            return
-        }
-
-        completion(.failure(error))
+        didFinish(withResult: .failure(error))
     }
 }
 
