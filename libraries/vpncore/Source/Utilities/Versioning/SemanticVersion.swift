@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct SemanticVersion: CustomStringConvertible {
+public struct SemanticVersion: CustomStringConvertible, Comparable {
     
     public let metadataComponents: [String]
     public let releaseComponents: [String]
@@ -108,15 +108,15 @@ public struct SemanticVersion: CustomStringConvertible {
         return .orderedSame
     }
     
-    static func == (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
+    public static func == (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         return lhs.compare(to: rhs) == .orderedSame
     }
     
-    static func > (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
+    public static func > (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         return lhs.compare(to: rhs) == .orderedDescending
     }
     
-    static func < (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
+    public static func < (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         return lhs.compare(to: rhs) == .orderedAscending
     }
     

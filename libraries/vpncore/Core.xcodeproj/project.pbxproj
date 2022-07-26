@@ -1249,6 +1249,13 @@
 			path = Connections;
 			sourceTree = "<group>";
 		};
+		4C1ECBAB28912DFE00820068 /* SystemExtensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SystemExtensions;
+			sourceTree = "<group>";
+		};
 		4CE300C52858777E00FBD249 /* DependencyWrappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -2159,6 +2166,7 @@
 		F36ECB9A2610AA530089B898 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				4C1ECBAB28912DFE00820068 /* SystemExtensions */,
 				F36ECBA22610AA960089B898 /* Announcements */,
 				E939EEE627954D4D006E4305 /* BugReport */,
 				E9427501285B5FA7003CACA8 /* FileManager */,

@@ -95,7 +95,7 @@ class SystemExtensionGuideViewModel: NSObject {
         finishedTour = true
         close?()
 
-        if let request = notification.object as? SystemExtensionRequest, request.userInitiated {
+        if let userInitiated = notification.object as? Bool, userInitiated {
             alertService.push(alert: SysexEnabledAlert())
         }
     }
@@ -112,7 +112,7 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     
     func viewWillAppear() {
         // Autoclose this window after installation finishes
-        NotificationCenter.default.addObserver(forName: SystemExtensionManagerNotification.allExtensionsInstalled, object: nil, queue: nil, using: finish)
+        NotificationCenter.default.addObserver(forName: SystemExtensionManager.allExtensionsInstalled, object: nil, queue: nil, using: finish)
         NotificationCenter.default.addObserver(forName: SystemExtensionsStateCheck.userAlreadyRequestedExtension, object: nil, queue: nil, using: userTriedToSupersedeRequest)
         
         currentStep = 0
