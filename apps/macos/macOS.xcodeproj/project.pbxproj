@@ -59,6 +59,9 @@
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C2AE85428364C00005F37E6 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AE85328364C00005F37E6 /* AppInfo.swift */; };
 		4C2FC57427E1DE6000101912 /* NSGradient+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */; };
+		4C3087BB28912B3600ABA4BA /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F256EC257E36270033633B /* SystemExtensionManager.swift */; };
+		4C3087BC28912B6C00ABA4BA /* ExtensionInfo+comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */; };
+		4C3087BD28912B7400ABA4BA /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
 		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
@@ -81,6 +84,7 @@
 		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
 		4CD3B3FB288FCE950053A644 /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3B3FA288FCE940053A644 /* SystemExtensionManagerMock.swift */; };
+		4CD3B3FD288FEEE50053A644 /* SystemExtensionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3B3FC288FEEE50053A644 /* SystemExtensionManagerTests.swift */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
 		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
@@ -643,6 +647,7 @@
 		4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionIntercepts.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/ConnectionIntercepts.swift; sourceTree = "<group>"; };
 		4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NET2WarningPopupViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/ViewControllers/NET2WarningPopupViewController.swift; sourceTree = "<group>"; };
 		4CD3B3FA288FCE940053A644 /* SystemExtensionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerMock.swift; sourceTree = "<group>"; };
+		4CD3B3FC288FEEE50053A644 /* SystemExtensionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerTests.swift; sourceTree = "<group>"; };
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
@@ -1540,6 +1545,7 @@
 				E15B755B20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift */,
 				E13F4CF120FC99DA00D985C2 /* ServerManagerTests.swift */,
 				E1683FF92372DCBD00992E75 /* AlertTests.swift */,
+				4CD3B3FC288FEEE50053A644 /* SystemExtensionManagerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -3403,10 +3409,14 @@
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				4CD3B3FB288FCE950053A644 /* SystemExtensionManagerMock.swift in Sources */,
+				4C3087BD28912B7400ABA4BA /* ExtensionInfo.swift in Sources */,
+				4C3087BB28912B3600ABA4BA /* SystemExtensionManager.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
+				4CD3B3FD288FEEE50053A644 /* SystemExtensionManagerTests.swift in Sources */,
 				E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
+				4C3087BC28912B6C00ABA4BA /* ExtensionInfo+comparison.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
 				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
