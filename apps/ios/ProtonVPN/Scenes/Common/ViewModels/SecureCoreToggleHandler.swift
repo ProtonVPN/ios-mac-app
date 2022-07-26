@@ -82,7 +82,6 @@ extension SecureCoreToggleHandler {
                 self?.showDisconnectAlert(completion: completion)
             }
         }
-        alert.onLearnMore = { }
         alert.dismiss = { [weak self] in
             self?.completionWrapper(succeeded: false, completion: completion)
         }
