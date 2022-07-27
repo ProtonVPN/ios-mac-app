@@ -100,6 +100,10 @@ public protocol PropertiesManagerProtocol: class {
     var smartProtocolConfig: SmartProtocolConfig { get set }
 
     var ratingSettings: RatingSettings { get set }
+
+    #if os(macOS)
+    var forceExtensionUpgrade: Bool { get set }
+    #endif
     
     func logoutCleanup()
     
@@ -176,7 +180,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
-        case ratingSettings = "RatingSettings"        
+        case ratingSettings = "RatingSettings"
+
+        #if os(macOS)
+        case forceExtensionUpgrade = "ForceExtensionUpgrade"
+        #endif
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -410,6 +418,17 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setEncodableValue(newValue, forKey: Keys.ratingSettings.rawValue)
         }
     }
+
+    #if os(macOS)
+    public var forceExtensionUpgrade: Bool {
+        get {
+            return storage.defaults.bool(forKey: Keys.forceExtensionUpgrade.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.forceExtensionUpgrade.rawValue)
+        }
+    }
+    #endif
     
     public var vpnProtocol: VpnProtocol {
         get {
