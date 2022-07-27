@@ -19,6 +19,7 @@
 import Foundation
 import SystemExtensions
 import XCTest
+@testable import vpncore
 
 class SystemExtensionManagerMock: SystemExtensionManager {
     var pendingRequests: [(SystemExtensionRequest, ExtensionInfo)] = []
@@ -114,4 +115,3 @@ class SystemExtensionManagerMock: SystemExtensionManager {
         requestFinished?(request)
     }
 }
-

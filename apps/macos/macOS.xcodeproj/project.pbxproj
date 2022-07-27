@@ -55,13 +55,9 @@
 		42EF09DF257A713F00E2EDCA /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF09DE257A713F00E2EDCA /* PacketTunnelProvider.swift */; };
 		42EF09E1257A713F00E2EDCA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF09E0257A713F00E2EDCA /* main.swift */; };
 		42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		42F256ED257E36270033633B /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F256EC257E36270033633B /* SystemExtensionManager.swift */; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		4C2AE85428364C00005F37E6 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AE85328364C00005F37E6 /* AppInfo.swift */; };
 		4C2FC57427E1DE6000101912 /* NSGradient+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */; };
-		4C3087BB28912B3600ABA4BA /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F256EC257E36270033633B /* SystemExtensionManager.swift */; };
-		4C3087BC28912B6C00ABA4BA /* ExtensionInfo+comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */; };
-		4C3087BD28912B7400ABA4BA /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
 		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
@@ -82,9 +78,9 @@
 		4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */; };
 		4C8641E727DE35A500EEFB1D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */; };
 		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
+		4CB2A3D3289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
+		4CB2A3D4289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
-		4CD3B3FB288FCE950053A644 /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3B3FA288FCE940053A644 /* SystemExtensionManagerMock.swift */; };
-		4CD3B3FD288FEEE50053A644 /* SystemExtensionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD3B3FC288FEEE50053A644 /* SystemExtensionManagerTests.swift */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
 		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
@@ -248,9 +244,6 @@
 		E91BDD40274BC9D0005F370C /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3E274BC9D0005F370C /* PMLogFormatter.swift */; };
 		E9200ED826612F4200BBAB9C /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
-		E928093326B43704008C9F2C /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
-		E928093426B43704008C9F2C /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
-		E928093626B445A4008C9F2C /* ExtensionInfo+comparison.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */; };
 		E9380F63283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F62283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift */; };
 		E9380F65283FA761008065C8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9380F64283FA761008065C8 /* Logging.swift */; };
 		E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
@@ -285,7 +278,6 @@
 		E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */; };
 		E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */; };
 		E9AF94B526B7C2FE00AA1A5F /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
-		E9AF94B726B7C30400AA1A5F /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928093226B43704008C9F2C /* ExtensionInfo.swift */; };
 		E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */; };
 		E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */; };
 		E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */; };
@@ -622,7 +614,6 @@
 		42EF09E0257A713F00E2EDCA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		42EF09E2257A713F00E2EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42EF09E3257A713F00E2EDCA /* ProtonVPN_OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN_OpenVPN.entitlements; sourceTree = "<group>"; };
-		42F256EC257E36270033633B /* SystemExtensionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionManager.swift; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubuserMacAlertViewController.xib; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserMacAlertViewController.xib"; sourceTree = "<group>"; };
 		45F03F9B62B304014D9F07D2 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -645,9 +636,8 @@
 		4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSImage+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSImage+AppTheme.swift"; sourceTree = "<group>"; };
 		4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OptionSet+Extension.swift"; path = "../../../macos/ProtonVPN/Extensions/OptionSet+Extension.swift"; sourceTree = "<group>"; };
 		4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionIntercepts.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/ConnectionIntercepts.swift; sourceTree = "<group>"; };
+		4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../../libraries/vpncore/Source/Management/SystemExtensions/ExtensionInfo.swift; sourceTree = "<group>"; };
 		4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NET2WarningPopupViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/ViewControllers/NET2WarningPopupViewController.swift; sourceTree = "<group>"; };
-		4CD3B3FA288FCE940053A644 /* SystemExtensionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerMock.swift; sourceTree = "<group>"; };
-		4CD3B3FC288FEEE50053A644 /* SystemExtensionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerTests.swift; sourceTree = "<group>"; };
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
@@ -879,8 +869,6 @@
 		E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCBaseConnection.swift; sourceTree = "<group>"; };
 		E928092E26B42739008C9F2C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../macos/ExtensionsIPC/README.md; sourceTree = "<group>"; };
 		E928092F26B42B63008C9F2C /* IPCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCHelper.swift; path = ../../macos/ExtensionsIPC/IPCHelper.swift; sourceTree = "<group>"; };
-		E928093226B43704008C9F2C /* ExtensionInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../macos/ExtensionsIPC/ExtensionInfo.swift; sourceTree = "<group>"; };
-		E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ExtensionInfo+comparison.swift"; path = "../../../macos/ProtonVPN/Extensions/ExtensionInfo+comparison.swift"; sourceTree = "<group>"; };
 		E9380F62283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnMacProtocolFactory.swift; sourceTree = "<group>"; };
 		E9380F64283FA761008065C8 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.WireGuard-Extension.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1264,6 +1252,14 @@
 			path = AppTheme;
 			sourceTree = "<group>";
 		};
+		4CB2A3D128913192002E839E /* vpncore */ = {
+			isa = PBXGroup;
+			children = (
+				4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */,
+			);
+			name = vpncore;
+			sourceTree = "<group>";
+		};
 		59FDE4B3A2A3BC26BD32FAE2 /* Announcement */ = {
 			isa = PBXGroup;
 			children = (
@@ -1465,7 +1461,6 @@
 				D5421EA925B6DB0200280C29 /* Updates */,
 				E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */,
 				E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */,
-				4CD3B3FA288FCE940053A644 /* SystemExtensionManagerMock.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -1545,7 +1540,6 @@
 				E15B755B20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift */,
 				E13F4CF120FC99DA00D985C2 /* ServerManagerTests.swift */,
 				E1683FF92372DCBD00992E75 /* AlertTests.swift */,
-				4CD3B3FC288FEEE50053A644 /* SystemExtensionManagerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1615,13 +1609,13 @@
 		E928092D26B42714008C9F2C /* ExtensionsIPC */ = {
 			isa = PBXGroup;
 			children = (
+				4CB2A3D128913192002E839E /* vpncore */,
 				E928092E26B42739008C9F2C /* README.md */,
 				E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */,
 				4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */,
 				4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */,
 				4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */,
 				E928092F26B42B63008C9F2C /* IPCHelper.swift */,
-				E928093226B43704008C9F2C /* ExtensionInfo.swift */,
 				4C8641B827D22B1900EEFB1D /* AuditTokenGetter.h */,
 			);
 			path = ExtensionsIPC;
@@ -2452,7 +2446,6 @@
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
-				E928093526B445A4008C9F2C /* ExtensionInfo+comparison.swift */,
 				F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */,
 				4C8641E627DE35A500EEFB1D /* OptionSet+Extension.swift */,
 				4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */,
@@ -2692,7 +2685,6 @@
 		F36ECE4F2611E2FA0089B898 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				42F256EC257E36270033633B /* SystemExtensionManager.swift */,
 				E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */,
 				D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */,
 				351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */,
@@ -3368,11 +3360,11 @@
 				E9380F65283FA761008065C8 /* Logging.swift in Sources */,
 				E9AF94B526B7C2FE00AA1A5F /* IPCBaseConnection.swift in Sources */,
 				42EF09E1257A713F00E2EDCA /* main.swift in Sources */,
-				E9AF94B726B7C30400AA1A5F /* ExtensionInfo.swift in Sources */,
 				E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */,
 				42EF09DF257A713F00E2EDCA /* PacketTunnelProvider.swift in Sources */,
 				4C8641C727D2624400EEFB1D /* IPCHelper.swift in Sources */,
 				4C8641C327D261FB00EEFB1D /* IPCServerConnection.swift in Sources */,
+				4CB2A3D3289131BA002E839E /* ExtensionInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3408,15 +3400,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
-				4CD3B3FB288FCE950053A644 /* SystemExtensionManagerMock.swift in Sources */,
-				4C3087BD28912B7400ABA4BA /* ExtensionInfo.swift in Sources */,
-				4C3087BB28912B3600ABA4BA /* SystemExtensionManager.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
-				4CD3B3FD288FEEE50053A644 /* SystemExtensionManagerTests.swift in Sources */,
 				E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
-				4C3087BC28912B6C00ABA4BA /* ExtensionInfo+comparison.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,
 				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
@@ -3442,9 +3429,9 @@
 				E99799C126A6FFAC0083D61E /* ringlogger.c in Sources */,
 				E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */,
 				E99799BD26A6FFAC0083D61E /* NotificationToken.swift in Sources */,
-				E928093426B43704008C9F2C /* ExtensionInfo.swift in Sources */,
 				4C8641C427D261FB00EEFB1D /* IPCServerConnection.swift in Sources */,
 				E997995726A6F58F0083D61E /* VpnCertificate.swift in Sources */,
+				4CB2A3D4289131BA002E839E /* ExtensionInfo.swift in Sources */,
 				E997999326A6FAA00083D61E /* WGConstants.swift in Sources */,
 				E997995026A6F57B0083D61E /* Data+JSONDictionary.swift in Sources */,
 				E99799BF26A6FFAC0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
@@ -3521,7 +3508,6 @@
 				F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */,
 				E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */,
 				EE343B7B1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift in Sources */,
-				E928093626B445A4008C9F2C /* ExtensionInfo+comparison.swift in Sources */,
 				EE68DD511F49F4BE00F218B8 /* TabBarView.swift in Sources */,
 				42BEF95626317F29009180A7 /* FeatureRowView.swift in Sources */,
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
@@ -3591,7 +3577,6 @@
 				EE24A3AB1F1BDDEF00B70949 /* ProfilesSectionViewController.swift in Sources */,
 				EEB493D31F2145CE00A979DC /* CreateNewProfileViewModel.swift in Sources */,
 				42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */,
-				42F256ED257E36270033633B /* SystemExtensionManager.swift in Sources */,
 				42BEF97826319E39009180A7 /* StreamingServicesOverlayViewModel.swift in Sources */,
 				EE69C8D91F5D9EB300C3065C /* LoginWindowController.swift in Sources */,
 				D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */,
@@ -3627,7 +3612,6 @@
 				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
 				42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */,
-				E928093326B43704008C9F2C /* ExtensionInfo.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
