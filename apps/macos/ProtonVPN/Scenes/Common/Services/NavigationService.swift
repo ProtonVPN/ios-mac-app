@@ -47,7 +47,7 @@ class NavigationService {
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
-        & SystemExtensionsStateCheckFactory
+        & SystemExtensionManagerFactory
         & LogFileManagerFactory
         & UserTierProviderFactory
         & NATTypePropertyProviderFactory

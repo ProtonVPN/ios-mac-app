@@ -40,7 +40,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
-    private lazy var systemExtensionStateCheck = container.makeSystemExtensionsStateCheck()
     private lazy var appInfo: AppInfo = container.makeAppInfo()
     
     private var notificationManager: NotificationManagerProtocol!
@@ -73,7 +72,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            self.container.makeSystemExtensionsStateCheck().checkSystemExtensionRequiredAndInstallIfNeeded(userInitiated: false)
+            if self.propertiesManager.connectionProtocol.requiresSystemExtension {
+                self.container.makeSystemExtensionManager()
+                    .checkAndInstallAllIfNeeded(userInitiated: false, actionHandler: { _ in })
+            }
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()

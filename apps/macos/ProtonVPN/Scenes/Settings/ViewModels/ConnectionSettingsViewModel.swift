@@ -29,7 +29,7 @@ final class ConnectionSettingsViewModel {
         & VpnGatewayFactory
         & CoreAlertServiceFactory
         & ProfileManagerFactory
-        & SystemExtensionsStateCheckFactory
+        & SystemExtensionManagerFactory
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
@@ -39,7 +39,7 @@ final class ConnectionSettingsViewModel {
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
+    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -207,8 +207,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func refreshSysexPending(for connectionProtocol: ConnectionProtocol) {
-        sysexPending = connectionProtocol.requiresSystemExtension == true &&
-                        !propertiesManager.sysexSuccessWasShown
+        sysexPending = connectionProtocol.requiresSystemExtension
     }
 
     func shouldShowSysexProgress(for protocolIndex: Int) -> Bool {
@@ -237,22 +236,22 @@ final class ConnectionSettingsViewModel {
     
     func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         let update = { (shouldReconnect: Bool) in
-            self.systemExtensionsStateCheck.startCheckAndInstallIfNeeded(userInitiated: true) { result in
-                DispatchQueue.main.async {
+            self.sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+                DispatchQueue.main.async { [unowned self] in
                     self.sysexPending = false
 
                     switch result {
-                    case .success:
+                    case .installed, .upgraded, .alreadyThere:
                         self.propertiesManager.smartProtocol = true
                         completion(.success)
                         if shouldReconnect {
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
                             self.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
                         }
-                    case let .failure(error):
+                    case let .failed(error):
                         completion(.failure(error))
                     }
-                    
+
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                         self?.reloadNeeded?()
                     }

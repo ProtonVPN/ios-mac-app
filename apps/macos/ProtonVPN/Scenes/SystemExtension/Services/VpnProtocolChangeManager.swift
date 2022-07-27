@@ -44,13 +44,13 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     typealias Factory = PropertiesManagerFactory
         & CoreAlertServiceFactory
         & VpnGatewayFactory
-        & SystemExtensionsStateCheckFactory
+        & SystemExtensionManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
+    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     
     init(factory: Factory) {
         self.factory = factory
@@ -84,18 +84,16 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        systemExtensionsStateCheck.startCheckAndInstallIfNeeded(userInitiated: userInitiated) { result in
+        sysexManager.checkAndInstallAllIfNeeded(userInitiated: userInitiated) { result in
             switch result {
-            case .success:
+            case .installed, .upgraded, .alreadyThere:
                 self.propertiesManager.vpnProtocol = vpnProtocol
                 reconnectIfNeeded()
                 completion(.success)
-
-            case let .failure(error):
+            case .failed(let error):
                 log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)", category: .connectionConnect)
                 completion(.failure(error))
             }
         }
     }
-        
 }

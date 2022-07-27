@@ -54,7 +54,14 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & ProfileManagerFactory & SystemExtensionsStateCheckFactory & SessionServiceFactory
+    typealias Factory = CoreAlertServiceFactory &
+                        VpnKeychainFactory &
+                        PropertiesManagerFactory &
+                        AppStateManagerFactory &
+                        VpnGatewayFactory &
+                        ProfileManagerFactory &
+                        SystemExtensionManagerFactory &
+                        SessionServiceFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -71,7 +78,7 @@ class CreateNewProfileViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var sysexStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
+    private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var sessionService: SessionService = factory.makeSessionService()
 
     internal let defaultServerCount = 2
@@ -296,8 +303,7 @@ class CreateNewProfileViewModel {
 
     func refreshSysexPending(for vpnProtocolIndex: Int) {
         sysexPending = vpnProtocolIndex < availableVpnProtocols.count &&
-            availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension &&
-            !propertiesManager.sysexSuccessWasShown
+            availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension
     }
 
     func shouldShowSysexProgress(for vpnProtocolIndex: Int) -> Bool {
@@ -306,20 +312,15 @@ class CreateNewProfileViewModel {
         sysexPending
     }
 
-    func checkSysexInstallation(vpnProtocolIndex: Int, completion: @escaping (Result<SystemExtensionsStateCheck.SuccessResultType, Error>) -> Void) {
+    func checkSysexInstallation(vpnProtocolIndex: Int, completion: @escaping (SystemExtensionResult) -> Void) {
         let vpnProtocol = availableVpnProtocols[vpnProtocolIndex]
         guard vpnProtocol.requiresSystemExtension else {
             return
         }
 
-        // Before the callback is called, user will get an error alert
-        // if installation failed, and will be re-prompted for installation if they try
-        // to connect from the profile overview after failure/while installation is pending.
-        // Note that this callback can be called twice if the user closes the sysex tour window
-        // before going to system preferences!
-        sysexStateCheck.startCheckAndInstallIfNeeded(userInitiated: true) { result in
-            DispatchQueue.main.async {
-                self.sysexPending = false
+        sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+            DispatchQueue.main.async { [weak self] in
+                self?.sysexPending = false
                 completion(result)
             }
         }
