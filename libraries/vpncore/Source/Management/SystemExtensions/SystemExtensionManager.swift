@@ -22,51 +22,50 @@
 
 import Foundation
 import SystemExtensions
-import vpncore
 
-protocol SystemExtensionManagerFactory {
+public protocol SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager
 }
 
-enum SystemExtensionType: String, CaseIterable {
+public enum SystemExtensionType: String, CaseIterable {
     case openVPN = "ch.protonvpn.mac.OpenVPN-Extension"
     case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
     
-    var machServiceName: String {
+    public var machServiceName: String {
         let teamId = Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String
         return "\(teamId)group.\(rawValue)"
     }
 }
 
-enum SystemExtensionResult {
+public enum SystemExtensionResult {
     case installed
     case upgraded
     case nothing
     case failed(Error)
 }
 
-class SystemExtensionManager: NSObject {
-    static let allExtensionsInstalled = Notification.Name("SystemExtensionsAllInstalled")
+public class SystemExtensionManager: NSObject {
+    public static let allExtensionsInstalled = Notification.Name("SystemExtensionsAllInstalled")
     static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 
-    typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
+    public typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
     private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
 
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
 
-    init(factory: Factory) {
+    public init(factory: Factory) {
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
     }
 
-    func request(_ request: SystemExtensionRequest) {
+    internal func request(_ request: SystemExtensionRequest) {
         log.info("Submitting request \(request.request.description) for \(request.request.identifier)")
 
         OSSystemExtensionManager.shared.submitRequest(request.request)
     }
 
-    func uninstallAll(userInitiated: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
+    public func uninstallAll(userInitiated: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
         let group = DispatchGroup()
 
         SystemExtensionType.allCases.forEach { type in
@@ -137,7 +136,8 @@ class SystemExtensionManager: NSObject {
         }
     }
 
-    func checkAndInstallAllIfNeeded(userInitiated: Bool, actionHandler: @escaping (SystemExtensionResult) -> Void) {
+    public func checkAndInstallAllIfNeeded(userInitiated: Bool,
+                                           actionHandler: @escaping (SystemExtensionResult) -> Void) {
         var didRequireUserApproval = false
 
         submitInstallationRequests(userInitiated: userInitiated,
@@ -180,7 +180,7 @@ class SystemExtensionManager: NSObject {
     }
 }
 
-class SystemExtensionRequest: NSObject {
+public class SystemExtensionRequest: NSObject {
     typealias StateChangeCallback = ((State) -> Void)
 
     let request: OSSystemExtensionRequest
@@ -233,9 +233,9 @@ class SystemExtensionRequest: NSObject {
 }
 
 extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
-    func request(_ request: OSSystemExtensionRequest,
-                 actionForReplacingExtension existing: OSSystemExtensionProperties,
-                 withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+    public func request(_ request: OSSystemExtensionRequest,
+                        actionForReplacingExtension existing: OSSystemExtensionProperties,
+                        withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
         assert(existing.bundleIdentifier == ext.bundleIdentifier,
                "Extensions have mismatched identifiers? (\(existing.bundleIdentifier) and \(ext.bundleIdentifier))")
 
@@ -247,11 +247,11 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
                                                    bundleId: ext.bundleIdentifier)) ? .replace : .cancel
     }
 
-    func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+    public func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         stateChangeCallback(.userActionRequired)
     }
 
-    func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
+    public func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         guard let sysextError = error as? OSSystemExtensionError else {
             stateChangeCallback(.failed(error))
             return
@@ -267,7 +267,7 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
         }
     }
 
-    func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
+    public func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         stateChangeCallback(.succeeded(result))
     }
 }

@@ -87,6 +87,9 @@
 		4C096208285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */; };
 		4C1C2F2F28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
 		4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
+		4C1ECBAE28912EAD00820068 /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAC28912E6D00820068 /* ExtensionInfo.swift */; };
+		4C1ECBB428912FA000820068 /* SystemExtensionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBB128912F8500820068 /* SystemExtensionManagerTests.swift */; };
+		4C1ECBB828912FC200820068 /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBB628912FBE00820068 /* SystemExtensionManager.swift */; };
 		4C263C3E286F0E7600F48974 /* LocalAgentConnectionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */; };
 		4C263C3F286F0E7700F48974 /* LocalAgentConnectionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */; };
 		4C4D898327BD0BE800548523 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D898227BD0BE800548523 /* Array+Extension.swift */; };
@@ -114,6 +117,8 @@
 		4CAAEC45287323AA0029F13A /* MockAuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */; };
 		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
+		4CB2A3D0289130D5002E839E /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
+		4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */; };
 		4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
 		4CC20AD22869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
 		4CE300C7285877B100FBD249 /* NEVPNWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */; };
@@ -724,6 +729,10 @@
 		4C096203285B648900556E07 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsConfiguratorMock.swift; sourceTree = "<group>"; };
 		4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelProviderClientMessageTests.swift; sourceTree = "<group>"; };
+		4C1ECBAC28912E6D00820068 /* ExtensionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionInfo.swift; sourceTree = "<group>"; };
+		4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerMock.swift; sourceTree = "<group>"; };
+		4C1ECBB128912F8500820068 /* SystemExtensionManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerTests.swift; sourceTree = "<group>"; };
+		4C1ECBB628912FBE00820068 /* SystemExtensionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemExtensionManager.swift; sourceTree = "<group>"; };
 		4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConnectionMock.swift; sourceTree = "<group>"; };
 		4C4D898227BD0BE800548523 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		4C4E0B2B285B72A5001657FD /* MockVpnAuthenticationStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockVpnAuthenticationStorage.swift; sourceTree = "<group>"; };
@@ -736,6 +745,7 @@
 		4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NEVPNStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthKeychain.swift; sourceTree = "<group>"; };
 		4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnConnectionIntercept.swift; sourceTree = "<group>"; };
+		4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExtensionInfo+Comparable.swift"; sourceTree = "<group>"; };
 		4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocaleWrapper.swift; sourceTree = "<group>"; };
 		4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNWrappers.swift; sourceTree = "<group>"; };
 		4CF40B9E2833BDE100C3C501 /* ProviderMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderMessage.swift; sourceTree = "<group>"; };
@@ -1252,6 +1262,8 @@
 		4C1ECBAB28912DFE00820068 /* SystemExtensions */ = {
 			isa = PBXGroup;
 			children = (
+				4C1ECBB628912FBE00820068 /* SystemExtensionManager.swift */,
+				4C1ECBAC28912E6D00820068 /* ExtensionInfo.swift */,
 			);
 			path = SystemExtensions;
 			sourceTree = "<group>";
@@ -1416,6 +1428,7 @@
 		D5D606A52292DC5B00394CF9 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				4C1ECBB128912F8500820068 /* SystemExtensionManagerTests.swift */,
 				4C0961F8285B4FB800556E07 /* Connections */,
 				E9037D2E284F6F0B00151180 /* BugReport */,
 				D5D2957425A5D95E000FBD74 /* Providers */,
@@ -1911,6 +1924,7 @@
 				E55046422849F45A00E4BFC2 /* Image+Flag.swift */,
 				F327A9992821763B00848E42 /* Codable+Default.swift */,
 				CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */,
+				4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1918,6 +1932,7 @@
 		F36ECB682610A8950089B898 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */,
 				4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */,
 				D5EF8F982293D4E400B713BD /* AlertServiceMock.swift */,
 				D59671DD253D5E3A0061A75F /* AnnouncementStorageMock.swift */,
@@ -3084,6 +3099,7 @@
 				E9DC7A0B262DBFAB001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
 				F365355826384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
 				E129C6D722A9488900D8437E /* CLLocationCoordinate2D+Extension.swift in Sources */,
+				4C1ECBAE28912EAD00820068 /* ExtensionInfo.swift in Sources */,
 				F39E71CC26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				E1B5F65521B81E3A00B558B0 /* ServerFeature.swift in Sources */,
 				4242B0882465A4D10042145A /* UserProperties.swift in Sources */,
@@ -3135,6 +3151,7 @@
 				E1616BB421C7BCD100F42D79 /* KeychainError.swift in Sources */,
 				E129C6C322A90E6600D8437E /* AlertServiceMock.swift in Sources */,
 				E1B5F67021B8205100B558B0 /* ServerLocation.swift in Sources */,
+				4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */,
 				E151126C22F07D3100C9A41F /* VpnManagerConfiguration.swift in Sources */,
 				E1B5F63421B6B19200B558B0 /* VpnState.swift in Sources */,
 				F30B9E87262886D90094C65E /* VpnCertificate.swift in Sources */,
@@ -3260,6 +3277,7 @@
 				CFE4A175A862CAB417AE5C4F /* LogFileManager.swift in Sources */,
 				4C4E0B2D285B72A5001657FD /* MockVpnAuthenticationStorage.swift in Sources */,
 				2F36B2AB3CBF1764D7E766C8 /* FileLogFormatter.swift in Sources */,
+				4C1ECBB828912FC200820068 /* SystemExtensionManager.swift in Sources */,
 				021468D1606599C5393E4F1F /* Logger+Callers.swift in Sources */,
 				2D1D48B7BD7C604C2FBD7F1F /* LogHandler+Metadata.swift in Sources */,
 				8527DAA95348977F75A7452E /* Logger+Main.swift in Sources */,
@@ -3304,10 +3322,12 @@
 				D5967209253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
 				D5D2946325A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
 				4241A8DE24C9EEDA005412FB /* MigrationVersionTest.swift in Sources */,
+				4C1ECBB428912FA000820068 /* SystemExtensionManagerTests.swift in Sources */,
 				D523F11724B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
 				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
+				4CB2A3D0289130D5002E839E /* SystemExtensionManagerMock.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
 				F3747C1A26D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,

@@ -18,5 +18,4 @@ struct ExtensionInfo: Codable {
                     build: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0",
                     bundleId: Bundle.main.bundleIdentifier ?? "")
     }
-        
 }
