@@ -48,12 +48,26 @@ class SystemExtensionManagerMock: SystemExtensionManager {
     }()
 
     override func request(_ request: SystemExtensionRequest) {
+        guard case .install = request.action else {
+            guard case .uninstall = request.action else { return }
+
+            installedExtensions.removeAll { $0.bundleId == request.request.identifier }
+
+            requestFinished?(request)
+            request.request(request.request, didFinishWithResult: .completed)
+            return
+        }
+
         let extensionVersion = mockVersions ?? bundleAppVersions
         let extensionInfo = ExtensionInfo(version: extensionVersion.semanticVersion,
                                           build: extensionVersion.buildVersion,
                                           bundleId: request.request.identifier)
+        // ExtensionInfo's Comparable function only matches on version info, we need to compare bundleId as well.
+        let matchesExtensionInfo = { (info: ExtensionInfo) in
+            info == extensionInfo && info.bundleId == extensionInfo.bundleId
+        }
 
-        if let pending = pendingRequests.first(where: { (_, info) in info == extensionInfo }) {
+        if let pending = pendingRequests.first(where: { (_, info) in matchesExtensionInfo(info) }) {
             guard request.shouldExtension(pending.1, beReplacedBy: extensionInfo) else {
                 request.request(request.request, didFailWithError: OSSystemExtensionError(.requestCanceled))
                 requestFinished?(request)
@@ -67,7 +81,7 @@ class SystemExtensionManagerMock: SystemExtensionManager {
         pendingRequests.append((request, extensionInfo))
         requestIsPending?(request)
 
-        if let installed = installedExtensions.first(where: { info in info == extensionInfo }) {
+        if let installed = installedExtensions.first(where: { $0.bundleId == extensionInfo.bundleId }) {
             guard request.shouldExtension(installed, beReplacedBy: extensionInfo) else {
                 pendingRequests.removeAll { (pendingRequest, _) in pendingRequest.uuid == request.uuid }
                 request.request(request.request, didFailWithError: OSSystemExtensionError(.requestCanceled))
@@ -75,7 +89,7 @@ class SystemExtensionManagerMock: SystemExtensionManager {
                 return
             }
 
-            installedExtensions.removeAll { info in info == installed }
+            installedExtensions.removeAll { $0.bundleId == extensionInfo.bundleId }
             installedExtensions.append(extensionInfo)
 
             pendingRequests.removeAll { (pendingRequest, _) in pendingRequest.uuid == request.uuid }

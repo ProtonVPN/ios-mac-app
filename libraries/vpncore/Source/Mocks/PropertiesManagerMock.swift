@@ -94,6 +94,11 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var wireguardConfig: WireguardConfig = WireguardConfig()
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
     public var ratingSettings: RatingSettings = RatingSettings()
+
+    #if os(macOS)
+    public var forceExtensionUpgrade: Bool = false
+    #endif
+
     public var vpnProtocol: VpnProtocol = .ike {
         didSet {
             NotificationCenter.default.post(name: Self.vpnProtocolNotification, object: vpnProtocol)

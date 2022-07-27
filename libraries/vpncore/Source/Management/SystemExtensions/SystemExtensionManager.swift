@@ -38,9 +38,13 @@ public enum SystemExtensionType: String, CaseIterable {
 }
 
 public enum SystemExtensionResult {
+    /// The extension was not previously on the system, and has been installed.
     case installed
+    /// An earlier version of the extension was installed, and has now been upgraded.
     case upgraded
-    case nothing
+    /// The same version of the extension was installed, and no action was taken.
+    case alreadyThere
+    /// An error occurred while trying to perform the installation or upgrade.
     case failed(Error)
 }
 
@@ -48,15 +52,24 @@ public class SystemExtensionManager: NSObject {
     public static let allExtensionsInstalled = Notification.Name("SystemExtensionsAllInstalled")
     static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 
-    public typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
+    public typealias Factory = CoreAlertServiceFactory &
+                                PropertiesManagerFactory &
+                                VpnKeychainFactory
+
     private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
 
     private let alertService: CoreAlertService
-    private let propertiesManager: PropertiesManagerProtocol
+    fileprivate let propertiesManager: PropertiesManagerProtocol
+    private let vpnKeychain: VpnKeychainProtocol
+
+    private var userIsLoggedIn: Bool {
+        (try? vpnKeychain.fetch()) != nil
+    }
 
     public init(factory: Factory) {
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
+        self.vpnKeychain = factory.makeVpnKeychain()
     }
 
     internal func request(_ request: SystemExtensionRequest) {
@@ -65,12 +78,13 @@ public class SystemExtensionManager: NSObject {
         OSSystemExtensionManager.shared.submitRequest(request.request)
     }
 
+    /// Synchronously (!) uninstall all extensions on the system, with an optional timeout.
     public func uninstallAll(userInitiated: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
         let group = DispatchGroup()
 
         SystemExtensionType.allCases.forEach { type in
             group.enter()
-            request(.uninstall(type: type) { stateChange in
+            request(.uninstall(type: type, manager: self) { stateChange in
                 switch stateChange {
                 case .succeeded, .failed:
                     group.leave()
@@ -88,6 +102,12 @@ public class SystemExtensionManager: NSObject {
         return group.wait(timeout: timeout)
     }
 
+    /// Submit installation requests for all extensions.
+    ///
+    /// - Parameter userInitiated: Whether or not this request was initiated by the user (e.g., through connecting)
+    /// - Parameter userActionRequiredHandler: Called with the number of extensions that require user approval.
+    ///             This callback will *not* be called if no extensions require approval.
+    /// - Parameter installationFinishedHandler: Called when installation is finished, regardless of success.
     private func submitInstallationRequests(userInitiated: Bool,
                                             userActionRequiredHandler: @escaping ((Int) -> Void),
                                             installationFinishedHandler: @escaping ((InstallationState) -> Void)) {
@@ -102,7 +122,7 @@ public class SystemExtensionManager: NSObject {
             finishedInstalling.enter()
             installStatesKnown.enter()
 
-            let install = SystemExtensionRequest.install(type: type) { stateChange in
+            let install = SystemExtensionRequest.install(type: type, manager: self) { stateChange in
                 var prevState: SystemExtensionRequest.State?
                 queue.sync {
                     prevState = states[type]
@@ -116,8 +136,8 @@ public class SystemExtensionManager: NSObject {
                     queue.sync { extensionsRequiringApproval += 1 }
                     installStatesKnown.leave()
                 case .failed, .succeeded, .superseded, .cancelled:
-                    if case .replacing = prevState {
-                        // If we transition directly from the replacing state, that means that we didn't
+                    if case .userActionRequired = prevState {} else {
+                        // If we never transitioned through userActionRequired, that means that we didn't
                         // require user action to replace the extension, so it already exists on the system.
                         installStatesKnown.leave()
                     }
@@ -128,6 +148,8 @@ public class SystemExtensionManager: NSObject {
         }
 
         installStatesKnown.notify(queue: SystemExtensionManager.requestQueue) {
+            guard extensionsRequiringApproval > 0 else { return }
+            
             userActionRequiredHandler(extensionsRequiringApproval)
         }
 
@@ -136,8 +158,14 @@ public class SystemExtensionManager: NSObject {
         }
     }
 
+    /// Installs all extensions. This will result in system extension dialogs appearing if the user has
+    /// not approved any on the system yet.
     public func checkAndInstallAllIfNeeded(userInitiated: Bool,
                                            actionHandler: @escaping (SystemExtensionResult) -> Void) {
+        // do not check if the user is not logged in to avoid showing the installation prompt on the
+        // login screen on first start
+        guard userIsLoggedIn else { return }
+
         var didRequireUserApproval = false
 
         submitInstallationRequests(userInitiated: userInitiated,
@@ -151,7 +179,7 @@ public class SystemExtensionManager: NSObject {
                 // alsotodo: this can go away
             }))
         }, installationFinishedHandler: { installationResults in
-            var result: SystemExtensionResult = .nothing
+            var result: SystemExtensionResult = .alreadyThere
 
             for (type, finalState) in installationResults {
                 switch finalState {
@@ -170,24 +198,36 @@ public class SystemExtensionManager: NSObject {
                 }
             }
 
-            guard case .nothing = result else {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                actionHandler(result)
+                guard case .alreadyThere = result else {
                     NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: userInitiated)
+                    return
                 }
-                return
             }
         })
     }
 }
 
+/// Wrapper class for `OSSystemExtensionRequest` that lets us keep track of individual requests more easily.
+/// Every call to a delegate function is routed through the `stateChangeCallback` property. This callback is
+/// generated uniquely for every request in the `SystemExtensionManager`, so we know the state of each
+/// installation request individually.
 public class SystemExtensionRequest: NSObject {
     typealias StateChangeCallback = ((State) -> Void)
 
+    let action: Action
     let request: OSSystemExtensionRequest
     let stateChangeCallback: StateChangeCallback
+    unowned let manager: SystemExtensionManager
 
     let uuid = UUID()
-    
+
+    enum Action {
+        case install
+        case uninstall
+    }
+
     enum State {
         /// We have told sysextd we want our extension to replace an existing one in the system.
         case replacing
@@ -205,28 +245,41 @@ public class SystemExtensionRequest: NSObject {
         case failed(Error)
     }
 
+    /// Only opts to replace an extension if the version is higher, or if a testing flag is set in defaults.
     func shouldExtension(_ existing: ExtensionInfo, beReplacedBy newExtension: ExtensionInfo) -> Bool {
-        existing < newExtension
+        existing < newExtension || manager.propertiesManager.forceExtensionUpgrade
     }
 
-    required init(request: OSSystemExtensionRequest,
-                  stateChange: @escaping StateChangeCallback) {
+    required init(action: Action,
+                  request: OSSystemExtensionRequest,
+                  stateChange: @escaping StateChangeCallback,
+                  manager: SystemExtensionManager) {
+        self.action = action
         self.request = request
         self.stateChangeCallback = stateChange
+        self.manager = manager
     }
 
-    static func install(type: SystemExtensionType, stateChange: @escaping StateChangeCallback) -> Self {
-        let result = Self(request: .activationRequest(forExtensionWithIdentifier: type.rawValue,
+    static func install(type: SystemExtensionType,
+                        manager: SystemExtensionManager,
+                        stateChange: @escaping StateChangeCallback) -> Self {
+        let result = Self(action: .install,
+                          request: .activationRequest(forExtensionWithIdentifier: type.rawValue,
                                                       queue: SystemExtensionManager.requestQueue),
-                          stateChange: stateChange)
+                          stateChange: stateChange,
+                          manager: manager)
         result.request.delegate = result
         return result
     }
 
-    static func uninstall(type: SystemExtensionType, stateChange: @escaping StateChangeCallback) -> Self {
-        let result = Self(request: .deactivationRequest(forExtensionWithIdentifier: type.rawValue,
+    static func uninstall(type: SystemExtensionType,
+                          manager: SystemExtensionManager,
+                          stateChange: @escaping StateChangeCallback) -> Self {
+        let result = Self(action: .uninstall,
+                          request: .deactivationRequest(forExtensionWithIdentifier: type.rawValue,
                                                         queue: SystemExtensionManager.requestQueue),
-                          stateChange: stateChange)
+                          stateChange: stateChange,
+                          manager: manager)
         result.request.delegate = result
         return result
     }
@@ -239,12 +292,19 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
         assert(existing.bundleIdentifier == ext.bundleIdentifier,
                "Extensions have mismatched identifiers? (\(existing.bundleIdentifier) and \(ext.bundleIdentifier))")
 
-        return shouldExtension(.init(version: existing.bundleShortVersion,
-                                     build: existing.bundleVersion,
-                                     bundleId: existing.bundleIdentifier),
-                               beReplacedBy: .init(version: ext.bundleShortVersion,
-                                                   build: ext.bundleVersion,
-                                                   bundleId: ext.bundleIdentifier)) ? .replace : .cancel
+        let shouldReplace = shouldExtension(.init(version: existing.bundleShortVersion,
+                                                  build: existing.bundleVersion,
+                                                  bundleId: existing.bundleIdentifier),
+                                            beReplacedBy: .init(version: ext.bundleShortVersion,
+                                                                build: ext.bundleVersion,
+                                                                bundleId: ext.bundleIdentifier))
+
+        // Don't call stateChangeCallback(.cancelled) here, we do that when sysextd calls us again
+        // with `request(_:didFailWithError:)`.
+        guard shouldReplace else { return .cancel }
+
+        stateChangeCallback(.replacing)
+        return .replace
     }
 
     public func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
