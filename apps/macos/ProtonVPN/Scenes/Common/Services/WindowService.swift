@@ -77,7 +77,7 @@ class WindowServiceImplementation: WindowService {
         & VpnGatewayFactory
         & HeaderViewModelFactory
         & AnnouncementsViewModelFactory
-        & SystemExtensionsStateCheckFactory
+        & SystemExtensionManagerFactory
         & ConnectingOverlayViewModelFactory
         & NetShieldPropertyProviderFactory
         & ProfileManagerFactory

@@ -131,7 +131,6 @@
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
-		D59DC45026C296C700C6A694 /* SystemExtensionsStateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
 		D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */; };
 		D5A8813D22CF28F5009B63D1 /* ReportBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */; };
@@ -744,7 +743,6 @@
 		D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SystemExtensionsStateCheck.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/SystemExtensionsStateCheck.swift; sourceTree = "<group>"; };
 		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
 		D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
 		D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBugViewController.xib; sourceTree = "<group>"; };
@@ -2686,7 +2684,6 @@
 			isa = PBXGroup;
 			children = (
 				E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */,
-				D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */,
 				351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */,
 			);
 			path = Services;
@@ -3513,7 +3510,6 @@
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
 				42BEF97026319ADC009180A7 /* StreamingServicesOverlayViewController.swift in Sources */,
 				E180D16C2126FCF700F4D1C7 /* TourNextButton.swift in Sources */,
-				D59DC45026C296C700C6A694 /* SystemExtensionsStateCheck.swift in Sources */,
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
 				EE5CF76E1F4DDB750002BBF3 /* ProfilesMenuController.swift in Sources */,
 				E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */,

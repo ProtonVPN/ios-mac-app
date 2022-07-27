@@ -34,8 +34,8 @@ class ProfilesSectionViewModel {
     private let profileManager: ProfileManager
     private let navService: NavigationService
     private let alertService: CoreAlertService
-    private let stateCheck: SystemExtensionsStateCheck
-    
+    private let sysexManager: SystemExtensionManager
+
     var contentChanged: (() -> Void)?
     
     var cellCount: Int {
@@ -50,12 +50,12 @@ class ProfilesSectionViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService, alertService: CoreAlertService, profileManager: ProfileManager, protocolChangeNotifications: [Notification.Name], sysexStateCheck: SystemExtensionsStateCheck) {
+    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService, alertService: CoreAlertService, profileManager: ProfileManager, protocolChangeNotifications: [Notification.Name], sysexManager: SystemExtensionManager) {
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.alertService = alertService
         self.profileManager = profileManager
-        self.stateCheck = sysexStateCheck
+        self.sysexManager = sysexManager
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: profileManager.contentChanged, object: nil)
         for notificationName in protocolChangeNotifications {
             NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: notificationName, object: nil)
@@ -72,7 +72,7 @@ class ProfilesSectionViewModel {
     
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService, sysexStateCheck: stateCheck))
+            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService, sysexManager: sysexManager))
         } else {
             return .footer(self)
         }

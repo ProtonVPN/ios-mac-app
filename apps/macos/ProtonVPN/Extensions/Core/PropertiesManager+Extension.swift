@@ -82,15 +82,6 @@ extension PropertiesManagerProtocol {
             setValue(newValue, forKey: AppConstants.UserDefaults.systemNotifications)
         }
     }
-    
-    var sysexSuccessWasShown: Bool {
-        get {
-            return getValue(forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
-        }
-        set {
-            setValue(newValue, forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
-        }
-    }
 
     var uninstallSysexesOnTerminate: Bool {
         get {

@@ -30,7 +30,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
-    private let stateCheck: SystemExtensionsStateCheck
+    private let sysexManager: SystemExtensionManager
     
     var enabled: Bool {
         return !underMaintenance
@@ -56,10 +56,14 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         return formSecondaryDescription()
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int, alertService: CoreAlertService, sysexStateCheck: SystemExtensionsStateCheck) {
+    init(profile: Profile,
+         vpnGateway: VpnGatewayProtocol,
+         userTier: Int,
+         alertService: CoreAlertService,
+         sysexManager: SystemExtensionManager) {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
-        self.stateCheck = sysexStateCheck
+        self.sysexManager = sysexManager
         super.init(profile: profile, userTier: userTier)
     }
     
@@ -87,11 +91,11 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        stateCheck.startCheckAndInstallIfNeeded(userInitiated: true) { result in
+        sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
             switch result {
-            case .success:
+            case .installed, .upgraded, .alreadyThere:
                 performConnection()
-            case let .failure(error):
+            case let .failed(error):
                 log.error("Error installing sysex when profile was selected: \(String(describing: error))")
             }
         }

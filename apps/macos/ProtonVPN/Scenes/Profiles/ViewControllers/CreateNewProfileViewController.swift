@@ -293,21 +293,19 @@ final class CreateNewProfileViewController: NSViewController {
 
         viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem) { [weak self] result in
             switch result {
-            case let .success(result):
-                guard case .installed = result else {
-                    break
-                }
-                
+            case .installed:
                 if self?.protocolList.indexOfSelectedItem != originalIndex {
                     self?.refreshProtocolList(withSelectionAt: originalIndex)
                 } else {
                     self?.refreshPendingEnablement()
                 }
-            case .failure:
+            case .failed:
                 guard let ikeIndex = self?.viewModel.vpnProtocolIndex(for: .ike) else {
                     return
                 }
                 self?.refreshProtocolList(withSelectionAt: ikeIndex)
+            default:
+                break
             }
         }
     }

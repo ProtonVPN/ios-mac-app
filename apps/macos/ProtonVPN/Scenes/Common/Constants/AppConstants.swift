@@ -45,7 +45,6 @@ class AppConstants {
         static let trialWelcomed = "TrialWelcomed"
         static let warnedTrialExpiring = "WarnedTrialExpiring"
         static let warnedTrialExpired = "WarnedTrialExpired"
-        static let sysexSuccessWasShown = "SysexSuccessWasShown"
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
     }
     
