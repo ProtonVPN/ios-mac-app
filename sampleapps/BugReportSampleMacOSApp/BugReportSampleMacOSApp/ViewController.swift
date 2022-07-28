@@ -35,7 +35,7 @@ class ViewController: NSViewController {
             sendCallback: { form, result in
                 self.statusTextField.stringValue = "Sent"
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    if form.email == "success@email.com" {
+                    if form.email.starts(with: "success") {
                         result(.success(Void()))
                     } else {
                         result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
