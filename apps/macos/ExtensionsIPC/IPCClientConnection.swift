@@ -41,20 +41,6 @@ class XPCServiceUser {
         self.log = logger
     }
 
-    func getVersion(completionHandler: @escaping (Data?) -> Void) {
-        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy for \(self.machServiceName): \(String(describing: registerError))")
-            self.currentConnection = nil
-            completionHandler(nil)
-        }) as? ProviderCommunication else {
-            self.log("Failed to create a remote object proxy for the provider: \(machServiceName)")
-            completionHandler(nil)
-            return
-        }
-
-        providerProxy.getVersion(completionHandler)
-    }
-
     func getLogs(completionHandler: @escaping (Data?) -> Void) {
         guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
             self.log("Failed to get remote object proxy \(self.machServiceName): \(String(describing: registerError))")

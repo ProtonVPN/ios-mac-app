@@ -11,7 +11,6 @@ import os.log
 
 /// App -> Provider IPC
 @objc protocol ProviderCommunication {
-    func getVersion(_ completionHandler: @escaping (Data?) -> Void)
     func getLogs(_ completionHandler: @escaping (Data?) -> Void)
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void)
 }
