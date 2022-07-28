@@ -277,4 +277,8 @@ extension SystemExtensionManagerTests: SystemExtensionManager.Factory {
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManager
     }
+
+    func makeVpnKeychain() -> VpnKeychainProtocol {
+        return vpnKeychain
+    }
 }
