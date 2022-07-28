@@ -26,11 +26,10 @@ import vpncore
 protocol SystemExtensionGuideViewModelProtocol: NSObject {
     func didTapNext()
     func didTapPrevious()
-    func didTapAccept()
     func viewWillAppear()
     func tourCancelled()
 
-    var extensionsCount: Int { get set }
+    var extensionsCount: Int { get }
     var finishedTour: Bool { get }
     var isNextButtonVisible: Bool { get }
     var isPrevButtonVisible: Bool { get }
@@ -50,7 +49,18 @@ class SystemExtensionGuideViewModel: NSObject {
         let imageName: String
     }
     
-    var steps: [Step] { return extensionsCount == 1 ? stepsOne : stepsMany }
+    var steps: [Step] {
+        var result = extensionsCount == 1 ? stepsOne : stepsMany
+        // If the user was shown the tour before, tell the user to open System Preferences directly
+        // since they won't see an alert with a link to open Security Preferences.
+        if userWasShownTourBefore {
+            let title = result[0].title
+            result[0] = Step(title: title,
+                             description: LocalizedString.sysexWizardStep1DescriptionGoToSystemPreferences,
+                             imageName: "1-step-security-prefs")
+        }
+        return result
+    }
     
     private let stepsOne: [Step] = [
         Step(title: LocalizedString.sysexWizardStep1Title1, description: LocalizedString.sysexWizardStep1Description1, imageName: "1-step-1"),
@@ -67,22 +77,27 @@ class SystemExtensionGuideViewModel: NSObject {
     ]
     private var currentStep = 0
     
-    private let alertService: CoreAlertService
-    private let propertiesManager: PropertiesManagerProtocol
+    private unowned let alertService: CoreAlertService
+    private unowned let propertiesManager: PropertiesManagerProtocol
+
     var finishedTour = false
-    var extensionsCount: Int
-    var acceptedHandler: () -> Void
+    let extensionsCount: Int
+    let userWasShownTourBefore: Bool
     var cancelledHandler: () -> Void
 
     var contentChanged: (() -> Void)?
     var close: (() -> Void)?
     
-    init(extensionsCount: Int, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, acceptedHandler: @escaping () -> Void, cancelledHandler: @escaping () -> Void) {
+    init(extensionsCount: Int,
+         userWasShownTourBefore: Bool,
+         alertService: CoreAlertService,
+         propertiesManager: PropertiesManagerProtocol,
+         cancelledHandler: @escaping () -> Void) {
         self.alertService = alertService
         self.extensionsCount = extensionsCount
-        self.acceptedHandler = acceptedHandler
-        self.cancelledHandler = cancelledHandler
+        self.userWasShownTourBefore = userWasShownTourBefore
         self.propertiesManager = propertiesManager
+        self.cancelledHandler = cancelledHandler
     }
     
     // MARK: - Private
@@ -104,7 +119,6 @@ class SystemExtensionGuideViewModel: NSObject {
 // MARK: - SystemExtensionGuideViewModelProtocol
 
 extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
-    
     func viewWillAppear() {
         // Autoclose this window after installation finishes
         NotificationCenter.default.addObserver(forName: SystemExtensionManager.allExtensionsInstalled, object: nil, queue: nil, using: finish)
@@ -125,10 +139,6 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     func didTapPrevious() {
         currentStep = max(currentStep - 1, 0)
         contentChanged?()
-    }
-    
-    func didTapAccept() {
-        acceptedHandler()
     }
     
     var isNextButtonVisible: Bool {

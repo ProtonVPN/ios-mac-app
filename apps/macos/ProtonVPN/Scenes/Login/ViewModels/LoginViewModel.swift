@@ -132,7 +132,10 @@ final class LoginViewModel {
                     // they are most likely new to Proton VPN and don't need to see the brand refresh modal.
                     self?.propertiesManager.newBrandModalShown = true
                     self?.silentlyCheckForUpdates()
-                    self?.sysexManager.checkAndInstallAllIfNeeded(userInitiated: true, actionHandler: { _ in })
+
+                    if self?.propertiesManager.connectionProtocol.requiresSystemExtension == true {
+                        self?.sysexManager.checkAndInstallAllIfNeeded(userInitiated: true, actionHandler: { _ in })
+                    }
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })

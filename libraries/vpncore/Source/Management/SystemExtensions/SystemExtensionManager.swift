@@ -50,6 +50,8 @@ public enum SystemExtensionResult {
 
 public class SystemExtensionManager: NSObject {
     public static let allExtensionsInstalled = Notification.Name("SystemExtensionsAllInstalled")
+    public static let userCancelledTour = Notification.Name("UserCancelledSystemExtensionTour")
+
     static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 
     public typealias Factory = CoreAlertServiceFactory &
@@ -61,6 +63,10 @@ public class SystemExtensionManager: NSObject {
     private let alertService: CoreAlertService
     fileprivate let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
+
+    fileprivate var outstandingRequests: Set<SystemExtensionRequest> = []
+
+    private var userClosedTour = false
 
     private var userIsLoggedIn: Bool {
         (try? vpnKeychain.fetch()) != nil
@@ -75,6 +81,7 @@ public class SystemExtensionManager: NSObject {
     internal func request(_ request: SystemExtensionRequest) {
         log.info("Submitting request \(request.request.description) for \(request.request.identifier)")
 
+        outstandingRequests.insert(request)
         OSSystemExtensionManager.shared.submitRequest(request.request)
     }
 
@@ -172,12 +179,20 @@ public class SystemExtensionManager: NSObject {
             userActionRequiredHandler: { [unowned self] numberOfExtensionsToApprove in
             didRequireUserApproval = true
 
-            self.alertService.push(alert: SystemExtensionTourAlert(extensionsCount: numberOfExtensionsToApprove,
-                continueHandler: {
-                // onetodo: this can go away
-            }, cancelHandler: {
-                // alsotodo: this can go away
-            }))
+            let tour = SystemExtensionTourAlert(extensionsCount: numberOfExtensionsToApprove,
+                                                userWasShownTourBefore: userClosedTour,
+                                                cancelHandler: { [unowned self] in
+                // We use userClosedTour to show the user the right "step" of the tour, since
+                // if they make the tour pop up a second time within the same lifetime of the app,
+                // they aren't likely to get another "System Extension Blocked" message (since macOS
+                // will keep us from spamming it)
+                self.userClosedTour = true
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Self.userCancelledTour, object: nil)
+                }
+            })
+
+            self.alertService.push(alert: tour)
         }, installationFinishedHandler: { installationResults in
             var result: SystemExtensionResult = .alreadyThere
 
@@ -325,9 +340,13 @@ extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
         default:
             stateChangeCallback(.failed(sysextError))
         }
+
+        manager.outstandingRequests.remove(self)
     }
 
     public func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         stateChangeCallback(.succeeded(result))
+
+        manager.outstandingRequests.remove(self)
     }
 }

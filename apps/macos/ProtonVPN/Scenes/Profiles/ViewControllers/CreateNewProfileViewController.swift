@@ -62,6 +62,8 @@ final class CreateNewProfileViewController: NSViewController {
             typeList.indexOfSelectedItem != 0 ||
             countryList.indexOfSelectedItem != 0
     }
+
+    private var sysexTourCancelled: (() -> Void)?
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -291,6 +293,13 @@ final class CreateNewProfileViewController: NSViewController {
         viewModel.refreshSysexPending(for: originalIndex)
         refreshProtocolList(withSelectionAt: originalIndex)
 
+        sysexTourCancelled = { [weak self] in
+            guard let ikeIndex = self?.viewModel.vpnProtocolIndex(for: .ike) else {
+                return
+            }
+            self?.refreshProtocolList(withSelectionAt: ikeIndex)
+        }
+
         viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem) { [weak self] result in
             switch result {
             case .installed:
@@ -308,6 +317,10 @@ final class CreateNewProfileViewController: NSViewController {
                 break
             }
         }
+    }
+
+    @objc private func tourCancelled() {
+        sysexTourCancelled?()
     }
     
     @objc private func countrySelected() {
@@ -389,6 +402,8 @@ final class CreateNewProfileViewController: NSViewController {
         viewModel.secureCoreWarning = { [weak self] in self?.secureCoreWarning() }
         NotificationCenter.default.addObserver(self, selector: #selector(clearContent),
                                                name: viewModel.sessionFinished, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled),
+                                               name: SystemExtensionManager.userCancelledTour, object: nil)
     }
     
     private func prefillContent(_ profileInformation: PrefillInformation) {
