@@ -60,6 +60,7 @@ final class ConnectionSettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled), name: SystemExtensionManager.userCancelledTour, object: nil)
     }
     
     deinit {
@@ -232,29 +233,31 @@ final class ConnectionSettingsViewModel {
         
     @objc private func settingsChanged() {
         reloadNeeded?()
-    }    
+    }
+
+    @objc private func tourCancelled() {
+        reloadNeeded?()
+    }
     
     func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         let update = { (shouldReconnect: Bool) in
             self.sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
-                DispatchQueue.main.async { [unowned self] in
-                    self.sysexPending = false
+                self.sysexPending = false
 
-                    switch result {
-                    case .installed, .upgraded, .alreadyThere:
-                        self.propertiesManager.smartProtocol = true
-                        completion(.success)
-                        if shouldReconnect {
-                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
-                            self.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
-                        }
-                    case let .failed(error):
-                        completion(.failure(error))
+                switch result {
+                case .installed, .upgraded, .alreadyThere:
+                    self.propertiesManager.smartProtocol = true
+                    completion(.success)
+                    if shouldReconnect {
+                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                        self.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
                     }
+                case let .failed(error):
+                    completion(.failure(error))
+                }
 
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                        self?.reloadNeeded?()
-                    }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                    self?.reloadNeeded?()
                 }
             }
         }

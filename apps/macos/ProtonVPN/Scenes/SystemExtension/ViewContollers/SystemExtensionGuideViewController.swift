@@ -24,9 +24,6 @@ import Cocoa
 import vpncore
 
 final class SystemExtensionGuideViewController: NSViewController {
-        
-    @IBOutlet private weak var confirmationButton: PrimaryActionButton!
-    
     @IBOutlet private weak var titleView: NSTextField!
     @IBOutlet private weak var subtitleView: NSTextField!
     
@@ -91,10 +88,7 @@ final class SystemExtensionGuideViewController: NSViewController {
     private func setupViews() {
         titleView.stringValue = LocalizedString.sysexWizardTitle
         subtitleView.stringValue = LocalizedString.sysexWizardSubtitle
-        confirmationButton.title = LocalizedString.sysexWizardButton
-        confirmationButton.actionType = .confirmative
-        confirmationButton.isEnabled = true
-        
+
         let steps = viewModel.steps        
         for index in titles.indices {
             guard index < steps.count else {
@@ -133,10 +127,6 @@ final class SystemExtensionGuideViewController: NSViewController {
     
     @IBAction func previousAction(_ sender: Any) {
         viewModel.didTapPrevious()
-    }
-    
-    @IBAction func confirmButtonAction(_ sender: Any) {
-        viewModel.didTapAccept()
     }
     
     // MARK: - ViewModel callbacks

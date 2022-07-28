@@ -1666,12 +1666,14 @@
 "_sysex_wizard_step1_description_link" = "click here";
 
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Two dialogs will appear. Click on \"Open Security Preferences\".\nAlternatively, click here to open preferences.";
 
 /* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
 "_sysex_wizard_step1_title_1" = "Open Security Preferences";
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "A security dialog has appeared. Click on \"Open Security Preferences\".\nAlternatively, click here to open preferences.";
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Open System Preferences: click here.\nThen, go to the \"Security & Privacy\" pane.";
 
 /* System extension wizard in mac: Step nr.2 title */
 "_sysex_wizard_step2_title" = "Unlock to make changes";
@@ -1700,10 +1702,6 @@
 
 /* System extension wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "You’re now ready to use Proton VPN with the latest and fastest VPN technologies available!";
-/* System extension wizard in mac: Button */
-"_sysex_wizard_button" = "Begin configuration";
-
-
 
 
 // Cert based auth

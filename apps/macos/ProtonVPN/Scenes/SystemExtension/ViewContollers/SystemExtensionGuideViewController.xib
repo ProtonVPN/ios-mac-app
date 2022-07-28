@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SystemExtensionGuideViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
-                <outlet property="confirmationButton" destination="MBG-X6-r1F" id="iFy-kP-tUD"/>
                 <outlet property="imageDescription" destination="LEN-6y-HxU" id="4KU-Fc-blr"/>
                 <outlet property="imageView" destination="2Sf-nP-nbc" id="ULA-hD-GxI"/>
                 <outlet property="nextBtn" destination="jNI-jo-5Gr" id="zXm-0d-y8p"/>
@@ -387,15 +386,15 @@
                                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJl-iW-elh">
                                     <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
                                     <clipView key="contentView" drawsBackground="NO" id="5cG-08-uS5">
-                                        <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="385" height="80"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="LEN-6y-HxU" customClass="PVPNTextViewLink" customModule="ProtonVPN" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="385" height="80"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <size key="minSize" width="400" height="80"/>
+                                                <size key="minSize" width="385" height="80"/>
                                                 <size key="maxSize" width="400" height="10000000"/>
                                                 <attributedString key="textStorage">
                                                     <fragment>
@@ -421,7 +420,7 @@ Alternatively, click here to open the same settings._</string>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                     <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="KCM-gD-B6M">
-                                        <rect key="frame" x="384" y="0.0" width="16" height="80"/>
+                                        <rect key="frame" x="385" y="0.0" width="15" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                 </scrollView>
@@ -438,30 +437,9 @@ Alternatively, click here to open the same settings._</string>
                                 <constraint firstAttribute="width" constant="400" id="uLN-eO-NxB"/>
                             </constraints>
                         </customView>
-                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MBG-X6-r1F" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="391" y="48" width="200" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="Yvg-K1-0OG"/>
-                                <constraint firstAttribute="height" constant="40" id="kjZ-KG-tOw"/>
-                            </constraints>
-                            <buttonCell key="cell" type="bevel" title="_Begin manual configuration_" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="gwG-Ps-Zdh">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                    <real key="value" value="30"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="confirmButtonAction:" target="-2" id="S98-m8-ctZ"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="height" constant="740" id="2Rr-Pb-hlQ"/>
-                        <constraint firstAttribute="bottom" secondItem="MBG-X6-r1F" secondAttribute="bottom" constant="48" id="3bA-Lt-4ao"/>
-                        <constraint firstItem="MBG-X6-r1F" firstAttribute="centerX" secondItem="jNA-mD-boC" secondAttribute="centerX" id="BFx-La-qb4"/>
                         <constraint firstItem="hNx-Tb-i5F" firstAttribute="top" secondItem="jNA-mD-boC" secondAttribute="top" constant="64" id="ER7-FW-kQg"/>
                         <constraint firstAttribute="trailing" secondItem="hNx-Tb-i5F" secondAttribute="trailing" constant="240" id="Si8-gY-0C8"/>
                         <constraint firstItem="7rs-Su-G9W" firstAttribute="leading" secondItem="7D2-Jt-e4J" secondAttribute="trailing" constant="16" id="Y4c-0Q-Z2K"/>
