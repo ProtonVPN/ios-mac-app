@@ -73,7 +73,7 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
         
     func testSendBugReportWithError() {
             
-        let email = "success@email"
+        let email = "wrong@email"
         let description = "Description"
         
         bugReportRobot
