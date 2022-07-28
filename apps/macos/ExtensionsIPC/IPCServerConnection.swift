@@ -49,12 +49,6 @@ class XPCBaseService: NSObject {
 }
 
 extension XPCBaseService: ProviderCommunication {
-
-    func getVersion(_ completionHandler: @escaping (Data?) -> Void) {
-        log("getVersion: \(ExtensionInfo.current)")
-        completionHandler(try? JSONEncoder().encode(ExtensionInfo.current))
-    }
-
     func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
         log("This is just a placeholder! Add `getLogs` in each implementation.")
     }
@@ -62,7 +56,6 @@ extension XPCBaseService: ProviderCommunication {
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setCredentials` in each implementation.")
     }
-
 }
 
 extension XPCBaseService: NSXPCListenerDelegate {
