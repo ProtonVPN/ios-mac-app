@@ -107,9 +107,9 @@ class CertificateRefreshTests: XCTestCase {
         timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(storage: storage,
-                                         dataTaskFactory: dataTaskFactory,
                                          timerFactory: timerFactory,
-                                         keychain: keychain)
+                                         keychain: keychain,
+                                         dataTaskFactoryGetter: { [unowned self] in self.dataTaskFactory })
 
         self.manager = ExtensionCertificateRefreshManager(apiService: apiService,
                                                           timerFactory: timerFactory,

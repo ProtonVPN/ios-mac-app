@@ -109,9 +109,9 @@ final class ExtensionAPIService {
         }
     }
 
-    init(storage: Storage, dataTaskFactory: DataTaskFactory, timerFactory: TimerFactory, keychain: AuthKeychainHandle) {
+    init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
         self.storage = storage
-        self.dataTaskFactory = dataTaskFactory
+        self.dataTaskFactoryGetter = dataTaskFactoryGetter
         self.timerFactory = timerFactory
         self.keychain = keychain
     }
@@ -136,10 +136,12 @@ final class ExtensionAPIService {
 
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
-    private let dataTaskFactory: DataTaskFactory
+    private let dataTaskFactoryGetter: (() -> DataTaskFactory)
     private let timerFactory: TimerFactory
     private let keychain: AuthKeychainHandle
     private let appInfo = AppInfoImplementation(context: .wireGuardExtension)
+
+    var dataTaskFactory: DataTaskFactory { dataTaskFactoryGetter() }
 
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 
