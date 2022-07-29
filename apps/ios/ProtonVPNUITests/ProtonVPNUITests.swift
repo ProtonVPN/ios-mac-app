@@ -67,10 +67,6 @@ class ProtonVPNUITests: XCTestCase {
         login(withCredentials: credentials[2])
     }
     
-    func loginAsVisionaryUser() {
-        login(withCredentials: credentials[3])
-    }
-    
     func login(withCredentials credentials: Credentials) {
         let buttonQuickConnect = app.buttons["Quick Connect"]
         let plan = credentials.plan.replacingOccurrences(of: "ProtonVPN", with: "Proton VPN")
