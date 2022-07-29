@@ -13,9 +13,10 @@ import WireGuardKit
 import Logging
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    
+    private var timerFactory: TimerFactory!
     private var dataTaskFactory: DataTaskFactory!
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
+    private var killSwitchSettingObservation: NSKeyValueObservation!
 
     override init() {
         super.init()
@@ -25,15 +26,22 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                                                  storage: storage)
         let authKeychain = AuthKeychain(context: .wireGuardExtension)
 
-        let timerFactory = TimerFactoryImplementation()
-        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
-        // Used for testing purposes
-        // dataTaskFactory = URLSession.shared
+        self.timerFactory = TimerFactoryImplementation()
+
+        let dataTaskFactoryGetter = { [unowned self] in dataTaskFactory! }
+
+        if #available(iOSApplicationExtension 14.0, *) {
+            killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
+                wg_log(.info, message: "Kill Switch configuration changed.")
+                self.setDataTaskFactoryAccordingToKillSwitchSettings()
+            }
+        }
+        self.setDataTaskFactory(sendThroughTunnel: true)
 
         let apiService = ExtensionAPIService(storage: storage,
-                                             dataTaskFactory: dataTaskFactory,
                                              timerFactory: timerFactory,
-                                             keychain: authKeychain)
+                                             keychain: authKeychain,
+                                             dataTaskFactoryGetter: dataTaskFactoryGetter)
 
         certificateRefreshManager = ExtensionCertificateRefreshManager(apiService: apiService,
                                                                        timerFactory: timerFactory,
@@ -44,6 +52,32 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")
+    }
+
+    /// NetworkExtension appears to have a bug where connections sent through the tunnel time out
+    /// if the user is using KillSwitch (i.e., `includeAllNetworks`). Ironically, the best thing for
+    /// this is to *not* send API requests through the VPN if the user has opted for KillSwitch.
+    private func setDataTaskFactoryAccordingToKillSwitchSettings() {
+        guard #available(iOSApplicationExtension 14.0, *) else {
+            setDataTaskFactory(sendThroughTunnel: true)
+            return
+        }
+
+        guard !self.protocolConfiguration.includeAllNetworks else {
+            setDataTaskFactory(sendThroughTunnel: false)
+            return
+        }
+
+        setDataTaskFactory(sendThroughTunnel: true)
+    }
+
+    private func setDataTaskFactory(sendThroughTunnel: Bool) {
+        wg_log(.info, message: "Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
+
+        dataTaskFactory = !sendThroughTunnel ?
+                URLSession.shared :
+                ConnectionTunnelDataTaskFactory(provider: self,
+                                                timerFactory: timerFactory)
     }
 
     private func connectionEstablished() {
@@ -66,6 +100,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         
         // Use shared defaults to get cert features that were set in the app
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
+
+        setDataTaskFactoryAccordingToKillSwitchSettings()
 
         #if FREQUENT_AUTH_CERT_REFRESH
         CertificateConstants.certificateDuration = "30 minutes"
