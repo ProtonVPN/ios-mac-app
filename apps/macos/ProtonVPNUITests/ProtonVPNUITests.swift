@@ -60,10 +60,6 @@ class ProtonVPNUITests: XCTestCase {
     func loginAsPlusUser() {
         login(withCredentials: credentials[2])
     }
-      
-    func loginAsVisionaryUser() {
-        login(withCredentials: credentials[3])
-    }
 
     func login(withCredentials credentials: Credentials) {
         

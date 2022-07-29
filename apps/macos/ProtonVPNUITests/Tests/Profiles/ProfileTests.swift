@@ -146,5 +146,11 @@ class ProfileTests: ProtonVPNUITests {
             .closeProfilesOverview()
             .quickConnectToAServer()
             .verify.checkUpsellModalIsOpen()
+            .closeUpsellModal()
+        mainRobot
+            .openAppSettings()
+            .connectionTabClick()
+            .selectQuickConnect("￼  " + name)
+            .selectProfile(qcFastest)
     }
 }
