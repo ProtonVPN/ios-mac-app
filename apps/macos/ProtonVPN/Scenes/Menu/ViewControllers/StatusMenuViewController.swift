@@ -32,6 +32,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     let viewModel: StatusMenuViewModel
     
+    @IBOutlet private weak var backgroundView: NSView!
     @IBOutlet private weak var contentView: NSStackView!
     @IBOutlet private weak var dynamicContentView: NSStackView!
     @IBOutlet private weak var loginLabel: NSTextField!
@@ -101,8 +102,6 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     private func initialViewSetup() {        
         view.wantsLayer = true
         
-        let cornerRadius: CGFloat = 8
-        
         if let visualEffectView = view as? ClickDetectingVisualEffectView {
             visualEffectView.clickAction = { [weak self] in
                 guard let self = self else {
@@ -117,24 +116,6 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                     self.hideProfilesList()
                 }
             }
-            
-            visualEffectView.material = .windowBackground
-            
-            let maskImage = NSImage(size: view.bounds.size, flipped: false) { rect in
-                let path = NSBezierPath()
-                path.move(to: CGPoint(x: rect.origin.x, y: rect.size.height))
-                path.appendArc(withCenter: CGPoint(x: rect.origin.x + cornerRadius, y: rect.origin.y + cornerRadius), radius: cornerRadius, startAngle: 180, endAngle: 270, clockwise: false)
-                path.appendArc(withCenter: CGPoint(x: rect.size.width - cornerRadius, y: rect.origin.y + cornerRadius), radius: cornerRadius, startAngle: 270, endAngle: 0, clockwise: false)
-                path.line(to: CGPoint(x: rect.size.width, y: rect.size.height))
-                path.close()
-
-                let bezierPath = path
-                NSColor.color(.background).set()
-                bezierPath.fill()
-                return true
-            }
-            maskImage.capInsets = NSEdgeInsets(top: cornerRadius, left: cornerRadius, bottom: cornerRadius, right: cornerRadius)
-            visualEffectView.maskImage = maskImage
         }
         
         loginLabel.attributedStringValue = viewModel.loginDescription
@@ -153,6 +134,8 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         dynamicContentView.layer?.backgroundColor = .cgColor(.background)
         footerView.wantsLayer = true
         footerView.layer?.backgroundColor = .cgColor(.background)
+        backgroundView.wantsLayer = true
+        backgroundView.layer?.backgroundColor = .cgColor(.background)
     }
         
     private func setupSecureCoreSection() {
