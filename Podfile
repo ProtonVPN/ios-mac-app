@@ -40,7 +40,7 @@ def vpn_core
     # Checks code style and bad practices
     pod 'SwiftLint', '0.46.5'
 
-    pod 'SwiftGen', '~> 6.0'
+    pod 'SwiftGen', '~> 6.5'
 
     # Certificates pinning
     pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'

@@ -145,7 +145,7 @@ PODS:
   - Sentry (7.16.0):
     - Sentry/Core (= 7.16.0)
   - Sentry/Core (7.16.0)
-  - SwiftGen (6.4.0)
+  - SwiftGen (6.5.1)
   - SwiftLint (0.46.5)
   - SwiftyBeaver (1.9.5)
   - TrustKit (1.7.0)
@@ -204,7 +204,7 @@ DEPENDENCIES:
   - ReachabilitySwift (= 5.0.0)
   - SDWebImage (= 5.10.0)
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `7.16.0`)
-  - SwiftGen (~> 6.0)
+  - SwiftGen (~> 6.5)
   - SwiftLint (= 0.46.5)
   - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
   - "TunnelKit (from `git@gitlab.protontech.ch:apple/vpn/tunnelkit.git`, branch `develop`)"
@@ -446,12 +446,12 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 8045e58d18a62583325aa4a661262fdea799abb1
-  SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
+  SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   SwiftLint: 2c16e8fa99dac2e440dc0c70ea74d2532048f6cf
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 622cf14653e0a29cb55d6771fa465877bbaabf01
+PODFILE CHECKSUM: 1fead88d04dfc193b64e0587f7d95a5f7018c3d9
 
 COCOAPODS: 1.11.3
