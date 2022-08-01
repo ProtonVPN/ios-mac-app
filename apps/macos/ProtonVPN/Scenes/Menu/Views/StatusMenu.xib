@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="StatusMenuViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="backgroundView" destination="dz8-NE-cWh" id="ix5-Wv-MOG"/>
                 <outlet property="cancelConnectionButton" destination="kBn-HF-fRD" id="Yzd-9c-Far"/>
                 <outlet property="connectButton" destination="V73-4C-3dg" id="X7H-2U-fSe"/>
                 <outlet property="connectionLabel" destination="w1C-eT-cdk" id="9w5-Jn-Ezq"/>
@@ -39,6 +40,9 @@
             <rect key="frame" x="0.0" y="0.0" width="300" height="530"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="dz8-NE-cWh">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="530"/>
+                </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TGe-8v-bdJ">
                     <rect key="frame" x="132" y="257" width="37" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="BJE-OK-BvX">
@@ -325,16 +329,20 @@
                 <constraint firstItem="TGe-8v-bdJ" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="2Qs-mQ-eps"/>
                 <constraint firstItem="3jG-Pa-qhh" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="2w8-xi-4c0"/>
                 <constraint firstItem="qCN-hu-XJV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="8oB-7W-94X"/>
+                <constraint firstAttribute="bottom" secondItem="dz8-NE-cWh" secondAttribute="bottom" id="GYE-3a-67W"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qCN-hu-XJV" secondAttribute="trailing" constant="10" id="JCx-A6-9oy"/>
                 <constraint firstAttribute="bottom" secondItem="cHq-1N-vjY" secondAttribute="bottom" id="MQw-Kr-rfj"/>
                 <constraint firstItem="cHq-1N-vjY" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="OZc-wh-bJd"/>
                 <constraint firstItem="TGe-8v-bdJ" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="XGG-Gx-vj3"/>
                 <constraint firstItem="qCN-hu-XJV" firstAttribute="centerY" secondItem="gAI-kn-mXB" secondAttribute="centerY" id="akF-bj-W8q"/>
                 <constraint firstItem="3jG-Pa-qhh" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="bWb-xn-7ir"/>
+                <constraint firstItem="dz8-NE-cWh" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="dlE-jf-Cjj"/>
                 <constraint firstAttribute="trailing" secondItem="cHq-1N-vjY" secondAttribute="trailing" id="eOb-uy-DbT"/>
                 <constraint firstItem="cHq-1N-vjY" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="gdr-0k-VyF"/>
                 <constraint firstAttribute="trailing" secondItem="3jG-Pa-qhh" secondAttribute="trailing" constant="10" id="mUS-i3-ahF"/>
+                <constraint firstAttribute="trailing" secondItem="dz8-NE-cWh" secondAttribute="trailing" id="om6-M2-Vg4"/>
                 <constraint firstItem="qCN-hu-XJV" firstAttribute="centerX" secondItem="gAI-kn-mXB" secondAttribute="centerX" id="uT9-ue-bud"/>
+                <constraint firstItem="dz8-NE-cWh" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="vYj-ny-sJf"/>
                 <constraint firstItem="3jG-Pa-qhh" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="wlY-6p-gpf"/>
             </constraints>
             <point key="canvasLocation" x="245" y="31"/>
