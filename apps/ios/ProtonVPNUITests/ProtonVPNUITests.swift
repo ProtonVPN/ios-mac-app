@@ -98,7 +98,7 @@ class ProtonVPNUITests: XCTestCase {
             return
         }
         else {
-            changeEnvToProdIfNedded()
+            changeEnvToProdIfNeeded()
             openLoginScreen()
             loginAsPlusUser()
         }
@@ -130,7 +130,7 @@ class ProtonVPNUITests: XCTestCase {
         app.buttons["OK"].tap()
      }
     
-    func changeEnvToBlackIfNedded() {
+    func changeEnvToBlackIfNeeded() {
         let env = app.staticTexts[ObfuscatedConstants.blackDefaultHost + ObfuscatedConstants.blackDefaultPath]
         
         if env.waitForExistence(timeout: 10){
@@ -142,7 +142,7 @@ class ProtonVPNUITests: XCTestCase {
         }
     }
     
-    func changeEnvToProdIfNedded() {
+    func changeEnvToProdIfNeeded() {
         let env = app.staticTexts["https://api.protonvpn.ch"]
         
         if env.waitForExistence(timeout: 10){
@@ -157,9 +157,9 @@ class ProtonVPNUITests: XCTestCase {
     func skipOnboarding() -> OnboardingRobot {
         
         onboardingRobot.skipOnboarding()
-        let elementclose = app.buttons["CloseButton"]
+        let elementClose = app.buttons["CloseButton"]
         
-        if elementclose.exists {
+        if elementClose.exists {
             return onboardingRobot
                 .closeOnboardingScreen()
                 .skipOnboarding()

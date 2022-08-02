@@ -21,7 +21,7 @@ import XCTest
 
 fileprivate let createProfileTitleId = "Profiles Overview"
 fileprivate let createProfileButton = "Create Profile"
-fileprivate let fastesButton = "Fastest"
+fileprivate let fastestButton = "Fastest"
 fileprivate let randomButton = "Random"
 fileprivate let editButton = "Edit"
 fileprivate let deleteButton = "Delete"

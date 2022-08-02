@@ -72,7 +72,7 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
     
         logoutIfNeeded()
-        changeEnvToProdIfNedded()
+        changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsFreeUser()
         mainRobot
@@ -88,7 +88,7 @@ class ProfilesTests: ProtonVPNUITests {
         let serverVia = "Iceland"
         
         logoutIfNeeded()
-        changeEnvToProdIfNedded()
+        changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsPlusUser()
         mainRobot

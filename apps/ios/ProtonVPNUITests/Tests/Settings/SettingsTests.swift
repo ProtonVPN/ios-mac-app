@@ -28,7 +28,7 @@ class SettingsTests: ProtonVPNUITests {
             .verify.lanConnectionIsEnabled()
     }
     
-    func testSmartProtocolnOffAndOn() {
+    func testSmartProtocolOffAndOn() {
         
         mainRobot
             .goToSettingsTab()
