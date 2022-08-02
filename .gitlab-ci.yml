@@ -478,11 +478,10 @@ ios_ui_tests:
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   rules:
-#  Bring this back after UI tests flakiness is fixed
-#    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#      when: always
-#    - if: $CI_COMMIT_BRANCH == "develop"
-#      when: always
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   when: manual
   artifacts:
@@ -643,11 +642,10 @@ macos_ui_tests:
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
     - fastlane delete_macos_keychain
   rules:
-#  Bring this back after UI tests flakiness is fixed
-#    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-#      when: always
-#    - if: $CI_COMMIT_BRANCH == "develop"
-#      when: always
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
     - when: manual
   tags:
     - macOS_ARM
