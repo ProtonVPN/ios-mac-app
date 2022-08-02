@@ -33,8 +33,8 @@ class ReportBugTests: ProtonVPNUITests {
             .fillBugReportForm(email, message)
             .sendBugReport()
             .verify.bugReportIsSent()
-            .closeBugReporForm()
-            .verify.bugReporFormIsClosed()
+            .closeBugReportForm()
+            .verify.bugReportFormIsClosed()
     }
     
     func testSendBugReportWithInvalidEmail() {
@@ -60,6 +60,6 @@ class ReportBugTests: ProtonVPNUITests {
             .openReportBugWindow()
             .fillBugReportForm(email, message)
             .sendBugReport()
-            .verify.addMoreDetailsdMessagIsShown()
+            .verify.addMoreDetailsMessageIsShown()
     }
 }

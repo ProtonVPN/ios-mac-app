@@ -28,7 +28,7 @@ class SettingsTests: ProtonVPNUITests {
          super.setUp()
      }
     
-    func testNavigateThrouthSettings() {
+    func testNavigateThroughSettings() {
         
         logInIfNeeded()
         mainRobot

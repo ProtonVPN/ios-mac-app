@@ -13,11 +13,11 @@ fileprivate let nameField = "Enter Profile Name"
 fileprivate let countryField = "Select Country"
 fileprivate let countryButton = "Country"
 fileprivate let serverField = "Select Server"
-fileprivate let fastesServer = "  Fastest"
+fileprivate let fastestServer = "  Fastest"
 fileprivate let saveProfileButton = "Save"
 fileprivate let tabBars = "Profiles"
 fileprivate let secureCoreToggle = "Secure Core"
-fileprivate let defaultprofileToggle = "Make Default Profile"
+fileprivate let defaultProfileToggle = "Make Default Profile"
 fileprivate let upsellSecureCore = "Double the encryption with Secure Core"
 fileprivate let okButton = "OK"
 
@@ -117,7 +117,7 @@ class CreateProfileRobot: CoreElements {
     }
     
     private func defaultProfileON() -> CreateProfileRobot {
-        swittch(defaultprofileToggle).tap()
+        swittch(defaultProfileToggle).tap()
         return self
     }
     

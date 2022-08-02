@@ -17,9 +17,9 @@ fileprivate let tabQCInactive = "quick connect inactive button"
 fileprivate let tabQCActive = "quick connect active button"
 fileprivate let secureCore = "Use Secure Core"
 fileprivate let statusNotConnected = "Not Connected"
-fileprivate let upgradeSubscribtionTitle = "Upgrade Subscription"
-fileprivate let popUpforFreeUser = "Plus or Visionary subscription required"
-fileprivate let popUpforBasicUser = "Upgrade Unavailable in App"
+fileprivate let upgradeSubscriptionTitle = "Upgrade Subscription"
+fileprivate let popUpForFreeUser = "Plus or Visionary subscription required"
+fileprivate let popUpForBasicUser = "Upgrade Unavailable in App"
 fileprivate let buttonOk = "OK"
 fileprivate let buttonCancel = "Cancel"
 fileprivate let buttonAccount = "Account"
@@ -55,18 +55,18 @@ class MainRobot: CoreElements {
         return SettingsRobot()
     }
     
-    func quickConnectViaQCbutton() -> ConnectionStatusRobot {
+    func quickConnectViaQCButton() -> ConnectionStatusRobot {
         button(tabQCInactive).tap()
         return ConnectionStatusRobot()
     }
     
-    func backToPreviouseTab<T: CoreElements>(robot _: T.Type, _ name: String) -> T {
+    func backToPreviousTab<T: CoreElements>(robot _: T.Type, _ name: String) -> T {
         button(name).byIndex(0).tap()
         return T()
     }
     
     @discardableResult
-    func quickDisconnectViaQCbutton() -> ConnectionStatusRobot {
+    func quickDisconnectViaQCButton() -> ConnectionStatusRobot {
         button(tabQCActive).tap()
         return ConnectionStatusRobot()
     }
@@ -110,14 +110,14 @@ class MainRobot: CoreElements {
         }
     
         @discardableResult
-        func upgradeSubscribtionIsOpenFreeUser() -> MainRobot {
-            staticText(upgradeSubscribtionTitle).checkExists()
+        func upgradeSubscriptionIsOpenFreeUser() -> MainRobot {
+            staticText(upgradeSubscriptionTitle).checkExists()
             return MainRobot()
         }
     
         @discardableResult
-        func upgradeSubscribtionIsOpenBasicUser() -> MainRobot {
-            staticText(popUpforBasicUser).checkExists()
+        func upgradeSubscriptionIsOpenBasicUser() -> MainRobot {
+            staticText(popUpForBasicUser).checkExists()
             return MainRobot()
         }
     }

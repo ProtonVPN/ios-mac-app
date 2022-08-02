@@ -10,7 +10,7 @@ import pmtest
 import XCTest
 
 fileprivate let headerTitle = "Settings"
-fileprivate let reportBugtButton = "Report Bug"
+fileprivate let reportBugButton = "Report Bug"
 fileprivate let protocolButton = "Protocol"
 fileprivate let killSwitchButton = "Kill Switch"
 fileprivate let killSwitchAlert = "Turn Kill Switch on?"
@@ -26,7 +26,7 @@ class SettingsRobot: CoreElements {
     let verify = Verify()
     
     func openReportBugWindow() -> ReportBugRobot {
-        button(reportBugtButton).tap()
+        button(reportBugButton).tap()
         return ReportBugRobot()
     }
     
@@ -85,7 +85,7 @@ class SettingsRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func bugReporFormIsClosed() -> SettingsRobot {
+        func bugReportFormIsClosed() -> SettingsRobot {
             staticText(headerTitle).wait().checkExists()
             return SettingsRobot()
         }

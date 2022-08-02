@@ -47,12 +47,12 @@ class ProfileRobot: CoreElements {
         return MainRobot()
     }
     
-    func connectToAFastesServer() -> MainRobot {
+    func connectToAFastestServer() -> MainRobot {
         staticText(fastestProfile).tap()
         return MainRobot()
     }
     
-    func disconnectFromAFastesServer() -> MainRobot {
+    func disconnectFromAFastestServer() -> MainRobot {
         staticText(fastestProfile).tap()
         return MainRobot()
     }

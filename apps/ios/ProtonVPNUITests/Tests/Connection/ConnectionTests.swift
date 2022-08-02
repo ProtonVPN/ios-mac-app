@@ -26,13 +26,13 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Netherlands"
 
         logoutIfNeeded()
-        changeEnvToProdIfNedded()
+        changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsFreeUser()
         mainRobot
-            .quickConnectViaQCbutton()
+            .quickConnectViaQCButton()
             .verify.connectedToAServer(countryName)
-            .quickDisconnectViaQCbutton()
+            .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
     }
     
@@ -46,7 +46,7 @@ class ConnectionTests: ProtonVPNUITests {
             .goToCountriesTab()
             .connectToAserver()
             .verify.connectedToAServer(countryName)
-            .backToPreviouseTab(robot: CountryListRobot.self, back)
+            .backToPreviousTab(robot: CountryListRobot.self, back)
             .diconnectViaCountry()
             .verify.connectionStatusNotConnected()
     }
@@ -62,7 +62,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.serverListIsOpen(countryName)
             .connectToAServerViaServer()
             .verify.connectedToAServer(countryName)
-            .backToPreviouseTab(robot: ServerListRobot.self, countryName)
+            .backToPreviousTab(robot: ServerListRobot.self, countryName)
             .verify.serverListIsOpen(countryName)
             .disconectFromAServerViaServer()
             .verify.connectionStatusNotConnected()
@@ -78,7 +78,7 @@ class ConnectionTests: ProtonVPNUITests {
             .goToMapTab()
             .selectCountryAndConnect()
             .verify.connectedToAServer(countryName)
-            .backToPreviouseTab(robot: MapRobot.self, map)
+            .backToPreviousTab(robot: MapRobot.self, map)
             .selectCountryAndDisconnect()
             .verify.connectionStatusNotConnected()
     }
@@ -98,7 +98,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.profileIsCreated()
             .connectToAProfile(profilename)
             .verify.connectedToAServer(countryName)
-            .backToPreviouseTab(robot: ProfileRobot.self, back)
+            .backToPreviousTab(robot: ProfileRobot.self, back)
             .disconnectFromAProfile()
             .verify.connectionStatusNotConnected()
     }
@@ -110,15 +110,15 @@ class ConnectionTests: ProtonVPNUITests {
         logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
-            .connectToAFastesServer()
+            .connectToAFastestServer()
             .verify.qcButtonConnected()
-            .backToPreviouseTab(robot: ProfileRobot.self, back)
-            .disconnectFromAFastesServer()
+            .backToPreviousTab(robot: ProfileRobot.self, back)
+            .disconnectFromAFastestServer()
             .verify.qcButtonDisconnected()
-            .backToPreviouseTab(robot: ProfileRobot.self, back)
+            .backToPreviousTab(robot: ProfileRobot.self, back)
             .connectToARandomServer()
             .verify.qcButtonConnected()
-            .backToPreviouseTab(robot: ProfileRobot.self, back)
+            .backToPreviousTab(robot: ProfileRobot.self, back)
             .disconnectFromARandomServer()
             .verify.qcButtonDisconnected()
     }
@@ -138,10 +138,10 @@ class ConnectionTests: ProtonVPNUITests {
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
         mainRobot
-            .quickConnectViaQCbutton()
+            .quickConnectViaQCButton()
             .verify.connectedToASCServer(status)
             .verify.connectedToAProfile()
-            .quickDisconnectViaQCbutton()
+            .quickDisconnectViaQCButton()
         }
     
     func testConnectToAPlusServerWithFreeUser() {
@@ -149,13 +149,13 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Ukraine"
         
         logoutIfNeeded()
-        changeEnvToProdIfNedded()
+        changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsFreeUser()
         mainRobot
             .goToCountriesTab()
             .connectToAPlusCountry(countryName)
-            .verify.upgradeSubscribtionIsOpenFreeUser()
+            .verify.upgradeSubscriptionIsOpenFreeUser()
     }
     
     func testConnectToAPlusServerWithBasicUser() {
@@ -164,14 +164,14 @@ class ConnectionTests: ProtonVPNUITests {
         let serverName = "UA#12"
         
         logoutIfNeeded()
-        changeEnvToProdIfNedded()
+        changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsBasicUser()
         mainRobot
             .goToCountriesTab()
             .openServerList(countryName)
             .connectToAPlusServer(serverName)
-            .verify.upgradeSubscribtionIsOpenBasicUser()
+            .verify.upgradeSubscriptionIsOpenBasicUser()
     }
     
     func testLogoutWhileConnectedToVPNServer() {

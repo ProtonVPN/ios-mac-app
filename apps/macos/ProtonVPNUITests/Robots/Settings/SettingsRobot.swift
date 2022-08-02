@@ -137,7 +137,7 @@ class SettingsRobot {
         @discardableResult
         func checkModalIsOpen() -> SettingsRobot {
             XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: 5))
-            XCTAssert(app.staticTexts[modalDescribtion].waitForExistence(timeout: 5))
+            XCTAssert(app.staticTexts[modalDescription].waitForExistence(timeout: 5))
             return SettingsRobot()
         }
         

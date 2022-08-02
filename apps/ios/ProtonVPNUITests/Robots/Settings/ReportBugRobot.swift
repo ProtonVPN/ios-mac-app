@@ -12,10 +12,9 @@ import XCTest
 fileprivate let vpnLogsSwitch = "vpn logs"
 fileprivate let contactEmailInput = "Contact email"
 fileprivate let yourMessageInput = "Your message..."
-fileprivate let reportMessaheTitle = "REPORT MESSAGE"
 fileprivate let sendReportButton = "Send Report"
 fileprivate let invalidEmailMessage = "Invalid email address"
-fileprivate let addMoreDetailsdMessage = "Please add more detail to your submission"
+fileprivate let addMoreDetailsMessage = "Please add more details to your submission"
 fileprivate let bugReportSuccessMessage = "Thank you for your report"
 fileprivate let okButton = "OK"
 
@@ -34,7 +33,7 @@ class ReportBugRobot: CoreElements {
         return ReportBugRobot()
     }
     
-    func closeBugReporForm() -> SettingsRobot {
+    func closeBugReportForm() -> SettingsRobot {
         button(okButton).tap()
         return SettingsRobot()
     }
@@ -63,8 +62,8 @@ class ReportBugRobot: CoreElements {
         }
         
         @discardableResult
-        func addMoreDetailsdMessagIsShown() -> ReportBugRobot {
-            staticText(addMoreDetailsdMessage).wait().checkExists()
+        func addMoreDetailsMessageIsShown() -> ReportBugRobot {
+            staticText(addMoreDetailsMessage).wait().checkExists()
             return ReportBugRobot()
         }
     }

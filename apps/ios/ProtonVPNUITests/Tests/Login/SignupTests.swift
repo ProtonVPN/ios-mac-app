@@ -42,7 +42,7 @@ class SignupTests: ProtonVPNUITests {
         
         let email = "vpnfree"
         
-        changeEnvToBlackIfNedded()
+        changeEnvToBlackIfNeeded()
         useAndContinueTap()
         mainRobot
             .showSignup()
@@ -61,7 +61,7 @@ class SignupTests: ProtonVPNUITests {
         let code = "666666"
         let plan = "Proton VPN Free"
 
-        changeEnvToBlackIfNedded()
+        changeEnvToBlackIfNeeded()
         useAndContinueTap()
         mainRobot
             .showSignup()
@@ -90,7 +90,7 @@ class SignupTests: ProtonVPNUITests {
         let password = StringUtils().randomAlphanumericString(length: 8)
         let plan = "Proton VPN Free"
     
-        changeEnvToBlackIfNedded()
+        changeEnvToBlackIfNeeded()
         useAndContinueTap()
         mainRobot
             .showSignup()
@@ -104,7 +104,7 @@ class SignupTests: ProtonVPNUITests {
             .enterPassword(password)
             .enterRepeatPassword(password)
             .nextButtonTap(robot: PaymentsRobot.self)
-            .verify.subscribtionScreenIsShown()
+            .verify.subscriptionScreenIsShown()
     }
     
     func testSignupExistingExternalAccount() {
@@ -112,7 +112,7 @@ class SignupTests: ProtonVPNUITests {
         let email = "vpnfree@gmail.com"
         let code = "666666"
         
-        changeEnvToBlackIfNedded()
+        changeEnvToBlackIfNeeded()
         useAndContinueTap()
         mainRobot
             .showSignup()
@@ -122,7 +122,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.accountVerificationScreenIsShown()
             .enterVerificationCode(code)
             .nextButtonTap(robot: LoginRobot.self)
-            .verify.emailAddresAlreadyExists()
+            .verify.emailAddressAlreadyExists()
             .verify.loginScreenIsShown()
     }
 }

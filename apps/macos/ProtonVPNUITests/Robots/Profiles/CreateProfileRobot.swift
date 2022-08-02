@@ -24,7 +24,7 @@ let app = XCUIApplication()
 fileprivate let createProfileTitleId = "Profiles Overview"
 fileprivate let createProfileTab = "CreateNewProfileButton"
 fileprivate let profileNameTextField = "NameTextField"
-fileprivate let featureStandart = "Standard"
+fileprivate let featureStandard = "Standard"
 fileprivate let featureSC = "Secure Core"
 fileprivate let featureP2P = "P2P"
 fileprivate let featureTor = "TOR"
@@ -43,10 +43,10 @@ fileprivate let errorMessageEnterName = "Please enter a name"
 fileprivate let errorMessageSelectServerAndCountry = "Please select a country, Please select a server"
 fileprivate let errorMessageSelectCountry = "Please select a country"
 fileprivate let errorMessageSelectServer = "Please select a server"
-fileprivate let errorMessageMaxNameLenght = "Maximum profile name length is 25 characters"
+fileprivate let errorMessageMaxNameLength = "Maximum profile name length is 25 characters"
 fileprivate let errorMessage = "ErrorMessage"
-fileprivate let cancelProfileModalTtitle = "Create Profile"
-fileprivate let cancelProfileDescribtion = "By continuing, current selection will be lost. Do you want to continue?"
+fileprivate let cancelProfileModalTitle = "Create Profile"
+fileprivate let cancelProfileDescription = "By continuing, current selection will be lost. Do you want to continue?"
 
 class CreateProfileRobot {
     
@@ -102,7 +102,7 @@ class CreateProfileRobot {
     }
 
     private func selectFeature() -> CreateProfileRobot {
-        app.popUpButtons[featureStandart].click()
+        app.popUpButtons[featureStandard].click()
         return CreateProfileRobot()
     }
         
@@ -206,8 +206,8 @@ class CreateProfileRobot {
             
         @discardableResult
         func checkModalIsOpen() -> CreateProfileRobot {
-            XCTAssert(app.staticTexts[cancelProfileModalTtitle].waitForExistence(timeout: 1))
-            XCTAssert(app.staticTexts[cancelProfileDescribtion].waitForExistence(timeout: 1))
+            XCTAssert(app.staticTexts[cancelProfileModalTitle].waitForExistence(timeout: 1))
+            XCTAssert(app.staticTexts[cancelProfileDescription].waitForExistence(timeout: 1))
             return CreateProfileRobot()
         }
     }
