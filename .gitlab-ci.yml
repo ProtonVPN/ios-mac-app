@@ -37,7 +37,7 @@ code_quality:
     reports:
       codequality: codequality_report.json
   script:    
-    - fastlane/code_quality.sh
+    - scripts/code_quality.sh
   tags:
     - iOS_ARM
   rules:
@@ -261,7 +261,7 @@ core_ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
-    - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
+    - scripts/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-ios.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
@@ -293,7 +293,7 @@ bugreport_unit_tests:
     - $XCODE_PATH/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-cov export -instr-profile=.build/$ARCH-apple-macosx/debug/codecov/default.profdata .build/$ARCH-apple-macosx/debug/BugReportPackageTests.xctest/Contents/MacOS/BugReportPackageTests -format=lcov > ../../fastlane/test_output/BugReport.lcov
     - cd -
     - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/BugReport.lcov -o fastlane/test_output/BugReport.xml
-    - Scripts/print-coverage-cobertura.sh fastlane/test_output/BugReport.xml
+    - scripts/print-coverage-cobertura.sh fastlane/test_output/BugReport.xml
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
@@ -319,7 +319,7 @@ review_unit_tests:
     - $XCODE_PATH/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-cov export -instr-profile=.build/$ARCH-apple-macosx/debug/codecov/default.profdata .build/$ARCH-apple-macosx/debug/ReviewPackageTests.xctest/Contents/MacOS/ReviewPackageTests -format=lcov > ../../fastlane/test_output/Review.lcov
     - cd -
     - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/Review.lcov -o fastlane/test_output/Review.xml
-    - Scripts/print-coverage-cobertura.sh fastlane/test_output/Review.xml
+    - scripts/print-coverage-cobertura.sh fastlane/test_output/Review.xml
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
@@ -339,7 +339,7 @@ search_ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_search_test
-    - fastlane/print-coverage.sh fastlane/test_output/Search.xcresult Search 1
+    - scripts/print-coverage.sh fastlane/test_output/Search.xcresult Search 1
     - xcrun xccov view --report --json fastlane/test_output/Search.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
@@ -365,7 +365,7 @@ modals_ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
-    - fastlane/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
+    - scripts/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
     - xcrun xccov view --report --json fastlane/test_output/Modals.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
@@ -392,7 +392,7 @@ core_macos_unit_tests:
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - fastlane create_macos_keychain
     - fastlane macos_core_test
-    - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
+    - scripts/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-macos.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script: # Cleanup
@@ -417,8 +417,8 @@ wireguard_unit_tests:
     - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/ios/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane wireguard_networkextension_tests
     - xcrun xccov view --report --json fastlane/test_output/WireGuardNetworkExtensionTests.xcresult > coverage.json
@@ -441,11 +441,11 @@ ios_unit_tests:
     - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/ios/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_unit_test
-    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
     - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-iOS.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script:
@@ -470,11 +470,11 @@ ios_ui_tests:
     - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/ios/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_ui_test
-    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   rules:
@@ -549,7 +549,7 @@ ios_bugreport_ui_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_bugreport_ui_test
-    - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
+    - scripts/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   rules:
@@ -569,7 +569,7 @@ macos_bugreport_ui_tests:
     - macOS_ARM
   script:
     - fastlane macos_bugreport_ui_test
-    - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
+    - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
@@ -585,8 +585,8 @@ macos_unit_tests:
   dependencies: []
   stage: apps_unit_tests
   script:
-    - cd apps/macos/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/macos/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
@@ -594,7 +594,7 @@ macos_unit_tests:
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
     - fastlane create_macos_keychain
     - fastlane macos_app_unit_test
-    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
+    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
     - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-macOS.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script: # Cleanup
@@ -627,8 +627,8 @@ macos_ui_tests:
   dependencies: []
   stage: apps_ui_tests
   script:
-    - cd apps/macos/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/macos/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
@@ -636,7 +636,7 @@ macos_ui_tests:
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
     - fastlane create_macos_keychain
     - fastlane macos_app_ui_test
-    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
+    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
   after_script: # Cleanup
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
@@ -673,13 +673,13 @@ ios_testflight_internal:
   script:
     - fastlane sigh download_all --download_xcode_profiles
     - export atlasSecret="static let atlasSecret = \"`(curl $ATLAS_TOKEN_URL)`\""
-    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - export NEW_BUILD_NUMBER=$(./fastlane/generate_build_number.sh)
+    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - export NEW_BUILD_NUMBER=$(./scripts/generate_build_number.sh)
     - echo $NEW_BUILD_NUMBER
     - export CHANGELOG=$(git log $(git tag -l 'ios/beta/*' --sort=-version:refname:strip=2 | head -n 1)..HEAD --pretty="format:- %s" -- . ':(exclude)apps/macos*')
     - echo $CHANGELOG
     - fastlane ios_internal_beta changelog:"$CHANGELOG"
-    - ./fastlane/add_git_tag.sh
+    - ./scripts/add_git_tag.sh
     - fastlane delete_ios_keychain ## Re-create keychain to have less problems
     - fastlane create_ios_keychain
     - fastlane ios_internal_beta changelog:"$CHANGELOG" scheme:"ProtonVPN-iOS-Staging"
@@ -745,7 +745,7 @@ i18n-crowdin-upload:
       I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals,libraries/Search'
   extends: .i18n-sync-crowdin-shared-apple
   before_script:
-    - sh fastlane/adjust-for-strings-export.sh
+    - sh scripts/adjust-for-strings-export.sh
     - !reference [.i18n-sync-crowdin-shared-apple, before_script]
 
 i18n-crowdin-download:
@@ -755,7 +755,7 @@ i18n-crowdin-download:
       I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals,libraries/Search'
   extends: .i18n-commit-locales-shared-apple
   before_script:
-    - sh fastlane/adjust-for-strings-export.sh
+    - sh scripts/adjust-for-strings-export.sh
     - !reference [.i18n-commit-locales-shared-apple, before_script]
 
 # --- Open Source GitHub related tasks ---
