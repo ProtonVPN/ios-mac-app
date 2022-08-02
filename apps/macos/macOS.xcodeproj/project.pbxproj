@@ -3263,7 +3263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ..\n";
+			shellScript = "cd ${PROJECT_DIR}/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
 			showEnvVarsInLog = 0;
 		};
 		E148AE5521C2628A007AB65A /* Sentry dSYM upload */ = {
