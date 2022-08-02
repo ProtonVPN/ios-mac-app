@@ -711,7 +711,7 @@ ios_testflight_internal:
       - .last_build_nr
       - build/
     exclude:
-      - build/*.ipa
+      - build/**/*.ipa
     expire_in: 60 days
 
 mac_release_internal:
