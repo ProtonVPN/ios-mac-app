@@ -241,7 +241,7 @@ final class ConnectionSettingsViewModel {
     
     func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         let update = { (shouldReconnect: Bool) in
-            self.sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+            self.sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
                 self.sysexPending = false
 
                 switch result {

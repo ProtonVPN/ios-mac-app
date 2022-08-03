@@ -84,7 +84,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        sysexManager.checkAndInstallAllIfNeeded(userInitiated: userInitiated) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated) { result in
             switch result {
             case .installed, .upgraded, .alreadyThere:
                 self.propertiesManager.vpnProtocol = vpnProtocol

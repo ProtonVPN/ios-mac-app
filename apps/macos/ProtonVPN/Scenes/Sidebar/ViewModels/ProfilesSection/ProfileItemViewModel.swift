@@ -91,7 +91,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
             switch result {
             case .installed, .upgraded, .alreadyThere:
                 performConnection()

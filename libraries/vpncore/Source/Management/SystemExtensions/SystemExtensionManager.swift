@@ -56,13 +56,16 @@ public class SystemExtensionManager: NSObject {
 
     public typealias Factory = CoreAlertServiceFactory &
                                 PropertiesManagerFactory &
-                                VpnKeychainFactory
+                                VpnKeychainFactory &
+                                ProfileManagerFactory
+    private let factory: Factory
 
     private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
 
-    private let alertService: CoreAlertService
-    fileprivate let propertiesManager: PropertiesManagerProtocol
-    private let vpnKeychain: VpnKeychainProtocol
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
     fileprivate var outstandingRequests: Set<SystemExtensionRequest> = []
 
@@ -73,9 +76,7 @@ public class SystemExtensionManager: NSObject {
     }
 
     public init(factory: Factory) {
-        self.alertService = factory.makeCoreAlertService()
-        self.propertiesManager = factory.makePropertiesManager()
-        self.vpnKeychain = factory.makeVpnKeychain()
+        self.factory = factory
     }
 
     internal func request(_ request: SystemExtensionRequest) {
@@ -165,14 +166,28 @@ public class SystemExtensionManager: NSObject {
         }
     }
 
-    /// Installs all extensions. This will result in system extension dialogs appearing if the user has
-    /// not approved any on the system yet.
-    public func checkAndInstallAllIfNeeded(userInitiated: Bool,
-                                           actionHandler: @escaping (SystemExtensionResult) -> Void) {
+    /// Installs all extensions, provided the following hold true:
+    /// - The user is logged in
+    /// - The default connection protocol requires a system extension, OR
+    /// - The user has created a custom profile containing a protocol requiring a system extension
+    public func checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: Bool,
+                                                          actionHandler: @escaping (SystemExtensionResult) -> Void) {
         // do not check if the user is not logged in to avoid showing the installation prompt on the
         // login screen on first start
         guard userIsLoggedIn else { return }
 
+        guard propertiesManager.connectionProtocol.requiresSystemExtension ||
+              profileManager.customProfiles.contains(where: { $0.connectionProtocol.requiresSystemExtension }) else {
+            return
+        }
+
+        installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated, actionHandler: actionHandler)
+    }
+
+    /// Installs all extensions. This will result in system extension dialogs appearing if the user has
+    /// not approved any on the system yet.
+    public func installOrUpdateExtensionsIfNeeded(userInitiated: Bool,
+                                                  actionHandler: @escaping (SystemExtensionResult) -> Void) {
         var didRequireUserApproval = false
 
         submitInstallationRequests(userInitiated: userInitiated,
@@ -297,6 +312,10 @@ public class SystemExtensionRequest: NSObject {
                           manager: manager)
         result.request.delegate = result
         return result
+    }
+
+    deinit {
+        log.debug("Deinit request \(uuid.uuidString) for \(request.identifier)")
     }
 }
 

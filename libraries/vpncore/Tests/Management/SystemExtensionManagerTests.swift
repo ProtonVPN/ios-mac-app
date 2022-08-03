@@ -28,12 +28,18 @@ class SystemExtensionManagerTests: XCTestCase {
     var vpnKeychain: VpnKeychainMock!
     var alertService: CoreAlertServiceMock!
     var sysextManager: SystemExtensionManagerMock!
+    var profileManager: ProfileManager!
 
     override func setUp() {
         propertiesManager = PropertiesManagerMock()
         alertService = CoreAlertServiceMock()
         vpnKeychain = VpnKeychainMock(accountPlan: .free, maxTier: CoreAppConstants.VpnTiers.free)
         sysextManager = SystemExtensionManagerMock(factory: self)
+        profileManager = ProfileManager(serverStorage: ServerStorageMock(),
+                                        propertiesManager: propertiesManager,
+                                        profileStorage: ProfileStorage(authKeychain: MockAuthKeychain()))
+
+        propertiesManager.smartProtocol = true
     }
 
     override func tearDown() {
@@ -41,6 +47,7 @@ class SystemExtensionManagerTests: XCTestCase {
         alertService = nil
         vpnKeychain = nil
         sysextManager = nil
+        profileManager = nil
     }
 
     func testInstallingExtensionForTheFirstTimeSimply() {
@@ -53,7 +60,7 @@ class SystemExtensionManagerTests: XCTestCase {
             approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallAllIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -93,7 +100,7 @@ class SystemExtensionManagerTests: XCTestCase {
             approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
             installResult = result
             installFinished.fulfill()
         }
@@ -109,7 +116,7 @@ class SystemExtensionManagerTests: XCTestCase {
             var cancelResult: SystemExtensionResult?
             let installCancelled = XCTestExpectation(description: "Cancel install attempt #\(attempt)")
 
-            sysextManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
                 cancelResult = result
                 installCancelled.fulfill()
             }
@@ -163,7 +170,7 @@ class SystemExtensionManagerTests: XCTestCase {
         }
 
         var result: SystemExtensionResult?
-        sysextManager.checkAndInstallAllIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -204,7 +211,7 @@ class SystemExtensionManagerTests: XCTestCase {
             XCTFail("Shouldn't need to request for approval, extensions are being upgraded")
         }
 
-        sysextManager.checkAndInstallAllIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -247,7 +254,7 @@ class SystemExtensionManagerTests: XCTestCase {
             requestPending.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallAllIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -280,5 +287,9 @@ extension SystemExtensionManagerTests: SystemExtensionManager.Factory {
 
     func makeVpnKeychain() -> VpnKeychainProtocol {
         return vpnKeychain
+    }
+
+    func makeProfileManager() -> ProfileManager {
+        return profileManager
     }
 }

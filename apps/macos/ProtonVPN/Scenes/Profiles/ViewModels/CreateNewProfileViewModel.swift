@@ -318,7 +318,7 @@ class CreateNewProfileViewModel {
             return
         }
 
-        sysexManager.checkAndInstallAllIfNeeded(userInitiated: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
             DispatchQueue.main.async { [weak self] in
                 self?.sysexPending = false
                 completion(result)
