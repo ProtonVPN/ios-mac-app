@@ -151,6 +151,7 @@ final class DependencyContainer {
         return doh
     }()
     private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
+    private lazy var sysexManager = SystemExtensionManager(factory: self)
 }
 
 // MARK: PlanServiceFactory
@@ -426,7 +427,7 @@ extension DependencyContainer: UpdateManagerFactory {
 // MARK: - SystemExtensionManagerFactory
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
-        return SystemExtensionManager(factory: self)
+        return sysexManager
     }
 }
 

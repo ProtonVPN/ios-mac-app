@@ -133,9 +133,7 @@ final class LoginViewModel {
                     self?.propertiesManager.newBrandModalShown = true
                     self?.silentlyCheckForUpdates()
 
-                    if self?.propertiesManager.connectionProtocol.requiresSystemExtension == true {
-                        self?.sysexManager.checkAndInstallAllIfNeeded(userInitiated: true, actionHandler: { _ in })
-                    }
+                    self?.sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, actionHandler: { _ in })
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })
