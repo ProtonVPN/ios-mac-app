@@ -46,7 +46,7 @@ class ViewController: UITableViewController {
     let modalsFactory = ModalsFactory(colors: Colors())
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        5
+        4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -72,8 +72,6 @@ class ViewController: UITableViewController {
             title = "New Brand"
         } else if indexPath.section == 3 {
             title = upgrades[indexPath.row].title
-        } else if indexPath.section == 4 {
-            title = "Informative"
         } else {
             title = ""
         }
@@ -104,10 +102,6 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 3 {
             let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
-            viewController = modalVC
-        } else if indexPath.section == 4 {
-            let modalVC = modalsFactory.informativeViewController()
-            modalVC.modalPresentationStyle = .fullScreen
             viewController = modalVC
         } else {
             fatalError()
