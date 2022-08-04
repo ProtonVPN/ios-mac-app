@@ -381,8 +381,9 @@ public class VpnManager: VpnManagerProtocol {
     private func configureConnection(forProtocol configuration: NEVPNProtocol,
                                      vpnManager: NEVPNManagerWrapper,
                                      completion: @escaping () -> Void) {
-        guard connectAllowed else { return }
-        var vpnManager = vpnManager
+        guard connectAllowed else {
+            return            
+        }
         
         log.info("Configuring connection", category: .connectionConnect)
         
@@ -497,7 +498,7 @@ public class VpnManager: VpnManagerProtocol {
                 return
             }
 
-            guard var vpnManager = vpnManager else {
+            guard let vpnManager = vpnManager else {
                 self.setState(withError: ProtonVpnError.vpnManagerUnavailable)
                 return
             }
@@ -662,7 +663,7 @@ public class VpnManager: VpnManagerProtocol {
                 completionHandler?(ProtonVpnError.removeVpnProfileFailed)
                 return
             }
-            guard var vpnManager = vpnManager else {
+            guard let vpnManager = vpnManager else {
                 completionHandler?(ProtonVpnError.removeVpnProfileFailed)
                 return
             }
