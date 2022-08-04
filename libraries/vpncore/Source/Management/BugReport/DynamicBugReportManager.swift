@@ -121,7 +121,7 @@ public class DynamicBugReportManager {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         let appBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
 
-        var report = ReportBug(os: os,
+        let report = ReportBug(os: os,
                                osVersion: osVersion,
                                client: "App",
                                clientVersion: "\(appVersion) (\(appBuild))",
