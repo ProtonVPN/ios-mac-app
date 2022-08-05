@@ -368,7 +368,7 @@
 "_error_mitm_title" = "Conexión no segura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de Proton VPN. Tu conexión actual a Internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de Proton VPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de Proton VPN. Tu conexión actual a internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de Proton VPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -524,7 +524,7 @@
 "_feature_tor" = "Tor sobre VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Enruta tu tráfico de Internet a través de la red Tor. Más lento, pero más privado.";
+"_feature_tor_description" = "Enruta tu tráfico de internet a través de la red Tor. Más lento, pero más privado.";
 
 /* (No Comment) */
 "_features_title" = "Características";
@@ -593,16 +593,16 @@
 "_invalid_refresh_token" = "La sesión ha expirado";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "De parte de los científicos e ingenieros que crearon ProtonMail, bienvenidos a un Internet más seguro y privado.";
+"_ios_onboarding_page1_description" = "De parte de los científicos e ingenieros que crearon ProtonMail, bienvenidos a un internet más seguro y privado.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenido/a a un mejor Internet";
+"_ios_onboarding_page1_title" = "Bienvenido/a a un mejor internet";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Golpeamos la censura y las restricciones regionales. No tenemos anuncios, ni límites de ancho de banda, y no vendemos tus datos.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Creemos que Internet debería ser libre";
+"_ios_onboarding_page2_title" = "Creemos que internet debería ser libre";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_description" = "Somos una empresa de seguridad. Ya sea nuestra arquitectura de Secure Core o nuestro cifrado avanzado, la seguridad siempre es lo primero.";
@@ -656,7 +656,7 @@
 "_kill_switch_helper_update_popup_body" = "La actualización más reciente que has descargado requiere que proporciones tu contraseña de cuenta de ordenador. Cuando la petición aparezca, por favor introduce tu %@ y acepta.\n\nSi no ingresas tu contraseña de Mac, kill switch se desactivará.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Su conexión a Internet se reanudará tan pronto como Proton VPN se vuelva a conectar a un servidor.\nPara usar Internet sin la protección de VPN y kill switch, cancele la reconexión al servidor.";
+"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como Proton VPN se vuelva a conectar a un servidor.\nPara usar internet sin la protección de VPN y kill switch, cancele la reconexión al servidor.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sin";
@@ -848,7 +848,7 @@
 "_ne_network_connection_lost" = "Conexión de red perdida";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Sin conexión a Internet";
+"_ne_not_connected_to_the_internet" = "Sin conexión a internet";
 
 /* Network error */
 "_ne_request_timed_out" = "Tiempo de espera de red agotado";
@@ -929,7 +929,7 @@
 "_not_connected" = "No conectado";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No estás conectado a Internet.";
+"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No estás conectado a internet.";
 
 /* (No Comment) */
 "_not_now" = "Ahora no";
@@ -1121,13 +1121,13 @@
 "_quick_settings_get_plus" = "Obtener Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Desactiva Internet si la conexión VPN se cae para evitar una fuga accidental de IP.";
+"_quick_settings_killSwitch_description" = "Desactiva internet si la conexión VPN se cae para evitar una fuga accidental de IP.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Si no puedes conectarte a dispositivos de tu red local, intenta deshabilitar kill switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Navegue por Internet sin anuncios ni malware.";
+"_quick_settings_netShield_description" = "Navegue por internet sin anuncios ni malware.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Si los sitios web no se cargan, intente deshabilitar NetShield";
@@ -1504,7 +1504,7 @@
 "_trial_popup_call_to_upgrade" = "Para tener acceso permanente a las funciones de Proton VPN Plus, puedes mejorar tu plan.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Disfruta de todos los beneficios de Internet seguro en cualquier lugar con Proton VPN";
+"_trial_popup_enjoy" = "Disfruta de todos los beneficios de internet seguro en cualquier lugar con Proton VPN";
 
 /* Final text:
  
@@ -1569,13 +1569,13 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de Internet (ISP)";
+"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de internet (ISP)";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Por favor, asegúrate de que tu conexión a Internet está funcionando.";
+"_troubleshoot_item_nointernet_description" = "Por favor, asegúrate de que tu conexión a internet está funcionando.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "No hay conexión a Internet";
+"_troubleshoot_item_nointernet_title" = "No hay conexión a internet";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Contáctanos directamente a través de nuestro formulario de soporte, correo electrónico (%@), o Twitter.";

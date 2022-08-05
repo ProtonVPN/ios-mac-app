@@ -404,7 +404,7 @@
 "_error_mitm_title" = "Conexión insegura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse al servidor VPN. Su conexión actual a Internet puede ser monitoreada. Para mantener sus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nPor favor seleccione otro servidor.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse al servidor VPN. Su conexión actual a internet puede ser monitoreada. Para mantener sus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nPor favor seleccione otro servidor.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -572,7 +572,7 @@
 "_feature_tor" = "Tor sobre VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Envía su tráfico de Internet a través de la red Tor. Más lento, pero más privado.";
+"_feature_tor_description" = "Envía su tráfico de internet a través de la red Tor. Más lento, pero más privado.";
 
 /* (No Comment) */
 "_features_title" = "Características";
@@ -692,7 +692,7 @@
 "_kill_switch" = "Interruptor de apagado";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "El interruptor de apagado está protegiendo su IP\n\nSu conexión a Internet se reanudará tan pronto como Proton VPN se reconecte a un servidor. Para continuar sin protección VPN, desactive el interruptor.";
+"_kill_switch_blocking_body" = "El interruptor de apagado está protegiendo su IP\n\nSu conexión a internet se reanudará tan pronto como Proton VPN se reconecte a un servidor. Para continuar sin protección VPN, desactive el interruptor.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "El interruptor de apagado bloquea todas las conexiones";
@@ -725,7 +725,7 @@
 "_kill_switch_helper_update_popup_body" = "La actualización más reciente que ha descargado requiere que proporcione su contraseña del ordenador. Cuando la solicitud aparezca, ingrese su %@ y acepte.\n\nSi no ingresa su contraseña de Mac, el interruptor de apagado se deshabilitará.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como Proton VPN se conecte a un servidor.\nPara usar Internet sin protección VPN e interruptor de apagado cancele la reconexión al servidor.";
+"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como Proton VPN se conecte a un servidor.\nPara usar internet sin protección VPN e interruptor de apagado cancele la reconexión al servidor.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sin";
@@ -1052,7 +1052,7 @@
 "_not_connected" = "No conectado";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No está conectado a Internet.";
+"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No está conectado a internet.";
 
 /* (No Comment) */
 "_not_now" = "Ahora no";
@@ -1253,13 +1253,13 @@
 "_quick_settings_get_plus" = "Obtener Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Deshabilita Internet si la conexión VPN cae para evitar fugas accidentales de IP.";
+"_quick_settings_killSwitch_description" = "Deshabilita internet si la conexión VPN cae para evitar fugas accidentales de IP.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Si no puede conectarse a dispositivos de su red local, intente deshabilitar el interruptor de apagado.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Navegue por Internet sin anuncios ni malware.";
+"_quick_settings_netShield_description" = "Navegue por internet sin anuncios ni malware.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Si los sitios web no se cargan, intente desactivar NetShield";
@@ -1824,7 +1824,7 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de Internet (ISP)";
+"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de internet (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Asegúrese de que su conexión a internet esté funcionando.";
@@ -2043,7 +2043,7 @@
 "_warning_vpn_session_is_active" = "La sesión de Proton VPN de otro usuario está activa en este dispositivo. Continuar con el proceso de inicio de sesión hará que la sesión actual finalice. ¿Desea continuar?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN suiza de alta velocidad que protege su privacidad cifrando su conexión a Internet.";
+"_welcome_body" = "VPN suiza de alta velocidad que protege su privacidad cifrando su conexión a internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Gracias por usar Proton VPN. Eche un vistazo rápido\na las funciones principales de la aplicación.";
@@ -2058,7 +2058,7 @@
 "_welcome_title" = "¡BIENVENIDO A BORDO!";
 
 /* (No Comment) */
-"_wgks_description" = "El interruptor de apagado evita que la VPN se conecte a Internet. Esto puede deberse a una incompatibilidad con su sistema operativo (macOS Catalina 10.15).\n\nPara resolver este problema, actualice su sistema operativo a la última versión.\n\nAlternativamente, puede cambiar al protocolo OpenVPN o deshabilitar el interruptor de apagado.";
+"_wgks_description" = "El interruptor de apagado evita que la VPN se conecte a internet. Esto puede deberse a una incompatibilidad con su sistema operativo (macOS Catalina 10.15).\n\nPara resolver este problema, actualice su sistema operativo a la última versión.\n\nAlternativamente, puede cambiar al protocolo OpenVPN o deshabilitar el interruptor de apagado.";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Deshabilitar el interruptor de apagado";
@@ -2067,7 +2067,7 @@
 "_wgks_ovpn" = "Cambiar a OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "El interruptor de apagado está evitando que la VPN se conecte a Internet";
+"_wgks_title" = "El interruptor de apagado está evitando que la VPN se conecte a internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";

@@ -398,7 +398,7 @@
 "_error_loads" = "Impossible de mettre à jour la charge des serveurs.";
 
 /* (No Comment) */
-"_error_mitm_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion à l'API Proton VPN. Votre connexion Internet actuelle peut être surveillée. Pour assurer la sécurité de vos données, nous empêchons l'application d'accéder à l'API Proton VPN.\nPour vous connecter ou accéder à votre compte, passez par un nouveau réseau et essayez de vous connecter à nouveau.";
+"_error_mitm_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion à l'API Proton VPN. Votre connexion internet actuelle peut être surveillée. Pour assurer la sécurité de vos données, nous empêchons l'application d'accéder à l'API Proton VPN.\nPour vous connecter ou accéder à votre compte, passez par un nouveau réseau et essayez de vous connecter à nouveau.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Connexion non sécurisée";
@@ -662,7 +662,7 @@
 "_invalid_refresh_token_please_login" = "Cela fait un certain temps que vous n'avez pas utilisé l'application Proton VPN. Merci de vous reconnecter.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Par les scientifiques et les ingénieurs qui ont créé Proton Mail, bienvenue dans un Internet plus sécurisé et privé.";
+"_ios_onboarding_page1_description" = "Par les scientifiques et les ingénieurs qui ont créé Proton Mail, bienvenue dans un internet plus sécurisé et privé.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Bienvenue sur un meilleur internet";
@@ -773,7 +773,7 @@
 "_loading_connection_info_for" = "Chargement des informations de connexion pour %@";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Pour un Internet plus sûr, partout";
+"_loading_screen_slogan" = "Pour un internet plus sûr, partout";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_message" = "Vous n'êtes pas autorisé à vous connecter au serveur. Choisissez un autre serveur ou envisagez de passer à l'abonnement supérieur.";
@@ -1759,7 +1759,7 @@
 "_trial_popup_call_to_upgrade" = "Profitez en permanence des fonctionnalités de Proton VPN Plus en passant à un abonnement supérieur.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Profitez des avantages d'un Internet sécurisé partout avec Proton VPN";
+"_trial_popup_enjoy" = "Profitez des avantages d'un internet sécurisé partout avec Proton VPN";
 
 /* Final text:
  

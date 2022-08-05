@@ -94,7 +94,7 @@
 "_network_unreachable" = "Network Unreachable";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the Internet.";
+"_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the internet.";
 
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "VPN Connection Active";
@@ -752,7 +752,7 @@
 "_ne_network_connection_lost" = "Network connection lost";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Not connected to the Internet";
+"_ne_not_connected_to_the_internet" = "Not connected to the internet";
 
 /* Network error */
 "_ne_couldnt_reach_server" = "We could not reach Proton servers";
@@ -958,8 +958,8 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 "_error_mitm_title" = "Insecure connection";
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
-"_error_mitm_vpn_description" = "The TLS certificate validation failed when trying to connect to the VPN server. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.";
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_vpn_description" = "The TLS certificate validation failed when trying to connect to the VPN server. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.";
 
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
@@ -1398,13 +1398,13 @@
 // Upsell & Onboard - iOS
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Welcome to a better Internet";
+"_ios_onboarding_page1_title" = "Welcome to a better internet";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "From the scientists and engineers that created Proton Mail, welcome to a more secure and private Internet.";
+"_ios_onboarding_page1_description" = "From the scientists and engineers that created Proton Mail, welcome to a more secure and private internet.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "We believe the Internet should be free";
+"_ios_onboarding_page2_title" = "We believe the internet should be free";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Beat censorship and regional restrictions. We have no ads, no bandwidth limits, and don’t sell your data.";
@@ -1589,8 +1589,8 @@
 
 // Quick Settings
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
-"_quick_settings_netShield_description" = "Browse the Internet without ads and malware.";
-"_quick_settings_killSwitch_description" = "Disables Internet if the VPN connection drops to prevent accidental IP leak.";
+"_quick_settings_netShield_description" = "Browse the internet without ads and malware.";
+"_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak.";
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
 "_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling kill switch.";
@@ -1643,7 +1643,7 @@
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
 "_sysex_enabled_title" = "Configuration completed";
-"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
+"_sysex_enabled_description" = "Configuration completed. Now you can browse the internet faster with the best VPN technologies.";
 
 "_sysex_cannot_enable" = "Cannot enable System Extension";
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
@@ -1761,7 +1761,7 @@
 "_feature_smart_routing_description" = "This technology allows Proton VPN to provide higher speed and security in difficult-to-serve countries.";
 "_feature_streaming_description" = "Plus servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";
 "_feature_p2p_description" = "These servers give the best performance for BitTorrent and file sharing.";
-"_feature_tor_description" = "Route your Internet traffic through the Tor network. Slower, but more private.";
+"_feature_tor_description" = "Route your internet traffic through the Tor network. Slower, but more private.";
 "_performance_load_description" = "Servers with high load are slower than servers with low load.";
 
 "_performance_load_low" = "Low";
@@ -1805,7 +1805,7 @@
 "_welcome_headline" = "Protect yourself online";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.";
+"_welcome_body" = "High-speed Swiss VPN that safeguards your privacy by encrypting your internet connection.";
 
 "_force_upgrade_title" = "Application upgrade needed";
 "_force_upgrade_message" = "The version of Proton VPN application you are currently using is no longer supported. Please update to the latest version.";
@@ -1814,8 +1814,8 @@
 "login_summary_button" = "Start using Proton VPN";
 
 // Wireguard + KillSwitch alert on Catalina
-"_wgks_title" = "Kill switch is preventing the VPN to connect to Internet";
-"_wgks_description" = "Kill switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable kill switch.";
+"_wgks_title" = "Kill switch is preventing the VPN to connect to internet";
+"_wgks_description" = "Kill switch is preventing the VPN to connect to the internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable kill switch.";
 "_wgks_ovpn" = "Switch to OpenVPN";
 
 // Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below

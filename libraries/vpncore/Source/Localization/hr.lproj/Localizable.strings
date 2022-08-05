@@ -593,16 +593,16 @@
 "_invalid_refresh_token" = "Sesija je istekla";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Od znanstvenika i inženjera koji su stvorili ProtonMail, dobrodošli na sigurniji i privatniji Internet.";
+"_ios_onboarding_page1_description" = "Od znanstvenika i inženjera koji su stvorili ProtonMail, dobrodošli na sigurniji i privatniji internet.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Dobrodošli na bolji Internet";
+"_ios_onboarding_page1_title" = "Dobrodošli na bolji internet";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Pobijedite cenzuru i regionalna ograničenja. Nemamo oglase, nemamo ograničenja propusnosti i ne prodajemo vaše podatke.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Vjerujemo da bi Internet trebao biti slobodan";
+"_ios_onboarding_page2_title" = "Vjerujemo da bi internet trebao biti slobodan";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_description" = "Mi smo sigurnosna tvrtka. Bilo da se radi o Secure Core arhitekturi ili naprednom šifriranju, sigurnost je uvijek na prvom mjestu.";
@@ -848,7 +848,7 @@
 "_ne_network_connection_lost" = "Veza s mrežom je izgubljena";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Nije spojen na Internet";
+"_ne_not_connected_to_the_internet" = "Nije spojen na internet";
 
 /* Network error */
 "_ne_request_timed_out" = "Mrežni zahtjev je istekao";
@@ -929,7 +929,7 @@
 "_not_connected" = "Nije povezano";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Nije moguće uspostaviti VPN vezu. Niste povezani s Internetom.";
+"_not_connected_to_the_internet" = "Nije moguće uspostaviti VPN vezu. Niste povezani s internetom.";
 
 /* (No Comment) */
 "_not_now" = "Ne sada";
@@ -1121,13 +1121,13 @@
 "_quick_settings_get_plus" = "Nabavite Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Onemogućuje Internet ako VPN veza se prekine, kako bi se spriječilo slučajno curenje IP adrese.";
+"_quick_settings_killSwitch_description" = "Onemogućuje internet ako VPN veza se prekine, kako bi se spriječilo slučajno curenje IP adrese.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Ako se ne možete povezati s uređajima na lokalnoj mreži, pokušajte onemogućiti kill switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Pretražujte Internet bez oglasa i zlonamjernih programa.";
+"_quick_settings_netShield_description" = "Pretražujte internet bez oglasa i zlonamjernih programa.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Ako se web stranice ne učitaju, pokušajte onemogućiti NetShield";
@@ -1154,7 +1154,7 @@
 "_quick_settings_tour_feature_1" = "Dodajte još dodatni sloj sigurnosti uz Secure Core.";
 
 /* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Pretražujte Internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
+"_quick_settings_tour_feature_2" = "Pretražujte internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
 
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem kill switch.";
