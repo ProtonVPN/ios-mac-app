@@ -59,7 +59,7 @@
 "_ae_wrong_login_credentials" = "Kullanıcı adı veya parola yanlış";
 
 /* Account plan description */
-"_all_countries" = "50+ ülke";
+"_all_countries" = "60+ ülke";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Bu ülkedeki tüm sunuculara bakım yapılıyor. Lütfen başka bir ülkeye bağlanın.";
