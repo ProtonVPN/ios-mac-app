@@ -1731,10 +1731,10 @@
 /* MacOS: connecting overlay */
 "_timed_out" = "tiempo agotado";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Otra aplicación podría estar interfiriendo con el interruptor de apagado. Para solucionar este problema, cambie al protocolo OpenVPN o desactive el interruptor y vuelva a intentarlo.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Cambiar a OpenVPN y reintentar";
 
 /* (No Comment) */
@@ -2060,7 +2060,7 @@
 /* (No Comment) */
 "_wgks_description" = "El interruptor de apagado evita que la VPN se conecte a Internet. Esto puede deberse a una incompatibilidad con su sistema operativo (macOS Catalina 10.15).\n\nPara resolver este problema, actualice su sistema operativo a la última versión.\n\nAlternativamente, puede cambiar al protocolo OpenVPN o deshabilitar el interruptor de apagado.";
 
-/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Deshabilitar el interruptor de apagado";
 
 /* (No Comment) */

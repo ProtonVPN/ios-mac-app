@@ -65,7 +65,7 @@
 "_allow" = "Dopusti";
 
 /* (No Comment) */
-"_allow_lan_description" = "Kako bi se omogućilo LAN pristup, Kill Switch mora biti isključen.\n\nNastaviti?";
+"_allow_lan_description" = "Kako bi se omogućilo LAN pristup, kill switch mora biti isključen.\n\nNastaviti?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Omogućuje zaobilaženje VPN-a i povezivanje s uređajima u vašoj lokalnoj mreži, poput vašeg pisača.";
@@ -455,7 +455,7 @@
 "_error_wrong_payment_token_status" = "Pogrešan status tokena plaćanja. Ponovo pokrenite aplikaciju. Ako pogreška i dalje postoji, obratite se službi za podršku.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN koristi vatrozid za filtriranje paketa kod implementacije Kill Switcha. Omogućivanjem Kill Switcha prebrisati će te trenutne postavke vatrozida vašeg uređaja. Ako se oslanjate na ove postavke vatrozida, ne biste trebali koristiti Kill Switch.\n\nDa biste koristili Kill Switch i presnimiti vaše trenutne postavke vatrozida, odaberite NASTAVI.\n\nDa biste isključili Kill Switch i nastavili koristiti trenutni vatrozid, odaberite PONIŠTI.";
+"_existing_firewall_popup_body" = "Proton VPN koristi vatrozid za filtriranje paketa kod implementacije kill switcha. Omogućivanjem kill switcha prebrisati će te trenutne postavke vatrozida vašeg uređaja. Ako se oslanjate na ove postavke vatrozida, ne biste trebali koristiti kill switch.\n\nDa biste koristili kill switch i presnimiti vaše trenutne postavke vatrozida, odaberite NASTAVI.\n\nDa biste isključili kill switch i nastavili koristiti trenutni vatrozid, odaberite PONIŠTI.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Vatrozid je otkriven";
@@ -620,64 +620,64 @@
 "_ip_will_not_be_exposed" = "Vaša IP adresa neće biti izložena.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch štiti vašu IP adresu\n\nVaša će internetska veza nastaviti raditi čim se Proton VPN ponovno poveže s poslužiteljem.\nDa biste nastavili bez VPN zaštite, onemogućite Kill Switch.";
+"_kill_switch_blocking_body" = "Kill switch štiti vašu IP adresu\n\nVaša će internetska veza nastaviti raditi čim se Proton VPN ponovno poveže s poslužiteljem.\nDa biste nastavili bez VPN zaštite, onemogućite kill switch.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch blokira sve veze";
+"_kill_switch_blocking_connection" = "Kill switch blokira sve veze";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Onemogući Kill Switch";
+"_kill_switch_disable" = "Onemogući kill switch";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Zaustavite te aplikacije da biste riješili problem.\nDa biste nastavili pregledavati bez Kill Switcha, kliknite Nastavi.";
+"_kill_switch_error_foot" = "Zaustavite te aplikacije da biste riješili problem.\nDa biste nastavili pregledavati bez kill switcha, kliknite Nastavi.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Neke aplikacije, poput antivirusnih programa ili vatrozida, mogu se sukobiti s Kill Switchom, zbog čega ne funkcionira ispravno.";
+"_kill_switch_error_head" = "Neke aplikacije, poput antivirusnih programa ili vatrozida, mogu se sukobiti s kill switchom, zbog čega ne funkcionira ispravno.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch radi s macOS vatrozidom.\nAko su s vatrozidom povezane druge aplikacije, one mogu ometati Proton VPN-ov Kill Switch. Zaustavljanjem tih aplikacija možete vratiti pravila vatrozida postavljena od strane Kill Switcha.";
+"_kill_switch_error_info" = "Kill switch radi s macOS vatrozidom.\nAko su s vatrozidom povezane druge aplikacije, one mogu ometati Proton VPN-ov kill switch. Zaustavljanjem tih aplikacija možete vratiti pravila vatrozida postavljena od strane kill switcha.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Pogreška s Kill Switchom je otkrivena";
+"_kill_switch_error_title" = "Pogreška s kill switchom je otkrivena";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Došlo je do problema prilikom instaliranja ili ažuriranja Kill Switcha.\n\nDa biste pokušali ponovo, pritisnite POKUŠAJ PONOVNO.\n\nDa biste nastavili bez Kill Switcha, pritisnite ONEMOGUĆI.";
+"_kill_switch_helper_install_issue_popup_body" = "Došlo je do problema prilikom instaliranja ili ažuriranja kill switcha.\n\nDa biste pokušali ponovo, pritisnite POKUŠAJ PONOVNO.\n\nDa biste nastavili bez kill switcha, pritisnite ONEMOGUĆI.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Da biste omogućili Kill Switch, od vas će se možda tražiti da navedete lozinku korisničkog računa. Ako se pojavi zahtjev, unesite svoju %@ i prihvatite.\n\nOvaj zahtjev možete povremeno vidjeti kada aplikacija Proton VPN primi ažuriranja.";
+"_kill_switch_helper_install_popup_body" = "Da biste omogućili kill switch, od vas će se možda tražiti da navedete lozinku korisničkog računa. Ako se pojavi zahtjev, unesite svoju %@ i prihvatite.\n\nOvaj zahtjev možete povremeno vidjeti kada aplikacija Proton VPN primi ažuriranja.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Najnovije ažuriranje koje ste preuzeli zahtijeva da navedete lozinku korisničkog računa. Kad se zahtjev pojavi, unesite svoju %@ i prihvatite.\n\nAko ne unesete svoju lozinku za Mac, Kill Switch će biti isključen.";
+"_kill_switch_helper_update_popup_body" = "Najnovije ažuriranje koje ste preuzeli zahtijeva da navedete lozinku korisničkog računa. Kad se zahtjev pojavi, unesite svoju %@ i prihvatite.\n\nAko ne unesete svoju lozinku za Mac, kill switch će biti isključen.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Vaša će se internetska veza nastaviti čim se Proton VPN ponovno poveže s poslužiteljem.\nDa biste koristili internet bez VPN i Kill Switch zaštite, otkažite ponovno povezivanje s poslužiteljem.";
+"_kill_switch_reconnection" = "Vaša će se internetska veza nastaviti čim se Proton VPN ponovno poveže s poslužiteljem.\nDa biste koristili internet bez VPN i kill switch zaštite, otkažite ponovno povezivanje s poslužiteljem.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "bez";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Kill Switch zaštita";
+"_kill_switch_reconnection_bold2" = "Kill switch zaštita";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Otkaži ponovno povezivanje";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch štiti vašu IP adresu";
+"_kill_switch_reconnection_header" = "Kill switch štiti vašu IP adresu";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Ne pitaj ponovno";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Da biste omogućili Kill Switch, morate preuzeti i instalirati %@.\nMolimo instalirajte ga prije nego što omogućite Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Da biste omogućili kill switch, morate preuzeti i instalirati %@.\nMolimo instalirajte ga prije nego što omogućite kill switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN nije mogao otkriti %@. Da biste omogućili Kill Switch, prvo instalirajte program.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN nije mogao otkriti %@. Da biste omogućili kill switch, prvo instalirajte program.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Swift 5 Runtime Support biblioteka";
@@ -1124,7 +1124,7 @@
 "_quick_settings_killSwitch_description" = "Onemogućuje Internet ako VPN veza se prekine, kako bi se spriječilo slučajno curenje IP adrese.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Ako se ne možete povezati s uređajima na lokalnoj mreži, pokušajte onemogućiti Kill Switch.";
+"_quick_settings_killSwitch_note" = "Ako se ne možete povezati s uređajima na lokalnoj mreži, pokušajte onemogućiti kill switch.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Pretražujte Internet bez oglasa i zlonamjernih programa.";
@@ -1157,7 +1157,7 @@
 "_quick_settings_tour_feature_2" = "Pretražujte Internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem Kill Switch.";
+"_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem kill switch.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Brze postavke";
@@ -1494,7 +1494,7 @@
 /* MacOS: connecting overlay */
 "_timed_out" = "isteklo vrijeme";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Prebacite se na OpenVPN i ponovno pokušajte";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
@@ -1620,13 +1620,13 @@
 "_try_again" = "Pokušaj ponovno";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Onemogućite Kill Switch i pokušajte ponovno";
+"_try_again_without_killswitch" = "Onemogućite kill switch i pokušajte ponovno";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Aktiviranjem Kill Switcha, nećete moći pristupiti uređajima na lokalnoj mreži.\n\nNastaviti?";
+"_turn_ks_on_description" = "Aktiviranjem kill switcha, nećete moći pristupiti uređajima na lokalnoj mreži.\n\nNastaviti?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Uključiti Kill Switch?";
+"_turn_ks_on_title" = "Uključiti kill switch?";
 
 /* (No Comment) */
 "_turn_on" = "Uključi";
@@ -1796,8 +1796,8 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "DOBRO DOŠLI!";
 
-/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Onemogući Kill Switch";
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Onemogući kill switch";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS Widget";

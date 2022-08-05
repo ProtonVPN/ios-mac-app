@@ -422,7 +422,7 @@
 "_error_vpn_session_is_active" = "A Proton VPN munkamenet aktív";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "A Proton VPN csomagszűrő tűzfalat használ a Kill Switch megvalósításához. A Kill Switch engedélyezésével felülírod az eszköz jelenlegi tűzfal-beállításait. Ha használod ezt a tűzfalkonfigurációt, akkor ne engedélyezd a Kill Switch szolgáltatást.\n\nA Kill Switch használatához és a jelenlegi tűzfal-beállítások felülírásához válaszd a FOLYTATÁS lehetőséget.\n\nA Kill Switch letiltásához és a jelenlegi tűzfal-beállítások megtartásához válaszd a MÉGSEM lehetőséget.";
+"_existing_firewall_popup_body" = "A Proton VPN csomagszűrő tűzfalat használ a kill switch megvalósításához. A kill switch engedélyezésével felülírod az eszköz jelenlegi tűzfal-beállításait. Ha használod ezt a tűzfalkonfigurációt, akkor ne engedélyezd a kill switch szolgáltatást.\n\nA kill switch használatához és a jelenlegi tűzfal-beállítások felülírásához válaszd a FOLYTATÁS lehetőséget.\n\nA kill switch letiltásához és a jelenlegi tűzfal-beállítások megtartásához válaszd a MÉGSEM lehetőséget.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Tűzfalat észleltük";
@@ -578,31 +578,31 @@
 "_ip_value" = "IP: %@";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Megszakadt a kapcsolat a VPN kiszolgálókkal. A Kill Switch blokkolta az összes kapcsolatot az adatok kiszivárgásának elkerülése érdekében. A Proton VPN megpróbál automatikusan újracsatlakozni. Az ablak bezárásához kattints az OK gombra.\n\nHa átmenetileg le szeretnéd tiltani a Kill Switch szolgáltatást, és újra csatlakozni szeretnél az internethez VPN védelem NÉLKÜL, kattints a KIKAPCSOLÁS gombra.\n\nA Kill Switch végleges kikapcsolásához kattints ide %@.";
+"_kill_switch_blocking_body" = "Megszakadt a kapcsolat a VPN kiszolgálókkal. A kill switch blokkolta az összes kapcsolatot az adatok kiszivárgásának elkerülése érdekében. A Proton VPN megpróbál automatikusan újracsatlakozni. Az ablak bezárásához kattints az OK gombra.\n\nHa átmenetileg le szeretnéd tiltani a kill switch szolgáltatást, és újra csatlakozni szeretnél az internethez VPN védelem NÉLKÜL, kattints a KIKAPCSOLÁS gombra.\n\nA kill switch végleges kikapcsolásához kattints ide %@.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch blokkolja az összes kapcsolatot";
+"_kill_switch_blocking_connection" = "Kill switch blokkolja az összes kapcsolatot";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "A Kill Switch blokkolja az IP szivárgásokat";
+"_kill_switch_blocking_title" = "A kill switch blokkolja az IP szivárgásokat";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "A Kill Switch szolgáltatás nem működik megfelelően. Ha szeretnéd jelenteni a hibát a Proton VPN támogatási csoportnak, kattints a Jelentés gombra.\nHa figyelmen kívül hagynád a hibát, és folytatni a böngészést Kill Switch NÉLKÜL, kattints a letiltás gombra.";
+"_kill_switch_error_body" = "A kill switch szolgáltatás nem működik megfelelően. Ha szeretnéd jelenteni a hibát a Proton VPN támogatási csoportnak, kattints a Jelentés gombra.\nHa figyelmen kívül hagynád a hibát, és folytatni a böngészést kill switch NÉLKÜL, kattints a letiltás gombra.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "A Kill Switch működésében hibát észleltünk";
+"_kill_switch_error_title" = "A kill switch működésében hibát észleltünk";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Probléma merült fel a Kill Switch telepítésében vagy frissítésében.\n\nAz újbóli próbálkozáshoz kattints a VISSZA gombra.\n\nHa szeretnéd kikapcsolni a Kill Switch szolgáltatást, kattints a LETILTÁS gombra.";
+"_kill_switch_helper_install_issue_popup_body" = "Probléma merült fel a kill switch telepítésében vagy frissítésében.\n\nAz újbóli próbálkozáshoz kattints a VISSZA gombra.\n\nHa szeretnéd kikapcsolni a kill switch szolgáltatást, kattints a LETILTÁS gombra.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "A Kill Switch engedélyezéséhez meg kell adni a fiókod jelszavát. Ha megjelenik egy kérés, írja be a %@-ot az elfogadáshoz.\n\nElőfordulhat, hogy a Proton VPN alkalmazás frissítéskor ismét megjelenik ez a kérés.";
+"_kill_switch_helper_install_popup_body" = "A kill switch engedélyezéséhez meg kell adni a fiókod jelszavát. Ha megjelenik egy kérés, írja be a %@-ot az elfogadáshoz.\n\nElőfordulhat, hogy a Proton VPN alkalmazás frissítéskor ismét megjelenik ez a kérés.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "A frissítéshez meg kell adnod a fiókod jelszavát. Amikor a kérés megjelenik, kérlek írd be a %@ -ot az elfogadáshoz.\n\nHa nem adod meg a fiókod jelszavát, a Kill Switch ki lesz kapcsolva.";
+"_kill_switch_helper_update_popup_body" = "A frissítéshez meg kell adnod a fiókod jelszavát. Amikor a kérés megjelenik, kérlek írd be a %@ -ot az elfogadáshoz.\n\nHa nem adod meg a fiókod jelszavát, a kill switch ki lesz kapcsolva.";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokkolva lesz az összes hálózati forgalmat, ha a VPN-alagút elveszik. Vedd figyelembe, hogy a VPN-kapcsolat megszűnik, amikor átváltasz a Mac-fiókra.";
