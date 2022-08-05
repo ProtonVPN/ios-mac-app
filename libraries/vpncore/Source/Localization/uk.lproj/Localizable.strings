@@ -74,7 +74,7 @@
 "_allow" = "Дозволити";
 
 /* (No Comment) */
-"_allow_lan_description" = "Щоб дозволити LAN-доступ, необхідно вимкнути Kill Switch.\n\nПродовжити?";
+"_allow_lan_description" = "Щоб дозволити LAN-доступ, необхідно вимкнути kill switch.\n\nПродовжити?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Дозволяє обійти VPN і з'єднатися з пристроями у вашій локальній мережі, наприклад, принтер.";
@@ -497,7 +497,7 @@
 "_error_wrong_payment_token_status" = "Неправильний стан платіжного токена. Будь ласка, перезапустіть програму. Якщо помилка не зникне, зв'яжіться зі службою підтримки.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN використовує мережевий фільтр пакетів для забезпечення режиму Kill Switch. Увімкнувши Kill Switch, ви перезапишете поточні налаштування мережевого екрана. Якщо ви використовуєте цю конфігурацію мережевого екрана для своїх потреб, вам не слід використовувати функцію Kill Switch.\n\nЩоб використовувати Kill Switch та перезаписати поточні налаштування мережевого екрана, оберіть ПРОДОВЖИТИ.\n\nЩоб вимкнути Kill Switch і продовжити користуватися мережевим екраном без змін, оберіть СКАСУВАТИ.";
+"_existing_firewall_popup_body" = "Proton VPN використовує мережевий фільтр пакетів для забезпечення режиму kill switch. Увімкнувши kill switch, ви перезапишете поточні налаштування мережевого екрана. Якщо ви використовуєте цю конфігурацію мережевого екрана для своїх потреб, вам не слід використовувати функцію kill switch.\n\nЩоб використовувати kill switch та перезаписати поточні налаштування мережевого екрана, оберіть ПРОДОВЖИТИ.\n\nЩоб вимкнути kill switch і продовжити користуватися мережевим екраном без змін, оберіть СКАСУВАТИ.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Виявлено мережевий екран";
@@ -689,55 +689,55 @@
 "_ip_will_not_be_exposed" = "Ваш IP не буде викрито.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch блокує всі з'єднання";
+"_kill_switch_blocking_connection" = "Kill switch блокує всі з'єднання";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Вимкнути Kill Switch";
+"_kill_switch_disable" = "Вимкнути kill switch";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Припиніть роботу тих програм для виправлення проблеми.\nЩоб продовжити перегляд без Kill Switch, натисніть Продовжити.";
+"_kill_switch_error_foot" = "Припиніть роботу тих програм для виправлення проблеми.\nЩоб продовжити перегляд без kill switch, натисніть Продовжити.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Деякі програми, наприклад, антивіруси чи мережеві екрани, можуть конфліктувати з функцією Kill Switch, не дозволяючи їм працювати належним чином.";
+"_kill_switch_error_head" = "Деякі програми, наприклад, антивіруси чи мережеві екрани, можуть конфліктувати з функцією kill switch, не дозволяючи їм працювати належним чином.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch працює з мережевим екраном macOS.\nЯкщо є інші програми, пов'язані з мережевим екраном, вони можуть взаємодіяти з Kill Switch від Proton VPN. Припинення роботи таких програм може відновити правила мережевого екрана, встановлені Kill Switch.";
+"_kill_switch_error_info" = "Kill switch працює з мережевим екраном macOS.\nЯкщо є інші програми, пов'язані з мережевим екраном, вони можуть взаємодіяти з kill switch від Proton VPN. Припинення роботи таких програм може відновити правила мережевого екрана, встановлені kill switch.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Виявлено помилку Kill Switch";
+"_kill_switch_error_title" = "Виявлено помилку kill switch";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Виникла проблема під час встановлення чи оновлення Kill Switch.\n\nЩоб спробувати знову, натисніть ПОВТОРИТИ.\n\nЩоб продовжити без Kill Switch, натисніть ВИМКНУТИ.";
+"_kill_switch_helper_install_issue_popup_body" = "Виникла проблема під час встановлення чи оновлення kill switch.\n\nЩоб спробувати знову, натисніть ПОВТОРИТИ.\n\nЩоб продовжити без kill switch, натисніть ВИМКНУТИ.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Щоб увімкнути Kill Switch, ви можете отримати запит про надання пароля облікового запису вашого комп'ютера. Якщо такий запит з'явиться, введіть свій %@ і схваліть.\n\nВи можете побачити цей запит знову, після оновлень вашої програми Proton VPN.";
+"_kill_switch_helper_install_popup_body" = "Щоб увімкнути kill switch, ви можете отримати запит про надання пароля облікового запису вашого комп'ютера. Якщо такий запит з'явиться, введіть свій %@ і схваліть.\n\nВи можете побачити цей запит знову, після оновлень вашої програми Proton VPN.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Останнє завантажене вами оновлення вимагає надання пароля облікового запису вашого комп'ютера. Якщо такий запит з'явиться, введіть свій %@ і схваліть.\n\nЯкщо ви не введете свій пароль Mac, Kill Switch буде вимкнено.";
+"_kill_switch_helper_update_popup_body" = "Останнє завантажене вами оновлення вимагає надання пароля облікового запису вашого комп'ютера. Якщо такий запит з'явиться, введіть свій %@ і схваліть.\n\nЯкщо ви не введете свій пароль Mac, kill switch буде вимкнено.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Ваше з'єднання з Інтернетом відновиться одразу, як Proton VPN повторно з'єднається з сервером.\nЩоб користуватися Інтернетом без VPN та захисту Kill Switch, скасуйте повторне з'єднання з сервером.";
+"_kill_switch_reconnection" = "Ваше з'єднання з Інтернетом відновиться одразу, як Proton VPN повторно з'єднається з сервером.\nЩоб користуватися Інтернетом без VPN та захисту kill switch, скасуйте повторне з'єднання з сервером.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "без";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Захист Kill Switch";
+"_kill_switch_reconnection_bold2" = "Захист kill switch";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Скасувати повторне з'єднання";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch захищає вашу IP-адресу";
+"_kill_switch_reconnection_header" = "Kill switch захищає вашу IP-адресу";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
@@ -746,10 +746,10 @@
 "_ks_dont_ask" = "Надалі не запитувати";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Щоб увімкнути Kill Switch, вам необхідно завантажити і встановити %@.\nБудь ласка, встановіть його перед увімкненням Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Щоб увімкнути kill switch, вам необхідно завантажити і встановити %@.\nБудь ласка, встановіть його перед увімкненням kill switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN не зміг виявити %@. Щоб увімкнути Kill Switch, спершу встановіть програмне забезпечення.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN не зміг виявити %@. Щоб увімкнути kill switch, спершу встановіть програмне забезпечення.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Підтримка бібліотеки Swift 5 Runtime";
@@ -980,13 +980,13 @@
 "_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
-"_neks_t2_description" = "Використання Kill Switch нестабільне на цьому пристрої.\n\nВаш пристрій має чип безпеки T2, що може призвести до проблем зі стабільністю системи, якщо функціональність Kill Switch macOS використовується Proton VPN.";
+"_neks_t2_description" = "Використання kill switch нестабільне на цьому пристрої.\n\nВаш пристрій має чип безпеки T2, що може призвести до проблем зі стабільністю системи, якщо функціональність kill switch macOS використовується Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Чип безпеки T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Попередження про стабільність Kill Switch";
+"_neks_t2_title" = "Попередження про стабільність kill switch";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Для зміни режиму NetShield ваше з'єднання буде перезапущено.";
@@ -1256,7 +1256,7 @@
 "_quick_settings_killSwitch_description" = "Вимикає Інтернет, якщо VPN-з'єднання скидається для запобігання випадкового розкриття IP-адреси.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Якщо ви не можете з'єднатися з пристроями у вашій локальній мережі, спробуйте вимкнути Kill Switch.";
+"_quick_settings_killSwitch_note" = "Якщо ви не можете з'єднатися з пристроями у вашій локальній мережі, спробуйте вимкнути kill switch.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Користуйтеся Інтернетом без реклами і зловмисних програм.";
@@ -1289,7 +1289,7 @@
 "_quick_settings_tour_feature_2" = "Користуйтеся вільним Інтернетом без реклами і зловмисних програм з NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Запобігайте викриттю своєї IP-адреси, увімкнувши Kill Switch.";
+"_quick_settings_tour_feature_3" = "Запобігайте викриттю своєї IP-адреси, увімкнувши kill switch.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Швидкі налаштування";
@@ -1731,10 +1731,10 @@
 /* MacOS: connecting overlay */
 "_timed_out" = "час очікування завершився";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Інша програма може взаємодіяти з Kill Switch. Щоб виправити цю проблему, перемкніть на протокол OpenVPN чи вимкніть Kill Switch та повторіть спробу.";
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Інша програма може взаємодіяти з kill switch. Щоб виправити цю проблему, перемкніть на протокол OpenVPN чи вимкніть kill switch та повторіть спробу.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Перемкнути на OpenVPN і повторити спробу";
 
 /* (No Comment) */
@@ -1869,13 +1869,13 @@
 "_try_again" = "Спробувати знову";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Вимкніть Kill Switch і повторіть спробу";
+"_try_again_without_killswitch" = "Вимкніть kill switch і повторіть спробу";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Активувавши Kill Switch, ви не зможете отримати доступ до пристроїв у вашій локальній мережі. \n\nПродовжити?";
+"_turn_ks_on_description" = "Активувавши kill switch, ви не зможете отримати доступ до пристроїв у вашій локальній мережі. \n\nПродовжити?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Увімкнути Kill Switch?";
+"_turn_ks_on_title" = "Увімкнути kill switch?";
 
 /* (No Comment) */
 "_turn_on" = "Увімкнути";
@@ -2058,16 +2058,16 @@
 "_welcome_title" = "ЛАСКАВО ПРОСИМО НА БОРТ!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill Switch перешкоджає з'єднанню VPN з Інтернетом. Це може бути пов'язане з несумісністю вашої операційної системи (macOS Catalіna 10.15).\n\nЩоб вирішити цю проблему, обновіть операційну систему до останньої версії.\n\nТакож ви можете перейти на протокол OpenVPN або вимкнути Kill Switch.";
+"_wgks_description" = "Kill switch перешкоджає з'єднанню VPN з Інтернетом. Це може бути пов'язане з несумісністю вашої операційної системи (macOS Catalіna 10.15).\n\nЩоб вирішити цю проблему, обновіть операційну систему до останньої версії.\n\nТакож ви можете перейти на протокол OpenVPN або вимкнути kill switch.";
 
-/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Вимкнути Kill Switch";
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Вимкнути kill switch";
 
 /* (No Comment) */
 "_wgks_ovpn" = "Перемкнутися на OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill Switch запобігає VPN з'єднуватись з Інтернетом";
+"_wgks_title" = "Kill switch запобігає VPN з'єднуватись з Інтернетом";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS віджет";

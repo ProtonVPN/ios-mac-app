@@ -65,7 +65,7 @@
 "_allow" = "اجازه بده";
 
 /* (No Comment) */
-"_allow_lan_description" = "برای اجازه دادن به دسترسی به شبکهٔ محلی (LAN)، Kill Switch باید خاموش شود.\n\nادامه می‌دهید؟";
+"_allow_lan_description" = "برای اجازه دادن به دسترسی به شبکهٔ محلی (LAN)، kill switch باید خاموش شود.\n\nادامه می‌دهید؟";
 
 /* (No Comment) */
 "_allow_lan_info" = "اجازه می‌دهد که از VPN عبور کند و به دستگاه‌های موجود در شبکه محلی، مانند چاپگرتان متصل شود.";
@@ -461,7 +461,7 @@
 "_error_wrong_payment_token_status" = "وضعیت اشتباه توکن پرداخت. لطفاً اپ را دوباره راه‌ بیاندازید. اگر خطا پافشاری کرد، با پشتیبانی تماس بگیرید.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "برنامه Proton VPN برای امکان Kill Switch از فایروال خود برای فیلتر کردن بسته‌های دریافتی بهره می‌برد. با فعال‌سازی Kill Switch، تنظیمات این فایروال بر روی دستگاه شما بازنگاری می‌شود. اگر شما به پیکربندی فایروال فعلی خود اطمینان دارید، بهتر است از قابلیت Kill Switch استفاده نکنید.\n\nبرای استفاده از Kill Switch و بازنگاری اطلاعات بر روی تنظیمات فعلی فایروال، کلید 'ادامه' را فشار دهید.\n\nبرای خاموش کردن Kill Switch و ادامه با فایروال فعلی، گزینه 'لغو' را انتخاب کنید.";
+"_existing_firewall_popup_body" = "برنامه Proton VPN برای امکان kill switch از فایروال خود برای فیلتر کردن بسته‌های دریافتی بهره می‌برد. با فعال‌سازی kill switch، تنظیمات این فایروال بر روی دستگاه شما بازنگاری می‌شود. اگر شما به پیکربندی فایروال فعلی خود اطمینان دارید، بهتر است از قابلیت kill switch استفاده نکنید.\n\nبرای استفاده از kill switch و بازنگاری اطلاعات بر روی تنظیمات فعلی فایروال، کلید 'ادامه' را فشار دهید.\n\nبرای خاموش کردن kill switch و ادامه با فایروال فعلی، گزینه 'لغو' را انتخاب کنید.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "دیوار آتش تشخیص داده شد";
@@ -626,64 +626,64 @@
 "_ip_will_not_be_exposed" = "IP شما آشکار نخواهد شد.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch از IP شما حفاظت می‌کند\n\nاتصال اینترنت شما به محض اتصال مجدد Proton VPN به یک سرور ادامه خواهد یافت. برای اینکه بدون حفاظت VPN ادامه دهید، Kill Switch را غیرفعّال کنید.";
+"_kill_switch_blocking_body" = "Kill switch از IP شما حفاظت می‌کند\n\nاتصال اینترنت شما به محض اتصال مجدد Proton VPN به یک سرور ادامه خواهد یافت. برای اینکه بدون حفاظت VPN ادامه دهید، kill switch را غیرفعّال کنید.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch همه ارتباطات را مسدود کرده است";
+"_kill_switch_blocking_connection" = "Kill switch همه ارتباطات را مسدود کرده است";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "غیرفعال کردن Kill Switch";
+"_kill_switch_disable" = "غیرفعال کردن kill switch";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون Kill Switch, دکمه ادامه را بزنید.";
+"_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون kill switch, دکمه ادامه را بزنید.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "بعضی برنامه‌ها، مانند ضد-ویروسها یا دیوارهای آتشین، ممکن است با Kill Switch, تضاد ایجاد کنند، بطوریکه موجب عدم کار کردن درست آن بشوند.";
+"_kill_switch_error_head" = "بعضی برنامه‌ها، مانند ضد-ویروسها یا دیوارهای آتشین، ممکن است با kill switch, تضاد ایجاد کنند، بطوریکه موجب عدم کار کردن درست آن بشوند.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch با دیوار آتشین macOS کار می‌کند. اگر برنامه‌های دیگری وجود دارند که با دیوار آتشین در ارتباط هستند، آنها ممکن است که با Proton VPN’s Kill Switch تداخل کنند. پایان دادن به آن برنامه‌ها می‌تواند قوانین دیوار آتشین ایجاد شده توسط Kill Switch را دوباره برقرار کند.";
+"_kill_switch_error_info" = "Kill switch با دیوار آتشین macOS کار می‌کند. اگر برنامه‌های دیگری وجود دارند که با دیوار آتشین در ارتباط هستند، آنها ممکن است که با Proton VPN’s kill switch تداخل کنند. پایان دادن به آن برنامه‌ها می‌تواند قوانین دیوار آتشین ایجاد شده توسط kill switch را دوباره برقرار کند.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "یک خطا در عملکرد Kill Switch شناسایی شد";
+"_kill_switch_error_title" = "یک خطا در عملکرد kill switch شناسایی شد";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "مشکلی در نصب یا به‌روزرسانی Kill Switch به وجود آمد.\n\nبرای دوباره امتحان‌کردن، 'تلاش مجدد' را انتخاب کنید.\n\nبرای ادامه کار بدون Kill Switch، گزینه 'غیرفعال‌سازی' را انتخاب کنید.";
+"_kill_switch_helper_install_issue_popup_body" = "مشکلی در نصب یا به‌روزرسانی kill switch به وجود آمد.\n\nبرای دوباره امتحان‌کردن، 'تلاش مجدد' را انتخاب کنید.\n\nبرای ادامه کار بدون kill switch، گزینه 'غیرفعال‌سازی' را انتخاب کنید.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "برای فعال‌سازی Kill Switch، احتمالا باید رمزعبور کامپیوتر را از مسئول مربوطه دریافت کنید. اگر این درخواست ظاهر شد، %@ خود را وارد کرده و شرایط را قبول کنید.\n\nاحتمالا در آینده هم گاهی این درخواست را به هنگام دریافت بسته‌های به‌روزرسانی Proton VPN مشاهده می‌کنید.";
+"_kill_switch_helper_install_popup_body" = "برای فعال‌سازی kill switch، احتمالا باید رمزعبور کامپیوتر را از مسئول مربوطه دریافت کنید. اگر این درخواست ظاهر شد، %@ خود را وارد کرده و شرایط را قبول کنید.\n\nاحتمالا در آینده هم گاهی این درخواست را به هنگام دریافت بسته‌های به‌روزرسانی Proton VPN مشاهده می‌کنید.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "رمزعبور کامپیوتر شده برای نصب تازه‌ترین به‌روزرسانی‌ای که دانلود کرده‌اید مورد نیاز است. زمانی که درخواست رمزعبور ظاهر شد، لطفا %@ را وارد کرده و شرایط را قبول کنید.\n\nاگر شما رمز عبور مک خود را وارد نکنید، Kill Switch خاموش خواهد شد.";
+"_kill_switch_helper_update_popup_body" = "رمزعبور کامپیوتر شده برای نصب تازه‌ترین به‌روزرسانی‌ای که دانلود کرده‌اید مورد نیاز است. زمانی که درخواست رمزعبور ظاهر شد، لطفا %@ را وارد کرده و شرایط را قبول کنید.\n\nاگر شما رمز عبور مک خود را وارد نکنید، kill switch خاموش خواهد شد.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "اتصال اینترنت شما به محض اتصال مجدد Proton VPN به یک سرور دوباره از سر گرفته خواهد شد.\nبرای استفاده از اینترنت بدون محافظت VPN و Kill Switch, اتصال دوباره به سرور را لغو کنید.";
+"_kill_switch_reconnection" = "اتصال اینترنت شما به محض اتصال مجدد Proton VPN به یک سرور دوباره از سر گرفته خواهد شد.\nبرای استفاده از اینترنت بدون محافظت VPN و kill switch, اتصال دوباره به سرور را لغو کنید.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "بدون";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "حفاظت Kill Switch";
+"_kill_switch_reconnection_bold2" = "حفاظت kill switch";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "لغو اتصال دوباره";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill Switch از IP شما حفاظت می‌کند";
+"_kill_switch_reconnection_header" = "Kill switch از IP شما حفاظت می‌کند";
 
 /* (No Comment) */
 "_ks_dont_ask" = "دوباره از من نپرس";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "برای فعال کردن Kill Switch، شما لازم است که %@ را بارگیری و نصب کنید.\nلطفاً قبل از فعال کردن Kill Switch آن را نصب کنید.";
+"_ks_requires_swift5_popup_msg" = "برای فعال کردن kill switch، شما لازم است که %@ را بارگیری و نصب کنید.\nلطفاً قبل از فعال کردن kill switch آن را نصب کنید.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN نتوانست %@ را کشف کند. برای فعال کردن Kill Switch، لطفاً ابتدا نرم‌افزار را نصب کنید.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN نتوانست %@ را کشف کند. برای فعال کردن kill switch، لطفاً ابتدا نرم‌افزار را نصب کنید.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "کتابخانه پشتیبانی Swift 5 Runtime";
@@ -1148,7 +1148,7 @@
 "_quick_settings_killSwitch_description" = "اگر اتصال VPN سقوط کند اینترنت را غیرفعّال می‌کند تا از نشت تصادفی IP جلوگیری کند.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "اگر نمی‌توانید به دستگاه‌های روی شبکهٔ محلی خود متصل شوید، غیرفعال کردن Kill Switch را امتحان کنید.";
+"_quick_settings_killSwitch_note" = "اگر نمی‌توانید به دستگاه‌های روی شبکهٔ محلی خود متصل شوید، غیرفعال کردن kill switch را امتحان کنید.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "اینترنت را بدون آگهی و بدافزار مرور کنید.";
@@ -1181,7 +1181,7 @@
 "_quick_settings_tour_feature_2" = "با NetShield وب را آزاد از بدافزار و آگهی بگردید.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "از آشکار شدن IP خود با روشن کردن Kill Switch جلوگیری کنید.";
+"_quick_settings_tour_feature_3" = "از آشکار شدن IP خود با روشن کردن kill switch جلوگیری کنید.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "تنظیمات سریع";
@@ -1530,7 +1530,7 @@
 /* MacOS: connecting overlay */
 "_timed_out" = "وقفه";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "به OpenVPN تغییر دهید و دوباره امتحان کنید";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
@@ -1656,10 +1656,10 @@
 "_try_again" = "تلاش دوباره";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Kill Switch را غیرفعال و دوباره امتحان کنید";
+"_try_again_without_killswitch" = "Kill switch را غیرفعال و دوباره امتحان کنید";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Kill Switch روشن شود؟";
+"_turn_ks_on_title" = "Kill switch روشن شود؟";
 
 /* (No Comment) */
 "_turn_on" = "روشن";
@@ -1832,8 +1832,8 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "خوش آمدید!";
 
-/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "غیرفعال کردن Kill Switch";
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "غیرفعال کردن kill switch";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "ویجت iOS";

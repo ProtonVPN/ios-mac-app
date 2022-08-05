@@ -980,13 +980,13 @@
 "_neks_t2_connect" = "Enable anyway";
 
 /* (No Comment) */
-"_neks_t2_description" = "Bu aygıt üzerinde Kill Switch kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN Kill Switch özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
+"_neks_t2_description" = "Bu aygıt üzerinde kill switch kullanımı sorunlara yol açar.\n\nAygıtınızda macOS üzerinde Proton VPN kill switch özelliği kullanıldığında kararsızlığa yol açan T2 güvenlik çipi bulunuyor.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2 güvenlik çipi";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill Switch kararsızlığı uyarısı";
+"_neks_t2_title" = "Kill switch kararsızlığı uyarısı";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "NetShield kipini değiştirmek için bağlantınız yeniden başlatılacak.";
@@ -1731,10 +1731,10 @@
 /* MacOS: connecting overlay */
 "_timed_out" = "zaman aşımına uğradı";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Başka bir uygulama bağlantı kesici ile etkileşebilir. Bu sorunu çözmek için OpenVPN iletişim kuralına geçin ya da Bağlantı kesiciyi devre dışı bırakarak yeniden deneyin.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "OpenVPN kullanmaya geçerek yeniden deneyin";
 
 /* (No Comment) */
@@ -2060,7 +2060,7 @@
 /* (No Comment) */
 "_wgks_description" = "Bağlantı kesici, VPN internet bağlantısını engelliyor. Bunun nedeni işletim sisteminizle (macOS Catalina 10.15) uyumsuzluk olabilir.\n\nBu sorunu çözmek için işletim sisteminizi son sürüme güncelleyin.\n\nAlternatif olarak, OpenVPN iletişim kuralına geçebilir veya Bağlantı kesiciyi devre dışı bırakabilirsiniz.";
 
-/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Bağlantı kesiciyi devre dışı bırak";
 
 /* (No Comment) */

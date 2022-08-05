@@ -689,7 +689,7 @@
 "_ip_will_not_be_exposed" = "Votre adresse IP ne sera pas exposée.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
@@ -698,10 +698,10 @@
 "_kill_switch_blocking_connection" = "La fonction kill switch bloque toutes les connexions.";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Désactiver Kill Switch";
+"_kill_switch_disable" = "Désactiver kill switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Fermez ces applications pour résoudre le problème.\nPour continuer à naviguer sans la fonction kill switch, cliquez sur Continuer.";
@@ -719,13 +719,13 @@
 "_kill_switch_helper_install_issue_popup_body" = "La fonction kill switch a rencontré un problème lors de son installation ou mise à jour.\n\nPour réessayer, cliquez sur RÉESSAYER.\n\nPour continuer sans la fonction kill switch, cliquez sur DÉSACTIVER.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Pour activer Kill Switch, il est possible que l'on vous demande le mot de passe du compte de votre ordinateur. Si cette demande se présente, entrez votre %@ et acceptez.\n\nCette demande pourrait réapparaître occasionnellement, lorsque l'app Proton VPN reçoit des mises à jour.";
+"_kill_switch_helper_install_popup_body" = "Pour activer kill switch, il est possible que l'on vous demande le mot de passe du compte de votre ordinateur. Si cette demande se présente, entrez votre %@ et acceptez.\n\nCette demande pourrait réapparaître occasionnellement, lorsque l'app Proton VPN reçoit des mises à jour.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "La dernière mise à jour que vous avez téléchargée vous demande de fournir le mot de passe de votre compte d'ordinateur. Lorsque la requête apparaît, veuillez entrer votre %@ et accepter.\n\nSi vous ne saisissez pas votre mot de passe Mac, la fonction kill switch sera désactivée.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Votre connexion internet sera rétablie dès que Proton VPN se reconnectera à un serveur.\nPour utiliser internet sans VPN et sans la protection Kill Switch, annulez la reconnexion au serveur.";
+"_kill_switch_reconnection" = "Votre connexion internet sera rétablie dès que Proton VPN se reconnectera à un serveur.\nPour utiliser internet sans VPN et sans la protection kill switch, annulez la reconnexion au serveur.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sans";
@@ -1731,10 +1731,10 @@
 /* MacOS: connecting overlay */
 "_timed_out" = "temps écoulé";
 
-/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Une autre application peut interférer avec la fonction kill switch. Pour résoudre ce problème, passez au protocole OpenVPN ou désactivez la fonction kill switch et réessayez.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Basculer vers OpenVPN et réessayer";
 
 /* (No Comment) */
@@ -1869,13 +1869,13 @@
 "_try_again" = "Réessayer";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Désactiver Kill Switch et réessayer";
+"_try_again_without_killswitch" = "Désactiver kill switch et réessayer";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "En activant Kill Switch, vous ne pourrez pas accéder aux appareils de votre réseau local. \n\nContinuer ?";
+"_turn_ks_on_description" = "En activant kill switch, vous ne pourrez pas accéder aux appareils de votre réseau local. \n\nContinuer ?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Activer Kill Switch ?";
+"_turn_ks_on_title" = "Activer kill switch ?";
 
 /* (No Comment) */
 "_turn_on" = "Activer";
@@ -2060,8 +2060,8 @@
 /* (No Comment) */
 "_wgks_description" = "Kill switch empêche le VPN de se connecter à internet. Cela peut être dû à une incompatibilité avec votre système d'exploitation (macOS Catalina 10.15).\n\nPour résoudre ce problème, mettez à jour votre système d'exploitation vers la dernière version.\n\nAlternativement, vous pouvez passer au protocole OpenVPN ou désactiver kill switch.";
 
-/* Also used for disabling Kill Switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Désactiver Kill Switch";
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Désactiver kill switch";
 
 /* (No Comment) */
 "_wgks_ovpn" = "Passer à OpenVPN";

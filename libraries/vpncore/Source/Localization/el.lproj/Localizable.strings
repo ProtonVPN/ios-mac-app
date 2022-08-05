@@ -422,7 +422,7 @@
 "_error_vpn_session_is_active" = "Η περίοδος συνεδρίας Proton VPN είναι ενεργή";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Το Proton VPN χρησιμοποιεί ένα firewall πακέτων φίλτρων για την εφαρμογή ενός Kill Switch. Με την ενεργοποίηση του Kill Switch, θα αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall της συσκευής σας. Αν βασίζεστε σε αυτή τη διαμόρφωση του firewall, δεν θα πρέπει να χρησιμοποιήσετε το Kill Switch.\n\nΓια να χρησιμοποιήσετε τον Kill Switch και να αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall, επιλέξτε CONTINUE.\n\nΓια να απενεργοποιήσετε τον Kill Switch και να συνεχίσετε να χρησιμοποιείτε το τρέχον firewall, επιλέξτε CANCEL.";
+"_existing_firewall_popup_body" = "Το Proton VPN χρησιμοποιεί ένα firewall πακέτων φίλτρων για την εφαρμογή ενός kill switch. Με την ενεργοποίηση του kill switch, θα αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall της συσκευής σας. Αν βασίζεστε σε αυτή τη διαμόρφωση του firewall, δεν θα πρέπει να χρησιμοποιήσετε το kill switch.\n\nΓια να χρησιμοποιήσετε τον kill switch και να αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall, επιλέξτε CONTINUE.\n\nΓια να απενεργοποιήσετε τον kill switch και να συνεχίσετε να χρησιμοποιείτε το τρέχον firewall, επιλέξτε CANCEL.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Εντοπίστηκε Firewall";
@@ -578,31 +578,31 @@
 "_ip_value" = "IP: %@";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Έχετε χάσει τη σύνδεση με το διακομιστή VPN. Το Kill Switch μπλοκάρει όλες τις συνδέσεις για να αποφύγει τη διαρροή των δεδομένων σας. Το Proton VPN θα προσπαθήσει να επανασυνδεθεί αυτόματα. Για να απορρίψετε αυτό το παράθυρο, κάντε κλικ στο κουμπί OK.\n\nΕάν θέλετε να απενεργοποιήσετε προσωρινά το Kill Switch και να επανασυνδεθείτε στο Internet ΧΩΡΙΣ προστασια VPN, κάντε κλικ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.\n\nΓια να κλείστε το Kill Switch μόνιμα, πηγαίνετε στο %@.";
+"_kill_switch_blocking_body" = "Έχετε χάσει τη σύνδεση με το διακομιστή VPN. Το kill switch μπλοκάρει όλες τις συνδέσεις για να αποφύγει τη διαρροή των δεδομένων σας. Το Proton VPN θα προσπαθήσει να επανασυνδεθεί αυτόματα. Για να απορρίψετε αυτό το παράθυρο, κάντε κλικ στο κουμπί OK.\n\nΕάν θέλετε να απενεργοποιήσετε προσωρινά το kill switch και να επανασυνδεθείτε στο Internet ΧΩΡΙΣ προστασια VPN, κάντε κλικ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.\n\nΓια να κλείστε το kill switch μόνιμα, πηγαίνετε στο %@.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Το Kill Switch μπλοκάρει όλες τις συνδέσεις";
+"_kill_switch_blocking_connection" = "Το kill switch μπλοκάρει όλες τις συνδέσεις";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Το Kill Switch αυτή τη στιγμή εμποδίζει διαρροές IP";
+"_kill_switch_blocking_title" = "Το kill switch αυτή τη στιγμή εμποδίζει διαρροές IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Ο Kill Switch δεν λειτουργεί σωστά. Αν θέλετε να αναφέρετε αυτό το σφάλμα στην ομάδα υποστήριξης του Proton VPN, κάντε κλικ στην επιλογή Αναφορά.\nΕάν θέλετε να αγνοήσετε αυτό το σφάλμα και να συνεχίσετε να περιηγείστε στο Internet ΧΩΡΙΣ Kill Switch, κάντε κλικ στην επιλογή Αγνόηση.";
+"_kill_switch_error_body" = "Ο kill switch δεν λειτουργεί σωστά. Αν θέλετε να αναφέρετε αυτό το σφάλμα στην ομάδα υποστήριξης του Proton VPN, κάντε κλικ στην επιλογή Αναφορά.\nΕάν θέλετε να αγνοήσετε αυτό το σφάλμα και να συνεχίσετε να περιηγείστε στο Internet ΧΩΡΙΣ kill switch, κάντε κλικ στην επιλογή Αγνόηση.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Έχει εντοπιστεί σφάλμα Kill Switch";
+"_kill_switch_error_title" = "Έχει εντοπιστεί σφάλμα kill switch";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Παρουσιάστηκε πρόβλημα κατά την εγκατάσταση ή την ενημέρωση του Kill Switch.\n\nΓια να προσπαθήστε ξανά, κάντε κλικ στο ΕΠΑΝΑΛΗΨΗ.\n\nΓια να συνεχίσετε χωρίς το Kill Switch, κάντε κλικ στο ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.";
+"_kill_switch_helper_install_issue_popup_body" = "Παρουσιάστηκε πρόβλημα κατά την εγκατάσταση ή την ενημέρωση του kill switch.\n\nΓια να προσπαθήστε ξανά, κάντε κλικ στο ΕΠΑΝΑΛΗΨΗ.\n\nΓια να συνεχίσετε χωρίς το kill switch, κάντε κλικ στο ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Για να ενεργοποιήσετε το Kill Switch, ίσως σας ζητηθεί να δώσετε τον κωδικό του λογαριασμού υπολογιστή σας. Εάν εμφανιστεί ένα αίτημα, πληκτρολογήστε το %@ και κάντε αποδοχή.\n\nΕνδέχεται να δείτε ξανά αυτό το αίτημα περιστασιακά όταν η εφαρμογή Proton VPN λαμβάνει ενημερώσεις.";
+"_kill_switch_helper_install_popup_body" = "Για να ενεργοποιήσετε το kill switch, ίσως σας ζητηθεί να δώσετε τον κωδικό του λογαριασμού υπολογιστή σας. Εάν εμφανιστεί ένα αίτημα, πληκτρολογήστε το %@ και κάντε αποδοχή.\n\nΕνδέχεται να δείτε ξανά αυτό το αίτημα περιστασιακά όταν η εφαρμογή Proton VPN λαμβάνει ενημερώσεις.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Η πιο πρόσφατη ενημέρωση που κατεβάσατε, απαιτεί να δώσετε τον κωδικό πρόσβασης του υπολογιστή σας. Όταν εμφανιστεί το αίτημα, εισαγάγετε το %@ και αποδεχτείτε.\n\nΕάν δεν εισάγετε τον κωδικό Mac σας, το Kill Switch θα απενεργοποιηθεί.";
+"_kill_switch_helper_update_popup_body" = "Η πιο πρόσφατη ενημέρωση που κατεβάσατε, απαιτεί να δώσετε τον κωδικό πρόσβασης του υπολογιστή σας. Όταν εμφανιστεί το αίτημα, εισαγάγετε το %@ και αποδεχτείτε.\n\nΕάν δεν εισάγετε τον κωδικό Mac σας, το kill switch θα απενεργοποιηθεί.";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Μπλοκάρει όλη την κίνηση δικτύου όταν χαθεί το VPN tunnel. Σημειώστε ότι η σύνδεση VPN θα τερματιστεί όταν εναλλάσετε λογαριασμούς Mac.";
