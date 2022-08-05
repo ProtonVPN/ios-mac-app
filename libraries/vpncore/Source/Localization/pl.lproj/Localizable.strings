@@ -725,7 +725,7 @@
 "_kill_switch_helper_update_popup_body" = "Najnowsza aktualizacja wymaga wpisania hasła do konta użytkownika. Po pojawieniu się komunikatu, wpisz swoje %@ i zatwierdź.\n\nJeśli nie wpiszesz swojego hasła Mac, funkcja kill switch zostanie wyłączona.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Połączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem.\nAby korzystać z Internetu bez ochrony VPN i funkcji kill switch, anuluj ponowne łączenie z serwerem.";
+"_kill_switch_reconnection" = "Połączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem.\nAby korzystać z internetu bez ochrony VPN i funkcji kill switch, anuluj ponowne łączenie z serwerem.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "bez";
@@ -773,7 +773,7 @@
 "_loading_connection_info_for" = "Ładowanie informacji o połączeniu %@";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Bezpieczny Internet w każdym miejscu";
+"_loading_screen_slogan" = "Bezpieczny internet w każdym miejscu";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_message" = "Nie masz dostępu do tego serwera. Połącz się z innym serwerem lub ulepsz plan.";
@@ -947,7 +947,7 @@
 "_ne_network_connection_lost" = "Połączenie z siecią zostało utracone";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Nie jesteś podłączony do Internetu";
+"_ne_not_connected_to_the_internet" = "Nie jesteś podłączony do internetu";
 
 /* Network error */
 "_ne_request_timed_out" = "Upłynął limit czasu żądania sieci";
@@ -1052,7 +1052,7 @@
 "_not_connected" = "Nie połączono";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Nie udało się ustanowić połączenia VPN. Nie jesteś podłączony do Internetu.";
+"_not_connected_to_the_internet" = "Nie udało się ustanowić połączenia VPN. Nie jesteś podłączony do internetu.";
 
 /* (No Comment) */
 "_not_now" = "Nie teraz";
@@ -1253,13 +1253,13 @@
 "_quick_settings_get_plus" = "Wybierz plan Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Blokuje połączenie z Internetem, aby zapobiec wyciekowi adresu IP, gdy połączenie VPN zostanie rozłączone.";
+"_quick_settings_killSwitch_description" = "Blokuje połączenie z internetem, aby zapobiec wyciekowi adresu IP, gdy połączenie VPN zostanie rozłączone.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Jeśli nie możesz połączyć się z urządzeniami w sieci lokalnej, wyłącz funkcję kill switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania.";
+"_quick_settings_netShield_description" = "Przeglądaj internet bez reklam i złośliwego oprogramowania.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Jeśli strony internetowe się nie ładują, spróbuj wyłączyć funkcję NetShield";
@@ -1286,7 +1286,7 @@
 "_quick_settings_tour_feature_1" = "Dodaj dodatkowe zabezpieczenie za pomocą funkcji Secure Core.";
 
 /* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania dzięki funkcji NetShield.";
+"_quick_settings_tour_feature_2" = "Przeglądaj internet bez reklam i złośliwego oprogramowania dzięki funkcji NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Włączenie funkcji kill switch zapobiega ujawnieniu Twojego adresu IP.";
@@ -1622,7 +1622,7 @@
 "_sysex_cannot_enable" = "Nie można włączyć rozszerzenia systemu";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Konfiguracja została zakończona. Możesz przeglądać Internet szybciej dzięki najlepszej technologii VPN.";
+"_sysex_enabled_description" = "Konfiguracja została zakończona. Możesz przeglądać internet szybciej dzięki najlepszej technologii VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Konfiguracja została zakończona";
@@ -1759,7 +1759,7 @@
 "_trial_popup_call_to_upgrade" = "Ulepsz swój plan, aby uzyskać stały dostęp do funkcji planu Proton VPN Plus.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Ciesz się wszystkimi zaletami bezpiecznego Internetu w każdym miejscu dzięki usłudze Proton VPN";
+"_trial_popup_enjoy" = "Ciesz się wszystkimi zaletami bezpiecznego internetu w każdym miejscu dzięki usłudze Proton VPN";
 
 /* Final text:
  
@@ -1824,13 +1824,13 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problem z dostawcą Internetu (ISP)";
+"_troubleshoot_item_isp_title" = "Problem z dostawcą internetu (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Upewnij się, że Twoje połączenie sieciowe działa.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Brak połączenia z Internetem";
+"_troubleshoot_item_nointernet_title" = "Brak połączenia z internetem";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Skontaktuj się z nami przez formularz kontaktowy, wiadomość e-mail (%@) lub Twittera.";

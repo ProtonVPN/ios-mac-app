@@ -404,7 +404,7 @@
 "_error_mitm_title" = "Koneksi tidak aman";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "Validasi sertifikat TLS gagal ketika coba menyambung ke server VPN. Sambungan Internet Anda saat ini mungkin diawasi. Untuk menjaga keamanan data Anda, kami mencegah aplikasi mengakses server VPN ini. Silakan pilih server lain.";
+"_error_mitm_vpn_description" = "Validasi sertifikat TLS gagal ketika coba menyambung ke server VPN. Sambungan internet Anda saat ini mungkin diawasi. Untuk menjaga keamanan data Anda, kami mencegah aplikasi mengakses server VPN ini. Silakan pilih server lain.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulus tanda tangan kosong";
@@ -572,7 +572,7 @@
 "_feature_tor" = "Tor via VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Alihkan lalu lintas Internet Anda melalui jaringan Tor. Lebih lambat, namun lebih privat.";
+"_feature_tor_description" = "Alihkan lalu lintas internet Anda melalui jaringan Tor. Lebih lambat, namun lebih privat.";
 
 /* (No Comment) */
 "_features_title" = "Fitur";
@@ -947,7 +947,7 @@
 "_ne_network_connection_lost" = "Koneksi internet terputus";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Tidak terhubung ke Internet";
+"_ne_not_connected_to_the_internet" = "Tidak terhubung ke internet";
 
 /* Network error */
 "_ne_request_timed_out" = "Waktu permintaan jaringan habis";
@@ -1052,7 +1052,7 @@
 "_not_connected" = "Tidak Terhubung";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Tidak dapat menciptakan koneksi VPN. Kamu tidak sedang terhubung dengan Internet.";
+"_not_connected_to_the_internet" = "Tidak dapat menciptakan koneksi VPN. Kamu tidak sedang terhubung dengan internet.";
 
 /* (No Comment) */
 "_not_now" = "Tidak sekarang";
@@ -1253,13 +1253,13 @@
 "_quick_settings_get_plus" = "Pilih Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Matikan Internet jika sambungan VPN turun untuk mencegah kebocoran IP.";
+"_quick_settings_killSwitch_description" = "Matikan internet jika sambungan VPN turun untuk mencegah kebocoran IP.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Jika Anda tidak bisa tersambung ke perangkat di jaringan lokal Anda, coba nonaktifkan kill switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Jelajahi Internet tanpa iklan dan malware.";
+"_quick_settings_netShield_description" = "Jelajahi internet tanpa iklan dan malware.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Jika situs web tidak dimuat, coba nonaktifkan NetShield";
@@ -1824,7 +1824,7 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Masalah Penyedia Layanan Internet (ISP)";
+"_troubleshoot_item_isp_title" = "Masalah Penyedia Layanan internet (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Pastikan koneksi internet anda berfungsi.";
@@ -2058,7 +2058,7 @@
 "_welcome_title" = "SELAMAT DATANG!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch mencegah VPN untuk dapat terhubung ke Internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk dapat menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan kill switch.";
+"_wgks_description" = "Kill switch mencegah VPN untuk dapat terhubung ke internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk dapat menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan kill switch.";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Nonaktifkan kill switch";
@@ -2067,7 +2067,7 @@
 "_wgks_ovpn" = "Beralih ke OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch mencegah VPN untuk dapat terhubung ke Internet";
+"_wgks_title" = "Kill switch mencegah VPN untuk dapat terhubung ke internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";

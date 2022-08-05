@@ -563,7 +563,7 @@
 "_feature_tor" = "Tor com VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Roteie seu tráfego de Internet pela rede Tor. Mais lento, mas mais privado.";
+"_feature_tor_description" = "Roteie seu tráfego de internet pela rede Tor. Mais lento, mas mais privado.";
 
 /* (No Comment) */
 "_features_title" = "Recursos";
@@ -683,7 +683,7 @@
 "_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch está protegendo seu IP\n\nSua conexão com a Internet será retomada assim que o Proton VPN se reconectar a um servidor. Para retomar sem proteção VPN, desative kill switch.";
+"_kill_switch_blocking_body" = "Kill switch está protegendo seu IP\n\nSua conexão com a internet será retomada assim que o Proton VPN se reconectar a um servidor. Para retomar sem proteção VPN, desative kill switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch bloqueando todas as conexões";
@@ -716,7 +716,7 @@
 "_kill_switch_helper_update_popup_body" = "A atualização mais recente que você transferiu requer que você insira a senha de sua conta do computador. Quando a solicitação aparecer, digite sua %@ e aceite.\n\nSe você não inserir sua senha do Mac, o kill switch será desativado.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Sua conexão com a Internet será retomada assim que o Proton VPN se reconectar a um servidor.\nPara usar a Internet sem VPN e proteção kill switch, cancele a reconexão com o servidor.";
+"_kill_switch_reconnection" = "Sua conexão com a internet será retomada assim que o Proton VPN se reconectar a um servidor.\nPara usar a internet sem VPN e proteção kill switch, cancele a reconexão com o servidor.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sem";
@@ -1229,13 +1229,13 @@
 "_quick_settings_get_plus" = "Obter Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Desativa a Internet se a conexão VPN cair para evitar vazamento acidental de IP.";
+"_quick_settings_killSwitch_description" = "Desativa a internet se a conexão VPN cair para evitar vazamento acidental de IP.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Se você não pode se conectar a dispositivos na sua rede local, tente desabilitar o kill switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Navegue pela Internet sem anúncios e malware.";
+"_quick_settings_netShield_description" = "Navegue pela internet sem anúncios e malware.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Se os sites não carregarem, tente desativar o NetShield";
@@ -1598,7 +1598,7 @@
 "_sysex_cannot_enable" = "Não é possível ativar a extensão do sistema";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configuração concluída. Agora você pode navegar na Internet mais rápido com as melhores tecnologias de VPN.";
+"_sysex_enabled_description" = "Configuração concluída. Agora você pode navegar na internet mais rápido com as melhores tecnologias de VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Configuração concluída";
@@ -2019,7 +2019,7 @@
 "_welcome_title" = "BEM-VINDO(A) A BORDO!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch está impedindo a VPN de se conectar à Internet. Isso pode ser devido a uma incompatibilidade com seu sistema operacional (macOS Catalina 10.15).\n\nPara resolver esse problema, atualize seu sistema operacional para a versão mais recente.\n\nComo alternativa, você pode alternar para o protocolo OpenVPN ou desativar o kill switch.";
+"_wgks_description" = "Kill switch está impedindo a VPN de se conectar à internet. Isso pode ser devido a uma incompatibilidade com seu sistema operacional (macOS Catalina 10.15).\n\nPara resolver esse problema, atualize seu sistema operacional para a versão mais recente.\n\nComo alternativa, você pode alternar para o protocolo OpenVPN ou desativar o kill switch.";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Desativar kill switch";
@@ -2028,7 +2028,7 @@
 "_wgks_ovpn" = "Mudar para OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch está impedindo a VPN de se conectar à Internet";
+"_wgks_title" = "Kill switch está impedindo a VPN de se conectar à internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget do iOS";

@@ -398,13 +398,13 @@
 "_error_loads" = "Impossibile aggiornare il carico del server";
 
 /* (No Comment) */
-"_error_mitm_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi all'API Proton VPN. La tua connessione Internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere all'API Proton VPN.\nPer accedere al tuo account, passa a una nuova rete e prova a connetterti di nuovo.";
+"_error_mitm_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi all'API Proton VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere all'API Proton VPN.\nPer accedere al tuo account, passa a una nuova rete e prova a connetterti di nuovo.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Connessione non sicura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi al server VPN. La tua connessione Internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere a questo server VPN.\nPer favore seleziona un altro server.";
+"_error_mitm_vpn_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi al server VPN. La tua connessione internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere a questo server VPN.\nPer favore seleziona un altro server.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del modulo è vuota";
@@ -662,16 +662,16 @@
 "_invalid_refresh_token_please_login" = "È passato un po' dall'ultima volta che hai usato l'app Proton VPN. Per favore rieffettua il login.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Dagli scienziati e ingegneri che hanno creato Proton Mail, benvenuto in un Internet più sicuro e privato.";
+"_ios_onboarding_page1_description" = "Dagli scienziati e ingegneri che hanno creato Proton Mail, benvenuto in un internet più sicuro e privato.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Benvenuto in un Internet migliore";
+"_ios_onboarding_page1_title" = "Benvenuto in un internet migliore";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Batti la censura e le restrizioni regionali. Non abbiamo annunci, limiti di larghezza di banda e non vendiamo i tuoi dati.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Noi crediamo che Internet debba essere libero";
+"_ios_onboarding_page2_title" = "Noi crediamo che internet debba essere libero";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_description" = "Siamo una società di sicurezza. Che si tratti della nostra architettura del Secure Core o di una crittografia avanzata, la sicurezza viene sempre al primo posto.";
@@ -725,7 +725,7 @@
 "_kill_switch_helper_update_popup_body" = "L'aggiornamento più recente che hai scaricato richiede di fornire la password dell'account del tuo computer. Quando la richiesta appare, per favore inserisci la tua %@ e accetta.\n\nSe non inserisci la password Mac, kill switch verrà disattivato.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "La tua connessione internet riprenderà non appena Proton VPN si riconnetterà a un server.\nPer utilizzare Internet senza protezione VPN e kill switch annullare la riconnessione al server.";
+"_kill_switch_reconnection" = "La tua connessione internet riprenderà non appena Proton VPN si riconnetterà a un server.\nPer utilizzare internet senza protezione VPN e kill switch annullare la riconnessione al server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "senza";
@@ -947,7 +947,7 @@
 "_ne_network_connection_lost" = "Connessione di rete persa";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Non connesso ad Internet";
+"_ne_not_connected_to_the_internet" = "Non connesso ad internet";
 
 /* Network error */
 "_ne_request_timed_out" = "Richiesta di rete scaduta";
@@ -1052,7 +1052,7 @@
 "_not_connected" = "Non connesso";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Impossibile stabilire la connessione VPN. Non sei connesso a Internet.";
+"_not_connected_to_the_internet" = "Impossibile stabilire la connessione VPN. Non sei connesso a internet.";
 
 /* (No Comment) */
 "_not_now" = "Non ora";
@@ -1253,13 +1253,13 @@
 "_quick_settings_get_plus" = "Ottieni Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Disabilita Internet se la connessione VPN cade per evitare perdite accidentali di IP.";
+"_quick_settings_killSwitch_description" = "Disabilita internet se la connessione VPN cade per evitare perdite accidentali di IP.";
 
 /* (No Comment) */
 "_quick_settings_killSwitch_note" = "Se non riesci a connetterti ai dispositivi sulla tua rete locale, prova a disabilitare il kill switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Naviga in Internet senza pubblicità e malware.";
+"_quick_settings_netShield_description" = "Naviga in internet senza pubblicità e malware.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Se i siti web non si caricano, prova a disabilitare NetShield";
@@ -1622,7 +1622,7 @@
 "_sysex_cannot_enable" = "Impossibile abilitare l'Estensione del Sistema";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configurazione completata. Ora puoi navigare in Internet più velocemente con le migliori tecnologie VPN.";
+"_sysex_enabled_description" = "Configurazione completata. Ora puoi navigare in internet più velocemente con le migliori tecnologie VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Configurazione completata";
@@ -1824,13 +1824,13 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problema del provider Internet (ISP)";
+"_troubleshoot_item_isp_title" = "Problema del provider internet (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Per favore assicurati che la connessione internet funzioni.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Nessuna connessione Internet";
+"_troubleshoot_item_nointernet_title" = "Nessuna connessione internet";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Contattaci attraverso il nostro modulo di supporto, email (%@), o Twitter.";
@@ -2043,7 +2043,7 @@
 "_warning_vpn_session_is_active" = "La sessione Proton VPN di un altro utente è attiva su questo dispositivo. Continuando con il processo di accesso causerai la fine della sessione corrente. Vuoi continuare?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN svizzera ad alta velocità che salvaguarda la tua privacy crittografando la tua connessione Internet.";
+"_welcome_body" = "VPN svizzera ad alta velocità che salvaguarda la tua privacy crittografando la tua connessione internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Grazie per utilizzare Proton VPN. Dai un rapido sguardo alle funzioni principali dell'app.";
@@ -2058,7 +2058,7 @@
 "_welcome_title" = "BENVENUTO A BORDO!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch impedisce alla VPN di connettersi a Internet. Ciò potrebbe essere dovuto a un'incompatibilità con il sistema operativo (macOS Catalina 10.15).\n\nPer risolvere questo problema, aggiorna il tuo sistema operativo all'ultima versione.\n\nIn alternativa, puoi passare al protocollo OpenVPN o disabilitare kill switch.";
+"_wgks_description" = "Kill switch impedisce alla VPN di connettersi a internet. Ciò potrebbe essere dovuto a un'incompatibilità con il sistema operativo (macOS Catalina 10.15).\n\nPer risolvere questo problema, aggiorna il tuo sistema operativo all'ultima versione.\n\nIn alternativa, puoi passare al protocollo OpenVPN o disabilitare kill switch.";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Disabilita kill switch";
@@ -2067,7 +2067,7 @@
 "_wgks_ovpn" = "Passa a OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch impedisce alla VPN di connettersi a Internet";
+"_wgks_title" = "Kill switch impedisce alla VPN di connettersi a internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";
