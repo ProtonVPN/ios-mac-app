@@ -53,7 +53,7 @@
 "_ae_wrong_login_credentials" = "Pogrešno korisničko ime ili lozinka";
 
 /* Account plan description */
-"_all_countries" = "50+ država";
+"_all_countries" = "60+ država";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Svi poslužitelji u ovoj državi se održavaju. Spojite se u drugu državu.";

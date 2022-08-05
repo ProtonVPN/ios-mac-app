@@ -59,7 +59,7 @@
 "_ae_wrong_login_credentials" = "Неправильне ім'я користувача або пароль";
 
 /* Account plan description */
-"_all_countries" = "50+ країн";
+"_all_countries" = "60+ країн";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Усі сервери в цій країні на обслуговуванні. Будь ласка, оберіть іншу країну.";
