@@ -18,6 +18,7 @@
 
 import Foundation
 import NetworkExtension
+import TimerMock
 
 @testable import vpncore
 

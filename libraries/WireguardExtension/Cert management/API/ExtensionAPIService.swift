@@ -18,6 +18,7 @@
 
 import Foundation
 import NetworkExtension
+import Timer
 #if os(iOS)
 import UIKit
 #endif

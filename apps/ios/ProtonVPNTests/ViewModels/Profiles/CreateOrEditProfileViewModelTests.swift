@@ -22,6 +22,7 @@
 
 import XCTest
 import vpncore
+import TimerMock
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
 

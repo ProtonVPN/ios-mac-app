@@ -19,6 +19,7 @@
 import Foundation
 @testable import vpncore
 import XCTest
+import TimerMock
 
 class AppSessionRefreshTimerTests: XCTestCase {
     var alertService: CoreAlertServiceMock!

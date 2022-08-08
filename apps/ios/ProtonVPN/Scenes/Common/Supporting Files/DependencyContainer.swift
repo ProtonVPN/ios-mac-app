@@ -27,6 +27,7 @@ import BugReport
 import Search
 import Review
 import NetworkExtension
+import Timer
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 

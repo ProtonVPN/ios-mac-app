@@ -145,6 +145,7 @@
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
 		D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DE76AA257635F70077C610 /* SwiftChecker.swift */; };
 		D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */; };
+		D5F65F9E28A14E190062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9D28A14E190062CF85 /* Timer */; };
 		D5FD4B9F264BEF4E001F26CE /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = D557D587264AC344007E4396 /* ProtonVPN_ike_root.der */; };
 		D5FD4C1E264C1B3A001F26CE /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; };
 		D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; };
@@ -1147,6 +1148,7 @@
 				EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */,
 				8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */,
 				D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */,
+				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
 				E94EFFF02653D0A60024DBFB /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2868,6 +2870,7 @@
 			name = "ProtonVPN-mac";
 			packageProductDependencies = (
 				E53D64C2281169880060C463 /* Modals-macOS */,
+				D5F65F9D28A14E190062CF85 /* Timer */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4790,6 +4793,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
+		};
+		D5F65F9D28A14E190062CF85 /* Timer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Timer;
 		};
 		E53D64C2281169880060C463 /* Modals-macOS */ = {
 			isa = XCSwiftPackageProductDependency;

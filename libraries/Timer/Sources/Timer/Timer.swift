@@ -1,5 +1,5 @@
 //
-//  Created on 2022-05-24.
+//  Created on 2022-08-08.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -35,7 +35,7 @@ public protocol TimerFactory {
                        _ closure: @escaping (() -> Void))
 }
 
-extension TimerFactory {
+public extension TimerFactory {
     func scheduledTimer(timeInterval: TimeInterval,
                         repeats: Bool,
                         queue: DispatchQueue,

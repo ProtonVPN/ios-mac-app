@@ -25,6 +25,7 @@ import Foundation
 import vpncore
 import BugReport
 import NetworkExtension
+import Timer
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 

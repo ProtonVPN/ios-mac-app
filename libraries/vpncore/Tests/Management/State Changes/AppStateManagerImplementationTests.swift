@@ -21,6 +21,7 @@
 
 @testable import vpncore
 import XCTest
+import TimerMock
 
 class AppStateManagerImplementationTests: XCTestCase {
 

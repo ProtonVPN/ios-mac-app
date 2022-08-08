@@ -11,6 +11,7 @@ import NetworkExtension
 import os
 import WireGuardKit
 import Logging
+import Timer
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     private var timerFactory: TimerFactory!

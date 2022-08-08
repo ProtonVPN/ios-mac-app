@@ -23,6 +23,7 @@
 import CoreLocation
 import vpncore
 import XCTest
+import TimerMock
 
 class MapViewModelTests: XCTestCase {
 

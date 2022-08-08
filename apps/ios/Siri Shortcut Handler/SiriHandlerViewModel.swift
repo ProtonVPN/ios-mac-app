@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import Timer
 
 @available(iOSApplicationExtension 12.0, *)
 class SiriHandlerViewModel {
