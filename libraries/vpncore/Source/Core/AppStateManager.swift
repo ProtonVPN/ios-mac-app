@@ -21,6 +21,7 @@
 
 import Foundation
 import Reachability
+import Timer
 #if canImport(AppKit)
 import AppKit
 #endif

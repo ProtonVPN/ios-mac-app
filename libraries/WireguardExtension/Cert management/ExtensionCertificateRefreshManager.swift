@@ -8,6 +8,7 @@
 
 import Foundation
 import NetworkExtension
+import Timer
 
 public enum CertificateRefreshError: Error {
     case timedOut

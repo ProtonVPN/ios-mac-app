@@ -18,6 +18,7 @@
 
 import Foundation
 import NetworkExtension
+import Timer
 
 // MARK: ConnectionTunnel protocols
 

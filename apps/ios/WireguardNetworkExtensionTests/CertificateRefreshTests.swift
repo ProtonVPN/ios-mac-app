@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import TimerMock
 
 class CertificateRefreshTests: XCTestCase {
     typealias MockEndpointBlock = ((URLRequest, @escaping MockDataTask.CompletionCallback) -> ())

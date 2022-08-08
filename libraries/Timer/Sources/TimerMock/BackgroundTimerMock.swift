@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Timer
 
 public class BackgroundTimerMock: BackgroundTimer {
     let nextRunTime: Date
@@ -61,7 +62,7 @@ public final class TimerFactoryMock: TimerFactory {
         }
 
         guard let done = done else { return }
-        
+
         group.notify(queue: .main, execute: done)
     }
 
@@ -84,7 +85,7 @@ public final class TimerFactoryMock: TimerFactory {
 
     public func scheduleAfter(_ interval: DispatchTimeInterval, on queue: DispatchQueue, _ closure: @escaping (() -> Void)) {
         lastQueueWorkWasScheduledOn = queue
-        
+
         scheduledWork.append((interval, closure))
         workWasScheduled?()
     }
