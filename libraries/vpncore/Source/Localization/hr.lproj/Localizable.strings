@@ -716,7 +716,7 @@
 "_locations_all" = "Sve lokacije";
 
 /* (No Comment) */
-"_locations_basic_plus" = "PLUS lokacije";
+"_locations_plus" = "PLUS lokacije";
 
 /* (No Comment) */
 "_locations_plus" = "PLUS lokacije";
@@ -1478,9 +1478,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "TEST poslužitelji";
-
-/* (No Comment) */
-"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "Free";

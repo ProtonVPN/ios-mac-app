@@ -79,9 +79,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Az alkalmazás indításakor kapcsolódik a kiválasztott profilhoz";
 
-/* iOS: section header in countries list */
-"_basic_servers" = "Basic Szerverek";
-
 /* Common word */
 "_cancel" = "Mégsem";
 
@@ -1146,9 +1143,6 @@
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Telepítés kész";
-
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "A vásárlás sikerült. Aktiváltuk a megrendelt Proton VPN csomagot.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "A Proton VPN ingyenes csomagját választottad. Mivel új felhasználó vagy, hét napig ingyenesen használhatod a Proton VPN Plus összes szolgáltatását.";

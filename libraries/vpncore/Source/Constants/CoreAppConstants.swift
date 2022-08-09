@@ -78,8 +78,6 @@ public class CoreAppConstants {
         switch tier {
         case 0:
             return LocalizedString.freeServers
-        case 1:
-            return LocalizedString.basicServers
         case 2:
             return LocalizedString.plusServers
         default:

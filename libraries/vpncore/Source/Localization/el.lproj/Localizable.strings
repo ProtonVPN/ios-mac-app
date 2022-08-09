@@ -79,9 +79,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Κατά την εκκίνηση της εφαρμογής, θα είστε συνδεδεμένοι στο επιλεγμένο προφίλ";
 
-/* iOS: section header in countries list */
-"_basic_servers" = "ΒΑΣΙΚΟΙ ΔΙΑΚΟΜΙΣΤΕΣ";
-
 /* Common word */
 "_cancel" = "Ακύρωση";
 
@@ -1143,9 +1140,6 @@
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Η Εγκατάσταση Ολοκληρώθηκε";
-
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας Proton VPN Basic είναι τώρα ενεργό.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Τώρα έχετε εγγραφεί για ένα δωρεάν πρόγραμμα Proton VPN. Για να ξεκινήσετε, απολαύστε δωρεάν τις επτά ημέρες του πακέτου Proton VPN Plus.";

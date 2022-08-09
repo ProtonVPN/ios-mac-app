@@ -728,7 +728,7 @@
 "_locations_all" = "Todas as localizações";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Localizações PLUS";
+"_locations_plus" = "Localizações PLUS";
 
 /* (No Comment) */
 "_locations_plus" = "Localizações PLUS";
@@ -1526,9 +1526,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "Servidores TEST";
-
-/* (No Comment) */
-"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "Gratuito";

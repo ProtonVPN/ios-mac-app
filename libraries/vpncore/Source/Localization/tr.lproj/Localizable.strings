@@ -112,9 +112,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Uygulama başlatıldığında seçilmiş profile bağlanırsınız";
 
-/* iOS: section header in countries list */
-"_basic_servers" = "Basic sunucuları";
-
 /* Battery usages screen description */
 "_battery_description" = "Telefonunuzdaki tüm trafik OpenVPN üzerinden geçirilecek. Bu nedenle iOS, diğer uygulamaların pil kullanımını Proton VPN için ayıracak.";
 
@@ -794,10 +791,7 @@
 "_locations_all" = "Tüm konumlar";
 
 /* (No Comment) */
-"_locations_basic" = "Basic konumları";
-
-/* (No Comment) */
-"_locations_basic_plus" = "Plus konumları";
+"_locations_plus" = "Plus konumları";
 
 /* (No Comment) */
 "_locations_free" = "Free konumları";
@@ -1490,9 +1484,6 @@
 "_setup_complete" = "Kurulum tamamlandı";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Satın alma işleminiz tamamlandı. Proton VPN Basic tarifeniz etkinleştirildi.";
-
-/* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Ücretsiz Proton VPN hesabınızı açtınız. Başlamak için, yedi günlük Proton VPN Plus tarifemizin tadını çıkarın.";
 
 /* iOS: title of the screen after successfull purchase */
@@ -1715,9 +1706,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "Test sunucuları";
-
-/* (No Comment) */
-"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "Ücretsiz";

@@ -728,7 +728,7 @@
 "_locations_all" = "همهٔ مکان‌ها";
 
 /* (No Comment) */
-"_locations_basic_plus" = "مکان‌های PLUS";
+"_locations_plus" = "مکان‌های PLUS";
 
 /* (No Comment) */
 "_locations_plus" = "مکان‌های PLUS";
@@ -1514,9 +1514,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "سرورهای آزمایشی";
-
-/* (No Comment) */
-"_tier_basic" = "پایه";
 
 /* (No Comment) */
 "_tier_free" = "رایگان";
