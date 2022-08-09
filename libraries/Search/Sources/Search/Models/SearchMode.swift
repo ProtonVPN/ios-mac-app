@@ -20,9 +20,7 @@ import Foundation
 
 public enum UserTier {
     case free
-    case basic
     case plus
-    case visionary
 }
 
 public enum SearchMode: Equatable {

@@ -68,7 +68,4 @@
 "_free_servers" = "Free Servers";
 
 /* Section header in search */
-"_basic_servers" = "Basic Servers";
-
-/* Section header in search */
 "_plus_servers" = "Plus Servers";

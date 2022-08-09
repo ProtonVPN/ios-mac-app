@@ -80,11 +80,9 @@ final class ViewController: UIViewController {
     private func createTier() -> UserTier {
         switch userTierSegmentedControl.selectedSegmentIndex {
         case 0:
-            return .basic
-        case 1:
-            return .plus
+            return .free
         default:
-            return .visionary
+            return .plus
         }
     }
 
@@ -94,34 +92,64 @@ final class ViewController: UIViewController {
         let isSecureCoreCountry = mode == .secureCore
         let entryCountryName: String? = mode == .secureCore ? "Italy" : nil
 
+        let switzerlandServers: [ServerTier : [ServerViewModel]] = {
+            let free = [
+                ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
+                ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+            ]
+            switch tier {
+            case .free:
+                return [ServerTier.free: free]
+            case .plus:
+                return [
+                    ServerTier.free: free,
+                    ServerTier.plus: [
+                        ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName)
+                    ]
+                ]
+            }
+        }()
+
+        let usServers: [ServerTier : [ServerViewModel]] = {
+            let free = [
+                ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
+                ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+            ]
+            switch tier {
+            case .free:
+                return [ServerTier.free: free]
+            case .plus:
+                return [
+                    ServerTier.free: free,
+                    ServerTier.plus: [
+                        ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName)
+                    ]
+                ]
+            }
+        }()
+
+        let czechiaServers: [ServerTier : [ServerViewModel]] = {
+            let free = [
+                ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
+                ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+            ]
+            switch tier {
+            case .free:
+                return [ServerTier.free: free]
+            case .plus:
+                return [
+                    ServerTier.free: free,
+                    ServerTier.plus: [
+                        ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName)
+                    ]
+                ]
+            }
+        }()
+
         return [
-            CountryItemViewModel(country: "Switzerland", servers: [
-                ServerTier.basic: [
-                    ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                    ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
-                ],
-                tier: [
-                    ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName)
-                ]
-            ], isSecureCoreCountry: isSecureCoreCountry),
-            CountryItemViewModel(country: "United States", servers: [
-                ServerTier.basic: [
-                    ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                    ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
-                ],
-                tier: [
-                    ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName)
-                ]
-            ], isSecureCoreCountry: isSecureCoreCountry),
-            CountryItemViewModel(country: "Czechia", servers: [
-                ServerTier.basic: [
-                    ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                    ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
-                ],
-                tier: [
-                    ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName)
-                ]
-            ], isSecureCoreCountry: isSecureCoreCountry)
+            CountryItemViewModel(country: "Switzerland", servers: switzerlandServers, isSecureCoreCountry: isSecureCoreCountry),
+            CountryItemViewModel(country: "United States", servers: usServers, isSecureCoreCountry: isSecureCoreCountry),
+            CountryItemViewModel(country: "Czechia", servers: czechiaServers, isSecureCoreCountry: isSecureCoreCountry)
         ]
     }
 }

@@ -69,7 +69,6 @@
 			isa = PBXGroup;
 			children = (
 				F37F73E627CF7B8700F1C621 /* SearchSampleApp */,
-				F37F740727CF7B8900F1C621 /* SearchSampleAppUITests */,
 				F37F73E527CF7B8700F1C621 /* Products */,
 				F37F741727CF7BD800F1C621 /* Frameworks */,
 			);
@@ -98,13 +97,6 @@
 				F348C9CE27D7AC3700622584 /* Storage.swift */,
 			);
 			path = SearchSampleApp;
-			sourceTree = "<group>";
-		};
-		F37F740727CF7B8900F1C621 /* SearchSampleAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SearchSampleAppUITests;
 			sourceTree = "<group>";
 		};
 		F37F741727CF7BD800F1C621 /* Frameworks */ = {
