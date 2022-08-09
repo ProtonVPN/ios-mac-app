@@ -54,8 +54,8 @@ class ServerManagerTests: XCTestCase {
         XCTAssert(grouping[2].0.countryCode == "JP")
     }
     
-    func testSecureCoreBasicGrouping() {
-        let serverManager = ServerManagerImplementation.instance(forTier: 1, serverStorage: serverStorage)
+    func testSecureCoreFreeGrouping() {
+        let serverManager = ServerManagerImplementation.instance(forTier: 0, serverStorage: serverStorage)
         let grouping = serverManager.grouping(for: .secureCore)
         
         XCTAssert(grouping.isEmpty)
@@ -79,29 +79,18 @@ class ServerManagerTests: XCTestCase {
         XCTAssert(grouping.isEmpty)
     }
     
-    func testP2pBasicGrouping() {
-        let serverManager = ServerManagerImplementation.instance(forTier: 1, serverStorage: serverStorage)
-        let grouping = serverManager.grouping(for: .p2p)
-        
-        XCTAssert(grouping.count == 1)
-        XCTAssert(grouping[0].0.countryCode == "JP")
-        XCTAssert(grouping[0].1.count == 1)
-        XCTAssert(grouping[0].1[0].name == "JP#6")
-    }
-    
     func testP2pPlusGrouping() {
         let serverManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: serverStorage)
         let grouping = serverManager.grouping(for: .p2p)
 
         XCTAssert(grouping.count == 1)
         XCTAssert(grouping[0].0.countryCode == "JP")
-        XCTAssert(grouping[0].1.count == 2)
-        XCTAssert(grouping[0].1[0].name == "JP#6")
-        XCTAssert(grouping[0].1[1].name == "JP#7")
+        XCTAssert(grouping[0].1.count == 1)
+        XCTAssert(grouping[0].1[0].name == "JP#7")
     }
     
-    func testTorBasicGrouping() {
-        let serverManager = ServerManagerImplementation.instance(forTier: 1, serverStorage: serverStorage)
+    func testTorFreeGrouping() {
+        let serverManager = ServerManagerImplementation.instance(forTier: 0, serverStorage: serverStorage)
         let grouping = serverManager.grouping(for: .tor)
         
         XCTAssert(grouping.isEmpty)
