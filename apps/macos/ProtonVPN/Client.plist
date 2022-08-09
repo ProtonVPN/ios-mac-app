@@ -7,6 +7,6 @@
 	<key>Secret</key>
 	<string>31e7dcced342f546df6edc7146577090</string>
 	<key>WireGuardId</key>
-	<string>macos-vpn-wireguard</string>
+	<string>macos-wireguard-extension</string>
 </dict>
 </plist>
