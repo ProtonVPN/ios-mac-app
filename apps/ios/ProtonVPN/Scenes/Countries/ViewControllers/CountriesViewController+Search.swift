@@ -52,14 +52,10 @@ extension CountriesViewController: SearchCoordinatorDelegate {
         }
 
         switch viewModel.accountPlan {
-        case .free, .trial:
+        case .free, .trial, .basic:
             return .standard(.free)
-        case .basic:
-            return .standard(.basic)
-        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022:
+        case .plus, .vpnPlus, .family, .bundlePro, .enterprise2022, .visionary, .unlimited, .visionary2022:
             return .standard(.plus)
-        case .visionary, .unlimited, .visionary2022:
-            return .standard(.visionary)
         }
     }
 }

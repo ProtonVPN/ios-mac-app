@@ -145,9 +145,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let totalCountries = " (\(numberOfRows(in: section)))"
         switch userTier {
         case 0:
-            return [LocalizedString.locationsFree, LocalizedString.locationsBasicPlus][section] + totalCountries
-        case 1:
-            return [LocalizedString.locationsBasic, LocalizedString.locationsPlus][section] + totalCountries
+            return [LocalizedString.locationsFree, LocalizedString.locationsPlus][section] + totalCountries
         default:
             return LocalizedString.locationsAll + totalCountries
         }
