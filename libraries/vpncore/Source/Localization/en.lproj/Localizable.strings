@@ -988,7 +988,7 @@
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
 "_neagent_always_allow" = "Always Allow";
 
 /* Mac: neagent help screen */
