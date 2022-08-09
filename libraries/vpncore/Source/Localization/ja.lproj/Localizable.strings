@@ -79,9 +79,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "アプリ起動時に、選択されたプロファイルに接続します。";
 
-/* iOS: section header in countries list */
-"_basic_servers" = "Basic サーバー";
-
 /* Common word */
 "_cancel" = "キャンセル";
 
@@ -1143,9 +1140,6 @@
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "セットアップ完了";
-
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "購入手続きが完了しました。Proton VPN Basicプランを利用できます。";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Proton VPN Freeプランへの登録が完了しました。Proton VPN Plusプランを7日間無料でお試しいただけます。";

@@ -216,9 +216,6 @@
 "_free_servers" = "Free Servers";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "Basic Servers";
-
-/* iOS: section header in countries list */
 "_plus_servers" = "Plus Servers";
 
 /* iOS: section header in countries list */
@@ -428,9 +425,6 @@
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "You are now signed up for a Proton VPN Free plan. To get you started, enjoy seven days of our Proton VPN Plus plan for free.";
-
-/* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Your purchase was successful. Your Proton VPN Basic plan is now active.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Your purchase was successful. Your Proton VPN Plus plan is now active.";
@@ -1740,7 +1734,6 @@
 "_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
 
 "_tier_free" = "Free";
-"_tier_basic" = "Basic";
 "_tier_plus" = "Plus";
 "_tier_visionary" = "Visionary";
 
@@ -1771,8 +1764,7 @@
 
 "_locations_all" = "All Locations";
 "_locations_free" = "Free Locations";
-"_locations_basic_plus" = "Plus Locations";
-"_locations_basic" = "Basic Locations";
+"_locations_plus" = "Plus Locations";
 "_locations_plus" = "Plus Locations";
 
 "_vpn_accelerator_title" = "VPN Accelerator";

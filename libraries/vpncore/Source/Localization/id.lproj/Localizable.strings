@@ -112,9 +112,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Saat memulai aplikasi, Anda akan tersambung ke profil terpilih";
 
-/* iOS: section header in countries list */
-"_basic_servers" = "Server Basic";
-
 /* Battery usages screen description */
 "_battery_description" = "Seluruh lalu lintas jaringan telepon Anda akan dikelola melalui OpenVPN, dan oleh karenanya iOS akan mengalokasikan penggunaan baterai milik aplikasi lain ke Proton VPN.";
 
@@ -794,10 +791,7 @@
 "_locations_all" = "Semua lokasi";
 
 /* (No Comment) */
-"_locations_basic" = "Lokasi Basic";
-
-/* (No Comment) */
-"_locations_basic_plus" = "Lokasi PLUS";
+"_locations_plus" = "Lokasi PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Lokasi Gratis";
@@ -1490,9 +1484,6 @@
 "_setup_complete" = "Pengaturan Selesai";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "Pembelian Anda berhasil. Paket Proton VPN Basic Anda kini telah aktif.";
-
-/* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Anda telah terdaftar untuk paket Proton VPN Free. Untuk memulai perjalanan Anda, nikmati paket Proton VPN Plus selama tujuh hari secara gratis.";
 
 /* iOS: title of the screen after successfull purchase */
@@ -1715,9 +1706,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "Server TEST";
-
-/* (No Comment) */
-"_tier_basic" = "Basic";
 
 /* (No Comment) */
 "_tier_free" = "Gratis";
