@@ -21,14 +21,11 @@ import Foundation
 public enum ServerTier {
     case free
     case plus
-    case basic
 }
 
 extension ServerTier {
     var title: String {
         switch self {
-        case .basic:
-            return LocalizedString.basicServers
         case .plus:
             return LocalizedString.plusServers
         case .free:
@@ -39,11 +36,9 @@ extension ServerTier {
     static func sorted(by userTier: UserTier) -> [ServerTier] {
         switch userTier {
         case .free:
-            return [.free, .plus, .basic]
-        case .basic:
-            return [.basic, .plus, .free]
-        case .plus, .visionary:
-            return [.plus, .basic, .free]
+            return [.free, .plus]
+        case .plus:
+            return [.plus, .free]
         }
     }
 }
