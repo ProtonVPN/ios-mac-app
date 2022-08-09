@@ -218,10 +218,8 @@ class CountriesSectionViewModel {
         servers = [:]
         self.countries.forEach { country, servers in
             let freeServers: [CellModel] = servers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
-            let basicServers: [CellModel] = servers.filter { $0.tier == 1 }.map { .server(self.serverViewModel($0)) }
             let plusServers: [CellModel] = servers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
             let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
-            let basicHeaderVM = ServerHeaderViewModel(LocalizedString.basicServers, totalServers: basicServers.count, country: country, tier: 1, propertiesManager: propertiesManager, countriesViewModel: self)
             let plusHeaderVM = ServerHeaderViewModel(LocalizedString.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
             
             var cells = [CellModel]()
@@ -232,12 +230,6 @@ class CountriesSectionViewModel {
                 cells.append(contentsOf: freeServers)
             }
             
-            let addBasic = {
-                if basicServers.isEmpty { return }
-                cells.append(.header(basicHeaderVM))
-                cells.append(contentsOf: basicServers)
-            }
-            
             let addPlus = {
                 if plusServers.isEmpty { return }
                 cells.append(.header(plusHeaderVM))
@@ -245,17 +237,11 @@ class CountriesSectionViewModel {
             }
             
             switch userTier {
-            case 0:
+            case 0, 1:
                 addFree()
-                addBasic()
                 addPlus()
-            case 1:
-                addBasic()
-                addPlus()
-                addFree()
             default:
                 addPlus()
-                addBasic()
                 addFree()
             }
             
@@ -358,18 +344,10 @@ class CountriesSectionViewModel {
         
         if userTier == 1 {
             // BASIC
-            let basicLocations = countries.filter { $0.0.lowestTier < 2 }
             let plusLocations = countries.filter { $0.0.lowestTier > 1 }
-            let headerBasicVM = CountryHeaderViewModel(LocalizedString.locationsBasic, totalCountries: basicLocations.count, isPremium: false, countriesViewModel: self)
             let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
-            
-            let basicSections = [ .header(headerBasicVM) ] + basicLocations.enumerated().map { index, country -> CellModel in
-                return .country(self.countryViewModel(country, displaySeparator: index != 0))
-            }
-            
-            if plusLocations.isEmpty { return basicSections }
-            
-            return basicSections + [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
+
+            return [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
                 return .country(self.countryViewModel(country, displaySeparator: index != 0))
             }
         }
@@ -377,13 +355,13 @@ class CountriesSectionViewModel {
         // Free
 
         let freeLocations = countries.filter { $0.0.lowestTier == 0 }
-        let basicPlusLocations = countries.filter { $0.0.lowestTier != 0 }
+        let plusLocations = countries.filter { $0.0.lowestTier != 0 }
         let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, isPremium: false, countriesViewModel: self)
-        let headerBasicPlusVM = CountryHeaderViewModel(LocalizedString.locationsBasicPlus, totalCountries: basicPlusLocations.count, isPremium: true, countriesViewModel: self)
+        let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
 
         return [ .header(headerFreeVM) ] + freeLocations.enumerated().map { index, country -> CellModel in
             return .country(self.countryViewModel(country, displaySeparator: index != 0))
-        } + [ .header(headerBasicPlusVM) ] + basicPlusLocations.enumerated().map { index, country -> CellModel in
+        } + [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
             return .country(self.countryViewModel(country, displaySeparator: index != 0))
         }
     }

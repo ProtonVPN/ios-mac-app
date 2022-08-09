@@ -25,30 +25,6 @@
 		"Load": 50,
         "Score": 1.5
     }, {
-		"Name": "JP#2",
-		"EntryCountry": "JP",
-		"ExitCountry": "JP",
-		"Domain": "jp-02.protonvpn.com",
-		"Tier": 1,
-		"Features": 0,
-		"Region": null,
-		"City": "Tokyo",
-		"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111112==",
-		"Location": {
-			"Lat": 38.280000,
-			"Long": 140.460000
-		},
-		"Status": 1,
-		"Servers": [{
-			"EntryIP": "1.2.3.5",
-			"ExitIP": "1.2.3.5",
-			"Domain": "ca-01.protonvpn.com",
-			"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111112==",
-			"Status": 1
-		}],
-		"Load": 25,
-		"Score": 0.5
-	}, {
 		"Name": "HK#3",
 		"EntryCountry": "HK",
 		"ExitCountry": "HK",
@@ -162,30 +138,6 @@
 		}],
 		"Load": 15,
 		"Score": 1.5
-	}, {
-		"Name": "JP#6",
-		"EntryCountry": "JP",
-		"ExitCountry": "JP",
-		"Domain": "jp-06.protonvpn.com",
-		"Tier": 1,
-		"Features": 4,
-		"Region": null,
-		"City": "Tokyo",
-		"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111117==",
-		"Location": {
-			"Lat": 38.280000,
-			"Long": 140.460000
-		},
-		"Status": 1,
-		"Servers": [{
-			"EntryIP": "1.2.3.11",
-			"ExitIP": "1.2.3.11",
-			"Domain": "jp-06.protonvpn.com",
-			"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111117==",
-			"Status": 1
-		}],
-		"Load": 25,
-		"Score": 0.5
 	}, {
 		"Name": "JP#7",
 		"EntryCountry": "JP",
