@@ -949,8 +949,9 @@
 "_update_required" = "Update required";
 "_update_required_no_longer_supported" = "This version of Proton VPN is no longer supported, please update the app to continue using it.";
 
-/* App update required alert */
+/* Secondary button title in the App update required alert  */
 "_update_required_support" = "Contact support";
+/* Primary button title in the App update required alert  */
 "_update_required_update" = "Update";
 "_invalid_refresh_token" = "Session expired";
 "_invalid_refresh_token_please_login" = "It's been a while since you last used the Proton VPN app. Please log back in.";
