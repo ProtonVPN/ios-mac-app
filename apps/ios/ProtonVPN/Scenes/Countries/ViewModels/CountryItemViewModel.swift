@@ -146,13 +146,6 @@ class CountryItemViewModel {
         return serverViewModels(for: freeServers)
     }()
     
-    private lazy var basicServerViewModels: [ServerItemViewModel] = {
-        let basicServers = serverModels.filter({ (serverModel) -> Bool in
-            serverModel.tier == CoreAppConstants.VpnTiers.basic
-        })
-        return serverViewModels(for: basicServers)
-    }()
-    
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
         let plusServers = serverModels.filter({ (serverModel) -> Bool in
             serverModel.tier >= CoreAppConstants.VpnTiers.plus
@@ -178,9 +171,6 @@ class CountryItemViewModel {
         var serverTypes = [(tier: Int, viewModels: [ServerItemViewModel])]()
         if !freeServerViewModels.isEmpty {
             serverTypes.append((tier: 0, viewModels: freeServerViewModels))
-        }
-        if !basicServerViewModels.isEmpty {
-            serverTypes.append((tier: 1, viewModels: basicServerViewModels))
         }
         if !plusServerViewModels.isEmpty {
             serverTypes.append((tier: 2, viewModels: plusServerViewModels))
@@ -308,7 +298,7 @@ extension CountryItemViewModel: CountryViewModel {
             case CoreAppConstants.VpnTiers.plus:
                 return .plus
             default:
-                return .basic
+                return .plus
             }
         }
 
