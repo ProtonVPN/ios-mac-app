@@ -59,7 +59,7 @@ ios_bugreport_ui_tests:
 
 
 macos_bugreport_ui_tests:
-  extends: .mr_job_template
+  extends: .mac_job_template
   stage: apps_ui_tests
   tags:
     - macOS_ARM
