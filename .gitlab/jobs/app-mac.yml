@@ -2,6 +2,7 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 macos_lint:
+  extends: .mr_job_template
   stage: linting
   tags:
     - macOS_ARM
@@ -9,14 +10,8 @@ macos_lint:
     - cd apps/macos
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
-    name: "ios-lint-$CI_COMMIT_TAG"
+    name: "macos-lint-$CI_COMMIT_TAG"
     paths:
       - swiftlint.xml
     reports:
@@ -26,34 +21,14 @@ macos_lint:
     
     
 macos_unit_tests:
+  extends: .mac_job_template
   dependencies: []
   stage: apps_unit_tests
   script:
-    - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
-    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
-    - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
-    - fastlane create_macos_keychain
     - fastlane macos_app_unit_test
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
     - xcrun xccov view --report --json fastlane/test_output/ProtonVPN-macOS.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
-  after_script: # Cleanup
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
-    - fastlane delete_macos_keychain
-  tags:
-    - macOS_ARM
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     name: "macos-tests-$CI_COMMIT_TAG"
     when: always
@@ -68,34 +43,14 @@ macos_unit_tests:
         - fastlane/test_output/report.junit
 
 macos_ui_tests:
+  extends: .mac_job_template
   dependencies: []
   stage: apps_ui_tests
   script:
-    - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
-    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
-    - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
-    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
-    - fastlane create_macos_keychain
     - fastlane macos_app_ui_test
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
-  after_script: # Cleanup
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
-    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
-    - fastlane delete_macos_keychain
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
-  tags:
-    - macOS_ARM
   artifacts:
-    name: "macos-tests-$CI_COMMIT_TAG"
+    name: "macos-uitests-$CI_COMMIT_TAG"
     when: always
     paths:
       - fastlane/test_output/

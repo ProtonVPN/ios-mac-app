@@ -1,0 +1,34 @@
+# Templates to be used in other jobs
+
+# Main template for most CI jobs. Runs jobs automatically only when MR is created
+# and after the merge to develop branch.
+.mr_job_template:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
+
+
+# Template for macOS jobs. These require having proper development certificates and provisioning
+# profiles installed.
+.mac_job_template:
+  extends: .mr_job_template
+  tags:
+    - macOS_ARM
+  before_script:
+    - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
+    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
+    - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
+    - fastlane create_macos_keychain
+  after_script:
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
+    - fastlane delete_macos_keychain
+    

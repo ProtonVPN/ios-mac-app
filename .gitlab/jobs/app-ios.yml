@@ -2,6 +2,7 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 ios_lint:
+  extends: .mr_job_template
   stage: linting
   tags:
     - iOS_ARM
@@ -9,12 +10,6 @@ ios_lint:
     - cd apps/iOS
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     name: "ios-lint-$CI_COMMIT_TAG"
     paths:
@@ -26,6 +21,7 @@ ios_lint:
     
 
 ios_unit_tests:
+  extends: .mr_job_template
   stage: apps_unit_tests
   tags:
     - iOS_ARM
@@ -40,12 +36,6 @@ ios_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages ProtonVPNTests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     reports:
       coverage_report:
@@ -56,6 +46,7 @@ ios_unit_tests:
 
 
 ios_ui_tests:
+  extends: .mr_job_template
   stage: apps_ui_tests
   tags:
     - iOS_ARM
@@ -68,12 +59,6 @@ ios_ui_tests:
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   when: manual
   artifacts:
     reports:
@@ -83,6 +68,7 @@ ios_ui_tests:
 # ------------------------------------------ WireGuard Extension ------------------------------------------
 
 wireguard_extension_lint:
+  extends: .mr_job_template
   stage: linting
   tags:
     - iOS_ARM
@@ -90,12 +76,6 @@ wireguard_extension_lint:
     - cd libraries/WireguardExtension
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     name: "wireguard_extension-report-lint-$CI_COMMIT_TAG"
     paths:
@@ -107,6 +87,7 @@ wireguard_extension_lint:
 
 
 wireguard_unit_tests:
+  extends: .mr_job_template
   stage: apps_unit_tests
   tags:
     - iOS_ARM
@@ -119,12 +100,6 @@ wireguard_unit_tests:
     - xcrun xccov view --report --json fastlane/test_output/WireGuardNetworkExtensionTests.xcresult > coverage.json
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     reports:
       junit:

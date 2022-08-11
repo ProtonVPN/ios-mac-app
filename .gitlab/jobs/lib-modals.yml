@@ -3,6 +3,7 @@
 
 
 modals_lint:
+  extends: .mr_job_template
   stage: linting
   tags:
     - iOS_ARM
@@ -10,12 +11,6 @@ modals_lint:
     - cd libraries/Modals
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     name: "modals-report-lint-$CI_COMMIT_TAG"
     paths:
@@ -27,6 +22,7 @@ modals_lint:
     
     
 modals_ios_unit_tests:
+  extends: .mr_job_template
   stage: core_unit_tests
   tags:
     - iOS_ARM
@@ -38,12 +34,6 @@ modals_ios_unit_tests:
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     reports:
       junit:
@@ -54,6 +44,7 @@ modals_ios_unit_tests:
 
 
 modals_unit_tests:
+  extends: .mr_job_template
   stage: apps_unit_tests
   tags:
     - iOS_ARM
@@ -63,12 +54,6 @@ modals_unit_tests:
   after_script:
     - xcrun simctl delete $CI_JOB_ID
   when: always
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
   artifacts:
     name: "modals-tests-$CI_COMMIT_TAG"
     when: always
