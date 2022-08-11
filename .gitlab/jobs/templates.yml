@@ -10,7 +10,15 @@
       when: always
     - when: manual
 
-
+# Script for deleting all keychain entries that Proton VPN mac app makes.
+# Should be done because otherwise CI throws modals asking for login keychain password.
+# Usage in before_script, script, after_script: `!reference [.mac_clean_app_keychain, before_script]`
+.mac_clean_app_keychain:
+  before_script:
+    # App saves several items in the keychain. Let's delete them all.
+    - for i in `seq 8`; do security delete-generic-password -s "ProtonVPN" || true; done
+    - for i in `seq 2`; do security delete-generic-password -s "ProtonVPN-Server-Password" || true; done
+        
 # Template for macOS jobs. These require having proper development certificates and provisioning
 # profiles installed.
 .mac_job_template:
@@ -18,6 +26,7 @@
   tags:
     - macOS_ARM
   before_script:
+    - !reference [.mac_clean_app_keychain, before_script]
     - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
     - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
@@ -27,6 +36,7 @@
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
     - fastlane create_macos_keychain
   after_script:
+    - !reference [.mac_clean_app_keychain, before_script]
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
