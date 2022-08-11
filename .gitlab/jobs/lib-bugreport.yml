@@ -1,0 +1,93 @@
+# Jobs for linting/testing/etc. BugReport library.
+# Stages and other useful stuff can be found in /.gitlab-ci.yml file
+    
+bugreport_lint:
+  stage: linting
+  tags:
+    - iOS_ARM
+  script:
+    - cd libraries/BugReport
+    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+  allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
+  artifacts:
+    name: "bug-report-lint-$CI_COMMIT_TAG"
+    paths:
+      - swiftlint.xml
+    reports:
+      junit:
+        - swiftlint.xml
+    expire_in: 90 days
+
+bugreport_unit_tests:
+  stage: core_unit_tests
+  tags:
+    - iOS_ARM
+  script:
+    - cd libraries/BugReport/
+    - swift test --enable-code-coverage
+    - mkdir -p ../../fastlane/test_output
+    - XCODE_PATH=`xcode-select -p`
+    - ARCH="$(uname -m)"
+    - $XCODE_PATH/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-cov export -instr-profile=.build/$ARCH-apple-macosx/debug/codecov/default.profdata .build/$ARCH-apple-macosx/debug/BugReportPackageTests.xctest/Contents/MacOS/BugReportPackageTests -format=lcov > ../../fastlane/test_output/BugReport.lcov
+    - cd -
+    - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/BugReport.lcov -o fastlane/test_output/BugReport.xml
+    - scripts/print-coverage-cobertura.sh fastlane/test_output/BugReport.xml
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: fastlane/test_output/BugReport.xml
+
+
+ios_bugreport_ui_tests:
+  stage: apps_ui_tests
+  tags:
+    - iOS_ARM
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - fastlane ios_bugreport_ui_test
+    - scripts/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit
+
+
+macos_bugreport_ui_tests:
+  stage: apps_ui_tests
+  tags:
+    - macOS_ARM
+  script:
+    - fastlane macos_bugreport_ui_test
+    - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit
+       
