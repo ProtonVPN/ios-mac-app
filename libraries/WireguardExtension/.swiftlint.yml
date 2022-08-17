@@ -17,6 +17,7 @@ disabled_rules: # rule identifiers to exclude from running
   - nesting  #https://realm.github.io/SwiftLint/nesting.html
   - function_body_length  #https://realm.github.io/SwiftLint/function_body_length.html
   - function_parameter_count  #https://realm.github.io/SwiftLint/function_parameter_count.html
+  - for_where # https://realm.github.io/SwiftLint/for_where.html
 
 opt_in_rules: # some rules are only opt-in
   - empty_count # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-count
