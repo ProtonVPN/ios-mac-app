@@ -13,6 +13,7 @@ disabled_rules: # rule identifiers to exclude from running
   - no_fallthrough_only # https://github.com/realm/SwiftLint/blob/master/Rules.md#no-fallthrough-only
   - cyclomatic_complexity #https://realm.github.io/SwiftLint/cyclomatic_complexity.html
   - shorthand_operator  #https://realm.github.io/SwiftLint/shorthand_operator.html
+  - for_where # https://realm.github.io/SwiftLint/for_where.html
 
 opt_in_rules: # some rules are only opt-in
   - empty_count # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-count
