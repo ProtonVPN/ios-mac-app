@@ -2,10 +2,10 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
     
 timer_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/Timer
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -20,10 +20,10 @@ timer_lint:
     expire_in: 90 days
 
 timer_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: core_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/Timer/
     - swift test --enable-code-coverage

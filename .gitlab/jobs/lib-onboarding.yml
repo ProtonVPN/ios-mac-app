@@ -2,10 +2,10 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 onboarding_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/Onboarding
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -21,10 +21,10 @@ onboarding_lint:
 
 
 onboarding_ui_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: apps_ui_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane onboarding_test

@@ -2,10 +2,10 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 search_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/Search
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -21,10 +21,10 @@ search_lint:
 
 
 search_ios_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: core_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_search_test

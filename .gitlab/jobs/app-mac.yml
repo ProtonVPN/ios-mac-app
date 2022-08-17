@@ -5,7 +5,7 @@ macos_lint:
   extends: .mr_job_template
   stage: linting
   tags:
-    - macOS_ARM
+    - macOS_vpn
   script:
     - cd apps/macos
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml

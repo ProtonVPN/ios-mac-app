@@ -2,10 +2,10 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 ios_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd apps/iOS
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -21,10 +21,10 @@ ios_lint:
     
 
 ios_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: apps_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -46,10 +46,10 @@ ios_unit_tests:
 
 
 ios_ui_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: apps_ui_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -68,10 +68,10 @@ ios_ui_tests:
 # ------------------------------------------ WireGuard Extension ------------------------------------------
 
 wireguard_extension_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/WireguardExtension
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -87,10 +87,10 @@ wireguard_extension_lint:
 
 
 wireguard_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: apps_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../

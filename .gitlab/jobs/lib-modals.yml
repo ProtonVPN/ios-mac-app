@@ -3,10 +3,10 @@
 
 
 modals_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/Modals
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -22,10 +22,10 @@ modals_lint:
     
     
 modals_ios_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: core_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
@@ -44,10 +44,10 @@ modals_ios_unit_tests:
 
 
 modals_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: apps_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane modals_ios_test

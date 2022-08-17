@@ -45,7 +45,7 @@ code_quality:
   script:    
     - scripts/code_quality.sh
   tags:
-    - iOS_ARM
+    - iOS_vpn
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always

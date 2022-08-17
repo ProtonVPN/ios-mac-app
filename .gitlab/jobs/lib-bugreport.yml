@@ -2,10 +2,10 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
     
 bugreport_lint:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/BugReport
     - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
@@ -20,10 +20,10 @@ bugreport_lint:
     expire_in: 90 days
 
 bugreport_unit_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: core_unit_tests
-  tags:
-    - iOS_ARM
   script:
     - cd libraries/BugReport/
     - swift test --enable-code-coverage
@@ -42,10 +42,10 @@ bugreport_unit_tests:
 
 
 ios_bugreport_ui_tests:
-  extends: .mr_job_template
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: apps_ui_tests
-  tags:
-    - iOS_ARM
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_bugreport_ui_test
@@ -61,8 +61,6 @@ ios_bugreport_ui_tests:
 macos_bugreport_ui_tests:
   extends: .mac_job_template
   stage: apps_ui_tests
-  tags:
-    - macOS_ARM
   script:
     - fastlane macos_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1

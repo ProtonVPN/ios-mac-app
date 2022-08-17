@@ -10,6 +10,11 @@
       when: always
     - when: manual
 
+# Template for iOS jobs.
+.ios_job_template:
+  tags:
+    - iOS_vpn
+
 # Script for deleting all keychain entries that Proton VPN mac app makes.
 # Should be done because otherwise CI throws modals asking for login keychain password.
 # Usage in before_script, script, after_script: `!reference [.mac_clean_app_keychain, before_script]`
@@ -24,7 +29,7 @@
 .mac_job_template:
   extends: .mr_job_template
   tags:
-    - macOS_ARM
+    - macOS_vpn
   before_script:
     - !reference [.mac_clean_app_keychain, before_script]
     - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
