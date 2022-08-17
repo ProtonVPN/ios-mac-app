@@ -1,23 +1,5 @@
 # Jobs for linting/testing/etc. Proton VPN macOS app.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
-
-macos_lint:
-  extends: .mr_job_template
-  stage: linting
-  tags:
-    - macOS_vpn
-  script:
-    - cd apps/macos
-    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
-  allow_failure: false
-  artifacts:
-    name: "macos-lint-$CI_COMMIT_TAG"
-    paths:
-      - swiftlint.xml
-    reports:
-      junit:
-        - swiftlint.xml
-    expire_in: 90 days
     
     
 macos_unit_tests:

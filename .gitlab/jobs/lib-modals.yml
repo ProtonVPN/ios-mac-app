@@ -1,25 +1,6 @@
 # Jobs for linting/testing/etc. BugReport library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
-
-modals_lint:
-  extends:
-    - .mr_job_template
-    - .ios_job_template
-  stage: linting
-  script:
-    - cd libraries/Modals
-    - swiftlint --strict --reporter junit > ../../swiftlint.xml
-  allow_failure: false
-  artifacts:
-    name: "modals-report-lint-$CI_COMMIT_TAG"
-    paths:
-      - swiftlint.xml
-    reports:
-      junit:
-        - swiftlint.xml
-    expire_in: 90 days
-    
     
 modals_ios_unit_tests:
   extends:

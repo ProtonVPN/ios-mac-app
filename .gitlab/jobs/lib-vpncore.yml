@@ -1,24 +1,6 @@
 # Jobs for linting/testing/etc. vpncore library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
-core_lint:
-  extends:
-    - .mr_job_template
-    - .ios_job_template
-  stage: linting
-  script:
-    - cd libraries/vpncore
-    - swiftlint --strict --reporter junit > ../../swiftlint.xml
-  allow_failure: false
-  artifacts:
-    name: "core-lint-$CI_COMMIT_TAG"
-    paths:
-      - swiftlint.xml
-    reports:
-      junit:
-        - swiftlint.xml
-    expire_in: 90 days
-
 
 core_ios_unit_tests:
   extends:
@@ -42,19 +24,15 @@ core_ios_unit_tests:
         - fastlane/test_output/report.junit
 
 core_macos_unit_tests:
-  extends: .mr_job_template
+  extends: .mac_job_template
   stage: core_unit_tests
   tags:
     - macOS_vpn
   script:
-    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
-    - fastlane create_macos_keychain
     - fastlane macos_core_test
     - scripts/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
     - xcrun xccov view --report --json fastlane/test_output/vpncore-macos.xcresult > coverage.json
     - xcc generate coverage.json fastlane/test_output cobertura-xml --exclude-packages Tests
-  after_script: # Cleanup
-    - fastlane delete_macos_keychain
   artifacts:
     reports:
       coverage_report:

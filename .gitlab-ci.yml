@@ -32,10 +32,14 @@ include:
   - local: '.gitlab/jobs/*.yml'
 
 
+# Runs a script that goes through all out apps and lib folders and lints them if .swiftlint file is available.
+#
 # More info on how it works:
 # https://blog.kulman.sk/using-swiftlint-for-gitlab-code-quality/
 code_quality:
-  dependencies: []
+  extends:
+    - .mr_job_template
+    - .ios_job_template
   stage: linting
   artifacts:
     paths:
@@ -44,15 +48,12 @@ code_quality:
       codequality: codequality_report.json
   script:    
     - scripts/code_quality.sh
-  tags:
-    - iOS_vpn
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
-
 
 
 # Reenable when/if we have a license

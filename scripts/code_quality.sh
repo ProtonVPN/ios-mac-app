@@ -4,6 +4,8 @@ function process() {
     name=($(basename "$(dirname "$2")"))
     path="$1/$name"
     
+    echo "---------- Linting $name ----------"
+    
     cd $path
     swiftlint --strict --reporter codeclimate > codequality_report.json
 
