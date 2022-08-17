@@ -8,7 +8,7 @@ core_lint:
   stage: linting
   script:
     - cd libraries/vpncore
-    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+    - swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
   artifacts:
     name: "core-lint-$CI_COMMIT_TAG"

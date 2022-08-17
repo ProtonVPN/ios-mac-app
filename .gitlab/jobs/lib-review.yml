@@ -8,7 +8,7 @@ review_lint:
   stage: linting
   script:
     - cd libraries/Review
-    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+    - swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
   artifacts:
     name: "review-report-lint-$CI_COMMIT_TAG"

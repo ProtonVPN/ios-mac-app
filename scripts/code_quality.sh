@@ -5,7 +5,7 @@ function process() {
     path="$1/$name"
     
     cd $path
-    ../../Pods/SwiftLint/swiftlint --strict --reporter codeclimate > codequality_report.json
+    swiftlint --strict --reporter codeclimate > codequality_report.json
 
     pattern="\"path\" : \""
     replacement="\"path\" : \"$1\/$name\/"

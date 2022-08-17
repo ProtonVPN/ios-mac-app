@@ -8,7 +8,7 @@ onboarding_lint:
   stage: linting
   script:
     - cd libraries/Onboarding
-    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+    - swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
   artifacts:
     name: "onboarding-lint-$CI_COMMIT_TAG"

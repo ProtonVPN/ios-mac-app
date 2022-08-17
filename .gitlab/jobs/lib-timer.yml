@@ -8,7 +8,7 @@ timer_lint:
   stage: linting
   script:
     - cd libraries/Timer
-    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+    - swiftlint --strict --reporter junit > ../../swiftlint.xml
   allow_failure: false
   artifacts:
     name: "timer-lint-$CI_COMMIT_TAG"
