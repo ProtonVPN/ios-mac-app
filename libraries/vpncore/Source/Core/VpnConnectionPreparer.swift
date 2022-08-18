@@ -107,12 +107,12 @@ class VpnConnectionPreparer {
             }
             
         case let .vpnProtocol(vpnProtocol):
-            let portSelector = SmartPortSelectorImplementation(
+            smartPortSelector = SmartPortSelectorImplementation(
                 openVpnTcpChecker: availabilityCheckerResolver.availabilityChecker(for: .openVpn(.tcp)),
                 openVpnUdpChecker: availabilityCheckerResolver.availabilityChecker(for: .openVpn(.udp)),
                 wireguardChecker: availabilityCheckerResolver.availabilityChecker(for: .wireGuard)
             )
-            portSelector.determineBestPort(for: vpnProtocol, on: serverIp) { ports in
+            smartPortSelector?.determineBestPort(for: vpnProtocol, on: serverIp) { ports in
                 completion(vpnProtocol, ports)
             }
         }
