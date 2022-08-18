@@ -33,8 +33,25 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
             wireguardChecker.getFirstToRespondPort(server: serverIp) { result in
                 if let port = result {
                     completion([port])
-                } else {
-                    completion(self.wireguardChecker.defaultPorts.shuffled())
+                    return
+                }
+
+                log.debug("No Wireguard ports responded when trying to get the best port, waiting a bit and trying one more time.", category: .connectionConnect, event: .scan)
+
+                // In case no Wireguard ports respon we wait a bit and try again just to be sure
+                // If no port respond on the second attempt we return an empty array which will cause a connection failure
+                // This is better than returning shuffled port for the app to connect with a random one
+                // because it might cause the app to think it is connected even if it is not and result in various local agent failures
+                DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
+                    self?.wireguardChecker.getFirstToRespondPort(server: serverIp) { result in
+                        if let port = result {
+                            completion([port])
+                            return
+                        }
+
+                        log.debug("No Wireguard ports responded even on second attempt, returning empty array to fail the connection.", category: .connectionConnect, event: .scan)
+                        completion([])
+                    }
                 }
             }
             
