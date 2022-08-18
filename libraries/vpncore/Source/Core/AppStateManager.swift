@@ -229,6 +229,11 @@ public class AppStateManagerImplementation: AppStateManager {
             connectionFailed()
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
         }
+
+        guard !configuration.ports.isEmpty else {
+            connectionFailed()
+            return
+        }
         
         lastAttemptedConfiguration = configuration
         
