@@ -285,6 +285,17 @@ class AppStateManagerImplementationTests: XCTestCase {
         initialError()
         subsequentError()
     }
+
+    func testConnectingWithEmptyPortsFails() {
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: ConnectionConfiguration(server: connectionConfig.server, serverIp: connectionConfig.serverIp, vpnProtocol: connectionConfig.vpnProtocol, netShieldType: connectionConfig.netShieldType, natType: connectionConfig.natType, safeMode: connectionConfig.safeMode, ports: []))
+
+        let state = self.appStateManager.state
+        if case AppState.error = state {} else {
+            XCTFail("App state should be 'error' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssertTrue(state.isDisconnected)
+    }
     
     lazy var connectionConfig: ConnectionConfiguration = {
         let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil)
