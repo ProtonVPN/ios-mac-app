@@ -58,8 +58,6 @@ final class SmartProtocolImplementation: SmartProtocol {
         if smartProtocolConfig.wireGuard {
             log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.wireguard] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard)
-
-            fallbackCandidates.append((SmartProtocolProtocol.wireguard, wireguardConfig.defaultPorts))
         }
 
         if let fallback = fallbackCandidates.min(by: { lhs, rhs in lhs.0.priority < rhs.0.priority }) {
