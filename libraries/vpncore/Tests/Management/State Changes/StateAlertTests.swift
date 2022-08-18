@@ -25,7 +25,7 @@ import TimerMock
 
 class StateAlertTests: XCTestCase {
 
-    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), clientPrivateKey: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [], serverPublicKey: nil)
+    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), clientPrivateKey: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [500], serverPublicKey: nil)
     let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
     
@@ -76,7 +76,7 @@ class StateAlertTests: XCTestCase {
 
         wait(for: timeouts, timeout: 10)
 
-        XCTAssertTrue(alertService.alerts.count == 1)
+        XCTAssertEqual(alertService.alerts.count, 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
 
@@ -100,7 +100,7 @@ class StateAlertTests: XCTestCase {
     lazy var connectionConfig: ConnectionConfiguration = {
         let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil)
         let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike, netShieldType: .off, natType: .default, safeMode: true, ports: [])
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike, netShieldType: .off, natType: .default, safeMode: true, ports: [500])
     }()
     
 }
