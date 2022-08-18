@@ -37,6 +37,18 @@ extension WireguardAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        checkAvailability(server: server, ports: config.defaultPorts, completion: completion)
+        let defaultPorts = config.defaultPorts
+
+        checkAvailability(server: server, ports: defaultPorts) { result in
+            switch result {
+            case let .available(ports: ports):
+                completion(.available(ports: ports))
+            case .unavailable:
+                // In case no Wireguard ports respon we wait a bit and try again just to be sure
+                DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
+                    self?.checkAvailability(server: server, ports: defaultPorts, completion: completion)
+                }
+            }
+        }
     }
 }
