@@ -14,7 +14,7 @@ protocol SmartPortSelector {
     func determineBestPort(for vpnProtocol: VpnProtocol, on server: ServerIp, completion: @escaping SmartPortSelectorCompletion)
 }
 
-final class SmartPortSelectorImplementation {
+final class SmartPortSelectorImplementation: SmartPortSelector {
     private let openVpnTcpChecker: SmartProtocolAvailabilityChecker
     private let openVpnUdpChecker: SmartProtocolAvailabilityChecker
     private let wireguardChecker: SmartProtocolAvailabilityChecker
