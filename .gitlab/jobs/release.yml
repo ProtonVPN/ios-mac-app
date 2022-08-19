@@ -9,6 +9,7 @@ ios_testflight_internal:
     - git config --global user.name $GIT_CI_USERNAME
     - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
     - fastlane create_ios_keychain
+    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
   script:
     - fastlane sigh download_all --download_xcode_profiles
     - export atlasSecret="static let atlasSecret = \"`(curl $ATLAS_TOKEN_URL)`\""
