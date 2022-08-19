@@ -38,7 +38,7 @@ def vpn_core
     keychain_access
     
     # Checks code style and bad practices
-    pod 'SwiftLint', '0.46.5'
+    pod 'SwiftLint', '0.48.0'
 
     pod 'SwiftGen', '~> 6.5'
 
