@@ -72,9 +72,7 @@ extension MacAlertService: CoreAlertService {
             
         case let firstTimeConnectingAlert as FirstTimeConnectingAlert:
             // Neagent popup is no longer an issue in macOS 10.15+, so we don't need to show the help anymore
-            if #available(OSX 10.15, *) {
-                // do nothing
-            } else {
+            if #unavailable(OSX 10.15) {
                 show(firstTimeConnectingAlert)
             }
             

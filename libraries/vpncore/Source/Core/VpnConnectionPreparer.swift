@@ -93,7 +93,7 @@ class VpnConnectionPreparer {
             return nil
         }
 
-        let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))]
+        let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))] // swiftlint:disable:this legacy_random
         log.info("Selected \(serverIp.entryIp) as server ip for \(server.domain)", category: .connectionConnect)
         return serverIp
     }

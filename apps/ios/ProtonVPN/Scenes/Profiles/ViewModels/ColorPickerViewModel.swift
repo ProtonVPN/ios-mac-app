@@ -101,7 +101,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func selectRandom() {
-        selectedColorIndex = Int(arc4random_uniform(UInt32(colors.count)))
+        selectedColorIndex = Int(arc4random_uniform(UInt32(colors.count))) // swiftlint:disable:this legacy_random
     }
     
     func select(color newColor: UIColor?) {
