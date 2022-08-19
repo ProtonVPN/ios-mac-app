@@ -57,7 +57,7 @@ class WindowController: NSWindowController {
             return
         }
         
-        monitorsKeyEvents ? addEventMonitor() : removeEventMonitor()
+        monitorsKeyEvents ? addEventMonitor() : removeEventMonitor() // swiftlint:disable:this void_function_in_ternary
     }
     
     private func addEventMonitor() {

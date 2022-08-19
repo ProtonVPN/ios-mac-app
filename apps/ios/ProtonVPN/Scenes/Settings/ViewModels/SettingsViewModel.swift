@@ -316,7 +316,7 @@ final class SettingsViewModel {
                     return
                 }
 
-                let natType = toggleOn ? NATType.moderateNAT: NATType.strictNAT
+                let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 
                 self.vpnStateConfiguration.getInfo { [weak self] info in
                     switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {

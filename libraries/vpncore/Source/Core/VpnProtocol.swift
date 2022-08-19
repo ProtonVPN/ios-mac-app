@@ -206,4 +206,4 @@ extension VpnProtocol {
     }
 }
 
-extension VpnProtocol: Equatable & Hashable {}
+extension VpnProtocol: Equatable, Hashable {}

@@ -111,13 +111,13 @@ class VpnServerSelector {
         case .fastest:
             return servers.first
         case .random:
-            return servers[Int(arc4random_uniform(UInt32(servers.count)))]
+            return servers[Int(arc4random_uniform(UInt32(servers.count)))] // swiftlint:disable:this legacy_random
         case .country(_, let countryType):
             switch countryType {
             case .fastest:
                 return servers.first
             case .random:
-                return servers[Int(arc4random_uniform(UInt32(servers.count)))]
+                return servers[Int(arc4random_uniform(UInt32(servers.count)))] // swiftlint:disable:this legacy_random
             case .server(let server):
                 return server
             }

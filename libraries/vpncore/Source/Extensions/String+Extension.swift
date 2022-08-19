@@ -67,7 +67,7 @@ public extension String {
         var randomString = ""
         
         for _ in 0..<length {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
+            let randomNum = Int(arc4random_uniform(allowedCharsCount)) // swiftlint:disable:this legacy_random
             let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
             let newCharacter = allowedChars[randomIndex]
             randomString += String(newCharacter)
