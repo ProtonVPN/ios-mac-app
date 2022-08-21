@@ -15,7 +15,7 @@ class ConnectionTests: ProtonVPNUITests {
     private let connectionStatusRobot = ConnectionStatusRobot()
     private let countryListRobot = CountryListRobot()
     private let serverListRobot = ServerListRobot()
-    private let settingstRobot = SettingsRobot()
+    private let settingsRobot = SettingsRobot()
     
     override func setUp() {
         super.setUp()
@@ -23,15 +23,13 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testConnectAndDisconnectViaQCButtonFreeUser() {
         
-        let countryName = "Netherlands"
-
         logoutIfNeeded()
         changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsFreeUser()
         mainRobot
             .quickConnectViaQCButton()
-            .verify.connectedToAServer(countryName)
+            .verify.connectionStatusConnected(robot: MainRobot.self)
             .quickDisconnectViaQCButton()
             .verify.disconnectedFromAServer()
     }
@@ -44,10 +42,10 @@ class ConnectionTests: ProtonVPNUITests {
         logInToProdIfNeeded()
         mainRobot
             .goToCountriesTab()
-            .connectToAserver()
+            .connectToAServer()
             .verify.connectedToAServer(countryName)
             .backToPreviousTab(robot: CountryListRobot.self, back)
-            .diconnectViaCountry()
+            .disconnectViaCountry()
             .verify.connectionStatusNotConnected()
     }
     
@@ -55,6 +53,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         let countryName = "Australia"
         
+        logoutIfNeeded()
         logInToProdIfNeeded()
         mainRobot
             .goToCountriesTab()
@@ -64,7 +63,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectedToAServer(countryName)
             .backToPreviousTab(robot: ServerListRobot.self, countryName)
             .verify.serverListIsOpen(countryName)
-            .disconectFromAServerViaServer()
+            .disconnectFromAServerViaServer()
             .verify.connectionStatusNotConnected()
     }
     
@@ -85,7 +84,7 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testConnectAndDisconnectViaProfile() {
         
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Argentina"
         let back = "Profiles"
         
@@ -93,10 +92,10 @@ class ConnectionTests: ProtonVPNUITests {
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .setProfileDetails(profilename, countryName)
+            .setProfileDetails(profileName, countryName)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
-            .connectToAProfile(profilename)
+            .connectToAProfile(profileName)
             .verify.connectedToAServer(countryName)
             .backToPreviousTab(robot: ProfileRobot.self, back)
             .disconnectFromAProfile()
@@ -125,7 +124,7 @@ class ConnectionTests: ProtonVPNUITests {
     
     func testConnectionWithDefaultAndSecureCoreProfile() {
         
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Ukraine"
         let serverVia = "Switzerland"
         let status = "Switzerland >> Ukraine"
@@ -134,7 +133,7 @@ class ConnectionTests: ProtonVPNUITests {
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .makeDefaultProfileWithSecureCore(profilename, countryName, serverVia)
+            .makeDefaultProfileWithSecureCore(profileName, countryName, serverVia)
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated()
         mainRobot
@@ -158,33 +157,232 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.upgradeSubscriptionIsOpenFreeUser()
     }
     
-    func testConnectToAPlusServerWithBasicUser() {
+    func testLogoutWhileConnectedToVPNServer() {
+        
+        let countryName = "Netherlands"
 
-        let countryName = "Ukraine"
-        let serverName = "UA#12"
+        logInToProdIfNeeded()
+        mainRobot
+            .goToCountriesTab()
+            .connectToAServer()
+            .verify.connectedToAServer(countryName)
+            .goToSettingsTab()
+            .logOut()
+            .verify.logOutSuccessfully()
+    }
+    
+    func testCancelLogoutWhileConnectedToVpn() {
+            
+        logoutIfNeeded()
+        logInToProdIfNeeded()
+        mainRobot
+            .goToCountriesTab()
+            .connectToAServer()
+            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .goToSettingsTab()
+            .cancelLogOut()
+            .verify.connectionStatusConnected(robot: ConnectionStatusRobot.self)
+            .disconnectFromAServer()
+    }
+    
+    func testConnectionViaOpenvpnUDP() {
+        
+        let protocolVia = "OpenVPN (UDP)"
+        let countryName = "Australia"
+        let back = "Countries"
+        
+        logInToProdIfNeeded()
+        mainRobot
+            .goToSettingsTab()
+            .goToProtocolsList()
+            .protocolOn(protocolVia)
+            .returnToSettings()
+        mainRobot
+            .goToCountriesTab()
+            .connectToAServer()
+            .verify.protocolNameIsCorrect(protocolVia)
+            .verify.connectedToAServer(countryName)
+            .backToPreviousTab(robot: CountryListRobot.self, back)
+            .disconnectViaCountry()
+            .verify.connectionStatusNotConnected()
+    }
+    
+    func testConnectionViaOpenvpnTCP() {
+           
+           let protocolVia = "OpenVPN (TCP)"
+           let countryName = "United States"
+           let back = "Countries"
+           
+           logInToProdIfNeeded()
+           mainRobot
+               .goToSettingsTab()
+               .goToProtocolsList()
+               .protocolOn(protocolVia)
+               .returnToSettings()
+           mainRobot
+               .goToCountriesTab()
+               .connectToAServer()
+               .verify.protocolNameIsCorrect(protocolVia)
+               .verify.connectedToAServer(countryName)
+               .backToPreviousTab(robot: CountryListRobot.self, back)
+               .disconnectViaCountry()
+               .verify.connectionStatusNotConnected()
+       }
+    
+    func testConnectionViaIkev() {
+            
+            let protocolVia = "IKEv2"
+            let countryName = "Australia"
+            let back = "Countries"
+        
+            logoutIfNeeded()
+            logInToProdIfNeeded()
+            loginAsFreeUser()
+            mainRobot
+                .goToSettingsTab()
+                .goToProtocolsList()
+                .protocolOn(protocolVia)
+                .returnToSettings()
+            mainRobot
+                .goToCountriesTab()
+                .connectToAServer()
+                .verify.protocolNameIsCorrect(protocolVia)
+                .verify.connectedToAServer(countryName)
+                .backToPreviousTab(robot: CountryListRobot.self, back)
+                .disconnectViaCountry()
+                .verify.connectionStatusNotConnected()
+        }
+
+    func testConnectionViaSC() {
+        
+        let protocolVia = "IKEv2"
+        let status = "Sweden >> Australia"
+        let back = "Countries"
+        
+        logoutIfNeeded()
+        logInToProdIfNeeded()
+        loginAsBasicUser()
+        mainRobot
+            .goToSettingsTab()
+            .goToProtocolsList()
+            .protocolOn(protocolVia)
+            .returnToSettings()
+        mainRobot
+            .goToCountriesTab()
+            .secureCoreOn()
+            .connectToAServer()
+            .verify.connectedToASCServer(status)
+            .verify.protocolNameIsCorrect(protocolVia)
+            .disconnectFromAServer()
+            .verify.connectionStatusNotConnected()
+        mainRobot
+            .backToPreviousTab(robot: CountryListRobot.self, back)
+            .secureCoreOFf()
+    }
+    
+    func testConnectionWithAllSettingsOn() {
+        
+        let protocolVia = "Smart"
+        let netshield = "Block malware, ads, & trackers"
+        let status = "Sweden >> Australia"
         
         logoutIfNeeded()
         changeEnvToProdIfNeeded()
         openLoginScreen()
         loginAsBasicUser()
         mainRobot
-            .goToCountriesTab()
-            .openServerList(countryName)
-            .connectToAPlusServer(serverName)
-            .verify.upgradeSubscriptionIsOpenBasicUser()
-    }
-    
-    func testLogoutWhileConnectedToVPNServer() {
-        
-        let countryName = "Australia"
-        
-        logInToProdIfNeeded()
+            .goToSettingsTab()
+            .goToProtocolsList()
+            .protocolOn(protocolVia)
+            .returnToSettings()
+            .selectNetshield(netshield)
+            .turnKillSwitchOn()
+            .turnModerateNatOn()
         mainRobot
             .goToCountriesTab()
-            .connectToAserver()
-            .verify.connectedToAServer(countryName)
+            .secureCoreOn()
+            .connectToAServer()
+            .verify.connectedToASCServer(status)
+            .disconnectFromAServer()
+            .verify.connectionStatusNotConnected()
+    }
+    
+    func testConnectionViaAllProtocolsWithKsOn() {
+        
+        let countryName = "Australia"
+        let protocolViaWG = "WireGuard"
+        let protocolViaUDP = "OpenVPN (UDP)"
+        let protocolViaTCP = "OpenVPN (TCP)"
+        let protocolViaSmart = "Smart"
+        let back = "Settings"
+        
+        logoutIfNeeded()
+        changeEnvToProdIfNeeded()
+        openLoginScreen()
+        loginAsBasicUser()
+        mainRobot
             .goToSettingsTab()
-            .logOut()
-            .verify.logOutSuccessfully()
+            .goToProtocolsList()
+            .protocolOn(protocolViaWG)
+            .returnToSettings()
+            .turnKillSwitchOn()
+        mainRobot
+            .quickConnectViaQCButton()
+            .verify.protocolNameIsCorrect(protocolViaWG)
+            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
+            .backToPreviousTab(robot: SettingsRobot.self, back)
+            .goToProtocolsList()
+            .protocolOn(protocolViaUDP)
+            .returnToSettings()
+        mainRobot
+            .quickConnectViaQCButton()
+            .verify.protocolNameIsCorrect(protocolViaUDP)
+            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
+            .backToPreviousTab(robot: SettingsRobot.self, back)
+            .goToProtocolsList()
+            .protocolOn(protocolViaTCP)
+            .returnToSettings()
+        mainRobot
+            .quickConnectViaQCButton()
+            .verify.protocolNameIsCorrect(protocolViaTCP)
+            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
+            .backToPreviousTab(robot: SettingsRobot.self, back)
+            .goToProtocolsList()
+            .protocolOn(protocolViaSmart)
+            .returnToSettings()
+        mainRobot
+            .quickConnectViaQCButton()
+            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
+    }
+    
+    func testReconnectionViaWithKsOn() {
+        
+        let countryName = "Japan"
+
+        logoutIfNeeded()
+        changeEnvToProdIfNeeded()
+        openLoginScreen()
+        loginAsFreeUser()
+        mainRobot
+            .goToSettingsTab()
+            .turnKillSwitchOn()
+        mainRobot
+            .quickConnectViaQCButton()
+            .verify.connectionStatusConnected(robot: MainRobot.self)
+            .goToCountriesTab()
+            .openServerList(countryName)
+            .verify.serverListIsOpen(countryName)
+            .connectToAServerViaServer()
+            .verify.connectedToAServer(countryName)
+            .quickDisconnectViaQCButton()
+            .verify.disconnectedFromAServer()
     }
 }

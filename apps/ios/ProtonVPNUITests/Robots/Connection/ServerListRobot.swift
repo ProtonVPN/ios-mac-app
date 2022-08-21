@@ -8,7 +8,7 @@
 
 import pmtest
 
-fileprivate let buttonConnectDisconnect = "con available"
+fileprivate let buttonConnectDisconnect = "ic power off"
 
 class ServerListRobot: CoreElements {
     
@@ -19,7 +19,7 @@ class ServerListRobot: CoreElements {
         return ConnectionStatusRobot()
     }
     
-    func disconectFromAServerViaServer() -> MainRobot {
+    func disconnectFromAServerViaServer() -> MainRobot {
         button(buttonConnectDisconnect).byIndex(0).tap()
         return MainRobot()
     }

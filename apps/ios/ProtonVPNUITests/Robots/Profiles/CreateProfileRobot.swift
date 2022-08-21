@@ -14,12 +14,15 @@ fileprivate let countryField = "Select Country"
 fileprivate let countryButton = "Country"
 fileprivate let serverField = "Select Server"
 fileprivate let fastestServer = "  Fastest"
+fileprivate let protocolUDP = "OpenVPN (UDP)"
+fileprivate let protocolWG = "WireGuard"
 fileprivate let saveProfileButton = "Save"
 fileprivate let tabBars = "Profiles"
 fileprivate let secureCoreToggle = "Secure Core"
 fileprivate let defaultProfileToggle = "Make Default Profile"
 fileprivate let upsellSecureCore = "Double the encryption with Secure Core"
 fileprivate let okButton = "OK"
+fileprivate let protocolCell = "Protocol"
 
 class CreateProfileRobot: CoreElements {
     
@@ -31,6 +34,7 @@ class CreateProfileRobot: CoreElements {
             .chooseCountry(" " + " " + countryname)
             .selectServer()
             .chooseServer()
+            .chooseProtocol()
     }
     
     func setProfileWithSameName(_ name: String, _ countryname: String)-> CreateProfileRobot {
@@ -56,6 +60,7 @@ class CreateProfileRobot: CoreElements {
             .chooseCountry(" " + " " + newcountryname)
             .selectServer()
             .chooseServerVia(server)
+            .chooseProtocol()
             .defaultProfileON()
     }
     
@@ -118,6 +123,12 @@ class CreateProfileRobot: CoreElements {
     
     private func defaultProfileON() -> CreateProfileRobot {
         swittch(defaultProfileToggle).tap()
+        return self
+    }
+    
+    private func chooseProtocol() -> CreateProfileRobot {
+        cell(protocolCell).byIndex(1).tap()
+        staticText(protocolWG).tap()
         return self
     }
     
