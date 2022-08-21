@@ -14,8 +14,8 @@ fileprivate let addButton = "Add"
 fileprivate let deleteButton = "Delete"
 fileprivate let newProfileSuccessMessage = "New Profile saved"
 fileprivate let editProfileSuccessMessage = "Profile updated"
-fileprivate let buttonConnect = "con available"
-fileprivate let buttonDisconnect = "con connected"
+fileprivate let buttonConnect = "ic power off"
+fileprivate let buttonDisconnect = "ic power off"
 fileprivate let fastestProfile = "Fastest Connection"
 fileprivate let randomProfile = "Random Connection"
 
@@ -43,7 +43,7 @@ class ProfileRobot: CoreElements {
     }
     
     func disconnectFromAProfile() -> MainRobot {
-        button(buttonDisconnect).tap()
+        button(buttonDisconnect).byIndex(2).tap()
         return MainRobot()
     }
     

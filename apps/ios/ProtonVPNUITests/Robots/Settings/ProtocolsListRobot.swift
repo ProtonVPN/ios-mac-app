@@ -25,8 +25,16 @@ class ProtocolsListRobot: CoreElements {
         return ProtocolsListRobot()
     }
     
+    @discardableResult
     func returnToSettings() -> SettingsRobot {
         button(settingsButton).tap()
         return SettingsRobot()
     }
+    
+    /// Choose protocol from the protocol list
+    ///- Precondition: Default protocol is Smart
+    func protocolOn(_ protocolVia: String) -> ProtocolsListRobot {
+         cell(protocolVia).tap()
+         return ProtocolsListRobot()
+     }
 }

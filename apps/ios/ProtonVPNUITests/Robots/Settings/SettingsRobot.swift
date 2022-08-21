@@ -12,12 +12,15 @@ import XCTest
 fileprivate let headerTitle = "Settings"
 fileprivate let reportBugButton = "Report Bug"
 fileprivate let protocolButton = "Protocol"
+fileprivate let netshieldButton =  "NetShield"
 fileprivate let killSwitchButton = "Kill switch"
 fileprivate let killSwitchAlert = "Turn kill switch on?"
 fileprivate let allowLanConnectionsButton = "Allow LAN connections"
 fileprivate let allowLanConnectionsAlert = "Allow LAN connections"
+fileprivate let moderateNatSwitch = "Moderate NAT"
 fileprivate let continueButton = "Continue"
 fileprivate let logOutButton = "Log Out"
+fileprivate let cancelButton = "Cancel"
 fileprivate let vpnConnectionActiveAlert = "VPN Connection Active"
 fileprivate let firstAppScreen = "Selected environment"
 
@@ -30,11 +33,31 @@ class SettingsRobot: CoreElements {
         return ReportBugRobot()
     }
     
+    /// - Precondition: Protocol submenu of Settings menu
     func goToProtocolsList() -> ProtocolsListRobot {
         cell(protocolButton).tap()
         return ProtocolsListRobot()
     }
     
+    /// - Precondition: Netshield submenu of Settings menu
+    func goToNetshieldList() -> SettingsRobot {
+        cell(netshieldButton).tap()
+        return SettingsRobot()
+    }
+
+    func selectNetshield(_ netshield: String) -> SettingsRobot {
+        cell(netshieldButton).tap()
+        staticText(netshield).tap()
+        return SettingsRobot()
+    }
+
+    @discardableResult
+    func turnModerateNatOn() -> SettingsRobot {
+        swittch(moderateNatSwitch).tap()
+        return SettingsRobot()
+    }
+    
+    @discardableResult
     func turnKillSwitchOn() -> SettingsRobot {
         return killSwitchOn()
             .killSwitchContinue()
@@ -50,6 +73,12 @@ class SettingsRobot: CoreElements {
             .logOutContinue()
     }
     
+    func cancelLogOut() -> ConnectionStatusRobot {
+        return clickLogOut()
+            .logOutCancel()
+    }
+    
+    /// - Precondition: Kill Switch is off
     private func killSwitchOn() -> SettingsRobot {
         swittch(killSwitchButton)
             .swipeUpUntilVisible()
@@ -62,6 +91,7 @@ class SettingsRobot: CoreElements {
         return self
     }
     
+    /// - Precondition: Lan Connection is off
     private func lanConnectionOn() -> SettingsRobot {
         swittch(allowLanConnectionsButton).tap()
         return self
@@ -80,6 +110,11 @@ class SettingsRobot: CoreElements {
     private func logOutContinue() -> SettingsRobot {
         button(continueButton).tap()
         return self
+    }
+    
+    private func logOutCancel() -> ConnectionStatusRobot {
+        button(cancelButton).tap()
+        return ConnectionStatusRobot()
     }
     
     class Verify: CoreElements {

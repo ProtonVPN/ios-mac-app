@@ -17,7 +17,7 @@ fileprivate let tabQCInactive = "quick connect inactive button"
 fileprivate let tabQCActive = "quick connect active button"
 fileprivate let secureCore = "Use Secure Core"
 fileprivate let statusNotConnected = "Not Connected"
-fileprivate let upgradeSubscriptionTitle = "Upgrade Subscription"
+fileprivate let upgradeSubscriptionTitle = "Upgrade"
 fileprivate let popUpForFreeUser = "Plus or Visionary subscription required"
 fileprivate let popUpForBasicUser = "Upgrade Unavailable in App"
 fileprivate let buttonOk = "OK"
@@ -28,6 +28,7 @@ fileprivate let useAndContinueButton = "Use and continue"
 fileprivate let resetToProductionButton = "Reset to production and kill the app"
 fileprivate let showLoginButtonLabelText = "Sign in"
 fileprivate let showSignupButtonLabelText = "Create an account"
+fileprivate let upselModal = "TitleLabel"
 
 // MainRobot class contains actions for main app view.
 
@@ -83,6 +84,11 @@ class MainRobot: CoreElements {
         return LoginRobot()
     }
     
+    func clickUpgrade() -> MainRobot {
+        button(upgradeSubscriptionTitle).tap()
+        return MainRobot()
+    }
+    
     class Verify: CoreElements {
     
         @discardableResult
@@ -118,6 +124,12 @@ class MainRobot: CoreElements {
         @discardableResult
         func upgradeSubscriptionIsOpenBasicUser() -> MainRobot {
             staticText(popUpForBasicUser).checkExists()
+            return MainRobot()
+        }
+        
+        @discardableResult
+        func upsellModalIsOpen() -> MainRobot {
+            staticText(upselModal).checkExists()
             return MainRobot()
         }
     }

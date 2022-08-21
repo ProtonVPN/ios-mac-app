@@ -14,7 +14,7 @@ fileprivate let HeadTitle = "Map"
 class MapRobot: CoreElements {
     
     func selectCountryAndConnect() -> ConnectionStatusRobot {
-        selectAndDeselct()
+        selectAndDeselect()
         return ConnectionStatusRobot()
     }
     
@@ -24,7 +24,7 @@ class MapRobot: CoreElements {
     }
     
     @discardableResult
-    private func selectAndDeselct() -> MapRobot {
+    private func selectAndDeselect() -> MapRobot {
         button().byIndex(18).tap()
         button().byIndex(18).tap()
         return self

@@ -19,8 +19,6 @@ fileprivate let deleteSuccessMessage = "Profile has been deleted"
 fileprivate let tabQCInactive = "quick connect inactive button"
 fileprivate let tabQCActive = "quick connect active button"
 fileprivate let netshieldUpgradeButton = "Upgrade"
-fileprivate let serverNumber = "Server, "
-
 
 class ConnectionStatusRobot: CoreElements {
     
@@ -33,6 +31,12 @@ class ConnectionStatusRobot: CoreElements {
 
     func deleteProfile() -> ConnectionStatusRobot {
         button(deleteProfileButton).tap()
+        return ConnectionStatusRobot()
+    }
+    
+    @discardableResult
+    func disconnectFromAServer() -> ConnectionStatusRobot {
+        button(tabQCActive).tap()
         return ConnectionStatusRobot()
     }
 
@@ -54,14 +58,14 @@ class ConnectionStatusRobot: CoreElements {
         
         @discardableResult
         func connectedToAServer(_ name: String) -> MainRobot {
-            staticText(statusConnected + name).wait(time: 20).checkExists()
+            staticText(statusConnected + name).wait(time: 35).checkExists()
             button(tabQCActive).wait().checkExists()
             return MainRobot()
         }
         
         @discardableResult
         func connectedToASCServer(_ name: String) -> ConnectionStatusRobot {
-            staticText(statusConnected + name).wait(time: 10).checkExists()
+            staticText(statusConnected + name).wait(time: 30).checkExists()
             button(tabQCActive).wait().checkExists()
             return ConnectionStatusRobot()
         }
@@ -77,6 +81,24 @@ class ConnectionStatusRobot: CoreElements {
         func connectedToAProfile() -> MainRobot {
             button(deleteProfileButton).checkExists()
             return MainRobot()
+        }
+        
+        @discardableResult
+        func connectionStatusNotConnected() -> CountryListRobot {
+            staticText("Not Connected").wait(time:10).checkExists()
+            return CountryListRobot()
+        }
+        
+        @discardableResult
+        func connectionStatusConnected<T: CoreElements>(robot _: T.Type) -> T {
+            button(tabQCActive).wait(time:10).checkExists()
+            return T()
+        }
+        
+        @discardableResult
+        func protocolNameIsCorrect(_ protocolname: String) -> ConnectionStatusRobot {
+            staticText(protocolname).wait(time: 30).checkExists()
+            return ConnectionStatusRobot()
         }
     }
 }

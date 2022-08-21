@@ -9,21 +9,23 @@
 import pmtest
 
 fileprivate let HeadTitle = "Countries"
-fileprivate let buttonConnectDisconnect = "con available"
-fileprivate let secureCore = "Use Secure Core"
+fileprivate let buttonConnectDisconnect = "ic power off"
+fileprivate let secureCoreSwitch = "secureCoreSwitch"
 fileprivate let warningMessage = "Plus or Visionary subscription required"
 fileprivate let okButton = "OK"
+fileprivate let upgradeButton = "Upgrade"
+fileprivate let activateSCButton = "Activate Secure Core"
 
 class CountryListRobot: CoreElements {
     
     let verify = Verify()
     
-    func connectToAserver() -> ConnectionStatusRobot {
+    func connectToAServer() -> ConnectionStatusRobot {
         button(buttonConnectDisconnect).byIndex(1).tap()
         return ConnectionStatusRobot()
     }
     
-    func diconnectViaCountry() -> MainRobot {
+    func disconnectViaCountry() -> MainRobot {
         button(buttonConnectDisconnect).byIndex(1).tap()
         return MainRobot()
     }
@@ -34,20 +36,23 @@ class CountryListRobot: CoreElements {
     }
     
     func connectToAPlusCountry(_ name: String) -> MainRobot {
-        staticText(name).tap()
+        button(upgradeButton).byIndex(1).tap()
         return MainRobot()
     }
     
     func secureCoreOn() -> CountryListRobot {
-        swittch(secureCore).tap()
+        swittch(secureCoreSwitch).tap()
+        button(activateSCButton).tap()
+        return CountryListRobot()
+    }
+    
+    @discardableResult
+    func secureCoreOFf() -> CountryListRobot {
+        swittch(secureCoreSwitch).tap()
         return CountryListRobot()
     }
     
     class Verify: CoreElements {
         
-        func countryTabIsOpen() -> CountryListRobot {
-            staticText(HeadTitle).wait().checkExists()
-            return CountryListRobot()
-        }
     }
 }
