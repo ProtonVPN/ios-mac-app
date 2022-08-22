@@ -202,8 +202,8 @@ extension MacAlertService: CoreAlertService {
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
 
-        case let announcmentOfferAlert as AnnouncmentOfferAlert:
-            show(announcmentOfferAlert)
+        case let announcementOfferAlert as AnnouncementOfferAlert:
+            show(announcementOfferAlert)
             
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
@@ -330,8 +330,16 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 
-    private func show(_ alert: AnnouncmentOfferAlert) {
-        let vc = AnnouncementDetailViewController(alert.data)
+    private func show(_ alert: AnnouncementOfferAlert) {
+        guard let panelMode = alert.data.panelMode() else { return }
+        let vc: NSViewController
+        switch panelMode {
+        case .legacy(let legacyPanel):
+            vc = AnnouncementDetailViewController(legacyPanel)
+        case .image(let imagePanel):
+            vc = AnnouncementImageViewController(imagePanel)
+        }
+
         windowService.presentKeyModal(viewController: vc)
     }
     

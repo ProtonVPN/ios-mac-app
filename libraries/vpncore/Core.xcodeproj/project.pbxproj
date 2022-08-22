@@ -444,6 +444,8 @@
 		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
+		E5B304A128C0C5AE0093517A /* FullScreenImage+PreferredSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B304A028C0C5AE0093517A /* FullScreenImage+PreferredSource.swift */; };
+		E5B304A228C0C5AE0093517A /* FullScreenImage+PreferredSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B304A028C0C5AE0093517A /* FullScreenImage+PreferredSource.swift */; };
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
@@ -998,6 +1000,7 @@
 		E53D64B728115B580060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
+		E5B304A028C0C5AE0093517A /* FullScreenImage+PreferredSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullScreenImage+PreferredSource.swift"; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
 		E91866FB285231A3003BCA27 /* EmptyLogContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyLogContent.swift; sourceTree = "<group>"; };
@@ -2137,6 +2140,7 @@
 			children = (
 				D5DCCAC9252B4E0A004CB353 /* Announcement.swift */,
 				D5BCDEA925359F68004BAEE8 /* Offer.swift */,
+				E5B304A028C0C5AE0093517A /* FullScreenImage+PreferredSource.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2803,6 +2807,7 @@
 				F30B9D8926281F840094C65E /* VpnCertificate.swift in Sources */,
 				E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
 				F30B9D8E26281F990094C65E /* VpnKeys.swift in Sources */,
+				E5B304A128C0C5AE0093517A /* FullScreenImage+PreferredSource.swift in Sources */,
 				E94274FF285B5CCA003CACA8 /* FileManagerWrapper.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
 				4257B21224EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
@@ -3110,6 +3115,7 @@
 				E148AE5F21C28CF4007AB65A /* AlertService.swift in Sources */,
 				4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				4C6C4705283FA0230064DEC9 /* VpnAuthenticationMock.swift in Sources */,
+				E5B304A228C0C5AE0093517A /* FullScreenImage+PreferredSource.swift in Sources */,
 				42878E4224EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D56B68E42507CBBD00796E0C /* ClientConfig.swift in Sources */,
 				E9606FFB283B62AA00983E3B /* LogContent.swift in Sources */,

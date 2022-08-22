@@ -222,6 +222,8 @@
 		E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */; };
 		E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
+		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
@@ -838,6 +840,8 @@
 		E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusMenuCountryViewItem.xib; sourceTree = "<group>"; };
 		E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppConnectButton.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
+		E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
+		E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
 		E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "XCUIElement+forceClick.swift"; path = "../../../macos/ProtonVPNUITests/Other classes/XCUIElement+forceClick.swift"; sourceTree = "<group>"; };
 		E534EA4D2806B6DB00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -1313,6 +1317,8 @@
 			children = (
 				65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */,
 				17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */,
+				E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */,
+				E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -3092,6 +3098,7 @@
 				E156C19C20BDA5920054E935 /* StatusMenu.xib in Resources */,
 				42C1F2852552FEA800793A49 /* QuickSettingsDropdownOption.xib in Resources */,
 				E1420A73209B57B100697461 /* ConnectionSettings.xib in Resources */,
+				E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */,
 				EEBB82EA1F1DF5B40041432A /* CreateNewProfile.xib in Resources */,
 				EE27DB491F47095300D2FF2B /* Account.xib in Resources */,
 				EE74FCB21F5DD9E500E266BC /* PopUp.xib in Resources */,
@@ -3520,6 +3527,7 @@
 				EE4E7E051F62B27A000F7D5E /* ProfilesContainerViewModel.swift in Sources */,
 				E195C0D9204301900002021B /* ButtonMask.swift in Sources */,
 				E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */,
+				E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */,
 				E9380F63283F75DA008065C8 /* OpenVpnMacProtocolFactory.swift in Sources */,
 				E17C1CDD20E5297400DCC687 /* StatusMenuWindowModel.swift in Sources */,
 				EE3B38001F436E14008DF9E7 /* ProfilesTabBarViewController.swift in Sources */,

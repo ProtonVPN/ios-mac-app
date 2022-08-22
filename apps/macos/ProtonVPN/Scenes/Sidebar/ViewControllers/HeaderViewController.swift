@@ -68,6 +68,7 @@ final class HeaderViewController: NSViewController {
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
         
         setupAnnouncements()
+        setupBadgeView()
         NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
     
@@ -153,18 +154,22 @@ final class HeaderViewController: NSViewController {
     
     // MARK: Announcements
     
-    @objc func setupAnnouncements() {
+    fileprivate func setupBadgeView() {
         badgeView.wantsLayer = true
         badgeView.layer?.cornerRadius = 3
         badgeView.layer?.backgroundColor = .cgColor(.background, .info)
         badgeView.isHidden = true
+    }
 
+    @objc func setupAnnouncements() {
         guard let viewModel = viewModel, viewModel.showAnnouncements else {
             announcementsButton.isHidden = true
             return
         }
 
-        let setup = { [weak self] (image: NSImage?) in
+        viewModel.prefetchImages()
+
+        let setup = { [weak self] (image: NSImage) in
             self?.announcementsButton.image = image
             self?.announcementsButton.isHidden = false
             self?.badgeView.isHidden = self?.viewModel.hasUnreadAnnouncements != true

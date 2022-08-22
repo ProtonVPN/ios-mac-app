@@ -454,7 +454,12 @@
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
+		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
+		E5B3049E28BF7C4A0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
+		E5B3049F28BF7C720093517A /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5C035B327BAA8EF003196F5 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
+		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
+		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
@@ -1011,6 +1016,9 @@
 		E534EA442806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E593B97027BA7DC100AFCA8C /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpsellColors.swift; path = ../../../../ios/ProtonVPN/Scenes/Upsell/UpsellColors.swift; sourceTree = "<group>"; };
+		E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementViewController.swift; sourceTree = "<group>"; };
+		E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementImageViewController.swift; sourceTree = "<group>"; };
+		E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementImageViewController.xib; sourceTree = "<group>"; };
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E86A799CCEC040F563446F6F /* Pods-WireGuardNetworkExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
@@ -1844,11 +1852,14 @@
 		D5BCDC7B25303825004BAEE8 /* Announcements */ = {
 			isa = PBXGroup;
 			children = (
+				D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */,
+				E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */,
+				9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */,
+				01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */,
+				E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */,
+				E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */,
 				D5F37633254010C7008C7207 /* Extensions */,
 				D5BCDCF525304C83004BAEE8 /* Views */,
-				D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */,
-				01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */,
-				9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */,
 			);
 			path = Announcements;
 			sourceTree = "<group>";
@@ -1856,9 +1867,9 @@
 		D5BCDCF525304C83004BAEE8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */,
 				626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */,
 				AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */,
+				F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2993,6 +3004,7 @@
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
+				E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */,
 				E986309B269835E500F56B87 /* Localizable.stringsdict in Resources */,
 				8CE611B08C0E5F102ECF4E3A /* Pods-ProtonVPN-metadata.plist in Resources */,
 				DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */,
@@ -3608,6 +3620,7 @@
 				428DF9B5262F126600944379 /* StreamingServiceCell.swift in Sources */,
 				D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */,
 				66E34BB627ABEC45002FC827 /* SettingsAccountViewController.swift in Sources */,
+				E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */,
 				D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */,
 				79848BB420D201AC00EF6F9F /* ConnectionViewModel.swift in Sources */,
 				42066E97263025E0001F86DB /* ServersFeaturesInformationViewModel.swift in Sources */,
@@ -3619,6 +3632,7 @@
 				42066E8F2630240F001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
 				F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */,
 				79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */,
+				E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */,
 				79DEE9092111A5E100C354EF /* TabBar.swift in Sources */,
 				792B58C02150DEA3000BB3A3 /* StatusViewController.swift in Sources */,
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,
@@ -3646,6 +3660,7 @@
 				F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
+				E5B3049E28BF7C4A0093517A /* AnnouncementViewController.swift in Sources */,
 				663F86962840DFE9009AABF6 /* AccountDetailsTableViewCell.swift in Sources */,
 				D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */,
@@ -3776,6 +3791,7 @@
 				D5110852246150DF0018872A /* Date+Formatters.swift in Sources */,
 				D5136C84228592E80002C095 /* UIKitString+Extension.swift in Sources */,
 				D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */,
+				E5B3049F28BF7C720093517A /* AnnouncementImageViewController.swift in Sources */,
 				D5136C85228592E80002C095 /* ProtonButton.swift in Sources */,
 				D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */,
 				D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */,

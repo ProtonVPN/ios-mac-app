@@ -35,13 +35,13 @@ final class AnnouncementDetailViewController: NSViewController {
     @IBOutlet private weak var actionButton: PrimaryActionButton!
     @IBOutlet private weak var pageFooterLabel: NSTextField!
 
-    private let data: OfferPanel
+    private let data: OfferPanel.LegacyPanel
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(_ data: OfferPanel) {
+    init(_ data: OfferPanel.LegacyPanel) {
         self.data = data
         super.init(nibName: NSNib.Name(String(describing: AnnouncementDetailViewController.self)), bundle: nil)
     }
