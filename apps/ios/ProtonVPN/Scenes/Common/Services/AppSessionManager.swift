@@ -210,8 +210,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             case .success:
                 success()
             case let .failure(error):
-                if let providerError = error as? ProviderMessageError, case .sendingError = providerError {
-                    // The vpn isn't connected yet and the provider can't refresh the certificate.
+                if let providerError = error as? ProviderMessageError {
+                    // The vpn isn't connected yet, which means the extension hasn't been
+                    // launched (if it's used at all for the user's preferred protocol)
+                    // and the provider can't refresh the certificate.
                     // Fake success and the extension can handle refresh itself once we're connected.
                     success()
                     return
