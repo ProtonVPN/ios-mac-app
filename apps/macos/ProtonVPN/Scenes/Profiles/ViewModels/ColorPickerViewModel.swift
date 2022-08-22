@@ -76,6 +76,6 @@ class ColorPickerViewModel {
 
 private extension Array {
     var randomIndex: Index {
-        Index(arc4random_uniform(UInt32(count)))
+        Index(arc4random_uniform(UInt32(count))) // swiftlint:disable:this legacy_random
     }
 }
