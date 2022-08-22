@@ -689,7 +689,7 @@ public class VpnServerSubscriptionErrorAlert: SystemAlert {
     public init() { }
 }
 
-public class AnnouncmentOfferAlert: SystemAlert {
+public class AnnouncementOfferAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()

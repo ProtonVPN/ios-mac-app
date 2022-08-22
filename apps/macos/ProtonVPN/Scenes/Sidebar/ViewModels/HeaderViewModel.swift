@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import SDWebImage
 import vpncore
 
 protocol HeaderViewModelDelegate: class {
@@ -153,6 +154,11 @@ final class HeaderViewModel {
             return url
         }
         return nil
+    }
+
+    func prefetchImages() {
+        let urls = announcementsViewModel.backgroundURLs()
+        SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil)
     }
 
     var announcementTooltip: String? {

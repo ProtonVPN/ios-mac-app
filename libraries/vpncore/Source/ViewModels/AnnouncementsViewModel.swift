@@ -69,7 +69,7 @@ public class AnnouncementsViewModel {
         announcementManager.markAsRead(announcement: announcement)
 
         if let data = announcement.offer?.panel {
-            alertService.push(alert: AnnouncmentOfferAlert(data: data))
+            alertService.push(alert: AnnouncementOfferAlert(data: data))
             return
         }
         
@@ -87,5 +87,9 @@ public class AnnouncementsViewModel {
     @objc func dataChanged() {
         fillItems()
         refreshView?()
+    }
+
+    public func backgroundURLs() -> [URL] {
+        items.compactMap(\.prefetchableImage)
     }
 }

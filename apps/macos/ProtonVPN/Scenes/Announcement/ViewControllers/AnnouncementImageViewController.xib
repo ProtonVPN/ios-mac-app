@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AnnouncementImageViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="actionButton" destination="PIL-Yz-icj" id="r7e-Ys-5bu"/>
+                <outlet property="imageView" destination="wYo-jg-x61" id="8wK-NQ-CUn"/>
+                <outlet property="imageViewHeight" destination="9EZ-fP-vz0" id="Lmn-N5-HRa"/>
+                <outlet property="imageViewWidth" destination="vdx-KQ-M1c" id="xrP-Uv-dov"/>
+                <outlet property="progressIndicator" destination="Uua-av-HPk" id="Gaj-X4-Qt3"/>
+                <outlet property="view" destination="c22-O7-iKe" id="t1Z-9g-uOU"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="528" height="384"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="Uua-av-HPk">
+                    <rect key="frame" x="256" y="184" width="16" height="16"/>
+                </progressIndicator>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PIL-Yz-icj" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="227" y="25" width="75" height="32"/>
+                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="b5Z-jn-D80">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="verticalPadding">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                            <real key="value" value="120"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didTapActionButton:" target="-2" id="5Kb-Dy-Ned"/>
+                    </connections>
+                </button>
+                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAg-Pe-Yoo">
+                    <rect key="frame" x="0.0" y="84" width="528" height="300"/>
+                    <clipView key="contentView" drawsBackground="NO" id="T93-UT-JlB">
+                        <rect key="frame" x="0.0" y="0.0" width="528" height="300"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view translatesAutoresizingMaskIntoConstraints="NO" id="2Ny-Yp-oMF">
+                                <rect key="frame" x="0.0" y="0.0" width="528" height="300"/>
+                                <subviews>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="wYo-jg-x61">
+                                        <rect key="frame" x="64" y="0.0" width="400" height="300"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="300" id="9EZ-fP-vz0"/>
+                                            <constraint firstAttribute="width" constant="400" id="vdx-KQ-M1c"/>
+                                        </constraints>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="9bS-wQ-FPm"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="wYo-jg-x61" firstAttribute="centerY" secondItem="2Ny-Yp-oMF" secondAttribute="centerY" id="GI8-fG-qrO"/>
+                                    <constraint firstItem="wYo-jg-x61" firstAttribute="leading" secondItem="2Ny-Yp-oMF" secondAttribute="leading" constant="64" id="GnW-3b-XVy"/>
+                                    <constraint firstAttribute="trailing" secondItem="wYo-jg-x61" secondAttribute="trailing" constant="64" id="YNm-CP-WGr"/>
+                                    <constraint firstItem="wYo-jg-x61" firstAttribute="top" secondItem="2Ny-Yp-oMF" secondAttribute="top" id="ib4-aa-WT2"/>
+                                    <constraint firstAttribute="bottom" secondItem="wYo-jg-x61" secondAttribute="bottom" id="x9G-Eh-rme"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="2Ny-Yp-oMF" firstAttribute="top" secondItem="T93-UT-JlB" secondAttribute="top" id="FnW-me-fTo"/>
+                            <constraint firstItem="2Ny-Yp-oMF" firstAttribute="leading" secondItem="T93-UT-JlB" secondAttribute="leading" id="PJM-FO-olY"/>
+                            <constraint firstAttribute="bottom" secondItem="2Ny-Yp-oMF" secondAttribute="bottom" id="QlQ-LX-eSz"/>
+                            <constraint firstAttribute="trailing" secondItem="2Ny-Yp-oMF" secondAttribute="trailing" id="m7E-SS-Av5"/>
+                        </constraints>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="tDV-3u-Wf2">
+                        <rect key="frame" x="-100" y="-100" width="421" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="lQh-lW-Zlk">
+                        <rect key="frame" x="-100" y="-100" width="16" height="462"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="PIL-Yz-icj" secondAttribute="bottom" constant="32" id="7xS-8r-AoE"/>
+                <constraint firstItem="PIL-Yz-icj" firstAttribute="top" secondItem="pAg-Pe-Yoo" secondAttribute="bottom" constant="32" id="CkY-ij-dPt"/>
+                <constraint firstAttribute="trailing" secondItem="pAg-Pe-Yoo" secondAttribute="trailing" id="ISm-Ds-Dr9"/>
+                <constraint firstItem="PIL-Yz-icj" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="Lq7-cj-KAt"/>
+                <constraint firstItem="Uua-av-HPk" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="VI2-53-rGu"/>
+                <constraint firstItem="pAg-Pe-Yoo" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="mJt-Wn-tDa"/>
+                <constraint firstItem="pAg-Pe-Yoo" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="rjz-vq-DcC"/>
+                <constraint firstItem="Uua-av-HPk" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="tBG-fH-4fN"/>
+            </constraints>
+            <point key="canvasLocation" x="212" y="110.5"/>
+        </customView>
+    </objects>
+</document>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnnouncementImageViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="actionButton" destination="IJc-VT-yuj" id="YkP-qg-qw4"/>
+                <outlet property="closeButton" destination="RZQ-nD-A6j" id="h5K-ID-FdJ"/>
+                <outlet property="imageView" destination="O8v-xy-cAn" id="B7r-QX-YZP"/>
+                <outlet property="imageViewHeight" destination="Q8B-dI-lgC" id="Zde-b6-9ST"/>
+                <outlet property="progressIndicator" destination="Mbz-3A-zyZ" id="fov-ah-ivr"/>
+                <outlet property="scrollView" destination="vA8-UI-hgt" id="bRU-WZ-ltE"/>
+                <outlet property="view" destination="iN0-l3-epB" id="jzZ-Qj-CHr"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Mbz-3A-zyZ">
+                    <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                </activityIndicatorView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vA8-UI-hgt" customClass="CenteringScrollView" customModule="Modals_iOS">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="788"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="406" placeholderIntrinsicHeight="710" translatesAutoresizingMaskIntoConstraints="NO" id="O8v-xy-cAn">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="710"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="710" id="Q8B-dI-lgC"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="O8v-xy-cAn" secondAttribute="bottom" id="IEm-OX-evJ"/>
+                        <constraint firstItem="xeo-Bf-0a4" firstAttribute="trailing" secondItem="O8v-xy-cAn" secondAttribute="trailing" id="P4i-Pe-Zji"/>
+                        <constraint firstItem="O8v-xy-cAn" firstAttribute="top" secondItem="vA8-UI-hgt" secondAttribute="top" id="QrV-bM-Ome"/>
+                        <constraint firstAttribute="trailing" secondItem="O8v-xy-cAn" secondAttribute="trailing" id="vlo-bM-Y9D"/>
+                        <constraint firstItem="O8v-xy-cAn" firstAttribute="leading" secondItem="xeo-Bf-0a4" secondAttribute="leading" id="zmZ-9u-xf2"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="rMq-rS-6pO"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="xeo-Bf-0a4"/>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RZQ-nD-A6j">
+                    <rect key="frame" x="0.0" y="44" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="RZQ-nD-A6j" secondAttribute="height" multiplier="1:1" id="Tj7-TI-6Mh"/>
+                        <constraint firstAttribute="width" constant="60" id="xma-MF-pDl"/>
+                    </constraints>
+                    <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                    <state key="normal" image="close">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="closeButtonTapped:" destination="-1" eventType="touchUpInside" id="rdV-Es-EEr"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZGy-R0-PBh">
+                    <rect key="frame" x="0.0" y="788" width="414" height="74"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJc-VT-yuj" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="24" y="8" width="366" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="Yfr-d6-ffb"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="actionButtonTapped:" destination="-1" eventType="touchUpInside" id="K1B-ez-Xcn"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="IJc-VT-yuj" secondAttribute="bottom" constant="16" id="FGE-IC-vNW"/>
+                        <constraint firstItem="IJc-VT-yuj" firstAttribute="top" secondItem="ZGy-R0-PBh" secondAttribute="topMargin" id="aTk-ND-Q6k"/>
+                        <constraint firstItem="IJc-VT-yuj" firstAttribute="leading" secondItem="ZGy-R0-PBh" secondAttribute="leadingMargin" constant="16" id="jcH-Tn-kX2"/>
+                        <constraint firstAttribute="trailingMargin" secondItem="IJc-VT-yuj" secondAttribute="trailing" constant="16" id="v8Y-DE-ao6"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="RZQ-nD-A6j" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8EU-yU-lfQ"/>
+                <constraint firstItem="RZQ-nD-A6j" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="KUp-3L-NYy"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZGy-R0-PBh" secondAttribute="bottom" id="SeN-Oe-wy6"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="vA8-UI-hgt" secondAttribute="trailing" id="Tbb-Gn-O0l"/>
+                <constraint firstItem="Mbz-3A-zyZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Wym-0c-gVF"/>
+                <constraint firstItem="ZGy-R0-PBh" firstAttribute="top" secondItem="vA8-UI-hgt" secondAttribute="bottom" id="dw9-8v-3O5"/>
+                <constraint firstItem="ZGy-R0-PBh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="g7z-rw-zys"/>
+                <constraint firstItem="Mbz-3A-zyZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="gPA-KO-3j4"/>
+                <constraint firstItem="vA8-UI-hgt" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="rr5-QB-Frl"/>
+                <constraint firstItem="vA8-UI-hgt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tGB-af-CnJ"/>
+                <constraint firstItem="RZQ-nD-A6j" firstAttribute="width" secondItem="RZQ-nD-A6j" secondAttribute="height" multiplier="1:1" id="uI9-3s-JS0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZGy-R0-PBh" secondAttribute="trailing" id="ueB-qC-sqQ"/>
+                <constraint firstItem="RZQ-nD-A6j" firstAttribute="width" secondItem="RZQ-nD-A6j" secondAttribute="height" multiplier="1:1" id="xAQ-dD-GCz"/>
+            </constraints>
+            <point key="canvasLocation" x="132" y="98"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close" width="217" height="217"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

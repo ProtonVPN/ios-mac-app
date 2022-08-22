@@ -38,15 +38,86 @@ public struct Offer: Codable {
 }
 
 public struct OfferPanel: Codable {
-    public let incentive: String
-    public let incentivePrice: String
-    public let pill: String
-    public let pictureURL: String
-    public let title: String
-    public let features: [OfferFeature]
-    public let featuresFooter: String
+    public let fullScreenImage: FullScreenImage?
     public let button: OfferButton
-    public let pageFooter: String
+    public let incentive: String?
+    public let incentivePrice: String?
+    public let pill: String?
+    public let pictureURL: String?
+    public let title: String?
+    public let features: [OfferFeature]?
+    public let featuresFooter: String?
+    public let pageFooter: String?
+}
+
+public struct FullScreenImage: Codable {
+    public let source: [Source]
+    public let alternativeText: String
+
+    public struct Source: Codable {
+        public let url: String
+        public let type: String
+        public let width: Int?
+        public let target: String?
+
+        enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
+            case type
+            case width
+            case url = "URL"
+            case target
+        }
+    }
+}
+
+public extension OfferPanel {
+    func panelMode() -> Mode? {
+        if let fullScreenImage = fullScreenImage {
+            let panel = ImagePanel(fullScreenImage: fullScreenImage, button: button)
+            return .image(panel)
+        }
+        guard let incentive = incentive,
+              let incentivePrice = incentivePrice,
+              let pill = pill,
+              let pictureURL = pictureURL,
+              let title = title,
+              let features = features,
+              let featuresFooter = featuresFooter,
+              let pageFooter = pageFooter else {
+            return nil
+        }
+        let panel = LegacyPanel(button: button,
+                                incentive: incentive,
+                                incentivePrice: incentivePrice,
+                                pill: pill,
+                                pictureURL: pictureURL,
+                                title: title,
+                                features: features,
+                                featuresFooter: featuresFooter,
+                                pageFooter: pageFooter)
+        return .legacy(panel)
+    }
+
+    enum Mode {
+        case image(ImagePanel)
+        case legacy(LegacyPanel)
+    }
+
+    struct LegacyPanel {
+        public let button: OfferButton
+        public let incentive: String
+        public let incentivePrice: String
+        public let pill: String
+        public let pictureURL: String
+        public let title: String
+        public let features: [OfferFeature]
+        public let featuresFooter: String
+        public let pageFooter: String
+    }
+
+    struct ImagePanel {
+        public let fullScreenImage: FullScreenImage
+        public let button: OfferButton
+    }
 }
 
 public struct OfferFeature: Codable {

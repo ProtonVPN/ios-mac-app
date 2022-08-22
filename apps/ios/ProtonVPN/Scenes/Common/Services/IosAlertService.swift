@@ -161,7 +161,7 @@ extension IosAlertService: CoreAlertService {
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
 
-        case let announcementOfferAlert as AnnouncmentOfferAlert:
+        case let announcementOfferAlert as AnnouncementOfferAlert:
             show(announcementOfferAlert)
             
         case let subuserAlert as SubuserWithoutConnectionsAlert:
@@ -313,16 +313,23 @@ extension IosAlertService: CoreAlertService {
         showNotificationStyleAlert(message: alert.title ?? "", type: .success)
     }
 
-    private func show(_ alert: AnnouncmentOfferAlert) {
-        let vc = AnnouncementDetailViewController(alert.data)
-        vc.modalPresentationStyle = .fullScreen
-        vc.cancelled = { [weak self] in
+    private func show(_ alert: AnnouncementOfferAlert) {
+        guard let panelMode = alert.data.panelMode() else { return }
+        let announcement: AnnouncementViewController
+        switch panelMode {
+        case .legacy(let legacyPanel):
+            announcement = AnnouncementDetailViewController(legacyPanel)
+        case .image(let imagePanel):
+            announcement = AnnouncementImageViewController(imagePanel)
+        }
+        announcement.cancelled = { [weak self] in
             self?.windowService.dismissModal { }
         }
-        vc.urlRequested = { [weak self] url in
+        announcement.urlRequested = { [weak self] url in
             self?.safariService.open(url: url)
         }
-        windowService.present(modal: vc)
+        announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
+        windowService.present(modal: announcement)
     }
 
     private func show(_ alert: SubuserWithoutConnectionsAlert) {

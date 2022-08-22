@@ -25,7 +25,7 @@ import UIKit
 import vpncore
 import Alamofire
 
-final class AnnouncementDetailViewController: UIViewController {
+final class AnnouncementDetailViewController: AnnouncementViewController {
 
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var actionButton: UIButton!
@@ -39,16 +39,13 @@ final class AnnouncementDetailViewController: UIViewController {
     @IBOutlet private weak var featuresStackView: UIStackView!
     @IBOutlet private weak var featuresFooterLabel: UILabel!
 
-    var cancelled: (() -> Void)?
-    var urlRequested: ((String) -> Void)?
-
-    private let data: OfferPanel
+    private let data: OfferPanel.LegacyPanel
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(_ data: OfferPanel) {
+    init(_ data: OfferPanel.LegacyPanel) {
         self.data = data
         super.init(nibName: String(describing: AnnouncementDetailViewController.self), bundle: nil)
     }

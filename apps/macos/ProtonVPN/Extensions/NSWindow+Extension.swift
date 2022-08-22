@@ -24,7 +24,7 @@ import Cocoa
 
 extension NSWindow {
     
-    func applyModalAppearance(withTitle modalTitle: String) {
+    func applyModalAppearance(withTitle modalTitle: String = "Proton VPN") {
         styleMask.remove(NSWindow.StyleMask.resizable)
         title = modalTitle
         titlebarAppearsTransparent = true
@@ -65,5 +65,15 @@ extension NSWindow {
         backgroundColor = .color(.background, .weak)
         
         minSize = NSSize(width: AppConstants.Windows.sidebarWidth, height: AppConstants.Windows.minimumSidebarHeight)
+    }
+
+    func centerWindowOnScreen() {
+        guard let screen = NSScreen.screens.first?.visibleFrame,
+              let size = contentView?.frame.size else {
+            return
+        }
+        let x = screen.size.width / 2 - size.width / 2
+        let y = screen.size.height / 2 - size.height / 2
+        setFrameOrigin(NSPoint(x: x, y: y))
     }
 }

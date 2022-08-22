@@ -42,5 +42,14 @@ public struct Announcement: Codable {
     mutating func setAsRead(_ read: Bool) {
         isRead = read
     }
-    
+}
+
+extension Announcement {
+    var prefetchableImage: URL? {
+        guard case .image(let panel) = offer?.panel?.panelMode(),
+              let url = panel.fullScreenImage.preferredSource() else {
+            return nil
+        }
+        return url
+    }
 }
