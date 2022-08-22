@@ -162,6 +162,23 @@ fileprivate extension AppDelegate {
                     UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                 }
             }
+
+        case URLConstants.deepLinkRefresh:
+            guard container.makeAuthKeychainHandle().fetch() != nil else {
+                log.debug("User not is logged in, not refreshing user data", category: .app)
+                return false
+            }
+
+            log.debug("App activated with the refresh url, refreshing data", category: .app)
+            container.makeAppSessionManager().attemptSilentLogIn { result in
+                switch result {
+                case .success:
+                    log.debug("User data refreshed after url activation", category: .app)
+                case let .failure(error):
+                    log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
+                }
+            }
+
         default:
             log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])
             return false
