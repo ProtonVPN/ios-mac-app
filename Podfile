@@ -27,6 +27,10 @@ def keychain_access
   pod 'KeychainAccess', '3.2.1'
 end
 
+def reachability
+  pod 'ReachabilitySwift', '5.0.0'
+end
+
 def sd_web_image
   pod 'SDWebImage', '5.12.6'
 end
@@ -34,7 +38,7 @@ end
 def vpn_core
     use_frameworks!        
     pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.16.0'
-    pod 'ReachabilitySwift', '5.0.0'
+    reachability
     keychain_access
     
     # Checks code style and bad practices
@@ -94,7 +98,7 @@ target 'ProtonVPN' do
   pod 'AlamofireImage', '~> 4.1'
   pod 'Alamofire', '5.4.4'
   
-  pod 'ReachabilitySwift', '5.0.0'
+  reachability
   
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
