@@ -26,6 +26,7 @@ struct ClientConfigResponse {
     enum PortType {
         static let UDP = "UDP"
         static let TCP = "TCP"
+        static let TLS = "TLS"
     }
     enum ProtocolType {
         static let WireGuard = "WireGuard"
@@ -49,18 +50,20 @@ extension ClientConfigResponse: Codable {
         let featureFlags = try container.decode(FeatureFlags.self, forKey: .featureFlags)
         let serverRefreshInterval = try container.decode(Int.self, forKey: .serverRefreshInterval)
         let defaultPorts = try container.decode([String: [String: [Int]]].self, forKey: .defaultPorts)
-        let openVpnConfig: OpenVpnConfig
-        if let openVpnPorts = defaultPorts[ProtocolType.OpenVPN], let openVpnUDP = openVpnPorts[PortType.UDP], let openVpnTCP = openVpnPorts[PortType.TCP] {
-            openVpnConfig = OpenVpnConfig(defaultTcpPorts: openVpnTCP, defaultUdpPorts: openVpnUDP)
-        } else {
-            openVpnConfig = OpenVpnConfig()
-        }
-        let wireguardConfig: WireguardConfig
-        if let wireguardPorts = defaultPorts[ProtocolType.WireGuard], let wireguardUDP = wireguardPorts[PortType.UDP], let wireguardTCP = wireguardPorts[PortType.TCP] {
-            wireguardConfig = WireguardConfig(defaultUdpPorts: wireguardUDP, defaultTcpPorts: wireguardTCP)
-        } else {
-            wireguardConfig = WireguardConfig()
-        }
+
+        let openVpnPorts = defaultPorts[ProtocolType.OpenVPN]
+        let (openVpnUdp, openVpnTcp) = (openVpnPorts?[PortType.UDP],
+                                        openVpnPorts?[PortType.TCP])
+        let openVpnConfig = OpenVpnConfig(defaultTcpPorts: openVpnTcp, defaultUdpPorts: openVpnUdp)
+
+        let wireguardPorts = defaultPorts[ProtocolType.WireGuard]
+        let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?[PortType.UDP],
+                                                          wireguardPorts?[PortType.TCP],
+                                                          wireguardPorts?[PortType.TLS])
+        let wireguardConfig = WireguardConfig(defaultUdpPorts: wireguardUdp,
+                                              defaultTcpPorts: wireguardTcp,
+                                              defaultTlsPorts: wireguardTls)
+
         let smartProtocolConfig = try container.decode(SmartProtocolConfig.self, forKey: .smartProtocol)
         let ratingSettings = try container.decodeIfPresent(RatingSettings.self, forKey: .ratingSettings) ?? RatingSettings()
 

@@ -26,7 +26,10 @@ import os
 import WireGuardKit
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-        
+    override init() {
+        super.init()
+    }
+
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }

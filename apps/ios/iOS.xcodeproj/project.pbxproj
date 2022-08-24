@@ -5203,7 +5203,7 @@
 			repositoryURL = "git@gitlab.protontech.ch:apple/vpn/wireguard-apple.git";
 			requirement = {
 				kind = revision;
-				revision = 2cdcd84aceeb26d2cf67c549ad5a64ce16d0ef65;
+				revision = 61f68bf48f5f8d558f84b44ea528211857eb23bc;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

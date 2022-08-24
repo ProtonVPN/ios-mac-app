@@ -230,7 +230,7 @@ extension WireGuardTransport {
     }
 }
 
-extension VpnProtocol: Equatable & Hashable {}
+extension VpnProtocol: Equatable, Hashable {}
 
 // MARK: - MacOS
 

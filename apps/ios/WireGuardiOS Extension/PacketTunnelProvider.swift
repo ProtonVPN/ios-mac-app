@@ -22,6 +22,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override init() {
         super.init()
+
         let storage = Storage()
 
         let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
@@ -100,7 +101,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
-        
+
         // Use shared defaults to get cert features that were set in the app
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 

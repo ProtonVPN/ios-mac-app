@@ -37,9 +37,9 @@ public struct WireguardConfig: Codable, Equatable {
         return "0.0.0.0/0"
     }
 
-    init(defaultUdpPorts: [Int] = [51820], defaultTcpPorts: [Int] = [443], defaultTlsPorts: [Int] = [443]) {
-        self.defaultUdpPorts = defaultUdpPorts
-        self.defaultTcpPorts = defaultTcpPorts
-        self.defaultTlsPorts = defaultTlsPorts
+    init(defaultUdpPorts: [Int]? = nil, defaultTcpPorts: [Int]? = nil, defaultTlsPorts: [Int]? = nil) {
+        self.defaultUdpPorts = defaultUdpPorts ?? [51820]
+        self.defaultTcpPorts = defaultTcpPorts ?? [443]
+        self.defaultTlsPorts = defaultTlsPorts ?? [443]
     }
 }
