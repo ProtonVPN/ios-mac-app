@@ -88,6 +88,94 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         wait(for: [expectations.disconnect], timeout: expectationTimeout)
     }
 
+    /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail
+    /// the checker tries one more time and if that succeeds the connection is established
+    func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFail() {
+        let retryExpectation = XCTestExpectation()
+        var seenPorts: [Int: Bool] = [:]
+
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.pingCallback = { serverIp, port in
+            if seenPorts[port] == nil {
+                seenPorts[port] = true
+                // fail all pings on first try
+                return false
+            }
+
+            // if we have seen the port being checked already then it is the second attempt
+            retryExpectation.fulfill()
+            // succeed all ping on second try
+            return true
+        }
+
+        container.serverStorage.populateServers(container.serverStorage.servers.values + [testData.server2])
+
+        let request = ConnectionRequest(serverType: .standard,
+                                        connectionType: .country("CH", .fastest),
+                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        netShieldType: .level1,
+                                        natType: .moderateNAT,
+                                        safeMode: true,
+                                        profileId: nil)
+
+        let tunnelProviderExpectation = XCTestExpectation()
+
+        statusChanged = { status in
+            if status == .connected {
+                tunnelProviderExpectation.fulfill()
+            }
+        }
+
+        container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
+        container.vpnGateway.connect(with: request)
+
+        wait(for: [retryExpectation, tunnelProviderExpectation], timeout: 10)
+        XCTAssert(container.appStateManager.state.isConnected)
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard)
+    }
+
+    /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail
+    /// the checker tries one more time and if the pings for all the ports fail again the connection fails with an error
+    func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() {
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard]?.pingCallback = { serverIp, port in
+            // fail all the pings
+            return false
+        }
+
+        container.serverStorage.populateServers(container.serverStorage.servers.values + [testData.server2])
+
+        let request = ConnectionRequest(serverType: .standard,
+                                        connectionType: .country("CH", .fastest),
+                                        connectionProtocol: .vpnProtocol(.wireGuard),
+                                        netShieldType: .level1,
+                                        natType: .moderateNAT,
+                                        safeMode: true,
+                                        profileId: nil)
+
+        let stateChangedToErrorExpectation = XCTestExpectation()
+        let stateChangeNotification = AppStateManagerNotification.stateChange
+        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
+            guard let appState = notification.object as? AppState else {
+                XCTFail("Did not send app state as part of notification")
+                return
+            }
+
+            switch appState {
+            case .error:
+                stateChangedToErrorExpectation.fulfill()
+            default:
+                break
+            }
+
+        }
+        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
+
+        container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
+        container.vpnGateway.connect(with: request)
+
+        wait(for: [stateChangedToErrorExpectation], timeout: 10)
+        XCTAssert(container.appStateManager.state.isDisconnected)
+    }
+
     /// This test uses two servers and manipulates their properties and protocol availabilities to see how vpncore reacts.
     ///
     /// With two servers in the server storage, the app should pick the one with the lower score. Then, using a mocked

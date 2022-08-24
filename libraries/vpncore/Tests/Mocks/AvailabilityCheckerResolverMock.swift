@@ -54,6 +54,7 @@ class AvailabilityCheckerResolverMock: AvailabilityCheckerResolver {
 
 class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
     var availabilityCallback: ((ServerIp) -> SmartProtocolAvailabilityCheckerResult)?
+    var pingCallback: ((ServerIp, Int) -> Bool)?
 
     let vpnProtocol: VpnProtocol
     let availablePorts: [Int]
@@ -68,6 +69,11 @@ class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
     }
 
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
+        if let pingCallback = pingCallback {
+            completion(pingCallback(server, port))
+            return
+        }
+
         completion(true)
     }
 
