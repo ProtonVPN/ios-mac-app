@@ -31,45 +31,42 @@ class LoginRobot: CoreElements {
     func loginUser(credentials: Credentials) -> LoginRobot {
         return typeUsername(username: credentials.username)
             .typePassword(password: credentials.password)
-            .signIn()
     }
     
     @discardableResult
     func loginWrongUser(_ username: String, _ password: String) -> LoginRobot {
         return typeUsername(username: username)
             .typePassword(password: password)
-            .signIn()
     }
     
-    @discardableResult
-    func loginEmptyFields() -> LoginRobot {
-        return signIn()
-    }
+    func loginAsUser(_ name: Credentials) -> LoginRobot {
+         return typeUsername(username: name.username)
+             .typePassword(password: name.password)
+     }
     
     func loginAsSubuser(subusercredentials: Credentials) -> LoginRobot {
         return typeUsername(username: subusercredentials.username)
             .typePassword(password: subusercredentials.password)
-            .signIn()
+    }
+    
+    @discardableResult
+    func signIn<T: CoreElements>(robot _: T.Type) -> T {
+        button(signInButtonId).tap()
+        return T()
     }
     
     func needHelp() -> NeedHelpRobot {
         button(helpButtonId).tap()
         return NeedHelpRobot()
     }
-
+    
     private func typeUsername(username: String) -> LoginRobot {
         textField(loginTextFieldId).tap().typeText(username)
         return self
     }
     
     private func typePassword(password: String) -> LoginRobot {
-        secureTextField(passwordTextFieldId).tap()
         secureTextField(passwordTextFieldId).tap().typeText(password)
-        return self
-    }
-    
-    private func signIn() -> LoginRobot {
-        button(signInButtonId).tap()
         return self
     }
     

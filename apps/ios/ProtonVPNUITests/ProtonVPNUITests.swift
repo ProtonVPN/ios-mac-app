@@ -54,6 +54,7 @@ class ProtonVPNUITests: XCTestCase {
     private let loginRobot = LoginRobot()
     private let onboardingRobot = OnboardingRobot()
     private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
     
     func loginAsFreeUser() {
         login(withCredentials: credentials[0])
@@ -67,19 +68,25 @@ class ProtonVPNUITests: XCTestCase {
         login(withCredentials: credentials[2])
     }
     
+    func loginAsTwoPassUser() {
+        login(withCredentials: twopassusercredentials[0])
+    }
+    
     func login(withCredentials credentials: Credentials) {
-        let buttonQuickConnect = app.buttons["Quick Connect"]
-        let plan = credentials.plan.replacingOccurrences(of: "ProtonVPN", with: "Proton VPN")
         super.setUp()
         loginRobot
             .loginUser(credentials: credentials)
-        
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
-                waitForExpectations(timeout: 10, handler: nil)
-
+            .signIn(robot: LoginRobot.self)
+        correctUserIsLogedIn(credentials)
+    }
+    
+    @discardableResult
+    func correctUserIsLogedIn(_ name: Credentials)-> MainRobot {
+        app.buttons["Quick Connect"].waitForExistence(timeout: 5)
         app.tabBars.buttons["Settings"].tap()
-        XCTAssert(app.staticTexts[credentials.username].exists)
-        XCTAssert(app.staticTexts[plan].exists)
+        XCTAssert(app.staticTexts[name.username].exists)
+        XCTAssert(app.staticTexts[name.plan].exists)
+        return MainRobot()
     }
  
      func openLoginScreen(){

@@ -54,4 +54,7 @@ class ObfuscatedConstants {
     static let blackDefaultPath: String = ""
 
     static let atlasSecret: String = ""
+    
+    static let twoFASecurityKey: String = ""
+    static let twoFAandTwoPassSecurityKey: String = ""
 }
