@@ -74,3 +74,63 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 
 echo '</array>
 </plist>' >> subusercredentials.plist
+
+
+# twopassusercredentials.plist
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>' > twopassusercredentials.plist
+
+[ -n "$IOS_VPNTEST_2PASSUSER1" ] && echo "<dict>
+            <key>plan</key>
+            <string>$IOS_VPNTEST_2PASSAUSERPLAN1</string>
+            <key>username</key>
+            <string>$IOS_VPNTEST_2PASSUSER1</string>
+            <key>password</key>
+            <string>$IOS_VPNTEST_2PASSPASSWORD1</string>
+        </dict>" >> twopassusercredentials.plist
+
+echo '</array>
+</plist>' >> twopassusercredentials.plist
+
+
+# twofausercredentials.plist
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>' > twofausercredentials.plist
+
+[ -n "$IOS_VPNTEST_2FAUSER1" ] && echo "<dict>
+            <key>plan</key>
+            <string>$IOS_VPNTEST_2FAUSERPLAN1</string>
+            <key>username</key>
+            <string>$IOS_VPNTEST_2FAUSER1</string>
+            <key>password</key>
+            <string>$IOS_VPNTEST_2FAPASSWORD1</string>
+        </dict>" >> twofausercredentials.plist
+
+echo '</array>
+</plist>' >> twofausercredentials.plist
+
+
+# twopasstwofausercredentials.plist
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>' > twopasstwofausercredentials.plist
+
+[ -n "$IOS_VPNTEST_2PASS2FAUSER1" ] && echo "<dict>
+            <key>plan</key>
+            <string>$IOS_VPNTEST_2PASS2FAUSERPLAN1</string>
+            <key>username</key>
+            <string>$IOS_VPNTEST_2PASS2FAUSER1</string>
+            <key>password</key>
+            <string>$IOS_VPNTEST_2PASS2FAPASSWORD1</string>
+        </dict>" >> twopasstwofausercredentials.plist
+
+echo '</array>
+</plist>' >> twopasstwofausercredentials.plist

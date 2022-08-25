@@ -19,6 +19,8 @@ fileprivate let deleteSuccessMessage = "Profile has been deleted"
 fileprivate let tabQCInactive = "quick connect inactive button"
 fileprivate let tabQCActive = "quick connect active button"
 fileprivate let netshieldUpgradeButton = "Upgrade"
+fileprivate let getPlusButton = "GetPlusButton"
+fileprivate let notNowbutton = "UseFreeButton"
 
 class ConnectionStatusRobot: CoreElements {
     
@@ -98,6 +100,12 @@ class ConnectionStatusRobot: CoreElements {
         @discardableResult
         func protocolNameIsCorrect(_ protocolname: String) -> ConnectionStatusRobot {
             staticText(protocolname).wait(time: 30).checkExists()
+            return ConnectionStatusRobot()
+        }
+        
+        func upsellModalIsShown() -> ConnectionStatusRobot {
+            button(getPlusButton).wait().checkExists()
+            button(notNowbutton).tap()
             return ConnectionStatusRobot()
         }
     }

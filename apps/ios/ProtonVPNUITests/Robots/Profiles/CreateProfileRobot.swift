@@ -69,6 +69,15 @@ class CreateProfileRobot: CoreElements {
             .secureCoreON()
     }
     
+    func setDefaultProfile(_ name: String, _ countryname: String)-> CreateProfileRobot {
+        return enterProfileName(name)
+            .selectCountry()
+            .chooseCountry(countryname)
+            .selectServer()
+            .chooseServer()
+            .defaultProfileON()
+    }
+    
     func saveProfile<T: CoreElements>(robot _: T.Type) -> T {
         button(saveProfileButton).tap()
         return T()

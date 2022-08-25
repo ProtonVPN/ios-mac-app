@@ -99,6 +99,27 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.profileIsCreated()
     }
     
+    func testQuickConnectToAServerViaUnavailableProfile() {
+        
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let countryName = "  Argentina (Upgrade Required)"
+        
+        logoutIfNeeded()
+        changeEnvToProdIfNeeded()
+        openLoginScreen()
+        loginAsFreeUser()
+        mainRobot
+            .goToProfilesTab()
+            .addNewProfile()
+            .setDefaultProfile(profileName, countryName)
+            .saveProfile(robot: ProfileRobot.self)
+            .verify.profileIsCreated()
+        mainRobot
+            .quickConnectViaQCButton()
+            .verify.upsellModalIsShown()
+            .verify.connectionStatusNotConnected()
+    }
+    
     func testRecommendedProfiles() {
         
         logInToProdIfNeeded()

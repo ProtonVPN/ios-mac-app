@@ -197,6 +197,10 @@
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
+		B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BCF09828B546200041A635 /* Generate2FACode.swift */; };
+		B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09B28B547F00041A635 /* twofausercredentials.plist */; };
+		B2BCF09E28B549C90041A635 /* twopasstwofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */; };
+		B2BCF0A028B54ACF0041A635 /* twopassusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */; };
 		B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */; };
 		B2D4572C2771D8C30065FEC2 /* SummarySignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */; };
 		B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */; };
@@ -853,7 +857,11 @@
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
 		B20C28F42799947A00157BD1 /* OnboardingRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRobot.swift; sourceTree = "<group>"; };
 		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
-		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
+		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		B2BCF09828B546200041A635 /* Generate2FACode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generate2FACode.swift; sourceTree = "<group>"; };
+		B2BCF09B28B547F00041A635 /* twofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
+		B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twopasstwofausercredentials.plist; sourceTree = "<group>"; };
+		B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = twopassusercredentials.plist; sourceTree = "<group>"; };
 		B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsRobot.swift; sourceTree = "<group>"; };
 		B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySignupRobot.swift; sourceTree = "<group>"; };
 		B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatingAccountRobot.swift; sourceTree = "<group>"; };
@@ -1623,6 +1631,16 @@
 			path = Signup;
 			sourceTree = "<group>";
 		};
+		B2BCF0AA28B760B70041A635 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				B29CD6AE2654109600978637 /* StringUtils.swift */,
+				D5AAA12A229D28E400EA839A /* Credentials.swift */,
+				B2BCF09828B546200041A635 /* Generate2FACode.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		D50342602472C82A005F6B90 /* ConnectionBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1794,11 +1812,14 @@
 			children = (
 				F377835D26E644BC00392958 /* Tests */,
 				F3B783E426E6428C006768A8 /* Robots */,
-				D5AAA129229D28CC00EA839A /* Other classes */,
 				D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */,
+				B2BCF0AA28B760B70041A635 /* Support */,
 				F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */,
 				D5811D81229BBD870087B63A /* Info.plist */,
 				D5AAA127229D23F500EA839A /* credentials.plist */,
+				B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */,
+				B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */,
+				B2BCF09B28B547F00041A635 /* twofausercredentials.plist */,
 				E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */,
 			);
 			path = ProtonVPNUITests;
@@ -1813,15 +1834,6 @@
 				D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		D5AAA129229D28CC00EA839A /* Other classes */ = {
-			isa = PBXGroup;
-			children = (
-				D5AAA12A229D28E400EA839A /* Credentials.swift */,
-				B29CD6AE2654109600978637 /* StringUtils.swift */,
-			);
-			path = "Other classes";
 			sourceTree = "<group>";
 		};
 		D5BCDC7B25303825004BAEE8 /* Announcements */ = {
@@ -3014,9 +3026,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */,
+				B2BCF09E28B549C90041A635 /* twopasstwofausercredentials.plist in Resources */,
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
 				47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */,
+				B2BCF0A028B54ACF0041A635 /* twopassusercredentials.plist in Resources */,
 				F377836D26E644BC00392958 /* TestPlan.xctestplan in Resources */,
+				B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */,
 				C53623CCB48A9BF717A1BAB9 /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3816,6 +3831,7 @@
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
 				F377836B26E644BC00392958 /* ReportBugTests.swift in Sources */,
+				B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */,
 				F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,

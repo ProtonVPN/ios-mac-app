@@ -18,8 +18,6 @@ fileprivate let tabQCActive = "quick connect active button"
 fileprivate let secureCore = "Use Secure Core"
 fileprivate let statusNotConnected = "Not Connected"
 fileprivate let upgradeSubscriptionTitle = "Upgrade"
-fileprivate let popUpForFreeUser = "Plus or Visionary subscription required"
-fileprivate let popUpForBasicUser = "Upgrade Unavailable in App"
 fileprivate let buttonOk = "OK"
 fileprivate let buttonCancel = "Cancel"
 fileprivate let buttonAccount = "Account"
@@ -118,12 +116,6 @@ class MainRobot: CoreElements {
         @discardableResult
         func upgradeSubscriptionIsOpenFreeUser() -> MainRobot {
             staticText(upgradeSubscriptionTitle).checkExists()
-            return MainRobot()
-        }
-    
-        @discardableResult
-        func upgradeSubscriptionIsOpenBasicUser() -> MainRobot {
-            staticText(popUpForBasicUser).checkExists()
             return MainRobot()
         }
         
