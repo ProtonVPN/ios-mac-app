@@ -23,7 +23,7 @@ public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
 
 extension NetworkingDelegate {
     public var version: HumanVerificationVersion {
-        return .v2
+        return .v3
     }
 }
 
