@@ -40,7 +40,7 @@ class BaseConnectionTestCase: XCTestCase {
     var didRequestCertRefresh: ((VPNConnectionFeatures?) -> ())?
     var didPushNewSessionSelector: ((String) -> ())?
 
-    let testData = MockTestData()
+    var testData = MockTestData()
     var container: MockDependencyContainer!
 
     var tunnelManagerCreated: ((NETunnelProviderManagerMock) -> Void)?

@@ -53,7 +53,8 @@ class AvailabilityCheckerResolverMock: AvailabilityCheckerResolver {
 }
 
 class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
-    var availabilityCallback: ((ServerIp) -> SmartProtocolAvailabilityCheckerResult)?
+    typealias AvailabilityCallback = ((ServerIp) -> SmartProtocolAvailabilityCheckerResult)
+    var availabilityCallback: AvailabilityCallback?
     var pingCallback: ((ServerIp, Int) -> Bool)?
 
     let vpnProtocol: VpnProtocol
