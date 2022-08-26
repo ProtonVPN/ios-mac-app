@@ -67,6 +67,31 @@ final class ConnectionSettingsViewModel {
         NotificationCenter.default.removeObserver(self)
     }
 
+    // MARK: - Available protocols
+
+    var availableConnectionProtocols: [ConnectionProtocol] {
+        let withoutWireGuardTls: [ConnectionProtocol] = [
+            .smartProtocol,
+            .vpnProtocol(.ike),
+            .vpnProtocol(.openVpn(.tcp)),
+            .vpnProtocol(.openVpn(.udp)),
+            .vpnProtocol(.wireGuard(.udp))
+        ]
+
+        let wireGuardTlsEnabled = propertiesManager.featureFlags.wireGuardTls ||
+            propertiesManager.vpnProtocol == .wireGuard(.tcp) ||
+            propertiesManager.vpnProtocol == .wireGuard(.tls)
+
+        guard wireGuardTlsEnabled else {
+            return withoutWireGuardTls
+        }
+
+        return withoutWireGuardTls + [
+            .vpnProtocol(.wireGuard(.tcp)),
+            .vpnProtocol(.wireGuard(.tls))
+        ]
+    }
+
     // MARK: - Quick and auto connect for current user
     var username: String? {
         authKeychain.fetch()?.username
@@ -150,7 +175,7 @@ final class ConnectionSettingsViewModel {
     }
     
     var protocolItemCount: Int {
-        return 7
+        return availableConnectionProtocols.count
     }
         
     // MARK: - Setters
@@ -181,39 +206,20 @@ final class ConnectionSettingsViewModel {
     }
 
     func protocolIndex(for vpnProtocol: ConnectionProtocol) -> Int {
-        switch vpnProtocol {
-        case .smartProtocol:
+        guard let result = availableConnectionProtocols.index(of: vpnProtocol) else {
+            assertionFailure("Protocol \(vpnProtocol) was not in available protocols list")
             return 0
-        case .vpnProtocol(let vpnProtocol):
-            switch vpnProtocol {
-            case .openVpn(let transport):
-                return transport == .tcp ? 1 : 2
-            case .wireGuard(let transport):
-                switch transport {
-                case .udp:
-                    return 3
-                case .tcp:
-                    return 4
-                case .tls:
-                    return 5
-                }
-            case .ike:
-                return 6
-            }
         }
+
+        return result
     }
 
     func protocolItem(for index: Int) -> ConnectionProtocol? {
-        switch index {
-        case 0: return .smartProtocol
-        case 1: return .vpnProtocol(.openVpn(.tcp))
-        case 2: return .vpnProtocol(.openVpn(.udp))
-        case 3: return .vpnProtocol(.wireGuard(.udp))
-        case 4: return .vpnProtocol(.wireGuard(.tcp))
-        case 5: return .vpnProtocol(.wireGuard(.tls))
-        case 6: return .vpnProtocol(.ike)
-        default: return nil
+        guard index < availableConnectionProtocols.count else {
+            return nil
         }
+
+        return availableConnectionProtocols[index]
     }
 
     func refreshSysexPending(for connectionProtocol: ConnectionProtocol) {

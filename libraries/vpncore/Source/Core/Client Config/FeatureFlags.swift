@@ -34,8 +34,9 @@ public struct FeatureFlags: Codable {
     public let guestHoles: Bool
     public let safeMode: Bool
     @Default<Bool> public var promoCode: Bool
+    @Default<Bool> public var wireGuardTls: Bool
 
-    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool) {
+    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool) {
         self.smartReconnect = smartReconnect
         self.vpnAccelerator = vpnAccelerator
         self.netShield = netShield
@@ -47,9 +48,10 @@ public struct FeatureFlags: Codable {
         self.guestHoles = guestHoles
         self.safeMode = safeMode
         self.promoCode = promoCode
+        self.wireGuardTls = wireGuardTls
     }
 
     public init() {
-        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false)
+        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false)
     }
 }

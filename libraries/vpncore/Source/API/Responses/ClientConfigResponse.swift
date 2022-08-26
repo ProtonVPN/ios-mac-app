@@ -59,7 +59,7 @@ extension ClientConfigResponse: Codable {
         let wireguardPorts = defaultPorts[ProtocolType.WireGuard]
         let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?[PortType.UDP],
                                                           wireguardPorts?[PortType.TCP],
-                                                          wireguardPorts?[PortType.TLS])
+                                                          wireguardPorts?[PortType.TLS] ?? wireguardPorts?[PortType.TCP])
         let wireguardConfig = WireguardConfig(defaultUdpPorts: wireguardUdp,
                                               defaultTcpPorts: wireguardTcp,
                                               defaultTlsPorts: wireguardTls)

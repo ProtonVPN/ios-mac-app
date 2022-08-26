@@ -26,24 +26,37 @@ public struct SmartProtocolConfig: Codable, Equatable {
     public let openVPN: Bool
     public let iKEv2: Bool
     public let wireGuard: Bool
+    @Default<Bool> public var wireGuardTls: Bool
 
     enum CodingKeys: String, CodingKey {
         case openVPN
         case iKEv2 = "IKEv2"
         case wireGuard
+        case wireGuardTls
     }
 
-    public init(openVPN: Bool, iKEv2: Bool, wireGuard: Bool) {
+    public init(openVPN: Bool, iKEv2: Bool, wireGuard: Bool, wireGuardTls: Bool) {
         self.openVPN = openVPN
         self.iKEv2 = iKEv2
         self.wireGuard = wireGuard
+        self.wireGuardTls = wireGuardTls
     }
 
     public init() {
-        self.init(openVPN: true, iKEv2: true, wireGuard: true)
+        self.init(openVPN: true, iKEv2: true, wireGuard: true, wireGuardTls: true)
     }
     
-    public func configWithWireGuard(enabled: Bool) -> SmartProtocolConfig {
-        return SmartProtocolConfig(openVPN: openVPN, iKEv2: iKEv2, wireGuard: enabled)
+    public func configWithWireGuard(enabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
+        return SmartProtocolConfig(openVPN: openVPN,
+                                   iKEv2: iKEv2,
+                                   wireGuard: enabled ?? wireGuard,
+                                   wireGuardTls: tlsEnabled ?? wireGuardTls)
+    }
+
+    public static func == (lhs: SmartProtocolConfig, rhs: SmartProtocolConfig) -> Bool {
+        lhs.openVPN == rhs.openVPN &&
+        lhs.iKEv2 == rhs.iKEv2 &&
+        lhs.wireGuard == rhs.wireGuard &&
+        lhs.wireGuardTls == rhs.wireGuardTls
     }
 }

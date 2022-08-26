@@ -33,7 +33,10 @@ final class SmartProtocolImplementation: SmartProtocol {
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let fallback: (SmartProtocolProtocol, [Int])
 
-    init(availabilityCheckerResolver: AvailabilityCheckerResolver, smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
+    init(availabilityCheckerResolver: AvailabilityCheckerResolver,
+         smartProtocolConfig: SmartProtocolConfig,
+         openVpnConfig: OpenVpnConfig,
+         wireguardConfig: WireguardConfig) {
         self.availabilityCheckerResolver = availabilityCheckerResolver
 
         var checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker] = [:]
@@ -58,8 +61,13 @@ final class SmartProtocolImplementation: SmartProtocol {
         if smartProtocolConfig.wireGuard {
             log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.wireguardUdp] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.udp))
-            checkers[.wireguardTcp] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tcp))
-            checkers[.wireguardTls] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tls))
+
+            if smartProtocolConfig.wireGuardTls {
+                log.debug("Wireguard TCP/TLS will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
+
+                checkers[.wireguardTcp] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tcp))
+                checkers[.wireguardTls] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tls))
+            }
         }
 
         if let fallback = fallbackCandidates.min(by: { lhs, rhs in lhs.0.priority < rhs.0.priority }) {
