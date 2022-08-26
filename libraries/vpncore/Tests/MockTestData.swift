@@ -113,20 +113,54 @@ struct MockTestData {
 
     var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
                                                                 defaultUdpPorts: [2345, 6789]),
-                                           featureFlags: .init(smartReconnect: true,
-                                                               vpnAccelerator: true,
-                                                               netShield: true,
-                                                               streamingServicesLogos: true,
-                                                               portForwarding: true,
-                                                               moderateNAT: true,
-                                                               pollNotificationAPI: true,
-                                                               serverRefresh: true,
-                                                               guestHoles: true,
-                                                               safeMode: true,
-                                                               promoCode: true),
+                                           featureFlags: .allEnabled,
                                            serverRefreshInterval: 2 * 60,
                                            wireGuardConfig: .init(defaultUdpPorts: [12345, 65432],
                                                                   defaultTcpPorts: [12346, 65433]),
-                                           smartProtocolConfig: .init(openVPN: true, iKEv2: true, wireGuard: true),
+                                           smartProtocolConfig: .init(openVPN: true,
+                                                                      iKEv2: true,
+                                                                      wireGuard: true,
+                                                                      wireGuardTls: true),
                                            ratingSettings: .init())
+
+    lazy var clientConfigNoWireGuardTls = defaultClientConfig.withFeatureFlags(.wireGuardTlsDisabled)
+}
+
+extension ClientConfig {
+    func withFeatureFlags(_ featureFlags: FeatureFlags) -> ClientConfig {
+        return ClientConfig(openVPNConfig: openVPNConfig,
+                            featureFlags: featureFlags,
+                            serverRefreshInterval: serverRefreshInterval,
+                            wireGuardConfig: wireGuardConfig,
+                            smartProtocolConfig: smartProtocolConfig,
+                            ratingSettings: ratingSettings)
+    }
+}
+
+extension FeatureFlags {
+    static let allEnabled: Self = .init(smartReconnect: true,
+                                        vpnAccelerator: true,
+                                        netShield: true,
+                                        streamingServicesLogos: true,
+                                        portForwarding: true,
+                                        moderateNAT: true,
+                                        pollNotificationAPI: true,
+                                        serverRefresh: true,
+                                        guestHoles: true,
+                                        safeMode: true,
+                                        promoCode: true,
+                                        wireGuardTls: true)
+
+    static let wireGuardTlsDisabled: Self = .init(smartReconnect: true,
+                                                  vpnAccelerator: true,
+                                                  netShield: true,
+                                                  streamingServicesLogos: true,
+                                                  portForwarding: true,
+                                                  moderateNAT: true,
+                                                  pollNotificationAPI: true,
+                                                  serverRefresh: true,
+                                                  guestHoles: true,
+                                                  safeMode: true,
+                                                  promoCode: true,
+                                                  wireGuardTls: false)
 }

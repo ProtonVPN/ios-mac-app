@@ -396,6 +396,104 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         wait(for: [expectations.finalDisconnection], timeout: expectationTimeout)
     }
 
+    func retrieveAndSetVpnProperties() {
+        let expectation = XCTestExpectation(description: "Retrieves VPN properties")
+
+        container.vpnApiService.vpnProperties(isDisconnected: true, lastKnownLocation: nil) { [weak self] result in
+            defer { expectation.fulfill() }
+
+            guard case let .success(vpnProperties) = result else {
+                XCTFail("Could not get vpn properties")
+                return
+            }
+
+            self?.container.propertiesManager.featureFlags = vpnProperties.clientConfig.featureFlags
+            self?.container.propertiesManager.smartProtocolConfig = vpnProperties.clientConfig.smartProtocolConfig
+        }
+
+        wait(for: [expectation], timeout: expectationTimeout)
+    }
+
+    // Test that Smart Protocol doesn't use WireGuard TLS when it's disabled in feature flags.
+    func testWireGuardTlsFeatureFlagDisablement() {
+        container.networkingDelegate.apiClientConfig = testData.clientConfigNoWireGuardTls
+
+        let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
+            .unavailable
+        }
+
+        let unavailableProtocols: [VpnProtocol] = [
+            .ike,
+            .openVpn(.tcp),
+            .openVpn(.udp),
+            .wireGuard(.udp)
+        ]
+
+        for vpnProtocol in unavailableProtocols {
+            container.availabilityCheckerResolverFactory.checkers[vpnProtocol]?.availabilityCallback = unavailableCallback
+        }
+
+        let expectations = (
+            connection: (1...2).map { XCTestExpectation(description: "connection #\($0)") },
+            clientConfig: (1...2).map { XCTestExpectation(description: "fetch client config #\($0)") },
+            disconnect: (1...2).map { XCTestExpectation(description: "disconnect #\($0)") }
+        )
+
+        var didConnect = false
+        var step = 0
+        statusChanged = { status in
+            if status == .connected {
+                didConnect = true
+                expectations.connection[step].fulfill()
+            } else if status == .disconnected {
+                XCTAssert(didConnect, "should have connected first")
+                expectations.disconnect[step].fulfill()
+            }
+        }
+
+        container.networkingDelegate.didHitRoute = { route in
+            guard route == .clientConfig else { return }
+
+            expectations.clientConfig[step].fulfill()
+        }
+
+        let request = ConnectionRequest(serverType: .standard,
+                                        connectionType: .country("CH", .fastest),
+                                        connectionProtocol: .smartProtocol,
+                                        netShieldType: .level1,
+                                        natType: .moderateNAT,
+                                        safeMode: true,
+                                        profileId: nil)
+
+        retrieveAndSetVpnProperties()
+        container.vpnGateway.connect(with: request)
+        wait(for: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+        XCTAssertFalse(container.propertiesManager.featureFlags.wireGuardTls)
+        XCTAssertNotEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
+        XCTAssertNotEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+
+        container.vpnGateway.disconnect()
+        wait(for: [expectations.disconnect[step]], timeout: expectationTimeout)
+
+        step += 1
+
+        // Now enable the feature flag and try reconnecting with smart protocol. Resulting connection
+        // should be using wireguard with tls.
+        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
+        retrieveAndSetVpnProperties()
+
+        container.vpnGateway.connect(with: request)
+        wait(for: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+        XCTAssert(container.propertiesManager.featureFlags.wireGuardTls)
+        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+
+        container.vpnGateway.disconnect()
+        wait(for: [expectations.disconnect[step]], timeout: expectationTimeout)
+    }
+
     /// Tests user connected to a plus server. Then the plan gets downgraded to free. Supposing the user then realizes
     /// the error of their ways and upgrades back to plus, the test will then exercise the app in the case where that
     /// same user then becomes delinquent on their plan payment.
