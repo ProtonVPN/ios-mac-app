@@ -1157,6 +1157,9 @@
 /* iOS Settings -> Protocol: WireGuard option */
 "_wireguard" = "WireGuard";
 
+/* Settings -> Protocol: WireGuard TLS Option */
+"_wireguard_tls" = "Obfuscated";
+
 /* MacOS menu item; iOS setting screen item */
 "_view_logs" = "View Logs";
 
