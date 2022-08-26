@@ -219,8 +219,24 @@ class CreateNewProfileViewModel {
         return propertiesManager.featureFlags.netShield
     }
 
-    let availableVpnProtocols = [VpnProtocol.ike, VpnProtocol.openVpn(.tcp), VpnProtocol.openVpn(.udp), VpnProtocol.wireGuard(.udp), VpnProtocol.wireGuard(.tcp), VpnProtocol.wireGuard(.tls)]
-    
+    var availableVpnProtocols: [VpnProtocol] {
+        let withoutWireGuardTls: [VpnProtocol] = [
+            .ike,
+            .openVpn(.tcp),
+            .openVpn(.udp),
+            .wireGuard(.udp)
+        ]
+
+        guard propertiesManager.featureFlags.wireGuardTls else {
+            return withoutWireGuardTls
+        }
+
+        return withoutWireGuardTls + [
+            .wireGuard(.tcp),
+            .wireGuard(.tls)
+        ]
+    }
+
     func countryCount(for typeIndex: Int) -> Int {
         let type = ProfileUtility.serverType(for: typeIndex)
         return serverManager.grouping(for: type).count

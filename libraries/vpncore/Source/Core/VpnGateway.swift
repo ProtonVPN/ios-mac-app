@@ -442,39 +442,21 @@ public class VpnGateway: VpnGatewayProtocol {
         }
 
         var connectionProtocol = connectionProtocol
-        var smartProtocolConfig = propertiesManager.smartProtocolConfig
         let killSwitch = propertiesManager.killSwitch
+        var smartProtocolConfig = propertiesManager.smartProtocolConfig
+            .configWithWireGuard(tlsEnabled: propertiesManager.featureFlags.wireGuardTls)
 
         DispatchQueue.global(qos: .userInitiated).async {
             for policy in self.interceptPolicies {
-                let group = DispatchGroup()
-                group.enter()
-
-                var result: VpnConnectionInterceptResult = .allow
-                policy.shouldIntercept(connectionProtocol, isKillSwitchOn: killSwitch) { interceptResult in
-                    result = interceptResult
-                    group.leave()
+                guard !self.applyInterceptPolicy(policy: policy,
+                                                 connectionProtocol: &connectionProtocol,
+                                                 smartProtocolConfig: &smartProtocolConfig,
+                                                 killSwitch: killSwitch) else {
+                    break
                 }
-                group.wait()
-                
-                guard case .intercept(let parameters) = result else {
-                    continue
-                }
-
-                if parameters.smartProtocolWithoutWireGuard {
-                    smartProtocolConfig = smartProtocolConfig.configWithWireGuard(enabled: false)
-                }
-                if parameters.disableKillSwitch {
-                    self.propertiesManager.killSwitch = false
-                }
-                if connectionProtocol != parameters.newProtocol {
-                    connectionProtocol = parameters.newProtocol
-                }
-                break
             }
 
             self.propertiesManager.lastPreparedServer = server
-
             let availabilityCheckerResolver = self.availabilityCheckerResolverFactory
                 .makeAvailabilityCheckerResolver(openVpnConfig: self.propertiesManager.openVpnConfig,
                                                  wireguardConfig: self.propertiesManager.wireguardConfig)
@@ -495,6 +477,38 @@ public class VpnGateway: VpnGatewayProtocol {
                 self.connectionPreparer?.determineServerParametersAndConnect(with: connectionProtocol, to: server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             }
         }
+    }
+
+    /// - Returns: Whether or not the given policy changed connection settings.
+    private func applyInterceptPolicy(policy: VpnConnectionInterceptPolicyItem,
+                                      connectionProtocol: inout ConnectionProtocol,
+                                      smartProtocolConfig: inout SmartProtocolConfig,
+                                      killSwitch: Bool) -> Bool {
+        let group = DispatchGroup()
+        group.enter()
+
+        var result: VpnConnectionInterceptResult = .allow
+        policy.shouldIntercept(connectionProtocol, isKillSwitchOn: killSwitch) { interceptResult in
+            result = interceptResult
+            group.leave()
+        }
+        group.wait()
+
+        guard case .intercept(let parameters) = result else {
+            return false
+        }
+
+        if parameters.smartProtocolWithoutWireGuard {
+            smartProtocolConfig = smartProtocolConfig.configWithWireGuard(enabled: false)
+        }
+        if parameters.disableKillSwitch {
+            self.propertiesManager.killSwitch = false
+        }
+        if connectionProtocol != parameters.newProtocol {
+            connectionProtocol = parameters.newProtocol
+        }
+
+        return true
     }
 
     public func postConnectionInformation() {

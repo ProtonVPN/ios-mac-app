@@ -47,9 +47,36 @@ final class VpnProtocolViewModel {
         
         let smartDisabled = !displaySmartProtocol || connectionProtocol != .smartProtocol || !featureFlags.smartReconnect
 
-        [VpnProtocol.wireGuard(.udp), VpnProtocol.openVpn(.udp), VpnProtocol.openVpn(.tcp), VpnProtocol.ike, VpnProtocol.wireGuard(.tcp), VpnProtocol.wireGuard(.tls)].forEach { addProtocol in
-            cells.append(.checkmarkStandard(title: addProtocol.localizedString, checked: vpnProtocol == addProtocol && smartDisabled, handler: {
-                self.switchConnectionProtocol(.vpnProtocol(addProtocol))
+        var availableProtocols: [VpnProtocol] = [
+            .wireGuard(.udp),
+            .openVpn(.udp),
+            .openVpn(.tcp),
+            .ike,
+        ]
+
+        let wireGuardTlsEnabled = featureFlags.wireGuardTls ||
+            (connectionProtocol == .vpnProtocol(.wireGuard(.tcp)) ||
+             connectionProtocol == .vpnProtocol(.wireGuard(.tls)))
+
+        if wireGuardTlsEnabled {
+            availableProtocols.append(contentsOf: [
+                .wireGuard(.tcp),
+                .wireGuard(.tls)
+            ])
+        }
+
+        let availableProtocolsAndTitles = availableProtocols.map {
+            (vpnProtocol: $0, title: $0.localizedString)
+        }.sorted { lhs, rhs in
+            lhs.title < rhs.title
+        }
+
+        availableProtocolsAndTitles.forEach { addProtocol in
+            let (thisProtocol, title) = addProtocol
+            cells.append(.checkmarkStandard(title: title,
+                                            checked: vpnProtocol == thisProtocol && smartDisabled,
+                                            handler: {
+                self.switchConnectionProtocol(.vpnProtocol(thisProtocol))
                 return true
             }))
         }
