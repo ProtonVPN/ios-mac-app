@@ -71,7 +71,7 @@ extension VpnProtocol { // Text for UI
             case .tcp:
                 string += " (\(LocalizedString.tcp))"
             case .tls:
-                string += " (\(LocalizedString.tls))"
+                string = LocalizedString.wireguardTls
             }
         }
 
