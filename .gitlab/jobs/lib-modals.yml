@@ -8,7 +8,6 @@ modals_ios_unit_tests:
     - .ios_job_template
   stage: core_unit_tests
   script:
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
     - scripts/print-coverage.sh fastlane/test_output/Modals.xcresult Modals 1
@@ -31,7 +30,6 @@ modals_unit_tests:
     - .ios_job_template
   stage: apps_unit_tests
   script:
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane modals_ios_test
   after_script:

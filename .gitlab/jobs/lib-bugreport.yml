@@ -29,7 +29,6 @@ ios_bugreport_ui_tests:
     - .ios_job_template
   stage: apps_ui_tests
   script:
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
@@ -45,7 +44,6 @@ macos_bugreport_ui_tests:
   extends: .mac_job_template
   stage: apps_ui_tests
   script:
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
     - fastlane macos_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
   artifacts:

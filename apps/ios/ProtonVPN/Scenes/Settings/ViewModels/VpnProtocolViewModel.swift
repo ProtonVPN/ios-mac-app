@@ -65,22 +65,20 @@ final class VpnProtocolViewModel {
             ])
         }
 
-        let availableProtocolsAndTitles = availableProtocols.map {
+        let protocolCells: [TableViewCellModel] = availableProtocols.map {
             (vpnProtocol: $0, title: $0.localizedString)
         }.sorted { lhs, rhs in
             lhs.title < rhs.title
+        }.map { item in
+            .checkmarkStandard(title: item.title,
+                               checked: vpnProtocol == item.vpnProtocol && smartDisabled) {
+                self.switchConnectionProtocol(.vpnProtocol(item.vpnProtocol))
+                return true
+            }
         }
 
-        availableProtocolsAndTitles.forEach { addProtocol in
-            let (thisProtocol, title) = addProtocol
-            cells.append(.checkmarkStandard(title: title,
-                                            checked: vpnProtocol == thisProtocol && smartDisabled,
-                                            handler: {
-                self.switchConnectionProtocol(.vpnProtocol(thisProtocol))
-                return true
-            }))
-        }
-        
+        cells.append(contentsOf: protocolCells)
+
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }
     

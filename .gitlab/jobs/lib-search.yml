@@ -1,25 +1,6 @@
 # Jobs for linting/testing/etc. BugReport library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
-search_lint:
-  extends: .mr_job_template
-  stage: linting
-  tags:
-    - iOS_ARM
-  script:
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
-    - cd libraries/Search
-    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
-  allow_failure: false
-  artifacts:
-    name: "search-lint-$CI_COMMIT_TAG"
-    paths:
-      - swiftlint.xml
-    reports:
-      junit:
-        - swiftlint.xml
-    expire_in: 90 days
-
 search_ios_unit_tests:
   extends:
     - .mr_job_template

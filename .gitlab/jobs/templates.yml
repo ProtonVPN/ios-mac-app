@@ -12,6 +12,9 @@
 
 # Template for iOS jobs.
 .ios_job_template:
+  before_script:
+    # Make sure xcode uses system ssh/git settings
+    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
   tags:
     - iOS_vpn
 
@@ -23,6 +26,8 @@
     # App saves several items in the keychain. Let's delete them all.
     - for i in `seq 8`; do security delete-generic-password -s "ProtonVPN" || true; done
     - for i in `seq 2`; do security delete-generic-password -s "ProtonVPN-Server-Password" || true; done
+    # Make sure xcode uses system ssh/git settings
+    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
         
 # Template for macOS jobs. These require having proper development certificates and provisioning
 # profiles installed.
@@ -40,7 +45,6 @@
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
     - fastlane create_macos_keychain
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES # Make sure xcode uses system ssh/git settings
   after_script:
     - !reference [.mac_clean_app_keychain, before_script]
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
