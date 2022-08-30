@@ -51,9 +51,9 @@ public class AvailabilityCheckerResolverImplementation: AvailabilityCheckerResol
             case .udp:
                 return WireguardUDPAvailabilityChecker(config: wireguardConfig)
             case .tcp:
-                return WireguardTCPAvailabilityChecker(config: wireguardConfig, vpnProtocol: .wireGuard(.tcp))
+                return WireguardTCPAvailabilityChecker(config: wireguardConfig, transport: .tcp)
             case .tls:
-                return WireguardTCPAvailabilityChecker(config: wireguardConfig, vpnProtocol: .wireGuard(.tls))
+                return WireguardTCPAvailabilityChecker(config: wireguardConfig, transport: .tls)
             }
         }
     }

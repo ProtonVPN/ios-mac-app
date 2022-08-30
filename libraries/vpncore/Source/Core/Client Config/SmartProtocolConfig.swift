@@ -47,10 +47,19 @@ public struct SmartProtocolConfig: Codable, Equatable {
     }
     
     public func configWithWireGuard(enabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
+        // If enabled is specified, use that value. Otherwise, use the existing config value in this object.
+        let wireGuardEnabled = enabled ?? wireGuard
+        var wireGuardTlsEnabled = false
+        // If wireGuard has been enabled via the above, set WGTLS' enablement according to the passed value,
+        // or, if none was provided, the existing config value in this object.
+        if wireGuardEnabled {
+            wireGuardTlsEnabled = tlsEnabled ?? wireGuardTls
+        }
+
         return SmartProtocolConfig(openVPN: openVPN,
                                    iKEv2: iKEv2,
-                                   wireGuard: enabled ?? wireGuard,
-                                   wireGuardTls: tlsEnabled ?? wireGuardTls)
+                                   wireGuard: wireGuardEnabled,
+                                   wireGuardTls: wireGuardTlsEnabled)
     }
 
     public static func == (lhs: SmartProtocolConfig, rhs: SmartProtocolConfig) -> Bool {

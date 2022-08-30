@@ -19,26 +19,25 @@
 import Foundation
 
 class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
-    
-    let vpnProtocol: VpnProtocol
+    let transport: WireGuardTransport
+
+    var vpnProtocol: VpnProtocol {
+        .wireGuard(transport)
+    }
+
     private let config: WireguardConfig
     
     var defaultPorts: [Int] {
-        switch vpnProtocol {
-        case .wireGuard(let wireGuardTransport):
-            switch wireGuardTransport {
-            case .udp: return config.defaultUdpPorts
-            case .tcp: return config.defaultTcpPorts
-            case .tls: return config.defaultTlsPorts
-            }
-        default:
-            return []
+        switch transport {
+        case .udp: return config.defaultUdpPorts
+        case .tcp: return config.defaultTcpPorts
+        case .tls: return config.defaultTlsPorts
         }
     }
 
-    init(config: WireguardConfig, vpnProtocol: VpnProtocol) {
+    init(config: WireguardConfig, transport: WireGuardTransport) {
         self.config = config
-        self.vpnProtocol = vpnProtocol
+        self.transport = transport
     }
     
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {

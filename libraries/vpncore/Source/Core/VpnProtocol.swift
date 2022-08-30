@@ -13,7 +13,6 @@ public enum VpnProtocol {
     case ike
     case openVpn(OpenVpnTransport)
     case wireGuard(WireGuardTransport)
-
 }
 
 public enum OpenVpnTransport: String, Codable {
@@ -99,7 +98,7 @@ extension VpnProtocol: Codable {
             let transportProtocol = try container.decode(OpenVpnTransport.self, forKey: .transportProtocol)
             self = .openVpn(transportProtocol)
         case 2:
-            let transportProtocol = try container.decode(WireGuardTransport.self, forKey: .transportProtocol)
+            let transportProtocol = (try? container.decode(WireGuardTransport.self, forKey: .transportProtocol)) ?? .udp
             self = .wireGuard(transportProtocol)
         default:
             throw CodingError.unknownValue
