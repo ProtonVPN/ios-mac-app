@@ -126,7 +126,6 @@ final class CreateNewProfileViewController: NSViewController {
         protocolLabel.attributedStringValue = viewModel.style(LocalizedString.vpnProtocol, font: .themeFont(.heading4), alignment: .left)
 
         protocolList.isBordered = false
-        protocolList.menu?.delegate = self
         protocolList.target = self
         protocolList.action = #selector(protocolSelected)
 
@@ -148,7 +147,6 @@ final class CreateNewProfileViewController: NSViewController {
         typeLabel.attributedStringValue = viewModel.style(LocalizedString.feature + ":", font: .themeFont(.heading4), alignment: .left)
         
         typeList.isBordered = false
-        typeList.menu?.delegate = self
         typeList.target = self
         typeList.action = #selector(typeSelected)
         
@@ -159,7 +157,6 @@ final class CreateNewProfileViewController: NSViewController {
         countryLabel.attributedStringValue = viewModel.style(LocalizedString.country + ":", font: .themeFont(.heading4), alignment: .left)
         
         countryList.isBordered = false
-        countryList.menu?.delegate = self
         countryList.target = self
         countryList.action = #selector(countrySelected)
         countryList.setAccessibilityIdentifier("CountryList")
@@ -171,7 +168,6 @@ final class CreateNewProfileViewController: NSViewController {
         serverLabel.attributedStringValue = viewModel.style(LocalizedString.server + ":", font: .themeFont(.heading4), alignment: .left)
         
         serverList.isBordered = false
-        serverList.menu?.delegate = self
         serverList.target = self
         serverList.action = #selector(serverSelected)
         serverList.setAccessibilityIdentifier("ServerList")
@@ -454,21 +450,5 @@ extension CreateNewProfileViewController: TextFieldFocusDelegate {
 extension CreateNewProfileViewController: NSTextFieldDelegate {
     func controlTextDidEndEditing(_ obj: Notification) {
         nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)
-    }
-}
-
-extension CreateNewProfileViewController: NSMenuDelegate {
-    func confinementRect(for menu: NSMenu, on screen: NSScreen?) -> NSRect {
-        let offset: CGFloat = 120
-        let width: CGFloat = 500
-        let height: CGFloat = 300
-        
-        if let typeMenu = typeList.menu, typeMenu == menu {
-            return NSRect(x: typeList.frame.minX, y: typeList.frame.minY + offset, width: width, height: height)
-        } else if let countryMenu = countryList.menu, countryMenu == menu {
-            return NSRect(x: countryList.frame.minX, y: countryList.frame.minY + offset, width: width, height: height)
-        } else {
-            return NSRect(x: serverList.frame.minX, y: serverList.frame.minY + offset, width: width, height: height)
-        }
     }
 }
