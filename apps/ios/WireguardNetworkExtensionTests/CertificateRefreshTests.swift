@@ -64,8 +64,9 @@ class CertificateRefreshTests: XCTestCase {
         // API error codes should be ignored by the cert refresh manager for clearly-defined HTTP error cases.
         static let tokenExpired = Self(httpError: .tokenExpired,
                                        apiError: .init(code: 15213, message: "Token expired"))
-        static let sessionExpired = Self(httpError: .sessionExpired,
-                                         apiError: .init(code: 15213, message: "Session expired"))
+        static let sessionExpired = Self(httpError: .unprocessableEntity,
+                                         apiError: .init(code: APIJSONErrorCode.invalidAuthToken.rawValue,
+                                                         message: "Session expired"))
         static let tooManyRequests = Self(httpError: .tooManyRequests,
                                           apiError: .init(code: 15213, message: "You need to calm down"))
         static let serviceUnavailable = Self(httpError: .serviceUnavailable, apiError: nil)
@@ -1031,6 +1032,79 @@ class CertificateRefreshTests: XCTestCase {
         // not try to refresh the token, since the app has already checked in.
         timerFactory.runRepeatingTimers()
         wait(for: [expectations.thirdCertRefresh], timeout: 10)
+    }
+
+    func testExtensionDoesNotHitAPIWhenUsingExpiredMainAppSession() {
+        let expectations = (
+            firstCertRefresh: XCTestExpectation(description: "first certificate refresh"),
+            authTokenRefresh: XCTestExpectation(description: "first auth token refresh"),
+            sessionExpiredResult: (1...3).map { XCTestExpectation(description: "session expiry result #\($0)") }
+        )
+
+        keychain.credentials = [
+            .mainApp: .init(username: "me",
+                            accessToken: "access",
+                            refreshToken: "refresh",
+                            sessionId: "session",
+                            userId: "user",
+                            expiration: Date().addingTimeInterval(60 * 60 * 24 * 3),
+                            scopes: [])
+        ]
+
+        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
+                                           apiFailure: .tokenExpired,
+                                           expectationToFulfill: expectations.firstCertRefresh)
+        tokenRefreshCallback = mockEndpoint(TokenRefreshRequest.self,
+                                            apiFailure: .sessionExpired,
+                                            expectationToFulfill: expectations.authTokenRefresh)
+
+        manager.start { }
+
+        manager.checkRefreshCertificateNow(features: nil) { result in
+            defer { expectations.sessionExpiredResult[0].fulfill() }
+
+            XCTAssertTrue(self.apiService.sessionExpired)
+
+            guard case let .failure(error) = result, case .sessionExpiredOrMissing = error else {
+                XCTFail("Request should have failed with expired session")
+                return
+            }
+        }
+
+        wait(for: [expectations.firstCertRefresh,
+                   expectations.authTokenRefresh,
+                   expectations.sessionExpiredResult[0]], timeout: expectationTimeout)
+
+        // we shouldn't hit the API at all here
+        certRefreshCallback = failCallback
+        tokenRefreshCallback = failCallback
+        sessionAuthCallback = failCallback
+
+        manager.checkRefreshCertificateNow(features: nil) { result in
+            defer { expectations.sessionExpiredResult[1].fulfill() }
+
+            XCTAssertTrue(self.apiService.sessionExpired)
+
+            guard case let .failure(error) = result, case .sessionExpiredOrMissing = error else {
+                XCTFail("Request should have failed with expired session")
+                return
+            }
+        }
+
+        wait(for: [expectations.sessionExpiredResult[1]], timeout: expectationTimeout)
+
+        manager.checkRefreshCertificateNow(features: nil, userInitiated: true, forceRefreshDueToExpiredSession: false) { result in
+            defer { expectations.sessionExpiredResult[2].fulfill() }
+
+            XCTAssertTrue(self.apiService.sessionExpired)
+
+            guard case let .failure(error) = result, case .sessionExpiredOrMissing = error else {
+                XCTFail("Request should have failed with expired session")
+                return
+            }
+        }
+
+        wait(for: [expectations.sessionExpiredResult[2]], timeout: expectationTimeout)
     }
 }
 
