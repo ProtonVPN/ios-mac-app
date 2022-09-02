@@ -62,6 +62,7 @@ public enum APIHeader: String {
     case accept = "Accept"
     case userAgent = "User-Agent"
     case retryAfter = "retry-after"
+    case atlasSecret = "x-atlas-secret"
 }
 
 extension URLRequest {

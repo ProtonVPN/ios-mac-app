@@ -231,6 +231,10 @@ final class ExtensionAPIService {
         request.setHeader(.accept, "application/vnd.protonmail.v1+json")
         request.setHeader(.userAgent, appInfo.userAgent)
 
+        if !ObfuscatedConstants.atlasSecret.isEmpty {
+            request.setHeader(.atlasSecret, ObfuscatedConstants.atlasSecret)
+        }
+
         // Body
         if let body = apiRequest.body {
             log.debug("Request body: \(body)")

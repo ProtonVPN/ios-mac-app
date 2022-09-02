@@ -92,6 +92,7 @@
 		4CB0A3582822A71100BF95C3 /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */; };
 		4CB0A3592822A71100BF95C3 /* NWTCPConnection+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB0A3572822A71100BF95C3 /* NWTCPConnection+DataTask.swift */; };
 		4CB432062834E7A900DC437B /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB432052834E7A900DC437B /* APIRequest.swift */; };
+		4CBBA02528C0B6A700FF12BE /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
 		4CCE9F7D283BCC750090E234 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F7C283BCC750090E234 /* ConnectionTests.swift */; };
 		4CCE9F85283D2AA60090E234 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */; };
 		4CCE9F86283D2AA60090E234 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCE9F84283D2AA60090E234 /* AsyncOperation.swift */; };
@@ -3918,6 +3919,7 @@
 				E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */,
 				E977A78A2681FEF50013495A /* AuthKeychain.swift in Sources */,
 				E977A79C2682171D0013495A /* KeychainConstants.swift in Sources */,
+				4CBBA02528C0B6A700FF12BE /* ObfuscatedConstants.swift in Sources */,
 				E99799A326A6FE0C0083D61E /* FileManager+Extension.swift in Sources */,
 				4CF40BA62833D64D00C3C501 /* ProviderMessage.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
