@@ -13,8 +13,15 @@
 # Template for iOS jobs.
 .ios_job_template:
   before_script:
+    - ssh-add -D # Delete all ssh private keys
+    # Add private key for access to gitlab
+    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    # Save gitlab servers public key
+    - if [ -z "$(ssh-keygen -F $CI_SERVER_HOST)" ]; then ssh-keyscan -H $CI_SERVER_HOST >> ~/.ssh/known_hosts; fi
     # Make sure xcode uses system ssh/git settings
     - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
+  after_script:
+    - ssh-add -D # Delete all ssh private keys
   tags:
     - iOS_vpn
 
@@ -26,8 +33,6 @@
     # App saves several items in the keychain. Let's delete them all.
     - for i in `seq 8`; do security delete-generic-password -s "ProtonVPN" || true; done
     - for i in `seq 2`; do security delete-generic-password -s "ProtonVPN-Server-Password" || true; done
-    # Make sure xcode uses system ssh/git settings
-    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
         
 # Template for macOS jobs. These require having proper development certificates and provisioning
 # profiles installed.
@@ -45,10 +50,18 @@
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_WG
     - fastlane create_macos_keychain
+    - ssh-add -D # Delete all ssh private keys
+    # Add private key for access to gitlab
+    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    # Save gitlab servers public key
+    - if [ -z "$(ssh-keygen -F $CI_SERVER_HOST)" ]; then ssh-keyscan -H $CI_SERVER_HOST >> ~/.ssh/known_hosts; fi
+    # Make sure xcode uses system ssh/git settings
+    - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
   after_script:
     - !reference [.mac_clean_app_keychain, before_script]
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
     - fastlane delete_macos_keychain
+    - ssh-add -D # Delete all ssh private keys
     

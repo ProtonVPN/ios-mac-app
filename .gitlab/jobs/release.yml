@@ -4,7 +4,10 @@
 
 ios_testflight_internal:
   stage: release
+  extends:
+    - .ios_job_template
   before_script:
+    - !reference [.ios_job_template, before_script] # Using reference because extending doesn't work as expected
     - git config --global user.email $GIT_CI_EMAIL
     - git config --global user.name $GIT_CI_USERNAME
     - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
@@ -25,6 +28,7 @@ ios_testflight_internal:
   after_script: # Cleanup
     - rm -f Certificates.p12
     - fastlane delete_ios_keychain
+    - !reference [.ios_job_template, after_script] # Using reference because extending doesn't work as expected
   tags:
     - iOS-deploy
   environment:
