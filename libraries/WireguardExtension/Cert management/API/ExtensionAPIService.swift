@@ -44,8 +44,13 @@ final class ExtensionAPIService {
     func refreshCertificate(publicKey: String,
                             asPartOf operation: CertificateRefreshAsyncOperation,
                             completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
-        guard !sessionExpired || usingMainAppSessionUntilForkReceived else {
-            log.info("Not starting certificate refresh: session is expired.")
+
+        if operation.isUserInitiated && userInitiatedRequestHasNotYetBeenMade {
+            userInitiatedRequestHasNotYetBeenMade = false
+            mainAppSessionHasExpired = false // if the app is able to send a request, it is likely logged in
+        }
+
+        guard !shouldRefuseRefreshDueToExpiredSession(refreshIsUserInitiated: operation.isUserInitiated) else {
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
             return
         }
@@ -134,6 +139,7 @@ final class ExtensionAPIService {
     public private(set) var sessionExpired = false
     private var userInitiatedRequestHasNotYetBeenMade = true
     private var usingMainAppSessionUntilForkReceived = false
+    private var mainAppSessionHasExpired = false
 
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
@@ -146,6 +152,7 @@ final class ExtensionAPIService {
 
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 
+    // MARK: - Private helper functions
     private func jitter(forRetryAfterInterval retryAfter: TimeInterval? = nil) -> TimeInterval {
         let jitterMax: UInt32
 
@@ -164,6 +171,31 @@ final class ExtensionAPIService {
         }
 
         return TimeInterval(arc4random_uniform(jitterMax))
+    }
+
+    /// Should we refuse to refresh the certificate due to session expiry?
+    ///
+    /// If the request was user initiated and our session is expired, we have a chance to get it renewed, since we can
+    /// reply saying that we need a new forked session selector and have it sent.
+    ///
+    /// If the request was initiated by a timer, and the main app's session is still valid, then we can proceed with
+    /// background refresh by using the app's session.
+    ///
+    /// - Parameter refreshIsUserInitiated: whether the refresh was initiated by the app or by the background timer in
+    ///             the extension.
+    private func shouldRefuseRefreshDueToExpiredSession(refreshIsUserInitiated: Bool) -> Bool {
+        guard !sessionExpired || (usingMainAppSessionUntilForkReceived && !mainAppSessionHasExpired) else {
+            let whichSession = sessionExpired && mainAppSessionHasExpired ? "main app" : "extension"
+            log.info("Refusing to refresh: \(whichSession) session expired")
+            return true
+        }
+
+        guard !(refreshIsUserInitiated && sessionExpired) else {
+            log.info("Refusing to refresh: request came from application, and session is expired")
+            return true
+        }
+
+        return false
     }
 
     // MARK: - Base API request handling
@@ -325,14 +357,22 @@ final class ExtensionAPIService {
         }
 
         switch code {
-        case .sessionExpired:
-            guard apiError?.knownErrorCode != .invalidValue else {
-                log.info("Got invalid selector.")
-                errorHandler(CertificateRefreshError.internalError(message: "Invalid selector"))
+        case .unprocessableEntity:
+            if apiError?.knownErrorCode == .invalidAuthToken {
+                // Session has expired. Is it the main app's, or our own forked session?
+
+                if usingMainAppSessionUntilForkReceived {
+                    mainAppSessionHasExpired = true
+                    usingMainAppSessionUntilForkReceived = false
+                }
+                sessionExpired = true
+                errorHandler(CertificateRefreshError.sessionExpiredOrMissing)
                 return
             }
-            sessionExpired = true
-            errorHandler(CertificateRefreshError.sessionExpiredOrMissing)
+
+            let errorMessage = "Unprocessable request: \(apiError?.description ?? "(unknown error)")"
+            log.info("\(errorMessage)")
+            errorHandler(CertificateRefreshError.internalError(message: errorMessage))
         case .internalError, .serviceUnavailable, .tooManyRequests:
             var retryAfterInterval: TimeInterval?
             if let retryAfterResponse = response.value(forApiHeader: .retryAfter) {
@@ -373,9 +413,13 @@ final class ExtensionAPIService {
             if let apiError = apiError {
                 badRequestError = apiError
 
-                if apiError.knownErrorCode == .invalidAuthRefreshToken {
+                if apiError.knownErrorCode == .invalidAuthToken {
                     log.info("Received invalid refresh token error. Invalidating session.")
 
+                    if usingMainAppSessionUntilForkReceived {
+                        mainAppSessionHasExpired = true
+                        usingMainAppSessionUntilForkReceived = false
+                    }
                     sessionExpired = true
                     errorHandler(CertificateRefreshError.sessionExpiredOrMissing)
                     return
@@ -416,6 +460,7 @@ final class ExtensionAPIService {
     /// upgrade occurred, and the user hasn't launched the app yet).
     private func fetchApiCredentials(asPartOf operation: CertificateRefreshAsyncOperation) -> (AuthCredentials, AppContext)? {
         if let authCredentials = keychain.fetch() {
+            log.info("Using extension's API session.")
             return (authCredentials, .wireGuardExtension)
         }
 
@@ -428,6 +473,7 @@ final class ExtensionAPIService {
         }
 
         usingMainAppSessionUntilForkReceived = true
+        log.info("Using app's API session.")
         return (authCredentials, .mainApp)
     }
 
@@ -437,10 +483,6 @@ final class ExtensionAPIService {
                                     refreshApiTokenIfNeeded: Bool,
                                     asPartOf operation: CertificateRefreshAsyncOperation,
                                     completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
-        if operation.isUserInitiated && userInitiatedRequestHasNotYetBeenMade {
-            userInitiatedRequestHasNotYetBeenMade = false
-        }
-
         guard let (authCredentials, credentialContext) = fetchApiCredentials(asPartOf: operation) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
             sessionExpired = true
