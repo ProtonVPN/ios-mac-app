@@ -80,7 +80,7 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
     case conflict = 409
     // case retryRequest = 409 (Unimplemented, retry request immediately)
     /// The session is expired, and the user must log in again (or session needs re-forking.)
-    case sessionExpired = 422
+    case unprocessableEntity = 422
     /// The client has been jailed for sending too many requests. Retry the request after a reasonable time,
     /// respecting the `Retry-After` header.
     case tooManyRequests = 429
@@ -98,7 +98,7 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
             return "The current access token has expired. Please refresh the token."
         case .conflict:
             return "Database conflict - please retry your request, or try logging out and back in again."
-        case .sessionExpired:
+        case .unprocessableEntity:
             return "The current session has expired. Please log in again."
         case .tooManyRequests:
             return "The client has sent too many requests in one period and should try again after a reasonable time."
@@ -133,7 +133,7 @@ extension HTTPURLResponse {
 enum APIJSONErrorCode: Int, Error {
     case invalidValue = 2001
     case alreadyExists = 2500
-    case invalidAuthRefreshToken = 10013
+    case invalidAuthToken = 10013
     case tooManyCertRefreshRequests = 85092
 }
 

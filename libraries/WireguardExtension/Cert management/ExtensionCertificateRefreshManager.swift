@@ -165,7 +165,8 @@ final class ExtensionCertificateRefreshManager {
         }
 
         // don't actually refresh the certificate, just leave it be.
-        log.info("Certificate seems up to date!")
+        let interval = storedCert.refreshTime.timeIntervalSinceNow
+        log.info("Certificate seems up to date! Will need to refresh in \(interval.asColonSeparatedString)")
         return false
     }
 
