@@ -32,7 +32,19 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let safeModePropertyProvider: SafeModePropertyProvider
     private let completion: CertificateRefreshCompletion?
     private let features: VPNConnectionFeatures?
-    private var isRetry = false
+
+    private var isConflictRetry = false
+    private var remainingNetworkErrorRetries = 5
+    private var shouldRetryDueToNetworkIssue: Bool {
+        remainingNetworkErrorRetries > 0
+    }
+
+    private let minNetworkErrorRetryDelay: UInt32 = 10
+    private let networkErrorRetryDelayJitter: UInt32 = 5
+    private var networkRetryDelay: UInt32 {
+        let jitter = UInt32.random(in: 0...networkErrorRetryDelayJitter)
+        return minNetworkErrorRetryDelay + jitter
+    }
 
     init(storage: VpnAuthenticationStorage, features: VPNConnectionFeatures?, networking: Networking, safeModePropertyProvider: SafeModePropertyProvider, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
@@ -74,7 +86,29 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         }
     }
 
-    override func main() { // swiftlint:disable:this function_body_length
+    func handleError(_ error: Error) {
+        guard !(error.isNetworkError && shouldRetryDueToNetworkIssue) else {
+            self.remainingNetworkErrorRetries -= 1
+            sleep(self.networkRetryDelay)
+            self.main()
+            return
+        }
+
+        let nsError = error as NSError
+        switch nsError.code {
+        case 2500 where !self.isConflictRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
+            log.error("Trying to recover by generating new keys and trying again",
+                      category: .userCert, event: .refreshError)
+            self.storage.deleteKeys()
+            self.storage.deleteCertificate()
+            self.isConflictRetry = true
+            self.main()
+        default:
+            self.finish(.failure(error))
+        }
+    }
+
+    override func main() {
         guard !isCancelled else {
             finish(.failure(CertificateRefreshError.canceled))
             return
@@ -112,7 +146,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         }
 
         // fetch new certificate from backend
-        getCertificate(keys: keys) { result in
+        getCertificate(keys: keys) { [unowned self] result in
             guard !self.isCancelled else {
                 self.finish(.failure(CertificateRefreshError.canceled))
                 return
@@ -120,17 +154,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
             switch result {
             case let .failure(error):
-                let nsError = error as NSError
-                switch nsError.code {
-                case 2500 where !self.isRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
-                    log.error("Trying to recover by generating new keys and trying again", category: .userCert, event: .refreshError)
-                    self.storage.deleteKeys()
-                    self.storage.deleteCertificate()
-                    self.isRetry = true
-                    self.main()
-                default:
-                    self.finish(.failure(error))
-                }
+                self.handleError(error)
             case let .success(certificateWithFeatures):
                 // store it
                 self.storage.store(certificate: certificateWithFeatures)

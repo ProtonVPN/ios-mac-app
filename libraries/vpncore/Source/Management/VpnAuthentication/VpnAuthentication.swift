@@ -136,7 +136,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
     }
 
     public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-        // If new ferature set is given, use it, otherwise try to get certificate with the same features as previous
+        // If new feature set is given, use it, otherwise try to get certificate with the same features as previous
         let newFeatures = features ?? storage.getStoredCertificateFeatures()
 
         queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, networking: networking, safeModePropertyProvider: safeModePropertyProvider, completion: { result in
