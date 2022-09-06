@@ -85,9 +85,7 @@ public final class CoreNetworking: Networking {
             if let data = data {
                 var result = [String: AnyObject]()
                 for (key, value) in data {
-                    if let v = value as? AnyObject {
-                        result[key] = v
-                    }
+                    result[key] = value as AnyObject
                 }
                 completion(.success(result))
                 return

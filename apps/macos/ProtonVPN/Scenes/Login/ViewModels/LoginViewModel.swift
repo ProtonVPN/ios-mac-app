@@ -45,9 +45,9 @@ final class LoginViewModel {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
     private lazy var authManager = AuthManager()
-    private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService, authManager: authManager, sessionId: "LoginSessionId", minimumAccountType: AccountType.username)
+    private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService, authManager: authManager, clientApp: .vpn, sessionId: "LoginSessionId", minimumAccountType: AccountType.username)
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    
+
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
     var logInFailureWithSupport: ((String?) -> Void)?
@@ -102,7 +102,7 @@ final class LoginViewModel {
     
     func logIn(username: String, password: String) {
         logInInProgress?()
-        loginService.login(username: username, password: password) { [weak self] result in
+        loginService.login(username: username, password: password, challenge: nil) { [weak self] result in
             self?.handleLoginResult(result: result)
         }
     }

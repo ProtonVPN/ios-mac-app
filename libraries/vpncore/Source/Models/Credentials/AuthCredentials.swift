@@ -21,8 +21,10 @@
 
 import Foundation
 
-public class AuthCredentials: NSObject, NSCoding {
+public class AuthCredentials: NSObject, NSSecureCoding {
     static let VERSION: Int = 0 // Current build version.
+
+    public static var supportsSecureCoding: Bool = true
     
     public let cacheVersion: Int // Cached version default is 0
     public let username: String
@@ -75,7 +77,7 @@ public class AuthCredentials: NSObject, NSCoding {
         static let username = "username"
         static let accessToken = "accessToken"
         static let refreshToken = "refreshToken"
-        static let sessionId = "userId" // missnamed, should be "sessionId", but leaving for backwards compat
+        static let sessionId = "userId" // misnamed, should be "sessionId", but leaving for backwards compatibility
         static let userId = "staticUserId"
         static let expiration = "expiration"
         static let scopes = "scopes"
@@ -83,17 +85,18 @@ public class AuthCredentials: NSObject, NSCoding {
     
     public required convenience init(coder aDecoder: NSCoder) {
         var scopes: [String] = []
-        if let scopesData = aDecoder.decodeObject(forKey: CoderKey.scopes) as? Data {
-            scopes = (NSKeyedUnarchiver.unarchiveObject(with: scopesData) as? [String] ?? [])
+        if let scopesData = aDecoder.decodeObject(forKey: CoderKey.scopes) as? Data,
+           let unarchivedScopes = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self, NSString.self], from: scopesData) {
+            scopes = unarchivedScopes as? [String] ?? []
         }
         
-        self.init(version: aDecoder.decodeObject(forKey: CoderKey.authCacheVersion) as? Int ?? 0,
-                  username: aDecoder.decodeObject(forKey: CoderKey.username) as! String,
-                  accessToken: aDecoder.decodeObject(forKey: CoderKey.accessToken) as! String,
-                  refreshToken: aDecoder.decodeObject(forKey: CoderKey.refreshToken) as! String,
-                  sessionId: aDecoder.decodeObject(forKey: CoderKey.sessionId) as! String,
-                  userId: aDecoder.decodeObject(forKey: CoderKey.userId) as? String,
-                  expiration: aDecoder.decodeObject(forKey: CoderKey.expiration) as! Date,
+        self.init(version: aDecoder.decodeInteger(forKey: CoderKey.authCacheVersion),
+                  username: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.username)! as String,
+                  accessToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.accessToken)! as String,
+                  refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
+                  sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
+                  userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
+                  expiration: aDecoder.decodeObject(of: NSDate.self, forKey: CoderKey.expiration)! as Date,
                   scopes: scopes)
     }
     
@@ -106,8 +109,7 @@ public class AuthCredentials: NSObject, NSCoding {
         aCoder.encode(userId, forKey: CoderKey.userId)
         aCoder.encode(expiration, forKey: CoderKey.expiration)
         
-        let scopesData = NSKeyedArchiver.archivedData(withRootObject: scopes)
+        let scopesData = try? NSKeyedArchiver.archivedData(withRootObject: scopes, requiringSecureCoding: true)
         aCoder.encode(scopesData, forKey: CoderKey.scopes)
     }
-    
 }

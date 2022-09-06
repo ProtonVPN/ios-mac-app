@@ -315,8 +315,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         aCoder.encode(feature.rawValue, forKey: CoderKey.features.rawValue)
         aCoder.encode(city, forKey: CoderKey.city.rawValue)
         
-        let ipsData = NSKeyedArchiver.archivedData(withRootObject: ips)
-        let locationData = NSKeyedArchiver.archivedData(withRootObject: location)
+        let ipsData = try? NSKeyedArchiver.archivedData(withRootObject: ips, requiringSecureCoding: false)
+        let locationData = try? NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
         
         aCoder.encode(ipsData, forKey: CoderKey.ips.rawValue)
         aCoder.encode(locationData, forKey: CoderKey.location.rawValue)
@@ -371,8 +371,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         try container.encode(feature.rawValue, forKey: .features)
         try container.encode(city, forKey: .city)
         
-        let ipsData = NSKeyedArchiver.archivedData(withRootObject: ips)
-        let locationData = NSKeyedArchiver.archivedData(withRootObject: location)
+        let ipsData = try? NSKeyedArchiver.archivedData(withRootObject: ips, requiringSecureCoding: false)
+        let locationData = try? NSKeyedArchiver.archivedData(withRootObject: location, requiringSecureCoding: false)
         
         try container.encode(ipsData, forKey: .ips)
         try container.encode(locationData, forKey: .location)

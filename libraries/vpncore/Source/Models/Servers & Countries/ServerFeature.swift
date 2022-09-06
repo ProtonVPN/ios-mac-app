@@ -31,7 +31,7 @@ public struct ServerFeature: OptionSet {
     public static let xor = ServerFeature(rawValue: 1 << 3)
     public static let ipv6 = ServerFeature(rawValue: 1 << 4)
     
-    public static let zero = ServerFeature(rawValue: 0)
+    public static let zero = ServerFeature([])
     
     public static var description: String {
         return
