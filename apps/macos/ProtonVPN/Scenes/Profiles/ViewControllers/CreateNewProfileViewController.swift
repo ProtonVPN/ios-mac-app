@@ -310,7 +310,7 @@ final class CreateNewProfileViewController: NSViewController {
                 }
                 self?.refreshProtocolList(withSelectionAt: ikeIndex)
             default:
-                break
+                self?.refreshPendingEnablement()
             }
         }
     }
