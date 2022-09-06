@@ -67,14 +67,15 @@ public class ProfileStorage {
     private func fetchFromMemory(storageKey: String) -> [Profile] {
         if let data = Storage.userDefaults().data(forKey: storageKey),
             let userProfiles = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Profile] {
-                return userProfiles
+            return userProfiles
         }
         return []
     }
     
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
         Storage.userDefaults().set(Self.storageVersion, forKey: Self.versionKey)
-        Storage.userDefaults().set(NSKeyedArchiver.archivedData(withRootObject: profiles), forKey: storageKey)
+        let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: profiles, requiringSecureCoding: false)
+        Storage.userDefaults().set(archivedData, forKey: storageKey)
     }
     
     private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {

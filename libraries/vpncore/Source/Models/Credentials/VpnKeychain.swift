@@ -77,7 +77,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     public func fetch() throws -> VpnCredentials {
         do {
             if let data = try appKeychain.getData(StorageKey.vpnCredentials) {
-                if let vpnCredentials = try NSKeyedUnarchiver.unarchivedObject(ofClass: VpnCredentials.self, from: data) {
+                if let unarchivedObject = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [VpnCredentials.self, NSString.self, NSData.self, NSNumber.self], from: data)),
+                   let vpnCredentials = unarchivedObject as? VpnCredentials {
                     cached = CachedVpnCredentials(credentials: vpnCredentials)
                     return vpnCredentials
                 }

@@ -96,7 +96,8 @@ extension AuthKeychain: AuthKeychainHandle {
 
         do {
             if let data = try keychain.getData(key) {
-                if let authCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredentials {
+                if let unarchivedObject = (try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [AuthCredentials.self, NSString.self, NSData.self], from: data)),
+                   let authCredentials = unarchivedObject as? AuthCredentials {
                     return authCredentials
                 }
             }
@@ -116,18 +117,18 @@ extension AuthKeychain: AuthKeychainHandle {
         }
 
         do {
-            try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: key)
+            try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials, requiringSecureCoding: true), key: key)
         } catch let error {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
-                try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: key)
+                try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials, requiringSecureCoding: true), key: key)
             } catch let error2 {
                 #if os(macOS)
                     log.error("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", category: .keychain, metadata: ["error": "\(error2)"])
                     do { // Last chance. Locking/unlocking keychain sometimes helps.
                         SecKeychainLock(nil)
-                        try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: key)
+                        try keychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials, requiringSecureCoding: true), key: key)
                     } catch let error3 {
                         log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error3)"])
                         throw error3
