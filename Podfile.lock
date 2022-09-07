@@ -140,9 +140,9 @@ PODS:
   - ProtonCore-Utilities (3.21.1):
     - ProtonCore-Log (= 3.21.1)
   - ReachabilitySwift (5.0.0)
-  - SDWebImage (5.10.0):
-    - SDWebImage/Core (= 5.10.0)
-  - SDWebImage/Core (5.10.0)
+  - SDWebImage (5.12.6):
+    - SDWebImage/Core (= 5.12.6)
+  - SDWebImage/Core (5.12.6)
   - Sentry (7.16.0):
     - Sentry/Core (= 7.16.0)
   - Sentry/Core (7.16.0)
@@ -205,7 +205,7 @@ DEPENDENCIES:
   - "ProtonCore-UIFoundations-V5 (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.21.1`)"
   - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.21.1`)"
   - ReachabilitySwift (= 5.0.0)
-  - SDWebImage (= 5.10.0)
+  - SDWebImage (= 5.12.6)
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `7.16.0`)
   - SwiftGen (~> 6.5)
   - SwiftLint (= 0.48.0)
@@ -451,7 +451,7 @@ SPEC CHECKSUMS:
   ProtonCore-UIFoundations-V5: 58af4d3f5f535d62f705a7e521d7516e56a29c18
   ProtonCore-Utilities: 39798cf28640f61afa35cc6ece6cd9672899ed23
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
+  SDWebImage: a47aea9e3d8816015db4e523daff50cfd294499d
   Sentry: 8045e58d18a62583325aa4a661262fdea799abb1
   SwiftGen: a6d22010845f08fe18fbdf3a07a8e380fd22e0ea
   SwiftLint: 284cea64b6187c5d6bd83e9a548a64104d546447
@@ -460,6 +460,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 4120f38522fbb701113e38914c38b0d9b5215321
+PODFILE CHECKSUM: f17ea3fb33d058c1c6f253a42c949d6e40985151
 
 COCOAPODS: 1.11.3

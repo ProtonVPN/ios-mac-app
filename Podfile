@@ -31,6 +31,10 @@ def logs
   pod 'Logging', '1.4.0'
 end
 
+def sd_web_image
+  pod 'SDWebImage', '5.12.6'
+end
+
 def vpn_core
     use_frameworks!        
     pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.16.0'
@@ -89,6 +93,8 @@ target 'ProtonVPN' do
   use_frameworks!
 
   vpn_core
+
+  sd_web_image
 
   pod 'GSMessages', '~> 1.0'
   pod 'AlamofireImage', '~> 4.1'
@@ -175,7 +181,7 @@ target 'ProtonVPN-mac' do
   pod 'ProtonCore-Login/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
 
   # Third party pods
-  pod 'SDWebImage', '5.10.0'
+  sd_web_image
 
 end
 
