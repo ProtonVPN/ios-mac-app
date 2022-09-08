@@ -62,6 +62,8 @@ public extension VpnAuthentication {
 }
 
 public final class VpnAuthenticationManager {
+    private let operationDispatchQueue = DispatchQueue(label: "ch.protonvpn.mac.async_cert_refresh",
+                                                       qos: .userInitiated)
     private let queue = OperationQueue()
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
@@ -74,6 +76,7 @@ public final class VpnAuthenticationManager {
         self.storage = storage
         self.safeModePropertyProvider = safeModePropertyProvider
         queue.maxConcurrentOperationCount = 1
+        queue.underlyingQueue = operationDispatchQueue
 
         NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnUserDelinquent, object: nil)
@@ -135,6 +138,9 @@ extension VpnAuthenticationManager: VpnAuthentication {
         completion()
     }
 
+    /// - Parameter features: The features used for the current connection.
+    /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
+    ///                         certificate, or an error if the refresh failed.
     public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
         // If new feature set is given, use it, otherwise try to get certificate with the same features as previous
         let newFeatures = features ?? storage.getStoredCertificateFeatures()
@@ -152,9 +158,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
             }
 
             // certificate is missing or no longer valid, refresh it and use
-            self.refreshCertificates(features: features, completion: { result in
-                executeOnUIThread { completion(result) }
-            })
+            self.refreshCertificates(features: features, completion: completion)
         }
     }
 
