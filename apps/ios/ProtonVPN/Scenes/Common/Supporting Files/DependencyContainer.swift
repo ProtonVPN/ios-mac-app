@@ -31,7 +31,7 @@ import Timer
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
-final class DependencyContainer {
+final class DependencyContainer: Container {
     
     private let appGroup = AppConstants.AppGroups.main
     
