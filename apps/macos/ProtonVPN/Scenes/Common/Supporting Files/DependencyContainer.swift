@@ -31,12 +31,6 @@ import Timer
 
 final class DependencyContainer: Container {
     private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
-    private var teamId: String {
-        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-    }
-    private var appGroup: String {
-        return "\(teamId)group.ch.protonvpn.mac"
-    }
     private let wireguardVpnExtensionBundleIdentifier = "ch.protonvpn.mac.WireGuard-Extension"
 
     // Singletons
@@ -44,7 +38,7 @@ final class DependencyContainer: Container {
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
                                                                  openVpnFactory: openVpnFactory,
                                                                  wireguardProtocolFactory: wireguardFactory,
-                                                                 appGroup: appGroup,
+                                                                 appGroup: config.appGroup,
                                                                  vpnAuthentication: vpnAuthentication,
                                                                  vpnKeychain: vpnKeychain,
                                                                  propertiesManager: makePropertiesManager(),
@@ -57,10 +51,10 @@ final class DependencyContainer: Container {
                                                                  safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
-                                                                    appGroup: appGroup,
+                                                                    appGroup: config.appGroup,
                                                                     factory: self)
     private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
-                                                                appGroup: appGroup,
+                                                                appGroup: config.appGroup,
                                                                 factory: self)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
@@ -124,11 +118,10 @@ final class DependencyContainer: Container {
                                         storage: vpnAuthenticationKeychain,
                                         safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
-    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos", storage: storage)
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(config.appIdentifierPrefix)ch.protonvpn.macos", storage: storage)
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: vpnAuthenticationKeychain)
 
     private lazy var storage = Storage()
-    private lazy var propertiesManager = PropertiesManager(storage: storage)
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN(), authKeychain: makeAuthKeychainHandle())
     private lazy var planService = CorePlanService(networking: networking)
@@ -140,18 +133,26 @@ final class DependencyContainer: Container {
         #endif
         let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost,
                          verifyHost: ObfuscatedConstants.humanVerificationV3Host,
-                         alternativeRouting: propertiesManager.alternativeRouting,
-                         customHost: propertiesManager.apiEndpoint,
+                         alternativeRouting: makePropertiesManager().alternativeRouting,
+                         customHost: makePropertiesManager().apiEndpoint,
                          atlasSecret: atlasSecret,
                          appState: .disconnected // AppState is not known yet, because DoH is initialized before AppStateManager
         )
-        propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
+        makePropertiesManager().onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
         }
         return doh
     }()
     private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
     private lazy var sysexManager = SystemExtensionManager(factory: self)
+
+    public init() {
+        let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+
+        super.init(Config(appIdentifierPrefix: prefix,
+
+                          appGroup: "\(prefix)group.ch.protonvpn.mac"))
+    }
 }
 
 // MARK: PlanServiceFactory
@@ -186,13 +187,6 @@ extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
 extension DependencyContainer: VpnKeychainFactory {
     func makeVpnKeychain() -> VpnKeychainProtocol {
         return vpnKeychain
-    }
-}
-
-// MARK: PropertiesManagerFactory
-extension DependencyContainer: PropertiesManagerFactory {
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
     }
 }
 
@@ -448,7 +442,7 @@ extension DependencyContainer: VpnAuthenticationFactory {
 // MARK: VpnStateConfigurationFactory
 extension DependencyContainer: VpnStateConfigurationFactory {
     func makeVpnStateConfiguration() -> VpnStateConfiguration {
-        return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
+        return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: config.appGroup)
     }
 }
 
