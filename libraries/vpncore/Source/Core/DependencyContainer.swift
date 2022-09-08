@@ -34,20 +34,30 @@ open class Container {
 
     private lazy var storage = Storage()
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
+    private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
 
     public init(_ config: Config) {
         self.config = config
     }
 }
 
+// MARK: StorageFactory
 extension Container: StorageFactory {
     public func makeStorage() -> Storage {
         storage
     }
 }
 
+// MARK: PropertiesManagerFactory
 extension Container: PropertiesManagerFactory {
     public func makePropertiesManager() -> PropertiesManagerProtocol {
         propertiesManager
+    }
+}
+
+// MARK: VpnKeychainFactory
+extension Container: VpnKeychainFactory {
+    public func makeVpnKeychain() -> VpnKeychainProtocol {
+        return vpnKeychain
     }
 }
