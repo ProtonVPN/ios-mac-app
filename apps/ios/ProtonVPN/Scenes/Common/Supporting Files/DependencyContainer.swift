@@ -53,7 +53,7 @@ final class DependencyContainer: Container {
                                                                  wireguardProtocolFactory: wireguardFactory,
                                                                  appGroup: config.appGroup,
                                                                  vpnAuthentication: makeVpnAuthentication(),
-                                                                 vpnKeychain: vpnKeychain,
+                                                                 vpnKeychain: makeVpnKeychain(),
                                                                  propertiesManager: makePropertiesManager(),
                                                                  vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                  alertService: iosAlertService,
@@ -65,7 +65,6 @@ final class DependencyContainer: Container {
     private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
-    private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
@@ -149,7 +148,7 @@ final class DependencyContainer: Container {
     }()
     lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
     private lazy var searchStorage = SearchModuleStorage(storage: makeStorage())
-    private lazy var review = Review(configuration: Configuration(settings: makePropertiesManager().ratingSettings), plan: (try? vpnKeychain.fetchCached().accountPlan.description), logger: { message in log.debug("\(message)", category: .review) })
+    private lazy var review = Review(configuration: Configuration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().accountPlan.description), logger: { message in log.debug("\(message)", category: .review) })
 
     init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -189,13 +188,6 @@ extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
                                                alertService: makeCoreAlertService(),
                                                propertiesManager: makePropertiesManager()
         )
-    }
-}
-
-// MARK: VpnKeychainFactory
-extension DependencyContainer: VpnKeychainFactory {
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychain
     }
 }
 

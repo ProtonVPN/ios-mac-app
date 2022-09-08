@@ -40,7 +40,7 @@ final class DependencyContainer: Container {
                                                                  wireguardProtocolFactory: wireguardFactory,
                                                                  appGroup: config.appGroup,
                                                                  vpnAuthentication: vpnAuthentication,
-                                                                 vpnKeychain: vpnKeychain,
+                                                                 vpnKeychain: makeVpnKeychain(),
                                                                  propertiesManager: makePropertiesManager(),
                                                                  vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                  alertService: macAlertService,
@@ -56,7 +56,6 @@ final class DependencyContainer: Container {
     private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
                                                                 appGroup: config.appGroup,
                                                                 factory: self)
-    private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
@@ -66,7 +65,7 @@ final class DependencyContainer: Container {
         alertService: macAlertService,
         timerFactory: timerFactory,
         propertiesManager: makePropertiesManager(),
-        vpnKeychain: vpnKeychain,
+        vpnKeychain: makeVpnKeychain(),
         configurationPreparer: makeVpnManagerConfigurationPreparer(),
         vpnAuthentication: vpnAuthentication,
         doh: makeDoHVPN(),
@@ -180,13 +179,6 @@ extension DependencyContainer: VpnManagerFactory {
 extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
     func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
         return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
-    }
-}
-
-// MARK: VpnKeychainFactory
-extension DependencyContainer: VpnKeychainFactory {
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychain
     }
 }
 
