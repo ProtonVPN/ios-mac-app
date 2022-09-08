@@ -146,7 +146,6 @@ final class DependencyContainer: Container {
         }
         return doh
     }()
-    lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
     private lazy var searchStorage = SearchModuleStorage(storage: makeStorage())
     private lazy var review = Review(configuration: Configuration(settings: makePropertiesManager().ratingSettings), plan: (try? makeVpnKeychain().fetchCached().accountPlan.description), logger: { message in log.debug("\(message)", category: .review) })
 
@@ -226,13 +225,6 @@ extension DependencyContainer: AppSessionManagerFactory {
     }
 }
 
-// MARK: ServerStorageFactory
-extension DependencyContainer: ServerStorageFactory {
-    func makeServerStorage() -> ServerStorage {
-        return ServerStorageConcrete()
-    }
-}
-
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
@@ -300,13 +292,6 @@ extension DependencyContainer: MaintenanceManagerFactory {
 extension DependencyContainer: MaintenanceManagerHelperFactory {
     func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
         return maintenanceManagerHelper
-    }
-}
-
-// MARK: - ProfileManagerFactory
-extension DependencyContainer: ProfileManagerFactory {
-    func makeProfileManager() -> ProfileManager {
-        return profileManager
     }
 }
 
@@ -539,12 +524,5 @@ extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
 extension DependencyContainer: AvailabilityCheckerResolverFactory {
     func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
-    }
-}
-
-// MARK: AuthKeychainHandleFactory
-extension DependencyContainer: AuthKeychainHandleFactory {
-    func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        return authKeychain
     }
 }

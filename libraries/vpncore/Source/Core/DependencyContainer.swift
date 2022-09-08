@@ -32,9 +32,17 @@ open class Container {
 
     public let config: Config
 
+    // Lazy instances - get allocated once, and stay allocated
     private lazy var storage = Storage()
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
+    private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
+    private lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
+
+    // Transient instances - get allocated as many times as they're referenced
+    private var serverStorage: ServerStorage {
+        ServerStorageConcrete()
+    }
 
     public init(_ config: Config) {
         self.config = config
@@ -58,6 +66,26 @@ extension Container: PropertiesManagerFactory {
 // MARK: VpnKeychainFactory
 extension Container: VpnKeychainFactory {
     public func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychain
+        vpnKeychain
+    }
+}
+
+// MARK: AuthKeychainHandleFactory
+extension Container: AuthKeychainHandleFactory {
+    public func makeAuthKeychainHandle() -> AuthKeychainHandle {
+        authKeychain
+    }
+}
+
+extension Container: ServerStorageFactory {
+    public func makeServerStorage() -> ServerStorage {
+        serverStorage
+    }
+}
+
+// MARK: - ProfileManagerFactory
+extension Container: ProfileManagerFactory {
+    public func makeProfileManager() -> ProfileManager {
+        profileManager
     }
 }

@@ -111,7 +111,6 @@ final class DependencyContainer: Container {
 
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
-    private lazy var authKeychain = AuthKeychain()
     private lazy var vpnAuthentication: VpnAuthentication = {
         return VpnAuthenticationManager(networking: makeNetworking(),
                                         storage: vpnAuthenticationKeychain,
@@ -142,7 +141,6 @@ final class DependencyContainer: Container {
         }
         return doh
     }()
-    private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
     private lazy var sysexManager = SystemExtensionManager(factory: self)
 
     public init() {
@@ -221,13 +219,6 @@ extension DependencyContainer: AppStateManagerFactory {
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         return appSessionManager
-    }
-}
-
-// MARK: ServerStorageFactory
-extension DependencyContainer: ServerStorageFactory {
-    func makeServerStorage() -> ServerStorage {
-        return ServerStorageConcrete()
     }
 }
 
@@ -351,13 +342,6 @@ extension DependencyContainer: AnnouncementManagerFactory {
 extension DependencyContainer: CoreApiServiceFactory {
     func makeCoreApiService() -> CoreApiService {
         return CoreApiServiceImplementation(networking: makeNetworking())
-    }
-}
-
-// MARK: - ProfileManagerFactory
-extension DependencyContainer: ProfileManagerFactory {
-    func makeProfileManager() -> ProfileManager {
-        return profileManager
     }
 }
 
@@ -590,12 +574,5 @@ extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
 extension DependencyContainer: AvailabilityCheckerResolverFactory {
     func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
-    }
-}
-
-// MARK: AuthKeychainHandleFactory
-extension DependencyContainer: AuthKeychainHandleFactory {
-    func makeAuthKeychainHandle() -> AuthKeychainHandle {
-        return authKeychain
     }
 }
