@@ -19,5 +19,35 @@
 import Foundation
 
 open class Container {
-    public init() {}
+    public struct Config {
+        public let appIdentifierPrefix: String
+        public let appGroup: String
+
+        public init(appIdentifierPrefix: String,
+                    appGroup: String) {
+            self.appIdentifierPrefix = appIdentifierPrefix
+            self.appGroup = appGroup
+        }
+    }
+
+    public let config: Config
+
+    private lazy var storage = Storage()
+    private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
+
+    public init(_ config: Config) {
+        self.config = config
+    }
+}
+
+extension Container: StorageFactory {
+    public func makeStorage() -> Storage {
+        storage
+    }
+}
+
+extension Container: PropertiesManagerFactory {
+    public func makePropertiesManager() -> PropertiesManagerProtocol {
+        propertiesManager
+    }
 }

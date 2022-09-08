@@ -21,6 +21,10 @@
 
 import Foundation
 
+public protocol StorageFactory {
+    func makeStorage() -> Storage
+}
+
 public class Storage {
     
     private static let migrationKey = "migratedTo"
