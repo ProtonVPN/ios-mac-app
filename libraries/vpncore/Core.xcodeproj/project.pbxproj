@@ -110,6 +110,8 @@
 		4C83C46E2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46C2869F956000A3FB4 /* AvailabilityCheckerFactory.swift */; };
 		4C83C4722869FCAD000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */; };
 		4C83C4732869FCAF000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */; };
+		4C9486B628CA327B008AD889 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9486B528CA327B008AD889 /* DependencyContainer.swift */; };
+		4C9486B728CA327B008AD889 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9486B528CA327B008AD889 /* DependencyContainer.swift */; };
 		4CA0977C28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CA0977D28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */; };
 		4CAAEC3D286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
@@ -735,6 +737,7 @@
 		4C83C4692869C830000A3FB4 /* BaseConnectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConnectionTestCase.swift; sourceTree = "<group>"; };
 		4C83C46C2869F956000A3FB4 /* AvailabilityCheckerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCheckerFactory.swift; sourceTree = "<group>"; };
 		4C83C46F2869FC9D000A3FB4 /* AvailabilityCheckerResolverMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityCheckerResolverMock.swift; sourceTree = "<group>"; };
+		4C9486B528CA327B008AD889 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		4CA0977B28119E6600F4ABA9 /* VpnAuthenticationKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnAuthenticationKeychain.swift; sourceTree = "<group>"; };
 		4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NEVPNStatus+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		4CAAEC412873239F0029F13A /* MockAuthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAuthKeychain.swift; sourceTree = "<group>"; };
@@ -2002,6 +2005,7 @@
 				E1B5F62D21B6B18C00B558B0 /* VpnState.swift */,
 				15625170A69D95C5DBA7C332 /* Logs */,
 				F3B2AB1427622CCC0081D65F /* AppInfo.swift */,
+				4C9486B528CA327B008AD889 /* DependencyContainer.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2926,6 +2930,7 @@
 				3F437F527A79A23D94EB0CCF /* LocalAgentNativeClientImplementation.swift in Sources */,
 				7538034CFD760B83386F6FEA /* SentryHelper.swift in Sources */,
 				E976C6286E41A6496964C105 /* String+Email.swift in Sources */,
+				4C9486B628CA327B008AD889 /* DependencyContainer.swift in Sources */,
 				963AC1AED691DDAF9BA69AC0 /* Bundle+vpncore.swift in Sources */,
 				88C647B5CB54C5F17ECDCEF6 /* FileLogFormatter.swift in Sources */,
 				C109A49B74792CEE3B79D9D3 /* FileHandler+New.swift in Sources */,
@@ -3115,6 +3120,7 @@
 				F3021D8225E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */,
 				D523F11324B7543C007DB086 /* String+Url.swift in Sources */,
+				4C9486B728CA327B008AD889 /* DependencyContainer.swift in Sources */,
 				F387A26E267B550D00F0C3D8 /* VpnStateConfiguration.swift in Sources */,
 				E1B5F66A21B81F8500B558B0 /* Dictionary+Extension.swift in Sources */,
 				E1616BB421C7BCD100F42D79 /* KeychainError.swift in Sources */,
