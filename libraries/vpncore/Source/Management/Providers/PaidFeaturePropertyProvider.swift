@@ -19,11 +19,11 @@
 import Foundation
 
 public protocol PaidFeaturePropertyProvider: AnyObject {
-    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory & AuthKeychainHandleFactory
+    typealias Factory = PropertiesManagerFactory & UserTierProviderFactory & AuthKeychainHandleFactory & StorageFactory
     var factory: Factory { get }
     var currentUserTier: Int { get }
 
-    init(_ factory: Factory, storage: Storage)
+    init(_ factory: Factory)
 
     func resetForIneligibleUser()
 }

@@ -56,6 +56,24 @@ public class DynamicBugReportManager {
     private let vpnKeychain: VpnKeychainProtocol
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
+
+    public typealias Factory = ReportsApiServiceFactory &
+        DynamicBugReportStorageFactory &
+        CoreAlertServiceFactory &
+        PropertiesManagerFactory &
+        UpdateCheckerFactory &
+        VpnKeychainFactory &
+        LogContentProviderFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(api: factory.makeReportsApiService(),
+                  storage: factory.makeDynamicBugReportStorage(),
+                  alertService: factory.makeCoreAlertService(),
+                  propertiesManager: factory.makePropertiesManager(),
+                  updateChecker: factory.makeUpdateChecker(),
+                  vpnKeychain: factory.makeVpnKeychain(),
+                  logContentProvider: factory.makeLogContentProvider())
+    }
     
     public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, updateChecker: UpdateChecker, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases) {
         self.api = api

@@ -33,36 +33,27 @@ import Timer
 final class DependencyContainer: Container {
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
-    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
+    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
+                                                                 appGroup: config.appGroup,
+                                                                 propertiesManager: makePropertiesManager(),
+                                                                 vpnManagerFactory: self)
+    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: config.openVpnExtensionBundleIdentifier,
+                                                             appGroup: config.appGroup,
+                                                             propertiesManager: makePropertiesManager(),
+                                                             vpnManagerFactory: self)
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
-    private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
-                                                           timerFactory: timerFactory,
                                                            refreshIntervals: (AppConstants.Time.fullServerRefresh,
                                                                               AppConstants.Time.serverLoadsRefresh,
                                                                               AppConstants.Time.userAccountRefresh))
 
-    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(
-        api: makeReportsApiService(),
-        storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()),
-        alertService: makeCoreAlertService(),
-        propertiesManager: makePropertiesManager(),
-        updateChecker: makeUpdateChecker(),
-        vpnKeychain: makeVpnKeychain(),
-        logContentProvider: makeLogContentProvider()
-    )
-
     private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationRemoteClient(sessionService: makeSessionService(),
-                                             authenticationStorage: makeVpnAuthenticationStorage(),
-                                             safeModePropertyProvider: makeSafeModePropertyProvider())
+        return VpnAuthenticationRemoteClient(self)
     }()
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate

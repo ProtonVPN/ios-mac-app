@@ -23,6 +23,10 @@ public protocol BackgroundTimer {
     mutating func invalidate()
 }
 
+public protocol TimerFactoryCreator {
+    func makeTimerFactory() -> TimerFactory
+}
+
 public protocol TimerFactory {
     func scheduledTimer(runAt nextRunTime: Date,
                         repeating: Double?,

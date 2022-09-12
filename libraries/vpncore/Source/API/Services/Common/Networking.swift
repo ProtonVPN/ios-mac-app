@@ -53,6 +53,18 @@ public final class CoreNetworking: Networking {
     private let doh: DoHVPN
     private let authKeychain: AuthKeychainHandle
 
+    public typealias Factory = NetworkingDelegateFactory &
+        AppInfoFactory &
+        DoHVPNFactory &
+        AuthKeychainHandleFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(delegate: factory.makeNetworkingDelegate(),
+                  appInfo: factory.makeAppInfo(),
+                  doh: factory.makeDoHVPN(),
+                  authKeychain: factory.makeAuthKeychainHandle())
+    }
+
     public init(delegate: NetworkingDelegate, appInfo: AppInfo, doh: DoHVPN, authKeychain: AuthKeychainHandle) {
         self.delegate = delegate
         self.appInfo = appInfo

@@ -22,6 +22,7 @@ final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.
     let propertiesManager: PropertiesManagerMock
     let userTierProviderMock: UserTierProviderMock
     let authKeychain: AuthKeychainHandle
+    let storage = Storage()
 
     init(propertiesManager: PropertiesManagerMock = PropertiesManagerMock(),
          userTierProviderMock: UserTierProviderMock = UserTierProviderMock(CoreAppConstants.VpnTiers.basic),
@@ -41,5 +42,9 @@ final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.
 
     func makeAuthKeychainHandle() -> AuthKeychainHandle {
         return authKeychain
+    }
+
+    func makeStorage() -> Storage {
+        return storage
     }
 }

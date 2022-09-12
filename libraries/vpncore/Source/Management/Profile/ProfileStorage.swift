@@ -21,6 +21,10 @@
 
 import Foundation
 
+public protocol ProfileStorageFactory {
+    func makeProfileStorage() -> ProfileStorage
+}
+
 public class ProfileStorage {
     private static let storageVersion = 1
     private static let versionKey     = "profileCacheVersion"

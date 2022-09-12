@@ -38,23 +38,23 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         let variants: [NetShieldType] = NetShieldType.allCases
         
         for type in variants {
-            let (factory, storage) = getFactory(netShieldType: type, tier: CoreAppConstants.VpnTiers.basic)
-            XCTAssertEqual(NetShieldPropertyProviderImplementation(factory, storage: storage).netShieldType, type)
+            let factory = getFactory(netShieldType: type, tier: CoreAppConstants.VpnTiers.basic)
+            XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, type)
         }
     }
     
     func testWhenNothingIsSetReturnsLevel1ForPaidUsers() throws {
-        var (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory, storage: storage).netShieldType, NetShieldType.level1)
-        (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory, storage: storage).netShieldType, NetShieldType.level1)
-        (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory, storage: storage).netShieldType, NetShieldType.level1)
+        var factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level1)
+        factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level1)
+        factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level1)
     }
     
     func testWhenNothingIsSetReturnsOffForFreeUsers() throws {
-        let (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.free)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory, storage: storage).netShieldType, NetShieldType.off)
+        let factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.off)
     }
     
     func testWhenUnavailableOptionIsSetReturnsDefault() throws {
@@ -62,7 +62,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.free)
         let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider)
 
-        let provider = NetShieldPropertyProviderImplementation(factory, storage: Storage())
+        let provider = NetShieldPropertyProviderImplementation(factory)
         XCTAssertEqual(provider.netShieldType, NetShieldType.off)
     }
     
@@ -73,7 +73,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         keychain.setMockUsername(Self.username)
         let factory = PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: keychain)
         
-        let provider = NetShieldPropertyProviderImplementation(factory, storage: Storage())
+        let provider = NetShieldPropertyProviderImplementation(factory)
         
         for type in NetShieldType.allCases {
             provider.netShieldType = type
@@ -83,28 +83,27 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     }
     
     func testFreeUserCantTurnNetShieldOn() throws {
-        let (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.free)
-        XCTAssert(NetShieldPropertyProviderImplementation(factory, storage: storage).isUserEligibleForNetShield == false)
+        let factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.free)
+        XCTAssert(NetShieldPropertyProviderImplementation(factory).isUserEligibleForNetShield == false)
     }
     
     func testPaidUserCanTurnNetShieldOn() throws {
-        var (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssert(NetShieldPropertyProviderImplementation(factory, storage: storage).isUserEligibleForNetShield == true)
-        (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssert(NetShieldPropertyProviderImplementation(factory, storage: storage).isUserEligibleForNetShield == true)
-        (factory, storage) = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssert(NetShieldPropertyProviderImplementation(factory, storage: storage).isUserEligibleForNetShield == true)
+        var factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)
+        XCTAssert(NetShieldPropertyProviderImplementation(factory).isUserEligibleForNetShield == true)
+        factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)
+        XCTAssert(NetShieldPropertyProviderImplementation(factory).isUserEligibleForNetShield == true)
+        factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)
+        XCTAssert(NetShieldPropertyProviderImplementation(factory).isUserEligibleForNetShield == true)
     }
     
     // MARK: -
     
-    private func getFactory(netShieldType: NetShieldType?, tier: Int) -> (PaidFeaturePropertyProviderFactoryMock, Storage) {
+    private func getFactory(netShieldType: NetShieldType?, tier: Int) -> PaidFeaturePropertyProviderFactoryMock {
         let propertiesManager = PropertiesManagerMock()
         let userTierProvider = UserTierProviderMock(tier)
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
-
         testDefaults.set(netShieldType?.rawValue, forKey: "NetShield\(Self.username)")
-        return (PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain), Storage())
+        return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
     }
 }

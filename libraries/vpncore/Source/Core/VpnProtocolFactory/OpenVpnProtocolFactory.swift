@@ -11,7 +11,7 @@ import Foundation
 import NetworkExtension
 import TunnelKit
 
-protocol OpenVpnProtocolFactoryCreator {
+public protocol OpenVpnProtocolFactoryCreator {
     func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory
 }
 

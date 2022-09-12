@@ -19,6 +19,7 @@
 import Foundation
 @testable import vpncore
 import XCTest
+import Timer
 import TimerMock
 
 class AppSessionRefreshTimerTests: XCTestCase {
@@ -47,7 +48,6 @@ class AppSessionRefreshTimerTests: XCTestCase {
         appSessionRefresher = BaseAppSessionRefresher(factory: self)
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimer(factory: self,
-                                                        timerFactory: timerFactory,
                                                         refreshIntervals: (full: 30, server: 20, account: 10))
     }
 
@@ -173,6 +173,10 @@ class AppSessionRefreshTimerTests: XCTestCase {
 }
 
 extension AppSessionRefreshTimerTests: AppSessionRefresherImplementation.Factory & AppSessionRefreshTimer.Factory {
+    func makeTimerFactory() -> TimerFactory {
+        return timerFactory
+    }
+
     func makeCoreAlertService() -> CoreAlertService {
         return alertService
     }

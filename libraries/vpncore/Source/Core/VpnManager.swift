@@ -153,6 +153,37 @@ public class VpnManager: VpnManagerProtocol {
             }
         }
     }
+
+    public typealias Factory = IkeProtocolFactoryCreator &
+        OpenVpnProtocolFactoryCreator &
+        WireguardProtocolFactoryCreator &
+        VpnAuthenticationFactory &
+        VpnKeychainFactory &
+        PropertiesManagerFactory &
+        VpnStateConfigurationFactory &
+        CoreAlertServiceFactory &
+        VpnCredentialsConfiguratorFactoryCreator &
+        LocalAgentConnectionFactoryCreator &
+        NATTypePropertyProviderFactory &
+        NetShieldPropertyProviderFactory &
+        SafeModePropertyProviderFactory
+
+    public convenience init(_ factory: Factory, config: Container.Config) {
+        self.init(ikeFactory: factory.makeIkeProtocolFactory(),
+                  openVpnFactory: factory.makeOpenVpnProtocolFactory(),
+                  wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
+                  appGroup: config.appGroup,
+                  vpnAuthentication: factory.makeVpnAuthentication(),
+                  vpnKeychain: factory.makeVpnKeychain(),
+                  propertiesManager: factory.makePropertiesManager(),
+                  vpnStateConfiguration: factory.makeVpnStateConfiguration(),
+                  alertService: factory.makeCoreAlertService(),
+                  vpnCredentialsConfiguratorFactory: factory.makeVpnCredentialsConfiguratorFactory(),
+                  localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
+                  natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
+                  netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
+                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+    }
     
     public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, localAgentConnectionFactory: LocalAgentConnectionFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         readyGroup?.enter()

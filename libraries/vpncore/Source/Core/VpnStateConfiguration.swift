@@ -49,6 +49,19 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
 
+    public typealias Factory = IkeProtocolFactoryCreator &
+        OpenVpnProtocolFactoryCreator &
+        WireguardProtocolFactoryCreator &
+        PropertiesManagerFactory
+
+    public convenience init(_ factory: Factory, config: Container.Config) {
+        self.init(ikeProtocolFactory: factory.makeIkeProtocolFactory(),
+                  openVpnProtocolFactory: factory.makeOpenVpnProtocolFactory(),
+                  wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
+                  propertiesManager: factory.makePropertiesManager(),
+                  appGroup: config.appGroup)
+    }
+
     public init(ikeProtocolFactory: VpnProtocolFactory, openVpnProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, propertiesManager: PropertiesManagerProtocol, appGroup: String) {
         self.ikeProtocolFactory = ikeProtocolFactory
         self.openVpnProtocolFactory = openVpnProtocolFactory

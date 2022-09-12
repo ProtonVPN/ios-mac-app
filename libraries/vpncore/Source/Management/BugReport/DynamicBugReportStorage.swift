@@ -19,6 +19,10 @@
 import Foundation
 import BugReport
 
+public protocol DynamicBugReportStorageFactory {
+    func makeDynamicBugReportStorage() -> DynamicBugReportStorage
+}
+
 public protocol DynamicBugReportStorage {
     func fetch() -> BugReportModel?
     func store(_ bugReport: BugReportModel)
