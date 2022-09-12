@@ -33,7 +33,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Ponad %d krajów</string>
+			<string>Ponad %d kraje</string>
 			<key>many</key>
 			<string>Ponad %d krajów</string>
 			<key>one</key>
@@ -53,7 +53,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d połączeń</string>
+			<string>%d połączenia</string>
 			<key>many</key>
 			<string>%d połączeń</string>
 			<key>one</key>

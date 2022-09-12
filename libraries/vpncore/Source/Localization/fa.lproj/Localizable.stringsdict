@@ -61,9 +61,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
+			<string>صدها سرور در %d کشور</string>
 			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>صدها سرور در %d کشور</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option2</key>
@@ -77,9 +77,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
+			<string>تا %d دستگاه را همزمان متصل کنید</string>
 			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>تا %d دستگاه را همزمان متصل کنید</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -93,15 +93,15 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minute.</string>
+			<string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
 			<key>other</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>شما به حداکثر تعداد تغییرات تنظیمات رسیده اید. لطفا بعد از %d دقیقه دوباره تلاش کنید.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<string> تا بتوانید %#@num_devices@ دستگاه را بطور همزمان متصل کنید.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -109,9 +109,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d device</string>
+			<string>%d دستگاه</string>
 			<key>other</key>
-			<string>%d devices</string>
+			<string>%d دستگاه</string>
 		</dict>
 	</dict>
 </dict>

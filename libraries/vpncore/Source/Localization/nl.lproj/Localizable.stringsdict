@@ -63,7 +63,7 @@
 			<key>one</key>
 			<string>Hundreds of servers in %d country</string>
 			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>Honderden servers in %d landen</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option2</key>
@@ -77,7 +77,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
+			<string>Verbind tot %d apparat op hetzelfde moment</string>
 			<key>other</key>
 			<string>Connect up to %d devices at the same time</string>
 		</dict>
@@ -93,9 +93,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minute.</string>
+			<string>U heeft het maximale aantal instellingswijzigingen bereikt. Probeer het over ten minste %d minut opnieuw.</string>
 			<key>other</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>U heeft het maximale aantal instellingswijzigingen bereikt. Probeer het over ten minste %d minuten opnieuw.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>

@@ -401,7 +401,7 @@
 "_error_mitm_title" = "Koneksi tidak aman";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "Validasi sertifikat TLS gagal ketika coba menyambung ke server VPN. Sambungan internet Anda saat ini mungkin diawasi. Untuk menjaga keamanan data Anda, kami mencegah aplikasi mengakses server VPN ini. Silakan pilih server lain.";
+"_error_mitm_vpn_description" = "Sistem gagal memvalidasi sertifikat TLS pada saat mencoba terhubung ke server VPN. Koneksi internet Anda mungkin sedang diawasi. Agar data Anda tetap aman, kami telah mencegah aplikasi yang bersangkutan untuk dapat mengakses server VPN ini.\nMohon pilih server lain.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulus tanda tangan kosong";
@@ -494,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Status token pembayaran salah. Silakan buka ulang aplikasi. Jika galat masih terjadi, hubungi dukungan.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN menggunakan filter paket firewall untuk mengimplementasikan kill switch. Dengan mengaktifkan kill switch, Anda akan menimpa setelan firewall yang ada saat ini. Apabila Anda bergantung pada konfigurasi firewall ini, Anda seharusnya tidak mengaktifkan kill switch.\n\nUntuk mengaktifkan kill switch dan menimpa setelan firewall Anda saat ini, pilih LANJUT.\n\nUntuk menonaktifkan kill switch dan kembali menggunakan firewall Anda, pilih BATAL.";
+"_existing_firewall_popup_body" = "Proton VPN menggunakan filter paket firewall untuk mengimplementasikan kill switch. Dengan mengaktifkan kill switch, Anda akan menimpa setelan firewall milik perangkat Anda saat ini. Apabila Anda bergantung pada konfigurasi firewall yang telah ada, Anda disarankan untuk tidak mengaktifkan kill switch.\n\nUntuk mengaktifkan kill switch dan menimpa setelan firewall Anda saat ini, pilih LANJUT.\n\nUntuk menonaktifkan kill switch dan kembali menggunakan firewall Anda, pilih BATAL.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall terdeteksi";
@@ -653,7 +653,7 @@
 "_initializing_connection" = "Memulai Sambungan...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "Sesi kedaluwarsa";
+"_invalid_refresh_token" = "Sesi telah kedaluwarsa";
 
 /* (No Comment) */
 "_invalid_refresh_token_please_login" = "Anda sudah tidak menggunakan aplikasi Proton VPN selama beberapa waktu. Silakan masuk kembali.";
@@ -701,28 +701,28 @@
 "_kill_switch_disable" = "Nonaktifkan kill switch";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Matikan aplikasi tersebut untuk mengatasi masalah.\nUntuk tetap berselancar tanpa kill switch, klik Lanjutkan.";
+"_kill_switch_error_foot" = "Nonaktifkan aplikasi tersebut agar masalah ini dapat teratasi.\nUntuk tetap berselancar tanpa kill switch, klik Lanjutkan.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Beberapa aplikasi, seperti antivirus atau firewall, mungkin berkonflik dengan kill switch, menjadikannya tidak berjalan sesuai fungsi.";
+"_kill_switch_error_head" = "Aplikasi tertentu seperti antivirus atau firewall dapat berbentrokan dengan kill switch, yang membuat kill switch tidak dapat berfungsi sebagaimana mestinya.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch bekerja dengan Firewall macOS.\nApabila terdapat aplikasi lain yang juga menggunakan Firewall, kinerja kill switch Proton VPN dapat terganggu. Matikan aplikasi tersebut untuk memulihkan pengaturan Firewall yang dibutuhkan oleh kill switch.";
+"_kill_switch_error_info" = "Kill switch dapat bekerja di atas Firewall macOS.\nMeskipun demikian, apabila terdapat aplikasi lain yang juga terhubung dengan Firewall, aplikasi tersebut dapat mengganggu kinerja kill switch Proton VPN. Menonaktifkan aplikasi tersebut dapat memulihkan regulasi Firewall yang ditentukan oleh kill switch.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Sebuah kesalahan kill switch terlah terdeteksi";
+"_kill_switch_error_title" = "Kesalahan pada kill switch terdeteksi";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Sedang terdapat sebuah masalah memasang atau memperbaharui kill switch.\n\nUntuk mencoba kembali, klik COBA KEMBALI.\n\nUntuk melanjutkan tanpa kill switch, klik NONAKTIFKAN.";
+"_kill_switch_helper_install_issue_popup_body" = "Terdapat masalah dalam proses instalasi atau pembaruan kill switch.\n\nUntuk mencoba kembali, klik COBA LAGI.\n\nUntuk melanjutkan tanpa kill switch, klik NONAKTIFKAN.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Untuk mengaktifkan kill switch, Anda akan diminta untuk memasukkan kata sandi komputer Anda. Apabila permintaan yang bersangkutan muncul, masukan %@ Anda dan terima.\n\nAnda akan dapat kembali menerima permintaan ini pada saat aplikasi Proton VPN menerima pembaruan.";
+"_kill_switch_helper_install_popup_body" = "Untuk mengaktifkan kill switch, Anda mungkin akan diminta untuk memasukkan kata sandi komputer Anda. Apabila permintaan yang bersangkutan muncul, masukkan %@ Anda dan terima.\n\nAnda akan dapat kembali menerima permintaan ini pada saat aplikasi Proton VPN diperbarui.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Pembaharuan terbaru yang Anda unduh memerlukanmu untuk menyediakan kata sandi akun komputer Anda. Ketika permintaan muncul, mohon masukkan %@ dan terima.\n\nJika Anda tidak memasukkan kata sandi Mac, kill switch akan dinonaktifkan.";
+"_kill_switch_helper_update_popup_body" = "Pembaruan terbaru yang Anda unduh memerlukan Anda untuk memasukkan kata sandi akun komputer Anda. Apabila permintaan yang bersangkutan muncul, mohon masukkan %@ Anda dan terima.\n\nApabila Anda tidak memasukkan kata sandi Mac Anda, kill switch akan dinonaktifkan.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Koneksi internet Anda akan kembali pulih segera setelah Proton VPN tersambung ulang ke server. Untuk menggunakan internet tanpa perlindungan VPN dan kill switch, batalkan proses penyambungan ulang ke server.";
+"_kill_switch_reconnection" = "Koneksi internet Anda akan kembali pulih segera setelah Proton VPN tersambung ulang ke server yang ada. Untuk menggunakan internet tanpa perlindungan VPN dan kill switch, batalkan proses penyambungan ulang ke server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "tanpa";
@@ -743,10 +743,10 @@
 "_ks_dont_ask" = "Jangan tanyakan lagi";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Untuk mengaktifkan kill switch, Anda perlu mengunduh dan memasang %@.\nSilakan pasang sebelum mengaktifkan kill switch.";
+"_ks_requires_swift5_popup_msg" = "Untuk mengaktifkan kill switch, Anda harus terlebih dahulu mengunduh dan menginstal %@.\nSilakan instal aplikasi tersebut sebelum mengaktifkan kill switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN tidak dapat mendeteksi %@. Untuk dapat mengaktifkan kill switch, silakan install software yang ada terlebih dahulu.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN tidak dapat mendeteksi keberadaan %@. Untuk dapat mengaktifkan kill switch, silakan instal aplikasi yang bersangkutan terlebih dahulu.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Pustaka Swift 5 Runtime Support";
@@ -773,7 +773,7 @@
 "_loading_screen_slogan" = "Internet Aman di Mana Saja";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Anda tidak diizinkan tersambung ke server. Pilih server lain atau tingkatkan paket Anda.";
+"_local_agent_policy_violation_error_message" = "Anda tidak diizinkan untuk dapat tersambung ke server ini. Pilih server lain atau tingkatkan jenis akun Anda.";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_title" = "Pelanggaran kebijakan";
@@ -791,10 +791,7 @@
 "_locations_all" = "Semua lokasi";
 
 /* (No Comment) */
-"_locations_plus" = "Lokasi PLUS";
-
-/* (No Comment) */
-"_locations_free" = "Lokasi Gratis";
+"_locations_free" = "Lokasi Free";
 
 /* (No Comment) */
 "_locations_plus" = "Lokasi Plus";
@@ -952,7 +949,7 @@
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Layanan VPN tidak dapat dijangkau";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
 "_neagent_always_allow" = "Selalu Izinkan";
 
 /* Mac: neagent help screen */
@@ -971,7 +968,7 @@
 "_need_help" = "Butuh Bantuan?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Aktifkan Saja";
+"_neks_t2_connect" = "Tetap aktifkan";
 
 /* (No Comment) */
 "_neks_t2_description" = "Kill switch tidak dapat digunakan secara stabil pada perangkat ini.\n\nPerangkat Anda memiliki Chip Keamanan T2, yang dapat membuat sistem Anda menjadi tidak stabil apabila fungsionalitas kill switch yang dimiliki oleh macOS digunakan oleh Proton VPN.";
@@ -980,7 +977,7 @@
 "_neks_t2_hyperlink" = "Chip Keamanan T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Peringatan Stabilitas kill switch";
+"_neks_t2_title" = "Peringatan Stabilitas Kill Switch";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Sambungan Anda akan dimulai ulang untuk mengganti mode NetShield.";
@@ -1046,7 +1043,7 @@
 "_not_connected" = "Tidak Terhubung";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Tidak dapat menciptakan koneksi VPN. Kamu tidak sedang terhubung dengan internet.";
+"_not_connected_to_the_internet" = "Tidak dapat mengukuhkan koneksi VPN. Anda tidak sedang terhubung ke internet.";
 
 /* (No Comment) */
 "_not_now" = "Tidak sekarang";
@@ -1196,7 +1193,7 @@
 "_profile_edited_successfully" = "Profil telah diperbarui";
 
 /* Error in profile create/change form */
-"_profile_name_is_required" = "Silahkan masukkan nama";
+"_profile_name_is_required" = "Silakan masukkan nama";
 
 /* Error in profile create/change form */
 "_profile_name_is_too_long" = "Nama profil maksimal 25 karakter";
@@ -1247,10 +1244,10 @@
 "_quick_settings_get_plus" = "Pilih Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Matikan internet jika sambungan VPN turun untuk mencegah kebocoran IP.";
+"_quick_settings_killSwitch_description" = "Menonaktifkan internet Anda sepenuhnya apabila koneksi VPN terputus untuk mencegah kebocoran IP.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Jika Anda tidak bisa tersambung ke perangkat di jaringan lokal Anda, coba nonaktifkan kill switch.";
+"_quick_settings_killSwitch_note" = "Apabila Anda tidak dapat tersambung ke perangkat lain yang terdapat pada jaringan lokal Anda, cobalah untuk nonaktifkan kill switch.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Jelajahi internet tanpa iklan dan malware.";
@@ -1511,7 +1508,7 @@
 "_smart_protocol_reconnect_modal_body" = "Koneksi Anda akan dimulai ulang untuk mengubah mode Smart Protokol.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
-"_smart_protocol_reconnect_modal_title" = "Diperlukan penyambungan ulang";
+"_smart_protocol_reconnect_modal_title" = "Penyambungan ulang dibutuhkan";
 
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
@@ -1541,7 +1538,7 @@
 "_streaming_servers_description" = "Hubungkan diri Anda ke server Plus di negara ini untuk mulai menonton tayangan streaming.";
 
 /* (No Comment) */
-"_streaming_servers_extra" = "dan banyak lagi";
+"_streaming_servers_extra" = "dan masih banyak lagi";
 
 /* (No Comment) */
 "_streaming_servers_note" = "Perhatian: Matikan Layanan Lokasi dan bersihkan tembolok aplikasi pengaliran untuk memastikan konten baru muncul.";
@@ -1601,7 +1598,7 @@
 "_subuser_alert_title" = "Terima kasih karena telah meningkatkan jenis akun Anda ke Professional/Visionary";
 
 /* MacOS: connecting overlay */
-"_successfully_connected" = "Berhasil Tersambung";
+"_successfully_connected" = "Berhasil Terhubung";
 
 /* (No Comment) */
 "_switch_side_button_off" = "MATI";
@@ -1613,7 +1610,7 @@
 "_sysex_cannot_enable" = "Tidak dapat mengaktifkan modul Ekstensi Sistem";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Konfigurasi selesai. Anda kini dapat menjelajah internet dengan lebih cepat berkat teknologi-teknologi VPN mutakhir yang telah berhasil terpasang.";
+"_sysex_enabled_description" = "Konfigurasi selesai. Anda kini dapat menjelajah internet lebih cepat dengan berbagai teknologi VPN terbaik.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Konfigurasi selesai";
@@ -1624,14 +1621,14 @@
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
 
-/* System extension wizard in mac: Button */
-"_sysex_wizard_button" = "Mulai konfigurasi";
-
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Klik \"Mulai konfigurasi\". Pada kedua jendela dialog yang muncul, pilih \"Buka Preferensi Keamanan\".\nAnda juga dapat mengakses menu pengaturan yang bersangkutan melalui tombol ini.";
+"_sysex_wizard_step1_description" = "Anda akan dihadapkan dengan dua kotak dialog. Klik \"Open Security Preferences\".\nSebagai alternatif, klik di sini untuk membuka menu preferensi.";
 
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Klik \"Mulai konfigurasi\". Pada jendela dialog yang muncul, pilih \"Buka Preferensi Keamanan\".\nAnda juga dapat mengakses menu pengaturan yang bersangkutan melalui tombol ini.";
+"_sysex_wizard_step1_description_1" = "Anda akan dihadapkan dengan dialog keamanan. Klik \"Open Security Preferences\".\nSebagai alternatif, klik di sini untuk membuka menu preferensi.";
+
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Buka System Preferences: klik di sini.\nLalu, tuju panel \"Security & Privacy\".";
 
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
@@ -1720,7 +1717,7 @@
 "_timed_out" = "waktu habis";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Terdapat aplikasi lain yang ditenggarai mengganggu kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan hubungkan VPN Anda kembali.";
+"_timeout_ks_ike_descritpion" = "Terdapat aplikasi lain yang diduga mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba kembali";
@@ -1730,6 +1727,9 @@
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Mendukung sambungan ke jaringan Tor";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
@@ -1812,7 +1812,7 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Masalah Penyedia Layanan internet (ISP)";
+"_troubleshoot_item_isp_title" = "Masalah Penyedia Layanan Internet (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Pastikan koneksi internet anda berfungsi.";
@@ -1860,10 +1860,10 @@
 "_try_again_without_killswitch" = "Nonaktifkan kill switch dan coba lagi";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Selama kill switch aktif, Anda tidak akan dapat mengakses perangkat-perangkat yang terhubung pada jaringan lokal Anda. \n\nApakah Anda tetap ingin lanjut?";
+"_turn_ks_on_description" = "Selama kill switch aktif, Anda tidak akan dapat mengakses berbagai perangkat yang terhubung pada jaringan lokal Anda. \n\nApakah Anda tetap ingin lanjut?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Nyalakan kill switch?";
+"_turn_ks_on_title" = "Aktifkan kill switch?";
 
 /* (No Comment) */
 "_turn_on" = "Nyalakan";
@@ -1898,10 +1898,10 @@
 /* (No Comment) */
 "_update_required_no_longer_supported" = "Versi Proton VPN ini sudah tidak lagi didukung. Silakan perbarui aplikasi untuk dapat melanjutkan.";
 
-/* App update required alert */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Hubungi dukungan";
 
-/* (No Comment) */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Perbarui";
 
 /* Button in many places in both iOS and MacOS apps */
@@ -2046,7 +2046,7 @@
 "_welcome_title" = "SELAMAT DATANG!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch mencegah VPN untuk dapat terhubung ke internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk dapat menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan kill switch.";
+"_wgks_description" = "Kill switch mencegah VPN untuk dapat terhubung ke Internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk dapat menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan kill switch.";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Nonaktifkan kill switch";

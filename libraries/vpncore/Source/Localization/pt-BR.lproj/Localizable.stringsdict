@@ -93,15 +93,15 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minute.</string>
+			<string>Você atingiu o número máximo de alterações de configuração. Por favor, tente novamente em %d minuto.</string>
 			<key>other</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>Você atingiu o número máximo de alterações de configuração. Por favor, tente novamente em %d minutos.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<string> para conectar até %#@num_devices@ dispositivos em simultâneo.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>

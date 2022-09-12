@@ -1,9 +1,15 @@
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
-/* (No Comment) */
-"_neks_t2_connect" = "Enable anyway";
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "Under maintenance";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Unprotected network notifications";
 
