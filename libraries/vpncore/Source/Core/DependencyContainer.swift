@@ -18,7 +18,7 @@
 
 import Foundation
 
-open class Container {
+open class Container: DoHVPNFactory, NetworkingDelegateFactory {
     public struct Config {
         public let appIdentifierPrefix: String
         public let appGroup: String
@@ -38,6 +38,10 @@ open class Container {
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
     private lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
+    private lazy var networking = CoreNetworking(delegate: makeNetworkingDelegate(),
+                                                 appInfo: makeAppInfo(),
+                                                 doh: makeDoHVPN(),
+                                                 authKeychain: makeAuthKeychainHandle())
 
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {
@@ -46,6 +50,26 @@ open class Container {
 
     public init(_ config: Config) {
         self.config = config
+    }
+
+    func shouldHaveOverridden(caller: StaticString = #function) -> Never {
+        fatalError("Should have overridden \(caller)")
+    }
+
+// MARK: - Factories and methods to override
+    #if os(macOS)
+    open var modelId: String? {
+        nil
+    }
+    #endif
+
+    // MARK: DoHVPNFactory
+    open func makeDoHVPN() -> DoHVPN {
+        shouldHaveOverridden()
+    }
+
+    open func makeNetworkingDelegate() -> NetworkingDelegate {
+        shouldHaveOverridden()
     }
 }
 
@@ -83,9 +107,23 @@ extension Container: ServerStorageFactory {
     }
 }
 
-// MARK: - ProfileManagerFactory
+// MARK: ProfileManagerFactory
 extension Container: ProfileManagerFactory {
     public func makeProfileManager() -> ProfileManager {
         profileManager
+    }
+}
+
+// MARK: AppInfoFactory
+extension Container: AppInfoFactory {
+    public func makeAppInfo(context: AppContext) -> AppInfo {
+        AppInfoImplementation(context: context, modelName: modelId)
+    }
+}
+
+// MARK: NetworkingFactory
+extension Container: NetworkingFactory {
+    public func makeNetworking() -> Networking {
+        networking
     }
 }
