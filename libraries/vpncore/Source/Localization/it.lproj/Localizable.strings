@@ -59,7 +59,7 @@
 "_ae_wrong_login_credentials" = "Nome utente o password errati";
 
 /* Account plan description */
-"_all_countries" = "Oltre 50 paesi";
+"_all_countries" = "60+ paesi";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Tutti i server in questo paese sono in manutenzione. Sei pregato di connetterti a un altro paese.";
@@ -74,7 +74,7 @@
 "_allow" = "Consenti";
 
 /* (No Comment) */
-"_allow_lan_description" = "Per consentire l'accesso LAN, il kill switch dev'esser disattivato.\n\nContinuare?";
+"_allow_lan_description" = "Per consentire l'accesso LAN, kill switch dev'essere disattivato.\n\nContinuare?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Consente di bypassare la VPN e connettersi ai dispositivi sulla tua rete locale, come la tua stampante.";
@@ -251,7 +251,7 @@
 "_data_disclaimer_user_details" = "Nome utente, indirizzo email";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Il pulsante \"Connessione Rapida\" usa il profilo predefinito.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
 /* Common word */
 "_delete" = "Elimina";
@@ -494,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Stato del token di pagamento errato. Si prega di riaprire l'app. Se l'errore persiste, contatta l'assistenza.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN utilizza un firewall col filtro pacchetti per implementare un kill switch. Abilitando il kill switch, sovrascriverai le attuali impostazioni del firewall del tuo dispositivo. Se ti affidi a questa configurazione di firewall, non dovresti utilizzare kill switch.\n\nPer utilizzare il kill switch e sovrascrivere le impostazioni attuali del firewall, scegli CONTINUA.\n\nPer disattivare il kill switch e continuare ad utilizzare il tuo attuale firewall, scegli ANNULLA.";
+"_existing_firewall_popup_body" = "ProtonVPN utilizza un firewall col filtro pacchetti per implementare kill switch. Abilitando kill switch, sovrascriverai le attuali impostazioni del firewall del tuo dispositivo. Se ti affidi a questa configurazione di firewall, non dovresti utilizzare kill switch.\n\nPer utilizzare kill switch e sovrascrivere le impostazioni attuali del firewall, scegli CONTINUA.\n\nPer disattivare il kill switch e continuare ad utilizzare il tuo attuale firewall, scegli ANNULLA.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall rilevato";
@@ -689,7 +689,7 @@
 "_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
+"_kill_switch_blocking_body" = "Kill switch sta proteggendo il tuo IP\n\nLa tua connessione ad internet riprenderà non appena Proton VPN si riconnetterà ad un server. Per riprendere senza protezione VPN, disabilita Kill switch.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill switch sta bloccando tutte le connessioni";
@@ -698,7 +698,7 @@
 "_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Disabilita kill switch";
+"_kill_switch_disable" = "Disabilita Kill switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Termina quelle applicazioni per risolvere il problema.\nPer continuare a navigare senza kill switch, fai clic su Continua.";
@@ -707,28 +707,28 @@
 "_kill_switch_error_head" = "Alcune applicazioni, come anti-virus o firewall, potrebbero entrare in conflitto con kill switch, facendo si che non funzioni correttamente.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch funziona con macOS Firewall.\nSe ci sono altre applicazioni associate al Firewall, potrebbero interferire con kill switch di Proton VPN. Terminare queste app può ripristinare le regole Firewall impostate da kill switch.";
+"_kill_switch_error_info" = "Kill switch funziona con macOS Firewall.\nSe ci sono altre applicazioni associate al Firewall, potrebbero interferire con kill switch di ProtonVPN. Terminare queste app può ripristinare le regole Firewall impostate da kill switch.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "È stato rilevato un errore del kill switch";
+"_kill_switch_error_title" = "È stato rilevato un errore di kill switch";
 
 /* MacOS: killswicth install error alert */
 "_kill_switch_helper_install_issue_popup_body" = "Si è verificato un problema durante l'installazione o l'aggiornamento di kill switch.\n\nPer riprovare, clicca su RIPROVA.\n\nPer continuare senza kill switch, clicca su DISABILITA.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Per abilitare kill switch, ti verrà chiesto di fornire la password dell'account del tuo computer. Se appare una richiesta, inserisci il tuo %@ e accetta.\n\nPotresti vedere di nuovo questa richiesta quando l'app Proton VPN riceve aggiornamenti.";
+"_kill_switch_helper_install_popup_body" = "Per abilitare kill switch, ti verrà chiesto di fornire la password dell'account del tuo computer. Se appare una richiesta, inserisci il tuo %@ e accetta.\n\nPotresti vedere di nuovo questa richiesta quando l'app ProtonVPN riceve aggiornamenti.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "L'aggiornamento più recente che hai scaricato richiede di fornire la password dell'account del tuo computer. Quando la richiesta appare, per favore inserisci la tua %@ e accetta.\n\nSe non inserisci la password Mac, kill switch verrà disattivato.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "La tua connessione internet riprenderà non appena Proton VPN si riconnetterà a un server.\nPer utilizzare internet senza protezione VPN e kill switch annullare la riconnessione al server.";
+"_kill_switch_reconnection" = "La tua connessione internet riprenderà non appena ProtonVPN si riconnetterà a un server.\nPer utilizzare Internet senza protezione VPN e kill switch annullare la riconnessione al server.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "senza";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protezione kill switch";
+"_kill_switch_reconnection_bold2" = "Protezione Kill switch";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Annulla riconnessione";
@@ -746,7 +746,7 @@
 "_ks_requires_swift5_popup_msg" = "Per abilitare kill switch, è necessario scaricare e installare %@.\nSi prega di installarlo prima di abilitare kill switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN non è riuscito a rilevare %@. Per abilitare Kill Swicth, prima installa il software.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN non è riuscito a rilevare %@. Per abilitare kill swicth, prima installa il software.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Libreria di supporto Runtime Swift 5";
@@ -789,9 +789,6 @@
 
 /* (No Comment) */
 "_locations_all" = "Tutte le Località";
-
-/* (No Comment) */
-"_locations_plus" = "Località PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Località Gratuite";
@@ -952,7 +949,7 @@
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Servizio non raggiungibile";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
 "_neagent_always_allow" = "Consenti sempre";
 
 /* Mac: neagent help screen */
@@ -971,7 +968,7 @@
 "_need_help" = "Hai bisogno di aiuto?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Enable anyway";
+"_neks_t2_connect" = "Abilita comunque";
 
 /* (No Comment) */
 "_neks_t2_description" = "L'uso di kill switch è instabile su questo dispositivo.\n\nIl tuo dispositivo ha un chip di sicurezza T2, che può causare problemi di stabilità del sistema se la funzionalità kill switch di macOS viene utilizzata da Proton VPN.";
@@ -980,7 +977,7 @@
 "_neks_t2_hyperlink" = "Chip di Sicurezza T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Avviso di Stabilità di kill switch";
+"_neks_t2_title" = "Avviso di Stabilità di Kill switch";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "La tua connessione verrà riavviata per cambiare la modalità NetShield.";
@@ -1055,7 +1052,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "In manutenzione";
+"_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostra Proton VPN per accedere...";
@@ -1624,14 +1621,14 @@
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN richiede di caricare un'Estensione del Sistema per sfruttare lo Smart Protocol, OpenVPN e WireGuard.";
 
-/* System extension wizard in mac: Button */
-"_sysex_wizard_button" = "Inizia la configurazione";
-
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Fare clic su \"Inizia configurazione\". Appariranno due finestre di dialogo, quindi fare clic su \"Apri preferenze di sicurezza\".\nIn alternativa, clicca qui per aprire le stesse impostazioni.";
+"_sysex_wizard_step1_description" = "Appariranno due finestre di dialogo. Fare clic su \"Apri Preferenze di Sicurezza\".\nIn alternativa, fare clic qui per aprire le preferenze.";
 
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Fare clic su \"Inizia configurazione\". Apparirà una finestra di dialogo, quindi fare clic su \"Apri preferenze di sicurezza\".\nIn alternativa, clicca qui per aprire le stesse impostazioni.";
+"_sysex_wizard_step1_description_1" = "È stata visualizzata una finestra di dialogo di sicurezza. Fare clic su \"Apri Preferenze di Sicurezza\".\nIn alternativa, fare clic qui per aprire le preferenze.";
+
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Apri le Preferenze di Sistema: clicca qui.\nQuindi, vai al pannello \"Sicurezza & Privacy\".";
 
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
@@ -1729,7 +1726,10 @@
 "_to_server_title" = "Al Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
@@ -1812,13 +1812,13 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problema del provider internet (ISP)";
+"_troubleshoot_item_isp_title" = "Problema del provider Internet (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Per favore assicurati che la connessione internet funzioni.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "Nessuna connessione internet";
+"_troubleshoot_item_nointernet_title" = "Nessuna connessione Internet";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Contattaci attraverso il nostro modulo di supporto, email (%@), o Twitter.";
@@ -1860,10 +1860,10 @@
 "_try_again_without_killswitch" = "Disabilita kill switch e riprova";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Attivando il kill switch, non potrai accedere ai dispositivi sulla tua rete locale. \n\nContinuare?";
+"_turn_ks_on_description" = "Attivando kill switch, non potrai accedere ai dispositivi sulla tua rete locale. \n\nContinuare?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Attivare il kill switch?";
+"_turn_ks_on_title" = "Attivare kill switch?";
 
 /* (No Comment) */
 "_turn_on" = "Attiva";
@@ -1875,7 +1875,7 @@
 "_unavailable" = "Non disponibile";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Notifica reti non protette";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Ricevi una notifica quando Proton VPN rileva che sei connesso ad una rete non protetta.";
@@ -1898,10 +1898,10 @@
 /* (No Comment) */
 "_update_required_no_longer_supported" = "Questa versione di Proton VPN non è più supportata, per favore aggiorna l'app per continuare ad usarla.";
 
-/* App update required alert */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Contatta il supporto";
 
-/* (No Comment) */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Aggiorna";
 
 /* Button in many places in both iOS and MacOS apps */
@@ -2031,7 +2031,7 @@
 "_warning_vpn_session_is_active" = "La sessione Proton VPN di un altro utente è attiva su questo dispositivo. Continuando con il processo di accesso causerai la fine della sessione corrente. Vuoi continuare?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN svizzera ad alta velocità che salvaguarda la tua privacy crittografando la tua connessione internet.";
+"_welcome_body" = "Una VPN svizzera ad Alta Velocità che protegge la vostra privacy criptando la vostra connessione a internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Grazie per utilizzare Proton VPN. Dai un rapido sguardo alle funzioni principali dell'app.";

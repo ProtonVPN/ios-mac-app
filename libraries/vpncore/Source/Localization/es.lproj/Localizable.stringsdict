@@ -61,9 +61,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
+			<string>Cientos de servidores en %d país</string>
 			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>Cientos de servidores en %d países</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option2</key>
@@ -77,9 +77,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
+			<string>Conectar hasta %d dispositivo al mismo tiempo</string>
 			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>Conectar hasta %d dispositivos al mismo tiempo</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -93,15 +93,15 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minute.</string>
+			<string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
 			<key>other</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<string> para tener hasta %#@num_devices@ conectados al mismo tiempo.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -109,9 +109,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d device</string>
+			<string>%d dispositivo</string>
 			<key>other</key>
-			<string>%d devices</string>
+			<string>%d dispositivos</string>
 		</dict>
 	</dict>
 </dict>

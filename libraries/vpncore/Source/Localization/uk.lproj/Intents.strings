@@ -11,13 +11,13 @@
 "cQ4Mju" = "Від'єднати";
 
 /* (No Comment) */
-"hIcJsr" = "Get Proton VPN connection status";
+"hIcJsr" = "Отримайте стан з'єднання Proton VPN";
 
 /* (No Comment) */
 "jf696t" = "Під'єднатися до Proton VPN";
 
 /* (No Comment) */
-"JOCERT" = "Get Proton VPN connection status";
+"JOCERT" = "Отримайте стан з'єднання Proton VPN";
 
 /* (No Comment) */
 "ksQcRb" = "Від'єднатися від Proton VPN";
@@ -30,7 +30,4 @@
 
 /* (No Comment) */
 "Ya0ZRy" = "Швидке з'єднання";
-
-/* (No Comment) */
-"ZqjXZN" = "${status}";
 

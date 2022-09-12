@@ -401,7 +401,7 @@
 "_error_mitm_title" = "Conexión insegura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse al servidor VPN. Su conexión actual a internet puede ser monitoreada. Para mantener sus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nPor favor seleccione otro servidor.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse al servidor VPN. Su conexión actual a Internet puede ser monitoreada. Para mantener sus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nPor favor seleccione otro servidor.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -494,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Estado del token de pago incorrecto. Por favor, reinicie la aplicación. Si el error persiste, póngase en contacto con soporte al cliente.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN usa un firewall para implementar el interruptor de apagado. Al habilitar el interruptor, sobrescribirá la configuración actual del firewall del dispositivo. Si confía en esta configuración de firewall, no debe usar el interruptor.\n\nPara usar el interruptor de apagado y sobrescribir la configuración actual del firewall, seleccione CONTINUAR.\n\nPara deshabilitarlo y continuar usando su firewall actual, seleccione CANCELAR.";
+"_existing_firewall_popup_body" = "ProtonVPN usa un firewall para implementar el interruptor de apagado. Al habilitar el interruptor, sobrescribirá la configuración actual del firewall del dispositivo. Si confía en esta configuración de firewall, no debe usar el interruptor.\n\nPara usar el interruptor de apagado y sobrescribir la configuración actual del firewall, seleccione CONTINUAR.\n\nPara deshabilitarlo y continuar usando su firewall actual, seleccione CANCELAR.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall detectado";
@@ -662,13 +662,13 @@
 "_ios_onboarding_page1_description" = "De los científicos e ingenieros que crearon Proton Mail, bienvenidos a un internet más seguro y privado.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenido a un mejor internet";
+"_ios_onboarding_page1_title" = "Bienvenido/a a un internet mejor";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Golpeamos la censura y las restricciones regionales. No tenemos anuncios, ni límites de ancho de banda, y no vendemos sus datos.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Creemos que internet debería ser gratis";
+"_ios_onboarding_page2_title" = "Creemos que Internet debe ser libre";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_description" = "Somos una empresa de seguridad. Ya sea nuestra arquitectura Secure Core o nuestro cifrado avanzado, la seguridad siempre es lo primero.";
@@ -689,7 +689,7 @@
 "_kill_switch" = "Interruptor de apagado";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "El interruptor de apagado está protegiendo su IP\n\nSu conexión a internet se reanudará tan pronto como Proton VPN se reconecte a un servidor. Para continuar sin protección VPN, desactive el interruptor.";
+"_kill_switch_blocking_body" = "El interruptor de apagado está protegiendo su IP\n\nSu conexión a Internet se reanudará tan pronto como Proton VPN se reconecte a un servidor. Para continuar sin protección VPN, desactive el interruptor.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "El interruptor de apagado bloquea todas las conexiones";
@@ -707,7 +707,7 @@
 "_kill_switch_error_head" = "Algunas apps, como antivirus o firewalls, pueden interferir con el interruptor de apagado.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "El interruptor de apagado funciona con el firewall de macOS.\nSi hay otras aplicaciones asociadas con el firewall, pueden interferir con el interruptor de apagado de Proton VPN. Terminar esas aplicaciones puede restaurar las reglas de firewall establecidas por el interruptor.";
+"_kill_switch_error_info" = "El interruptor de apagado funciona con el firewall de macOS.\nSi hay otras aplicaciones asociadas con el firewall, pueden interferir con el interruptor de apagado de ProtonVPN. Terminar esas aplicaciones puede restaurar las reglas de firewall establecidas por el interruptor.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Se ha detectado un error del interruptor de apagado";
@@ -716,19 +716,19 @@
 "_kill_switch_helper_install_issue_popup_body" = "Hubo un problema al instalar o actualizar el interruptor de apagado.\n\nPara intentarlo otra vez, haga clic en REINTENTAR.\n\nPara continuar sin el interruptor, haga clic en DESHABILITAR.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Para habilitar el interruptor de apagado, es posible que se le solicite que proporcione la contraseña del ordenador. Si aparece una solicitud, ingrese su %@ y acepte.\n\nPuede ver esta solicitud nuevamente ocasionalmente cuando la aplicación Proton VPN reciba actualizaciones.";
+"_kill_switch_helper_install_popup_body" = "Para habilitar el interruptor de apagado, es posible que se le solicite que proporcione la contraseña del ordenador. Si aparece una solicitud, ingrese su %@ y acepte.\n\nPuede ver esta solicitud nuevamente ocasionalmente cuando la aplicación ProtonVPN reciba actualizaciones.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "La actualización más reciente que ha descargado requiere que proporcione su contraseña del ordenador. Cuando la solicitud aparezca, ingrese su %@ y acepte.\n\nSi no ingresa su contraseña de Mac, el interruptor de apagado se deshabilitará.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como Proton VPN se conecte a un servidor.\nPara usar internet sin protección VPN e interruptor de apagado cancele la reconexión al servidor.";
+"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como ProtonVPN se conecte a un servidor.\nPara usar Internet sin protección VPN e interruptor de apagado cancele la reconexión al servidor.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sin";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "protección de interruptor de apagado";
+"_kill_switch_reconnection_bold2" = "Protección de interruptor de apagado";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Cancelar reconexión";
@@ -746,7 +746,7 @@
 "_ks_requires_swift5_popup_msg" = "Para habilitar el interruptor de apagado, necesita descargar e instalar la %@.\nInstálelo antes de habilitar el interruptor.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN no pudo detectar la %@. Para habilitar el interruptor de apagado, instale primero el software.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN no pudo detectar la %@. Para habilitar el interruptor de apagado, instale primero el software.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Biblioteca de soporte de Swift 5 Runtime";
@@ -789,9 +789,6 @@
 
 /* (No Comment) */
 "_locations_all" = "Todas las ubicaciones";
-
-/* (No Comment) */
-"_locations_plus" = "Ubicaciones PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Ubicaciones Gratuitas";
@@ -952,7 +949,7 @@
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Servicio no disponible";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
 "_neagent_always_allow" = "Permitir siempre";
 
 /* Mac: neagent help screen */
@@ -1624,14 +1621,14 @@
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN requiere cargar una extensión del sistema para aprovechar Smart Protocol, OpenVPN y WireGuard.";
 
-/* System extension wizard in mac: Button */
-"_sysex_wizard_button" = "Iniciar configuración";
-
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Haga clic en \"Iniciar configuración\". Aparecerán dos cuadros de diálogo, luego haga clic en \"Abrir preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir la misma configuración.";
+"_sysex_wizard_step1_description" = "Aparecerán dos ventanas. Haga clic en \"Preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir las preferencias.";
 
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Haga clic en \"Iniciar configuración\". Aparecerá un cuadro de diálogo, luego haga clic en \"Abrir preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir la misma configuración.";
+"_sysex_wizard_step1_description_1" = "Ha aparecido una ventana de seguridad. Haga clic en \"Abrir preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir las preferencias.";
+
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Abra las preferencias del sistema: clic aquí.\nLuego, vaya al panel de \"Seguridad y privacidad\".";
 
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
@@ -1731,6 +1728,9 @@
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
 
+/* Description shown together with server info icon */
+"_tor_description" = "Conecta a la red Tor";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";
 
@@ -1812,7 +1812,7 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de internet (ISP)";
+"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de Internet (ISP)";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_description" = "Asegúrese de que su conexión a internet esté funcionando.";
@@ -1863,7 +1863,7 @@
 "_turn_ks_on_description" = "Al activar el interruptor de apagado, no podrá acceder a los dispositivos en su red local. \n\n¿Continuar?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "¿Activar el interruptor de apagado?";
+"_turn_ks_on_title" = "¿Habilitar el interruptor de apagado?";
 
 /* (No Comment) */
 "_turn_on" = "Activar";
@@ -1898,10 +1898,10 @@
 /* (No Comment) */
 "_update_required_no_longer_supported" = "Esta versión de Proton VPN ya no es compatible, actualice la aplicación para continuar usándola.";
 
-/* App update required alert */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Contacte al soporte";
 
-/* (No Comment) */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Actualizar";
 
 /* Button in many places in both iOS and MacOS apps */
@@ -2031,7 +2031,7 @@
 "_warning_vpn_session_is_active" = "La sesión de Proton VPN de otro usuario está activa en este dispositivo. Continuar con el proceso de inicio de sesión hará que la sesión actual finalice. ¿Desea continuar?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN suiza de alta velocidad que protege su privacidad cifrando su conexión a internet.";
+"_welcome_body" = "VPN suiza de alta velocidad que protege su privacidad cifrando su conexión a Internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Gracias por usar Proton VPN. Eche un vistazo rápido\na las funciones principales de la aplicación.";

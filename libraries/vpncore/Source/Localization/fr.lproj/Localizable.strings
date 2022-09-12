@@ -59,7 +59,7 @@
 "_ae_wrong_login_credentials" = "Nom d’utilisateur ou mot de passe incorrect";
 
 /* Account plan description */
-"_all_countries" = "Plus de 50 pays";
+"_all_countries" = "Plus de 60 pays";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Tous les serveurs de ce pays sont en maintenance. Veuillez vous connecter à un autre pays.";
@@ -74,7 +74,7 @@
 "_allow" = "Autoriser";
 
 /* (No Comment) */
-"_allow_lan_description" = "Pour autoriser l'accès au réseau local, il faut désactiver la fonction kill switch.\n\nContinuer ?";
+"_allow_lan_description" = "Afin d'autoriser l'accès au réseau local, la fonction Arrêt d'urgence (kill switch) doit être désactivée.\n\nContinuer ?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Permet de contourner le VPN et de se connecter à des périphériques de votre réseau local, comme votre imprimante.";
@@ -251,7 +251,7 @@
 "_data_disclaimer_user_details" = "Nom d'utilisateur, adresse électronique";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Le bouton « Connexion rapide » utilise le profil par défaut.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
 /* Common word */
 "_delete" = "Supprimer";
@@ -272,13 +272,13 @@
 "_delete_profile_warning" = "Le profil sera définitivement supprimé. Souhaitez-vous continuer ?";
 
 /* (No Comment) */
-"_delinquent_description" = "Vous pourrez à nouveau accéder aux fonctionnalités premium une fois que celles-ci auront été payées.";
+"_delinquent_description" = "Vous pourrez à nouveau accéder aux fonctionnalités premium une fois le paiement effectué.";
 
 /* (No Comment) */
 "_delinquent_reconnection_description" = "Vous pourrez à nouveau accéder aux fonctionnalités premium une fois que celles-ci auront été payées. Pour l'instant, nous vous reconnectons au serveur de l'offre Free le plus rapide disponible.";
 
 /* (No Comment) */
-"_delinquent_title" = "Votre compte VPN comporte des factures en attente";
+"_delinquent_title" = "Votre compte VPN comporte des factures en attente.";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "Votre compte présente une facture impayée. Veuillez la régler en vous rendant sur account.protonvpn.com.";
@@ -368,10 +368,10 @@
 "_error_field_email_wrong_format" = "L'adresse électronique n'est pas dans le bon format.";
 
 /* (No Comment) */
-"_error_field_passwords_dont_match" = "Les mots de passe ne correspondent pas";
+"_error_field_passwords_dont_match" = "Les mots de passe ne correspondent pas.";
 
 /* Form validation error */
-"_error_field_required" = "Ce champ est requis";
+"_error_field_required" = "Ce champ est requis.";
 
 /* Form validation error */
 "_error_field_unknown" = "Veuillez vérifier ce champ";
@@ -494,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Statut incorrect du jeton de paiement. Veuillez relancer l'application. Si l'erreur persiste, contactez le support.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN utilise un pare-feu de filtrage de paquets pour implémenter un kill switch. En activant le kill switch, vous écraserez les paramètres actuels de pare-feu de votre appareil. Si vous comptez sur cette configuration de pare-feu, vous ne devriez pas utiliser le kill switch.\n\nPour utiliser le kill switch et écraser vos paramètres de pare-feu actuels, sélectionnez CONTINUER.\n\nPour désactiver le kill switch et continuer à utiliser votre pare-feu actuel, sélectionnez ANNULER.";
+"_existing_firewall_popup_body" = "Proton VPN utilise un pare-feu à filtre de paquets pour mettre en œuvre la fonction Arrêt d'urgence (kill switch). En activant cette fonction, vous remplacerez les paramètres actuels de votre pare-feu. Si vous comptez sur cette configuration de pare-feu, vous ne devriez pas utiliser Arrêt d'urgence (kill switch).\n\nPour utiliser la fonction Arrêt d'urgence (kill switch) et remplacer les paramètres actuels de votre pare-feu, sélectionnez Continuer.\n\nPour désactiver la fonction Arrêt d'urgence (kill switch) et continuer à utiliser votre pare-feu actuel, sélectionnez Annuler.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Pare-feu détecté";
@@ -563,7 +563,7 @@
 "_feature_speed" = "Vitesse";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Les serveurs PLUS prennent en charge le streaming (Netflix, Disney+...) depuis n'importe où dans le monde.";
+"_feature_streaming_description" = "Les serveurs Plus prennent en charge le streaming (Netflix, Disney+...) depuis n'importe où dans le monde.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
@@ -686,55 +686,55 @@
 "_ip_will_not_be_exposed" = "Votre adresse IP ne sera pas exposée.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill switch";
+"_kill_switch" = "Arrêt d'urgence (kill switch)";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
+"_kill_switch_blocking_body" = "La fonction Arrêt d'urgence (kill switch) protège votre adresse IP\n\nVotre connexion internet sera rétablie dès que Proton VPN se reconnectera à un serveur. Pour relancer sans protection VPN, désactivez Arrêt d'urgence (kill switch).";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "La fonction kill switch bloque toutes les connexions.";
+"_kill_switch_blocking_connection" = "Arrêt d'urgence (kill switch) bloque toutes les connexions";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill switch";
+"_kill_switch_blocking_title" = "Arrêt d'urgence (kill switch)";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Désactiver kill switch";
+"_kill_switch_disable" = "Désactiver la fonction Arrêt d'urgence (kill switch)";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Fermez ces applications pour résoudre le problème.\nPour continuer à naviguer sans la fonction kill switch, cliquez sur Continuer.";
+"_kill_switch_error_foot" = "Fermez ces applications pour résoudre le problème.\nPour continuer à naviguer sans la fonction Arrêt d'urgence (kill switch), cliquez sur Continuer.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Certaines applications, comme les anti-virus ou les pare-feu, peuvent interférer avec la fonction kill switch et empêcher son bon fonctionnement.";
+"_kill_switch_error_head" = "Certaines applications, comme les anti-virus ou les pare-feu, peuvent interférer avec la fonction Arrêt d'urgence (kill switch) et empêcher son bon fonctionnement.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch fonctionne avec le pare-feu de macOS.\nS'il y a d'autres applications associées au pare-feu, elles peuvent interférer avec la fonction kill switch de Proton VPN. Fermez ces applications peut restaurer les règles du pare-feu définies par kill switch.";
+"_kill_switch_error_info" = "La fonction Arrêt d'urgence (kill switch) fonctionne avec le pare-feu de macOS.\nS'il y a d'autres applications associées au pare-feu, elles peuvent interférer. Fermez ces applications peut restaurer les règles du pare-feu définies par Arrêt d'urgence (kill switch).";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Une erreur de la fonction kill switch a été détectée.";
+"_kill_switch_error_title" = "Une erreur de la fonction Arrêt d'urgence (kill switch) a été détectée.";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "La fonction kill switch a rencontré un problème lors de son installation ou mise à jour.\n\nPour réessayer, cliquez sur RÉESSAYER.\n\nPour continuer sans la fonction kill switch, cliquez sur DÉSACTIVER.";
+"_kill_switch_helper_install_issue_popup_body" = "Arrêt d'urgence (kill switch) a rencontré un problème lors de son installation ou mise à jour.\n\nPour réessayer, cliquez sur Réessayer.\n\nPour continuer sans Arrêt d'urgence (kill switch), cliquez sur Désactiver.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Pour activer kill switch, il est possible que l'on vous demande le mot de passe du compte de votre ordinateur. Si cette demande se présente, entrez votre %@ et acceptez.\n\nCette demande pourrait réapparaître occasionnellement, lorsque l'app Proton VPN reçoit des mises à jour.";
+"_kill_switch_helper_install_popup_body" = "Pour activer la fonction Arrêt d'urgence (kill switch), il est possible que l'on vous demande le mot de passe du compte de votre ordinateur. Si cette demande se présente, entrez votre %@ et acceptez.\n\nCette demande pourrait réapparaître occasionnellement, lorsque l'app Proton VPN reçoit des mises à jour.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "La dernière mise à jour que vous avez téléchargée vous demande de fournir le mot de passe de votre compte d'ordinateur. Lorsque la requête apparaît, veuillez entrer votre %@ et accepter.\n\nSi vous ne saisissez pas votre mot de passe Mac, la fonction kill switch sera désactivée.";
+"_kill_switch_helper_update_popup_body" = "La dernière mise à jour que vous avez téléchargée vous demande le mot de passe de votre compte d'ordinateur. Lorsque la requête apparaît, veuillez entrer votre %@ et accepter.\n\nSi vous ne saisissez pas votre mot de passe Mac, la fonction Arrêt d'urgence (kill switch) sera désactivée.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Votre connexion internet sera rétablie dès que Proton VPN se reconnectera à un serveur.\nPour utiliser internet sans VPN et sans la protection kill switch, annulez la reconnexion au serveur.";
+"_kill_switch_reconnection" = "Votre connexion internet reprendra dès que Proton VPN se reconnectera à un serveur.\nPour utiliser internet sans VPN et sans la protection Arrêt d'urgence (kill switch), annulez la reconnexion au serveur.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sans";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protection kill switch";
+"_kill_switch_reconnection_bold2" = "Protection Arrêt d'urgence (kill switch)";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Annuler la reconnexion";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "La fonction kill switch protège votre adresse IP.";
+"_kill_switch_reconnection_header" = "Arrêt d'urgence (kill switch) protège votre adresse IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloque tout le trafic réseau lorsque le tunnel VPN est perdu.";
@@ -743,10 +743,10 @@
 "_ks_dont_ask" = "Ne plus me demander";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Pour activer la fonction kill switch, vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer la fonction kill switch.";
+"_ks_requires_swift5_popup_msg" = "Pour activer la fonction Arrêt d'urgence (kill switch), vous devez télécharger et installer le %@.\nVeuillez l'installer avant d'activer Arrêt d'urgence (kill switch).";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer la fonction kill switch, veuillez d'abord installer le logiciel.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN n'a pas pu détecter le %@. Pour activer la fonction Arrêt d'urgence (kill switch), veuillez d'abord installer le logiciel.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Bibliothèque de prise en charge de Swift 5 RunTime";
@@ -789,9 +789,6 @@
 
 /* (No Comment) */
 "_locations_all" = "Tous les emplacements";
-
-/* (No Comment) */
-"_locations_plus" = "Emplacements PLUS";
 
 /* (No Comment) */
 "_locations_free" = "Emplacements Free";
@@ -860,7 +857,7 @@
 "_maximum_device_reached_description" = "Veuillez déconnecter un autre appareil pour connecter celui-ci.";
 
 /* (No Comment) */
-"_maximum_device_title" = "Vous avez atteint votre limite maximale d'appareils";
+"_maximum_device_title" = "Vous avez atteint votre nombre maximal d'appareils.";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Peut-être plus tard";
@@ -952,7 +949,7 @@
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Service inaccessible";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
 "_neagent_always_allow" = "Toujours autoriser";
 
 /* Mac: neagent help screen */
@@ -971,16 +968,16 @@
 "_need_help" = "Besoin d’aide ?";
 
 /* (No Comment) */
-"_neks_t2_connect" = "Enable anyway";
+"_neks_t2_connect" = "Activer quand même";
 
 /* (No Comment) */
-"_neks_t2_description" = "L'utilisation de la fonction kill switch est instable sur cet appareil.\n\nVotre appareil est doté d'une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si la fonctionnalité kill switch est utilisée par Proton VPN.";
+"_neks_t2_description" = "L'utilisation de la fonction Arrêt d'urgence (kill switch) est instable sur cet appareil.\n\nVotre appareil est doté d'une puce de sécurité T2 qui peut entraîner des problèmes de stabilité du système macOS si la fonction Arrêt d'urgence (kill switch) est utilisée par Proton VPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "Puce de sécurité T2";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Avertissement de stabilité kill switch";
+"_neks_t2_title" = "Avertissement de stabilité Arrêt d'urgence (kill switch)";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Votre connexion sera réinitialisée pour changer le mode NetShield.";
@@ -995,7 +992,7 @@
 "_netshield_level1" = "Bloquer les programmes malveillants";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Bloquer les programmes malveillants, les publicités, & les traqueurs";
+"_netshield_level2" = "Bloquer les programmes malveillants, publicités et traqueurs";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Désactivé";
@@ -1055,7 +1052,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "En maintenance";
+"_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Afficher Proton VPN pour vous connecter...";
@@ -1250,7 +1247,7 @@
 "_quick_settings_killSwitch_description" = "Désactive internet si la connexion VPN tombe afin d’éviter une fuite accidentelle d'IP.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Si vous ne pouvez pas vous connecter aux périphériques de votre réseau local, essayez de désactiver la fonction kill switch.";
+"_quick_settings_killSwitch_note" = "Si vous ne pouvez pas vous connecter aux périphériques de votre réseau local, essayez de désactiver la fonction Arrêt d'urgence (kill switch).";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Naviguez sur internet sans publicités ni logiciels malveillants.";
@@ -1262,7 +1259,7 @@
 "_quick_settings_netshield_option_level1" = "Bloquer uniquement les logiciels malveillants";
 
 /* (No Comment) */
-"_quick_settings_netshield_option_level2" = "Bloquer les programmes malveillants, les publicités, & les traqueurs";
+"_quick_settings_netshield_option_level2" = "Bloquer les programmes malveillants, publicités et traqueurs";
 
 /* (No Comment) */
 "_quick_settings_netshield_option_off" = "Ne pas bloquer";
@@ -1283,7 +1280,7 @@
 "_quick_settings_tour_feature_2" = "Naviguez sur le web sans logiciels malveillants ni publicités avec NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Empêchez votre IP d'être exposée en activant la fonction kill switch.";
+"_quick_settings_tour_feature_3" = "Empêchez votre IP d'être exposée en activant la fonction Arrêt d'urgence (kill switch).";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Paramètres rapides";
@@ -1624,14 +1621,14 @@
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_description" = "Proton VPN nécessite le chargement d'une extension système pour exploiter Smart Protocol, OpenVPN et Wireguard.";
 
-/* System extension wizard in mac: Button */
-"_sysex_wizard_button" = "Commencer la configuration";
-
 /* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Cliquez sur « Commencer la configuration ». Deux boîtes de dialogue apparaîtront, puis cliquez sur « Ouvrir les préférences de sécurité ».\nSinon, cliquez ici pour ouvrir les mêmes paramètres.";
+"_sysex_wizard_step1_description" = "Deux boîtes de dialogue apparaîtront. Cliquez sur Ouvrir les préférences de sécurité.\nVous pouvez également cliquer ici pour ouvrir les préférences.";
 
 /* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Cliquez sur « Commencer la configuration ». Une boîte de dialogue apparaîtra, puis cliquez sur « Ouvrir les préférences de sécurité ».\nSinon, cliquez ici pour ouvrir les mêmes paramètres.";
+"_sysex_wizard_step1_description_1" = "Une boîte de dialogue de sécurité est apparue. Cliquez sur Ouvrir les préférences de sécurité.\nVous pouvez également cliquer ici pour ouvrir les préférences.";
+
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Ouvrez les Préférences Système : cliquez ici.\nEnsuite, rendez-vous dans le volet Sécurité et confidentialité.";
 
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
@@ -1720,7 +1717,7 @@
 "_timed_out" = "temps écoulé";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Une autre application peut interférer avec la fonction kill switch. Pour résoudre ce problème, passez au protocole OpenVPN ou désactivez la fonction kill switch et réessayez.";
+"_timeout_ks_ike_descritpion" = "Une autre application peut interférer avec la fonction Arrêt d'urgence (kill switch). Pour résoudre ce problème, passez au protocole OpenVPN ou désactivez Arrêt d'urgence (kill switch) et réessayez.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Basculer vers OpenVPN et réessayer";
@@ -1729,7 +1726,10 @@
 "_to_server_title" = "Vers le serveur :";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serveur Tor";
@@ -1815,7 +1815,7 @@
 "_troubleshoot_item_isp_title" = "Problème de fournisseur d'accès internet (FAI)";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Veuillez vérifier que votre connexion internet fonctionne.";
+"_troubleshoot_item_nointernet_description" = "Vérifiez que votre connexion internet fonctionne.";
 
 /* (No Comment) */
 "_troubleshoot_item_nointernet_title" = "Aucune connexion internet";
@@ -1857,13 +1857,13 @@
 "_try_again" = "Réessayer";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Désactiver kill switch et réessayer";
+"_try_again_without_killswitch" = "Désactiver Arrêt d'urgence (kill switch) et réessayer";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "En activant kill switch, vous ne pourrez pas accéder aux appareils de votre réseau local. \n\nContinuer ?";
+"_turn_ks_on_description" = "En activant la fonction Arrêt d'urgence (kill switch), vous ne pourrez pas accéder aux appareils de votre réseau local.\n\nContinuer ?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Activer kill switch ?";
+"_turn_ks_on_title" = "Activer la fonction Arrêt d'urgence (kill switch) ?";
 
 /* (No Comment) */
 "_turn_on" = "Activer";
@@ -1875,7 +1875,7 @@
 "_unavailable" = "Indisponible";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Signaler les réseaux non protégés";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Recevoir une notification lorsque Proton VPN détecte que vous êtes connecté à un réseau non protégé.";
@@ -1898,10 +1898,10 @@
 /* (No Comment) */
 "_update_required_no_longer_supported" = "Cette version de Proton VPN n'est plus prise en charge, veuillez mettre à jour l'application pour continuer à l'utiliser.";
 
-/* App update required alert */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Contacter l'assistance";
 
-/* (No Comment) */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Mettre à jour";
 
 /* Button in many places in both iOS and MacOS apps */
@@ -2031,7 +2031,7 @@
 "_warning_vpn_session_is_active" = "Une autre session Proton VPN de l'utilisateur est active sur cet appareil. Continuer avec le processus de connexion va entraîner la fin de la session actuelle. Voulez-vous continuer ?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "VPN suisse haut débit qui protège votre vie privée en chiffrant votre connexion internet.";
+"_welcome_body" = "Le VPN suisse haut débit qui protège votre vie privée en chiffrant votre connexion internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Merci d’utiliser Proton VPN. Jetez un coup d’œil\naux principales fonctionnalités de l'application.";
@@ -2046,16 +2046,16 @@
 "_welcome_title" = "BIENVENUE À BORD !";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch empêche le VPN de se connecter à internet. Cela peut être dû à une incompatibilité avec votre système d'exploitation (macOS Catalina 10.15).\n\nPour résoudre ce problème, mettez à jour votre système d'exploitation vers la dernière version.\n\nAlternativement, vous pouvez passer au protocole OpenVPN ou désactiver kill switch.";
+"_wgks_description" = "La fonction Arrêt d'urgence (kill switch) empêche le VPN de se connecter à internet. Cela peut être dû à une incompatibilité avec votre système d'exploitation (macOS Catalina 10.15).\n\nPour résoudre ce problème, mettez à jour votre système d'exploitation vers la dernière version.\n\nVous pouvez également passer au protocole OpenVPN ou désactiver Arrêt d'urgence (kill switch).";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Désactiver kill switch";
+"_wgks_ks_off" = "Désactiver la fonction Arrêt d'urgence (kill switch)";
 
 /* (No Comment) */
 "_wgks_ovpn" = "Passer à OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch empêche le VPN de se connecter à internet";
+"_wgks_title" = "La fonction Arrêt d'urgence (kill switch) empêche le VPN de se connecter à internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";

@@ -10,6 +10,9 @@
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Cuenta";
 
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "La eliminación de tu cuenta pondrá fin a su sesión de VPN.";
+
 /* Alert title for account deletion error */
 "_account_deletion_error" = "Error";
 
@@ -37,6 +40,9 @@
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "Desliza hacia abajo y pulsa el botón editar.";
 
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Añadir el widget Proton VPN a la lista de widgets activos.";
+
 /* Plan information */
 "_adblocker_netshield_feature" = "Bloqueador de anuncios (NetShield)";
 
@@ -61,14 +67,20 @@
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Servidores del perfil en mantenimiento";
 
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Todos los servidores están en mantenimiento. Esto suele significar que hay dificultades técnicas por parte de Proton VPN o que su red está limitada.";
+
 /* (No Comment) */
 "_allow" = "Permitir";
 
 /* (No Comment) */
-"_allow_lan_description" = "Para permitir acceso LAN, kill switch debe estar desactivado.\n\n¿Continuar?";
+"_allow_lan_description" = "Para permitir acceso LAN, Kill Switch debe estar desactivado.\n\n¿Desea continuar?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Permite omitir la VPN y conectarse a dispositivos de su red local, como la impresora.";
+
+/* (No Comment) */
+"_allow_lan_note" = "Tenga en cuenta que su conexión debe reiniciarse para aplicar este cambio";
 
 /* (No Comment) */
 "_allow_lan_title" = "Permitir conexiones LAN";
@@ -139,8 +151,14 @@
 /* Common word */
 "_close" = "Cerrar";
 
+/* (No Comment) */
+"_collapse_list_of_servers" = "Colapsar la lista de servidores";
+
 /* Profile create/change form */
 "_color" = "Color";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Problemas comunes de inicio de sesión";
 
 /* Common word */
 "_connect" = "Conectar";
@@ -232,6 +250,9 @@
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Nombre de usuario, dirección de correo electrónico";
 
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+
 /* Common word */
 "_delete" = "Borrar";
 
@@ -252,6 +273,9 @@
 
 /* (No Comment) */
 "_delinquent_description" = "Podrás acceder a las características premium de nuevo una vez que se haya completado el pago.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "Podrás volver a acceder a las funciones premium una vez que las hayas pagado. Por ahora, estamos volviendo a conectar con el servidor del plan gratuito más rápido disponible.";
 
 /* (No Comment) */
 "_delinquent_title" = "Tu cuenta VPN tiene facturas pendientes";
@@ -289,6 +313,9 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Evita que se filtren detalles de consultas DNS a terceros. Siempre habilitada.";
 
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Deseas activar la suscripción comprada para ";
+
 /* Common word */
 "_done" = "Completado";
 
@@ -306,6 +333,9 @@
 
 /* MacOS app tour: end tour button */
 "_end_tour" = "Terminar recorrido";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "¡Disfruta de %@ gratis!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
 "_enter_email_address" = "Introduzca su dirección de email";
@@ -365,10 +395,13 @@
 "_error_loads" = "No se pueden actualizar las cargas del servidor";
 
 /* (No Comment) */
+"_error_mitm_description" = "La validación del certificado TLS ha fallado al intentar conectarse a la API de Proton VPN. Tu conexión a Internet actual puede ser monitorizada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de Proton VPN.\nPara conectarte o acceder a tu cuenta, cambia a una nueva red e intenta conectarte de nuevo.";
+
+/* (No Comment) */
 "_error_mitm_title" = "Conexión no segura";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de Proton VPN. Tu conexión actual a internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de Proton VPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Tu conexión actual a Internet puede ser monitorizada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a este servidor VPN.\nPor favor, selecciona otro servidor.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -394,6 +427,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "No se puede analizar el número de sesiones";
 
+/* (No Comment) */
+"_error_signup_using_protonmail_address" = "Su cuenta de Proton Mail ya está configurada para la VPN. Por favor, inicie sesión con sus credenciales existentes.";
+
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "No se puede analizar la información de suscripción";
 
@@ -405,6 +441,9 @@
 
 /* In App Purchase error */
 "_error_transaction_failed_by_unknown_reason" = "La App Store no pudo procesar su compra.";
+
+/* In App Purchase error */
+"_error_transaction_of_other_user" = "Se ha iniciado una compra con un nombre de usuario diferente de Proton VPN.";
 
 /* In App Purchase error */
 "_error_unavailable_product" = "No se pudo obtener la lista de productos disponibles desde AppStore.";
@@ -455,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Estado incorrecto del token de pago. Por favor, vuelve a abrir la aplicación. Si el error persiste, ponte en contacto con atención al cliente.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN utiliza un firewall para implementar un kill switch. Al habilitar kill switch, sobrescribirás la configuración actual del firewall del dispositivo. Si confías en esta configuración de firewall, no debes usar kill switch.\n\nPara usar kill switch y sobrescribir la configuración actual del firewall, selecciona CONTINUAR.\n\nPara desactivar kill switch y continuar usando tu firewall actual, selecciona CANCELAR.";
+"_existing_firewall_popup_body" = "Proton VPN utiliza un cortafuegos de filtrado de paquetes para implementar un Kill Switch. Al habilitar Kill Switch, sobrescribirás la configuración del cortafuegos del dispositivo. Si confías en la configuración actual del cortafuegos, no debes usar Kill Switch.\n\nPara usar Kill Switch y sobrescribir la configuración actual del cortafuegos, selecciona CONTINUAR.\n\nPara desactivar Kill Switch y continuar usando la configuración actual del cortafuegos, selecciona CANCELAR.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall detectado";
@@ -465,6 +504,9 @@
 
 /* Existing connection alert */
 "_existing_session_to_server" = "Por favor, selecciona un servidor diferente.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Ampliar la lista de servidores";
 
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "EXPIRADO";
@@ -520,14 +562,23 @@
 /* iOS plan feature */
 "_feature_speed" = "Velocidad";
 
+/* (No Comment) */
+"_feature_streaming_description" = "Además, los servidores admiten el streaming (Netflix, Disney+, etc.) desde cualquier parte del mundo.";
+
 /* iOS plan feature */
 "_feature_tor" = "Tor sobre VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Enruta tu tráfico de internet a través de la red Tor. Más lento, pero más privado.";
+"_feature_tor_description" = "Enruta tu tráfico de Internet a través de la red Tor. Más lento, pero más privado.";
 
 /* (No Comment) */
 "_features_title" = "Características";
+
+/* (No Comment) */
+"_force_upgrade_message" = "La versión de la aplicación Proton VPN que está utilizando actualmente ya no es compatible. Por favor, actualice a la última versión.";
+
+/* (No Comment) */
+"_force_upgrade_title" = "Es necesario actualizar la aplicación";
 
 /* iOS: button in login screen */
 "_forgot_password" = "¿Has olvidado tu contraseña?";
@@ -541,11 +592,23 @@
 /* Account plan description */
 "_free_countries" = "3 Países";
 
+/* iOS: section header in countries list */
+"_free_servers" = "Servidores gratuitos";
+
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Mejora a %@ y siga disfrutando de estas características:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "¡Tu prueba gratuita está a punto de expirar!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Tu cuenta ha sido degradada a Proton VPN Free.\nEsto es lo que se perderá de %@:";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Su prueba gratuita %@";
+
+/* Downgrade */
+"_from_server_title" = "Desde el servidor:";
 
 /* MacOS: General tab in setting window */
 "_general" = "General";
@@ -592,17 +655,20 @@
 /* (No Comment) */
 "_invalid_refresh_token" = "La sesión ha expirado";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "De parte de los científicos e ingenieros que crearon ProtonMail, bienvenidos a un internet más seguro y privado.";
+/* (No Comment) */
+"_invalid_refresh_token_please_login" = "Ha pasado un tiempo desde la última vez que usaste la aplicación Proton VPN. Por favor, vuelve a conectarte.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenido/a a un mejor internet";
+"_ios_onboarding_page1_description" = "De parte de los científicos e ingenieros que crearon ProtonMail, bienvenidos a un Internet más seguro y privado.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Bienvenido a un Internet mejor";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Golpeamos la censura y las restricciones regionales. No tenemos anuncios, ni límites de ancho de banda, y no vendemos tus datos.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_title" = "Creemos que internet debería ser libre";
+"_ios_onboarding_page2_title" = "Creemos que Internet debe ser libre";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_description" = "Somos una empresa de seguridad. Ya sea nuestra arquitectura de Secure Core o nuestro cifrado avanzado, la seguridad siempre es lo primero.";
@@ -623,61 +689,64 @@
 "_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill switch is protecting your IP\n\nYour internet connection will resume as soon as Proton VPN reconnects to a server. To resume without VPN protection, disable the kill switch.";
+"_kill_switch_blocking_body" = "Kill Switch está protegiendo tu IP\n\nSu conexión a Internet se reanudará tan pronto como Proton VPN se vuelva a conectar a un servidor. Para reanudar sin protección VPN, desactive Kill Switch.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill switch bloquea todas las conexiones";
+"_kill_switch_blocking_connection" = "Kill Switch bloquea todas las conexiones";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Deshabilitar kill switch";
+"_kill_switch_disable" = "Deshabilitar Kill Switch";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Cerrar esas aplicaciones para solucionar el problema.\nPara seguir navegando sin kill switch, haz clic en Continuar.";
+"_kill_switch_error_foot" = "Cerrar esas aplicaciones para solucionar el problema.\nPara seguir navegando sin Kill Switch, haz clic en Continuar.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Algunas aplicaciones, como antivirus o firewalls, pueden entrar en conflicto con kill switch, lo que hace que no funcione correctamente.";
+"_kill_switch_error_head" = "Algunas aplicaciones, como antivirus o cortafuegos, pueden entrar en conflicto con Kill Switch haciendo que no funcione correctamente.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch funciona con el Firewall de macOS.\nSi hay otras aplicaciones asociadas con el Firewall, pueden interferir con el kill switch de Proton VPN. Cerrar estas aplicaciones puede restaurar las reglas del Firewall establecidas por kill switch.";
+"_kill_switch_error_info" = "Kill Switch funciona con el cortafuegos de macOS.\nSi hay otras aplicaciones asociadas con el cortafuegos, podrían interferir con el Kill Switch de ProtonVPN. Cerrar estas aplicaciones puede restaurar las reglas del cortafuegos establecidas por Kill Switch.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Se ha detectado un error de kill switch";
+"_kill_switch_error_title" = "Se ha detectado un error de Kill Switch";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Hubo un problema al instalar o actualizar kill switch.\n\nPara intentarlo nuevamente, haga clic en REINTENTAR.\n\nPara continuar sin kill switch, haga clic en DESACTIVAR.";
+"_kill_switch_helper_install_issue_popup_body" = "Hubo un problema al instalar o actualizar Kill Switch.\n\nPara intentarlo nuevamente, haz clic en REINTENTAR.\n\nPara continuar sin Kill Switch, haz clic en DESHABILITAR.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Para habilitar kill switch, es posible que se le solicite que proporcione la contraseña de su cuenta de ordenador. Si aparece una solicitud, introduzca su %@ y acepte.\n\nPuede ver esta solicitud nuevamente ocasionalmente cuando la aplicación Proton VPN reciba actualizaciones.";
+"_kill_switch_helper_install_popup_body" = "Para habilitar Kill Switch, puede que se te solicite la contraseña de la cuenta de tu ordenador. Si aparece una solicitud, introduce tu %@ y acepta.\n\nOcasionalmente podrías ver esta solicitud de nuevo cuando la aplicación Proton VPN reciba actualizaciones.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "La actualización más reciente que has descargado requiere que proporciones tu contraseña de cuenta de ordenador. Cuando la petición aparezca, por favor introduce tu %@ y acepta.\n\nSi no ingresas tu contraseña de Mac, kill switch se desactivará.";
+"_kill_switch_helper_update_popup_body" = "La actualización más reciente que has descargado requiere que proporciones la contraseña de la cuenta de tu ordenador. Cuando la petición aparezca, por favor introduce tu %@ y acepta.\n\nSi no ingresas tu contraseña de Mac, Kill Switch se desactivará.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Su conexión a internet se reanudará tan pronto como Proton VPN se vuelva a conectar a un servidor.\nPara usar internet sin la protección de VPN y kill switch, cancele la reconexión al servidor.";
+"_kill_switch_reconnection" = "Tu conexión a Internet se reanudará tan pronto como ProtonVPN se vuelva a conectar a un servidor.\nPara usar Internet sin la protección de VPN y Kill Switch, cancela la reconexión al servidor.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "sin";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Protección kill switch";
+"_kill_switch_reconnection_bold2" = "Protección de Kill Switch";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Cancelar reconexión";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill switch está protegiendo tu IP";
+"_kill_switch_reconnection_header" = "Kill Switch está protegiendo tu IP";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "No volver a preguntar";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Para habilitar kill switch, debe descargar e instalar%@.\nInstálelo antes de habilitar kill switch.";
+"_ks_requires_swift5_popup_msg" = "Para habilitar Kill Switch, debe descargar e instalar %@.\nInstálalo antes de habilitar Kill Switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN no pudo detectar el %@. Para habilitar kill switch, primero instale el software.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN no pudo detectar %@. Para habilitar Kill Switch, primero instale el software.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Librería de Soporte para Ejecución de 5 Swift";
@@ -693,6 +762,12 @@
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Cargar";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Cargando la información de conexión";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Cargando información de conexión para %@";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Internet seguro en cualquier lugar";
@@ -716,7 +791,7 @@
 "_locations_all" = "Todas las ubicaciones";
 
 /* (No Comment) */
-"_locations_plus" = "Ubicaciones PLUS";
+"_locations_free" = "Ubicaciones Gratuitas";
 
 /* (No Comment) */
 "_locations_plus" = "Ubicaciones PLUS";
@@ -779,6 +854,9 @@
 "_map_show" = "Mostrar mapa";
 
 /* (No Comment) */
+"_maximum_device_reached_description" = "Por favor, desconecte otro dispositivo para conectarse a este.";
+
+/* (No Comment) */
 "_maximum_device_title" = "Has alcanzado el límite máximo de dispositivos";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
@@ -817,8 +895,20 @@
 /* Main mac app menu item */
 "_menu_window" = "Ventana";
 
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Habilitar NAT moderado";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Habilitar NAT moderado";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "La NAT moderada desactiva la aleatorización de la asignación de direcciones locales. Esto puede reducir ligeramente su seguridad, pero permite que las aplicaciones peer-to-peer, como los juegos en línea, establezcan conexiones directas. \nMás información";
+
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Más información";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "NAT Moderado";
 
 /* Display more information */
 "_more_info" = "Más info";
@@ -848,7 +938,7 @@
 "_ne_network_connection_lost" = "Conexión de red perdida";
 
 /* Network error */
-"_ne_not_connected_to_the_internet" = "Sin conexión a internet";
+"_ne_not_connected_to_the_internet" = "Sin conexión a Internet";
 
 /* Network error */
 "_ne_request_timed_out" = "Tiempo de espera de red agotado";
@@ -859,7 +949,7 @@
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Servicio inalcanzable";
 
-/* Mac: neagent help screen */
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
 "_neagent_always_allow" = "Permitir siempre";
 
 /* Mac: neagent help screen */
@@ -878,6 +968,18 @@
 "_need_help" = "¿Necesitas Ayuda?";
 
 /* (No Comment) */
+"_neks_t2_connect" = "Habilitar de todos modos";
+
+/* (No Comment) */
+"_neks_t2_description" = "El uso de Kill Switch es inestable en este dispositivo.\n\nTu dispositivo tiene un chip de seguridad T2 que puede dar lugar a problemas de estabilidad del sistema si la funcionalidad Kill Switch de macOS es utilizada por Proton VPN.";
+
+/* `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "Chip de seguridad T2";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Alerta de estabilidad de Kill Switch";
+
+/* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "La conexión se reiniciará para cambiar el modo NetShield.";
 
 /* (No Comment) */
@@ -894,6 +996,9 @@
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Off";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Malware & Bloqueador de anuncios";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -922,14 +1027,23 @@
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "No, gracias";
 
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Habilitar puertos no estándar";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Utilice Proton VPN para cualquier necesidad especial permitiendo el tráfico a puertos no estándar a través de la red VPN. \nMás información";
+
 /* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
 "_non_standard_ports_explanation_link" = "Más información";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Puertos no estándares";
 
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "No conectado";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No estás conectado a internet.";
+"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No estás conectado a Internet.";
 
 /* (No Comment) */
 "_not_now" = "Ahora no";
@@ -938,7 +1052,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "En mantenimiento";
+"_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostrar Proton VPN para iniciar sesión...";
@@ -1033,6 +1147,9 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Al confirmar su compra de un plan pago, se le cobrará a su cuenta de iTunes la cantidad que se muestra, incluye impuestos y tarifas de plataforma adicionales (que Proton no cobra directamente). Después de realizar la compra, se lo actualizará automáticamente al plan seleccionado por un período de 1 año, después de este tiempo puede renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
 
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
 /* Features of account plan */
 "_plus_plan_features" = "Servidores Plus\nSecure Core\nServidores Tor";
 
@@ -1102,6 +1219,12 @@
 /* (No Comment) */
 "_protocol" = "Protocolo";
 
+/* (No Comment) */
+"_protonvpn_macos" = "Proton VPN macOS";
+
+/* (No Comment) */
+"_protonvpn_plus" = "Proton VPN Plus";
+
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP pública: %@";
 
@@ -1121,13 +1244,13 @@
 "_quick_settings_get_plus" = "Obtener Plus";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_description" = "Desactiva internet si la conexión VPN se cae para evitar una fuga accidental de IP.";
+"_quick_settings_killSwitch_description" = "Deshabilita Internet si la conexión VPN cae para prevenir una fuga accidental de IP.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Si no puedes conectarte a dispositivos de tu red local, intenta deshabilitar kill switch.";
+"_quick_settings_killSwitch_note" = "Si no puedes conectarte a dispositivos de tu red local, prueba a deshabilitar Kill Switch.";
 
 /* (No Comment) */
-"_quick_settings_netShield_description" = "Navegue por internet sin anuncios ni malware.";
+"_quick_settings_netShield_description" = "Navega por Internet sin anuncios ni malware.";
 
 /* (No Comment) */
 "_quick_settings_netShield_note" = "Si los sitios web no se cargan, intente deshabilitar NetShield";
@@ -1157,7 +1280,7 @@
 "_quick_settings_tour_feature_2" = "Navegue por la web libre de malware y anuncios con NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Evita que tu IP quede expuesta activando kill switch.";
+"_quick_settings_tour_feature_3" = "Evita que tu IP quede expuesta activando Kill Switch.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Configuración rápida";
@@ -1215,6 +1338,12 @@
 
 /* Mag bug report: attach logs checkbox */
 "_report_attachments_checkbox" = "Incluye registros de aplicaciones y detalles del sistema";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Notificar un problema";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Proporcionando los siguientes detalles, nuestro equipo puede identificar su problema y una posible solución con mayores posibilidades y menor tiempo:\n- Registros de la aplicación Proton VPN\n- Registros de OpenVPN\n- Registros de WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Correo electrónico:";
@@ -1354,17 +1483,26 @@
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Ahora estás registrado en un plan Proton VPN Free. Para comenzar, disfrute de siete días de nuestro plan Proton VPN Plus de forma gratuita.";
 
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Tu compra se ha realizado correctamente. Tu plan Proton VPN Plus está ahora activo.";
+
 /* Show/hide password switch */
 "_show" = "MOSTRAR";
 
 /* Button in some alerts */
 "_show_instructions" = "Mostrar instrucciones";
 
+/* (No Comment) */
+"_show_protonvpn" = "Mostrar Proton VPN";
+
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Regístrate";
 
 /* MacOS welcome screen: skip button */
 "_skip" = "Omitir";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Activa el protocolo inteligente para utilizar automáticamente el protocolo y el puerto que ofrezca la mejor conectividad.";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Tu conexión se reiniciará para cambiar el modo de Smart Protocol.";
@@ -1448,7 +1586,16 @@
 "_subuser_alert_assign_connections_button" = "Asignar conexiones VPN";
 
 /* (No Comment) */
+"_subuser_alert_description1" = "Para comenzar su viaje en Proton VPN, asigne conexiones VPN a su cuenta o a cualquier otra subcuenta.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Este paso le llevará sólo unos minutos. Después de eso podrás iniciar sesión y proteger todos tus dispositivos.";
+
+/* (No Comment) */
 "_subuser_alert_login_button" = "Iniciar sesión de nuevo";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Gracias por pasar a Profesional/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado con éxito";
@@ -1459,10 +1606,82 @@
 /* (No Comment) */
 "_switch_side_button_on" = "ON";
 
+/* (No Comment) */
+"_sysex_cannot_enable" = "No se puede activar la extensión del sistema";
+
+/* (No Comment) */
+"_sysex_enabled_description" = "Configuración completada. Ahora puedes navegar por Internet más rápido con las mejores tecnologías VPN.";
+
+/* (No Comment) */
+"_sysex_enabled_title" = "Configuración completada";
+
+/* (No Comment) */
+"_sysex_error_description" = "Se ha producido un error al instalar la extensión del sistema.\nVuelva a instalar Proton VPN, asegurándose de que se encuentra en la carpeta de aplicaciones, para solucionar este problema. Alternativamente, póngase en contacto con nuestro soporte.";
+
+/* OpenVPN /  WireGuard / System Extensions */
+"_sysex_settings_description" = "Proton VPN requiere cargar una extensión del sistema para aprovechar el protocolo inteligente, OpenVPN y WireGuard.";
+
+/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
+"_sysex_wizard_step1_description" = "Aparecerán dos cuadros de diálogo. Haga clic en \"Abrir las preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir las preferencias.";
+
+/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
+"_sysex_wizard_step1_description_1" = "Ha aparecido un diálogo de seguridad. Haga clic en \"Abrir las preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir las preferencias.";
+
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Abra las Preferencias del Sistema: haga clic aquí.\nA continuación, vaya al panel \"Seguridad & privacidad\" panel.";
+
 /* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
    The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
    `_sysex_wizard_step1_description_1' localized strings. */
 "_sysex_wizard_step1_description_link" = "haz clic aquí";
+
+/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
+"_sysex_wizard_step1_title" = "Abrir las preferencias de seguridad";
+
+/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
+"_sysex_wizard_step1_title_1" = "Abrir las preferencias de seguridad";
+
+/* System extension wizard in mac: Step nr.2 description */
+"_sysex_wizard_step2_description" = "Haga clic en el candado para realizar cambios";
+
+/* System extension wizard in mac: Step nr.2 title */
+"_sysex_wizard_step2_title" = "Desbloquear para hacer cambios";
+
+/* System extension wizard in mac: Step nr.3 description */
+"_sysex_wizard_step3_description" = "Introduce tus credenciales de macOS para autentificarte";
+
+/* System extension wizard in mac: Step nr.3 title */
+"_sysex_wizard_step3_title" = "Introduzca las credenciales";
+
+/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
+"_sysex_wizard_step4_description" = "Haga clic en el botón \"Detalles...\"";
+
+/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
+"_sysex_wizard_step4_description_1" = "Haga clic en el botón \"Permitir\"";
+
+/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
+"_sysex_wizard_step4_title" = "Botón \"Detalles...\"";
+
+/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
+"_sysex_wizard_step4_title_1" = "Botón \"Permitir\"";
+
+/* System extension wizard in mac: Step nr.5 description */
+"_sysex_wizard_step5_description" = "Seleccione ambos elementos de Proton VPN para habilitar los protocolos personalizados y haga clic en \"Aceptar\"";
+
+/* System extension wizard in mac: Step nr.5 title */
+"_sysex_wizard_step5_title" = "Selección de elementos de Proton VPN";
+
+/* System extension wizard in mac: Subtitle */
+"_sysex_wizard_subtitle" = "Para ello, siga los siguientes pasos:";
+
+/* System extension wizard in mac: Text under 5 points */
+"_sysex_wizard_text_under_steps" = "¡Ya está listo para utilizar Proton VPN con las últimas y más rápidas tecnologías VPN disponibles!";
+
+/* System extension wizard in mac: Main title */
+"_sysex_wizard_title" = "Disfruta de las conexiones más rápidas activando los protocolos personalizados";
+
+/* System extension wizard in mac: Main title */
+"_sysex_wizard_window_title" = "Habilitación de protocolos personalizados";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Notificaciones del sistema";
@@ -1479,20 +1698,38 @@
 /* iOS: link inside text under sign-up form */
 "_terms_and_conditions" = "Términos y condiciones";
 
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Al utilizar Proton VPN, usted acepta nuestros\n%@ y %@";
+
 /* iOS: section header in countries list */
 "_test_servers" = "Servidores de prueba";
 
 /* (No Comment) */
 "_tier_free" = "Gratuita";
 
+/* (No Comment) */
+"_tier_plus" = "Plus";
+
+/* (No Comment) */
+"_tier_visionary" = "Visionary";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "tiempo de espera agotado";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Otra aplicación puede estar interfiriendo con Kill Switch. Para solucionar este problema, cambia al protocolo OpenVPN o deshabilita Kill Switch y vuelve a intentarlo.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Cambiar a OpenVPN y reintentar";
 
+/* (No Comment) */
+"_to_server_title" = "Al servidor:";
+
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";
@@ -1500,11 +1737,17 @@
 /* (No Comment) */
 "_tor_title" = "Tor";
 
+/* iOS trial expired screen */
+"_trial_expired_alert_body_iOS" = "Su prueba gratuita de 7 días de Proton VPN Plus ha expirado. Puedes seguir usando Proton VPN Free, pero si quieres apoyar el proyecto y tener acceso a más países y funciones, por favor, actualiza a un plan de pago.";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_title_iOS" = "La prueba de Proton VPN Plus ha expirado";
+
 /* (No Comment) */
 "_trial_popup_call_to_upgrade" = "Para tener acceso permanente a las funciones de Proton VPN Plus, puedes mejorar tu plan.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Disfruta de todos los beneficios de internet seguro en cualquier lugar con Proton VPN";
+"_trial_popup_enjoy" = "Disfruta de todos los beneficios de Internet seguro en cualquier lugar con Proton VPN";
 
 /* Final text:
  
@@ -1569,13 +1812,13 @@
 "_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
-"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de internet (ISP)";
+"_troubleshoot_item_isp_title" = "Problema del proveedor de servicios de Internet (ISP)";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_description" = "Por favor, asegúrate de que tu conexión a internet está funcionando.";
+"_troubleshoot_item_nointernet_description" = "Por favor, asegúrate de que tu conexión a Internet está funcionando.";
 
 /* (No Comment) */
-"_troubleshoot_item_nointernet_title" = "No hay conexión a internet";
+"_troubleshoot_item_nointernet_title" = "No hay conexión a Internet";
 
 /* (No Comment) */
 "_troubleshoot_item_other_description" = "Contáctanos directamente a través de nuestro formulario de soporte, correo electrónico (%@), o Twitter.";
@@ -1614,13 +1857,13 @@
 "_try_again" = "Vuelva a intentarlo";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Desactivar kill switch y reintentar";
+"_try_again_without_killswitch" = "Deshabilitar Kill Switch y reintentar";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Al activar kill switch, no podrás acceder a los dispositivos en tu red local. \n\n¿Continuar?";
+"_turn_ks_on_description" = "Al activar Kill Switch, no podrás acceder a los dispositivos en tu red local. \n\n¿Desea continuar?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "¿Activar kill switch?";
+"_turn_ks_on_title" = "¿Activar Kill Switch?";
 
 /* (No Comment) */
 "_turn_on" = "Activar";
@@ -1632,7 +1875,7 @@
 "_unavailable" = "No disponible";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Notificar redes sin protección";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Recibir una notificación cuando Proton VPN detecta que está conectado a una red sin protección.";
@@ -1655,10 +1898,10 @@
 /* (No Comment) */
 "_update_required_no_longer_supported" = "Esta versión de Proton VPN ya no es compatible, actualiza la aplicación para continuar usándola.";
 
-/* App update required alert */
+/* Secondary button title in the App update required alert */
 "_update_required_support" = "Contactar con el soporte";
 
-/* (No Comment) */
+/* Primary button title in the App update required alert */
 "_update_required_update" = "Actualizar";
 
 /* Button in many places in both iOS and MacOS apps */
@@ -1773,13 +2016,22 @@
 "_vpnauth_certfail_title" = "Error de autenticación";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtelo de nuevo en unos minutos";
+
+/* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Error de autenticación";
+
+/* (No Comment) */
+"_vpnstatus_not_loggedin" = "No has iniciado sesión en Proton VPN. Abra la aplicación Proton VPN e inicie sesión.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advertencia";
 
 /* MacOS: alert shown during login if already connected to VPN */
 "_warning_vpn_session_is_active" = "La sesión de Proton VPN de otro usuario está activa en este dispositivo. Continuar con el proceso de inicio de sesión hará que la sesión actual finalice. ¿Quieres continuar?";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "VPN suiza de alta velocidad que salvaguarda tu privacidad encriptando tu conexión a internet.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Gracias por usar Proton VPN. Echa un vistazo rápido\nen las principales características de la aplicación.";
@@ -1793,11 +2045,17 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "¡BIENVENIDO A BORDO!";
 
+/* (No Comment) */
+"_wgks_description" = "Kill Switch está impidiendo que la VPN se conecte a Internet. Esto puede deberse a una incompatibilidad con su sistema operativo (macOS Catalina 10.15).\n\nPara resolver este problema, actualiza tu sistema operativo a la última versión.\n\nTambién puedes cambiar al protocolo OpenVPN o deshabilitar Kill Switch.";
+
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Deshabilitar kill switch";
+"_wgks_ks_off" = "Deshabilitar Kill Switch";
 
 /* (No Comment) */
 "_wgks_ovpn" = "Cambiar a OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch está impidiendo que la VPN se conecte a Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "widget de iOS";
@@ -1814,9 +2072,51 @@
 /* Button to apply coupon */
 "apply_coupon" = "Aplicar";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Autentificar";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "El cupón se ha aplicado con éxito.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "El cupón se ha aplicado con éxito. Su suscripción se actualizará en unos minutos.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Código de descuento";
+
+/* (No Comment) */
+"login_fetch_vpn_data" = "Configuración del acceso a la VPN";
+
 /* (No Comment) */
 "login_summary_button" = "Empieza a utilizar Proton VPN";
 
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Método de inicio de sesión no válido. Por favor, póngase en contacto con el servicio de asistencia.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Por favor, desconecte otro dispositivo para conectarse a este o actualice a %@";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "El sitio web de Proton VPN podría estar temporalmente inaccesible debido a restricciones de la red. Utilice la aplicación móvil para crear una nueva cuenta de Proton.";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Código de recuperación";
+
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Autenticación de dos factores";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Código de dos factores";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Usar cupón";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Utilizar código de recuperación";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Usar código de doble factor";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ No se ha podido cambiar la configuración. Por favor, inténtelo de nuevo más tarde o conéctese a un servidor diferente";
 

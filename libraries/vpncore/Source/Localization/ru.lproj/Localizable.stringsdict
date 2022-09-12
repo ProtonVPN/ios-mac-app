@@ -73,13 +73,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>Сотни серверов в %d странах</string>
 			<key>many</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>Сотни серверов в %d странах</string>
 			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
+			<string>Сотни серверов в %d стране</string>
 			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>Сотни серверов в %d странах</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option2</key>
@@ -93,13 +93,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>Подключайте до %d устройств одновременно</string>
 			<key>many</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>Подключайте до %d устройств одновременно</string>
 			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
+			<string>Подключайте до %d устройства одновременно</string>
 			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>Подключайте до %d устройств одновременно</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -113,13 +113,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуты.</string>
 			<key>many</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
 			<key>one</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minute.</string>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуту.</string>
 			<key>other</key>
-			<string>You reached the maximum number of setting changes. Please try again after at least %d minutes.</string>
+			<string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>

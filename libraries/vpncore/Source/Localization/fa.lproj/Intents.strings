@@ -14,6 +14,15 @@
 "hIcJsr" = "دریافت وضعیت اتصال Proton VPN";
 
 /* (No Comment) */
+"jf696t" = "اتصال به Proton VPN";
+
+/* (No Comment) */
+"JOCERT" = "دریافت وضعیت اتصال Proton VPN";
+
+/* (No Comment) */
+"ksQcRb" = "قطع اتصال از ProtonVPN";
+
+/* (No Comment) */
 "NzUfmp" = "${status}";
 
 /* (No Comment) */
@@ -21,7 +30,4 @@
 
 /* (No Comment) */
 "Ya0ZRy" = "اتصال سریع";
-
-/* (No Comment) */
-"ZqjXZN" = "${status}";
 
