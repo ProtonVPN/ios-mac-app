@@ -51,9 +51,6 @@ final class DependencyContainer: Container {
 
     private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
 
-    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
-
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
                                                            timerFactory: timerFactory,
@@ -61,26 +58,6 @@ final class DependencyContainer: Container {
                                                                               AppConstants.Time.serverLoadsRefresh,
                                                                               AppConstants.Time.userAccountRefresh),
                                                            canRefreshLoads: { return NSApp.isActive })
-
-    // Refreshes announcements from API
-    private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
-
-    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(
-        api: makeReportsApiService(),
-        storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()),
-        alertService: makeCoreAlertService(),
-        propertiesManager: makePropertiesManager(),
-        updateChecker: makeUpdateManager(),
-        vpnKeychain: makeVpnKeychain(),
-        logContentProvider: makeLogContentProvider()
-    )
-
-    #if TLS_PIN_DISABLE
-    private lazy var trustKitHelper: TrustKitHelper? = nil
-    #else
-    private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
-    #endif
 
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
@@ -104,7 +81,8 @@ final class DependencyContainer: Container {
     public init() {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
-        super.init(Config(appIdentifierPrefix: prefix,
+        super.init(Config(os: "MacOS",
+                          appIdentifierPrefix: prefix,
 
                           appGroup: "\(prefix)group.ch.protonvpn.mac",
                           accessGroup: "\(prefix)ch.protonvpn.macos",
@@ -155,6 +133,21 @@ final class DependencyContainer: Container {
     // MARK: VpnAuthentication
     override func makeVpnAuthentication() -> VpnAuthentication {
         vpnAuthentication
+    }
+
+    // MARK: LogContentProviderFactory
+    override func makeLogContentProvider() -> LogContentProvider {
+        let appLogsFolder = makeLogFileManager()
+            .getFileUrl(named: AppConstants.Filenames.appLogFilename)
+            .deletingLastPathComponent()
+        return MacOSLogContentProvider(appLogsFolder: appLogsFolder,
+                                       wireguardProtocolFactory: makeWireguardProtocolFactory(),
+                                       openVpnProtocolFactory: makeOpenVpnProtocolFactory())
+    }
+
+    // MARK: UpdateManagerFactory
+    override func makeUpdateChecker() -> UpdateChecker {
+        updateManager
     }
 }
 
@@ -219,47 +212,12 @@ extension DependencyContainer: NotificationManagerFactory {
     }
 }
 
-// MARK: ReportBugViewModelFactory
-extension DependencyContainer: ReportBugViewModelFactory {
-    func makeReportBugViewModel() -> ReportBugViewModel {
-        return ReportBugViewModel(os: "MacOS",
-                                  osVersion: ProcessInfo.processInfo.operatingSystemVersionString,
-                                  propertiesManager: makePropertiesManager(),
-                                  reportsApiService: makeReportsApiService(),
-                                  alertService: makeCoreAlertService(),
-                                  vpnKeychain: makeVpnKeychain(),
-                                  logContentProvider: makeLogContentProvider(),
-                                  authKeychain: makeAuthKeychainHandle())
-    }
-}
-
-// MARK: ReportsApiServiceFactory
-extension DependencyContainer: ReportsApiServiceFactory {
-    func makeReportsApiService() -> ReportsApiService {
-        return ReportsApiService(networking: makeNetworking(), authKeychain: makeAuthKeychainHandle())
-    }
-}
-
-// MARK: TrustKitHelperFactory
-extension DependencyContainer: TrustKitHelperFactory {
-    func makeTrustKitHelper() -> TrustKitHelper? {
-        return trustKitHelper
-    }
-}
-
 // MARK: MigrationManagerFactory
 extension DependencyContainer: MigrationManagerFactory {
     func makeMigrationManager() -> MigrationManagerProtocol {
         let propertiesManager = makePropertiesManager()
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
         return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
-    }
-}
-
-// MARK: - MaintenanceManagerFactory
-extension DependencyContainer: MaintenanceManagerFactory {
-    func makeMaintenanceManager() -> MaintenanceManagerProtocol {
-        return maintenanceManager
     }
 }
 
@@ -277,59 +235,10 @@ extension DependencyContainer: AppSessionRefresherFactory {
     }
 }
 
-// MARK: - MaintenanceManagerHelperFactory
-extension DependencyContainer: MaintenanceManagerHelperFactory {
-    func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
-        return maintenanceManagerHelper
-    }
-}
-
-// MARK: - AnnouncementRefresherFactory
-extension DependencyContainer: AnnouncementRefresherFactory {
-    func makeAnnouncementRefresher() -> AnnouncementRefresher {
-        return announcementRefresher
-    }
-}
-
-// MARK: - AnnouncementStorageFactory
-extension DependencyContainer: AnnouncementStorageFactory {
-    func makeAnnouncementStorage() -> AnnouncementStorage {
-        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults(), keyNameProvider: nil)
-    }
-}
-
-// MARK: - AnnouncementManagerFactory
-extension DependencyContainer: AnnouncementManagerFactory {
-    func makeAnnouncementManager() -> AnnouncementManager {
-        return AnnouncementManagerImplementation(factory: self)
-    }
-}
-
-// MARK: - CoreApiServiceFactory
-extension DependencyContainer: CoreApiServiceFactory {
-    func makeCoreApiService() -> CoreApiService {
-        return CoreApiServiceImplementation(networking: makeNetworking())
-    }
-}
-
 // MARK: - HeaderViewModelFactory
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
         return HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
-    }
-}
-
-// MARK: - AnnouncementsViewModelFactory
-extension DependencyContainer: AnnouncementsViewModelFactory {
-    func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
-        return AnnouncementsViewModel(factory: self)
-    }
-}
-
-// MARK: - SafariServiceFactory
-extension DependencyContainer: SafariServiceFactory {
-    func makeSafariService() -> SafariServiceProtocol {
-        return SafariService()
     }
 }
 
@@ -340,24 +249,10 @@ extension DependencyContainer: UpdateFileSelectorFactory {
     }
 }
 
-// MARK: - UpdateManagerFactory
-extension DependencyContainer: UpdateManagerFactory {
-    func makeUpdateManager() -> UpdateManager {
-        return updateManager
-    }
-}
-
 // MARK: - SystemExtensionManagerFactory
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
         return sysexManager
-    }
-}
-
-// MARK: - TroubleshootViewModelFactory
-extension DependencyContainer: TroubleshootViewModelFactory {
-    func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 }
 
@@ -368,24 +263,10 @@ extension DependencyContainer: XPCConnectionsRepositoryFactory {
     }
 }
 
-// MARK: LogFileManagerFactory
-extension DependencyContainer: LogFileManagerFactory {
-    func makeLogFileManager() -> LogFileManager {
-        return LogFileManagerImplementation()
-    }
-}
-
 // MARK: BugReportCreatorFactory
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
         return MacOSBugReportCreator()
-    }
-}
-
-// MARK: DynamicBugReportManagerFactory
-extension DependencyContainer: DynamicBugReportManagerFactory {
-    func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        return dynamicBugReportManager
     }
 }
 
@@ -410,13 +291,6 @@ extension DependencyContainer: ProtonReachabilityCheckerFactory {
     }
 }
 
-// MARK: PaymentsApiServiceFactory
-extension DependencyContainer: PaymentsApiServiceFactory {
-    func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(networking: makeNetworking(), vpnKeychain: makeVpnKeychain(), vpnApiService: makeVpnApiService())
-    }
-}
-
 // MARK: CouponViewModelFactory
 extension DependencyContainer: CouponViewModelFactory {
     func makeCouponViewModel() -> CouponViewModel {
@@ -424,25 +298,16 @@ extension DependencyContainer: CouponViewModelFactory {
     }
 }
 
-// MARK: LogContentProviderFactory
-extension DependencyContainer: LogContentProviderFactory {
-    func makeLogContentProvider() -> LogContentProvider {
-        return MacOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
-                                       wireguardProtocolFactory: makeWireguardProtocolFactory(),
-                                       openVpnProtocolFactory: makeOpenVpnProtocolFactory())
-    }
-}
-
-// MARK: SessionServiceFactory
-extension DependencyContainer: SessionServiceFactory {
-    func makeSessionService() -> SessionService {
-        return SessionServiceImplementation(factory: self)
-    }
-}
-
 // MARK: StatusMenuViewModelFactory
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         return StatusMenuViewModel(factory: self)
+    }
+}
+
+// MARK: UpdateManagerFactory
+extension DependencyContainer: UpdateManagerFactory {
+    func makeUpdateManager() -> UpdateManager {
+        return updateManager
     }
 }

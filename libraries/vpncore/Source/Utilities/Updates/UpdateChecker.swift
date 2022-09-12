@@ -18,6 +18,10 @@
 
 import Foundation
 
+public protocol UpdateCheckerFactory {
+    func makeUpdateChecker() -> UpdateChecker
+}
+
 /// Check if updates for current app is available. Implemented on each platform depending on the way the app is distributed.
 public protocol UpdateChecker {
 
