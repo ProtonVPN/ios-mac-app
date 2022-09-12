@@ -34,40 +34,11 @@ import Timer
 final class DependencyContainer: Container {
     // Singletons
     private lazy var navigationService = NavigationService(self)
-
-    private lazy var vpnGateway: VpnGateway = VpnGateway(vpnApiService: makeVpnApiService(),
-                                                         appStateManager: makeAppStateManager(),
-                                                         alertService: makeCoreAlertService(),
-                                                         vpnKeychain: makeVpnKeychain(),
-                                                         authKeychain: makeAuthKeychainHandle(),
-                                                         siriHelper: SiriHelper(),
-                                                         netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                                                         natTypePropertyProvider: makeNATTypePropertyProvider(),
-                                                         safeModePropertyProvider: makeSafeModePropertyProvider(),
-                                                         propertiesManager: makePropertiesManager(),
-                                                         profileManager: makeProfileManager(),
-                                                         availabilityCheckerResolverFactory: self,
-                                                         serverStorage: makeServerStorage())
     private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
-    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
-                                                                        vpnApiService: makeVpnApiService(),
-                                                                        vpnManager: makeVpnManager(),
-                                                                        networking: makeNetworking(),
-                                                                        alertService: makeCoreAlertService(),
-                                                                        timerFactory: timerFactory,
-                                                                        propertiesManager: makePropertiesManager(),
-                                                                        vpnKeychain: makeVpnKeychain(),
-                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer(),
-                                                                        vpnAuthentication: makeVpnAuthentication(),
-                                                                        doh: makeDoHVPN(),
-                                                                        serverStorage: makeServerStorage(),
-                                                                        natTypePropertyProvider: makeNATTypePropertyProvider(),
-                                                                        netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                                                                        safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
@@ -203,16 +174,6 @@ extension DependencyContainer: SettingsServiceFactory {
     }
 }
 
-// MARK: VpnManagerConfigurationPreparer
-extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
-    func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
-        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(),
-                                               alertService: makeCoreAlertService(),
-                                               propertiesManager: makePropertiesManager()
-        )
-    }
-}
-
 // MARK: WindowServiceFactory
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
@@ -220,31 +181,10 @@ extension DependencyContainer: WindowServiceFactory {
     }
 }
 
-// MARK: VpnApiServiceFactory
-extension DependencyContainer: VpnApiServiceFactory {
-    func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(networking: makeNetworking())
-    }
-}
-
-// MARK: AppStateManagerFactory
-extension DependencyContainer: AppStateManagerFactory {
-    func makeAppStateManager() -> AppStateManager {
-        return appStateManager
-    }
-}
-
 // MARK: AppSessionManagerFactory
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         return appSessionManager
-    }
-}
-
-// MARK: VpnGatewayFactory
-extension DependencyContainer: VpnGatewayFactory {
-    func makeVpnGateway() -> VpnGatewayProtocol {
-        return vpnGateway
     }
 }
 
@@ -443,12 +383,5 @@ extension DependencyContainer: LogContentProviderFactory {
 extension DependencyContainer: SessionServiceFactory {
     func makeSessionService() -> SessionService {
         return SessionServiceImplementation(factory: self)
-    }
-}
-
-// MARK: AvailabilityCheckerResolverFactory
-extension DependencyContainer: AvailabilityCheckerResolverFactory {
-    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
-        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
     }
 }
