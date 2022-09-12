@@ -42,9 +42,9 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
     private let storage: Storage
     private let key = "SafeMode"
 
-    public required init(_ factory: Factory, storage: Storage) {
+    public required init(_ factory: Factory) {
         self.factory = factory
-        self.storage = storage
+        self.storage = factory.makeStorage()
     }
 
     public var safeMode: Bool? {

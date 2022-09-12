@@ -131,6 +131,38 @@ public class AppStateManagerImplementation: AppStateManager {
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
+
+    public typealias Factory = VpnApiServiceFactory &
+        VpnManagerFactory &
+        NetworkingFactory &
+        CoreAlertServiceFactory &
+        TimerFactoryCreator &
+        PropertiesManagerFactory &
+        VpnKeychainFactory &
+        VpnManagerConfigurationPreparerFactory &
+        VpnAuthenticationFactory &
+        DoHVPNFactory &
+        ServerStorageFactory &
+        NATTypePropertyProviderFactory &
+        NetShieldPropertyProviderFactory &
+        SafeModePropertyProviderFactory
+    
+    public convenience init(_ factory: Factory) {
+        self.init(vpnApiService: factory.makeVpnApiService(),
+                  vpnManager: factory.makeVpnManager(),
+                  networking: factory.makeNetworking(),
+                  alertService: factory.makeCoreAlertService(),
+                  timerFactory: factory.makeTimerFactory(),
+                  propertiesManager: factory.makePropertiesManager(),
+                  vpnKeychain: factory.makeVpnKeychain(),
+                  configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
+                  vpnAuthentication: factory.makeVpnAuthentication(),
+                  doh: factory.makeDoHVPN(),
+                  serverStorage: factory.makeServerStorage(),
+                  natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
+                  netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
+                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+    }
     
     public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactory, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN, serverStorage: ServerStorage, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         self.vpnApiService = vpnApiService

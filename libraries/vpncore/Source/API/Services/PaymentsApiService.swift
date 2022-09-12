@@ -37,6 +37,16 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
     private let vpnKeychain: VpnKeychainProtocol
     private let vpnApiService: VpnApiService
 
+    public typealias Factory = NetworkingFactory &
+        VpnKeychainFactory &
+        VpnApiServiceFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(networking: factory.makeNetworking(),
+                  vpnKeychain: factory.makeVpnKeychain(),
+                  vpnApiService: factory.makeVpnApiService())
+    }
+
     public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, vpnApiService: VpnApiService) {
         self.networking = networking
         self.vpnKeychain = vpnKeychain

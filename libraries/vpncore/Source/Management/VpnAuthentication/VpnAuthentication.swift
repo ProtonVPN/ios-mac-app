@@ -69,6 +69,16 @@ public final class VpnAuthenticationManager {
     private let networking: Networking
     private let safeModePropertyProvider: SafeModePropertyProvider
 
+    public typealias Factory = NetworkingFactory &
+        VpnAuthenticationStorageFactory &
+        SafeModePropertyProviderFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(networking: factory.makeNetworking(),
+                  storage: factory.makeVpnAuthenticationStorage(),
+                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+    }
+
     public init(networking: Networking,
                 storage: VpnAuthenticationStorage,
                 safeModePropertyProvider: SafeModePropertyProvider) {
@@ -177,6 +187,16 @@ public final class VpnAuthenticationRemoteClient {
     private let sessionService: SessionService
     private let authenticationStorage: VpnAuthenticationStorage
     private let safeModePropertyProvider: SafeModePropertyProvider
+
+    public typealias Factory = SessionServiceFactory &
+        VpnAuthenticationStorageFactory &
+        SafeModePropertyProviderFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(sessionService: factory.makeSessionService(),
+                  authenticationStorage: factory.makeVpnAuthenticationStorage(),
+                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+    }
 
     public init(sessionService: SessionService,
                 authenticationStorage: VpnAuthenticationStorage,

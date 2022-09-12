@@ -48,9 +48,9 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     private let key = "NetShield"
     private let lastActiveKey = "LastActiveNetShield"
 
-    public required init(_ factory: Factory, storage: Storage) {
+    public required init(_ factory: Factory) {
         self.factory = factory
-        self.storage = storage
+        self.storage = factory.makeStorage()
     }
 
     public var lastActiveNetShieldType: NetShieldType {

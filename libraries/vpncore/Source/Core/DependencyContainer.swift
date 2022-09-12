@@ -67,46 +67,16 @@ open class Container: PropertiesToOverride {
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
-    private lazy var profileManager = ProfileManager(serverStorage: makeServerStorage(), propertiesManager: makePropertiesManager(), profileStorage: ProfileStorage(authKeychain: makeAuthKeychainHandle()))
-    private lazy var networking = CoreNetworking(delegate: makeNetworkingDelegate(),
-                                                 appInfo: makeAppInfo(),
-                                                 doh: makeDoHVPN(),
-                                                 authKeychain: makeAuthKeychainHandle())
+    private lazy var profileManager = ProfileManager(self)
+    private lazy var networking = CoreNetworking(self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: config.accessGroup,
                                                                            storage: makeStorage())
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
-                                                                 openVpnFactory: makeOpenVpnProtocolFactory(),
-                                                                 wireguardProtocolFactory: makeWireguardProtocolFactory(),
-                                                                 appGroup: config.appGroup,
-                                                                 vpnAuthentication: makeVpnAuthentication(),
-                                                                 vpnKeychain: makeVpnKeychain(),
-                                                                 propertiesManager: makePropertiesManager(),
-                                                                 vpnStateConfiguration: makeVpnStateConfiguration(),
-                                                                 alertService: makeCoreAlertService(),
-                                                                 vpnCredentialsConfiguratorFactory: makeVpnCredentialsConfiguratorFactory(),
-                                                                 localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
-                                                                 natTypePropertyProvider: makeNATTypePropertyProvider(),
-                                                                 netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                                                                 safeModePropertyProvider: makeSafeModePropertyProvider())
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
 
     private lazy var timerFactory = TimerFactoryImplementation()
 
-    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
-        vpnApiService: makeVpnApiService(),
-        vpnManager: makeVpnManager(),
-        networking: makeNetworking(),
-        alertService: makeCoreAlertService(),
-        timerFactory: timerFactory,
-        propertiesManager: makePropertiesManager(),
-        vpnKeychain: makeVpnKeychain(),
-        configurationPreparer: makeVpnManagerConfigurationPreparer(),
-        vpnAuthentication: makeVpnAuthentication(),
-        doh: makeDoHVPN(),
-        serverStorage: makeServerStorage(),
-        natTypePropertyProvider: makeNATTypePropertyProvider(),
-        netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-        safeModePropertyProvider: makeSafeModePropertyProvider())
+    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(self)
 
     // Refreshes announcements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
@@ -115,15 +85,7 @@ open class Container: PropertiesToOverride {
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
-    private lazy var dynamicBugReportManager = DynamicBugReportManager(
-        api: makeReportsApiService(),
-        storage: DynamicBugReportStorageUserDefaults(userDefaults: storage),
-        alertService: makeCoreAlertService(),
-        propertiesManager: makePropertiesManager(),
-        updateChecker: makeUpdateChecker(),
-        vpnKeychain: makeVpnKeychain(),
-        logContentProvider: makeLogContentProvider()
-    )
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {
@@ -289,32 +251,28 @@ extension Container: UserTierProviderFactory {
 // MARK: NATTypePropertyProviderFactory
 extension Container: NATTypePropertyProviderFactory {
     public func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
-        NATTypePropertyProviderImplementation(self, storage: storage)
+        NATTypePropertyProviderImplementation(self)
     }
 }
 
 // MARK: SafeModePropertyProviderFactory
 extension Container: SafeModePropertyProviderFactory {
     public func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
-        SafeModePropertyProviderImplementation(self, storage: storage)
+        SafeModePropertyProviderImplementation(self)
     }
 }
 
 // MARK: NetShieldPropertyProviderFactory
 extension Container: NetShieldPropertyProviderFactory {
     public func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        NetShieldPropertyProviderImplementation(self, storage: storage)
+        NetShieldPropertyProviderImplementation(self)
     }
 }
 
 // MARK: VpnStateConfigurationFactory
 extension Container: VpnStateConfigurationFactory {
     public func makeVpnStateConfiguration() -> VpnStateConfiguration {
-        VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory,
-                                     openVpnProtocolFactory: makeOpenVpnProtocolFactory(),
-                                     wireguardProtocolFactory: makeWireguardProtocolFactory(),
-                                     propertiesManager: makePropertiesManager(),
-                                     appGroup: config.appGroup)
+        VpnStateConfigurationManager(self, config: config)
     }
 }
 
@@ -333,7 +291,7 @@ extension Container: VpnAuthenticationStorageFactory {
 // MARK: VpnManagerConfigurationPreparer
 extension Container: VpnManagerConfigurationPreparerFactory {
     public func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
-        VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
+        VpnManagerConfigurationPreparer(self)
     }
 }
 
@@ -402,17 +360,14 @@ extension Container: CoreApiServiceFactory {
 // MARK: PaymentsApiServiceFactory
 extension Container: PaymentsApiServiceFactory {
     public func makePaymentsApiService() -> PaymentsApiService {
-        PaymentsApiServiceImplementation(networking: makeNetworking(),
-                                         vpnKeychain: makeVpnKeychain(),
-                                         vpnApiService: makeVpnApiService())
+        PaymentsApiServiceImplementation(self)
     }
 }
 
 // MARK: ReportsApiServiceFactory
 extension Container: ReportsApiServiceFactory {
     public func makeReportsApiService() -> ReportsApiService {
-        ReportsApiService(networking: makeNetworking(),
-                                 authKeychain: makeAuthKeychainHandle())
+        ReportsApiService(self)
     }
 }
 
@@ -491,5 +446,39 @@ extension Container: MaintenanceManagerHelperFactory {
 extension Container: DynamicBugReportManagerFactory {
     public func makeDynamicBugReportManager() -> DynamicBugReportManager {
         return dynamicBugReportManager
+    }
+}
+
+// MARK: TimerFactoryCreator
+extension Container: TimerFactoryCreator {
+    public func makeTimerFactory() -> TimerFactory {
+        return timerFactory
+    }
+}
+
+// MARK: LocalAgentConnectionFactoryCreator
+extension Container: LocalAgentConnectionFactoryCreator {
+    public func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory {
+        LocalAgentConnectionFactoryImplementation()
+    }
+}
+
+// MARK: IkeProtocolFactoryCreator
+extension Container: IkeProtocolFactoryCreator {
+    public func makeIkeProtocolFactory() -> IkeProtocolFactory {
+        ikeFactory
+    }
+}
+
+// MARK: ProfileStorageFactory
+extension Container: ProfileStorageFactory {
+    public func makeProfileStorage() -> ProfileStorage {
+        ProfileStorage(authKeychain: makeAuthKeychainHandle())
+    }
+}
+
+extension Container: DynamicBugReportStorageFactory {
+    public func makeDynamicBugReportStorage() -> DynamicBugReportStorage {
+        DynamicBugReportStorageUserDefaults(userDefaults: storage)
     }
 }

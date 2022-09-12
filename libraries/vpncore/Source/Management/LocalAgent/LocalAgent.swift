@@ -55,6 +55,10 @@ public protocol LocalAgentConnectionWrapper {
 extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {
 }
 
+public protocol LocalAgentConnectionFactoryCreator {
+    func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory
+}
+
 public protocol LocalAgentConnectionFactory {
     // Wrapper function for LocalAgentAgentConnection for unit testing.
     // swiftlint:disable:next function_parameter_count

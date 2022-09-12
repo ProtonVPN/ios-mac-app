@@ -25,12 +25,12 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
 
     public static var netShieldNotification: Notification.Name = Notification.Name("")
 
-    public required init(_ factory: Factory, storage: Storage) {
+    public required init(_ factory: Factory) {
         self.factory = factory
     }
 
     public convenience init() {
-        self.init(PaidFeaturePropertyProviderFactoryMock(), storage: Storage())
+        self.init(PaidFeaturePropertyProviderFactoryMock())
     }
 
     public var netShieldType: NetShieldType = .off    

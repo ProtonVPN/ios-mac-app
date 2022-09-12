@@ -32,7 +32,7 @@ public class AppSessionRefreshTimer {
     private let serverLoadsRefreshTimeout: TimeInterval // Default: 15 minutes
     private let accountRefreshTimeout: TimeInterval // Default: 3 minutes
     
-    public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory
+    public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory & TimerFactoryCreator
     private let factory: Factory
     private let timerFactory: TimerFactory
     
@@ -50,14 +50,13 @@ public class AppSessionRefreshTimer {
     }
 
     public init(factory: Factory,
-                timerFactory: TimerFactory,
                 // swiftlint:disable:next large_tuple
                 refreshIntervals: (full: TimeInterval, server: TimeInterval, account: TimeInterval),
                 canRefreshFull: @escaping RefreshCheckerCallback = { return true },
                 canRefreshLoads: @escaping RefreshCheckerCallback = { return true },
                 canRefreshAccount: @escaping RefreshCheckerCallback = { return true }) {
         self.factory = factory
-        self.timerFactory = timerFactory
+        self.timerFactory = factory.makeTimerFactory()
 
         self.fullServerRefreshTimeout = refreshIntervals.full
         self.serverLoadsRefreshTimeout = refreshIntervals.server

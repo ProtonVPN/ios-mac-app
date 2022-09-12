@@ -22,6 +22,10 @@
 import Foundation
 import NetworkExtension
 
+public protocol IkeProtocolFactoryCreator {
+    func makeIkeProtocolFactory() -> IkeProtocolFactory
+}
+
 public class IkeProtocolFactory: VpnProtocolFactory {
     public typealias Factory = NEVPNManagerWrapperFactory
 

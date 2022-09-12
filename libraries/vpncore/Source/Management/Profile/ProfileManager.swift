@@ -53,6 +53,16 @@ public class ProfileManager {
     public var allProfiles: [Profile] {
         return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol) + customProfiles
     }
+
+    public typealias Factory = ServerStorageFactory &
+        PropertiesManagerFactory &
+        ProfileStorageFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(serverStorage: factory.makeServerStorage(),
+                  propertiesManager: factory.makePropertiesManager(),
+                  profileStorage: factory.makeProfileStorage())
+    }
     
     public init(serverStorage: ServerStorage,
                 propertiesManager: PropertiesManagerProtocol,

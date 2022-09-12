@@ -9,7 +9,7 @@
 import Foundation
 import NetworkExtension
 
-protocol WireguardProtocolFactoryCreator {
+public protocol WireguardProtocolFactoryCreator {
     func makeWireguardProtocolFactory() -> WireguardProtocolFactory
 }
 

@@ -47,10 +47,10 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let authKeychain = AuthKeychain()
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
-        let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider, authKeychain: authKeychain)
-        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage)
-        let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage)
-        let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory, storage: storage)
+        let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider, authKeychain: authKeychain, storage: storage)
+        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory)
+        let natTypePropertyProvider = NATTypePropertyProviderImplementation(paidFeaturePropertyProviderFactory)
+        let safeModePropertyProvider = SafeModePropertyProviderImplementation(paidFeaturePropertyProviderFactory)
         let vpnWrapperFactory = VPNWrapperFactory()
         let ikeFactory = IkeProtocolFactory(factory: vpnWrapperFactory)
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager, vpnManagerFactory: vpnWrapperFactory)
@@ -118,11 +118,13 @@ fileprivate class PaidFeaturePropertyProviderFactory: PaidFeaturePropertyProvide
     private let propertiesManager: PropertiesManagerProtocol
     private let userTierProvider: UserTierProvider
     private let authKeychain: AuthKeychainHandle
-    
-    init(propertiesManager: PropertiesManagerProtocol, userTierProvider: UserTierProvider, authKeychain: AuthKeychainHandle) {
+    private let storage: Storage
+
+    init(propertiesManager: PropertiesManagerProtocol, userTierProvider: UserTierProvider, authKeychain: AuthKeychainHandle, storage: Storage) {
         self.propertiesManager = propertiesManager
         self.userTierProvider = userTierProvider
         self.authKeychain = authKeychain
+        self.storage = storage
     }
     
     func makePropertiesManager() -> PropertiesManagerProtocol {
@@ -135,6 +137,10 @@ fileprivate class PaidFeaturePropertyProviderFactory: PaidFeaturePropertyProvide
     
     func makeUserTierProvider() -> UserTierProvider {
         return userTierProvider
+    }
+
+    func makeStorage() -> Storage {
+        return storage
     }
 }
 

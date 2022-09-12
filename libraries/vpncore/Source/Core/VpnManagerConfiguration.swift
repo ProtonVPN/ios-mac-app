@@ -87,10 +87,19 @@ public protocol VpnManagerConfigurationPreparerFactory {
 }
 
 public class VpnManagerConfigurationPreparer {
-    
     private let vpnKeychain: VpnKeychainProtocol
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
+
+    public typealias Factory = VpnKeychainFactory &
+        CoreAlertServiceFactory &
+        PropertiesManagerFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(vpnKeychain: factory.makeVpnKeychain(),
+                  alertService: factory.makeCoreAlertService(),
+                  propertiesManager: factory.makePropertiesManager())
+    }
     
     public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
         self.vpnKeychain = vpnKeychain

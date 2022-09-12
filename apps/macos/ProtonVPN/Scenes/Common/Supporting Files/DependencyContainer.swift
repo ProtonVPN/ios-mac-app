@@ -25,7 +25,6 @@ import Foundation
 import vpncore
 import BugReport
 import NetworkExtension
-import Timer
 
 final class DependencyContainer: Container {
     // Singletons
@@ -38,12 +37,8 @@ final class DependencyContainer: Container {
     private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: config.openVpnExtensionBundleIdentifier,
                                                                 appGroup: config.appGroup,
                                                                 factory: self)
-    private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
-
     private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationManager(networking: makeNetworking(),
-                                        storage: makeVpnAuthenticationStorage(),
-                                        safeModePropertyProvider: makeSafeModePropertyProvider())
+        return VpnAuthenticationManager(self)
     }()
 
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
@@ -53,7 +48,6 @@ final class DependencyContainer: Container {
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
-                                                           timerFactory: timerFactory,
                                                            refreshIntervals: (AppConstants.Time.fullServerRefresh,
                                                                               AppConstants.Time.serverLoadsRefresh,
                                                                               AppConstants.Time.userAccountRefresh),

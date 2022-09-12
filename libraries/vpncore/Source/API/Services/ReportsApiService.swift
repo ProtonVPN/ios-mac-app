@@ -32,6 +32,14 @@ public protocol ReportsApiServiceFactory {
 public class ReportsApiService {
     private let networking: Networking
     private let authKeychain: AuthKeychainHandle
+
+    public typealias Factory = NetworkingFactory &
+        AuthKeychainHandleFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(networking: factory.makeNetworking(),
+                  authKeychain: factory.makeAuthKeychainHandle())
+    }
     
     public init(networking: Networking, authKeychain: AuthKeychainHandle) {
         self.networking = networking
