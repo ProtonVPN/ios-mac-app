@@ -171,7 +171,38 @@ public class VpnGateway: VpnGatewayProtocol {
 
     let interceptPolicies: [VpnConnectionInterceptPolicyItem]
 
-    // FUTUREDO: Use factory
+    public typealias Factory = VpnApiServiceFactory &
+        AppStateManagerFactory &
+        CoreAlertServiceFactory &
+        VpnKeychainFactory &
+        AuthKeychainHandleFactory &
+        SiriHelperFactory &
+        NetShieldPropertyProviderFactory &
+        NATTypePropertyProviderFactory &
+        SafeModePropertyProviderFactory &
+        PropertiesManagerFactory &
+        ProfileManagerFactory &
+        AvailabilityCheckerResolverFactory &
+        ServerStorageFactory &
+        VpnConnectionInterceptDelegate
+
+    public convenience init(_ factory: Factory) {
+        self.init(vpnApiService: factory.makeVpnApiService(),
+                  appStateManager: factory.makeAppStateManager(),
+                  alertService: factory.makeCoreAlertService(),
+                  vpnKeychain: factory.makeVpnKeychain(),
+                  authKeychain: factory.makeAuthKeychainHandle(),
+                  siriHelper: factory.makeSiriHelper(),
+                  netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
+                  natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
+                  safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
+                  propertiesManager: factory.makePropertiesManager(),
+                  profileManager: factory.makeProfileManager(),
+                  availabilityCheckerResolverFactory: factory,
+                  vpnInterceptPolicies: factory.vpnConnectionInterceptPolicies,
+                  serverStorage: factory.makeServerStorage())
+    }
+
     public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, authKeychain: AuthKeychainHandle, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory, vpnInterceptPolicies: [VpnConnectionInterceptPolicyItem] = [], serverStorage: ServerStorage) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager

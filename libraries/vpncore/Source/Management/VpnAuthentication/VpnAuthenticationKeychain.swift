@@ -33,6 +33,13 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     private var storage: Storage
     public weak var delegate: VpnAuthenticationStorageDelegate?
 
+    public typealias Factory = StorageFactory
+
+    public convenience init(_ factory: Factory, accessGroup: String) {
+        self.init(accessGroup: accessGroup,
+                  storage: factory.makeStorage())
+    }
+
     public init(accessGroup: String, storage: Storage) {
         appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain,
                                               accessGroup: accessGroup)

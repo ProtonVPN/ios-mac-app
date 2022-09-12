@@ -18,6 +18,10 @@
 
 import Foundation
 
+public protocol VpnConnectionInterceptDelegate: AnyObject {
+    var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] { get }
+}
+
 /// A policy item for "intercepting" an attempted VPN connection in `VpnGateway`. These can be used
 /// to prevent connections that are known to cause instability or other bugs when combined with
 /// certain features, when used on certain platforms, or when configured on certain OS versions.

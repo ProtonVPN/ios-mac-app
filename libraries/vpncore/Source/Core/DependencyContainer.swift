@@ -28,7 +28,8 @@ typealias PropertiesToOverride = DoHVPNFactory &
                                 VpnCredentialsConfiguratorFactoryCreator &
                                 VpnAuthenticationFactory &
                                 LogContentProviderFactory &
-                                UpdateCheckerFactory
+                                UpdateCheckerFactory &
+                                VpnConnectionInterceptDelegate
 
 open class Container: PropertiesToOverride {
     public struct Config {
@@ -38,6 +39,10 @@ open class Container: PropertiesToOverride {
         public let accessGroup: String
         public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
+
+        public var osVersion: String {
+            ProcessInfo.processInfo.operatingSystemVersionString
+        }
 
         public init(os: String,
                     appIdentifierPrefix: String,
@@ -70,8 +75,7 @@ open class Container: PropertiesToOverride {
     private lazy var profileManager = ProfileManager(self)
     private lazy var networking = CoreNetworking(self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: config.accessGroup,
-                                                                           storage: makeStorage())
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(self, accessGroup: config.accessGroup)
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
 
     private lazy var timerFactory = TimerFactoryImplementation()
@@ -107,7 +111,7 @@ open class Container: PropertiesToOverride {
     }
     #endif
 
-    open var vpnConnectionIntercepts: [VpnConnectionInterceptPolicyItem] {
+    open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
         []
     }
 
@@ -319,20 +323,7 @@ extension Container: AvailabilityCheckerResolverFactory {
 // MARK: VpnGatewayFactory
 extension Container: VpnGatewayFactory {
     public func makeVpnGateway() -> VpnGatewayProtocol {
-        VpnGateway(vpnApiService: makeVpnApiService(),
-                   appStateManager: makeAppStateManager(),
-                   alertService: makeCoreAlertService(),
-                   vpnKeychain: makeVpnKeychain(),
-                   authKeychain: makeAuthKeychainHandle(),
-                   siriHelper: SiriHelper(),
-                   netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                   natTypePropertyProvider: makeNATTypePropertyProvider(),
-                   safeModePropertyProvider: makeSafeModePropertyProvider(),
-                   propertiesManager: makePropertiesManager(),
-                   profileManager: makeProfileManager(),
-                   availabilityCheckerResolverFactory: self,
-                   vpnInterceptPolicies: vpnConnectionIntercepts,
-                   serverStorage: makeServerStorage())
+        VpnGateway(self)
     }
 }
 
@@ -410,14 +401,7 @@ extension Container: AnnouncementsViewModelFactory {
 // MARK: ReportBugViewModelFactory
 extension Container: ReportBugViewModelFactory {
     public func makeReportBugViewModel() -> ReportBugViewModel {
-        ReportBugViewModel(os: config.os,
-                           osVersion: ProcessInfo.processInfo.operatingSystemVersionString,
-                           propertiesManager: makePropertiesManager(),
-                           reportsApiService: makeReportsApiService(),
-                           alertService: makeCoreAlertService(),
-                           vpnKeychain: makeVpnKeychain(),
-                           logContentProvider: makeLogContentProvider(),
-                           authKeychain: makeAuthKeychainHandle())
+        ReportBugViewModel(self, config: config)
     }
 }
 
@@ -473,12 +457,18 @@ extension Container: IkeProtocolFactoryCreator {
 // MARK: ProfileStorageFactory
 extension Container: ProfileStorageFactory {
     public func makeProfileStorage() -> ProfileStorage {
-        ProfileStorage(authKeychain: makeAuthKeychainHandle())
+        ProfileStorage(self)
     }
 }
 
 extension Container: DynamicBugReportStorageFactory {
     public func makeDynamicBugReportStorage() -> DynamicBugReportStorage {
-        DynamicBugReportStorageUserDefaults(userDefaults: storage)
+        DynamicBugReportStorageUserDefaults(self)
+    }
+}
+
+extension Container: SiriHelperFactory {
+    public func makeSiriHelper() -> SiriHelperProtocol {
+        SiriHelper()
     }
 }

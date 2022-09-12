@@ -33,6 +33,12 @@ public class ProfileStorage {
 
     private let authKeychain: AuthKeychainHandle
 
+    public typealias Factory = AuthKeychainHandleFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(authKeychain: factory.makeAuthKeychainHandle())
+    }
+
     public init(authKeychain: AuthKeychainHandle) {
         self.authKeychain = authKeychain
     }

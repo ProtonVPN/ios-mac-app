@@ -33,18 +33,12 @@ import Timer
 final class DependencyContainer: Container {
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
-                                                                 appGroup: config.appGroup,
-                                                                 propertiesManager: makePropertiesManager(),
-                                                                 vpnManagerFactory: self)
-    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: config.openVpnExtensionBundleIdentifier,
-                                                             appGroup: config.appGroup,
-                                                             propertiesManager: makePropertiesManager(),
-                                                             vpnManagerFactory: self)
-    private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
-    private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
-    private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
+    private lazy var wireguardFactory = WireguardProtocolFactory(self, config: config)
+    private lazy var openVpnFactory = OpenVpnProtocolFactory(self, config: config)
+    private lazy var windowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
+    private lazy var appSessionManager = AppSessionManagerImplementation(factory: self)
+    private lazy var uiAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
+    private lazy var iosAlertService = IosAlertService(self)
 
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,

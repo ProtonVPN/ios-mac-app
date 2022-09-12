@@ -92,6 +92,16 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         
         return emptyTunnelBuilder.build()
     }()
+
+    public typealias Factory = PropertiesManagerFactory &
+        NETunnelProviderManagerWrapperFactory
+
+    public convenience init(_ factory: Factory, config: Container.Config) {
+        self.init(bundleId: config.openVpnExtensionBundleIdentifier,
+                  appGroup: config.appGroup,
+                  propertiesManager: factory.makePropertiesManager(),
+                  vpnManagerFactory: factory)
+    }
     
     public init(bundleId: String,
                 appGroup: String,

@@ -89,7 +89,7 @@ final class DependencyContainer: Container {
         makeModelIdChecker().modelId
     }
 
-    override var vpnConnectionIntercepts: [VpnConnectionInterceptPolicyItem] {
+    override var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
         ConnectionIntercepts(factory: self).intercepts
     }
 
