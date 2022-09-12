@@ -20,6 +20,16 @@ open class WireguardProtocolFactory {
     private let vpnManagerFactory: NETunnelProviderManagerWrapperFactory
 
     private var vpnManager: NETunnelProviderManagerWrapper?
+
+    public typealias Factory = PropertiesManagerFactory &
+        NETunnelProviderManagerWrapperFactory
+
+    public convenience init(_ factory: Factory, config: Container.Config) {
+        self.init(bundleId: config.wireguardVpnExtensionBundleIdentifier,
+                  appGroup: config.appGroup,
+                  propertiesManager: factory.makePropertiesManager(),
+                  vpnManagerFactory: factory)
+    }
     
     public init(bundleId: String,
                 appGroup: String,

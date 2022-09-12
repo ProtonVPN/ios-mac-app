@@ -33,6 +33,12 @@ public class DynamicBugReportStorageUserDefaults: DynamicBugReportStorage {
     
     private let userDefaults: Storage
     private let storageKey: String = "DynamicBugReport"
+
+    public typealias Factory = StorageFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(userDefaults: factory.makeStorage())
+    }
     
     public init(userDefaults: Storage) {
         self.userDefaults = userDefaults

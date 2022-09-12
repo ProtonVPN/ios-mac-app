@@ -69,6 +69,18 @@ final class CorePlanService: PlanService {
         return userCachedStatus.paymentsBackendStatusAcceptsIAP
     }
 
+    public typealias Factory = NetworkingFactory &
+        CoreAlertServiceFactory &
+        StorageFactory &
+        AuthKeychainHandleFactory
+
+    public convenience init(_ factory: Factory) {
+        self.init(networking: factory.makeNetworking(),
+                  alertService: factory.makeCoreAlertService(),
+                  storage: factory.makeStorage(),
+                  authKeychain: factory.makeAuthKeychainHandle())
+    }
+
     init(networking: Networking, alertService: CoreAlertService, storage: Storage, authKeychain: AuthKeychainHandle) {
         self.alertService = alertService
         self.authKeychain = authKeychain

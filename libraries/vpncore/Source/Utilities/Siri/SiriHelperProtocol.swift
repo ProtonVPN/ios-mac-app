@@ -22,6 +22,10 @@
 import Foundation
 import Intents
 
+public protocol SiriHelperFactory {
+    func makeSiriHelper() -> SiriHelperProtocol
+}
+
 public protocol SiriHelperProtocol {
     func donateQuickConnect()
     func donateDisconnect()
