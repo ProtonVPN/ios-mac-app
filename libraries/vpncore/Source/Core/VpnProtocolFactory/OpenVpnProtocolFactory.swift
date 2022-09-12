@@ -11,6 +11,10 @@ import Foundation
 import NetworkExtension
 import TunnelKit
 
+protocol OpenVpnProtocolFactoryCreator {
+    func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory
+}
+
 open class OpenVpnProtocolFactory: VpnProtocolFactory {
 
     private static let certificateAuthority = OpenVPN.CryptoContainer(pem: """

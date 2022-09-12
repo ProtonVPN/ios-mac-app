@@ -8,6 +8,10 @@
 
 import Foundation
 
+public protocol VpnCredentialsConfiguratorFactoryCreator {
+    func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory
+}
+
 /// Factory that produces `VpnCredentialsConfigurator` instances for each protocol.
 public protocol VpnCredentialsConfiguratorFactory {
     

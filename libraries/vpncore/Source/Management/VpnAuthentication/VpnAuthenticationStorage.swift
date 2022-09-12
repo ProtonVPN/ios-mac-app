@@ -22,6 +22,10 @@
 
 import Foundation
 
+public protocol VpnAuthenticationStorageFactory {
+    func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage
+}
+
 public protocol VpnAuthenticationStorage: AnyObject {
     func deleteKeys()
     func deleteCertificate()

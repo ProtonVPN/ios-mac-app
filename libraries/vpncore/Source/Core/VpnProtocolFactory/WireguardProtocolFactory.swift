@@ -9,8 +9,11 @@
 import Foundation
 import NetworkExtension
 
-open class WireguardProtocolFactory {
+protocol WireguardProtocolFactoryCreator {
+    func makeWireguardProtocolFactory() -> WireguardProtocolFactory
+}
 
+open class WireguardProtocolFactory {
     private let bundleId: String
     private let appGroup: String
     private let propertiesManager: PropertiesManagerProtocol
