@@ -46,21 +46,6 @@ final class DependencyContainer: Container {
                                         safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
 
-    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
-        vpnApiService: makeVpnApiService(),
-        vpnManager: makeVpnManager(),
-        networking: makeNetworking(),
-        alertService: macAlertService,
-        timerFactory: timerFactory,
-        propertiesManager: makePropertiesManager(),
-        vpnKeychain: makeVpnKeychain(),
-        configurationPreparer: makeVpnManagerConfigurationPreparer(),
-        vpnAuthentication: makeVpnAuthentication(),
-        doh: makeDoHVPN(),
-        serverStorage: makeServerStorage(),
-        natTypePropertyProvider: makeNATTypePropertyProvider(),
-        netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-        safeModePropertyProvider: makeSafeModePropertyProvider())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
 
@@ -103,8 +88,8 @@ final class DependencyContainer: Container {
     private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: makeVpnAuthenticationStorage())
 
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
-    private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN(), authKeychain: makeAuthKeychainHandle())
-    private lazy var planService = CorePlanService(networking: networking)
+
+    private lazy var planService = CorePlanService(networking: makeNetworking())
     private lazy var doh: DoHVPN = {
         let propertiesManager = makePropertiesManager()
         let doh = DoHVPN(alternativeRouting: propertiesManager.alternativeRouting,
@@ -130,6 +115,10 @@ final class DependencyContainer: Container {
     // MARK: - Overridden config methods
     override var modelId: String? {
         makeModelIdChecker().modelId
+    }
+
+    override var vpnConnectionIntercepts: [VpnConnectionInterceptPolicyItem] {
+        ConnectionIntercepts(factory: self).intercepts
     }
 
     // MARK: - Overridden factory methods
@@ -201,24 +190,10 @@ extension DependencyContainer: NavigationServiceFactory {
     }
 }
 
-// MARK: VpnManagerConfigurationPreparer
-extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
-    func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
-        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
-    }
-}
-
 // MARK: WindowServiceFactory
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
         return windowService
-    }
-}
-
-// MARK: VpnApiServiceFactory
-extension DependencyContainer: VpnApiServiceFactory {
-    func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(networking: makeNetworking())
     }
 }
 
@@ -229,39 +204,10 @@ extension DependencyContainer: UIAlertServiceFactory {
     }
 }
 
-// MARK: AppStateManagerFactory
-extension DependencyContainer: AppStateManagerFactory {
-    func makeAppStateManager() -> AppStateManager {
-        return appStateManager
-    }
-}
-
 // MARK: AppSessionManagerFactory
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         return appSessionManager
-    }
-}
-
-// MARK: VpnGatewayFactory
-extension DependencyContainer: VpnGatewayFactory {
-    func makeVpnGateway() -> VpnGatewayProtocol {
-        let connectionIntercepts = ConnectionIntercepts(factory: self).intercepts
-
-        return VpnGateway(vpnApiService: makeVpnApiService(),
-                          appStateManager: makeAppStateManager(),
-                          alertService: makeCoreAlertService(),
-                          vpnKeychain: makeVpnKeychain(),
-                          authKeychain: makeAuthKeychainHandle(),
-                          siriHelper: SiriHelper(),
-                          netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                          natTypePropertyProvider: makeNATTypePropertyProvider(),
-                          safeModePropertyProvider: makeSafeModePropertyProvider(),
-                          propertiesManager: makePropertiesManager(),
-                          profileManager: makeProfileManager(),
-                          availabilityCheckerResolverFactory: self,
-                          vpnInterceptPolicies: connectionIntercepts,
-                          serverStorage: makeServerStorage())
     }
 }
 
@@ -369,7 +315,7 @@ extension DependencyContainer: CoreApiServiceFactory {
 // MARK: - HeaderViewModelFactory
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
-        return HeaderViewModel(factory: self, appStateManager: appStateManager, navService: navigationService)
+        return HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
     }
 }
 
@@ -498,12 +444,5 @@ extension DependencyContainer: SessionServiceFactory {
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         return StatusMenuViewModel(factory: self)
-    }
-}
-
-// MARK: AvailabilityCheckerResolverFactory
-extension DependencyContainer: AvailabilityCheckerResolverFactory {
-    func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
-        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
     }
 }

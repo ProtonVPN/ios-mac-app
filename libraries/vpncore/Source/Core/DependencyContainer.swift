@@ -18,6 +18,7 @@
 
 import Foundation
 import NetworkExtension
+import Timer
 
 open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertServiceFactory, OpenVpnProtocolFactoryCreator, WireguardProtocolFactoryCreator, VpnCredentialsConfiguratorFactoryCreator, VpnAuthenticationFactory {
     public struct Config {
@@ -70,6 +71,24 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertService
                                                                  netShieldPropertyProvider: makeNetShieldPropertyProvider(),
                                                                  safeModePropertyProvider: makeSafeModePropertyProvider())
 
+    private lazy var timerFactory = TimerFactoryImplementation()
+
+    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
+        vpnApiService: makeVpnApiService(),
+        vpnManager: makeVpnManager(),
+        networking: makeNetworking(),
+        alertService: makeCoreAlertService(),
+        timerFactory: timerFactory,
+        propertiesManager: makePropertiesManager(),
+        vpnKeychain: makeVpnKeychain(),
+        configurationPreparer: makeVpnManagerConfigurationPreparer(),
+        vpnAuthentication: makeVpnAuthentication(),
+        doh: makeDoHVPN(),
+        serverStorage: makeServerStorage(),
+        natTypePropertyProvider: makeNATTypePropertyProvider(),
+        netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+        safeModePropertyProvider: makeSafeModePropertyProvider())
+
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {
         ServerStorageConcrete()
@@ -84,19 +103,15 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertService
     }
 
     // MARK: - Configs to override
-    open var openVpnExtensionBundleIdentifier: String {
-        shouldHaveOverridden()
-    }
-
-    open var wireguardVpnExtensionBundleIdentifier: String {
-        shouldHaveOverridden()
-    }
-
     #if os(macOS)
     open var modelId: String? {
         shouldHaveOverridden()
     }
     #endif
+
+    open var vpnConnectionIntercepts: [VpnConnectionInterceptPolicyItem] {
+        []
+    }
 
     // MARK: - Factories to override
     // MARK: DoHVPNFactory
@@ -261,5 +276,53 @@ extension Container: VpnManagerFactory {
 extension Container: VpnAuthenticationStorageFactory {
     public func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage {
         vpnAuthenticationKeychain
+    }
+}
+
+// MARK: VpnManagerConfigurationPreparer
+extension Container: VpnManagerConfigurationPreparerFactory {
+    public func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
+        VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
+    }
+}
+
+// MARK: VpnApiServiceFactory
+extension Container: VpnApiServiceFactory {
+    public func makeVpnApiService() -> VpnApiService {
+        return VpnApiService(networking: makeNetworking())
+    }
+}
+
+// MARK: AppStateManagerFactory
+extension Container: AppStateManagerFactory {
+    public func makeAppStateManager() -> AppStateManager {
+        appStateManager
+    }
+}
+
+// MARK: AvailabilityCheckerResolverFactory
+extension Container: AvailabilityCheckerResolverFactory {
+    public func makeAvailabilityCheckerResolver(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+        AvailabilityCheckerResolverImplementation(openVpnConfig: openVpnConfig, wireguardConfig: wireguardConfig)
+    }
+}
+
+// MARK: VpnGatewayFactory
+extension Container: VpnGatewayFactory {
+    public func makeVpnGateway() -> VpnGatewayProtocol {
+        return VpnGateway(vpnApiService: makeVpnApiService(),
+                          appStateManager: makeAppStateManager(),
+                          alertService: makeCoreAlertService(),
+                          vpnKeychain: makeVpnKeychain(),
+                          authKeychain: makeAuthKeychainHandle(),
+                          siriHelper: SiriHelper(),
+                          netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                          natTypePropertyProvider: makeNATTypePropertyProvider(),
+                          safeModePropertyProvider: makeSafeModePropertyProvider(),
+                          propertiesManager: makePropertiesManager(),
+                          profileManager: makeProfileManager(),
+                          availabilityCheckerResolverFactory: self,
+                          vpnInterceptPolicies: vpnConnectionIntercepts,
+                          serverStorage: makeServerStorage())
     }
 }
