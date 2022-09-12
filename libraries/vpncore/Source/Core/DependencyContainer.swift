@@ -17,16 +17,26 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import NetworkExtension
 
-open class Container: DoHVPNFactory, NetworkingDelegateFactory {
+open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertServiceFactory, OpenVpnProtocolFactoryCreator, WireguardProtocolFactoryCreator, VpnCredentialsConfiguratorFactoryCreator, VpnAuthenticationFactory {
     public struct Config {
         public let appIdentifierPrefix: String
         public let appGroup: String
+        public let accessGroup: String
+        public let openVpnExtensionBundleIdentifier: String
+        public let wireguardVpnExtensionBundleIdentifier: String
 
         public init(appIdentifierPrefix: String,
-                    appGroup: String) {
+                    appGroup: String,
+                    accessGroup: String,
+                    openVpnExtensionBundleIdentifier: String,
+                    wireguardVpnExtensionBundleIdentifier: String) {
             self.appIdentifierPrefix = appIdentifierPrefix
             self.appGroup = appGroup
+            self.accessGroup = accessGroup
+            self.openVpnExtensionBundleIdentifier = openVpnExtensionBundleIdentifier
+            self.wireguardVpnExtensionBundleIdentifier = wireguardVpnExtensionBundleIdentifier
         }
     }
 
@@ -42,6 +52,23 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory {
                                                  appInfo: makeAppInfo(),
                                                  doh: makeDoHVPN(),
                                                  authKeychain: makeAuthKeychainHandle())
+    private lazy var ikeFactory = IkeProtocolFactory(factory: self)
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: config.accessGroup,
+                                                                           storage: makeStorage())
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
+                                                                 openVpnFactory: makeOpenVpnProtocolFactory(),
+                                                                 wireguardProtocolFactory: makeWireguardProtocolFactory(),
+                                                                 appGroup: config.appGroup,
+                                                                 vpnAuthentication: makeVpnAuthentication(),
+                                                                 vpnKeychain: makeVpnKeychain(),
+                                                                 propertiesManager: makePropertiesManager(),
+                                                                 vpnStateConfiguration: makeVpnStateConfiguration(),
+                                                                 alertService: makeCoreAlertService(),
+                                                                 vpnCredentialsConfiguratorFactory: makeVpnCredentialsConfiguratorFactory(),
+                                                                 localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
+                                                                 natTypePropertyProvider: makeNATTypePropertyProvider(),
+                                                                 netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                                                                 safeModePropertyProvider: makeSafeModePropertyProvider())
 
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {
@@ -56,19 +83,54 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory {
         fatalError("Should have overridden \(caller)")
     }
 
-// MARK: - Factories and methods to override
+    // MARK: - Configs to override
+    open var openVpnExtensionBundleIdentifier: String {
+        shouldHaveOverridden()
+    }
+
+    open var wireguardVpnExtensionBundleIdentifier: String {
+        shouldHaveOverridden()
+    }
+
     #if os(macOS)
     open var modelId: String? {
-        nil
+        shouldHaveOverridden()
     }
     #endif
 
+    // MARK: - Factories to override
     // MARK: DoHVPNFactory
     open func makeDoHVPN() -> DoHVPN {
         shouldHaveOverridden()
     }
 
+    // MARK: NetworkingDelegate
     open func makeNetworkingDelegate() -> NetworkingDelegate {
+        shouldHaveOverridden()
+    }
+
+    // MARK: CoreAlertService
+    open func makeCoreAlertService() -> CoreAlertService {
+        shouldHaveOverridden()
+    }
+
+    // MARK: OpenVPNProtocolFactoryCreator
+    open func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory {
+        shouldHaveOverridden()
+    }
+
+    // MARK: WireguardProtocolFactoryCreator
+    open func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
+        shouldHaveOverridden()
+    }
+
+    // MARK: VpnCredentialsConfigurator
+    open func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
+        shouldHaveOverridden()
+    }
+
+    // MARK: VpnAuthentication
+    open func makeVpnAuthentication() -> VpnAuthentication {
         shouldHaveOverridden()
     }
 }
@@ -117,7 +179,11 @@ extension Container: ProfileManagerFactory {
 // MARK: AppInfoFactory
 extension Container: AppInfoFactory {
     public func makeAppInfo(context: AppContext) -> AppInfo {
-        AppInfoImplementation(context: context, modelName: modelId)
+        #if os(macOS)
+        return AppInfoImplementation(context: context, modelName: modelId)
+        #else
+        return AppInfoImplementation(context: context)
+        #endif
     }
 }
 
@@ -125,5 +191,75 @@ extension Container: AppInfoFactory {
 extension Container: NetworkingFactory {
     public func makeNetworking() -> Networking {
         networking
+    }
+}
+
+// MARK: NEVPNManagerWrapperFactory
+extension Container: NEVPNManagerWrapperFactory {
+    public func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+        NEVPNManager.shared()
+    }
+}
+
+// MARK: NETunnelProviderManagerWrapperFactory
+extension Container: NETunnelProviderManagerWrapperFactory {
+    public func makeNewManager() -> NETunnelProviderManagerWrapper {
+        NETunnelProviderManager()
+    }
+
+    public func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
+        NETunnelProviderManager.loadAllFromPreferences { managers, error in
+            completionHandler(managers, error)
+        }
+    }
+}
+
+extension Container: UserTierProviderFactory {
+    public func makeUserTierProvider() -> UserTierProvider {
+        UserTierProviderImplementation(self)
+    }
+}
+
+// MARK: NATTypePropertyProviderFactory
+extension Container: NATTypePropertyProviderFactory {
+    public func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
+        NATTypePropertyProviderImplementation(self, storage: storage)
+    }
+}
+
+// MARK: SafeModePropertyProviderFactory
+extension Container: SafeModePropertyProviderFactory {
+    public func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
+        SafeModePropertyProviderImplementation(self, storage: storage)
+    }
+}
+
+// MARK: NetShieldPropertyProviderFactory
+extension Container: NetShieldPropertyProviderFactory {
+    public func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
+        NetShieldPropertyProviderImplementation(self, storage: storage)
+    }
+}
+
+// MARK: VpnStateConfigurationFactory
+extension Container: VpnStateConfigurationFactory {
+    public func makeVpnStateConfiguration() -> VpnStateConfiguration {
+        VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory,
+                                     openVpnProtocolFactory: makeOpenVpnProtocolFactory(),
+                                     wireguardProtocolFactory: makeWireguardProtocolFactory(),
+                                     propertiesManager: makePropertiesManager(),
+                                     appGroup: config.appGroup)
+    }
+}
+
+extension Container: VpnManagerFactory {
+    public func makeVpnManager() -> VpnManagerProtocol {
+        vpnManager
+    }
+}
+
+extension Container: VpnAuthenticationStorageFactory {
+    public func makeVpnAuthenticationStorage() -> VpnAuthenticationStorage {
+        vpnAuthenticationKeychain
     }
 }

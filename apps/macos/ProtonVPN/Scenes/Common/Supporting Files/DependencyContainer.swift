@@ -27,47 +27,35 @@ import BugReport
 import NetworkExtension
 import Timer
 
-// FUTURETODO: clean up objects that are possible to re-create if memory warning is received
-
 final class DependencyContainer: Container {
-    private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
-    private let wireguardVpnExtensionBundleIdentifier = "ch.protonvpn.mac.WireGuard-Extension"
-
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
-                                                                 openVpnFactory: openVpnFactory,
-                                                                 wireguardProtocolFactory: wireguardFactory,
-                                                                 appGroup: config.appGroup,
-                                                                 vpnAuthentication: vpnAuthentication,
-                                                                 vpnKeychain: makeVpnKeychain(),
-                                                                 propertiesManager: makePropertiesManager(),
-                                                                 vpnStateConfiguration: makeVpnStateConfiguration(),
-                                                                 alertService: macAlertService,
-                                                                 vpnCredentialsConfiguratorFactory: MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()),
-                                                                 localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
-                                                                 natTypePropertyProvider: makeNATTypePropertyProvider(),
-                                                                 netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                                                                 safeModePropertyProvider: makeSafeModePropertyProvider())
-    private lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
+
+    private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
+    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
                                                                     appGroup: config.appGroup,
                                                                     factory: self)
-    private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
+    private lazy var openVpnFactory = OpenVpnMacProtocolFactory(bundleId: config.openVpnExtensionBundleIdentifier,
                                                                 appGroup: config.appGroup,
                                                                 factory: self)
-    private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
+
+    private lazy var vpnAuthentication: VpnAuthentication = {
+        return VpnAuthenticationManager(networking: makeNetworking(),
+                                        storage: makeVpnAuthenticationStorage(),
+                                        safeModePropertyProvider: makeSafeModePropertyProvider())
+    }()
+
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
         vpnApiService: makeVpnApiService(),
-        vpnManager: vpnManager,
+        vpnManager: makeVpnManager(),
         networking: makeNetworking(),
         alertService: macAlertService,
         timerFactory: timerFactory,
         propertiesManager: makePropertiesManager(),
         vpnKeychain: makeVpnKeychain(),
         configurationPreparer: makeVpnManagerConfigurationPreparer(),
-        vpnAuthentication: vpnAuthentication,
+        vpnAuthentication: makeVpnAuthentication(),
         doh: makeDoHVPN(),
         serverStorage: makeServerStorage(),
         natTypePropertyProvider: makeNATTypePropertyProvider(),
@@ -111,15 +99,9 @@ final class DependencyContainer: Container {
 
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
-    private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationManager(networking: makeNetworking(),
-                                        storage: vpnAuthenticationKeychain,
-                                        safeModePropertyProvider: makeSafeModePropertyProvider())
-    }()
-    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(config.appIdentifierPrefix)ch.protonvpn.macos", storage: storage)
-    private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: vpnAuthenticationKeychain)
 
-    private lazy var storage = Storage()
+    private lazy var appCertificateRefreshManager = AppCertificateRefreshManager(appSessionManager: makeAppSessionManager(), vpnAuthenticationStorage: makeVpnAuthenticationStorage())
+
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN(), authKeychain: makeAuthKeychainHandle())
     private lazy var planService = CorePlanService(networking: networking)
@@ -139,14 +121,18 @@ final class DependencyContainer: Container {
 
         super.init(Config(appIdentifierPrefix: prefix,
 
-                          appGroup: "\(prefix)group.ch.protonvpn.mac"))
+                          appGroup: "\(prefix)group.ch.protonvpn.mac",
+                          accessGroup: "\(prefix)ch.protonvpn.macos",
+                          openVpnExtensionBundleIdentifier: "ch.protonvpn.mac.OpenVPN-Extension",
+                          wireguardVpnExtensionBundleIdentifier: "ch.protonvpn.mac.WireGuard-Extension"))
     }
 
-    // MARK: - Overridden factory & config methods
+    // MARK: - Overridden config methods
     override var modelId: String? {
         makeModelIdChecker().modelId
     }
 
+    // MARK: - Overridden factory methods
     // MARK: DoHVPNFactory
     override func makeDoHVPN() -> DoHVPN {
         doh
@@ -155,6 +141,31 @@ final class DependencyContainer: Container {
     // MARK: NetworkingDelegate
     override func makeNetworkingDelegate() -> NetworkingDelegate {
         networkingDelegate
+    }
+
+    // MARK: CoreAlertServiceFactory
+    override func makeCoreAlertService() -> CoreAlertService {
+        macAlertService
+    }
+
+    // MARK: OpenVPNProtocolFactoryCreator
+    override func makeOpenVpnProtocolFactory() -> OpenVpnProtocolFactory {
+        openVpnFactory
+    }
+
+    // MARK: WireguardProtocolFactoryCreator
+    override func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
+        wireguardFactory
+    }
+
+    // MARK: VpnCredentialsConfiguratorFactoryCreator
+    override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
+        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager())
+    }
+
+    // MARK: VpnAuthentication
+    override func makeVpnAuthentication() -> VpnAuthentication {
+        vpnAuthentication
     }
 }
 
@@ -190,13 +201,6 @@ extension DependencyContainer: NavigationServiceFactory {
     }
 }
 
-// MARK: VpnManagerFactory
-extension DependencyContainer: VpnManagerFactory {
-    func makeVpnManager() -> VpnManagerProtocol {
-        return vpnManager
-    }
-}
-
 // MARK: VpnManagerConfigurationPreparer
 extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
     func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
@@ -222,13 +226,6 @@ extension DependencyContainer: VpnApiServiceFactory {
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
         return OsxUiAlertService(factory: self)
-    }
-}
-
-// MARK: CoreAlertServiceFactory
-extension DependencyContainer: CoreAlertServiceFactory {
-    func makeCoreAlertService() -> CoreAlertService {
-        return macAlertService
     }
 }
 
@@ -390,20 +387,6 @@ extension DependencyContainer: SafariServiceFactory {
     }
 }
 
-// MARK: - UserTierProviderFactory
-extension DependencyContainer: UserTierProviderFactory {
-    func makeUserTierProvider() -> UserTierProvider {
-        return UserTierProviderImplementation(self)
-    }
-}
-
-// MARK: - NetShieldPropertyProviderFactory
-extension DependencyContainer: NetShieldPropertyProviderFactory {
-    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
-        return NetShieldPropertyProviderImplementation(self, storage: storage)
-    }
-}
-
 // MARK: - UpdateFileSelectorFactory
 extension DependencyContainer: UpdateFileSelectorFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector {
@@ -432,20 +415,6 @@ extension DependencyContainer: TroubleshootViewModelFactory {
     }
 }
 
-// MARK: VpnAuthenticationManagerFactory
-extension DependencyContainer: VpnAuthenticationFactory {
-    func makeVpnAuthentication() -> VpnAuthentication {
-        return vpnAuthentication
-    }
-}
-
-// MARK: VpnStateConfigurationFactory
-extension DependencyContainer: VpnStateConfigurationFactory {
-    func makeVpnStateConfiguration() -> VpnStateConfiguration {
-        return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: config.appGroup)
-    }
-}
-
 // MARK: XPCConnectionsRepositoryFactory
 extension DependencyContainer: XPCConnectionsRepositoryFactory {
     func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
@@ -471,20 +440,6 @@ extension DependencyContainer: BugReportCreatorFactory {
 extension DependencyContainer: DynamicBugReportManagerFactory {
     func makeDynamicBugReportManager() -> DynamicBugReportManager {
         return dynamicBugReportManager
-    }
-}
-
-// MARK: NATTypePropertyProviderFactory
-extension DependencyContainer: NATTypePropertyProviderFactory {
-    func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
-        return NATTypePropertyProviderImplementation(self, storage: storage)
-    }
-}
-
-// MARK: SafeModePropertyProviderFactory
-extension DependencyContainer: SafeModePropertyProviderFactory {
-    func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
-        return SafeModePropertyProviderImplementation(self, storage: storage)
     }
 }
 
@@ -527,8 +482,8 @@ extension DependencyContainer: CouponViewModelFactory {
 extension DependencyContainer: LogContentProviderFactory {
     func makeLogContentProvider() -> LogContentProvider {
         return MacOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
-                                       wireguardProtocolFactory: wireguardFactory,
-                                       openVpnProtocolFactory: openVpnFactory)
+                                       wireguardProtocolFactory: makeWireguardProtocolFactory(),
+                                       openVpnProtocolFactory: makeOpenVpnProtocolFactory())
     }
 }
 
@@ -543,26 +498,6 @@ extension DependencyContainer: SessionServiceFactory {
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         return StatusMenuViewModel(factory: self)
-    }
-}
-
-// MARK: NEVPNManagerWrapperFactory
-extension DependencyContainer: NEVPNManagerWrapperFactory {
-    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-        NEVPNManager.shared()
-    }
-}
-
-// MARK: NETunnelProviderManagerWrapperFactory
-extension DependencyContainer: NETunnelProviderManagerWrapperFactory {
-    func makeNewManager() -> NETunnelProviderManagerWrapper {
-        NETunnelProviderManager()
-    }
-
-    func loadManagersFromPreferences(completionHandler: @escaping ([NETunnelProviderManagerWrapper]?, Error?) -> Void) {
-        NETunnelProviderManager.loadAllFromPreferences { managers, error in
-            completionHandler(managers, error)
-        }
     }
 }
 
