@@ -124,19 +124,10 @@ final class DependencyContainer: Container {
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN(), authKeychain: makeAuthKeychainHandle())
     private lazy var planService = CorePlanService(networking: networking)
     private lazy var doh: DoHVPN = {
-        #if !RELEASE
-        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
-        #else
-        let atlasSecret: String? = nil
-        #endif
-        let doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost,
-                         verifyHost: ObfuscatedConstants.humanVerificationV3Host,
-                         alternativeRouting: makePropertiesManager().alternativeRouting,
-                         customHost: makePropertiesManager().apiEndpoint,
-                         atlasSecret: atlasSecret,
-                         appState: .disconnected // AppState is not known yet, because DoH is initialized before AppStateManager
-        )
-        makePropertiesManager().onAlternativeRoutingChange = { alternativeRouting in
+        let propertiesManager = makePropertiesManager()
+        let doh = DoHVPN(alternativeRouting: propertiesManager.alternativeRouting,
+                         customHost: propertiesManager.apiEndpoint)
+        propertiesManager.onAlternativeRoutingChange = { alternativeRouting in
             doh.alternativeRouting = alternativeRouting
         }
         return doh
@@ -149,6 +140,39 @@ final class DependencyContainer: Container {
         super.init(Config(appIdentifierPrefix: prefix,
 
                           appGroup: "\(prefix)group.ch.protonvpn.mac"))
+    }
+
+    // MARK: - Overridden factory & config methods
+    override var modelId: String? {
+        makeModelIdChecker().modelId
+    }
+
+    // MARK: DoHVPNFactory
+    override func makeDoHVPN() -> DoHVPN {
+        doh
+    }
+
+    // MARK: NetworkingDelegate
+    override func makeNetworkingDelegate() -> NetworkingDelegate {
+        networkingDelegate
+    }
+}
+
+extension DoHVPN {
+    convenience init(alternativeRouting: Bool, customHost: String?) {
+        #if !RELEASE
+        let atlasSecret: String? = ObfuscatedConstants.atlasSecret
+        #else
+        let atlasSecret: String? = nil
+        #endif
+
+        self.init(apiHost: ObfuscatedConstants.apiHost,
+                  verifyHost: ObfuscatedConstants.humanVerificationV3Host,
+                  alternativeRouting: alternativeRouting,
+                  customHost: customHost,
+                  atlasSecret: atlasSecret,
+                  // Will get updated once AppStateManager is initialized
+                  appState: .disconnected)
     }
 }
 
@@ -422,20 +446,6 @@ extension DependencyContainer: VpnStateConfigurationFactory {
     }
 }
 
-// MARK: NetworkingFactory
-extension DependencyContainer: NetworkingFactory {
-    func makeNetworking() -> Networking {
-        return networking
-    }
-}
-
-// MARK: NetworkingDelegateFactory
-extension DependencyContainer: NetworkingDelegateFactory {
-    func makeNetworkingDelegate() -> NetworkingDelegate {
-        return networkingDelegate
-    }
-}
-
 // MARK: XPCConnectionsRepositoryFactory
 extension DependencyContainer: XPCConnectionsRepositoryFactory {
     func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
@@ -447,20 +457,6 @@ extension DependencyContainer: XPCConnectionsRepositoryFactory {
 extension DependencyContainer: LogFileManagerFactory {
     func makeLogFileManager() -> LogFileManager {
         return LogFileManagerImplementation()
-    }
-}
-
-// MARK: AppInfoFactory
-extension DependencyContainer: AppInfoFactory {
-    func makeAppInfo(context: AppContext) -> AppInfo {
-        return AppInfoImplementation(context: context, modelName: makeModelIdChecker().modelId)
-    }
-}
-
-// MARK: DoHVPNFactory
-extension DependencyContainer: DoHVPNFactory {
-    func makeDoHVPN() -> DoHVPN {
-        return doh
     }
 }
 
