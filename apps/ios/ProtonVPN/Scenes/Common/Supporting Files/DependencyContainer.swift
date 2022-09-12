@@ -26,7 +26,6 @@ import KeychainAccess
 import BugReport
 import Search
 import Review
-import NetworkExtension
 import Timer
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
@@ -35,26 +34,20 @@ final class DependencyContainer: Container {
     // Singletons
     private lazy var navigationService = NavigationService(self)
     private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
-    private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: config.appGroup, propertiesManager: makePropertiesManager(), vpnManagerFactory: self)
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private lazy var timerFactory: TimerFactory = TimerFactoryImplementation()
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
-    
-    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
-    
+
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
                                                            timerFactory: timerFactory,
                                                            refreshIntervals: (AppConstants.Time.fullServerRefresh,
                                                                               AppConstants.Time.serverLoadsRefresh,
                                                                               AppConstants.Time.userAccountRefresh))
-    // Refreshes announements from API
-    private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
-    
+
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(
         api: makeReportsApiService(),
@@ -71,12 +64,6 @@ final class DependencyContainer: Container {
                                              authenticationStorage: makeVpnAuthenticationStorage(),
                                              safeModePropertyProvider: makeSafeModePropertyProvider())
     }()
-    
-    #if TLS_PIN_DISABLE
-    private lazy var trustKitHelper: TrustKitHelper? = nil
-    #else
-    private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
-    #endif
 
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var planService = CorePlanService(networking: makeNetworking(), alertService: makeCoreAlertService(), storage: makeStorage(), authKeychain: makeAuthKeychainHandle())
@@ -97,7 +84,8 @@ final class DependencyContainer: Container {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
         super.init(
-            Config(appIdentifierPrefix: prefix,
+            Config(os: "iOS",
+                   appIdentifierPrefix: prefix,
                    appGroup: AppConstants.AppGroups.main,
                    accessGroup: "\(prefix)prt.ProtonVPN",
                    openVpnExtensionBundleIdentifier: AppConstants.NetworkExtensions.openVpn,
@@ -139,6 +127,20 @@ final class DependencyContainer: Container {
     // MARK: VpnAuthentication
     override func makeVpnAuthentication() -> VpnAuthentication {
         vpnAuthentication
+    }
+
+    // MARK: LogContentProviderFactory
+    override func makeLogContentProvider() -> LogContentProvider {
+        let appLogsFolder = makeLogFileManager()
+            .getFileUrl(named: AppConstants.Filenames.appLogFilename)
+            .deletingLastPathComponent()
+        return IOSLogContentProvider(appLogsFolder: appLogsFolder,
+                                     appGroup: AppConstants.AppGroups.main,
+                                     wireguardProtocolFactory: wireguardFactory)
+    }
+
+    override func makeUpdateChecker() -> UpdateChecker {
+        iOSUpdateManager()
     }
 }
 
@@ -188,38 +190,10 @@ extension DependencyContainer: AppSessionManagerFactory {
     }
 }
 
-// MARK: ReportBugViewModelFactory
-extension DependencyContainer: ReportBugViewModelFactory {
-    func makeReportBugViewModel() -> ReportBugViewModel {
-        return ReportBugViewModel(os: "iOS",
-                                  osVersion: ProcessInfo.processInfo.operatingSystemVersionString,
-                                  propertiesManager: makePropertiesManager(),
-                                  reportsApiService: makeReportsApiService(),
-                                  alertService: makeCoreAlertService(),
-                                  vpnKeychain: makeVpnKeychain(),
-                                  logContentProvider: makeLogContentProvider(),
-                                  authKeychain: makeAuthKeychainHandle())
-    }
-}
-
-// MARK: ReportsApiServiceFactory
-extension DependencyContainer: ReportsApiServiceFactory {
-    func makeReportsApiService() -> ReportsApiService {
-        return ReportsApiService(networking: makeNetworking(), authKeychain: makeAuthKeychainHandle())
-    }
-}
-
 // MARK: UIAlertServiceFactory
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService
-    }
-}
-
-// MARK: TrustKitHelperFactory
-extension DependencyContainer: TrustKitHelperFactory {
-    func makeTrustKitHelper() -> TrustKitHelper? {
-        return trustKitHelper
     }
 }
 
@@ -234,69 +208,6 @@ extension DependencyContainer: AppSessionRefreshTimerFactory {
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         return appSessionManager
-    }
-}
-        
-// MARK: - MaintenanceManagerFactory
-extension DependencyContainer: MaintenanceManagerFactory {
-    func makeMaintenanceManager() -> MaintenanceManagerProtocol {
-        return maintenanceManager
-    }
-}
-
-// MARK: - MaintenanceManagerHelperFactory
-extension DependencyContainer: MaintenanceManagerHelperFactory {
-    func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
-        return maintenanceManagerHelper
-    }
-}
-
-// MARK: - AnnouncementRefresherFactory
-extension DependencyContainer: AnnouncementRefresherFactory {
-    func makeAnnouncementRefresher() -> AnnouncementRefresher {
-        return announcementRefresher
-    }
-}
-
-// MARK: - AnnouncementStorageFactory
-extension DependencyContainer: AnnouncementStorageFactory {
-    func makeAnnouncementStorage() -> AnnouncementStorage {
-        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults(), keyNameProvider: nil)
-    }
-}
-
-// MARK: - AnnouncementManagerFactory
-extension DependencyContainer: AnnouncementManagerFactory {
-    func makeAnnouncementManager() -> AnnouncementManager {
-        return AnnouncementManagerImplementation(factory: self)
-    }
-}
-
-// MARK: - CoreApiServiceFactory
-extension DependencyContainer: CoreApiServiceFactory {
-    func makeCoreApiService() -> CoreApiService {
-        return CoreApiServiceImplementation(networking: makeNetworking())
-    }
-}
-
-// MARK: - AnnouncementsViewModelFactory
-extension DependencyContainer: AnnouncementsViewModelFactory {
-    func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
-        return AnnouncementsViewModel(factory: self)
-    }
-}
-
-// MARK: - SafariServiceFactory
-extension DependencyContainer: SafariServiceFactory {
-    func makeSafariService() -> SafariServiceProtocol {
-        return SafariService()
-    }
-}
-
-// MARK: TroubleshootViewModelFactory
-extension DependencyContainer: TroubleshootViewModelFactory {
-    func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 }
 
@@ -314,13 +225,6 @@ extension DependencyContainer: PlanServiceFactory {
     }
 }
 
-// MARK: LogFileManagerFactory
-extension DependencyContainer: LogFileManagerFactory {
-    func makeLogFileManager() -> LogFileManager {
-        return LogFileManagerImplementation()
-    }
-}
-
 // MARK: OnboardingServiceFactory
 extension DependencyContainer: OnboardingServiceFactory {
     func makeOnboardingService() -> OnboardingService {
@@ -332,13 +236,6 @@ extension DependencyContainer: OnboardingServiceFactory {
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
         return iOSBugReportCreator()
-    }
-}
-
-// MARK: DynamicBugReportManagerFactory
-extension DependencyContainer: DynamicBugReportManagerFactory {
-    func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        return dynamicBugReportManager
     }
 }
 
@@ -356,32 +253,9 @@ extension DependencyContainer: ReviewFactory {
     }
 }
 
-// MARK: PaymentsApiServiceFactory
-extension DependencyContainer: PaymentsApiServiceFactory {
-    func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(networking: makeNetworking(), vpnKeychain: makeVpnKeychain(), vpnApiService: makeVpnApiService())
-    }
-}
-
 // MARK: CouponViewModelFactory
 extension DependencyContainer: CouponViewModelFactory {
     func makeCouponViewModel() -> CouponViewModel {
         return CouponViewModel(paymentsApiService: makePaymentsApiService(), appSessionRefresher: appSessionManager)
-    }
-}
-
-// MARK: LogContentProviderFactory
-extension DependencyContainer: LogContentProviderFactory {
-    func makeLogContentProvider() -> LogContentProvider {
-        return IOSLogContentProvider(appLogsFolder: LogFileManagerImplementation().getFileUrl(named: AppConstants.Filenames.appLogFilename).deletingLastPathComponent(),
-                                     appGroup: AppConstants.AppGroups.main,
-                                     wireguardProtocolFactory: wireguardFactory)
-    }
-}
-
-// MARK: SessionServiceFactory
-extension DependencyContainer: SessionServiceFactory {
-    func makeSessionService() -> SessionService {
-        return SessionServiceImplementation(factory: self)
     }
 }

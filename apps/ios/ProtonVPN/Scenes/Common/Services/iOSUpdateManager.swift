@@ -19,16 +19,6 @@
 import Foundation
 import vpncore
 
-protocol UpdateCheckerFactory {
-    func makeUpdateChecker() -> UpdateChecker
-}
-
-extension DependencyContainer: UpdateCheckerFactory {
-    func makeUpdateChecker() -> UpdateChecker {
-        return iOSUpdateManager()
-    }
-}
-
 final class iOSUpdateManager: UpdateChecker {
     
     func isUpdateAvailable(_ callback: @escaping (Bool) -> Void) {

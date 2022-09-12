@@ -20,19 +20,32 @@ import Foundation
 import NetworkExtension
 import Timer
 
-open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertServiceFactory, OpenVpnProtocolFactoryCreator, WireguardProtocolFactoryCreator, VpnCredentialsConfiguratorFactoryCreator, VpnAuthenticationFactory {
+typealias PropertiesToOverride = DoHVPNFactory &
+                                NetworkingDelegateFactory &
+                                CoreAlertServiceFactory &
+                                OpenVpnProtocolFactoryCreator &
+                                WireguardProtocolFactoryCreator &
+                                VpnCredentialsConfiguratorFactoryCreator &
+                                VpnAuthenticationFactory &
+                                LogContentProviderFactory &
+                                UpdateCheckerFactory
+
+open class Container: PropertiesToOverride {
     public struct Config {
+        public let os: String
         public let appIdentifierPrefix: String
         public let appGroup: String
         public let accessGroup: String
         public let openVpnExtensionBundleIdentifier: String
         public let wireguardVpnExtensionBundleIdentifier: String
 
-        public init(appIdentifierPrefix: String,
+        public init(os: String,
+                    appIdentifierPrefix: String,
                     appGroup: String,
                     accessGroup: String,
                     openVpnExtensionBundleIdentifier: String,
                     wireguardVpnExtensionBundleIdentifier: String) {
+            self.os = os
             self.appIdentifierPrefix = appIdentifierPrefix
             self.appGroup = appGroup
             self.accessGroup = accessGroup
@@ -42,6 +55,12 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertService
     }
 
     public let config: Config
+
+    #if TLS_PIN_DISABLE
+    private lazy var trustKitHelper: TrustKitHelper? = nil
+    #else
+    private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
+    #endif
 
     // Lazy instances - get allocated once, and stay allocated
     private lazy var storage = Storage()
@@ -88,6 +107,23 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertService
         natTypePropertyProvider: makeNATTypePropertyProvider(),
         netShieldPropertyProvider: makeNetShieldPropertyProvider(),
         safeModePropertyProvider: makeSafeModePropertyProvider())
+
+    // Refreshes announcements from API
+    private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
+
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
+
+    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(
+        api: makeReportsApiService(),
+        storage: DynamicBugReportStorageUserDefaults(userDefaults: storage),
+        alertService: makeCoreAlertService(),
+        propertiesManager: makePropertiesManager(),
+        updateChecker: makeUpdateChecker(),
+        vpnKeychain: makeVpnKeychain(),
+        logContentProvider: makeLogContentProvider()
+    )
 
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {
@@ -148,6 +184,14 @@ open class Container: DoHVPNFactory, NetworkingDelegateFactory, CoreAlertService
     open func makeVpnAuthentication() -> VpnAuthentication {
         shouldHaveOverridden()
     }
+
+    open func makeLogContentProvider() -> LogContentProvider {
+        shouldHaveOverridden()
+    }
+
+    open func makeUpdateChecker() -> UpdateChecker {
+        shouldHaveOverridden()
+    }
 }
 
 // MARK: StorageFactory
@@ -206,6 +250,13 @@ extension Container: AppInfoFactory {
 extension Container: NetworkingFactory {
     public func makeNetworking() -> Networking {
         networking
+    }
+}
+
+// MARK: TrustKitHelperFactory
+extension Container: TrustKitHelperFactory {
+    public func makeTrustKitHelper() -> TrustKitHelper? {
+        return trustKitHelper
     }
 }
 
@@ -310,19 +361,135 @@ extension Container: AvailabilityCheckerResolverFactory {
 // MARK: VpnGatewayFactory
 extension Container: VpnGatewayFactory {
     public func makeVpnGateway() -> VpnGatewayProtocol {
-        return VpnGateway(vpnApiService: makeVpnApiService(),
-                          appStateManager: makeAppStateManager(),
-                          alertService: makeCoreAlertService(),
-                          vpnKeychain: makeVpnKeychain(),
-                          authKeychain: makeAuthKeychainHandle(),
-                          siriHelper: SiriHelper(),
-                          netShieldPropertyProvider: makeNetShieldPropertyProvider(),
-                          natTypePropertyProvider: makeNATTypePropertyProvider(),
-                          safeModePropertyProvider: makeSafeModePropertyProvider(),
-                          propertiesManager: makePropertiesManager(),
-                          profileManager: makeProfileManager(),
-                          availabilityCheckerResolverFactory: self,
-                          vpnInterceptPolicies: vpnConnectionIntercepts,
-                          serverStorage: makeServerStorage())
+        VpnGateway(vpnApiService: makeVpnApiService(),
+                   appStateManager: makeAppStateManager(),
+                   alertService: makeCoreAlertService(),
+                   vpnKeychain: makeVpnKeychain(),
+                   authKeychain: makeAuthKeychainHandle(),
+                   siriHelper: SiriHelper(),
+                   netShieldPropertyProvider: makeNetShieldPropertyProvider(),
+                   natTypePropertyProvider: makeNATTypePropertyProvider(),
+                   safeModePropertyProvider: makeSafeModePropertyProvider(),
+                   propertiesManager: makePropertiesManager(),
+                   profileManager: makeProfileManager(),
+                   availabilityCheckerResolverFactory: self,
+                   vpnInterceptPolicies: vpnConnectionIntercepts,
+                   serverStorage: makeServerStorage())
+    }
+}
+
+// MARK: SessionServiceFactory
+extension Container: SessionServiceFactory {
+    public func makeSessionService() -> SessionService {
+        SessionServiceImplementation(factory: self)
+    }
+}
+
+// MARK: LogFileManagerFactory
+extension Container: LogFileManagerFactory {
+    public func makeLogFileManager() -> LogFileManager {
+        LogFileManagerImplementation()
+    }
+}
+
+// MARK: CoreApiServiceFactory
+extension Container: CoreApiServiceFactory {
+    public func makeCoreApiService() -> CoreApiService {
+        CoreApiServiceImplementation(networking: makeNetworking())
+    }
+}
+
+// MARK: PaymentsApiServiceFactory
+extension Container: PaymentsApiServiceFactory {
+    public func makePaymentsApiService() -> PaymentsApiService {
+        PaymentsApiServiceImplementation(networking: makeNetworking(),
+                                         vpnKeychain: makeVpnKeychain(),
+                                         vpnApiService: makeVpnApiService())
+    }
+}
+
+// MARK: ReportsApiServiceFactory
+extension Container: ReportsApiServiceFactory {
+    public func makeReportsApiService() -> ReportsApiService {
+        ReportsApiService(networking: makeNetworking(),
+                                 authKeychain: makeAuthKeychainHandle())
+    }
+}
+
+// MARK: SafariServiceFactory
+extension Container: SafariServiceFactory {
+    public func makeSafariService() -> SafariServiceProtocol {
+        SafariService()
+    }
+}
+
+// MARK: AnnouncementStorageFactory
+extension Container: AnnouncementStorageFactory {
+    public func makeAnnouncementStorage() -> AnnouncementStorage {
+        AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults(),
+                                        keyNameProvider: nil)
+    }
+}
+
+// MARK: AnnouncementRefresherFactory
+extension Container: AnnouncementRefresherFactory {
+    public func makeAnnouncementRefresher() -> AnnouncementRefresher {
+        announcementRefresher
+    }
+}
+
+// MARK: - AnnouncementManagerFactory
+extension Container: AnnouncementManagerFactory {
+    public func makeAnnouncementManager() -> AnnouncementManager {
+        AnnouncementManagerImplementation(factory: self)
+    }
+}
+
+// MARK: AnnouncementsViewModelFactory
+extension Container: AnnouncementsViewModelFactory {
+    public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
+        AnnouncementsViewModel(factory: self)
+    }
+}
+
+// MARK: ReportBugViewModelFactory
+extension Container: ReportBugViewModelFactory {
+    public func makeReportBugViewModel() -> ReportBugViewModel {
+        ReportBugViewModel(os: config.os,
+                           osVersion: ProcessInfo.processInfo.operatingSystemVersionString,
+                           propertiesManager: makePropertiesManager(),
+                           reportsApiService: makeReportsApiService(),
+                           alertService: makeCoreAlertService(),
+                           vpnKeychain: makeVpnKeychain(),
+                           logContentProvider: makeLogContentProvider(),
+                           authKeychain: makeAuthKeychainHandle())
+    }
+}
+
+// MARK: TroubleshootViewModelFactory
+extension Container: TroubleshootViewModelFactory {
+    public func makeTroubleshootViewModel() -> TroubleshootViewModel {
+        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+    }
+}
+
+// MARK: MaintenanceManagerFactory
+extension Container: MaintenanceManagerFactory {
+    public func makeMaintenanceManager() -> MaintenanceManagerProtocol {
+        return maintenanceManager
+    }
+}
+
+// MARK: MaintenanceManagerHelperFactory
+extension Container: MaintenanceManagerHelperFactory {
+    public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
+        return maintenanceManagerHelper
+    }
+}
+
+// MARK: DynamicBugReportManagerFactory
+extension Container: DynamicBugReportManagerFactory {
+    public func makeDynamicBugReportManager() -> DynamicBugReportManager {
+        return dynamicBugReportManager
     }
 }
