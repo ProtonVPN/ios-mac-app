@@ -9,16 +9,14 @@
 
 import Foundation
 import NetworkExtension
+import PMLogger
 
 public enum VpnProviderManagerRequirement {
     case configuration
     case status
 }
 
-public protocol VpnProtocolFactory {
-    
+public protocol VpnProtocolFactory: NetworkExtensionLogProvider {
     func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol
     func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void)
-    func logs(completion: @escaping (String?) -> Void)
-    
 }

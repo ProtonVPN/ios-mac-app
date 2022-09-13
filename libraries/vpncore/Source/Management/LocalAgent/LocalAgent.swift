@@ -224,7 +224,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // only check received features in Connected state
         // the problem here is that states like HardJailed reset Netshield in features to off
         guard state == .connected else {
-            log.debug("Not checking features in \(state) state")
+            log.debug("Not checking features in \(state) state", category: .localAgent, event: .stateChange)
             return
         }
 

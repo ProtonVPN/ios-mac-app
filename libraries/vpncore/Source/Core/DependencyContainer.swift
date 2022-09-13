@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 import Timer
+import PMLogger
 
 typealias PropertiesToOverride = DoHVPNFactory &
                                 NetworkingDelegateFactory &

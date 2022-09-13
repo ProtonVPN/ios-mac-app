@@ -18,6 +18,7 @@
 
 import Foundation
 import Logging
+import PMLogger
 
 class WGLogFormatter: PMLogFormatter {
 

@@ -141,7 +141,7 @@ final class CoreLoginService {
         case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
         case .loginStateChanged(.dataIsAvailable), .signupStateChanged(.dataIsAvailable):
-            log.debug("Login or signup process in progress")
+            log.debug("Login or signup process in progress", category: .app)
         }
     }
 
