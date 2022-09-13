@@ -226,7 +226,7 @@ public final class VpnAuthenticationRemoteClient {
                                                       retryingForExpiredSessions: Bool = true,
                                                       completionHandler: @escaping CertificateRefreshCompletion) {
         guard let connectionProvider = connectionProvider else {
-            log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.")
+            log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.", category: .userCert)
             completionHandler(.failure(ProviderMessageError.sendingError))
             return
         }
@@ -243,7 +243,7 @@ public final class VpnAuthenticationRemoteClient {
                         return
                     }
                     
-                    log.info("Certificate retrieved from extension. Expires on \(certificate.validUntil), should refresh before \(certificate.refreshTime)")
+                    log.info("Certificate retrieved from extension. Expires on \(certificate.validUntil), should refresh before \(certificate.refreshTime)", category: .userCert)
                     completionHandler(.success(VpnAuthenticationData(clientKey: keys.privateKey,
                                                                      clientCertificate: certificate.certificate)))
                     return
@@ -300,7 +300,7 @@ public final class VpnAuthenticationRemoteClient {
         sessionService.getExtensionSessionSelector(extensionContext: extensionContext) { [weak self] apiResult in
             guard case let .success(selector) = apiResult else {
                 if case let .failure(error) = apiResult {
-                    log.error("Received error forking API session: \(error)")
+                    log.error("Received error forking API session: \(error)", category: .userCert)
                 }
                 return
             }
@@ -345,7 +345,7 @@ public final class VpnAuthenticationRemoteClient {
         connectionProvider.send(WireguardProviderRequest.cancelRefreshes, completion: { [weak self] result in
             // This is not great, but we should still continue with removing the items from the keychain if it fails.
             if case let .failure(error) = result {
-                log.error("Could not stop manager remotely: \(error)")
+                log.error("Could not stop manager remotely: \(error)", category: .userCert)
                 assertionFailure("Could not stop manager remotely: \(error)")
             }
 
@@ -353,7 +353,7 @@ public final class VpnAuthenticationRemoteClient {
 
             self?.connectionProvider?.send(WireguardProviderRequest.restartRefreshes, completion: { result in
                 if case let .failure(error) = result {
-                    log.error("Could not stop manager remotely: \(error)")
+                    log.error("Could not stop manager remotely: \(error)", category: .userCert)
                     assertionFailure("Could not stop manager remotely: \(error)")
                     return
                 }

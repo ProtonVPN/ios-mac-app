@@ -100,7 +100,7 @@ public class ServerStorageMock: ServerStorage {
                 serverModels.append(try ServerModel(dic: json))
             } catch {
                 let error = ParseError.serverParse
-                log.error("Failed to parse serves in mock with \(error)")
+                log.error("Failed to parse serves in mock with \(error)", category: .app)
             }
         }
 

@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "swift-log",
+        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "state": {
+          "branch": null,
+          "revision": "6fe203dc33195667ce1759bf0182975e4653ba1c",
+          "version": "1.4.4"
+        }
+      },
+      {
         "package": "Overture",
         "repositoryURL": "https://github.com/pointfreeco/swift-overture",
         "state": {

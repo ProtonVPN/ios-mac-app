@@ -8,6 +8,7 @@
 
 import Foundation
 import Logging
+import PMLogger
 
 let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.WG.logger")
 

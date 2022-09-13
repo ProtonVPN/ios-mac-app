@@ -26,7 +26,10 @@ import ProtonCore_Services
 import ProtonCore_Log
 import ProtonCore_UIFoundations
 import Logging
+import PMLogger
 import Foundation
+
+public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

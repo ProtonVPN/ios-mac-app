@@ -138,7 +138,7 @@ extension NETunnelProviderSessionWrapper {
                 }
             }
         } catch {
-            log.error("Received error while attempting to send provider message: \(error)")
+            log.error("Received error while attempting to send provider message: \(error)", category: .connection)
             completion?(.failure(.sendingError))
         }
     }

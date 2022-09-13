@@ -27,10 +27,6 @@ def keychain_access
   pod 'KeychainAccess', '3.2.1'
 end
 
-def logs
-  pod 'Logging', '1.4.0'
-end
-
 def sd_web_image
   pod 'SDWebImage', '5.12.6'
 end
@@ -61,8 +57,6 @@ def vpn_core
     pod 'ProtonCore-Payments/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
 
-    # Logs
-    logs
 end    
 
 abstract_target 'Core' do
@@ -158,7 +152,6 @@ target 'WireGuardiOS Extension' do
   use_frameworks!
   
   keychain_access
-  logs
 end
 
 target 'WireGuardNetworkExtensionTests' do
@@ -167,7 +160,6 @@ target 'WireGuardNetworkExtensionTests' do
   use_frameworks!
   
   keychain_access
-  logs
 end
 
 # macOS
@@ -195,7 +187,6 @@ target 'ProtonVPN WireGuard' do
   project 'apps/macos/macOS.xcodeproj'
   use_frameworks!
   keychain_access
-  logs
 end
 
 target 'ProtonVPNmacOSTests' do

@@ -71,7 +71,7 @@ public final class CouponViewModel {
             case let .success(type):
                 switch type {
                 case .planUpgraded:
-                    log.info("Promo code applied, reloading data")
+                    log.info("Promo code applied, reloading data", category: .app)
 
                     // reload the user data
                     self?.appSessionRefresher.attemptSilentLogIn { [weak self] result in
@@ -81,7 +81,7 @@ public final class CouponViewModel {
                         case let .failure(error):
                             switch error {
                             case is CertificateRefreshError:
-                                log.debug("Certificate refresh failed after data reload but the data reloaded successfully")
+                                log.debug("Certificate refresh failed after data reload but the data reloaded successfully", category: .app)
                                 completion(.success(LocalizedString.couponApplied))
                             default:
                                 log.error("Failed to reload data after applying promo code", category: .app, metadata: ["error": "\(error)"])
@@ -93,7 +93,7 @@ public final class CouponViewModel {
                         }
                     }
                 case .planNotUpgradedYet:
-                    log.info("Promo code applied, not reloading data because the plan was not upgraded yet")
+                    log.info("Promo code applied, not reloading data because the plan was not upgraded yet", category: .app)
                     completion(.success(LocalizedString.couponAppliedPlanNotUpgradedYet))
                 }
             }
