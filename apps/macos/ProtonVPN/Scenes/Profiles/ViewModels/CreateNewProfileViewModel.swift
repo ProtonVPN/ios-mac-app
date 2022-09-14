@@ -226,15 +226,17 @@ class CreateNewProfileViewModel {
             .openVpn(.udp),
             .wireGuard(.udp)
         ]
+        
+        let protocols = propertiesManager.featureFlags.wireGuardTls
+            ? withoutWireGuardTls + [
+                .wireGuard(.tcp),
+                .wireGuard(.tls)
+            ]
+            : withoutWireGuardTls
 
-        guard propertiesManager.featureFlags.wireGuardTls else {
-            return withoutWireGuardTls
+        return protocols.sorted {lhs, rhs in
+            VpnProtocol.uiOrder[lhs]! < VpnProtocol.uiOrder[rhs]!
         }
-
-        return withoutWireGuardTls + [
-            .wireGuard(.tcp),
-            .wireGuard(.tls)
-        ]
     }
 
     func countryCount(for typeIndex: Int) -> Int {
