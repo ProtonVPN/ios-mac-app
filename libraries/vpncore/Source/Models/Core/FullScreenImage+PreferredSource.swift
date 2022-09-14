@@ -28,10 +28,8 @@ public extension FullScreenImage {
     func preferredSource() -> URL? {
         #if os(iOS)
         let maxWidth = UIScreen.main.bounds.width * UIScreen.main.scale
-        let expectedTarget: Target = UIDevice.current.isIpad ? .desktop : .phone
         #elseif os(macOS)
         let maxWidth: CGFloat = 600 * (NSScreen.main?.backingScaleFactor ?? 1)
-        let expectedTarget: Target = .desktop
         #endif
 
         enum Target: String {
@@ -42,7 +40,6 @@ public extension FullScreenImage {
         struct URLSource {
             let url: URL
             let width: CGFloat
-            let target: Target
 
             init?(source: Source) {
                 guard let width = source.width,
@@ -52,16 +49,15 @@ public extension FullScreenImage {
                 }
                 self.url = url
                 self.width = CGFloat(width)
-                self.target = .init(rawValue: source.target ?? "") ?? .phone
             }
         }
 
         return source
             .compactMap(URLSource.init(source:))
-            .filter { $0.target == expectedTarget }
-            .sorted { $0.width > $1.width } // swiftlint:ignore:this sorted_first_last
-            .first {
-                $0.width <= maxWidth
-            }?.url
+            .first?.url
+//            .sorted { $0.width > $1.width } // swiftlint:ignore:this sorted_first_last
+//            .first {
+//                $0.width <= maxWidth
+//            }?.url
     }
 }

@@ -47,15 +47,15 @@ final class AnnouncementImageViewController: NSViewController {
         super.viewDidLayout()
         view.window?.centerWindowOnScreen()
 
-        adjustImageViewHeight()
+//        adjustImageViewHeight()
     }
 
-    private func adjustImageViewHeight() {
-        guard let image = imageView.image else { return }
-        let imageRatio = image.size.height / image.size.width
-        let height = imageView.frame.size.width * imageRatio
-        imageViewHeight.constant = height
-    }
+//    private func adjustImageViewHeight() {
+//        guard let image = imageView.image else { return }
+//        let imageRatio = image.size.height / image.size.width
+//        let height = imageView.frame.size.width * imageRatio
+//        imageViewHeight.constant = height
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
