@@ -10,8 +10,6 @@
             <connections>
                 <outlet property="actionButton" destination="PIL-Yz-icj" id="r7e-Ys-5bu"/>
                 <outlet property="imageView" destination="wYo-jg-x61" id="8wK-NQ-CUn"/>
-                <outlet property="imageViewHeight" destination="9EZ-fP-vz0" id="Lmn-N5-HRa"/>
-                <outlet property="imageViewWidth" destination="vdx-KQ-M1c" id="xrP-Uv-dov"/>
                 <outlet property="progressIndicator" destination="Uua-av-HPk" id="Gaj-X4-Qt3"/>
                 <outlet property="view" destination="c22-O7-iKe" id="t1Z-9g-uOU"/>
             </connections>
@@ -54,10 +52,6 @@
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="wYo-jg-x61">
                                         <rect key="frame" x="64" y="0.0" width="400" height="300"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="300" id="9EZ-fP-vz0"/>
-                                            <constraint firstAttribute="width" constant="400" id="vdx-KQ-M1c"/>
-                                        </constraints>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="9bS-wQ-FPm"/>
                                     </imageView>
                                 </subviews>

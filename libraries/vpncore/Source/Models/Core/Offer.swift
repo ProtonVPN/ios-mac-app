@@ -58,13 +58,13 @@ public struct FullScreenImage: Codable {
         public let url: String
         public let type: String
         public let width: Int?
-        public let target: String?
+        public let height: Int?
 
         enum CodingKeys: String, CodingKey { // swiftlint:disable:this nesting
             case type
             case width
+            case height
             case url = "URL"
-            case target
         }
     }
 }
@@ -128,9 +128,13 @@ public struct OfferFeature: Codable {
 public struct OfferButton: Codable {
     public let url: String
     public let text: String
+    public let action: String // "OpenURL"
+    public let with: [String] // ["AutoLogin"]
 
     enum CodingKeys: String, CodingKey {
         case text
         case url = "URL"
+        case action
+        case with
     }
 }
