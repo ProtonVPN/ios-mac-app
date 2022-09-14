@@ -225,7 +225,7 @@ post_install do |installer|
     end
   end
   
-  # Fix bundle signing problems started with XCode 14: https://github.com/CocoaPods/CocoaPods/issues/11402
+  # Fix bundle signing problems started with Xcode 14: https://github.com/CocoaPods/CocoaPods/issues/11402
   ## Get main project development team id
   dev_team = ""
   project = installer.aggregate_targets[0].user_project
