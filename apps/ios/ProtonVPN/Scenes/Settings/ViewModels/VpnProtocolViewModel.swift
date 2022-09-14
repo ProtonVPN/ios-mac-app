@@ -68,7 +68,7 @@ final class VpnProtocolViewModel {
         let protocolCells: [TableViewCellModel] = availableProtocols.map {
             (vpnProtocol: $0, title: $0.localizedString)
         }.sorted { lhs, rhs in
-            lhs.title < rhs.title
+            VpnProtocol.uiOrder[lhs.vpnProtocol] < VpnProtocol.uiOrder[rhs.vpnProtocol]
         }.map { item in
             .checkmarkStandard(title: item.title,
                                checked: vpnProtocol == item.vpnProtocol && smartDisabled) {

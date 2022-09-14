@@ -78,6 +78,17 @@ extension VpnProtocol { // Text for UI
     }
 }
 
+extension VpnProtocol { // Order of vpn protocols in UI
+    public static var uiOrder: [VpnProtocol: Int] = [
+        .wireGuard(.udp): 1,
+        .wireGuard(.tcp): 2,
+        .openVpn(.udp): 3,
+        .openVpn(.tcp): 4,
+        .ike: 5,
+        .wireGuard(.tls): 6,
+    ]
+}
+
 // MARK: - Codable
 
 extension VpnProtocol: Codable {

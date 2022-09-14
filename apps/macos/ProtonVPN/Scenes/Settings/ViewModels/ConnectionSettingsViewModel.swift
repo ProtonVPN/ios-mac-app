@@ -82,14 +82,24 @@ final class ConnectionSettingsViewModel {
             propertiesManager.vpnProtocol == .wireGuard(.tcp) ||
             propertiesManager.vpnProtocol == .wireGuard(.tls)
 
-        guard wireGuardTlsEnabled else {
-            return withoutWireGuardTls
+        let protocols = wireGuardTlsEnabled
+            ? withoutWireGuardTls + [
+                .vpnProtocol(.wireGuard(.tcp)),
+                .vpnProtocol(.wireGuard(.tls))
+            ]
+            : withoutWireGuardTls
+        
+        return protocols.sorted { lhs, rhs in
+            // SmartProtocol is always first
+            guard let lProtocol = lhs.vpnProtocol else {
+                return true
+            }
+            guard let rProtocol = rhs.vpnProtocol else {
+                return false
+            }
+            // Otherwise sort according to VPN protocol
+            return VpnProtocol.uiOrder[lProtocol]! < VpnProtocol.uiOrder[rProtocol]!
         }
-
-        return withoutWireGuardTls + [
-            .vpnProtocol(.wireGuard(.tcp)),
-            .vpnProtocol(.wireGuard(.tls))
-        ]
     }
 
     // MARK: - Quick and auto connect for current user
