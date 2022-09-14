@@ -24,7 +24,7 @@
         "repositoryURL": "git@gitlab.protontech.ch:apple/vpn/wireguard-apple.git",
         "state": {
           "branch": null,
-          "revision": "61f68bf48f5f8d558f84b44ea528211857eb23bc",
+          "revision": "e706248845b5f03e02d1daa2b5d7a86fcf454a94",
           "version": null
         }
       }
