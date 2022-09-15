@@ -19,7 +19,6 @@
 import XCTest
 @testable import BugReport
 
-@available(iOS 14.0, *)
 final class FormViewModelTests: XCTestCase {
     
     private let emailValue = "elon@tesla.com"

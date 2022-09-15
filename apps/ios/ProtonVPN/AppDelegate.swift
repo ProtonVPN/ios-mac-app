@@ -81,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         // Handle Siri intents
         let prefix = "com.protonmail.vpn."
-        guard #available(iOS 12.0, *), userActivity.activityType.hasPrefix(prefix) else {
+        guard userActivity.activityType.hasPrefix(prefix) else {
             return false
         }
         

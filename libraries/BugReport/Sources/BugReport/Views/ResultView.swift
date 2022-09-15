@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct ResultView: View {
     var error: Error?
     var finishCallback: (() -> Void)?
@@ -98,7 +98,7 @@ struct ResultView: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         ResultView(error: nil)

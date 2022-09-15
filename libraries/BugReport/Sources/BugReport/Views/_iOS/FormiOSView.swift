@@ -21,7 +21,7 @@ import SwiftUI
 
 /// Thirst step of Report Bug flow.
 /// Asks user some questions to collect all the needed debug information.
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct FormiOSView: View {
 
     @StateObject var viewModel: FormViewModel
@@ -109,7 +109,7 @@ struct FormiOSView: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
         let fields = [

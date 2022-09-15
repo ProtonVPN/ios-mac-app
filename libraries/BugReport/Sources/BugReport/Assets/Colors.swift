@@ -7,7 +7,6 @@
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
-//
 //  ProtonVPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,7 +19,6 @@ import Foundation
 import SwiftUI
 
 /// All the colors used through this module. Colors.testColors is for testing purposes only. Apps should provide their own set of colors.
-@available(iOS 14.0, *)
 public struct Colors {
 
     public init(primary: Color, interactive: Color, interactiveSecondary: Color, interactiveActive: Color, interactiveDisabled: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundWeak: Color, backgroundStrong: Color?, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
@@ -81,12 +79,10 @@ public struct Colors {
 
 }
 
-@available(iOS 14.0, *)
 struct ColorsEnvironmentKey: EnvironmentKey {
     static var defaultValue = Colors.testColors
 }
 
-@available(iOS 14.0, *)
 extension EnvironmentValues {
     var colors: Colors {
         get { self[ColorsEnvironmentKey.self] }
@@ -94,7 +90,6 @@ extension EnvironmentValues {
     }
 }
 
-@available(iOS 14.0, *)
 fileprivate extension Color {
     init(rgbValue: UInt) {
         self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,

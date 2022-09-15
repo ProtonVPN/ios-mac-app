@@ -19,7 +19,6 @@
 import Foundation
 import SwiftUI
 
-@available(iOS 14.0, *)
 final class MacBugReportViewModel: ObservableObject {
 
     @Published var page: Page

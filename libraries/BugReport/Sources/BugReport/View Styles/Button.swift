@@ -18,14 +18,14 @@
 
 import SwiftUI
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 private extension ButtonStyle {
     var paddingHorizontal: CGFloat { 16 }
     var cornerRadius: CGFloat { 8 }
     var pressedColorOpacity: Double { 0.5 }
 }
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct PrimaryButtonStyle: ButtonStyle {
     @Environment(\.colors) var colors: Colors
     @Environment(\.isEnabled) private var isEnabled: Bool
@@ -55,7 +55,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
 }
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct SecondaryButtonStyle: ButtonStyle {
     @Environment(\.colors) var colors: Colors
 
@@ -69,7 +69,7 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
 }
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct UpdateButtonStyle: ButtonStyle {
     @Environment(\.colors) var colors: Colors
 
@@ -86,7 +86,7 @@ struct UpdateButtonStyle: ButtonStyle {
 
 // MARK: - Mac only styles
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct CategoryButtonStyle: ButtonStyle {
     @Environment(\.colors) var colors: Colors
     private var horizontalPadding = 32.0
@@ -104,7 +104,7 @@ struct CategoryButtonStyle: ButtonStyle {
     }
 }
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct BackButtonStyle: ButtonStyle {
     @Environment(\.colors) var colors: Colors
 

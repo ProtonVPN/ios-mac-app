@@ -18,7 +18,6 @@
 
 import Foundation
 
-@available(iOS 14.0, *)
 public final class IOSUpdateViewModel: ObservableObject {
 
     @Published var updateIsAvailable: Bool

@@ -512,9 +512,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var killSwitch: Bool {
         get {
-            #if os(iOS)
-            guard #available(iOS 14, *) else { return false }
-            #endif
             return storage.defaults.bool(forKey: Keys.killSwitch.rawValue)
         }
         set {

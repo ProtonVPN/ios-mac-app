@@ -75,70 +75,6 @@ extension URLRequest {
 }
 
 extension HTTPURLResponse {
-    @available(iOS, introduced: 10, deprecated: 13)
-    private static func oldParseHelper(scanner: Scanner, encoding: String.Encoding, requestData: Data) throws -> (httpVersion: String,
-                                                                                                                  statusCode: Int,
-                                                                                                                  headers: [(header: String, value: String)],
-                                                                                                                  body: Data?) {
-        let parseError = HTTPError.parseError
-
-        let space = CharacterSet(charactersIn: " ")
-        let newline = CharacterSet(charactersIn: "\r\n")
-        let colon = CharacterSet(charactersIn: ":")
-        let skip = space.union(newline).union(colon)
-        scanner.charactersToBeSkipped = skip
-
-        var _httpVersion: NSString?
-        guard scanner.scanUpToCharacters(from: space, into: &_httpVersion), let httpVersion = _httpVersion as? String else {
-            throw parseError
-        }
-
-        var statusCode: Int = 0
-        guard scanner.scanInt(&statusCode) else {
-            throw parseError
-        }
-
-        var statusMessage: NSString?
-        guard scanner.scanUpToCharacters(from: newline, into: &statusMessage) else {
-            throw parseError
-        }
-
-        let doubleNewline = "\r\n\r\n"
-
-        var _allHeaders: NSString?
-        var headerEnd = scanner.scanLocation
-        guard scanner.scanUpTo(doubleNewline, into: &_allHeaders), let allHeaders = _allHeaders else {
-            throw parseError
-        }
-
-        if !scanner.isAtEnd {
-            headerEnd = scanner.scanLocation
-        }
-
-        let headersScanner = Scanner(string: allHeaders as String)
-        headersScanner.charactersToBeSkipped = skip
-        var headers: [(String, String)] = []
-        do {
-            var _header, _value: NSString?
-
-            while headersScanner.scanUpToCharacters(from: colon, into: &_header) &&
-                    headersScanner.scanUpToCharacters(from: newline, into: &_value),
-                    let header = _header as? String, let value = _value as? String {
-                headers.append((header, value))
-            }
-        }
-
-        var body: Data?
-        if let doubleNewlineData = doubleNewline.data(using: encoding),
-           requestData[headerEnd...].starts(with: doubleNewlineData) {
-            headerEnd += doubleNewlineData.count
-            body = requestData[headerEnd...]
-        }
-
-        return (httpVersion, statusCode, headers, body)
-    }
-
-    @available(iOS 13, *)
     private static func parseHelper(scanner: Scanner, encoding: String.Encoding) throws -> (httpVersion: String,
                                                                                             statusCode: Int,
                                                                                             headers: [(header: String, value: String)],
@@ -206,14 +142,8 @@ extension HTTPURLResponse {
         let headers: [(header: String, value: String)]
         let body: Data?
 
-        if #available(iOS 13, *) {
-            (httpVersion, statusCode, headers, body) = try parseHelper(scanner: scanner,
-                                                                       encoding: encoding)
-        } else {
-            (httpVersion, statusCode, headers, body) = try oldParseHelper(scanner: scanner,
-                                                                          encoding: encoding,
-                                                                          requestData: data)
-        }
+        (httpVersion, statusCode, headers, body) = try parseHelper(scanner: scanner,
+                                                                   encoding: encoding)
 
         // For some nonsensical reason, Foundation likes to assume that headers and their values can
         // be represented as dictionaries, despite the fact that including multiple copies of the same

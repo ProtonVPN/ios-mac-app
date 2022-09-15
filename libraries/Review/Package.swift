@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Review",
     defaultLocalization: "en",
-    platforms: [.iOS(.v12), .macOS(.v10_14)],
+    platforms: [.iOS(.v14), .macOS(.v10_14)],
     products: [
         .library(
             name: "Review",

@@ -19,7 +19,6 @@
 import BugReport
 import SwiftUI
 
-@available(iOS 14.0.0, *)
 extension BugReport.Colors {
     public init() {
         self.init(primary: Color(.brandLighten20Color()),
