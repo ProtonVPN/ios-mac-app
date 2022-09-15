@@ -21,7 +21,6 @@ import SwiftUI
 
 /// First step of Bug Report flow.
 /// Asks user to define problem category.
-@available(iOS 14.0, *)
 public struct BugReportiOSView: View {
 
     private weak var delegate: BugReportDelegate? = CurrentEnv.bugReportDelegate
@@ -77,7 +76,6 @@ public struct BugReportiOSView: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
 struct BugReportView_Previews: PreviewProvider {
     private static let bugReport = MockBugReportDelegate(model: .mock)
 

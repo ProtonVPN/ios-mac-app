@@ -23,7 +23,6 @@ struct IsLoadingEnvironmentKey: EnvironmentKey {
     static var defaultValue = false
 }
 
-@available(iOS 14.0, *)
 extension EnvironmentValues {
     var isLoading: Bool {
         get { self[IsLoadingEnvironmentKey.self] }

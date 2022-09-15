@@ -18,7 +18,6 @@
 
 import Foundation
 
-@available(iOS 14.0, *)
 struct BugReportEnvironment {
     public weak var bugReportDelegate: BugReportDelegate?
     public var assetsBundle = Bundle.module
@@ -27,5 +26,4 @@ struct BugReportEnvironment {
     #endif
 }
 
-@available(iOS 14.0, *)
 var CurrentEnv = BugReportEnvironment()

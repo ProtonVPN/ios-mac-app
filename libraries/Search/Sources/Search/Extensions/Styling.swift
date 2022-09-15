@@ -48,12 +48,7 @@ let subtitleStyle = concat(centeredTextStyle, and: {
 let searchBarStyle: (UISearchBar) -> Void = {
     $0.backgroundImage = UIImage()
     $0.tintColor = colors.weakText
-    let searchField: UITextField
-    if #available(iOS 13.0, *) {
-        searchField = $0.searchTextField
-    } else {
-        searchField = $0.value(forKey: "searchField") as! UITextField
-    }
+    let searchField = $0.searchTextField
     searchField.textColor = colors.weakText
     searchField.backgroundColor = colors.secondaryBackground
 }

@@ -18,7 +18,6 @@
 
 import Foundation
 
-@available(iOS 14.0, *)
 final class FormViewModel: ObservableObject {
 
     @Published var fields: [FormInputField]

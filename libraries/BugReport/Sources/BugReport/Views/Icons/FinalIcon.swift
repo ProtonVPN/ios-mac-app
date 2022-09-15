@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// Image for usage in final modal. Can present success or failure state.
-@available(iOS 14.0, *)
 struct FinalIcon: View {
     enum State {
         case success
@@ -47,7 +46,6 @@ struct FinalIcon: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
 struct FinalIcon_Previews: PreviewProvider {
     static var previews: some View {
         FinalIcon(state: .success)

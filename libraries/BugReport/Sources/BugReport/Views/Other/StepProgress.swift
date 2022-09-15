@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// View representing progress of process that has steps.
-@available(iOS 14.0, *)
 struct StepProgress: View {
     var step: UInt
     var steps: UInt
@@ -56,7 +55,7 @@ struct StepProgress: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, macOS 11, *)
+@available(macOS 11, *)
 struct StepProgress_Previews: PreviewProvider {
     static var previews: some View {
         StepProgress(step: 2, steps: 3, colorMain: .green, colorText: .purple, colorSecondary: .red)
