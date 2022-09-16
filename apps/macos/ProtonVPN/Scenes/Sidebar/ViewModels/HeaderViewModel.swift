@@ -156,9 +156,15 @@ final class HeaderViewModel {
         return nil
     }
 
-    func prefetchImages() {
+    func prefetchImages(completion: @escaping (Bool) -> Void) {
         let urls = announcementsViewModel.backgroundURLs()
-        SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil)
+        guard !urls.isEmpty else {
+            completion(true)
+            return
+        }
+        SDWebImagePrefetcher.shared.prefetchURLs(urls) { finishedUrls, skippedUrls in
+            completion(finishedUrls == urls.count)
+        }
     }
 
     var announcementTooltip: String? {

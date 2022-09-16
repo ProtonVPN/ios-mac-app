@@ -90,7 +90,7 @@ public class CoreAppConstants {
         public static let quickReconnectTime: TimeInterval = 0.5
         
         // Pull announcements from API
-        public static let announcementRefreshTime: TimeInterval = 12 * 60 * 60 // 12 h
+        public static let announcementRefreshTime: TimeInterval = 3 * 60 * 60 // 12 h
     }
     
     public struct Maintenance {

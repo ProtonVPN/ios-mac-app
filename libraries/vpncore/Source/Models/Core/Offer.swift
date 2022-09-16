@@ -135,8 +135,8 @@ public struct OfferFeature: Codable {
 public struct OfferButton: Codable {
     public let url: String
     public let text: String
-    public let action: String // "OpenURL"
-    public let with: [String] // ["AutoLogin"]
+    public let action: String? // "OpenURL"
+    public let with: [String]? // ["AutoLogin"]
 
     enum CodingKeys: String, CodingKey {
         case text
