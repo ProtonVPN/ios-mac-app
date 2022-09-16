@@ -22,10 +22,11 @@
 
 import XCTest
 import GSMessages
-import vpncore
+@testable import vpncore
 
 @testable import ProtonVPN
 
+fileprivate let sessionService = SessionServiceMock()
 fileprivate let windowService = WindowServiceMock()
 fileprivate let uiAlertService = IosUiAlertService(windowService: windowService, planService: nil)
 
@@ -113,6 +114,9 @@ fileprivate class WindowServiceMock: WindowService {
 }
 
 fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
+    func makeSessionService() -> SessionService {
+        return sessionService
+    }
     
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService

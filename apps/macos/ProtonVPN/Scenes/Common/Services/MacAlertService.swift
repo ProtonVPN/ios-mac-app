@@ -331,7 +331,10 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: AnnouncementOfferAlert) {
-        guard let panelMode = alert.data.panelMode() else { return }
+        guard let panelMode = alert.data.panelMode() else {
+            log.warning("Couldn't determine panelMode from: \(alert.data)")
+            return
+        }
         let vc: NSViewController
         switch panelMode {
         case .legacy(let legacyPanel):
