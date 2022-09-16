@@ -77,7 +77,6 @@ final class DependencyContainer: Container {
 
         super.init(Config(os: "MacOS",
                           appIdentifierPrefix: prefix,
-
                           appGroup: "\(prefix)group.ch.protonvpn.mac",
                           accessGroup: "\(prefix)ch.protonvpn.macos",
                           openVpnExtensionBundleIdentifier: "ch.protonvpn.mac.OpenVPN-Extension",
