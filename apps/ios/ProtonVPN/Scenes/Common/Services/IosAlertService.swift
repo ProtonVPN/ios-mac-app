@@ -314,11 +314,15 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: AnnouncementOfferAlert) {
-        guard let panelMode = alert.data.panelMode() else { return }
+        guard let panelMode = alert.data.panelMode() else {
+            log.warning("Couldn't determine panelMode from: \(alert.data)")
+            return
+        }
         let announcement: AnnouncementViewController
         switch panelMode {
         case .legacy(let legacyPanel):
             announcement = AnnouncementDetailViewController(legacyPanel)
+            announcement.modalPresentationStyle = .fullScreen
         case .image(let imagePanel):
             announcement = AnnouncementImageViewController(data: imagePanel, sessionService: factory.makeSessionService())
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen

@@ -159,11 +159,13 @@ final class HeaderViewModel {
     func prefetchImages(completion: @escaping (Bool) -> Void) {
         let urls = announcementsViewModel.backgroundURLs()
         guard !urls.isEmpty else {
+            log.debug("No URLs to prefetch")
             completion(true)
             return
         }
-        SDWebImagePrefetcher.shared.prefetchURLs(urls) { finishedUrls, skippedUrls in
-            completion(finishedUrls == urls.count)
+        SDWebImagePrefetcher.shared.prefetchURLs(urls) { finishedUrlsCount, skippedUrlsCount in
+            log.debug("SDWebImagePrefetcher couldn't prefetch all urls, skipped urls count: \(skippedUrlsCount)")
+            completion(finishedUrlsCount == urls.count)
         }
     }
 

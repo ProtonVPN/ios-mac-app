@@ -61,12 +61,14 @@ final class AnnouncementImageViewController: NSViewController {
 
         guard let imageURL = data.fullScreenImage.firstURL else {
             // This case should not happen, we're preloading the image before we allow the user to open the announcement
+            log.warning("Couldn't retrieve image URL from data: \(data)")
             view.window?.close()
             return
         }
         imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
             guard error == nil else {
                 self?.view.window?.close()
+                log.warning("Couldn't retrieve image from URL: \(imageURL)")
                 return
             }
             self?.progressIndicator.stopAnimation(nil)
