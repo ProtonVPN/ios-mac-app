@@ -76,7 +76,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
         imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
             guard error == nil else {
-                cancelled?()
+                self?.cancelled?()
                 return
             }
             self?.progressIndicator.stopAnimating()

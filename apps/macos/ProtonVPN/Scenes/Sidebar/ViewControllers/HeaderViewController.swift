@@ -167,8 +167,13 @@ final class HeaderViewController: NSViewController {
             return
         }
 
-        viewModel.prefetchImages()
+        viewModel.prefetchImages { [weak self] success in
+            guard success else { return }
+            self?.setupAnnouncementsButton()
+        }
+    }
 
+    private func setupAnnouncementsButton() {
         let setup = { [weak self] (image: NSImage) in
             self?.announcementsButton.image = image
             self?.announcementsButton.isHidden = false

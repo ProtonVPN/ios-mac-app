@@ -33,9 +33,16 @@ extension UIViewController {
             return
         }
 
+        viewModel.prefetchImages { [weak self] success in
+            guard success else { return }
+            self?.setupAnnouncementsButton(iconUrl: viewModel.iconUrl)
+        }
+    }
+
+    private func setupAnnouncementsButton(iconUrl: URL?) {
         let setup = { [weak self] in
             self?.renderAnnouncementsButtonBadge()
-            // Button may not have been shown yet and this case bagde will not be added, so run this a little later
+            // Button may not have been shown yet and this case badge will not be added, so run this a little later
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
                 self?.renderAnnouncementsButtonBadge()
             })
@@ -51,7 +58,7 @@ extension UIViewController {
         }
         
         if navigationItem.rightBarButtonItems?.contains(where: { $0 is BadgedBarButtonItem }) == false {
-            if let iconUrl = viewModel.iconUrl {
+            if let iconUrl = iconUrl {
                 let downloader = ImageDownloader()
                 let urlRequest = URLRequest(url: iconUrl)
 
