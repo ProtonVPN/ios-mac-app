@@ -47,7 +47,7 @@ public struct Announcement: Codable {
 extension Announcement {
     var prefetchableImage: URL? {
         guard case .image(let panel) = offer?.panel?.panelMode(),
-              let url = panel.fullScreenImage.preferredSource() else {
+              let url = panel.fullScreenImage.firstURL else {
             return nil
         }
         return url

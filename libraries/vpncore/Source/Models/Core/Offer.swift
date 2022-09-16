@@ -54,6 +54,13 @@ public struct FullScreenImage: Codable {
     public let source: [Source]
     public let alternativeText: String
 
+    public var firstURL: URL? {
+        guard let urlString = source.first?.url else {
+            return nil
+        }
+        return URL(string: urlString)
+    }
+
     public struct Source: Codable {
         public let url: String
         public let type: String
