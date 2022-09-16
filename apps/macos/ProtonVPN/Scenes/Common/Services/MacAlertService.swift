@@ -337,7 +337,7 @@ extension MacAlertService: CoreAlertService {
         case .legacy(let legacyPanel):
             vc = AnnouncementDetailViewController(legacyPanel)
         case .image(let imagePanel):
-            vc = AnnouncementImageViewController(imagePanel)
+            vc = AnnouncementImageViewController(data: imagePanel, sessionService: sessionService)
         }
 
         windowService.presentKeyModal(viewController: vc)

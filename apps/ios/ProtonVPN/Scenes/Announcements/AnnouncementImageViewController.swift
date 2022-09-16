@@ -35,12 +35,15 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
     var didShowTheWholeModal = false
 
+    private let sessionService: SessionService
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(_ data: OfferPanel.ImagePanel) {
+    init(data: OfferPanel.ImagePanel, sessionService: SessionService) {
         self.data = data
+        self.sessionService = sessionService
         super.init(nibName: String(describing: AnnouncementImageViewController.self), bundle: nil)
     }
 
@@ -107,7 +110,17 @@ final class AnnouncementImageViewController: AnnouncementViewController {
     }
 
     @IBAction private func actionButtonTapped(_ sender: Any) {
-        urlRequested?(data.button.url)
+        actionButton.isEnabled = false
+        guard data.button.action == "OpenURL",
+              data.button.with?.contains("AutoLogin") == true else {
+                actionButton.isEnabled = true
+                  urlRequested?(data.button.url)
+                  return
+              }
+        sessionService.getUpgradePlanSession { [weak self] url in
+            self?.actionButton.isEnabled = true
+            self?.urlRequested?(url)
+        }
     }
 
     @IBAction private func closeButtonTapped(_ sender: Any) {
