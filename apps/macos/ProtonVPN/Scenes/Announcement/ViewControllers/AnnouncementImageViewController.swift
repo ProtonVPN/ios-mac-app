@@ -46,16 +46,7 @@ final class AnnouncementImageViewController: NSViewController {
     override func viewDidLayout() {
         super.viewDidLayout()
         view.window?.centerWindowOnScreen()
-
-//        adjustImageViewHeight()
     }
-
-//    private func adjustImageViewHeight() {
-//        guard let image = imageView.image else { return }
-//        let imageRatio = image.size.height / image.size.width
-//        let height = imageView.frame.size.width * imageRatio
-//        imageViewHeight.constant = height
-//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +57,14 @@ final class AnnouncementImageViewController: NSViewController {
         progressIndicator.startAnimation(nil)
         actionButton.isHidden = true
 
-        guard let imageURL = data.fullScreenImage.preferredSource() else {
-            // close window or present an error message
+        guard let imageURL = data.fullScreenImage.firstURL else {
+            // This case should not happen, we're preloading the image before we allow the user to open the announcement
+            view.window?.close()
             return
         }
         imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
             guard error == nil else {
-                // close window or present an error message or open browser
+                self?.view.window?.close()
                 return
             }
             self?.progressIndicator.stopAnimation(nil)

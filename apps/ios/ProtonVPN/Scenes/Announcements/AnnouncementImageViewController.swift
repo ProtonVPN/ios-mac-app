@@ -66,8 +66,9 @@ final class AnnouncementImageViewController: AnnouncementViewController {
     }
 
     private func setupImage() {
-        guard let imageURL = data.fullScreenImage.preferredSource() else {
-            // close window or present an error message
+        guard let imageURL = data.fullScreenImage.firstURL else {
+            // This case should not happen, we're preloading the image before we allow the user to open the announcement
+            cancelled?()
             return
         }
         progressIndicator.startAnimating()
@@ -75,7 +76,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
         imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
             guard error == nil else {
-                // close window or present an error message or open browser
+                cancelled?()
                 return
             }
             self?.progressIndicator.stopAnimating()
