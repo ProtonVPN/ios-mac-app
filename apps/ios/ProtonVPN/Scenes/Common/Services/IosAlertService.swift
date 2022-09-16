@@ -29,7 +29,7 @@ import ProtonCore_UIFoundations
 
 class IosAlertService {
         
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory & SafariServiceFactory & PlanServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory & SafariServiceFactory & PlanServiceFactory & SessionServiceFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -320,7 +320,8 @@ extension IosAlertService: CoreAlertService {
         case .legacy(let legacyPanel):
             announcement = AnnouncementDetailViewController(legacyPanel)
         case .image(let imagePanel):
-            announcement = AnnouncementImageViewController(imagePanel)
+            announcement = AnnouncementImageViewController(data: imagePanel, sessionService: factory.makeSessionService())
+            announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }
         announcement.cancelled = { [weak self] in
             self?.windowService.dismissModal { }
@@ -328,7 +329,6 @@ extension IosAlertService: CoreAlertService {
         announcement.urlRequested = { [weak self] url in
             self?.safariService.open(url: url)
         }
-        announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         windowService.present(modal: announcement)
     }
 

@@ -28,13 +28,15 @@ final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var actionButton: PrimaryActionButton!
 
     private let data: OfferPanel.ImagePanel
+    private let sessionService: SessionService
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(_ data: OfferPanel.ImagePanel) {
+    init(data: OfferPanel.ImagePanel, sessionService: SessionService) {
         self.data = data
+        self.sessionService = sessionService
         super.init(nibName: NSNib.Name(String(describing: AnnouncementImageViewController.self)), bundle: nil)
     }
 
@@ -73,6 +75,16 @@ final class AnnouncementImageViewController: NSViewController {
     }
 
     @IBAction private func didTapActionButton(_ sender: Any) {
-        SafariService.openLink(url: data.button.url)
+        actionButton.isEnabled = false
+        guard data.button.action == "OpenURL",
+              data.button.with?.contains("AutoLogin") == true else {
+            actionButton.isEnabled = true
+            SafariService.openLink(url: data.button.url)
+            return
+        }
+        sessionService.getUpgradePlanSession { [weak actionButton] url in
+            actionButton?.isEnabled = true
+            SafariService.openLink(url: url)
+        }
     }
 }
