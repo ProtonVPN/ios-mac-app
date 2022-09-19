@@ -1055,7 +1055,7 @@
 "_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Oturum açılacak Proton VPN görüntüle...";
+"_open_app_to_log_in" = "Oturum açmak için Proton VPN uygulamasını aç...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN günlük kayıtları";

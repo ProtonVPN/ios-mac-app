@@ -61,7 +61,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
+			<string>Honderden servers in %d een land</string>
 			<key>other</key>
 			<string>Honderden servers in %d landen</string>
 		</dict>
@@ -77,9 +77,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Verbind tot %d apparat op hetzelfde moment</string>
+			<string>Verbind tot %d apparaat op hetzelfde moment</string>
 			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>Verbind tot %d apparaten op hetzelfde moment</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -93,7 +93,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>U heeft het maximale aantal instellingswijzigingen bereikt. Probeer het over ten minste %d minut opnieuw.</string>
+			<string>U heeft het maximale aantal instellingswijzigingen bereikt. Probeer het over ten minste %d minuut opnieuw.</string>
 			<key>other</key>
 			<string>U heeft het maximale aantal instellingswijzigingen bereikt. Probeer het over ten minste %d minuten opnieuw.</string>
 		</dict>
