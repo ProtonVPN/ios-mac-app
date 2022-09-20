@@ -222,30 +222,48 @@ public class PropertiesManager: PropertiesManagerProtocol {
             postNotificationOnUIThread(type(of: self).hasConnectedNotification, object: newValue)
         }
     }
-    
+
+    private var _lastIkeConnection: ConnectionConfiguration?
     public var lastIkeConnection: ConnectionConfiguration? {
         get {
+            if let _lastIkeConnection = _lastIkeConnection {
+                return _lastIkeConnection
+            }
+
             return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastIkeConnection.rawValue)
         }
         set {
+            _lastIkeConnection = newValue
             storage.setEncodableValue(newValue, forKey: Keys.lastIkeConnection.rawValue)
         }
     }
-    
+
+    private var _lastOpenVpnConnection: ConnectionConfiguration?
     public var lastOpenVpnConnection: ConnectionConfiguration? {
         get {
+            if let _lastOpenVpnConnection = _lastOpenVpnConnection {
+                return _lastOpenVpnConnection
+            }
+
             return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastOpenVpnConnection.rawValue)
         }
         set {
+            _lastOpenVpnConnection = newValue
             storage.setEncodableValue(newValue, forKey: Keys.lastOpenVpnConnection.rawValue)
         }
     }
     
+    private var _lastWireguardConnection: ConnectionConfiguration?
     public var lastWireguardConnection: ConnectionConfiguration? {
         get {
+            if let _lastWireguardConnection = _lastWireguardConnection {
+                return _lastWireguardConnection
+            }
+
             return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastWireguardConnection.rawValue)
         }
         set {
+            _lastWireguardConnection = newValue
             storage.setEncodableValue(newValue, forKey: Keys.lastWireguardConnection.rawValue)
         }
     }
@@ -561,12 +579,18 @@ public class PropertiesManager: PropertiesManagerProtocol {
             postNotificationOnUIThread(type(of: self).smartProtocolNotification, object: newValue)
         }
     }
-    
+
+    private var _streamingServices: StreamingDictServices?
     public var streamingServices: StreamingDictServices {
         get {
+            if let _streamingServices = _streamingServices {
+                return _streamingServices
+            }
+
             return storage.getDecodableValue(StreamingDictServices.self, forKey: Keys.streamingServices.rawValue) ?? StreamingDictServices()
         }
         set {
+            _streamingServices = newValue
             storage.setEncodableValue(newValue, forKey: Keys.streamingServices.rawValue)
         }
     }
