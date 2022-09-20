@@ -115,7 +115,8 @@ final class ExtensionAPIService {
         }
     }
 
-    init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
+    init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
+        self.appInfo = appInfo
         self.storage = storage
         self.dataTaskFactoryGetter = dataTaskFactoryGetter
         self.timerFactory = timerFactory
@@ -146,7 +147,7 @@ final class ExtensionAPIService {
     private let dataTaskFactoryGetter: (() -> DataTaskFactory)
     private let timerFactory: TimerFactory
     private let keychain: AuthKeychainHandle
-    private let appInfo = AppInfoImplementation(context: .wireGuardExtension)
+    private let appInfo: AppInfo
 
     var dataTaskFactory: DataTaskFactory { dataTaskFactoryGetter() }
 

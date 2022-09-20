@@ -2651,6 +2651,7 @@
 				D5136C0C2284154F0002C095 /* Run SwiftLint Script */,
 				AA41AC376972247A822D1DEF /* [CP] Embed Pods Frameworks */,
 				F3521E0F264A9D2C0070F177 /* Embed Frameworks */,
+				4C07DA4828D890CA00B5EB1D /* Embed Build Info */,
 			);
 			buildRules = (
 			);
@@ -2782,6 +2783,7 @@
 				E9445D5B26528A790075FD31 /* Frameworks */,
 				E9445D5C26528A790075FD31 /* Resources */,
 				E9C9FDD7268DE35B005665C6 /* Run Swiftlint */,
+				4C07DA4C28D9ABCF00B5EB1D /* Embed Build Info */,
 			);
 			buildRules = (
 			);
@@ -3148,6 +3150,46 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4C07DA4828D890CA00B5EB1D /* Embed Build Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Embed Build Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${SRCROOT}/../../scripts/describe-revision.sh ios \"$SCRIPT_INPUT_FILE_0\"\n";
+		};
+		4C07DA4C28D9ABCF00B5EB1D /* Embed Build Info */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "Embed Build Info";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${SRCROOT}/../../scripts/describe-revision.sh ios \"$SCRIPT_INPUT_FILE_0\"\n";
 		};
 		82C3CF3ED925BFD883546B6F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
