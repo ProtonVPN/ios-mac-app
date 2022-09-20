@@ -16,6 +16,7 @@ import Timer
 class PacketTunnelProvider: NEPacketTunnelProvider {
     private var timerFactory: TimerFactory!
     private var dataTaskFactory: DataTaskFactory!
+    private var appInfo: AppInfo = AppInfoImplementation(context: .wireGuardExtension)
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
 
@@ -42,6 +43,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let apiService = ExtensionAPIService(storage: storage,
                                              timerFactory: timerFactory,
                                              keychain: authKeychain,
+                                             appInfo: appInfo,
                                              dataTaskFactoryGetter: dataTaskFactoryGetter)
 
         certificateRefreshManager = ExtensionCertificateRefreshManager(apiService: apiService,
@@ -300,6 +302,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     private func flushLogsToFile() {
+        wg_log(.info, message: "Build info: \(appInfo.debugInfoString)")
         guard let path = FileManager.logTextFileURL?.path else { return }
         if Logger.global?.writeLog(to: path) ?? false {
             wg_log(.info, message: "flushLogsToFile written to file \(path) ")

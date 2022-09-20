@@ -44,6 +44,7 @@ class HelpMenuViewModel {
                         & LogFileManagerFactory
                         & LogContentProviderFactory
                         & AuthKeychainHandleFactory
+                        & AppInfoFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -55,12 +56,17 @@ class HelpMenuViewModel {
     private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     private lazy var logContentProvider: LogContentProvider = factory.makeLogContentProvider()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-    
+
     init(factory: Factory) {
         self.factory = factory
     }
+
+    func logDebugInfoString() {
+        log.info("Build info: \(factory.makeAppInfo().debugInfoString)")
+    }
     
     func openLogsFolderAction() {
+        logDebugInfoString()
         navService.openLogsFolder()
     }
     
@@ -90,6 +96,7 @@ class HelpMenuViewModel {
     }
     
     func openReportBug() {
+        logDebugInfoString()
         navService.showReportBug()
     }
     

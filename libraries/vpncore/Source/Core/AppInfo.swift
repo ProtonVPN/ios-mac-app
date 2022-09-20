@@ -73,6 +73,10 @@ extension AppInfo {
         return bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
     }
 
+    public var revisionInfo: String {
+        return bundleInfoDictionary["RevisionInfo"] as? String ?? ""
+    }
+
     private var platformName: String {
         #if os(iOS)
             return "iOS"
@@ -91,13 +95,21 @@ extension AppInfo {
         "\(platformName) \(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
     }
 
-    public var userAgent: String {
+    private var osVersionAndModelString: String {
         var modelString: String = ""
         if let modelName = modelName {
             modelString = "; \(modelName)"
         }
 
-        return "\(processName)/\(bundleShortVersion) (\(osVersionString)\(modelString))"
+        return "\(osVersionString)\(modelString)"
+    }
+
+    public var userAgent: String {
+        "\(processName)/\(bundleShortVersion) (\(osVersionAndModelString))"
+    }
+
+    public var debugInfoString: String {
+        "\(osVersionAndModelString). \(processName): \(revisionInfo)"
     }
 }
 
