@@ -28,7 +28,7 @@ public struct Announcement: Codable {
     public let notificationID: String
     public let startTime: Date
     public let endTime: Date
-    public let type: Int
+    public let type: NotificationType
     public let offer: Offer?
     
     // Is set from the app, NOT api
@@ -41,6 +41,13 @@ public struct Announcement: Codable {
     
     mutating func setAsRead(_ read: Bool) {
         isRead = read
+    }
+}
+
+extension Announcement {
+    public enum NotificationType: Int, Codable {
+        case `default` = 0
+        case oneTime = 1
     }
 }
 
