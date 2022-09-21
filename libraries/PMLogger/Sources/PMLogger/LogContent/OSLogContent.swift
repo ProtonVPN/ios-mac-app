@@ -19,6 +19,7 @@
 import Foundation
 import OSLog
 
+/// Reads all available logs from OSLog subsystem
 @available(iOS 15, macOS 12, *)
 public class OSLogContent: LogContent {
     
