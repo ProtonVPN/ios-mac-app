@@ -32,3 +32,6 @@ libraries/Review/Tests/ReviewTests/ExtensionsTests.swift.plist
 libraries/Review/Tests/ReviewTests/UserDefaultsReviewDataStorageTests.swift.plist
 swiftlint.json
 codequality_report.json
+
+# Produced when running scripts/code_quality.sh locally
+codequality_report.json-e

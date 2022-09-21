@@ -428,6 +428,16 @@
 		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
+		E5CBA02128DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
+		E5CBA02228DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
+		E5CBA02428DB23E600EA1F25 /* FullScreenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02328DB23E600EA1F25 /* FullScreenImage.swift */; };
+		E5CBA02528DB23E600EA1F25 /* FullScreenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02328DB23E600EA1F25 /* FullScreenImage.swift */; };
+		E5CBA02728DB23FB00EA1F25 /* OfferPanel+Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02628DB23FB00EA1F25 /* OfferPanel+Mode.swift */; };
+		E5CBA02828DB23FB00EA1F25 /* OfferPanel+Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02628DB23FB00EA1F25 /* OfferPanel+Mode.swift */; };
+		E5CBA02A28DB242B00EA1F25 /* OfferFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02928DB242B00EA1F25 /* OfferFeature.swift */; };
+		E5CBA02B28DB242B00EA1F25 /* OfferFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02928DB242B00EA1F25 /* OfferFeature.swift */; };
+		E5CBA02D28DB243900EA1F25 /* OfferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02C28DB243900EA1F25 /* OfferButton.swift */; };
+		E5CBA02E28DB243900EA1F25 /* OfferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02C28DB243900EA1F25 /* OfferButton.swift */; };
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
@@ -947,6 +957,11 @@
 		E53D64B728115B580060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
+		E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferPanel.swift; sourceTree = "<group>"; };
+		E5CBA02328DB23E600EA1F25 /* FullScreenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImage.swift; sourceTree = "<group>"; };
+		E5CBA02628DB23FB00EA1F25 /* OfferPanel+Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfferPanel+Mode.swift"; sourceTree = "<group>"; };
+		E5CBA02928DB242B00EA1F25 /* OfferFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferFeature.swift; sourceTree = "<group>"; };
+		E5CBA02C28DB243900EA1F25 /* OfferButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferButton.swift; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
 		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2010,6 +2025,11 @@
 			children = (
 				D5DCCAC9252B4E0A004CB353 /* Announcement.swift */,
 				D5BCDEA925359F68004BAEE8 /* Offer.swift */,
+				E5CBA02928DB242B00EA1F25 /* OfferFeature.swift */,
+				E5CBA02C28DB243900EA1F25 /* OfferButton.swift */,
+				E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */,
+				E5CBA02628DB23FB00EA1F25 /* OfferPanel+Mode.swift */,
+				E5CBA02328DB23E600EA1F25 /* FullScreenImage.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2622,6 +2642,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E53D64C828116C4A0060C463 /* VPNSessionsCountRequest.swift in Sources */,
+				E5CBA02428DB23E600EA1F25 /* FullScreenImage.swift in Sources */,
 				4242B0322465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
 				F3747BF026D3B93300EF2F00 /* Networking.swift in Sources */,
 				E9DC7A07262DBFAA001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
@@ -2672,6 +2693,7 @@
 				E1B5F67C21B8253500B558B0 /* String+Extension.swift in Sources */,
 				F314141327B1410A007424E9 /* PaidFeaturePropertyProvider.swift in Sources */,
 				E9550E152850DE7B00616DB5 /* Bundle+isTestflightBeta.swift in Sources */,
+				E5CBA02A28DB242B00EA1F25 /* OfferFeature.swift in Sources */,
 				D5966F3B2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				E129C6C222A90E6500D8437E /* VpnGatewayMock.swift in Sources */,
 				D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */,
@@ -2760,6 +2782,7 @@
 				D5DC52C3252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				F365355B2638522E001B7E88 /* LocalAgentState.swift in Sources */,
 				E196BE4C23742116003E5832 /* Collection+Extension.swift in Sources */,
+				E5CBA02128DB23D200EA1F25 /* OfferPanel.swift in Sources */,
 				E1B5F68121B839A300B558B0 /* ServerStorage.swift in Sources */,
 				F34AC17F27F442CD0007FF93 /* RatingSettings.swift in Sources */,
 				D5EA845028C8F59500C8EB7D /* SentryHelper.swift in Sources */,
@@ -2799,6 +2822,7 @@
 				E1B5F67621B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
 				E148AE6521C29A20007AB65A /* ProtonApiError.swift in Sources */,
 				D5ADF5192281975E0062367C /* SiriHelperProtocol.swift in Sources */,
+				E5CBA02728DB23FB00EA1F25 /* OfferPanel+Mode.swift in Sources */,
 				F30B9EA72629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
 				4243631F26555D590027EAEE /* SessionsResponse.swift in Sources */,
 				F30B9EE22629BDC60094C65E /* VpnAuthenticationData.swift in Sources */,
@@ -2829,6 +2853,7 @@
 				E9AF94C126B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */,
 				E1616BC721C7D53D00F42D79 /* PropertiesManager.swift in Sources */,
 				4C4D898327BD0BE800548523 /* Array+Extension.swift in Sources */,
+				E5CBA02D28DB243900EA1F25 /* OfferButton.swift in Sources */,
 				F38F7BE92795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
 				E1B5F66C21B8203200B558B0 /* ServerType.swift in Sources */,
 				F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
@@ -2912,6 +2937,7 @@
 				E53D64C728116B910060C463 /* VPNSessionsCountRequest.swift in Sources */,
 				4242B0332465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
 				D5566E1028DAFF10007CB88F /* Log.swift in Sources */,
+				E5CBA02828DB23FB00EA1F25 /* OfferPanel+Mode.swift in Sources */,
 				F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				F330F00D27FC812900C3AA33 /* PromoCodeRequest.swift in Sources */,
 				F3A3D6DA27C0174C00B474D7 /* NetShieldPropertyProviderMock.swift in Sources */,
@@ -2924,6 +2950,7 @@
 				E1616BD221C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
 				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3A3D6C927C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */,
+				E5CBA02E28DB243900EA1F25 /* OfferButton.swift in Sources */,
 				4237064F262DA3BE00A920CF /* VpnStreamingOption.swift in Sources */,
 				E151126F22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
 				F314140A27B11185007424E9 /* NATType.swift in Sources */,
@@ -2954,6 +2981,7 @@
 				E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
 				E1616C0721C95DD200F42D79 /* ProfileUtility.swift in Sources */,
 				E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */,
+				E5CBA02B28DB242B00EA1F25 /* OfferFeature.swift in Sources */,
 				D5DC52C5252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				F38F7BEA2795657B005B9EA2 /* CoreApiFeatureRequest.swift in Sources */,
 				4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */,
@@ -2978,6 +3006,7 @@
 				4CF40BA32833C0F300C3C501 /* WireguardProviderMessage.swift in Sources */,
 				E129C6C522A90E6600D8437E /* VpnGatewayMock.swift in Sources */,
 				4C096205285B648900556E07 /* SessionServiceMock.swift in Sources */,
+				E5CBA02228DB23D200EA1F25 /* OfferPanel.swift in Sources */,
 				D58874B624FE69260022E438 /* AppSessionRefresher.swift in Sources */,
 				E9AF94C326B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */,
 				F3021D7525E93E2A00EF73A1 /* TroubleshootItem.swift in Sources */,
@@ -3075,6 +3104,7 @@
 				4242B0392465A41A0042145A /* VPNClientConfigRequest.swift in Sources */,
 				F30B9E2F26285B780094C65E /* CertificateRequest.swift in Sources */,
 				F330F01427FC837F00C3AA33 /* PromoCodeResponse.swift in Sources */,
+				E5CBA02528DB23E600EA1F25 /* FullScreenImage.swift in Sources */,
 				E1616C0421C95DB500F42D79 /* ProfileStorage.swift in Sources */,
 				E9DC79BD262DBEDD001A0FC0 /* SmartProtocol.swift in Sources */,
 				E13791B92313D3B300D7B1FA /* ConnectionConfiguration.swift in Sources */,
