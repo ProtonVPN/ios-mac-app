@@ -88,7 +88,7 @@ extension UIScreen {
     func sizeInPixels() -> CGSize {
         let size = UIScreen.main.bounds.size
         let scale = UIScreen.main.scale
-        return CGSize(width: size.width * scale, height: size.height * scale)
+        return size.horizontalSize(withScale: scale)
     }
 }
 
@@ -96,10 +96,18 @@ extension UIScreen {
 
 extension NSScreen {
     static func sizeInPixels() -> CGSize {
-        let size = NSScreen.screens.first?.frame.size ?? CGSize(width: 1920, height: 1080) // fullHD
-        let scale = NSScreen.screens.first?.backingScaleFactor ?? 1
-        return CGSize(width: size.width * scale, height: size.height * scale)
+        let screen = NSApplication.shared.mainWindow?.screen
+        let size = screen?.visibleFrame.size ?? CGSize(width: 1920, height: 1080) // fullHD
+        return size.horizontalSize(withScale: screen?.backingScaleFactor ?? 1)
     }
 }
 
 #endif
+
+extension CGSize {
+    fileprivate func horizontalSize(withScale scale: CGFloat) -> CGSize {
+        let newWidth = max(width, height)
+        let newHeight = min(width, height)
+        return CGSize(width: newWidth * scale, height: newHeight * scale)
+    }
+}

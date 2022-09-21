@@ -112,13 +112,20 @@ final class AnnouncementImageViewController: AnnouncementViewController {
     }
 
     @IBAction private func actionButtonTapped(_ sender: Any) {
+
+        guard data.button.action == "OpenURL" else {
+            log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action ?? "nil")>, url: <\(data.button.url)>")
+            cancelled?()
+            return
+        }
+
+        guard data.button.with?.contains("AutoLogin") == true else {
+            urlRequested?(data.button.url)
+            return
+        }
+
         actionButton.isEnabled = false
-        guard data.button.action == "OpenURL",
-              data.button.with?.contains("AutoLogin") == true else {
-                actionButton.isEnabled = true
-                  urlRequested?(data.button.url)
-                  return
-              }
+
         sessionService.getUpgradePlanSession { [weak self] url in
             self?.actionButton.isEnabled = true
             self?.urlRequested?(url)
