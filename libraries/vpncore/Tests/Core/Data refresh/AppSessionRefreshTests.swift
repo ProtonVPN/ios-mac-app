@@ -21,6 +21,7 @@ import Foundation
 import XCTest
 import Timer
 import TimerMock
+import ProtonCore_TestingToolkit
 
 class AppSessionRefreshTimerTests: XCTestCase {
     var alertService: CoreAlertServiceMock!

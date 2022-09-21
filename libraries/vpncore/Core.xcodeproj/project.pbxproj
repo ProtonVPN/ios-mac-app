@@ -483,6 +483,7 @@
 		E9DC7A0B262DBFAB001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNTCPAvailabilityChecker.swift */; };
 		E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */; };
 		E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */; };
+		E9FDFBF228DB3AE30019B097 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1B5F60C21B6960100B558B0 /* vpncore.framework */; };
 		EC6B47126B111E78B21B786F /* Bundle+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC60F8D6F15BEB1582DE310 /* Bundle+vpncore.swift */; };
 		F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6B25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
@@ -1079,6 +1080,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9FDFBF228DB3AE30019B097 /* vpncore.framework in Frameworks */,
 				E9CB3B0428A676DE0086F22F /* TimerMock in Frameworks */,
 				02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */,
 			);

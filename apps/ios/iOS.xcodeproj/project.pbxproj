@@ -516,6 +516,8 @@
 		E9CB3B0628A691070086F22F /* TimerMock in Frameworks */ = {isa = PBXBuildFile; productRef = E9CB3B0528A691070086F22F /* TimerMock */; };
 		E9E82FA92820273600D9EFBB /* StringBundleIdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E82FA82820273600D9EFBB /* StringBundleIdTests.swift */; };
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
+		E9FDFBF428DB40470019B097 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E9FDFBF328DB40470019B097 /* PMLogger */; };
+		E9FDFBF628DB41580019B097 /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E9FDFBF528DB41580019B097 /* PMLogger */; };
 		ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */; };
 		F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3082A6E27E2293D001A83DF /* CityItemViewModel.swift */; };
@@ -1165,6 +1167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9CB3B0628A691070086F22F /* TimerMock in Frameworks */,
+				E9FDFBF428DB40470019B097 /* PMLogger in Frameworks */,
 				4C221AE828181E8100C4D1E3 /* Crypto_VPN.xcframework in Frameworks */,
 				4C221AE728181E7100C4D1E3 /* Pods_WireGuardNetworkExtensionTests.framework in Frameworks */,
 			);
@@ -1192,6 +1195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9CB3B0028A65E220086F22F /* TimerMock in Frameworks */,
+				E9FDFBF628DB41580019B097 /* PMLogger in Frameworks */,
 				80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2627,6 +2631,7 @@
 			name = WireGuardNetworkExtensionTests;
 			packageProductDependencies = (
 				E9CB3B0528A691070086F22F /* TimerMock */,
+				E9FDFBF328DB40470019B097 /* PMLogger */,
 			);
 			productName = NetworkExtensionTests;
 			productReference = 4CAF943C281144680050C8B4 /* WireGuardNetworkExtensionTests.xctest */;
@@ -2683,6 +2688,7 @@
 			name = ProtonVPNTests;
 			packageProductDependencies = (
 				E9CB3AFF28A65E220086F22F /* TimerMock */,
+				E9FDFBF528DB41580019B097 /* PMLogger */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -5227,6 +5233,14 @@
 		E9CB3B0528A691070086F22F /* TimerMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TimerMock;
+		};
+		E9FDFBF328DB40470019B097 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
+		};
+		E9FDFBF528DB41580019B097 /* PMLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PMLogger;
 		};
 		F348C9D527D8E54200622584 /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
