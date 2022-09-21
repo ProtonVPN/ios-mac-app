@@ -25,6 +25,7 @@ import vpncore
 import SwiftUI
 import BugReport
 import AppKit
+import PMLogger
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
