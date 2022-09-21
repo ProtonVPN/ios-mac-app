@@ -22,8 +22,8 @@
 
 import XCTest
 import GSMessages
+import PMLogger
 @testable import vpncore
-
 @testable import ProtonVPN
 
 fileprivate let sessionService = SessionServiceMock()
