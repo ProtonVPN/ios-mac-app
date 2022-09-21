@@ -68,12 +68,15 @@ extension NSWindow {
     }
 
     func centerWindowOnScreen() {
-        guard let screen = NSScreen.screens.first?.visibleFrame,
+        guard let visibleFrame = screen?.visibleFrame,
               let size = contentView?.frame.size else {
             return
         }
-        let x = screen.size.width / 2 - size.width / 2
-        let y = screen.size.height / 2 - size.height / 2
+        var x = visibleFrame.size.width / 2 - size.width / 2
+        var y = visibleFrame.size.height / 2 - size.height / 2
+
+        y += visibleFrame.origin.y
+        x += visibleFrame.origin.x
         setFrameOrigin(NSPoint(x: x, y: y))
     }
 }

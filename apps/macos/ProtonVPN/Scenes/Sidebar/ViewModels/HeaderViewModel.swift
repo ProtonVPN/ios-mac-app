@@ -163,8 +163,13 @@ final class HeaderViewModel {
             completion(true)
             return
         }
+        log.debug("Prefetching urls: \(urls)")
         SDWebImagePrefetcher.shared.prefetchURLs(urls) { finishedUrlsCount, skippedUrlsCount in
-            log.debug("SDWebImagePrefetcher couldn't prefetch all urls, skipped urls count: \(skippedUrlsCount)")
+            if skippedUrlsCount != 0 {
+                log.debug("SDWebImagePrefetcher couldn't prefetch all urls, skipped urls count: \(skippedUrlsCount)")
+            } else {
+                log.debug("SDWebImagePrefetcher finished prefetching urls, urls count: \(finishedUrlsCount)")
+            }
             completion(finishedUrlsCount == urls.count)
         }
     }
