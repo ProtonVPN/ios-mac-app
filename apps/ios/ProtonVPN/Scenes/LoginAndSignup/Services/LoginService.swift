@@ -138,14 +138,17 @@ final class CoreLoginService {
         switch result {
         case .dismissed:
             log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
+            loginInterface = makeLoginInterface()
         case .loginStateChanged(.loginFinished):
             delegate?.userDidLogIn()
+            loginInterface = makeLoginInterface()
         case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
+            loginInterface = makeLoginInterface()
+
         case .loginStateChanged(.dataIsAvailable), .signupStateChanged(.dataIsAvailable):
             log.debug("Login or signup process in progress", category: .app)
         }
-        loginInterface = makeLoginInterface()
     }
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
