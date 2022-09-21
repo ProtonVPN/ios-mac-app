@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import PMLogger
 
 class ReportBugViewController: NSViewController {
     

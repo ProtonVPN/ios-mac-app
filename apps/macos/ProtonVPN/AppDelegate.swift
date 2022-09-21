@@ -28,6 +28,7 @@ import ProtonCore_Services
 import ProtonCore_Log
 import ProtonCore_UIFoundations
 import Logging
+import PMLogger
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

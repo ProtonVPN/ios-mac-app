@@ -23,6 +23,7 @@
 import Cocoa
 import os
 import vpncore
+import PMLogger
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
