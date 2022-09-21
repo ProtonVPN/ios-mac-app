@@ -22,6 +22,7 @@ public protocol NetworkExtensionLogProvider {
     func logs(completion: @escaping (String?) -> Void)
 }
 
+/// Helps receiving logs from Network Extensions
 public class NELogContent: LogContent {
 
     private let neLogProvider: NetworkExtensionLogProvider
