@@ -25,6 +25,7 @@ import Foundation
 import vpncore
 import ProtonCore_Login
 import ProtonCore_Networking
+import ProtonCore_Authentication
 
 final class LoginViewModel {
     
@@ -44,8 +45,8 @@ final class LoginViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
-    private lazy var authManager = AuthManager()
-    private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService, authManager: authManager, clientApp: .vpn, sessionId: "LoginSessionId", minimumAccountType: AccountType.username)
+    private lazy var authManager = AuthHelper()
+    private lazy var loginService: Login = LoginService(api: factory.makeNetworking().apiService, authManager: authManager, clientApp: .vpn, minimumAccountType: AccountType.username)
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     var logInInProgress: (() -> Void)?
