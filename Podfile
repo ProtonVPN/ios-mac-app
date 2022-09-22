@@ -57,6 +57,8 @@ def vpn_core
     pod 'ProtonCore-Payments/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
 
+    # Third party pods
+    sd_web_image
 end    
 
 abstract_target 'Core' do
@@ -87,8 +89,6 @@ target 'ProtonVPN' do
   use_frameworks!
 
   vpn_core
-
-  sd_web_image
 
   pod 'GSMessages', '~> 1.0'
   pod 'AlamofireImage', '~> 4.1'
@@ -171,9 +171,6 @@ target 'ProtonVPN-mac' do
   
   pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Login/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
-
-  # Third party pods
-  sd_web_image
 
 end
 
