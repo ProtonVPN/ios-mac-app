@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import SDWebImage
 
 public struct FullScreenImage: Codable {
     public let source: [Source]
@@ -27,6 +28,16 @@ public struct FullScreenImage: Codable {
             return nil
         }
         return URL(string: urlString)
+    }
+
+    public func isImagePrefetched(completion: @escaping (Bool) -> Void) {
+        guard let urlString = source.first?.url else {
+            completion(false)
+            return
+        }
+        SDImageCache.shared.containsImage(forKey: urlString, cacheType: .all) { cacheType in
+            completion(cacheType != .none)
+        }
     }
 
     public struct Source: Codable {
