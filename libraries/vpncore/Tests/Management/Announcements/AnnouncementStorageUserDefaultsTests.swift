@@ -45,16 +45,16 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
     
     func testStoreAndFetchWorks() {
         XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "id"))
-        storage.store([Announcement(notificationID: "id", startTime: Date(), endTime: Date(), type: 0, offer: nil)])
+        storage.store([Announcement(notificationID: "id", startTime: Date(), endTime: Date(), type: .default, offer: nil)])
         userDefaults.synchronize()
         XCTAssert(storage.fetch().containsAnnouncement(withId: "id"))
     }
     
     func testStoringPreservesIsReadFlag() {
         var announcements = [
-            Announcement(notificationID: "1", startTime: Date(), endTime: Date(), type: 0, offer: nil),
-            Announcement(notificationID: "2", startTime: Date(), endTime: Date(), type: 0, offer: nil),
-            Announcement(notificationID: "3", startTime: Date(), endTime: Date(), type: 0, offer: nil),
+            Announcement(notificationID: "1", startTime: Date(), endTime: Date(), type: .default, offer: nil),
+            Announcement(notificationID: "2", startTime: Date(), endTime: Date(), type: .default, offer: nil),
+            Announcement(notificationID: "3", startTime: Date(), endTime: Date(), type: .default, offer: nil),
         ]
         storage.store(announcements)
         

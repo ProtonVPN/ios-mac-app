@@ -84,11 +84,11 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
     
     func testSavesNewAnnouncementsToStorage() {
         let storage: AnnouncementStorageMock = AnnouncementStorageMock()
-        storage.store([Announcement(notificationID: "old", startTime: Date(), endTime: Date(), type: 0, offer: nil)])
+        storage.store([Announcement(notificationID: "old", startTime: Date(), endTime: Date(), type: .default, offer: nil)])
         
         let coreApiService = CoreApiServiceMock()
         coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            success(GetApiNotificationsResponse(notifications: [Announcement(notificationID: "new", startTime: Date(), endTime: Date(), type: 0, offer: nil)]))
+            success(GetApiNotificationsResponse(notifications: [Announcement(notificationID: "new", startTime: Date(), endTime: Date(), type: .default, offer: nil)]))
         }
         let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
         let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)
@@ -104,7 +104,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
     
     func testDoesntNewAnnouncementsToStorageOnError() {
         let storage: AnnouncementStorageMock = AnnouncementStorageMock()
-        storage.store([Announcement(notificationID: "old", startTime: Date(), endTime: Date(), type: 0, offer: nil)])
+        storage.store([Announcement(notificationID: "old", startTime: Date(), endTime: Date(), type: .default, offer: nil)])
         
         let coreApiService = CoreApiServiceMock()
         coreApiService.callbackGetApiNotificationsCallback = { success, failure in
