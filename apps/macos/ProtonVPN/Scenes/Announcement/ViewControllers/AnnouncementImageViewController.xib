@@ -51,14 +51,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="528" height="300"/>
                                 <subviews>
                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="20" placeholderIntrinsicHeight="20" translatesAutoresizingMaskIntoConstraints="NO" id="wYo-jg-x61">
-                                        <rect key="frame" x="64" y="0.0" width="400" height="300"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="528" height="300"/>
                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="9bS-wQ-FPm"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="wYo-jg-x61" firstAttribute="centerY" secondItem="2Ny-Yp-oMF" secondAttribute="centerY" id="GI8-fG-qrO"/>
-                                    <constraint firstItem="wYo-jg-x61" firstAttribute="leading" secondItem="2Ny-Yp-oMF" secondAttribute="leading" constant="64" id="GnW-3b-XVy"/>
-                                    <constraint firstAttribute="trailing" secondItem="wYo-jg-x61" secondAttribute="trailing" constant="64" id="YNm-CP-WGr"/>
+                                    <constraint firstItem="wYo-jg-x61" firstAttribute="leading" secondItem="2Ny-Yp-oMF" secondAttribute="leading" id="GnW-3b-XVy"/>
+                                    <constraint firstAttribute="trailing" secondItem="wYo-jg-x61" secondAttribute="trailing" id="YNm-CP-WGr"/>
                                     <constraint firstItem="wYo-jg-x61" firstAttribute="top" secondItem="2Ny-Yp-oMF" secondAttribute="top" id="ib4-aa-WT2"/>
                                     <constraint firstAttribute="bottom" secondItem="wYo-jg-x61" secondAttribute="bottom" id="x9G-Eh-rme"/>
                                 </constraints>
