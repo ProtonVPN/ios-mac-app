@@ -26,7 +26,7 @@ public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel
 }
 
-/// Controll view showing the list of announcements
+/// Control view showing the list of announcements
 public class AnnouncementsViewModel {
     
     public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory
@@ -38,17 +38,14 @@ public class AnnouncementsViewModel {
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     
     // Data
-    private(set) var items: [Announcement] = [Announcement]()
+    private(set) var items: [Announcement] = []
 
     public var currentItem: Announcement? {
-        let sorted = items.sorted(by: { (lhs, rhs) -> Bool in
-            if let lhsRead = lhs.isRead {
-                return !lhsRead
-            }
-            return false
-        })
+        items.first { $0.type == .default && $0.isRead == false }
+    }
 
-        return sorted.first
+    public var oneTimeAnnouncement: Announcement? {
+        items.first { $0.type == .oneTime && $0.isRead == false }
     }
     
     // Callbacks
@@ -57,15 +54,31 @@ public class AnnouncementsViewModel {
     public init(factory: Factory) {
         self.factory = factory
         fillItems()
+        // This type of announcement should ONLY be opened right after opening the app
+        openOneTimeAnnouncement()
         NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
-    
-    /// Navigate to announcement screen
+
+    public func openOneTimeAnnouncement() {
+        guard let announcement = oneTimeAnnouncement else {
+            return
+        }
+        announcement.isImagePrefetched { [weak self] isPrefetched in
+            if isPrefetched {
+                self?.openAnnouncement(announcement: announcement)
+            }
+        }
+    }
+
     public func open() {
         guard let announcement = currentItem else {
             return
         }
+        openAnnouncement(announcement: announcement)
+    }
 
+    /// Navigate to announcement screen
+    private func openAnnouncement(announcement: Announcement) {
         announcementManager.markAsRead(announcement: announcement)
 
         if let data = announcement.offer?.panel {

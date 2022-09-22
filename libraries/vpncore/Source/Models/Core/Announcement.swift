@@ -52,11 +52,22 @@ extension Announcement {
 }
 
 extension Announcement {
+
+    var fullScreenImage: FullScreenImage? {
+        guard case .image(let panel) = offer?.panel?.panelMode() else {
+            return nil
+        }
+        return panel.fullScreenImage
+    }
+
     var prefetchableImage: URL? {
-        guard case .image(let panel) = offer?.panel?.panelMode(),
-              let url = panel.fullScreenImage.firstURL else {
+        guard let url = fullScreenImage?.firstURL else {
             return nil
         }
         return url
+    }
+
+    public func isImagePrefetched(completion: @escaping (Bool) -> Void) {
+        fullScreenImage?.isImagePrefetched(completion: completion)
     }
 }

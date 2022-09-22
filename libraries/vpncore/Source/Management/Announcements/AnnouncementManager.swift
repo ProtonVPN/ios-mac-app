@@ -48,9 +48,13 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
             return $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
         }
     }
-    
+
     public var hasUnreadAnnouncements: Bool {
-        return fetchCurrentAnnouncements().contains(where: { return !$0.wasRead })
+        return fetchCurrentAnnouncements().contains(where: { !$0.wasRead && $0.type == .default })
+    }
+
+    public var hasUnreadOneTimeAnnouncements: Bool {
+        return fetchCurrentAnnouncements().contains(where: { !$0.wasRead && $0.type == .oneTime })
     }
     
     public func markAsRead(announcement: Announcement) {
