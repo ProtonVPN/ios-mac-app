@@ -41,11 +41,13 @@ public class AnnouncementsViewModel {
     private(set) var items: [Announcement] = []
 
     public var currentItem: Announcement? {
-        items.first { $0.type == .default && $0.isRead == false }
+        let firstUnread = items.first { $0.type == .default && $0.isRead == false }
+        return firstUnread ?? items.first { $0.type == .default }
     }
 
     public var oneTimeAnnouncement: Announcement? {
-        items.first { $0.type == .oneTime && $0.isRead == false }
+        let firstUnread = items.first { $0.type == .oneTime && $0.isRead == false }
+        return firstUnread ?? items.first { $0.type == .oneTime }
     }
     
     // Callbacks

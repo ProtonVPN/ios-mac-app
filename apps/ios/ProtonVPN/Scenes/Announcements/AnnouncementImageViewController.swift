@@ -78,6 +78,9 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         progressIndicator.startAnimating()
         actionButton.isHidden = true
 
+        imageView.accessibilityLabel = data.fullScreenImage.alternativeText
+        imageView.isAccessibilityElement = true
+
         imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
             guard error == nil else {
                 self?.cancelled?()
@@ -112,14 +115,13 @@ final class AnnouncementImageViewController: AnnouncementViewController {
     }
 
     @IBAction private func actionButtonTapped(_ sender: Any) {
-
-        guard data.button.action == "OpenURL" else {
-            log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action ?? "nil")>, url: <\(data.button.url)>")
+        guard data.button.action == .openURL else {
+            log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             cancelled?()
             return
         }
 
-        guard data.button.with?.contains("AutoLogin") == true else {
+        guard data.button.behaviors?.contains(.autoLogin) == true else {
             urlRequested?(data.button.url)
             return
         }

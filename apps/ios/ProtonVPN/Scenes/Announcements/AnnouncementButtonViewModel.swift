@@ -81,13 +81,9 @@ final class AnnouncementButtonViewModel {
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        SDWebImagePrefetcher.shared.prefetchURLs(urls) { finishedUrlsCount, skippedUrlsCount in
-            if skippedUrlsCount != 0 {
-                log.debug("SDWebImagePrefetcher couldn't prefetch all urls, skipped urls count: \(skippedUrlsCount)")
-            } else {
-                log.debug("SDWebImagePrefetcher finished prefetching urls, urls count: \(finishedUrlsCount)")
-            }
+        SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
+            log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
             completion(finishedUrlsCount == urls.count)
-        }
+        })
     }
 }
