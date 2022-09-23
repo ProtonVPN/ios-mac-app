@@ -59,6 +59,9 @@ final class AnnouncementImageViewController: NSViewController {
         progressIndicator.startAnimation(nil)
         actionButton.isHidden = true
 
+        imageView.cell?.setAccessibilityElement(true)
+        imageView.setAccessibilityLabel(data.fullScreenImage.alternativeText)
+
         guard let imageURL = data.fullScreenImage.firstURL else {
             // This case should not happen, we're preloading the image before we allow the user to open the announcement
             log.warning("Couldn't retrieve image URL from data: \(data)")
@@ -77,13 +80,18 @@ final class AnnouncementImageViewController: NSViewController {
     }
 
     @IBAction private func didTapActionButton(_ sender: Any) {
-        actionButton.isEnabled = false
-        guard data.button.action == "OpenURL",
-              data.button.with?.contains("AutoLogin") == true else {
-            actionButton.isEnabled = true
+        guard data.button.action == .openURL else {
+            log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
+            return
+        }
+
+        guard data.button.behaviors?.contains(.autoLogin) == true else {
             SafariService.openLink(url: data.button.url)
             return
         }
+
+        actionButton.isEnabled = false
+
         sessionService.getUpgradePlanSession { [weak actionButton] url in
             actionButton?.isEnabled = true
             SafariService.openLink(url: url)
