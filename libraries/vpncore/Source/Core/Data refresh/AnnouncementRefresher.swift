@@ -40,25 +40,26 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     private lazy var coreApiService: CoreApiService = factory.makeCoreApiService()
     private lazy var announcementStorage: AnnouncementStorage = factory.makeAnnouncementStorage()
     
-    private var lastRefresh: Date?
-    private var minRefreshTime: TimeInterval
+    private var lastRefreshDate: Date?
+    private var minRefreshInterval: TimeInterval
     
     public init(factory: Factory, minRefreshTime: TimeInterval = CoreAppConstants.UpdateTime.announcementRefreshTime) {
         self.factory = factory
-        self.minRefreshTime = minRefreshTime
+        self.minRefreshInterval = minRefreshTime
         
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
     }
     
     public func refresh() {
-        if lastRefresh != nil && Date().timeIntervalSince(lastRefresh!) < minRefreshTime {
+        if let lastRefresh = lastRefreshDate,
+            Date().timeIntervalSince(lastRefresh) < minRefreshInterval {
             return
         }
-    
+
         coreApiService.getApiNotifications { [weak self] result in
             switch result {
             case let .success(announcementsResponse):
-                self?.lastRefresh = Date()
+                self?.lastRefreshDate = Date()
                 self?.announcementStorage.store(announcementsResponse.notifications)
             case let .failure(error):
                 log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
@@ -67,8 +68,8 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     }
     
     public func clear() {
-        lastRefresh = nil
-        self.announcementStorage.clear()
+        lastRefreshDate = nil
+        announcementStorage.clear()
     }
     
     @objc func featureFlagsChanged(_ notification: NSNotification) {

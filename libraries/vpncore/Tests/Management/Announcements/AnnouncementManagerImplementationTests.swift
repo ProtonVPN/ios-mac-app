@@ -35,6 +35,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         storage.store([
             Announcement(notificationID: "1-no-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: nil),
             Announcement(notificationID: "2-with-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil)),
+            Announcement(notificationID: "2-with-offer-one-time", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .oneTime, offer: Offer(label: "", url: "", icon: "", panel: nil)),
             Announcement(notificationID: "3-ended", startTime: Date(), endTime: Date(timeIntervalSinceNow: -1), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil)),
             Announcement(notificationID: "3-future", startTime: Date(timeIntervalSinceNow: 888), endTime: Date(timeIntervalSinceNow: 8889), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil)),
         ])
@@ -45,6 +46,8 @@ class AnnouncementManagerImplementationTests: XCTestCase {
     func testFetchesOnlyCurrentNotifications(){
         let filtered = manager.fetchCurrentAnnouncements()
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer"))
+        XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer-one-time"))
+        XCTAssertEqual(filtered.count, 2)
         XCTAssertFalse(filtered.containsAnnouncement(withId: "1-no-offer"))
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-ended"))
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-future"))
@@ -57,14 +60,23 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         let announcement2 = manager.fetchCurrentAnnouncements()[0]
         XCTAssert(announcement2.wasRead)
     }
-    
-    func testDistinguoshesWhenUnreadAnnsArePresent() {
+
+    func testDistinguishesWhenUnreadAnnsArePresent() {
         XCTAssert(manager.hasUnreadAnnouncements)
         let announcements = manager.fetchCurrentAnnouncements()
         announcements.forEach {
             manager.markAsRead(announcement: $0)
         }
         XCTAssertFalse(manager.hasUnreadAnnouncements)
+    }
+
+    func testDistinguishesWhenUnreadOneTimeAnnouncementsArePresent() {
+        XCTAssert(manager.hasUnreadOneTimeAnnouncements)
+        let announcements = manager.fetchCurrentAnnouncements()
+        announcements.forEach {
+            manager.markAsRead(announcement: $0)
+        }
+        XCTAssertFalse(manager.hasUnreadOneTimeAnnouncements)
     }
     
 }
