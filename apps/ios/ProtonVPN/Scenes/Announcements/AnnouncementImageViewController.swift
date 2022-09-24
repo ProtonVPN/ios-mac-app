@@ -128,6 +128,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
         actionButton.isEnabled = false
 
+        // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
         sessionService.getUpgradePlanSession { [weak self] url in
             self?.actionButton.isEnabled = true
             self?.urlRequested?(url)

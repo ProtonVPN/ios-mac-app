@@ -84,27 +84,35 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
     
     func testSavesNewAnnouncementsToStorage() {
         let storage: AnnouncementStorageMock = AnnouncementStorageMock()
-        storage.store([Announcement(notificationID: "old", startTime: Date(), endTime: Date(), type: .default, offer: nil)])
+        storage.store([Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: .default, offer: nil),
+                       Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: .oneTime, offer: nil)])
         
         let coreApiService = CoreApiServiceMock()
         coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            success(GetApiNotificationsResponse(notifications: [Announcement(notificationID: "new", startTime: Date(), endTime: Date(), type: .default, offer: nil)]))
+            let announcements = [Announcement(notificationID: "newDefault", startTime: Date(), endTime: Date(), type: .default, offer: nil),
+                                 Announcement(notificationID: "newOneTime", startTime: Date(), endTime: Date(), type: .oneTime, offer: nil)]
+            success(GetApiNotificationsResponse(notifications: announcements))
         }
         let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
         let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)
-        
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "old"))
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "new"))
+
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
+        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "newDefault"))
+        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "newOneTime"))
         
         refresher.refresh()
-        
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "old"))
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "new"))
+
+        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "oldDefault"))
+        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "newDefault"))
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "newOneTime"))
     }
     
-    func testDoesntNewAnnouncementsToStorageOnError() {
+    func testDoesntSaveNewAnnouncementsToStorageOnError() {
         let storage: AnnouncementStorageMock = AnnouncementStorageMock()
-        storage.store([Announcement(notificationID: "old", startTime: Date(), endTime: Date(), type: .default, offer: nil)])
+        storage.store([Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: .default, offer: nil),
+                       Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: .oneTime, offer: nil)])
         
         let coreApiService = CoreApiServiceMock()
         coreApiService.callbackGetApiNotificationsCallback = { success, failure in
@@ -112,14 +120,16 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         }
         let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
         let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 0)
-        
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "old"))
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "new"))
+
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
+        XCTAssertEqual(storage.fetch().count, 2)
         
         refresher.refresh()
-        
-        XCTAssert(storage.fetch().containsAnnouncement(withId: "old"))
-        XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "new"))
+
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
+        XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
+        XCTAssertEqual(storage.fetch().count, 2)
     }
     
 }
