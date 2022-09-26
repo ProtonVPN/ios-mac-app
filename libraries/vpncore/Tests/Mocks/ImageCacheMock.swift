@@ -1,5 +1,5 @@
 //
-//  Created on 21/09/2022.
+//  Created on 26/09/2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,18 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import vpncore
+import XCTest
+@testable import vpncore
 
-public struct OfferButton: Codable {
-    public let url: String
-    public let text: String
-    public let action: Offer.Action?
-    public let behaviors: [Offer.Behavior]?
+struct ImageCacheMock: ImageCacheProtocol {
+    static var completionBlockParameterValue = true
+    func containsImageForKey(forKey key: String, completion completionBlock: @escaping (Bool) -> Void?) {
+        completionBlock(ImageCacheMock.completionBlockParameterValue)
+    }
+    
+    func prefetchURLs(_ urls: [URL]) {
+    }
+}
 
-    enum CodingKeys: String, CodingKey {
-        case text
-        case url = "URL"
-        case action
-        case behaviors
+struct ImageCacheFactoryMock: ImageCacheFactoryProtocol {
+    func makeImageCache() -> ImageCacheProtocol {
+        ImageCacheMock()
     }
 }

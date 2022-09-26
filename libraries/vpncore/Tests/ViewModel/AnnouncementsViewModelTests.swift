@@ -46,7 +46,7 @@ class AnnouncementsViewModelTests: XCTestCase {
     func testTakesDataFromTheStorage(){
         XCTAssert(viewModel.items.count == 0)
         
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil))])
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: .empty)])
         
         XCTAssert(viewModel.items.count == 1)
     }
@@ -57,7 +57,7 @@ class AnnouncementsViewModelTests: XCTestCase {
             expectationViewRefreshed.fulfill()
         }
         
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil))])
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: .empty)])
         
         wait(for: [expectationViewRefreshed], timeout:0.2)
     }
@@ -67,7 +67,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         XCTAssert(safariService.lastUrl == nil)
         
         let url = "http://link.url"
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: url, icon: "", panel: nil))])
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: url, action: nil, behaviors: nil, icon: "", panel: nil))])
         
         viewModel.open()
         
