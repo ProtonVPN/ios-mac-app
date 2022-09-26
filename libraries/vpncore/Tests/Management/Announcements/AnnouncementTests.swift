@@ -38,9 +38,6 @@ class AnnouncementTests: XCTestCase {
         let offerPanel = OfferPanel(fullScreenImage: fullScreenImage,
                                     button: offerButton)
         let offer = Offer(label: "",
-                          url: "",
-                          action: .openURL,
-                          behaviors: [.autoLogin],
                           icon: "",
                           panel: offerPanel)
         let sut = Announcement(notificationID: "someID",
