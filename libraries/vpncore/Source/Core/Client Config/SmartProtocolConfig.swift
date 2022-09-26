@@ -26,32 +26,41 @@ public struct SmartProtocolConfig: Codable, Equatable {
     public let openVPN: Bool
     public let iKEv2: Bool
     public let wireGuard: Bool
+    @Default<Bool> public var wireGuardTcp: Bool
     @Default<Bool> public var wireGuardTls: Bool
 
     enum CodingKeys: String, CodingKey {
         case openVPN
         case iKEv2 = "IKEv2"
         case wireGuard
-        case wireGuardTls
+        case wireGuardTcp = "WireGuardTCP"
+        case wireGuardTls = "WireGuardTLS"
     }
 
-    public init(openVPN: Bool, iKEv2: Bool, wireGuard: Bool, wireGuardTls: Bool) {
+    public init(openVPN: Bool, iKEv2: Bool, wireGuard: Bool, wireGuardTcp: Bool, wireGuardTls: Bool) {
         self.openVPN = openVPN
         self.iKEv2 = iKEv2
         self.wireGuard = wireGuard
+        self.wireGuardTcp = wireGuardTcp
         self.wireGuardTls = wireGuardTls
     }
 
     public init() {
-        self.init(openVPN: true, iKEv2: true, wireGuard: true, wireGuardTls: true)
+        self.init(openVPN: true,
+                  iKEv2: true,
+                  wireGuard: true,
+                  wireGuardTcp: true,
+                  wireGuardTls: true)
     }
     
     public func configWithWireGuard(enabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
-        // If enabled is specified, use that value. Otherwise, use the existing config value in this object.
+        // If enabled is specified, use that value. Otherwise, use the existing config value in
+        // this object.
         let wireGuardEnabled = enabled ?? wireGuard
         var wireGuardTlsEnabled = false
-        // If wireGuard has been enabled via the above, set WGTLS' enablement according to the passed value,
-        // or, if none was provided, the existing config value in this object.
+        // If wireGuard has been enabled via the above, set WGTLS' enablement according to
+        // the passed value, or, if none was provided, the existing config value in this object.
+        // Set WGTCP's enablement to the same, since they're part of the same feature.
         if wireGuardEnabled {
             wireGuardTlsEnabled = tlsEnabled ?? wireGuardTls
         }
@@ -59,6 +68,7 @@ public struct SmartProtocolConfig: Codable, Equatable {
         return SmartProtocolConfig(openVPN: openVPN,
                                    iKEv2: iKEv2,
                                    wireGuard: wireGuardEnabled,
+                                   wireGuardTcp: wireGuardTlsEnabled,
                                    wireGuardTls: wireGuardTlsEnabled)
     }
 
