@@ -62,10 +62,15 @@ final class SmartProtocolImplementation: SmartProtocol {
             log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.wireguardUdp] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.udp))
 
-            if smartProtocolConfig.wireGuardTls {
-                log.debug("Wireguard TCP/TLS will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
+            if smartProtocolConfig.wireGuardTcp {
+                log.debug("Wireguard TCP will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
 
                 checkers[.wireguardTcp] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tcp))
+            }
+
+            if smartProtocolConfig.wireGuardTls {
+                log.debug("Wireguard TLS will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
+
                 checkers[.wireguardTls] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.tls))
             }
         }

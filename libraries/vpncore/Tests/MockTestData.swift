@@ -117,10 +117,7 @@ struct MockTestData {
                                            serverRefreshInterval: 2 * 60,
                                            wireGuardConfig: .init(defaultUdpPorts: [12345, 65432],
                                                                   defaultTcpPorts: [12346, 65433]),
-                                           smartProtocolConfig: .init(openVPN: true,
-                                                                      iKEv2: true,
-                                                                      wireGuard: true,
-                                                                      wireGuardTls: true),
+                                           smartProtocolConfig: .init(),
                                            ratingSettings: .init())
 
     lazy var clientConfigNoWireGuardTls = defaultClientConfig.withFeatureFlags(.wireGuardTlsDisabled)
