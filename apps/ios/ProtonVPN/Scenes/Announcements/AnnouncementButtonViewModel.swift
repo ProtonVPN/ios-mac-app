@@ -21,7 +21,6 @@
 //
 
 import vpncore
-import SDWebImage
 
 protocol AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel
@@ -81,9 +80,6 @@ final class AnnouncementButtonViewModel {
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
-            log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
-            completion(finishedUrlsCount == urls.count)
-        })
+        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
     }
 }

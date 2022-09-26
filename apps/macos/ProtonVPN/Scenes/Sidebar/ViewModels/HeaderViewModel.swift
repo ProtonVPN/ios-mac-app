@@ -21,7 +21,6 @@
 //
 
 import Cocoa
-import SDWebImage
 import vpncore
 
 protocol HeaderViewModelDelegate: class {
@@ -164,10 +163,7 @@ final class HeaderViewModel {
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
-            log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
-            completion(finishedUrlsCount == urls.count)
-        })
+        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
     }
 
     var announcementTooltip: String? {

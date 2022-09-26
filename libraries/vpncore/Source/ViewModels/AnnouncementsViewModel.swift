@@ -65,7 +65,7 @@ public class AnnouncementsViewModel {
         guard let announcement = oneTimeAnnouncement else {
             return
         }
-        announcement.isImagePrefetched { [weak self] isPrefetched in
+        announcement.isImagePrefetched(imageCache: ImageCacheFactory()) { [weak self] isPrefetched in
             if isPrefetched {
                 self?.openAnnouncement(announcement: announcement)
             }

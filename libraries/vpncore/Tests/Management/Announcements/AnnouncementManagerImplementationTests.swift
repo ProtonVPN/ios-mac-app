@@ -24,6 +24,10 @@ import vpncore
 import XCTest
 @testable import vpncore
 
+extension Offer {
+    static let empty: Offer = Offer(label: "", url: "", action: nil, behaviors: nil, icon: "", panel: nil)
+}
+
 class AnnouncementManagerImplementationTests: XCTestCase {
 
     private var storage: AnnouncementStorageMock = AnnouncementStorageMock()
@@ -33,11 +37,31 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         super.setUp()
         
         storage.store([
-            Announcement(notificationID: "1-no-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: nil),
-            Announcement(notificationID: "2-with-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil)),
-            Announcement(notificationID: "2-with-offer-one-time", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .oneTime, offer: Offer(label: "", url: "", icon: "", panel: nil)),
-            Announcement(notificationID: "3-ended", startTime: Date(), endTime: Date(timeIntervalSinceNow: -1), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil)),
-            Announcement(notificationID: "3-future", startTime: Date(timeIntervalSinceNow: 888), endTime: Date(timeIntervalSinceNow: 8889), type: .default, offer: Offer(label: "", url: "", icon: "", panel: nil)),
+            Announcement(notificationID: "1-no-offer",
+                         startTime: Date(),
+                         endTime: .distantFuture,
+                         type: .default,
+                         offer: nil),
+            Announcement(notificationID: "2-with-offer",
+                         startTime: Date(),
+                         endTime: .distantFuture,
+                         type: .default,
+                         offer: Offer.empty),
+            Announcement(notificationID: "2-with-offer-one-time",
+                         startTime: Date(),
+                         endTime: .distantFuture,
+                         type: .oneTime,
+                         offer: Offer.empty),
+            Announcement(notificationID: "3-ended",
+                         startTime: Date(),
+                         endTime: .distantPast,
+                         type: .default,
+                         offer: Offer.empty),
+            Announcement(notificationID: "3-future",
+                         startTime: .distantFuture,
+                         endTime: .distantFuture,
+                         type: .default,
+                         offer: Offer.empty),
         ])
         
         manager = AnnouncementManagerImplementation(factory: AnnouncementStorageFactoryMock(storage))

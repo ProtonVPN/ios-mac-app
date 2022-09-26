@@ -21,21 +21,13 @@ import Foundation
 public struct OfferButton: Codable {
     public let url: String
     public let text: String
-    public let action: Action?
-    public let behaviors: [Behavior]?
+    public let action: Offer.Action?
+    public let behaviors: [Offer.Behavior]?
 
     enum CodingKeys: String, CodingKey {
         case text
         case url = "URL"
         case action
         case behaviors
-    }
-
-    public enum Action: String, Codable {
-        case openURL = "OpenURL"
-    }
-
-    public enum Behavior: String, Codable {
-        case autoLogin = "AutoLogin"
     }
 }

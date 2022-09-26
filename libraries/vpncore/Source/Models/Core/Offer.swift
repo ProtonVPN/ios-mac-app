@@ -25,6 +25,11 @@ import Foundation
 public struct Offer: Codable {
     public let label: String
     public let url: String
+    // These two properties are present in the JSON but the functionality is not yet implemented.
+    // It should behave the same as the corresponding properties on the OfferButton.
+    public let action: Action?
+    public let behaviors: [Behavior]?
+
     public let icon: String
     public let panel: OfferPanel?
     
@@ -32,7 +37,17 @@ public struct Offer: Codable {
     enum CodingKeys: String, CodingKey {
         case label
         case url = "URL"
+        case action
+        case behaviors
         case icon
         case panel
+    }
+
+    public enum Action: String, Codable {
+        case openURL = "OpenURL"
+    }
+
+    public enum Behavior: String, Codable {
+        case autoLogin = "AutoLogin"
     }
 }
