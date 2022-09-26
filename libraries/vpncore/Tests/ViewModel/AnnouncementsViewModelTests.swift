@@ -61,20 +61,6 @@ class AnnouncementsViewModelTests: XCTestCase {
         
         wait(for: [expectationViewRefreshed], timeout:0.2)
     }
-    
-    func testOpensLinkInSafari() {
-        XCTAssert(safariService.openCount == 0)
-        XCTAssert(safariService.lastUrl == nil)
-        
-        let url = "http://link.url"
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: Offer(label: "", url: url, action: nil, behaviors: nil, icon: "", panel: nil))])
-        
-        viewModel.open()
-        
-        XCTAssert(safariService.openCount == 1)
-        XCTAssert(safariService.lastUrl?.starts(with: url) ?? false)
-    }
-    
 }
 
 fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {

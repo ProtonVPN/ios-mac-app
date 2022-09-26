@@ -25,7 +25,7 @@ import XCTest
 @testable import vpncore
 
 extension Offer {
-    static let empty: Offer = Offer(label: "", url: "", action: nil, behaviors: nil, icon: "", panel: nil)
+    static let empty: Offer = Offer(label: "", icon: "", panel: nil)
 }
 
 class AnnouncementManagerImplementationTests: XCTestCase {

@@ -83,14 +83,8 @@ public class AnnouncementsViewModel {
     private func openAnnouncement(announcement: Announcement) {
         announcementManager.markAsRead(announcement: announcement)
 
-        if let data = announcement.offer?.panel {
-            alertService.push(alert: AnnouncementOfferAlert(data: data))
-            return
-        }
-        
-        if let url = announcement.offer?.url.urlWithAdded(utmSource: appInfo.clientId.lowercased()) {
-            safariService.open(url: url)
-        }
+        guard let data = announcement.offer?.panel else { return }
+        alertService.push(alert: AnnouncementOfferAlert(data: data))
     }
         
     // MARK: - Data
