@@ -23,20 +23,20 @@ import Timer
 // MARK: ConnectionTunnel protocols
 
 /// Wrapper class for NEPacketTunnelProvider for creating TCP connections through the encrypted tunnel.
-protocol ConnectionTunnelFactory {
+public protocol ConnectionTunnelFactory {
     func createTunnel(hostname: String, port: String, useTLS: Bool) -> ConnectionTunnel
 }
 
 /// We need a wrapper function here because the return type of `createTCPConnectionThroughTunnel` is not `ConnectionTunnel`.
 extension NEPacketTunnelProvider: ConnectionTunnelFactory {
-    func createTunnel(hostname: String, port: String, useTLS: Bool) -> ConnectionTunnel {
+    public func createTunnel(hostname: String, port: String, useTLS: Bool) -> ConnectionTunnel {
         let endpoint = NWHostEndpoint(hostname: hostname, port: port)
         return createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: nil)
     }
 }
 
 /// Wrapper protocol for `NWTCPConnectionTunnel`, providing most of the same properties and methods (besides `observeStateChange`).
-protocol ConnectionTunnel {
+public protocol ConnectionTunnel {
     var state: NWTCPConnectionState { get }
 
     func write(_: Data, completionHandler: @escaping (Error?) -> Void)
@@ -52,13 +52,13 @@ protocol ConnectionTunnel {
 /// Note: adding `.initial` to the options passed to `observe` means that the callback will immediately be invoked with
 /// `state`'s initial value.
 extension NWTCPConnection: ConnectionTunnel {
-    func observeStateChange(withCallback stateChangeCallback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
+    public func observeStateChange(withCallback stateChangeCallback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
         return self.observe(\.state, options: [.initial, .new]) { _, _ in stateChangeCallback(self.state) }
     }
 }
 
 /// Wrapper protocol for `NSKeyValueObservation`, needed for polymorphism for mocking unit tests using `observeStateChange`.
-protocol ObservationHandle {
+public protocol ObservationHandle {
     func invalidate()
 }
 
@@ -68,7 +68,7 @@ extension NSKeyValueObservation: ObservationHandle {
 // MARK: Cookie storage
 
 /// A wrapper protocol for HTTPCookieStorage.
-protocol CookieStorageProtocol {
+public protocol CookieStorageProtocol {
     func setCookies(_ cookies: [HTTPCookie], for URL: URL?, mainDocumentURL: URL?)
     func cookies(for: URL) -> [HTTPCookie]?
 }
@@ -79,7 +79,7 @@ extension HTTPCookieStorage: CookieStorageProtocol {
 // MARK: DataTask protocols
 
 /// A wrapper protocol for making HTTP requests with NWTCPConnection.
-protocol DataTaskProtocol {
+public protocol DataTaskProtocol {
     func resume()
 }
 
@@ -87,38 +87,38 @@ extension URLSessionDataTask: DataTaskProtocol {
 }
 
 /// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
-protocol DataTaskFactory {
+public protocol DataTaskFactory {
     var cookieStorage: CookieStorageProtocol { get }
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol
 }
 
 extension URLSession: DataTaskFactory {
-    var cookieStorage: CookieStorageProtocol {
+    public var cookieStorage: CookieStorageProtocol {
         HTTPCookieStorage.shared
     }
 
-    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
+    public func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         dataTask(with: request, completionHandler: completionHandler)
     }
 }
 
 /// Generate NWTCPConnections by connecting to endpoints through the NEPacketTunnelProvider's tunnel.
-class ConnectionTunnelDataTaskFactory: DataTaskFactory {
+public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     let provider: ConnectionTunnelFactory
     let timerFactory: TimerFactory
-    let cookieStorage: CookieStorageProtocol = HTTPCookieStorage.shared
+    public let cookieStorage: CookieStorageProtocol = HTTPCookieStorage.shared
     let timeoutInterval: TimeInterval
 
     private var tasks: [UUID: NWTCPDataTask] = [:]
 
-    init(provider: ConnectionTunnelFactory, timerFactory: TimerFactory, connectionTimeoutInterval: TimeInterval = 10) {
+    public init(provider: ConnectionTunnelFactory, timerFactory: TimerFactory, connectionTimeoutInterval: TimeInterval = 10) {
         self.provider = provider
         self.timeoutInterval = connectionTimeoutInterval
         self.timerFactory = timerFactory
     }
 
-    func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
+    public func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         let id = UUID()
 
         let cookies: [HTTPCookie]

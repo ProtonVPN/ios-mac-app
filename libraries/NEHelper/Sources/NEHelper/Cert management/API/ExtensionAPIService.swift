@@ -23,7 +23,7 @@ import Timer
 import UIKit
 #endif
 
-final class ExtensionAPIService {
+public final class ExtensionAPIService {
     /// Intervals are in seconds unless otherwise specified.
     public struct Intervals {
         /// If a retry-after header is not sent, this should be the default retry interval.
@@ -115,7 +115,7 @@ final class ExtensionAPIService {
         }
     }
 
-    init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
+    public init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
         self.appInfo = appInfo
         self.storage = storage
         self.dataTaskFactoryGetter = dataTaskFactoryGetter
@@ -264,9 +264,9 @@ final class ExtensionAPIService {
         request.setHeader(.accept, "application/vnd.protonmail.v1+json")
         request.setHeader(.userAgent, appInfo.userAgent)
 
-        if !ObfuscatedConstants.atlasSecret.isEmpty {
-            request.setHeader(.atlasSecret, ObfuscatedConstants.atlasSecret)
-        }
+//        if !ObfuscatedConstants.atlasSecret.isEmpty {
+//            request.setHeader(.atlasSecret, ObfuscatedConstants.atlasSecret)
+//        }
 
         // Body
         if let body = apiRequest.body {

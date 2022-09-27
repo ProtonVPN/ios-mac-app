@@ -12,6 +12,7 @@ import os
 import WireGuardKit
 import Logging
 import Timer
+import NEHelper
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     private var timerFactory: TimerFactory!

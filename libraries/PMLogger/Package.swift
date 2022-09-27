@@ -22,9 +22,6 @@ let package = Package(
             name: "PMLogger",
             dependencies: [
                 .product(name: "Logging", package: "swift-log")
-            ],
-            swiftSettings: [
-              .define("APPLICATION_EXTENSION_API_ONLY=YES"),
             ]
         ),
         .testTarget(

@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum WireguardProviderRequest: ProviderRequest {
+public enum WireguardProviderRequest: ProviderRequest {
     private enum MessageCode: UInt8 {
         // Standard messages
         case getRuntimeTunnelConfiguration = 0
@@ -72,7 +72,7 @@ enum WireguardProviderRequest: ProviderRequest {
         }
     }
 
-    static func decode(data: Data) throws -> Self {
+    public static func decode(data: Data) throws -> Self {
         guard let datagram = data.first else {
             throw ProviderMessageError.noDataReceived
         }
