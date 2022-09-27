@@ -18,6 +18,7 @@
 
 import Foundation
 import vpncore
+import VPNShared
 
 protocol PaidFeature: Equatable {
     var name: String { get }

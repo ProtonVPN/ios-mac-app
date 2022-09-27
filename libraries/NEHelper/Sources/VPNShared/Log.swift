@@ -1,5 +1,5 @@
 //
-//  Created on 07.02.2022.
+//  Created on 2022-09-27.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,23 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Logging
 
-public enum NATType: Int, Codable, CaseIterable {
-    case strictNAT
-    case moderateNAT
-
-    init(flag: Bool) {
-        self = flag ? .strictNAT : .moderateNAT
-    }
-
-    var flag: Bool {
-        switch self {
-        case .strictNAT:
-            return true
-        case .moderateNAT:
-            return false
-        }
-    }
-
-    public static let `default`: NATType = .strictNAT
-}
+public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.NEHelper.logger")

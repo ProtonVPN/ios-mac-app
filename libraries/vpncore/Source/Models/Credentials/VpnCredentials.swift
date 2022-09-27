@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared
 
 public class VpnCredentials: NSObject, NSSecureCoding {
 

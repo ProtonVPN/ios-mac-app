@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared // TODO: Move to vpnshared library itself
 
 class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
     public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?

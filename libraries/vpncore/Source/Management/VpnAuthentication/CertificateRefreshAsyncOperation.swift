@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public enum CertificateRefreshError: Error {
     case canceled

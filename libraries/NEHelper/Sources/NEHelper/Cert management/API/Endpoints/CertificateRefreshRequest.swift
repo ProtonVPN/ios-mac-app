@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import VPNShared
 
 // Important! If changing this request, don't forget there is `CertificateRequest` class that does the same request, but in vpncore.
 

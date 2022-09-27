@@ -8,6 +8,7 @@
 
 import Foundation
 import ProtonCore_Networking
+import VPNShared
 
 extension AuthCredentials {
     public func updatedWithAuth(auth: Credential) -> AuthCredentials {

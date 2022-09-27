@@ -8,6 +8,7 @@
 
 import Foundation
 import NetworkExtension
+import VPNShared
 
 public protocol WireguardProtocolFactoryCreator {
     func makeWireguardProtocolFactory() -> WireguardProtocolFactory

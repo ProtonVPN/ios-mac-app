@@ -22,6 +22,7 @@
 
 import ProtonCore_Networking
 import Foundation
+import VPNShared
 
 final class CertificateRequest: Request {
     let publicKey: PublicKey

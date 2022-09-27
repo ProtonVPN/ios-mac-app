@@ -11,6 +11,7 @@ import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
 import Crypto_VPN
+import VPNShared
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)

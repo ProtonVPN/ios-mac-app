@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared
 
 public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
     public static var natTypeNotification: Notification.Name = NSNotification.Name("")

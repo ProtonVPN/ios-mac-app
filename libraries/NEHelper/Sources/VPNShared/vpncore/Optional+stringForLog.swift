@@ -1,7 +1,7 @@
 //
-//  Created on 07.02.2022.
+//  Created on 2021-11-25.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2021 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,22 +18,19 @@
 
 import Foundation
 
-public enum NATType: Int, Codable, CaseIterable {
-    case strictNAT
-    case moderateNAT
-
-    init(flag: Bool) {
-        self = flag ? .strictNAT : .moderateNAT
-    }
-
-    var flag: Bool {
-        switch self {
-        case .strictNAT:
-            return true
-        case .moderateNAT:
-            return false
+public extension Optional where Wrapped: Any {
+    
+    /// Removes 'Optional' from the string and decodes Data to String.
+    var stringForLog: String {
+        guard let value = self else {
+            return "null"
+        }
+        
+        switch value {
+        case let dataValue as Data:
+            return String(data: dataValue, encoding: .utf8) ?? "-"
+        default:
+            return "\(value)"
         }
     }
-
-    public static let `default`: NATType = .strictNAT
 }

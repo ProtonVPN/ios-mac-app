@@ -51,6 +51,6 @@ public struct PrivateKey: Codable {
  Ed25519 key pair
  */
 public struct VpnKeys: Codable {
-    let privateKey: PrivateKey
-    let publicKey: PublicKey
+    public let privateKey: PrivateKey
+    public let publicKey: PublicKey
 }

@@ -20,6 +20,7 @@ import Foundation
 import Search
 import vpncore
 import UIKit
+import VPNShared
 
 extension Configuration {
     init() {

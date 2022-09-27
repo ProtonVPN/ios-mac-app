@@ -28,6 +28,7 @@ import ProtonCore_UIFoundations
 import Logging
 import PMLogger
 import Foundation
+import VPNShared
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 

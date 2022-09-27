@@ -25,6 +25,7 @@ import ProtonCore_Payments
 import ProtonCore_PaymentsUI
 import vpncore
 import UIKit
+import VPNShared
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService

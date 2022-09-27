@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public struct LocalAgentConfiguration {
     let hostname: String

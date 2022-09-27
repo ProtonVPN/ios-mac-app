@@ -24,6 +24,7 @@ import Foundation
 import GSMessages
 import vpncore
 import UIKit
+import VPNShared
 
 class StatusViewModel {
     

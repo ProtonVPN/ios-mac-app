@@ -22,6 +22,7 @@
 import Foundation
 import ProtonCore_APIClient
 import BugReport
+import VPNShared
 
 public typealias DynamicBugReportConfigCallback = GenericCallback<BugReportModel>
 

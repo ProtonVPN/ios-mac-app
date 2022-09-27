@@ -23,6 +23,7 @@
 import UIKit
 import vpncore
 import ProtonCore_UIFoundations
+import VPNShared
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &

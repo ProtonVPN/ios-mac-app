@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public protocol VpnAuthenticationFactory {
     func makeVpnAuthentication() -> VpnAuthentication

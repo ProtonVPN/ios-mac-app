@@ -18,6 +18,7 @@
 
 import Foundation
 import NetworkExtension
+import VPNShared
 
 public protocol NEVPNManagerWrapper: AnyObject {
     var vpnConnection: NEVPNConnectionWrapper { get }

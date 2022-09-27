@@ -22,6 +22,7 @@
 
 import Foundation
 import Crypto_VPN
+import VPNShared
 
 extension PublicKey {
     init(keyPair: Ed25519KeyPair) {
