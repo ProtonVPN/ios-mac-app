@@ -14,6 +14,7 @@ import ProtonCore_LoginUI
 import ProtonCore_Networking
 import ProtonCore_Payments
 import UIKit
+import VPNShared
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService

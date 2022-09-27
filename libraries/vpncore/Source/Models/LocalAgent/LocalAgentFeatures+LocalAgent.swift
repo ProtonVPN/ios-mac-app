@@ -22,6 +22,7 @@
 
 import Foundation
 import Crypto_VPN
+import VPNShared
 
 enum LocalAgentFeaturesKeys: String {
     case vpnAccelerator = "split-tcp"

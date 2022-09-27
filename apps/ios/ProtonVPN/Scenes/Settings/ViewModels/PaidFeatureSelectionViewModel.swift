@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import vpncore
+import VPNShared
 
 final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
 

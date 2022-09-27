@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 extension Data {
     var jsonDictionary: JSONDictionary? {

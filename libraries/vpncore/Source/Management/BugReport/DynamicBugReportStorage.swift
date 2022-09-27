@@ -18,6 +18,7 @@
 
 import Foundation
 import BugReport
+import VPNShared
 
 public protocol DynamicBugReportStorageFactory {
     func makeDynamicBugReportStorage() -> DynamicBugReportStorage

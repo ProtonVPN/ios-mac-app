@@ -23,19 +23,19 @@
 import Foundation
 
 public struct VpnCertificate: Codable {
-    let certificate: String
-    let validUntil: Date
+    public let certificate: String
+    public let validUntil: Date
     public let refreshTime: Date
 
-    var isExpired: Bool {
+    public var isExpired: Bool {
         return Date() > validUntil
     }
 
-    var shouldBeRefreshed: Bool {
+    public var shouldBeRefreshed: Bool {
         return Date() > refreshTime
     }
 
-    init(dict: JSONDictionary) throws {
+    public init(dict: JSONDictionary) throws {
         certificate = try dict.stringOrThrow(key: "Certificate")
         validUntil = try dict.unixTimestampOrThrow(key: "ExpirationTime")
         refreshTime = try dict.unixTimestampOrThrow(key: "RefreshTime")
@@ -49,6 +49,11 @@ public struct VpnCertificate: Codable {
 }
 
 public struct VpnCertificateWithFeatures {
-    let certificate: VpnCertificate
-    let features: VPNConnectionFeatures?
+    public let certificate: VpnCertificate
+    public let features: VPNConnectionFeatures?
+
+    public init(certificate: VpnCertificate, features: VPNConnectionFeatures?) {
+        self.certificate = certificate
+        self.features = features
+    }
 }

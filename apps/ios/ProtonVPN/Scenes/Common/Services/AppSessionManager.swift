@@ -25,6 +25,7 @@ import UIKit
 import Foundation
 import Search
 import Review
+import VPNShared
 
 enum SessionStatus {
     

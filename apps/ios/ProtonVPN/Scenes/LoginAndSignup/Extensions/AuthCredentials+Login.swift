@@ -19,6 +19,7 @@
 import Foundation
 import ProtonCore_Login
 import vpncore
+import VPNShared
 
 extension AuthCredentials {
     convenience init(_ data: LoginData) {

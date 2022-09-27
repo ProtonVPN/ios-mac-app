@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCore_Networking
+import VPNShared
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService

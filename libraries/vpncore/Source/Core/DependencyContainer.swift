@@ -20,6 +20,7 @@ import Foundation
 import NetworkExtension
 import Timer
 import PMLogger
+import VPNShared
 
 typealias PropertiesToOverride = DoHVPNFactory &
                                 NetworkingDelegateFactory &

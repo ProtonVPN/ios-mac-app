@@ -22,6 +22,7 @@
 import Foundation
 import Reachability
 import Timer
+import VPNShared
 #if canImport(AppKit)
 import AppKit
 #endif

@@ -8,6 +8,7 @@
 //  See LICENSE for up to date license information.
 
 import Foundation
+import VPNShared
 
 public enum VpnManagerClientConfiguration {
     case iOSClient

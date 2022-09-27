@@ -19,6 +19,7 @@
 import Foundation
 import ProtonCore_APIClient
 import ProtonCore_Networking
+import VPNShared
 
 public final class ReportsBugs: Request {
     public let bug: ReportBug

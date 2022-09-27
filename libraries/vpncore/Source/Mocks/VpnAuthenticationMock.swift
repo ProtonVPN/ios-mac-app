@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public final class VpnAuthenticationMock: VpnAuthentication {
     public init() { }

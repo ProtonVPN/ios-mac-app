@@ -19,6 +19,7 @@
 import Foundation
 import ProtonCore_APIClient
 import BugReport
+import VPNShared
 
 #if os(iOS)
 import UIKit

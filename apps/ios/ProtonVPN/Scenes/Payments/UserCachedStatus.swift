@@ -10,6 +10,7 @@ import Foundation
 import ProtonCore_Payments
 import ProtonCore_PaymentsUI
 import vpncore
+import VPNShared
 
 final class UserCachedStatus: ServicePlanDataStorage {
     enum UserCachedStatusKeys: String, CaseIterable {

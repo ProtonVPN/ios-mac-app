@@ -19,13 +19,13 @@
 import Foundation
 
 public struct VPNConnectionFeatures: Equatable {
-    let netshield: NetShieldType
-    let vpnAccelerator: Bool
-    let bouncing: String?
-    let natType: NATType
-    let safeMode: Bool?
+    public let netshield: NetShieldType
+    public let vpnAccelerator: Bool
+    public let bouncing: String?
+    public let natType: NATType
+    public let safeMode: Bool?
 
-    init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
+    public init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
         self.netshield = netshield
         self.vpnAccelerator = vpnAccelerator
         self.bouncing = bouncing
@@ -34,7 +34,7 @@ public struct VPNConnectionFeatures: Equatable {
     }
 
     /// Used for testing purposes.
-    var asDict: [String: Any] {
+    public var asDict: [String: Any] {
         var result = [String: Any]()
         result[CodingKeys.netshield.rawValue] = netshield.rawValue
         result[CodingKeys.vpnAccelerator.rawValue] = vpnAccelerator
@@ -73,7 +73,7 @@ extension VPNConnectionFeatures: Codable {
 }
 
 extension VPNConnectionFeatures {
-    func equals(other: VPNConnectionFeatures?, safeModeEnabled: Bool) -> Bool {
+    public func equals(other: VPNConnectionFeatures?, safeModeEnabled: Bool) -> Bool {
         let equalsWithoutSafeMode = self.netshield == other?.netshield && self.vpnAccelerator == other?.vpnAccelerator && self.bouncing == other?.bouncing && self.natType == other?.natType
 
         // if Safe Mode is disabled by feature flag ignore it when doing the comparison

@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel

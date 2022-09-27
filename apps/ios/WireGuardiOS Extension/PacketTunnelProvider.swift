@@ -13,6 +13,7 @@ import WireGuardKit
 import Logging
 import Timer
 import NEHelper
+import VPNShared
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     private var timerFactory: TimerFactory!

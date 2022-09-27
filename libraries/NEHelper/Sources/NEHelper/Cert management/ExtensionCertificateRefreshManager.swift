@@ -9,6 +9,7 @@
 import Foundation
 import NetworkExtension
 import Timer
+import VPNShared
 
 public enum CertificateRefreshError: Error {
     case timedOut

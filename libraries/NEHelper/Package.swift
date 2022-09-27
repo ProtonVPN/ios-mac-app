@@ -10,10 +10,12 @@ let package = Package(
         .macOS(.v10_15)
     ],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "NEHelper",
             targets: ["NEHelper"]),
+        .library(
+            name: "VPNShared",
+            targets: ["VPNShared"]),
     ],
     dependencies: [
         .package(path: "../Timer"),
@@ -21,14 +23,19 @@ let package = Package(
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "3.2.1"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "NEHelper",
+            name: "VPNShared",
             dependencies: [
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
+            ]
+        ),
+        .target(
+            name: "NEHelper",
+            dependencies: [
+                .product(name: "Timer", package: "Timer"),
+                "VPNShared",
             ]
         ),
         .testTarget(

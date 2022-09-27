@@ -21,6 +21,7 @@
 //
 
 import ProtonCore_Networking
+import VPNShared
 
 final class VPNLocationRequest: Request {
     var path: String {

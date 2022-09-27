@@ -23,6 +23,7 @@
 import Foundation
 import Crypto_VPN
 import Reachability
+import VPNShared
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)

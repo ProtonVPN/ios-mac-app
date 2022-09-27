@@ -2581,6 +2581,8 @@
 			dependencies = (
 			);
 			name = "Siri Shortcut Handler";
+			packageProductDependencies = (
+			);
 			productName = "Siri Shortcut Handler";
 			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -2641,6 +2643,8 @@
 			dependencies = (
 			);
 			name = "Quick Connect Widget";
+			packageProductDependencies = (
+			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
 			productType = "com.apple.product-type.app-extension";

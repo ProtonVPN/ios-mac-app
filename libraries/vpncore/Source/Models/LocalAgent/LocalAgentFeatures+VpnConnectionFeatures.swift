@@ -18,6 +18,7 @@
 
 import Foundation
 import Crypto_VPN
+import VPNShared
 
 extension LocalAgentFeatures {   
     var vpnFeatures: VPNConnectionFeatures? {

@@ -23,6 +23,7 @@
 import Intents
 import vpncore
 import NetworkExtension
+import VPNShared
 
 @available(iOSApplicationExtension 12.0, *)
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {

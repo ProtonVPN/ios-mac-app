@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 import Timer
+import VPNShared
 #if os(iOS)
 import UIKit
 #endif

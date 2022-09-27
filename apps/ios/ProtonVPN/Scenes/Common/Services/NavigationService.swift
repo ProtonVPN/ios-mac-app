@@ -25,6 +25,7 @@ import UIKit
 import vpncore
 import SwiftUI
 import BugReport
+import VPNShared
 
 // MARK: Country Service
 

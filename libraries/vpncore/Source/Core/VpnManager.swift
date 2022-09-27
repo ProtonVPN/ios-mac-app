@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import NetworkExtension
+import VPNShared
 
 public protocol VpnManagerProtocol {
 

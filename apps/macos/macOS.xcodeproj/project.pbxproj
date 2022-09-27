@@ -256,10 +256,8 @@
 		E997994E26A6F5740083D61E /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994226A6F50F0083D61E /* AuthCredentials.swift */; };
 		E997994F26A6F5780083D61E /* AuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994326A6F50F0083D61E /* AuthKeychain.swift */; };
 		E997995026A6F57B0083D61E /* Data+JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994426A6F50F0083D61E /* Data+JSONDictionary.swift */; };
-		E997995126A6F57E0083D61E /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994526A6F50F0083D61E /* Dictionary+Extension.swift */; };
 		E997995226A6F5810083D61E /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994626A6F50F0083D61E /* KeychainConstants.swift */; };
 		E997995326A6F5840083D61E /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994726A6F50F0083D61E /* CertificateConstants.swift */; };
-		E997995526A6F5890083D61E /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */; };
 		E997995726A6F58F0083D61E /* VpnCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994B26A6F50F0083D61E /* VpnCertificate.swift */; };
 		E997995826A6F5920083D61E /* VpnKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994C26A6F50F0083D61E /* VpnKeys.swift */; };
 		E997999326A6FAA00083D61E /* WGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998E26A6FAA00083D61E /* WGConstants.swift */; };
@@ -877,10 +875,8 @@
 		E997994226A6F50F0083D61E /* AuthCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthCredentials.swift; path = ../../../../libraries/vpncore/Source/Models/Credentials/AuthCredentials.swift; sourceTree = "<group>"; };
 		E997994326A6F50F0083D61E /* AuthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthKeychain.swift; path = ../../../../libraries/vpncore/Source/Models/Credentials/AuthKeychain.swift; sourceTree = "<group>"; };
 		E997994426A6F50F0083D61E /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Data+JSONDictionary.swift"; path = "../../../../libraries/vpncore/Source/Extensions/Data+JSONDictionary.swift"; sourceTree = "<group>"; };
-		E997994526A6F50F0083D61E /* Dictionary+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dictionary+Extension.swift"; path = "../../../../libraries/vpncore/Source/Extensions/Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		E997994626A6F50F0083D61E /* KeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/KeychainConstants.swift; sourceTree = "<group>"; };
 		E997994726A6F50F0083D61E /* CertificateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/CertificateConstants.swift; sourceTree = "<group>"; };
-		E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIDevice+ModelName.swift"; path = "../../../../libraries/vpncore/Source/Extensions/UIDevice+ModelName.swift"; sourceTree = "<group>"; };
 		E997994B26A6F50F0083D61E /* VpnCertificate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnCertificate.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnCertificate.swift; sourceTree = "<group>"; };
 		E997994C26A6F50F0083D61E /* VpnKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnKeys.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnKeys.swift; sourceTree = "<group>"; };
 		E997998E26A6FAA00083D61E /* WGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGConstants.swift; sourceTree = "<group>"; };
@@ -1641,10 +1637,8 @@
 				E997994226A6F50F0083D61E /* AuthCredentials.swift */,
 				E997994326A6F50F0083D61E /* AuthKeychain.swift */,
 				E997994426A6F50F0083D61E /* Data+JSONDictionary.swift */,
-				E997994526A6F50F0083D61E /* Dictionary+Extension.swift */,
 				E997994626A6F50F0083D61E /* KeychainConstants.swift */,
 				E997994726A6F50F0083D61E /* CertificateConstants.swift */,
-				E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */,
 				E997994B26A6F50F0083D61E /* VpnCertificate.swift */,
 				E997994C26A6F50F0083D61E /* VpnKeys.swift */,
 				1A10940E60F666D60A950D73 /* VPNConnectionFeatures.swift */,
@@ -3479,8 +3473,6 @@
 				E997994F26A6F5780083D61E /* AuthKeychain.swift in Sources */,
 				F314141127B12443007424E9 /* NATType.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,
-				E997995126A6F57E0083D61E /* Dictionary+Extension.swift in Sources */,
-				E997995526A6F5890083D61E /* UIDevice+ModelName.swift in Sources */,
 				E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */,
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 				FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */,

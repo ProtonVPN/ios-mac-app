@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import NetworkExtension
+import VPNShared
 
 final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn

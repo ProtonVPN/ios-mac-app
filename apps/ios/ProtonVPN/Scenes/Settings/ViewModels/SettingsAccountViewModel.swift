@@ -24,6 +24,7 @@ import vpncore
 import UIKit
 import ProtonCore_AccountDeletion
 import ProtonCore_Networking
+import VPNShared
 
 final class SettingsAccountViewModel {
     

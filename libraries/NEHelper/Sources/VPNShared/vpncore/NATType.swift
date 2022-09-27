@@ -1,5 +1,5 @@
 //
-//  Created on 2022-05-17.
+//  Created on 07.02.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,27 +17,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import NetworkExtension
 
-public protocol ProviderMessage: Equatable {
-    var asData: Data { get }
+public enum NATType: Int, Codable, CaseIterable {
+    case strictNAT
+    case moderateNAT
 
-    static func decode(data: Data) throws -> Self
-}
+    public init(flag: Bool) {
+        self = flag ? .strictNAT : .moderateNAT
+    }
 
-public protocol ProviderRequest: ProviderMessage {
-    associatedtype Response: ProviderMessage
-}
+    public var flag: Bool {
+        switch self {
+        case .strictNAT:
+            return true
+        case .moderateNAT:
+            return false
+        }
+    }
 
-public protocol ProviderMessageSender: AnyObject {
-    func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
-}
-
-public enum ProviderMessageError: Error {
-    case noDataReceived
-    case decodingError
-    case sendingError
-    case unknownRequest
-    case unknownResponse
-    case remoteError(message: String)
+    public static let `default`: NATType = .strictNAT
 }

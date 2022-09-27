@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import Timer
+import VPNShared
 
 @available(iOSApplicationExtension 12.0, *)
 class SiriHandlerViewModel {
