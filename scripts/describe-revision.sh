@@ -18,6 +18,9 @@
 # example, reading this line in the log messages will help determine if the
 # desired version is actually installed.
 
+# add homebrew to path in case lfs is there
+PATH="${PATH}:/opt/homebrew/bin"
+
 REVISION_INFO_KEY="RevisionInfo"
 MATCH="$1"
 INFOPLIST_PATH="$2"
