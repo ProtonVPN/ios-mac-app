@@ -29,10 +29,6 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
 
 extension macOSNetworkingDelegate {
     func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
-        // there is no human verification on macOS so just show en error
-        // We don't have an error message to show
-        // alertService.push(alert: UserVerificationAlert(error: error))
-
         // report human verification as closed by the user
         // should result in the request failing with error
         completion(.verification(header: [:], verificationCodeBlock: nil))
