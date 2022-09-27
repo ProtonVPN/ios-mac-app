@@ -135,6 +135,9 @@ final class CoreLoginService {
     }
 
     private func processLoginResult(result: LoginAndSignupResult) {
+        // loginInteface should not be retained, but recreated after
+        // each use. But not all LoginResults signal and end of the process,
+        // so we only renew it in some cases
         switch result {
         case .dismissed:
             log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
@@ -145,7 +148,6 @@ final class CoreLoginService {
         case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
             loginInterface = makeLoginInterface()
-
         case .loginStateChanged(.dataIsAvailable), .signupStateChanged(.dataIsAvailable):
             log.debug("Login or signup process in progress", category: .app)
         }
