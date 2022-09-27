@@ -80,6 +80,6 @@ final class AnnouncementButtonViewModel {
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
+        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls, completion: completion)
     }
 }

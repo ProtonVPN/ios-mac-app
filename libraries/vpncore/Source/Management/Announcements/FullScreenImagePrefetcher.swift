@@ -36,13 +36,13 @@ public struct FullScreenImagePrefetcher {
         imageCache.containsImageForKey(forKey: urlString, completion: completion)
     }
 
-    public func prefetchImages(urls: [URL]) {
+    public func prefetchImages(urls: [URL], completion: @escaping (Bool) -> Void) {
         guard !urls.isEmpty else {
             log.debug("No URLs to prefetch")
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        imageCache.prefetchURLs(urls)
+        imageCache.prefetchURLs(urls, completion: completion)
     }
 }
 
@@ -62,7 +62,7 @@ public struct ImageCacheFactory: ImageCacheFactoryProtocol {
 public protocol ImageCacheProtocol {
     func containsImageForKey(forKey key: String,
                              completion completionBlock: @escaping (Bool) -> Void?)
-    func prefetchURLs(_ urls: [URL])
+    func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void)
 }
 
 struct ImageCache: ImageCacheProtocol {
@@ -71,9 +71,10 @@ struct ImageCache: ImageCacheProtocol {
             completionBlock(cacheType != .none)
         }
     }
-    func prefetchURLs(_ urls: [URL]) {
+    func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void) {
         SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
             log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
+            completion(finishedUrlsCount == urls.count)
         })
     }
 }

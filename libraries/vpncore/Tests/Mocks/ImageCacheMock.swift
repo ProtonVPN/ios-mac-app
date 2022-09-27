@@ -26,7 +26,7 @@ struct ImageCacheMock: ImageCacheProtocol {
         completionBlock(ImageCacheMock.completionBlockParameterValue)
     }
     
-    func prefetchURLs(_ urls: [URL]) {
+    func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void) {
     }
 }
 
