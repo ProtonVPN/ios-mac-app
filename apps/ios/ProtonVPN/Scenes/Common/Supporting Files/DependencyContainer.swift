@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import UIKit
 import vpncore
 import KeychainAccess
 import BugReport

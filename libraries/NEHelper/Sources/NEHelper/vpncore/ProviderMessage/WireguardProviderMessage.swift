@@ -286,3 +286,9 @@ private extension HTTPCookie {
         return HTTPCookie(properties: cookieProperties)
     }
 }
+
+extension Data {
+    var jsonDictionary: JSONDictionary? {
+        return (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
+    }
+}

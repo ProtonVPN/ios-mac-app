@@ -19,11 +19,11 @@ public enum CertificateRefreshError: Error {
     case internalError(message: String)
 }
 
-typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshError>) -> Void)
+public typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshError>) -> Void)
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `start()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
-final class ExtensionCertificateRefreshManager {
+public final class ExtensionCertificateRefreshManager {
     /// All intervals are in seconds unless otherwise mentioned.
     struct Intervals {
         /// How long to wait for another enqueued operation to complete before timing it out.
@@ -51,14 +51,14 @@ final class ExtensionCertificateRefreshManager {
     /// the completion is called and the request is processed, increment the semaphore so the next request can be made.
     fileprivate let semaphore = DispatchSemaphore(value: 1)
 
-    enum State {
+    public enum State {
         case running
         case stopped
     }
 
     public private(set) var state: State = .stopped
 
-    init(apiService: ExtensionAPIService,
+    public init(apiService: ExtensionAPIService,
          timerFactory: TimerFactory,
          vpnAuthenticationStorage: VpnAuthenticationStorage,
          keychain: AuthKeychainHandle) {
