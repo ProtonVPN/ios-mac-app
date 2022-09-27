@@ -163,7 +163,7 @@ final class HeaderViewModel {
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
+        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls, completion: completion)
     }
 
     var announcementTooltip: String? {
