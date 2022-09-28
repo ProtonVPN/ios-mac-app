@@ -58,7 +58,7 @@ class MockDependencyContainer {
                                                          propertiesManager: propertiesManager,
                                                          vpnManagerFactory: neTunnelProviderFactory)
 
-    lazy var vpnApiService = VpnApiService(networking: networking)
+    lazy var vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
 
     let sessionService = SessionServiceMock()
     public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()

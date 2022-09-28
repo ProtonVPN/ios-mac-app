@@ -28,6 +28,7 @@ import TimerMock
 class MapViewModelTests: XCTestCase {
 
     lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain())
+    lazy var vpnKeychain = VpnKeychainMock()
 
     var serverStorage: ServerStorage!
     var appStateManager: AppStateManager!
@@ -36,18 +37,18 @@ class MapViewModelTests: XCTestCase {
         ServerManagerImplementation.reset()
         serverStorage = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self)))
 
-        let vpnApiService = VpnApiService(networking: networking)
+        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: Storage())
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManagerMock())
-        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain, safeModePropertyProvider: SafeModePropertyProviderMock()), doh: .mock, serverStorage: serverStorage, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain, safeModePropertyProvider: SafeModePropertyProviderMock()), doh: .mock, serverStorage: serverStorage, natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
     }
     
     func testSecureCoreAnnotationLocations() {
-        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: AlertServiceEmptyStub(), serverStorage: serverStorage, vpnGateway: nil, vpnKeychain: VpnKeychainMock(), propertiesManager: PropertiesManagerMock(), connectionStatusService: ConnectionStatusServiceMock())
+        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: AlertServiceEmptyStub(), serverStorage: serverStorage, vpnGateway: nil, vpnKeychain: vpnKeychain, propertiesManager: PropertiesManagerMock(), connectionStatusService: ConnectionStatusServiceMock())
         mapViewModel.setStateOf(type: .secureCore)
         
         let annotations = mapViewModel.annotations

@@ -25,11 +25,19 @@ public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
 }
 
+extension Container: VpnApiServiceFactory {
+    public func makeVpnApiService() -> VpnApiService {
+        return VpnApiService(networking: makeNetworking(), vpnKeychain: makeVpnKeychain())
+    }
+}
+
 public class VpnApiService {
     private let networking: Networking
+    private let vpnKeychain: VpnKeychainProtocol
     
-    public init(networking: Networking) {
+    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol) {
         self.networking = networking
+        self.vpnKeychain = vpnKeychain
     }
     
     // swiftlint:disable function_body_length cyclomatic_complexity
@@ -333,7 +341,8 @@ public class VpnApiService {
     }
     
     public func clientConfig(completion: @escaping (Result<ClientConfig, Error>) -> Void) {
-        networking.request(VPNClientConfigRequest()) { (result: Result<JSONDictionary, Error>) in
+        let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn)
+        networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 do {

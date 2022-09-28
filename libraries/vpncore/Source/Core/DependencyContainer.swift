@@ -300,13 +300,6 @@ extension Container: VpnManagerConfigurationPreparerFactory {
     }
 }
 
-// MARK: VpnApiServiceFactory
-extension Container: VpnApiServiceFactory {
-    public func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(networking: makeNetworking())
-    }
-}
-
 // MARK: AppStateManagerFactory
 extension Container: AppStateManagerFactory {
     public func makeAppStateManager() -> AppStateManager {
