@@ -74,7 +74,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     safeModePropertyProvider: safeModePropertyProvider)
         
         siriHandlerViewModel = SiriHandlerViewModel(networking: networking,
-                                                    vpnApiService: VpnApiService(networking: networking),
+                                                    vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain),
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,
                                                     authKeychain: authKeychain,

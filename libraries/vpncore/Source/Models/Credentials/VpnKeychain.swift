@@ -48,6 +48,12 @@ public protocol VpnKeychainProtocol {
     func clearOldVpnPassword() throws
 }
 
+extension VpnKeychainProtocol {
+    var userIsLoggedIn: Bool {
+        (try? fetch()) != nil
+    }
+}
+
 public protocol VpnKeychainFactory {
     func makeVpnKeychain() -> VpnKeychainProtocol
 }

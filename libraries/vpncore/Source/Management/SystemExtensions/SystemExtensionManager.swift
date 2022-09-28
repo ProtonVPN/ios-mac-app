@@ -72,7 +72,7 @@ public class SystemExtensionManager: NSObject {
     private var userClosedTour = false
 
     private var userIsLoggedIn: Bool {
-        (try? vpnKeychain.fetch()) != nil
+        vpnKeychain.userIsLoggedIn
     }
 
     public init(factory: Factory) {

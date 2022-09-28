@@ -27,7 +27,9 @@ final class VPNClientConfigRequest: Request {
         return "/vpn/v2/clientconfig"
     }
 
-    var isAuth: Bool {
-        return false
+    let isAuth: Bool
+
+    public init(isAuth: Bool) {
+        self.isAuth = isAuth
     }
 }

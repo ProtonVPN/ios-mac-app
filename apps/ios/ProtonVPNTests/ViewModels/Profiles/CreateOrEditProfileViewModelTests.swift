@@ -45,18 +45,20 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var authKeychain: AuthKeychainHandle = MockAuthKeychain()
 
+    lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychainMock(accountPlan: .visionary, maxTier: 4)
+
     lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: appInfo, doh: .mock, authKeychain: authKeychain)
     var vpnApiService: VpnApiService {
-        return VpnApiService(networking: networking)
+        return VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
     }
     
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
-        vpnKeychain: VpnKeychainMock(),
+        vpnKeychain: vpnKeychain,
         alertService: AlertServiceEmptyStub(),
         propertiesManager: propertiesManager)
     
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
     }
 
     lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
@@ -67,7 +69,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
-                                                              vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
+                                                              vpnKeychain: vpnKeychain,
                                                               serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage),
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
@@ -78,7 +80,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
-                                                              vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
+                                                              vpnKeychain: vpnKeychain,
                                                               serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage), 
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),

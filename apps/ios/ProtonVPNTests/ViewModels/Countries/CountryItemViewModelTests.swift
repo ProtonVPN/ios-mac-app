@@ -62,14 +62,15 @@ class CountryItemViewModelTests: XCTestCase {
     private func viewModel(withServers servers: [ServerModel]) -> CountryItemViewModel {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
         let group: CountryGroup = (country, servers)
+        let vpnKeychain = VpnKeychainMock()
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain())
-        let vpnApiService = VpnApiService(networking: networking)
+        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
         let configurationPreparer = VpnManagerConfigurationPreparer(
-            vpnKeychain: VpnKeychainMock(),
+            vpnKeychain: vpnKeychain,
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManagerMock())
         
-        let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
+        let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
         
         let viewModel = CountryItemViewModel(
             countryGroup: group,

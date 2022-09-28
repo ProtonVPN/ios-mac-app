@@ -44,8 +44,8 @@ class AppSessionRefreshTimerTests: XCTestCase {
         networking = NetworkingMock()
         networkingDelegate = FullNetworkingMockDelegate()
         networking.delegate = networkingDelegate
-        apiService = VpnApiService(networking: networking)
         vpnKeychain = VpnKeychainMock()
+        apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
         appSessionRefresher = BaseAppSessionRefresher(factory: self)
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimer(factory: self,
