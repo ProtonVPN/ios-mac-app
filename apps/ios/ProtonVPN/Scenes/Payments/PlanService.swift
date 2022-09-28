@@ -179,6 +179,8 @@ final class CorePlanService: PlanService {
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
             case .toppedUpCredits:
                 log.debug("Credits topped up", category: .iap)
+            case let .apiMightBeBlocked(message, error):
+               log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
             }
         }
     }
@@ -211,6 +213,9 @@ final class CorePlanService: PlanService {
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
         case .toppedUpCredits:
             log.debug("Credits topped up", category: .iap)
+        case let .apiMightBeBlocked(message, originalError: error):
+            log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
+
         }
     }
 }
