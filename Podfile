@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.21.0'
+  '3.22.4'
 end
 
 def openvpn
@@ -119,6 +119,7 @@ target 'ProtonVPN' do
   pod 'ProtonCore-Hash', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-ForceUpgrade-V5/Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-AccountDeletion-V5/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-TroubleShooting', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
     openvpn
