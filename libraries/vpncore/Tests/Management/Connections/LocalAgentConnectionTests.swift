@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 import NetworkExtension
-
+import VPNShared
 import Crypto_VPN
 @testable import vpncore
 

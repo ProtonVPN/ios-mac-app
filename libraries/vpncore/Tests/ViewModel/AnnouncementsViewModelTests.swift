@@ -22,6 +22,7 @@
 
 @testable import vpncore
 import XCTest
+import VPNShared
 
 class AnnouncementsViewModelTests: XCTestCase {
     

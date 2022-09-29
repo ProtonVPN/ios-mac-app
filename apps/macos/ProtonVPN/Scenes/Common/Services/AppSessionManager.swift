@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import VPNShared
 
 enum SessionStatus {
     case notEstablished

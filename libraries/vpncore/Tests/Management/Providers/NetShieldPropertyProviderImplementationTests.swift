@@ -21,6 +21,7 @@
 //
 
 import XCTest
+import VPNShared
 @testable import vpncore
 
 final class NetShieldPropertyProviderImplementationTests: XCTestCase {

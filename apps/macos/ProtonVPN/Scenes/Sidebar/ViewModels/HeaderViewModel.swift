@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import VPNShared
 
 protocol HeaderViewModelDelegate: class {
     func bitrateUpdated(with attributedString: NSAttributedString)

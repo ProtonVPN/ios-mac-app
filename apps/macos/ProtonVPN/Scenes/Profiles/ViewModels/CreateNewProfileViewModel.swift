@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import VPNShared
 
 internal struct ModelState {
 

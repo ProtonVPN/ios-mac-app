@@ -22,6 +22,7 @@
 
 import vpncore
 import Foundation
+import VPNShared
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
     

@@ -20,4 +20,4 @@ import Foundation
 import Logging
 
 // Main core library logger
-public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.core.logger")
+let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.core.logger")

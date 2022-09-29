@@ -11,6 +11,7 @@ import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
 import XCTest
+import VPNShared
 @testable import vpncore
 
 final class NetworkingMock {

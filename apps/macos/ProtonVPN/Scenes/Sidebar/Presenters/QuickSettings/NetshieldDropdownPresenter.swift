@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import AppKit
+import VPNShared
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     

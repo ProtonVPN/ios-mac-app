@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+import VPNShared
 @testable import vpncore
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {

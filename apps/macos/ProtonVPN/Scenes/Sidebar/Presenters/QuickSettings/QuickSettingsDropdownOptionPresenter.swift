@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import VPNShared
 
 protocol QuickSettingsDropdownOptionPresenter {
     var title: String! { get }
