@@ -24,6 +24,7 @@ import XCTest
 import vpncore
 import ProtonCore_UIFoundations
 import TimerMock
+import VPNShared
 
 class CountryItemViewModelTests: XCTestCase {
 

@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import PMLogger
+import VPNShared
 
 protocol HelpMenuViewModelFactory {
     func makeHelpMenuViewModel() -> HelpMenuViewModel

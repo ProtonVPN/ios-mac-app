@@ -22,6 +22,8 @@
 
 import vpncore
 import AppKit
+import VPNShared
+import Logging
 
 protocol OverlayViewModelDelegate: class {
     func stateChanged()

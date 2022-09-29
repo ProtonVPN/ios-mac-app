@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import VPNShared
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)

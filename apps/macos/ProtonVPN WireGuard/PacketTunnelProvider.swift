@@ -24,6 +24,7 @@ import Foundation
 import NetworkExtension
 import os
 import WireGuardKit
+import PMLogger
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     override init() {

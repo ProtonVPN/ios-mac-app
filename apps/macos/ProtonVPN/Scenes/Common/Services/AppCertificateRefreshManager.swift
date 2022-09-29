@@ -18,6 +18,7 @@
 
 import Foundation
 import vpncore
+import VPNShared
 
 protocol AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager

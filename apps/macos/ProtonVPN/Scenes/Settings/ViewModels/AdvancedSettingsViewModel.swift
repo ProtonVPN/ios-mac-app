@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import vpncore
+import VPNShared
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory

@@ -24,6 +24,7 @@ import Cocoa
 import os
 import vpncore
 import PMLogger
+import VPNShared
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService

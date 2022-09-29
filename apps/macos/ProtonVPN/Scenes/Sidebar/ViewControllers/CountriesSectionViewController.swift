@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import AppKit
+import VPNShared
 
 class QuickSettingsStack: NSStackView {
 

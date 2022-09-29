@@ -24,6 +24,7 @@ import CoreLocation
 import vpncore
 import XCTest
 import TimerMock
+import VPNShared
 
 class MapViewModelTests: XCTestCase {
 
