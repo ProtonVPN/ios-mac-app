@@ -60,22 +60,39 @@ public class VpnApiService {
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure = { [weak self] (location: UserLocation?) in
+        let ipResolvedClosure = { [unowned self] (location: UserLocation?) in
             rLocation = location
+
+            var shortenedIp: String?
+            if let ip = location?.ip {
+                shortenedIp = truncatedIp(ip)
+            }
             
-            self?.serverInfo(for: location?.ip) { result in
+            serverInfo(for: shortenedIp) { result in
                 switch result {
                 case let .success(serverModels):
                     rServerModels = serverModels
-                    dispatchGroup.leave()
+                    dispatchGroup.leave() // leave: A
                 case let .failure(error):
-                    failureClosure(error)
+                    failureClosure(error) // leave: A
+                }
+            }
+
+            clientConfig(for: shortenedIp) { result in
+                switch result {
+                case let .success(config):
+                    rClientConfig = config
+                    dispatchGroup.leave() // leave: B
+                case let .failure(error):
+                    failureClosure(error) // leave: B
                 }
             }
         }
         
         // Only retrieve IP address when not connected to VPN
-        dispatchGroup.enter()
+
+        dispatchGroup.enter() // enter: A
+        dispatchGroup.enter() // enter: B
         if isDisconnected {
             // Just use last known IP if getting new one failed
             userLocation { result in
@@ -89,40 +106,30 @@ public class VpnApiService {
         } else {
             ipResolvedClosure(lastKnownLocation)
         }
-        
-        dispatchGroup.enter()
+
+
+        dispatchGroup.enter() // enter: C
         clientCredentials { result in
             switch result {
             case let .success(credentials):
                 rCredentials = credentials
-                dispatchGroup.leave()
+                dispatchGroup.leave() // leave: C
             case let .failure(error):
-                silentFailureClosure(error)
+                silentFailureClosure(error) // leave: C
             }
         }
         
-        dispatchGroup.enter()
+        dispatchGroup.enter() // enter: D
         virtualServices { result in
             switch result {
             case let .success(response):
                 rStreamingServices = response
-                dispatchGroup.leave()
+                dispatchGroup.leave() // leave: D
             case let .failure(error):
-                silentFailureClosure(error)
+                silentFailureClosure(error) // leave: D
             }
         }
-        
-        dispatchGroup.enter()
-        clientConfig { result in
-            switch result {
-            case let .success(config):
-                rClientConfig = config
-                dispatchGroup.leave()
-            case let .failure(error):
-                failureClosure(error)
-            }
-        }
-        
+
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
                 completion(.success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, location: rLocation, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
@@ -231,12 +238,7 @@ public class VpnApiService {
     }
     
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(for ip: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
-        var shortenedIp: String?
-        if let ip = ip {
-            shortenedIp = truncatedIp(ip)
-        }
-
+    public func serverInfo(for shortenedIp: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
         networking.request(VPNLogicalServicesRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(json):
@@ -340,8 +342,10 @@ public class VpnApiService {
         }
     }
     
-    public func clientConfig(completion: @escaping (Result<ClientConfig, Error>) -> Void) {
-        let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn)
+    public func clientConfig(for shortenedIp: String?, completion: @escaping (Result<ClientConfig, Error>) -> Void) {
+        let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn,
+                                             ip: shortenedIp)
+
         networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):

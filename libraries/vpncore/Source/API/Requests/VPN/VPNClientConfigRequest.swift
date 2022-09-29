@@ -23,13 +23,24 @@
 import ProtonCore_Networking
 
 final class VPNClientConfigRequest: Request {
+
+    let isAuth: Bool
+    let ip: String?
+
     var path: String {
         return "/vpn/v2/clientconfig"
     }
 
-    let isAuth: Bool
+    var header: [String: Any] {
+        guard let ip = ip else {
+            return [:]
+        }
 
-    public init(isAuth: Bool) {
+        return ["x-pm-netzone": ip]
+    }
+
+    public init(isAuth: Bool, ip: String?) {
         self.isAuth = isAuth
+        self.ip = ip
     }
 }
