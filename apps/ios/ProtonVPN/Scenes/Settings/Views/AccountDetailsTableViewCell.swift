@@ -44,6 +44,7 @@ final class AccountDetailsTableViewCell: UITableViewCell {
         initialsText.textColor = ColorProvider.White
         username.textColor = ColorProvider.TextNorm
         plan.textColor = ColorProvider.TextWeak
+        accessibilityIdentifier = "Account Details cell"
     }
     
     func setup(initials: NSAttributedString,
