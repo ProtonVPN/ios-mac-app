@@ -45,6 +45,13 @@ class SettingsRobot: CoreElements {
         return SettingsRobot()
     }
 
+
+
+    func goToAccountDetail() -> AccountRobot {
+        cell("Account Details cell").tap()
+        return AccountRobot()
+    }
+
     func selectNetshield(_ netshield: String) -> SettingsRobot {
         cell(netshieldButton).tap()
         staticText(netshield).tap()

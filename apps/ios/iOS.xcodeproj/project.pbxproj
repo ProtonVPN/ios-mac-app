@@ -102,6 +102,10 @@
 		4CF40BAB2833D9C600C3C501 /* SessionAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BAA2833D9C600C3C501 /* SessionAuthRequest.swift */; };
 		4CF40BAC2833D9C600C3C501 /* SessionAuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF40BAA2833D9C600C3C501 /* SessionAuthRequest.swift */; };
 		5159CDEF329B705491152AE6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552536E9D3C3A3ED5F3D2677 /* Storage.swift */; };
+		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
+		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
+		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
+		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
 		590028A871E7DBEB4E962B52 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */; };
 		663F86952840DFDD009AABF6 /* SettingsAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB527ABEC45002FC827 /* SettingsAccountViewController.swift */; };
 		663F86962840DFE9009AABF6 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
@@ -762,6 +766,10 @@
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		552536E9D3C3A3ED5F3D2677 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = ../../../../libraries/vpncore/Source/Management/Storage/Storage.swift; sourceTree = "<group>"; };
 		552A60268108D0F8C395145D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
+		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
+		57E3438D28E573D60012B2DF /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
+		57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsRobot.swift; sourceTree = "<group>"; };
+		57E3439128E5A6780012B2DF /* AccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRobot.swift; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
 		595518BE20B6AFF39944C7C4 /* Pods-Quick Connect Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.debug.xcconfig"; path = "Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.debug.xcconfig"; sourceTree = "<group>"; };
 		5C8BFCB54283835ABE021501 /* Pods-WireGuardNetworkExtensionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.release.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1831,6 +1839,7 @@
 				F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */,
 				D5811D81229BBD870087B63A /* Info.plist */,
 				D5AAA127229D23F500EA839A /* credentials.plist */,
+				572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */,
 				B2BCF09D28B549C90041A635 /* twopasstwofausercredentials.plist */,
 				B2BCF09F28B54ACF0041A635 /* twopassusercredentials.plist */,
 				B2BCF09B28B547F00041A635 /* twofausercredentials.plist */,
@@ -2467,6 +2476,7 @@
 		F377836126E644BC00392958 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
+				57E3438D28E573D60012B2DF /* PlanTests.swift */,
 				F377836226E644BC00392958 /* ConnectionTests.swift */,
 			);
 			path = Connection;
@@ -2524,6 +2534,8 @@
 				F3B783E726E6428C006768A8 /* SettingsRobot.swift */,
 				F3B783E826E6428C006768A8 /* ReportBugRobot.swift */,
 				588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */,
+				57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */,
+				57E3439128E5A6780012B2DF /* AccountRobot.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -3053,6 +3065,7 @@
 				B2BCF0A028B54ACF0041A635 /* twopassusercredentials.plist in Resources */,
 				F377836D26E644BC00392958 /* TestPlan.xctestplan in Resources */,
 				B2BCF09C28B547F00041A635 /* twofausercredentials.plist in Resources */,
+				572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */,
 				C53623CCB48A9BF717A1BAB9 /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3882,6 +3895,7 @@
 				B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */,
 				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
+				57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */,
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
 				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
@@ -3890,6 +3904,7 @@
 				B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */,
 				F377836F26E644BC00392958 /* LoginTests.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
+				57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
 				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
@@ -3900,6 +3915,7 @@
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
+				57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */,
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
 				D5AAA12E229D337300EA839A /* (null) in Sources */,
 				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
