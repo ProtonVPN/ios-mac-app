@@ -57,4 +57,12 @@ class ObfuscatedConstants {
     
     static let twoFASecurityKey: String = ""
     static let twoFAandTwoPassSecurityKey: String = ""
+    
+    static let bf22SignupDomain: String = ""
+    static let bf22DefaultHostWithoutHttps: String = ""
+    static let bf22DefaultHost: String = ""
+    static let bf22CaptchaHost: String = ""
+    static let bf22HumanVerificationV3Host = ""
+    static let bf22AccountHost = ""
+    static let bf22DefaultPath: String = ""
 }
