@@ -117,6 +117,8 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
         let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: bundleId, username: configuration.username)
+        neProtocol.connectedServerId = configuration.serverId
+
         return neProtocol
     }
     

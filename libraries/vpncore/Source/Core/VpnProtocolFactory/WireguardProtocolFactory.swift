@@ -62,6 +62,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = configuration.entryServerAddress
+        protocolConfiguration.connectedServerId = configuration.serverId
         return protocolConfiguration
     }
     
