@@ -18,18 +18,18 @@
 
 import Foundation
 
-class ServerStatusRequest: APIRequest {
+public class ServerStatusRequest: APIRequest {
     let params: Params
     let httpMethod = "GET"
     let hasBody = false
 
     var endpointUrl: String { "vpn/servers/\(params.serverId)?WithReconnectAlternative" }
 
-    struct Params: Codable {
+    public struct Params: Codable {
         let serverId: String
     }
 
-    struct Server: Codable {
+    public struct Server: Codable {
         let entryIp: String
         let exitIp: String
         let domain: String
@@ -45,7 +45,7 @@ class ServerStatusRequest: APIRequest {
         }
     }
 
-    class Response: Codable {
+    public class Response: Codable {
         let server: Server
         let reconnectTo: Server?
 
@@ -53,14 +53,14 @@ class ServerStatusRequest: APIRequest {
             case reconnectTo = "ReconnectTo"
         }
 
-        func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: Encoder) throws {
             try server.encode(to: encoder)
 
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(reconnectTo, forKey: .reconnectTo)
         }
 
-        required init(from decoder: Decoder) throws {
+        public required init(from decoder: Decoder) throws {
             self.server = try Server(from: decoder)
 
             do {

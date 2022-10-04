@@ -37,17 +37,51 @@ extension NETunnelProviderProtocol {
         }
     }
 
+    func tunnelConfigurationFromData(_ data: Data,
+                                     called name: String?) -> TunnelConfiguration? {
+        guard let version = StoredWireguardConfig.Version(rawValue: Int(data[0])) else {
+            log.info("No known version found, trying old format")
+            guard let config = String(data: data, encoding: .utf8),
+                  config.starts(with: "[Interface]") else {
+                log.info("Tried to use old format, but couldn't decode data")
+                return nil
+            }
+            return try? TunnelConfiguration(fromWgQuickConfig: config, called: name)
+        }
+
+        log.info("Using new configuration format (\(String(describing: version))")
+
+        guard case .v1 = version else {
+            log.info("Version \(version) is not yet supported.")
+            return nil
+        }
+
+        let configData = data[1...]
+        let decoder = JSONDecoder()
+        guard let storedConfig = (try? decoder.decode(StoredWireguardConfig.self,
+                                                      from: configData)) else {
+            log.error("Could not decode data (\(String(describing: version))")
+            return nil
+        }
+
+        let wgConfig = storedConfig.asWireguardConfiguration()
+        return try? TunnelConfiguration(fromWgQuickConfig: wgConfig, called: name)
+    }
+
     func asTunnelConfiguration(called name: String? = nil) -> TunnelConfiguration? {
         #if os(macOS)
-        if let config = Keychain.loadWgConfig() {
-            return try? TunnelConfiguration(fromWgQuickConfig: config, called: name)
+        if let data = Keychain.loadWgConfig() {
+            log.info("Loading config directly from keychain")
+            return tunnelConfigurationFromData(data, called: name)
         }
         #endif
         if let passwordReference = passwordReference,
-            let config = Keychain.openReference(called: passwordReference) {
-            return try? TunnelConfiguration(fromWgQuickConfig: config, called: name)
+           let data = Keychain.openReference(called: passwordReference) {
+            log.info("Loading config from keychain by reference")
+            return tunnelConfigurationFromData(data, called: name)
         }
         if let oldConfig = providerConfiguration?["WgQuickConfig"] as? String {
+            log.info("Loading config from provider configuration")
             return try? TunnelConfiguration(fromWgQuickConfig: oldConfig, called: name)
         }
         return nil

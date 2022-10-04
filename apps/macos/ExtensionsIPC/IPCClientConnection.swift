@@ -69,6 +69,20 @@ class XPCServiceUser {
         providerProxy.setCredentials(username: username, password: password, completionHandler: completionHandler)
     }
 
+    func setConfigData(_ data: Data, completionHandler: @escaping (Bool) -> Void) {
+        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
+            self.log("Failed to get remote object proxy \(self.machServiceName): \(String(describing: registerError))")
+            self.currentConnection = nil
+            completionHandler(false)
+        }) as? ProviderCommunication else {
+            self.log("Failed to get remote object proxy: \(machServiceName)")
+            completionHandler(false)
+            return
+        }
+
+        providerProxy.setConfigData(data, completionHandler: completionHandler)
+    }
+
     // MARK: - Private
 
     private var connection: NSXPCConnection {

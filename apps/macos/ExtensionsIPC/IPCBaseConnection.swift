@@ -11,8 +11,15 @@ import os.log
 
 /// App -> Provider IPC
 @objc protocol ProviderCommunication {
+    /// Used by both extensions to get log data
     func getLogs(_ completionHandler: @escaping (Data?) -> Void)
-    func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void)
+    /// Used by OpenVPN extension to set connection credentials.
+    func setCredentials(username: String,
+                        password: String,
+                        completionHandler: @escaping (Bool) -> Void)
+    /// Used by WireGuard extension to set the connection configuration, including creds.
+    func setConfigData(_ data: Data,
+                       completionHandler: @escaping (Bool) -> Void)
 }
 
 /// Provider -> App IPC

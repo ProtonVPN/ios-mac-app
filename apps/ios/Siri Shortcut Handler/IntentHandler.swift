@@ -70,7 +70,9 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     vpnKeychain: vpnKeychain,
                                     propertiesManager: propertiesManager,
                                     vpnStateConfiguration: vpnStateConfiguration,
-                                    vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: propertiesManager),
+                                    vpnCredentialsConfiguratorFactory:
+                                        IOSVpnCredentialsConfiguratorFactory(propertiesManager: propertiesManager,
+                                                                             vpnKeychain: vpnKeychain),
                                     localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
                                     natTypePropertyProvider: natTypePropertyProvider,
                                     netShieldPropertyProvider: netShieldPropertyProvider,

@@ -38,7 +38,7 @@ public protocol VpnKeychainProtocol {
     func store(vpnCredentials: VpnCredentials)
     func getServerCertificate() throws -> SecCertificate
     func storeServerCertificate() throws
-    func store(wireguardConfiguration: String) throws -> Data
+    func store(wireguardConfiguration: Data) throws -> Data
     func fetchWireguardConfigurationReference() throws -> Data
     func fetchWireguardConfiguration() throws -> String?
     func clear()
@@ -174,37 +174,33 @@ public class VpnKeychain: VpnKeychainProtocol {
             throw ProtonVpnErrorConst.vpnCredentialsMissing
         }
     }
-    
-    public func setPassword(_ password: String, forKey key: String) throws {
+
+    private func setPasswordData(_ data: Data, forKey key: String) throws {
         do {
             var query = formBaseQuery(forKey: key)
             query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
             query[kSecReturnAttributes as AnyHashable] = kCFBooleanTrue
             query[kSecReturnData as AnyHashable] = kCFBooleanTrue
-            
+
             var secItem: AnyObject?
             let result = SecItemCopyMatching(query as CFDictionary, &secItem)
             if result != errSecSuccess {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
-            
-            guard let data = secItem as? [String: AnyObject],
-                let passwordData = data[kSecValueData as String] as? Data,
-                let oldPassword = String(data: passwordData, encoding: String.Encoding.utf8) else {
-                    throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
-            }
-            
-            if password != oldPassword {
+
+            guard let secItemDict = secItem as? [String: AnyObject],
+                let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
+                  data == oldPasswordData else {
                 throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
             }
         } catch {
             do {
                 try clearPassword(forKey: key)
             } catch { }
-            
+
             var query = formBaseQuery(forKey: key)
-            query[kSecValueData as AnyHashable] = password.data(using: String.Encoding.utf8) as Any
-            
+            query[kSecValueData as AnyHashable] = data
+
             let result = SecItemAdd(query as CFDictionary, nil)
             if result != errSecSuccess {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
@@ -212,6 +208,10 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
     }
     
+    public func setPassword(_ password: String, forKey key: String) throws {
+        try setPasswordData(password.data(using: .utf8)!, forKey: key)
+    }
+
     private func clearPassword(forKey key: String) throws {
         let query = formBaseQuery(forKey: key)
         
@@ -299,8 +299,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     
     // MARK: - Wireguard
     
-    public func store(wireguardConfiguration: String) throws -> Data {
-        try setPassword(wireguardConfiguration, forKey: StorageKey.wireguardSettings)
+    public func store(wireguardConfiguration: Data) throws -> Data {
+        try setPasswordData(wireguardConfiguration, forKey: StorageKey.wireguardSettings)
         return try fetchWireguardConfigurationReference()
     }
     
@@ -332,5 +332,4 @@ public class VpnKeychain: VpnKeychainProtocol {
             return nil
         }
     }
-    
 }

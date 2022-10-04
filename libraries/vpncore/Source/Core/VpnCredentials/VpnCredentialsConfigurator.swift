@@ -15,7 +15,7 @@ public protocol VpnCredentialsConfigurator {
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void)
 }
 
-/// Used for IKEv2 on macos and ios and sets username and password keychain referrence for use by network extension.
+/// Used for IKEv2 on macos and ios and sets username and password keychain reference for use by network extension.
 public class KeychainRefVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     
     public init() {        

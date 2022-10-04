@@ -80,6 +80,7 @@
 		4CB2A3D4289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
 		4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2F42127ECA7B000B21A00 /* GIFView.swift */; };
+		4CE4E1DB28EC52C500ABE85A /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4E1DA28EC52C500ABE85A /* WireguardConfig.swift */; };
 		4CFFC94427E0C0AE0035969B /* CancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFFC94327E0C0AE0035969B /* CancellationButton.swift */; };
 		4E06182DC9F62ECAC45524E0 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437269ACE0C19C03AA703A72 /* SubuserMacAlertViewController.xib */; };
 		54A3F867B897C7D92CDF75C9 /* SubuserMacAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD48FBC3A054F5D91A15F1E /* SubuserMacAlertViewController.swift */; };
@@ -619,6 +620,7 @@
 		4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../../libraries/vpncore/Source/Management/SystemExtensions/ExtensionInfo.swift; sourceTree = "<group>"; };
 		4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NET2WarningPopupViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/ViewControllers/NET2WarningPopupViewController.swift; sourceTree = "<group>"; };
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
+		4CE4E1DA28EC52C500ABE85A /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../../../libraries/vpncore/Source/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		4CFFC94327E0C0AE0035969B /* CancellationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CancellationButton.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Button/CancellationButton.swift; sourceTree = "<group>"; };
 		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		65A71CB6D31F355FD456BA35 /* Pods-ProtonVPN OpenVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.release.xcconfig"; sourceTree = "<group>"; };
@@ -1614,6 +1616,16 @@
 			isa = PBXGroup;
 			children = (
 				E997994426A6F50F0083D61E /* Data+JSONDictionary.swift */,
+				E997994526A6F50F0083D61E /* Dictionary+Extension.swift */,
+				E997994626A6F50F0083D61E /* KeychainConstants.swift */,
+				E997994726A6F50F0083D61E /* CertificateConstants.swift */,
+				E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */,
+				E997994B26A6F50F0083D61E /* VpnCertificate.swift */,
+				E997994C26A6F50F0083D61E /* VpnKeys.swift */,
+				1A10940E60F666D60A950D73 /* VPNConnectionFeatures.swift */,
+				4CE4E1DA28EC52C500ABE85A /* WireguardConfig.swift */,
+				F314141027B12443007424E9 /* NATType.swift */,
+				C77BDD50C752FDC9115636D8 /* NetShieldType.swift */,
 			);
 			path = vpncore;
 			sourceTree = "<group>";
@@ -3434,6 +3446,8 @@
 				E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */,
 				E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */,
 				E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */,
+				4CE4E1DB28EC52C500ABE85A /* WireguardConfig.swift in Sources */,
+				E997995326A6F5840083D61E /* CertificateConstants.swift in Sources */,
 				4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */,
 				E99799BE26A6FFAC0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,

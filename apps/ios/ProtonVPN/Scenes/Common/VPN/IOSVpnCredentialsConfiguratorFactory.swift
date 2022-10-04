@@ -12,9 +12,11 @@ import vpncore
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
     
     private let propertiesManager: PropertiesManagerProtocol
+    private let vpnKeychain: VpnKeychainProtocol
     
-    init(propertiesManager: PropertiesManagerProtocol) {
+    init(propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol) {
         self.propertiesManager = propertiesManager
+        self.vpnKeychain = vpnKeychain
     }
     
     func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
@@ -24,7 +26,8 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         case .openVpn:
             return OVPNiOSCredentialsConfigurator()
         case .wireGuard:
-            return WGiOSVpnCredentialsConfigurator(propertiesManager: propertiesManager)
+            return WGiOSVpnCredentialsConfigurator(propertiesManager: propertiesManager,
+                                                   vpnKeychain: vpnKeychain)
         }
     }
     

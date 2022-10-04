@@ -56,6 +56,10 @@ extension XPCBaseService: ProviderCommunication {
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setCredentials` in each implementation.")
     }
+
+    func setConfigData(_ data: Data, completionHandler: @escaping (Bool) -> Void) {
+        log("This is just a placeholder! Add `setConfigData` in each implementation.")
+    }
 }
 
 extension XPCBaseService: NSXPCListenerDelegate {
