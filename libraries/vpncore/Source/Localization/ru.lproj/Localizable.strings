@@ -1689,7 +1689,7 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Ознакомительный тур";
 
-/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
 "_tcp" = "TCP";
 
 /* iOS status view */
@@ -1721,6 +1721,9 @@
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Переключиться на OpenVPN и повторить";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
 
 /* (No Comment) */
 "_to_server_title" = "На сервер:";
@@ -1868,7 +1871,7 @@
 /* (No Comment) */
 "_turn_on" = "Включить";
 
-/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
 "_udp" = "UDP";
 
 /* Common word */
@@ -2065,6 +2068,9 @@
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Журнал WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Вы не подключены";
