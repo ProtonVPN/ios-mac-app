@@ -103,40 +103,16 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             }
         }
     }
-
 }
 
-extension VpnManagerConfiguration {
-
-    private var persistentKeepalive: Int? {
-        return 25
-    }
-    
-    public func asWireguardConfiguration(config: WireguardConfig) -> String {
-        var output = "[Interface]\n"
-        
-        if let clientPrivateKey = clientPrivateKey {
-            output.append("PrivateKey = \(clientPrivateKey)\n")
-        }
-        output.append("Address = \(config.address)\n")
-        output.append("DNS = \(config.dns)\n")
-        
-        output.append("\n[Peer]\n")
-        if let serverPublicKey = serverPublicKey {
-            output.append("PublicKey = \(serverPublicKey)\n")
-        }
-        output.append("AllowedIPs = \(config.allowedIPs)\n")
-
-        // VPNAPPL-1447 - find out why the wireguard-go backend is improperly parsing the
-        // IPv4 address from the config
-        let endpointLine = "Endpoint = \(entryServerAddress):\(ports.first!)\n"
-        log.info("WireGuard \(endpointLine)")
-
-        output.append(endpointLine)
-        if let persistentKeepalive = persistentKeepalive {
-            output.append("PersistentKeepalive = \(persistentKeepalive)")
-        }
-        
-        return output
+public extension StoredWireguardConfig {
+    init(vpnManagerConfig: VpnManagerConfiguration,
+         wireguardConfig: WireguardConfig) {
+        self.init(wireguardConfig: wireguardConfig,
+                  clientPrivateKey: vpnManagerConfig.clientPrivateKey,
+                  serverPublicKey: vpnManagerConfig.serverPublicKey,
+                  entryServerAddress: vpnManagerConfig.entryServerAddress,
+                  ports: vpnManagerConfig.ports,
+                  timestamp: Date())
     }
 }
