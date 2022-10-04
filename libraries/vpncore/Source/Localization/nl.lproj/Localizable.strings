@@ -494,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Verkeerde betalingstoken status. Herstart de app. Als de fout zich blijft voordoen, neem contact op met support.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN gebruikt een pakket firewall om een kill switch te implementeren. Door de kill switch in te schakelen worden de huidige firewallinstellingen van uw apparaat overschreven. Als u uw eigen firewallconfiguratie wil blijven gebruiken, moet u geen gebruik maken van de kill switch.\n\nOm gebruik te maken van de kill switch en daarmee uw firewallinstellingen te overschrijven, selecteer DOORGAAN.\n\nom uw huidige firewall te blijven gebruiken, selecteer ANNULEREN.";
+"_existing_firewall_popup_body" = "ProtonVPN gebruikt een pakket firewall om een IP-beveiliging te implementeren. Door de IP-beveiliging in te schakelen worden de huidige firewallinstellingen van uw apparaat overschreven. Als u uw eigen firewallconfiguratie wil blijven gebruiken, moet u geen gebruik maken van de IP-beveiliging.\n\nOm gebruik te maken van de IP-beveiliging en daarmee uw firewallinstellingen te overschrijven, selecteer DOORGAAN.\n\nom uw huidige firewall te blijven gebruiken, selecteer ANNULEREN.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall gedetecteerd";
@@ -692,49 +692,49 @@
 "_kill_switch_blocking_body" = "Kill Switch beschermt uw IP\n\nUw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server. Om te hervatten zonder VPN-bescherming, schakelt u kill switch uit.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill switch blokkeert alle verbindingen";
+"_kill_switch_blocking_connection" = "IP-beveiliging blokkeert alle verbindingen";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill switch";
+"_kill_switch_blocking_title" = "IP-beveiliging";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Schakel kill switch uit";
+"_kill_switch_disable" = "Schakel IP-beveiliging uit";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Beëindig deze apps om het probleem te verhelpen.\nKlik op Doorgaan om te blijven surfen zonder kill switch.";
+"_kill_switch_error_foot" = "Beëindig deze apps om het probleem te verhelpen.\nKlik op Doorgaan om te blijven surfen zonder IP-beveiliging.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Sommige apps, zoals antivirussen of firewalls, kunnen botsen met de kill switch, waardoor deze niet goed functioneert.";
+"_kill_switch_error_head" = "Sommige apps, zoals antivirussen of firewalls, kunnen botsen met de IP-beveiliging, waardoor deze niet goed functioneert.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch werkt met de macOS Firewall.\nAls er andere apps zijn gekoppeld aan de Firewall, kunnen ze de kill switch van Proton VPN verstoren. Het beëindigen van deze apps kan de Firewall regels die door de kill switch zijn ingesteld herstellen.";
+"_kill_switch_error_info" = "IP-beveiliging werkt met de macOS Firewall.\nAls er andere apps zijn gekoppeld aan de Firewall, kunnen ze de IP-beveiliging van Proton VPN verstoren. Het beëindigen van deze apps kan de Firewall regels die door de IP-beveiliging zijn ingesteld herstellen.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Er is een fout opgetreden bij de kill switch";
+"_kill_switch_error_title" = "Er is een fout opgetreden bij de IP-beveiliging";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Er is een probleem opgetreden bij het installeren of bijwerken van kill switch.\n\nOm het opnieuw te proberen, klik op OPNIEUW PROBEREN.\n\nom door te gaan zonder kill switch, klik op UITSCHAKELEN.";
+"_kill_switch_helper_install_issue_popup_body" = "Er is een probleem opgetreden bij het installeren of bijwerken van IP-beveiliging.\n\nOm het opnieuw te proberen, klik op OPNIEUW PROBEREN.\n\nom door te gaan zonder IP-beveiliging, klik op UITSCHAKELEN.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Om kill switch in te schakelen, kunt u gevraagd worden om uw wachtwoord van uw computeraccount in te vullen. Als een aanvraag verschijnt, voer dan uw %@ in en accepteer.\n\nU kunt dit verzoek opnieuw krijgen wanneer de ProtonVPN-app updates ontvangt.";
+"_kill_switch_helper_install_popup_body" = "Om IP-beveiliging in te schakelen, kunt u gevraagd worden om uw wachtwoord van uw computeraccount in te vullen. Als een aanvraag verschijnt, voer dan uw %@ in en accepteer.\n\nU kunt dit verzoek opnieuw krijgen wanneer de ProtonVPN-app updates ontvangt.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "De meest recente update die u hebt gedownload vereist dat u uw wachtwoord van uw computeraccount geeft. Zodra het verzoek verschijnt, voer dan uw %@ in en accepteer.\n\nAls u uw Mac-wachtwoord niet invoert, wordt kill switch uitgeschakeld.";
+"_kill_switch_helper_update_popup_body" = "De meest recente update die u hebt gedownload vereist dat u uw wachtwoord van uw computeraccount geeft. Zodra het verzoek verschijnt, voer dan uw %@ in en accepteer.\n\nAls u uw Mac-wachtwoord niet invoert, wordt IP-beveiliging uitgeschakeld.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Uw internetverbinding wordt hervat zodra ProtonVPN opnieuw verbinding maakt met een server.\nOm het internet zonder VPN en bescherming van de kill switch te gebruiken, moet u het herverbinden met de server verbreken.";
+"_kill_switch_reconnection" = "Uw internetverbinding wordt hervat zodra ProtonVPN opnieuw verbinding maakt met een server.\nOm het internet zonder VPN en bescherming van de IP-beveiliging te gebruiken, moet u het herverbinden met de server verbreken.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "zonder";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "Kill switch bescherming";
+"_kill_switch_reconnection_bold2" = "IP-beveiliging";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Opnieuw verbinden annuleren";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection_header" = "Kill switch beschermt uw IP";
+"_kill_switch_reconnection_header" = "IP-beveiliging beschermt uw IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokkeert al het netwerkverkeer als de VPN-tunnel is weggevallen.";
@@ -743,10 +743,10 @@
 "_ks_dont_ask" = "Niet opnieuw vragen";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Om kill switch in te schakelen, moet u de %@downloaden en installeren.\nInstalleer het voordat u kill switch inschakelt.";
+"_ks_requires_swift5_popup_msg" = "Om de IP-beveiliging in te schakelen, moet u de %@downloaden en installeren.\nInstalleer het voordat u de IP-beveiliging inschakelt.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN kon de %@ niet detecteren. Om de kill switch in te schakelen, installeer eerst de software.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN kon de %@ niet detecteren. Om de IP-beveiliging in te schakelen, installeer eerst de software.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
@@ -971,13 +971,13 @@
 "_neks_t2_connect" = "Toch inschakelen";
 
 /* (No Comment) */
-"_neks_t2_description" = "Het gebruik van kill switch is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de Kill Switch-functionaliteit van macOS gebruikt wordt door ProtonVPN.";
+"_neks_t2_description" = "Het gebruik van de IP-beveiliging is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de IP-beveiligingsfunctionaliteit van macOS gebruikt wordt door ProtonVPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2-beveiligingschip";
 
 /* NetworkExtension + KillSwitch on T2 Macs */
-"_neks_t2_title" = "Kill switch Stabiliteitswaarschuwing";
+"_neks_t2_title" = "IP-beveiliging Stabiliteitswaarschuwing";
 
 /* (No Comment) */
 "_netshield_alert_reconnect_description_off" = "Uw verbinding zal opnieuw worden gestart om de NetShield modus te wijzigen.";
@@ -1280,7 +1280,7 @@
 "_quick_settings_tour_feature_2" = "Surf vrij van malware en advertenties met NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Voorkom dat uw IP wordt blootgesteld door kill switch aan te zetten.";
+"_quick_settings_tour_feature_3" = "Voorkom dat uw IP wordt blootgesteld door IP-beveiliging aan te zetten.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Snelle Instellingen";
@@ -1689,7 +1689,7 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Neem een rondleiding";
 
-/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
 "_tcp" = "TCP";
 
 /* iOS status view */
@@ -1717,10 +1717,13 @@
 "_timed_out" = "verlopen";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
-"_timeout_ks_ike_descritpion" = "Een andere toepassing kan interfereren met kill switch. Om dit probleem op te lossen, schakelt u over naar het OpenVPN-protocol of schakelt u kill switch uit en probeert u het opnieuw.";
+"_timeout_ks_ike_descritpion" = "Een andere toepassing kan interfereren met de IP-beveiliging. Om dit probleem op te lossen, schakelt u over naar het OpenVPN-protocol of schakelt u de IP-beveiliging uit en probeert u het opnieuw.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Overschakelen naar OpenVPN en probeer het opnieuw";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
 
 /* (No Comment) */
 "_to_server_title" = "Naar Server:";
@@ -1857,18 +1860,18 @@
 "_try_again" = "Opnieuw proberen";
 
 /* (No Comment) */
-"_try_again_without_killswitch" = "Schakel kill switch uit en probeer het opnieuw";
+"_try_again_without_killswitch" = "Schakel IP-beveiliging uit en probeer het opnieuw";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Door het activeren van de kill switch, bent u niet in staat om toegang te krijgen tot apparaten op uw lokale netwerk. \n\nDoorgaan?";
+"_turn_ks_on_description" = "Door het activeren van de IP-beveiliging, bent u niet in staat om toegang te krijgen tot apparaten op uw lokale netwerk. \n\nDoorgaan?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "De kill switch inschakelen?";
+"_turn_ks_on_title" = "De IP-beveiliging inschakelen?";
 
 /* (No Comment) */
 "_turn_on" = "Zet aan";
 
-/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
 "_udp" = "UDP";
 
 /* Common word */
@@ -2046,16 +2049,16 @@
 "_welcome_title" = "WELKOM AAN BOORD!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill switch voorkomt de VPN om met het internet te verbinden. Dit wordt mogelijks veroorzaakt wegens een incompatibiliteit met uw besturingssysteem (macOS Catalina 10.15).\n\nUpdate uw besturingssysteem naar de meest recente versie om dit probleem op te lossen.\n\nAlternatief, kan u wisselen naar het OpenVPN-protocol of kunt u de kill switch uitschakelen.";
+"_wgks_description" = "IP-beveiliging voorkomt de VPN om met het internet te verbinden. Dit wordt mogelijks veroorzaakt wegens een incompatibiliteit met uw besturingssysteem (macOS Catalina 10.15).\n\nUpdate uw besturingssysteem naar de meest recente versie om dit probleem op te lossen.\n\nAlternatief, kan u wisselen naar het OpenVPN-protocol of kunt u de IP-beveiliging uitschakelen.";
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
-"_wgks_ks_off" = "Schakel kill switch uit";
+"_wgks_ks_off" = "Schakel IP-beveiliging uit";
 
 /* (No Comment) */
 "_wgks_ovpn" = "Wissel naar OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch voorkomt de VPN om met het internet te verbinden";
+"_wgks_title" = "IP-beveiliging voorkomt de VPN om met het internet te verbinden";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS Widget";

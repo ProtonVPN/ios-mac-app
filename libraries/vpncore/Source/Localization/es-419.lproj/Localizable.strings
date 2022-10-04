@@ -1689,7 +1689,7 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Hacer recorrido";
 
-/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
 "_tcp" = "TCP";
 
 /* iOS status view */
@@ -1721,6 +1721,9 @@
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Cambiar a OpenVPN y reintentar";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
 
 /* (No Comment) */
 "_to_server_title" = "Al servidor:";
@@ -1868,7 +1871,7 @@
 /* (No Comment) */
 "_turn_on" = "Activar";
 
-/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
 "_udp" = "UDP";
 
 /* Common word */
