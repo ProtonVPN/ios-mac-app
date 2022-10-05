@@ -107,7 +107,6 @@ public class VpnApiService {
             ipResolvedClosure(lastKnownLocation)
         }
 
-
         dispatchGroup.enter() // enter: C
         clientCredentials { result in
             switch result {

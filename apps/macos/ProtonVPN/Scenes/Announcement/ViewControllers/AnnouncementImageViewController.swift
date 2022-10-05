@@ -93,9 +93,10 @@ final class AnnouncementImageViewController: NSViewController {
         actionButton.isEnabled = false
 
         // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
-        sessionService.getUpgradePlanSession { [weak actionButton] url in
+        sessionService.getUpgradePlanSession { [weak actionButton, weak view] url in
             actionButton?.isEnabled = true
             SafariService.openLink(url: url)
+            view?.window?.close()
         }
     }
 }

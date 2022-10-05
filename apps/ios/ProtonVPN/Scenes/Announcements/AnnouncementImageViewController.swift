@@ -123,6 +123,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {
             urlRequested?(data.button.url)
+            cancelled?()
             return
         }
 
@@ -132,6 +133,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         sessionService.getUpgradePlanSession { [weak self] url in
             self?.actionButton.isEnabled = true
             self?.urlRequested?(url)
+            self?.cancelled?()
         }
     }
 
