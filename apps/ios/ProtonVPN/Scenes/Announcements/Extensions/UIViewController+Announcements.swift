@@ -24,7 +24,6 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import vpncore
-import ProtonCore_UIFoundations
 
 extension UIViewController {
     
@@ -69,12 +68,12 @@ extension UIViewController {
                         assign(BadgedBarButtonItem(withImage: image))
                         setup()
                     case .failure:
-                        assign(BadgedBarButtonItem(withImage: IconProvider.bell))
+                        assign(BadgedBarButtonItem(withImage: UIImage(named: "bell")?.withRenderingMode(.alwaysTemplate)))
                         setup()
                     }
                 })
             } else {
-                assign(BadgedBarButtonItem(withImage: IconProvider.bell))
+                assign(BadgedBarButtonItem(withImage: UIImage(named: "bell")?.withRenderingMode(.alwaysTemplate)))
                 setup()
             }
         }

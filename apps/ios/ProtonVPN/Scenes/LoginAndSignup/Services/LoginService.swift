@@ -62,7 +62,21 @@ final class CoreLoginService {
     private let coreApiService: CoreApiService
     private let settingsService: SettingsService
 
-    private lazy var loginInterface: LoginAndSignupInterface = makeLoginInterface()
+    private lazy var loginInterface: LoginAndSignupInterface = {
+        let signupParameters = SignupParameters(passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
+        let signupAvailability = SignupAvailability.available(parameters: signupParameters)
+        let login = LoginAndSignup(appName: "Proton VPN",
+                                   clientApp: .vpn,
+                                   doh: doh,
+                                   apiServiceDelegate: networking,
+                                   forceUpgradeDelegate: networkingDelegate,
+                                   humanVerificationVersion: networkingDelegate.version,
+                                   minimumAccountType: AccountType.username,
+                                   isCloseButtonAvailable: false,
+                                   paymentsAvailability: PaymentsAvailability.notAvailable,
+                                   signupAvailability: signupAvailability)
+        return login
+    }()
 
     weak var delegate: LoginServiceDelegate?
 
@@ -79,22 +93,6 @@ final class CoreLoginService {
         doh = factory.makeDoHVPN()
         coreApiService = factory.makeCoreApiService()
         settingsService = factory.makeSettingsService()
-    }
-
-    private func makeLoginInterface() -> LoginAndSignupInterface {
-        let signupParameters = SignupParameters(passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
-        let signupAvailability = SignupAvailability.available(parameters: signupParameters)
-        let login = LoginAndSignup(appName: "Proton VPN",
-                                   clientApp: .vpn,
-                                   doh: doh,
-                                   apiServiceDelegate: networking,
-                                   forceUpgradeDelegate: networkingDelegate,
-                                   humanVerificationVersion: networkingDelegate.version,
-                                   minimumAccountType: AccountType.username,
-                                   isCloseButtonAvailable: false,
-                                   paymentsAvailability: PaymentsAvailability.notAvailable,
-                                   signupAvailability: signupAvailability)
-        return login
     }
 
     private func finishFlow() -> WorkBeforeFlow {
@@ -135,19 +133,13 @@ final class CoreLoginService {
     }
 
     private func processLoginResult(result: LoginAndSignupResult) {
-        // loginInteface should not be retained, but recreated after
-        // each use. But not all LoginResults signal and end of the process,
-        // so we only renew it in some cases
         switch result {
         case .dismissed:
             log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
-            loginInterface = makeLoginInterface()
         case .loginStateChanged(.loginFinished):
             delegate?.userDidLogIn()
-            loginInterface = makeLoginInterface()
         case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
-            loginInterface = makeLoginInterface()
         case .loginStateChanged(.dataIsAvailable), .signupStateChanged(.dataIsAvailable):
             log.debug("Login or signup process in progress", category: .app)
         }
