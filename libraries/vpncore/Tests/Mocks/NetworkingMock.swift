@@ -51,7 +51,7 @@ final class NetworkingMock {
 }
 
 extension NetworkingMock: Networking {
-    func request(_ route: Request, completion: @escaping (Result<vpncore.JSONDictionary, Error>) -> Void) {
+    func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
         request(route) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):

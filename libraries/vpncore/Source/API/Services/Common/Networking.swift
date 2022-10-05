@@ -227,13 +227,7 @@ extension CoreNetworking: APIServiceDelegate {
 
 // MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
-  
-    public func credential(sessionUID: String) -> Credential? {
-        guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
-        return .init(authCredential)
-    }
-
-    public func authCredential(sessionUID: String) -> AuthCredential? {
+    public func getToken(bySessionUID uid: String) -> AuthCredential? {
         guard let credentials = authKeychain.fetch() else {
             return nil
         }
@@ -241,33 +235,26 @@ extension CoreNetworking: AuthDelegate {
         return ProtonCore_Networking.AuthCredential(Credential(credentials))
     }
 
-    public func onLogout(sessionUID: String) {
+    public func onLogout(sessionUID uid: String) {
         log.error("Logout from Core because of expired token", category: .app, event: .trigger)
         delegate.onLogout()
     }
 
-    public func onUpdate(credential: Credential, sessionUID: String) {
-        guard let credentials = authKeychain.fetch(),
-              credentials.sessionId == sessionUID else {
+    public func onUpdate(auth: Credential) {
+        guard let credentials = authKeychain.fetch() else {
             return
         }
 
         do {
-            try authKeychain.store(credentials.updatedWithAuth(auth: credential))
+            try authKeychain.store(credentials.updatedWithAuth(auth: auth))
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
 
-    public func onRefresh(sessionUID: String, service: APIService, complete: @escaping AuthRefreshResultCompletion) {
+    public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
         guard let credentials = authKeychain.fetch() else {
             log.error("Cannot refresh token when credentials are not available", category: .keychain, event: .change)
-            complete(.failure(.notImplementedYet("Not logged in")))
-            return
-        }
-        guard credentials.sessionId == sessionUID else {
-            log.error("Asked for refreshing credentials of wrong session. It's a programmers error and should be investigated")
-            complete(.failure(.notImplementedYet("Wrong session")))
             return
         }
 
@@ -275,13 +262,16 @@ extension CoreNetworking: AuthDelegate {
         let authenticator = Authenticator(api: apiService)
         authenticator.refreshCredential(Credential(credentials)) { result in
             switch result {
-            case .success(.ask2FA((let newCredential, _))), .success(.newCredential(let newCredential, _)), .success(.updatedCredential(let newCredential)):
+            case .success(let stage):
+                guard case Authenticator.Status.updatedCredential(let updatedCredential) = stage else {
+                    return complete(nil, nil)
+                }
                 log.debug("Access token refreshed successfully", category: .net)
-                complete(.success(newCredential))
+                complete(updatedCredential, nil)
             case .failure(let error):
                 log.error("Updating access token failed", category: .net, event: .response, metadata: ["error": "\(error)"])
                 SentryHelper.log(error: error) // Log this temporarily to get a grasp at how ofter this happens. Can be removed after a few months.
-                complete(.failure(error))
+                complete(nil, error)
             }
         }
     }
