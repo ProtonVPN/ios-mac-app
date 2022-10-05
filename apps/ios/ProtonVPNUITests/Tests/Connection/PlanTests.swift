@@ -45,7 +45,8 @@ class PlanTests: ProtonVPNUITests {
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 1 year")
-//            .checkPriceIs("$71.88")
+        // ⬇︎ Uncomment after CP-4705 (Core > 3.22.4) is merged in
+        // .checkPriceIs("$71.88")
     }
 
     // Black Friday 2022 plans, will renew at same price and cycle, so we want to keep tests for them
@@ -59,8 +60,8 @@ class PlanTests: ProtonVPNUITests {
             .goToAccountDetail()
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("for 1 year") // should be "for 15 months"
-//            .checkPriceIs("$149.85")
+            .checkDurationIs("for 1 year") // should be "for 15 months" after CP-4611
+            .checkPriceIs("$149.85")
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 30 months and costs $299.70
@@ -72,12 +73,9 @@ class PlanTests: ProtonVPNUITests {
             .goToAccountDetail()
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("for 2 years") // should be "for 30 months"
-//            .checkPriceIs("$299.70")
+            .checkDurationIs("for 2 years") // should be "for 30 months" after CP-4611
+            .checkPriceIs("$299.70")
     }
-
-
-
 
     override func loginAsPlusUser() {
         login(withCredentials: credentialsBF22[0])
