@@ -74,7 +74,7 @@ struct ImageCache: ImageCacheProtocol {
     func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void) {
         SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
             log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
-            completion(finishedUrlsCount == urls.count)
+            completion(skippedUrlsCount == 0)
         })
     }
 }
