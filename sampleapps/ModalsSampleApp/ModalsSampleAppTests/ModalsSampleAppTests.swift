@@ -40,10 +40,3 @@ struct MockColors: ModalsColors {
     let brand: UIColor = .white
     let weakText: UIColor = .white
 }
-
-struct MockIcons: NewBrandIcons {
-    let vpnMain: Image = UIImage()
-    let driveMain: Image = UIImage()
-    let calendarMain: Image = UIImage()
-    let mailMain: Image = UIImage()
-}

@@ -37,7 +37,6 @@ public class CoreAppConstants {
     }
     
     public struct ProtonVpnLinks {
-        public static let updatedProton = "https://protonvpn.com/blog/updated-proton-vpn"
         public static let signUp = "https://account.protonvpn.com/signup"
         public static let accountDashboard = "https://account.protonvpn.com/dashboard"
         public static let learnMore = "https://protonvpn.com/support/secure-core-vpn"

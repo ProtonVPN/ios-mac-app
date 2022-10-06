@@ -702,19 +702,6 @@ public class AnnouncementOfferAlert: SystemAlert {
     }
 }
 
-public class NewBrandAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions: [AlertAction] = []
-    public var isError: Bool = false
-    public var onReadMore: (() -> Void) = {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.updatedProton)
-    }
-    public var dismiss: (() -> Void)?
-
-    public init() { }
-}
-
 public class DiscourageSecureCoreAlert: SystemAlert {
     public var title: String?
     public var message: String?

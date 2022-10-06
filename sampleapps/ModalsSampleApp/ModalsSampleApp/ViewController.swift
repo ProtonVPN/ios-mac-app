@@ -46,14 +46,14 @@ class ViewController: UITableViewController {
     let modalsFactory = ModalsFactory(colors: Colors())
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        4
+        3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return upsells.count
-        case 3:
+        case 2:
             return upgrades.count
         default:
             return 1
@@ -69,8 +69,6 @@ class ViewController: UITableViewController {
         } else if indexPath.section == 1 {
             title = "Discourage Secure Core"
         } else if indexPath.section == 2 {
-            title = "New Brand"
-        } else if indexPath.section == 3 {
             title = upgrades[indexPath.row].title
         } else {
             title = ""
@@ -96,10 +94,6 @@ class ViewController: UITableViewController {
                                                                            onLearnMore: nil)
             viewController = modalVC
         } else if indexPath.section == 2 {
-            let modalVC = modalsFactory.newBrandViewController(icons: ModalIcons(), onDismiss: nil, onReadMore: nil)
-            modalVC.modalPresentationStyle = .overFullScreen
-            viewController = modalVC
-        } else if indexPath.section == 3 {
             let modalVC = modalsFactory.userAccountUpdateViewController(viewModel: upgrades[indexPath.row].type,
                                                                         onPrimaryButtonTap: nil)
             viewController = modalVC
@@ -146,19 +140,5 @@ struct Colors: ModalsColors {
         brand = UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1)
         weakText = UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1)
         weakInteraction = UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1)
-    }
-}
-
-struct ModalIcons: NewBrandIcons {
-    let vpnMain: Image
-    let driveMain: Image
-    let calendarMain: Image
-    let mailMain: Image
-
-    init() {
-        vpnMain = UIImage(named: "VPNMain")!
-        driveMain = UIImage(named: "DriveMain")!
-        calendarMain = UIImage(named: "CalendarMain")!
-        mailMain = UIImage(named: "MailMain")!
     }
 }

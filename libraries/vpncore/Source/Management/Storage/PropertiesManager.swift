@@ -60,7 +60,6 @@ public protocol PropertiesManagerProtocol: class {
     var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
-    var newBrandModalShown: Bool { get set }
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -159,9 +158,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         // Discourage Secure Core
         case discourageSecureCore = "DiscourageSecureCore"
-
-        // Did Show New Brand Modal
-        case newBrandModalShown = "NewBrandModalShown"
 
         // Kill Switch
         case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
@@ -516,15 +512,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             storage.setValue(newValue, forKey: Keys.discourageSecureCore.rawValue)
-        }
-    }
-
-    public var newBrandModalShown: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.newBrandModalShown.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.newBrandModalShown.rawValue)
         }
     }
     

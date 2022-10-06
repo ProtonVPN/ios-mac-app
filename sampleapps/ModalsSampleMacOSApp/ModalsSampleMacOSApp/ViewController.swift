@@ -25,7 +25,6 @@ class ViewController: NSViewController {
     enum Modal {
         case upsell(UpsellType)
         case discourageSecureCore
-        case newBrand
     }
 
     let modals: [(type: Modal, title: String)] = [(.upsell(.allCountries(numberOfDevices: 10,
@@ -35,8 +34,7 @@ class ViewController: NSViewController {
                                                   (.upsell(.netShield), "Net Shield"),
                                                   (.upsell(.safeMode), "Safe Mode"),
                                                   (.upsell(.moderateNAT), "Moderate NAT"),
-                                                  (.discourageSecureCore, "Discourage Secure Core"),
-                                                  (.newBrand, "New Brand")]
+                                                  (.discourageSecureCore, "Discourage Secure Core")]
 
     let factory = ModalsFactory(colors: Colors())
 
@@ -57,8 +55,6 @@ extension ViewController: NSTableViewDelegate {
             viewController = factory.upsellViewController(upsellType: type, upgradeAction: { }, learnMoreAction: { })
         case .discourageSecureCore:
             viewController = factory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
-        case .newBrand:
-            viewController = factory.newBrandViewController(icons: ModalIcons(), onReadMore: nil)
         }
 
         presentAsModalWindow(viewController)
@@ -98,19 +94,5 @@ struct Colors: ModalsColors {
         hoverBrand = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
         weakText = NSColor(red: 167/255, green: 164/255, blue: 181/255, alpha: 1)
         linkNorm = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
-    }
-}
-
-struct ModalIcons: NewBrandIcons {
-    let vpnMain: Image
-    let driveMain: Image
-    let calendarMain: Image
-    let mailMain: Image
-
-    init() {
-        vpnMain = NSImage(named: "VPNMain")!
-        driveMain = NSImage(named: "DriveMain")!
-        calendarMain = NSImage(named: "CalendarMain")!
-        mailMain = NSImage(named: "MailMain")!
     }
 }

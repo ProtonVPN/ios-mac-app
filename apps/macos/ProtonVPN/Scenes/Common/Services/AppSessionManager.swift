@@ -105,12 +105,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         
         retrieveProperties(success: { [weak self] in
             self?.finishLogin(success: {
-                // Only put this in silent login logic, to approximate only showing this modal to existing users.
-                if self?.propertiesManager.newBrandModalShown != true {
-                    self?.alertService.push(alert: NewBrandAlert())
-                    self?.propertiesManager.newBrandModalShown = true
-                }
-
                 completion(.success)
             }, failure: failureWrapper)
         }, failure: failureWrapper)
