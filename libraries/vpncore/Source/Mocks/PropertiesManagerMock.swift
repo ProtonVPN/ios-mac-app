@@ -89,7 +89,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var warnedTrialExpired: Bool = false
     public var reportBugEmail: String?
     public var discourageSecureCore: Bool = false
-    public var newBrandModalShown: Bool = false
     public var openVpnConfig: OpenVpnConfig = OpenVpnConfig()
     public var wireguardConfig: WireguardConfig = WireguardConfig()
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()

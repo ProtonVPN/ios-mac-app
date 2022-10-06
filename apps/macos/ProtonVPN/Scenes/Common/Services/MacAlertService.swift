@@ -106,9 +106,6 @@ extension MacAlertService: CoreAlertService {
         case let alert as DiscourageSecureCoreAlert:
             show(alert)
 
-        case let alert as NewBrandAlert:
-            show(alert)
-
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
             
@@ -354,12 +351,6 @@ extension MacAlertService: CoreAlertService {
         let factory = ModalsFactory(colors: UpsellColors())
 
         let viewController = factory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
-        windowService.presentKeyModal(viewController: viewController)
-    }
-
-    private func show(_ alert: NewBrandAlert) {
-        let factory = ModalsFactory(colors: UpsellColors())
-        let viewController = factory.newBrandViewController(icons: NewBrandModalIcons(), onReadMore: alert.onReadMore)
         windowService.presentKeyModal(viewController: viewController)
     }
 

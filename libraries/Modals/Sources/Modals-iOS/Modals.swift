@@ -7,13 +7,11 @@ public struct ModalsFactory {
 
     private let upsellStoryboard: UIStoryboard
     private let discourageStoryboard: UIStoryboard
-    private let newBrandStoryboard: UIStoryboard
     private let userAccountUpdateStoryboard: UIStoryboard
 
     public init(colors: ModalsColors) {
         upsellStoryboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
         discourageStoryboard = UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
-        newBrandStoryboard = UIStoryboard(name: "NewBrandViewController", bundle: Bundle.module)
         userAccountUpdateStoryboard = UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
         Modals_iOS.colors = colors
     }
@@ -31,16 +29,6 @@ public struct ModalsFactory {
         discourageSecureCoreViewController.onCancel = onCancel
         discourageSecureCoreViewController.onLearnMore = onLearnMore
         return discourageSecureCoreViewController
-    }
-
-    public func newBrandViewController(icons: NewBrandIcons, onDismiss: (() -> Void)?, onReadMore: (() -> Void)?) -> UIViewController {
-        let newBrandViewController = newBrandStoryboard.instantiate(controllerType: NewBrandViewController.self)
-        newBrandViewController.onReadMore = onReadMore
-        newBrandViewController.onDismiss = onDismiss
-        newBrandViewController.modalTransitionStyle = .crossDissolve
-        newBrandViewController.modalPresentationStyle = .overFullScreen
-        newBrandViewController.icons = icons
-        return newBrandViewController
     }
 
     public func userAccountUpdateViewController(viewModel: UserAccountUpdateViewModel, onPrimaryButtonTap: (() -> Void)?) -> UIViewController {

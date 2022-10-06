@@ -128,9 +128,6 @@ final class LoginViewModel {
             switch status {
             case let .finished(data):
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: { [weak self] in
-                    // We only want to show the new brand modal to existing users. If a user is logging in manually,
-                    // they are most likely new to Proton VPN and don't need to see the brand refresh modal.
-                    self?.propertiesManager.newBrandModalShown = true
                     self?.silentlyCheckForUpdates()
 
                     self?.sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, actionHandler: { _ in })

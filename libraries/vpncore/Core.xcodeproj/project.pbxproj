@@ -428,8 +428,6 @@
 		E53406AC28E1BBD00078A7A3 /* ImageCacheMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406AA28E1BBD00078A7A3 /* ImageCacheMock.swift */; };
 		E53406B028E1BCD10078A7A3 /* FullScreenImagePrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406AD28E1BCAB0078A7A3 /* FullScreenImagePrefetcher.swift */; };
 		E53406B128E1BCD20078A7A3 /* FullScreenImagePrefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406AD28E1BCAB0078A7A3 /* FullScreenImagePrefetcher.swift */; };
-		E53D64B828115B580060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B728115B580060C463 /* NewBrandModalIcons.swift */; };
-		E53D64B928115B7A0060C463 /* NewBrandModalIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53D64B728115B580060C463 /* NewBrandModalIcons.swift */; };
 		E53D64BF2811694F0060C463 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64BE2811694F0060C463 /* Modals */; };
 		E53D64C1281169550060C463 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C0281169550060C463 /* Modals */; };
 		E53D64C728116B910060C463 /* VPNSessionsCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0262465A4190042145A /* VPNSessionsCountRequest.swift */; };
@@ -969,7 +967,6 @@
 		E534EA492806B67000BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "Localization/es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E534EA4A2806B68700BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "Localization/es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4B2806B68D00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
-		E53D64B728115B580060C463 /* NewBrandModalIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBrandModalIcons.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
 		E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferPanel.swift; sourceTree = "<group>"; };
@@ -1459,7 +1456,6 @@
 		E53D64B628115B4A0060C463 /* Modals */ = {
 			isa = PBXGroup;
 			children = (
-				E53D64B728115B580060C463 /* NewBrandModalIcons.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -2690,7 +2686,6 @@
 				E992F27E26675C3200169C6B /* VpnKeychainMock.swift in Sources */,
 				E1B5F66521B81EE100B558B0 /* ServerIp.swift in Sources */,
 				D57A656F2485330700079E82 /* VpnServerSelector.swift in Sources */,
-				E53D64B828115B580060C463 /* NewBrandModalIcons.swift in Sources */,
 				E977A78C268206B30013495A /* AuthCredentials+vpncore.swift in Sources */,
 				E129C6D622A9488900D8437E /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				E1B5F65421B81E3A00B558B0 /* ServerFeature.swift in Sources */,
@@ -2976,7 +2971,6 @@
 				D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */,
 				4CAAEC44287323A90029F13A /* MockAuthKeychain.swift in Sources */,
 				D56B68E02507A1CF00796E0C /* NetShieldType.swift in Sources */,
-				E53D64B928115B7A0060C463 /* NewBrandModalIcons.swift in Sources */,
 				E15367E722663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
 				E129C6CC22A9205700D8437E /* VpnManagerMock.swift in Sources */,
 				E977A799268215A70013495A /* KeychainConstants.swift in Sources */,
