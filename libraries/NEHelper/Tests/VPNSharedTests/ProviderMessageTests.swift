@@ -1,5 +1,5 @@
 //
-//  Created on 2022-06-03.
+//  Created on 2022-10-05.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+@testable import VPNShared
 
 class ProviderMessageTests: XCTestCase {
     func testProviderResponses() {

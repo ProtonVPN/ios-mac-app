@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import VPNSharedTesting
 
 public final class VpnAuthenticationMock: VpnAuthentication {
     public init() { }
@@ -31,6 +32,6 @@ public final class VpnAuthenticationMock: VpnAuthentication {
     public func clearEverything(completion: @escaping (() -> Void)) { completion() }
     
     public func loadClientPrivateKey() -> PrivateKey {
-        VpnKeys().privateKey
+        VpnKeys.mock().privateKey
     }
 }

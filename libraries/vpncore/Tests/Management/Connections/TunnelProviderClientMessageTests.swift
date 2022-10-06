@@ -20,6 +20,7 @@ import Foundation
 import NetworkExtension
 import VPNShared
 import XCTest
+import VPNSharedTesting
 
 @testable import vpncore
 
@@ -30,7 +31,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
     override func setUp() {
         super.setUp()
 
-        container.vpnAuthenticationStorage.keys = VpnKeys()
+        container.vpnAuthenticationStorage.keys = VpnKeys.mock()
         container.vpnAuthenticationStorage.keysStored = { [unowned self] _ in
             self.fulfillExpectationCategory(self.storeKeys)
         }

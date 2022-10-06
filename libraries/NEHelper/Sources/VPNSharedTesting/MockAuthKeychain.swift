@@ -1,5 +1,5 @@
 //
-//  Created on 2022-04-21.
+//  Created on 2022-10-05.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -46,7 +46,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
     }
 }
 
-extension MockAuthKeychain {
+public extension MockAuthKeychain {
     func setMockUsername(_ username: String) {
         self.credentials[defaultContext] = .init(username: username,
                                                  accessToken: "",

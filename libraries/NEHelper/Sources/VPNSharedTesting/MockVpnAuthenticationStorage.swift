@@ -17,59 +17,62 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared // TODO: Move to vpnshared library itself
+import VPNShared
 
-class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
+public class MockVpnAuthenticationStorage: VpnAuthenticationStorage {
     public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
     public var keysStored: ((VpnKeys) -> ())?
 
     public var keys: VpnKeys?
     public var cert: VpnCertificate?
     public var features: VPNConnectionFeatures?
+    
+    public init(){
+    }
 
-    func deleteKeys() {
+    public func deleteKeys() {
         keys = nil
         deleteCertificate()
     }
 
-    func deleteCertificate() {
+    public func deleteCertificate() {
         cert = nil
         delegate?.certificateDeleted()
     }
 
-    func getKeys() -> VpnKeys {
+    public func getKeys() -> VpnKeys {
         if let keys = keys {
             return keys
         }
 
-        let newKeys = VpnKeys()
+        let newKeys = VpnKeys.mock()
         self.store(keys: newKeys)
         return newKeys
     }
 
-    func getStoredCertificate() -> VpnCertificate? {
+    public func getStoredCertificate() -> VpnCertificate? {
         cert
     }
 
-    func getStoredCertificateFeatures() -> VPNConnectionFeatures? {
+    public func getStoredCertificateFeatures() -> VPNConnectionFeatures? {
         features
     }
 
-    func getStoredKeys() -> VpnKeys? {
+    public func getStoredKeys() -> VpnKeys? {
         keys
     }
 
-    func store(keys: VpnKeys) {
+    public func store(keys: VpnKeys) {
         self.keys = keys
         keysStored?(keys)
     }
 
-    func store(certificate: VpnCertificateWithFeatures) {
+    public func store(certificate: VpnCertificateWithFeatures) {
         self.cert = certificate.certificate
         self.features = certificate.features
         delegate?.certificateStored(certificate)
         certAndFeaturesStored?(certificate)
     }
 
-    var delegate: VpnAuthenticationStorageDelegate?
+    public var delegate: VpnAuthenticationStorageDelegate?
 }

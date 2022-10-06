@@ -1,5 +1,5 @@
 //
-//  Created on 2022-04-21.
+//  Created on 2022-10-06.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,9 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#ifndef NetworkExtensionTests_Bridging_Header_h
-#define NetworkExtensionTests_Bridging_Header_h
+import Foundation
+import VPNShared
 
-#import "../../../libraries/WireguardExtension/WG/Shared/Logging/ringlogger.h"
+public extension VpnKeys {
+    static func mock() -> VpnKeys {
+        VpnKeys(privateKey: PrivateKey(rawRepresentation: [], derRepresentation: String.random(8), base64X25519Representation: String.random(8)),
+                  publicKey: PublicKey(rawRepresentation: [], derRepresentation: String.random(8)))
+    }
+}
 
-#endif /* NetworkExtensionTests_Bridging_Header_h */
+fileprivate extension String {
+    static func random(_ length: Int) -> String {
+        let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0 ..< length).map { _ in chars.randomElement()! })
+      }
+}

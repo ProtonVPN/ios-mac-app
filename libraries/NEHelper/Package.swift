@@ -10,12 +10,9 @@ let package = Package(
         .macOS(.v10_15)
     ],
     products: [
-        .library(
-            name: "NEHelper",
-            targets: ["NEHelper"]),
-        .library(
-            name: "VPNShared",
-            targets: ["VPNShared"]),
+        .library(name: "NEHelper", targets: ["NEHelper"]),
+        .library(name: "VPNShared", targets: ["VPNShared"]),
+        .library(name: "VPNSharedTesting", targets: ["VPNSharedTesting"]),
     ],
     dependencies: [
         .package(path: "../Timer"),
@@ -31,6 +28,16 @@ let package = Package(
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
             ]
         ),
+        .testTarget(
+            name: "VPNSharedTests",
+            dependencies: ["VPNShared"]
+        ),
+        
+        .target(
+            name: "VPNSharedTesting",
+            dependencies: ["VPNShared", .product(name: "TimerMock", package: "Timer")]
+        ),
+        
         .target(
             name: "NEHelper",
             dependencies: [
@@ -40,6 +47,7 @@ let package = Package(
         ),
         .testTarget(
             name: "NEHelperTests",
-            dependencies: ["NEHelper"]),
+            dependencies: ["NEHelper", "VPNSharedTesting"]
+        ),
     ]
 )

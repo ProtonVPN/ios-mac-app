@@ -17,6 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
+@testable import NEHelper
+@testable import VPNShared
 
 class RequestParsingTests: XCTestCase {
     static func makeHeaders(headers: [String: String]) -> String {
