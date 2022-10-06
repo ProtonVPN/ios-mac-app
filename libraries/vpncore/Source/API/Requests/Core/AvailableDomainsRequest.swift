@@ -32,4 +32,8 @@ final class AvailableDomainsRequest: Request {
     var parameters: [String: Any]? {
         return ["Type": "login"]
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }

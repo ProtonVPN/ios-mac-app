@@ -36,4 +36,8 @@ final class CoreApiFeatureRequest: Request {
     var isAuth: Bool {
         return false
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }
