@@ -22,7 +22,7 @@
 
 import XCTest
 import vpncore
-
+import VPNShared
 @testable import ProtonVPN
 
 fileprivate let navigationService = NavigationService(DependencyContainer())

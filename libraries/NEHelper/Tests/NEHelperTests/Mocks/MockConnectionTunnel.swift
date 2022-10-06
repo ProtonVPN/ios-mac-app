@@ -19,6 +19,8 @@
 import Foundation
 import NetworkExtension
 import XCTest
+import VPNShared
+import NEHelper
 
 struct MockDataTaskFactory: DataTaskFactory {
     let cookieStorage: CookieStorageProtocol = HTTPCookieStorage()

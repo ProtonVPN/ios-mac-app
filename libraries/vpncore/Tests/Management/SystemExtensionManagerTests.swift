@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 @testable import vpncore
 import SystemExtensions
+import VPNSharedTesting
 
 class SystemExtensionManagerTests: XCTestCase {
     let expectationTimeout: TimeInterval = 600

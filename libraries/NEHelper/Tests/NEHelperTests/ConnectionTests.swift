@@ -21,6 +21,9 @@ import XCTest
 import NetworkExtension
 import Timer
 import TimerMock
+@testable import NEHelper
+@testable import VPNShared
+@testable import VPNSharedTesting
 
 class NWTCPConnectionTests: XCTestCase {
     let networkQueue = DispatchQueue(label: "ch.protonvpn.fake-network-request")

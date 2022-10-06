@@ -1,5 +1,5 @@
 //
-//  Created on 2022-04-21.
+//  Created on 2022-10-05.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -19,7 +19,11 @@
 import Foundation
 import XCTest
 import TimerMock
+@testable import NEHelper
+@testable import VPNShared
+@testable import VPNSharedTesting
 
+@available(iOS 15, macOS 12, *)
 class CertificateRefreshTests: XCTestCase {
     typealias MockEndpointBlock = ((URLRequest, @escaping MockDataTask.CompletionCallback) -> ())
 
@@ -91,7 +95,7 @@ class CertificateRefreshTests: XCTestCase {
 
         let storage = Storage()
         authenticationStorage = MockVpnAuthenticationStorage()
-        authenticationStorage.keys = VpnKeys()
+        authenticationStorage.keys = VpnKeys.mock()
         authenticationStorage.features = Self.defaultVpnFeatures
 
         certRefreshCallback = failCallback
@@ -1109,42 +1113,54 @@ class CertificateRefreshTests: XCTestCase {
     }
 }
 
+@available(iOS 15, macOS 12, *)
 protocol MockableAPIResponse: Codable {
     init(fakeData: [PartialKeyPath<Self>: Any])
 }
 
+@available(iOS 15, macOS 12, *)
 protocol MockableRequest {
     associatedtype Response: MockableAPIResponse
 }
 
+@available(iOS 15, macOS 12, *)
 extension CertificateRefreshRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<Self>: Any]) {
-        self.certificate = fakeData[\.certificate] as? String ?? "certificate"
-        self.validUntil = fakeData[\.validUntil] as? Date ?? Date()
-        self.refreshTime = fakeData[\.refreshTime] as? Date ?? Date()
+        let validUntil = fakeData[\.validUntil] as? Date ?? Date()
+        let refreshTime = fakeData[\.refreshTime] as? Date ?? Date()
+        try! self.init(dict: [
+            CodingKeys.certificate.rawValue: fakeData[\.certificate] as? String ?? "certificate",
+            CodingKeys.validUntil.rawValue: validUntil.timeIntervalSince1970,
+            CodingKeys.refreshTime.rawValue: refreshTime.timeIntervalSince1970
+        ] as JSONDictionary)
     }
 }
 
+@available(iOS 15, macOS 12, *)
 extension CertificateRefreshRequest: MockableRequest {
 }
 
+@available(iOS 15, macOS 12, *)
 extension TokenRefreshRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<Self>: Any]) {
-        self.accessToken = fakeData[\.accessToken] as? String ?? "accessToken"
-        self.refreshToken = fakeData[\.refreshToken] as? String ?? "refreshToken"
-        self.expiresIn = fakeData[\.expiresIn] as? TimeInterval ?? 15
+        self.init(accessToken: fakeData[\.accessToken] as? String ?? "accessToken",
+                  refreshToken: fakeData[\.refreshToken] as? String ?? "refreshToken",
+                  expiresIn: fakeData[\.expiresIn] as? TimeInterval ?? 15)
     }
 }
 
+@available(iOS 15, macOS 12, *)
 extension TokenRefreshRequest: MockableRequest {
 }
 
+@available(iOS 15, macOS 12, *)
 extension SessionAuthRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<Self>: Any]) {
-        self.uid = fakeData[\.uid] as? String ?? "uid"
-        self.refreshToken = fakeData[\.refreshToken] as? String ?? "refreshToken"
+        self.init(uid: fakeData[\.uid] as? String ?? "uid",
+                  refreshToken: fakeData[\.refreshToken] as? String ?? "refreshToken")
     }
 }
 
+@available(iOS 15, macOS 12, *)
 extension SessionAuthRequest: MockableRequest {
 }

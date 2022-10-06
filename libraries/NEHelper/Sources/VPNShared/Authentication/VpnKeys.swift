@@ -30,7 +30,12 @@ public struct PublicKey: Codable {
     public let rawRepresentation: [UInt8]
 
     // ASN.1 DER
-    public let  derRepresentation: String      
+    public let  derRepresentation: String
+    
+    public init(rawRepresentation: [UInt8], derRepresentation: String) {
+        self.rawRepresentation = rawRepresentation
+        self.derRepresentation = derRepresentation
+    }
 }
 
 /**
@@ -44,7 +49,13 @@ public struct PrivateKey: Codable {
     public let derRepresentation: String
 
     // base64 encoded X25519 key
-    public let base64X25519Representation: String     
+    public let base64X25519Representation: String
+    
+    public init(rawRepresentation: [UInt8], derRepresentation: String, base64X25519Representation: String) {
+        self.rawRepresentation = rawRepresentation
+        self.derRepresentation = derRepresentation
+        self.base64X25519Representation = base64X25519Representation
+    }
 }
 
 /**
@@ -53,4 +64,9 @@ public struct PrivateKey: Codable {
 public struct VpnKeys: Codable {
     public let privateKey: PrivateKey
     public let publicKey: PublicKey
+    
+    public init(privateKey: PrivateKey, publicKey: PublicKey) {
+        self.privateKey = privateKey
+        self.publicKey = publicKey
+    }
 }

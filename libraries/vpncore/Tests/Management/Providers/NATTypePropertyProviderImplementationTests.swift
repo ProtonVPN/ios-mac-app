@@ -18,6 +18,7 @@
 
 import XCTest
 import VPNShared
+import VPNSharedTesting
 @testable import vpncore
 
 final class NATTypePropertyProviderImplementationTests: XCTestCase {

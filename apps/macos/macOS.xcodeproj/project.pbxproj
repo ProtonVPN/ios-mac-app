@@ -2750,6 +2750,8 @@
 				E15B755320FA83CB0022C406 /* PBXTargetDependency */,
 			);
 			name = ProtonVPNmacOSTests;
+			packageProductDependencies = (
+			);
 			productName = ProtonVPNTests;
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNmacOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";

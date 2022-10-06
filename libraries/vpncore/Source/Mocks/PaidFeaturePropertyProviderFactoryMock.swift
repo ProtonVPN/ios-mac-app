@@ -18,6 +18,7 @@
 
 import Foundation
 import VPNShared
+import VPNSharedTesting
 
 final class PaidFeaturePropertyProviderFactoryMock: PaidFeaturePropertyProvider.Factory {
     let propertiesManager: PropertiesManagerMock
