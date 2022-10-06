@@ -65,4 +65,8 @@ final class CertificateRequest: Request {
         
         return params
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }

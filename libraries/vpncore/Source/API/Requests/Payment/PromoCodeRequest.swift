@@ -41,4 +41,8 @@ final class PromoCodeRequest: Request {
             "Codes": [code]
         ]
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }

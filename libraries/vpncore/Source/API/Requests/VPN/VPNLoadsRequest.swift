@@ -45,4 +45,8 @@ final class VPNLoadsRequest: Request {
 
         return [:]
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }

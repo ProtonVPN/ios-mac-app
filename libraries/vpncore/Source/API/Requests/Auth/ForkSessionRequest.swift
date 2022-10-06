@@ -49,4 +49,8 @@ final class ForkSessionRequest: Request {
             "Independent": independent ? 1 : 0,
         ]
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }

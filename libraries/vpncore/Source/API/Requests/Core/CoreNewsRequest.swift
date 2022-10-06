@@ -80,6 +80,10 @@ extension CoreApiNotificationsRequest: Request {
         components?.queryItems = queryItems()
         return components?.url?.absoluteString ?? basePath
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }
 
 #if canImport(UIKit)

@@ -39,6 +39,10 @@ final class VPNClientConfigRequest: Request {
         return ["x-pm-netzone": ip]
     }
 
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
+
     public init(isAuth: Bool, ip: String?) {
         self.isAuth = isAuth
         self.ip = ip

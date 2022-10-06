@@ -27,4 +27,8 @@ final class VPNSessionsCountRequest: Request {
     var path: String {
         return "/vpn/sessioncount"
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }

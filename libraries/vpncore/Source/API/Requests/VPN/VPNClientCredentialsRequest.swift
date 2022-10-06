@@ -26,4 +26,8 @@ final class VPNClientCredentialsRequest: Request {
     var path: String {
         return "/vpn"
     }
+
+    var retryPolicy: ProtonRetryPolicy.RetryMode {
+        .background
+    }
 }
