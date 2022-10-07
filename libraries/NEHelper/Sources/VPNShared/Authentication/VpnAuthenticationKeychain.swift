@@ -128,7 +128,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
             delegate?.certificateStored(certificate)
         } catch {
-            log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
+            log.error("Saving generated vpn auth keys failed \(error)", category: .userCert)
         }
     }
 }
