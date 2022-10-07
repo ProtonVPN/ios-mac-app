@@ -395,8 +395,10 @@ public class VpnManager: VpnManagerProtocol {
             guard let vpnManager = vpnManager else { return }
             
             do {
-                let protocolConfiguration = try currentVpnProtocolFactory.create(configuration)
-                let credentialsConfigurator = self.vpnCredentialsConfiguratorFactory.getCredentialsConfigurator(for: configuration.vpnProtocol)
+                let protocolConfiguration = try currentVpnProtocolFactory
+                    .create(configuration)
+                let credentialsConfigurator = self.vpnCredentialsConfiguratorFactory
+                    .getCredentialsConfigurator(for: configuration.vpnProtocol)
                 
                 credentialsConfigurator.prepareCredentials(for: protocolConfiguration, configuration: configuration) { protocolConfigurationWithCreds in
                     self.configureConnection(forProtocol: protocolConfigurationWithCreds, vpnManager: vpnManager) {

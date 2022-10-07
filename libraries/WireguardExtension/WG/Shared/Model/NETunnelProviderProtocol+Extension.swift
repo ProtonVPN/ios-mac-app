@@ -24,7 +24,7 @@ extension NETunnelProviderProtocol {
             return nil
         }
         #if os(macOS)
-        providerConfiguration = ["UID": getuid()]
+        appUid = getuid()
         #endif
 
         let endpoints = tunnelConfiguration.peers.compactMap { $0.endpoint }
@@ -117,8 +117,9 @@ extension NETunnelProviderProtocol {
             return true
         }
         #if os(macOS)
-        if passwordReference != nil && providerConfiguration?["UID"] == nil && verifyConfigurationReference() {
-            providerConfiguration = ["UID": getuid()]
+        if passwordReference != nil, appUid == nil,
+           verifyConfigurationReference() {
+            appUid = getuid()
             return true
         }
         #endif

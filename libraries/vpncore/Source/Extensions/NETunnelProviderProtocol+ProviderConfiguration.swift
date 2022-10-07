@@ -21,17 +21,31 @@ import NetworkExtension
 
 extension NETunnelProviderProtocol {
     static let connectedServerIdKey = "PVPNServerID"
+    static let uidKey = "UID"
 
-    var connectedServerId: String? {
+    private func ensureProviderConfig() {
+        guard providerConfiguration == nil else { return }
+
+        providerConfiguration = [:]
+    }
+
+    public var connectedServerId: String? {
         get {
             providerConfiguration?[Self.connectedServerIdKey] as? String
         }
         set {
-            if providerConfiguration == nil {
-                providerConfiguration = [:]
-            }
-
+            ensureProviderConfig()
             providerConfiguration?[Self.connectedServerIdKey] = newValue
+        }
+    }
+
+    public var appUid: uid_t? {
+        get {
+            providerConfiguration?[Self.uidKey] as? uid_t
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[Self.uidKey] = newValue
         }
     }
 }
