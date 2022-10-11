@@ -125,4 +125,42 @@ class SignupTests: ProtonVPNUITests {
             .verify.emailAddressAlreadyExists()
             .verify.loginScreenIsShown()
     }
+    
+    /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
+    func testSignupNewInternalAccountUpgradePlans() {
+       
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let testEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
+        let randomEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
+        let password = StringUtils().randomAlphanumericString(length: 8)
+        let code = "666666"
+
+        changeEnvToBlackIfNeeded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: RecoveryRobot.self)
+            .insertRecoveryEmail(testEmail)
+            .nextButtonTap(robot: SignupHumanVerificationV3Robot.self)
+            .verify.humanVerificationScreenIsShown()
+            .performEmailVerificationV3(email: randomEmail, code: code, to: CreatingAccountRobot.self)
+            .verify.creatingAccountScreenIsShown()
+            .verify.summaryScreenIsShown()
+            .skipOnboarding()
+            .nextOnboardingStep()
+            .skipOnboarding()
+            .startUsingProtonVpn()
+            .startUpgrade()
+            .verifyStaticText("Get Plus")
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "for 1 year")
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
+    }
+
 }

@@ -41,4 +41,26 @@ class SubscriptionsRobot: CoreElements {
 
         return self
     }
+    
+    @discardableResult
+    func verifyStaticText(_ name: String) -> Self {
+        staticText(name).wait().checkExists()
+        return self
+    }
+    
+    @discardableResult
+    public func verifyNumberOfPlansToPurchase(number: Int) -> Self {
+        table("PaymentsUIViewController.tableView").wait().checkExists()
+        let count = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.count
+        XCTAssertEqual(count, number)
+        return self
+    }
+    
+    @discardableResult
+    public func verifyTableCellStaticText(cellName: String, name: String) -> Self {
+        table("PaymentsUIViewController.tableView").wait().checkExists()
+        let staticTexts = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.matching(identifier: cellName).staticTexts
+        XCTAssertTrue(staticTexts[name].exists)
+        return self
+    }
 }
