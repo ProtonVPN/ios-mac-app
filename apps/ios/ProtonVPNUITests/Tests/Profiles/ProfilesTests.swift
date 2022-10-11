@@ -55,6 +55,7 @@ class ProfilesTests: ProtonVPNUITests {
         let countryName = "Belgium"
         let newCountryName = "Australia"
         
+        logoutIfNeeded()
         logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()

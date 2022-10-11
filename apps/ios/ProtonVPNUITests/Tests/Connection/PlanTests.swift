@@ -29,7 +29,7 @@ class PlanTests: ProtonVPNUITests {
         super.setUp()
 
         logoutIfNeeded()
-        changeEnvToBF22IfNeeded()
+        changeEnvToBlackIfNeeded()
         openLoginScreen()
 
     }
@@ -45,8 +45,7 @@ class PlanTests: ProtonVPNUITests {
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 1 year")
-        // ⬇︎ Uncomment after CP-4705 (Core > 3.22.4) is merged in
-        // .checkPriceIs("$71.88")
+            .checkPriceIs("$99.99")
     }
 
     // Black Friday 2022 plans, will renew at same price and cycle, so we want to keep tests for them
@@ -61,7 +60,7 @@ class PlanTests: ProtonVPNUITests {
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 1 year") // should be "for 15 months" after CP-4611
-            .checkPriceIs("$149.85")
+            .checkPriceIs("$71.88")
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 30 months and costs $299.70
@@ -74,9 +73,27 @@ class PlanTests: ProtonVPNUITests {
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 2 years") // should be "for 30 months" after CP-4611
-            .checkPriceIs("$299.70")
+            .checkPriceIs("$119.76")
     }
 
+    /// Test showing standard plans for upgrade but not Black Friday 2022 plans
+    func testShowUpdatePlansForCurrentFreePlan() {
+        loginAsFreeUser()
+
+        mainRobot
+            .goToSettingsTab()
+            .goToAccountDetail()
+            .goToUpgradeSubscription()
+            .verifyStaticText("Upgrade your plan")
+            .verifyNumberOfPlansToPurchase(number: 2)
+            .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "Proton Unlimited")
+            .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "for 1 year")
+            .verifyTableCellStaticText(cellName: "PlanCell.Proton_Unlimited", name: "$149.99")
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "for 1 year")
+            .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
+    }
+    
     override func loginAsPlusUser() {
         login(withCredentials: credentialsBF22[0])
     }
@@ -89,23 +106,7 @@ class PlanTests: ProtonVPNUITests {
         login(withCredentials: credentialsBF22[2])
     }
 
-    private func changeEnvToBF22IfNeeded() {
-        let env = app.staticTexts[ObfuscatedConstants.bf22DefaultHost + ObfuscatedConstants.bf22DefaultPath]
-
-        if env.waitForExistence(timeout: 10){
-            return
-        }
-        else {
-            changeEnvToBF22()
-            app.launch()
-        }
-    }
-
-    private func changeEnvToBF22() {
-        let textFields = app.textFields["https://"]
-        textFields.tap()
-        textFields.typeText(ObfuscatedConstants.bf22DefaultHostWithoutHttps + ObfuscatedConstants.bf22DefaultPath)
-        app.buttons["Change and kill the app"].tap()
-        app.buttons["OK"].tap()
+    override func loginAsFreeUser() {
+        login(withCredentials: credentialsBF22[3])
     }
 }

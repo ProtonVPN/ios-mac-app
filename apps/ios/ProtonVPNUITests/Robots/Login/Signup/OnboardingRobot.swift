@@ -25,6 +25,7 @@ fileprivate let skipButton = "Skip"
 fileprivate let nextButton = "Next"
 fileprivate let closeButton = "CloseButton"
 fileprivate let takeTourButton = "Take a tour"
+fileprivate let upgradeButton = "Upgrade"
 
 class OnboardingRobot: CoreElements {
     
@@ -56,5 +57,10 @@ class OnboardingRobot: CoreElements {
     func nextOnboardingStep() -> OnboardingRobot {
           button(nextButton).tap()
           return OnboardingRobot()
+    }
+    
+    func startUpgrade() -> SubscriptionsRobot {
+          button(upgradeButton).tap()
+          return SubscriptionsRobot()
     }
 }
