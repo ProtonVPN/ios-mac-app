@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,9 @@
 		20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		223BDF9C51D60D8AD239D951 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */; };
 		257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */; };
+		37CC821328F43F3300230335 /* LoginExternalAccountNotSupportedSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CC821228F43F3200230335 /* LoginExternalAccountNotSupportedSetup.swift */; };
+		37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CC821428F4407C00230335 /* LoginExtAccountTests.swift */; };
+		37CC821628F5AC0000230335 /* LoginExternalAccountNotSupportedSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CC821228F43F3200230335 /* LoginExternalAccountNotSupportedSetup.swift */; };
 		3BA3B884CA7CCB1C46BA6073 /* Pods-WireGuardNetworkExtensionTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C6869C2948E149FEA6120D1 /* Pods-WireGuardNetworkExtensionTests-metadata.plist */; };
 		42066E8626301BF8001F86DB /* FeatureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */; };
 		42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */; };
@@ -720,6 +723,8 @@
 		30E5DFDCF6801E41EA22CF47 /* VPNConnectionFeatures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPNConnectionFeatures.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VPNConnectionFeatures.swift; sourceTree = "<group>"; };
 		31EA49C928662F450C8B22DD /* Pods-OpenVPN Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.release.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.release.xcconfig"; sourceTree = "<group>"; };
 		3282E4753260F985B918AC2F /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
+		37CC821228F43F3200230335 /* LoginExternalAccountNotSupportedSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExternalAccountNotSupportedSetup.swift; sourceTree = "<group>"; };
+		37CC821428F4407C00230335 /* LoginExtAccountTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginExtAccountTests.swift; sourceTree = "<group>"; };
 		3CBDFC873E416AD23C42323F /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		3FF4A29B042EF36CA906EF26 /* Pods-Siri Shortcut Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.release.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.release.xcconfig"; sourceTree = "<group>"; };
 		42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableViewCell.swift; sourceTree = "<group>"; };
@@ -1261,6 +1266,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37CC821128F43F3200230335 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				37CC821228F43F3200230335 /* LoginExternalAccountNotSupportedSetup.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
 		4053FDE72598EAD8EDA5FC75 /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
@@ -2503,6 +2516,7 @@
 			children = (
 				F377836826E644BC00392958 /* LoginTests.swift */,
 				F377836926E644BC00392958 /* SignupTests.swift */,
+				37CC821428F4407C00230335 /* LoginExtAccountTests.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2583,6 +2597,7 @@
 			children = (
 				F3E87E3026CFF26B00675AD2 /* LoginService.swift */,
 				F3BC534C278598E4009E49B4 /* OnboardingService.swift */,
+				37CC821128F43F3200230335 /* Tests */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3684,6 +3699,7 @@
 				791DE5DD208DDA3000A29EA5 /* AppDelegate.swift in Sources */,
 				42066E8F2630240F001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
 				F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */,
+				37CC821328F43F3300230335 /* LoginExternalAccountNotSupportedSetup.swift in Sources */,
 				79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */,
 				E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */,
 				79DEE9092111A5E100C354EF /* TabBar.swift in Sources */,
@@ -3854,6 +3870,7 @@
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
+				37CC821628F5AC0000230335 /* LoginExternalAccountNotSupportedSetup.swift in Sources */,
 				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
 				F314142527B19B72007424E9 /* PaidFeatureSelectionViewController.swift in Sources */,
 				D5136C192285918C0002C095 /* AlertService.swift in Sources */,
@@ -3914,6 +3931,7 @@
 				F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
+				37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
 				57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */,
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,

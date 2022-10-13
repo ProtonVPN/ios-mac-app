@@ -26,7 +26,8 @@ import XCTest
 class ProtonVPNUITests: XCTestCase {
 
     let app = XCUIApplication()
-    
+    var launchEnvironment: String?
+
     override func setUp() {
         app.launchArguments += ["UITests"]
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -36,6 +37,12 @@ class ProtonVPNUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
 
+        // Inject launchEnvironment
+        if let env = launchEnvironment {
+            app.launchEnvironment[env] = "1"
+        }
+
+        
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         app.launch()
 

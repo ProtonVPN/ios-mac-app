@@ -6,6 +6,19 @@ PODS:
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
   - lottie-ios (3.4.2)
+  - OHHTTPStubs/Core (9.1.0)
+  - OHHTTPStubs/Default (9.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (9.1.0)
+  - OHHTTPStubs/Swift (9.1.0):
+    - OHHTTPStubs/Default
   - OpenSSL-Apple (1.1.1k.11)
   - pmtest (1.0.0)
   - "ProtonCore-AccountDeletion-V5/UsingCryptoVPN+Alamofire (3.21.0)":
@@ -171,6 +184,7 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
+  - OHHTTPStubs/Swift (= 9.1.0)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
   - "ProtonCore-AccountDeletion-V5/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.21.0`)"
   - "ProtonCore-APIClient/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.21.0`)"
@@ -219,6 +233,7 @@ SPEC REPOS:
     - GSMessages
     - KeychainAccess
     - lottie-ios
+    - OHHTTPStubs
     - OpenSSL-Apple
     - ReachabilitySwift
     - SDWebImage
@@ -418,6 +433,7 @@ SPEC CHECKSUMS:
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   lottie-ios: 6bbc53eef6957e4744a50321507015fba72d8ca6
+  OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
   ProtonCore-AccountDeletion-V5: 5496152548cd2086b2b56941b8349933296353b9
@@ -456,6 +472,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 6cc0dd598fdbbb42fcb05e53e59a3aa63aa70ee0
+PODFILE CHECKSUM: b9cf96d79b81e7d7069426a80fa59a5188012d95
 
 COCOAPODS: 1.11.3
