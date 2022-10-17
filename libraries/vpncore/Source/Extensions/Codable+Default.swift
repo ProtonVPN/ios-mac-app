@@ -27,6 +27,16 @@ extension Bool: DefaultValue {
     public static let defaultValue = false
 }
 
+public struct BoolDefaultTrue: ExpressibleByBooleanLiteral, DefaultValue {
+    public typealias BooleanLiteralType = Bool
+    public static var defaultValue = true
+    public let rawValue: Bool
+
+    public init(booleanLiteral rawValue: Bool) {
+        self.rawValue = rawValue
+    }
+}
+
 @propertyWrapper
 public struct Default<T: DefaultValue> {
     public var wrappedValue: T.Value
