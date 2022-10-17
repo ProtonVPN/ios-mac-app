@@ -34,7 +34,7 @@ public struct FeatureFlags: Codable {
     public let guestHoles: Bool
     public let safeMode: Bool
     @Default<Bool> public var promoCode: Bool
-    @Default<Bool> public var wireGuardTls: Bool
+    @Default<BoolDefaultTrue> public var wireGuardTls: Bool
 
     public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool) {
         self.smartReconnect = smartReconnect

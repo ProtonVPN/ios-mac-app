@@ -26,8 +26,8 @@ public struct SmartProtocolConfig: Codable, Equatable {
     public let openVPN: Bool
     public let iKEv2: Bool
     public let wireGuard: Bool
-    @Default<Bool> public var wireGuardTcp: Bool
-    @Default<Bool> public var wireGuardTls: Bool
+    @Default<BoolDefaultTrue> public var wireGuardTcp: Bool
+    @Default<BoolDefaultTrue> public var wireGuardTls: Bool
 
     enum CodingKeys: String, CodingKey {
         case openVPN
