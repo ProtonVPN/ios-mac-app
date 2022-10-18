@@ -47,6 +47,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                              timerFactory: timerFactory,
                                              keychain: authKeychain,
                                              appInfo: appInfo,
+                                             atlasSecret: ObfuscatedConstants.atlasSecret,
                                              dataTaskFactoryGetter: dataTaskFactoryGetter)
 
         certificateRefreshManager = ExtensionCertificateRefreshManager(apiService: apiService,

@@ -116,6 +116,7 @@ class CertificateRefreshTests: XCTestCase {
                                          timerFactory: timerFactory,
                                          keychain: keychain,
                                          appInfo: AppInfoImplementation(context: .wireGuardExtension),
+                                         atlasSecret: "",
                                          dataTaskFactoryGetter: { [unowned self] in self.dataTaskFactory })
 
         self.manager = ExtensionCertificateRefreshManager(apiService: apiService,

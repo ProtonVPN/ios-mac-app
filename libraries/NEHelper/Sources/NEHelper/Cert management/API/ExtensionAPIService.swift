@@ -42,6 +42,9 @@ public final class ExtensionAPIService {
     /// For example: Retry-After: 60 => 60 * 0.2 = 12, time spent waiting = 60 + random(12)
     public static var retryAfterJitterRate = 0.2
 
+    /// If not empty will be added as a header to all requests
+    public let atlasSecret: String
+    
     func refreshCertificate(publicKey: String,
                             asPartOf operation: CertificateRefreshAsyncOperation,
                             completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
@@ -116,12 +119,13 @@ public final class ExtensionAPIService {
         }
     }
 
-    public init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
+    public init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, atlasSecret: String, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
         self.appInfo = appInfo
         self.storage = storage
         self.dataTaskFactoryGetter = dataTaskFactoryGetter
         self.timerFactory = timerFactory
         self.keychain = keychain
+        self.atlasSecret = atlasSecret
     }
 
     // MARK: - Private variables
@@ -265,9 +269,9 @@ public final class ExtensionAPIService {
         request.setHeader(.accept, "application/vnd.protonmail.v1+json")
         request.setHeader(.userAgent, appInfo.userAgent)
 
-//        if !ObfuscatedConstants.atlasSecret.isEmpty {
-//            request.setHeader(.atlasSecret, ObfuscatedConstants.atlasSecret)
-//        }
+        if !atlasSecret.isEmpty {
+            request.setHeader(.atlasSecret, atlasSecret)
+        }
 
         // Body
         if let body = apiRequest.body {
