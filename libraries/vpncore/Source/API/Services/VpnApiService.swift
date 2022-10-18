@@ -214,7 +214,7 @@ public class VpnApiService {
     // swiftlint:enable function_body_length
 
     public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
-        networking.request(VPNClientCredentialsRequest()) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNClientCredentialsRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 do {
@@ -239,7 +239,7 @@ public class VpnApiService {
     
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
     public func serverInfo(for shortenedIp: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
-        networking.request(VPNLogicalServicesRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNLogicalServicesRequest(shortenedIp)) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
@@ -265,7 +265,7 @@ public class VpnApiService {
     }
     
     public func serverState(serverId id: String, completion: @escaping (Result<VpnServerState, Error>) -> Void) {
-        networking.request(VPNServerRequest(id)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNServerRequest(id)) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
@@ -282,7 +282,7 @@ public class VpnApiService {
     }
     
     public func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
-        networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNLocationRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let userLocation = try? UserLocation(dic: response) else {
@@ -314,7 +314,7 @@ public class VpnApiService {
         if let ip = lastKnownIp {
             shortenedIp = truncatedIp(ip)
         }
-        networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
@@ -346,7 +346,7 @@ public class VpnApiService {
         let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn,
                                              ip: shortenedIp)
 
-        networking.request(request) { (result: Result<JSONDictionary, Error>) in
+        networking.request(request) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 do {

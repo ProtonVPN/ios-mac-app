@@ -26,6 +26,7 @@ import vpncore
 import ProtonCore_Login
 import ProtonCore_Networking
 import ProtonCore_Authentication
+import VPNShared
 
 final class LoginViewModel {
     
