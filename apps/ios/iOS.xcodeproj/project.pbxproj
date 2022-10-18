@@ -664,6 +664,7 @@
 		4BDA607B9EC0277A0B58BA0A /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-ProtonVPNUITests-metadata.plist"; sourceTree = "<group>"; };
 		4C221AE628181E7100C4D1E3 /* Pods_WireGuardNetworkExtensionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_WireGuardNetworkExtensionTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CA0977728118ECD00F4ABA9 /* Crypto_VPN.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Crypto_VPN.xcframework; path = "../../../Pods/ProtonCore-Crypto-VPN/vendor/Crypto_VPN/Crypto_VPN.xcframework"; sourceTree = "<group>"; };
+		4C27B51A28FD92C000A07DBE /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../libraries/vpncore/Source/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		552A60268108D0F8C395145D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
 		572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials_bf22.plist; sourceTree = "<group>"; };
@@ -1135,14 +1136,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		37CC821128F43F3200230335 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				37CC821228F43F3200230335 /* LoginExternalAccountNotSupportedSetup.swift */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
 		428DF974262EFC8C00944379 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -1266,6 +1259,7 @@
 				791DE5DA208DDA3000A29EA5 /* Products */,
 				7995FCFF2090A66F0030E1EB /* Frameworks */,
 				EF6A5BBA06C564D60E45EC71 /* Pods */,
+				4CECAA9628FF0F2000D84A01 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};

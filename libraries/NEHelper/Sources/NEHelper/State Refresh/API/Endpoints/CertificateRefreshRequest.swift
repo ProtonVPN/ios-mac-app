@@ -36,7 +36,7 @@ struct CertificateRefreshRequest: APIRequest {
         }
     }
 
-    typealias Response = VpnCertificate
+    public typealias Response = VpnCertificate
 
     init(params: Params) {
         self.params = params

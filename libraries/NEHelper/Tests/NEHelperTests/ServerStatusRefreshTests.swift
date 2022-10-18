@@ -1,5 +1,5 @@
 //
-//  Created on 2022-05-13.
+//  Created on 2022-10-18.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,29 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import XCTest
 
-class SessionAuthRequest: APIRequest {
-    var endpointUrl: String { "auth/sessions/forks/\(params.selector)" }
-    let httpMethod = "GET"
-    let hasBody = false
-
-    let params: Params
-
-    struct Params: Codable {
-        let selector: String
-    }
-
-    struct Response: Codable {
-        let uid: String
-        let refreshToken: String
-
-        enum CodingKeys: String, CodingKey {
-            case uid = "UID"
-            case refreshToken = "RefreshToken"
-        }
-    }
-
-    init(params: Params) {
-        self.params = params
+class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
+    func testServerStatusNotUnderMaintenance() {
+        
     }
 }

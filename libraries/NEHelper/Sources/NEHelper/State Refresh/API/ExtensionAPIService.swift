@@ -464,13 +464,13 @@ public final class ExtensionAPIService {
     /// This is done in order to avoid a situation where the app is not running, but we still need API credentials to
     /// refresh the certificate because they're missing from the keychain for whatever reason (most likely an app
     /// upgrade occurred, and the user hasn't launched the app yet).
-    private func fetchApiCredentials(asPartOf operation: CertificateRefreshAsyncOperation) -> (AuthCredentials, AppContext)? {
+    private func fetchApiCredentials(allowUsingAppsCredentials: Bool = false) -> (AuthCredentials, AppContext)? {
         if let authCredentials = keychain.fetch() {
             log.info("Using extension's API session.")
             return (authCredentials, .wireGuardExtension)
         }
 
-        guard !operation.isUserInitiated else {
+        guard allowUsingAppsCredentials else {
             return nil
         }
 
@@ -483,13 +483,54 @@ public final class ExtensionAPIService {
         return (authCredentials, .mainApp)
     }
 
+    // MARK: - Server status refresh
+    public func refreshServerStatus(serverId: String,
+                                    refreshApiTokenIfNeeded: Bool = false,
+                                    completionHandler: @escaping (Result<ServerStatusRequest.Server?, Error>) -> Void) {
+        guard let (authCredentials, credentialContext) = fetchApiCredentials(allowUsingAppsCredentials: true) else {
+            log.info("Can't load API credentials from keychain. Won't check server status.", category: .connection)
+            sessionExpired = true
+            completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
+            return
+        }
+
+        let serverStatusRequest = ServerStatusRequest(params: .init(serverId: serverId))
+
+        request(serverStatusRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
+                                               (.sessionId, authCredentials.sessionId)]) { [weak self] result in
+            switch result {
+            case .success(let response):
+                guard response.server.status == 0, let reconnect = response.reconnectTo else {
+                    // if there's nothing to reconnect to, return success with nil.
+                    completionHandler(.success(nil))
+                    return
+                }
+
+                completionHandler(.success(reconnect))
+                return
+            case .failure(let error):
+                self?.handleRequestError(error: error,
+                                         handleTokenRefresh: refreshApiTokenIfNeeded,
+                                         usingCredentialsFrom: credentialContext,
+                                         retryBlock: {
+                    self?.refreshServerStatus(serverId: serverId,
+                                              refreshApiTokenIfNeeded: false,
+                                              completionHandler: completionHandler)
+                },
+                                         errorHandler: { unhandledError in
+                    completionHandler(.failure(unhandledError))
+                })
+            }
+        }
+    }
+
     // MARK: - Certificate refresh
 
     private func refreshCertificate(publicKey: String,
                                     refreshApiTokenIfNeeded: Bool,
                                     asPartOf operation: CertificateRefreshAsyncOperation,
                                     completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
-        guard let (authCredentials, credentialContext) = fetchApiCredentials(asPartOf: operation) else {
+        guard let (authCredentials, credentialContext) = fetchApiCredentials(allowUsingAppsCredentials: !operation.isUserInitiated) else {
             log.info("Can't load API credentials from keychain. Won't refresh certificate.", category: .userCert)
             sessionExpired = true
             completionHandler(.failure(CertificateRefreshError.sessionExpiredOrMissing))
