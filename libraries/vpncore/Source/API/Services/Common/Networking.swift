@@ -39,7 +39,7 @@ public protocol NetworkingFactory {
 public protocol Networking: APIServiceDelegate {
     var apiService: PMAPIService { get }
 
-    func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
+    func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void)
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
@@ -81,7 +81,7 @@ public final class CoreNetworking: Networking {
         delegate.set(apiService: apiService)
     }
 
-    public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
+    public func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void) {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
 
