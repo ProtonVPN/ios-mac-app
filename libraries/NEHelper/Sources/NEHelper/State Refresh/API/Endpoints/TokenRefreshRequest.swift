@@ -39,10 +39,10 @@ struct TokenRefreshRequest: APIRequest {
         }
     }
 
-    struct Response: Codable {
-        let accessToken: String
-        let refreshToken: String
-        let expiresIn: Double
+    public struct Response: Codable {
+        public let accessToken: String
+        public let refreshToken: String
+        public let expiresIn: Double
 
         /// Important! This is useful only right after the response was received
         var expirationDate: Date {

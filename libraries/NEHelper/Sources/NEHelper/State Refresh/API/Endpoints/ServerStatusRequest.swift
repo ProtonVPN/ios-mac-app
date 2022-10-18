@@ -35,6 +35,7 @@ public class ServerStatusRequest: APIRequest {
         let domain: String
         let id: String
         let status: Int
+        let x25519PublicKey: String
 
         enum CodingKeys: String, CodingKey {
             case entryIp = "EntryIP"
@@ -42,6 +43,7 @@ public class ServerStatusRequest: APIRequest {
             case domain = "Domain"
             case id = "ID"
             case status = "Status"
+            case x25519PublicKey = "X25519PublicKey"
         }
     }
 
