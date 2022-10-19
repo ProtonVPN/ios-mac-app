@@ -97,7 +97,7 @@ target 'ProtonVPN' do
   pod 'GSMessages', '~> 1.0'
   pod 'AlamofireImage', '~> 4.1'
   pod 'Alamofire', '5.4.4'
-  pod 'OHHTTPStubs/Swift', '9.1.0', :configurations => ['Debug']
+  pod 'OHHTTPStubs/Swift', '9.1.0', :configurations => ['Debug', 'Staging'] # Staging builds also have set DEBUG flag
   
   reachability
   
