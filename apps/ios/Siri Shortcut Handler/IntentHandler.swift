@@ -46,7 +46,9 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let vpnKeychain = VpnKeychain()
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let authKeychain = AuthKeychain()
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
+                                                        storage: storage,
+                                                        vpnKeysGenerator: ExtensionVPNKeysGenerator())
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
         let paidFeaturePropertyProviderFactory = PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider, authKeychain: authKeychain, storage: storage)
         let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(paidFeaturePropertyProviderFactory)

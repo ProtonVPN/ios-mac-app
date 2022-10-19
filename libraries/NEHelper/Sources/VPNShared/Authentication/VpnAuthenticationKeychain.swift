@@ -31,20 +31,23 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
 
     private let appKeychain: KeychainAccess.Keychain
     private var storage: Storage
+    private let vpnKeysGenerator: VPNKeysGenerator
     public weak var delegate: VpnAuthenticationStorageDelegate?
 
     public typealias Factory = StorageFactory
 
-    public convenience init(_ factory: Factory, accessGroup: String) {
+    public convenience init(_ factory: Factory, accessGroup: String, vpnKeysGenerator: VPNKeysGenerator) {
         self.init(accessGroup: accessGroup,
-                  storage: factory.makeStorage())
+                  storage: factory.makeStorage(),
+                  vpnKeysGenerator: vpnKeysGenerator)
     }
 
-    public init(accessGroup: String, storage: Storage) {
+    public init(accessGroup: String, storage: Storage, vpnKeysGenerator: VPNKeysGenerator) {
         appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain,
                                               accessGroup: accessGroup)
             .accessibility(.afterFirstUnlockThisDeviceOnly)
         self.storage = storage
+        self.vpnKeysGenerator = vpnKeysGenerator
     }
 
     public func deleteKeys() {
@@ -66,7 +69,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             keys = existingKeys
         } else {
             log.info("No vpn auth keys, generating and storing", category: .userCert)
-            keys = VpnKeys()
+            keys = vpnKeysGenerator.generateKeys()
             self.store(keys: keys)
         }
 
@@ -113,7 +116,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             let data = try JSONEncoder().encode(keys)
             try appKeychain.set(data, key: KeychainStorageKey.vpnKeys)
         } catch {
-            log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
+            log.error("Saving generated vpn auth keys failed \(error)", category: .userCert)
         }
     }
 
