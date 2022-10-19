@@ -77,7 +77,9 @@ open class Container: PropertiesToOverride {
     private lazy var profileManager = ProfileManager(self)
     private lazy var networking = CoreNetworking(self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
-    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(self, accessGroup: config.accessGroup)
+    private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain(self,
+                                                                           accessGroup: config.accessGroup,
+                                                                           vpnKeysGenerator: CoreVPNKeysGenerator())
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
 
     private lazy var timerFactory = TimerFactoryImplementation()

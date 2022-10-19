@@ -48,7 +48,9 @@ class SiriHandlerViewModel {
     
     lazy var appStateManager: AppStateManager = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: Storage())
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
+                                                        storage: Storage(),
+                                                        vpnKeysGenerator: ExtensionVPNKeysGenerator())
         return AppStateManagerImplementation(vpnApiService: vpnApiService,
                                              vpnManager: vpnManager,
                                              networking: networking,

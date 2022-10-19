@@ -28,7 +28,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let storage = Storage()
 
         let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
-                                                                 storage: storage)
+                                                                 storage: storage,
+                                                                 vpnKeysGenerator: ExtensionVPNKeysGenerator())
         let authKeychain = AuthKeychain(context: .wireGuardExtension)
 
         self.timerFactory = TimerFactoryImplementation()
