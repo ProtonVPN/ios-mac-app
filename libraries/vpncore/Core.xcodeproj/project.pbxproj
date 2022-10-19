@@ -171,6 +171,8 @@
 		D578439328FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 4F037C4B0FA455B80D281721 /* VPNSharedTesting */; };
 		D578439528FFC779007E3FC6 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578439428FFC779007E3FC6 /* VpnKeys+Generation.swift */; };
 		D578439628FFC779007E3FC6 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578439428FFC779007E3FC6 /* VpnKeys+Generation.swift */; };
+		D578439A29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578439929001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift */; };
+		D578439B29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D578439929001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift */; };
 		D57A656F2485330700079E82 /* VpnServerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A656E2485330700079E82 /* VpnServerSelector.swift */; };
 		D57A65702485330700079E82 /* VpnServerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A656E2485330700079E82 /* VpnServerSelector.swift */; };
 		D585B5112447074200E901F3 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853DD2428F863002EBF05 /* Date+Misc.swift */; };
@@ -754,6 +756,7 @@
 		D563B26A2345DA4300F98797 /* FormValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidationError.swift; sourceTree = "<group>"; };
 		D56B68E22507CBBD00796E0C /* ClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfig.swift; sourceTree = "<group>"; };
 		D578439428FFC779007E3FC6 /* VpnKeys+Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnKeys+Generation.swift"; sourceTree = "<group>"; };
+		D578439929001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreVPNKeysGeneratorTests.swift; sourceTree = "<group>"; };
 		D57A656E2485330700079E82 /* VpnServerSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnServerSelector.swift; sourceTree = "<group>"; };
 		D582A7DD23F2D76400B5FD77 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = it; path = it.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D582A7DE23F2D76F00B5FD77 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -1151,6 +1154,22 @@
 			path = Reports;
 			sourceTree = "<group>";
 		};
+		D578439729001B7E007E3FC6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D578439829001B86007E3FC6 /* VPN */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D578439829001B86007E3FC6 /* VPN */ = {
+			isa = PBXGroup;
+			children = (
+				D578439929001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift */,
+			);
+			path = VPN;
+			sourceTree = "<group>";
+		};
 		D59671CC253D5D1E0061A75F /* Announcements */ = {
 			isa = PBXGroup;
 			children = (
@@ -1368,6 +1387,7 @@
 				D5D606A52292DC5B00394CF9 /* Management */,
 				4241A8D724C9EE86005412FB /* Migration */,
 				D5CC008D256C0C4B003FA161 /* Mocks */,
+				D578439729001B7E007E3FC6 /* Models */,
 				E935183D2617535600AB4C7C /* Protocols */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
 				D5D2946025A45B8F000FBD74 /* Utilities */,
@@ -2806,6 +2826,7 @@
 				4C0961FB285B503800556E07 /* VpnManagerTests.swift in Sources */,
 				4CFDF0BA287EE44100386626 /* MockTestData.swift in Sources */,
 				E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */,
+				D578439A29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */,
 				E10155D4230988C600A4B5CB /* AppStateManagerImplementationTests.swift in Sources */,
 				4C66CA9D2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				4CFDF0C0287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
@@ -3097,6 +3118,7 @@
 				D5C204252486646F004FB58B /* VpnServerSelectorTests.swift in Sources */,
 				D59671FE253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
 				66835CD1375221C55BF4610B /* Result+Extensions.swift in Sources */,
+				D578439B29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */,
 				C7F903A31EAFDB6A5376E625 /* ReportsBugResponse.swift in Sources */,
 				288E84E35E31849C5D750973 /* DoHHostsParsingTests.swift in Sources */,
 			);
