@@ -24,7 +24,7 @@ public typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshE
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `start()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
-public final class ExtensionCertificateRefreshManager {
+public final class ExtensionCertificateRefreshManager: RefreshManager {
     /// All intervals are in seconds unless otherwise mentioned.
     struct Intervals {
         /// How long to wait for another enqueued operation to complete before timing it out.
@@ -40,36 +40,34 @@ public final class ExtensionCertificateRefreshManager {
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorage
     private let apiService: ExtensionAPIService
-    private let timerFactory: TimerFactory
     private var timer: BackgroundTimer?
 
     /// Use an operation queue so we can cancel any pending work items if needed.
     private let operationQueue = OperationQueue()
-    /// The underlying queue for the operation queue.
-    private let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
     /// Ensures only one request is processed at a time. Before sending a request, decrement the semaphore. When
     /// the completion is called and the request is processed, increment the semaphore so the next request can be made.
     fileprivate let semaphore = DispatchSemaphore(value: 1)
 
-    public enum State {
-        case running
-        case stopped
+    override public var timerRefreshInterval: TimeInterval {
+        Self.intervals.checkInterval
     }
 
-    public private(set) var state: State = .stopped
-
     public init(apiService: ExtensionAPIService,
-         timerFactory: TimerFactory,
-         vpnAuthenticationStorage: VpnAuthenticationStorage,
-         keychain: AuthKeychainHandle) {
+                timerFactory: TimerFactory,
+                vpnAuthenticationStorage: VpnAuthenticationStorage,
+                keychain: AuthKeychainHandle) {
+        let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
+
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
-        self.timerFactory = timerFactory
         self.apiService = apiService
 
         operationQueue.maxConcurrentOperationCount = 1
         operationQueue.qualityOfService = .default
         operationQueue.underlyingQueue = workQueue
+
+        super.init(timerFactory: timerFactory,
+                   workQueue: workQueue)
     }
 
     /// Check the refresh conditions for certificate refresh, and refresh it if necessary.
@@ -91,6 +89,20 @@ public final class ExtensionCertificateRefreshManager {
                                                                      forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
                                                                      manager: self,
                                                                      completion: completion))
+    }
+
+    /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time,
+    /// to make sure we don't miss the time when certificate has to be refreshed.
+    override internal func work() {
+        let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
+
+        checkRefreshCertificateNow(features: features, completion: { result in
+            if case let .failure(error) = result {
+                log.error("Encountered error \(error) while refreshing in background.")
+                return
+            }
+            log.info("Background refresh of certificate completed successfully.")
+        })
     }
 
     /// If the cert refresh manager's session expires, this function needs to be called with a forked session selector
@@ -117,23 +129,6 @@ public final class ExtensionCertificateRefreshManager {
             self?.checkRefreshCertificateNow(features: features, forceRefreshDueToExpiredSession: true, completion: { result in
                 completionHandler(result.mapError({ $0 }))
             })
-        }
-    }
-
-    public func start(completion: @escaping (() -> Void)) {
-        workQueue.async { [weak self] in
-            self?.state = .running
-            self?.startTimer()
-            completion()
-        }
-    }
-
-    public func stop(completion: @escaping (() -> Void)) {
-        workQueue.async { [weak self] in
-            self?.operationQueue.cancelAllOperations()
-            self?.stopTimer()
-            self?.state = .stopped
-            completion()
         }
     }
 
@@ -237,37 +232,9 @@ public final class ExtensionCertificateRefreshManager {
         }
     }
 
-    // MARK: - Timer
-
-    /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time,
-    /// to make sure we don't miss the time when certificate has to be refreshed.
-    /// - Note: Call this function on `workQueue`.
-    private func startTimer() {
-        #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
-        #endif
-
-        timer = timerFactory.scheduledTimer(runAt: Date(), repeating: Self.intervals.checkInterval, queue: workQueue) { [weak self] in
-            let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
-
-            self?.checkRefreshCertificateNow(features: features, completion: { result in
-                if case let .failure(error) = result {
-                    log.error("Encountered error \(error) while refreshing in background.")
-                    return
-                }
-                log.info("Background refresh of certificate completed successfully.")
-            })
-        }
-    }
-
-    /// Stop the timer by deinit'ing it.
-    /// - Note: Call this function on `workQueue`.
-    private func stopTimer() {
-        #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
-        #endif
-
-        self.timer = nil
+    override func stopTimer() {
+        operationQueue.cancelAllOperations()
+        super.stopTimer()
     }
 }
 
