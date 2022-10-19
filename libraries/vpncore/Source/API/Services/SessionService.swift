@@ -52,6 +52,18 @@ extension SessionService {
         }
     }
 
+    public func getUpgradePlanSession(url: String, completion: @escaping (String) -> Void) {
+        getSelector(clientId: "web-account-lite", independent: false) { result in
+            switch result {
+            case let .success(selector):
+                completion("\(url)#selector=\(selector)")
+            case let .failure(error):
+                log.error("Failed to fork session, using default url", category: .app, metadata: ["error": "\(error)"])
+                completion("\(url)")
+            }
+        }
+    }
+
     public func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping ((Result<String, Error>) -> Void)) {
         getSelector(clientId: clientSessionId(forContext: extensionContext),
                     independent: false,
