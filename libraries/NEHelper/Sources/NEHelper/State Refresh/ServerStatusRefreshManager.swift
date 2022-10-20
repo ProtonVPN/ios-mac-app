@@ -21,7 +21,7 @@ import Timer
 import VPNShared
 
 public final class ServerStatusRefreshManager: RefreshManager {
-    typealias ServerStatusChangeCallback = (ServerStatusRequest.Server) -> Void
+    public typealias ServerStatusChangeCallback = (ServerStatusRequest.Server) -> Void
 
     private let apiService: ExtensionAPIService
     /// - Important: should set/get this value on `workQueue`.
@@ -32,9 +32,9 @@ public final class ServerStatusRefreshManager: RefreshManager {
         5 * 60 // 5 minutes
     }
 
-    init(apiService: ExtensionAPIService,
-         timerFactory: TimerFactory,
-         serverStatusChangeCallback: @escaping ServerStatusChangeCallback) {
+    public init(apiService: ExtensionAPIService,
+                timerFactory: TimerFactory,
+                serverStatusChangeCallback: @escaping ServerStatusChangeCallback) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.server-status-refresh")
 
         self.apiService = apiService

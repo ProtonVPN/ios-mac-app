@@ -30,12 +30,12 @@ public final class ServerStatusRequest: APIRequest {
     }
 
     public struct Server: Codable {
-        let entryIp: String
-        let exitIp: String
-        let domain: String
-        let id: String
-        let status: Int
-        let x25519PublicKey: String
+        public let entryIp: String
+        public let exitIp: String
+        public let domain: String
+        public let id: String
+        public let status: Int
+        public let x25519PublicKey: String
 
         enum CodingKeys: String, CodingKey {
             case entryIp = "EntryIP"
