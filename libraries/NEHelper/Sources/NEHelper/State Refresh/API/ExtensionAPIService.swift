@@ -259,7 +259,9 @@ public final class ExtensionAPIService {
     }
 
     private func makeUrlRequest<R: APIRequest>(_ apiRequest: R) -> URLRequest {
-        var request = URLRequest(url: URL(string: "\(apiUrl)/\(apiRequest.endpointUrl)")!)
+        let url = URL(string: "\(apiUrl)/\(apiRequest.endpointUrl)")!
+
+        var request = URLRequest(url: url)
         request.httpMethod = apiRequest.httpMethod
 
         // Headers

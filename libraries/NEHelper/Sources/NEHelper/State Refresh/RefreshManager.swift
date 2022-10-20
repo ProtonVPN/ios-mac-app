@@ -57,6 +57,7 @@ public class RefreshManager {
         }
     }
 
+    /// - Invariant: Will be called on `workQueue`.
     internal func work() {
         fatalError("\(#function) should be overridden by child class")
     }
@@ -71,9 +72,7 @@ public class RefreshManager {
         timer = timerFactory.scheduledTimer(runAt: Date(),
                                             repeating: timerRefreshInterval,
                                             queue: workQueue) { [weak self] in
-
             self?.work()
-
         }
     }
 
