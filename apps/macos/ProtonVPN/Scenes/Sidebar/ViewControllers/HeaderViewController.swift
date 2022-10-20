@@ -162,13 +162,14 @@ final class HeaderViewController: NSViewController {
     }
 
     @objc func setupAnnouncements() {
-        guard let viewModel = viewModel, viewModel.showAnnouncements else {
-            announcementsButton.isHidden = true
-            return
-        }
-
-        viewModel.prefetchImages { [weak self] success in
-            guard success else { return }
+        guard let viewModel = viewModel else { return }
+        Task.init { [weak self] in
+            await viewModel.prefetchImages()
+            
+            guard viewModel.showAnnouncements else {
+                self?.announcementsButton.isHidden = true
+                return
+            }
             self?.setupAnnouncementsButton()
         }
     }

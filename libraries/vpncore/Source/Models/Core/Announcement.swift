@@ -67,12 +67,11 @@ extension Announcement {
         return url
     }
 
-    public func isImagePrefetched(imageCache: ImageCacheFactoryProtocol, completion: @escaping (Bool) -> Void) {
+    public func isImagePrefetched(imageCache: ImageCacheFactoryProtocol) async -> Bool {
         guard let fullScreenImage = fullScreenImage else {
-            completion(false)
-            return
+            return false
         }
         let prefetcher = FullScreenImagePrefetcher(imageCache)
-        prefetcher.isImagePrefetched(fullScreenImage: fullScreenImage, completion: completion)
+        return await prefetcher.isImagePrefetched(fullScreenImage: fullScreenImage)
     }
 }

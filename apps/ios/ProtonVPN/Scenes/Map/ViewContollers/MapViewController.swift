@@ -101,7 +101,9 @@ final class MapViewController: UIViewController {
             initialMoveAndZoomDone = true
         }
         
-        setupAnnouncements()
+        Task.init { [weak self] in
+            await self?.setupAnnouncements()
+        }
     }
     
     private func setupSecureCoreBar() {

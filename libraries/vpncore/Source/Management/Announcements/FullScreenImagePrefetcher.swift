@@ -31,20 +31,17 @@ public struct FullScreenImagePrefetcher {
     public func isImagePrefetched(fullScreenImage: FullScreenImage) async -> Bool {
         guard let urlString = fullScreenImage.source.first?.url else {
             return false
-            return
         }
-        return await withCheckedContinuation { continuation in
-            imageCache.containsImageForKey(forKey: urlString, completion: <#completion#>)
-        }
+        return await imageCache.containsImageForKey(forKey: urlString)
     }
 
-    public func prefetchImages(urls: [URL], completion: @escaping (Bool) -> Void) {
+    public func prefetchImages(urls: [URL]) async {
         guard !urls.isEmpty else {
             log.debug("No URLs to prefetch")
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        imageCache.prefetchURLs(urls, completion: completion)
+        await imageCache.prefetchURLs(urls)
     }
 }
 
@@ -62,21 +59,25 @@ public struct ImageCacheFactory: ImageCacheFactoryProtocol {
 }
 
 public protocol ImageCacheProtocol {
-    func containsImageForKey(forKey key: String,
-                             completion completionBlock: @escaping (Bool) -> Void?)
-    func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void)
+    func containsImageForKey(forKey key: String) async -> Bool
+    func prefetchURLs(_ urls: [URL]) async
 }
 
 struct ImageCache: ImageCacheProtocol {
-    func containsImageForKey(forKey key: String, completion completionBlock: @escaping (Bool) -> Void?) {
-        SDImageCache.shared.containsImage(forKey: key, cacheType: .all) { cacheType in
-            completionBlock(cacheType != .none)
+    func containsImageForKey(forKey key: String) async -> Bool {
+        await withCheckedContinuation { continuation in
+            SDImageCache.shared.containsImage(forKey: key, cacheType: .all) { cacheType in
+                continuation.resume(returning: cacheType != .none)
+            }
         }
     }
-    func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void) {
-        SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
-            log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
-            completion(skippedUrlsCount == 0)
-        })
+
+    func prefetchURLs(_ urls: [URL]) async {
+        await withCheckedContinuation { continuation in
+            SDWebImagePrefetcher.shared.prefetchURLs(urls, progress: nil, completed: { finishedUrlsCount, skippedUrlsCount in
+                log.debug("SDWebImagePrefetcher finished prefetching urls, finished urls count: \(finishedUrlsCount), skipped urls count: \(skippedUrlsCount)")
+                continuation.resume()
+            })
+        }
     }
 }
