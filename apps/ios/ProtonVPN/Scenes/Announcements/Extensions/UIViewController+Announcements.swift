@@ -27,19 +27,24 @@ import vpncore
 import ProtonCore_UIFoundations
 
 extension UIViewController {
-    
+
     @objc func setupAnnouncements() {
-        guard let viewModel = AnnouncementButtonViewModel.shared, viewModel.showAnnouncements else {
+        Task.init { [weak self] in
+            await self?.setupAnnouncementsAsync()
+        }
+    }
+    
+    private func setupAnnouncementsAsync() async {
+        guard let viewModel = AnnouncementButtonViewModel.shared else { return }
+        await viewModel.prefetchImages()
+        
+        guard viewModel.showAnnouncements else {
             navigationItem.rightBarButtonItems?.removeAll(where: { $0 is BadgedBarButtonItem })
             return
         }
-
-        viewModel.prefetchImages { [weak self] success in
-            guard success else { return }
-            self?.setupAnnouncementsButton(iconUrl: viewModel.iconUrl)
-        }
+        setupAnnouncementsButton(iconUrl: viewModel.iconUrl)
     }
-
+    
     private func setupAnnouncementsButton(iconUrl: URL?) {
         let setup = { [weak self] in
             self?.renderAnnouncementsButtonBadge()

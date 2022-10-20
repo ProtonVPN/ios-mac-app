@@ -140,15 +140,14 @@ final class HeaderViewModel {
         return nil
     }
 
-    func prefetchImages(completion: @escaping (Bool) -> Void) {
+    func prefetchImages() async {
         let urls = announcementsViewModel.backgroundURLs()
         guard !urls.isEmpty else {
             log.debug("No URLs to prefetch")
-            completion(true)
             return
         }
         log.debug("Prefetching urls: \(urls)")
-        FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls, completion: completion)
+        await FullScreenImagePrefetcher(ImageCacheFactory()).prefetchImages(urls: urls)
     }
 
     var announcementTooltip: String? {

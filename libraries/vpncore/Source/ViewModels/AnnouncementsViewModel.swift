@@ -36,18 +36,18 @@ public class AnnouncementsViewModel {
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
+    private lazy var imageCache: ImageCacheFactory = ImageCacheFactory()
     
     // Data
     private(set) var items: [Announcement] = []
 
     public var currentItem: Announcement? {
-        let firstUnread = items.first { $0.type == .default && $0.isRead == false }
+        let firstUnread = items.first { $0.type == .default && $0.isRead != true }
         return firstUnread ?? items.first { $0.type == .default }
     }
 
     public var oneTimeAnnouncement: Announcement? {
-        let firstUnread = items.first { $0.type == .oneTime && $0.isRead == false }
-        return firstUnread ?? items.first { $0.type == .oneTime }
+        items.first { $0.type == .oneTime && $0.isRead != true }
     }
     
     // Callbacks
@@ -65,10 +65,9 @@ public class AnnouncementsViewModel {
         guard let announcement = oneTimeAnnouncement else {
             return
         }
-        announcement.isImagePrefetched(imageCache: ImageCacheFactory()) { [weak self] isPrefetched in
-            if isPrefetched {
-                self?.openAnnouncement(announcement: announcement)
-            }
+        Task.init { [weak self] in
+            guard await announcement.isImagePrefetched(imageCache: imageCache) else { return }
+            self?.openAnnouncement(announcement: announcement)
         }
     }
 

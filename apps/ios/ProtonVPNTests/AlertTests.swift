@@ -39,23 +39,23 @@ class AlertTests: XCTestCase {
     }
 
     func testSingleInstanceOfAlerts() {
-        XCTAssert(windowService.displayCount == 0)
+        XCTAssertEqual(windowService.displayCount, 0)
         
         alertService.push(alert: MITMAlert())
-        XCTAssert(windowService.displayCount == 1)
+        XCTAssertEqual(windowService.displayCount, 1)
         
         alertService.push(alert: MITMAlert())
-        XCTAssert(windowService.displayCount == 1)
+        XCTAssertEqual(windowService.displayCount, 1)
         
         alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
-        XCTAssert(windowService.displayCount == 2)
+        XCTAssertEqual(windowService.displayCount, 2)
         
         alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
-        XCTAssert(windowService.displayCount == 2)
+        XCTAssertEqual(windowService.displayCount, 2)
     }
     
     func testUpdatingAlertCompletionHandlers() {
-        XCTAssert(windowService.displayCount == 0)
+        XCTAssertEqual(windowService.displayCount, 0)
         
         let confirmationHandler1 = {
             XCTFail("Shouldn't reach here")
@@ -77,10 +77,10 @@ class AlertTests: XCTestCase {
         let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
         
         alertService.push(alert: alert1)
-        XCTAssert(windowService.displayCount == 1)
+        XCTAssertEqual(windowService.displayCount, 1)
         
         alertService.push(alert: alert2)
-        XCTAssert(windowService.displayCount == 1)
+        XCTAssertEqual(windowService.displayCount, 1)
         
         alert1.actions[0].handler?()
         alert1.actions[1].handler?()
@@ -95,10 +95,9 @@ fileprivate class WindowServiceMock: WindowService {
     
     func show(viewController: UIViewController) {}
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
-    func present(modal: UIViewController) {}
     func dismissModal(_ completion: (() -> Void)?) {}
     
-    func present(alert: UIAlertController) {
+    func present(modal: UIViewController) {
         displayCount += 1
     }
     

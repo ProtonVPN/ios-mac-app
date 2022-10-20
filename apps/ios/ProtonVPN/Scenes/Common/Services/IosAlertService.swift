@@ -48,14 +48,14 @@ class IosAlertService {
 
 extension IosAlertService: CoreAlertService {
 
-    func pushOnUIThread(alert: SystemAlert) {
+    func push(alert: SystemAlert) {
         executeOnUIThread {
-            self.push(alert: alert)
+            self.pushOnUIThread(alert: alert)
         }
     }
 
     // swiftlint:disable cyclomatic_complexity function_body_length
-    func push(alert: SystemAlert) {
+    func pushOnUIThread(alert: SystemAlert) {
         log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
 
         switch alert {
