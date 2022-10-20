@@ -42,10 +42,12 @@ final class AnnouncementButtonViewModel {
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
-    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+    // The announcementsViewModel property can't be lazy because we depend on the behaviour in its init method.
+    private let announcementsViewModel: AnnouncementsViewModel
     
     init(factory: Factory) {
         self.factory = factory
+        announcementsViewModel = factory.makeAnnouncementsViewModel()
     }
     
     // MARK: Main part
@@ -61,11 +63,11 @@ final class AnnouncementButtonViewModel {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
-        return announcementManager.fetchCurrentAnnouncements().contains(where: { $0.type == .default })
+        return announcementManager.shouldShowAnnouncementsIcon()
     }
     
     var hasUnreadAnnouncements: Bool {
-        return announcementManager.hasUnreadAnnouncements
+        announcementManager.hasUnreadAnnouncements
     }
 
     func showAnnouncement() {

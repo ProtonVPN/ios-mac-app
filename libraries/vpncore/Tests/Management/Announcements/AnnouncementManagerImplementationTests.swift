@@ -68,7 +68,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
     }
     
     func testFetchesOnlyCurrentNotifications(){
-        let filtered = manager.fetchCurrentAnnouncements()
+        let filtered = manager.fetchCurrentAnnouncementsFromStorage()
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer"))
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer-one-time"))
         XCTAssertEqual(filtered.count, 2)
@@ -78,16 +78,16 @@ class AnnouncementManagerImplementationTests: XCTestCase {
     }
     
     func testMarksAsRead() {
-        let announcement = manager.fetchCurrentAnnouncements()[0]
+        let announcement = manager.fetchCurrentAnnouncementsFromStorage()[0]
         XCTAssertFalse(announcement.wasRead)
         manager.markAsRead(announcement: announcement)
-        let announcement2 = manager.fetchCurrentAnnouncements()[0]
+        let announcement2 = manager.fetchCurrentAnnouncementsFromStorage()[0]
         XCTAssert(announcement2.wasRead)
     }
 
     func testDistinguishesWhenUnreadAnnsArePresent() {
         XCTAssert(manager.hasUnreadAnnouncements)
-        let announcements = manager.fetchCurrentAnnouncements()
+        let announcements = manager.fetchCurrentAnnouncementsFromStorage()
         announcements.forEach {
             manager.markAsRead(announcement: $0)
         }
@@ -96,7 +96,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
 
     func testDistinguishesWhenUnreadOneTimeAnnouncementsArePresent() {
         XCTAssert(manager.hasUnreadOneTimeAnnouncements)
-        let announcements = manager.fetchCurrentAnnouncements()
+        let announcements = manager.fetchCurrentAnnouncementsFromStorage()
         announcements.forEach {
             manager.markAsRead(announcement: $0)
         }

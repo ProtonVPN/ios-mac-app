@@ -33,12 +33,10 @@ protocol WindowService: AnyObject {
     func show(viewController: UIViewController)
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool)
     func popStackToRoot()
-    var navigationStackAvailable: Bool { get }
     
     func present(modal: UIViewController)
     func dismissModal(_ completion: (() -> Void)?)
-    
-    func present(alert: UIAlertController)
+
     func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?)
 }
 
@@ -58,15 +56,34 @@ enum PresentedMessageType {
 class WindowServiceImplementation: WindowService {
     
     private let window: UIWindow
-    
+
+    var rootViewControllerObserver: NSKeyValueObservation?
+
+    var scheduledViewControllers: [UIViewController] = []
+
     init (window: UIWindow) {
         self.window = window
 
         if ProcessInfo.processInfo.arguments.contains("UITests") {
             window.layer.speed = 100
         }
-        
+        observeRootViewController(window)
         setupAppearance()
+    }
+
+    fileprivate func observeRootViewController(_ window: UIWindow) {
+        rootViewControllerObserver = window.observe(\.rootViewController) { [weak self] _, _ in
+            self?.presentScheduledViewControllers()
+        }
+    }
+
+    fileprivate func presentScheduledViewControllers() {
+        var viewControllers = scheduledViewControllers
+        guard let modal = viewControllers.popLast() else { return }
+        topmostPresentedViewController?.present(modal, animated: true) { [weak self] in
+            _ = self?.scheduledViewControllers.popLast()
+            self?.presentScheduledViewControllers()
+        }
     }
     
     func setupAppearance() {
@@ -130,15 +147,15 @@ class WindowServiceImplementation: WindowService {
         let navigationController = topMostNavigationController()
         navigationController?.popToRootViewController(animated: true)
     }
-    
-    var navigationStackAvailable: Bool {
-        return topMostNavigationController() != nil
-    }
-    
+
     // MARK: - Modal presentation
     
     func present(modal: UIViewController) {
-        topmostPresentedViewController?.present(modal, animated: true, completion: nil)
+        guard let presentingViewController = topmostPresentedViewController else {
+            scheduledViewControllers.append(modal)
+            return
+        }
+        presentingViewController.present(modal, animated: true, completion: nil)
     }
     
     func dismissModal(_ completion: (() -> Void)? = nil) {
@@ -154,26 +171,16 @@ class WindowServiceImplementation: WindowService {
     }
     
     // MARK: - Alerts
-    
-    func present(alert: UIAlertController) {
-        presentAlertFromAppropriateViewController(alert: alert)
-    }
-    
+
     func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {
         let options = accessibilityIdentifier != nil ? UIConstants.messageOptions + [.accessibilityIdentifier(accessibilityIdentifier!)] : UIConstants.messageOptions
         topmostPresentedViewController?.showMessage(message, type: type.gsMessageType, options: options)
     }
     
     // MARK: - Private functions
-    
-    private func presentAlertFromAppropriateViewController(alert: UIAlertController) {
-        topmostPresentedViewController?.present(alert, animated: true, completion: nil)
-    }
-    
+
     private var topmostPresentedViewController: UIViewController? {
-        guard let rootViewController = window.rootViewController else {
-            return nil
-        }
+        guard let rootViewController = window.rootViewController else { return nil }
         var controller = rootViewController
         while let childController = controller.presentedViewController {
             controller = childController

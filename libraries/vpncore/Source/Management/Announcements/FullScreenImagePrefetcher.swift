@@ -28,12 +28,14 @@ public struct FullScreenImagePrefetcher {
         imageCache = factory.makeImageCache()
     }
 
-    public func isImagePrefetched(fullScreenImage: FullScreenImage, completion: @escaping (Bool) -> Void) {
+    public func isImagePrefetched(fullScreenImage: FullScreenImage) async -> Bool {
         guard let urlString = fullScreenImage.source.first?.url else {
-            completion(false)
+            return false
             return
         }
-        imageCache.containsImageForKey(forKey: urlString, completion: completion)
+        return await withCheckedContinuation { continuation in
+            imageCache.containsImageForKey(forKey: urlString, completion: <#completion#>)
+        }
     }
 
     public func prefetchImages(urls: [URL], completion: @escaping (Bool) -> Void) {
