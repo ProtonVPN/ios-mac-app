@@ -23,6 +23,30 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
 
+    private var currentWireguardServer: StoredWireguardConfig?
+
+    enum SocketType: String {
+        case udp
+        case tcp
+        case tls
+    }
+
+    var tunnelProviderProtocol: NETunnelProviderProtocol? {
+        guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
+            return nil
+        }
+
+        return tunnelProviderProtocol
+    }
+
+    var socketType: SocketType? {
+        guard let rawValue = tunnelProviderProtocol?.providerConfiguration?["wg-protocol"] as? String else {
+            return nil
+        }
+
+        return SocketType(rawValue: rawValue) ?? .udp
+    }
+
     override init() {
         super.init()
 
@@ -59,7 +83,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
         serverStatusRefreshManager = ServerStatusRefreshManager(apiService: apiService,
                                                                 timerFactory: timerFactory) { [unowned self] newServer in
-            restartTunnel(with: <#T##ServerStatusRequest.Server#>)
+            self.restartTunnel(with: newServer)
         }
         setupLogging()
     }
@@ -97,6 +121,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private func connectionEstablished() {
         certificateRefreshManager.start { }
 
+        guard let serverId = tunnelProviderProtocol?.connectedServerId else {
+            fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
+        }
+
+        serverStatusRefreshManager.updateConnectedServerId(serverId)
+        serverStatusRefreshManager.start { }
+
         #if CHECK_CONNECTIVITY
         self.startTestingConnectivity()
         #endif
@@ -108,58 +139,64 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }()
 
-    func restartTunnel(with server: ServerStatusRequest.Server) async throws {
-    }
-
-override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this function_body_length cyclomatic_complexity
-        let activationAttemptId = options?["activationAttemptId"] as? String
-        let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
-
-        // Use shared defaults to get cert features that were set in the app
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
-
-        setDataTaskFactoryAccordingToKillSwitchSettings()
-
-        #if FREQUENT_AUTH_CERT_REFRESH
-        CertificateConstants.certificateDuration = "30 minutes"
-        #endif
-
-        wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly" : "app"))
-        flushLogsToFile() // Prevents empty logs in the app during the first WG connection
-
-        guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
-            errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-            completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-            wg_log(.info, message: "Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+    func restartTunnel(with server: ServerStatusRequest.Server) {
+        guard let currentWireguardServer = currentWireguardServer else {
+            log.error("API said to reconnect, but we haven't connected to a server yet?")
             return
         }
-        
-        var socket: String = "udp"
-        if let socketTypeInput = tunnelProviderProtocol.providerConfiguration?["wg-protocol"] as? String {
-            switch socketTypeInput {
-            case "tcp": socket = "tcp"
-            case "tls": socket = "tls"
-            default: socket = "udp"
+
+        log.info("Stopping tunnel and reconnecting to \(server.domain)")
+
+        stopTunnel(with: .superceded) {
+            let errorNotifier = ErrorNotifier(activationAttemptId: nil)
+
+            self.currentWireguardServer = currentWireguardServer
+                .withNewServerPublicKey(server.x25519PublicKey,
+                                        andEntryServerAddress: server.entryIp)
+
+            self.tunnelProviderProtocol?.connectedServerId = server.id
+
+            self.startTunnelWithStoredConfig(errorNotifier: errorNotifier) { error in
+                if let error = error {
+                    log.error("Error restarting tunnel \(error)")
+                }
+
+                log.info("Reconnected successfully to \(server.domain)")
             }
         }
-        
-        guard let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
+    }
+
+    func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, completionHandler: @escaping (Error?) -> Void) {
+        guard let storedConfig = currentWireguardServer else {
+            wg_log(.error, message: "Current wireguard server not set; not starting tunnel")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-            wg_log(.info, message: "Error in guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+            wg_log(.info, message: "Error in \(#function) guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+            return
+        }
+
+        guard let socketType = socketType else {
+            wg_log(.info, message: "Error in \(#function) guard 2: missing socket type")
+            errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            return
+        }
+
+        guard let tunnelConfiguration = try? TunnelConfiguration(fromWgQuickConfig: storedConfig.asWireguardConfiguration()) else {
+            errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            wg_log(.info, message: "Error in \(#function) guard 3: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
 
         // Start the tunnel
-        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socket) { adapterError in
+        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socketType.rawValue) { adapterError in
             guard let adapterError = adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
                 completionHandler(nil)
-                
                 self.connectionEstablished()
-                
                 return
             }
 
@@ -194,21 +231,52 @@ override func startTunnel(options: [String: NSObject]?, completionHandler: @esca
         }
     }
 
+    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+        let activationAttemptId = options?["activationAttemptId"] as? String
+        let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
+
+        // Use shared defaults to get cert features that were set in the app
+        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
+
+        setDataTaskFactoryAccordingToKillSwitchSettings()
+
+        #if FREQUENT_AUTH_CERT_REFRESH
+        CertificateConstants.certificateDuration = "30 minutes"
+        #endif
+
+        wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly" : "app"))
+        flushLogsToFile() // Prevents empty logs in the app during the first WG connection
+
+        guard let storedConfig = tunnelProviderProtocol?.asWireguardConfig() else {
+            errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+            wg_log(.info, message: "Error in \(#function) guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+            return
+        }
+
+        currentWireguardServer = storedConfig
+
+        startTunnelWithStoredConfig(errorNotifier: errorNotifier,
+                                    completionHandler: completionHandler)
+    }
+
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, staticMessage: "Stopping tunnel")
         #if CHECK_CONNECTIVITY
         self.stopTestingConnectivity()
         #endif
 
-        certificateRefreshManager.stop { [weak self] in
-            self?.adapter.stop { error in
-                ErrorNotifier.removeLastErrorFile()
+        certificateRefreshManager.stop { [unowned self] in
+            self.serverStatusRefreshManager.stop {
+                self.adapter.stop { error in
+                    ErrorNotifier.removeLastErrorFile()
 
-                if let error = error {
-                    wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
+                    if let error = error {
+                        wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
+                    }
+                    self.flushLogsToFile()
+                    completionHandler()
                 }
-                self?.flushLogsToFile()
-                completionHandler()
             }
         }
     }
@@ -295,7 +363,9 @@ override func startTunnel(options: [String: NSObject]?, completionHandler: @esca
         #endif
 
         certificateRefreshManager.stop {
-            completionHandler()
+            self.serverStatusRefreshManager.stop {
+                completionHandler()
+            }
         }
     }
 
@@ -306,7 +376,11 @@ override func startTunnel(options: [String: NSObject]?, completionHandler: @esca
         self.startTestingConnectivity()
         #endif
 
-        certificateRefreshManager.start { }
+        certificateRefreshManager.start {
+            self.serverStatusRefreshManager.start {
+
+            }
+        }
     }
 
     // MARK: - Logs

@@ -71,6 +71,17 @@ public struct StoredWireguardConfig: Codable {
     let ports: [Int]
 
     let timestamp: Date
+
+    public func withNewServerPublicKey(_ newServerPublicKey: String?,
+                                       andEntryServerAddress newEntryServerAddress: String) -> Self {
+        Self(wireguardConfig: wireguardConfig,
+             clientPrivateKey: clientPrivateKey,
+             serverPublicKey: newServerPublicKey,
+             entryServerAddress: newEntryServerAddress,
+             ports: ports,
+             // update the timestamp since the configuration has changed
+             timestamp: Date())
+    }
 }
 
 /// This is what gets stored in the keychain, to communicate the connection
