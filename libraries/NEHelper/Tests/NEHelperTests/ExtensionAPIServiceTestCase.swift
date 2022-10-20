@@ -53,6 +53,7 @@ class ExtensionAPIServiceTestCase: XCTestCase {
     var certRefreshCallback: MockEndpointBlock?
     var tokenRefreshCallback: MockEndpointBlock?
     var sessionAuthCallback: MockEndpointBlock?
+    var serverStatusCallback: MockEndpointBlock?
 
     var keychain: MockAuthKeychain!
     var dataTaskFactory: MockDataTaskFactory!
@@ -87,6 +88,8 @@ class ExtensionAPIServiceTestCase: XCTestCase {
                 self.tokenRefreshCallback?(request, completionHandler)
             case "/auth/sessions/forks/\(Self.sessionSelector)":
                 self.sessionAuthCallback?(request, completionHandler)
+            case "/vpn/servers/serverid":
+                self.serverStatusCallback?(request, completionHandler)
             case nil:
                 XCTFail("Received request with no path")
             default:
@@ -102,6 +105,7 @@ class ExtensionAPIServiceTestCase: XCTestCase {
         certRefreshCallback = failCallback
         tokenRefreshCallback = failCallback
         sessionAuthCallback = failCallback
+        serverStatusCallback = failCallback
 
         keychain = MockAuthKeychain(context: .wireGuardExtension)
         try! keychain.store(AuthCredentials(username: "johnny",
@@ -234,4 +238,19 @@ extension SessionAuthRequest.Response: MockableAPIResponse {
 }
 
 extension SessionAuthRequest: MockableRequest {
+}
+
+extension ServerStatusRequest: MockableRequest {
+}
+
+extension ServerStatusRequest.Response: MockableAPIResponse {
+    convenience init(fakeData: [PartialKeyPath<ServerStatusRequest.Response>: Any]) {
+        let server = fakeData[\.server] as? ServerStatusRequest.Server ??
+            .init(entryIp: "127.0.0.1", exitIp: "127.0.0.1",
+                  domain: "localhost", id: "12345",
+                  status: 1, x25519PublicKey: "public key")
+
+        self.init(server: server,
+                  reconnectTo: fakeData[\.reconnectTo] as? ServerStatusRequest.Server)
+    }
 }

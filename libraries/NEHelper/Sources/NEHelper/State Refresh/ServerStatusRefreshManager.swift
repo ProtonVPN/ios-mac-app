@@ -20,11 +20,12 @@ import Foundation
 import Timer
 import VPNShared
 
-public final class ServerStateRefreshManager: RefreshManager {
+public final class ServerStatusRefreshManager: RefreshManager {
     typealias ServerStatusChangeCallback = (ServerStatusRequest.Server) -> Void
 
     private let apiService: ExtensionAPIService
-    private var serverId: String
+    /// - Important: should set/get this value on `workQueue`.
+    private var currentServerId: String?
     private let serverStatusChangeCallback: ServerStatusChangeCallback
 
     override public var timerRefreshInterval: TimeInterval {
@@ -33,35 +34,47 @@ public final class ServerStateRefreshManager: RefreshManager {
 
     init(apiService: ExtensionAPIService,
          timerFactory: TimerFactory,
-         initialConnectedServerId: String,
          serverStatusChangeCallback: @escaping ServerStatusChangeCallback) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.server-status-refresh")
 
         self.apiService = apiService
-        self.serverId = initialConnectedServerId
         self.serverStatusChangeCallback = serverStatusChangeCallback
 
         super.init(timerFactory: timerFactory, workQueue: workQueue)
     }
 
+    public func updateConnectedServerId(_ serverId: String) {
+        workQueue.async { [unowned self] in
+            currentServerId = serverId
+        }
+    }
+
     override internal func work() {
+        guard let serverId = currentServerId else {
+            log.info("No connected server id set; not refreshing server status.")
+            return
+        }
+
         apiService.refreshServerStatus(serverId: serverId,
                                        refreshApiTokenIfNeeded: true) { [unowned self] result in
-            switch result {
-            case .success(let server):
-                guard let server = server else {
-                    return
-                }
+            workQueue.async { [unowned self] in
+                switch result {
+                case .success(let server):
+                    guard let server = server else {
+                        return
+                    }
 
-                // We could have disconnected since making the API request, so check if we're stopped.
-                guard case .running = state else {
-                    log.info("Not reconnecting to \(server.entryIp) - refresh manager was already stopped")
-                    return
-                }
+                    // We could have disconnected since making the API request, so check if we're stopped.
+                    guard case .running = state else {
+                        log.info("Not reconnecting to \(server.entryIp) - refresh manager was already stopped")
+                        return
+                    }
 
-                serverStatusChangeCallback(server)
-            case .failure(let error):
-                log.error("Couldn't refresh server state: \(error)")
+                    currentServerId = server.id
+                    serverStatusChangeCallback(server)
+                case .failure(let error):
+                    log.error("Couldn't refresh server state: \(error)")
+                }
             }
         }
     }

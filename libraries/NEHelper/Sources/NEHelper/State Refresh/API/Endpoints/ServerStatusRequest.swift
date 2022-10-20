@@ -18,7 +18,7 @@
 
 import Foundation
 
-public class ServerStatusRequest: APIRequest {
+public final class ServerStatusRequest: APIRequest {
     let params: Params
     let httpMethod = "GET"
     let hasBody = false
@@ -47,7 +47,7 @@ public class ServerStatusRequest: APIRequest {
         }
     }
 
-    public class Response: Codable {
+    public final class Response: Codable {
         let server: Server
         let reconnectTo: Server?
 
@@ -72,6 +72,11 @@ public class ServerStatusRequest: APIRequest {
                 log.error("Could not decode ReconnectTo response: \(error)", category: .connection)
                 self.reconnectTo = nil
             }
+        }
+
+        internal init(server: Server, reconnectTo: Server?){
+            self.server = server
+            self.reconnectTo = reconnectTo
         }
     }
 

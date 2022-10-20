@@ -20,6 +20,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private var dataTaskFactory: DataTaskFactory!
     private var appInfo: AppInfo = AppInfoImplementation(context: .wireGuardExtension)
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
+    private var serverStatusRefreshManager: ServerStatusRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
 
     override init() {
@@ -55,6 +56,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                                                        timerFactory: timerFactory,
                                                                        vpnAuthenticationStorage: vpnAuthenticationStorage,
                                                                        keychain: authKeychain)
+
+        serverStatusRefreshManager = ServerStatusRefreshManager(apiService: apiService,
+                                                                timerFactory: timerFactory) { [unowned self] newServer in
+            restartTunnel(with: <#T##ServerStatusRequest.Server#>)
+        }
         setupLogging()
     }
     
