@@ -83,14 +83,17 @@ public class AnnouncementsViewModel {
     private func openAnnouncement(announcement: Announcement) {
         announcementManager.markAsRead(announcement: announcement)
 
-        guard let data = announcement.offer?.panel else { return }
+        guard let data = announcement.offer?.panel else {
+            log.warning("Tried opening an announcement, but there was no offer panel available", category: .app)
+            return
+        }
         alertService.push(alert: AnnouncementOfferAlert(data: data))
     }
         
     // MARK: - Data
     
     private func fillItems() {
-        items = announcementManager.fetchCurrentAnnouncements()
+        items = announcementManager.fetchCurrentAnnouncementsFromStorage()
     }
     
     @objc func dataChanged() {

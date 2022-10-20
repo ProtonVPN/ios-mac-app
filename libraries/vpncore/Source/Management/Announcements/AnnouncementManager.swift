@@ -24,14 +24,18 @@ import Foundation
 
 public protocol AnnouncementManager {
     var hasUnreadAnnouncements: Bool { get }
-    func fetchCurrentAnnouncements() -> [Announcement]
+    func fetchCurrentAnnouncementsFromStorage() -> [Announcement]
     func markAsRead(announcement: Announcement)
+    func shouldShowAnnouncementsIcon() -> Bool
 }
 
 public protocol AnnouncementManagerFactory {
     func makeAnnouncementManager() -> AnnouncementManager
 }
 
+/// Fetches announcements from storage.
+/// Informs if there are any unread current announcements.
+/// Marks announcements as read.
 public class AnnouncementManagerImplementation: AnnouncementManager {
     
     public typealias Factory = AnnouncementStorageFactory
@@ -42,19 +46,19 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     public init(factory: Factory) {
         self.factory = factory
     }
+
+    public func shouldShowAnnouncementsIcon() -> Bool {
+        fetchCurrentAnnouncementsFromStorage().contains(where: { $0.type == .default })
+    }
     
-    public func fetchCurrentAnnouncements() -> [Announcement] {
-        return announcementStorage.fetch().filter {
-            return $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
+    public func fetchCurrentAnnouncementsFromStorage() -> [Announcement] {
+        announcementStorage.fetch().filter {
+            $0.startTime.isPast && $0.endTime.isFuture && $0.offer != nil
         }
     }
 
     public var hasUnreadAnnouncements: Bool {
-        return fetchCurrentAnnouncements().contains(where: { !$0.wasRead && $0.type == .default })
-    }
-
-    public var hasUnreadOneTimeAnnouncements: Bool {
-        return fetchCurrentAnnouncements().contains(where: { !$0.wasRead && $0.type == .oneTime })
+        return fetchCurrentAnnouncementsFromStorage().contains(where: { !$0.wasRead && $0.type == .default })
     }
     
     public func markAsRead(announcement: Announcement) {

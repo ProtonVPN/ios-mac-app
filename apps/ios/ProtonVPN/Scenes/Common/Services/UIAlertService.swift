@@ -90,7 +90,7 @@ class IosUiAlertService: UIAlertService {
             alertController.dismiss(animated: true, completion: nil)
         }
         
-        self.windowService.present(alert: alertController)
+        self.windowService.present(modal: alertController)
     }
 }
 
@@ -106,7 +106,6 @@ extension PrimaryActionType {
             return .cancel
         }
     }
-    
 }
 
 extension NotificationStyleAlertType {

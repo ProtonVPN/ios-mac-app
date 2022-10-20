@@ -108,8 +108,7 @@ fileprivate class WindowServiceMock: WindowService {
     func popStackToRoot() {
     
     }
-    
-    var navigationStackAvailable: Bool = true
+
     var topmostPresentedViewController: UIViewController?
 }
 
