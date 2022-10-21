@@ -30,7 +30,7 @@ class AnnouncementTests: XCTestCase {
         super.tearDown()
     }
 
-    func testAnnouncementFullScreenImage() {
+    func testAnnouncementFullScreenImage() async {
         let sources: [FullScreenImage.Source] = [.init(url: "www.example.com", type: "", width: nil, height: nil),
                                                  .init(url: "www.example2.com", type: "", width: nil, height: nil)]
         let fullScreenImage = FullScreenImage(source: sources, alternativeText: "")
@@ -53,20 +53,18 @@ class AnnouncementTests: XCTestCase {
 
         let e = expectation(description: "Correctly reports prefetched assets")
         ImageCacheMock.completionBlockParameterValue = true
-        sut.isImagePrefetched(imageCache: ImageCacheFactoryMock()) { isPrefetched in
-            if isPrefetched {
-                e.fulfill()
-            }
+        var isPrefetched = await sut.isImagePrefetched(imageCache: ImageCacheFactoryMock())
+        if isPrefetched {
+            e.fulfill()
         }
-        waitForExpectations(timeout: 0.1)
+        await waitForExpectations(timeout: 0.1)
 
         let e2 = expectation(description: "Correctly reports not prefetched assets")
         ImageCacheMock.completionBlockParameterValue = false
-        sut.isImagePrefetched(imageCache: ImageCacheFactoryMock()) { isPrefetched in
-            if !isPrefetched {
-                e2.fulfill()
-            }
+        isPrefetched = await sut.isImagePrefetched(imageCache: ImageCacheFactoryMock())
+        if !isPrefetched {
+            e2.fulfill()
         }
-        waitForExpectations(timeout: 0.1)
+        await waitForExpectations(timeout: 0.1)
     }
 }
