@@ -220,7 +220,13 @@ post_install do |installer|
       
       # Reset deployment targets to use the one we have on the main project
       config.build_settings.delete 'MACOSX_DEPLOYMENT_TARGET'
-      
+
+      # The swift version setting can be removed once we move to lottie 3.4.2 or higher
+      if target.name == 'lottie-ios'
+          target.build_configurations.each do |config|
+              config.build_settings['SWIFT_VERSION'] = '5.0'
+          end
+      end
     end
   end
   
