@@ -22,11 +22,11 @@ import XCTest
 
 struct ImageCacheMock: ImageCacheProtocol {
     static var completionBlockParameterValue = true
-    func containsImageForKey(forKey key: String, completion completionBlock: @escaping (Bool) -> Void?) {
-        completionBlock(ImageCacheMock.completionBlockParameterValue)
+    func containsImageForKey(forKey key: String) async -> Bool {
+        return ImageCacheMock.completionBlockParameterValue
     }
     
-    func prefetchURLs(_ urls: [URL], completion: @escaping (Bool) -> Void) {
+    func prefetchURLs(_ urls: [URL]) async {
     }
 }
 

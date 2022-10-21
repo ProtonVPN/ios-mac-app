@@ -93,14 +93,4 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         }
         XCTAssertFalse(manager.hasUnreadAnnouncements)
     }
-
-    func testDistinguishesWhenUnreadOneTimeAnnouncementsArePresent() {
-        XCTAssert(manager.hasUnreadOneTimeAnnouncements)
-        let announcements = manager.fetchCurrentAnnouncementsFromStorage()
-        announcements.forEach {
-            manager.markAsRead(announcement: $0)
-        }
-        XCTAssertFalse(manager.hasUnreadOneTimeAnnouncements)
-    }
-    
 }
