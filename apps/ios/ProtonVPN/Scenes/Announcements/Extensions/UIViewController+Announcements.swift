@@ -35,16 +35,23 @@ extension UIViewController {
     }
     
     private func setupAnnouncementsAsync() async {
-        guard let viewModel = AnnouncementButtonViewModel.shared else { return }
+        guard let viewModel = AnnouncementButtonViewModel.shared else {
+            removeBadgedBarButtonItem()
+            return
+        }
         await viewModel.prefetchImages()
-        
+
         guard viewModel.showAnnouncements else {
-            navigationItem.rightBarButtonItems?.removeAll(where: { $0 is BadgedBarButtonItem })
+            removeBadgedBarButtonItem()
             return
         }
         setupAnnouncementsButton(iconUrl: viewModel.iconUrl)
     }
-    
+
+    private func removeBadgedBarButtonItem() {
+        navigationItem.rightBarButtonItems?.removeAll(where: { $0 is BadgedBarButtonItem })
+    }
+
     private func setupAnnouncementsButton(iconUrl: URL?) {
         let setup = { [weak self] in
             self?.renderAnnouncementsButtonBadge()

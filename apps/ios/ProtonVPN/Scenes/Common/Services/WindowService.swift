@@ -59,6 +59,10 @@ class WindowServiceImplementation: WindowService {
 
     var rootViewControllerObserver: NSKeyValueObservation?
 
+    /// This array was introduced when working on the one-time notification modal. We want to present the modal as soon as the app starts.
+    /// First problem was that we try to present it before we actually have a `rootViewController`, so we need to wait for it to be assigned, thus the `rootViewControllerObserver` was created.
+    /// Second problem is that the `rootViewController` is assigned twice in quick succession and we only want to show the modal on the last one.
+    /// We decided to try to show it on each of the `rootViewController`s but only "approve" it when it actually finishes showing the modal.
     var scheduledViewControllers: [UIViewController] = []
 
     init (window: UIWindow) {
@@ -71,13 +75,13 @@ class WindowServiceImplementation: WindowService {
         setupAppearance()
     }
 
-    fileprivate func observeRootViewController(_ window: UIWindow) {
+    private func observeRootViewController(_ window: UIWindow) {
         rootViewControllerObserver = window.observe(\.rootViewController) { [weak self] _, _ in
             self?.presentScheduledViewControllers()
         }
     }
 
-    fileprivate func presentScheduledViewControllers() {
+    private func presentScheduledViewControllers() {
         var viewControllers = scheduledViewControllers
         guard let modal = viewControllers.popLast() else { return }
         topmostPresentedViewController?.present(modal, animated: true) { [weak self] in
