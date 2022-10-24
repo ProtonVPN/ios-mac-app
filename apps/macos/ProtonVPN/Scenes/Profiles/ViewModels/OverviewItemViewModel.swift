@@ -73,7 +73,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
         
         guard !isUsersTierTooLow else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            sessionService.getUpgradePlanSession { url in
+            sessionService.getPlanSession(mode: .upgrade) { url in
                 SafariService.openLink(url: url)
             }
             completion()

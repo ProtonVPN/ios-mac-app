@@ -252,7 +252,7 @@ final class StatusMenuViewModel {
     
     // MARK: - Footer section - Inputs
     func upgradeAction() {
-        sessionService.getUpgradePlanSession { url in
+        sessionService.getPlanSession(mode: .upgrade) { url in
             SafariService.openLink(url: url)
         }
     }

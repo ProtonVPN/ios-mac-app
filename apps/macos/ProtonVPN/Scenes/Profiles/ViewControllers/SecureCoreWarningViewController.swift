@@ -73,7 +73,7 @@ final class SecureCoreWarningViewController: NSViewController {
     }
     
     @objc private func upgradeButtonAction() {
-        sessionService.getUpgradePlanSession { url in
+        sessionService.getPlanSession(mode: .upgrade) { url in
             SafariService.openLink(url: url)
         }
         dismiss(nil)
