@@ -58,7 +58,7 @@ final class AccountViewModel {
     }
     
     func manageSubscriptionAction() {
-        sessionService.getUpgradePlanSession { url in
+        sessionService.getPlanSession(mode: .manageSubscription) { url in
             SafariService.openLink(url: url)
         }
     }

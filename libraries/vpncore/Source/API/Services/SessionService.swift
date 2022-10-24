@@ -35,6 +35,20 @@ public protocol SessionService {
                      completion: @escaping (Result<String, Error>) -> Void)
 }
 
+public enum PlanSessionMode {
+    case upgrade
+    case manageSubscription
+
+    func path(selector: String) -> String {
+        switch self {
+        case .upgrade:
+            return "lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh&type=upgrade#selector=\(selector)"
+        case .manageSubscription:
+            return "lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=\(selector)"
+        }
+    }
+}
+
 extension SessionService {
     func getSelector(clientId: String,
                      independent: Bool,
@@ -42,11 +56,12 @@ extension SessionService {
         getSelector(clientId: clientId, independent: independent, timeout: nil, completion: completion)
     }
 
-    public func getUpgradePlanSession(completion: @escaping (String) -> Void) {
+    public func getPlanSession(mode: PlanSessionMode, completion: @escaping (String) -> Void) {
         getSelector(clientId: "web-account-lite", independent: false) { result in
             switch result {
             case let .success(selector):
-                completion("\(self.accountHost)/lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=\(selector)")
+                let path = mode.path(selector: selector)
+                completion("\(self.accountHost)/\(path)")
             case let .failure(error):
                 log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
                 completion("\(self.accountHost)/dashboard")
