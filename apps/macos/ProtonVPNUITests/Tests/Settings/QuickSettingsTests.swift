@@ -34,7 +34,7 @@ class QuickSettingsTests: ProtonVPNUITests {
         quickSettingsRobot
             .secureCoreDropdown()
             .verify.checkDropdownIsOpen()
-            .netShiedlDropdown()
+            .netShieldDropdown()
             .verify.checkDropdownIsOpen()
             .killSwitchDropdown()
             .verify.checkDropdownIsOpen()
@@ -51,7 +51,7 @@ class QuickSettingsTests: ProtonVPNUITests {
             .upgradeFeature()
             .verify.checkUpsellModalIsOpen()
             .closeUpsellModal()
-            .netShiedlDropdown()
+            .netShieldDropdown()
             .verify.checkDropdownIsOpen()
             .verify.checkUpgradeRequired()
             .upgradeFeature()

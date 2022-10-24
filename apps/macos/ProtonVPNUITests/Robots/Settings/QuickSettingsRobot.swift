@@ -37,17 +37,17 @@ fileprivate let modalDescription = "DescriptionLabel"
 class QuickSettingsRobot {
     
     func secureCoreDropdown() -> QuickSettingsRobot {
-        app.buttons[secureCoreButton].forceClick()
+        app.buttons[secureCoreButton].coordinatesClick() // For unknown reason forceClick()->click() clicks under the button and not on it
         return QuickSettingsRobot()
     }
     
-    func netShiedlDropdown() -> QuickSettingsRobot {
-        app.buttons[netShieldButton].forceClick()
+    func netShieldDropdown() -> QuickSettingsRobot {
+        app.buttons[netShieldButton].coordinatesClick() // For unknown reason forceClick()->click() clicks under the button and not on it
         return QuickSettingsRobot()
     }
     
     func killSwitchDropdown() -> QuickSettingsRobot {
-        app.buttons[killSwitchButton].forceClick()
+        app.buttons[killSwitchButton].coordinatesClick() // For unknown reason forceClick()->click() clicks under the button and not on it
         return QuickSettingsRobot()
     }
     
