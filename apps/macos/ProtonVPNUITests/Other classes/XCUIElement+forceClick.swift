@@ -24,8 +24,12 @@ extension XCUIElement {
         if isHittable {
             click()
         } else {
-            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector.init(dx: 0.5, dy: 0.5))
-            coordinate.click()
+            coordinatesClick()
         }
+    }
+    
+    func coordinatesClick() {
+        let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector.init(dx: 0.5, dy: 0.5))
+        coordinate.click()
     }
 }
