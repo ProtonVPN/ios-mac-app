@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -59,7 +59,7 @@
 		4C2AE85428364C00005F37E6 /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2AE85328364C00005F37E6 /* AppInfo.swift */; };
 		4C2FC57427E1DE6000101912 /* NSGradient+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2FC57327E1DE6000101912 /* NSGradient+AppTheme.swift */; };
 		4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54383227C3DC0600D7A88D /* ModelIDChecker.swift */; };
-		4C7CADE2280056090008778E /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		4C7CADE2280056090008778E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4C7CADE4280060C90008778E /* CGMutablePath+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */; };
 		4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */ = {isa = PBXBuildFile; fileRef = 4C7CAEC028006E5C0008778E /* LoadingAnimationFrames */; };
 		4C8313A727DE5D7200648797 /* NSTextField+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8313A627DE5D7200648797 /* NSTextField+AppTheme.swift */; };
@@ -2971,7 +2971,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -3531,7 +3531,7 @@
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
 				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
-				4C7CADE2280056090008778E /* BuildFile in Sources */,
+				4C7CADE2280056090008778E /* (null) in Sources */,
 				4C54383327C3DC0600D7A88D /* ModelIDChecker.swift in Sources */,
 				EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */,
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
@@ -4811,12 +4811,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonVPN/wireguard-apple.git";
 			requirement = {
 				kind = revision;
-				revision = 33eae7471aef779acf060e743d80857078fb540a;
+				revision = e0eabbcafd5ee72bc65dd2e0a2eb7ceab0c490e1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -4824,7 +4824,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 		D5F65F9D28A14E190062CF85 /* Timer */ = {
