@@ -243,7 +243,7 @@ extension MacAlertService: CoreAlertService {
     
     private func show(_ alert: AppUpdateRequiredAlert) {
         let supportAction = AlertAction(title: LocalizedString.updateRequiredSupport, style: .confirmative) {
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.supportForm)
+            SafariService().open(url: CoreAppConstants.ProtonVpnLinks.supportForm)
         }
         let updateAction = AlertAction(title: LocalizedString.updateRequiredUpdate, style: .confirmative) {
             self.updateManager.startUpdate()

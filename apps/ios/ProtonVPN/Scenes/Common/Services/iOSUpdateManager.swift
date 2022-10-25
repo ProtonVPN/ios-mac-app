@@ -67,7 +67,7 @@ final class iOSUpdateManager: UpdateChecker {
         guard let infoPlist = Bundle.main.infoDictionary, let identifier = infoPlist["AppStoreID"] as? String else {
             return
         }
-        SafariService.openLink(url: "itms-apps://itunes.apple.com/app/id\(identifier)?mt=8")
+        SafariService().open(url: "itms-apps://itunes.apple.com/app/id\(identifier)?mt=8")
     }
 
 }

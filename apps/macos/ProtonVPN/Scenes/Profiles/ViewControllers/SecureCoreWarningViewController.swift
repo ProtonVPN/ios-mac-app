@@ -80,7 +80,7 @@ final class SecureCoreWarningViewController: NSViewController {
     }
     
     @objc private func learnMoreButtonAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
         dismiss(nil)
     }
 }

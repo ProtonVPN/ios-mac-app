@@ -86,7 +86,7 @@ final class AnnouncementImageViewController: NSViewController {
         }
 
         guard data.button.behaviors?.contains(.autoLogin) == true else {
-            SafariService.openLink(url: data.button.url)
+            SafariService().open(url: data.button.url)
             return
         }
 
@@ -95,7 +95,7 @@ final class AnnouncementImageViewController: NSViewController {
         // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
         sessionService.getUpgradePlanSession(url: data.button.url) { [weak actionButton, weak view] url in
             actionButton?.isEnabled = true
-            SafariService.openLink(url: url)
+            SafariService().open(url: url)
             view?.window?.close()
         }
     }

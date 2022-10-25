@@ -219,7 +219,7 @@ public class UpgradeUnavailableAlert: SystemAlert {
     
     public init() {
         let confirmHandler: () -> Void = {
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            SafariService().open(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
         }
         actions.append(AlertAction(title: LocalizedString.account, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))

@@ -40,6 +40,6 @@ class FeatureRowView: NSView {
     }
     
     @IBAction private func didTapLearnMoreBtn(_ sender: Any) {
-        SafariService.openLink(url: viewModel.urlContact)
+        SafariService().open(url: viewModel.urlContact)
     }
 }

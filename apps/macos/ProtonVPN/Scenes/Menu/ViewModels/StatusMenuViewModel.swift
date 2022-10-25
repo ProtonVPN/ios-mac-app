@@ -237,7 +237,7 @@ final class StatusMenuViewModel {
     }
 
     private func didTapLearnMore() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
     }
 
     private func changeActiveServerType(state: ButtonState) {
