@@ -98,8 +98,8 @@ fileprivate class SessionServiceMock: SessionService {
         return context.rawValue
     }
 
-    func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?, completion: @escaping (Result<String, Error>) -> Void) {
-        completion(.success(CoreAppConstants.ProtonVpnLinks.accountDashboard))
+    func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?) async throws -> String {
+        return CoreAppConstants.ProtonVpnLinks.accountDashboard
     }
 }
 

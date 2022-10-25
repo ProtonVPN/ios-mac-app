@@ -66,9 +66,9 @@ public class AnnouncementsViewModel {
         guard let announcement = oneTimeAnnouncement else {
             return
         }
-        Task.init { [weak self] in
+        Task {
             guard await announcement.isImagePrefetched(imageCache: imageCache) else { return }
-            self?.openAnnouncement(announcement: announcement)
+            openAnnouncement(announcement: announcement)
         }
     }
 

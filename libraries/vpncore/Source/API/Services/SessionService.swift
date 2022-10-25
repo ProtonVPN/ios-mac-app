@@ -31,47 +31,36 @@ public protocol SessionService {
 
     func getSelector(clientId: String,
                      independent: Bool,
-                     timeout: TimeInterval?,
-                     completion: @escaping (Result<String, Error>) -> Void)
+                     timeout: TimeInterval?) async throws -> String
 }
 
 extension SessionService {
-    func getSelector(clientId: String,
-                     independent: Bool,
-                     completion: @escaping (Result<String, Error>) -> Void) {
-        getSelector(clientId: clientId, independent: independent, timeout: nil, completion: completion)
+    public func getSelector(clientId: String, independent: Bool) async throws -> String {
+        try await getSelector(clientId: clientId, independent: independent, timeout: nil)
     }
 
-    public func getPlanSession(mode: PlanSession, completion: @escaping (URL) -> Void) {
-        getSelector(clientId: "web-account-lite", independent: false) { result in
-            switch result {
-            case let .success(selector):
-                let url = mode.path(accountHost: self.accountHost, selector: selector)
-                completion(url)
-            case let .failure(error):
-                log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
-                let url = mode.path(accountHost: self.accountHost, selector: nil)
-                completion(url)
-            }
+    public func getPlanSession(mode: PlanSession) async -> URL {
+        do {
+            let selector = try await getSelector(clientId: "web-account-lite", independent: false)
+            return mode.path(accountHost: self.accountHost, selector: selector)
+        } catch {
+            log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
+            return mode.path(accountHost: self.accountHost, selector: nil)
         }
     }
 
-    public func getUpgradePlanSession(url: String, completion: @escaping (String) -> Void) {
-        getSelector(clientId: "web-account-lite", independent: false) { result in
-            switch result {
-            case let .success(selector):
-                completion("\(url)#selector=\(selector)")
-            case let .failure(error):
-                log.error("Failed to fork session, using default url", category: .app, metadata: ["error": "\(error)"])
-                completion("\(url)")
-            }
+    public func getUpgradePlanSession(url: String) async -> String {
+        do {
+            let selector = try await getSelector(clientId: "web-account-lite", independent: false)
+            return url + "#selector=" + selector
+        } catch {
+            log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
+            return url
         }
     }
 
-    public func getExtensionSessionSelector(extensionContext: AppContext, completion: @escaping ((Result<String, Error>) -> Void)) {
-        getSelector(clientId: clientSessionId(forContext: extensionContext),
-                    independent: false,
-                    completion: completion)
+    public func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
+        try await getSelector(clientId: clientSessionId(forContext: extensionContext), independent: false)
     }
 }
 
@@ -115,17 +104,18 @@ public final class SessionServiceImplementation: SessionService {
 
     public func getSelector(clientId: String,
                             independent: Bool,
-                            timeout: TimeInterval? = nil,
-                            completion: @escaping (Result<String, Error>) -> Void) {
+                            timeout: TimeInterval? = nil) async throws -> String {
         let timeout = timeout ?? Self.requestTimeout
         let request = ForkSessionRequest(clientId: clientId, independent: independent, timeout: timeout)
-        networking.request(request) { (result: Result<ForkSessionResponse, Error>) in
-             switch result {
-             case let .success(data):
-                 completion(.success(data.selector))
-             case let .failure(error):
-                 completion(.failure(error))
-             }
+        return try await withCheckedThrowingContinuation { continuation in
+            networking.request(request) { (result: Result<ForkSessionResponse, Error>) in
+                switch result {
+                case let .success(data):
+                    continuation.resume(with: .success(data.selector))
+                case let .failure(error):
+                    continuation.resume(with: .failure(error))
+                }
+            }
         }
     }
 }

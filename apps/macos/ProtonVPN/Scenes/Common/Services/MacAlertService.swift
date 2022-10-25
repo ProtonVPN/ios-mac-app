@@ -318,8 +318,11 @@ extension MacAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, upsellType: UpsellType) {
         let factory = ModalsFactory(colors: UpsellColors())
 
-        let upgradeAction = { [weak self] () -> Void in
-            self?.sessionService.getPlanSession(mode: .upgrade) { url in
+        let upgradeAction: (() -> Void) = { [weak self] in
+            Task { [weak self] in
+                guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
+                    return
+                }
                 SafariService.openLink(url: url)
             }
         }
