@@ -295,7 +295,8 @@ class CreateNewProfileViewModel {
     func checkNetshieldOption( _ netshieldIndex: Int ) -> Bool {
         guard let netshieldType = NetShieldType(rawValue: netshieldIndex), !netshieldType.isUserTierTooLow(userTier) else {
             let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: { [weak self] in
-                self?.sessionService.getPlanSession(mode: .upgrade) { url in
+                Task { [weak self] in
+                    guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else { return }
                     SafariService.openLink(url: url)
                 }
             })

@@ -296,45 +296,47 @@ public final class VpnAuthenticationRemoteClient {
     /// The network extension maintains its own API session. When we ask it to refresh certificates for us, it
     /// may find that its session has expired, or that it does not have any session saved in its keychain. In such
     /// a case, it will reply to refresh requests with `.errorSessionExpired`, at which point it will be the
-    /// main app's responsability to (re)fork its session and send the selector to the extension.
+    /// main app's responsibility to (re)fork its session and send the selector to the extension.
     private func pushSelectorToProvider(extensionContext: AppContext = .wireGuardExtension, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
-        sessionService.getExtensionSessionSelector(extensionContext: extensionContext) { [weak self] apiResult in
-            guard case let .success(selector) = apiResult else {
-                if case let .failure(error) = apiResult {
-                    log.error("Received error forking API session: \(error)", category: .userCert)
-                }
-                return
+        Task {
+            do {
+                let selector = try await sessionService.getExtensionSessionSelector(extensionContext: extensionContext)
+                pushToProvider(selector: selector, completionHandler: completionHandler)
+            } catch {
+                log.error("Received error forking API session: \(error)", category: .userCert)
             }
-
-            // If we get a success condition, we should look at the session cookie, because the network extension is going
-            // to need to send it to the server to avoid getting a 422. Sending a session cookie is required if the two
-            // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.
-            // The network extension will always send requests from behind the tunnel.
-            let sessionId = self?.sessionService.sessionCookie
-            let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: sessionId)
-
-            self?.connectionProvider?.send(request, completion: { result in
-                switch result {
-                case .success(let response):
-                    switch response {
-                    case .ok:
-                        completionHandler(.success(()))
-                    case .error(let message):
-                        completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
-                    case .errorTooManyCertRequests:
-                        assertionFailure("Received \(response) after trying to renew session?")
-                        completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
-                    case .errorSessionExpired, .errorNeedKeyRegeneration:
-                        // We should only ever expect these responses for cert refreshes, not for this entry point.
-                        // If we're hitting this, something is very wrong.
-                        assertionFailure("Received \(response) after trying to renew session?")
-                        completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
-                    }
-                case .failure(let error):
-                    completionHandler(.failure(error))
-                }
-            })
         }
+    }
+
+    private func pushToProvider(selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+        // If we get a success condition, we should look at the session cookie, because the network extension is going
+        // to need to send it to the server to avoid getting a 422. Sending a session cookie is required if the two
+        // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.
+        // The network extension will always send requests from behind the tunnel.
+        let sessionId = sessionService.sessionCookie
+        let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: sessionId)
+
+        connectionProvider?.send(request, completion: { result in
+            switch result {
+            case .success(let response):
+                switch response {
+                case .ok:
+                    completionHandler(.success(()))
+                case .error(let message):
+                    completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
+                case .errorTooManyCertRequests:
+                    assertionFailure("Received \(response) after trying to renew session?")
+                    completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
+                case .errorSessionExpired, .errorNeedKeyRegeneration:
+                    // We should only ever expect these responses for cert refreshes, not for this entry point.
+                    // If we're hitting this, something is very wrong.
+                    assertionFailure("Received \(response) after trying to renew session?")
+                    completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        })
     }
 
     private func syncStorageManipulationWithExtension(closure: @escaping (() -> Void), finished: (() -> Void)? = nil) {

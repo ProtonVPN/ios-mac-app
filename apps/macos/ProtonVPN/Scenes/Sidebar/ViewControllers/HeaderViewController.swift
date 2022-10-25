@@ -166,14 +166,14 @@ final class HeaderViewController: NSViewController {
             announcementsButton.isHidden = true
             return
         }
-        Task.init { [weak self] in
+        Task {
             await viewModel.prefetchImages()
             
             guard viewModel.showAnnouncements else {
-                self?.announcementsButton.isHidden = true
+                announcementsButton.isHidden = true
                 return
             }
-            self?.setupAnnouncementsButton()
+            setupAnnouncementsButton()
         }
     }
 

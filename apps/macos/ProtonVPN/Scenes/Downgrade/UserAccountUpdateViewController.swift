@@ -154,9 +154,12 @@ class UserAccountUpdateViewController: NSViewController {
     
     @IBAction func didTapPrimaryAction(_ sender: Any) {
         alert.actions.first?.handler?()
-        sessionService.getPlanSession(mode: .upgrade) { url in
+
+        Task {
+            let url = await sessionService.getPlanSession(mode: .upgrade)
             SafariService.openLink(url: url)
         }
+
         dismissCompletion?()
         dismiss(nil)
     }

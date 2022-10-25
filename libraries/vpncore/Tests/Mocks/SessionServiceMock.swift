@@ -23,21 +23,20 @@ class SessionServiceMock: SessionService {
     var sessionCookie: HTTPCookie? = nil
     var accountHost: URL = URL(string: "https://accountHost.com")!
 
-    var getSelectorCallback: (() -> (Result<String, Error>))?
+    var getSelectorCallback: (Result<String, Error>)?
 
     func clientSessionId(forContext context: AppContext) -> String {
         return context.rawValue
     }
 
-    func getSelector(clientId: String,
-                     independent: Bool,
-                     timeout: TimeInterval?,
-                     completion: @escaping (Result<String, Error>) -> Void) {
-        if let getSelectorCallback = getSelectorCallback {
-            completion(getSelectorCallback())
-            return
+    func getSelector(clientId: String, independent: Bool, timeout: TimeInterval?) async throws -> String {
+        switch getSelectorCallback {
+        case .success(let selector):
+            return selector
+        case .failure(let error):
+            throw error
+        case .none:
+            return "SELECTOR"
         }
-
-        completion(.success("SELECTOR"))
     }
 }

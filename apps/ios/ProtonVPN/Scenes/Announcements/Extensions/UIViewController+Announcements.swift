@@ -29,8 +29,8 @@ import ProtonCore_UIFoundations
 extension UIViewController {
 
     @objc func setupAnnouncements() {
-        Task.init { [weak self] in
-            await self?.setupAnnouncementsAsync()
+        Task {
+            await setupAnnouncementsAsync()
         }
     }
     

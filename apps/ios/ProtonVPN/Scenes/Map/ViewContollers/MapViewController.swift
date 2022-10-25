@@ -101,8 +101,8 @@ final class MapViewController: UIViewController {
             initialMoveAndZoomDone = true
         }
         
-        Task.init { [weak self] in
-            await self?.setupAnnouncements()
+        Task {
+            await setupAnnouncements()
         }
     }
     

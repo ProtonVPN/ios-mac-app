@@ -47,6 +47,10 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         super.init(nibName: String(describing: AnnouncementImageViewController.self), bundle: nil)
     }
 
+    deinit {
+        getUpgradePlanSessionTask?.cancel()
+    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         adjustImageViewHeight()
@@ -114,6 +118,8 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         }
     }
 
+    var getUpgradePlanSessionTask: Task<Void, Never>?
+
     @IBAction private func actionButtonTapped(_ sender: Any) {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
@@ -129,15 +135,19 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
         actionButton.isEnabled = false
 
-        // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
-        sessionService.getUpgradePlanSession(url: data.button.url) { [weak self] url in
-            self?.actionButton.isEnabled = true
-            self?.urlRequested?(url)
-            self?.cancelled?()
+        getUpgradePlanSessionTask = Task {
+            // This will retrieve a logged-in session so the user won't have to enter credentials after opening the link
+            let url = await sessionService.getUpgradePlanSession(url: data.button.url)
+            guard getUpgradePlanSessionTask?.isCancelled == false else { return }
+            actionButton.isEnabled = true
+            urlRequested?(url)
+            cancelled?()
+            getUpgradePlanSessionTask = nil
         }
     }
 
     @IBAction private func closeButtonTapped(_ sender: Any) {
+        getUpgradePlanSessionTask?.cancel()
         cancelled?()
     }
 }
