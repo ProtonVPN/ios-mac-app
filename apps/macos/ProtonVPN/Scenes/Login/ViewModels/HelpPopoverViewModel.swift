@@ -34,15 +34,15 @@ final class HelpPopoverViewModel {
     // MARK: - Actions
 
     func resetAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
     }
     
     func forgotAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
     }
 
     func commonIssuesAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.loginProblems)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.loginProblems)
     }
 
     func reportBugAction() {

@@ -105,6 +105,6 @@ final class AnnouncementDetailViewController: NSViewController {
     }
 
     @IBAction private func didTapActionButton(_ sender: Any) {
-        SafariService.openLink(url: data.button.url)
+        SafariService().open(url: data.button.url)
     }
 }

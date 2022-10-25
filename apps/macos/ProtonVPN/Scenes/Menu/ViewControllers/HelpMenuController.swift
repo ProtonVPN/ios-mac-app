@@ -96,7 +96,7 @@ class HelpMenuController: NSObject {
     }
     
     @objc private func helpItemAction() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.support)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.support)
     }
     
     @objc private func clearApplicationDataItemAction() {

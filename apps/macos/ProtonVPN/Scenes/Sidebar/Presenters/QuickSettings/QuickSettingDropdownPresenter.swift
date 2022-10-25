@@ -97,7 +97,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     // MARK: - Actions
     
     @objc private func didTapLearnMore() {
-        SafariService.openLink(url: learnLink)
+        SafariService().open(url: learnLink)
     }
 
     var alert: UpsellAlert {

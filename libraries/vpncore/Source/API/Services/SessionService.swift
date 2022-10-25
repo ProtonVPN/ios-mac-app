@@ -25,7 +25,7 @@ public protocol SessionServiceFactory {
 
 public protocol SessionService {
     var sessionCookie: HTTPCookie? { get }
-    var accountHost: String { get }
+    var accountHost: URL { get }
 
     func clientSessionId(forContext: AppContext) -> String
 
@@ -35,20 +35,6 @@ public protocol SessionService {
                      completion: @escaping (Result<String, Error>) -> Void)
 }
 
-public enum PlanSessionMode {
-    case upgrade
-    case manageSubscription
-
-    func path(selector: String) -> String {
-        switch self {
-        case .upgrade:
-            return "lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh&type=upgrade#selector=\(selector)"
-        case .manageSubscription:
-            return "lite?action=subscribe-account&fullscreen=off&redirect=protonvpn://refresh#selector=\(selector)"
-        }
-    }
-}
-
 extension SessionService {
     func getSelector(clientId: String,
                      independent: Bool,
@@ -56,15 +42,16 @@ extension SessionService {
         getSelector(clientId: clientId, independent: independent, timeout: nil, completion: completion)
     }
 
-    public func getPlanSession(mode: PlanSessionMode, completion: @escaping (String) -> Void) {
+    public func getPlanSession(mode: PlanSession, completion: @escaping (URL) -> Void) {
         getSelector(clientId: "web-account-lite", independent: false) { result in
             switch result {
             case let .success(selector):
-                let path = mode.path(selector: selector)
-                completion("\(self.accountHost)/\(path)")
+                let url = mode.path(accountHost: self.accountHost, selector: selector)
+                completion(url)
             case let .failure(error):
                 log.error("Failed to fork session, using default account url", category: .app, metadata: ["error": "\(error)"])
-                completion("\(self.accountHost)/dashboard")
+                let url = mode.path(accountHost: self.accountHost, selector: nil)
+                completion(url)
             }
         }
     }
@@ -104,8 +91,8 @@ public final class SessionServiceImplementation: SessionService {
             .first(where: { $0.name == UserProperties.sessionIdCookieName })
     }
 
-    public var accountHost: String {
-        networking.apiService.doh.accountHost
+    public var accountHost: URL {
+        URL(string: networking.apiService.doh.accountHost)!
     }
 
     public func clientSessionId(forContext context: AppContext) -> String {

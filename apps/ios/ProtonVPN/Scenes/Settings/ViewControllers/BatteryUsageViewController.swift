@@ -52,7 +52,7 @@ class BatteryUsageViewController: UIViewController {
     }
     
     @IBAction func learMore() {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.batteryOpenVpn)
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.batteryOpenVpn)
     }
 
 }

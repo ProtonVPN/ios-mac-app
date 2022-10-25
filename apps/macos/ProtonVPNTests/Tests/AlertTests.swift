@@ -91,7 +91,7 @@ class AlertTests: XCTestCase {
 }
 
 fileprivate class SessionServiceMock: SessionService {
-    let accountHost: String = "account host"
+    let accountHost: URL = URL(string: "account host")!
     var sessionCookie: HTTPCookie?
 
     func clientSessionId(forContext context: AppContext) -> String {

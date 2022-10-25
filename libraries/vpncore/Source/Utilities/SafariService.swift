@@ -36,10 +36,7 @@ public protocol SafariServiceFactory {
 public class SafariService: SafariServiceProtocol {
     
     // Old
-    public static func openLink(url: String) {
-        guard let url = URL(string: url) else {
-            return
-        }
+    public static func openLink(url: URL) {
         #if canImport(UIKit)
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
         #elseif canImport(Cocoa)
@@ -49,6 +46,9 @@ public class SafariService: SafariServiceProtocol {
     
     // Use this one in new code
     public func open(url: String) {
+        guard let url = URL(string: url) else {
+            return
+        }
         SafariService.openLink(url: url)
     }
     
