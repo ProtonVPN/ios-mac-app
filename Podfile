@@ -164,14 +164,6 @@ target 'WireGuardiOS Extension' do
   keychain_access
 end
 
-target 'WireGuardNetworkExtensionTests' do
-  project 'apps/ios/iOS.xcodeproj'
-  platform :ios, '14.0'
-  use_frameworks!
-  
-  keychain_access
-end
-
 # macOS
 
 target 'ProtonVPN-mac' do
