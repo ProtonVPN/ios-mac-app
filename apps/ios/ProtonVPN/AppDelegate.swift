@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
-            announcementRefresher.refresh()
+            announcementRefresher.tryRefreshing()
         }
 
         container.makeAppSessionManager().refreshVpnAuthCertificate(success: { }, failure: { _ in })
@@ -167,7 +167,7 @@ fileprivate extension AppDelegate {
                 }
             }
 
-        case URLConstants.deepLinkRefresh:
+        case URLConstants.deepLinkRefresh, URLConstants.deepLinkRefreshAccount:
             guard container.makeAuthKeychainHandle().fetch() != nil else {
                 log.debug("User not is logged in, not refreshing user data", category: .app)
                 return false
@@ -182,6 +182,7 @@ fileprivate extension AppDelegate {
                     log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
                 }
             }
+            NotificationCenter.default.post(name: PropertiesManager.announcementsNotification, object: nil)
 
         default:
             log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])

@@ -167,7 +167,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
                 self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
-                    self.announcementRefresher.refresh()
+                    self.announcementRefresher.tryRefreshing()
                 }
 
                 self.resolveActiveSession(success: success, failure: { error in

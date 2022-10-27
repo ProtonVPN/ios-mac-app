@@ -35,8 +35,9 @@ public protocol PropertiesManagerProtocol: class {
     static var excludeLocalNetworksNotification: Notification.Name { get }
     static var vpnAcceleratorNotification: Notification.Name { get }
     static var killSwitchNotification: Notification.Name { get }
-    static var smartProtocolNotification: Notification.Name { get }    
+    static var smartProtocolNotification: Notification.Name { get }
     static var featureFlagsNotification: Notification.Name { get }
+    static var announcementsNotification: Notification.Name { get }
 
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
@@ -187,6 +188,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
+    public static let announcementsNotification = Notification.Name("Announcements")
     public static let earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
     public static let vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
     public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
