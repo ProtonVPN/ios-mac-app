@@ -43,6 +43,7 @@ struct URLConstants {
     static let deepLinkLoginUrl = URLConstants.deepLinkBaseUrl + URLConstants.deepLinkLoginAction
 
     static let deepLinkRefresh = "refresh"
+    static let deepLinkRefreshAccount = "refresh-account"
     
     // MARK: - Other
     

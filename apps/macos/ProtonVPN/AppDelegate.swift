@@ -108,6 +108,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
             }
         }
+
+        NotificationCenter.default.post(name: PropertiesManager.announcementsNotification, object: nil)
     }
     
     private func setupDebugHelpers() {
@@ -125,7 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
         if propertiesManager.featureFlags.pollNotificationAPI, container.makeAuthKeychainHandle().fetch() != nil {
-            self.container.makeAnnouncementRefresher().refresh()
+            self.container.makeAnnouncementRefresher().tryRefreshing()
         }
     }
     

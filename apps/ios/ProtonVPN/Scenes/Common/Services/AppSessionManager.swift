@@ -272,7 +272,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
                 self.review.update(configuration: Configuration(settings: properties.clientConfig.ratingSettings))
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
-                    self.announcementRefresher.refresh()
+                    self.announcementRefresher.tryRefreshing()
                 }
 
                 self.resolveActiveSession(success: { [weak self] in

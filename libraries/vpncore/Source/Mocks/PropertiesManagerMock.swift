@@ -31,6 +31,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("vpnAccelerator")
     public static var smartProtocolNotification: Notification.Name = Notification.Name("smartProtocol")
     public static let featureFlagsNotification: Notification.Name = Notification.Name("featureFlags")
+    public static var announcementsNotification: Notification.Name = Notification.Name("announcements")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
