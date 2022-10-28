@@ -30,6 +30,7 @@ class AnnouncementsViewModelTests: XCTestCase {
     private var manager: AnnouncementManager!
     private var viewModel: AnnouncementsViewModel!
     private var safariService: SafariServiceMock!
+    private var propertiesManager: PropertiesManagerMock!
     
     override func setUp() {
         super.setUp()
@@ -37,7 +38,8 @@ class AnnouncementsViewModelTests: XCTestCase {
         storage = AnnouncementStorageMock()
         manager = AnnouncementManagerImplementation(factory: AnnouncementManagerImplementationFactoryMock(announcementStorage: storage))
         safariService = SafariServiceMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock(), appInfo: AppInfoImplementation(context: .mainApp)))
+        propertiesManager = PropertiesManagerMock()
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, propertiesManager: propertiesManager, safariService: safariService, coreAlertService: CoreAlertServiceMock(), appInfo: AppInfoImplementation(context: .mainApp)))
         
     }
     
@@ -67,19 +69,25 @@ class AnnouncementsViewModelTests: XCTestCase {
 fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
 
     public let announcementManager: AnnouncementManager
+    public let propertiesManager: PropertiesManagerProtocol
     public let safariService: SafariServiceProtocol
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
     
-    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
+    init(announcementManager: AnnouncementManager, propertiesManager: PropertiesManagerProtocol, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
         self.announcementManager = announcementManager
+        self.propertiesManager = propertiesManager
         self.safariService = safariService
         self.coreAlertService = coreAlertService
         self.appInfo = appInfo
     }
-    
+
     func makeAnnouncementManager() -> AnnouncementManager {
         return announcementManager
+    }
+
+    func makePropertiesManager() -> PropertiesManagerProtocol {
+        return propertiesManager
     }
     
     func makeSafariService() -> SafariServiceProtocol {

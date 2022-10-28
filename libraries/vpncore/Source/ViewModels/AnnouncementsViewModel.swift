@@ -30,7 +30,7 @@ public protocol AnnouncementsViewModelFactory {
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
     
-    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory
+    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
@@ -38,6 +38,7 @@ public class AnnouncementsViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private lazy var imageCache: ImageCacheFactory = ImageCacheFactory()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
     // Data
     private(set) var items: [Announcement] = []
@@ -63,7 +64,8 @@ public class AnnouncementsViewModel {
     }
 
     public func openOneTimeAnnouncement() {
-        guard let announcement = oneTimeAnnouncement else {
+        guard !propertiesManager.blockOneTimeAnnouncement,
+              let announcement = oneTimeAnnouncement else {
             return
         }
         Task {

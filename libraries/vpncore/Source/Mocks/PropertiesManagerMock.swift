@@ -49,6 +49,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
         }
     }
+    public var blockOneTimeAnnouncement: Bool = false
     public var lastIkeConnection: ConnectionConfiguration?
     public var lastOpenVpnConnection: ConnectionConfiguration?
     public var lastWireguardConnection: ConnectionConfiguration?

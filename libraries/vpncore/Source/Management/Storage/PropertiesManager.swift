@@ -44,6 +44,7 @@ public protocol PropertiesManagerProtocol: class {
     func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?)
     func setAutoConnect(for username: String, enabled: Bool, profileId: String?)
 
+    var blockOneTimeAnnouncement: Bool { get }
     var hasConnected: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
@@ -119,6 +120,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     internal enum Keys: String, CaseIterable {
         
         case autoConnect = "AutoConnect"
+        case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
         case lastIkeConnection = "LastIkeConnection"
@@ -197,6 +199,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
+
+    public var blockOneTimeAnnouncement: Bool {
+        get {
+            storage.defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.blockOneTimeAnnouncement.rawValue)
+        }
+    }
 
     public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
         let autoConnectEnabled = storage.defaults.bool(forKey: Keys.autoConnect.rawValue)
@@ -335,7 +346,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    // Destinguishes if kill switch should be disabled
+    // Distinguishes if kill switch should be disabled
     public var intentionallyDisconnected: Bool {
         get {
             return storage.defaults.bool(forKey: Keys.intentionallyDisconnected.rawValue)
