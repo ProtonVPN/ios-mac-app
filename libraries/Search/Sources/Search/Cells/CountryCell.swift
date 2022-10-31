@@ -104,6 +104,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
         rightChevron.image = CountryCell.chevronRight
 
         iconWeakStyle(rightChevron)
+        connectButton.addInteraction(UIPointerInteraction(delegate: self))
     }
 
     override public func layoutSubviews() {
@@ -115,5 +116,16 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
         renderConnectButton()
 
         rightChevron.isHidden = viewModel?.textInPlaceOfConnectIcon != nil
+    }
+}
+
+extension CountryCell: UIPointerInteractionDelegate {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        var pointerStyle: UIPointerStyle? = nil
+        if let interactionView = interaction.view {
+            let targetedPreview = UITargetedPreview(view: interactionView)
+            pointerStyle = UIPointerStyle(effect: UIPointerEffect.lift(targetedPreview))
+        }
+        return pointerStyle
     }
 }

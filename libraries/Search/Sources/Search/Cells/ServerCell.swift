@@ -108,6 +108,12 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         }
     }
 
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+
+        connectButton.addInteraction(UIPointerInteraction(delegate: self))
+    }
+
     // MARK: Actions
 
     private func connect() {
@@ -147,5 +153,16 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         }
         highlightMatches(serverNameLabel, viewModel.description, searchText)
         highlightMatches(countryNameLabel, viewModel.countryName, searchText)
+    }
+}
+
+extension ServerCell: UIPointerInteractionDelegate {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        var pointerStyle: UIPointerStyle? = nil
+        if let interactionView = interaction.view {
+            let targetedPreview = UITargetedPreview(view: interactionView)
+            pointerStyle = UIPointerStyle(effect: UIPointerEffect.lift(targetedPreview))
+        }
+        return pointerStyle
     }
 }

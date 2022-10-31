@@ -65,6 +65,7 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
         selectionStyle = .none
         countryLabel.textColor = colors.weakText
         cityLabel.textColor = colors.weakText
+        connectButton.addInteraction(UIPointerInteraction(delegate: self))
     }
 
     override public func layoutSubviews() {
@@ -99,5 +100,16 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
         }
         highlightMatches(cityLabel, viewModel.displayCityName, searchText)
         highlightMatches(countryLabel, viewModel.countryName, searchText)
+    }
+}
+
+extension CityCell: UIPointerInteractionDelegate {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+        var pointerStyle: UIPointerStyle? = nil
+        if let interactionView = interaction.view {
+            let targetedPreview = UITargetedPreview(view: interactionView)
+            pointerStyle = UIPointerStyle(effect: UIPointerEffect.lift(targetedPreview))
+        }
+        return pointerStyle
     }
 }
