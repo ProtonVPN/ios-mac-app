@@ -50,6 +50,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         }
     }
     public var blockOneTimeAnnouncement: Bool = false
+    public var blockUpdatePrompt: Bool = false
     public var lastIkeConnection: ConnectionConfiguration?
     public var lastOpenVpnConnection: ConnectionConfiguration?
     public var lastWireguardConnection: ConnectionConfiguration?

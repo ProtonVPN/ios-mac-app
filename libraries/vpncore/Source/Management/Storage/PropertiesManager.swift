@@ -45,6 +45,7 @@ public protocol PropertiesManagerProtocol: class {
     func setAutoConnect(for username: String, enabled: Bool, profileId: String?)
 
     var blockOneTimeAnnouncement: Bool { get }
+    var blockUpdatePrompt: Bool { get }
     var hasConnected: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
@@ -121,6 +122,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         case autoConnect = "AutoConnect"
         case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"
+        case blockUpdatePrompt = "BlockUpdatePrompt"
         case autoConnectProfile = "AutoConnect_"
         case connectOnDemand = "ConnectOnDemand"
         case lastIkeConnection = "LastIkeConnection"
@@ -206,6 +208,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             storage.setValue(newValue, forKey: Keys.blockOneTimeAnnouncement.rawValue)
+        }
+    }
+
+    public var blockUpdatePrompt: Bool {
+        get {
+            storage.defaults.bool(forKey: Keys.blockUpdatePrompt.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.blockUpdatePrompt.rawValue)
         }
     }
 
