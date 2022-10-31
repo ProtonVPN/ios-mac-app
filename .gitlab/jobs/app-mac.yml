@@ -40,3 +40,4 @@ macos_ui_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit
+  allow_failure: true
