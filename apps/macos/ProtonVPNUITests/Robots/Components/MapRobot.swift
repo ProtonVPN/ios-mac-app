@@ -27,6 +27,9 @@ fileprivate let connectImage = "ConnectImage"
 class MapRobot {
     
     func showMapClick() -> MapRobot {
+        if app.buttons[hideMapButton].isHittable {
+            return self
+        }
         XCTAssertTrue(app.buttons[showMapButton].waitForExistence(timeout: 5))
         app.buttons[showMapButton].click()
         return self

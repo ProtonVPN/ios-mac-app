@@ -203,21 +203,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
     public var blockOneTimeAnnouncement: Bool {
-        get {
-            storage.defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.blockOneTimeAnnouncement.rawValue)
-        }
+        storage.defaults.bool(forKey: Keys.blockOneTimeAnnouncement.rawValue)
     }
 
     public var blockUpdatePrompt: Bool {
-        get {
-            storage.defaults.bool(forKey: Keys.blockUpdatePrompt.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.blockUpdatePrompt.rawValue)
-        }
+        storage.defaults.bool(forKey: Keys.blockUpdatePrompt.rawValue)
     }
 
     public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {

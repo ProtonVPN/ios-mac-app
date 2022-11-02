@@ -102,7 +102,16 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func logoutIfNeeded() {
+        defer {
+            // Make sure app is fully logged out
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Sign in"], handler: nil)
+            waitForExpectations(timeout: 5, handler: nil)
+        }
         _ = waitForElementToDisappear(app.otherElements["loader"])
+
+        guard !tryLoggingOut() else {
+            return
+        }
 
         // give the main window time to load and show OpenVPN alert if needed
         sleep(2)
@@ -110,15 +119,16 @@ class ProtonVPNUITests: XCTestCase {
         dismissPopups()
         dismissDialogs()
             
+        _ = tryLoggingOut()
+    }
+
+    func tryLoggingOut() -> Bool {
         let logoutButton = app.menuBars.menuItems["Log Out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
-            return
+            return false
         }
         logoutButton.click()
-        
-        // Make sure app is fully logged out
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Sign in"], handler: nil)
-        waitForExpectations(timeout: 5, handler: nil)
+        return true
     }
     
     func logInIfNeeded() {

@@ -147,6 +147,12 @@ extension UpdateManager: SPUUpdaterDelegate {
         return url
     }
     
+    func updaterMayCheck(forUpdates updater: SPUUpdater) -> Bool {
+        guard !propertiesManager.blockUpdatePrompt else {
+            return false
+        }
+        return true
+    }
 }
 
 extension UpdateManager: UpdateChecker {
