@@ -45,7 +45,7 @@ class PlanTests: ProtonVPNUITests {
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 1 year")
-            .checkPriceIs("$99.99")
+            .checkPriceIs("$71.88")
     }
 
     // Black Friday 2022 plans, will renew at same price and cycle, so we want to keep tests for them
@@ -59,8 +59,8 @@ class PlanTests: ProtonVPNUITests {
             .goToAccountDetail()
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("for 1 year") // should be "for 15 months" after CP-4611
-            .checkPriceIs("$71.88")
+            .checkDurationIs("for 15 months")
+            .checkPriceIs("$149.85")
     }
 
     /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 30 months and costs $299.70
@@ -72,8 +72,8 @@ class PlanTests: ProtonVPNUITests {
             .goToAccountDetail()
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
-            .checkDurationIs("for 2 years") // should be "for 30 months" after CP-4611
-            .checkPriceIs("$119.76")
+            .checkDurationIs("for 30 months")
+            .checkPriceIs("$299.70")
     }
 
     /// Test showing standard plans for upgrade but not Black Friday 2022 plans

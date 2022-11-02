@@ -90,7 +90,7 @@ class ProtonVPNUITests: XCTestCase {
     
     @discardableResult
     func correctUserIsLogedIn(_ name: Credentials)-> MainRobot {
-        app.buttons["Quick Connect"].waitForExistence(timeout: 5)
+        app.buttons["Quick Connect"].waitForExistence(timeout: 10)
         app.tabBars.buttons["Settings"].tap()
         XCTAssert(app.staticTexts[name.username].exists)
         XCTAssert(app.staticTexts[name.plan].exists)
@@ -148,7 +148,7 @@ class ProtonVPNUITests: XCTestCase {
     func changeEnvToBlackIfNeeded() {
         let env = app.staticTexts[ObfuscatedConstants.blackDefaultHost + ObfuscatedConstants.blackDefaultPath]
         
-        if env.waitForExistence(timeout: 10){
+        if env.waitForExistence(timeout: 10) {
             return
         }
         else {
