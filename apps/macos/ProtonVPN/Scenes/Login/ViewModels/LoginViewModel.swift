@@ -204,7 +204,6 @@ final class LoginViewModel {
     }
     
     private func silentlyCheckForUpdates() {
-        guard !propertiesManager.blockUpdatePrompt else { return }
         updateManager.checkForUpdates(appSessionManager, silently: true)
     }
     
