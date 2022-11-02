@@ -72,7 +72,7 @@ public final class CoreNetworking: Networking {
         self.doh = doh
         self.authKeychain = authKeychain
 
-        apiService = PMAPIService(doh: doh)
+        apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "")
         apiService.authDelegate = self
         apiService.serviceDelegate = self
         apiService.forceUpgradeDelegate = delegate
