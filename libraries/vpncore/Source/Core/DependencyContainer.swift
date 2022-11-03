@@ -86,6 +86,8 @@ open class Container: PropertiesToOverride {
 
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(self)
 
+    private lazy var announcementsViewModel: AnnouncementsViewModel = AnnouncementsViewModel(factory: self)
+
     // Refreshes announcements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
@@ -391,7 +393,7 @@ extension Container: AnnouncementManagerFactory {
 // MARK: AnnouncementsViewModelFactory
 extension Container: AnnouncementsViewModelFactory {
     public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
-        AnnouncementsViewModel(factory: self)
+        announcementsViewModel
     }
 }
 
