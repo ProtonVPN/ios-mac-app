@@ -21,7 +21,8 @@
 //
 
 import Foundation
-import VPNShared
+
+public typealias JSONDictionary = [String: AnyObject]
 
 extension Data {
     var jsonDictionary: JSONDictionary? {
