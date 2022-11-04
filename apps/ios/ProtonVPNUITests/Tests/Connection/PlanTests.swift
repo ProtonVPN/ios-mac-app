@@ -34,7 +34,7 @@ class PlanTests: ProtonVPNUITests {
 
     }
 
-    /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 1 year and costs $71.88
+    /// Tests that the plan for the VPN Plus user is named "VPN Plus", lasts for 1 year and costs $99.99
     func testShowCurrentPlanForVPNPlusUser() {
 
         loginAsPlusUser()
@@ -45,7 +45,7 @@ class PlanTests: ProtonVPNUITests {
             .goToUpgradeSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 1 year")
-            .checkPriceIs("$71.88")
+            .checkPriceIs("$99.99")
     }
 
     // Black Friday 2022 plans, will renew at same price and cycle, so we want to keep tests for them
