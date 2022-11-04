@@ -158,6 +158,7 @@ class SignupTests: ProtonVPNUITests {
             .startUsingProtonVpn()
             .startUpgrade()
             .verifyStaticText("Get Plus")
+            .sleepFor(1)
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "VPN Plus")
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "for 1 year")
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")

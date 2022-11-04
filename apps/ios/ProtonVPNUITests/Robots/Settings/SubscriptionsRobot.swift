@@ -57,6 +57,12 @@ class SubscriptionsRobot: CoreElements {
     }
     
     @discardableResult
+    public func sleepFor(_ duration: UInt32) -> Self {
+        sleep(duration)
+        return self
+    }
+
+    @discardableResult
     public func verifyTableCellStaticText(cellName: String, name: String) -> Self {
         table("PaymentsUIViewController.tableView").wait().checkExists()
         let staticTexts = XCUIApplication().tables.matching(identifier: "PaymentsUIViewController.tableView").cells.matching(identifier: cellName).staticTexts
