@@ -126,8 +126,10 @@ extension NETunnelProviderSessionWrapper {
                         return
                     }
 
-                    sleep(1)
-                    self?.send(message, maxRetries: maxRetries - 1, completion: completion)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        log.debug("NETunnelProviderSessionWrapper try sending provider message after 1 second, maxRetries: \(maxRetries)", category: .connection)
+                        self?.send(message, maxRetries: maxRetries - 1, completion: completion)
+                    }
                     return
                 }
 
