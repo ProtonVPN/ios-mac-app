@@ -202,6 +202,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         guard loggedIn else {
+            log.info("Not refreshing vpn certificate - client not logged in")
+            success()
+            return
+        }
+
+        guard case .certificate = propertiesManager.vpnProtocol.authenticationType else {
+            log.info("Not refreshing vpn certificate - cert auth not in use")
             success()
             return
         }
@@ -210,24 +217,21 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             switch result {
             case .success:
                 success()
-            case let .failure(error):
-                if let providerError = error as? ProviderMessageError {
-                    // The vpn isn't connected yet, which means the extension hasn't been
-                    // launched (if it's used at all for the user's preferred protocol)
-                    // and the provider can't refresh the certificate.
-                    // Fake success and the extension can handle refresh itself once we're connected.
+            case let .failure(error) where error is ProviderMessageError:
+                // The vpn isn't connected yet, which means the extension hasn't been
+                // launched (if it's used at all for the user's preferred protocol)
+                // and the provider can't refresh the certificate.
+                // Fake success and the extension can handle refresh itself once we're connected.
+                success()
+            case .failure(AuthenticationRemoteClientError.needNewKeys):
+                // The network extension tried to refresh certificates, but the server responded saying
+                // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
+                // we just need to attempt to reconnect, since that will generate new keys for us.
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
                     success()
-                    return
-                } else if case AuthenticationRemoteClientError.needNewKeys = error {
-                    // The network extension tried to refresh certificates, but the server responded saying
-                    // that new keys needed regenerating. VpnAuthentication has deleted the keys, and now
-                    // we just need to attempt to reconnect, since that will generate new keys for us.
-                    executeOnUIThread {
-                        NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
-                        success()
-                    }
-                    return
                 }
+            case let .failure(error):
                 failure(error)
             }
         }
