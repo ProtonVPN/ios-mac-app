@@ -4764,7 +4764,7 @@
 			repositoryURL = "https://github.com/ProtonVPN/wireguard-apple.git";
 			requirement = {
 				kind = revision;
-				revision = b76a06397766e89e994fb012ae91a392071b542a;
+				revision = 4deff1844a4aba1dcf54b21725b6d4b22ce2f2eb;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
