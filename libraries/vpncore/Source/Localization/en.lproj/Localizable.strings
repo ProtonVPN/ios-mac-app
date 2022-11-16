@@ -1762,6 +1762,8 @@
 "_streaming_servers_note" = "Note: Turn off the Location Service and clear the cache of the streaming apps to ensure new content appears.";
 "_streaming_servers_extra" = "and more";
 
+"_feature_news_servers" = "News servers";
+"_feature_news_servers_description" = "Fast. Free. Uncensored. Connect to a #NEWS server to read articles, watch videos, and stream live news from our partners.";
 "_feature_free_servers" = "Free servers";
 "_feature_deutsche_welle" = "Deutsche Welle";
 "_feature_free_servers_description" = "Free servers have no data limit nor network throttling. The speed might be limited only due to the high number of users connected.";

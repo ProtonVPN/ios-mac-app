@@ -38,6 +38,6 @@ struct PremiumFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
 struct FreeFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
     let title: String = LocalizedString.informationTitle
     var featureViewModels: [FeatureCellViewModel] {
-        [FreeServersFeature(), PartnersFeature()]
+        [FreeServersFeature(), NewsServersFeature(), PartnersFeature()]
     }
 }

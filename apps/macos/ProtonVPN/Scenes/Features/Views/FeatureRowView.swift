@@ -32,9 +32,9 @@ class FeatureRowView: NSView {
     
     var viewModel: FeatureCellViewModel! {
         didSet {
-            titleLbl.stringValue = viewModel.title
+            titleLbl.attributedStringValue = viewModel.title.styled(.normal, font: .themeFont(.small))
             iconIV.image = viewModel.icon
-            descriptionLbl.stringValue = viewModel.description
+            descriptionLbl.attributedStringValue = viewModel.description.styled([.weak], font: .themeFont(.small), alignment: .natural)
             guard let footer = viewModel.footer else {
                 learnMoreBtn.removeFromSuperview()
                 return

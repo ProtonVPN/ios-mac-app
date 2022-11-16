@@ -37,7 +37,7 @@ class ServerItemViewModel {
     var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
     var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
     var partner: Partner? {
-        guard serverModel.feature.contains(.partner) else {
+        guard serverModel.isPartner else {
             return nil
         }
         return propertiesManager.partners.first {

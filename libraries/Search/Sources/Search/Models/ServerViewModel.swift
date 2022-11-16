@@ -22,6 +22,7 @@ import UIKit
 public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var description: String { get }
     var isSmartAvailable: Bool { get }
+    var isPartnerServer: Bool { get }
     var torAvailable: Bool { get }
     var p2pAvailable: Bool { get }
     var streamingAvailable: Bool { get }

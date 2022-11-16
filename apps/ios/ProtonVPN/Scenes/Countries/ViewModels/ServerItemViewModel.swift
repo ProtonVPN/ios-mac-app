@@ -109,6 +109,10 @@ class ServerItemViewModel {
     var isSmartAvailable: Bool {
         return serverModel.isVirtual
     }
+
+    var isPartnerServer: Bool {
+        serverModel.isPartner
+    }
     
     var streamingAvailable: Bool {
         let tier = String(serverModel.tier)

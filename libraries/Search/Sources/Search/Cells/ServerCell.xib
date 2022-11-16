@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,11 +29,11 @@
                         <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qUd-gM-Kds" userLabel="props stack">
-                        <rect key="frame" x="384" y="24" width="142" height="16"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qUd-gM-Kds" userLabel="props stack">
+                        <rect key="frame" x="356" y="7" width="170" height="50"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-arrows-switch" translatesAutoresizingMaskIntoConstraints="NO" id="1mc-2c-HuB">
-                                <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                <rect key="frame" x="0.0" y="17" width="16" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="Af9-53-4Vv"/>
@@ -41,7 +41,7 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-brand-tor" translatesAutoresizingMaskIntoConstraints="NO" id="UF9-cM-L8d">
-                                <rect key="frame" x="20" y="0.0" width="16" height="16"/>
+                                <rect key="frame" x="20" y="17" width="16" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="C8O-NA-YU9"/>
@@ -49,7 +49,7 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-globe" translatesAutoresizingMaskIntoConstraints="NO" id="LSC-eK-sOO">
-                                <rect key="frame" x="40" y="0.0" width="16" height="16"/>
+                                <rect key="frame" x="40" y="17" width="16" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="cHT-iW-iD6"/>
@@ -57,25 +57,29 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-play" translatesAutoresizingMaskIntoConstraints="NO" id="0uq-cF-CiO">
-                                <rect key="frame" x="60" y="0.0" width="16" height="16"/>
+                                <rect key="frame" x="60" y="17" width="16" height="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="Lhq-9G-0ll"/>
                                     <constraint firstAttribute="height" constant="16" id="YC8-Il-dNp"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" image="Deutsche-Welle-medium" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-i0-6KD">
+                                <rect key="frame" x="80" y="13" width="24" height="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVx-F1-H5s">
-                                <rect key="frame" x="80" y="0.0" width="8" height="16"/>
+                                <rect key="frame" x="108" y="0.0" width="8" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="kUU-TB-I9c"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-yk-4lY">
-                                <rect key="frame" x="92" y="0.0" width="50" height="16"/>
+                                <rect key="frame" x="120" y="0.0" width="50" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="0Cy-HH-d7d" userLabel="load color">
-                                        <rect key="frame" x="0.0" y="4" width="8" height="8"/>
+                                        <rect key="frame" x="0.0" y="21" width="8" height="8"/>
                                         <color key="backgroundColor" red="0.30196078431372547" green="0.63921568627450975" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="8" id="2DL-ft-50g"/>
@@ -88,7 +92,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gy0-ry-hsN">
-                                        <rect key="frame" x="12" y="-0.5" width="38" height="17"/>
+                                        <rect key="frame" x="12" y="16.5" width="38" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -190,6 +194,7 @@
                 <outlet property="loadContainingView" destination="Rif-yk-4lY" id="GjG-ZP-rph"/>
                 <outlet property="loadLbl" destination="Gy0-ry-hsN" id="4kh-DG-rD5"/>
                 <outlet property="p2pIV" destination="1mc-2c-HuB" id="cxK-lO-6od"/>
+                <outlet property="partnerImageView" destination="qyp-i0-6KD" id="TdJ-gR-LAT"/>
                 <outlet property="secureView" destination="uyK-oI-0bQ" id="80k-Bx-ede"/>
                 <outlet property="serverNameLabel" destination="Emp-q6-ALw" id="3yh-wb-7o7"/>
                 <outlet property="smartIV" destination="LSC-eK-sOO" id="T7t-MI-iTj"/>
@@ -200,6 +205,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Deutsche-Welle-medium" width="24" height="24"/>
         <image name="ic-arrows-switch" width="24" height="24"/>
         <image name="ic-brand-tor" width="24" height="24"/>
         <image name="ic-chevrons-right" width="24" height="24"/>
