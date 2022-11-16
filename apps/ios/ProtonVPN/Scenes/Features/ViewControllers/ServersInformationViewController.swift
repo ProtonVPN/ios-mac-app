@@ -40,14 +40,15 @@ class ServersInformationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.backgroundColor = .clear
         tableView.bounces = false
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
 
         view.backgroundColor = .backgroundColor()
+
         titleLabel.text = LocalizedString.informationTitle
         titleLabel.font = .boldSystemFont(ofSize: 17)
         titleLabel.textColor = .normalTextColor()
@@ -78,7 +79,9 @@ extension ServersInformationViewController: UITableViewDataSource {
 
         return cell
     }
+}
 
+extension ServersInformationViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         viewModel.sections[section].title != nil ? 56 : 0
     }
@@ -97,48 +100,5 @@ extension ServersInformationViewController: UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = viewModel.sections[section].title
         return header
-    }
-}
-
-extension ServersInformationViewController: UITableViewDelegate {
-}
-
-final class InformationTableViewCell: UITableViewCell {
-    struct ViewModel {
-        let title: String
-        let description: String
-        let icon: UIImage
-    }
-    static var cellIdentifier: String {
-        return String(describing: self)
-    }
-    @IBOutlet private weak var icon: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
-
-    var viewModel: ViewModel! {
-        didSet {
-            icon.image = viewModel.icon
-            icon.tintColor = .normalTextColor()
-            titleLabel.text = viewModel.title
-            descriptionLabel.text = viewModel.description
-        }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        backgroundColor = .clear
-        titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
-        titleLabel.textColor = .normalTextColor()
-
-        descriptionLabel.font = .systemFont(ofSize: 13)
-        descriptionLabel.textColor = .weakTextColor()
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        icon.image = nil
-        titleLabel.text = nil
-        descriptionLabel.text = nil
     }
 }

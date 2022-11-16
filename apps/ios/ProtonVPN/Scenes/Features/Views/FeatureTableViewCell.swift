@@ -76,6 +76,7 @@ class FeatureTableViewCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction private func didTapLearnMore(_ sender: Any) {
-        SafariService().open(url: viewModel.urlContact)
+        guard let urlContact = viewModel.urlContact else { return }
+        SafariService().open(url: urlContact)
     }
 }

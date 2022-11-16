@@ -120,7 +120,7 @@ class CountryItemViewModel {
     }
 
     var partner: Partner? {
-        return propertiesManager.partners.first
+        return propertiesManager.partners.first // add support for multiple partners
     }
     
     var textInPlaceOfConnectIcon: String? {
@@ -224,11 +224,11 @@ class CountryItemViewModel {
     }
 
     func isSeverPlus( for section: Int) -> Bool {
-        return serverViewModels[section].tier > 1
+        return serverViewModels[section].tier > CoreAppConstants.VpnTiers.basic
     }
 
     func isSeverFree( for section: Int) -> Bool {
-        return serverViewModels[section].tier == 0
+        return serverViewModels[section].tier == CoreAppConstants.VpnTiers.free
     }
     
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {

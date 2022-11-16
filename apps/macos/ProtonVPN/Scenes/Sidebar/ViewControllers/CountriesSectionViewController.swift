@@ -369,7 +369,7 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
     func userDidClickOnPartnerIcon(partner: Partner) {
-        SafariService().open(url: partner.websiteURL)
+        SafariService().open(url: partner.websiteURL) // open informative modal instead
     }
 
     func userDidRequestStreamingInfo(server: ServerItemViewModel) {

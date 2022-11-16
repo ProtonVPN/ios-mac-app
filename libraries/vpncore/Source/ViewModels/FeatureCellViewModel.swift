@@ -34,7 +34,7 @@ public protocol FeatureCellViewModel {
     var sectionTitle: String? { get }
     var description: String { get }
     var footer: String? { get }
-    var urlContact: String { get }
+    var urlContact: String? { get }
     var displayLoads: Bool { get }
 }
 
@@ -52,7 +52,7 @@ public struct SmartRoutingFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureSmartRoutingDescription
     public let footer: String? = LocalizedString.learnMore
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreSmartRouting
+    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreSmartRouting
     public init () { }
 }
 
@@ -62,7 +62,7 @@ public struct StreamingFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureStreamingDescription
     public let footer: String? = LocalizedString.learnMore
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreStreaming
+    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreStreaming
     public init () { }
 }
 
@@ -72,7 +72,7 @@ public struct P2PFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureP2pDescription
     public let footer: String? = LocalizedString.learnMore
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreP2p
+    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreP2p
     public init () { }
 }
 
@@ -82,7 +82,7 @@ public struct TorFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureTorDescription
     public let footer: String? = LocalizedString.learnMore
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreTor
+    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreTor
     public init () { }
 }
 
@@ -92,7 +92,7 @@ public struct LoadPerformanceFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.performanceLoadDescription
     public let footer: String? = LocalizedString.learnMore
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreLoads
+    public let urlContact: String? = CoreAppConstants.ProtonVpnLinks.learnMoreLoads
     public let displayLoads: Bool = true
     public init () { }
 }
@@ -103,7 +103,7 @@ public struct FreeServersFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureFreeServersDescription
     public let footer: String? = nil
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreFreeServers
+    public let urlContact: String? = nil
     public init () { }
 }
 
@@ -117,7 +117,7 @@ public struct NewsServersFeature: FeatureCellViewModel {
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureNewsServersDescription
     public let footer: String? = nil
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreFreeServers
+    public let urlContact: String? = nil
     public init () { }
 }
 
@@ -131,6 +131,6 @@ public struct PartnersFeature: FeatureCellViewModel {
     public var sectionTitle: String? = LocalizedString.partnersTitle
     public let description: String = LocalizedString.featureDeutscheWelleDescription
     public let footer: String? = nil
-    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreDW
+    public let urlContact: String? = nil
     public init () { }
 }
