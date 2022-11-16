@@ -92,8 +92,9 @@ public protocol PropertiesManagerProtocol: class {
     var humanValidationFailed: Bool { get set }
     var alternativeRouting: Bool { get set }
     var smartProtocol: Bool { get set }
-    
+
     var streamingServices: StreamingDictServices { get set }
+    var partners: [Partner] { get set }
     var streamingResourcesUrl: String? { get set }
 
     var connectionProtocol: ConnectionProtocol { get }
@@ -178,6 +179,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case alternativeRouting = "alternativeRouting"
         case smartProtocol = "smartProtocol"
         case streamingServices = "streamingServices"
+        case partners = "partners"
         case streamingResourcesUrl = "streamingResourcesUrl"
 
         case wireguardConfig = "WireguardConfig"
@@ -594,6 +596,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             _streamingServices = newValue
             storage.setEncodableValue(newValue, forKey: Keys.streamingServices.rawValue)
+        }
+    }
+
+    private var _partners: [Partner]?
+    public var partners: [Partner] {
+        get {
+            if let _partners = _partners {
+                return _partners
+            }
+
+            return storage.getDecodableValue([Partner].self, forKey: Keys.partners.rawValue) ?? []
+        }
+        set {
+            _partners = newValue
+            storage.setEncodableValue(newValue, forKey: Keys.partners.rawValue)
         }
     }
     

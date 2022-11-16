@@ -151,6 +151,7 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
         case location = "/vpn/location"
         case logicals = "/vpn/logicals"
         case streamingServices = "/vpn/streamingservices"
+        case partners = "/vpn/partners"
         case clientConfig = "/vpn/v2/clientconfig"
         case loads = "/vpn/loads"
     }
@@ -222,6 +223,18 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
                                                     "1": [.init(name: "Rai", icon: "rai.jpg")],
                                                     "2": [.init(name: "Netflix", icon: "netflix.jpg")]
                                                 ]])
+            let data = try responseEncoder.encode(response)
+            return .success(data)
+        case .partners:
+            // for fetching list of partners
+            let partner = Partner(name: "Deutche Welle",
+                                  description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
+                                  websiteURL: "https://www.dw.com/",
+                                  iconURL: "https://proton.me/favicon.ico",
+                                  logicalIDs: ["YC6ClO_x1nbwWdsNcxE6kmekOuSI6pEmB-zTnWUF-ENyT1OqB3vx-zfcAX7v6WKjDphKDE3ixJ41hIQJPFRPHQ=="])
+            let response = VPNPartnersResponse(code: 1000, partnerTypes: [PartnerType(type: "News",
+                                                                                      description: "descr",
+                                                                                      partners: [partner])])
             let data = try responseEncoder.encode(response)
             return .success(data)
         case .clientConfig:

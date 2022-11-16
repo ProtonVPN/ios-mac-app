@@ -75,6 +75,7 @@ class CountriesSectionViewModel {
     var secureCoreChange: ((Bool) -> Void)?
     var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
     var displayPremiumServices: (() -> Void)?
+    var displayFreeServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
     
     var isSecureCoreEnabled: Bool {

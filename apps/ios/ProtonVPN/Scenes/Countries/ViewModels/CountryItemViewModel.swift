@@ -114,9 +114,13 @@ class CountryItemViewModel {
             return IconProvider.powerOff
         }
     }
-    
+
     var streamingServices: [VpnStreamingOption] {
         return propertiesManager.streamingServices[countryCode]?["2"] ?? []
+    }
+
+    var partner: Partner? {
+        return propertiesManager.partners.first
     }
     
     var textInPlaceOfConnectIcon: String? {

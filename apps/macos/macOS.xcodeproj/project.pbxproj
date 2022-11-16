@@ -221,6 +221,7 @@
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
+		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
@@ -824,6 +825,7 @@
 		E534EA4D2806B6DB00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
+		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
 		E565986728200ADA004F2240 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/LoadingView.swift; sourceTree = "<group>"; };
 		E56598692820FECE004F2240 /* WarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = WarningView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.xib; sourceTree = "<group>"; };
 		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
@@ -1168,6 +1170,7 @@
 			isa = PBXGroup;
 			children = (
 				42BEF95526317F29009180A7 /* FeatureRowView.swift */,
+				E53D7456291925380006E499 /* FeatureRowView.xib */,
 				42BEF97E2631AB1A009180A7 /* StreamOptionCVItem.swift */,
 				42BEF97F2631AB1A009180A7 /* StreamOptionCVItem.xib */,
 			);
@@ -3041,6 +3044,7 @@
 				EECEF3D91F1699F500A16606 /* CountryItemCellView.xib in Resources */,
 				F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
+				E53D7457291925380006E499 /* FeatureRowView.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
 				4C7CAEC128006E5C0008778E /* LoadingAnimationFrames in Resources */,
 				F397EA67280565E50072D511 /* CouponViewController.xib in Resources */,

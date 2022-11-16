@@ -116,6 +116,7 @@ final class CountryItemCellView: NSView {
         expandButton.isHidden = viewModel.isTierTooLow || viewModel.underMaintenance
         maintenanceBtn.isHidden = !viewModel.underMaintenance
         connectButton.isHovered = false
+        expandButton.isHovered = false
         configureFeatures()
         setupAccessibilityCustomActions()
     }

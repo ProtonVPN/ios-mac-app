@@ -96,9 +96,17 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public var supportsP2P: Bool {
         return self.feature.contains(.p2p)
     }
-    
+
     public var supportsTor: Bool {
         return self.feature.contains(.tor)
+    }
+
+    public var supportsStreaming: Bool {
+        return self.feature.contains(.streaming)
+    }
+
+    public var isPartner: Bool {
+        return self.feature.contains(.partner)
     }
     
     public var underMaintenance: Bool {
@@ -156,7 +164,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         id = try dic.stringOrThrow(key: "ID") // "ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
         name = try dic.stringOrThrow(key: "Name") // "Name": "ES#1"
         domain = try dic.stringOrThrow(key: "Domain") // "Domain": "es-05.protonvpn.com"
-        load = try dic.intOrThrow(key: "Load") // "Load": 13
+        load = try Int(dic.doubleOrThrow(key: "Load")) // "Load": 13
         entryCountryCode = try dic.stringOrThrow(key: "EntryCountry") // "EntryCountry": "ES"
         exitCountryCode = try dic.stringOrThrow(key: "ExitCountry") // "ExitCountry": "ES" //this replace old countryCode
         tier = try dic.intOrThrow(key: "Tier") // "Tier": 2

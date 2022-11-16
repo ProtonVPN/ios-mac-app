@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,11 +10,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" customClass="ServerItemCellView" customModule="ProtonVPN" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="687" height="50"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
-                    <rect key="frame" x="24" y="13" width="250" height="24"/>
+                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
+                    <rect key="frame" x="24" y="13" width="274" height="24"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jz-D5-q91">
                             <rect key="frame" x="0.0" y="1" width="22" height="22"/>
@@ -99,6 +99,16 @@
                                 <action selector="didTapStreaming:" target="c22-O7-iKe" id="hAr-oF-Uji"/>
                             </connections>
                         </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="15N-3N-eoj">
+                            <rect key="frame" x="258" y="4" width="16" height="16"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Deutsche-Welle-small" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mLA-Mr-md9">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="didTapPartner:" target="c22-O7-iKe" id="etK-BJ-Day"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="xnJ-CI-Tms" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="9sA-fP-N82"/>
@@ -122,8 +132,10 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
@@ -136,7 +148,7 @@
                     </customSpacing>
                 </stackView>
                 <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0LY-WB-KAs" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="248" y="13" width="68" height="24"/>
+                    <rect key="frame" x="595" y="13" width="68" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="MmY-nG-zbD"/>
                     </constraints>
@@ -157,7 +169,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ewh-0g-OY6">
-                    <rect key="frame" x="288" y="17" width="30" height="17"/>
+                    <rect key="frame" x="635" y="17" width="30" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="City" id="l6m-pP-HZC">
                         <font key="font" metaFont="system" size="14"/>
                         <color key="textColor" red="0.44705882352941173" green="0.46274509803921571" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
@@ -165,7 +177,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aym-qX-9lw">
-                    <rect key="frame" x="252" y="18" width="64" height="18"/>
+                    <rect key="frame" x="599" y="19" width="64" height="17"/>
                     <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="rlB-0G-5Af">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="14"/>
@@ -188,6 +200,7 @@
             <connections>
                 <outlet property="cityLbl" destination="Ewh-0g-OY6" id="211-QY-fGX"/>
                 <outlet property="connectBtn" destination="0LY-WB-KAs" id="5LA-gB-rpA"/>
+                <outlet property="dwButton" destination="15N-3N-eoj" id="Ml2-gb-zAi"/>
                 <outlet property="loadIcon" destination="rdo-bb-f1n" id="Ygw-MS-wFP"/>
                 <outlet property="maintenanceIV" destination="3jz-D5-q91" id="stl-Vx-X3T"/>
                 <outlet property="p2pIV" destination="Meu-TF-bG3" id="lJI-60-3By"/>
@@ -199,10 +212,11 @@
                 <outlet property="torIV" destination="nA5-Vh-5IW" id="llX-5m-nb6"/>
                 <outlet property="upgradeBtn" destination="aym-qX-9lw" id="1Il-BH-Jyo"/>
             </connections>
-            <point key="canvasLocation" x="139" y="154"/>
+            <point key="canvasLocation" x="312.5" y="154"/>
         </customView>
     </objects>
     <resources>
+        <image name="Deutsche-Welle-small" width="16" height="16"/>
         <image name="ic-arrows-switch" width="24" height="24"/>
         <image name="ic-brand-tor" width="24" height="24"/>
         <image name="ic-chevrons-right" width="24" height="24"/>

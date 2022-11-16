@@ -48,6 +48,7 @@ public class VpnApiService {
         var rCredentials: VpnCredentials?
         var rServerModels: [ServerModel]?
         var rStreamingServices: VPNStreamingResponse?
+        var rPartnersServices: VPNPartnersResponse?
         var rLocation: UserLocation?
         var rClientConfig: ClientConfig?
         var rError: Error?
@@ -118,7 +119,7 @@ public class VpnApiService {
                 silentFailureClosure(error) // leave: C
             }
         }
-        
+
         dispatchGroup.enter() // enter: D
         virtualServices { result in
             switch result {
@@ -130,9 +131,25 @@ public class VpnApiService {
             }
         }
 
+        dispatchGroup.enter() // enter: E
+        partnersServices { result in
+            switch result {
+            case let .success(response):
+                rPartnersServices = response
+                dispatchGroup.leave() // leave: E
+            case let .failure(error):
+                silentFailureClosure(error) // leave: E
+            }
+        }
+
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, location: rLocation, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
+                completion(.success(VpnProperties(serverModels: servers,
+                                                  vpnCredentials: rCredentials,
+                                                  location: rLocation,
+                                                  clientConfig: rClientConfig,
+                                                  streamingResponse: rStreamingServices,
+                                                  partnersResponse: rPartnersServices)))
             } else if let error = rError {
                 completion(.failure(error))
             } else {
@@ -367,9 +384,13 @@ public class VpnApiService {
             }
         }
     }
-    
+
     public func virtualServices(completion: @escaping (Result<VPNStreamingResponse, Error>) -> Void) {
         networking.request(VPNStreamingRequest(), completion: completion)
+    }
+
+    public func partnersServices(completion: @escaping (Result<VPNPartnersResponse, Error>) -> Void) {
+        networking.request(VPNPartnersRequest(), completion: completion)
     }
     
     // MARK: - Private

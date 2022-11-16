@@ -36,9 +36,12 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     
     init( _ sectionHeader: String, totalCountries: Int, isPremium: Bool, countriesViewModel: CountriesSectionViewModel ) {
         title = sectionHeader + " (\(totalCountries))"
-        guard isPremium else { return }
         didTapInfoBtn = {
-            countriesViewModel.displayPremiumServices?()
+            if isPremium {
+                countriesViewModel.displayPremiumServices?()
+            } else {
+                countriesViewModel.displayFreeServices?()
+            }
         }
     }
 }

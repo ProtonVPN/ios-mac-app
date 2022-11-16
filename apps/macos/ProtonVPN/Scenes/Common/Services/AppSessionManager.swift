@@ -162,6 +162,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
                 self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+                self.propertiesManager.partners = properties.partnersResponse?.partnerTypes.first?.partners ?? []
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
                 self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
