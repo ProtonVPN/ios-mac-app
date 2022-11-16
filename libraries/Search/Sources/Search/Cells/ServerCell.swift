@@ -44,6 +44,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     @IBOutlet private weak var loadColorView: UIView!
     @IBOutlet private weak var loadContainingView: UIView!
 
+    @IBOutlet private weak var partnerImageView: UIImageView!
     @IBOutlet private weak var smartIV: UIImageView!
     @IBOutlet private weak var torIV: UIImageView!
     @IBOutlet private weak var p2pIV: UIImageView!
@@ -87,6 +88,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             secureView.isHidden = viewModel.entryCountryName == nil
             countryNameLabel.isHidden = viewModel.entryCountryName == nil
 
+            partnerImageView.isHidden = !viewModel.isPartnerServer
             smartIV.isHidden = !viewModel.isSmartAvailable
             torIV.isHidden = !viewModel.torAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable

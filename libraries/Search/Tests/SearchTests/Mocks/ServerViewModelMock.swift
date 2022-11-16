@@ -21,6 +21,8 @@ import UIKit
 @testable import Search
 
 final class ServerViewModelMock: ServerViewModel {
+    var isPartnerServer: Bool
+
     var textColor: UIColor
     
     let description: String
@@ -73,7 +75,7 @@ final class ServerViewModelMock: ServerViewModel {
 
     }
 
-    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil) {
+    init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil, isPartnerServer: Bool = false) {
         description = server
         self.city = city
         self.countryName = countryName
@@ -81,5 +83,6 @@ final class ServerViewModelMock: ServerViewModel {
         self.entryCountryName = entryCountryName
         self.translatedCity = translatedCity
         self.textColor = .white
+        self.isPartnerServer = isPartnerServer
     }
 }

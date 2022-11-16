@@ -107,12 +107,26 @@ public struct FreeServersFeature: FeatureCellViewModel {
     public init () { }
 }
 
+public struct NewsServersFeature: FeatureCellViewModel {
+#if os(macOS)
+    public let icon: Image = Bundle.vpnCore.image(forResource: NSImage.Name("ic-newspaper"))!
+#elseif os(iOS)
+    public let icon: Image = UIImage(named: "ic-newspaper", in: Bundle.vpnCore, with: nil)!
+#endif
+    public let title: String = LocalizedString.featureNewsServers
+    public var sectionTitle: String?
+    public let description: String = LocalizedString.featureNewsServersDescription
+    public let footer: String? = nil
+    public let urlContact: String = CoreAppConstants.ProtonVpnLinks.learnMoreFreeServers
+    public init () { }
+}
+
 public struct PartnersFeature: FeatureCellViewModel {
-    #if os(macOS)
+#if os(macOS)
     public let icon: Image = Bundle.vpnCore.image(forResource: NSImage.Name("Deutsche-Welle-medium"))!
-    #elseif os(iOS)
+#elseif os(iOS)
     public let icon: Image = UIImage(named: "Deutsche-Welle-medium", in: Bundle.vpnCore, with: nil)!
-    #endif
+#endif
     public let title: String = LocalizedString.featureDeutscheWelle
     public var sectionTitle: String? = LocalizedString.partnersTitle
     public let description: String = LocalizedString.featureDeutscheWelleDescription

@@ -222,9 +222,13 @@ class CountryItemViewModel {
         let tier = serverViewModels[section].tier
         return CoreAppConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
     }
-    
+
     func isSeverPlus( for section: Int) -> Bool {
         return serverViewModels[section].tier > 1
+    }
+
+    func isSeverFree( for section: Int) -> Bool {
+        return serverViewModels[section].tier == 0
     }
     
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
@@ -284,6 +288,27 @@ class CountryItemViewModel {
                 connectionChanged()
             }
         }
+    }
+}
+
+extension CountryItemViewModel {
+    func serversInformationViewModel() -> ServersInformationViewController.ViewModel {
+        ServersInformationViewController.ViewModel(title: "Information",
+                                                   sections: [.init(title: nil,
+                                                                    rowViewModels: [
+                                                                        .init(title: "Free servers",
+                                                                              description: "Security and privacy for everyone. Free servers have no data limits, and we’ll never deliberately slow down your browsing speed",
+                                                                              icon: IconProvider.servers),
+                                                                        .init(title: "News servers",
+                                                                              description: "Fast. Free. Uncensored. Connect to a #NEWS server to read articles, watch videos, and stream live news from our partners.",
+                                                                              icon: UIImage(named: "ic-newspaper", in: .vpnCore, with: nil)!)
+                                                                    ]),
+                                                              .init(title: "Our partners",
+                                                                    rowViewModels: [
+                                                                        .init(title: "DW news",
+                                                                              description: "The latest world news, independent from government influence. Available in English, German, Spanish, and Arabic.",
+                                                                              icon: UIImage(named: "Deutsche-Welle-medium", in: .vpnCore, with: nil)!)
+                                                                    ])])
     }
 }
 
