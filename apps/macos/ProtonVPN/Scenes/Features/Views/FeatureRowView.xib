@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="wvT-KL-rJh" customClass="FeatureRowView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="270" height="84"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="7Er-ij-bMQ">
+                    <rect key="frame" x="0.0" y="60" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="hd2-hJ-Gee"/>
+                        <constraint firstAttribute="width" constant="24" id="s0n-42-LlA"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="ic-globe" id="cg9-N0-JRW"/>
+                    <color key="contentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V7n-BY-RvP">
+                    <rect key="frame" x="30" y="69" width="85" height="15"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Smart Routing" id="9jp-le-OC8">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qVG-l6-0Jh">
+                    <rect key="frame" x="30" y="20" width="242" height="45"/>
+                    <textFieldCell key="cell" selectable="YES" title="This technology allows ProtonVPN to provide higher speed and security in difficult-to-serve countries." id="ZZV-wt-Z5B">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" red="0.61176470589999998" green="0.62745098040000002" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PJy-jc-zH8" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="32" y="0.0" width="73" height="16"/>
+                    <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="xOS-Rg-CSd">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <color key="contentTintColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="didTapLearnMoreBtn:" target="wvT-KL-rJh" id="OZ7-wc-Imk"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="PJy-jc-zH8" secondAttribute="bottom" id="IiV-uj-7at"/>
+                <constraint firstItem="7Er-ij-bMQ" firstAttribute="top" secondItem="wvT-KL-rJh" secondAttribute="top" id="aFQ-Zw-f9Y"/>
+                <constraint firstItem="7Er-ij-bMQ" firstAttribute="leading" secondItem="wvT-KL-rJh" secondAttribute="leading" id="bS7-UZ-UcI"/>
+                <constraint firstItem="V7n-BY-RvP" firstAttribute="top" secondItem="wvT-KL-rJh" secondAttribute="top" id="ddm-Rp-Mey"/>
+                <constraint firstItem="qVG-l6-0Jh" firstAttribute="leading" secondItem="V7n-BY-RvP" secondAttribute="leading" id="ey8-ay-o70"/>
+                <constraint firstAttribute="trailing" secondItem="qVG-l6-0Jh" secondAttribute="trailing" id="l02-Br-zpf"/>
+                <constraint firstItem="V7n-BY-RvP" firstAttribute="leading" secondItem="7Er-ij-bMQ" secondAttribute="trailing" constant="8" id="mas-7z-eBU"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V7n-BY-RvP" secondAttribute="trailing" id="sYs-gx-hJG"/>
+                <constraint firstItem="PJy-jc-zH8" firstAttribute="leading" secondItem="V7n-BY-RvP" secondAttribute="leading" id="tWe-48-87Y"/>
+                <constraint firstItem="PJy-jc-zH8" firstAttribute="top" secondItem="qVG-l6-0Jh" secondAttribute="bottom" constant="4" id="tZ2-jX-Wwo"/>
+                <constraint firstItem="qVG-l6-0Jh" firstAttribute="top" secondItem="V7n-BY-RvP" secondAttribute="bottom" constant="4" id="y6N-4N-QUe"/>
+            </constraints>
+            <connections>
+                <outlet property="descriptionLbl" destination="qVG-l6-0Jh" id="IpE-Q4-kJm"/>
+                <outlet property="iconIV" destination="7Er-ij-bMQ" id="Yob-bD-eTO"/>
+                <outlet property="learnMoreBtn" destination="PJy-jc-zH8" id="bAe-86-bWE"/>
+                <outlet property="titleLbl" destination="V7n-BY-RvP" id="rpi-hg-ZBO"/>
+            </connections>
+            <point key="canvasLocation" x="1" y="49"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="ic-globe" width="24" height="24"/>
+    </resources>
+</document>

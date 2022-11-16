@@ -762,6 +762,9 @@
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Can't parse the servers info";
 
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Can't parse the partner info";
+
 /* Default error when vpn properties fetch failed */
 "_error_vpn_properties" = "Can't fetch VPN properties!";
 
@@ -1753,11 +1756,17 @@
 "_p2p_title" = "P2P/BitTorrent";
 "_tor_title" = "Tor";
 "_server_load_title" = "Server Load";
+"_partners_footer" = "Visit website";
+"_partners_title" = "Partners";
 
 "_streaming_servers_description" = "Connect to a Plus server in this country to start streaming.";
 "_streaming_servers_note" = "Note: Turn off the Location Service and clear the cache of the streaming apps to ensure new content appears.";
 "_streaming_servers_extra" = "and more";
 
+"_feature_free_servers" = "Free servers";
+"_feature_deutsche_welle" = "Deutsche Welle";
+"_feature_free_servers_description" = "Free servers have no data limit nor network throttling. The speed might be limited only due to the high number of users connected.";
+"_feature_deutsche_welle_description" = "The latest world news, independent from any government influence. Available in English, German, Spanish, and Arabic.";
 "_feature_smart_routing_description" = "This technology allows Proton VPN to provide higher speed and security in difficult-to-serve countries.";
 "_feature_streaming_description" = "Plus servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";
 "_feature_p2p_description" = "These servers give the best performance for BitTorrent and file sharing.";

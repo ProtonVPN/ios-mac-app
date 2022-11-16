@@ -25,16 +25,19 @@ import vpncore
 
 protocol FeaturesOverlayViewModelProtocol {
     var title: String { get }
-    var smartRoutingViewModel: FeatureCellViewModel { get }
-    var streamingViewModel: FeatureCellViewModel { get }
-    var p2pViewModel: FeatureCellViewModel { get }
-    var torViewModel: FeatureCellViewModel { get }
+    var featureViewModels: [FeatureCellViewModel] { get }
 }
 
-struct FeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
+struct PremiumFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
     let title: String = LocalizedString.featuresTitle
-    let smartRoutingViewModel: FeatureCellViewModel = SmartRoutingFeature()
-    let streamingViewModel: FeatureCellViewModel = StreamingFeature()
-    let p2pViewModel: FeatureCellViewModel = P2PFeature()
-    let torViewModel: FeatureCellViewModel = TorFeature()
+    var featureViewModels: [FeatureCellViewModel] {
+        [SmartRoutingFeature(), StreamingFeature(), P2PFeature(), TorFeature()]
+    }
+}
+
+struct FreeFeaturesOverlayViewModel: FeaturesOverlayViewModelProtocol {
+    let title: String = LocalizedString.informationTitle
+    var featureViewModels: [FeatureCellViewModel] {
+        [FreeServersFeature(), PartnersFeature()]
+    }
 }

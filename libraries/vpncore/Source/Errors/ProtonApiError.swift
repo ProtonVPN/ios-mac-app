@@ -31,6 +31,7 @@ public enum ParseError: LocalizedError {
     case vpnCredentialsParse
     case userIpParse
     case serverParse
+    case partnerParse
     case sessionCountParse
     case loadsParse
     case clientConfigParse
@@ -43,6 +44,8 @@ public enum ParseError: LocalizedError {
         switch self {
         case .serverParse:
             return LocalizedString.errorServerInfoParser
+        case .partnerParse:
+            return LocalizedString.errorPartnerInfoParser
         case .sessionCountParse:
             return LocalizedString.errorSessionCountParser
         case .loadsParse:

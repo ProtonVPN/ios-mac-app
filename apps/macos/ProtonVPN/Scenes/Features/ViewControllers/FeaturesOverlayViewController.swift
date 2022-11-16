@@ -24,10 +24,7 @@ import Cocoa
 import vpncore
 class FeaturesOverlayViewController: NSViewController {
 
-    @IBOutlet private weak var smartRoutingRow: FeatureRowView!
-    @IBOutlet private weak var streamingRow: FeatureRowView!
-    @IBOutlet private weak var p2pRow: FeatureRowView!
-    @IBOutlet private weak var torRow: FeatureRowView!
+    @IBOutlet private weak var featuresStackView: NSStackView!
     @IBOutlet private weak var featuresTitleTF: NSTextField!
     @IBOutlet private weak var dismissButton: HoverDetectionButton!
 
@@ -44,14 +41,27 @@ class FeaturesOverlayViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        featuresTitleTF.stringValue = viewModel.title
-        smartRoutingRow.viewModel = viewModel.smartRoutingViewModel
-        streamingRow.viewModel = viewModel.streamingViewModel
-        p2pRow.viewModel = viewModel.p2pViewModel
-        torRow.viewModel = viewModel.torViewModel
+        featuresTitleTF.attributedStringValue = viewModel.title.styled(.hint, context: .text, font: .themeFont(.small), alignment: .natural)
+        addFeatureRows()
         dismissButton.image = AppTheme.Icon.crossSmall
         view.wantsLayer = true
         view.layer?.backgroundColor = .cgColor(.background)
+    }
+
+    private func addFeatureRows() {
+        for featureModel in viewModel.featureViewModels {
+            addSectionTitle(sectionTitle: featureModel.sectionTitle)
+            let view: FeatureRowView = .loadViewFromNib()!
+            view.viewModel = featureModel
+            featuresStackView.addArrangedSubview(view)
+        }
+    }
+
+    private func addSectionTitle(sectionTitle: String?) {
+        guard let sectionTitle = sectionTitle else { return }
+        let attributedString = sectionTitle.styled(.hint, context: .text, font: .themeFont(.small), alignment: .natural)
+        let titleTextField = NSTextField(labelWithAttributedString: attributedString)
+        featuresStackView.addArrangedSubview(titleTextField)
     }
     
     // MARK: - Actions

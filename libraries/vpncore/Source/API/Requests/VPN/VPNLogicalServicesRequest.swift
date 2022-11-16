@@ -23,17 +23,17 @@
 import ProtonCore_Networking
 
 final class VPNLogicalServicesRequest: Request {
-    
+
     let ip: String?
-    
+
     init(_ ip: String?) {
         self.ip = ip
     }
-    
+
     var path: String {
-        return "/vpn/logicals?WithTranslations=true"
+        return "/vpn/logicals?WithTranslations=true&WithPartnerLogicals=1"
     }
-    
+
     var isAuth: Bool {
         return true
     }

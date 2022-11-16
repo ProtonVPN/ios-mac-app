@@ -25,6 +25,7 @@ import vpncore
 
 protocol ServerItemCellViewDelegate: AnyObject {
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
+    func userDidClickOnPartnerIcon(partner: Partner)
 }
 
 final class ServerItemCellView: NSView {
@@ -34,6 +35,7 @@ final class ServerItemCellView: NSView {
     @IBOutlet private weak var p2pIV: NSImageView!
     @IBOutlet private weak var torIV: NSImageView!
     @IBOutlet private weak var streamingIV: NSButton!
+    @IBOutlet private weak var dwButton: NSButton!
 
     @IBOutlet private weak var serverLbl: NSTextField!
     @IBOutlet private weak var cityLbl: NSTextField!
@@ -65,9 +67,13 @@ final class ServerItemCellView: NSView {
         p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.weak)
         smartIV.image = AppTheme.Icon.globe.colored(.weak)
         secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
+        dwButton.image = Bundle.vpnCore.image(forResource: .init("Deutsche-Welle-medium"))
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
-        let trackingArea = NSTrackingArea(rect: trackingFrame, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
+        let trackingArea = NSTrackingArea(rect: trackingFrame,
+                                          options: [.mouseEnteredAndExited, .activeInKeyWindow],
+                                          owner: self,
+                                          userInfo: nil)
         addTrackingArea(trackingArea)
     }
     
@@ -108,11 +114,12 @@ final class ServerItemCellView: NSView {
         torIV.isHidden = !viewModel.isTorAvailable
         p2pIV.isHidden = !viewModel.isP2PAvailable
         smartIV.isHidden = !viewModel.isSmartAvailable
+        dwButton.isHidden = viewModel.partner == nil
         connectBtn.isHovered = false
         upgradeBtn.isHidden = !viewModel.requiresUpgrade
         setupInfoView()
         
-        [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl, torIV, smartIV, p2pIV, streamingIV].forEach {
+        [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl, torIV, smartIV, p2pIV, streamingIV, dwButton].forEach {
             $0?.alphaValue = viewModel.alphaForMainElements
         }
                 
@@ -141,6 +148,11 @@ final class ServerItemCellView: NSView {
 
     @IBAction private func didTapStreaming(_ sender: Any) {
         delegate?.userDidRequestStreamingInfo(server: viewModel)
+    }
+
+    @IBAction private func didTapPartner(_ sender: Any) {
+        guard let partner = viewModel.partner else { return }
+        delegate?.userDidClickOnPartnerIcon(partner: partner)
     }
 
     // MARK: - Accessibility

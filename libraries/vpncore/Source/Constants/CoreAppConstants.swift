@@ -64,6 +64,8 @@ public class CoreAppConstants {
         public static let learnMoreP2p = "https://protonvpn.com/support/bittorrent-vpn/"
         public static let learnMoreTor = "https://protonvpn.com/support/tor-vpn/"
         public static let learnMoreLoads = "https://protonvpn.com/support/server-load-percentages-and-colors-explained/"
+        public static let learnMoreFreeServers = "https://protonvpn.com/vpn-servers/#list_free-plan"
+        public static let learnMoreDW = "https://dw.com"
 
         public static let ping = "https://account.protonvpn.com/api/tests/ping"
     }

@@ -1,0 +1,43 @@
+//
+//  Created on 10/11/2022.
+//
+//  Copyright (c) 2022 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+
+public struct Partner: Codable {
+    let name: String
+    let description: String
+    public let websiteURL: String
+    let iconURL: String
+    public let logicalIDs: [String]
+
+    public init(dictionary: JSONDictionary) throws {
+        name = try dictionary.stringOrThrow(key: "Name")
+        description = try dictionary.stringOrThrow(key: "Description")
+        websiteURL = try dictionary.stringOrThrow(key: "WebsiteURL")
+        iconURL = try dictionary.stringOrThrow(key: "IconURL")
+        logicalIDs = try dictionary.stringArrayOrThrow(key: "LogicalIDs")
+    }
+
+    public init(name: String, description: String, websiteURL: String, iconURL: String, logicalIDs: [String]) {
+        self.name = name
+        self.description = description
+        self.websiteURL = websiteURL
+        self.iconURL = iconURL
+        self.logicalIDs = logicalIDs
+    }
+}
