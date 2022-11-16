@@ -38,7 +38,7 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PJy-jc-zH8" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PJy-jc-zH8" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
                     <rect key="frame" x="32" y="0.0" width="73" height="16"/>
                     <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="xOS-Rg-CSd">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -51,6 +51,7 @@
                 </button>
             </subviews>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="qVG-l6-0Jh" secondAttribute="bottom" priority="999" constant="4" id="E5M-zP-BXD"/>
                 <constraint firstAttribute="bottom" secondItem="PJy-jc-zH8" secondAttribute="bottom" id="IiV-uj-7at"/>
                 <constraint firstItem="7Er-ij-bMQ" firstAttribute="top" secondItem="wvT-KL-rJh" secondAttribute="top" id="aFQ-Zw-f9Y"/>
                 <constraint firstItem="7Er-ij-bMQ" firstAttribute="leading" secondItem="wvT-KL-rJh" secondAttribute="leading" id="bS7-UZ-UcI"/>

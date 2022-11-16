@@ -1756,7 +1756,6 @@
 "_p2p_title" = "P2P/BitTorrent";
 "_tor_title" = "Tor";
 "_server_load_title" = "Server Load";
-"_partners_footer" = "Visit website";
 "_partners_title" = "Partners";
 
 "_streaming_servers_description" = "Connect to a Plus server in this country to start streaming.";
