@@ -84,11 +84,7 @@ class CountryItemViewModel {
     var backgroundColor: UIColor {
         return .backgroundColor()
     }
-    
-    var cellHeight: CGFloat {
-        return 60
-    }
-    
+
     var torAvailable: Bool {
         return countryModel.feature.contains(.tor)
     }
