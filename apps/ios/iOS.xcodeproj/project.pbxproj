@@ -397,6 +397,8 @@
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E532A8A7292520FC00096D2D /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
+		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
+		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
@@ -920,6 +922,7 @@
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
 		E297CD5417EBE288B62F3B9A /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.debug.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
+		E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 		E534EA432806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E534EA442806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -1187,6 +1190,7 @@
 				428DF9B4262F126600944379 /* StreamingServiceCell.xib */,
 				42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */,
 				42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */,
+				E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -3263,6 +3267,7 @@
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
 				E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */,
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
+				E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
 				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
@@ -3376,6 +3381,7 @@
 				663F86962840DFE9009AABF6 /* AccountDetailsTableViewCell.swift in Sources */,
 				D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */,
+				E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
 				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
