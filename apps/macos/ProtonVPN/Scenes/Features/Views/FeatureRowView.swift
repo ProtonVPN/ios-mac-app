@@ -35,7 +35,11 @@ class FeatureRowView: NSView {
             titleLbl.stringValue = viewModel.title
             iconIV.image = viewModel.icon
             descriptionLbl.stringValue = viewModel.description
-            learnMoreBtn.attributedTitle = viewModel.footer.styled([.interactive, .active])
+            guard let footer = viewModel.footer else {
+                learnMoreBtn.removeFromSuperview()
+                return
+            }
+            learnMoreBtn.attributedTitle = footer.styled([.interactive, .active])
         }
     }
     
