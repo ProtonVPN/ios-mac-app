@@ -55,7 +55,6 @@ final class CountryViewController: UIViewController {
         tableView.delegate = self
         
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        tableView.rowHeight = viewModel?.cellHeight ?? 61
         tableView.separatorColor = UIColor.normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
         tableView.register(ServerCell.nib, forCellReuseIdentifier: ServerCell.identifier)
