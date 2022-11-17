@@ -36,13 +36,17 @@ class ServerItemViewModel {
     var isSmartAvailable: Bool { serverModel.isVirtual }
     var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
     var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
-    var partner: Partner? {
+    var partner: Partner? { // add unit tests
         guard serverModel.isPartner else {
             return nil
         }
-        return propertiesManager.partners.first {
-            $0.logicalIDs.contains(serverModel.id)
-        }
+        return propertiesManager.partnerTypes
+            .flatMap {
+                $0.partners
+            }
+            .first {
+                $0.logicalIDs.contains(serverModel.id)
+            }
     }
     var isStreamingAvailable: Bool {
         if serverModel.isSecureCore { return false }

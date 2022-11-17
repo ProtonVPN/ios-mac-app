@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 class ConnectingOverlayButton: HoverDetectionButton {
     enum Style {

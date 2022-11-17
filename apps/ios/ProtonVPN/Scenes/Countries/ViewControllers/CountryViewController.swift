@@ -95,11 +95,11 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
             guard let viewModel else {
                 return headerView
             }
-            if viewModel.streamingAvailable, viewModel.isSeverPlus(for: section) {
+            if viewModel.streamingAvailable, viewModel.isServerPlusOrAbove(for: section) {
                 headerView.callback = { [weak self] in
                     self?.displayStreamingServices()
                 }
-            } else if viewModel.isSeverFree(for: section) {
+            } else if viewModel.isServerFree(for: section) {
                 headerView.callback = { [weak self] in
                     self?.displayFreeServersInfo()
                 }

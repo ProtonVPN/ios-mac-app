@@ -18,7 +18,7 @@
 
 import Foundation
 
-extension OptionSet where RawValue == Int {
+public extension OptionSet where RawValue == Int {
     init(bitPosition: Int) {
         assert(0 <= bitPosition && bitPosition < Int.bitWidth)
         self = Self(rawValue: 1 << bitPosition)

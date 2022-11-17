@@ -230,10 +230,11 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
             let partner = Partner(name: "Deutche Welle",
                                   description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
                                   websiteURL: "https://www.dw.com/",
-                                  iconURL: "https://proton.me/favicon.ico",
+                                  iconURL: URL(string: "https://proton.me/favicon.ico")!,
                                   logicalIDs: ["YC6ClO_x1nbwWdsNcxE6kmekOuSI6pEmB-zTnWUF-ENyT1OqB3vx-zfcAX7v6WKjDphKDE3ixJ41hIQJPFRPHQ=="])
             let response = VPNPartnersResponse(code: 1000, partnerTypes: [PartnerType(type: "News",
                                                                                       description: "descr",
+                                                                                      iconURL: URL(string: "https://proton.me/favicon.ico")!,
                                                                                       partners: [partner])])
             let data = try responseEncoder.encode(response)
             return .success(data)

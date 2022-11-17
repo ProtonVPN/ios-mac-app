@@ -41,7 +41,7 @@ class FeaturesOverlayViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        featuresTitleTF.attributedStringValue = viewModel.title.styled(.hint, context: .text, font: .themeFont(.small), alignment: .natural)
+        featuresTitleTF.attributedStringValue = viewModel.title.styled(.hint, font: .themeFont(.small), alignment: .natural)
         addFeatureRows()
         dismissButton.image = AppTheme.Icon.crossSmall
         view.wantsLayer = true
@@ -51,15 +51,21 @@ class FeaturesOverlayViewController: NSViewController {
     private func addFeatureRows() {
         for featureModel in viewModel.featureViewModels {
             addSectionTitle(sectionTitle: featureModel.sectionTitle)
-            let view: FeatureRowView = .loadViewFromNib()!
-            view.viewModel = featureModel
-            featuresStackView.addArrangedSubview(view)
+            addFeatureRow(viewModel: featureModel)
         }
+    }
+
+    private func addFeatureRow(viewModel: FeatureCellViewModel) {
+        guard let view: FeatureRowView = .loadViewFromNib() else {
+            fatalError("Couldn't load FeatureRowView from nib")
+        }
+        view.viewModel = viewModel
+        featuresStackView.addArrangedSubview(view)
     }
 
     private func addSectionTitle(sectionTitle: String?) {
         guard let sectionTitle = sectionTitle else { return }
-        let attributedString = sectionTitle.styled(.hint, context: .text, font: .themeFont(.small), alignment: .natural)
+        let attributedString = sectionTitle.styled(.hint, font: .themeFont(.small), alignment: .natural)
         let titleTextField = NSTextField(labelWithAttributedString: attributedString)
         featuresStackView.addArrangedSubview(titleTextField)
     }

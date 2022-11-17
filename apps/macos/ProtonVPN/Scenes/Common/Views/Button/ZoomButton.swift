@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 enum ZoomType {
     case `in`

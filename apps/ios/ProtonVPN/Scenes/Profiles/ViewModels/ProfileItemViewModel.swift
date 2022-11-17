@@ -37,7 +37,7 @@ final class ProfileItemViewModel {
     private let planService: PlanService
     
     private let userTier: Int
-    private let lowestSeverTier: Int
+    private let lowestServerTier: Int
     private let underMaintenance: Bool
     
     var isConnected: Bool {
@@ -63,7 +63,7 @@ final class ProfileItemViewModel {
     }
     
     private var isUsersTierTooLow: Bool {
-        return userTier < lowestSeverTier
+        return userTier < lowestServerTier
     }
     
     var connectionChanged: (() -> Void)?
@@ -119,13 +119,13 @@ final class ProfileItemViewModel {
 
         switch profile.serverOffering {
         case .custom(let serverWrapper):
-            self.lowestSeverTier = serverWrapper.server.tier
+            self.lowestServerTier = serverWrapper.server.tier // add unit tests
             self.underMaintenance = serverWrapper.server.underMaintenance
            
         case .fastest(let countryCode): fallthrough
         case .random(let countryCode):
             guard let code = countryCode else {
-                self.lowestSeverTier = 0
+                self.lowestServerTier = 0
                 self.underMaintenance = false
                 break
             }
@@ -144,7 +144,7 @@ final class ProfileItemViewModel {
                     allServersUnderMaintenance = false
                 }
             }
-            self.lowestSeverTier = minTier
+            self.lowestServerTier = minTier
             self.underMaintenance = allServersUnderMaintenance
         }
         
