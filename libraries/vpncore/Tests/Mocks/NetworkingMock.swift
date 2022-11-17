@@ -151,7 +151,7 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
         case location = "/vpn/location"
         case logicals = "/vpn/logicals"
         case streamingServices = "/vpn/streamingservices"
-        case partners = "/vpn/partners"
+        case partners = "/vpn/v1/partners"
         case clientConfig = "/vpn/v2/clientconfig"
         case loads = "/vpn/loads"
     }
@@ -229,7 +229,6 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
             // for fetching list of partners
             let partner = Partner(name: "Deutche Welle",
                                   description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
-                                  websiteURL: "https://www.dw.com/",
                                   iconURL: URL(string: "https://proton.me/favicon.ico")!,
                                   logicalIDs: ["YC6ClO_x1nbwWdsNcxE6kmekOuSI6pEmB-zTnWUF-ENyT1OqB3vx-zfcAX7v6WKjDphKDE3ixJ41hIQJPFRPHQ=="])
             let response = VPNPartnersResponse(code: 1000, partnerTypes: [PartnerType(type: "News",
