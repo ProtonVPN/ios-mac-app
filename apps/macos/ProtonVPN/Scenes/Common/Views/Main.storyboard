@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,7 +22,7 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="MB8-ys-omS"/>
-                                        <menuItem title="_Preferences..." enabled="NO" keyEquivalent="," id="Eh5-UX-qbQ"/>
+                                        <menuItem title="_Preferences..." keyEquivalent="," id="Eh5-UX-qbQ"/>
                                         <menuItem isSeparatorItem="YES" id="Kbm-xb-JYd"/>
                                         <menuItem title="_Hide ProtonVPN" keyEquivalent="h" id="4ci-va-LpU">
                                             <connections>
