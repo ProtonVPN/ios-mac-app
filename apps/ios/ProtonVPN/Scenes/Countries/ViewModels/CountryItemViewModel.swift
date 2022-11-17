@@ -119,8 +119,8 @@ class CountryItemViewModel {
         return propertiesManager.streamingServices[countryCode]?["2"] ?? []
     }
 
-    var partner: Partner? {
-        return propertiesManager.partners.first // add support for multiple partners
+    var partnerTypes: [PartnerType] {
+        return propertiesManager.partnerTypes
     }
     
     var textInPlaceOfConnectIcon: String? {
@@ -223,11 +223,11 @@ class CountryItemViewModel {
         return CoreAppConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
     }
 
-    func isSeverPlus( for section: Int) -> Bool {
+    func isServerPlusOrAbove( for section: Int) -> Bool {
         return serverViewModels[section].tier > CoreAppConstants.VpnTiers.basic
     }
 
-    func isSeverFree( for section: Int) -> Bool {
+    func isServerFree( for section: Int) -> Bool {
         return serverViewModels[section].tier == CoreAppConstants.VpnTiers.free
     }
     
@@ -293,22 +293,28 @@ class CountryItemViewModel {
 
 extension CountryItemViewModel {
     func serversInformationViewModel() -> ServersInformationViewController.ViewModel {
-        ServersInformationViewController.ViewModel(title: "Information",
-                                                   sections: [.init(title: nil,
-                                                                    rowViewModels: [
-                                                                        .init(title: "Free servers",
-                                                                              description: "Security and privacy for everyone. Free servers have no data limits, and we’ll never deliberately slow down your browsing speed",
-                                                                              icon: IconProvider.servers),
-                                                                        .init(title: "News servers",
-                                                                              description: "Fast. Free. Uncensored. Connect to a #NEWS server to read articles, watch videos, and stream live news from our partners.",
-                                                                              icon: UIImage(named: "ic-newspaper", in: .vpnCore, with: nil)!)
-                                                                    ]),
-                                                              .init(title: "Our partners",
-                                                                    rowViewModels: [
-                                                                        .init(title: "DW news",
-                                                                              description: "The latest world news, independent from government influence. Available in English, German, Spanish, and Arabic.",
-                                                                              icon: UIImage(named: "Deutsche-Welle-medium", in: .vpnCore, with: nil)!)
-                                                                    ])])
+        let freeServersRow: InformationTableViewCell.ViewModel = .init(title: LocalizedString.featureFreeServers,
+                                                                       description: LocalizedString.featureFreeServersDescription,
+                                                                       icon: .image(IconProvider.servers))
+        var serverInformationViewModels: [InformationTableViewCell.ViewModel] = partnerTypes.map {
+            .init(title: $0.type,
+                  description: $0.description,
+                  icon: .url($0.iconURL))
+        }
+        serverInformationViewModels.insert(freeServersRow, at: 0)
+        let partners: [InformationTableViewCell.ViewModel] = partnerTypes.flatMap {
+            $0.partners.map {
+                .init(title: $0.name,
+                      description: $0.description,
+                      icon: .url($0.iconURL))
+            }
+
+        }
+        return .init(title: LocalizedString.informationTitle,
+                     sections: [.init(title: nil,
+                                      rowViewModels: serverInformationViewModels),
+                                .init(title: LocalizedString.partnersTitle,
+                                      rowViewModels: partners)])
     }
 }
 

@@ -1756,7 +1756,7 @@
 "_p2p_title" = "P2P/BitTorrent";
 "_tor_title" = "Tor";
 "_server_load_title" = "Server Load";
-"_partners_title" = "Partners";
+"_partners_title" = "Our partners";
 
 "_streaming_servers_description" = "Connect to a Plus server in this country to start streaming.";
 "_streaming_servers_note" = "Note: Turn off the Location Service and clear the cache of the streaming apps to ensure new content appears.";
@@ -1766,7 +1766,7 @@
 "_feature_news_servers_description" = "Fast. Free. Uncensored. Connect to a #NEWS server to read articles, watch videos, and stream live news from our partners.";
 "_feature_free_servers" = "Free servers";
 "_feature_deutsche_welle" = "Deutsche Welle";
-"_feature_free_servers_description" = "Free servers have no data limit nor network throttling. The speed might be limited only due to the high number of users connected.";
+"_feature_free_servers_description" = "Security and privacy for everyone. Free servers have no data limits, and we’ll never deliberately slow down your browsing speed.";
 "_feature_deutsche_welle_description" = "The latest world news, independent from any government influence. Available in English, German, Spanish, and Arabic.";
 "_feature_smart_routing_description" = "This technology allows Proton VPN to provide higher speed and security in difficult-to-serve countries.";
 "_feature_streaming_description" = "Plus servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";

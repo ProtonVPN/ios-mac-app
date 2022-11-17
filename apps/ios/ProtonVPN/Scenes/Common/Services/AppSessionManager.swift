@@ -265,6 +265,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.review.update(plan: credentials.accountPlan.rawValue)
                 }
                 self.serverStorage.store(properties.serverModels)
+                self.propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.propertiesManager.userLocation = properties.location

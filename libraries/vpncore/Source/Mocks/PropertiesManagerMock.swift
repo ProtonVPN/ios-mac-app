@@ -137,7 +137,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         }
     }
     public var streamingServices: StreamingDictServices = [:]
-    public var partners: [Partner] = []
+    public var partnerTypes: [PartnerType] = []
     public var excludeLocalNetworks: Bool = true {
         didSet {
             NotificationCenter.default.post(name: Self.excludeLocalNetworksNotification, object: excludeLocalNetworks)

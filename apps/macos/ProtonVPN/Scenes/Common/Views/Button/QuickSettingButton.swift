@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 class QuickSettingButton: NSButton {
     

@@ -35,9 +35,15 @@ public extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObj
         guard let val = string(key) else { throw orThrow }
         return val
     }
-    
+
     func stringOrThrow(key: Key) throws -> String {
         return try valueOrThrow(key)
+    }
+
+    func urlOrThrow(key: Key) throws -> URL {
+        let string: String = try valueOrThrow(key)
+        guard let url = URL(string: string) else { throw genericKeyErrorFor(key) }
+        return url
     }
     
     // MARK: Double

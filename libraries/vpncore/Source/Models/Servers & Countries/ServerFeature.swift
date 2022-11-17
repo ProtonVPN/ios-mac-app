@@ -25,13 +25,13 @@ public struct ServerFeature: OptionSet {
     
     public let rawValue: Int
     
-    public static let secureCore = ServerFeature(rawValue: 1 << 0)
-    public static let tor = ServerFeature(rawValue: 1 << 1) // 2
-    public static let p2p = ServerFeature(rawValue: 1 << 2) // 4
-    public static let streaming = ServerFeature(rawValue: 1 << 3) // 8
-    public static let ipv6 = ServerFeature(rawValue: 1 << 4) // 16
-    public static let restricted = ServerFeature(rawValue: 1 << 5) // 32
-    public static let partner = ServerFeature(rawValue: 1 << 6) // 64
+    public static let secureCore = ServerFeature(bitPosition: 0)
+    public static let tor = ServerFeature(bitPosition: 1) // 2
+    public static let p2p = ServerFeature(bitPosition: 2) // 4
+    public static let streaming = ServerFeature(bitPosition: 3) // 8
+    public static let ipv6 = ServerFeature(bitPosition: 4) // 16
+    public static let restricted = ServerFeature(bitPosition: 5) // 32
+    public static let partner = ServerFeature(bitPosition: 6) // 64
     
     public static let zero = ServerFeature([])
     

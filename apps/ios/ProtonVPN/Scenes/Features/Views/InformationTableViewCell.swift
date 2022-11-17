@@ -22,7 +22,11 @@ final class InformationTableViewCell: UITableViewCell {
     struct ViewModel {
         let title: String
         let description: String
-        let icon: UIImage
+        let icon: Icon
+    }
+    enum Icon {
+        case image(UIImage)
+        case url(URL)
     }
     static var cellIdentifier: String {
         return String(describing: self)
@@ -33,7 +37,13 @@ final class InformationTableViewCell: UITableViewCell {
 
     var viewModel: ViewModel! {
         didSet {
-            icon.image = viewModel.icon
+            switch viewModel.icon {
+            case .image(let image):
+                icon.image = image
+            case .url(let url):
+                icon.af.setImage(withURL: url)
+            }
+
             icon.tintColor = .normalTextColor()
             titleLabel.text = viewModel.title
             descriptionLabel.text = viewModel.description
@@ -55,5 +65,6 @@ final class InformationTableViewCell: UITableViewCell {
         icon.image = nil
         titleLabel.text = nil
         descriptionLabel.text = nil
+        icon.af.cancelImageRequest()
     }
 }
