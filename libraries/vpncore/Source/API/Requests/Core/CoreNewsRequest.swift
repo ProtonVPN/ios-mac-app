@@ -125,13 +125,3 @@ extension CGSize {
         return CGSize(width: newWidth, height: newHeight)
     }
 }
-
-struct Screen {
-    static var scale: CGFloat {
-#if canImport(UIKit)
-        UIScreen.main.scale
-#elseif canImport(AppKit)
-        NSApplication.shared.mainWindow?.screen?.backingScaleFactor ?? 1
-#endif
-    }
-}

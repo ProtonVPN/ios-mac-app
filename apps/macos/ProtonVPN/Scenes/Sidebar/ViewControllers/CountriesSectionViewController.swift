@@ -370,7 +370,7 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
     func userDidClickOnPartnerIcon(partner: Partner) {
-        // open informative modal instead
+        viewModel.displayFreeServices?()
     }
 
     func userDidRequestStreamingInfo(server: ServerItemViewModel) {
