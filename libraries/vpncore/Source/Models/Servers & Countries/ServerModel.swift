@@ -404,8 +404,18 @@ public class ServerModel: NSObject, NSCoding, Codable {
         // first in the ordering.
         let lhsIsFree = lhs.isFree
         let rhsIsFree = rhs.isFree
+        let lhsIsPartner = lhs.isPartner
+        let rhsIsPartner = rhs.isPartner
         if lhsIsFree, rhsIsFree {
-            return lhs.name < rhs.name
+            if lhsIsPartner, rhsIsPartner {
+                return lhs.name < rhs.name
+            }
+            if lhsIsPartner, !rhsIsPartner {
+                return false
+            }
+            if !lhsIsPartner, rhsIsPartner {
+                return true
+            }
         }
         if lhsIsFree, !rhsIsFree {
             return true
