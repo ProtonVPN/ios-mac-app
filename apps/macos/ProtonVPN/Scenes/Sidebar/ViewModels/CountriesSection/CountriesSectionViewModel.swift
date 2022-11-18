@@ -85,6 +85,35 @@ class CountriesSectionViewModel {
     var isNetShieldEnabled: Bool {
         return propertiesManager.featureFlags.netShield
     }
+
+    /// This function constructs the view model for the informative modal about the free servers features
+    /// At minimum it will include the static `FreeServersFeature` and if the `v1/partners/` endpoint
+    /// returns any partners then they will be added to the list.
+    func freeFeaturesOverlayViewModel() -> FreeFeaturesOverlayViewModel {
+        /// All the types of partners listed here
+        let featuresViewModels: [ServerFeatureViewModel] = propertiesManager.partnerTypes.map {
+            .init(title: $0.type,
+                  description: $0.description,
+                  icon: .url($0.iconURL))
+        }
+        /// All the actual partners listed
+        var partnersViewModels: [ServerFeatureViewModel] = propertiesManager.partnerTypes.flatMap {
+            $0.partners.map {
+                .init(title: $0.name,
+                      description: $0.description,
+                      icon: .url($0.iconURL))
+            }
+        }
+        /// We want to add the `sectionTitle` - "Our Partners" to the first partner
+        if let firstPartner = partnersViewModels.first {
+            partnersViewModels[0] = .init(sectionTitle: LocalizedString.dwPartner2022PartnersTitle,
+                                          title: firstPartner.title,
+                                          description: firstPartner.description,
+                                          icon: firstPartner.icon)
+        }
+
+        return FreeFeaturesOverlayViewModel(featureViewModels: [FreeServersFeature()] + featuresViewModels + partnersViewModels)
+    }
     
     // MARK: - QuickSettings presenters
     

@@ -52,7 +52,12 @@ class FeatureTableViewCell: UITableViewCell {
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.text = viewModel.title
-            iconIV.image = viewModel.icon
+            switch viewModel.icon {
+            case .image(let image):
+                iconIV.image = image
+            case .url(let url):
+                iconIV.af.setImage(withURL: url)
+            }
 
             descriptionLbl.text = viewModel.description
             learnMoreBtn.setTitle(LocalizedString.learnMore, for: .normal)
