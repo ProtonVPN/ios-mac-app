@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import SDWebImage
 
 class FeatureRowView: NSView {
     
@@ -33,7 +34,13 @@ class FeatureRowView: NSView {
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.attributedStringValue = viewModel.title.styled(.normal, font: .themeFont(.small))
-            iconIV.image = viewModel.icon
+            switch viewModel.icon {
+            case .url(let url):
+                iconIV.sd_setImage(with: url)
+            case .image(let image):
+                iconIV.image = image
+            }
+
             descriptionLbl.attributedStringValue = viewModel.description.styled([.weak], font: .themeFont(.small), alignment: .natural)
             guard let footer = viewModel.footer else {
                 learnMoreBtn.removeFromSuperview()
@@ -42,7 +49,7 @@ class FeatureRowView: NSView {
             learnMoreBtn.attributedTitle = footer.styled([.interactive, .active])
         }
     }
-    
+
     @IBAction private func didTapLearnMoreBtn(_ sender: Any) {
         guard let urlContact = viewModel.urlContact else { return }
         SafariService().open(url: urlContact)

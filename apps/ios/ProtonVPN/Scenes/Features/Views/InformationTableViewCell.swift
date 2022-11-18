@@ -17,16 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import vpncore
 
 final class InformationTableViewCell: UITableViewCell {
     struct ViewModel {
         let title: String
         let description: String
         let icon: Icon
-    }
-    enum Icon {
-        case image(UIImage)
-        case url(URL)
     }
     static var cellIdentifier: String {
         return String(describing: self)

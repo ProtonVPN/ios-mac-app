@@ -184,7 +184,8 @@ class CountriesSectionViewController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [weak self] change in self?.contentChanged(change) }
         viewModel.displayPremiumServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: PremiumFeaturesOverlayViewModel())) }
-        viewModel.displayFreeServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: FreeFeaturesOverlayViewModel())) }
+        let freeFeaturesOverlayViewModel = viewModel.freeFeaturesOverlayViewModel()
+        viewModel.displayFreeServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: freeFeaturesOverlayViewModel)) }
         viewModel.displayStreamingServices = { self.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2))) }
     }
     

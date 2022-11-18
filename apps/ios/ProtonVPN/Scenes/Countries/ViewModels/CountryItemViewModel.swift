@@ -308,12 +308,11 @@ extension CountryItemViewModel {
                       description: $0.description,
                       icon: .url($0.iconURL))
             }
-
         }
         return .init(title: LocalizedString.informationTitle,
                      sections: [.init(title: nil,
                                       rowViewModels: serverInformationViewModels),
-                                .init(title: LocalizedString.partnersTitle,
+                                .init(title: LocalizedString.dwPartner2022PartnersTitle,
                                       rowViewModels: partners)])
     }
 }

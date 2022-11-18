@@ -21,7 +21,7 @@ import ProtonCore_Networking
 final class VPNPartnersRequest: Request {
 
     var path: String {
-        return "/vpn/v1/partners"
+        return "/vpn/v1/partners?WithImageScale=\(Int(Screen.scale))"
     }
 
     var isAuth: Bool {

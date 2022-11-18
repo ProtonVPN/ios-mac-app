@@ -29,13 +29,18 @@ import AppKit
 #endif
 
 public protocol FeatureCellViewModel {
-    var icon: Image { get }
+    var icon: Icon { get }
     var title: String { get }
     var sectionTitle: String? { get }
     var description: String { get }
     var footer: String? { get }
     var urlContact: String? { get }
     var displayLoads: Bool { get }
+}
+
+public enum Icon {
+    case image(Image)
+    case url(URL)
 }
 
 extension FeatureCellViewModel {
@@ -47,7 +52,7 @@ extension FeatureCellViewModel {
 // MARK: - Features
 
 public struct SmartRoutingFeature: FeatureCellViewModel {
-    public let icon: Image = IconProvider.globe
+    public let icon: Icon = .image(IconProvider.globe)
     public let title: String = LocalizedString.smartRoutingTitle
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureSmartRoutingDescription
@@ -57,7 +62,7 @@ public struct SmartRoutingFeature: FeatureCellViewModel {
 }
 
 public struct StreamingFeature: FeatureCellViewModel {
-    public let icon: Image = IconProvider.play
+    public let icon: Icon = .image(IconProvider.play)
     public let title: String = LocalizedString.streamingTitle
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureStreamingDescription
@@ -67,7 +72,7 @@ public struct StreamingFeature: FeatureCellViewModel {
 }
 
 public struct P2PFeature: FeatureCellViewModel {
-    public let icon: Image = IconProvider.arrowsSwitch
+    public let icon: Icon = .image(IconProvider.arrowsSwitch)
     public let title: String = LocalizedString.p2pTitle
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureP2pDescription
@@ -77,7 +82,7 @@ public struct P2PFeature: FeatureCellViewModel {
 }
 
 public struct TorFeature: FeatureCellViewModel {
-    public let icon: Image = IconProvider.brandTor
+    public let icon: Icon = .image(IconProvider.brandTor)
     public let title: String = LocalizedString.featureTor
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureTorDescription
@@ -87,7 +92,7 @@ public struct TorFeature: FeatureCellViewModel {
 }
 
 public struct LoadPerformanceFeature: FeatureCellViewModel {
-    public let icon: Image = IconProvider.servers
+    public let icon: Icon = .image(IconProvider.servers)
     public let title: String = LocalizedString.serverLoadTitle
     public var sectionTitle: String?
     public let description: String = LocalizedString.performanceLoadDescription
@@ -98,7 +103,7 @@ public struct LoadPerformanceFeature: FeatureCellViewModel {
 }
 
 public struct FreeServersFeature: FeatureCellViewModel {
-    public let icon: Image = IconProvider.servers
+    public let icon: Icon = .image(IconProvider.servers)
     public let title: String = LocalizedString.featureFreeServers
     public var sectionTitle: String?
     public let description: String = LocalizedString.featureFreeServersDescription
@@ -107,30 +112,17 @@ public struct FreeServersFeature: FeatureCellViewModel {
     public init () { }
 }
 
-public struct NewsServersFeature: FeatureCellViewModel {
-#if os(macOS)
-    public let icon: Image = Bundle.vpnCore.image(forResource: NSImage.Name("ic-newspaper"))!
-#elseif os(iOS)
-    public let icon: Image = UIImage(named: "ic-newspaper", in: Bundle.vpnCore, with: nil)!
-#endif
-    public let title: String = LocalizedString.featureNewsServers
+public struct ServerFeatureViewModel: FeatureCellViewModel {
+    public var icon: Icon
+    public let title: String
     public var sectionTitle: String?
-    public let description: String = LocalizedString.featureNewsServersDescription
+    public let description: String
     public let footer: String? = nil
     public let urlContact: String? = nil
-    public init () { }
-}
-
-public struct PartnersFeature: FeatureCellViewModel {
-#if os(macOS)
-    public let icon: Image = Bundle.vpnCore.image(forResource: NSImage.Name("Deutsche-Welle-medium"))!
-#elseif os(iOS)
-    public let icon: Image = UIImage(named: "Deutsche-Welle-medium", in: Bundle.vpnCore, with: nil)!
-#endif
-    public let title: String = LocalizedString.featureDeutscheWelle
-    public var sectionTitle: String? = LocalizedString.partnersTitle
-    public let description: String = LocalizedString.featureDeutscheWelleDescription
-    public let footer: String? = nil
-    public let urlContact: String? = nil
-    public init () { }
+    public init (sectionTitle: String? = nil, title: String, description: String, icon: Icon) {
+        self.sectionTitle = sectionTitle
+        self.title = title
+        self.icon = icon
+        self.description = description
+    }
 }
