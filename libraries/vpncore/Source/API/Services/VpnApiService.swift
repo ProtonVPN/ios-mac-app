@@ -21,6 +21,7 @@
 
 import ProtonCore_Networking
 import VPNShared
+import LocalFeatureFlags
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -143,6 +144,10 @@ public class VpnApiService {
         }
 
         dispatchGroup.notify(queue: DispatchQueue.main) {
+            if let overrides = rClientConfig?.featureFlags.localOverrides {
+                setLocalFeatureFlagOverrides(overrides)
+            }
+
             if let servers = rServerModels {
                 completion(.success(VpnProperties(serverModels: servers,
                                                   vpnCredentials: rCredentials,
