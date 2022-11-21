@@ -3978,7 +3978,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ProtonVPNUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ProtonVPN;
 			};
 			name = Debug;
@@ -4004,7 +4004,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ProtonVPNUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ProtonVPN;
 			};
 			name = Release;
@@ -4105,7 +4105,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "TLS_PIN_DISABLE DEBUG FREQUENT_AUTH_CERT_REFRESH";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Staging;
 		};
@@ -4161,7 +4161,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/Contents/MacOS/ProtonVPN";
 			};
 			name = Staging;
@@ -4187,7 +4187,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.ProtonVPNUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = ProtonVPN;
 			};
 			name = Staging;
@@ -4215,7 +4215,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/Contents/MacOS/ProtonVPN";
 			};
 			name = Debug;
@@ -4243,7 +4243,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ProtonVPN.app/Contents/MacOS/ProtonVPN";
 			};
 			name = Release;
@@ -4632,7 +4632,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -4672,7 +4672,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Application Developer ID PP";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

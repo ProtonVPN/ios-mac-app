@@ -148,47 +148,51 @@ extension VpnManager {
         alertService?.push(alert: alert)
     }
 
-    func updateActiveConnection(netShieldType: NetShieldType) {
-        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: netShieldType)
+    func updateActiveConnection(closure: @escaping ((ConnectionConfiguration?) -> ConnectionConfiguration?)) {
         switch currentVpnProtocol {
         case .ike:
-            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(netShieldType: netShieldType)
+            propertiesManager.lastIkeConnection = closure(propertiesManager.lastIkeConnection)
         case .openVpn:
-            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(netShieldType: netShieldType)
+            propertiesManager.lastOpenVpnConnection = closure(propertiesManager.lastOpenVpnConnection)
         case .wireGuard:
-            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(netShieldType: netShieldType)
+            propertiesManager.lastWireguardConnection = closure(propertiesManager.lastWireguardConnection)
         case nil:
             break
+        }
+    }
+
+    func updateActiveConnection(netShieldType: NetShieldType) {
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: netShieldType)
+        updateActiveConnection {
+            log.info("Netshield type was \(String(describing: $0?.netShieldType)), updating to \(netShieldType).")
+            return $0?.withChanged(netShieldType: netShieldType)
         }
     }
 
     func updateActiveConnection(natType: NATType) {
         propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(natType: natType)
-        switch currentVpnProtocol {
-        case .ike:
-            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(natType: natType)
-        case .openVpn:
-            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(natType: natType)
-        case .wireGuard:
-            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(natType: natType)
-        case nil:
-            break
+        updateActiveConnection {
+            log.info("NAT type was \(String(describing: $0?.natType)), updating to \(natType).")
+            return $0?.withChanged(natType: natType)
         }
     }
 
     func updateActiveConnection(safeMode: Bool) {
         propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(safeMode: safeMode)
-        switch currentVpnProtocol {
-        case .ike:
-            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(safeMode: safeMode)
-        case .openVpn:
-            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(safeMode: safeMode)
-        case .wireGuard:
-            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(safeMode: safeMode)
-        case nil:
-            break
+        updateActiveConnection {
+            log.info("Safe mode was \(String(describing: $0?.safeMode)), updating to \(safeMode).")
+            return $0?.withChanged(safeMode: safeMode)
         }
     }
+
+    func updateActiveConnection(exitIp: String) {
+        updateActiveConnection {
+            log.info("Server IP was \($0?.serverIp.exitIp ?? "(nil)"), updating to \(exitIp).")
+            return $0?.withChanged(exitIp: exitIp)
+        }
+    }
+
+    // Danger: If you're adding another `updateActiveConnection` here, consider also updating `lastConnectionRequest`.
 }
 
 extension VpnManager: LocalAgentDelegate {
@@ -283,6 +287,12 @@ extension VpnManager: LocalAgentDelegate {
                 break
             }
         })
+    }
+
+    func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage) {
+        if let exitIp = details.exitIp {
+            self.updateActiveConnection(exitIp: String(describing: exitIp))
+        }
     }
 
     private func didReceiveFeature(safeMode: Bool?) {

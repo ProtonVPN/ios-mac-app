@@ -26,11 +26,10 @@ import GoLibs
 protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
     func didReceiveError(code: Int)
     func didChangeState(state: LocalAgentState?)
+    func didReceiveConnectionDetails(details: LocalAgentConnectionDetails)
 }
 
 final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClientProtocol {
-    func onStatusUpdate(_ status: LocalAgentStatusMessage?) { }
-
     weak var delegate: LocalAgentNativeClientImplementationDelegate?
 
     func log(_ text: String?) {
@@ -54,5 +53,12 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
         
         vpncore.log.info("Local agent shared library state reported as changed to \(state)", category: .localAgent, event: .stateChange)
         delegate?.didChangeState(state: LocalAgentState.from(string: state))
+    }
+
+    func onStatusUpdate(_ status: LocalAgentStatusMessage?) {
+        if let details = status?.connectionDetails {
+            vpncore.log.info("Local agent shared library received connection details: \(details)", category: .localAgent, event: .connect)
+            delegate?.didReceiveConnectionDetails(details: details)
+        }
     }
 }

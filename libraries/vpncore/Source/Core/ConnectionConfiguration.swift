@@ -45,14 +45,46 @@ public struct ConnectionConfiguration: Codable {
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionConfiguration {
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+        ConnectionConfiguration(server: server,
+                                serverIp: serverIp,
+                                vpnProtocol: vpnProtocol,
+                                netShieldType: netShieldType,
+                                natType: natType,
+                                safeMode: safeMode,
+                                ports: ports)
     }
 
     public func withChanged(natType: NATType) -> ConnectionConfiguration {
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+        ConnectionConfiguration(server: server,
+                                serverIp: serverIp,
+                                vpnProtocol: vpnProtocol,
+                                netShieldType: netShieldType,
+                                natType: natType,
+                                safeMode: safeMode,
+                                ports: ports)
     }
 
     public func withChanged(safeMode: Bool) -> ConnectionConfiguration {
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+        ConnectionConfiguration(server: server,
+                                serverIp: serverIp,
+                                vpnProtocol: vpnProtocol,
+                                netShieldType: netShieldType,
+                                natType: natType,
+                                safeMode: safeMode,
+                                ports: ports)
+    }
+
+    public func withChanged(exitIp: String) -> ConnectionConfiguration {
+        ConnectionConfiguration(server: server,
+                                serverIp: ServerIp(id: serverIp.id,
+                                                   entryIp: serverIp.entryIp,
+                                                   exitIp: exitIp,
+                                                   domain: serverIp.domain,
+                                                   status: serverIp.status),
+                                vpnProtocol: vpnProtocol,
+                                netShieldType: netShieldType,
+                                natType: natType,
+                                safeMode: safeMode,
+                                ports: ports)
     }
 }
