@@ -146,7 +146,8 @@ extension FeatureFlags {
                                         guestHoles: true,
                                         safeMode: true,
                                         promoCode: true,
-                                        wireGuardTls: true)
+                                        wireGuardTls: true,
+                                        localOverrides: nil)
 
     static let wireGuardTlsDisabled: Self = .init(smartReconnect: true,
                                                   vpnAccelerator: true,
@@ -159,5 +160,6 @@ extension FeatureFlags {
                                                   guestHoles: true,
                                                   safeMode: true,
                                                   promoCode: true,
-                                                  wireGuardTls: false)
+                                                  wireGuardTls: false,
+                                                  localOverrides: nil)
 }

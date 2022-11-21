@@ -45,6 +45,7 @@
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
+		4CAFE13A292CE03F00AC9C37 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAFE139292CE03F00AC9C37 /* LocalFeatureFlags */; };
 		4CBBA02528C0B6A700FF12BE /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
@@ -154,7 +155,6 @@
 		C3226764A143E60A9570365C /* Pods-ProtonVPNTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8746F5B74BD261EE27AF0E48 /* Pods-ProtonVPNTests-metadata.plist */; };
 		C53623CCB48A9BF717A1BAB9 /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4BDA607B9EC0277A0B58BA0A /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist */; };
 		D5057D2B28EEF212003CF725 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* WireGuardKit */; };
-		D5057D4328EF0F90003CF725 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D5110851246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
 		D5110852246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
 		D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
@@ -1067,6 +1067,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
+				4CAFE13A292CE03F00AC9C37 /* LocalFeatureFlags in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
@@ -1083,7 +1084,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5057D4328EF0F90003CF725 /* (null) in Frameworks */,
 				80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2442,6 +2442,7 @@
 				F348C9D527D8E54200622584 /* Search */,
 				F34AC17A27F439810007FF93 /* Review */,
 				E53D64C42811698F0060C463 /* Modals-iOS */,
+				4CAFE139292CE03F00AC9C37 /* LocalFeatureFlags */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -4787,6 +4788,10 @@
 		2DC3E67F6A25A4AD4DFCF448 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;
+		};
+		4CAFE139292CE03F00AC9C37 /* LocalFeatureFlags */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalFeatureFlags;
 		};
 		D16ECAECC9861A6ED5EDA4F2 /* Modals */ = {
 			isa = XCSwiftPackageProductDependency;

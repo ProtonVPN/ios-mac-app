@@ -35,8 +35,9 @@ public struct FeatureFlags: Codable {
     public let safeMode: Bool
     @Default<Bool> public var promoCode: Bool
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
+    public var localOverrides: [String: [String: Bool]]?
 
-    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool) {
+    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool, localOverrides: [String: [String: Bool]]?) {
         self.smartReconnect = smartReconnect
         self.vpnAccelerator = vpnAccelerator
         self.netShield = netShield
@@ -49,9 +50,10 @@ public struct FeatureFlags: Codable {
         self.safeMode = safeMode
         self.promoCode = promoCode
         self.wireGuardTls = wireGuardTls
+        self.localOverrides = localOverrides
     }
 
     public init() {
-        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false)
+        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, localOverrides: nil)
     }
 }
