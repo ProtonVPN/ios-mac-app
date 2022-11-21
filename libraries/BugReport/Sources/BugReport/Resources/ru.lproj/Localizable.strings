@@ -5,7 +5,7 @@
 "_br_2_button_cancel" = "Отмена";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
-"_br_2_button_next" = "Свяжитесь с нами";
+"_br_2_button_next" = "Связаться с нами";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
 "_br_2_footer" = "Не сработало?";
@@ -17,7 +17,7 @@
 "_br_2_title" = "Быстрые исправления";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_send" = "Отправить сообщение";
+"_br_3_button_send" = "Отправить отчет";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_sending" = "Отправка";
@@ -26,10 +26,10 @@
 "_br_3_email" = "Эл. почта";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Журнал - это тип файла, который показывает нам действия, которые вы предприняли и которые привели к ошибке. Мы используем их только для того, чтобы помочь нашим инженерам исправить ошибки.";
+"_br_3_logs_description" = "Журнал - это тип файла, показывающий нам ваши действия, приведшие к появлению ошибки. Мы используем их только для того, чтобы помочь нашим инженерам исправить ошибки.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в сути вашей проблемы. Если вы не приложите их, мы не сможем провести полное исследование.";
+"_br_3_logs_disabled" = "Журналы ошибок помогают нам разобраться в сути вашей проблемы. Если вы не приложите их, мы не сможем провести полную проверку.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Отправить журналы ошибок";
@@ -47,7 +47,7 @@
 "_br_failure_title" = "Ваш отчет не был отправлен";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Я понял";
+"_br_success_button" = "Понятно";
 
 /* ReportBug success window: subtitle text */
 "_br_success_subtitle" = "Мы свяжемся с вами, как только сможем.";
@@ -62,7 +62,7 @@
 "_update_view_button" = "Обновить";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Вероятность возникновения проблем на старых версиях Proton VPN выше.";
+"_update_view_description" = "Вероятность возникновения проблем выше на старых версиях Proton VPN.";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Обновить Proton VPN";

@@ -14,7 +14,7 @@
 "_br_2_subtitle" = "Estos consejos podrían ayudarle a resolver su problema más rápido.";
 
 /* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Arreglos rápidos";
+"_br_2_title" = "Soluciones rápidas";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Enviar reporte";
@@ -32,13 +32,13 @@
 "_br_3_logs_disabled" = "Los registros de errores nos ayudan a llegar al fondo de su problema. Si no los incluye, es posible que no podamos investigar por completo.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Enviar registros de error";
+"_br_3_logs_field" = "Enviar registro de errores";
 
 /* ReportBug 3rd step (form) username field name */
 "_br_3_username" = "Nombre de usuario";
 
 /* ReportBug success window: retry button */
-"_br_failure_button_retry" = "Intente nuevamente";
+"_br_failure_button_retry" = "Volver a intentar";
 
 /* ReportBug success window: troubleshoot button */
 "_br_failure_button_troubleshoot" = "Solución de problemas";

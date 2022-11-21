@@ -13,7 +13,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Langkah %d</string>
+			<string>Langkah ke-%d</string>
 		</dict>
 		<key>STEPS</key>
 		<dict>

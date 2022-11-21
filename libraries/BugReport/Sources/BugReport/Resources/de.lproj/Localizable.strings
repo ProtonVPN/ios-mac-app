@@ -5,7 +5,7 @@
 "_br_2_button_cancel" = "Abbrechen";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
-"_br_2_button_next" = "Kontaktieren uns";
+"_br_2_button_next" = "Kontaktiere uns";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
 "_br_2_footer" = "Hat es nicht geklappt?";
@@ -14,7 +14,7 @@
 "_br_2_subtitle" = "Diese Tipps können helfen, dein Problem schneller zu lösen.";
 
 /* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Schnelle Lösungen";
+"_br_2_title" = "Lösungsvorschläge";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Bericht senden";
@@ -41,7 +41,7 @@
 "_br_failure_button_retry" = "Erneut versuchen";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Fehlerbehebung";
+"_br_failure_button_troubleshoot" = "Problembehebung";
 
 /* ReportBug success window: title text */
 "_br_failure_title" = "Dein Bericht wurde nicht gesendet";
@@ -50,19 +50,19 @@
 "_br_success_button" = "Verstanden";
 
 /* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "Wir melden uns bei dir so schnell wie möglich.";
+"_br_success_subtitle" = "Wir melden uns so schnell wie möglich bei dir.";
 
 /* ReportBug success window: title text */
-"_br_success_title" = "Vielen Dank für deine Rückmeldung";
+"_br_success_title" = "Vielen Dank für dein Feedback";
 
 /* ReportBugwindow title */
-"_br_window_title" = "Problem melden";
+"_br_window_title" = "Ein Problem melden";
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Aktualisieren";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Bei älteren Versionen von Proton VPN ist die Wahrscheinlichkeit größer, dass du Probleme antriffst.";
+"_update_view_description" = "Bei älteren Versionen von Proton VPN ist die Wahrscheinlichkeit größer, dass Probleme auftreten.";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Proton VPN aktualisieren";

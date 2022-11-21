@@ -61,9 +61,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Hundreds of servers in %d country</string>
+			<string>Centenas de servidores em %d país</string>
 			<key>other</key>
-			<string>Hundreds of servers in %d countries</string>
+			<string>Centenas de servidores em %d países</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option2</key>
@@ -77,9 +77,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Connect up to %d device at the same time</string>
+			<string>Ligue até %d dispositivo em simultâneo</string>
 			<key>other</key>
-			<string>Connect up to %d devices at the same time</string>
+			<string>Ligue até %d dispositivos em simultâneo</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -101,7 +101,7 @@
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> to get up to %#@num_devices@ connected at the same time.</string>
+		<string> para ligar até %#@num_devices@ dispositivo em simultâneo.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
@@ -109,9 +109,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d device</string>
+			<string>%d dispositivo</string>
 			<key>other</key>
-			<string>%d devices</string>
+			<string>%d dispositivos</string>
 		</dict>
 	</dict>
 </dict>

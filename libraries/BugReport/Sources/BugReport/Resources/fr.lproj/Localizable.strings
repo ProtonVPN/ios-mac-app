@@ -1,5 +1,5 @@
 /* ReportBug 1st step title */
-"_br_1_title" = "Quel est le problème ?";
+"_br_1_title" = "Quel est le problème ?";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
 "_br_2_button_cancel" = "Annuler";
@@ -8,7 +8,7 @@
 "_br_2_button_next" = "Contactez-nous";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
-"_br_2_footer" = "Cela n'a pas fonctionné ?";
+"_br_2_footer" = "Cela n'a pas fonctionné ?";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
 "_br_2_subtitle" = "Ces conseils pourraient vous aider à résoudre votre problème plus rapidement.";
@@ -23,13 +23,13 @@
 "_br_3_button_sending" = "Envoi en cours";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "E-mail";
+"_br_3_email" = "Adresse e-mail";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Un journal est un type de fichier qui nous montre les actions que vous avez effectuées et qui ont conduit à une erreur. Nous ne les utiliserons que pour aider nos ingénieurs à corriger des bugs.";
+"_br_3_logs_description" = "Un journal est un type de fichier qui nous montre les actions que vous avez effectuées et qui ont conduit à une erreur. Nous les utilisons uniquement pour aider nos ingénieurs à corriger les bugs.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Les journaux d'erreurs nous aident à aller au fond de votre problème. Si vous ne les incluez pas, il se peut que nous ne soyons pas en mesure de mener une enquête approfondie.";
+"_br_3_logs_disabled" = "Les journaux d'erreurs nous aident à comprendre les causes de votre problème. Si vous ne les incluez pas, nous ne pourrons peut-être pas mener une analyse approfondie.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Envoyer les journaux d'erreurs";
@@ -44,10 +44,10 @@
 "_br_failure_button_troubleshoot" = "Dépannage";
 
 /* ReportBug success window: title text */
-"_br_failure_title" = "Votre rapport n'a pas été envoyé";
+"_br_failure_title" = "Votre rapport n'a pas été envoyé.";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Compris";
+"_br_success_button" = "J'ai compris";
 
 /* ReportBug success window: subtitle text */
 "_br_success_subtitle" = "Nous vous répondrons dès que possible.";
