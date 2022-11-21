@@ -18,7 +18,7 @@
 
 import Foundation
 import vpncore
-import Crypto_VPN
+import GoLibs
 
 class LocalAgentConnectionMock: LocalAgentConnectionWrapper {
     let clientCertPEM: String

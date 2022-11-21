@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import Crypto_VPN
+import GoLibs
 
 public enum SmartProtocolAvailabilityCheckerResult {
     case unavailable
