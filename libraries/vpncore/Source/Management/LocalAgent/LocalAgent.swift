@@ -24,11 +24,20 @@ import Foundation
 import GoLibs
 import Reachability
 import VPNShared
+import Network
+import LocalFeatureFlags
+
+private enum LocalAgentFeature: String, FeatureFlag {
+    var category: String { "LocalAgent" }
+
+    case connectionDetails = "ConnectionDetails"
+}
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
     func didReceiveFeatures(_ features: VPNConnectionFeatures)
+    func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage)
 }
 
 protocol LocalAgent {
@@ -42,6 +51,12 @@ protocol LocalAgent {
     func update(natType: NATType)
     func update(safeMode: Bool)
     func unjail()
+}
+
+struct ConnectionDetailsMessage {
+    let exitIp: IPAddress?
+    let deviceIp: IPAddress?
+    let deviceCountry: String?
 }
 
 public protocol LocalAgentConnectionWrapper {
@@ -193,7 +208,48 @@ final class LocalAgentImplementation: LocalAgent {
     }
 }
 
+extension ConnectionDetailsMessage {
+    /// `LocalAgentConnectionDetails` is received with the `StatusUpdate` LocalAgent message.
+    ///
+    /// None of the fields of `LocalAgentConnectionDetails` are optional, so an empty string indicates a missing field.
+    /// This wrapper struct makes sure that the IPs are valid before doing anything with them.
+    init(details: LocalAgentConnectionDetails) {
+        if !details.serverIpv4.isEmpty, let ipv4 = IPv4Address(details.serverIpv4) {
+            self.exitIp = ipv4
+        } else if !details.serverIpv6.isEmpty, let ipv6 = IPv6Address(details.serverIpv6) {
+            self.exitIp = ipv6
+        } else {
+            self.exitIp = nil
+        }
+
+        if !details.deviceCountry.isEmpty {
+            self.deviceCountry = details.deviceCountry
+        } else {
+            self.deviceCountry = nil
+        }
+
+        if !details.deviceIp.isEmpty {
+            if let ipv4 = IPv4Address(details.deviceIp) {
+                self.deviceIp = ipv4
+            } else if let ipv6 = IPv6Address(details.deviceIp) {
+                self.deviceIp = ipv6
+            } else {
+                self.deviceIp = nil
+            }
+        } else {
+            self.deviceIp = nil
+        }
+    }
+}
+
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
+    func didReceiveConnectionDetails(details: LocalAgentConnectionDetails) {
+        guard isEnabled(LocalAgentFeature.connectionDetails) else { return }
+
+        let detailsMessage = ConnectionDetailsMessage(details: details)
+        delegate?.didReceiveConnectionDetails(detailsMessage)
+    }
+
     func didReceiveError(code: Int) {
         guard let error = LocalAgentError.from(code: code) else {
             log.error("Ignoring unknown local agent error", category: .localAgent, event: .error)
