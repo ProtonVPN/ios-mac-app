@@ -75,9 +75,10 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     natTypePropertyProvider: natTypePropertyProvider,
                                     netShieldPropertyProvider: netShieldPropertyProvider,
                                     safeModePropertyProvider: safeModePropertyProvider)
-        
+
+        let countryCodeProvider = dependencyFactory.makeCountryCodeProvider()
         siriHandlerViewModel = SiriHandlerViewModel(networking: networking,
-                                                    vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain),
+                                                    vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: countryCodeProvider),
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,
                                                     authKeychain: authKeychain,
@@ -179,9 +180,13 @@ fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory & NETunnelProvid
 fileprivate class SiriIntentHandlerDependencyFactory {
 }
 
-extension SiriIntentHandlerDependencyFactory: AppInfoFactory {
+extension SiriIntentHandlerDependencyFactory: AppInfoFactory & CountryCodeProviderFactory {
     func makeAppInfo(context: AppContext) -> AppInfo {
         AppInfoImplementation(context: context)
+    }
+
+    func makeCountryCodeProvider() -> CountryCodeProvider {
+        CountryCodeProviderImplementation()
     }
 }
 

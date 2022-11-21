@@ -20,15 +20,21 @@ import Foundation
 import vpncore
 
 fileprivate let locales: [String: LocaleWrapperMock] = [
-    "en-US": LocaleWrapperMock(regionCodeDict: [
-        "US": "Murica",
-    ]),
-    "en": LocaleWrapperMock(regionCodeDict: [
-        "CH": "Switzerland",
-        "US": "United States",
-        "FR": "France"
-    ]),
-    "fr": LocaleWrapperMock(regionCodeDict: [
+    "en-US": LocaleWrapperMock(
+        ietfRegionTag: "us",
+        regionCodeDict: [
+            "US": "Murica",
+        ]),
+    "en": LocaleWrapperMock(
+        ietfRegionTag: "ch",
+        regionCodeDict: [
+            "CH": "Switzerland",
+            "US": "United States",
+            "FR": "France"
+        ]),
+    "fr": LocaleWrapperMock(
+        ietfRegionTag: "ch",
+        regionCodeDict: [
         "CH": "Suisse",
         "US": "Etats-Unis"
     ])
@@ -45,6 +51,8 @@ class LocaleResolverMock: LocaleResolver {
 }
 
 struct LocaleWrapperMock: LocaleWrapper {
+    let ietfRegionTag: String?
+
     let regionCodeDict: [String: String]
 
     func localizedString(forRegionCode regionCode: String) -> String? {

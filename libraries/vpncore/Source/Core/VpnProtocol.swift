@@ -32,7 +32,7 @@ public enum WireGuardTransport: String, Codable, Equatable {
 
 // MARK: -
 
-extension VpnProtocol { // Authencication
+extension VpnProtocol { // Authentication
 
     public enum AuthenticationType {
         case credentials
@@ -168,6 +168,18 @@ extension VpnProtocol {
         }
         aCoder.encode(data, forKey: CoderKey.vpnProtocol)
     }
+}
+
+// MARK: API description
+extension VpnProtocol {
+    static let apiDescriptions: [String: VpnProtocol] = [
+        "IKEv2": .ike,
+        "OpenVPNUDP": .openVpn(.udp),
+        "OpenVPNTCP": .openVpn(.tcp),
+        "WireGuardUDP": .wireGuard(.udp),
+        "WireGuardTCP": .wireGuard(.tcp),
+        "WireGuardTLS": .wireGuard(.tls),
+    ]
 }
 
 extension OpenVpnTransport {

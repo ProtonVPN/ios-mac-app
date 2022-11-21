@@ -39,7 +39,7 @@ class MapViewModelTests: XCTestCase {
         ServerManagerImplementation.reset()
         serverStorage = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self)))
 
-        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
+        let vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN",
                                                         storage: Storage(),

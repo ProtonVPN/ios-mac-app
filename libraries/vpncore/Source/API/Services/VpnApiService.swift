@@ -29,17 +29,29 @@ public protocol VpnApiServiceFactory {
 
 extension Container: VpnApiServiceFactory {
     public func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(networking: makeNetworking(), vpnKeychain: makeVpnKeychain())
+        return VpnApiService(self)
     }
 }
 
 public class VpnApiService {
+    public typealias Factory = NetworkingFactory &
+        VpnKeychainFactory &
+        CountryCodeProviderFactory
+
     private let networking: Networking
     private let vpnKeychain: VpnKeychainProtocol
-    
-    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol) {
+    private let countryCodeProvider: CountryCodeProvider
+
+    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, countryCodeProvider: CountryCodeProvider) {
         self.networking = networking
         self.vpnKeychain = vpnKeychain
+        self.countryCodeProvider = countryCodeProvider
+    }
+
+    public convenience init(_ factory: Factory) {
+        self.init(networking: factory.makeNetworking(),
+                  vpnKeychain: factory.makeVpnKeychain(),
+                  countryCodeProvider: factory.makeCountryCodeProvider())
     }
     
     // swiftlint:disable function_body_length cyclomatic_complexity
@@ -71,7 +83,7 @@ public class VpnApiService {
                 shortenedIp = truncatedIp(ip)
             }
             
-            serverInfo(for: shortenedIp) { result in
+            serverInfo(ip: shortenedIp) { result in
                 switch result {
                 case let .success(serverModels):
                     rServerModels = serverModels
@@ -190,7 +202,7 @@ public class VpnApiService {
                 return
             }
 
-            self?.serverInfo(for: rLocation?.ip) { result in
+            self?.serverInfo(ip: rLocation?.ip) { result in
                 switch result {
                 case let .success(serverModels):
                     rServerModels = serverModels
@@ -260,8 +272,10 @@ public class VpnApiService {
     }
     
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(for shortenedIp: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
-        networking.request(VPNLogicalServicesRequest(shortenedIp)) { (result: Result<VPNShared.JSONDictionary, Error>) in
+    public func serverInfo(ip shortenedIp: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
+        let countryCodes = countryCodeProvider.countryCodes
+
+        networking.request(VPNLogicalServicesRequest(ip: shortenedIp, countryCodes: countryCodes)) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {

@@ -21,17 +21,46 @@
 //
 
 import ProtonCore_Networking
+import LocalFeatureFlags
+
+enum LogicalFeature: String, FeatureFlag {
+    var category: String {
+        "Logicals"
+    }
+
+    var feature: String {
+        rawValue
+    }
+
+    case partnerLogicals = "PartnerLogicals"
+    case perProtocolEntriesForStealth = "PerProtocolEntriesForStealth"
+}
 
 final class VPNLogicalServicesRequest: Request {
-
+    /// Truncated ip as seen from VPN API
     let ip: String?
 
-    init(_ ip: String?) {
+    /// Country codes, if available
+    let countryCodes: [String]
+
+    init(ip: String?, countryCodes: [String]) {
         self.ip = ip
+        self.countryCodes = countryCodes
     }
 
     var path: String {
-        return "/vpn/logicals?WithTranslations=true&WithPartnerLogicals=1"
+        var result = "/vpn/logicals" +
+            "?WithTranslations=true"
+
+        if isEnabled(LogicalFeature.partnerLogicals) {
+            result += "&WithPartnerLogicals=1"
+        }
+
+        if isEnabled(LogicalFeature.perProtocolEntriesForStealth) {
+            result += "&WithEntriesForProtocols=WireGuardTLS"
+        }
+
+        return result
     }
 
     var isAuth: Bool {
@@ -39,11 +68,17 @@ final class VPNLogicalServicesRequest: Request {
     }
 
     var header: [String: Any] {
+        var result: [String: Any] = [:]
+
         if let ip = ip {
-            return ["x-pm-netzone": ip]
+            result["x-pm-netzone"] = ip
         }
 
-        return [:]
+        if isEnabled(LogicalFeature.perProtocolEntriesForStealth), !countryCodes.isEmpty {
+            result["x-pm-country"] = countryCodes.joined(separator: ", ")
+        }
+
+        return result
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

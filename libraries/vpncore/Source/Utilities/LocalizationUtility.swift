@@ -24,8 +24,9 @@ import Foundation
 public class LocalizationUtility {
     public static let `default` = LocalizationUtility()
 
-    /// This needs to be public so the tests can set this property to a mock implementation if needed.
-    public static var localeResolver: LocaleResolver = LocaleResolverImplementation()
+    /// This needs to be set to public so the unit tests can change it.
+    public static var localeResolver = LocaleResolverImplementation.default
+
     private var countryNameCache: [String: String] = [:]
 
     public init() {
