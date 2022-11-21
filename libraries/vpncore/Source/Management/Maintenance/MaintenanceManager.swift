@@ -104,7 +104,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                     return
                 }
 
-                self.vpnApiService.serverInfo(for: nil) { result in
+                self.vpnApiService.serverInfo(ip: nil) { result in
                     switch result {
                     case let .success(servers):
                         self.serverStorage.store(servers)

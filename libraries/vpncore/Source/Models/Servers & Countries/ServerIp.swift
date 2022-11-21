@@ -30,19 +30,42 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
     public let label: String?
     public let x25519PublicKey: String?
-    
-    override public var description: String {
-        return
-            "ID      = \(id)\n" +
-            "EntryIP = \(entryIp)\n" +
-            "ExitIP  = \(exitIp)\n" +
-            "Domain  = \(domain)\n" +
-            "Status  = \(status)\n" +
-            "Label = \(label ?? "")\n" +
-            "X25519PublicKey = \(x25519PublicKey ?? "")\n"
+
+    /// API overrides for connection parameters when using a certain protocol.
+    ///
+    /// Given an entry `e` exists for a protocol `p` on `ServerIp` object `s`:
+    /// 1. If `e.ipv4` is `nil`, `s` only supports `p`, and must use `s.entryIp` when connecting.
+    /// 2. If `e.ipv4` is not `nil`, `s` supports all protocols. Client must use `e.ipv4` when connecting with `p`.
+    /// 3. If `e.ports` is non-empty, client must choose from these ports when connecting, instead of ports from config.
+    public let protocolEntries: [VpnProtocol: ProtocolEntry?]?
+
+    public struct ProtocolEntry {
+        public let ipv4: String?
+        public let ports: [Int]?
     }
     
-    public init(id: String, entryIp: String, exitIp: String, domain: String, status: Int, label: String? = nil, x25519PublicKey: String? = nil) {
+    override public var description: String {
+        let entryOverrides: String = protocolEntries?.reduce(", with overrides for:\n", { partialResult, entry in
+            partialResult + "\t\(entry.key.localizedString) => \(entry.value?.description ?? "(nil)")\n"
+        }) ?? "\n"
+
+        return  "ID      = \(id)\n" +
+                "EntryIP = \(entryIp)\(entryOverrides)" +
+                "ExitIP  = \(exitIp)\n" +
+                "Domain  = \(domain)\n" +
+                "Status  = \(status)\n" +
+                "Label = \(label ?? "")\n" +
+                "X25519PublicKey = \(x25519PublicKey ?? "")\n"
+    }
+    
+    public init(id: String,
+                entryIp: String,
+                exitIp: String,
+                domain: String,
+                status: Int,
+                label: String? = nil,
+                x25519PublicKey: String? = nil,
+                protocolEntries: [VpnProtocol: ProtocolEntry?]? = nil) {
         self.id = id
         self.entryIp = entryIp
         self.exitIp = exitIp
@@ -50,6 +73,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.status = status
         self.label = label
         self.x25519PublicKey = x25519PublicKey
+        self.protocolEntries = protocolEntries
         super.init()
     }
     
@@ -61,6 +85,28 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.status = try dic.intOrThrow(key: "Status")
         self.label = dic["Label"] as? String
         self.x25519PublicKey = dic["X25519PublicKey"] as? String
+
+        // looks like:
+        // "EntryPerProtocol": {
+        //     "WireGuardTLS": {"IPv4": "5.6.7.8"},
+        //     "OpenVPNTCP": {"Ports": [22, 23]}
+        //  }
+        self.protocolEntries = try (dic["EntryPerProtocol"] as? [String: JSONDictionary?])?
+            .reduce([VpnProtocol: ProtocolEntry?]()) { partialResult, keyPair in
+                // Check if it's a vpn protocol that we recognize.
+                guard let vpnProtocol = VpnProtocol.apiDescriptions[keyPair.key] else {
+                    return partialResult
+                }
+
+                // API is allowed to include entries without overriding anything (see `protocolEntries` documentation)
+                var protocolEntry: ProtocolEntry?
+                if let protocolEntryDict = keyPair.value {
+                    protocolEntry = try .init(dic: protocolEntryDict)
+                }
+
+                return partialResult.merging([vpnProtocol: protocolEntry]) { l, r in r }
+            }
+
         super.init()
     }
 
@@ -155,5 +201,32 @@ public class ServerIp: NSObject, NSCoding, Codable {
         try container.encode(status, forKey: .status)
         try container.encode(label, forKey: .label)
         try container.encode(x25519PublicKey, forKey: .x25519PublicKey)
+    }
+}
+
+extension ServerIp.ProtocolEntry {
+    public init(dic: JSONDictionary) throws {
+        self.ipv4 = dic.string("IPv4")
+        self.ports = dic.intArray(key: "Ports")
+    }
+}
+
+extension ServerIp.ProtocolEntry: CustomStringConvertible {
+    public var description: String {
+        var result = ""
+
+        if let ipv4 {
+            result += "\(ipv4)"
+        }
+
+        if let ports, !ports.isEmpty {
+            if ports.count == 1, let first = ports.first {
+                result += ":\(first)"
+            } else {
+                result += ":{\(ports.map(String.init).joined(separator: ", "))}"
+            }
+        }
+
+        return result
     }
 }

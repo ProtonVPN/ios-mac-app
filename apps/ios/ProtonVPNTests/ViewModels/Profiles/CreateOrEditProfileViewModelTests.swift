@@ -51,7 +51,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
 
     lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: appInfo, doh: .mock, authKeychain: authKeychain)
     var vpnApiService: VpnApiService {
-        return VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
+        return VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
     }
     
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(

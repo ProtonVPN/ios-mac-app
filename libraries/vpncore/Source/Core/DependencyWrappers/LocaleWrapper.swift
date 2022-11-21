@@ -26,10 +26,14 @@ public protocol LocaleResolver {
 }
 
 public protocol LocaleWrapper {
+    var ietfRegionTag: String? { get }
+
     func localizedString(forRegionCode: String) -> String?
 }
 
 public class LocaleResolverImplementation: LocaleResolver {
+    public static var `default`: LocaleResolver = LocaleResolverImplementation()
+
     public var preferredLanguages: [String] {
         Locale.preferredLanguages
     }
@@ -44,4 +48,11 @@ public class LocaleResolverImplementation: LocaleResolver {
 }
 
 extension Locale: LocaleWrapper {
+    public var ietfRegionTag: String? {
+        if #available(iOS 16, macOS 13, *) {
+            return self.language.region?.identifier
+        } else {
+            return self.regionCode
+        }
+    }
 }

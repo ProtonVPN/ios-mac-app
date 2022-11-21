@@ -73,6 +73,10 @@
 		4C096205285B648900556E07 /* SessionServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096203285B648900556E07 /* SessionServiceMock.swift */; };
 		4C096207285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */; };
 		4C096208285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */; };
+		4C14523A292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C145239292CF9BF00DE9AC0 /* CountryCodeProvider.swift */; };
+		4C14523B292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C145239292CF9BF00DE9AC0 /* CountryCodeProvider.swift */; };
+		4C14523D292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14523C292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift */; };
+		4C14523E292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C14523C292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift */; };
 		4C1C2F2F28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
 		4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */; };
 		4C1ECBAE28912EAD00820068 /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAC28912E6D00820068 /* ExtensionInfo.swift */; };
@@ -674,6 +678,8 @@
 		4C0961FD285B50C700556E07 /* NEVPNMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NEVPNMocks.swift; sourceTree = "<group>"; };
 		4C096203285B648900556E07 /* SessionServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionServiceMock.swift; sourceTree = "<group>"; };
 		4C096206285B6ABB00556E07 /* CredentialsConfiguratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsConfiguratorMock.swift; sourceTree = "<group>"; };
+		4C145239292CF9BF00DE9AC0 /* CountryCodeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeProvider.swift; sourceTree = "<group>"; };
+		4C14523C292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolOverrideConnectionTests.swift; sourceTree = "<group>"; };
 		4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TunnelProviderClientMessageTests.swift; sourceTree = "<group>"; };
 		4C1ECBAC28912E6D00820068 /* ExtensionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionInfo.swift; sourceTree = "<group>"; };
 		4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemExtensionManagerMock.swift; sourceTree = "<group>"; };
@@ -1150,6 +1156,7 @@
 				4CFDF0BC287EE4F300386626 /* ConnectionSwitchingTests.swift */,
 				4CFDF0BF287EE55B00386626 /* LocalAgentConnectionTests.swift */,
 				4C1C2F2E28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift */,
+				4C14523C292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -1168,6 +1175,7 @@
 			children = (
 				4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */,
 				4CE300C6285877B100FBD249 /* NEVPNWrappers.swift */,
+				4C145239292CF9BF00DE9AC0 /* CountryCodeProvider.swift */,
 			);
 			path = DependencyWrappers;
 			sourceTree = "<group>";
@@ -2710,6 +2718,7 @@
 				E55046432849F45A00E4BFC2 /* Image+Flag.swift in Sources */,
 				F307F7B827C3C205004FD4A7 /* SafeModePropertyProviderMock.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
+				4C14523A292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
 				E9B98510284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */,
@@ -2872,6 +2881,7 @@
 				4C66CA9D2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				4CFDF0C0287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
 				F327A9A028217AB100848E42 /* CodableExtensionsTests.swift in Sources */,
+				4C14523D292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */,
 				E1B5F60621B6953200B558B0 /* AppStateTests.swift in Sources */,
 				4CFDF0BD287EE4F300386626 /* ConnectionSwitchingTests.swift in Sources */,
 				E19CE84E22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
@@ -2903,6 +2913,7 @@
 				F3021D6B25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
 				D5DCCACC252B4E0A004CB353 /* Announcement.swift in Sources */,
 				D5BCDC9725303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
+				4C14523B292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */,
 				E1616BD221C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
 				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3A3D6C927C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */,
@@ -3155,6 +3166,7 @@
 				4CFDF0BB287EE44100386626 /* MockTestData.swift in Sources */,
 				E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				4C66CA9E2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
+				4C14523E292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */,
 				E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */,
 				4CFDF0C1287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
 				F327A99F28217AB000848E42 /* CodableExtensionsTests.swift in Sources */,

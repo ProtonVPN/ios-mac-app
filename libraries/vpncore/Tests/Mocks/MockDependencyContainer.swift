@@ -59,7 +59,7 @@ class MockDependencyContainer {
                                                          propertiesManager: propertiesManager,
                                                          vpnManagerFactory: neTunnelProviderFactory)
 
-    lazy var vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain)
+    lazy var vpnApiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
 
     let sessionService = SessionServiceMock()
     public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
@@ -164,5 +164,11 @@ extension MockFactory: NEVPNManagerWrapperFactory {
 extension MockFactory: VpnCredentialsConfiguratorFactory {
     func getCredentialsConfigurator(for `protocol`: VpnProtocol) -> VpnCredentialsConfigurator {
         return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`)
+    }
+}
+
+extension MockFactory: CountryCodeProviderFactory {
+    func makeCountryCodeProvider() -> CountryCodeProvider {
+        CountryCodeProviderImplementation()
     }
 }
