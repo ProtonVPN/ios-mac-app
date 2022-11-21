@@ -251,7 +251,7 @@
 "_data_disclaimer_user_details" = "نام کاربری، آدرس ایمیل";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "دکمه‌ی «اتصال سریع» از پروفایل پیشفرض استفاده می‌کند.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
 /* Common word */
 "_delete" = "حذف";
@@ -1052,7 +1052,7 @@
 "_ok" = "تأیید";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "تحت عملیات نگهداری";
+"_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "نمایش Proton VPN برای ورود...";
@@ -1722,14 +1722,17 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "به OpenVPN تغییر دهید و دوباره امتحان کنید";
 
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
 /* (No Comment) */
 "_to_server_title" = "به سرور:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
 
 /* Description shown together with server info icon */
-"_tor_description" = "به شبکه TOR متصل می‌شود";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "سرور Tor";
@@ -1875,7 +1878,7 @@
 "_unavailable" = "غیرقابل دسترس";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "اعلام کردن شبکه‌های محافظت نشده";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "دریافت یک اخطار هنگامیکه Proton VPN می‌یابد که شما به یک شبکه محافظت نشده متصل شده اید.";

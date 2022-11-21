@@ -13,9 +13,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Step %d</string>
+			<string>Etapa %d</string>
 			<key>other</key>
-			<string>Step %d</string>
+			<string>Etapa %d</string>
 		</dict>
 		<key>STEPS</key>
 		<dict>

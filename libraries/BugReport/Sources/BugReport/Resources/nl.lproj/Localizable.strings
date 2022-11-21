@@ -2,7 +2,7 @@
 "_br_1_title" = "Wat is het probleem?";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Annuleer";
+"_br_2_button_cancel" = "Annuleren";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
 "_br_2_button_next" = "Contacteer ons";
@@ -17,7 +17,7 @@
 "_br_2_title" = "Snelle oplossingen";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_send" = "Verstuur melding";
+"_br_3_button_send" = "Rapport verzenden";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_sending" = "Bezig met verzenden";
@@ -59,7 +59,7 @@
 "_br_window_title" = "Een probleem melden";
 
 /* Action button of the view nudging users to update before filling Bug Report */
-"_update_view_button" = "Bijwerken";
+"_update_view_button" = "Update";
 
 /* Description text of the view nudging users to update before filling Bug Report */
 "_update_view_description" = "U heeft meer kans op problemen op oudere versies van Proton VPN.";

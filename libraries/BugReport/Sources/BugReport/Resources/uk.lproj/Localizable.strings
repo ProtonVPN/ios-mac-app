@@ -38,7 +38,7 @@
 "_br_3_username" = "Ім'я користувача";
 
 /* ReportBug success window: retry button */
-"_br_failure_button_retry" = "Спробувати знову";
+"_br_failure_button_retry" = "Повторити спробу";
 
 /* ReportBug success window: troubleshoot button */
 "_br_failure_button_troubleshoot" = "Усунення проблем";

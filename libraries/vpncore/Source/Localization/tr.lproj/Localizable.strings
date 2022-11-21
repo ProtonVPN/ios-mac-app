@@ -884,7 +884,7 @@
 "_menu_minimize" = "Küçült";
 
 /* Main mac app menu item */
-"_menu_preferences" = "Tercihler";
+"_menu_preferences" = "Ayarlar";
 
 /* Main mac app menu item */
 "_menu_quit" = "Proton VPN uygulamasından çık";
@@ -1160,7 +1160,7 @@
 "_plus_servers" = "Plus sunucuları";
 
 /* MacOS: Settings screen title */
-"_preferences" = "Tercihler";
+"_preferences" = "Ayarlar";
 
 /* Description shown together with server info icon */
 "_premium_description" = "Ücretli sunucu";

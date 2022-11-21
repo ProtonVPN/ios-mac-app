@@ -686,10 +686,10 @@
 "_ip_will_not_be_exposed" = "Uw IP zal niet worden gelekt.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Kill switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch beschermt uw IP\n\nUw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server. Om te hervatten zonder VPN-bescherming, schakelt u kill switch uit.";
+"_kill_switch_blocking_body" = "Kill switch beschermt uw IP\n\nUw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server. Om te hervatten zonder VPN-bescherming, schakelt u kill switch uit.";
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "IP-beveiliging blokkeert alle verbindingen";
@@ -707,7 +707,7 @@
 "_kill_switch_error_head" = "Sommige apps, zoals antivirussen of firewalls, kunnen botsen met de IP-beveiliging, waardoor deze niet goed functioneert.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "IP-beveiliging werkt met de macOS Firewall.\nAls er andere apps zijn gekoppeld aan de Firewall, kunnen ze de IP-beveiliging van Proton VPN verstoren. Het beëindigen van deze apps kan de Firewall regels die door de IP-beveiliging zijn ingesteld herstellen.";
+"_kill_switch_error_info" = "IP-beveiliging werkt met de macOS firewall.\nAls er andere apps zijn gekoppeld aan de firewall, kunnen ze de IP-beveiliging van Proton VPN verstoren. Het beëindigen van deze apps kan de firewall regels die door de IP-beveiliging zijn ingesteld herstellen.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Er is een fout opgetreden bij de IP-beveiliging";
@@ -716,19 +716,19 @@
 "_kill_switch_helper_install_issue_popup_body" = "Er is een probleem opgetreden bij het installeren of bijwerken van IP-beveiliging.\n\nOm het opnieuw te proberen, klik op OPNIEUW PROBEREN.\n\nom door te gaan zonder IP-beveiliging, klik op UITSCHAKELEN.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Om IP-beveiliging in te schakelen, kunt u gevraagd worden om uw wachtwoord van uw computeraccount in te vullen. Als een aanvraag verschijnt, voer dan uw %@ in en accepteer.\n\nU kunt dit verzoek opnieuw krijgen wanneer de ProtonVPN-app updates ontvangt.";
+"_kill_switch_helper_install_popup_body" = "Om IP-beveiliging in te schakelen, kunt u gevraagd worden om uw wachtwoord van uw computeraccount in te vullen. Als een aanvraag verschijnt, voer dan uw %@ in en accepteer.\n\nU kunt dit verzoek opnieuw krijgen wanneer de Proton VPN-app updates ontvangt.";
 
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "De meest recente update die u hebt gedownload vereist dat u uw wachtwoord van uw computeraccount geeft. Zodra het verzoek verschijnt, voer dan uw %@ in en accepteer.\n\nAls u uw Mac-wachtwoord niet invoert, wordt IP-beveiliging uitgeschakeld.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Uw internetverbinding wordt hervat zodra ProtonVPN opnieuw verbinding maakt met een server.\nOm het internet zonder VPN en bescherming van de IP-beveiliging te gebruiken, moet u het herverbinden met de server verbreken.";
+"_kill_switch_reconnection" = "Uw internetverbinding wordt hervat zodra Proton VPN opnieuw verbinding maakt met een server.\nOm het internet zonder VPN en bescherming van de IP-beveiliging te gebruiken, moet u het herverbinden met de server verbreken.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "zonder";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
-"_kill_switch_reconnection_bold2" = "IP-beveiliging";
+"_kill_switch_reconnection_bold2" = "IP-beveiligingbescherming";
 
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Opnieuw verbinden annuleren";
@@ -743,10 +743,10 @@
 "_ks_dont_ask" = "Niet opnieuw vragen";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Om de IP-beveiliging in te schakelen, moet u de %@downloaden en installeren.\nInstalleer het voordat u de IP-beveiliging inschakelt.";
+"_ks_requires_swift5_popup_msg" = "Om de IP-beveiliging in te schakelen, moet u de %@downloaden en installeren.\nInstalleer eerst de software om IP-beveiliging in te schakelen.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN kon de %@ niet detecteren. Om de IP-beveiliging in te schakelen, installeer eerst de software.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN kon de %@ niet detecteren. Om de IP-beveiliging in te schakelen, installeer eerst de software.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
@@ -902,7 +902,7 @@
 "_moderate_nat_enable_title" = "Schakel Gemiddelde NAT in";
 
 /* Explanation for the Moderate NAT feature shown next to the feature in Settings */
-"_moderate_nat_explanation" = "Moderate NAT schakelt de randomisatie van lokale adrestoewijzing uit. Dit kan uw veiligheid lichtjes verminderen, maar laat peer-to-peer toepassingen zoals online spelletjes toe om rechtstreekse verbindingen tot stand te brengen. \nLeer meer";
+"_moderate_nat_explanation" = "Gemiddelde NAT schakelt de randomisatie van lokale adrestoewijzing uit. Dit kan uw veiligheid lichtjes verminderen, maar laat peer-to-peer toepassingen zoals online spelletjes toe om rechtstreekse verbindingen tot stand te brengen. \nLeer meer";
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Meer informatie";
@@ -971,7 +971,7 @@
 "_neks_t2_connect" = "Toch inschakelen";
 
 /* (No Comment) */
-"_neks_t2_description" = "Het gebruik van de IP-beveiliging is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsprobleen op uw systeem als de IP-beveiligingsfunctionaliteit van macOS gebruikt wordt door ProtonVPN.";
+"_neks_t2_description" = "Het gebruik van de IP-beveiliging is instabiel op dit apparaat.\n\nUw apparaat heeft een T2-beveiligingschip, welke kan resulteren in een stabiliteitsproblemen op uw systeem als de IP-beveiligingsfunctionaliteit van macOS gebruikt wordt door ProtonVPN.";
 
 /* `_neks_t2_description' localized string. */
 "_neks_t2_hyperlink" = "T2-beveiligingschip";
@@ -1481,10 +1481,10 @@
 "_setup_complete" = "Installatie voltooid";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "U bent nu aangemeld voor een Proton VPN Free abonnement. Om u op weg te helpen, geniet u zeven dagen gratis van ons Proton VPN Plus-plan.";
+"_setup_complete_free" = "U bent nu aangemeld voor een Proton VPN Free-abonnement. Om u op weg te helpen, geniet u zeven dagen gratis van ons Proton VPN Plus-abonnement.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Uw aankoop was succesvol. Uw Proton VPN Plus abonnement is nu actief.";
+"_setup_complete_plus" = "Uw aankoop was succesvol. Uw Proton VPN Plus-abonnement is nu actief.";
 
 /* Show/hide password switch */
 "_show" = "TOON";
@@ -1767,7 +1767,7 @@
 /* Final text:
  
  We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "We hebben je een %@ gegeven met meer servers en extra functies. Uw Proton VPN Plus proefperiode eindigt over 7 dagen.";
+"_trial_popup_introduction" = "We hebben u een %@ gegeven met meer servers en extra functies. Uw Proton VPN Plus proefperiode eindigt over 7 dagen.";
 
 /* (No Comment) */
 "_trial_popup_thanks" = "Bedankt voor het gebruik van Proton VPN!";
@@ -1776,7 +1776,7 @@
 "_trial_popup_title" = "Proton VPN Proefversie";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Als welkomgeschenk heeft u de eerste dagen toegang tot een volledig Proton VPN abonnement met geavanceerde functies!";
+"_trial_welcome_description_iOS" = "Als welkomstgeschenk heeft u de eerste dagen toegang tot een volledig Proton VPN-abonnement met geavanceerde functies!";
 
 /* iOS trial welcome screen */
 "_trial_welcome_ends_in_iOS" = "Uw proefperiode loopt af in";

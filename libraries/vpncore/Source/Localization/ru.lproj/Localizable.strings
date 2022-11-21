@@ -737,7 +737,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch защищает ваш IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокировка всего сетевого трафика, тунель VPN потерян.";
+"_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере туннеля VPN.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Не спрашивать меня снова";
@@ -887,7 +887,7 @@
 "_menu_preferences" = "Настройки";
 
 /* Main mac app menu item */
-"_menu_quit" = "Выти из Proton VPN";
+"_menu_quit" = "Закрыть Proton VPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Показать все";

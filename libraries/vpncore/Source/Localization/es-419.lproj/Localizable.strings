@@ -251,7 +251,7 @@
 "_data_disclaimer_user_details" = "Nombre de usuario, dirección de correo";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "El botón \"Conexión rápida\" usa el perfil por defecto.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
 /* Common word */
 "_delete" = "Eliminar";
@@ -1052,7 +1052,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "En mantenimiento";
+"_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostrar Proton VPN para iniciar sesión...";
@@ -1732,7 +1732,7 @@
 "_tor" = "Tor";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Conecta a la red Tor";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Servidor Tor";
@@ -1878,7 +1878,7 @@
 "_unavailable" = "No disponible";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Notificar redes sin protección";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Reciba una notificación cuando Proton VPN detecte que está conectado a una red sin protección.";

@@ -1476,7 +1476,7 @@
 "_unavailable" = "Nedostupno";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Obavijesti o nezaštićenim mrežama";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Primanje obavijesti kada Proton VPN otkrije da ste povezani s nezaštićenom mrežom.";

@@ -251,7 +251,7 @@
 "_data_disclaimer_user_details" = "Nama pengguna, alamat email";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Tombol \"Quick Connect\" menggunakan profil default.\n";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
 
 /* Common word */
 "_delete" = "Hapus";
@@ -764,10 +764,10 @@
 "_load" = "Beban";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Memuat informasi seputar koneksi";
+"_loading_connection_info" = "Memuat informasi koneksi";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Memuat informasi seputar koneksi %@";
+"_loading_connection_info_for" = "Memuat informasi koneksi untuk %@";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Internet Aman di Mana Saja";
@@ -1052,7 +1052,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Sedang dalam pemeliharaan";
+"_on_maintenance" = "Under maintenance";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Tampilkan Proton VPN untuk masuk...";
@@ -1729,10 +1729,10 @@
 "_to_server_title" = "Ke Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "TOR";
+"_tor" = "Tor";
 
 /* Description shown together with server info icon */
-"_tor_description" = "Mendukung sambungan ke jaringan Tor";
+"_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
@@ -1878,7 +1878,7 @@
 "_unavailable" = "Tidak tersedia";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Beri tahu jaringan yang tidak dilindungi";
+"_unprotected_network" = "Unprotected network notifications";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Terima notifikasi pada saat Proton VPN mendeteksi Anda sedang tersambung ke jaringan yang tidak dilindungi.";
