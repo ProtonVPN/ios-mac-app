@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import Crypto_VPN
+import GoLibs
 
 protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
     func didReceiveError(code: Int)

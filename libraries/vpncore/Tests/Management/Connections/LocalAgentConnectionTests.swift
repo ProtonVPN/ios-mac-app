@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 import NetworkExtension
 import VPNShared
-import Crypto_VPN
+import GoLibs
 @testable import vpncore
 
 class LocalAgentConnectionTests: ConnectionTestCaseDriver {

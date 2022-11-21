@@ -8,7 +8,7 @@
 
 import Foundation
 import vpncore
-import Crypto_VPN
+import GoLibs
 import ProtonCore_DataModel
 import ProtonCore_Networking
 import ProtonCore_Services

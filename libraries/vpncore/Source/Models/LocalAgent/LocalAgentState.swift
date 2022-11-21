@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import Crypto_VPN
+import GoLibs
 
 enum LocalAgentState {
     case connecting

@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import Crypto_VPN
+import GoLibs
 import VPNShared
 
 enum LocalAgentFeaturesKeys: String {

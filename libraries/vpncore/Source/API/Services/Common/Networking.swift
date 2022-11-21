@@ -10,7 +10,7 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
-import Crypto_VPN
+import GoLibs
 import VPNShared
 
 public typealias SuccessCallback = (() -> Void)

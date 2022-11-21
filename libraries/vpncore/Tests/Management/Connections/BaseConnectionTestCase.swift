@@ -19,7 +19,7 @@
 import Foundation
 import XCTest
 import NetworkExtension
-import Crypto_VPN
+import GoLibs
 import VPNShared
 
 @testable import vpncore

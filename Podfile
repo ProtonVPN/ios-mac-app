@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.23.3'
+  '3.24.4'
 end
 
 def openvpn
@@ -20,7 +20,7 @@ def openvpn
 end
 
 def pm_automation
-  pod 'pmtest', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '579ef5f66deea4231784614d936956982f53ee30'
+  pod 'pmtest', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '56581413f76841d7f0d9f6ba555e03a6cc7b8d94'
 end
 
 def keychain_access
@@ -33,6 +33,10 @@ end
 
 def sd_web_image
   pod 'SDWebImage', '5.12.6'
+end
+
+def crypto_variant
+  "Crypto+VPN-Go1.15.15"
 end
 
 def vpn_core
@@ -57,9 +61,9 @@ def vpn_core
     pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Environment', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
-    pod 'ProtonCore-Authentication/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
-    pod 'ProtonCore-Crypto-VPN', :git => proton_core_path, :tag => proton_core_version
-    pod 'ProtonCore-Payments/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+    pod "ProtonCore-Authentication/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+    pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+    pod "ProtonCore-Payments/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
 
     # Third party pods
@@ -104,24 +108,24 @@ target 'ProtonVPN' do
   
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Login/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Crypto-VPN', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-LoginUI-V5/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-Login/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-LoginUI-V5/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-CoreTranslation-V5', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-Authentication-KeyGeneration/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-FeatureSwitch', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-HumanVerification-V5', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Payments/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-PaymentsUI-V5/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-Payments/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-PaymentsUI-V5/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-APIClient', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-Hash', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-ForceUpgrade-V5', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-AccountDeletion-V5/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-AccountDeletion-V5/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-TroubleShooting', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
@@ -172,8 +176,8 @@ target 'ProtonVPN-mac' do
   vpn_core
   
   pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Login/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Crypto-VPN', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-Login/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
 
 end
 
