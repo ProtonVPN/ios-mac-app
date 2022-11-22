@@ -36,12 +36,9 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     
     init( _ sectionHeader: String, totalCountries: Int, isPremium: Bool, countriesViewModel: CountriesSectionViewModel ) {
         title = sectionHeader + " (\(totalCountries))"
+        guard isPremium else { return }
         didTapInfoBtn = {
-            if isPremium {
-                countriesViewModel.displayPremiumServices?()
-            } else {
-                countriesViewModel.displayFreeServices?()
-            }
+            countriesViewModel.displayPremiumServices?()
         }
     }
 }
@@ -53,8 +50,17 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     
     init( _ sectionHeader: String, totalServers: Int, country: CountryModel, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
         title = sectionHeader + " (\(totalServers))"
-        guard !propertiesManager.secureCoreToggle, tier > 1, let streamServicesDict = propertiesManager.streamingServices[country.countryCode],
-              let key = streamServicesDict.keys.first, let streamServices = streamServicesDict[key] else {
+        if tier == CoreAppConstants.VpnTiers.free {
+            didTapInfoBtn = {
+                countriesViewModel.displayFreeServices?()
+            }
+            return
+        }
+        guard !propertiesManager.secureCoreToggle,
+              tier > CoreAppConstants.VpnTiers.basic,
+              let streamServicesDict = propertiesManager.streamingServices[country.countryCode],
+              let key = streamServicesDict.keys.first,
+              let streamServices = streamServicesDict[key] else {
             return
         }
         

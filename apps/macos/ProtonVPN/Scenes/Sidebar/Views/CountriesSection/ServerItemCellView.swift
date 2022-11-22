@@ -25,17 +25,15 @@ import vpncore
 
 protocol ServerItemCellViewDelegate: AnyObject {
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
-    func userDidClickOnPartnerIcon(partner: Partner)
+    func userDidClickOnPartnerIcon()
 }
 
 final class ServerItemCellView: NSView {
     
     @IBOutlet private weak var loadIcon: ColoredLoadButton!
-    @IBOutlet private weak var smartIV: NSImageView!
-    @IBOutlet private weak var p2pIV: NSImageView!
-    @IBOutlet private weak var torIV: NSImageView!
-    @IBOutlet private weak var streamingIV: NSButton!
-    @IBOutlet private weak var dwButton: NSButton!
+
+    @IBOutlet private weak var serverInfoStackView: NSStackView!
+    private weak var featuresStackView: NSStackView!
 
     @IBOutlet private weak var serverLbl: NSTextField!
     @IBOutlet private weak var cityLbl: NSTextField!
@@ -62,12 +60,7 @@ final class ServerItemCellView: NSView {
             .resize(newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
                     newHeight: Int(maintenanceIV.bounds.height) - imageMargin)
 
-        streamingIV.image = AppTheme.Icon.play.colored(.weak)
-        torIV.image = AppTheme.Icon.brandTor.colored(.weak)
-        p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.weak)
-        smartIV.image = AppTheme.Icon.globe.colored(.weak)
         secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
-//        dwButton.image = Bundle.vpnCore.image(forResource: .init("Deutsche-Welle-medium"))
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
         let trackingArea = NSTrackingArea(rect: trackingFrame,
@@ -75,6 +68,65 @@ final class ServerItemCellView: NSView {
                                           owner: self,
                                           userInfo: nil)
         addTrackingArea(trackingArea)
+
+        connectBtn.wantsLayer = true
+        let featuresStackView = NSStackView()
+        featuresStackView.translatesAutoresizingMaskIntoConstraints = false
+        featuresStackView.orientation = .horizontal
+        featuresStackView.alignment = .centerY
+        featuresStackView.distribution = .fill
+        featuresStackView.spacing = 8
+        addSubview(featuresStackView, positioned: .below, relativeTo: connectBtn)
+        addConstraints([serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -8),
+                        serverInfoStackView.centerYAnchor.constraint(equalTo: featuresStackView.centerYAnchor),
+                        featuresStackView.heightAnchor.constraint(equalToConstant: 24)])
+        self.featuresStackView = featuresStackView
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        featuresStackView.subviews.forEach {
+            ($0 as? NSButton)?.sd_cancelCurrentImageLoad()
+            ($0 as? NSImageView)?.sd_cancelCurrentImageLoad()
+            $0.removeFromSuperview()
+        }
+    }
+
+    func addFeatures() {
+        if viewModel.isSmartAvailable {
+            let imageView = NSImageView(image: AppTheme.Icon.globe.colored(.weak))
+            addViewToFeaturesStack(imageView)
+        }
+
+        if viewModel.isP2PAvailable {
+            let imageView = NSImageView(image: AppTheme.Icon.arrowsSwitch.colored(.weak))
+            addViewToFeaturesStack(imageView)
+        }
+
+        if viewModel.isTorAvailable {
+            let imageView = NSImageView(image: AppTheme.Icon.brandTor.colored(.weak))
+            addViewToFeaturesStack(imageView)
+        }
+
+        if viewModel.isStreamingAvailable {
+            let button = NSButton(image: AppTheme.Icon.play.colored(.weak), target: self, action: #selector(didTapStreaming))
+            button.isBordered = false
+            addViewToFeaturesStack(button)
+        }
+
+        viewModel.partners.forEach {
+            let button = NSButton(image: .init(), target: self, action: #selector(didTapPartner))
+            button.isBordered = false
+            button.sd_setImage(with: $0.iconURL)
+            addViewToFeaturesStack(button, width: 24)
+        }
+    }
+
+    func addViewToFeaturesStack(_ view: NSView, width: CGFloat = 16) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addConstraint(view.widthAnchor.constraint(equalToConstant: width))
+        view.wantsLayer = true
+        featuresStackView.addArrangedSubview(view)
     }
     
     private var viewModel: ServerItemViewModel!
@@ -110,17 +162,18 @@ final class ServerItemCellView: NSView {
         connectBtn.isConnected = viewModel.isConnected
         connectBtn.isHidden = !viewModel.isConnected || viewModel.requiresUpgrade
         cityLbl.isHidden = viewModel.isConnected || viewModel.requiresUpgrade
-        streamingIV.isHidden = !viewModel.isStreamingAvailable
-        torIV.isHidden = !viewModel.isTorAvailable
-        p2pIV.isHidden = !viewModel.isP2PAvailable
-        smartIV.isHidden = !viewModel.isSmartAvailable
-        dwButton.isHidden = viewModel.partners == nil
         connectBtn.isHovered = false
         upgradeBtn.isHidden = !viewModel.requiresUpgrade
         setupInfoView()
+
+        addFeatures()
         
-        [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl, torIV, smartIV, p2pIV, streamingIV, dwButton].forEach {
+        [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl].forEach {
             $0?.alphaValue = viewModel.alphaForMainElements
+        }
+
+        featuresStackView.views.forEach {
+            $0.alphaValue = viewModel.alphaForMainElements
         }
                 
         if let code = viewModel.entryCountry {
@@ -146,13 +199,12 @@ final class ServerItemCellView: NSView {
         viewModel.upgradeAction()
     }
 
-    @IBAction private func didTapStreaming(_ sender: Any) {
+    @objc private func didTapStreaming(_ sender: Any) {
         delegate?.userDidRequestStreamingInfo(server: viewModel)
     }
 
-    @IBAction private func didTapPartner(_ sender: Any) {
-        guard let partner = viewModel.partner else { return }
-        delegate?.userDidClickOnPartnerIcon(partner: partner)
+    @objc private func didTapPartner(_ sender: Any) {
+        delegate?.userDidClickOnPartnerIcon()
     }
 
     // MARK: - Accessibility

@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
-                    <rect key="frame" x="24" y="13" width="308" height="24"/>
+                    <rect key="frame" x="24" y="13" width="154" height="24"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jz-D5-q91">
                             <rect key="frame" x="0.0" y="1" width="22" height="22"/>
@@ -62,65 +62,9 @@
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-chevrons-right" id="25F-RR-AXu"/>
                         </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="61R-2Y-fBC">
-                            <rect key="frame" x="162" y="0.0" width="16" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="cKi-1L-PQn"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-globe" id="YEC-V1-OMH"/>
-                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Meu-TF-bG3">
-                            <rect key="frame" x="186" y="0.0" width="16" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="IaS-xx-SrL"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-arrows-switch" id="ZZQ-lv-SkV"/>
-                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Vh-5IW">
-                            <rect key="frame" x="210" y="0.0" width="16" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="0cJ-0y-Rxt"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-brand-tor" id="in4-Bp-Qe5"/>
-                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </imageView>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="xnJ-CI-Tms">
-                            <rect key="frame" x="234" y="0.0" width="16" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="z2R-cG-iyr"/>
-                            </constraints>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic-play" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="rmO-kh-wEA">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="didTapStreaming:" target="c22-O7-iKe" id="hAr-oF-Uji"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="15N-3N-eoj">
-                            <rect key="frame" x="258" y="0.0" width="50" height="24"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mLA-Mr-md9">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="didTapPartner:" target="c22-O7-iKe" id="etK-BJ-Day"/>
-                            </connections>
-                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="xnJ-CI-Tms" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="9sA-fP-N82"/>
-                        <constraint firstItem="Meu-TF-bG3" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="HOf-LE-orL"/>
-                        <constraint firstItem="htq-Vh-M3a" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="IF8-bR-eIt"/>
                         <constraint firstAttribute="height" constant="24" id="JwK-a6-OmP"/>
-                        <constraint firstItem="nA5-Vh-5IW" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="Qgi-yA-Uzw"/>
-                        <constraint firstItem="61R-2Y-fBC" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="U1s-sj-LC3"/>
-                        <constraint firstItem="6H3-fq-9lW" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="jY5-EB-TP9"/>
-                        <constraint firstItem="3jz-D5-q91" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="lOs-af-s0A"/>
-                        <constraint firstItem="rdo-bb-f1n" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="q1A-Z1-Vdw"/>
-                        <constraint firstItem="YUD-lf-aWO" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="wKM-jy-7Fz"/>
                     </constraints>
                     <visibilityPriorities>
                         <integer value="1000"/>
@@ -128,18 +72,8 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
-                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
@@ -200,27 +134,19 @@
             <connections>
                 <outlet property="cityLbl" destination="Ewh-0g-OY6" id="211-QY-fGX"/>
                 <outlet property="connectBtn" destination="0LY-WB-KAs" id="5LA-gB-rpA"/>
-                <outlet property="dwButton" destination="15N-3N-eoj" id="Ml2-gb-zAi"/>
                 <outlet property="loadIcon" destination="rdo-bb-f1n" id="Ygw-MS-wFP"/>
                 <outlet property="maintenanceIV" destination="3jz-D5-q91" id="stl-Vx-X3T"/>
-                <outlet property="p2pIV" destination="Meu-TF-bG3" id="lJI-60-3By"/>
                 <outlet property="secureCoreIV" destination="htq-Vh-M3a" id="YxX-Ra-YEF"/>
                 <outlet property="secureFlagIV" destination="YUD-lf-aWO" id="LnR-ZD-4Ws"/>
+                <outlet property="serverInfoStackView" destination="HwW-fd-TKx" id="QGw-U7-IkU"/>
                 <outlet property="serverLbl" destination="6H3-fq-9lW" id="VTW-MY-YEC"/>
-                <outlet property="smartIV" destination="61R-2Y-fBC" id="GUd-7n-TeR"/>
-                <outlet property="streamingIV" destination="xnJ-CI-Tms" id="tF6-HR-2EO"/>
-                <outlet property="torIV" destination="nA5-Vh-5IW" id="llX-5m-nb6"/>
                 <outlet property="upgradeBtn" destination="aym-qX-9lw" id="1Il-BH-Jyo"/>
             </connections>
             <point key="canvasLocation" x="312.5" y="154"/>
         </customView>
     </objects>
     <resources>
-        <image name="ic-arrows-switch" width="24" height="24"/>
-        <image name="ic-brand-tor" width="24" height="24"/>
         <image name="ic-chevrons-right" width="24" height="24"/>
-        <image name="ic-globe" width="24" height="24"/>
-        <image name="ic-play" width="24" height="24"/>
         <image name="ic-wrench" width="24" height="24"/>
     </resources>
 </document>

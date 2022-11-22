@@ -369,7 +369,7 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
 }
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
-    func userDidClickOnPartnerIcon(partner: Partner) {
+    func userDidClickOnPartnerIcon() {
         viewModel.displayFreeServices?()
     }
 
