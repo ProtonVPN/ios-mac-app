@@ -23,7 +23,6 @@ import Foundation
 import VPNShared
 
 class VpnConnectionPreparer {
-    
     private let appStateManager: AppStateManager
     private let vpnApiService: VpnApiService
     private let serverStorage: ServerStorage
@@ -57,7 +56,7 @@ class VpnConnectionPreparer {
                                              netShieldType: NetShieldType,
                                              natType: NATType,
                                              safeMode: Bool?) {
-        guard let serverIp = selectServerIp(server: server) else {
+        guard let serverIp = selectServerIp(server: server, connectionProtocol: connectionProtocol) else {
             return
         }
         
@@ -86,16 +85,15 @@ class VpnConnectionPreparer {
         }
     }
 
-    private func selectServerIp(server: ServerModel) -> ServerIp? {
+    private func selectServerIp(server: ServerModel, connectionProtocol: ConnectionProtocol) -> ServerIp? {
         let availableServerIps = server.ips.filter { !$0.underMaintenance }
 
-        guard !availableServerIps.isEmpty else {
+        guard let serverIp = availableServerIps.randomElement() else {
             serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .existingConnection)
             return nil
         }
 
-        let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))] // swiftlint:disable:this legacy_random
-        log.info("Selected \(serverIp.entryIp) as server ip for \(server.domain)", category: .connectionConnect)
+        log.info("Selected \(serverIp) as server ip for \(server.domain)", category: .connectionConnect)
         return serverIp
     }
     

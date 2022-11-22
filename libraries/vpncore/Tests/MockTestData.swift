@@ -133,9 +133,9 @@ struct MockTestData {
                               hostCountry: "Switzerland",
                               translatedCity: nil)
 
-    /// plus server which supports Stealth protocol only.
+    /// plus server with IP and port override for Stealth protocol.
     var server5 = ServerModel(id: "qrst",
-                              name: "exclusive plus server",
+                              name: "ports plus server",
                               domain: "withrelay2.protonvpn.ch",
                               load: 42,
                               entryCountryCode: "CH",
@@ -146,7 +146,30 @@ struct MockTestData {
                               ips: [.init(id: "mnop",
                                           entryIp: "10.0.0.10",
                                           exitIp: "10.0.0.11",
-                                          domain: "withrelay.protonvpn.net",
+                                          domain: "withrelay2.protonvpn.net",
+                                          status: 1,
+                                          protocolEntries: [.wireGuard(.tls): .init(ipv4: "10.0.1.12",
+                                                                                    ports: [15213])])],
+                              score: 10,
+                              status: 1,
+                              location: .init(lat: 47.22, long: 8.32),
+                              hostCountry: "Switzerland",
+                              translatedCity: nil)
+
+    /// plus server which supports Stealth protocol only.
+    var server6 = ServerModel(id: "uvwx",
+                              name: "exclusive plus server",
+                              domain: "withrelay3.protonvpn.ch",
+                              load: 42,
+                              entryCountryCode: "CH",
+                              exitCountryCode: "CH",
+                              tier: CoreAppConstants.VpnTiers.plus,
+                              feature: .zero,
+                              city: "Zurich",
+                              ips: [.init(id: "mnop",
+                                          entryIp: "10.0.0.13",
+                                          exitIp: "10.0.0.14",
+                                          domain: "withrelay3.protonvpn.net",
                                           status: 1,
                                           protocolEntries: [.wireGuard(.tls): .init(ipv4: nil, ports: nil)])],
                               score: 10,

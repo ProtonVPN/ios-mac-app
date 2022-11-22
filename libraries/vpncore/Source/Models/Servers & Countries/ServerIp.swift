@@ -31,6 +31,18 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public let label: String?
     public let x25519PublicKey: String?
 
+    public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
+        guard let override = protocolEntries?.first(where: { $0.key == vpnProtocol }), let ip = override.value?.ipv4 else {
+            return entryIp
+        }
+
+        return ip
+    }
+
+    public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
+        protocolEntries?[vpnProtocol]??.ports
+    }
+
     /// API overrides for connection parameters when using a certain protocol.
     ///
     /// Given an entry `e` exists for a protocol `p` on `ServerIp` object `s`:
@@ -94,7 +106,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.protocolEntries = try (dic["EntryPerProtocol"] as? [String: JSONDictionary?])?
             .reduce([VpnProtocol: ProtocolEntry?]()) { partialResult, keyPair in
                 // Check if it's a vpn protocol that we recognize.
-                guard let vpnProtocol = VpnProtocol.apiDescriptions[keyPair.key] else {
+                guard let vpnProtocol = VpnProtocol.apiDescriptionsToProtocols[keyPair.key] else {
                     return partialResult
                 }
 
@@ -167,7 +179,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public var underMaintenance: Bool {
         return status == 0
     }
-    
+
     // MARK: - Static functions
     
     // swiftlint:disable nsobject_prefer_isequal

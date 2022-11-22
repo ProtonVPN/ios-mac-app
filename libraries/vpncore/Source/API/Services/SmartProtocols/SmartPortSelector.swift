@@ -35,7 +35,8 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
         case .wireGuard(let transportProtocol): // Ping all the ports to determine which are available
             guard case .udp = transportProtocol else {
                 // FUTUREDO: Implement
-                completion(self.wireguardTcpChecker.defaultPorts.shuffled())
+                let ports = serverIp.protocolEntries?[vpnProtocol]??.ports ?? wireguardTcpChecker.defaultPorts
+                completion(ports.shuffled())
                 return
             }
 

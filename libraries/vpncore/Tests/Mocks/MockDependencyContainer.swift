@@ -76,6 +76,8 @@ class MockDependencyContainer {
 
     let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
 
+    var didConfigure: VpnCredentialsConfiguratorMock.VpnCredentialsConfiguratorMockCallback?
+
     lazy var vpnManager = VpnManager(ikeFactory: ikeFactory,
                                      openVpnFactory: openVpnFactory,
                                      wireguardProtocolFactory: wireguardFactory,
@@ -163,7 +165,9 @@ extension MockFactory: NEVPNManagerWrapperFactory {
 
 extension MockFactory: VpnCredentialsConfiguratorFactory {
     func getCredentialsConfigurator(for `protocol`: VpnProtocol) -> VpnCredentialsConfigurator {
-        return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`)
+        return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`) { [weak self] config, protocolConfig in
+            self?.container.didConfigure?(config, protocolConfig)
+        }
     }
 }
 

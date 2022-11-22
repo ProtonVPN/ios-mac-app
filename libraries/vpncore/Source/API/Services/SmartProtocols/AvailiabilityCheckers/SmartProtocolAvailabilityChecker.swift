@@ -49,14 +49,17 @@ extension SmartProtocolAvailabilityChecker {
     }
 
     func checkAvailability(server: ServerIp, ports: [Int], completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        log.debug("Checking \(protocolName) availability for \(server.entryIp)", category: .connectionConnect, event: .scan)
+        log.debug("Checking \(protocolName) availability for \(server)", category: .connectionConnect, event: .scan)
+
+        // Ports can be overridden for a given protocol and server
+        let ports = server.overridePorts(using: vpnProtocol) ?? ports
 
         DispatchQueue.global().async {
             let group = DispatchGroup()
             var availablePorts: [Int] = []
             let lockQueue = DispatchQueue(label: "ch.proton.availability_checker.\(self.protocolName)")
 
-            for port in ports {
+            for port in ports.shuffled() {
                 group.enter()
                 self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { receivedResponse in
                     lockQueue.sync {
@@ -78,14 +81,15 @@ extension SmartProtocolAvailabilityChecker {
 
     /// Pings all the ports and returns on the first successful try.
     func getFirstToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
-        log.debug("Getting best port for \(server.entryIp) on Wireguard", category: .connectionConnect, event: .scan)
+        log.debug("Getting best port for \(server) on \(vpnProtocol.localizedString)", category: .connectionConnect, event: .scan)
 
         DispatchQueue.global().async { [unowned self] in
             let group = DispatchGroup()
             let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(self.protocolName)")
             var portAlreadyFound = false // Prevents several calls to completion closure
 
-            for port in self.defaultPorts.shuffled() {
+            let ports = server.overridePorts(using: vpnProtocol) ?? defaultPorts
+            for port in ports.shuffled() {
                 group.enter()
                 self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { success in
                     defer { group.leave() }
@@ -95,7 +99,7 @@ extension SmartProtocolAvailabilityChecker {
                             return false
                         }
                         portAlreadyFound = true
-                        log.debug("First port to respond is \(port). Returning this port to be used on Wireguard.", category: .connectionConnect, event: .scan)
+                        log.debug("First port to respond is \(port). Returning this port to be used on \(self.vpnProtocol.localizedString).", category: .connectionConnect, event: .scan)
                         return true
                     }
 
@@ -119,10 +123,16 @@ protocol SharedLibraryUDPAvailabilityChecker: SmartProtocolAvailabilityChecker {
 
 extension SharedLibraryUDPAvailabilityChecker {
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
-        log.debug("Checking \(protocolName) availability for \(server.entryIp) on port \(port)", category: .connectionConnect, event: .scan)
+        guard let entryIp = server.entryIp(using: vpnProtocol) else {
+            log.error("Cannot find a valid entry IP for \(vpnProtocol).", category: .connectionConnect, event: .scan)
+            completion(false)
+            return
+        }
+
+        log.debug("Checking \(protocolName) availability for \(entryIp) on port \(port)", category: .connectionConnect, event: .scan)
 
         guard let key = server.x25519PublicKey else {
-            log.error("Cannot check \(protocolName) availability for \(server.entryIp) on port \(port) because of missing public key", category: .connectionConnect, event: .scan)
+            log.error("Cannot check \(protocolName) availability for \(entryIp) on port \(port) because of missing public key", category: .connectionConnect, event: .scan)
             completion(false)
             return
         }
@@ -130,15 +140,15 @@ extension SharedLibraryUDPAvailabilityChecker {
         DispatchQueue.global(qos: .userInitiated).async {
             var error: NSError?
             var ret: ObjCBool = false
-            let result = VpnPingPingSyncWithError(server.entryIp, port, key, Int(timeout * 1000), &ret, &error)
+            let result = VpnPingPingSyncWithError(entryIp, port, key, Int(timeout * 1000), &ret, &error)
 
             if let error = error {
-                log.error("\(protocolName) NOT available for \(server.entryIp) on port \(port) (Error: \(error))", category: .connectionConnect, event: .scan)
+                log.error("\(protocolName) NOT available for \(entryIp) on port \(port) (Error: \(error))", category: .connectionConnect, event: .scan)
                 completion(false)
                 return
             }
 
-            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(server.entryIp) on port \(port)", category: .connectionConnect, event: .scan)
+            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(entryIp) on port \(port)", category: .connectionConnect, event: .scan)
             completion(result)
         }
     }

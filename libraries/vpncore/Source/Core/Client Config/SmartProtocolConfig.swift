@@ -29,6 +29,32 @@ public struct SmartProtocolConfig: Codable, Equatable {
     @Default<BoolDefaultTrue> public var wireGuardTcp: Bool
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
 
+    public var supportedProtocols: [VpnProtocol] {
+        var result: [VpnProtocol] = []
+
+        if openVPN {
+            result.append(contentsOf: [.openVpn(.tcp), .openVpn(.udp)])
+        }
+
+        if iKEv2 {
+            result.append(.ike)
+        }
+
+        if wireGuard {
+            result.append(.wireGuard(.udp))
+        }
+
+        if wireGuardTcp {
+            result.append(.wireGuard(.tcp))
+        }
+
+        if wireGuardTls {
+            result.append(.wireGuard(.tls))
+        }
+
+        return result
+    }
+
     enum CodingKeys: String, CodingKey {
         case openVPN
         case iKEv2 = "IKEv2"
