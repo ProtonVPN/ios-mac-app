@@ -74,6 +74,11 @@ final class ServerViewModelMock: ServerViewModel {
     func connectAction() {
 
     }
+    
+    func partnersIcon(completion: @escaping (UIImage?) -> Void) { }
+
+    func cancelPartnersIconRequests() { }
+
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil, isPartnerServer: Bool = false) {
         description = server
