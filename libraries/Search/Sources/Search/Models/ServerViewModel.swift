@@ -40,6 +40,9 @@ public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var countryFlag: UIImage? { get }
 
     func updateTier()
+
+    func partnersIcon(completion: @escaping (UIImage?) -> Void)
+    func cancelPartnersIconRequests()
 }
 
 extension ServerViewModel {

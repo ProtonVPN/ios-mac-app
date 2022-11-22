@@ -309,11 +309,13 @@ extension CountryItemViewModel {
                       icon: .url($0.iconURL))
             }
         }
-        return .init(title: LocalizedString.informationTitle,
-                     sections: [.init(title: nil,
-                                      rowViewModels: serverInformationViewModels),
-                                .init(title: LocalizedString.dwPartner2022PartnersTitle,
-                                      rowViewModels: partners)])
+        var sections: [ServersInformationViewController.Section]
+        sections = [.init(title: nil, rowViewModels: serverInformationViewModels)]
+        if !partners.isEmpty {
+            sections.append(.init(title: LocalizedString.dwPartner2022PartnersTitle, rowViewModels: partners))
+        }
+
+        return .init(title: LocalizedString.informationTitle, sections: sections)
     }
 }
 

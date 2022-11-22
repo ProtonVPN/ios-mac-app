@@ -29,54 +29,18 @@
                         <color key="textColor" red="0.61176470588235299" green="0.62745098039215685" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qUd-gM-Kds" userLabel="props stack">
-                        <rect key="frame" x="356" y="7" width="170" height="50"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qUd-gM-Kds">
+                        <rect key="frame" x="464" y="7" width="62" height="50"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-arrows-switch" translatesAutoresizingMaskIntoConstraints="NO" id="1mc-2c-HuB">
-                                <rect key="frame" x="0.0" y="17" width="16" height="16"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="Af9-53-4Vv"/>
-                                    <constraint firstAttribute="height" constant="16" id="eYR-6O-5bb"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-brand-tor" translatesAutoresizingMaskIntoConstraints="NO" id="UF9-cM-L8d">
-                                <rect key="frame" x="20" y="17" width="16" height="16"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="C8O-NA-YU9"/>
-                                    <constraint firstAttribute="height" constant="16" id="joY-Ca-0pn"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-globe" translatesAutoresizingMaskIntoConstraints="NO" id="LSC-eK-sOO">
-                                <rect key="frame" x="40" y="17" width="16" height="16"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="cHT-iW-iD6"/>
-                                    <constraint firstAttribute="height" constant="16" id="vIJ-j0-TXK"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="ic-play" translatesAutoresizingMaskIntoConstraints="NO" id="0uq-cF-CiO">
-                                <rect key="frame" x="60" y="17" width="16" height="16"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="16" id="Lhq-9G-0ll"/>
-                                    <constraint firstAttribute="height" constant="16" id="YC8-Il-dNp"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalCompressionResistancePriority="751" image="Deutsche-Welle-medium" translatesAutoresizingMaskIntoConstraints="NO" id="qyp-i0-6KD">
-                                <rect key="frame" x="80" y="13" width="24" height="24"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVx-F1-H5s">
-                                <rect key="frame" x="108" y="0.0" width="8" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="8" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="8" id="kUU-TB-I9c"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rif-yk-4lY">
-                                <rect key="frame" x="120" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="12" y="0.0" width="50" height="50"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="0Cy-HH-d7d" userLabel="load color">
                                         <rect key="frame" x="0.0" y="21" width="8" height="8"/>
@@ -190,27 +154,18 @@
                 <outlet property="countryNameLabel" destination="cCK-ld-bJa" id="Pqv-RA-Hfj"/>
                 <outlet property="entryFlagIcon" destination="kwf-l7-NBG" id="d4C-Nx-wAv"/>
                 <outlet property="exitFlagIcon" destination="dqc-qE-lDa" id="nsa-a1-whg"/>
+                <outlet property="featuresStackView" destination="qUd-gM-Kds" id="r59-wZ-Vkm"/>
                 <outlet property="loadColorView" destination="0Cy-HH-d7d" id="sb9-ei-61f"/>
                 <outlet property="loadContainingView" destination="Rif-yk-4lY" id="GjG-ZP-rph"/>
                 <outlet property="loadLbl" destination="Gy0-ry-hsN" id="4kh-DG-rD5"/>
-                <outlet property="p2pIV" destination="1mc-2c-HuB" id="cxK-lO-6od"/>
-                <outlet property="partnerImageView" destination="qyp-i0-6KD" id="TdJ-gR-LAT"/>
                 <outlet property="secureView" destination="uyK-oI-0bQ" id="80k-Bx-ede"/>
                 <outlet property="serverNameLabel" destination="Emp-q6-ALw" id="3yh-wb-7o7"/>
-                <outlet property="smartIV" destination="LSC-eK-sOO" id="T7t-MI-iTj"/>
-                <outlet property="streamingIV" destination="0uq-cF-CiO" id="a2X-zD-ksu"/>
-                <outlet property="torIV" destination="UF9-cM-L8d" id="bwg-d3-J7h"/>
             </connections>
             <point key="canvasLocation" x="350.39999999999998" y="152.92353823088456"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Deutsche-Welle-medium" width="24" height="24"/>
-        <image name="ic-arrows-switch" width="24" height="24"/>
-        <image name="ic-brand-tor" width="24" height="24"/>
         <image name="ic-chevrons-right" width="24" height="24"/>
-        <image name="ic-globe" width="24" height="24"/>
-        <image name="ic-play" width="24" height="24"/>
         <image name="ic-power-off" width="22" height="22"/>
     </resources>
 </document>

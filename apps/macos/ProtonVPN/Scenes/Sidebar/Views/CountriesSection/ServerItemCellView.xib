@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
-                    <rect key="frame" x="24" y="13" width="274" height="24"/>
+                    <rect key="frame" x="24" y="13" width="308" height="24"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jz-D5-q91">
                             <rect key="frame" x="0.0" y="1" width="22" height="22"/>
@@ -100,8 +100,8 @@
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="15N-3N-eoj">
-                            <rect key="frame" x="258" y="4" width="16" height="16"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="Deutsche-Welle-small" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mLA-Mr-md9">
+                            <rect key="frame" x="258" y="0.0" width="50" height="24"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="mLA-Mr-md9">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
@@ -216,7 +216,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="Deutsche-Welle-small" width="16" height="16"/>
         <image name="ic-arrows-switch" width="24" height="24"/>
         <image name="ic-brand-tor" width="24" height="24"/>
         <image name="ic-chevrons-right" width="24" height="24"/>

@@ -141,4 +141,8 @@ extension CountryViewController: ServerCellDelegate {
     func userDidRequestStreamingInfo() {
         displayStreamingServices()
     }
+    
+    func userDidRequestFreeServersInfo() {
+        displayFreeServersInfo()
+    }
 }

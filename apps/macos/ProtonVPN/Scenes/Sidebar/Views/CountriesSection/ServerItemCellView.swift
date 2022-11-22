@@ -67,7 +67,7 @@ final class ServerItemCellView: NSView {
         p2pIV.image = AppTheme.Icon.arrowsSwitch.colored(.weak)
         smartIV.image = AppTheme.Icon.globe.colored(.weak)
         secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
-        dwButton.image = Bundle.vpnCore.image(forResource: .init("Deutsche-Welle-medium"))
+//        dwButton.image = Bundle.vpnCore.image(forResource: .init("Deutsche-Welle-medium"))
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
         let trackingArea = NSTrackingArea(rect: trackingFrame,
@@ -114,7 +114,7 @@ final class ServerItemCellView: NSView {
         torIV.isHidden = !viewModel.isTorAvailable
         p2pIV.isHidden = !viewModel.isP2PAvailable
         smartIV.isHidden = !viewModel.isSmartAvailable
-        dwButton.isHidden = viewModel.partner == nil
+        dwButton.isHidden = viewModel.partners == nil
         connectBtn.isHovered = false
         upgradeBtn.isHidden = !viewModel.requiresUpgrade
         setupInfoView()
