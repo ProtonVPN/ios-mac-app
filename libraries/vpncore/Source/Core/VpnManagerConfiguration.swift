@@ -109,11 +109,15 @@ public class VpnManagerConfigurationPreparer {
     }
     
     public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, clientPrivateKey: PrivateKey?) -> VpnManagerConfiguration? {
+        guard let entryServer = connectionConfig.serverIp.entryIp(using: connectionConfig.vpnProtocol) else {
+            log.error("No entry IP is available for \(connectionConfig.vpnProtocol.localizedString).")
+            return nil
+        }
+
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             let passwordRef = try vpnKeychain.fetchOpenVpnPassword()
             
-            let entryServer = connectionConfig.serverIp.entryIp
             let exitServer = connectionConfig.serverIp.exitIp
             
             return VpnManagerConfiguration(hostname: connectionConfig.serverIp.domain,

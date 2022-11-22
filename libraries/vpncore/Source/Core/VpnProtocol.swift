@@ -172,13 +172,22 @@ extension VpnProtocol {
 
 // MARK: API description
 extension VpnProtocol {
-    static let apiDescriptions: [String: VpnProtocol] = [
+    static let apiDescriptionsToProtocols: [String: VpnProtocol] = [
         "IKEv2": .ike,
         "OpenVPNUDP": .openVpn(.udp),
         "OpenVPNTCP": .openVpn(.tcp),
         "WireGuardUDP": .wireGuard(.udp),
         "WireGuardTCP": .wireGuard(.tcp),
         "WireGuardTLS": .wireGuard(.tls),
+    ]
+
+    static let protocolsToApiDescriptions: [VpnProtocol: String] = [
+        .ike: "IKEv2",
+        .openVpn(.udp): "OpenVPNUDP",
+        .openVpn(.tcp): "OpenVPNTCP",
+        .wireGuard(.udp): "WireGuardUDP",
+        .wireGuard(.tcp): "WireGuardTCP",
+        .wireGuard(.tls): "WireGuardTLS",
     ]
 }
 

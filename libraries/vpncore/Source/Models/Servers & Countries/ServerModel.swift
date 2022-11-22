@@ -140,7 +140,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
 
         return false
     }
-    
+
     public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?) {
         self.id = id
         self.name = name

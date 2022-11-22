@@ -20,10 +20,14 @@ import Foundation
 import NetworkExtension
 
 class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
-    let vpnProtocol: VpnProtocol
+    typealias VpnCredentialsConfiguratorMockCallback = ((VpnManagerConfiguration, NEVPNProtocol) -> ())
 
-    init(vpnProtocol: VpnProtocol) {
+    let vpnProtocol: VpnProtocol
+    var didConfigure: VpnCredentialsConfiguratorMockCallback?
+
+    init(vpnProtocol: VpnProtocol, didConfigure: VpnCredentialsConfiguratorMockCallback?) {
         self.vpnProtocol = vpnProtocol
+        self.didConfigure = didConfigure
     }
 
     func prepareCredentials(for protocolConfig: NEVPNProtocol,
@@ -31,15 +35,7 @@ class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
                             completionHandler: @escaping (NEVPNProtocol) -> Void) {
         assert(vpnProtocol == configuration.vpnProtocol, "Vpn protocol in configuration did not match!")
 
-        switch vpnProtocol {
-        case .ike:
-            break
-        case .openVpn:
-            break
-        case .wireGuard:
-            break
-        }
-
+        didConfigure?(configuration, protocolConfig)
         completionHandler(protocolConfig)
     }
 }

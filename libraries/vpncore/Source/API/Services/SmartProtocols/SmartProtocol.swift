@@ -90,7 +90,7 @@ final class SmartProtocolImplementation: SmartProtocol {
 
     func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
         guard !checkers.isEmpty else {
-            log.error("Client config received from backend has all the VPN procols disabled for Smart Protocol, fallback to \(fallback.0.vpnProtocol)", category: .connectionConnect, event: .scan)
+            log.error("Client config received from backend has all the VPN protocols disabled for Smart Protocol, fallback to \(fallback.0.vpnProtocol)", category: .connectionConnect, event: .scan)
             completion(fallback.0.vpnProtocol, fallback.1)
             return
         }
@@ -99,7 +99,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
 
-        log.debug("Determining best protocol for \(server.entryIp)", category: .connectionConnect, event: .scan)
+        log.debug("Determining best protocol for \(server)", category: .connectionConnect, event: .scan)
 
         for (proto, checker) in checkers {
             group.enter()
