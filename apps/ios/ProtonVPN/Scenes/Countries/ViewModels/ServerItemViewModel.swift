@@ -24,6 +24,7 @@ import UIKit
 import vpncore
 import Search
 import ProtonCore_UIFoundations
+import AlamofireImage
 
 class ServerItemViewModel {
     
@@ -40,6 +41,8 @@ class ServerItemViewModel {
     var isUsersTierTooLow: Bool {
         return userTier < serverModel.tier
     }
+
+    var partnersIconsReceipts: [RequestReceipt] = []
     
     let underMaintenance: Bool
     
@@ -246,6 +249,36 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 // MARK: - Search
 
 extension ServerItemViewModel: ServerViewModel {
+    var partners: [Partner] { // add unit tests
+        guard serverModel.isPartner else {
+            return []
+        }
+        return propertiesManager.partnerTypes
+            .flatMap {
+                $0.partners
+            }
+            .filter {
+                $0.logicalIDs.contains(serverModel.id)
+            }
+    }
+
+    func cancelPartnersIconRequests() {
+        partnersIconsReceipts.forEach {
+            $0.request.cancel()
+        }
+    }
+
+    func partnersIcon(completion: @escaping (UIImage?) -> Void) {
+        let iconURLs = partners.map {
+            URLRequest(url: $0.iconURL)
+        }
+        guard !iconURLs.isEmpty else { return }
+
+        partnersIconsReceipts = AlamofireImage.ImageDownloader.default.download(iconURLs, completion: { response in
+            completion(response.value)
+        })
+    }
+
     var connectButtonColor: UIColor {
         if underMaintenance {
             return isUsersTierTooLow ? UIColor.weakInteractionColor() : .clear

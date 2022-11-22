@@ -24,6 +24,7 @@ import UIKit
 
 public protocol ServerCellDelegate: AnyObject {
     func userDidRequestStreamingInfo()
+    func userDidRequestFreeServersInfo()
 }
 
 public final class ServerCell: UITableViewCell, ConnectTableViewCell {
@@ -35,6 +36,29 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
+    private enum ServerFeature {
+        case smart
+        case tor
+        case streaming
+        case p2p
+        case partner(UIImage)
+
+        var imageName: String {
+            switch self {
+            case .smart:
+                return "ic-globe"
+            case .tor:
+                return "ic-brand-tor"
+            case .streaming:
+                return "ic-play"
+            case .p2p:
+                return "ic-arrows-switch"
+            default:
+                return ""
+            }
+        }
+    }
+
     // MARK: Outlets
 
     @IBOutlet weak var connectButton: UIButton!
@@ -44,11 +68,12 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     @IBOutlet private weak var loadColorView: UIView!
     @IBOutlet private weak var loadContainingView: UIView!
 
-    @IBOutlet private weak var partnerImageView: UIImageView!
-    @IBOutlet private weak var smartIV: UIImageView!
-    @IBOutlet private weak var torIV: UIImageView!
-    @IBOutlet private weak var p2pIV: UIImageView!
-    @IBOutlet private weak var streamingIV: UIImageView!
+    private var partnersImageViews: [UIImageView] = []
+    private var smartIV: UIImageView?
+    private var torIV: UIImageView?
+    private var p2pIV: UIImageView?
+    private var streamingIV: UIImageView?
+    @IBOutlet private weak var featuresStackView: UIStackView!
 
     @IBOutlet private weak var secureView: UIView!
 
@@ -88,16 +113,13 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             secureView.isHidden = viewModel.entryCountryName == nil
             countryNameLabel.isHidden = viewModel.entryCountryName == nil
 
-            partnerImageView.isHidden = !viewModel.isPartnerServer
-            smartIV.isHidden = !viewModel.isSmartAvailable
-            torIV.isHidden = !viewModel.torAvailable
-            p2pIV.isHidden = !viewModel.p2pAvailable
-            streamingIV.isHidden = !viewModel.streamingAvailable
+            configureFeaturesStackView(viewModel: viewModel)
+
             loadContainingView.isHidden = viewModel.underMaintenance || viewModel.isUsersTierTooLow
 
             loadLbl.text = viewModel.loadValue
             loadColorView.backgroundColor = viewModel.loadColor
-            [serverNameLabel, cityNameLabel, torIV, p2pIV, smartIV, streamingIV, secureView].forEach { view in
+            [serverNameLabel, cityNameLabel, secureView].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
 
@@ -110,10 +132,64 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         }
     }
 
+    private func configureFeaturesStackView(viewModel: ServerViewModel) {
+        if viewModel.p2pAvailable {
+            addFeature(feature: .p2p)
+        }
+        if viewModel.torAvailable {
+            addFeature(feature: .tor)
+        }
+        if viewModel.isSmartAvailable {
+            addFeature(feature: .smart)
+        }
+        if viewModel.streamingAvailable {
+            addFeature(feature: .streaming)
+        }
+        viewModel.partnersIcon { [weak self] image in
+            guard let image else { return }
+            self?.addFeature(feature: .partner(image))
+        }
+    }
+
+    private func addFeature(feature: ServerFeature) {
+        let imageView = UIImageView(image: UIImage(named: feature.imageName,
+                                                   in: .module,
+                                                   with: nil))
+        imageView.tintColor = .white
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addConstraints([
+            imageView.widthAnchor.constraint(equalToConstant: 16),
+            imageView.heightAnchor.constraint(equalToConstant: 16)
+        ])
+        switch feature {
+        case .smart:
+            self.smartIV = imageView
+            featuresStackView.addArrangedSubview(imageView)
+        case .tor:
+            self.torIV = imageView
+            featuresStackView.addArrangedSubview(imageView)
+        case .streaming:
+            self.streamingIV = imageView
+            featuresStackView.addArrangedSubview(imageView)
+        case .p2p:
+            self.p2pIV = imageView
+        case .partner(let image):
+            imageView.image = image
+            imageView.removeConstraints(imageView.constraints)
+            self.partnersImageViews.append(imageView)
+            featuresStackView.insertArrangedSubview(imageView, at: 0)
+        }
+    }
+
     override public func awakeFromNib() {
         super.awakeFromNib()
 
         connectButton.addInteraction(UIPointerInteraction(delegate: self))
+    }
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        (viewModel as? ServerViewModel)?.cancelPartnersIconRequests()
     }
 
     // MARK: Actions
@@ -123,20 +199,38 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         stateChanged()
     }
 
-    @IBAction private func rowTapped(_ sender: Any, forEvent event: UIEvent) {
-        guard let button = sender as? UIButton, let touches = event.touches(for: button), let touch = touches.first, let convertedStreamingView = streamingIV.superview?.convert(streamingIV.frame, to: nil) else {
+    @IBAction private func rowTapped(_ button: UIButton, forEvent event: UIEvent) {
+        guard let touch = event.touches(for: button)?.first else {
             connect()
             return
+        }
+        if let streamingIV, isViewTapped(streamingIV, touch: touch) {
+            delegate?.userDidRequestStreamingInfo()
+            return
+        }
+        let tappedOnPartner = partnersImageViews.contains {
+            isViewTapped($0, touch: touch)
+        }
+        if tappedOnPartner {
+            delegate?.userDidRequestFreeServersInfo()
+            return
+        }
+        connect()
+    }
+
+    private func isViewTapped(_ imageView: UIView, touch: UITouch) -> Bool {
+        guard let convertedStreamingView = imageView.superview?.convert(imageView.frame, to: nil) else {
+            return false
         }
 
         let touchLocation = touch.location(in: self)
         let margin: CGFloat = 5
-        guard convertedStreamingView.origin.x - margin < touchLocation.x, touchLocation.x < convertedStreamingView.origin.x + convertedStreamingView.width + margin else {
-            connect()
-            return
+        guard convertedStreamingView.origin.x - margin < touchLocation.x,
+              touchLocation.x < convertedStreamingView.origin.x + convertedStreamingView.width + margin else {
+            return false
         }
 
-        delegate?.userDidRequestStreamingInfo()
+        return true
     }
 
     @IBAction private func connectButtonTap(_ sender: Any) {
