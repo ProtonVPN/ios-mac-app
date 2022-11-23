@@ -36,6 +36,8 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         return UINib(nibName: identifier, bundle: Bundle.module)
     }
 
+    static let featureViewTag = "Tag For Server Features Icons".hashValue
+
     private enum ServerFeature {
         case smart
         case tor
@@ -155,6 +157,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         let imageView = UIImageView(image: UIImage(named: feature.imageName,
                                                    in: .module,
                                                    with: nil))
+        imageView.tag = ServerCell.featureViewTag
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         let featureIconSize: CGFloat = 16
@@ -191,6 +194,11 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         (viewModel as? ServerViewModel)?.cancelPartnersIconRequests()
+        featuresStackView.subviews.forEach {
+            if $0.tag == ServerCell.featureViewTag {
+                $0.removeFromSuperview()
+            }
+        }
     }
 
     // MARK: Actions

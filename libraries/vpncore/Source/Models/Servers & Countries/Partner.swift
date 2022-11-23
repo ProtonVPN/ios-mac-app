@@ -21,17 +21,17 @@ import Foundation
 public struct Partner: Codable {
     public let name: String
     public let description: String
-    public let iconURL: URL
+    public let iconURL: URL?
     public let logicalIDs: [String]
 
     public init(dictionary: JSONDictionary) throws {
         name = try dictionary.stringOrThrow(key: "Name")
         description = try dictionary.stringOrThrow(key: "Description")
-        iconURL = try dictionary.urlOrThrow(key: "IconURL")
+        iconURL = dictionary.url(key: "IconURL")
         logicalIDs = try dictionary.stringArrayOrThrow(key: "LogicalIDs")
     }
 
-    public init(name: String, description: String, iconURL: URL, logicalIDs: [String]) {
+    public init(name: String, description: String, iconURL: URL?, logicalIDs: [String]) {
         self.name = name
         self.description = description
         self.iconURL = iconURL

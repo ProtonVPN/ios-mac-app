@@ -26,6 +26,6 @@ public struct VPNPartnersResponse: Codable {
 public struct PartnerType: Codable {
     public let type: String /// It's the `name` of the partner type for our purposes
     public let description: String
-    public let iconURL: URL
+    public let iconURL: URL?
     public let partners: [Partner]
 }

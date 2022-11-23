@@ -269,8 +269,9 @@ extension ServerItemViewModel: ServerViewModel {
     }
 
     func partnersIcon(completion: @escaping (UIImage?) -> Void) {
-        let iconURLs = partners.map {
-            URLRequest(url: $0.iconURL)
+        let iconURLs: [URLRequest] = partners.compactMap {
+            guard let iconURL = $0.iconURL else { return nil }
+            return URLRequest(url: iconURL)
         }
         guard !iconURLs.isEmpty else { return }
 
