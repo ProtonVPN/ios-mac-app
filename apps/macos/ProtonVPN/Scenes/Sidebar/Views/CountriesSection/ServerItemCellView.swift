@@ -75,11 +75,11 @@ final class ServerItemCellView: NSView {
         featuresStackView.orientation = .horizontal
         featuresStackView.alignment = .centerY
         featuresStackView.distribution = .fill
-        featuresStackView.spacing = 8
+        featuresStackView.spacing = .UI.halfMargin
         addSubview(featuresStackView, positioned: .below, relativeTo: connectBtn)
-        addConstraints([serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -8),
+        addConstraints([serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -.UI.halfMargin),
                         serverInfoStackView.centerYAnchor.constraint(equalTo: featuresStackView.centerYAnchor),
-                        featuresStackView.heightAnchor.constraint(equalToConstant: 24)])
+                        featuresStackView.heightAnchor.constraint(equalToConstant: .UI.iconSize)])
         self.featuresStackView = featuresStackView
     }
 
@@ -118,11 +118,11 @@ final class ServerItemCellView: NSView {
             let button = NSButton(image: .init(), target: self, action: #selector(didTapPartner))
             button.isBordered = false
             button.sd_setImage(with: $0.iconURL)
-            addViewToFeaturesStack(button, width: 24)
+            addViewToFeaturesStack(button, width: .UI.oneAndHalfMargin)
         }
     }
 
-    func addViewToFeaturesStack(_ view: NSView, width: CGFloat = 16) {
+    func addViewToFeaturesStack(_ view: NSView, width: CGFloat = .UI.margin) {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addConstraint(view.widthAnchor.constraint(equalToConstant: width))
         view.wantsLayer = true

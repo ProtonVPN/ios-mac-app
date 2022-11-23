@@ -157,9 +157,10 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
                                                    with: nil))
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        let featureIconSize: CGFloat = 16
         imageView.addConstraints([
-            imageView.widthAnchor.constraint(equalToConstant: 16),
-            imageView.heightAnchor.constraint(equalToConstant: 16)
+            imageView.widthAnchor.constraint(equalToConstant: featureIconSize),
+            imageView.heightAnchor.constraint(equalToConstant: featureIconSize)
         ])
         switch feature {
         case .smart:
@@ -204,22 +205,24 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             connect()
             return
         }
-        if let streamingIV, isViewTapped(streamingIV, touch: touch) {
+        if isViewTapped(streamingIV, touch: touch) {
             delegate?.userDidRequestStreamingInfo()
-            return
-        }
-        let tappedOnPartner = partnersImageViews.contains {
-            isViewTapped($0, touch: touch)
-        }
-        if tappedOnPartner {
+        } else if tappedOnPartner(touch: touch) {
             delegate?.userDidRequestFreeServersInfo()
-            return
+        } else {
+            connect()
         }
-        connect()
     }
 
-    private func isViewTapped(_ imageView: UIView, touch: UITouch) -> Bool {
-        guard let convertedStreamingView = imageView.superview?.convert(imageView.frame, to: nil) else {
+    private func tappedOnPartner(touch: UITouch) -> Bool {
+        partnersImageViews.contains {
+            isViewTapped($0, touch: touch)
+        }
+    }
+
+    private func isViewTapped(_ imageView: UIView?, touch: UITouch) -> Bool {
+        guard let imageView,
+                let convertedStreamingView = imageView.superview?.convert(imageView.frame, to: nil) else {
             return false
         }
 
