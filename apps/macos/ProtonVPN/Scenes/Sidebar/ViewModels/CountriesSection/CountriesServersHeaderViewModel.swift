@@ -50,10 +50,8 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     
     init( _ sectionHeader: String, totalServers: Int, country: CountryModel, tier: Int, propertiesManager: PropertiesManagerProtocol, countriesViewModel: CountriesSectionViewModel) {
         title = sectionHeader + " (\(totalServers))"
-        if tier == CoreAppConstants.VpnTiers.free {
-            didTapInfoBtn = {
-                countriesViewModel.displayFreeServices?()
-            }
+        guard tier != CoreAppConstants.VpnTiers.free else {
+            didTapInfoBtn = { countriesViewModel.displayFreeServices?() }
             return
         }
         guard !propertiesManager.secureCoreToggle,
