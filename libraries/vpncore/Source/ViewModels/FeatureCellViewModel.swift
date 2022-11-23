@@ -40,7 +40,7 @@ public protocol FeatureCellViewModel {
 
 public enum Icon {
     case image(Image)
-    case url(URL)
+    case url(URL?)
 }
 
 extension FeatureCellViewModel {

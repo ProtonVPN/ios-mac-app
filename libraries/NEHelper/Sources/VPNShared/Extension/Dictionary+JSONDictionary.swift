@@ -40,6 +40,11 @@ public extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObj
         return try valueOrThrow(key)
     }
 
+    func url(key: Key) -> URL? {
+        guard let string: String = try? valueOrThrow(key) else { return nil }
+        return URL(string: string)
+    }
+
     func urlOrThrow(key: Key) throws -> URL {
         let string: String = try valueOrThrow(key)
         guard let url = URL(string: string) else { throw genericKeyErrorFor(key) }

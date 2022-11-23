@@ -38,7 +38,9 @@ final class InformationTableViewCell: UITableViewCell {
             case .image(let image):
                 icon.image = image
             case .url(let url):
-                icon.af.setImage(withURL: url)
+                if let url {
+                    icon.af.setImage(withURL: url)
+                }
             }
 
             icon.tintColor = .normalTextColor()

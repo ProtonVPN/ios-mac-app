@@ -56,7 +56,9 @@ class FeatureTableViewCell: UITableViewCell {
             case .image(let image):
                 iconIV.image = image
             case .url(let url):
-                iconIV.af.setImage(withURL: url)
+                if let url {
+                    iconIV.af.setImage(withURL: url)
+                }
             }
 
             descriptionLbl.text = viewModel.description
