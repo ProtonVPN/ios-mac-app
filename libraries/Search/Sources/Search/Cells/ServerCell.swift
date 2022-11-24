@@ -71,9 +71,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     @IBOutlet private weak var loadContainingView: UIView!
 
     private var partnersImageViews: [UIImageView] = []
-    private var smartIV: UIImageView?
-    private var torIV: UIImageView?
-    private var p2pIV: UIImageView?
     private var streamingIV: UIImageView?
     @IBOutlet private weak var featuresStackView: UIStackView!
 
@@ -148,41 +145,42 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             addFeature(feature: .streaming)
         }
         viewModel.partnersIcon { [weak self] image in
+            // This closure may be called multiple times, once for each partner
             guard let image else { return }
             self?.addFeature(feature: .partner(image))
         }
     }
 
     private func addFeature(feature: ServerFeature) {
+        switch feature {
+        case .smart, .tor, .p2p:
+            featuresStackView.addArrangedSubview(imageViewForFeature(feature: feature))
+        case .streaming:
+            let streamingIV = imageViewForFeature(feature: feature)
+            featuresStackView.addArrangedSubview(streamingIV)
+            self.streamingIV = streamingIV
+        case .partner(let image):
+            let imageView = imageViewForFeature(feature: feature, iconSize: nil)
+            imageView.image = image
+            self.partnersImageViews.append(imageView)
+            featuresStackView.insertArrangedSubview(imageView, at: 0)
+        }
+    }
+
+    private func imageViewForFeature(feature: ServerFeature, iconSize: CGFloat? = 16) -> UIImageView {
         let imageView = UIImageView(image: UIImage(named: feature.imageName,
                                                    in: .module,
                                                    with: nil))
         imageView.tag = ServerCell.featureViewTag
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        let featureIconSize: CGFloat = 16
-        imageView.addConstraints([
-            imageView.widthAnchor.constraint(equalToConstant: featureIconSize),
-            imageView.heightAnchor.constraint(equalToConstant: featureIconSize)
-        ])
-        switch feature {
-        case .smart:
-            self.smartIV = imageView
-            featuresStackView.addArrangedSubview(imageView)
-        case .tor:
-            self.torIV = imageView
-            featuresStackView.addArrangedSubview(imageView)
-        case .streaming:
-            self.streamingIV = imageView
-            featuresStackView.addArrangedSubview(imageView)
-        case .p2p:
-            self.p2pIV = imageView
-        case .partner(let image):
-            imageView.image = image
-            imageView.removeConstraints(imageView.constraints)
-            self.partnersImageViews.append(imageView)
-            featuresStackView.insertArrangedSubview(imageView, at: 0)
+        if let iconSize {
+            imageView.addConstraints([
+                imageView.widthAnchor.constraint(equalToConstant: iconSize),
+                imageView.heightAnchor.constraint(equalToConstant: iconSize)
+            ])
         }
+        return imageView
     }
 
     override public func awakeFromNib() {
@@ -194,11 +192,10 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         (viewModel as? ServerViewModel)?.cancelPartnersIconRequests()
-        featuresStackView.subviews.forEach {
-            if $0.tag == ServerCell.featureViewTag {
-                $0.removeFromSuperview()
-            }
-        }
+        featuresStackView
+            .subviews
+            .filter { $0.tag == ServerCell.featureViewTag }
+            .forEach { $0.removeFromSuperview() }
     }
 
     // MARK: Actions
@@ -228,20 +225,14 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         }
     }
 
-    private func isViewTapped(_ imageView: UIView?, touch: UITouch) -> Bool {
-        guard let imageView,
-                let convertedStreamingView = imageView.superview?.convert(imageView.frame, to: nil) else {
-            return false
-        }
-
-        let touchLocation = touch.location(in: self)
-        let margin: CGFloat = 5
-        guard convertedStreamingView.origin.x - margin < touchLocation.x,
-              touchLocation.x < convertedStreamingView.origin.x + convertedStreamingView.width + margin else {
-            return false
-        }
-
-        return true
+    private func isViewTapped(_ view: UIView?, touch: UITouch) -> Bool {
+        guard let view else { return false }
+        let padding: CGFloat = 10
+        return view
+            .superview?
+            .convert(view.frame, to: self)
+            .insetBy(dx: -padding, dy: -padding)
+            .contains(touch.location(in: self)) ?? false
     }
 
     @IBAction private func connectButtonTap(_ sender: Any) {
