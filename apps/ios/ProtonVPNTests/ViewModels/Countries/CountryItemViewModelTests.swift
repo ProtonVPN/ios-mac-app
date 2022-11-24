@@ -73,12 +73,12 @@ class CountryItemViewModelTests: XCTestCase {
             propertiesManager: PropertiesManagerMock())
         
         let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock, serverStorage: ServerStorageMock(), natTypePropertyProvider: NATTypePropertyProviderMock(), netShieldPropertyProvider: NetShieldPropertyProviderMock(), safeModePropertyProvider: SafeModePropertyProviderMock())
-        
+
         let viewModel = CountryItemViewModel(
             countryGroup: group,
             serverType: ServerType.standard,
             appStateManager: appStateManager,
-            vpnGateway: nil,
+            vpnGateway: VpnGatewayMock(),
             alertService: AlertServiceEmptyStub(),
             connectionStatusService: ConnectionStatusServiceMock(),
             propertiesManager: PropertiesManagerMock(),

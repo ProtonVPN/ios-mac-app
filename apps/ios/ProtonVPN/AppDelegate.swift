@@ -156,12 +156,12 @@ fileprivate extension AppDelegate {
             
         case URLConstants.deepLinkConnectAction:
             // Extensions requesting a connection should set a connection request first
-            navigationService.vpnGateway?.quickConnect()
+            navigationService.vpnGateway.quickConnect()
             NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
             navigationService.presentStatusViewController()
             
         case URLConstants.deepLinkDisconnectAction:
-            navigationService.vpnGateway?.disconnect {
+            navigationService.vpnGateway.disconnect {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
                 }

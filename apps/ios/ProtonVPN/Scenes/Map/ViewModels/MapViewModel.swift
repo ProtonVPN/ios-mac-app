@@ -42,7 +42,7 @@ class MapPin: NSObject, MKAnnotation {
 class MapViewModel: SecureCoreToggleHandler {
     
     let alertService: AlertService
-    var vpnGateway: VpnGatewayProtocol?
+    var vpnGateway: VpnGatewayProtocol
     
     var activeView: ServerType = .standard
     
@@ -72,7 +72,7 @@ class MapViewModel: SecureCoreToggleHandler {
         }
         if secureCoreOn {
             // connected but not to a SC server
-            if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server {
+            if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server {
                 if activeServer.serverType == .standard {
                     cons.append(contentsOf: secureCoreConnections)
                 }
@@ -85,14 +85,14 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     var enableViewToggle: Bool {
-        return vpnGateway == nil || vpnGateway?.connection != .connecting
+        return vpnGateway.connection != .connecting
     }
     
     var contentChanged: (() -> Void)?
     var connectionStateChanged: (() -> Void)?
     var reorderAnnotations: (() -> Void)?
 
-    init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
+    init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
@@ -124,7 +124,6 @@ class MapViewModel: SecureCoreToggleHandler {
     
     // MARK: - Private functions
     private func addObservers() {
-        guard vpnGateway != nil else { return }
         
         NotificationCenter.default.addObserver(self, selector: #selector(activeServerTypeSet),
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
@@ -167,15 +166,13 @@ class MapViewModel: SecureCoreToggleHandler {
                     }
                 })
                 
-                if let vpnGateway = self.vpnGateway {
-                    self.secureCoreEntryAnnotations.forEach({ (annotation) in
-                        if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
-                            annotation.highlight(true)
-                        } else {
-                            annotation.highlight(false)
-                        }
-                    })
-                }
+                self.secureCoreEntryAnnotations.forEach({ (annotation) in
+                    if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
+                        annotation.highlight(true)
+                    } else {
+                        annotation.highlight(false)
+                    }
+                })
                 
                 self.reorderAnnotations?()
             }
@@ -222,7 +219,7 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     @objc private func connectionChanged() {
-        if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
+        if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
             
             // draw connection line
             if let entryCountry = secureCoreEntryAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.entryCountryCode }),

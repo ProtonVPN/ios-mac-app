@@ -86,10 +86,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var planService: PlanService = factory.makePlanService()
     
     private let countryService: CountryService
-    var vpnGateway: VpnGatewayProtocol?
+    var vpnGateway: VpnGatewayProtocol
     lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     
-    init(factory: Factory, vpnGateway: VpnGatewayProtocol?, countryService: CountryService) {
+    init(factory: Factory, vpnGateway: VpnGatewayProtocol, countryService: CountryService) {
         self.factory = factory
         self.vpnGateway = vpnGateway
         self.countryService = countryService
@@ -114,7 +114,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     var enableViewToggle: Bool {
-        return vpnGateway == nil || vpnGateway?.connection != .connecting
+        return vpnGateway.connection != .connecting
     }
     
     func headerHeight(for section: Int) -> CGFloat {
@@ -179,7 +179,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 userTier = CoreAppConstants.VpnTiers.free
                 return
             }
-            userTier = try vpnGateway?.userTier() ?? CoreAppConstants.VpnTiers.plus
+            userTier = try vpnGateway.userTier() ?? CoreAppConstants.VpnTiers.plus
         } catch {
             userTier = CoreAppConstants.VpnTiers.free
         }
@@ -212,7 +212,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     private func addObservers() {
-        guard vpnGateway != nil else { return }
         
         NotificationCenter.default.addObserver(self, selector: #selector(activeServerTypeSet),
                                                name: VpnGateway.activeServerTypeChanged, object: nil)

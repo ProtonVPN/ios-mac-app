@@ -139,7 +139,7 @@ final class NavigationService {
         return makeTabBarController()
     }()
     
-    var vpnGateway: VpnGatewayProtocol? {
+    var vpnGateway: VpnGatewayProtocol {
         return appSessionManager.vpnGateway
     }
     
@@ -286,7 +286,7 @@ extension NavigationService: ProfileService {
                                                                              vpnKeychain: vpnKeychain,
                                                                              serverManager: serverManager,
                                                                              appStateManager: appStateManager,
-                                                                             vpnGateway: vpnGateway!,
+                                                                             vpnGateway: vpnGateway,
                                                                              profileManager: profileManager,
                                                                              propertiesManager: propertiesManager)
         return createProfileViewController

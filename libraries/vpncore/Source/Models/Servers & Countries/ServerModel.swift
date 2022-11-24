@@ -106,7 +106,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
 
     public var isPartner: Bool {
-        return self.feature.contains(.partner)
+        return feature.contains(.partner)
     }
     
     public var underMaintenance: Bool {

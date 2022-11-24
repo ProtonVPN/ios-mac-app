@@ -38,7 +38,7 @@ protocol AppSessionManagerFactory {
 }
 
 protocol AppSessionManager {
-    var vpnGateway: VpnGatewayProtocol? { get }
+    var vpnGateway: VpnGatewayProtocol { get }
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
     
@@ -91,7 +91,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     private lazy var review: Review = factory.makeReview()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-    var vpnGateway: VpnGatewayProtocol?
+    lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     let sessionRefreshed = Notification.Name("AppSessionManagerSessionRefreshed")
@@ -426,7 +426,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         sessionStatus = state
         if state == .established {
             loggedIn = true
-            vpnGateway = factory.makeVpnGateway()
             propertiesManager.hasConnected = true
             postNotification(name: sessionChanged, object: vpnGateway)
         } else if state == .notEstablished {

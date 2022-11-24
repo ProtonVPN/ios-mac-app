@@ -26,7 +26,7 @@ import VPNShared
 
 class AppSessionManagerMock: AppSessionManager {
     
-    init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name, vpnGateway: VpnGatewayProtocol? = nil) {
+    init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name, vpnGateway: VpnGatewayProtocol) {
         self.sessionStatus = sessionStatus
         self.loggedIn = loggedIn
         self.sessionChanged = sessionChanged
@@ -44,7 +44,7 @@ class AppSessionManagerMock: AppSessionManager {
     
     // MARK: AppSessionManager implementation
     
-    var vpnGateway: VpnGatewayProtocol?
+    var vpnGateway: VpnGatewayProtocol
     
     var sessionStatus: SessionStatus
     
