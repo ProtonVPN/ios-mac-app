@@ -39,7 +39,7 @@ class MainRobot {
     }
     
     func openAppSettings() -> SettingsRobot {
-        app.menuBars.menuItems[preferencesTitle].click()
+        window.typeKey(",", modifierFlags:[.command]) // Settings…
         return SettingsRobot()
     }
     

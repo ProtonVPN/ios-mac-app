@@ -27,10 +27,6 @@ class ProfileTests: ProtonVPNUITests {
     private let createProfileRobot = CreateProfileRobot()
     private let manageProfilesRobot = ManageProfilesRobot()
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     func testCreateEmptyProfile() {
         
         let name = StringUtils().randomAlphanumericString(length: 8)
