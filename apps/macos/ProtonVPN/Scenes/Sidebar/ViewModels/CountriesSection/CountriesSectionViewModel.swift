@@ -407,7 +407,7 @@ class CountriesSectionViewModel {
     
     private func serverViewModel( _ server: ServerModel ) -> ServerItemViewModel {
         return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                   propertiesManager: propertiesManager, countriesSectionViewModel: self, requiresUpgrade: userTier < server.tier)
+                                   propertiesManager: propertiesManager, countriesSectionViewModel: self)
     }
     
     @objc func updateSettings() {

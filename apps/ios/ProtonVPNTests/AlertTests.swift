@@ -121,7 +121,10 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
     }
     
     func makeAppSessionManager() -> AppSessionManager {
-        return AppSessionManagerMock(sessionStatus: .established, loggedIn: true, sessionChanged: Notification.Name(rawValue: ""))
+        return AppSessionManagerMock(sessionStatus: .established,
+                                     loggedIn: true,
+                                     sessionChanged: Notification.Name(rawValue: ""),
+                                     vpnGateway: VpnGatewayMock())
     }
     
     func makeWindowService() -> WindowService {

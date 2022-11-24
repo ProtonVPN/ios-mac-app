@@ -31,7 +31,7 @@ class CountryItemViewModel {
     private let serverModels: [ServerModel]
     private let appStateManager: AppStateManager
     private let alertService: AlertService
-    private var vpnGateway: VpnGatewayProtocol?
+    private var vpnGateway: VpnGatewayProtocol
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
@@ -49,7 +49,7 @@ class CountryItemViewModel {
     }
     
     private var isConnected: Bool {
-        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.countryCode == countryCode {
+        if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.countryCode == countryCode {
             return serverModels.contains(where: { $0 == activeServer })
         }
 
@@ -57,7 +57,7 @@ class CountryItemViewModel {
     }
     
     private var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
@@ -197,7 +197,7 @@ class CountryItemViewModel {
         }).sorted(by: { $0.cityName < $1.cityName })
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
         self.appStateManager = appStateManager
@@ -236,10 +236,6 @@ class CountryItemViewModel {
     }
     
     func connectAction() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
         updateTier()
         
         log.debug("Connect requested by clicking on Country item", category: .connectionConnect, event: .trigger)
@@ -265,11 +261,7 @@ class CountryItemViewModel {
     
     func updateTier() {
         do {
-            if let vpnGateway = vpnGateway {
-                userTier = try vpnGateway.userTier()
-            } else { // not logged in
-                userTier = CoreAppConstants.VpnTiers.plus
-            }
+            userTier = try vpnGateway.userTier()
         } catch {
             userTier = CoreAppConstants.VpnTiers.free
         }

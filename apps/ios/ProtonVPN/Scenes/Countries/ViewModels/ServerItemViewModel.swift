@@ -26,28 +26,18 @@ import Search
 import ProtonCore_UIFoundations
 import AlamofireImage
 
-class ServerItemViewModel {
-    
-    fileprivate let serverModel: ServerModel
-    fileprivate var vpnGateway: VpnGatewayProtocol?
-    fileprivate let appStateManager: AppStateManager
-    fileprivate let propertiesManager: PropertiesManagerProtocol
+class ServerItemViewModel: ServerItemViewModelCore {
+
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    
-    private var userTier: Int = CoreAppConstants.VpnTiers.plus
-    
-    var isUsersTierTooLow: Bool {
-        return userTier < serverModel.tier
-    }
 
     var partnersIconsReceipts: [RequestReceipt] = []
     
-    let underMaintenance: Bool
-    
     var isConnected: Bool {
-        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.id == serverModel.id {
+        if vpnGateway.connection == .connected,
+           let activeServer = appStateManager.activeConnection()?.server,
+           activeServer.id == serverModel.id {
             return true
         }
 
@@ -55,8 +45,7 @@ class ServerItemViewModel {
     }
     
     var isConnecting: Bool {
-        if let vpnGateway = vpnGateway,
-           let activeConnection = vpnGateway.lastConnectionRequest,
+        if let activeConnection = vpnGateway.lastConnectionRequest,
            vpnGateway.connection == .connecting,
            case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
            case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
@@ -88,10 +77,6 @@ class ServerItemViewModel {
     var city: String {
         return serverModel.city ?? ""
     }
-
-    var loadValue: String {
-        return "\(serverModel.load)%"
-    }
     
     var loadColor: UIColor {
         if serverModel.load > 90 {
@@ -101,22 +86,6 @@ class ServerItemViewModel {
         } else {
             return .notificationOKColor()
         }
-    }
-
-    var torAvailable: Bool {
-        return serverModel.feature.contains(.tor)
-    }
-    
-    var p2pAvailable: Bool {
-        return serverModel.feature.contains(.p2p)
-    }
-    
-    var isSmartAvailable: Bool {
-        return serverModel.isVirtual
-    }
-
-    var isPartnerServer: Bool {
-        serverModel.isPartner
     }
     
     var streamingAvailable: Bool {
@@ -138,41 +107,28 @@ class ServerItemViewModel {
         return isUsersTierTooLow ? LocalizedString.upgrade : nil
     }
     
-    var alphaOfMainElements: CGFloat {
-        if underMaintenance {
-            return 0.25
-        }
+    init(serverModel: ServerModel,
+         vpnGateway: VpnGatewayProtocol,
+         appStateManager: AppStateManager,
+         alertService: AlertService,
+         connectionStatusService: ConnectionStatusService,
+         propertiesManager: PropertiesManagerProtocol,
+         planService: PlanService) {
 
-        if isUsersTierTooLow {
-            return 0.5
-        }
-
-        return 1.0
-    }
-    
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
-        self.serverModel = serverModel
-        self.vpnGateway = vpnGateway
-        self.appStateManager = appStateManager
-        self.underMaintenance = serverModel.underMaintenance
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
-        self.propertiesManager = propertiesManager
         self.planService = planService
-        let activeConnection = appStateManager.activeConnection()
 
+        super.init(serverModel: serverModel,
+                   vpnGateway: vpnGateway,
+                   appStateManager: appStateManager,
+                   propertiesManager: propertiesManager)
         if canConnect {
             startObserving()
         }
     }
     
     func connectAction() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
-        updateTier()
-        
         log.debug("Connect requested by clicking on Server item", category: .connectionConnect, event: .trigger)
         
         if underMaintenance {
@@ -191,18 +147,6 @@ class ServerItemViewModel {
             log.debug("Will connect to \(serverModel.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(server: serverModel)
             connectionStatusService.presentStatusViewController()
-        }
-    }
-    
-    func updateTier() {
-        do {
-            if let vpnGateway = vpnGateway {
-                userTier = try vpnGateway.userTier()
-            } else { // not logged in
-                userTier = CoreAppConstants.VpnTiers.plus
-            }
-        } catch {
-            userTier = CoreAppConstants.VpnTiers.free
         }
     }
     
@@ -225,7 +169,7 @@ class ServerItemViewModel {
 class SecureCoreServerItemViewModel: ServerItemViewModel {
         
     override var viaCountry: (name: String, code: String)? {
-        return serverModel.isSecureCore ? (serverModel.entryCountry, serverModel.entryCountryCode) : nil
+        return isSecureCoreEnabled ? (serverModel.entryCountry, serverModel.entryCountryCode) : nil
     }
 
     override fileprivate func startObserving() {
@@ -237,18 +181,6 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
 // MARK: - Search
 
 extension ServerItemViewModel: ServerViewModel {
-    var partners: [Partner] { // add unit tests
-        guard serverModel.isPartner else {
-            return []
-        }
-        return propertiesManager.partnerTypes
-            .flatMap {
-                $0.partners
-            }
-            .filter {
-                $0.logicalIDs.contains(serverModel.id)
-            }
-    }
 
     func cancelPartnersIconRequests() {
         partnersIconsReceipts.forEach {

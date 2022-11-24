@@ -136,7 +136,7 @@ final class ServerItemCellView: NSView {
     weak var delegate: ServerItemCellViewDelegate?
 
     override func mouseEntered(with event: NSEvent) {
-        if disabled || viewModel.underMaintenance || viewModel.requiresUpgrade {
+        if disabled || viewModel.underMaintenance || viewModel.isUsersTierTooLow {
             mouseExited(with: event)
             return
         }
@@ -145,9 +145,9 @@ final class ServerItemCellView: NSView {
     }
     
     override func mouseExited(with event: NSEvent) {
-        upgradeBtn.isHidden = !viewModel.requiresUpgrade
-        cityLbl.isHidden = viewModel.isConnected || viewModel.requiresUpgrade
-        connectBtn.isHidden = !viewModel.isConnected || viewModel.requiresUpgrade
+        upgradeBtn.isHidden = !viewModel.isUsersTierTooLow
+        cityLbl.isHidden = viewModel.isConnected || viewModel.isUsersTierTooLow
+        connectBtn.isHidden = !viewModel.isConnected || viewModel.isUsersTierTooLow
     }
     
     func updateView(withModel viewModel: ServerItemViewModel) {
@@ -160,20 +160,20 @@ final class ServerItemCellView: NSView {
         serverLbl.stringValue = viewModel.serverName
         cityLbl.stringValue = viewModel.cityName
         connectBtn.isConnected = viewModel.isConnected
-        connectBtn.isHidden = !viewModel.isConnected || viewModel.requiresUpgrade
-        cityLbl.isHidden = viewModel.isConnected || viewModel.requiresUpgrade
+        connectBtn.isHidden = !viewModel.isConnected || viewModel.isUsersTierTooLow
+        cityLbl.isHidden = viewModel.isConnected || viewModel.isUsersTierTooLow
         connectBtn.isHovered = false
-        upgradeBtn.isHidden = !viewModel.requiresUpgrade
+        upgradeBtn.isHidden = !viewModel.isUsersTierTooLow
         setupInfoView()
 
         addFeatures()
         
         [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl].forEach {
-            $0?.alphaValue = viewModel.alphaForMainElements
+            $0?.alphaValue = viewModel.alphaOfMainElements
         }
 
         featuresStackView.views.forEach {
-            $0.alphaValue = viewModel.alphaForMainElements
+            $0.alphaValue = viewModel.alphaOfMainElements
         }
                 
         if let code = viewModel.entryCountry {

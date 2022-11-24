@@ -103,7 +103,6 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 
             backgroundColor = .clear
             selectionStyle = .none
-            viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             serverNameLabel.isHidden = viewModel.entryCountryName != nil
             setupServerAndCountryName()
@@ -116,7 +115,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 
             loadContainingView.isHidden = viewModel.underMaintenance || viewModel.isUsersTierTooLow
 
-            loadLbl.text = viewModel.loadValue
+            loadLbl.text = "\(viewModel.load)%"
             loadColorView.backgroundColor = viewModel.loadColor
             [serverNameLabel, cityNameLabel, secureView].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
@@ -132,10 +131,10 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     }
 
     private func configureFeaturesStackView(viewModel: ServerViewModel) {
-        if viewModel.p2pAvailable {
+        if viewModel.isP2PAvailable {
             addFeature(feature: .p2p)
         }
-        if viewModel.torAvailable {
+        if viewModel.isTorAvailable {
             addFeature(feature: .tor)
         }
         if viewModel.isSmartAvailable {

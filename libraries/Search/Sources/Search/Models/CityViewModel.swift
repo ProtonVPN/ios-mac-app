@@ -26,8 +26,6 @@ public protocol CityViewModel: ConnectViewModel {
     var countryFlag: UIImage? { get }
 
     var connectionChanged: (() -> Void)? { get set }
-
-    func updateTier()
 }
 
 extension CityViewModel {

@@ -23,61 +23,22 @@
 import Cocoa
 import vpncore
 
-class ServerItemViewModel {
-    
-    private let propertiesManager: PropertiesManagerProtocol
-    private let vpnGateway: VpnGatewayProtocol
-    private let appStateManager: AppStateManager
-    
+class ServerItemViewModel: ServerItemViewModelCore {
+
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
-    
-    let serverModel: ServerModel
-    
-    var isSmartAvailable: Bool { serverModel.isVirtual }
-    var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
-    var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
-    var partners: [Partner] { // add unit tests
-        guard serverModel.isPartner else {
-            return []
-        }
-        return propertiesManager.partnerTypes
-            .flatMap {
-                $0.partners
-            }
-            .filter {
-                $0.logicalIDs.contains(serverModel.id)
-            }
-    }
+
     var isStreamingAvailable: Bool {
-        if serverModel.isSecureCore { return false }
+        if isSecureCoreEnabled { return false }
         let tier = String(serverModel.tier)
         return propertiesManager.streamingServices[serverModel.countryCode]?[tier] != nil
     }
     
-    let requiresUpgrade: Bool
-    
     fileprivate var canConnect: Bool {
-        return !requiresUpgrade && !underMaintenance
-    }
-    
-    var alphaForMainElements: CGFloat {
-        return underMaintenance ? 0.5 : ( requiresUpgrade ? 0.75 : 1 )
-    }
-    
-    var underMaintenance: Bool {
-        return serverModel.underMaintenance
-    }
-    
-    var load: Int {
-        return serverModel.load
-    }
-    
-    var isSecureCoreEnabled: Bool {
-        return serverModel.isSecureCore
+        return !isUsersTierTooLow && !underMaintenance
     }
     
     var serverName: String {
-        guard serverModel.isSecureCore else {
+        guard isSecureCoreEnabled else {
             return serverModel.name
         }
         return LocalizedString.via + " " + serverModel.entryCountry
@@ -89,7 +50,7 @@ class ServerItemViewModel {
     }
     
     var accessibilityLabel: String {
-        if requiresUpgrade { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.updateRequired)" }
+        if isUsersTierTooLow { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.updateRequired)" }
         if underMaintenance { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.onMaintenance)" }
 
         var features: [String] = []
@@ -109,23 +70,27 @@ class ServerItemViewModel {
     }
     
     var entryCountry: String? {
-        guard serverModel.isSecureCore else { return nil }
+        guard isSecureCoreEnabled else { return nil }
         return serverModel.entryCountryCode
     }
     
     var isConnected: Bool {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
-        return !requiresUpgrade && vpnGateway.connection == .connected
-            && connectedServer.id == serverModel.id
+        return !isUsersTierTooLow
+        && vpnGateway.connection == .connected
+        && connectedServer.id == serverModel.id
     }
 
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol, countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
-        self.propertiesManager = propertiesManager
-        self.serverModel = serverModel
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateway
+    init(serverModel: ServerModel,
+         vpnGateway: VpnGatewayProtocol,
+         appStateManager: AppStateManager,
+         propertiesManager: PropertiesManagerProtocol,
+         countriesSectionViewModel: CountriesSectionViewModel) {
         self.countriesSectionViewModel = countriesSectionViewModel
-        self.requiresUpgrade = requiresUpgrade
+        super.init(serverModel: serverModel,
+                   vpnGateway: vpnGateway,
+                   appStateManager: appStateManager,
+                   propertiesManager: propertiesManager)
     }
     
     func upgradeAction() {

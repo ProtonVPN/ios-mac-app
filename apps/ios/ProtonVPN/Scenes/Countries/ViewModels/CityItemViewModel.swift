@@ -25,7 +25,7 @@ import ProtonCore_UIFoundations
 final class CityItemViewModel: CityViewModel {
 
     private let alertService: AlertService
-    private var vpnGateway: VpnGatewayProtocol?
+    private var vpnGateway: VpnGatewayProtocol
     private let connectionStatusService: ConnectionStatusService
 
     let cityName: String
@@ -90,7 +90,7 @@ final class CityItemViewModel: CityViewModel {
     private let servers: [ServerItemViewModel]
     private let countryModel: CountryModel
 
-    init(cityName: String, translatedCityName: String?, countryModel: CountryModel, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol?, connectionStatusService: ConnectionStatusService) {
+    init(cityName: String, translatedCityName: String?, countryModel: CountryModel, servers: [ServerItemViewModel], alertService: AlertService, vpnGateway: VpnGatewayProtocol, connectionStatusService: ConnectionStatusService) {
         self.cityName = cityName
         self.translatedCityName = translatedCityName
         self.countryModel = countryModel
@@ -102,19 +102,7 @@ final class CityItemViewModel: CityViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: VpnGateway.connectionChanged, object: nil)
     }
 
-    func updateTier() {
-        servers.forEach {
-            $0.updateTier()
-        }
-    }
-
     func connectAction() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-
-        updateTier()
-
         log.debug("Connect requested by clicking on Country item", category: .connectionConnect, event: .trigger)
 
         if isUsersTierTooLow {

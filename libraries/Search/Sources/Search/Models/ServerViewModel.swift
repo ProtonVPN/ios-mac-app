@@ -23,14 +23,14 @@ public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var description: String { get }
     var isSmartAvailable: Bool { get }
     var isPartnerServer: Bool { get }
-    var torAvailable: Bool { get }
-    var p2pAvailable: Bool { get }
+    var isTorAvailable: Bool { get }
+    var isP2PAvailable: Bool { get }
     var streamingAvailable: Bool { get }
     var connectionChanged: (() -> Void)? { get set }
     var alphaOfMainElements: CGFloat { get }
     var isUsersTierTooLow: Bool { get }
     var underMaintenance: Bool { get }
-    var loadValue: String { get }
+    var load: Int { get }
     var loadColor: UIColor { get }
     var city: String { get }
     var translatedCity: String? { get }
@@ -38,8 +38,6 @@ public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var entryCountryFlag: UIImage? { get }
     var countryName: String { get }
     var countryFlag: UIImage? { get }
-
-    func updateTier()
 
     func partnersIcon(completion: @escaping (UIImage?) -> Void)
     func cancelPartnersIconRequests()

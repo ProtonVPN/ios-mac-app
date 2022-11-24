@@ -27,7 +27,7 @@ protocol SecureCoreToggleHandler: AnyObject {
 
     var alertService: AlertService { get }
     var propertiesManager: PropertiesManagerProtocol { get }
-    var vpnGateway: VpnGatewayProtocol? { get }
+    var vpnGateway: VpnGatewayProtocol { get }
     var activeView: ServerType { get }
 
     func toggleState(toOn: Bool, completion: @escaping (Bool) -> Void)
@@ -39,7 +39,7 @@ extension SecureCoreToggleHandler {
         DispatchQueue.global(qos: .background).async {
             if succeeded {
                 let newType = self.activeView == .secureCore ? ServerType.standard : .secureCore
-                self.vpnGateway?.changeActiveServerType(newType)
+                self.vpnGateway.changeActiveServerType(newType)
                 self.setStateOf(type: newType)
             }
             completion(succeeded)
@@ -47,9 +47,6 @@ extension SecureCoreToggleHandler {
     }
 
     private func checkPlanAndConnection() -> (insufficientPlan: Bool, isNotConnectedToVPN: Bool)? {
-        guard let vpnGateway = vpnGateway else {
-            return nil
-        }
         var userTier = 0
         do {
             userTier = try vpnGateway.userTier()
@@ -65,7 +62,7 @@ extension SecureCoreToggleHandler {
         let disconnectCompletion = { [weak self] in
             self?.completionWrapper(succeeded: true, completion: completion)
             log.debug("Disconnect requested after changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            self?.vpnGateway?.disconnect()
+            self?.vpnGateway.disconnect()
         }
         alertService.push(alert: SecureCoreToggleDisconnectAlert(confirmHandler: { disconnectCompletion() }, cancelHandler: { [weak self] in self?.completionWrapper(succeeded: false, completion: completion) }))
     }

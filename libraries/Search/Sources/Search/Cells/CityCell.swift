@@ -49,7 +49,6 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
             }
             flagImageView.image = viewModel.countryFlag
             setupCityAndCountryName()
-            viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
 
             DispatchQueue.main.async { [weak self] in
