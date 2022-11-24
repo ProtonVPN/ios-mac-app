@@ -21,6 +21,17 @@ import Foundation
 public struct VPNPartnersResponse: Codable {
     public let code: Int
     public let partnerTypes: [PartnerType]
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.code = try container.decode(Int.self, forKey: .code)
+        self.partnerTypes = try container.decode([PartnerType].self, forKey: .partnerTypes)
+    }
+
+    public init(code: Int, partnerTypes: [PartnerType]) {
+        self.code = code
+        self.partnerTypes = partnerTypes
+    }
 }
 
 public struct PartnerType: Codable {
@@ -28,4 +39,20 @@ public struct PartnerType: Codable {
     public let description: String
     public let iconURL: URL?
     public let partners: [Partner]
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.type = try container.decode(String.self, forKey: .type)
+        self.description = try container.decode(String.self, forKey: .description)
+        let iconString = try? container.decode(String.self, forKey: .iconURL)
+        self.iconURL = URL(string: iconString ?? "")
+        self.partners = try container.decode([Partner].self, forKey: .partners)
+    }
+
+    public init(type: String, description: String, iconURL: URL?, partners: [Partner]) {
+        self.type = type
+        self.description = description
+        self.iconURL = iconURL
+        self.partners = partners
+    }
 }

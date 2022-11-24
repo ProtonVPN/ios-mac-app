@@ -55,7 +55,12 @@ class ServerItemViewModel {
     }
     
     var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType, case CountryConnectionRequestType.server(let activeServer) = countryRequestType, activeServer == serverModel {
+        if let vpnGateway = vpnGateway,
+           let activeConnection = vpnGateway.lastConnectionRequest,
+           vpnGateway.connection == .connecting,
+           case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
+           case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
+           activeServer == serverModel {
             return true
         }
         return false
@@ -72,10 +77,7 @@ class ServerItemViewModel {
     fileprivate var canConnect: Bool {
         return !isUsersTierTooLow && !underMaintenance
     }
-    
-    let backgroundColor = UIColor.backgroundColor()
-    
-    fileprivate(set) var isCountryConnected: Bool = false
+
     var connectionChanged: (() -> Void)?
     var countryConnectionChanged: Notification.Name?
     
@@ -158,11 +160,7 @@ class ServerItemViewModel {
         self.propertiesManager = propertiesManager
         self.planService = planService
         let activeConnection = appStateManager.activeConnection()
-        
-        isCountryConnected = vpnGateway?.connection == .connected
-            && activeConnection?.server.isSecureCore == false
-            && activeConnection?.server.countryCode == serverModel.countryCode
-        
+
         if canConnect {
             startObserving()
         }
@@ -229,17 +227,7 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
     override var viaCountry: (name: String, code: String)? {
         return serverModel.isSecureCore ? (serverModel.entryCountry, serverModel.entryCountryCode) : nil
     }
-    
-    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
-        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager, planService: planService)
-        
-        let activeConnection = appStateManager.activeConnection()
-        
-        isCountryConnected = vpnGateway?.connection == .connected
-            && activeConnection?.server.hasSecureCore == true
-            && activeConnection?.server.countryCode == serverModel.countryCode
-    }
-    
+
     override fileprivate func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)

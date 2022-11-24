@@ -38,6 +38,6 @@ class LoginExtAccountTests: ProtonVPNUITests {
 
 extension LoginRobot.Verify {
     func bannerExtAccountError() {
-        textView("This app does not support external accounts").wait().checkExists()
+        alert("Proton address required").wait().checkExists()
     }
 }

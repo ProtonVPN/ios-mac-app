@@ -25,7 +25,6 @@ import XCTest
 class ProtonVPNUITests: XCTestCase {
 
     let app = XCUIApplication()
-    var window: XCUIElement!
     
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -84,8 +83,8 @@ class ProtonVPNUITests: XCTestCase {
         if waitForElementToAppear(app.dialogs["Enabling custom protocols"]) {
                 dismissDialogs()
         }
-             
-        app.menuBars.menuItems["Preferences"].click()
+
+        window.typeKey(",", modifierFlags:[.command]) // Settings…
         
         let preferencesWindow = app.windows["Preferences"]
         let accountTabButton = app.tabGroups["Account"]

@@ -24,17 +24,19 @@ public struct Partner: Codable {
     public let iconURL: URL?
     public let logicalIDs: [String]
 
-    public init(dictionary: JSONDictionary) throws {
-        name = try dictionary.stringOrThrow(key: "Name")
-        description = try dictionary.stringOrThrow(key: "Description")
-        iconURL = dictionary.url(key: "IconURL")
-        logicalIDs = try dictionary.stringArrayOrThrow(key: "LogicalIDs")
-    }
-
     public init(name: String, description: String, iconURL: URL?, logicalIDs: [String]) {
         self.name = name
         self.description = description
         self.iconURL = iconURL
         self.logicalIDs = logicalIDs
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.description = try container.decode(String.self, forKey: .description)
+        let iconString = try? container.decode(String.self, forKey: .iconURL)
+        self.iconURL = URL(string: iconString ?? "")
+        self.logicalIDs = try container.decode([String].self, forKey: .logicalIDs)
     }
 }
