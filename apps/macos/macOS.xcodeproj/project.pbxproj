@@ -260,7 +260,6 @@
 		E99799C226A6FFAC0083D61E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799B826A6FFAC0083D61E /* Logger.swift */; };
 		E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799BA26A6FFAC0083D61E /* ErrorNotifier.swift */; };
 		E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */; };
-		E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */; };
 		E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */; };
 		E9AF94B526B7C2FE00AA1A5F /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */; };
@@ -871,7 +870,6 @@
 		E99799B926A6FFAC0083D61E /* ringlogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ringlogger.h; sourceTree = "<group>"; };
 		E99799BA26A6FFAC0083D61E /* ErrorNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorNotifier.swift; sourceTree = "<group>"; };
 		E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManagerMock.swift; sourceTree = "<group>"; };
-		E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfoComparisonTests.swift; path = ../../../macos/ProtonVPNTests/Extensions/ExtensionInfoComparisonTests.swift; sourceTree = "<group>"; };
 		E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCWGService.swift; path = "../../../macos/ProtonVPN WireGuard/IPC/IPCWGService.swift"; sourceTree = "<group>"; };
 		E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MacVpnCredentialsConfiguratorFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/MacVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
@@ -1433,7 +1431,6 @@
 			children = (
 				D5421EA925B6DB0200280C29 /* Updates */,
 				E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */,
-				E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -3404,7 +3401,6 @@
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
-				E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */,
 				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */,

@@ -29,9 +29,9 @@ final class ServerViewModelMock: ServerViewModel {
 
     let isSmartAvailable: Bool = false
 
-    let torAvailable: Bool = false
+    let isTorAvailable: Bool = false
 
-    let p2pAvailable: Bool = false
+    let isP2PAvailable: Bool = false
 
     let streamingAvailable: Bool = false
 
@@ -51,7 +51,7 @@ final class ServerViewModelMock: ServerViewModel {
 
     let connectButtonColor: UIColor = .darkGray
 
-    let loadValue: String = "56%"
+    let load: Int = 56
 
     let loadColor: UIColor = .green
 
@@ -66,10 +66,6 @@ final class ServerViewModelMock: ServerViewModel {
     let countryName: String
 
     let translatedCity: String?
-
-    func updateTier() {
-
-    }
 
     func connectAction() {
 

@@ -227,15 +227,7 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
             return .success(data)
         case .partners:
             // for fetching list of partners
-            let partner = Partner(name: "Deutsche Welle",
-                                  description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
-                                  iconURL: URL(string: "https://proton.me/favicon.ico"),
-                                  logicalIDs: ["YC6ClO_x1nbwWdsNcxE6kmekOuSI6pEmB-zTnWUF-ENyT1OqB3vx-zfcAX7v6WKjDphKDE3ixJ41hIQJPFRPHQ=="])
-            let partnerType = PartnerType(type: "News",
-                                          description: "descr",
-                                          iconURL: URL(string: "https://proton.me/favicon.ico"),
-                                          partners: [partner])
-            let response = VPNPartnersResponse(code: 1000, partnerTypes: [partnerType])
+            let response = VPNPartnersResponse(code: 1000, partnerTypes: [.onePartner()])
             let data = try responseEncoder.encode(response)
             return .success(data)
         case .clientConfig:

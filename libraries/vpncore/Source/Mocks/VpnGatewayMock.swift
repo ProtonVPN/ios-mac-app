@@ -23,6 +23,9 @@ import Foundation
 import VPNShared
 
 public class VpnGatewayMock: VpnGatewayProtocol {
+    enum VpnGatewayMockError: Error {
+        case missingUserTier
+    }
     public static var connectionChanged: Notification.Name = Notification.Name("")
     public static var activeServerTypeChanged: Notification.Name = Notification.Name("")
     public static var needsReconnectNotification: Notification.Name = Notification.Name("")
@@ -45,9 +48,10 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public var lastConnectionRequest: ConnectionRequest?
     public var activeServerType: ServerType
     
-    private var _userTier: Int = 0
+    var _userTier: Int?
     
     public func userTier() throws -> Int {
+        guard let _userTier else { throw VpnGatewayMockError.missingUserTier }
         return _userTier
     }
     

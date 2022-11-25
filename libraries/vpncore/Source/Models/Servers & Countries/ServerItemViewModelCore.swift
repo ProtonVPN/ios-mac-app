@@ -67,7 +67,7 @@ open class ServerItemViewModelCore {
         self.propertiesManager = propertiesManager
     }
 
-    public var partners: [Partner] { // add unit tests
+    public var partners: [Partner] {
         guard serverModel.isPartner else {
             return []
         }
