@@ -21,63 +21,62 @@
 //
 
 import Foundation
-@testable import vpncore
 
 // Please update as/when needed
-class AppStateManagerMock: AppStateManager {
-    var displayState: AppDisplayState = .disconnected {
+public class AppStateManagerMock: AppStateManager {
+    public var displayState: AppDisplayState = .disconnected {
         didSet {
             NotificationCenter.default.post(name: AppStateManagerNotification.displayStateChange, object: state)
         }
     }
 
-    var state: AppState = .disconnected {
+    public var state: AppState = .disconnected {
         didSet {
             NotificationCenter.default.post(name: AppStateManagerNotification.stateChange, object: state)
         }
     }
     
-    var onVpnStateChanged: ((VpnState) -> Void)?
+    public var onVpnStateChanged: ((VpnState) -> Void)?
     
-    var isOnDemand: Bool = true
+    public var isOnDemand: Bool = true
     
-    func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
+    public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
         handler(isOnDemand)
     }
     
-    func cancelConnectionAttempt() {
+    public func cancelConnectionAttempt() {
         
     }
     
-    func cancelConnectionAttempt(completion: @escaping () -> Void) {
+    public func cancelConnectionAttempt(completion: @escaping () -> Void) {
         
     }
     
-    func prepareToConnect() {
+    public func prepareToConnect() {
         
     }
     
-    func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
+    public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
         
     }
     
-    func disconnect() {
+    public func disconnect() {
         
     }
     
-    func disconnect(completion: @escaping () -> Void) {
+    public func disconnect(completion: @escaping () -> Void) {
         
     }
     
-    func refreshState() {
+    public func refreshState() {
         
     }
     
-    func connectedDate(completion: @escaping (Date?) -> Void) {
+    public func connectedDate(completion: @escaping (Date?) -> Void) {
         
     }
     
-    func activeConnection() -> ConnectionConfiguration? {
+    public func activeConnection() -> ConnectionConfiguration? {
         return nil
     }
     

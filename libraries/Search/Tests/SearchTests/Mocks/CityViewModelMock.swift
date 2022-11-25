@@ -39,10 +39,6 @@ final class CityViewModelMock: CityViewModel {
 
     var connectionChanged: (() -> Void)?
 
-    func updateTier() {
-
-    }
-
     func connectAction() {
 
     }

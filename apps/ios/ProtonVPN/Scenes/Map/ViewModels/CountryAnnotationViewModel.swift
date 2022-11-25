@@ -33,7 +33,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     private let countryModel: CountryModel
     private let serverModels: [ServerModel]
-    private var vpnGateway: VpnGatewayProtocol?
+    private var vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
@@ -73,14 +73,14 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
     
     var isConnected: Bool {
-        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.serverType == serverType, activeServer.countryCode == countryCode {
+        if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.serverType == serverType, activeServer.countryCode == countryCode {
             return true
         }
         return false
     }
     
     var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
@@ -162,7 +162,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     let showAnchor: Bool = true
     
-    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, enabled: Bool, alertService: AlertService, connectionStatusService: ConnectionStatusService) {
+    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, enabled: Bool, alertService: AlertService, connectionStatusService: ConnectionStatusService) {
         self.countryModel = countryModel
         self.serverModels = servers
         self.vpnGateway = vpnGateway
@@ -180,10 +180,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         case .idle:
             viewState = .selected
         case .selected:
-            guard let vpnGateway = vpnGateway else {
-                return
-            }
-            
             log.debug("Connect requested by clicking on Country in the map", category: .connectionConnect, event: .trigger)
             
             if underMaintenance {
@@ -211,8 +207,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     // MARK: - Private functions
     fileprivate func startObserving() {
-        guard vpnGateway != nil else { return }
-        
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
     }

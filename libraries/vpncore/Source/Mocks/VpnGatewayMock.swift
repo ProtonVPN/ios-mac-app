@@ -30,9 +30,10 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public static var activeServerTypeChanged: Notification.Name = Notification.Name("")
     public static var needsReconnectNotification: Notification.Name = Notification.Name("")
 
-    public init() {
+    public init(userTier: Int? = nil) {
         self.connection = .disconnected
         self.activeServerType = .unspecified
+        _userTier = userTier
     }
 
     public init(propertiesManager: PropertiesManagerProtocol, activeServerType: ServerType, connection: ConnectionStatus) {

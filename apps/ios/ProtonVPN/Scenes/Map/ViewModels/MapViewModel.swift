@@ -184,7 +184,7 @@ class MapViewModel: SecureCoreToggleHandler {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
         serverManager.grouping(for: .secureCore).forEach { group in
             group.1.forEach { (server) in
-                var entryCountry = SecureCoreEntryCountryModel(appStateManager: appStateManager, countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode))
+                var entryCountry = SecureCoreEntryCountryModel(appStateManager: appStateManager, countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode), vpnGateway: vpnGateway)
                 if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
                     entryCountry = oldEntry
                 }

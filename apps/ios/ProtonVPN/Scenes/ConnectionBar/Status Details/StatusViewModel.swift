@@ -36,7 +36,7 @@ class StatusViewModel {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var vpnGateway: VpnGatewayProtocol? = factory.makeVpnGateway()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -199,7 +199,7 @@ class StatusViewModel {
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
         // same condition as on the Profiles screen to be consistent
-        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode) == vpnGateway?.lastConnectionRequest }) != nil {
+        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode) == vpnGateway.lastConnectionRequest }) != nil {
             cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .notificationErrorColor(), handler: { [deleteProfile] in
                 deleteProfile()
             })
@@ -363,7 +363,7 @@ class StatusViewModel {
                     // Save to general settings
                     self.netShieldPropertyProvider.netShieldType = newValue
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                    self.vpnGateway?.reconnect(with: newValue)
+                    self.vpnGateway.reconnect(with: newValue)
 
                 }, cancelHandler: {
                     self.contentChanged?()

@@ -36,7 +36,13 @@ class CountryItemViewModel {
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
     
-    private var userTier: Int = CoreAppConstants.VpnTiers.plus
+    private var userTier: Int {
+        do {
+            return try vpnGateway.userTier()
+        } catch {
+            return CoreAppConstants.VpnTiers.free
+        }
+    }
     
     var isUsersTierTooLow: Bool {
         return userTier < countryModel.lowestTier
@@ -167,7 +173,6 @@ class CountryItemViewModel {
     }
     
     private lazy var serverViewModels = { () -> [(tier: Int, viewModels: [ServerItemViewModel])] in
-        updateTier()
         var serverTypes = [(tier: Int, viewModels: [ServerItemViewModel])]()
         if !freeServerViewModels.isEmpty {
             serverTypes.append((tier: 0, viewModels: freeServerViewModels))
@@ -236,8 +241,6 @@ class CountryItemViewModel {
     }
     
     func connectAction() {
-        updateTier()
-        
         log.debug("Connect requested by clicking on Country item", category: .connectionConnect, event: .trigger)
         
         if isUsersTierTooLow {
@@ -256,14 +259,6 @@ class CountryItemViewModel {
             log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(country: countryCode, ofType: serverType)
             connectionStatusService.presentStatusViewController()
-        }
-    }
-    
-    func updateTier() {
-        do {
-            userTier = try vpnGateway.userTier()
-        } catch {
-            userTier = CoreAppConstants.VpnTiers.free
         }
     }
     

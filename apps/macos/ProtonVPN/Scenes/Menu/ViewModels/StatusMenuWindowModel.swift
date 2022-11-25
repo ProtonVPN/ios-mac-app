@@ -35,14 +35,13 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 
 class StatusMenuWindowModel {
     
-    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory
+    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory & VpnGatewayFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     
     var contentChanged: (() -> Void)?
-    
-    private var vpnGateway: VpnGatewayProtocol?
     
     init(factory: Factory) {
         self.factory = factory
@@ -54,9 +53,6 @@ class StatusMenuWindowModel {
     }
     
     var isConnected: Bool {
-        guard let vpnGateway = vpnGateway else {
-            return false
-        }
         return vpnGateway.connection == .connected
     }
     
@@ -66,10 +62,7 @@ class StatusMenuWindowModel {
     }
     
     var statusIcon: StatusIcon {
-        guard let connectionStatus = vpnGateway?.connection else {
-            return .unknown
-        }
-        switch connectionStatus {
+        switch vpnGateway.connection {
         case .connected:
             return .connected
         case .connecting:
@@ -80,11 +73,7 @@ class StatusMenuWindowModel {
     }
 
     var appIcon: AppIcon {
-        guard let connectionStatus = vpnGateway?.connection else {
-            return .disconnected
-        }
-
-        switch connectionStatus {
+        switch vpnGateway.connection {
         case .connected:
             return .active
         default:
@@ -93,10 +82,7 @@ class StatusMenuWindowModel {
     }
     
     var isStatusIconBlinking: Bool {
-        guard let connectionStatus = vpnGateway?.connection else {
-            return false
-        }
-        return connectionStatus == .connecting
+        return vpnGateway.connection == .connecting
     }
     
     func requiresRefreshes(_ required: Bool) {
@@ -131,12 +117,8 @@ class StatusMenuWindowModel {
     }
     
     private func sessionEnded() {
-        if vpnGateway != nil {
-            NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
-            NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
-        }
-        
-        vpnGateway = nil
+        NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
     }
     
     @objc private func handleChange() {

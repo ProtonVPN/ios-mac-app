@@ -304,7 +304,7 @@ extension NavigationService: SettingsService {
     
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(factory: factory, protocolService: self)
+            settingsViewController.viewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }

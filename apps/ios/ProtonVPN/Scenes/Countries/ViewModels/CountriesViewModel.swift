@@ -179,7 +179,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 userTier = CoreAppConstants.VpnTiers.free
                 return
             }
-            userTier = try vpnGateway.userTier() ?? CoreAppConstants.VpnTiers.plus
+            userTier = try vpnGateway.userTier()
         } catch {
             userTier = CoreAppConstants.VpnTiers.free
         }

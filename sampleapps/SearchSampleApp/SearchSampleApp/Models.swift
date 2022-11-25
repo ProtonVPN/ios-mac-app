@@ -41,10 +41,6 @@ final class CityItemViewModel: CityViewModel {
 
     let connectButtonColor: UIColor = .darkGray
 
-    func updateTier() {
-
-    }
-
     func connectAction() {
 
     }
@@ -84,10 +80,6 @@ final class CountryItemViewModel: CountryViewModel {
     let isSecureCoreCountry: Bool
 
     let cities: [CityViewModel]
-
-    func updateTier() {
-
-    }
 
     func connectAction() {
 
@@ -158,10 +150,6 @@ final class ServerItemViewModel: ServerViewModel {
     let countryName: String
 
     let translatedCity: String? = nil
-
-    func updateTier() {
-
-    }
 
     func connectAction() {
 

@@ -65,7 +65,6 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
                 return
             }
 
-            viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             countryName.textColor = viewModel.textColor
             highlightMatches(countryName, viewModel.description, searchText)
