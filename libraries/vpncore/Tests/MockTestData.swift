@@ -177,6 +177,29 @@ struct MockTestData {
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
                               translatedCity: nil)
+    /// plus server which supports all the features.
+    func server7(id: String = "yzab") -> ServerModel {
+        .init(id: id,
+              name: "exclusive plus server",
+              domain: "withrelay3.protonvpn.ch",
+              load: 42,
+              entryCountryCode: "CH",
+              exitCountryCode: "CH",
+              tier: CoreAppConstants.VpnTiers.plus,
+              feature: [.ipv6, .p2p, .partner, .restricted, .secureCore, .streaming, .tor],
+              city: "Zurich",
+              ips: [.init(id: "mnop",
+                          entryIp: "10.0.0.13",
+                          exitIp: "10.0.0.14",
+                          domain: "withrelay3.protonvpn.net",
+                          status: 1,
+                          protocolEntries: [.wireGuard(.tls): .init(ipv4: nil, ports: nil)])],
+              score: 10,
+              status: 1,
+              location: .init(lat: 47.22, long: 8.32),
+              hostCountry: "Switzerland",
+              translatedCity: nil)
+    }
 
     var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
                                                                 defaultUdpPorts: [2345, 6789]),

@@ -21,7 +21,6 @@
 //
 
 import Foundation
-@testable import ProtonVPN
 @testable import vpncore
 
 // Please update as/when needed

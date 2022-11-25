@@ -40,3 +40,10 @@ public struct Partner: Codable {
         self.logicalIDs = try container.decode([String].self, forKey: .logicalIDs)
     }
 }
+
+extension Partner: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.name == rhs.name &&
+        lhs.description == rhs.description
+    }
+}
