@@ -25,7 +25,7 @@ import vpncore
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
-    private let vpnGateway: VpnGatewayProtocol?
+    private let vpnGateway: VpnGatewayProtocol
     
     var canConnect: Bool {
         return !underMaintenance
@@ -44,7 +44,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
         return formSecondaryDescription()
     }
         
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, userTier: Int) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int) {
         self.vpnGateway = vpnGateway
         super.init(profile: profile, userTier: userTier)
     }
@@ -52,7 +52,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     func connectAction() {
         if canConnect {
             log.debug("Profile in status menu selected. Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-            vpnGateway?.connectTo(profile: profile)
+            vpnGateway.connectTo(profile: profile)
         }
     }
     

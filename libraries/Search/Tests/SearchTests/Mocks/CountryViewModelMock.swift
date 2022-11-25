@@ -47,10 +47,6 @@ final class CountryViewModelMock: CountryViewModel {
 
     let isSecureCoreCountry: Bool
 
-    func updateTier() {
-
-    }
-
     func connectAction() {
 
     }

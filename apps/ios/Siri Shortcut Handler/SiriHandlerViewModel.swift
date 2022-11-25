@@ -69,29 +69,21 @@ class SiriHandlerViewModel {
                                              safeModePropertyProvider: safeModePropertyProvider)
         }()
 
-    private var _vpnGateway: VpnGatewayProtocol?
-    var vpnGateway: VpnGatewayProtocol? {
-        guard let _ = try? vpnKeychain.fetch() else {
-            _vpnGateway = nil
-            return nil
-        }
-        if _vpnGateway == nil {
-            _vpnGateway = VpnGateway(vpnApiService: vpnApiService,
-                                     appStateManager: appStateManager,
-                                     alertService: alertService,
-                                     vpnKeychain: vpnKeychain,
-                                     authKeychain: authKeychain,
-                                     siriHelper: SiriHelper(),
-                                     netShieldPropertyProvider: netShieldPropertyProvider,
-                                     natTypePropertyProvider: natTypePropertyProvider,
-                                     safeModePropertyProvider: safeModePropertyProvider,
-                                     propertiesManager: propertiesManager,
-                                     profileManager: profileManager,
-                                     availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
-                                     serverStorage: serverStorage)
-        }
-        return _vpnGateway
-    }
+    lazy var vpnGateway: VpnGatewayProtocol = {
+        VpnGateway(vpnApiService: vpnApiService,
+                   appStateManager: appStateManager,
+                   alertService: alertService,
+                   vpnKeychain: vpnKeychain,
+                   authKeychain: authKeychain,
+                   siriHelper: SiriHelper(),
+                   netShieldPropertyProvider: netShieldPropertyProvider,
+                   natTypePropertyProvider: natTypePropertyProvider,
+                   safeModePropertyProvider: safeModePropertyProvider,
+                   propertiesManager: propertiesManager,
+                   profileManager: profileManager,
+                   availabilityCheckerResolverFactory: availabilityCheckerResolverFactory,
+                   serverStorage: serverStorage)
+    }()
     
     init(networking: Networking,
          vpnApiService: VpnApiService,
@@ -132,12 +124,6 @@ class SiriHandlerViewModel {
     }
     
     public func connect(_ completion: @escaping (QuickConnectIntentResponse) -> Void) {
-        guard let vpnGateway = vpnGateway else {
-            // Not logged in so open the app
-            completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: nil))
-            return
-        }
-        
         // Without refresh, from time to time it doesn't see newest default profile
         profileManager.refreshProfiles()
         
@@ -159,7 +145,7 @@ class SiriHandlerViewModel {
     }
     
     public func getConnectionStatus(_ completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
-        let status = getConnectionStatusString(connection: vpnGateway?.connection)
+        let status = getConnectionStatusString(connection: vpnGateway.connection)
         let response = GetConnectionStatusIntentResponse.success(status: status)
 
         completion(response)

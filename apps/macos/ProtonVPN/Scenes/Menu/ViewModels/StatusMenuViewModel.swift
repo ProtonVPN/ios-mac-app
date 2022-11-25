@@ -38,6 +38,7 @@ final class StatusMenuViewModel {
         & WiFiSecurityMonitorFactory
         & ProfileManagerFactory
         & SessionServiceFactory
+        & VpnGatewayFactory
 
     private let factory: Factory
     
@@ -50,6 +51,7 @@ final class StatusMenuViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
     private lazy var sessionService: SessionService = factory.makeSessionService()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
@@ -60,8 +62,7 @@ final class StatusMenuViewModel {
     var secureCoreCountries: [CountryGroup]?
     
     weak var viewController: StatusMenuViewControllerProtocol?
-    
-    private var vpnGateway: VpnGatewayProtocol?
+
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
     
@@ -77,16 +78,10 @@ final class StatusMenuViewModel {
     }
     
     var isConnected: Bool {
-        guard let vpnGateway = vpnGateway else {
-            return false
-        }
         return vpnGateway.connection == .connected
     }
     
     var isStateStable: Bool {
-        guard let vpnGateway = vpnGateway else {
-            return false
-        }
         return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
     }
     
@@ -96,9 +91,6 @@ final class StatusMenuViewModel {
     
     // MARK: - Connecting screen
     var isConnecting: Bool {
-        guard let vpnGateway = vpnGateway else {
-            return false
-        }
         return vpnGateway.connection == .connecting
     }
     
@@ -116,10 +108,7 @@ final class StatusMenuViewModel {
     
     func disconnectAction() {
         log.debug("Disconnect requested by clicking on Cancel", category: .connectionDisconnect, event: .trigger)
-        
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
+
         isConnecting ? vpnGateway.stopConnecting(userInitiated: true) : vpnGateway.disconnect()
     }
     
@@ -161,9 +150,6 @@ final class StatusMenuViewModel {
     
     // MARK: - Quick action section - Inputs
     func quickConnectAction() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
@@ -189,7 +175,7 @@ final class StatusMenuViewModel {
     }
     
     func countryViewModel(at index: IndexPath) -> StatusMenuCountryItemViewModel? {
-        guard let countryGroup = ((serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item]), let vpnGateway = vpnGateway else {
+        guard let countryGroup = ((serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item]) else {
             log.error(self.vpnGateway == nil ? "VpnGateway is nil" : "index.item: \(index.item), countryCount: \(countryCount())", category: .ui)
             return nil
         }
@@ -222,7 +208,7 @@ final class StatusMenuViewModel {
 
     private func isSufficientTierLevel() -> Bool {
         let freeTier = CoreAppConstants.VpnTiers.free
-        let userTier: Int = (try? vpnGateway?.userTier() ?? freeTier) ?? freeTier
+        let userTier: Int = (try? vpnGateway.userTier()) ?? freeTier
         return userTier >= CoreAppConstants.VpnTiers.plus
     }
 
@@ -241,7 +227,6 @@ final class StatusMenuViewModel {
     }
 
     private func changeActiveServerType(state: ButtonState) {
-        guard let vpnGateway = vpnGateway else { return }
         guard vpnGateway.connection != .connected else {
             presentDisconnectOnStateToggleWarning()
             return
@@ -291,8 +276,8 @@ final class StatusMenuViewModel {
     private func presentDisconnectOnStateToggleWarning() {
         let confirmationClosure: () -> Void = { [weak self] in
             log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
-            self?.vpnGateway?.disconnect()
-            self?.vpnGateway?.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
+            self?.vpnGateway.disconnect()
+            self?.vpnGateway.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
         }
 
         let viewModel = WarningPopupViewModel(title: LocalizedString.vpnConnectionActive,
@@ -363,18 +348,15 @@ final class StatusMenuViewModel {
     }
     
     private func sessionEnded() {
-        if vpnGateway != nil {
-            NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
-            NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
-        }
+        NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.removeObserver(self, name: VpnGateway.activeServerTypeChanged, object: nil)
         if let profileManager = profileManager {
             NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
         }
         if let serverManager = serverManager {
             NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
         }
-        
-        vpnGateway = nil
+
         profileManager = nil
         serverManager = nil
     }
@@ -393,7 +375,7 @@ final class StatusMenuViewModel {
                 log.debug("Disabling Secure Core because the changed plan does not allow its use anymore", category: .app)
                 propertiesManager.secureCoreToggle = false
                 serverType = .standard
-                vpnGateway?.changeActiveServerType(.standard)
+                vpnGateway.changeActiveServerType(.standard)
             }
 
             serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
@@ -471,7 +453,7 @@ final class StatusMenuViewModel {
     }
     
     private func formQuickActionDescription() -> String? {
-        guard isSessionEstablished, let vpnGateway = vpnGateway else {
+        guard isSessionEstablished else {
             return nil
         }
         
@@ -483,14 +465,6 @@ final class StatusMenuViewModel {
             description = LocalizedString.quickConnect
         }
         return description
-    }
-    
-    private func trunctateIfNecessary(itemName name: String) -> String {
-        var adjustedName: String = name
-        if name.count > maxCharCount {
-            adjustedName = name[0..<maxCharCount] + "..."
-        }
-        return adjustedName
     }
 }
 

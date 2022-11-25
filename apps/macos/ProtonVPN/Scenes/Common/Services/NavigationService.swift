@@ -70,8 +70,7 @@ class NavigationService {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
-
-    var vpnGateway: VpnGatewayProtocol?
+    lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     
     var appHasPresented = false
     var isSystemLoggingOff = false
@@ -98,12 +97,12 @@ class NavigationService {
     
     @objc private func sessionSwitchedOut(_ notification: NSNotification) {
         log.debug("User session did resign active", category: .app)
-        vpnGateway?.disconnect()
+        vpnGateway.disconnect()
     }
     
     @objc private func sessionBecameActive(_ notification: NSNotification) {
         log.debug("User session did become active", category: .app)
-        guard let vpnGateway = vpnGateway, vpnGateway.connection == .disconnected else {
+        guard vpnGateway.connection == .disconnected else {
             return
         }
 
@@ -137,7 +136,6 @@ class NavigationService {
                 showSidebar()
             }
         } else {
-            self.vpnGateway = nil
             showLogIn(initialError: notification.object as? String)
         }
     }
@@ -162,8 +160,7 @@ class NavigationService {
     
     private func showSidebar() {
         appHasPresented = true
-        
-        guard let vpnGateway = vpnGateway else { return }
+
         windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
     }
     
@@ -219,8 +216,7 @@ extension NavigationService {
     
     func openProfiles(_ initialTab: ProfilesTab) {
         guard !windowService.showIfPresent(windowController: ProfilesWindowController.self) else { return }
-        
-        guard let vpnGateway = vpnGateway else { return }
+
         windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService, vpnKeychain: vpnKeychain))
     }
     
@@ -231,7 +227,7 @@ extension NavigationService {
     
     private func openRequiredWindow() {
         if !windowService.bringWindowsToForeground() {
-            if appSessionManager.sessionStatus == .established, vpnGateway != nil {
+            if appSessionManager.sessionStatus == .established {
                 showSidebar()
             } else {
                 showLogIn()
@@ -271,7 +267,7 @@ extension NavigationService {
         // Do not show disconnect modal, because user asked for macOS logOff/shutdown
         // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
         
-        guard let vpnGateway = self.vpnGateway, vpnGateway.connection != .disconnected else {
+        guard vpnGateway.connection != .disconnected else {
             return .terminateNow
         }
         

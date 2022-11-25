@@ -25,7 +25,7 @@ import vpncore
 
 class StatusMenuProfilesListViewModel {
 
-    private let vpnGateway: VpnGatewayProtocol?
+    private let vpnGateway: VpnGatewayProtocol
     private let profileManager: ProfileManager
     
     var contentChanged: (() -> Void)?
@@ -39,9 +39,6 @@ class StatusMenuProfilesListViewModel {
     }
     
     private var userTier: Int {
-        guard let vpnGateway = vpnGateway else {
-            return CoreAppConstants.VpnTiers.free
-        }
         do {
             return try vpnGateway.userTier()
         } catch {
@@ -49,7 +46,7 @@ class StatusMenuProfilesListViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, profileManager: ProfileManager) {
+    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 

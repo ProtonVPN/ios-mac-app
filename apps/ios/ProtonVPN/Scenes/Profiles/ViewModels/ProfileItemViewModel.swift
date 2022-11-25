@@ -28,7 +28,7 @@ import ProtonCore_UIFoundations
 final class ProfileItemViewModel {
     
     private let profile: Profile
-    private let vpnGateway: VpnGatewayProtocol?
+    private let vpnGateway: VpnGatewayProtocol
     private let alertService: AlertService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
@@ -41,14 +41,14 @@ final class ProfileItemViewModel {
     private let underMaintenance: Bool
     
     var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
+        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
         return false
     }
     
     private var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
+        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
         return false
@@ -106,7 +106,7 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -152,10 +152,6 @@ final class ProfileItemViewModel {
     }
     
     func connectAction() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
 
         if isUsersTierTooLow {

@@ -67,15 +67,16 @@ final class SettingsViewModel {
     
     var reloadNeeded: (() -> Void)?
     
-    private var vpnGateway: VpnGatewayProtocol?
+    private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
     
     var pushHandler: ((UIViewController) -> Void)?
 
-    init(factory: Factory, protocolService: ProtocolService) {
+    init(factory: Factory, protocolService: ProtocolService, vpnGateway: VpnGatewayProtocol) {
         self.factory = factory
         self.protocolService = protocolService
+        self.vpnGateway = vpnGateway
 
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: factory.makeVpnGateway())
@@ -109,16 +110,10 @@ final class SettingsViewModel {
     }
     
     var isConnected: Bool {
-        guard let vpnGateway = vpnGateway else {
-            return false
-        }
         return vpnGateway.connection == .connected
     }
     
     var isStateStable: Bool {
-        guard let vpnGateway = vpnGateway else {
-            return false
-        }
         return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
     }
     
@@ -177,17 +172,14 @@ final class SettingsViewModel {
     }
     
     private func sessionEnded() {
-        if vpnGateway != nil {
-            NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
-        }
-        if let profileManager = profileManager {
+        NotificationCenter.default.removeObserver(self, name: VpnGateway.connectionChanged, object: nil)
+        if let profileManager {
             NotificationCenter.default.removeObserver(self, name: profileManager.contentChanged, object: nil)
         }
-        if let serverManager = serverManager {
+        if let serverManager {
             NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil)
         }
-        
-        vpnGateway = nil
+
         profileManager = nil
         serverManager = nil
     }
@@ -250,7 +242,7 @@ final class SettingsViewModel {
                             self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: { [weak self] in
                                 approve()
                                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                                self?.vpnGateway?.reconnect(with: type)
+                                self?.vpnGateway.reconnect(with: type)
                                 self?.connectionStatusService.presentStatusViewController()
                             }))
                         case .immediately:
@@ -289,7 +281,7 @@ final class SettingsViewModel {
                             self.propertiesManager.vpnAcceleratorEnabled.toggle()
                             callback(self.propertiesManager.vpnAcceleratorEnabled)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
-                            self.vpnGateway?.retryConnection()
+                            self.vpnGateway.retryConnection()
                         }))
                     case .immediately:
                         self.propertiesManager.vpnAcceleratorEnabled.toggle()
@@ -330,7 +322,7 @@ final class SettingsViewModel {
                             self?.natTypePropertyProvider.natType = natType
                             callback(toggleOn)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
-                            self?.vpnGateway?.retryConnection()
+                            self?.vpnGateway.retryConnection()
                         }))
                     case .immediately:
                         self?.natTypePropertyProvider.natType = natType
@@ -368,7 +360,7 @@ final class SettingsViewModel {
                             self.safeModePropertyProvider.safeMode = newSafeMode
                             callback(toggleOn)
                             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "safeMode"])
-                            self.vpnGateway?.retryConnection()
+                            self.vpnGateway.retryConnection()
                         }))
                     case .immediately:
                         self.safeModePropertyProvider.safeMode = newSafeMode
@@ -420,7 +412,7 @@ final class SettingsViewModel {
     
     private func switchLANCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
-            let isConnected = self.vpnGateway?.connection == .connected || self.vpnGateway?.connection == .connecting
+            let isConnected = self.vpnGateway.connection == .connected || self.vpnGateway.connection == .connecting
             
             var alert: SystemAlert
             
@@ -430,7 +422,7 @@ final class SettingsViewModel {
                     self.propertiesManager.killSwitch = false
                     if isConnected {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
-                        self.vpnGateway?.retryConnection()
+                        self.vpnGateway.retryConnection()
                     }
                     self.reloadNeeded?()
                     callback(true)
@@ -441,7 +433,7 @@ final class SettingsViewModel {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
                     self.propertiesManager.excludeLocalNetworks.toggle()
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
-                    self.vpnGateway?.retryConnection()
+                    self.vpnGateway.retryConnection()
                     callback(self.propertiesManager.excludeLocalNetworks)
                 }, cancelHandler: {
                     callback(self.propertiesManager.excludeLocalNetworks)
@@ -458,7 +450,7 @@ final class SettingsViewModel {
     
     private func ksSwitchCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
         return { (toggleOn, callback) in
-            let isConnected = self.vpnGateway?.connection == .connected || self.vpnGateway?.connection == .connecting
+            let isConnected = self.vpnGateway.connection == .connected || self.vpnGateway.connection == .connecting
             
             var alert: SystemAlert
             
@@ -468,7 +460,7 @@ final class SettingsViewModel {
                     self.propertiesManager.killSwitch = true
                     if isConnected {
                         log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
-                        self.vpnGateway?.retryConnection()
+                        self.vpnGateway.retryConnection()
                     }
                     self.reloadNeeded?()
                     callback(true)
@@ -479,7 +471,7 @@ final class SettingsViewModel {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
                     self.propertiesManager.killSwitch.toggle()
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
-                    self.vpnGateway?.retryConnection()
+                    self.vpnGateway.retryConnection()
                     callback(self.propertiesManager.killSwitch)
                 }, cancelHandler: {
                     callback(self.propertiesManager.killSwitch)
@@ -541,7 +533,7 @@ final class SettingsViewModel {
     }
     
     private func formQuickActionDescription() -> String? {
-        guard isSessionEstablished, let vpnGateway = vpnGateway else {
+        guard isSessionEstablished else {
             return nil
         }
         
@@ -587,7 +579,7 @@ final class SettingsViewModel {
             }
 
             if !self.appStateManager.state.isSafeToEnd {
-                self.vpnGateway?.reconnect(with: connectionProtocol)
+                self.vpnGateway.reconnect(with: connectionProtocol)
             }
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))

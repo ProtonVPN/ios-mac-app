@@ -28,7 +28,7 @@ class ProfilesViewModel {
     
     private let factory: Factory
     private let alertService: AlertService
-    private var vpnGateway: VpnGatewayProtocol?
+    private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
@@ -41,17 +41,13 @@ class ProfilesViewModel {
         
     private var userTier: Int {
         do {
-            if let vpnGateway = vpnGateway {
-                return try vpnGateway.userTier()
-            } else { // not logged in
-                return CoreAppConstants.VpnTiers.plus
-            }
+            return try vpnGateway.userTier()
         } catch {
             return CoreAppConstants.VpnTiers.free
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
+    init(vpnGateway: VpnGatewayProtocol, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService

@@ -27,7 +27,7 @@ open class ServerItemViewModelCore {
     public var isSmartAvailable: Bool { serverModel.isVirtual }
     public var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
     public var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
-    public var isPartnerServer: Bool { serverModel.isPartner }
+    public var isPartnerServer: Bool { serverModel.feature.contains(.partner) }
 
     public var isSecureCoreEnabled: Bool {
         return serverModel.isSecureCore
@@ -68,7 +68,7 @@ open class ServerItemViewModelCore {
     }
 
     public var partners: [Partner] {
-        guard serverModel.isPartner else {
+        guard isPartnerServer else {
             return []
         }
         return propertiesManager.partnerTypes

@@ -247,8 +247,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func userTier() throws -> Int {
-        let tier = try vpnKeychain.fetchCached().maxTier
-        return tier
+        return try vpnKeychain.fetchCached().maxTier
     }
     
     public func changeActiveServerType(_ serverType: ServerType) {

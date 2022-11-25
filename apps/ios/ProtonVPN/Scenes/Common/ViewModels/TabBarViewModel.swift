@@ -38,7 +38,7 @@ class TabBarViewModel {
     let navigationService: NavigationService
     let sessionManager: AppSessionManager
     let appStateManager: AppStateManager
-    let vpnGateway: VpnGatewayProtocol?
+    let vpnGateway: VpnGatewayProtocol
     let connectionStatusService: ConnectionStatusService
     weak var delegate: TabBarViewModelDelegate?
     
@@ -47,7 +47,7 @@ class TabBarViewModel {
     }
     
     // MARK: Initializers
-    init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?) {
+    init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.navigationService = navigationService
         self.sessionManager = sessionManager
         self.appStateManager = appStateManager
@@ -61,12 +61,6 @@ class TabBarViewModel {
     
     func quickConnectTapped() {
         log.debug("Connect requested by clicking on Quick connect", category: .connectionConnect, event: .trigger)
-                
-        guard let vpnGateway = vpnGateway else {
-            log.debug("Will not connect because user is not logged in", category: .connectionConnect, event: .trigger)
-            navigationService.presentWelcome(initialError: nil)
-            return
-        }
         
         if vpnGateway.connection == .disconnected || vpnGateway.connection == .disconnecting {
             vpnGateway.quickConnect()

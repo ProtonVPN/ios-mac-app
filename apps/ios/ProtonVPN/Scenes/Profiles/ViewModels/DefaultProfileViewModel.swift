@@ -27,7 +27,7 @@ import ProtonCore_UIFoundations
 class DefaultProfileViewModel {
     
     private let serverOffering: ServerOffering
-    private let vpnGateway: VpnGatewayProtocol?
+    private let vpnGateway: VpnGatewayProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
@@ -58,14 +58,14 @@ class DefaultProfileViewModel {
     }
     
     var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
+        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
         return false
     }
     
     private var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
+        if let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode)
         }
         return false
@@ -101,7 +101,7 @@ class DefaultProfileViewModel {
         }
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -114,10 +114,6 @@ class DefaultProfileViewModel {
     }
     
     func connectAction() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
         log.debug("Connect requested by selecting default profile.", category: .connectionConnect, event: .trigger)
         
         if isConnecting {
