@@ -11,7 +11,7 @@
 "_account" = "Аккаунт";
 
 /* iOS: Message explaining that deleting account closes the VPN connection */
-"_account_deletion_connection_warning" = "При удалении учетной записи подключение VPN завершится.";
+"_account_deletion_connection_warning" = "При удалении аккаунта завершится ваш сеанс VPN.";
 
 /* Alert title for account deletion error */
 "_account_deletion_error" = "Ошибка";
@@ -395,13 +395,13 @@
 "_error_loads" = "Не могу обновить данные о нагрузке на сервер";
 
 /* (No Comment) */
-"_error_mitm_description" = "Сбой проверки TLS-сертификата при попытке подключения к API Proton VPN. Возможно, ваше подключение к Интернету отслеживается. Чтобы сохранить ваши данные в безопасности, мы предотвратили доступ приложения к Proton VPN API.\nДля входа в приложение или доступа к аккаунту подключитесь к другой сети и попробуйте снова.";
+"_error_mitm_description" = "Сбой проверки сертификата TLS при попытке подключения к API Proton VPN. Возможно, ваше подключение к Интернету отслеживается. Чтобы обеспечить сохранность ваших данных, мы предотвратили доступ приложения к Proton VPN API.\nДля входа в приложение или доступа к аккаунту подключитесь к другой сети и попробуйте снова.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Небезопасное соединение";
 
 /* (No Comment) */
-"_error_mitm_vpn_description" = "Сбой проверки сертификата TLS при попытке подключения к VPN серверу. Ваше текущее подключение к Интернету, возможно, прослушивается. Чтобы защитить ваши данные, мы не позволяем приложению получить доступ к этому VPN серверу.\nПожалуйста, выберите другой сервер.";
+"_error_mitm_vpn_description" = "Сбой проверки сертификата TLS при попытке подключения к серверу VPN. Ваше текущее подключение к Интернету, возможно, отслеживается. При попытке подключения к VPN-серверу произошел сбой проверки сертификата TLS. Ваше текущее интернет-соединение может контролироваться. Чтобы обеспечить сохранность ваших данных, мы запрещаем приложению доступ к этому серверу VPN.\nВыберите другой сервер.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Пустая сигнатура остатка";
@@ -494,7 +494,7 @@
 "_error_wrong_payment_token_status" = "Неправильное состояние токена оплаты. Пожалуйста, перезапустите приложение. Если ошибка повторится, обратитесь в службу поддержки.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN использует брандмауэр устройства для реализации Kill Switch. Включив Kill Switch, вы перепишете текущие настройки брандмауэра вашего устройства. Если вы полагаетесь на эту конфигурацию брандмауэра, вы не должны использовать Kill Switch.\n\nЧтобы использовать Kill Switch и перезаписать текущие настройки брандмауэра, выберите ПРОДОЛЖИТЬ.\n\nЧтобы отключить Kill Switch и продолжить использование ваших текущих настроек брандмауэра, выберите ОТМЕНА.";
+"_existing_firewall_popup_body" = "ProtonVPN использует брандмауэр устройства для использования Kill Switch. Включив Kill Switch, вы перепишете текущие настройки брандмауэра вашего устройства. Если вы полагаетесь на эту конфигурацию брандмауэра, вы не должны использовать Kill Switch.\n\nЧтобы использовать Kill Switch и перезаписать текущие настройки брандмауэра, выберите ПРОДОЛЖИТЬ.\n\nЧтобы отключить Kill Switch и продолжить использование ваших текущих настроек брандмауэра, выберите ОТМЕНА.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Обнаружен брандмауэр";
@@ -659,7 +659,7 @@
 "_invalid_refresh_token_please_login" = "Прошло много времени с тех пор, как вы в последний раз использовали приложение Proton VPN. Пожалуйста, войдите в систему заново.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Учёные и инженеры, создавшие ProtonMail, приветствуют вас в более безопасном Интернете без цензуры.";
+"_ios_onboarding_page1_description" = "Ученые и инженеры, создавшие ProtonMail, приветствуют вас в более защищенном Интернете без цензуры.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
@@ -692,7 +692,7 @@
 "_kill_switch_blocking_body" = "Kill switch защищает ваш IP\n\nВаше подключение к Интернету возобновится, как только Proton VPN снова подключится к серверу. Чтобы возобновить работу без защиты VPN, отключите Kill Switch.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
+"_kill_switch_blocking_connection" = "Kill Switch блокирует все подключения";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill Switch";
@@ -707,7 +707,7 @@
 "_kill_switch_error_head" = "Некоторые приложения, например антивирусы и брандмауэры, могут конфликтовать с Kill Switch, из-за чего он может работать неправильно.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch работает с macOS Firewall.\nЕсли есть другие приложения, связанные с брандмауэром, они могут помешать Kill Switch ProtonVPN'а. Завершение этих приложений может восстановить правила брандмауэра, настроенные Kill Switch.";
+"_kill_switch_error_info" = "Kill Switch работает с macOS Firewall.\nЕсли есть другие приложения, связанные с брандмауэром, они могут помешать Kill Switch от ProtonVPN. Завершение этих приложений может восстановить правила брандмауэра, настроенные Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Обнаружена ошибка Kill Switch";
@@ -716,13 +716,13 @@
 "_kill_switch_helper_install_issue_popup_body" = "При установке или обновлении Kill Switch возникла проблема.\n\nЧтобы повторить попытку, нажмите кнопку ПОВТОРИТЬ.\n\nЧтобы продолжить без Kill Switch, нажмите кнопку ОТКЛЮЧИТЬ.";
 
 /* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Чтобы включить Kill Switch, вам может быть предложено ввести пароль учетной записи пользователя. Если появится запрос, введите свой %@ и подтвердите.\n\nВы можете иногда получать этот запрос и в будущем, когда приложение ProtonVPN обновляется.";
+"_kill_switch_helper_install_popup_body" = "Чтобы включить Kill Switch, вам может быть предложено ввести пароль аккаунта пользователя. Если появится запрос, введите свой %@ и подтвердите.\n\nВы можете иногда получать этот запрос и в будущем, когда приложение ProtonVPN обновляется.";
 
 /* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Последнее загруженное вами обновление требует указать пароль учетной записи компьютера. Когда появится запрос, пожалуйста, введите свой %@ и примите запрос.\n\nЕсли вы не введете пароль Mac, Kill Switch будет выключен.";
+"_kill_switch_helper_update_popup_body" = "Последнее загруженное вами обновление требует указать пароль аккаунта компьютера. Когда появится запрос, введите свой %@ и примите запрос.\n\nЕсли вы не введете пароль Mac, Kill Switch будет выключен.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
-"_kill_switch_reconnection" = "Ваше интернет-соединение возобновится, как только Proton VPN переподключится к серверу.\nЧтобы пользоваться интернетом без VPN и защиты Kill Switch, отмените повторное подключение к серверу.";
+"_kill_switch_reconnection" = "Ваше подключение к Интернету возобновится, как только Proton VPN переподключится к серверу.\nЧтобы пользоваться Интернетом без VPN и защиты Kill Switch, отмените повторное подключение к серверу.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "без";
@@ -743,10 +743,10 @@
 "_ks_dont_ask" = "Не спрашивать меня снова";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg" = "Чтобы включить Kill Switch, необходимо загрузить и установить программу %@.\nПожалуйста, установите её до включения Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Чтобы включить Kill Switch, необходимо загрузить и установить %@.\nУстановите до включения Kill Switch.";
 
 /* (No Comment) */
-"_ks_requires_swift5_popup_msg2" = "Proton VPN не смог обнаружить %@. Чтобы включить Kill Switch, пожалуйста, сначала установите программное обеспечение.";
+"_ks_requires_swift5_popup_msg2" = "Proton VPN не смог обнаружить %@. Чтобы включить Kill Switch, сначала установите программное обеспечение.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Поддержку библиотеки Swift 5 Runtime";
@@ -854,7 +854,7 @@
 "_map_show" = "Показать карту";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Пожалуйста, отключите другое устройство, чтобы подключить на это.";
+"_maximum_device_reached_description" = "Отключите другое устройство, чтобы подключить на это.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Вы достигли максимального лимита устройств";
@@ -2112,7 +2112,7 @@
 "two_factor_authentication" = "Двухфакторная аутентификация";
 
 /* Placeholder for the Two Factor text field */
-"two_factor_code" = "Код двухфакторной аутентификации";
+"two_factor_code" = "Двухфакторный код";
 
 /* Title of the Use coupon button in Settings */
 "use_coupon" = "Использовать купон";

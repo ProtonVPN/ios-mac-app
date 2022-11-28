@@ -1956,7 +1956,7 @@
 "_use_captcha_verification" = "Перевірити через CAPTCHA";
 
 /* iOS: human verification option select button */
-"_use_other_email_address" = "Перевірити електронною поштою";
+"_use_other_email_address" = "Підтвердити електронною поштою";
 
 /* Profile create/change form */
 "_use_secure_core" = "Secure Core";
