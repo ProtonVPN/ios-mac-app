@@ -25,7 +25,7 @@ public protocol ServerViewModel: AnyObject, ConnectViewModel {
     var isPartnerServer: Bool { get }
     var isTorAvailable: Bool { get }
     var isP2PAvailable: Bool { get }
-    var streamingAvailable: Bool { get }
+    var isStreamingAvailable: Bool { get }
     var connectionChanged: (() -> Void)? { get set }
     var alphaOfMainElements: CGFloat { get }
     var isUsersTierTooLow: Bool { get }

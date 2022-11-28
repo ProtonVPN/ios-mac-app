@@ -26,12 +26,6 @@ import vpncore
 class ServerItemViewModel: ServerItemViewModelCore {
 
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
-
-    var isStreamingAvailable: Bool {
-        if isSecureCoreEnabled { return false }
-        let tier = String(serverModel.tier)
-        return propertiesManager.streamingServices[serverModel.countryCode]?[tier] != nil
-    }
     
     fileprivate var canConnect: Bool {
         return !isUsersTierTooLow && !underMaintenance
