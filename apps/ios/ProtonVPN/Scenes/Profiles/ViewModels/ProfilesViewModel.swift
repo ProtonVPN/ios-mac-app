@@ -57,16 +57,10 @@ class ProfilesViewModel {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
         self.planService = planService
-        
-        if vpnGateway != nil {
-            self.profileManager = profileManager
-        }
+        self.profileManager = profileManager
     }
     
     func makeCreateProfileViewController() -> UITableViewController? {
-        guard vpnGateway != nil else {
-            return nil
-        }
         return factory.makeCreateProfileViewController(for: nil)
     }
     
