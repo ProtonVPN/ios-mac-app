@@ -124,6 +124,12 @@ class SiriHandlerViewModel {
     }
     
     public func connect(_ completion: @escaping (QuickConnectIntentResponse) -> Void) {
+        guard let _ = try? vpnKeychain.fetch() else {
+            // Not logged in so open the app
+            completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: nil))
+            return
+        }
+
         // Without refresh, from time to time it doesn't see newest default profile
         profileManager.refreshProfiles()
         
@@ -134,7 +140,7 @@ class SiriHandlerViewModel {
     }
     
     public func disconnect(_ completion: @escaping (DisconnectIntentResponse) -> Void) {
-        guard vpnGateway != nil else {
+        guard let _ = try? vpnKeychain.fetch() else {
             // Not logged in so open the app
             completion(DisconnectIntentResponse(code: .continueInApp, userActivity: nil))
             return
