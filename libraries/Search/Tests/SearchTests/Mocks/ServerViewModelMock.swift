@@ -33,7 +33,7 @@ final class ServerViewModelMock: ServerViewModel {
 
     let isP2PAvailable: Bool = false
 
-    let streamingAvailable: Bool = false
+    let isStreamingAvailable: Bool = false
 
     let connectIcon: UIImage? = nil
 

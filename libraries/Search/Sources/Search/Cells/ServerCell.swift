@@ -140,7 +140,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         if viewModel.isSmartAvailable {
             addFeature(feature: .smart)
         }
-        if viewModel.streamingAvailable {
+        if viewModel.isStreamingAvailable {
             addFeature(feature: .streaming)
         }
         viewModel.partnersIcon { [weak self] image in

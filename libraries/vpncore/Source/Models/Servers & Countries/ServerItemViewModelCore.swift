@@ -45,6 +45,14 @@ open class ServerItemViewModelCore {
         return userTier < serverModel.tier
     }
 
+    public var isStreamingAvailable: Bool {
+        guard !isSecureCoreEnabled,
+              serverModel.feature.contains(.streaming) else { return false }
+        let tier = String(serverModel.tier)
+        let countryCode = serverModel.countryCode
+        return propertiesManager.streamingServices[countryCode]?[tier] != nil
+    }
+
     public var alphaOfMainElements: CGFloat {
         if underMaintenance {
             return 0.25

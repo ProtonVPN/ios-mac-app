@@ -88,11 +88,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
         }
     }
     
-    var streamingAvailable: Bool {
-        let tier = String(serverModel.tier)
-        return propertiesManager.streamingServices[serverModel.countryCode]?[tier] != nil
-    }
-    
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
             return IconProvider.lock
