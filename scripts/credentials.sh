@@ -30,4 +30,4 @@ fi
 CREDENTIALS_DIR=$(git config --get vpn.credsdir)
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-git --git-dir="$CREDENTIALS_DIR" --work-tree="$SCRIPT_DIR/.." $@
+git --git-dir="$CREDENTIALS_DIR" --work-tree="$SCRIPT_DIR/.." "$@"
