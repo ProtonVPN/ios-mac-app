@@ -23,6 +23,11 @@ if [[ "$1" == "setup" ]]; then
 	git config --global vpn.credsdir "$FULL_PATH"
 	git clone --bare "$GIT_REMOTE" "$FULL_PATH"
 
+	# we need to set up fetches to work correctly. for some reason they don't track all branches
+	# when cloning a bare repository.
+	cd "$FULL_PATH"
+	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+
 	echo "Credentials repository setup successfully."
 	exit 0
 fi
