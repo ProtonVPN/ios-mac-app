@@ -42,7 +42,7 @@ class PlanTests: ProtonVPNUITests {
         mainRobot
             .goToSettingsTab()
             .goToAccountDetail()
-            .goToUpgradeSubscription()
+            .goToManageSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 1 year")
             .checkPriceIs("$99.99")
@@ -57,7 +57,7 @@ class PlanTests: ProtonVPNUITests {
         mainRobot
             .goToSettingsTab()
             .goToAccountDetail()
-            .goToUpgradeSubscription()
+            .goToManageSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 15 months")
             .checkPriceIs("$149.85")
@@ -70,7 +70,7 @@ class PlanTests: ProtonVPNUITests {
         mainRobot
             .goToSettingsTab()
             .goToAccountDetail()
-            .goToUpgradeSubscription()
+            .goToManageSubscription()
             .checkPlanNameIs("VPN Plus")
             .checkDurationIs("for 30 months")
             .checkPriceIs("$299.70")
