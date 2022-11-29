@@ -80,14 +80,7 @@ final class SettingsAccountViewModel {
             let accountPlan = vpnCredentials.accountPlan
             username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
-
-            switch accountPlan {
-            case .basic, .plus, .visionary:
-                allowPlanManagement = true
-            default:
-                allowPlanManagement = false
-            }
-
+            allowPlanManagement = accountPlan.paid
             allowUpgrade = planService.allowUpgrade && !allowPlanManagement
 
         } else {
