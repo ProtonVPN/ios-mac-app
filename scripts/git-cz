@@ -1,0 +1,86 @@
+#!/bin/bash -e
+# git-cz: Lint and draft commit messages.
+# This script depends on the `commitizen` python module, and will optionally install
+# it for you if you invoke the 'setup' subcommand. See the usage function below.
+
+SCRIPT_NAME="$0"
+OP="$1"
+SCRIPT_DIR=$( cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+cd "$SCRIPT_DIR/../" # source directory
+
+VIRTUALENV_PATH="$PWD/.gitlab/ci-env/commitizen-venv"
+PKG_PATH="$PWD/.gitlab/commitizen"
+
+function usage() {
+  echo "$0 <setup|check|commit|lintci>"
+  echo
+  echo "setup: setup commitizen and make proton rules available under the name cz_proton."
+  echo "check: a wrapper for 'cz check'."
+  echo "commit: a wrapper for 'cz commit'."
+  echo "lintci: used from CI only. Invokes the check subcommand for linting of merge requests."
+  echo
+  echo "Environment variables:"
+  echo "NO_VIRTUALENV: set this to 'YES' to use or install commitizen globally, rather than at:"
+  echo "    $VIRTUALENV_PATH"
+}
+
+function lint_for_ci() {
+  local commit_from="$CI_COMMIT_BEFORE_SHA"
+  local commit_to="$CI_COMMIT_SHA"
+
+  if [ ! -z "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then
+    commit_from="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+  fi
+
+  local commit_range="${commit_from}..${commit_to}"
+  echo "== Linting ${commit_range}."
+  exec "$0" check --rev-range "$commit_range"
+}
+
+function check_virtualenv_or_exit() {
+  if ! which virtualenv; then
+    echo -n "virtualenv not found; please install it with 'pip install virtualenv' and ensure it " > /dev/stderr
+    echo    "is available in your $PATH." > /dev/stderr
+    exit 1
+  fi
+}
+
+function should_use_virtualenv() {
+  [ "$NO_VIRTUALENV" != "YES" ]
+}
+
+function activate_virtualenv() {
+  source "$VIRTUALENV_PATH/bin/activate"
+}
+
+case "$OP" in
+  setup)
+    if should_use_virtualenv ; then
+      if [ -d "$VIRTUALENV_PATH" ]; then
+        echo "== $VIRTUALENV_PATH is already present; won't create virtualenv."
+      else
+        echo "== Creating Python virtualenv at $VIRUALENV_PATH."
+        virtualenv "$VIRTUALENV_PATH"
+      fi
+
+      echo "== Activating virtualenv."
+      activate_virtualenv
+    fi
+
+    echo "== Installing linting rules package from $PKG_PATH."
+    pip install "$PKG_PATH"
+    ;;
+  check|commit)
+    should_use_virtualenv && activate_virtualenv && CZPATH="$VIRTUALENV_PATH/bin/"
+    exec "${CZPATH}cz" -n cz_proton "$@"
+    ;;
+  lintci)
+    lint_for_ci
+    ;;
+  *)
+    echo "Error: Unknown command $OP" > /dev/stderr
+    echo > /dev/stderr
+    usage
+    exit 1
+    ;;
+esac

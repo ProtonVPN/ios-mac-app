@@ -31,8 +31,8 @@
 # Download obfuscated constants and other very top secret stuff
 .prepare_secrets:
   before_script:
-    - rm -rf .secrets-repo
-    - ./scripts/credentials.sh setup .secrets-repo https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}
+    - ./scripts/credentials.sh cleanup
+    - ./scripts/credentials.sh setup -s -d -p .secrets-ci-${CI_JOB_ID} -r https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}
 
 # Script for deleting all keychain entries that Proton VPN mac app makes.
 # Should be done because otherwise CI throws modals asking for login keychain password.

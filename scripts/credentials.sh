@@ -4,49 +4,85 @@
 # scripts/credentials.sh push origin main
 #
 # To setup:
-# ./scripts/credentials.sh setup <path to credentials repo> <credentials remote>
+# ./scripts/credentials.sh setup -p <path to credentials repo> -r <credentials remote>
 #
 # Then:
 # ./scripts/credentials.sh checkout
 
 SCRIPT_NAME="$0"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+CONFIG_NAME="vpn.credsdir"
 
-if [[ "$1" == "setup" ]]; then
-	if [[ "$2" == "" || "$3" == "" ]]; then
-		echo "Usage: $0 setup <path to credentials dir> <credentials remote>"
-		echo
-		echo "Environment variables:"
-		echo -e "\tDEFAULT_CREDS_BRANCH: the branch to use when first setting up. Defaults to main."
-		exit 1
+## Built-in commands
+
+function setup() {
+	local dont_write_config="$1"
+	local shallow_clone="$2"
+	local repo_path="$3"
+	local git_remote="$4"
+
+	if [ -d "$repo_path" ]; then
+		echo "Credentials repo already exists at \"$existing\"; please delete it first with 'cleanup'." > /dev/stderr
+		exit 0 # To keep CI scripts from exiting early due to an error
+	elif [ "$repo_path" == "$(directory)"  ]; then
+		echo "== Cleaning up stale repo config..."
+		# If the directory doesn't exist, but git config still points to it, do a cleanup
+		# and continue with normal setup.
+		cleanup
 	fi
 
-	GIT_REMOTE="$3"
+	mkdir -p "$repo_path"
+	local full_path=$(cd "$repo_path" && pwd)
 
-	mkdir -p "$2"
-	FULL_PATH=$(cd "$2" && pwd)
+	[ "$dont_write_config" != "YES" ] && set_config "$full_path"
 
-	git config --global vpn.credsdir "$FULL_PATH"
-	git clone --bare "$GIT_REMOTE" "$FULL_PATH"
+	echo "== Cloning (shallow = $shallow_clone) at $full_path."
+	local clone_opts=""
+	[ "$shallow_clone" == "YES" ] && clone_opts="--depth=1"
+	git clone --bare $clone_opts "$git_remote" "$full_path"
 
-	cd "$FULL_PATH"
+	echo "== Setting config options..."
+	cd "$full_path"
 	# we need to set up fetches to work correctly. for some reason they don't track all branches
 	# when cloning a bare repository.
-	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+	git config --file config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
 	# don't show all of the files in the repository when using 'git status', only ones that are
 	# already tracked in the credentials repo.
-	git config status.showUntrackedFiles no
+	git config --file config status.showUntrackedFiles no
 
+	echo "== Fetching..."
 	# now, fetch all of the remote branches after we've configured it properly.
 	git fetch
 
+	echo "== Checking out repository..."
 	# once we've fetched, populate the project directory with the files from the desired branch.
-	git --git-dir="$FULL_PATH" --work-tree="$SCRIPT_DIR/.." checkout -f "${DEFAULT_CREDS_BRANCH:-main}"
+	git --git-dir="$full_path" --work-tree="$SCRIPT_DIR/.." checkout -f "${DEFAULT_CREDS_BRANCH:-main}"
 
 	echo "Credentials repository setup successfully."
 	exit 0
-elif [[ "$1" == "xcodepull" ]]; then
+}
+
+function cleanup() {
+	echo "Cleaning up credentials repository."
+	local dir=$(directory)
+
+	if [ ! -z "$dir" ] && [ -d "$dir" ]; then
+		if [[ "$dir" == "$PWD"* ]]; then
+			echo "Error: not removing repo directory $dir since PWD is $PWD." > /dev/stderr
+			exit 1
+		fi
+		rm -rf "$dir" &> /dev/null || true
+	fi
+
+	unset_config
+}
+
+function directory() {
+	git config --get "$CONFIG_NAME"
+}
+
+function xcodepull() {
 	shift # remove xcodepull from arguments
 
 	VPN_SERVER_NAME=$(git config --get vpn.internal || true)
@@ -57,8 +93,72 @@ elif [[ "$1" == "xcodepull" ]]; then
 	fi
 
 	exec "$0" pull "$@"
-fi
+}
 
-CREDENTIALS_DIR=$(git config --get vpn.credsdir)
+## Helper functions
 
-exec git --git-dir="$CREDENTIALS_DIR" --work-tree="$SCRIPT_DIR/.." "$@"
+function invoke_setup() {
+	shift
+
+	local optstring=":hdsr:p:"
+	while getopts "$optstring" arg; do
+	  case "$arg" in
+	    d) local dont_write_config="YES" ;;
+	    s) local shallow_clone="YES" ;;
+	    r) local repo_remote="$OPTARG" ;;
+	    p) local repo_path="$OPTARG" ;;
+	    h) setup_usage 0 ;;
+	    ?) setup_usage 1 "Error: unknown option $OPTARG" ;;
+	  esac
+	done
+
+	[ -z "$repo_path" ] || [ -z "$repo_remote" ] && setup_usage 1 "Error: please specify both repo path and remote."
+
+	setup ${dont_write_config:-NO} ${shallow_clone:-NO} "$repo_path" "$repo_remote"
+}
+
+function setup_usage() {
+	local exit_code="$1"
+	local error_message="$2"
+
+	if [ ! -z "$error_message" ]; then
+		echo -e "$error_message"
+		echo ""
+	fi
+
+	echo "$SCRIPT_NAME setup: install version controlled credentials"
+	echo -e "\t-h: Show this help"
+	echo -e "\t-d: Don't write $CONFIG_NAME to repository git config"
+	echo -e "\t-s: Shallow clone (useful for CI)"
+	echo -e "\t-r <remote url>: Specify repository remote (required)"
+	echo -e "\t-p <path>: Specify repository path (required)"
+	echo "Environment variables:"
+	echo -e "\tDEFAULT_CREDS_BRANCH: the branch to use. Defaults to main."
+	echo "Example:"
+	echo -e "\t$SCRIPT_NAME setup -s -r https://github.com/repo/path -p ~/.credentials"
+
+	exit $exit_code
+}
+
+function set_config() {
+	local full_path="$1"
+	local source_dir="${SCRIPT_DIR}/.."
+
+	# set vpn.credsdir in the protonvpn repo config
+	touch "$source_dir/.gitconfig"
+	git config --file "$source_dir/.gitconfig" vpn.credsdir "$full_path"
+}
+
+function unset_config() {
+	git config --unset "$CONFIG_NAME" || true
+}
+
+case "$1" in
+	setup) invoke_setup $@; exit;;
+	cleanup) cleanup; exit;;
+	directory) directory; exit;;
+	xcodepull) xcodepull $@; exit;;
+	*);;
+esac
+
+exec git --git-dir="$(directory)" --work-tree="$SCRIPT_DIR/.." "$@"

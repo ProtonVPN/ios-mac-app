@@ -31,6 +31,19 @@ include:
   # Include all jobs from all the files on `.gitlab/jobs/` folder
   - local: '.gitlab/jobs/*.yml'
 
+commit_quality:
+  stage: linting
+  image: protonjohn/commitlint-docker:latest
+  script:
+    - export NO_VIRTUALENV="YES"
+    - scripts/git-cz setup
+    - scripts/git-cz lintci
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: always
+    - when: manual
 
 # Runs a script that goes through all out apps and lib folders and lints them if .swiftlint file is available.
 #

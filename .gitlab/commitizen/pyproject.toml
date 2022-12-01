@@ -1,0 +1,10 @@
+[project]
+name = "cz_proton"
+description = "Commitizen for Proton engineers"
+version = "0.1.0"
+authors = [
+    { name = "John Biggs", email = "john.biggs@proton.ch" }
+]
+dependencies = [
+    "commitizen"
+]
