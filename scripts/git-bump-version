@@ -1,0 +1,139 @@
+#!/bin/bash -e
+# bump_version.sh: Increment a project version number according to the options provided, replacing
+# the version number in any specified configuration file(s).
+
+SCRIPT_NAME="$0"
+SCRIPT_DIR=$( cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+cd "$SCRIPT_DIR/.." # project directory
+
+function bump_usage() {
+  echo "$SCRIPT_NAME: bump version of release"
+  echo
+  echo "-h: Show this help"
+  echo "-f: Version file to increment"
+  echo "-p: Tag prefix to use (e.g., mac/beta/)"
+  echo "-n: Don't commit the bump result"
+  echo "-j: Output bump results as json"
+}
+
+function version_bump_since_commit() {
+  local last_ver="$1"
+
+  # Tags look like: mac/beta/4.2.0-2204201620, and 2204201620 is `date "+%y%m%d%H%M"`,
+  # so it should sort numerically by date. $last_ver looks like mac/beta/4.2.0. What
+  # we're doing here is getting a list of all tags, sorting them, and grabbing the oldest
+  # one, so that way we're able to get all of the commits for a given version.
+  local ref=$(git tag | grep "$last_ver" | sort -n | head -n 1)
+
+  local result="patch"
+  local commits=$(git log --format="%H" "${ref}^..HEAD") # Carrot is used to include the first commit itself
+
+  for commit in $commits; do
+    local msg=$(git log -n 1 --format="%B" $commit)
+
+    if grep "^BREAKING CHANGE:" <<< "$msg" > /dev/null; then
+      result="major"
+      break
+    elif head -n 1 <<< "$msg" | grep "^feat" > /dev/null; then
+      result="minor"
+    fi
+  done
+
+  echo -n "$result"
+}
+
+# Determines the next version, given a tag prefix.
+function bump_version() {
+  # Arguments: ios vs mac, beta vs public
+  # Figure out the tag of the current version.
+  # Iterate over all of the commits from then until now. Determine if major, minor, or patch.
+  # Combine major/minor/patch in a separate function with the current version number to figure out the new one.
+  # Tell commitizen to bump to the derived version, and edit the necessary .xcconfig.
+
+  local tag_prefix="$1"
+  local version_files="$2" # Do a simple find and replace of the version in each file.
+  local git_commit="$3"
+  local bump_json="$4"
+
+  # `git describe` gives us a tag like mac/beta/3.0.1-2212010900, then we use grep to get just the '3.0.1'
+  local last_ver=$(git describe --abbrev=0 --tags --match "${tag_prefix}*" | grep -o -E "\d+\.\d+\.\d+")
+  local whichbump=$(version_bump_since_commit "${tag_prefix}${last_ver}")
+
+  local old_major=$(cut -d "." -f 1 <<< "$last_ver")
+  local old_minor=$(cut -d "." -f 2 <<< "$last_ver")
+  local old_patch=$(cut -d "." -f 3 <<< "$last_ver")
+
+  local new_major=$old_major
+  local new_minor=$old_minor
+  local new_patch=$old_patch
+
+  # echo the incremented version.
+  case "$whichbump" in
+    "major") new_major=$(bc <<< "$old_major + 1"); new_minor="0"; new_patch="0" ;;
+    "minor") new_minor=$(bc <<< "$old_minor + 1"); new_patch="0" ;;
+    "patch") new_patch=$(bc <<< "$old_patch + 1") ;;
+    *) echo "Unexpected bump \"$whichbump\"" > /dev/stderr; exit 1 ;;
+  esac
+
+  local new_ver="$new_major.$new_minor.$new_patch"
+  local new_tag="${tag_prefix}${new_ver}"
+
+  if [ ! -z "$version_files" ]; then
+    for version_file in $version_files; do
+      if [ ! -f "$version_file" ]; then
+        echo "File not found at $version_file; skipping."
+        continue
+      fi
+
+      sed -i "" "s/$old_major\.$old_minor\.$old_patch/$new_major\.$new_minor\.$new_patch/g" "$version_file"
+
+      if [ "$GIT_COMMIT" == "YES" ]; then
+        git add "$version_file"
+        git commit -m "chore(release): ${new_tag}"
+      fi
+    done
+  fi
+
+  if [ "$bump_json" == "YES" ]; then
+    cat <<EOF
+{
+  "old_major": $old_major,
+  "old_minor": $old_minor,
+  "old_patch": $old_patch,
+  "new_major": $new_major,
+  "new_minor": $new_minor,
+  "new_patch": $new_patch,
+  "old_version": "$last_ver",
+  "new_version": "$new_ver",
+  "new_tag": "$new_tag",
+  "bump_type": "$whichbump"
+}
+EOF
+  else
+    echo "$last_ver => $new_major.$new_minor.$new_patch"
+  fi
+}
+
+OPTSTRING=":f:p:nj"
+
+GIT_COMMIT="YES"
+BUMP_JSON="NO"
+while getopts "$OPTSTRING" arg; do
+  case "$arg" in
+    f) VERSION_FILES="$VERSION_FILES $OPTARG" ;;
+    p) TAG_PREFIX="$OPTARG" ;;
+    n) GIT_COMMIT="NO" ;;
+    j) BUMP_JSON="YES" ;;
+    h) bump_usage; exit 0 ;;
+    ?) bump_usage; exit 1 ;;
+  esac
+done
+
+if [ -z "$VERSION_FILES" ]; then
+  echo "No version files specified; no changes to the project will occur." > /dev/stderr
+  echo
+  bump_usage
+  exit 1
+fi
+
+bump_version "$TAG_PREFIX" "$VERSION_FILES" "$NO_COMMIT" "$BUMP_JSON"

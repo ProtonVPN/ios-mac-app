@@ -1,0 +1,3 @@
+commitizen:
+  name: cz_proton
+  jira_prefix: VPNAPPL

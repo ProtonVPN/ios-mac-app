@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# git-release-version: This is a placeholder file for now. It will
+# eventually contain a script for releasing new versions of the macOS
+# and iOS applications.

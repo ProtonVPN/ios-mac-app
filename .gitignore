@@ -37,4 +37,6 @@ codequality_report.json
 codequality_report.json-e
 
 apps/ios/ProtonVPNUITests/credentials_bf22.plist
-.gitlab/ci-env/ci-gpg.asc
+
+# CI for linting and releases
+.gitlab/ci-env

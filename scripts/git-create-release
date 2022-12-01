@@ -1,0 +1,263 @@
+#!/bin/bash -e
+# release.sh: Generate a new release, and create a pull request for it on GitHub.
+# This script depends on python and swift, and invokes the `git-bump-version` script.
+
+# Gitlab variables to specify:
+# "GPG_SIGNING_ID": The key ID for signing the commit, e.g., 847A2C2EA10558F5C36FF4CAECAE272F963E606A
+# "GPG_KEY_PATH": The path to the gpg commit signing key to import.
+
+SCRIPT_NAME="$0"
+OP="$1"
+SCRIPT_DIR=$( cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+cd "$SCRIPT_DIR/.." # project directory
+
+# Text formatting
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+function usage() {
+  echo "$SCRIPT_NAME: Create a new release merge request"
+  echo -e "\t-h: Show this help"
+  echo -e "\t-n: Non-interactive (skips all confirmation)"
+  echo -e "\t-m: Bump version for macOS"
+  echo -e "\t-i: Bump version for iOS"
+  echo -e "\t-t: Target branch for release merge request (defaults to 'develop')"
+  echo -e "\t-e <category/name>: Enable a feature flag (can specify multiple)"
+  echo -e "\t-d <category/name>: Disable a feature flag (can specify multiple)"
+  echo "Environment variables:"
+  echo -e "\tENABLE_FEATURES: A space-separated list of feature flags to enable, in Category/Name format"
+  echo -e "\tDISABLE_FEATURES: A space-separated list of feature flags to disable, in Category/Name format"
+  echo -e "\tGPG_KEY_PATH: The path to a gpg commit signing key to import, if available."
+  echo -e "\tGPG_SIGNING_ID: The key ID for signing the commit, if not already globally configured."
+  echo -e "\tGIT_CI_EMAIL: If invoked from CI, the email to use as the commit author."
+  echo "Examples:"
+  echo -e "\t$SCRIPT_NAME -m -i -e Logicals/NewFeature -e Protocols/NewProtocol -d Interface/SomethingBroken"
+  echo -e "\t$SCRIPT_NAME -i"
+}
+
+# Yes this is hacky, but I didn't want to depend on jq ;)
+function extract_json_value() {
+  local json="$1"
+  local key="$2"
+
+  python3 -c "import json, sys; data = json.load(sys.stdin); print(data[\"$key\"])" <<< "$json"
+}
+
+function toggle_flag() {
+  local op="$1" # enable or disable
+  local feat="$2" # <category/name>
+  local category=$(cut -d "/" -f 1 <<< "$feat")
+  local name=$(cut -d "/" -f 2 <<< "$feat")
+
+  # Swift wants to prompt us if it's okay for the plugin to write to the project directory.
+  yes yes | swift package plugin ff "$op" "$category" "$name" &> /dev/null
+}
+
+function bump_version_helper() {
+  local tag_prefix="$1"
+  local version_file="$2"
+  local bump_json=$(scripts/git-bump-version -j -n -p "$tag_prefix" -f "$version_file")
+  
+  extract_json_value "$bump_json" "new_version"
+}
+
+function bump_version_macos() {
+  bump_version_helper "mac/beta/" "apps/macos/Config.xcconfig"
+}
+
+function bump_version_ios() {
+  bump_version_helper "ios/beta/" "apps/ios/Config.xcconfig"
+}
+
+function import_commit_signing_key() {
+  if [ ! -z "$GPG_KEY_PATH" ]; then
+    gpg --import "$GPG_KEY_PATH"
+  fi
+}
+
+function confirm_or_exit() {
+  if [ "$NO_PROMPT" != "YES" ]; then
+    while true; do
+      read -p "Continue (y/n)? " choice
+      case "$choice" in
+        y|Y) break ;;
+        n|N) echo "Aborting." && exit 1 ;;
+        *) echo "Please input y or n." ;;
+      esac
+    done
+  fi
+}
+
+function git_commit() {
+  local branchname="$1"
+  local message="$2"
+
+  echo "== Committing changes..."
+  echo "Will create release commit on new branch $branchname."
+  echo "Your commit message:"
+  echo -e "$message"
+  confirm_or_exit
+
+  local tmpdir=$(mktemp -d "${TMPDIR:-/tmp/}$(basename $0).XXXXXXXX")
+  local commitfile="${tmpdir}/git-commit.txt"
+  echo -e "$message" > "$commitfile"
+
+  # Check if the branch exists
+  if git rev-parse --verify "$branchname" &> /dev/null; then
+    echo "$branchname already exists, will delete."
+    confirm_or_exit
+
+    git branch -D "$branchname"
+  fi
+
+  git checkout -b "$branchname"
+
+  import_commit_signing_key
+
+  local git_opts=""
+  if [ "$NO_PROMPT" == "YES" ]; then
+    local git_opts="$git_opts --no-edit"
+  fi
+
+  if [ ! -z "$GPG_SIGNING_ID" ]; then
+    git_opts="$git_opts --gpg-sign=\"$GPG_SIGNING_ID\""
+  fi
+
+  if [ ! -z "$GIT_CI_EMAIL" ]; then
+    git_opts="$git_opts --author=\"Proton CI <$GIT_CI_EMAIL>\""
+  fi
+
+  git add .
+  git commit $git_opts --file="$commitfile"
+  rm -rf "$tmpdir"
+}
+
+function create_merge_request() {
+  local branchname="$1"
+  local target="$2"
+
+  # Grep the CODEOWNERS file for the wildcard character indicating all default reviewers.
+  # Then grep again to extract the values starting with @...
+  # Then use tr to delete the @ characters. Then we have a list like "jdoe jsmith uname"
+  local codeowners=$(grep "^\*" .gitlab/CODEOWNERS | grep -o -E "@.*" | tr -d "@")
+
+  echo "Will create merge request ${bold}$branchname${normal} => ${bold}$target${normal} with reviewers ${bold}$codeowners${normal}"
+  confirm_or_exit
+
+  # By the end of this loop, reviewer_opts will look like:
+  # -o merge_request.assign="jdoe" -o merge_request.assign="jsmith" ...
+  local reviewer_opts=""
+  for owner in $codeowners; do
+    reviewer_opts="$reviewer_opts -o merge_request.assign=\"$owner\""
+  done
+  
+  echo "== Pushing..."
+  git push -f \
+           -o merge_request.create \
+           -o merge_request.remove_source_branch \
+           -o merge_request.target="$target" \
+           -o merge_request.label=Release \
+           $reviewer_opts \
+           origin "$branchname"
+}
+
+MACOS_RELEASE="NO"
+IOS_RELEASE="NO"
+
+OPTSTRING=":hmie:d:n"
+while getopts "$OPTSTRING" arg; do
+  case "$arg" in
+    m) MACOS_RELEASE="YES" ;;
+    i) IOS_RELEASE="YES" ;;
+    e) ENABLE_FEATURES="${ENABLE_FEATURES} ${OPTARG}" ;;
+    d) DISABLE_FEATURES="${DISABLE_FEATURES} ${OPTARG}" ;;
+    n) NO_PROMPT=YES ;;
+    t) TARGET_BRANCH="$OPTARG" ;;
+    h) usage; exit 0 ;;
+    ?) usage; exit 1 ;;
+  esac
+done
+
+if [ -z "$ENABLE_FEATURES" ] && [ -z "$DISABLE_FEATURES" ] && [ "$MACOS_RELEASE" == "NO" ] && [ "$IOS_RELEASE" == "NO" ]; then
+  echo "Error: No release actions specified."
+  echo ""
+  usage
+  exit 1
+fi
+
+# Create the commit message and branch name.
+#
+# If the user decided to specify an iOS or macOS release, branch name will look like:
+# release/macOS-4.2.0-iOS-4.2.0, or release/iOS-4.2.0, or release/macOS-4.2.0, etc.
+#
+# Otherwise, if user decided to enable/disable certain features but didn't decide to
+# bump the release version, branch name will look like:
+# release/enable-Feature-Example-disable-Feature-OtherExample, where Feature/Example and
+# Feature/OtherExample are feature flags being enabled and disabled, respectively.
+COMMIT_MESSAGE="chore(release):"
+BRANCH_NAME="release/"
+if [ "$MACOS_RELEASE" == "YES" ] || [ "$IOS_RELEASE" == "YES" ]; then
+  if [ "$MACOS_RELEASE" == "YES" ]; then
+    echo "== Bumping macOS version..."
+    NEW_MACOS_VERSION=$(bump_version_macos)
+    COMMIT_MESSAGE="$COMMIT_MESSAGE macOS -> $NEW_MACOS_VERSION"
+    BRANCH_NAME="${BRANCH_NAME}macOS-$NEW_MACOS_VERSION"
+  fi
+
+  if [ "$IOS_RELEASE" == "YES" ]; then
+    # add a separator to the current branch/commit message if we're doing a macOS release too
+    if [ "$MACOS_RELEASE" == "YES" ]; then
+      BRANCH_NAME="${BRANCH_NAME}-"
+      COMMIT_MESSAGE="${COMMIT_MESSAGE},"
+    fi
+
+    echo "== Bumping iOS version..."
+    NEW_IOS_VERSION=$(bump_version_ios)
+    COMMIT_MESSAGE="$COMMIT_MESSAGE iOS -> $NEW_IOS_VERSION"
+    BRANCH_NAME="${BRANCH_NAME}iOS-$NEW_IOS_VERSION"
+  fi
+else
+  COMMIT_MESSAGE="$COMMIT_MESSAGE Create release"
+
+  if [ ! -z "$ENABLE_FEATURES" ]; then
+    ENABLE_SLUG=$(tr "/ " "-" <<< "$ENABLE_FEATURES")
+    BRANCH_NAME="${BRANCH_NAME}enable-${ENABLE_SLUG}"
+  fi
+
+  if [ ! -z "$DISABLE_FEATURES" ]; then
+    if [ ! -z "$ENABLE_FEATURES" ]; then
+      BRANCH_NAME="${BRANCH_NAME}-" # add a dash if we already specified enabled features
+    fi
+    DISABLE_SLUG=$(tr "/ " "-" <<< "$ENABLE_FEATURES")
+    BRANCH_NAME="${BRANCH_NAME}disable-${DISABLE_SLUG}"
+  fi
+fi
+
+COMMIT_MESSAGE="${COMMIT_MESSAGE}\n"
+
+# Toggle the specified feature flags using the `LocalFeatureFlags` package, then
+# add which flags were enabled/disabled as trailers on the commit message.
+cd "libraries/LocalFeatureFlags"
+if [ ! -z "$ENABLE_FEATURES" ]; then
+  for feature in $ENABLE_FEATURES; do
+    echo "== Enabling feature flag $feature..."
+    toggle_flag enable "$feature"
+  done
+
+  COMMIT_MESSAGE="$COMMIT_MESSAGE\nEnable-Features: $ENABLE_FEATURES"
+fi
+
+if [ ! -z "$DISABLE_FEATURES" ]; then
+  for feature in $DISABLE_FEATURES; do
+    echo "== Disabling feature flag $feature..."
+    toggle_flag disable "$feature"
+  done
+
+  COMMIT_MESSAGE="$COMMIT_MESSAGE\nDisable-Features: $DISABLE_FEATURES"
+fi
+
+cd "${SCRIPT_DIR}/.."
+
+git_commit "$BRANCH_NAME" "$COMMIT_MESSAGE"
+
+create_merge_request "$BRANCH_NAME" "${TARGET_BRANCH:-develop}"
