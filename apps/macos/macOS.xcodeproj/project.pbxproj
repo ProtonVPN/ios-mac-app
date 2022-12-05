@@ -2801,8 +2801,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EED534901EEC112000013607 /* Build configuration list for PBXNativeTarget "ProtonVPN-mac" */;
 			buildPhases = (
-				EF653936EE2C101EC65FCD60 /* [CP] Check Pods Manifest.lock */,
 				E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */,
+				EF653936EE2C101EC65FCD60 /* [CP] Check Pods Manifest.lock */,
 				EED5347D1EEC112000013607 /* Sources */,
 				EED5347E1EEC112000013607 /* Frameworks */,
 				EED5347F1EEC112000013607 /* Resources */,
@@ -3251,6 +3251,7 @@
 		};
 		E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3262,6 +3263,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${PROJECT_DIR}/ProtonVPN/ObfuscatedConstants.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
