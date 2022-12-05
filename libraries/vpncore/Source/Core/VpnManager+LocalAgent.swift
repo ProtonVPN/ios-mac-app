@@ -190,6 +190,11 @@ extension VpnManager {
             log.info("Server IP was \($0?.serverIp.exitIp ?? "(nil)"), updating to \(exitIp).")
             return $0?.withChanged(exitIp: exitIp)
         }
+
+        executeOnUIThread { [unowned self] in
+            let note = type(of: self.propertiesManager).userIpNotification
+            NotificationCenter.default.post(name: note, object: nil)
+        }
     }
 
     // Danger: If you're adding another `updateActiveConnection` here, consider also updating `lastConnectionRequest`.
