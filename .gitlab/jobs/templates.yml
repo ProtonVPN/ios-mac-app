@@ -20,10 +20,17 @@
     - if [ -z "$(ssh-keygen -F $CI_SERVER_HOST)" ]; then ssh-keyscan -H $CI_SERVER_HOST >> ~/.ssh/known_hosts; fi
     # Make sure xcode uses system ssh/git settings
     - defaults write com.apple.dt.Xcode IDEPackageSupportUseBuiltinSCM YES
+    - !reference [.prepare_secrets, before_script] # Download obfuscated constants
   after_script:
     - ssh-add -D # Delete all ssh private keys
   tags:
     - iOS_vpn
+
+# Download obfuscated constants and other very top secret stuff
+.prepare_secrets:
+  before_script:
+    - rm -rf .secrets-repo
+    - ./scripts/credentials.sh setup .secrets-repo https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/apple/vpn/secrets.git
 
 # Script for deleting all keychain entries that Proton VPN mac app makes.
 # Should be done because otherwise CI throws modals asking for login keychain password.
@@ -42,8 +49,8 @@
     - macOS_vpn
   before_script:
     - !reference [.mac_clean_app_keychain, before_script]
+    - !reference [.prepare_secrets, before_script] # Download obfuscated constants
     - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/macos/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE

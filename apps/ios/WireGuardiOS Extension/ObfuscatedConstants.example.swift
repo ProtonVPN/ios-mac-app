@@ -25,24 +25,15 @@
 // and is generated on first build attempt. Once generated, the
 // values can be altered to suit.
 //
-// If you add new value here, don't forget to also add it into ObfuscatesConstants.example.swift
+// If you add new value here, don't forget to also add it into ObfuscatedConstants.example.swift
 // and push the changes to `secrets` repository.
 //
-// Important! Keep in mind that different targets have different ObsucatedConstant files. But if
+// Important! Keep in mind that different targets have different ObfuscatedConstants files. But if
 // there is a variable with the same name and it will be present in env vars, it will be overwritten
 // in all of them to the same value!
 
 import Foundation
 
 class ObfuscatedConstants {
-    
-    static let sentryDsnmacOS: String = ""
-    static let sentryDsniOS: String = ""
-
-    static let apiHost: String = ""
-    static let humanVerificationV3Host = ""
-
     static let atlasSecret: String = ""
-
-    static let vpnIAPIdentifiers: Set<String> = []
 }

@@ -46,7 +46,6 @@
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
 		4CAFE13A292CE03F00AC9C37 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAFE139292CE03F00AC9C37 /* LocalFeatureFlags */; };
-		4CBBA02528C0B6A700FF12BE /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */; };
 		572DD1FF28EAD6E60051DB1A /* credentials_bf22.plist in Resources */ = {isa = PBXBuildFile; fileRef = 572DD1FE28EAD6E60051DB1A /* credentials_bf22.plist */; };
 		57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438D28E573D60012B2DF /* PlanTests.swift */; };
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
@@ -301,6 +300,7 @@
 		D5BF95082354A07400C7D1E7 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
 		D5BF951023559AAF00C7D1E7 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
+		D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C8901229360230009177E4 /* ObfuscatedConstants.swift */; };
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
 		D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
@@ -846,6 +846,8 @@
 		D5BCDD2825307681004BAEE8 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
 		D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExpectation.swift; sourceTree = "<group>"; };
 		D5C137692334A54D00D20514 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
+		D5C8901229360230009177E4 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
 		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
 		D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStorageArrayMock.swift; sourceTree = "<group>"; };
@@ -1851,6 +1853,8 @@
 			isa = PBXGroup;
 			children = (
 				E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */,
+				D5C8901229360230009177E4 /* ObfuscatedConstants.swift */,
+				D5C8901129360230009177E4 /* ObfuscatedConstants.example.swift */,
 				E9445D6326528A790075FD31 /* Info.plist */,
 				E9445D6426528A790075FD31 /* WireGuardiOS_Extension.entitlements */,
 				E997997A26A6FA870083D61E /* WireguardExtension */,
@@ -2552,6 +2556,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9445D6826528A790075FD31 /* Build configuration list for PBXNativeTarget "WireGuardiOS Extension" */;
 			buildPhases = (
+				D5C890102935EDD0009177E4 /* Generate Obfuscated Constants */,
 				D292128A98F84194C3D6CF26 /* [CP] Check Pods Manifest.lock */,
 				E9445D5A26528A790075FD31 /* Sources */,
 				E9445D5B26528A790075FD31 /* Frameworks */,
@@ -3130,6 +3135,27 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D5C890102935EDD0009177E4 /* Generate Obfuscated Constants */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Obfuscated Constants";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${PROJECT_DIR}/WireGuardiOS Extension/ObfuscatedConstants.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${PROJECT_DIR}/WireGuardiOS\\ Extension/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ..\n";
+			showEnvVarsInLog = 0;
+		};
 		E1025D96230FD565003047B8 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3150,6 +3176,7 @@
 		};
 		E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -3161,6 +3188,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${PROJECT_DIR}/ProtonVPN/ObfuscatedConstants.swift",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3635,6 +3663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */,
+				D5C8901429360230009177E4 /* ObfuscatedConstants.swift in Sources */,
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */,
 				F31E91202758F5F900140B2E /* WGLogger.swift in Sources */,
@@ -3646,7 +3675,6 @@
 				E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */,
 				E99799A626A6FE0C0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */,
-				4CBBA02528C0B6A700FF12BE /* ObfuscatedConstants.swift in Sources */,
 				E99799A326A6FE0C0083D61E /* FileManager+Extension.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
 			);

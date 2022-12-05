@@ -24,6 +24,13 @@
 // The actual file used for these values is ObfuscatedConstants.swift
 // and is generated on first build attempt. Once generated, the
 // values can be altered to suit.
+//
+// If you add new value here, don't forget to also add it into ObfuscatedConstants.example.swift
+// and push the changes to `secrets` repository.
+//
+// Important! Keep in mind that different targets have different ObfuscatedConstants files. But if
+// there is a variable with the same name and it will be present in env vars, it will be overwritten
+// in all of them to the same value!
 
 import Foundation
 
@@ -58,11 +65,4 @@ class ObfuscatedConstants {
     static let twoFASecurityKey: String = ""
     static let twoFAandTwoPassSecurityKey: String = ""
     
-    static let bf22SignupDomain: String = ""
-    static let bf22DefaultHostWithoutHttps: String = ""
-    static let bf22DefaultHost: String = ""
-    static let bf22CaptchaHost: String = ""
-    static let bf22HumanVerificationV3Host = ""
-    static let bf22AccountHost = ""
-    static let bf22DefaultPath: String = ""
 }

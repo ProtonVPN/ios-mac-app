@@ -10,8 +10,6 @@ ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/ios/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
-    - echo "$FILE_CREDENTIALS_BF22" > "apps/ios/ProtonVPNUITests/credentials_bf22.plist"
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_unit_test
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
@@ -37,8 +35,6 @@ ios_ui_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/ios/ProtonVPNUITests/ && ../../../scripts/UITests/prepare_credentials.sh && cd ../../../
-    - echo "$FILE_CREDENTIALS_BF22" > "apps/ios/ProtonVPNUITests/credentials_bf22.plist"
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_ui_test
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
