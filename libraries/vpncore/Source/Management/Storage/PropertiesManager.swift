@@ -28,6 +28,7 @@ public protocol PropertiesManagerFactory {
 
 public protocol PropertiesManagerProtocol: class {
 
+    static var activeConnectionChangedNotification: Notification.Name { get }
     static var hasConnectedNotification: Notification.Name { get }
     static var userIpNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
@@ -190,7 +191,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case forceExtensionUpgrade = "ForceExtensionUpgrade"
         #endif
     }
-    
+
+    public static let activeConnectionChangedNotification = Notification.Name("ActiveConnectionChangedNotification")
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
@@ -248,6 +250,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             _lastIkeConnection = newValue
             storage.setEncodableValue(newValue, forKey: Keys.lastIkeConnection.rawValue)
+
+            executeOnUIThread { [unowned self] in
+                let notification = type(of: self).activeConnectionChangedNotification
+                NotificationCenter.default.post(name: notification, object: nil)
+            }
         }
     }
 
@@ -263,6 +270,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             _lastOpenVpnConnection = newValue
             storage.setEncodableValue(newValue, forKey: Keys.lastOpenVpnConnection.rawValue)
+
+            executeOnUIThread { [unowned self] in
+                let notification = type(of: self).activeConnectionChangedNotification
+                NotificationCenter.default.post(name: notification, object: nil)
+            }
         }
     }
     
@@ -278,6 +290,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             _lastWireguardConnection = newValue
             storage.setEncodableValue(newValue, forKey: Keys.lastWireguardConnection.rawValue)
+
+            executeOnUIThread { [unowned self] in
+                let notification = type(of: self).activeConnectionChangedNotification
+                NotificationCenter.default.post(name: notification, object: nil)
+            }
         }
     }
 
