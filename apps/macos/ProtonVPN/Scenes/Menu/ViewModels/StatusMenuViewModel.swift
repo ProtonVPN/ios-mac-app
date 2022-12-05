@@ -258,6 +258,8 @@ final class StatusMenuViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
                                                name: type(of: propertiesManager).userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
+                                               name: type(of: propertiesManager).activeConnectionChangedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
                                                name: type(of: propertiesManager).hasConnectedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handlePlanChange),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)

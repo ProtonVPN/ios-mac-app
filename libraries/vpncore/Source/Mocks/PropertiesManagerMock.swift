@@ -22,6 +22,7 @@
 import Foundation
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
+    public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")
     public static var killSwitchNotification: Notification.Name = Notification.Name("killSwitch")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("hasConnected")
     public static var userIpNotification: Notification.Name = Notification.Name("userIp")
