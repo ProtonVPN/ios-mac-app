@@ -8,6 +8,8 @@
       when: always
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
+    - if: $CI_COMMIT_TAG
+      when: always
     - when: manual
 
 # Template for iOS jobs.
