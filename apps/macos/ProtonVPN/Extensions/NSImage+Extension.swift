@@ -25,8 +25,30 @@ import AppKit
 import ProtonCore_UIFoundations
 
 extension NSImage {
-    func resize(newWidth w: Int, newHeight h: Int) -> NSImage {
-        let destSize = NSSize(width: CGFloat(w), height: CGFloat(h))
+    func resize(newWidth width: Int, newHeight height: Int) -> NSImage {
+        resizeWhilePreservingRatio(newWidth: CGFloat(width), newHeight: CGFloat(height))
+    }
+
+    func resizeWhilePreservingRatio(newWidth width: CGFloat? = nil, newHeight height: CGFloat? = nil) -> NSImage {
+        let w: CGFloat
+        let h: CGFloat
+        if let width, let height {
+            h = height
+            w = width
+        } else if width == nil, let height {
+            h = height
+            w = (h / size.height) * size.width
+        } else if height == nil, let width {
+            w = width
+            h = (w / size.width) * size.height
+        } else {
+            return self
+        }
+        return resize(w: w, h: h)
+    }
+
+    private func resize(w: CGFloat, h: CGFloat) -> NSImage {
+        let destSize = NSSize(width: w, height: h)
         let newImage = NSImage(size: destSize)
         newImage.lockFocus()
         self.draw(in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
