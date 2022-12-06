@@ -96,7 +96,6 @@ class ProfilesViewController: UIViewController {
         tableView.backgroundColor = .backgroundColor()
         tableView.allowsSelectionDuringEditing = true
         tableView.separatorStyle = .none
-        tableView.register(CreateProfileTableViewCell.nib, forCellReuseIdentifier: CreateProfileTableViewCell.identifier)
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }

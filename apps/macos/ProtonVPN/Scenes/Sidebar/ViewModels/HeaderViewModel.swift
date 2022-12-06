@@ -270,24 +270,4 @@ final class HeaderViewModel {
         let includeLoad = short ? "" : " \(LocalizedString.load)"
         return ("\(server.load)%" + includeLoad).styled(font: .themeFont(.small), alignment: .right)
     }
-
-    private func formProfileButtonLabel() -> NSAttributedString? {
-        guard let server = appStateManager.activeConnection()?.server else {
-            return nil
-        }
-        
-        if let profile = profileManager.profile(withServer: server) {
-            let deleteText = ("  " + profile.name).styled(font: .themeFont(literalSize: 13), alignment: .left, lineBreakMode: .byTruncatingTail)
-            let attributedString = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(profile.profileIcon.attributedAttachment(width: 10), deleteText))
-            let range = (attributedString.string as NSString).range(of: attributedString.string)
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineBreakMode = .byTruncatingTail
-            attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
-            return attributedString
-        } else {
-            let saveIcon = NSAttributedString.imageAttachment(named: "save_profile")!
-            let saveText = (" " + LocalizedString.saveAsProfile).styled(.interactive, font: .themeFont(literalSize: 13), alignment: .left)
-            return NSAttributedString.concatenate(saveIcon, saveText)
-        }
-    }
 }

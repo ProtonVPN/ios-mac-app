@@ -41,7 +41,7 @@ final class NET2WarningPopupViewController: WarningPopupViewController {
 
 extension WarningPopupViewModel {
     convenience init(alert: NEKSOnT2Alert) {
-        let image = NSImage(named: "qs_killswitch_off")?.resize(newWidth: 50, newHeight: 50)
+        let image = AppTheme.Icon.switchOff.resizeWhilePreservingRatio(newWidth: 50)
         self.init(image: image,
                   title: alert.title!,
                   description: alert.message!,

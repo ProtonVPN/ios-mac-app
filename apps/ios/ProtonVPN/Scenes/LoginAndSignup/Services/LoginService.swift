@@ -13,6 +13,7 @@ import ProtonCore_Login
 import ProtonCore_LoginUI
 import ProtonCore_Networking
 import ProtonCore_Payments
+import ProtonCore_UIFoundations
 import UIKit
 import VPNShared
 
@@ -123,7 +124,7 @@ final class CoreLoginService {
     }
 
     private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
-        let reportBugItem = HelpItem.custom(icon: UIImage(named: "ic-bug")!, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
+        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: LocalizedString.reportBug, behaviour: { [weak self] viewController in
             self?.settingsService.presentReportBug()
         })
         var result = input
@@ -136,7 +137,7 @@ final class CoreLoginService {
     }
 
     private func processLoginResult(result: LoginAndSignupResult) {
-        // loginInteface should not be retained, but recreated after
+        // loginInterface should not be retained, but recreated after
         // each use. But not all LoginResults signal and end of the process,
         // so we only renew it in some cases
         switch result {

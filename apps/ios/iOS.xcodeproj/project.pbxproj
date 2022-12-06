@@ -67,8 +67,6 @@
 		7904DA4520E57BA3008A4FCB /* ServerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4420E57BA3008A4FCB /* ServerUtility.swift */; };
 		7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4620E58292008A4FCB /* PrefillInformation.swift */; };
 		7904DA4920E6BA3E008A4FCB /* ColorPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4820E6BA3D008A4FCB /* ColorPickerViewModel.swift */; };
-		7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79059959212AB3A800C0E401 /* CreateProfileTableViewCell.swift */; };
-		7905995C212AB3A800C0E401 /* CreateProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7905995A212AB3A800C0E401 /* CreateProfileTableViewCell.xib */; };
 		7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7905995D212AE0A400C0E401 /* DefaultProfileTableViewCell.swift */; };
 		79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7905995E212AE0A400C0E401 /* DefaultProfileTableViewCell.xib */; };
 		791C54EE214A751F00C6F337 /* Common.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791C54EC214A751F00C6F337 /* Common.storyboard */; };
@@ -211,7 +209,6 @@
 		D5136C72228592E80002C095 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79312B762118823B00E79D09 /* SwitchTableViewCell.swift */; };
 		D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79312B7A2118852D00E79D09 /* DrillInTableViewCell.swift */; };
 		D5136C74228592E80002C095 /* SelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79312B7E2119905D00E79D09 /* SelectionTableViewCell.swift */; };
-		D5136C75228592E80002C095 /* CreateProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79059959212AB3A800C0E401 /* CreateProfileTableViewCell.swift */; };
 		D5136C76228592E80002C095 /* DefaultProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7905995D212AE0A400C0E401 /* DefaultProfileTableViewCell.swift */; };
 		D5136C77228592E80002C095 /* AppVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ECF452149045400C186A7 /* AppVersionView.swift */; };
 		D5136C78228592E80002C095 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */; };
@@ -247,8 +244,6 @@
 		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A1A525651B6700FE2D54 /* TimeIntervalTests.swift */; };
 		D550A1B3256551F900FE2D54 /* ConnectionStatusServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */; };
-		D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55131722319425900784ED0 /* RoundCheckboxView.xib */; };
-		D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
 		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */; };
@@ -262,7 +257,6 @@
 		D55B36CC2457FF0A00D8B0B9 /* TroubleshootingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */; };
 		D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */; };
-		D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D56B68DB250617F000796E0C /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
 		D573D114264A70980033CE19 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D573D113264A70980033CE19 /* UIKit.framework */; };
 		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
@@ -696,8 +690,6 @@
 		7904DA4420E57BA3008A4FCB /* ServerUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerUtility.swift; sourceTree = "<group>"; };
 		7904DA4620E58292008A4FCB /* PrefillInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefillInformation.swift; sourceTree = "<group>"; };
 		7904DA4820E6BA3D008A4FCB /* ColorPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewModel.swift; sourceTree = "<group>"; };
-		79059959212AB3A800C0E401 /* CreateProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileTableViewCell.swift; sourceTree = "<group>"; };
-		7905995A212AB3A800C0E401 /* CreateProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateProfileTableViewCell.xib; sourceTree = "<group>"; };
 		7905995D212AE0A400C0E401 /* DefaultProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultProfileTableViewCell.swift; sourceTree = "<group>"; };
 		7905995E212AE0A400C0E401 /* DefaultProfileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DefaultProfileTableViewCell.xib; sourceTree = "<group>"; };
 		791C54ED214A751F00C6F337 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = ProtonVPN/Storyboards/ProtonVPN/Storyboards/Base.lproj/Common.storyboard; sourceTree = "<group>"; };
@@ -808,8 +800,6 @@
 		D54D331D264A97CB000BEF04 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D550A1A525651B6700FE2D54 /* TimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTests.swift; sourceTree = "<group>"; };
 		D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusServiceMock.swift; sourceTree = "<group>"; };
-		D55131722319425900784ED0 /* RoundCheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoundCheckboxView.xib; sourceTree = "<group>"; };
-		D55131762319427900784ED0 /* RoundCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCheckboxView.swift; sourceTree = "<group>"; };
 		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55455412280280B006574F9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1238,8 +1228,6 @@
 			children = (
 				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
-				D55131762319427900784ED0 /* RoundCheckboxView.swift */,
-				D55131722319425900784ED0 /* RoundCheckboxView.xib */,
 				79DEE9082111A5E100C354EF /* TabBar.swift */,
 			);
 			path = Views;
@@ -2119,8 +2107,6 @@
 			children = (
 				7950441621183E6E0022ED35 /* ColorPickerItem.swift */,
 				7950441C211850710022ED35 /* ColorPickerItem.xib */,
-				79059959212AB3A800C0E401 /* CreateProfileTableViewCell.swift */,
-				7905995A212AB3A800C0E401 /* CreateProfileTableViewCell.xib */,
 				7905995D212AE0A400C0E401 /* DefaultProfileTableViewCell.swift */,
 				7905995E212AE0A400C0E401 /* DefaultProfileTableViewCell.xib */,
 				79312B7A2118852D00E79D09 /* DrillInTableViewCell.swift */,
@@ -2747,11 +2733,9 @@
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
 				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
 				42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */,
-				D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */,
 				796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
-				7905995C212AB3A800C0E401 /* CreateProfileTableViewCell.xib in Resources */,
 				7995FAAC209080E70030E1EB /* Countries.storyboard in Resources */,
 				66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */,
 				793ECF3A2148DCF900C186A7 /* KeyValueTableViewCell.xib in Resources */,
@@ -3299,10 +3283,8 @@
 				E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */,
 				F348C9D327D7B63300622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01627FC85AE00C3AA33 /* CouponViewController.swift in Sources */,
-				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
 				F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
-				D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
@@ -3415,7 +3397,6 @@
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
 				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
 				E185A866237157EC0039E625 /* TrackedAlertController.swift in Sources */,
-				D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */,
 				D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */,
 				D5136C30228592E80002C095 /* UIView+constraints.swift in Sources */,
 				D5136C31228592E80002C095 /* ServerUtility.swift in Sources */,
@@ -3510,7 +3491,6 @@
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,
 				D5136C74228592E80002C095 /* SelectionTableViewCell.swift in Sources */,
-				D5136C75228592E80002C095 /* CreateProfileTableViewCell.swift in Sources */,
 				42066FCE2630491A001F86DB /* ServersFeaturesInformationVC.swift in Sources */,
 				D5136C76228592E80002C095 /* DefaultProfileTableViewCell.swift in Sources */,
 				D5136C77228592E80002C095 /* AppVersionView.swift in Sources */,

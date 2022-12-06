@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
                                 <constraint firstAttribute="height" constant="24" id="J7S-RE-fIO"/>
                                 <constraint firstAttribute="width" secondItem="4HN-TR-4Fn" secondAttribute="height" multiplier="1:1" id="znp-eC-XNO"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="qs_netshield_level1" id="7Dp-Ju-czb"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" id="7Dp-Ju-czb"/>
                             <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </imageView>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="UMw-zQ-QKK" userLabel="titileLbl">
@@ -108,7 +108,4 @@
             <point key="canvasLocation" x="45" y="227"/>
         </customView>
     </objects>
-    <resources>
-        <image name="qs_netshield_level1" width="20" height="20"/>
-    </resources>
 </document>
