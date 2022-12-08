@@ -20,14 +20,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+// System frameworks
 import UIKit
-import vpncore
+import Foundation
+
+// Third-party dependencies
+import TrustKit
+
+// Core dependencies
 import ProtonCore_Services
 import ProtonCore_Log
 import ProtonCore_UIFoundations
+import ProtonCore_Environment
+
+// Local dependencies
+import vpncore
 import Logging
 import PMLogger
-import Foundation
 import VPNShared
 
 public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
@@ -237,9 +246,16 @@ extension AppDelegate {
     private func setupCoreIntegration() {
         ColorProvider.brand = .vpn
 
-        let trusKitHelper = container.makeTrustKitHelper()
-        PMAPIService.trustKit = trusKitHelper?.trustKit
-        PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil
+        // FUTUREDO: When we adopt a Core version >= 3.25.1, move to TrustKitWrapper
+        #if TLS_PIN_DISABLE
+        PMAPIService.trustKit = nil
+        PMAPIService.noTrustKit = true
+        #else
+        let config = TrustKitWrapper.configuration(hardfail: true)
+        let instance = TrustKit(configuration: config)
+        PMAPIService.trustKit = instance
+        PMAPIService.noTrustKit = false
+        #endif
 
         ProtonCore_Log.PMLog.callback = { (message, level) in
             switch level {

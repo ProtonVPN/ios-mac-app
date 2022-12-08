@@ -48,8 +48,6 @@
 		4242B0862465A4D10042145A /* VpnProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07C2465A4D10042145A /* VpnProperties.swift */; };
 		4242B0872465A4D10042145A /* UserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07D2465A4D10042145A /* UserProperties.swift */; };
 		4242B0882465A4D10042145A /* UserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07D2465A4D10042145A /* UserProperties.swift */; };
-		4242B0992465A4E60042145A /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0912465A4E60042145A /* TrustKitHelper.swift */; };
-		4242B09A2465A4E60042145A /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0912465A4E60042145A /* TrustKitHelper.swift */; };
 		4242B0A42465A7E20042145A /* Data+JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */; };
 		4242B0A52465A7E20042145A /* Data+JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */; };
 		4243631F26555D590027EAEE /* SessionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243631E26555D590027EAEE /* SessionsResponse.swift */; };
@@ -670,7 +668,6 @@
 		4242B07B2465A4D10042145A /* HumanVerificationToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanVerificationToken.swift; sourceTree = "<group>"; };
 		4242B07C2465A4D10042145A /* VpnProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VpnProperties.swift; sourceTree = "<group>"; };
 		4242B07D2465A4D10042145A /* UserProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProperties.swift; sourceTree = "<group>"; };
-		4242B0912465A4E60042145A /* TrustKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustKitHelper.swift; sourceTree = "<group>"; };
 		4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+JSONDictionary.swift"; sourceTree = "<group>"; };
 		4243631E26555D590027EAEE /* SessionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsResponse.swift; sourceTree = "<group>"; };
 		424A012924A9F41800F3EEE4 /* DefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConstants.swift; sourceTree = "<group>"; };
@@ -1679,7 +1676,6 @@
 				F36ECB552610A8380089B898 /* Utils */,
 				F36ECB4C2610A8260089B898 /* SmartProtocols */,
 				F36ECB4B2610A81D0089B898 /* Common */,
-				F36ECB4A2610A8120089B898 /* Network helpers */,
 				D5DCCABF252B4BAF004CB353 /* CoreApiService.swift */,
 				4242B06D2465A48B0042145A /* ReportsApiService.swift */,
 				F330F00E27FC814400C3AA33 /* PaymentsApiService.swift */,
@@ -1690,14 +1686,6 @@
 				1FF46E08575622A159ABB005 /* SessionService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		F36ECB4A2610A8120089B898 /* Network helpers */ = {
-			isa = PBXGroup;
-			children = (
-				4242B0912465A4E60042145A /* TrustKitHelper.swift */,
-			);
-			path = "Network helpers";
 			sourceTree = "<group>";
 		};
 		F36ECB4B2610A81D0089B898 /* Common */ = {
@@ -2659,7 +2647,6 @@
 				E148AE6E21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				E9DC79B9262DBEDC001A0FC0 /* SmartProtocol.swift in Sources */,
 				D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */,
-				4242B0992465A4E60042145A /* TrustKitHelper.swift in Sources */,
 				E1B5F63B21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
 				F3B225B1281FCCD3008404E4 /* ForkSessionRequest.swift in Sources */,
@@ -2958,7 +2945,6 @@
 				E148AE6F21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				D5BBC81C24332BF8001DC783 /* Dictionary+Merge.swift in Sources */,
 				E96B766027AC010F00079B04 /* UpdateChecker.swift in Sources */,
-				4242B09A2465A4E60042145A /* TrustKitHelper.swift in Sources */,
 				E1B5F63C21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68521B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
 				E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */,

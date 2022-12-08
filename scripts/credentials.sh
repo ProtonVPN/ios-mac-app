@@ -33,6 +33,10 @@ if [[ "$1" == "setup" ]]; then
 	# when cloning a bare repository.
 	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
+	# don't show all of the files in the repository when using 'git status', only ones that are
+	# already tracked in the credentials repo.
+	git config status.showUntrackedFiles no
+
 	# now, fetch all of the remote branches after we've configured it properly.
 	git fetch
 
