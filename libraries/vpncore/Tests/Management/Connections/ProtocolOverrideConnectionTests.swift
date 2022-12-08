@@ -29,8 +29,10 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
         let testData = MockTestData()
 
-        container.networkingDelegate.apiServerList = [testData.server1, testData.server3, testData.server4,
-                                                      testData.server5, testData.server6]
+        container.networkingDelegate.apiServerList = [
+            testData.server1, testData.server3, testData.server4,
+            testData.server5, testData.server6, testData.server8,
+        ]
     }
 
     func testConnectingWithIpOverride() {
@@ -97,20 +99,127 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         XCTAssertEqual(managerConfig.entryServerAddress, serverAddress)
     }
 
-    #if false
     func testExclusiveOverrideWithNoSpecifiedPort() {
+        var managerConfig: VpnManagerConfiguration?
 
+        populateExpectations(description: "Should be entry IP specified on server 6",
+                             [.vpnConnection, .certificateRefresh, .localAgentConnection])
+
+        container.didConfigure = { vmc, _ in
+            managerConfig = vmc
+        }
+
+        container.propertiesManager.vpnProtocol = .wireGuard(.tls)
+        container.vpnGateway.connectTo(server: testData.server6)
+
+        awaitExpectations()
+
+        guard let serverAddress = manager?.protocolConfiguration?.serverAddress else {
+            XCTFail("No server address was available in the protocol configuration.")
+            return
+        }
+
+        XCTAssertEqual(serverAddress, testData.server6.ips.first?.entryIp)
+
+        guard let managerConfig else {
+            XCTFail("WireGuard manager config not stored after connection")
+            return
+        }
+
+        XCTAssertEqual(managerConfig.entryServerAddress, serverAddress)
     }
 
     func testExclusiveOverrideWithSpecifiedPorts() {
+        var managerConfig: VpnManagerConfiguration?
 
+        populateExpectations(description: "Should connect to openvpn, with overridden ports",
+                             [.vpnConnection, .certificateRefresh, .localAgentConnection])
+
+        container.didConfigure = { vmc, _ in
+            managerConfig = vmc
+        }
+
+        container.propertiesManager.vpnProtocol = .openVpn(.udp)
+        container.vpnGateway.connectTo(server: testData.server8)
+
+        awaitExpectations()
+
+        guard let serverAddress = manager?.protocolConfiguration?.serverAddress else {
+            XCTFail("No server address was available in the protocol configuration.")
+            return
+        }
+
+        guard let override = testData.server8.ips.first?.protocolEntries?[.openVpn(.udp)],
+              let override,
+              let ports = override.ports else {
+            XCTFail("Unreachable")
+            return
+        }
+
+        XCTAssertEqual(serverAddress, testData.server8.ips.first?.entryIp)
+
+        guard let managerConfig else {
+            XCTFail("WireGuard manager config not stored after connection")
+            return
+        }
+
+        XCTAssertEqual(managerConfig.ports.count, 2)
+        XCTAssert(!Set(ports).isDisjoint(with: managerConfig.ports))
+        XCTAssertEqual(managerConfig.entryServerAddress, serverAddress)
     }
 
     func testExclusiveOverrideWithSmartProtocol() {
+        var managerConfig: VpnManagerConfiguration?
+        // should ignore whatever protocol is set if smart protocol is set to true
+        container.propertiesManager.vpnProtocol = .openVpn(.udp)
+        container.propertiesManager.smartProtocol = true
+
+        populateExpectations(description: "Should be overridden server IP for stealth protocol",
+                             [.vpnConnection, .certificateRefresh, .localAgentConnection])
+
+        container.didConfigure = { vmc, _ in
+            managerConfig = vmc
+        }
+
+        container.vpnGateway.connectTo(server: testData.server8)
+
+        awaitExpectations()
+
+        guard let serverAddress = manager?.protocolConfiguration?.serverAddress else {
+            XCTFail("No server address was available in the protocol configuration.")
+            return
+        }
+
+        guard let override = testData.server8.ips.first?.protocolEntries?[.wireGuard(.udp)],
+              let override else {
+            XCTFail("Unreachable")
+            return
+        }
+
+        XCTAssertEqual(serverAddress, override.ipv4)
+
+        guard let managerConfig else {
+            XCTFail("WireGuard manager config not stored after connection")
+            return
+        }
+
+        let defaultPorts = container.availabilityCheckerResolverFactory
+            .checkers[.wireGuard(.udp)]?.defaultPorts ?? []
+        XCTAssert(!Set(managerConfig.ports).isDisjoint(with: defaultPorts))
+
+        XCTAssertEqual(managerConfig.entryServerAddress, serverAddress)
+    }
+
+    #if false
+    func testExclusiveServerSwitchingDueToMaintenance() {
 
     }
 
-    func testExclusiveServerSwitchingDueToMaintenance() {
+    func testConnectingToProfileWithOverriddenIP() {
+
+    }
+
+    func testConnectingToProfileWithChangedOverride() {
 
     }
     #endif

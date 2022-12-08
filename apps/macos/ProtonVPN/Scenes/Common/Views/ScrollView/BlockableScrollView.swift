@@ -1,5 +1,5 @@
 //
-//  BlockeableScrollView.swift
+//  BlockableScrollView.swift
 //  ProtonVPN - Created on 23/11/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,7 +22,7 @@
 
 import Cocoa
 
-class BlockeableScrollView: NSScrollView {
+class BlockableScrollView: NSScrollView {
     var block: Bool = false
     
     override func hitTest(_ point: NSPoint) -> NSView? {

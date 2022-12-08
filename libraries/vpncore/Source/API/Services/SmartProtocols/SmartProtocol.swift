@@ -101,7 +101,7 @@ final class SmartProtocolImplementation: SmartProtocol {
 
         log.debug("Determining best protocol for \(server)", category: .connectionConnect, event: .scan)
 
-        for (proto, checker) in checkers {
+        for (proto, checker) in checkers where server.supports(vpnProtocol: proto.vpnProtocol) {
             group.enter()
             checker.checkAvailability(server: server) { result in
                 lockQueue.async {

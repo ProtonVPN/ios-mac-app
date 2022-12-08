@@ -109,7 +109,7 @@ public class ServerStorageConcrete: ServerStorage {
         let servers = fetch()
         servers.forEach { (server) in
             if let properties = continuousServerProperties[server.id] {
-                server.update(continousProperties: properties)
+                server.update(continuousProperties: properties)
             }
         }
         

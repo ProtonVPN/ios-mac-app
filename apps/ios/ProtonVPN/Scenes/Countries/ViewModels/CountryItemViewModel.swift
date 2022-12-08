@@ -26,16 +26,23 @@ import Search
 import ProtonCore_UIFoundations
 
 class CountryItemViewModel {
-    
+    /// Contains information about the region such as the country code, the tier the
+    /// country is available for, and what features are available.
     private let countryModel: CountryModel
+    /// All of the server models available for a given country.
+    /// - Note: It's likely you want to access `supportedServerModels` instead.
     private let serverModels: [ServerModel]
+
+    // MARK: Dependencies
     private let appStateManager: AppStateManager
     private let alertService: AlertService
     private var vpnGateway: VpnGatewayProtocol
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    
+    internal let propertiesManager: PropertiesManagerProtocol
+
+    // MARK: Computed properties
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -47,11 +54,17 @@ class CountryItemViewModel {
     var isUsersTierTooLow: Bool {
         return userTier < countryModel.lowestTier
     }
-    
-    let propertiesManager: PropertiesManagerProtocol
-    
+
     var underMaintenance: Bool {
-        return !serverModels.contains { !$0.underMaintenance }
+        return supportedServerModels.allSatisfy { $0.underMaintenance }
+    }
+
+    /// The server models that are supported using the active connection protocol.
+    private var supportedServerModels: [ServerModel] {
+        serverModels.filter {
+            $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
+                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        }
     }
     
     private var isConnected: Bool {
@@ -100,7 +113,7 @@ class CountryItemViewModel {
     }
     
     var isSmartAvailable: Bool {
-        return serverModels.allSatisfy { $0.isVirtual }
+        return supportedServerModels.allSatisfy { $0.isVirtual }
     }
     
     var streamingAvailable: Bool {
@@ -146,14 +159,14 @@ class CountryItemViewModel {
     }
     
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
-        let freeServers = serverModels.filter { (serverModel) -> Bool in
+        let freeServers = supportedServerModels.filter { (serverModel) -> Bool in
             serverModel.tier == CoreAppConstants.VpnTiers.free
         }
         return serverViewModels(for: freeServers)
     }()
     
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
-        let plusServers = serverModels.filter({ (serverModel) -> Bool in
+        let plusServers = supportedServerModels.filter({ (serverModel) -> Bool in
             serverModel.tier >= CoreAppConstants.VpnTiers.plus
         })
         return serverViewModels(for: plusServers)
@@ -201,7 +214,8 @@ class CountryItemViewModel {
             return CityItemViewModel(cityName: $0.key, translatedCityName: translatedCityName, countryModel: self.countryModel, servers: $0.value, alertService: self.alertService, vpnGateway: self.vpnGateway, connectionStatusService: self.connectionStatusService)
         }).sorted(by: { $0.cityName < $1.cityName })
     }()
-    
+
+    // MARK: Init routine
     init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
@@ -214,7 +228,8 @@ class CountryItemViewModel {
         self.planService = planService
         startObserving()
     }
-    
+
+    // MARK: Methods
     func serversCount(for section: Int) -> Int {
         return serverViewModels[section].viewModels.count
     }
@@ -346,6 +361,6 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var isSecureCoreCountry: Bool {
-        return serverModels.allSatisfy({ $0.serverType == .secureCore })
+        return supportedServerModels.allSatisfy({ $0.serverType == .secureCore })
     }
 }

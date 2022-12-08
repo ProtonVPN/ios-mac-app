@@ -41,35 +41,48 @@ public class CountryCodeProviderImplementation: CountryCodeProvider {
 
     private static let localeResolver = LocaleResolverImplementation.default
 
-    /// Go over all of the preferred languages on a device. If we're able
+    /// Insert the region code if it's available for the current locale.
+    /// Then, go over all of the preferred languages on a device. If we're able
     /// to generate a locale from this language, then insert its region code
-    /// into the set.
-    ///
-    /// If we're on iOS, also go over the MCCs available from CoreTelephony
-    /// and include those. The region codes will be uniqued and made available
-    /// through the `countryCodes` property.
+    /// into the set as well.
     public init() {
         var result = Set<String>()
+
+        if let localeTag = Self.localeResolver.currentLocale.ietfRegionTag {
+            result.insert(localeTag.lowercased())
+        }
 
         for language in Self.localeResolver.preferredLanguages {
             let languageLocale = Self.localeResolver.locale(withIdentifier: language)
 
             if let tag = languageLocale.ietfRegionTag {
-                result.insert(tag)
+                result.insert(tag.lowercased())
             }
         }
 
+        self.countryCodes = Array(result.union(Self.carrierIsoCountryCodes))
+    }
+
+    /// Only available on iOS devices before iOS 16, where this functionality was senselessly deprecated.
+    private static var carrierIsoCountryCodes: Set<String> {
         #if os(iOS)
-        let netInfo = CTTelephonyNetworkInfo()
-        if let carriers = netInfo.serviceSubscriberCellularProviders {
-            for carrier in carriers.values {
-                if let mcc = carrier.mobileCountryCode {
-                    result.insert(mcc)
-                }
-            }
+        guard #unavailable(iOS 16) else {
+            return []
         }
-        #endif
 
-        self.countryCodes = Array(result)
+        let netInfo = CTTelephonyNetworkInfo()
+        guard let carriers = netInfo.serviceSubscriberCellularProviders else {
+            return []
+        }
+
+        return carriers.values.reduce(into: Set()) { partialResult, carrier in
+            guard let iso = carrier.isoCountryCode, iso != "--" else {
+                return
+            }
+            partialResult.insert(iso.lowercased())
+        }
+        #else
+        return []
+        #endif
     }
 }

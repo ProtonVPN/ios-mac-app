@@ -175,6 +175,8 @@ class CountriesSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).killSwitchNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).smartProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
@@ -248,6 +250,11 @@ class CountriesSectionViewModel {
     private func setupServers () {
         servers = [:]
         self.countries.forEach { country, servers in
+            let servers = servers.filter {
+                $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
+                            smartProtocolConfig: propertiesManager.smartProtocolConfig)
+            }
+
             let freeServers: [CellModel] = servers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
             let plusServers: [CellModel] = servers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
             let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
@@ -279,7 +286,7 @@ class CountriesSectionViewModel {
             self.servers[country.countryCode] = cells
         }
     }
-    
+
     @objc private func reloadDataOnChange() {
         expandedCountries = []
         updateState()
@@ -399,15 +406,22 @@ class CountriesSectionViewModel {
     
     private func countryViewModel( _ country: CountryGroup, displaySeparator: Bool ) -> CountryItemViewModel {
         return CountryItemViewModel(
-                            country: country, vpnGateway: self.vpnGateway,
-                            appStateManager: self.appStateManager, countriesSectionViewModel: self,
-                            propertiesManager: self.propertiesManager, userTier: self.userTier, isOpened: false,
+                            country: country,
+                            vpnGateway: self.vpnGateway,
+                            appStateManager: self.appStateManager,
+                            countriesSectionViewModel: self,
+                            propertiesManager: self.propertiesManager,
+                            userTier: self.userTier,
+                            isOpened: false,
                             displaySeparator: displaySeparator)
     }
     
     private func serverViewModel( _ server: ServerModel ) -> ServerItemViewModel {
-        return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                   propertiesManager: propertiesManager, countriesSectionViewModel: self)
+        return ServerItemViewModel(serverModel: server,
+                                   vpnGateway: vpnGateway,
+                                   appStateManager: appStateManager,
+                                   propertiesManager: propertiesManager,
+                                   countriesSectionViewModel: self)
     }
     
     @objc func updateSettings() {

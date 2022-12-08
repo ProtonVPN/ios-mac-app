@@ -192,6 +192,9 @@ extension IosAlertService: CoreAlertService {
             
         case is LocalAgentSystemErrorAlert:
             showDefaultSystemAlert(alert)
+
+        case is ProtocolNotAvailableForServerAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

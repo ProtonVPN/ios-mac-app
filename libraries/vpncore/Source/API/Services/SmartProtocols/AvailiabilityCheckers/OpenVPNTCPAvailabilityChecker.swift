@@ -44,8 +44,12 @@ final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
 
     // swiftlint:disable function_body_length
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
-        let host = NWEndpoint.Host(server.entryIp)
+        guard let entryIp = server.entryIp(using: .openVpn(.tcp)) else {
+            completion(false)
+            return
+        }
 
+        let host = NWEndpoint.Host(entryIp)
         guard let port = NWEndpoint.Port("\(port)") else {
             log.error("Invalid port for \(protocolName) smart protocol check", category: .connectionConnect, event: .scan)
             completion(false)
@@ -65,7 +69,8 @@ final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
             }
 
             completed = true
-            log.error("\(protocolName) NOT available for \(server.entryIp) on port \(port) (timeout)", category: .connectionConnect, event: .scan)
+            log.error("\(protocolName) NOT available for \(entryIp) on port \(port) (timeout)",
+                      category: .connectionConnect, event: .scan)
             cleanup()
             completion(false)
         }
@@ -76,13 +81,15 @@ final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
             }
 
             completed = true
-            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(server.entryIp) on port \(port)", category: .connectionConnect, event: .scan)
+            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(entryIp) on port \(port)",
+                      category: .connectionConnect, event: .scan)
             task.cancel()
             cleanup()
             completion(result)
         }
 
-        log.debug("Checking \(protocolName) availability for \(server.entryIp) on port \(port)", category: .connectionConnect, event: .scan)
+        log.debug("Checking \(protocolName) availability for \(entryIp) on port \(port)",
+                  category: .connectionConnect, event: .scan)
 
         let packet = createOpenVPNHandshake(config: config, includeLength: true)
         let connection = NWConnection(host: host, port: port, using: .tcp)
@@ -100,6 +107,8 @@ final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
             case .failed, .cancelled:
                 complete(false)
             case .preparing, .setup, .waiting:
+                break
+            @unknown default:
                 break
             }
         }

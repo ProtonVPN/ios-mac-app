@@ -36,7 +36,10 @@ final class ConnectionSettingsViewModel {
         & VpnStateConfigurationFactory
         & UserTierProviderFactory
         & AuthKeychainHandleFactory
+        & AppStateManagerFactory
+
     private let factory: Factory
+    private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
@@ -48,6 +51,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var userTierProvider: UserTierProvider = factory.makeUserTierProvider()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
 
     private var sysexPending = false
     private var featureFlags: FeatureFlags {
@@ -244,7 +248,7 @@ final class ConnectionSettingsViewModel {
     func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<(), Error>) -> Void) {
         switch connectionProtocol {
         case .smartProtocol:
-            self.enableSmartProtocol(completion)
+            self.confirmEnableSmartProtocol(completion)
         case .vpnProtocol(let transportProtocol):
             vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { [weak self] result in
                 self?.sysexPending = false
@@ -265,38 +269,70 @@ final class ConnectionSettingsViewModel {
         reloadNeeded?()
     }
     
-    func enableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
-        let update = { (shouldReconnect: Bool) in
-            self.sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
-                self.sysexPending = false
-
-                switch result {
-                case .installed, .upgraded, .alreadyThere:
-                    self.propertiesManager.smartProtocol = true
-                    completion(.success)
-                    if shouldReconnect {
-                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
-                        self.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
-                    }
-                case let .failed(error):
-                    completion(.failure(error))
-                }
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                    self?.reloadNeeded?()
-                }
-            }
-        }
-
+    func confirmEnableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         switch vpnGateway.connection {
         case .connected, .connecting:
-            alertService.push(alert: ReconnectOnSmartProtocolChangeAlert(confirmHandler: {
-                update(true)
-            }, cancelHandler: {
-                completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
-            }))
+            let config = propertiesManager.smartProtocolConfig
+            let supported = appStateManager.activeConnection()?.server.supports(connectionProtocol: .smartProtocol,
+                                                                                smartProtocolConfig: config) == true
+
+            let alert: SystemAlert
+            if supported {
+                alert = ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
+                    self?.enableSmartProtocol(and: .reconnect, completion)
+                }, cancelHandler: {
+                    completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
+                })
+            } else {
+                alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
+                    log.info("User changed to smart protocol, even though current server doesn't support it",
+                             category: .connectionConnect, event: .trigger,
+                             metadata: ["smartProtocolConfig": "\(config)"])
+                    self?.enableSmartProtocol(and: .disconnect, completion)
+                }, cancelHandler: {
+                    log.info("User did not change to smart protocol, since current server doesn't support it",
+                             category: .connectionConnect, event: .trigger,
+                             metadata: ["smartProtocolConfig": "\(config)"])
+                    completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
+                })
+            }
+            alertService.push(alert: alert)
+
         default:
-            update(false)
+            enableSmartProtocol(and: .doNothing, completion)
+        }
+    }
+
+    private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<(), Error>) -> Void) {
+        self.sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { [weak self] result in
+            self?.sysexPending = false
+
+            switch result {
+            case .installed, .upgraded, .alreadyThere:
+                self?.propertiesManager.smartProtocol = true
+
+                switch then {
+                case .disconnect:
+                    log.info("Will disconnect after VPN feature change",
+                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    self?.vpnGateway.disconnect { completion(.success) }
+                case .reconnect:
+                    log.info("Connection will restart after VPN feature change",
+                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    self?.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
+                    completion(.success)
+                case .doNothing:
+                    log.info("Smart protocol was enabled",
+                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    completion(.success)
+                }
+            case let .failed(error):
+                completion(.failure(error))
+            }
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                self?.reloadNeeded?()
+            }
         }
     }
     

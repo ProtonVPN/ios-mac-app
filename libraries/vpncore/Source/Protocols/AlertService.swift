@@ -319,6 +319,26 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     }
 }
 
+public class ProtocolNotAvailableForServerAlert: SystemAlert {
+    public var title: String? = LocalizedString.vpnProtocolNotSupportedTitle
+    public var message: String? = LocalizedString.vpnProtocolNotSupportedText
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init(confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
+        if let confirmHandler {
+            actions.append(AlertAction(title: LocalizedString.disconnect,
+                                       style: .destructive,
+                                       handler: confirmHandler))
+        }
+        let dismissText = confirmHandler == nil ? LocalizedString.ok : LocalizedString.cancel
+        actions.append(AlertAction(title: LocalizedString.cancel,
+                                   style: .cancel,
+                                   handler: cancelHandler ?? dismiss))
+    }
+}
+
 public class ReconnectOnSettingsChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User was changing settings, but cancelled reconnecting."

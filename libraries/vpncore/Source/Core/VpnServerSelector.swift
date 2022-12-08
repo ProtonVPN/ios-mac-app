@@ -36,12 +36,21 @@ class VpnServerSelector {
     private var serverTypeToggle: ServerType
     private var userTier: Int
     private var serverGrouping: [CountryGroup]
+    private var connectionProtocol: ConnectionProtocol
+    private var smartProtocolConfig: SmartProtocolConfig
     
-    public init(serverType: ServerType, userTier: Int, serverGrouping: [CountryGroup], appStateGetter: @escaping AppStateGetter) {
+    public init(serverType: ServerType,
+                userTier: Int,
+                serverGrouping: [CountryGroup],
+                connectionProtocol: ConnectionProtocol,
+                smartProtocolConfig: SmartProtocolConfig,
+                appStateGetter: @escaping AppStateGetter) {
         self.serverTypeToggle = serverType
         self.userTier = userTier
         self.serverGrouping = serverGrouping
         self.getCurrentAppState = appStateGetter
+        self.connectionProtocol = connectionProtocol
+        self.smartProtocolConfig = smartProtocolConfig
     }
     
     /// Returns a server that best suits connection request.
@@ -111,13 +120,13 @@ class VpnServerSelector {
         case .fastest:
             return servers.first
         case .random:
-            return servers[Int(arc4random_uniform(UInt32(servers.count)))] // swiftlint:disable:this legacy_random
+            return servers.randomElement()
         case .country(_, let countryType):
             switch countryType {
             case .fastest:
                 return servers.first
             case .random:
-                return servers[Int(arc4random_uniform(UInt32(servers.count)))] // swiftlint:disable:this legacy_random
+                return servers.randomElement()
             case .server(let server):
                 return server
             }
@@ -126,9 +135,21 @@ class VpnServerSelector {
         }
     }
     
-    private func filter(servers: [ServerModel], forSpecificCountry: Bool, type: ServerType) -> [ServerModel] {
-        let serversWithoutUpgrades = servers.filter { $0.tier <= userTier }
-        if serversWithoutUpgrades.isEmpty {
+    private func filter(servers: [ServerModel],
+                        forSpecificCountry: Bool,
+                        type: ServerType) -> [ServerModel] {
+        let serversSupportingProtocol = servers.filter {
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: smartProtocolConfig)
+        }
+
+        guard !serversSupportingProtocol.isEmpty else {
+            notifyResolutionUnavailable?(forSpecificCountry, type, .protocolNotSupported)
+            return []
+        }
+
+        let serversWithoutUpgrades = serversSupportingProtocol.filter { $0.tier <= userTier }
+        guard !serversWithoutUpgrades.isEmpty else {
             notifyResolutionUnavailable?(forSpecificCountry, type, .upgrade(servers.reduce(Int.max, { (lowestTier, server) -> Int in
                 return lowestTier > server.tier ? server.tier : lowestTier
             })))
@@ -136,13 +157,12 @@ class VpnServerSelector {
         }
         
         let serversWithoutMaintenance = serversWithoutUpgrades.filter { !$0.underMaintenance }
-        if serversWithoutMaintenance.isEmpty {
+        guard !serversWithoutMaintenance.isEmpty else {
             notifyResolutionUnavailable?(forSpecificCountry, type, .maintenance)
             return []
         }
         
         return serversWithoutMaintenance
-        
     }
     
 }

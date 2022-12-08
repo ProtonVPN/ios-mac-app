@@ -61,8 +61,16 @@ class VpnConnectionPreparer {
         }
         
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
-            log.info("Connecting with \(vpnProtocol) to \(server.name) via \(serverIp.entryIp):\(ports)", category: .connectionConnect)
-            self.formConfigurationWithParametersAndConnect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, safeMode: safeMode, ports: ports)
+            let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
+            log.info("Connecting with \(vpnProtocol) to \(server.name) via \(entryIp):\(ports)",
+                     category: .connectionConnect)
+            self.formConfigurationWithParametersAndConnect(withProtocol: vpnProtocol,
+                                                           server: server,
+                                                           serverIp: serverIp,
+                                                           netShieldType: netShieldType,
+                                                           natType: natType,
+                                                           safeMode: safeMode,
+                                                           ports: ports)
         }
     }
     
@@ -85,8 +93,31 @@ class VpnConnectionPreparer {
         }
     }
 
+    private func canUse(serverIp: ServerIp,
+                        withConnectionProtocol connectionProtocol: ConnectionProtocol) -> Bool {
+        guard !serverIp.underMaintenance else {
+            return false
+        }
+
+        if let vpnProtocol = connectionProtocol.vpnProtocol {
+            return serverIp.entryIp(using: vpnProtocol) != nil
+        }
+
+        // Smart protocol
+        for vpnProtocol in smartProtocolConfig.supportedProtocols {
+            if serverIp.entryIp(using: vpnProtocol) != nil {
+                return true
+            }
+        }
+
+        return false
+    }
+
     private func selectServerIp(server: ServerModel, connectionProtocol: ConnectionProtocol) -> ServerIp? {
-        let availableServerIps = server.ips.filter { !$0.underMaintenance }
+        let availableServerIps = server.ips.filter {
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: smartProtocolConfig)
+        }
 
         guard let serverIp = availableServerIps.randomElement() else {
             serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .existingConnection)

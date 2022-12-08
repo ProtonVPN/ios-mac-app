@@ -53,6 +53,11 @@ open class ServerItemViewModelCore {
         return propertiesManager.streamingServices[countryCode]?[tier] != nil
     }
 
+    public var isCurrentProtocolSupported: Bool {
+        return serverModel.supports(connectionProtocol: propertiesManager.connectionProtocol,
+                                    smartProtocolConfig: propertiesManager.smartProtocolConfig)
+    }
+
     public var alphaOfMainElements: CGFloat {
         if underMaintenance {
             return 0.25
