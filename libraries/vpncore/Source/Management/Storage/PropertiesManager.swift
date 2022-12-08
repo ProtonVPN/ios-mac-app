@@ -26,7 +26,7 @@ public protocol PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol
 }
 
-public protocol PropertiesManagerProtocol: class {
+public protocol PropertiesManagerProtocol: AnyObject {
 
     static var activeConnectionChangedNotification: Notification.Name { get }
     static var hasConnectedNotification: Notification.Name { get }
@@ -228,84 +228,22 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
 
     // Use to do first time connecting stuff if needed
-    public var hasConnected: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.connectOnDemand.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.connectOnDemand.rawValue)
-            postNotificationOnUIThread(type(of: self).hasConnectedNotification, object: newValue)
-        }
-    }
-
-    private var _lastIkeConnection: ConnectionConfiguration?
-    public var lastIkeConnection: ConnectionConfiguration? {
-        get {
-            if let _lastIkeConnection = _lastIkeConnection {
-                return _lastIkeConnection
-            }
-
-            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastIkeConnection.rawValue)
-        }
-        set {
-            _lastIkeConnection = newValue
-            storage.setEncodableValue(newValue, forKey: Keys.lastIkeConnection.rawValue)
-
-            executeOnUIThread { [unowned self] in
-                let notification = type(of: self).activeConnectionChangedNotification
-                NotificationCenter.default.post(name: notification, object: nil)
-            }
-        }
-    }
-
-    private var _lastOpenVpnConnection: ConnectionConfiguration?
-    public var lastOpenVpnConnection: ConnectionConfiguration? {
-        get {
-            if let _lastOpenVpnConnection = _lastOpenVpnConnection {
-                return _lastOpenVpnConnection
-            }
-
-            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastOpenVpnConnection.rawValue)
-        }
-        set {
-            _lastOpenVpnConnection = newValue
-            storage.setEncodableValue(newValue, forKey: Keys.lastOpenVpnConnection.rawValue)
-
-            executeOnUIThread { [unowned self] in
-                let notification = type(of: self).activeConnectionChangedNotification
-                NotificationCenter.default.post(name: notification, object: nil)
-            }
-        }
-    }
+    @BoolProperty(.connectOnDemand, notifyChangesWith: PropertiesManager.hasConnectedNotification)
     
-    private var _lastWireguardConnection: ConnectionConfiguration?
-    public var lastWireguardConnection: ConnectionConfiguration? {
-        get {
-            if let _lastWireguardConnection = _lastWireguardConnection {
-                return _lastWireguardConnection
-            }
+    public var hasConnected: Bool
+    @Property(.lastIkeConnection,
+              notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
+    public var lastIkeConnection: ConnectionConfiguration?
 
-            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastWireguardConnection.rawValue)
-        }
-        set {
-            _lastWireguardConnection = newValue
-            storage.setEncodableValue(newValue, forKey: Keys.lastWireguardConnection.rawValue)
+    @Property(.lastOpenVpnConnection,
+              notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
+    public var lastOpenVpnConnection: ConnectionConfiguration?
 
-            executeOnUIThread { [unowned self] in
-                let notification = type(of: self).activeConnectionChangedNotification
-                NotificationCenter.default.post(name: notification, object: nil)
-            }
-        }
-    }
+    @Property(.lastWireguardConnection,
+              notifyChangesWith: PropertiesManager.activeConnectionChangedNotification)
+    public var lastWireguardConnection: ConnectionConfiguration?
 
-    public var lastPreparedServer: ServerModel? {
-        get {
-            return storage.getDecodableValue(ServerModel.self, forKey: Keys.lastPreparingServer.rawValue)
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastPreparingServer.rawValue)
-        }
-    }
+    @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
 
     public var lastConnectedTimeStamp: Double {
         get {
@@ -315,15 +253,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(newValue, forKey: Keys.lastConnectedTimeStamp.rawValue)
         }
     }
-    
-    public var lastConnectionRequest: ConnectionRequest? {
-        get {
-            return storage.getDecodableValue(ConnectionRequest.self, forKey: Keys.lastConnectionRequest.rawValue)
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastConnectionRequest.rawValue)
-        }
-    }
+
+    @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
 
     public func getLastAccountPlan(for username: String) -> AccountPlan? {
         guard let result = storage.defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username) else {
@@ -344,15 +275,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         storage.setValue(quickConnect, forKey: Keys.quickConnectProfile.rawValue + username)
     }
 
-    public var secureCoreToggle: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.secureCoreToggle.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.secureCoreToggle.rawValue)
-        }
-    }
-    
+    @BoolProperty(.secureCoreToggle) public var secureCoreToggle: Bool
+
     public var serverTypeToggle: ServerType {
         return secureCoreToggle ? .secureCore : .standard
     }
@@ -366,61 +290,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    // Distinguishes if kill switch should be disabled
-    public var intentionallyDisconnected: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.intentionallyDisconnected.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.intentionallyDisconnected.rawValue)
-        }
-    }
+    /// Distinguishes if kill switch should be disabled
+    @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
 
-    public var userLocation: UserLocation? {
-        get {
-            return storage.getDecodableValue(UserLocation.self, forKey: Keys.userLocation.rawValue)
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.userLocation.rawValue)
-            postNotificationOnUIThread(type(of: self).userIpNotification, object: userLocation)
-        }
-    }
-    
-    public var userDataDisclaimerAgreed: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.userDataDisclaimerAgreed.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.userDataDisclaimerAgreed.rawValue)
-        }
-    }
-    
-    public var trialWelcomed: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.trialWelcomed.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.trialWelcomed.rawValue)
-        }
-    }
-    
-    public var warnedTrialExpiring: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.warnedTrialExpiring.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.warnedTrialExpiring.rawValue)
-        }
-    }
-    
-    public var warnedTrialExpired: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.warnedTrialExpired.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.warnedTrialExpired.rawValue)
-        }
-    }
+    @Property(.userLocation, notifyChangesWith: PropertiesManager.userIpNotification)
+    public var userLocation: UserLocation?
+
+    @BoolProperty(.userDataDisclaimerAgreed) public var userDataDisclaimerAgreed: Bool
+    @BoolProperty(.trialWelcomed) public var trialWelcomed: Bool
+    @BoolProperty(.warnedTrialExpiring) public var warnedTrialExpiring: Bool
+    @BoolProperty(.warnedTrialExpired) public var warnedTrialExpired: Bool
 
     public var apiEndpoint: String? {
         get {
@@ -430,52 +309,14 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(newValue, forKey: Keys.apiEndpoint.rawValue)
         }
     }
-    
-    public var openVpnConfig: OpenVpnConfig {
-        get {
-            return storage.getDecodableValue(OpenVpnConfig.self, forKey: Keys.openVpnConfig.rawValue) ?? OpenVpnConfig()
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.openVpnConfig.rawValue)
-        }
-    }
 
-    public var wireguardConfig: WireguardConfig {
-        get {
-            return storage.getDecodableValue(WireguardConfig.self, forKey: Keys.wireguardConfig.rawValue) ?? WireguardConfig()
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.wireguardConfig.rawValue)
-        }
-    }
-
-    public var smartProtocolConfig: SmartProtocolConfig {
-        get {
-            return storage.getDecodableValue(SmartProtocolConfig.self, forKey: Keys.smartProtocolConfig.rawValue) ?? SmartProtocolConfig()
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.smartProtocolConfig.rawValue)
-        }
-    }
-
-    public var ratingSettings: RatingSettings {
-        get {
-            return storage.getDecodableValue(RatingSettings.self, forKey: Keys.ratingSettings.rawValue) ?? RatingSettings()
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.ratingSettings.rawValue)
-        }
-    }
+    @InitializedProperty(.openVpnConfig) public var openVpnConfig: OpenVpnConfig
+    @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
+    @InitializedProperty(.smartProtocolConfig) public var smartProtocolConfig: SmartProtocolConfig
+    @InitializedProperty(.ratingSettings) public var ratingSettings: RatingSettings
 
     #if os(macOS)
-    public var forceExtensionUpgrade: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.forceExtensionUpgrade.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.forceExtensionUpgrade.rawValue)
-        }
-    }
+    @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
     #endif
     
     public var vpnProtocol: VpnProtocol {
@@ -506,16 +347,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground.rawValue)
         }
     }
-    
-    public var featureFlags: FeatureFlags {
-        get {
-            return storage.getDecodableValue(FeatureFlags.self, forKey: Keys.featureFlags.rawValue) ?? FeatureFlags()
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.featureFlags.rawValue)
-            postNotificationOnUIThread(type(of: self).featureFlagsNotification, object: newValue)
-        }
-    }
+
+    @InitializedProperty(.featureFlags,
+                         notifyChangesWith: PropertiesManager.featureFlagsNotification)
+    public var featureFlags: FeatureFlags
     
     public var maintenanceServerRefreshIntereval: Int {
         get {
@@ -529,36 +364,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
             storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
         }
     }
-    
-    public var vpnAcceleratorEnabled: Bool {
-        get {
-            return storage.defaults.object(forKey: Keys.vpnAcceleratorEnabled.rawValue) as? Bool ?? true
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled.rawValue)
-            postNotificationOnUIThread(type(of: self).vpnAcceleratorNotification, object: newValue)
-        }
-    }
 
-    public var discourageSecureCore: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.discourageSecureCore.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.discourageSecureCore.rawValue)
-        }
-    }
-    
-    public var killSwitch: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.killSwitch.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.killSwitch.rawValue)
-            postNotificationOnUIThread(type(of: self).killSwitchNotification, object: newValue)
-        }
-    }
-    
+    @BoolProperty(.vpnAcceleratorEnabled,
+                  notifyChangesWith: PropertiesManager.vpnAcceleratorNotification)
+    public var vpnAcceleratorEnabled: Bool
+
+    @BoolProperty(.discourageSecureCore) public var discourageSecureCore: Bool
+
+    @BoolProperty(.killSwitch, notifyChangesWith: PropertiesManager.killSwitchNotification)
+    public var killSwitch: Bool
+
     public var excludeLocalNetworks: Bool {
         get {
             #if os(iOS)
@@ -571,15 +386,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
             postNotificationOnUIThread(type(of: self).excludeLocalNetworksNotification, object: newValue)
         }
     }
-        
-    public var humanValidationFailed: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.humanValidationFailed.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.humanValidationFailed.rawValue)
-        }
-    }
+
+    @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
 
     public var alternativeRouting: Bool {
         get {
@@ -591,46 +399,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    public var smartProtocol: Bool {
-        get {
-            return storage.defaults.bool(forKey: Keys.smartProtocol.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.smartProtocol.rawValue)
-            postNotificationOnUIThread(type(of: self).smartProtocolNotification, object: newValue)
-        }
-    }
+    @BoolProperty(.smartProtocol, notifyChangesWith: PropertiesManager.smartProtocolNotification)
+    public var smartProtocol: Bool
 
-    private var _streamingServices: StreamingDictServices?
-    public var streamingServices: StreamingDictServices {
-        get {
-            if let _streamingServices = _streamingServices {
-                return _streamingServices
-            }
+    @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
+    @InitializedProperty(.partnerTypes) public var partnerTypes: [PartnerType]
 
-            return storage.getDecodableValue(StreamingDictServices.self, forKey: Keys.streamingServices.rawValue) ?? StreamingDictServices()
-        }
-        set {
-            _streamingServices = newValue
-            storage.setEncodableValue(newValue, forKey: Keys.streamingServices.rawValue)
-        }
-    }
-
-    private var _partnerTypes: [PartnerType]?
-    public var partnerTypes: [PartnerType] {
-        get {
-            if let _partnerTypes = _partnerTypes {
-                return _partnerTypes
-            }
-
-            return storage.getDecodableValue([PartnerType].self, forKey: Keys.partnerTypes.rawValue) ?? []
-        }
-        set {
-            _partnerTypes = newValue
-            storage.setEncodableValue(newValue, forKey: Keys.partnerTypes.rawValue)
-        }
-    }
-    
     public var streamingResourcesUrl: String? {
         get {
             return storage.defaults.string(forKey: Keys.streamingResourcesUrl.rawValue)
@@ -655,6 +429,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Keys.smartProtocol.rawValue: true,
             Keys.discourageSecureCore.rawValue: true
         ])
+
+        Mirror(reflecting: self).children.forEach {
+            guard var wrapper = $0.value as? DefaultsWrapper else { return }
+            wrapper.storage = storage
+        }
     }
     
     public func logoutCleanup() {
@@ -675,7 +454,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
         killSwitch = false
     }
     
-    func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {
+    func postNotificationOnUIThread(_ name: NSNotification.Name,
+                                    object: Any?,
+                                    userInfo: [AnyHashable: Any]? = nil) {
         executeOnUIThread {
             NotificationCenter.default.post(name: name, object: object, userInfo: userInfo)
         }
@@ -687,5 +468,131 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public func setValue(_ value: Bool, forKey key: String) {
         storage.setValue(value, forKey: key)
+    }
+}
+
+/// Used to initialize the `storage` property of defaults-backed property wrappers.
+protocol DefaultsWrapper {
+    var storage: Storage! { get set }
+}
+
+public protocol DefaultableProperty {
+    init()
+}
+
+/// Provides synchronized in-memory access to stored properties, using defaults as a backing store,
+/// for values from defaults that may not be set.
+@propertyWrapper
+public class Property<Value: Codable>: DefaultsWrapper {
+    var storage: Storage!
+
+    let key: PropertiesManager.Keys
+    let notification: Notification.Name?
+
+    private var _wrappedValue = ConcurrentReaders<Value?>(nil)
+    public var wrappedValue: Value? {
+        get {
+            if let value = _wrappedValue.get() {
+                return value
+            }
+
+            let value = storage.getDecodableValue(Value.self, forKey: key.rawValue)
+            _wrappedValue.update { $0 = value }
+
+            return value
+        }
+        set {
+            _wrappedValue.update { $0 = newValue }
+            storage.setEncodableValue(newValue, forKey: key.rawValue)
+
+            if let notification {
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: notification, object: newValue)
+                }
+            }
+        }
+    }
+
+    init(_ key: PropertiesManager.Keys,
+         notifyChangesWith notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
+    }
+}
+
+/// Same as the `Property` wrapper, but will initialize the value if it's not present in defaults.
+@propertyWrapper
+public class InitializedProperty<Value: DefaultableProperty & Codable>: DefaultsWrapper {
+    var storage: Storage!
+
+    let key: PropertiesManager.Keys
+    let notification: Notification.Name?
+
+    private var _wrappedValue: ConcurrentReaders<Value>?
+    public var wrappedValue: Value {
+        get {
+            if let value = _wrappedValue?.get() {
+                return value
+            }
+
+            let value = storage.getDecodableValue(Value.self, forKey: key.rawValue) ?? Value()
+
+            guard let _wrappedValue else {
+                _wrappedValue = ConcurrentReaders(value)
+                return value
+            }
+
+            _wrappedValue.update { $0 = value }
+            return value
+        }
+        set {
+            if let _wrappedValue {
+                _wrappedValue.update { $0 = newValue }
+            } else {
+                _wrappedValue = ConcurrentReaders(newValue)
+            }
+
+            storage.setEncodableValue(newValue, forKey: key.rawValue)
+
+            if let notification {
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: notification, object: newValue)
+                }
+            }
+        }
+    }
+
+    init(_ key: PropertiesManager.Keys,
+         notifyChangesWith notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
+    }
+}
+
+@propertyWrapper
+public class BoolProperty: DefaultsWrapper {
+    var storage: Storage!
+
+    let key: PropertiesManager.Keys
+    let notification: Notification.Name?
+
+    public var wrappedValue: Bool {
+        get {
+            return storage.defaults.bool(forKey: key.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: key.rawValue)
+            if let notification {
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: notification, object: newValue)
+                }
+            }
+        }
+    }
+
+    init(_ key: PropertiesManager.Keys,
+         notifyChangesWith notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
     }
 }

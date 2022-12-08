@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct FeatureFlags: Codable {
+public struct FeatureFlags: Codable, DefaultableProperty {
     public let smartReconnect: Bool
     public let vpnAccelerator: Bool
     public let netShield: Bool

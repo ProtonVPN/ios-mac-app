@@ -18,14 +18,14 @@
 
 import Foundation
 
-public struct RatingSettings: Codable, Equatable {
+public struct RatingSettings: Codable, Equatable, DefaultableProperty {
     public let eligiblePlans: [String]
     public let successConnections: Int
     public let daysLastReviewPassed: Int
     public let daysConnected: Int
     public let daysFromFirstConnection: Int
 
-    init() {
+    public init() {
         eligiblePlans = ["vpnplus"]
         successConnections = 3
         daysLastReviewPassed = 100

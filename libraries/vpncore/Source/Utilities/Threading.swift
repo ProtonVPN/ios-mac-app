@@ -37,3 +37,50 @@ public func dispatchAssert(condition: DispatchPredicate) {
     dispatchPrecondition(condition: condition)
     #endif
 }
+
+/// Allow multiple readers concurrent access to a value, and allow thread-safe barrier writes to this value using
+/// dispatch_barrier_sync on a per-instance queue.
+public class ConcurrentReaders<T> {
+    private var value: T
+
+    /// Concurrent queue for accessing the value.
+    private let queue = DispatchQueue(label: "ch.protonvpn.rwsync.\(String(describing: T.self)).\(UUID().uuidString)",
+                                      attributes: .concurrent)
+
+    /// Schedule a synchronous operation on the queue and return the value.
+    private var sync: ((() -> T) -> T)!
+
+    /// Schedule a synchronous operation on the queue, inserting a barrier before and after the operation.
+    private var syncBarrier: ((() -> Void) -> Void)!
+
+    /// Schedule an asynchronous operation on the queue, inserting a barrier before and after the operation.
+    private var asyncBarrier: ((@escaping () -> Void) -> Void)!
+
+    public init(_ value: T) {
+        self.value = value
+
+        self.sync = { [unowned self] in
+            self.queue.sync(execute: $0)
+        }
+
+        self.syncBarrier = { [unowned self] in
+            self.queue.sync(flags: .barrier, execute: $0)
+        }
+
+        self.asyncBarrier = { [unowned self] in
+            self.queue.async(flags: .barrier, execute: $0)
+        }
+    }
+
+    public func get() -> T {
+        sync { value }
+    }
+
+    public func update(_ closure: @escaping ((inout T) -> Void)) {
+        syncBarrier { closure(&value) }
+    }
+
+    public func updateAsync(_ closure: @escaping ((inout T) -> Void)) {
+        asyncBarrier { [unowned self] in closure(&self.value) }
+    }
+}
