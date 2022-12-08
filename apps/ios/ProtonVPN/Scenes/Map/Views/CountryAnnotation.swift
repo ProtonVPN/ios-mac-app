@@ -108,6 +108,10 @@ class CountryAnnotation: AnnotationView {
         countryLabel.attributedText = viewModel.labelString
         countryLabel.isUserInteractionEnabled = false
         addSubview(countryLabel)
+
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+        accessibilityLabel = viewModel.accessibilityLabel
         
         backgroundColor = .clear
     }
