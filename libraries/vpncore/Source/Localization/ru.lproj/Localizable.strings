@@ -89,13 +89,13 @@
 "_already_have_account" = "У меня уже есть аккаунт";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "Постоянный VPN";
+"_always_on_vpn" = "Постоянная VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "«Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
+"_always_on_vpn_tooltip_ios" = "«Постоянная VPN» переподключает VPN при обрывах быстро и автоматически. Для вашей безопасности, эту функцию нельзя отключить.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "Постоянный VPN переподключит вас автоматически";
+"_always_on_will_reconnect" = "Постоянная VPN переподключит вас автоматически";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Журналы приложения";
@@ -272,16 +272,16 @@
 "_delete_profile_warning" = "Профиль будет окончательно удален. Вы хотите продолжить?";
 
 /* (No Comment) */
-"_delinquent_description" = "Вы снова получите доступ к платным функциям, когда это буден оплачено.";
+"_delinquent_description" = "Вы снова получите доступ к платным функциям, когда это будет оплачено.";
 
 /* (No Comment) */
 "_delinquent_reconnection_description" = "Вы снова получите доступ к платным функциям, когда эти счета будут оплачены. А пока, мы подключаем Вас к самому быстрому доступному бесплатному серверу.";
 
 /* (No Comment) */
-"_delinquent_title" = "В Вашем аккаунте VPN есть неоплаченные счета";
+"_delinquent_title" = "В вашем аккаунте VPN есть неоплаченные счета";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "У вашей учётной записи есть неоплаченный счёт. Пожалуйста, оплатите все неоплаченные счета на account.protonvpn.com";
+"_delinquent_user_description" = "У вашем аккаунте есть неоплаченный счет. Оплатите все неоплаченные счета на account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Неоплаченный счет";
@@ -412,6 +412,9 @@
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Повышение вашей подписки успешно. Пожалуйста, перезапустите приложение, чтобы воспользоваться вашим новым тарифным планом.";
 
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Не удается разобрать информацию о партнере";
+
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Мы не смогли сопоставить продукты из AppStore с продуктами на нашем сервере. Пожалуйста, свяжитесь с поддержкой.";
 
@@ -473,7 +476,7 @@
 "_error_user_has_not_signed_up" = "Вы еще не зарегистрировались в Proton VPN";
 
 /* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Вы в списке ожидания и ваша учетная запись еще не готова";
+"_error_user_is_on_waitlist" = "Вы в списке ожидания, а ваш аккаунт еще не готов";
 
 /* Username unavailable error */
 "_error_username_unavailable" = "Данное имя пользователя уже занято";
@@ -543,6 +546,12 @@
 
 /* iOS plan feature */
 "_feature_connections" = "Одновременные VPN-подключения";
+
+/* (No Comment) */
+"_feature_free_servers" = "Бесплатные серверы";
+
+/* (No Comment) */
+"_feature_free_servers_description" = "Безопасность и конфиденциальность для всех. На бесплатных серверах нет ограничений по объему данных, и мы никогда не станем намеренно снижать скорость вашего просмотра веб-страниц.";
 
 /* (No Comment) */
 "_feature_p2p_description" = "Эти серверы обеспечивают лучшую производительность для BitTorrent и обмена файлами.";
@@ -818,7 +827,7 @@
 "_logs" = "Логи";
 
 /* Mac: neagent help screen */
-"_mac_password" = "пароль учетной записи пользователя macOS";
+"_mac_password" = "Пароль Mac";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Техобслуживание";
@@ -959,7 +968,7 @@
 "_neagent_first_step" = "(1)";
 
 /* Mac: neagent help screen */
-"_neagent_password" = "пароль учетной записи пользователя";
+"_neagent_password" = "пароль аккаунта компьютера";
 
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
@@ -1574,7 +1583,7 @@
 "_subscription_upgrade_option3" = "Дополнительные возможности: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
-"_subscription_upgrade_title" = "Улучшите снова, чтобы воспользоваться всеми функциями:";
+"_subscription_upgrade_title" = "Улучшите снова, чтобы пользоваться всеми функциями:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Текущий тариф истекает %@.";
@@ -1648,13 +1657,13 @@
 "_sysex_wizard_step2_title" = "Разблокируйте, чтобы внести изменения";
 
 /* System extension wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Введите данные своей учетной записи macOS, чтобы аутентифицироваться";
+"_sysex_wizard_step3_description" = "Введите учетные данные macOS для аутентификации";
 
 /* System extension wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Введите учетные данные";
 
 /* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Нажмите кнопку \"Подробности…\"";
+"_sysex_wizard_step4_description" = "Нажмите кнопку \"Информация…\"";
 
 /* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
 "_sysex_wizard_step4_description_1" = "Нажмите на кнопку \"Разрешить\"";
@@ -2100,7 +2109,7 @@
 "login_unsupported_state" = "Недействительный способ входа. Пожалуйста, свяжитесь с поддержкой.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Пожалуйста, отключите другое устройство, чтобы подключить на это, или перейдите на %@";
+"maximum_device_plan_limit_part_1" = "Отключите другое устройство, чтобы подключить на это, или перейдите на %@";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Сайт Proton VPN может быть временно недоступен из-за сетевых ограничений. Пожалуйста, используйте мобильное приложение для создания нового аккаунта Proton.";

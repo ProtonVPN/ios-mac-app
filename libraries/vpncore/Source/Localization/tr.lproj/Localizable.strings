@@ -412,6 +412,9 @@
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Abonelik yükseltme işleminiz tamamlandı. Lütfen yeni hizmet tarifenizden yararlanmak için uygulamayı yeniden başlatın.";
 
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "İş ortağı bilgileri işlenemedi";
+
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "App Store ürününü sunucumuzdaki ürünlerle eşleştiremedik. Lütfen destek ekibiyle görüşün.";
 
@@ -543,6 +546,12 @@
 
 /* iOS plan feature */
 "_feature_connections" = "Eşzamanlı VPN bağlantıları";
+
+/* (No Comment) */
+"_feature_free_servers" = "Ücretsiz sunucular";
+
+/* (No Comment) */
+"_feature_free_servers_description" = "Herkes için güvenlik ve kişisel gizlilik. Ücretsiz sunucularda veri miktarı sınırlaması yoktur ve asla kastılı olarak gezinme hızınızı yavaşlatmayız.";
 
 /* (No Comment) */
 "_feature_p2p_description" = "Bu sunucular, BitTorrent ve dosya paylaşımı için en iyi başarımı sağlar.";

@@ -412,6 +412,9 @@
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Peningkatan paket langganan Anda berhasil. Silahkan luncurkan ulang aplikasi untuk mendapatkan manfaat dari paket layanan baru Anda.";
 
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Tidak dapat mengurai info mitra";
+
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Kami tidak dapat mencocokkan produk yang ada di App Store dengan produk yang ada di server kami. Silakan hubungi layanan dukungan.";
 
@@ -543,6 +546,12 @@
 
 /* iOS plan feature */
 "_feature_connections" = "Sambungan VPN serentak";
+
+/* (No Comment) */
+"_feature_free_servers" = "Server Free";
+
+/* (No Comment) */
+"_feature_free_servers_description" = "Keamanan dan privasi untuk semua. Server Free kami tidak memiliki batasan data, dan kami tidak akan pernah dengan sengaja memperlambat laju penjelajahan internet Anda.";
 
 /* (No Comment) */
 "_feature_p2p_description" = "Server-server berikut memberikan performa terbaik dalam hal BitTorrent dan file sharing.";
