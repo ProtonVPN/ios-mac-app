@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>_countries_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d země</string>
+			<key>many</key>
+			<string>%d zemí</string>
+			<key>one</key>
+			<string>%d země</string>
+			<key>other</key>
+			<string>%d zemí</string>
+		</dict>
+	</dict>
+	<key>_countries_count_plus</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d+ země</string>
+			<key>many</key>
+			<string>%d+ zemí</string>
+			<key>one</key>
+			<string>%d+ země</string>
+			<key>other</key>
+			<string>%d+ zemí</string>
+		</dict>
+	</dict>
+	<key>_plans_connections</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d připojení</string>
+			<key>many</key>
+			<string>%d připojení</string>
+			<key>one</key>
+			<string>%d připojení</string>
+			<key>other</key>
+			<string>%d připojení</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Stovky serverů ve %d zemích</string>
+			<key>many</key>
+			<string>Stovky serverů v %d zemích</string>
+			<key>one</key>
+			<string>Stovky serverů v %d zemi</string>
+			<key>other</key>
+			<string>Stovky serverů v %d zemích</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Připojení až %d zařízení najednou</string>
+			<key>many</key>
+			<string>Připojení až %d zařízení najednou</string>
+			<key>one</key>
+			<string>Připojení až %d zařízení</string>
+			<key>other</key>
+			<string>Připojení až %d zařízení najednou</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Dosáhli jste maximálního počtu změn nastavení. Zkuste to prosím znovu za minimálně %d minuty.</string>
+			<key>many</key>
+			<string>Dosáhli jste maximálního počtu změn nastavení. Zkuste to prosím znovu za minimálně %d minut.</string>
+			<key>one</key>
+			<string>Dosáhli jste maximálního počtu změn nastavení. Zkuste to prosím znovu za minimálně %d minutu.</string>
+			<key>other</key>
+			<string>Dosáhli jste maximálního počtu změn nastavení. Zkuste to prosím znovu za minimálně %d minut.</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> abyste připojili až %#@num_devices@ současně.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d zařízení</string>
+			<key>many</key>
+			<string>%d zařízení</string>
+			<key>one</key>
+			<string>%d zařízení</string>
+			<key>other</key>
+			<string>%d zařízení</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

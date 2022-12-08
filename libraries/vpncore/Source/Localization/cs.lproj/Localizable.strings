@@ -1,0 +1,2134 @@
+/* (No Comment) */
+"_5_connections" = "5 připojení";
+
+/* (No Comment) */
+"_5_connections_description" = "Připojte až 5 zařízení\nsoučasně";
+
+/* MacOS: About window title */
+"_about" = "O aplikaci";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Účet";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Smazáním vašeho účtu se ukončí vaše VPN relace.";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Chyba";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Tarif účtu";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Typ účtu";
+
+/* MacOS: About window */
+"_acknowledgements" = "Poděkování";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Akce";
+
+/* (No Comment) */
+"_action_requires_reconnect" = "Pro použití této změny je třeba připojení restartovat";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "Aktivovat Widget";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "Přejetím prstem doleva na vaší domovské obrazovce otevřete widgety.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "Posouvejte úplně dolů a klepněte na tlačítko úpravy.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Přidejte widget Proton VPN do seznamu aktivních widgetů.";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Blokování reklam (NetShield)";
+
+/* Section title in Settings */
+"_advanced" = "Pokročilé";
+
+/* Plan information */
+"_advanced_features" = "+ Pokročilé funkce";
+
+/* API error */
+"_ae_vpn_info_not_received" = "Nelze získat informace o VPN";
+
+/* API error */
+"_ae_wrong_login_credentials" = "Špatné uživatelské jméno nebo heslo";
+
+/* Account plan description */
+"_all_countries" = "60+ zemí";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Všechny servery v této zemi jsou v údržbě. Připojte se k jiné zemi.";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Profilový(é) server(y) pod údržbou";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Všechny servery jsou v údržbě. To obvykle znamená, že na straně Proton VPN jsou buď technické problémy, nebo je vaše síť omezená.";
+
+/* (No Comment) */
+"_allow" = "Povolit";
+
+/* (No Comment) */
+"_allow_lan_description" = "Pro povolení přístupu k LAN musí být Kill Switch vypnut.\n\nPokračovat?";
+
+/* (No Comment) */
+"_allow_lan_info" = "Umožňuje obejití VPN a připojení k zařízením na lokální síti (např. vaše tiskárna).";
+
+/* (No Comment) */
+"_allow_lan_note" = "Pro použití této změny je třeba připojení restartovat";
+
+/* (No Comment) */
+"_allow_lan_title" = "Povolit připojení LAN";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Již mám účet";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Trvalá síť VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Trvalá síť VPN obnovuje bezpečné VPN připojení rychle a automaticky. Pro vaši bezpečnost je tato funkce vždy zapnuta.";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Trvalá síť VPN vás automaticky znovu připojí";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Záznam aplikace";
+
+/* (No Comment) */
+"_applying_settings_" = "Nastavení se ukládají";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Automaticky přiřazeno";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Automatické připojení";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Při spuštění aplikace jste připojeni k vybranému profilu";
+
+/* Battery usages screen description */
+"_battery_description" = "Veškerý provoz na vašem telefonu bude spravován přes OpenVPN, takže iOS přidělí využití baterie jiných aplikacích Proton VPN.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Chcete se dozvědět více?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Využití baterie";
+
+/* Common word */
+"_cancel" = "Zrušit";
+
+/* (No Comment) */
+"_cancel_reconnection" = "Tímto se zruší jakýkoli pokus o opětovné připojení a zanechá vás odpojený";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Změna protokolů ukončí vaši aktuální relaci VPN.";
+
+/* Changing settings title */
+"_change_settings" = "Změnit nastavení";
+
+/* MacOS: About window */
+"_changelog" = "Přehled změn";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Zkontrolujte, zda jsou vyplněna všechna pole";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Zvolte předplatné";
+
+/* iOS status view */
+"_city" = "Město";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Vymazat data aplikace";
+
+/* Common word */
+"_close" = "Zavřít";
+
+/* (No Comment) */
+"_collapse_list_of_servers" = "Sbalit seznam serverů";
+
+/* Profile create/change form */
+"_color" = "Barva";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Běžné problémy s přihlášením";
+
+/* Common word */
+"_connect" = "Připojit";
+
+/* Common word */
+"_connected" = "Připojeno";
+
+/* iOS status view */
+"_connected_to" = "Připojeno k";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Připojeno k %@";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Připojování";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Připojování k %@";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Připojování %@";
+
+/* (No Comment) */
+"_connectingDotDotDot" = "Připojování...";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Připojení";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Připojení selhalo";
+
+/* Profile create/change form */
+"_connection_settings" = "Nastavení připojení";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Kontaktujte naši podporu";
+
+/* (No Comment) */
+"_continue" = "Pokračovat";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Země";
+
+/* iOS: countries list section header */
+"_countries_free" = "Země pro bezplatné uživatele";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Země pro prémiové uživatele";
+
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Vyberte zemi a server, který chcete použít pro svou koncovou IP adresu.";
+
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Země";
+
+/* Profile create/edit menu */
+"_country" = "Země";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Vyberte prosím zemi";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ serverů, na kterých probíhá údržba";
+
+/* MacOS: button in login screen */
+"_create_account" = "Vytvořit účet";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Vytvořit profil";
+
+/* (No Comment) */
+"_create_profile" = "Vytvořit profil";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Pokračováním dojde ke ztrátě aktuálního výběru. Chcete pokračovat?";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Souhlasit & Pokračovat";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Model vašeho zařízení a verze OS";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN je oddaná ochraně a respektování vašeho soukromí. Naší prvořadou prioritou je sbírat co nejméně uživatelských dat, abychom mohli zajistit soukromý a anonymní zážitek při používání aplikace, speciálně:\n\n%@ - přihlásit vás, pomoci vám při ztrátě hesla a poslat vám důležité aktualizace služby.\n\n%@ - pouze pro záznamy pádů a chyb.\n\nAplikace Proton VPN nezpracovává žádná uživatelská data kromě těchto. Nezaznamenáváme vaši online aktivitu, ani žádné osobní identifikační údaje. Všechna zmíněná data jsou ukládána a zpracovávána na našich vlastních systémech Proton VPN, bez přístupu jakékoliv třetí strany.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Chraňte se online";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Uživatelské jméno, e-mailová adresa";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+
+/* Common word */
+"_delete" = "Smazat";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Veškerá data související s Proton VPN budou vymazána a aplikace se zavře. Přejete si pokračovat?";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Vymazat data aplikace";
+
+/* Button */
+"_delete_profile" = "Odstranit profil";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Odstranit profil";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Tento profil bude trvale smazán. Chcete pokračovat?";
+
+/* (No Comment) */
+"_delinquent_description" = "Budete moci znovu přistupovat k prémiovým funkcí po uhrazení nesplacených faktur.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "Budete moci znovu přistupovat k prémiovým funkcí po uhrazení nesplacených faktur. Pro teď vás přepojujeme na nejrychlejší server bezplatného tarifu.";
+
+/* (No Comment) */
+"_delinquent_title" = "U Vašeho VPN účtu evidujeme neuhrazené faktury";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Váš účet má aktuálně fakturu po splatnosti. Zaplaťte prosím všechny nezaplacené faktury na account.protonvpn.com";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Nezaplacená faktura";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Pokaždé jiný server";
+
+/* Button in some alerts */
+"_disable" = "Zakázat";
+
+/* Common word */
+"_disabled" = "Zakázáno";
+
+/* Common word */
+"_disconnect" = "Odpojit";
+
+/* Common word */
+"_disconnected" = "Odpojeno";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Odpojování";
+
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Prozkoumejte aplikaci";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Ochrana proti úniku DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Zabránit úniku podrobností dotazů DNS třetím stranám. Vždy zapnuto.";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Chcete aktivovat zakoupené předplatné pro ";
+
+/* Common word */
+"_done" = "Hotovo";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Předběžný přístup";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Buďte první, kdo získá nejnovější aktualizace. Pamatujte, že rané verze mohou být méně stabilní.";
+
+/* Common word */
+"_edit" = "Upravit";
+
+/* Common word */
+"_enabled" = "Zapnuto";
+
+/* MacOS app tour: end tour button */
+"_end_tour" = "Ukončit prohlídku";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "Užijte si %@ zdarma!";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Zadejte e-mailovou adresu";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Zadejte název profilu";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* API error */
+"_error_api_offline" = "Proton VPN API je nyní nedostupné";
+
+/* (No Comment) */
+"_error_credit_applied" = "Pro dokončení nákupu kontaktujte support@protonvpn.com.";
+
+/* Error decoding an object */
+"_error_decode" = "Selhání při dešifrování archivovaných dat ve třídě: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Ověřování emailů dočasně vypnuté";
+
+/* Application error */
+"_error_existing_session_to_server" = "Nelze se připojit k serveru, protože na něm již existuje aktivní relace uživatele";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Nelze nalézt uživatele z relace";
+
+/* (No Comment) */
+"_error_field_email_wrong_format" = "E-mailová adresa není ve správném formátu";
+
+/* (No Comment) */
+"_error_field_passwords_dont_match" = "Hesla se neshodují";
+
+/* Form validation error */
+"_error_field_required" = "Toto pole je povinné";
+
+/* Form validation error */
+"_error_field_unknown" = "Prosím zaškrtněte toto pole";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "Generování SRP selhalo";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Nelze vytvořit hash uživatelského hesla";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Interní chyba API";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Keychain chyba.";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton nedokázal komunikovat s vaším zařízením. Prosím zkuste to později.";
+
+/* Parsing error */
+"_error_loads" = "Nelze aktualizovat vytížení serverů";
+
+/* (No Comment) */
+"_error_mitm_description" = "Ověření TLS certifikátu selhalo při připojování k Proton VPN API. Vaše současné internetové připojení může být monitorováno. Pro udržení vašich dat v bezpečí, zamezujeme aplikaci přístup k Proton VPN API.\nPro přihlášení nebo přístup k vašemu účtu se připojte k jiné síti a zkuste to znovu.";
+
+/* (No Comment) */
+"_error_mitm_title" = "Nezabezpečené připojení";
+
+/* (No Comment) */
+"_error_mitm_vpn_description" = "Ověření TLS certifikátu selhalo při připojování k VPN serveru. Vaše současné internetové připojení může být monitorováno. Pro udržení vašich dat v bezpečí, zamezujeme aplikaci přístup k tomuto VPN serveru.\nProsím zvolte jiný server.";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Podpis Modulusu je prázdný";
+
+/* In App Purchase error */
+"_error_no_active_username" = "Prosíme přihlaste se pomocí účtu, kterému chcete navýšit tarif. Potom budeme moci dokončit nákup.";
+
+/* In App Purchase error */
+"_error_no_new_subscription_in_successfull_response" = "Vaše předplatné bylo úspěšně navýšeno. Pro zpřístupnění výhod prosím aplikaci ukončete a znovu spusťte.";
+
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Nelze analyzovat informace o partnerovi";
+
+/* In App Purchase error */
+"_error_purchased_plan_does_not_match_available" = "Nepodařilo se nám spárovat produkt na App Store s produkty na našem serveru. Obraťte se prosím na podporu.";
+
+/* In App Purchase error */
+"_error_receipt_lost" = "Účtenka z App Storu byla ztracena. Prosím kontaktujte podporu pokud vaše předplatné nebylo aktivováno.";
+
+/* In App Purchase error */
+"_error_sandbox_receipt" = "Nákupy v beta verzi iOS aplikace nejsou dostupné. Nic jsme vám neúčtovali.";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "Nelze dodat informace serveru";
+
+/* Parsing error */
+"_error_session_count_parser" = "Nelze analyzovat počet relací";
+
+/* (No Comment) */
+"_error_signup_using_protonmail_address" = "Váš Proton Mail účet už je nastaven pro VPN. Prosím přihlaste se s vašimi současnými údaji.";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Nelze analyzovat informace o předplatném";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Chyba inicializace TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Není možné ověřit certifikát serveru.";
+
+/* In App Purchase error */
+"_error_transaction_failed_by_unknown_reason" = "App Store nemohl váš nákup zpracovat.";
+
+/* In App Purchase error */
+"_error_transaction_of_other_user" = "Nákup byl zahájen pod jiným uživatelským jménem Proton VPN.";
+
+/* In App Purchase error */
+"_error_unavailable_product" = "Proces získání seznamu dostupných produktů z AppStore selhal.";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Neznámá chyba";
+
+/* user cancelled human validation procedure */
+"_error_user_cancelled" = "Operace byla zrušena";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "Vytvoření účtu selhalo";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Platnost pověření uživatele vypršela. Přihlaste se prosím";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Chybí pověření uživatele. Nelze se přihlásit";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Nepodařilo se nám ověřit, zda jste člověk. Zkuste to prosím znovu nebo si zakupte prémiový tarif.";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_no_vpn_access" = "Váš účet nemá přístup k síti VPN. Obraťte se prosím na správce účtu";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_not_signed_up" = "Ještě jste se nezaregistrovali pro Proton VPN";
+
+/* VPN credentials can't be loaded error */
+"_error_user_is_on_waitlist" = "V současné době jste na čekací listině a váš účet ještě není připraven";
+
+/* Username unavailable error */
+"_error_username_unavailable" = "Uživatelské jméno je již obsazeno";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Nelze analyzovat metody ověřování";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "V klíčence chybí pověření VPN";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Nelze načíst vlastnosti VPN!";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Relace Proton VPN je aktivní";
+
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "Chybný stav platebního tokenu. Restartujte aplikaci. Pokud chyba přetrvává, kontaktujte podporu.";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_body" = "Proton VPN používá firewall s paketovým filtrem k implementaci přepínače Kill Switch. Povolením funkce Kill Switch přepíšete aktuální nastavení brány firewall vašeho zařízení. Pokud se na tuto konfiguraci brány firewall spoléháte, neměli byste přepínač Kill Switch používat.\n\nChcete-li použít přepínač Kill Switch a přepsat aktuální nastavení brány firewall, vyberte možnost POKRAČOVAT.\n\nChcete-li přepínač Kill Switch vypnout a pokračovat v používání aktuální brány firewall, vyberte možnost ZRUŠIT.";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_title" = "Detekován firewall";
+
+/* Existing connection alert */
+"_existing_session" = "Server je nedostupný";
+
+/* Existing connection alert */
+"_existing_session_to_server" = "Prosím vyberte jiný server.";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Rozbalit seznam serverů";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "VYPRŠELO";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Rozšíření";
+
+/* MacOS: connecting overlay */
+"_failed" = "selhalo";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_description" = "Nepodařilo se načíst pověřovací údaje VPN, přihlaste se prosím znovu pro vyřešení problému.";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_title" = "VPN pověřovací údaje chybí";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Nejrychlejší";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Nejrychlejší dostupný server";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Nejrychlejší připojení";
+
+/* (No Comment) */
+"_feature" = "Funkce";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "Přístup k blokovanému obsahu";
+
+/* (No Comment) */
+"_feature_bt" = "BitTorrent/podpora sdílení souborů";
+
+/* iOS plan feature */
+"_feature_connections" = "Souběžná připojení VPN";
+
+/* (No Comment) */
+"_feature_free_servers" = "Bezplatné servery";
+
+/* (No Comment) */
+"_feature_free_servers_description" = "Bezpečnost a soukromí pro všechny. Bezplatné servery nemají žádná datová omezení a ani vám nebudeme záměrně snižovat rychlost prohlížení.";
+
+/* (No Comment) */
+"_feature_p2p_description" = "Tyto servery poskytují nejvyšší výkony pro BitTorrent a sdílení souborů.";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Bezpečné streamování";
+
+/* iOS plan feature */
+"_feature_server_count" = "Připojit k serverům v";
+
+/* (No Comment) */
+"_feature_smart_routing_description" = "Tato technologie umožňuje, aby aplikace Proton VPN byly rychlejší a bezpečnější v zemích, které nerespektují soukromí.";
+
+/* iOS plan feature */
+"_feature_speed" = "Rychlost";
+
+/* (No Comment) */
+"_feature_streaming_description" = "PLUS servery podporují streamování (Netflix, Disney+, atd.) kdekoliv na světě.";
+
+/* iOS plan feature */
+"_feature_tor" = "TOR skrze VPN";
+
+/* (No Comment) */
+"_feature_tor_description" = "Veďte veškerý internetový provoz přes síť Tor. Pomalejší, ale více soukromější.";
+
+/* (No Comment) */
+"_features_title" = "Funkce";
+
+/* (No Comment) */
+"_force_upgrade_message" = "Verze aplikace Proton VPN, kterou právě používáte, již není podporována. Aktualizujte ji prosím na nejnovější verzi.";
+
+/* (No Comment) */
+"_force_upgrade_title" = "Nutná aktualizace aplikace";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Zapomněli jste heslo?";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Zapomenuté uživatelské jméno";
+
+/* Used instead of price for free plans. */
+"_free" = "Zdarma";
+
+/* Account plan description */
+"_free_countries" = "3 země";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Bezplatné servery";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Navyšte na tarif %@ a využívejte nadále funkce:";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Vaše bezplatná zkušební verze brzy vyprší!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Váš účet byl převeden na bezplatný tarif Proton VPN.\nMohou vám chybět následující výhody %@:";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Vaše zkušební verze %@";
+
+/* Downgrade */
+"_from_server_title" = "Ze serveru:";
+
+/* MacOS: General tab in setting window */
+"_general" = "Obecné";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Získat tarif %@";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Pořiďte si Proton VPN Plus a odemkněte si tyto a další funkce.";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Získat ověřovací e-mail";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Získat ověřovací SMS";
+
+/* Button in several different alerts */
+"_got_it" = "Rozumím!";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Nápověda";
+
+/* Show/hide password switch */
+"_hide" = "SKRÝT";
+
+/* Value of speed in _speed */
+"_high" = "Vysoká";
+
+/* Value of speed in _speed */
+"_highest" = "Nejvyšší";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Ignorovat";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* Streaming & Features */
+"_information_title" = "Informace";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Navazování spojení...";
+
+/* (No Comment) */
+"_invalid_refresh_token" = "Relace vypršela";
+
+/* (No Comment) */
+"_invalid_refresh_token_please_login" = "Dlouho jste aplikaci Proton VPN nepoužívali. Prosím přihlaste se znovu.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "Od vědců a inženýrů, kteří vytvořili Proton Mail, vítejte na bezpečnějším a soukromějším internetu.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Vítejte na lepším internetu";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Překonejte cenzuru a regionální omezení. Nemáme reklamy, neomezujeme šířku pásma a neprodáváme vaše data.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "Věříme, že internet by měl být svobodný";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Jsme bezpečnostní společnost. Ať už jde o naši architekturu Secure Core nebo pokročilé šifrování, bezpečnost je vždy na prvním místě.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "Vaše bezpečnost je naší prioritou";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* (No Comment) */
+"_ip_will_not_be_exposed" = "Vaše IP adresa nebude zveřejněna.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill Switch";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Kill Switch chrání vaši IP adresu\n\nVaše internetové připojení bude obnoveno, jakmile se Proton VPN znovu připojí k serveru. Chcete-li obnovit připojení bez ochrany VPN, vypněte funkci Kill Switch.";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill Switch blokuje všechna spojení";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_title" = "Kill Switch";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Vypnout Kill Switch";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_foot" = "Ukončete tyto aplikace, abyste problém vyřešili.\nChcete-li pokračovat v procházení bez přepínače Kill Switch, klikněte na tlačítko Pokračovat.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Některé aplikace, například antiviry nebo brány firewall, mohou být s přepínačem Kill Switch v konfliktu, takže nebude správně fungovat.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Přepínač Kill Switch funguje s bránou MacOS Firewall.\nPokud jsou s bránou Firewall spojeny jiné aplikace, mohou s přepínačem Kill Switch Proton VPN interferovat. Ukončení těchto aplikací může obnovit pravidla brány Firewall nastavená přepínačem Kill Switch.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_title" = "Byla zjištěna chyba Kill Switch";
+
+/* MacOS: killswicth install error alert */
+"_kill_switch_helper_install_issue_popup_body" = "Při instalaci nebo aktualizaci přepínače Kill Switch došlo k problému.\n\nChcete-li to zkusit znovu, klikněte na tlačítko ZNOVU.\n\nChcete-li pokračovat bez funkce Kill Switch, klikněte na tlačítko ZAKÁZAT.";
+
+/* MacOS: killswitch alert */
+"_kill_switch_helper_install_popup_body" = "Chcete-li zapnout funkci Kill Switch, můžete být požádáni o zadání hesla k počítačovému účtu. Pokud se zobrazí výzva, zadejte své %@ a přijměte ji.\n\nTento požadavek se může občas znovu zobrazit, když aplikace Proton VPN obdrží aktualizace.";
+
+/* MacOS: updating helper alert */
+"_kill_switch_helper_update_popup_body" = "Poslední stažená aktualizace vyžaduje zadání hesla k počítačovému účtu. Když se zobrazí požadavek, zadejte své %@ a přijměte jej.\n\nPokud heslo k počítači Mac nezadáte, bude funkce Kill Switch vypnuta.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Vaše připojení k internetu bude obnoveno, jakmile se Proton VPN znovu připojí k serveru.\nChcete-li používat internet bez ochrany VPN a Kill Switch, zrušte opětovné připojení k serveru.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "bez";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Ochrana Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Zrušení opětovného připojení";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch chrání vaši IP adresu";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Zablokuje veškerý síťový provoz při uzavření VPN tunelu.";
+
+/* (No Comment) */
+"_ks_dont_ask" = "Příště se nedotazovat";
+
+/* (No Comment) */
+"_ks_requires_swift5_popup_msg" = "Chcete-li zapnout funkci Kill Switch, musíte si stáhnout a nainstalovat %@.\nProsím proveďte tuto instalaci před zapnutím Kill Switch.";
+
+/* (No Comment) */
+"_ks_requires_swift5_popup_msg2" = "Proton VPN nerozpoznala %@. Chcete-li zapnout funkci Kill Switch, nainstalujte nejprve software.";
+
+/* (No Comment) */
+"_ks_swift5_lib_name" = "Knihovna podpory běhu Swift 5";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Více informací";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Dozvědět se více o Secure Core";
+
+/* Display less information */
+"_less_info" = "Méně informací";
+
+/* Server load. Used together with actual server load in percents. */
+"_load" = "Vytížení";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Načítání informací o připojení";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Načítání informací o připojení pro %@";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Zabezpečený Internet kdekoli";
+
+/* (No Comment) */
+"_local_agent_policy_violation_error_message" = "Nemáte dovoleno připojit se k tomuto serveru. Zvolte jiný server nebo navyšte svůj tarif.";
+
+/* (No Comment) */
+"_local_agent_policy_violation_error_title" = "Porušení pravidel";
+
+/* (No Comment) */
+"_local_agent_server_error_message" = "Na serveru se vyskytla chyba. Prosím připojte se k jinému serveru.";
+
+/* Local agent */
+"_local_agent_server_error_title" = "Chyba serveru";
+
+/* iOS status view */
+"_location" = "Lokace";
+
+/* (No Comment) */
+"_locations_all" = "Všechny lokace";
+
+/* (No Comment) */
+"_locations_free" = "Bezplatná umístění";
+
+/* (No Comment) */
+"_locations_plus" = "Plus umístění";
+
+/* iOS: Login button in several places */
+"_log_in" = "Přihlásit se";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Přihlaste se a začněte";
+
+/* iOS: button in settings screen */
+"_log_out" = "Odhlásit se";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Odhlášení ukončí vaši VPN relaci.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Odhlášením z aplikace se odpojí aktivní připojení VPN. Chcete pokračovat?";
+
+/* MacOS: Login button */
+"_login" = "Přihlásit se";
+
+/* iOS logs screen title */
+"_logs" = "Logy";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Heslo Mac";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Údržba";
+
+/* (No Comment) */
+"_maintenance_on_server_detected_description" = "Přepojování k nejrychlejšímu dostupnému serveru.";
+
+/* (No Comment) */
+"_maintenance_on_server_detected_subtitle" = "Server, ke kterému jste byli připojeni, je v údržbě";
+
+/* (No Comment) */
+"_maintenance_on_server_detected_title" = "VPN server je v režimu údržby";
+
+/* Profile create/change form */
+"_make_default_profile" = "Nastavit základní profil";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Správa profilů";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Správa předplatného";
+
+/* (No Comment) */
+"_manage_subscription_on_web" = "Správa předplatného na webovém ovládacím panelu";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Mapa";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Skrýt mapu";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Ukázat mapu";
+
+/* (No Comment) */
+"_maximum_device_reached_description" = "Pro připojení k tomuto zařízení odpojte jiné zařízení.";
+
+/* (No Comment) */
+"_maximum_device_title" = "Dosáhli jste maximálního počtu zařízení";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Možná později";
+
+/* Value of speed in _speed */
+"_medium" = "Střední";
+
+/* Main mac app menu item */
+"_menu_about" = "O Proton VPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Kontrola aktualizací...";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Skrýt ostatní";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Skrýt Proton VPN";
+
+/* Main mac app menu item */
+"_menu_logout" = "Odhlásit se";
+
+/* Main mac app menu item */
+"_menu_minimize" = "Minimalizovat";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Nastavení";
+
+/* Main mac app menu item */
+"_menu_quit" = "Ukončit Proton VPN";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Zobrazit vše";
+
+/* Main mac app menu item */
+"_menu_window" = "Okno";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Povolit Moderate NAT";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Povolit Moderate NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "Moderate NAT zakáže náhodné mapování místních adres. To může mírně snížit zabezpečení, ale umožňuje to aplikacím typu peer-to-peer, jako jsou online hry, navazovat přímá spojení. \nDalší informace";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "Více informací";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Moderate NAT";
+
+/* Display more information */
+"_more_info" = "Další informace";
+
+/* Label in Plan information */
+"_most_popular" = "Nejoblíbenější";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Více zemí";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Stovky serverů\npo celém světě";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Více serverů";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Moje profily";
+
+/* Profile create/change form */
+"_name" = "Název";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Nemohli jsme se připojit k Proton serverům";
+
+/* Network error */
+"_ne_network_connection_lost" = "Síťové spojení ztraceno";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Nejste připojeni k internetu";
+
+/* Network error */
+"_ne_request_timed_out" = "Síťový požadavek vypršel";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Poradce při potížích";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Služba je nedostupná";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Vždy Zapnuto";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Můžete být požádáni, abyste uvedli své %@\npro připojení ke službě Proton VPN. Pokud se tento požadavek objeví,\nzadejte své %@ %@ a klikněte na \"%@\" %@.";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "heslo účtu počítače";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* MacOS: button in login screen */
+"_need_help" = "Potřebujete pomoc?";
+
+/* (No Comment) */
+"_neks_t2_connect" = "Přesto povolit";
+
+/* (No Comment) */
+"_neks_t2_description" = "Použití vypínače Kill Switch je u tohoto zařízení nestabilní.\n\nVaše zařízení je vybaveno bezpečnostním čipem T2, což může vést k problémům se stabilitou systému, pokud Proton VPN používá funkci Kill Switch systému macOS.";
+
+/* `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "T2 bezpečnostní čip";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Upozornění na stabilitu Kill Switch";
+
+/* (No Comment) */
+"_netshield_alert_reconnect_description_off" = "Vaše připojení bude restartováno, aby se změnil NetShield režim.";
+
+/* (No Comment) */
+"_netshield_alert_reconnect_description_on" = "Vaše připojení bude restartováno, aby se změnil režim NetShield.\nPoznámka: Pokud se některé stránky nenačtou, zkuste vypnout funkci NetShield.";
+
+/* (No Comment) */
+"_netshield_alert_upgrade_description" = "NetShield zvyšuje vaše soukromí blokováním reklam a sledovacích prvků.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Blokování malwaru";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Blokování malware, reklam & sledovacích prvků";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Vypnuto";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Blokování malware & reklam";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* (No Comment) */
+"_netshield_title_tooltip" = "Blokovat reklamy, sledovací prvky a malware";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Síť je nedostupná";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Novinky";
+
+/* iOS onboarding next item button */
+"_next" = "Další";
+
+/* MacOS app tour: next tip button */
+"_next_tip" = "Další tip";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Popis není k dispozici";
+
+/* (No Comment) */
+"_no_servers_to_show" = "V současné době zde nejsou žádné servery k zobrazení.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Ne, děkuji";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Povolit nestandardní porty";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Použijte Proton VPN pro jakékoliv speciální potřeby povolením provozu na nestandardních portech prostřednictvím sítě VPN. Další informace";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "Více informací";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Nestandardní porty";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Nepřipojeno";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Nelze navázat připojení VPN. Nejste připojeni k internetu.";
+
+/* (No Comment) */
+"_not_now" = "Nyní ne";
+
+/* Common word */
+"_ok" = "OK";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "Under maintenance";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Zobrazit Proton VPN pro přihlášení...";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN logy";
+
+/* (No Comment) */
+"_openvpn" = "OpenVPN";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Přehled";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Podporuje provoz P2P";
+
+/* (No Comment) */
+"_p2p_detected_popup_body" = "Vaše připojení bylo zakázáno, protože používáte server, který nepodporuje peer-to-peer (P2P) přenosy. P2P není podporován na bezplatných serverech nebo serverech s číslem 100 nebo vyšším.";
+
+/* (No Comment) */
+"_p2p_detected_popup_title" = "Provoz P2P není na tomto serveru povolen";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body" = "Vaše připojení bylo automaticky přesměrováno přes jiný server, protože některé servery nepodporují provoz P2P. To může snížit rychlost vašeho připojení. Abyste se vyhnuli přesměrování, používejte servery s označením P2P.";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body_p1" = "Vaše připojení bylo automaticky přesměrováno přes jiný server, protože některé servery nepodporují provoz P2P. To může snížit rychlost vašeho připojení. Používejte prosím servery s";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body_p2" = "ikonou abyste se vyhnuli pomalému přesměrování.";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_title" = "Připojení přesměrováno";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "Server P2P";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P servery";
+
+/* (No Comment) */
+"_p2p_title" = "P2P/BitTorrent";
+
+/* Plan upgrade required alert */
+"_paid_required" = "Je vyžadováno předplatné Proton VPN";
+
+/* Used in sign-in, sign-up */
+"_password" = "Heslo";
+
+/* Sign-up form */
+"_password_confirm" = "Potvrzení hesla";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ rok";
+
+/* (No Comment) */
+"_performance_load_description" = "Servery s vyšším vytížením jsou pomalejší než servery s nízkým vytížením.";
+
+/* (No Comment) */
+"_performance_load_high" = "Vysoké";
+
+/* (No Comment) */
+"_performance_load_low" = "Nízké";
+
+/* (No Comment) */
+"_performance_load_medium" = "Střední";
+
+/* (No Comment) */
+"_performance_title" = "Výkon";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Kód";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Zadejte telefonní číslo";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Váš tarif nezahrnuje funkci Secure Core.";
+
+/* (No Comment) */
+"_plan_speed_fastest" = "Nejvyšší rychlost";
+
+/* Plan speed */
+"_plan_speed_high" = "Vysoká rychlost";
+
+/* Plan speed */
+"_plan_speed_medium" = "Střední rychlost";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Po potvrzení nákupu placeného tarifu bude z vašeho účtu iTunes stržena zobrazená částka, která zahrnuje daně a další poplatky platformy (které nejsou účtovány přímo společností Proton). Po provedení nákupu budete automaticky převedeni na vybraný plán na dobu 1 roku, po jejímž uplynutí můžete prodloužit nebo zrušit jeho platnost, a to buď online, nebo prostřednictvím naší aplikace pro iOS.";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* Features of account plan */
+"_plus_plan_features" = "Servery Plus\nSecure Core\nServery Tor";
+
+/* Plan upgrade required alert */
+"_plus_required" = "Je vyžadováno předplatné Plus nebo Visionary";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Servery Plus";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Nastavení";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Prémiový server";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Prémiový server";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Ověření dostupnosti serveru";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Zásady ochrany osobních údajů";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profil";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Nový profil uložen";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Profil se nepodařilo vytvořit";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Profil byl smazán";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Profil nelze smazat";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Profil aktualizován";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Prosím zadejte název";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Maximální délka názvu profilu je 25 znaků";
+
+/* (No Comment) */
+"_profile_name_needs_to_be_unique" = "Profil se stejným názvem již existuje";
+
+/* Profile create/change form */
+"_profile_settings" = "Nastavení profilu";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Profily";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Přehled profilů";
+
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Uložte si preferovaná nastavení a servery pro budoucí použití.";
+
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Profily";
+
+/* (No Comment) */
+"_protocol" = "Protokol";
+
+/* (No Comment) */
+"_protonvpn_macos" = "Proton VPN macOS";
+
+/* (No Comment) */
+"_protonvpn_plus" = "Proton VPN Plus";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Veřejná IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Rychlé připojení";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Tlačítko Rychlé připojení vás připojí k vybranému profilu";
+
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Automaticky se připojte k serveru, který vám poskytne nejrychlejší připojení.";
+
+/* MacOS app tour: quick connect title */
+"_quick_connect_tour_title" = "Rychlé připojení";
+
+/* (No Comment) */
+"_quick_settings_get_plus" = "Získat Plus";
+
+/* (No Comment) */
+"_quick_settings_killSwitch_description" = "Zakáže internet při přerušení VPN spojení, čímž zabrání úniku IP adresy.";
+
+/* (No Comment) */
+"_quick_settings_killSwitch_note" = "Pokud se nemůžete připojit k zařízením v místní síti, zkuste vypnout funkci Kill Switch.";
+
+/* (No Comment) */
+"_quick_settings_netShield_description" = "Procházení internetu bez reklam a malwaru.";
+
+/* (No Comment) */
+"_quick_settings_netShield_note" = "Pokud se webové stránky nenačtou, zkuste vypnout NetShield";
+
+/* (No Comment) */
+"_quick_settings_netshield_option_level1" = "Blokovat pouze malware";
+
+/* (No Comment) */
+"_quick_settings_netshield_option_level2" = "Blokování malware, reklam & sledovacích prvků";
+
+/* (No Comment) */
+"_quick_settings_netshield_option_off" = "Neblokovat";
+
+/* Quick Settings */
+"_quick_settings_secureCore_description" = "Směrujte vaše nejcitlivější data skrz naše nejbezpečnější servery v zemích respektujících soukromí.";
+
+/* (No Comment) */
+"_quick_settings_secureCore_note" = "Secure Core může snížit rychlost VPN";
+
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Zvyšte své zabezpečení jedním kliknutím:";
+
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Přidejte další vrstvu zabezpečení pomocí Secure Core.";
+
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Surfujte na webu chráněni před malware a reklamami pomocí NetShield.";
+
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Zabraňte odhalení své IP adresy zapnutím Kill Switch.";
+
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "Rychlá nastavení";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Ukončit";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Ukončením aplikace se odpojí aktivní připojení VPN. Chcete pokračovat?";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Náhodný";
+
+/* Profile create/change form */
+"_random_available_server" = "Náhodný dostupný server";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Náhodné připojení";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Doporučené";
+
+/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
+"_reconnect_on_protocol_change_title" = "Změna protokolu";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Pro použití této změny je třeba připojení restartovat.";
+
+/* (No Comment) */
+"_reconnect_title" = "Připojujeme se k nejrychlejšímu dostupnému serveru.";
+
+/* (No Comment) */
+"_reconnecting_to" = "Opětovné připojování k %@";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Je nutné opětovné připojení";
+
+/* (No Comment) */
+"_reestablish_vpn_connection_" = "Opětovné navazování VPN připojení.";
+
+/* MacOS: About window */
+"_release_date" = "Datum vydání:";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Zapamatovat přihlašovací údaje";
+
+/* Button in Kill switch error alert */
+"_report" = "Nahlásit";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Nahlásit problém...";
+
+/* Bug report attachments */
+"_report_attachments" = "Přílohy";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Zahrnout logy aplikace a podrobnosti o systému";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Nahlásit problém";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Pokud nám poskytnete následující údaje, náš tým dokáže identifikovat váš problém a najít možné řešení s vyšší pravděpodobností a v kratším čase:\n• logy Proton VPN\n• logy OpenVPN\n• logy WireGuard";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "E-mail:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Co se pokazilo?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Pište...";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Jaké jsou přesné kroky, které jste provedli?";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "Logy VPN";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Povolením této funkce se do tohoto hlášení přidají také záznamy/protokoly/logy vaší VPN aplikace";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Kontaktní e-mail";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Vaše zpráva:";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Nahlásit zprávu";
+
+/* Bug report: Send report button text */
+"_report_send" = "Poslat zprávu";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Děkujeme za Vaši zprávu";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Požádat o manuální aktivaci";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Požádat o nový kód";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Neobdrželi jste kód?";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Zažádáno o nový kód";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Resetovat heslo";
+
+/* Button in some alerts */
+"_retry" = "Obnovit";
+
+/* Common word */
+"_save" = "Uložit";
+
+/* Button */
+"_save_as_profile" = "Uložit jako Profil";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Hledat zemi";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Vyhledat zemi";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Ultra bezpečné servery\nhostované námi";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Poskytuje dodatečnou ochranu proti kompromitaci VPN serveru směrováním provozu přes naši Síť Secure Core";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Bezpečné streamování vašeho\noblíbeného obsahu";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Bezpečné streamování";
+
+/* iOS status view */
+"_security" = "Zabezpečení";
+
+/* iOS Settings: table section header */
+"_security_options" = "Možnosti zabezpečení";
+
+/* Profile create/change form */
+"_select_country" = "Vyberte zemi";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Vyberte předčíslí země";
+
+/* Button in plan selection */
+"_select_plan" = "Zvolte tarif";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Vyberte barvu profilu";
+
+/* Profile create/change form */
+"_select_server" = "Vyberte server";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Pro pokračování vyberte možnost ověření:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Abychom zabránili zneužití, musíte ověřit, že jste člověk.";
+
+/* Profile create/change form */
+"_server" = "Server";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "IP serveru:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Vytížení serveru:";
+
+/* (No Comment) */
+"_server_load_title" = "Vytížení serveru";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Prosím zvolte server";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Na serveru probíhá údržba";
+
+/* iOS status view */
+"_session_time" = "Čas relace";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Nastavení";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Nastavení Dokončeno";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Nyní jste se přihlásili k bezplatnému tarifu Proton VPN. Pro začátek si ale užijte sedm dnů zdarma na tarifu Proton VPN Plus.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Váš nákup byl úspěšný. Váš tarif Proton VPN Basic je nyní aktivní.";
+
+/* Show/hide password switch */
+"_show" = "ZOBRAZIT";
+
+/* Button in some alerts */
+"_show_instructions" = "Zobrazit instrukce";
+
+/* (No Comment) */
+"_show_protonvpn" = "Zobrazit Proton VPN";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Registrace";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "Přeskočit";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Zapněte Smart Protocol pro automatické využití protokolu a portu s nejlepší konektivitou.";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "Vaše připojení bude restartováno kvůli změně režimu Smart Protocol.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "Je nutné opětovné připojení";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Chytrý protokol";
+
+/* (No Comment) */
+"_smart_routing_title" = "Smart Routing";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ rychlost";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Standardní";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Spustit minimalizovaně";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Spustit při startu systému";
+
+/* iOS status view */
+"_status" = "Stav";
+
+/* (No Comment) */
+"_streaming_servers_description" = "Chcete-li zahájit streamování, připojte se k serveru Plus v této zemi.";
+
+/* (No Comment) */
+"_streaming_servers_extra" = "a další";
+
+/* (No Comment) */
+"_streaming_servers_note" = "Poznámka: Vypněte službu určování polohy a vymažte mezipaměť streamovacích aplikací, abyste zajistili zobrazení nového obsahu.";
+
+/* (No Comment) */
+"_streaming_title" = "Streamování";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Odeslat";
+
+/* (No Comment) */
+"_subscription_button" = "Prodloužení tarifu o 1 rok \n%@.";
+
+/* (No Comment) */
+"_subscription_description" = "Můžete si zakoupit více kreditů pro automatické prodloužení stávajícího tarifu. Na konci předplaceného období budou kredity použity na prodloužení tarifu.";
+
+/* (No Comment) */
+"_subscription_expired_description" = "Vaše předplatné bylo sníženo.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Vaše předplatné bylo sníženo, takže vás přepojujeme na nejrychlejší dostupný server.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "Vaše předplatné VPN vypršelo";
+
+/* (No Comment) */
+"_subscription_extended_success" = "Úspěšně jste si zakoupili kredity na prodloužení stávajícího tarifu.";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Předplacený tarif";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Pokročilé funkce: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Znovu navyšte tarif pro využití všech funkcí:";
+
+/* Manage subscription */
+"_subscription_will_expire" = "Stávající tarif vyprší %@.";
+
+/* (No Comment) */
+"_subscription_will_renew" = "Stávající tarif se automaticky obnoví %@.";
+
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Přiřaďte VPN připojení";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "Pro použití Proton VPN prosím přiřaďte VPN připojení k vašemu účtu nebo k podřízenému účtu.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Tento krok zabere jen několik minut. Poté se budete moci přihlásit a chránit všechna svá zařízení.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Přihlásit se znovu";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Děkujeme, že jste přešli na tarif Professional/Visionary";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Úspěšně připojeno";
+
+/* (No Comment) */
+"_switch_side_button_off" = "VYP";
+
+/* (No Comment) */
+"_switch_side_button_on" = "ZAP";
+
+/* (No Comment) */
+"_sysex_cannot_enable" = "Nelze povolit rozšíření systému";
+
+/* (No Comment) */
+"_sysex_enabled_description" = "Nastavení dokončeno. Nyní můžete procházet internet rychleji díky nejlepším technologiím VPN.";
+
+/* (No Comment) */
+"_sysex_enabled_title" = "Nastavení dokončeno";
+
+/* (No Comment) */
+"_sysex_error_description" = "Při instalaci rozšíření systému došlo k chybě.\nPro vyřešení tohoto problému znovu nainstalujte Proton VPN a ujistěte se, že se nachází ve složce Aplikace. Případně kontaktujte naši podporu.";
+
+/* OpenVPN /  WireGuard / System Extensions */
+"_sysex_settings_description" = "Proton VPN vyžaduje nahrání systémového rozšíření pro využití Smart Protocol, OpenVPN a WireGuard.";
+
+/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
+"_sysex_wizard_step1_description" = "Zobrazí se dvě dialogová okna. Klikněte na \"Otevřít předvolby zabezpečení\".\nPřípadně klikněte zde a otevřete předvolby.";
+
+/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
+"_sysex_wizard_step1_description_1" = "Zobrazí se dialogové okno zabezpečení. Klikněte na \"Otevřít předvolby zabezpečení\".\nPřípadně klikněte zde a otevřete předvolby.";
+
+/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
+"_sysex_wizard_step1_description_go_to_system_preferences" = "Otevřít předvolby zabezpečení: klikněte zde.\nPoté přejděte na \"Zabezpečení a soukromí\".";
+
+/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
+   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
+   `_sysex_wizard_step1_description_1' localized strings. */
+"_sysex_wizard_step1_description_link" = "klikněte zde";
+
+/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
+"_sysex_wizard_step1_title" = "Otevřít předvolby zabezpečení";
+
+/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
+"_sysex_wizard_step1_title_1" = "Otevřít předvolby zabezpečení";
+
+/* System extension wizard in mac: Step nr.2 description */
+"_sysex_wizard_step2_description" = "Kliknutím na zámek provedete změny";
+
+/* System extension wizard in mac: Step nr.2 title */
+"_sysex_wizard_step2_title" = "Odemkněte pro provedení změn";
+
+/* System extension wizard in mac: Step nr.3 description */
+"_sysex_wizard_step3_description" = "Zadejte své přihlašovací údaje k systému macOS pro ověření";
+
+/* System extension wizard in mac: Step nr.3 title */
+"_sysex_wizard_step3_title" = "Zadejte přihlašovací údaje";
+
+/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
+"_sysex_wizard_step4_description" = "Klikněte na tlačítko \"Detaily...\"";
+
+/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
+"_sysex_wizard_step4_description_1" = "Klikněte na tlačítko \"Povolit\"";
+
+/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
+"_sysex_wizard_step4_title" = "tlačítko \"Detaily...\"";
+
+/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
+"_sysex_wizard_step4_title_1" = "tlačítko “Povolit”";
+
+/* System extension wizard in mac: Step nr.5 description */
+"_sysex_wizard_step5_description" = "Vyberte obě položky Proton VPN pro povolení vlastních protokolů a klikněte na tlačítko \"OK\"";
+
+/* System extension wizard in mac: Step nr.5 title */
+"_sysex_wizard_step5_title" = "Výběr položek Proton VPN";
+
+/* System extension wizard in mac: Subtitle */
+"_sysex_wizard_subtitle" = "Pro provedení postupujte podle následujích kroků:";
+
+/* System extension wizard in mac: Text under 5 points */
+"_sysex_wizard_text_under_steps" = "Nyní jste připraveni používat Proton VPN s nejnovějšími a nejrychlejšími dostupnými technologiemi VPN!";
+
+/* System extension wizard in mac: Main title */
+"_sysex_wizard_title" = "Využívejte nejrychlejší připojení povolením vlastních protokolů";
+
+/* System extension wizard in mac: Main title */
+"_sysex_wizard_window_title" = "Povolení vlastních protokolů";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Systémová upozornění";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Absolvujte prohlídku";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS status view */
+"_technical_details" = "Technické detaily";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Smluvními podmínkami užívání";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Používáním Proton VPN souhlasíte s našimi\n%@ a %@";
+
+/* iOS: section header in countries list */
+"_test_servers" = "TESTOVACÍ servery";
+
+/* (No Comment) */
+"_tier_free" = "Bezplatný";
+
+/* (No Comment) */
+"_tier_plus" = "Plus";
+
+/* (No Comment) */
+"_tier_visionary" = "Visionary";
+
+/* MacOS: connecting overlay */
+"_timed_out" = "časový limit vypršel";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Do funkce Kill Switch může zasahovat jiná aplikace. Chcete-li tento problém vyřešit, přepněte na protokol OpenVPN nebo vypněte Kill Switch a zkuste to znovu.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Přepnout na OpenVPN a opakovat";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* (No Comment) */
+"_to_server_title" = "K serveru:";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Connects to Tor network";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Server Tor";
+
+/* (No Comment) */
+"_tor_title" = "Tor";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_body_iOS" = "Vaše 7denní bezplatná zkušební verze Proton VPN Plus vypršela. Můžete nadále používat bezplatnou Proton VPN, ale pokud chcete projekt podpořit a mít přístup k více zemím a funkcím, přejděte na placený tarif.";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_title_iOS" = "Zkušební doba Proton VPN Plus vypršela";
+
+/* (No Comment) */
+"_trial_popup_call_to_upgrade" = "Pro trvalý přístup k funkcím Proton VPN Plus navyšte prosím své předplatné.";
+
+/* (No Comment) */
+"_trial_popup_enjoy" = "Užívejte si všech výhod bezpečného internetu kdekoli s Proton VPN";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes */
+"_trial_popup_explanation" = "Jako dárek na uvítanou máte v prvních dnech přístup k %@ včetně pokročilých funkcí! Vaše zkušební verze končí za";
+
+/* (No Comment) */
+"_trial_popup_free_upgrade" = "bezplatné navýšení na Proton VPN Plus";
+
+/* (No Comment) */
+"_trial_popup_full_subscription" = "úplné předplatné Proton VPN";
+
+/* Final text:
+ 
+ We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Poskytli jsme vám %@, zahrnuje více serverů a dodatečné funkce. Zkušební verze Proton VPN Plus končí za 7 dní.";
+
+/* (No Comment) */
+"_trial_popup_thanks" = "Děkujeme, že používáte Proton VPN!";
+
+/* (No Comment) */
+"_trial_popup_title" = "Zkušební verze Proton VPN";
+
+/* iOS trial welcome screen */
+"_trial_welcome_description_iOS" = "Jako dárek na uvítanou máte v prvních dnech přístup k plnému předplatnému Proton VPN včetně pokročilých funkcí!";
+
+/* iOS trial welcome screen */
+"_trial_welcome_ends_in_iOS" = "Vaše zkušební období končí za";
+
+/* iOS trial welcome screen */
+"_trial_welcome_heading_iOS" = "Vítejte na palubě";
+
+/* (No Comment) */
+"_troubleshoot_item_alt_description" = "V případě, že jsou stránky Proton blokovány, toto nastavení umožňuje aplikaci vyzkoušet alternativní směrování sítě k dosažení Protonu, což může být užitečné pro obejití firewallů nebo problémů se sítí. Doporučujeme ponechat toto nastavení zapnuté pro větší spolehlivost. \nVíce informací";
+
+/* (No Comment) */
+"_troubleshoot_item_alt_link1" = "Více informací";
+
+/* (No Comment) */
+"_troubleshoot_item_alt_title" = "Povolit alternativní směrování";
+
+/* (No Comment) */
+"_troubleshoot_item_antivirus_description" = "Dočasně zakažte nebo odstraňte váš antivirový program.";
+
+/* (No Comment) */
+"_troubleshoot_item_antivirus_title" = "Interference antiviru";
+
+/* (No Comment) */
+"_troubleshoot_item_gov_description" = "Vaše země možná blokuje přístup ke službě Proton. Zkuste pro přístup k Protonu použít Tor.";
+
+/* (No Comment) */
+"_troubleshoot_item_gov_link1" = "Tor";
+
+/* (No Comment) */
+"_troubleshoot_item_gov_title" = "Vládní blokování";
+
+/* (No Comment) */
+"_troubleshoot_item_isp_description" = "Zkuste se připojit k Protonu z jiné sítě (nebo použijte Tor).";
+
+/* (No Comment) */
+"_troubleshoot_item_isp_link1" = "Tor";
+
+/* (No Comment) */
+"_troubleshoot_item_isp_title" = "Problém s poskytovatelem internetových služeb (ISP)";
+
+/* (No Comment) */
+"_troubleshoot_item_nointernet_description" = "Prosíme zkontrolujte, že jste připojeni k internetu.";
+
+/* (No Comment) */
+"_troubleshoot_item_nointernet_title" = "Bez připojení k Internetu";
+
+/* (No Comment) */
+"_troubleshoot_item_other_description" = "Kontaktujte nás přímo prostřednictvím formuláře podpory, e-mailu (%@) nebo Twitteru.";
+
+/* (No Comment) */
+"_troubleshoot_item_other_link1" = "formulář podpory";
+
+/* (No Comment) */
+"_troubleshoot_item_other_link2" = "e-mail";
+
+/* (No Comment) */
+"_troubleshoot_item_other_link3" = "Twitteru";
+
+/* (No Comment) */
+"_troubleshoot_item_other_title" = "Stále nemůžu najít řešení";
+
+/* (No Comment) */
+"_troubleshoot_item_proton_description" = "Zkontrolujte Stav Protonu pro zjištění stavu našeho systému.";
+
+/* (No Comment) */
+"_troubleshoot_item_proton_link1" = "Stav Protonu";
+
+/* (No Comment) */
+"_troubleshoot_item_proton_title" = "Proton je offline";
+
+/* (No Comment) */
+"_troubleshoot_item_proxy_description" = "Zakažte všechny proxy nebo brány firewall nebo se obraťte na správce sítě.";
+
+/* (No Comment) */
+"_troubleshoot_item_proxy_title" = "Rušení proxy/firewallem";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Řešení problémů";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Zkusit znovu";
+
+/* (No Comment) */
+"_try_again_without_killswitch" = "Vypněte Kill Switch a zkuste to znovu";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Zapnutím funkce Kill Switch nebudete mít přístup k zařízením v místní síti. \n\nPokračovat?";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Zapnout Kill Switch?";
+
+/* (No Comment) */
+"_turn_on" = "Zapnout";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* Common word */
+"_unavailable" = "Není k dispozici";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Unprotected network notifications";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Obdržíte oznámení, když Proton VPN zjistí, že jste připojeni k nechráněné síti.";
+
+/* (No Comment) */
+"_unsecure_wifi" = "Bylo zjištěno nezabezpečené připojení WiFi";
+
+/* (No Comment) */
+"_unsecure_wifi_learn_more" = "Více informací";
+
+/* (No Comment) */
+"_unsecure_wifi_title" = "Rozpoznána nezabezpečená WiFi";
+
+/* (No Comment) */
+"_update_billing" = "AKTUALIZOVAT PLATEBNÍ INFORMACE";
+
+/* (No Comment) */
+"_update_required" = "Je vyžadována aktualizace";
+
+/* (No Comment) */
+"_update_required_no_longer_supported" = "Tato verze Proton VPN již není podporována, aktualizujte aplikaci pro pokračování.";
+
+/* Secondary button title in the App update required alert */
+"_update_required_support" = "Kontaktovat podporu";
+
+/* Primary button title in the App update required alert */
+"_update_required_update" = "Aktualizovat";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Navýšit";
+
+/* (No Comment) */
+"_upgrade_again" = "NAVÝŠIT ZNOVU";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "pro použití Secure Core";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Přejít na vyšší tarif";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Navýšit nyní";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_country" = "Je nám líto, ale v této zemi nejsou pro vaši úroveň předplatného k dispozici žádné servery. Pokud chcete mít přístup k více serverům, zvažte navýšení předplatného.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core je prémiová funkce, která vyžaduje Proton VPN Plus nebo vyšší. Secure Core přidává pokročilou ochranu proti sledování serverů VPN.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_secure_core_p2" = "Chcete-li získat přístup k Secure Core, podívejte se na naše další tarify předplatného, které tuto funkci obsahují.";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Je nám líto, tento server není pro vaši úroveň předplatného k dispozici. Pokud chcete získat přístup k více serverům, zvažte navýšení předplatného.";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Vyžadován vyšší tarif";
+
+/* (No Comment) */
+"_upgrade_required_securecore_description" = "Secure Core je k dispozici s tarifem Plus. Navyšte nyní váš tarif pro směrování vašeho provozu skrze naše nejbezpečnější servery v zemích s vysokou ochranou soukromí.";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Navýšit předplatné";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Přejít na tarif Plus";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Vaše předplatné Proton VPN nemůže být navýšeno z aplikace, pro navýšení navštivte account.protonvpn.com.";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Navýšení není k dispozici v aplikaci";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Ověřit pomocí CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Ověřit přes e-mail";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* (No Comment) */
+"_use_sms_verification" = "Ověřit pomocí SMS";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Uživatelské jméno";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Byl vám zaslán ověřovací kód, zadejte jej prosím níže.";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Verze";
+
+/* MacOS: About window */
+"_version_current" = "Současná verze:";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "přes";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "přes %@";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Zobrazit logy";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Přepnutím Secure Core ukončíte aktuální připojení.";
+
+/* (No Comment) */
+"_vpn_accelerator_change_title" = "Změnit VPN Accelerator";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN Accelerator poskytuje sadu jedinečných technologií zvyšujících výkon, které mohou zrychlit VPN připojení až o 400%%.\nVíce informací";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "Více informací";
+
+/* (No Comment) */
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+/* MacOS: alert before disconnection on SecureCore state change */
+"_vpn_connection_active" = "VPN připojení je aktivní";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN Protokol";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Vašemu zařízení se nepodařilo ukončit předchozí relaci VPN. Před navázáním nového připojení VPN bude nutné zařízení restartovat.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Chyba připojení";
+
+/* (No Comment) */
+"_vpnauth_certfail_description" = "Nepodařilo se obnovit certifikát VPN. Zkontrolujte prosím své připojení";
+
+/* Cert based auth */
+"_vpnauth_certfail_title" = "Ověření selhalo";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Dosáhli jste maximálního počtu změn nastavení. Zkuste to prosím znovu za několik minut";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Ověření selhalo";
+
+/* (No Comment) */
+"_vpnstatus_not_loggedin" = "Nejste přihlášeni k Proton VPN. Otevřete aplikaci Proton VPN a přihlaste se.";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Upozornění";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Na tomto zařízení je aktivní relace Proton VPN jiného uživatele. Pokračování v procesu přihlašování způsobí ukončení aktuální relace. Chcete pokračovat?";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Vysokorychlostní švýcarská VPN, která chrání vaše soukromí šifrováním internetového připojení.";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Děkujeme, že používáte Proton VPN. Podívejte se \nna hlavní funkce aplikace.";
+
+/* %@ is always 'Proton VPN Plus' e.g. As a welcome gift, you are granted a 7-day access to a\nProton VPN Plus subscription which gives you: A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "Jako dárek na uvítanou získáváte 7-denní přístup k\n%@ předplatnému, které vám umožní:";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Chraňte se online";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "VÍTEJTE NA PALUBĚ!";
+
+/* (No Comment) */
+"_wgks_description" = "Přepínač Kill Switch brání připojení sítě VPN k internetu. Může to být způsobeno nekompatibilitou s vaším operačním systémem (macOS Catalina 10.15).\n\nChcete-li tento problém vyřešit, aktualizujte operační systém na nejnovější verzi.\n\nPřípadně můžete přejít na protokol OpenVPN nebo vypnout funkci Kill Switch.";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Vypnout Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Přepnout na OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Přepínač Kill Switch brání připojení VPN k internetu";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS Widget";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "WireGuard logy";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Nejste připojeni";
+
+/* Button to apply coupon */
+"apply_coupon" = "Použít";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Ověřit";
+
+/* Banner shown after coupon is applied */
+"coupon_applied" = "Kupón byl úspěšně uplatněn.";
+
+/* Banner shown after coupon is applied but the plan is not yet upgraded */
+"coupon_applied_plan_not_upgraded_yet" = "Kupón byl úspěšně uplatněn. Vaše předplatné bude aktualizováno během několika minut.";
+
+/* Title of the screen to apply a coupon */
+"coupon_code" = "Kód kupónu";
+
+/* (No Comment) */
+"login_fetch_vpn_data" = "Nastavení vašeho VPN přístupu";
+
+/* (No Comment) */
+"login_summary_button" = "Začněte používat Proton VPN";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Nesprávná metoda přihlášení. Kontaktujte prosím podporu.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Prosíme odpojte jiné zařízení pro připojení tohoto a nebo navyšte tarif na %@";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "Webové stránky Proton VPN mohou být dočasně nedostupné z důvodu síťových omezení. Pro vytvoření nového účtu Proton použijte mobilní aplikaci.";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Kód pro obnovení";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Dvoufázové ověření";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Kód pro dvoufázové ověření";
+
+/* Title of the Use coupon button in Settings */
+"use_coupon" = "Použít kupón";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Použít kód pro obnovení";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Použít kód dvoufázového ověření";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ nastavení nebylo možné změnit. Zkuste to prosím později nebo se připojte k jinému serveru";
+

@@ -759,6 +759,9 @@
 		C06FA74B404A712CB9FC055D /* Pods-Core-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
 		C0B3BBF683E35241139EBB14 /* Pods-Core-vpncore-iosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.staging.xcconfig"; sourceTree = "<group>"; };
 		C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetShieldType+Extensions.swift"; sourceTree = "<group>"; };
+		C30E4D2A2942700400971A2D /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = Localization/ro.lproj/Intents.strings; sourceTree = "<group>"; };
+		C30E4D2B2942700400971A2D /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = Localization/ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C30E4D2C2942700400971A2D /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ro; path = ro.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		C31DD07E27BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Localization/en-US.lproj/Intents.strings"; sourceTree = "<group>"; };
 		C31DD07F27BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "Localization/en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C31DD08027BA0DCB00D1FF91 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "en-US"; path = "en-US.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -769,6 +772,9 @@
 		C39EE8D1272FA13F008DAC54 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = Localization/tr.lproj/Intents.strings; sourceTree = "<group>"; };
 		C39EE8D2272FA13F008DAC54 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = Localization/tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C39EE8D3272FA13F008DAC54 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		C3A69F222942702400BA8314 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = Localization/cs.lproj/Intents.strings; sourceTree = "<group>"; };
+		C3A69F232942702400BA8314 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = Localization/cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C3A69F242942702400BA8314 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = cs; path = cs.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoHHostsParsingTests.swift; sourceTree = "<group>"; };
 		CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLArray+Extension.swift"; sourceTree = "<group>"; };
 		D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PropertiesManager+Log.swift"; sourceTree = "<group>"; };
@@ -2303,6 +2309,8 @@
 				"en-US",
 				uk,
 				"es-419",
+				ro,
+				cs,
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
@@ -3241,6 +3249,8 @@
 				C31DD08027BA0DCB00D1FF91 /* en-US */,
 				E92CCE3127D88E3400A6A476 /* uk */,
 				E534EA4B2806B68D00BCC9F6 /* es-419 */,
+				C30E4D2C2942700400971A2D /* ro */,
+				C3A69F242942702400BA8314 /* cs */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3270,6 +3280,8 @@
 				C31DD07E27BA0DCB00D1FF91 /* en-US */,
 				C34735DB27D8DFC900E318F7 /* uk */,
 				E534EA492806B67000BCC9F6 /* es-419 */,
+				C30E4D2A2942700400971A2D /* ro */,
+				C3A69F222942702400BA8314 /* cs */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
@@ -3316,6 +3328,8 @@
 				C31DD07F27BA0DCB00D1FF91 /* en-US */,
 				E92CCE3027D88E3400A6A476 /* uk */,
 				E534EA4A2806B68700BCC9F6 /* es-419 */,
+				C30E4D2B2942700400971A2D /* ro */,
+				C3A69F232942702400BA8314 /* cs */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

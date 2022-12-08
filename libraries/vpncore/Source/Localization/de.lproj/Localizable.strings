@@ -412,6 +412,9 @@
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Dein Abonnement-Upgrade war erfolgreich. Bitte starte die Anwendung neu, um alle neuen Funktionen zu aktivieren.";
 
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Partnerinformationen können nicht analysiert werden.";
+
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Es war nicht möglich, das App Store Produkt mit Produkten auf unserem Server abzugleichen. Bitte wende dich an den Support.";
 
@@ -543,6 +546,12 @@
 
 /* iOS plan feature */
 "_feature_connections" = "Gleichzeitige VPN‐Verbindungen";
+
+/* (No Comment) */
+"_feature_free_servers" = "Free-Server";
+
+/* (No Comment) */
+"_feature_free_servers_description" = "Sicherheit und Privatsphäre für alle. Free-Server haben keine Datenlimits und wir werden deine Surfgeschwindigkeit nie absichtlich verlangsamen.";
 
 /* (No Comment) */
 "_feature_p2p_description" = "Dieser Server bietet die beste Leistung für BitTorrent und Dateifreigabe.";
