@@ -63,12 +63,6 @@ open class Container: PropertiesToOverride {
 
     public let config: Config
 
-    #if TLS_PIN_DISABLE
-    private lazy var trustKitHelper: TrustKitHelper? = nil
-    #else
-    private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
-    #endif
-
     // Lazy instances - get allocated once, and stay allocated
     private lazy var storage = Storage()
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
@@ -222,13 +216,6 @@ extension Container: AppInfoFactory {
 extension Container: NetworkingFactory {
     public func makeNetworking() -> Networking {
         networking
-    }
-}
-
-// MARK: TrustKitHelperFactory
-extension Container: TrustKitHelperFactory {
-    public func makeTrustKitHelper() -> TrustKitHelper? {
-        return trustKitHelper
     }
 }
 

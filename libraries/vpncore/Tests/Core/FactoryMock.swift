@@ -23,7 +23,7 @@
 import Foundation
 @testable import vpncore
 
-final class FactoryMock: CoreAlertServiceFactory & TrustKitHelperFactory & PropertiesManagerFactory & NetworkingFactory {
+final class FactoryMock: CoreAlertServiceFactory & PropertiesManagerFactory & NetworkingFactory {
     func makeNetworking() -> Networking {
         return NetworkingMock()
     }
@@ -32,10 +32,6 @@ final class FactoryMock: CoreAlertServiceFactory & TrustKitHelperFactory & Prope
 
     func makeCoreAlertService() -> CoreAlertService {
         return CoreAlertServiceMock()
-    }
-
-    func makeTrustKitHelper() -> TrustKitHelper? {
-        return TrustKitHelper()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {

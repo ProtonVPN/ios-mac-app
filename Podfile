@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.24.4'
+  '3.25.0'
 end
 
 def openvpn
@@ -51,7 +51,7 @@ def vpn_core
     pod 'SwiftGen', '~> 6.5'
 
     # Certificates pinning
-    pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'
+    pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :branch => 'release/1.0.3', :commit => 'd107d7cc825f38ae2d6dc7c54af71d58145c3506'
     
     openvpn
 
