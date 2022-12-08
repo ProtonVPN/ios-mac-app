@@ -52,6 +52,7 @@ protocol AnnotationViewModel {
     var outlineWidth: CGFloat { get }
     var outlineColor: UIColor { get }
     var labelString: NSAttributedString { get }
+    var accessibilityLabel: String { get }
     var labelHeight: CGFloat { get }
     var labelStringPadding: CGFloat { get }
     var labelWidth: CGFloat { get }
@@ -87,9 +88,17 @@ extension AnnotationViewModel {
     var outlineWidth: CGFloat {
         return 2
     }
+
+    private var localizedCountry: String? {
+        return LocalizationUtility.default.countryName(forCode: countryCode)
+    }
+
+    var accessibilityLabel: String {
+        return localizedCountry ?? ""
+    }
     
     var labelString: NSAttributedString {
-        return (LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
+        return (localizedCountry ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
     }
     
     var labelHeight: CGFloat {
