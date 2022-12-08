@@ -24,6 +24,9 @@ import Foundation
 
 public typealias StreamingDictServices = [String: [String: [VpnStreamingOption]]]
 
+extension StreamingDictServices: DefaultableProperty {
+}
+
 public struct VPNStreamingResponse: Codable {
     public let code: Int
     public let resourceBaseURL: String

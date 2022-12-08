@@ -56,3 +56,6 @@ public struct PartnerType: Codable {
         self.partners = partners
     }
 }
+
+extension Array: DefaultableProperty where Element == PartnerType {
+}

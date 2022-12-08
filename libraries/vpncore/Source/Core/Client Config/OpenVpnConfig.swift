@@ -9,7 +9,7 @@
 
 import Foundation
 
-public struct OpenVpnConfig: Codable, Equatable {
+public struct OpenVpnConfig: Codable, Equatable, DefaultableProperty {
     let defaultTcpPorts: [Int]
     let defaultUdpPorts: [Int]
 
@@ -29,5 +29,9 @@ public struct OpenVpnConfig: Codable, Equatable {
     public init(defaultTcpPorts: [Int]? = nil, defaultUdpPorts: [Int]? = nil) {
         self.defaultTcpPorts = defaultTcpPorts ?? [443, 5995, 8443]
         self.defaultUdpPorts = defaultUdpPorts ?? [80, 443, 4569, 1194, 5060]
+    }
+
+    public init() {
+        self.init(defaultTcpPorts: nil, defaultUdpPorts: nil)
     }
 }
