@@ -9,20 +9,30 @@
 
 import Foundation
 
-public enum VpnProtocol {
+public enum VpnProtocol: CaseIterable {
+    public static let allCases: [VpnProtocol] = [.ike]
+        + OpenVpnTransport.allCases.map(Self.openVpn)
+        + WireGuardTransport.allCases.map(Self.wireGuard)
+
     case ike
     case openVpn(OpenVpnTransport)
     case wireGuard(WireGuardTransport)
 }
 
-public enum OpenVpnTransport: String, Codable {
+extension VpnProtocol: DefaultableProperty {
+    public init() {
+        self = DefaultConstants.vpnProtocol
+    }
+}
+
+public enum OpenVpnTransport: String, Codable, CaseIterable {
     case tcp = "tcp"
     case udp = "udp"
 
     private static var defaultValue = OpenVpnTransport.tcp
 }
 
-public enum WireGuardTransport: String, Codable, Equatable {
+public enum WireGuardTransport: String, Codable, Equatable, CaseIterable {
     case udp = "udp"
     case tcp = "tcp"
     case tls = "tls"

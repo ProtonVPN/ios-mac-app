@@ -318,16 +318,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     #if os(macOS)
     @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
     #endif
-    
-    public var vpnProtocol: VpnProtocol {
-        get {
-            return storage.getDecodableValue(VpnProtocol.self, forKey: Keys.vpnProtocol.rawValue) ?? DefaultConstants.vpnProtocol
-        }
-        set {
-            storage.setEncodableValue(newValue, forKey: Keys.vpnProtocol.rawValue)
-            postNotificationOnUIThread(PropertiesManager.vpnProtocolNotification, object: newValue)
-        }
-    }
+
+    @InitializedProperty(.vpnProtocol, notifyChangesWith: PropertiesManager.vpnProtocolNotification)
+    public var vpnProtocol: VpnProtocol
     
     public var lastAppVersion: String {
         get {

@@ -555,21 +555,39 @@ final class SettingsViewModel {
     }
     
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol, featureFlags: propertiesManager.featureFlags)
-        vpnProtocolViewModel.protocolChangeConfirmation = { [self] completion in
-            if self.appStateManager.state.isSafeToEnd {
-                completion(true)
+        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol,
+                                                        featureFlags: propertiesManager.featureFlags)
+        vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
+            guard !self.appStateManager.state.isSafeToEnd,
+                  let activeConnection = appStateManager.activeConnection() else {
+                completion(.success(true))
                 return
             }
 
-            let alert = ChangeProtocolDisconnectAlert {
-                log.debug("Disconnect requested after changing protocol", category: .connectionDisconnect, event: .trigger)
-                completion(true)
+            // If the server we're going to try to reconnect to with the new protocol doesn't support it, make
+            // sure the user knows that the app is about to disconnect.
+            guard activeConnection.serverIp.supports(connectionProtocol: newProtocol,
+                                                     smartProtocolConfig: propertiesManager.smartProtocolConfig) else {
+                self.alertService.push(alert: ProtocolNotAvailableForServerAlert(confirmHandler: {
+                    log.debug("Disconnecting after changing protocols on a server which doesn't support \(newProtocol)",
+                              category: .connectionDisconnect, event: .trigger)
+                    completion(.success(/* shouldReconnect */ false))
+                }, cancelHandler: {
+                    completion(.failure(.userCancelled))
+                }))
+                return
             }
-            alert.dismiss = { completion(false) }
+
+            // Otherwise, reconnect normally after changing the protocol.
+            let alert = ChangeProtocolDisconnectAlert {
+                log.debug("Reconnect requested after changing protocol to \(newProtocol)",
+                          category: .connectionDisconnect, event: .trigger)
+                completion(.success(true))
+            }
+            alert.dismiss = { completion(.failure(.userCancelled)) }
             self.alertService.push(alert: alert)
         }
-        vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol in
+        vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, shouldReconnect in
             switch connectionProtocol {
             case .smartProtocol:
                 self.propertiesManager.smartProtocol = true
@@ -579,7 +597,11 @@ final class SettingsViewModel {
             }
 
             if !self.appStateManager.state.isSafeToEnd {
-                self.vpnGateway.reconnect(with: connectionProtocol)
+                if shouldReconnect {
+                    self.vpnGateway.reconnect(with: connectionProtocol)
+                } else {
+                    self.vpnGateway.disconnect()
+                }
             }
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))

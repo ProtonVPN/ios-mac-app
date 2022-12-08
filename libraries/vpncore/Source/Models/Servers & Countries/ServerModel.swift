@@ -137,6 +137,22 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return false
     }
 
+    public func supports(vpnProtocol: VpnProtocol) -> Bool {
+        ips.contains { $0.supports(vpnProtocol: vpnProtocol) }
+    }
+
+    public func supports(connectionProtocol: ConnectionProtocol,
+                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+        if let vpnProtocol = connectionProtocol.vpnProtocol {
+            return supports(vpnProtocol: vpnProtocol)
+        }
+
+        return ips.contains {
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: smartProtocolConfig)
+        }
+    }
+
     public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?, translatedCity: String?) {
         self.id = id
         self.name = name
@@ -235,24 +251,16 @@ public class ServerModel: NSObject, NSCoding, Codable {
     
     private func setupIps(fromArray array: [JSONDictionary]) throws {
         ips = []
-        try array.forEach { ips.append(try ServerIp(dic: $0)) }
-    }
-    
-    public func contains(domain: String) -> Bool {
-        return !ips.filter { $0.domain == domain }.isEmpty
-    }
-    
-    public func exitIp(forEntryIp entryIp: String) -> String? {
-        for ip in ips where ip.entryIp == entryIp {
-            return ip.exitIp
+        try array.forEach {
+            let ip = try ServerIp(dic: $0)
+            ips.append(ip)
         }
-        return nil
     }
-    
-    public func update(continousProperties: ContinuousServerProperties) {
-        load = continousProperties.load
-        score = continousProperties.score
-        status = continousProperties.status
+
+    public func update(continuousProperties: ContinuousServerProperties) {
+        load = continuousProperties.load
+        score = continuousProperties.score
+        status = continuousProperties.status
     }
     
     // MARK: - NSCoding

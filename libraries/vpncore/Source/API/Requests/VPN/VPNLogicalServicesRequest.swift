@@ -33,14 +33,14 @@ enum LogicalFeature: String, FeatureFlag {
     }
 
     case partnerLogicals = "PartnerLogicals"
-    case perProtocolEntriesForStealth = "PerProtocolEntriesForStealth"
+    case perProtocolEntries = "PerProtocolEntries"
 }
 
 final class VPNLogicalServicesRequest: Request {
     /// Truncated ip as seen from VPN API
     let ip: String?
 
-    /// Country codes, if available
+    /// Country codes, if available, to show relay IPs for specific countries
     let countryCodes: [String]
 
     init(ip: String?, countryCodes: [String]) {
@@ -56,8 +56,9 @@ final class VPNLogicalServicesRequest: Request {
             result += "&WithPartnerLogicals=1"
         }
 
-        if isEnabled(LogicalFeature.perProtocolEntriesForStealth) {
-            result += "&WithEntriesForProtocols=WireGuardTLS"
+        if isEnabled(LogicalFeature.perProtocolEntries) {
+            let protocols = VpnProtocol.apiDescriptionsToProtocols.keys.joined(separator: ",")
+            result += "&WithEntriesForProtocols=\(protocols)"
         }
 
         return result
@@ -74,7 +75,7 @@ final class VPNLogicalServicesRequest: Request {
             result["x-pm-netzone"] = ip
         }
 
-        if isEnabled(LogicalFeature.perProtocolEntriesForStealth), !countryCodes.isEmpty {
+        if isEnabled(LogicalFeature.perProtocolEntries), !countryCodes.isEmpty {
             result["x-pm-country"] = countryCodes.joined(separator: ", ")
         }
 

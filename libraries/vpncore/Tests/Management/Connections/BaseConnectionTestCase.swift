@@ -59,6 +59,8 @@ class BaseConnectionTestCase: XCTestCase {
 
     override func setUp() {
         container = MockDependencyContainer()
+        container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
+
         container.networkingDelegate.apiServerList = [testData.server1]
         container.networkingDelegate.apiVpnLocation = testData.vpnLocation
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig

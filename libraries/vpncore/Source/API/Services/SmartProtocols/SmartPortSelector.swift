@@ -31,11 +31,13 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
     }
     
     func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
+        let portOverrides = serverIp.overridePorts(using: vpnProtocol)
+
         switch vpnProtocol {
         case .wireGuard(let transportProtocol): // Ping all the ports to determine which are available
             guard case .udp = transportProtocol else {
                 // FUTUREDO: Implement
-                let ports = serverIp.protocolEntries?[vpnProtocol]??.ports ?? wireguardTcpChecker.defaultPorts
+                let ports = portOverrides ?? wireguardTcpChecker.defaultPorts
                 completion(ports.shuffled())
                 return
             }
@@ -66,14 +68,17 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
             }
 
         case .ike: // Only port is used, so nothing to select
-            completion(DefaultConstants.ikeV2Ports)
+            let ports = portOverrides ?? DefaultConstants.ikeV2Ports
+            completion(ports.shuffled())
             
         case .openVpn(let transport): // TunnelKit accepts array of ports and select appropriate port by itself
             switch transport {
             case .tcp:
-                completion(openVpnTcpChecker.defaultPorts.shuffled())
+                let ports = portOverrides ?? openVpnTcpChecker.defaultPorts
+                completion(ports.shuffled())
             case .udp:
-                completion(openVpnUdpChecker.defaultPorts.shuffled())
+                let ports = portOverrides ?? openVpnUdpChecker.defaultPorts
+                completion(ports.shuffled())
             }
         }
     }

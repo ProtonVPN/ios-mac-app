@@ -134,7 +134,11 @@
 			"ExitIP": "1.2.4.10",
 			"Domain": "ch-ca-01b.protonvpn.com",
 			"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111136==",
-			"Status": 1
+			"Status": 1,
+            "EntryPerProtocol": {
+                "WireGuardTCP": { "IPv4": "1.2.3.13", "Ports": [1234, 5678] },
+                "OpenVPNUDP": null,
+            }
 		}],
 		"Load": 15,
 		"Score": 1.5
@@ -158,7 +162,11 @@
 			"ExitIP": "1.2.3.12",
 			"Domain": "jp-07.protonvpn.com",
 			"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111118==",
-			"Status": 1
+			"Status": 1,
+            "EntryPerProtocol": {
+                "WireGuardTCP": { "IPv4": "1.2.3.13", "Ports": [1234, 5678] },
+                "OpenVPNUDP": { }
+            }
 		}],
 		"Load": 25,
 		"Score": 1.5
@@ -182,7 +190,10 @@
 			"ExitIP": "1.2.3.13",
 			"Domain": "jp-08.protonvpn.com",
 			"ID": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890111111111111111111111119==",
-			"Status": 1
+			"Status": 1,
+            "EntryPerProtocol": {
+                "WireGuardUDP": { "Ports": [1234, 5678] },
+            }
 		}],
 		"Load": 65,
 		"Score": 1.4

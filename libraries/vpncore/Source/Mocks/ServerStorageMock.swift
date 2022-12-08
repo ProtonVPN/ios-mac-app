@@ -64,7 +64,7 @@ public class ServerStorageMock: ServerStorage {
     public func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {
         var updatedServers: [ServerModel] = []
         for (serverId, properties) in continuousServerProperties {
-            servers[serverId]?.update(continousProperties: properties)
+            servers[serverId]?.update(continuousProperties: properties)
 
             if let server = servers[serverId] {
                 updatedServers.append(server)
@@ -88,7 +88,7 @@ public class ServerStorageMock: ServerStorage {
             }
             jsonDictionary = jsonDict
         } catch {
-            fatalError("Error loading JSON servers")
+            fatalError("Error loading JSON servers: \(error)")
         }
 
         guard let serversJson = jsonDictionary.jsonArray(key: "LogicalServers") else {

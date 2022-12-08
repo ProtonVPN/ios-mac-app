@@ -42,44 +42,84 @@ protocol VpnProtocolChangeManager {
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     
     typealias Factory = PropertiesManagerFactory
+        & AppStateManagerFactory
         & CoreAlertServiceFactory
         & VpnGatewayFactory
         & SystemExtensionManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    
+
+    /// What to do after switching protocols
+    internal enum ProtocolSwitchAction {
+        /// Reconnect to the current server with the new protocol.
+        case reconnect
+        /// Disconnect from the current server (can be due to unsupported protocol on server)
+        case disconnect
+        /// Just switch the protocol, don't do anything else.
+        case doNothing
+    }
+
     init(factory: Factory) {
         self.factory = factory
     }
     
     func change(toProtocol vpnProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            set(vpnProtocol: vpnProtocol, userInitiated: userInitiated, reconnect: false, completion: completion)
+            set(vpnProtocol: vpnProtocol,
+                userInitiated: userInitiated,
+                and: .doNothing,
+                completion: completion)
+            return
+        }
+
+        guard appStateManager.activeConnection()?.server.supports(vpnProtocol: vpnProtocol) != false else {
+            let alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
+                self?.set(vpnProtocol: vpnProtocol,
+                          userInitiated: true,
+                          and: .disconnect,
+                          completion: completion)
+            }, cancelHandler: {
+                completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
+            })
+            alertService.push(alert: alert)
             return
         }
 
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: { [weak self] in
-            self?.set(vpnProtocol: vpnProtocol, userInitiated: userInitiated, reconnect: true, completion: completion)
+            self?.set(vpnProtocol: vpnProtocol,
+                      userInitiated: userInitiated,
+                      and: .reconnect,
+                      completion: completion)
         }, cancelHandler: {
             completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
         }))
     }
     
-    private func set(vpnProtocol: VpnProtocol, userInitiated: Bool, reconnect: Bool, completion: @escaping (Result<(), Error>) -> Void) {
-        let reconnectIfNeeded = { [weak self] in
-            if reconnect {
-                log.info("New protocol set to \(vpnProtocol). VPN will reconnect.", category: .connectionConnect, event: .trigger)
+    private func set(vpnProtocol: VpnProtocol,
+                     userInitiated: Bool,
+                     and then: ProtocolSwitchAction,
+                     completion: @escaping (Result<(), Error>) -> Void) {
+        let performSwitchAction = { [weak self] in
+            switch then {
+            case .reconnect:
+                log.info("New protocol set to \(vpnProtocol). VPN will reconnect.",
+                         category: .connectionConnect, event: .trigger)
                 self?.vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
+            case .disconnect:
+                self?.vpnGateway.disconnect()
+            case .doNothing:
+                return
             }
         }
 
         guard vpnProtocol.requiresSystemExtension else {
             propertiesManager.vpnProtocol = vpnProtocol
-            reconnectIfNeeded()
+            performSwitchAction()
             completion(.success)
             return
         }
@@ -88,7 +128,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             switch result {
             case .installed, .upgraded, .alreadyThere:
                 self.propertiesManager.vpnProtocol = vpnProtocol
-                reconnectIfNeeded()
+                performSwitchAction()
                 completion(.success)
             case .failed(let error):
                 log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)", category: .connectionConnect)

@@ -96,8 +96,14 @@
 /* Title in no internet alert */
 "_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the internet.";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN Connection Active";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN Protocol Not Supported";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "The VPN protocol is not available for the connection you have selected. To connect, try changing the protocol or server.";
 
 /* iOS: button in settings screen */
 "_log_out" = "Log Out";

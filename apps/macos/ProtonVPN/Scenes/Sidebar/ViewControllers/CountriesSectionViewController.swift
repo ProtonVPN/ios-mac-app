@@ -67,7 +67,7 @@ class CountriesSectionViewController: NSViewController {
     @IBOutlet weak var searchBox: NSBox!
 
     @IBOutlet weak var bottomHorizontalLine: NSBox!
-    @IBOutlet weak var serverListScrollView: BlockeableScrollView!
+    @IBOutlet weak var serverListScrollView: BlockableScrollView!
     @IBOutlet weak var serverListTableView: NSTableView!
     @IBOutlet weak var shadowView: ShadowView!
     @IBOutlet weak var clearSearchBtn: NSButton!

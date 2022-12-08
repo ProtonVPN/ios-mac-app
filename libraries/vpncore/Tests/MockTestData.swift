@@ -177,6 +177,7 @@ struct MockTestData {
                               location: .init(lat: 47.22, long: 8.32),
                               hostCountry: "Switzerland",
                               translatedCity: nil)
+
     /// plus server which supports all the features.
     func server7(id: String = "yzab") -> ServerModel {
         .init(id: id,
@@ -200,6 +201,34 @@ struct MockTestData {
               hostCountry: "Switzerland",
               translatedCity: nil)
     }
+
+    /// plus server which supports WireGuard protocol and OpenVPN UDP only.
+    ///
+    /// - Note: OpenVPNUDP uses the "EntryIP" field, WireGuard uses an explicit IP override.
+    var server8 = ServerModel(id: "zyxw",
+                              name: "stealthy server",
+                              domain: "withrelay128.protonvpn.ch",
+                              load: 42,
+                              entryCountryCode: "CH",
+                              exitCountryCode: "CH",
+                              tier: CoreAppConstants.VpnTiers.plus,
+                              feature: .zero,
+                              city: "Zurich",
+                              ips: [.init(id: "mnop",
+                                          entryIp: "10.0.0.13",
+                                          exitIp: "10.0.0.14",
+                                          domain: "withrelay3.protonvpn.net",
+                                          status: 1,
+                                          protocolEntries: [
+                                            .wireGuard(.udp): .init(ipv4: "10.0.1.1", ports: nil),
+                                            .openVpn(.udp): .init(ipv4: nil, ports: [1234, 5678])
+                                          ])
+                              ],
+                              score: 10,
+                              status: 1,
+                              location: .init(lat: 47.22, long: 8.32),
+                              hostCountry: "Switzerland",
+                              translatedCity: nil)
 
     var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
                                                                 defaultUdpPorts: [2345, 6789]),

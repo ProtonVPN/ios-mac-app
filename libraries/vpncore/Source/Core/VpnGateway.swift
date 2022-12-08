@@ -48,6 +48,7 @@ public enum ResolutionUnavailableReason {
     case upgrade(Int)
     case maintenance
     case existingConnection
+    case protocolNotSupported
 }
 
 public enum RestrictedServerGroup {
@@ -62,7 +63,7 @@ public enum ServerSelection {
     case random
 }
 
-public protocol VpnGatewayProtocol: class {
+public protocol VpnGatewayProtocol: AnyObject {
     
     var connection: ConnectionStatus { get }
     var lastConnectionRequest: ConnectionRequest? { get }
@@ -359,13 +360,18 @@ public class VpnGateway: VpnGatewayProtocol {
             
             let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
             
-            let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: serverManager.grouping(for: type), appStateGetter: {
-                return self.appStateManager.state
+            let selector = VpnServerSelector(serverType: type,
+                                             userTier: currentUserTier,
+                                             serverGrouping: serverManager.grouping(for: type),
+                                             connectionProtocol: connectionRequest.connectionProtocol,
+                                             smartProtocolConfig: propertiesManager.smartProtocolConfig,
+                                             appStateGetter: { [unowned self] in
+                self.appStateManager.state
             })
-            selector.changeActiveServerType = { [self] serverType in
+            selector.changeActiveServerType = { [unowned self] serverType in
                 self.changeActiveServerType(serverType)
             }
-            selector.notifyResolutionUnavailable = { [self] forSpecificCountry, type, reason in
+            selector.notifyResolutionUnavailable = { [unowned self] forSpecificCountry, type, reason in
                 self.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
             }
             
@@ -594,8 +600,14 @@ fileprivate extension VpnGateway {
 
         let tier = downgradeInfo.to.maxTier
         let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: serverStorage)
-        let selector = VpnServerSelector(serverType: .unspecified, userTier: tier, serverGrouping: serverManager.grouping(for: serverTypeToggle), appStateGetter: {
-            return self.appStateManager.state
+        let selector = VpnServerSelector(serverType: .unspecified,
+                                         userTier: tier,
+                                         serverGrouping:
+                                            serverManager.grouping(for: serverTypeToggle),
+                                         connectionProtocol: propertiesManager.connectionProtocol,
+                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
+                                         appStateGetter: { [unowned self] in
+            self.appStateManager.state
         })
         
         let request = ConnectionRequest(

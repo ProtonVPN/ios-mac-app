@@ -24,16 +24,20 @@ import Cocoa
 import vpncore
 
 class CountryItemViewModel {
-    
+    /// Contains information about the region such as the country code, the tier the
+    /// country is available for, and what features are available.
     let countryModel: CountryModel
-    private let countryGroup: CountryGroup
+    /// The grouping of servers for the given country.
+    /// - Note: It's likely you want to access `supportedServerModels` instead.
+    private let serverModels: [ServerModel]
+
     fileprivate let vpnGateway: VpnGatewayProtocol
     fileprivate let appStateManager: AppStateManager
     fileprivate let propertiesManager: PropertiesManagerProtocol
     
     private let countriesSectionViewModel: CountriesSectionViewModel
         
-    var isSmartAvailable: Bool { countryGroup.1.allSatisfy({ $0.isVirtual }) }
+    var isSmartAvailable: Bool { supportedServerModels.allSatisfy({ $0.isVirtual }) }
     var isTorAvailable: Bool { countryModel.feature.contains(.tor) }
     var isP2PAvailable: Bool { countryModel.feature.contains(.p2p) }
     var isStreamingAvailable: Bool {
@@ -47,9 +51,16 @@ class CountryItemViewModel {
     var countryCode: String { countryModel.countryCode }
     var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
     var countryName: String { LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable }
+
+    private var supportedServerModels: [ServerModel] {
+        serverModels.filter {
+            $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
+                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        }
+    }
     
     var underMaintenance: Bool {
-        return countryGroup.1.first(where: { !$0.underMaintenance }) == nil
+        return supportedServerModels.allSatisfy { $0.underMaintenance }
     }
     
     var alphaForMainElements: CGFloat {
@@ -66,17 +77,22 @@ class CountryItemViewModel {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isTierTooLow && vpnGateway.connection == .connected
             && connectedServer.isSecureCore == false
-            && connectedServer.countryCode == countryGroup.0.countryCode
+            && connectedServer.countryCode == countryModel.countryCode
     }
     
     let displaySeparator: Bool
     
-    init(country: CountryGroup, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
-         countriesSectionViewModel: CountriesSectionViewModel, propertiesManager: PropertiesManagerProtocol,
-         userTier: Int, isOpened: Bool, displaySeparator: Bool) {
+    init(country: CountryGroup,
+         vpnGateway: VpnGatewayProtocol,
+         appStateManager: AppStateManager,
+         countriesSectionViewModel: CountriesSectionViewModel,
+         propertiesManager: PropertiesManagerProtocol,
+         userTier: Int,
+         isOpened: Bool,
+         displaySeparator: Bool) {
         
-        self.countryGroup = country
         self.countryModel = country.0
+        self.serverModels = country.1
         self.vpnGateway = vpnGateway
         self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
