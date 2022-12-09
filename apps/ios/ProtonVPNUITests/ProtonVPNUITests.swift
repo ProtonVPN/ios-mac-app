@@ -90,7 +90,7 @@ class ProtonVPNUITests: XCTestCase {
     
     @discardableResult
     func correctUserIsLogedIn(_ name: Credentials)-> MainRobot {
-        app.buttons["Quick Connect"].waitForExistence(timeout: 10)
+        app.buttons["Quick Connect"].waitForExistence(timeout: 15)
         app.tabBars.buttons["Settings"].tap()
         XCTAssert(app.staticTexts[name.username].exists)
         XCTAssert(app.staticTexts[name.plan].exists)
