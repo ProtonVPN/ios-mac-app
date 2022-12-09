@@ -2929,6 +2929,8 @@
 				tr,
 				uk,
 				"es-419",
+				cs,
+				ro,
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
@@ -3843,6 +3845,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				EEB404D01F77F639006CF513 /* Base */,
+				E575975B2943310900E5F823 /* cs */,
+				E575975C2943310E00E5F823 /* ro */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
