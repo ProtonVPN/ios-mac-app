@@ -91,7 +91,6 @@ final class CoreLoginService {
                                    doh: doh,
                                    apiServiceDelegate: networking,
                                    forceUpgradeDelegate: networkingDelegate,
-                                   humanVerificationVersion: networkingDelegate.version,
                                    minimumAccountType: AccountType.username,
                                    isCloseButtonAvailable: false,
                                    paymentsAvailability: PaymentsAvailability.notAvailable,
