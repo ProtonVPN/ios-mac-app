@@ -845,11 +845,9 @@
 /* Existing connection alert */
 "_existing_session_to_server" = "Please select a different server.";
 
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "VPN credentials missing";
+/* Generic sign in error */
+"_error_sign_in_again" = "Sorry, something went wrong. Please sign in again.";
 
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Failed to retrieve VPN credentials, please log back in to resolve the issue.";
 "_p2p_detected_popup_title" = "P2P traffic is not permitted on this server";
 "_p2p_detected_popup_body" = "Your connection has been disabled because you are using a server that does not support peer-to-peer (P2P) traffic. P2P is not supported on free servers or servers that are numbered 100 or greater.";
 "_p2p_forwarded_popup_title" = "Connection rerouted";
