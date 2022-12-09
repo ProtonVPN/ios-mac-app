@@ -122,6 +122,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         certificateRefreshManager.start { }
 
         guard let serverId = tunnelProviderProtocol?.connectedServerId else {
+            wg_log(.fault, message: "Server ID wasn't set on tunnel start. This should be an unreachable state")
             fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
         }
 
