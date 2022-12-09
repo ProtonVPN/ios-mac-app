@@ -22,12 +22,6 @@ public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func onLogout()
 }
 
-extension NetworkingDelegate {
-    public var version: HumanVerificationVersion {
-        return .v3
-    }
-}
-
 public protocol NetworkingDelegateFactory {
     func makeNetworkingDelegate() -> NetworkingDelegate
 }
