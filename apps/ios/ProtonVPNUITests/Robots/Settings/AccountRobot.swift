@@ -21,6 +21,10 @@ import pmtest
 
 fileprivate let manageSubscriptionButton = "Manage Subscription"
 fileprivate let upgradeSubscriptionButton = "Upgrade Subscription"
+fileprivate let deleteAccountButton = "Delete account"
+fileprivate let deleteAccountText = "Delete account"
+fileprivate let deleteButton = "Delete"
+fileprivate let selectedEnvHeader = "Selected environment"
 
 class AccountRobot: CoreElements {
 
@@ -34,5 +38,28 @@ class AccountRobot: CoreElements {
     func goToUpgradeSubscription() -> SubscriptionsRobot {
         button(upgradeSubscriptionButton).tap()
         return SubscriptionsRobot()
+    }
+    
+    func deleteAccount() -> AccountRobot {
+        button(deleteAccountButton).tap()
+        return AccountRobot()
+    }
+    
+    let verify = Verify()
+    
+    class Verify: CoreElements {
+        
+        @discardableResult
+        func deleteAccountScreen() -> AccountRobot {
+            staticText(deleteAccountText).wait(time:10).checkExists()
+            button(deleteButton).wait(time: 10).checkExists()
+            return AccountRobot()
+        }
+        
+        @discardableResult
+        func userIsLoggedout() -> AccountRobot {
+            staticText(selectedEnvHeader).wait(time:5).checkExists()
+            return AccountRobot()
+        }
     }
 }
