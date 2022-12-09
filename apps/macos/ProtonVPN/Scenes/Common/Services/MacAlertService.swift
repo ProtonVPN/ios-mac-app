@@ -257,7 +257,7 @@ extension MacAlertService: CoreAlertService {
     
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
-        appSessionManager.logOut(force: true, reason: LocalizedString.failedToAccessVpnCredentialsDescription)
+        appSessionManager.logOut(force: true, reason: LocalizedString.errorSignInAgain)
     }
     
     private func show(_ alert: FirstTimeConnectingAlert) {
