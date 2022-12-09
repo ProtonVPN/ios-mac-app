@@ -635,6 +635,12 @@
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A5E7ACED174F96942750130A /* Pods-ProtonVPN OpenVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.staging.xcconfig"; sourceTree = "<group>"; };
 		AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNmacOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD09EA41294346F500D4F6F2 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AD09EA42294346F800D4F6F2 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AD09EA43294346FE00D4F6F2 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ro; path = ro.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		AD09EA442943470000D4F6F2 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = cs; path = cs.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		AD09EA452943470800D4F6F2 /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Intents.strings; sourceTree = "<group>"; };
+		AD09EA462943470A00D4F6F2 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Intents.strings; sourceTree = "<group>"; };
 		B1EFC7A33024E654F07AB793 /* BugReport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BugReport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22F32F7278DC07800DBB8CA /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../macos/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
 		B22F32F9278DC19E00DBB8CA /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
@@ -3781,6 +3787,8 @@
 				D53D133C2732A57200B9D740 /* tr */,
 				E90F956627E09DBB00A51A42 /* uk */,
 				E534EA4D2806B6DB00BCC9F6 /* es-419 */,
+				AD09EA41294346F500D4F6F2 /* ro */,
+				AD09EA42294346F800D4F6F2 /* cs */,
 			);
 			name = Localizable.strings;
 			path = Localization;
@@ -3808,6 +3816,8 @@
 				D53D133D2732A57800B9D740 /* tr */,
 				E90F956527E09D6600A51A42 /* uk */,
 				E534EA4E2806B6DE00BCC9F6 /* es-419 */,
+				AD09EA43294346FE00D4F6F2 /* ro */,
+				AD09EA442943470000D4F6F2 /* cs */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3836,6 +3846,8 @@
 				D53D133E2732A57C00B9D740 /* tr */,
 				E90F956727E09DD400A51A42 /* uk */,
 				E534EA4F2806B6E200BCC9F6 /* es-419 */,
+				AD09EA452943470800D4F6F2 /* ro */,
+				AD09EA462943470A00D4F6F2 /* cs */,
 			);
 			name = Intents.strings;
 			path = Localization;
