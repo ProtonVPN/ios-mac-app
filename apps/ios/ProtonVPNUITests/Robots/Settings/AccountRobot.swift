@@ -51,14 +51,14 @@ class AccountRobot: CoreElements {
         
         @discardableResult
         func deleteAccountScreen() -> AccountRobot {
-            staticText(deleteAccountText).wait(time:10).checkExists()
+            staticText(deleteAccountText).wait(time: 10).checkExists()
             button(deleteButton).wait(time: 10).checkExists()
             return AccountRobot()
         }
         
         @discardableResult
-        func userIsLoggedout() -> AccountRobot {
-            staticText(selectedEnvHeader).wait(time:5).checkExists()
+        func userIsLoggedOut() -> AccountRobot {
+            staticText(selectedEnvHeader).wait(time: 5).checkExists()
             return AccountRobot()
         }
     }
