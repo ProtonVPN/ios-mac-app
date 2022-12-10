@@ -52,50 +52,44 @@ class TokenRefreshTests: ProtonVPNUITests {
     }
 
     @MainActor
-    func testExpireSessionAndRefreshToken() async {
+    func testExpireSessionAndRefreshToken() async throws {
         loginRobot
             .loginAsUser(credentialsBF22[0])
             .signIn(robot: MainRobot.self)
             .verify.qcButtonDisconnected()
-        let result = await quarkCommands.expireSessionAsync(username: credentialsBF22[0].username, expireRefreshToken: true)
-        switch result {
-        case .failure(let error):
-            XCTFail(error.localizedDescription)
-        case .success:
-            mainRobot
-                .goToSettingsTab()
-                .goToAccountDetail()
-                .deleteAccount()
-                .verify.userIsLoggedout()
-        }
+        try await quarkCommands.expireSessionAsync(username: credentialsBF22[0].username, expireRefreshToken: true)
+        mainRobot
+            .goToSettingsTab()
+            .goToAccountDetail()
+            .deleteAccount()
+            .verify.userIsLoggedOut()
     }
 
     @MainActor
-    func testExpireSessionToken() async {
+    func testExpireSessionToken() async throws {
         loginRobot
             .loginAsUser(credentialsBF22[0])
             .signIn(robot: MainRobot.self)
             .verify.qcButtonDisconnected()
-        let result = await quarkCommands.expireSessionAsync(username: credentialsBF22[0].username)
-        switch result {
-        case .failure(let error):
-            XCTFail(error.localizedDescription)
-        case .success:
-            mainRobot
-                .goToSettingsTab()
-                .goToAccountDetail()
-                .deleteAccount()
-                .verify.deleteAccountScreen()
-        }
+        try await quarkCommands.expireSessionAsync(username: credentialsBF22[0].username)
+        mainRobot
+            .goToSettingsTab()
+            .goToAccountDetail()
+            .deleteAccount()
+            .verify.deleteAccountScreen()
     }
 }
 
 extension QuarkCommands {
-    public func expireSessionAsync(username: String,
-                                   expireRefreshToken: Bool = false) async -> Result<Void, Error> {
-        await withCheckedContinuation { continuation in
+    public func expireSessionAsync(username: String, expireRefreshToken: Bool = false) async throws {
+        return try await withCheckedThrowingContinuation { continuation in
             expireSession(username: username, expireRefreshToken: expireRefreshToken) { result in
-                continuation.resume(returning: result)
+                switch result {
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                case .success:
+                    continuation.resume()
+                }
             }
         }
     }
