@@ -103,7 +103,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             XCTAssert(tunnelManager.isOnDemandEnabled, "OpenVpn on demand rules should be enabled")
 
             XCTAssertEqual(providerProtocol.providerBundleIdentifier, MockDependencyContainer.wireguardProviderBundleId)
-            XCTAssertEqual(providerProtocol.providerConfiguration?["wg-protocol"] as? String, "udp")
+            XCTAssertEqual(providerProtocol.wgProtocol as? String, "udp")
             XCTAssertEqual(providerProtocol.serverAddress, wgConfig.entryServerAddress)
 
             if #available(iOS 14.2, *) {

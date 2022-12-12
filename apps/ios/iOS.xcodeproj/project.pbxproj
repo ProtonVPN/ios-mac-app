@@ -14,7 +14,6 @@
 		132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */; };
 		140F5CD9C21275193C0773F6 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */; };
 		15BFBFA1C27903EECE96B320 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
-		17DAC73C9EF0DD1AD2A1C58D /* NETunnelProviderProtocol+ProviderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BC28B2CE6AF198C065D224 /* NETunnelProviderProtocol+ProviderConfiguration.swift */; };
 		20227E9EFF62B5A862052082 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		223BDF9C51D60D8AD239D951 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */; };
 		257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */; };
@@ -784,7 +783,6 @@
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		BDB268B7C236ED5B1A411ACD /* Pods-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
 		C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
-		C1BC28B2CE6AF198C065D224 /* NETunnelProviderProtocol+ProviderConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NETunnelProviderProtocol+ProviderConfiguration.swift"; path = "../../vpncore/Source/Extensions/NETunnelProviderProtocol+ProviderConfiguration.swift"; sourceTree = "<group>"; };
 		C50B858CE669F031FF23768F /* Pods-ProtonVPN-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-WireGuardiOS Extension/Pods-ProtonVPN-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
 		C97818770724B809A512B8DA /* Pods-ProtonVPN-ProtonVPNUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-ProtonVPNUITests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-ProtonVPNUITests/Pods-ProtonVPN-ProtonVPNUITests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -2007,7 +2005,6 @@
 				F31E911F2758F5F900140B2E /* WGLogger.swift */,
 				E93F769227C788740033B88F /* WGLogFormatter.swift */,
 				725FA809DE263D5243FD5A16 /* WireguardConfig.swift */,
-				C1BC28B2CE6AF198C065D224 /* NETunnelProviderProtocol+ProviderConfiguration.swift */,
 			);
 			path = vpncore;
 			sourceTree = "<group>";
@@ -3679,7 +3676,6 @@
 				E99799A326A6FE0C0083D61E /* FileManager+Extension.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
 				9CAA535B7E08D1D7EA1B1153 /* WireguardConfig.swift in Sources */,
-				17DAC73C9EF0DD1AD2A1C58D /* NETunnelProviderProtocol+ProviderConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
