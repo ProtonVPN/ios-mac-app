@@ -428,7 +428,7 @@ public class VpnManager: VpnManagerProtocol {
         configuration.includeAllNetworks = propertiesManager.killSwitch
         
         if case .wireGuard(let type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
-            (configuration as? NETunnelProviderProtocol)?.providerConfiguration = ["wg-protocol": type.rawValue]
+            (configuration as? NETunnelProviderProtocol)?.wgProtocol = type.rawValue
         }
 
         vpnManager.protocolConfiguration = configuration
