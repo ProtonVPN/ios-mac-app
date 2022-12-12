@@ -21,11 +21,13 @@
 //
 
 import UIKit
+import ProtonCore_UIFoundations
 import vpncore
 
 class ServersFeaturesInformationVC: UIViewController {
-    
+
     @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var featuresTableView: UITableView!
     
     let viewModel: ServersFeaturesInformationViewModel
@@ -45,6 +47,7 @@ class ServersFeaturesInformationVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor()
         titleLbl.text = LocalizedString.informationTitle
+        closeButton.setImage(IconProvider.crossBig, for: .normal) 
         featuresTableView.register(FeatureTableViewCell.nib, forCellReuseIdentifier: FeatureTableViewCell.identifier)
         featuresTableView.dataSource = self
         featuresTableView.delegate = self

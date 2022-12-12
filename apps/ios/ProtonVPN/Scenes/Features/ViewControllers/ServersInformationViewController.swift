@@ -18,6 +18,7 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class ServersInformationViewController: UIViewController {
     static var identifier: String {
@@ -33,6 +34,8 @@ class ServersInformationViewController: UIViewController {
         let title: String?
         let rowViewModels: [InformationTableViewCell.ViewModel]
     }
+
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleLabel: UILabel!
 
@@ -40,6 +43,7 @@ class ServersInformationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        closeButton.setImage(IconProvider.crossBig, for: .normal)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = .clear

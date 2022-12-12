@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ServersFeaturesInformationVC" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="closeButton" destination="cKz-ib-CXz" id="PK8-Wb-Lqj"/>
                 <outlet property="featuresTableView" destination="z6R-my-jyY" id="5c1-ge-4DG"/>
                 <outlet property="titleLbl" destination="GtF-8d-Qwh" id="QtK-RC-59H"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -39,7 +40,7 @@
                     </constraints>
                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                    <state key="normal" title="Button" image="close"/>
+                    <state key="normal" title="Button" image="ic-cross"/>
                     <connections>
                         <action selector="didTapDismiss:" destination="-1" eventType="touchUpInside" id="VrA-FC-ilL"/>
                     </connections>
@@ -72,6 +73,6 @@
         </view>
     </objects>
     <resources>
-        <image name="close" width="217" height="217"/>
+        <image name="ic-cross" width="24" height="24"/>
     </resources>
 </document>

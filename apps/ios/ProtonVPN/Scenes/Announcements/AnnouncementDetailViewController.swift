@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 import vpncore
 import Alamofire
+import ProtonCore_UIFoundations
 
 final class AnnouncementDetailViewController: AnnouncementViewController {
 
@@ -55,7 +56,7 @@ final class AnnouncementDetailViewController: AnnouncementViewController {
 
         view.backgroundColor = .backgroundColor()
         footerView.backgroundColor = .backgroundColor()
-        closeButton.setImage(closeButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.setImage(IconProvider.crossBig, for: .normal)
         closeButton.tintColor = .normalTextColor()
 
         featuresFooterLabel.textColor = .weakTextColor()

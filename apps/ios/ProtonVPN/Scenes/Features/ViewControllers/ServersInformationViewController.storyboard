@@ -24,7 +24,7 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="contentEdgeInsets" minX="3" minY="3" maxX="3" maxY="3"/>
-                                <state key="normal" title="Button" image="close"/>
+                                <state key="normal" title="Button" image="ic-cross-big"/>
                                 <connections>
                                     <action selector="didTapDismiss:" destination="Bnq-PR-ajU" eventType="touchUpInside" id="0X6-I3-6ub"/>
                                 </connections>
@@ -112,6 +112,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="close" width="217" height="217"/>
+        <image name="ic-cross-big" width="24" height="24"/>
     </resources>
 </document>
