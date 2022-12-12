@@ -29,7 +29,6 @@
 		262328404A30662F306A590A /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F973511943D701511CC59CC4 /* URL+String.swift */; };
 		288E84E35E31849C5D750973 /* DoHHostsParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */; };
 		2B08815511366A3226FB58B2 /* URLArray+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */; };
-		350540321BE1783F3E779501 /* NETunnelProviderProtocol+ProviderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA471EEFE5C7BBAD7F71FB7 /* NETunnelProviderProtocol+ProviderConfiguration.swift */; };
 		38BE49A63633B4C7539CB9BC /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7478731ADFC58899985DB1C0 /* LocalAgentFeatures+VpnConnectionFeatures.swift */; };
 		3F437F527A79A23D94EB0CCF /* LocalAgentNativeClientImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B94859EECE5632F9371C009 /* LocalAgentNativeClientImplementation.swift */; };
 		403D438B4B6E524D1808DD5D /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7478731ADFC58899985DB1C0 /* LocalAgentFeatures+VpnConnectionFeatures.swift */; };
@@ -157,7 +156,6 @@
 		AD3A999529534B82002805AE /* Array+Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD09EA472953396F00D4F6F2 /* Array+Builder.swift */; };
 		AD3A999729535952002805AE /* ArrayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* ArrayBuilderTests.swift */; };
 		AD3A999829535952002805AE /* ArrayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* ArrayBuilderTests.swift */; };
-		AF0978A5A19A6A43803DAA2D /* NETunnelProviderProtocol+ProviderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA471EEFE5C7BBAD7F71FB7 /* NETunnelProviderProtocol+ProviderConfiguration.swift */; };
 		B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		B814D7396AC688F7877D3490 /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F973511943D701511CC59CC4 /* URL+String.swift */; };
@@ -754,7 +752,6 @@
 		4CFDF0B9287EE44100386626 /* MockTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTestData.swift; sourceTree = "<group>"; };
 		4CFDF0BC287EE4F300386626 /* ConnectionSwitchingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionSwitchingTests.swift; sourceTree = "<group>"; };
 		4CFDF0BF287EE55B00386626 /* LocalAgentConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConnectionTests.swift; sourceTree = "<group>"; };
-		5EA471EEFE5C7BBAD7F71FB7 /* NETunnelProviderProtocol+ProviderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NETunnelProviderProtocol+ProviderConfiguration.swift"; sourceTree = "<group>"; };
 		5EC60F8D6F15BEB1582DE310 /* Bundle+vpncore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+vpncore.swift"; sourceTree = "<group>"; };
 		5F0112A1878C3C8F142EEB7F /* Pods_Core_vpncore_macosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core_vpncore_macosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A2CD9441D776C2B170405C /* Pods-Core-vpncore-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-ios.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-ios/Pods-Core-vpncore-ios.release.xcconfig"; sourceTree = "<group>"; };
@@ -1844,7 +1841,6 @@
 				4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */,
 				E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */,
 				E53C798C292E1A8200A59A1F /* CGFloat+Margin.swift */,
-				5EA471EEFE5C7BBAD7F71FB7 /* NETunnelProviderProtocol+ProviderConfiguration.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2952,7 +2948,6 @@
 				AD09EA482953396F00D4F6F2 /* Array+Builder.swift in Sources */,
 				403D438B4B6E524D1808DD5D /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
 				E53D7461291CF0CB0006E499 /* VPNPartnersRequest.swift in Sources */,
-				AF0978A5A19A6A43803DAA2D /* NETunnelProviderProtocol+ProviderConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3251,7 +3246,6 @@
 				B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */,
 				D578439628FFC779007E3FC6 /* VpnKeys+Generation.swift in Sources */,
 				38BE49A63633B4C7539CB9BC /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
-				350540321BE1783F3E779501 /* NETunnelProviderProtocol+ProviderConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -41,7 +41,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     var socketType: SocketType? {
-        guard let rawValue = tunnelProviderProtocol?.providerConfiguration?["wg-protocol"] as? String else {
+        guard let rawValue = tunnelProviderProtocol?.wgProtocol as? String else {
             return nil
         }
 
@@ -191,7 +191,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
 
-        connectedServerId = tunnelProviderProtocol?.providerConfiguration?["PVPNServerID"] as? String
+        connectedServerId = tunnelProviderProtocol?.connectedServerId
         wg_log(.info, message: "Starting connection to server ID \(connectedServerId ?? "-")")
 
         // Start the tunnel
