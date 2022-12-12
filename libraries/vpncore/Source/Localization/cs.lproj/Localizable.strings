@@ -1520,7 +1520,7 @@
 "_smart_protocol_reconnect_modal_title" = "Je nutné opětovné připojení";
 
 /* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Chytrý protokol";
+"_smart_protocol_title" = "Smart Protocol";
 
 /* (No Comment) */
 "_smart_routing_title" = "Smart Routing";
