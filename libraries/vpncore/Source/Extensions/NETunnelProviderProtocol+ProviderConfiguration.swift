@@ -22,6 +22,7 @@ import NetworkExtension
 extension NETunnelProviderProtocol {
     static let connectedServerIdKey = "PVPNServerID"
     static let uidKey = "UID"
+    static let wgProtocolKey = "wg-protocol"
 
     private func ensureProviderConfig() {
         guard providerConfiguration == nil else { return }
@@ -46,6 +47,16 @@ extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[Self.uidKey] = newValue
+        }
+    }
+
+    public var wgProtocol: String? {
+        get {
+            providerConfiguration?[Self.wgProtocolKey] as? String
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[Self.wgProtocolKey] = newValue
         }
     }
 }

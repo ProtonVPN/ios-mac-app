@@ -24,6 +24,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private var killSwitchSettingObservation: NSKeyValueObservation!
 
     private var currentWireguardServer: StoredWireguardConfig?
+    private var connectedServerId: String?
 
     enum SocketType: String {
         case udp
@@ -121,7 +122,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private func connectionEstablished() {
         certificateRefreshManager.start { }
 
-        guard let serverId = tunnelProviderProtocol?.connectedServerId else {
+        guard let serverId = connectedServerId else {
             wg_log(.fault, message: "Server ID wasn't set on tunnel start. This should be an unreachable state")
             fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
         }
@@ -155,7 +156,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 .withNewServerPublicKey(server.x25519PublicKey,
                                         andEntryServerAddress: server.entryIp)
 
-            self.tunnelProviderProtocol?.connectedServerId = server.id
+            self.connectedServerId = server.id
 
             self.startTunnelWithStoredConfig(errorNotifier: errorNotifier) { error in
                 if let error = error {
@@ -189,6 +190,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             wg_log(.info, message: "Error in \(#function) guard 3: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
+
+        connectedServerId = tunnelProviderProtocol?.providerConfiguration?["PVPNServerID"] as? String
+        wg_log(.info, message: "Starting connection to server ID \(connectedServerId ?? "-")")
 
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socketType.rawValue) { adapterError in
