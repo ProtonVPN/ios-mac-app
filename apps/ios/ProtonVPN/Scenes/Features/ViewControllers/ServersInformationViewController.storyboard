@@ -102,6 +102,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="closeButton" destination="vKW-ny-eGC" id="yHL-mJ-XV4"/>
                         <outlet property="tableView" destination="0AY-6U-GJj" id="MgL-Xr-RYr"/>
                         <outlet property="titleLabel" destination="n6c-Pe-2bj" id="dj7-8h-BIY"/>
                     </connections>
