@@ -21,6 +21,7 @@ import UIKit
 import vpncore
 import Alamofire
 import SDWebImage
+import ProtonCore_UIFoundations
 
 final class AnnouncementImageViewController: AnnouncementViewController {
 
@@ -65,7 +66,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .backgroundColor()
-        closeButton.setImage(closeButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.setImage(IconProvider.crossBig, for: .normal)
         closeButton.tintColor = .normalTextColor()
         actionButton.setTitle(data.button.text, for: .normal)
 

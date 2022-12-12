@@ -28,6 +28,7 @@ class ServersStreamingFeaturesVC: UIViewController {
     
     private let viewModel: ServersStreamingFeaturesViewModel
 
+    @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLbl: UILabel!
     @IBOutlet private weak var countryLbl: UILabel!
@@ -51,6 +52,7 @@ class ServersStreamingFeaturesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        closeButton.setImage(IconProvider.crossBig, for: .normal)
         iconImageView.image = IconProvider.play
         countryLbl.text = LocalizedString.streamingTitle + " - " + viewModel.countryName
         titleLbl.text = LocalizedString.plusServers

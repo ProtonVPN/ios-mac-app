@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 class TroubleshootViewController: UIViewController {
 
@@ -64,7 +65,7 @@ class TroubleshootViewController: UIViewController {
         
         headerView.backgroundColor = .secondaryBackgroundColor()
         titleLabel.attributedText = LocalizedString.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
-        closeButton.setImage(closeButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        closeButton.setImage(IconProvider.crossBig, for: .normal)
         closeButton.tintColor = .normalTextColor()
     }
     
