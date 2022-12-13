@@ -32,7 +32,7 @@
 .prepare_secrets:
   before_script:
     - rm -rf .secrets-repo
-    - ./scripts/credentials.sh setup .secrets-repo https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/apple/vpn/secrets.git
+    - ./scripts/credentials.sh setup .secrets-repo https://bot:${CI_SECRETS_REPO_KEY}@${CI_SERVER_HOST}/${CI_SECRETS_REPO_PATH}
 
 # Script for deleting all keychain entries that Proton VPN mac app makes.
 # Should be done because otherwise CI throws modals asking for login keychain password.
