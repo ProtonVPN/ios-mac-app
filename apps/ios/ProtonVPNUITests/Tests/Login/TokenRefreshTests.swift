@@ -79,18 +79,3 @@ class TokenRefreshTests: ProtonVPNUITests {
             .verify.deleteAccountScreen()
     }
 }
-
-extension QuarkCommands {
-    public func expireSessionAsync(username: String, expireRefreshToken: Bool = false) async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            expireSession(username: username, expireRefreshToken: expireRefreshToken) { result in
-                switch result {
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                case .success:
-                    continuation.resume()
-                }
-            }
-        }
-    }
-}
