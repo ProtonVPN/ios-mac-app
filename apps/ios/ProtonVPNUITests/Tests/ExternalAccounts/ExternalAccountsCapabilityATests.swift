@@ -37,24 +37,14 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
 //    Sign-in with external account works
 //    Sign-in with username account works (no conversion to internal, so no address or keys generation)
 
-    func testSignInWithInternalAccountWorks() {
+    @MainActor
+    func testSignInWithInternalAccountWorks() async throws {
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
-        
-        let expectQuarkCommandToFinish = expectation(description: "Quark command should finish")
-        var quarkCommandResult: Result<CreatedAccountDetails, CreateAccountError>?
-        QuarkCommands.create(account: .freeWithAddressAndKeys(username: randomUsername, password: randomPassword),
-                             currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl()) { result in
-            quarkCommandResult = result
-            expectQuarkCommandToFinish.fulfill()
-        }
-        
-        wait(for: [expectQuarkCommandToFinish], timeout: 5.0)
-        if case .failure(let error) = quarkCommandResult {
-            XCTFail("Internal account creation failed in test \(#function) because of \(error.userFacingMessageInQuarkCommands)")
-            return
-        }
-        
+
+        try await QuarkCommands.createAsync(account: .freeWithAddressAndKeys(username: randomUsername, password: randomPassword),
+                                            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
+
         _ = MainRobot()
             .showLogin()
         
@@ -65,23 +55,14 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
         
         correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
-    
-    func testSignInWithExternalAccountWorks() {
+
+    @MainActor
+    func testSignInWithExternalAccountWorks() async throws {
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
-        
-        let expectQuarkCommandToFinish = expectation(description: "Quark command should finish")
-        var quarkCommandResult: Result<CreatedAccountDetails, CreateAccountError>?
-        QuarkCommands.create(account: .external(email: randomEmail, password: randomPassword),
-                             currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl()) { result in
-            quarkCommandResult = result
-            expectQuarkCommandToFinish.fulfill()
-        }
-        wait(for: [expectQuarkCommandToFinish], timeout: 5.0)
-        if case .failure(let error) = quarkCommandResult {
-            XCTFail("External account creation failed in test \(#function) because of \(error.userFacingMessageInQuarkCommands)")
-            return
-        }
+
+        try await QuarkCommands.createAsync(account: .external(email: randomEmail, password: randomPassword),
+                                            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
         
         _ = MainRobot()
             .showLogin()
@@ -93,23 +74,14 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
         
         correctUserIsLogedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
     }
-    
-    func testSignInWithUsernameAccountWorks() {
+
+    @MainActor
+    func testSignInWithUsernameAccountWorks() async throws {
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
-        
-        let expectQuarkCommandToFinish = expectation(description: "Quark command should finish")
-        var quarkCommandResult: Result<CreatedAccountDetails, CreateAccountError>?
-        QuarkCommands.create(account: .freeNoAddressNoKeys(username: randomUsername, password: randomPassword),
-                             currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl()) { result in
-            quarkCommandResult = result
-            expectQuarkCommandToFinish.fulfill()
-        }
-        wait(for: [expectQuarkCommandToFinish], timeout: 5.0)
-        if case .failure(let error) = quarkCommandResult {
-            XCTFail("Username account creation failed in test \(#function) because of \(error.userFacingMessageInQuarkCommands)")
-            return
-        }
+
+        try await QuarkCommands.createAsync(account: .freeNoAddressNoKeys(username: randomUsername, password: randomPassword),
+                                            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
 
         _ = MainRobot()
             .showLogin()
@@ -143,13 +115,10 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
         ProtonCore_TestingToolkit.SignupRobot()
             .verify.otherAccountExtButtonIsNotShown()
     }
-    
-    func testSignUpWithUsernameAccountWorks() {
-        let expectQuarkCommandToFinish = expectation(description: "Quark command should finish")
-        QuarkCommands.unban(currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl()) { _ in
-            expectQuarkCommandToFinish.fulfill()
-        }
-        wait(for: [expectQuarkCommandToFinish], timeout: 5.0)
+
+    @MainActor
+    func testSignUpWithUsernameAccountWorks() async throws {
+        try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
         
         let randomUsername = StringUtils().randomAlphanumericString(length: 8)
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
