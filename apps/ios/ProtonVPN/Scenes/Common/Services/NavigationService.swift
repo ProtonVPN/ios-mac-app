@@ -335,30 +335,14 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        if !ProcessInfo.processInfo.arguments.contains("UITests") { // Switch to old report bug because new flow is tested separately in sample app
-            let manager = factory.makeDynamicBugReportManager()
-            if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
-                manager.closeBugReportHandler = {
-                    self.windowService.dismissModal { }
-                }
-                windowService.present(modal: viewController)
-                return
+        let manager = factory.makeDynamicBugReportManager()
+        if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
+            manager.closeBugReportHandler = {
+                self.windowService.dismissModal { }
             }
+            windowService.present(modal: viewController)
+            return
         }
-
-        let viewController = ReportBugViewController(vpnManager: vpnManager)
-        viewController.viewModel = ReportBugViewModel(os: "iOS",
-                                                      osVersion: UIDevice.current.systemVersion,
-                                                      propertiesManager: propertiesManager,
-                                                      reportsApiService: ReportsApiService(networking: networking,
-                                                                                           authKeychain: authKeychain),
-                                                      alertService: alertService,
-                                                      vpnKeychain: vpnKeychain,
-                                                      logContentProvider: factory.makeLogContentProvider(),
-                                                      authKeychain: authKeychain)
-        viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        windowService.present(modal: navigationController)
     }
 }
 

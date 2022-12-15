@@ -34,6 +34,8 @@ extension NEVPNStatus: CustomStringConvertible {
             return "reasserting"
         case .invalid:
             return "invalid"
+        @unknown default:
+            return "invalid unknown"
         }
     }
 }

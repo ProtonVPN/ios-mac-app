@@ -33,7 +33,7 @@ final class NetworkingMock {
 
     func request(_ route: Request, completion: @escaping (Result<Data, Error>) -> Void) {
         var urlRequest = Foundation.URLRequest(url: URL(string: "\(apiURLString)\(route.path)")!)
-        urlRequest.httpMethod = route.method.toString()
+        urlRequest.httpMethod = route.method.rawValue
 
         for (header, value) in route.header {
             urlRequest.setValue(value as? String, forHTTPHeaderField: header)
