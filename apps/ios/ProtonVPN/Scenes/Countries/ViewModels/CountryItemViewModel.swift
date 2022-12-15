@@ -59,13 +59,9 @@ class CountryItemViewModel {
         return supportedServerModels.allSatisfy { $0.underMaintenance }
     }
 
-    /// The server models that are supported using the active connection protocol.
-    private var supportedServerModels: [ServerModel] {
-        serverModels.filter {
-            $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
-                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
-        }
-    }
+    /// The server models that are supported using currently set connection protocol.
+    /// Gets updated every time the protocol changes.
+    @ConcurrentlyReadable private var supportedServerModels = [ServerModel]()
     
     private var isConnected: Bool {
         if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.countryCode == countryCode {
@@ -196,7 +192,7 @@ class CountryItemViewModel {
         
         serverTypes.sort(by: { (serverGroup1, serverGroup2) -> Bool in
             if userTier >= serverGroup1.tier && userTier >= serverGroup2.tier ||
-               userTier < serverGroup1.tier && userTier < serverGroup2.tier { // sort within available then non-available groups
+                userTier < serverGroup1.tier && userTier < serverGroup2.tier { // sort within available then non-available groups
                 return serverGroup1.tier > serverGroup2.tier
             } else {
                 return serverGroup1.tier < serverGroup2.tier
@@ -226,6 +222,7 @@ class CountryItemViewModel {
         self.connectionStatusService = connectionStatusService
         self.propertiesManager = propertiesManager
         self.planService = planService
+        self.populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
         startObserving()
     }
 
@@ -280,8 +277,18 @@ class CountryItemViewModel {
     // MARK: - Private functions
     
     fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(stateChanged),
+                                               name: VpnGateway.connectionChanged,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectionProtocolChanged),
+                                               name: PropertiesManager.vpnProtocolNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectionProtocolChanged),
+                                               name: PropertiesManager.smartProtocolNotification,
+                                               object: nil)
     }
     
     @objc fileprivate func stateChanged() {
@@ -289,6 +296,30 @@ class CountryItemViewModel {
             DispatchQueue.main.async {
                 connectionChanged()
             }
+        }
+    }
+
+    @objc private func connectionProtocolChanged(_ notification: Notification) {
+        switch notification.name {
+        case PropertiesManager.vpnProtocolNotification:
+            guard let vpnProtocol = notification.object as? VpnProtocol else { return }
+            populateSupportedServerModels(supporting: .vpnProtocol(vpnProtocol))
+        case PropertiesManager.smartProtocolNotification:
+            guard let smartProtocol = notification.object as? Bool else { return }
+            if smartProtocol {
+                populateSupportedServerModels(supporting: .smartProtocol)
+            } else {
+                populateSupportedServerModels(supporting: .vpnProtocol(propertiesManager.vpnProtocol))
+            }
+        default:
+            return
+        }
+    }
+
+    private func populateSupportedServerModels(supporting connectionProtocol: ConnectionProtocol) {
+        supportedServerModels = serverModels.filter {
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
         }
     }
 }
