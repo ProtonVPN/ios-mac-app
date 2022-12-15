@@ -38,7 +38,6 @@ class CountryItemViewModelTests: XCTestCase {
     }
 
     func testUnderMaintenanceLogic() {
-        
         XCTAssertFalse(self.viewModel(withServers: [
             serverModel(withStatus: 5),
             serverModel(withStatus: 1),
@@ -99,7 +98,7 @@ class CountryItemViewModelTests: XCTestCase {
             tier: 1,
             feature: ServerFeature.zero,
             city: nil,
-            ips: [],
+            ips: [ServerIp(id: "", entryIp: "10.0.0.1", exitIp: "", domain: "", status: status)],
             score: 11,
             status: status,
             location: ServerLocation(lat: 1, long: 2),

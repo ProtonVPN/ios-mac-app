@@ -133,7 +133,7 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
         var managerConfig: VpnManagerConfiguration?
 
         populateExpectations(description: "Should connect to openvpn, with overridden ports",
-                             [.vpnConnection, .certificateRefresh, .localAgentConnection])
+                             [.vpnConnection])
 
         container.didConfigure = { vmc, _ in
             managerConfig = vmc

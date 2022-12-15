@@ -26,6 +26,7 @@ import XCTest
 class VpnServerSelectorTests: XCTestCase {
     static let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)
     static let smartProtocolConfig = MockTestData().defaultClientConfig.smartProtocolConfig
+    static let appStateGetter: (() -> AppState) = { return .disconnected }
     
     private var grouping1: [CountryGroup]!
     private var serversGB: [ServerModel]!
@@ -57,9 +58,12 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type,
+                                         userTier: currentUserTier,
+                                         serverGrouping: grouping1,
+                                         connectionProtocol: Self.connectionProtocol,
+                                         smartProtocolConfig: Self.smartProtocolConfig,
+                                         appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversGB[0], selector.selectServer(connectionRequest: connectionRequest))
     }
 
@@ -68,9 +72,7 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .fastest), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversDE[0], selector.selectServer(connectionRequest: connectionRequest))
     }
 
@@ -79,9 +81,7 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversGB[2], selector.selectServer(connectionRequest: connectionRequest))
     }
 
@@ -90,9 +90,7 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .fastest), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversDE[2], selector.selectServer(connectionRequest: connectionRequest))
     }
 
@@ -101,9 +99,7 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .server(getServerModel(id: "DE2", countryCode: "DE", tier: 1, score: 6))), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversDE[2].id, selector.selectServer(connectionRequest: connectionRequest)?.id)
     }
     
@@ -112,9 +108,7 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("FR", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(nil, selector.selectServer(connectionRequest: connectionRequest))
     }
     
@@ -130,9 +124,7 @@ class VpnServerSelectorTests: XCTestCase {
         ]
         let grouping = [(CountryModel(serverModel: servers[0]), servers)];
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         
         var notifiedNoResultion = false
         selector.notifyResolutionUnavailable = { _, _, _ in
@@ -154,9 +146,7 @@ class VpnServerSelectorTests: XCTestCase {
         ]
         let grouping = [(CountryModel(serverModel: servers[0]), servers)];
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         
         var notifiedNoResultion = false
         selector.notifyResolutionUnavailable = { _, _, _ in
@@ -172,9 +162,7 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .secureCore, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         var currentServerType = ServerType.unspecified
         selector.changeActiveServerType = { serverType in
             currentServerType = serverType
@@ -203,16 +191,28 @@ class VpnServerSelectorTests: XCTestCase {
         let type = ServerType.unspecified
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
         
-        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: {
-            return AppState.disconnected
-        })
+        let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(servers2[0], selector.selectServer(connectionRequest: connectionRequest))
     }
 
     // MARK: - Helpers
     
     private func getServerModel(id: String, countryCode: String, tier: Int, score: Double, feature: ServerFeature = .zero, status: Int = 1) -> ServerModel {
-        return ServerModel(id: id, name: "", domain: "", load: 0, entryCountryCode: countryCode, exitCountryCode: countryCode, tier: tier, feature: feature, city: nil, ips: [ServerIp](), score: score, status: status, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil)
+        return ServerModel(id: id,
+                           name: "",
+                           domain: "",
+                           load: 0,
+                           entryCountryCode: countryCode,
+                           exitCountryCode: countryCode,
+                           tier: tier,
+                           feature: feature,
+                           city: nil,
+                           ips: [ServerIpMock(entryIp: "10.0.0.1")],
+                           score: score,
+                           status: status,
+                           location: ServerLocation(lat: 0, long: 0),
+                           hostCountry: nil,
+                           translatedCity: nil)
     }
     
 }
