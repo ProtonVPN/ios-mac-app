@@ -84,3 +84,27 @@ public class ConcurrentReaders<T> {
         asyncBarrier { [unowned self] in closure(&self.value) }
     }
 }
+
+@propertyWrapper
+public class ConcurrentlyReadable<T> {
+    private var _wrappedValue: ConcurrentReaders<T>
+
+    public var wrappedValue: T {
+        get {
+            _wrappedValue.get()
+        }
+        set {
+            _wrappedValue.update {
+                $0 = newValue
+            }
+        }
+    }
+
+    public func updateAsync(_ closure: @escaping ((inout T) -> Void)) {
+        _wrappedValue.updateAsync(closure)
+    }
+
+    public init(wrappedValue: T) {
+        self._wrappedValue = ConcurrentReaders(wrappedValue)
+    }
+}

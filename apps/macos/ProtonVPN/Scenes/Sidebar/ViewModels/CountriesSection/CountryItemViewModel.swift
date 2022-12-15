@@ -52,12 +52,7 @@ class CountryItemViewModel {
     var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
     var countryName: String { LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable }
 
-    private var supportedServerModels: [ServerModel] {
-        serverModels.filter {
-            $0.supports(connectionProtocol: propertiesManager.connectionProtocol,
-                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
-        }
-    }
+    @ConcurrentlyReadable private var supportedServerModels = [ServerModel]()
     
     var underMaintenance: Bool {
         return supportedServerModels.allSatisfy { $0.underMaintenance }
@@ -102,6 +97,9 @@ class CountryItemViewModel {
         self.isServerUnderMaintenance = false
         self.displaySeparator = displaySeparator
         self.appStateManager = appStateManager
+
+        populateSupportedServerModels(supporting: propertiesManager.connectionProtocol)
+        startObserving()
     }
     
     func connectAction() {
@@ -122,5 +120,41 @@ class CountryItemViewModel {
     func changeCellState() {
         countriesSectionViewModel.toggleCell(for: countryCode)
         isOpened = !isOpened
+    }
+
+    // MARK: Private functions
+    private func startObserving() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectionProtocolChanged),
+                                               name: PropertiesManager.vpnProtocolNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectionProtocolChanged),
+                                               name: PropertiesManager.smartProtocolNotification,
+                                               object: nil)
+    }
+
+    @objc private func connectionProtocolChanged(_ notification: Notification) {
+        switch notification.name {
+        case PropertiesManager.vpnProtocolNotification:
+            guard let vpnProtocol = notification.object as? VpnProtocol else { return }
+            populateSupportedServerModels(supporting: .vpnProtocol(vpnProtocol))
+        case PropertiesManager.smartProtocolNotification:
+            guard let smartProtocol = notification.object as? Bool else { return }
+            if smartProtocol {
+                populateSupportedServerModels(supporting: .smartProtocol)
+            } else {
+                populateSupportedServerModels(supporting: .vpnProtocol(propertiesManager.vpnProtocol))
+            }
+        default:
+            return
+        }
+    }
+
+    private func populateSupportedServerModels(supporting connectionProtocol: ConnectionProtocol) {
+        supportedServerModels = serverModels.filter {
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        }
     }
 }
