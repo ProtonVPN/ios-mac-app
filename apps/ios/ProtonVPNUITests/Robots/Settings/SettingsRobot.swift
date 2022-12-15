@@ -28,11 +28,6 @@ class SettingsRobot: CoreElements {
     
     let verify = Verify()
     
-    func openReportBugWindow() -> ReportBugRobot {
-        button(reportBugButton).tap()
-        return ReportBugRobot()
-    }
-    
     /// - Precondition: Protocol submenu of Settings menu
     func goToProtocolsList() -> ProtocolsListRobot {
         cell(protocolButton).tap()

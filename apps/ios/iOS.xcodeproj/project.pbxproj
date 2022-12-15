@@ -251,8 +251,6 @@
 		D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */; };
 		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
-		D554789E22C601CE00AD3C5B /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */; };
-		D554789F22C601CE00AD3C5B /* ReportBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */; };
 		D55B36C82457FDF500D8B0B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
 		D55B36CB2457FF0600D8B0B9 /* TroubleshootingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */; };
@@ -278,7 +276,6 @@
 		D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
 		D5A8813022CE2702009B63D1 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */; };
 		D5A8813122CE270A009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
-		D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */; };
 		D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
@@ -485,7 +482,6 @@
 		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
 		F377836A26E644BC00392958 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377835F26E644BC00392958 /* SettingsTests.swift */; };
-		F377836B26E644BC00392958 /* ReportBugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836026E644BC00392958 /* ReportBugTests.swift */; };
 		F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836226E644BC00392958 /* ConnectionTests.swift */; };
 		F377836D26E644BC00392958 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = F377836426E644BC00392958 /* TestPlan.xctestplan */; };
 		F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836626E644BC00392958 /* ProfilesTests.swift */; };
@@ -497,7 +493,6 @@
 		F37F741F27CFBD4D00F1C621 /* Search+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37F741D27CF877A00F1C621 /* Search+Configuration.swift */; };
 		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
 		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
-		F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E826E6428C006768A8 /* ReportBugRobot.swift */; };
 		F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */; };
 		F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EB26E6428C006768A8 /* MapRobot.swift */; };
 		F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EC26E6428C006768A8 /* CountryListRobot.swift */; };
@@ -810,8 +805,6 @@
 		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
 		D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriHandlerViewModel.swift; sourceTree = "<group>"; };
-		D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
-		D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBugViewController.xib; sourceTree = "<group>"; };
 		D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinatorMock.swift; sourceTree = "<group>"; };
 		D55E116128CB491F00507A44 /* Logging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Logging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D573D113264A70980033CE19 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1029,7 +1022,6 @@
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
 		F377835F26E644BC00392958 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
-		F377836026E644BC00392958 /* ReportBugTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugTests.swift; sourceTree = "<group>"; };
 		F377836226E644BC00392958 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
 		F377836426E644BC00392958 /* TestPlan.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		F377836626E644BC00392958 /* ProfilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
@@ -1040,7 +1032,6 @@
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 		F3B783E526E6428C006768A8 /* MainRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRobot.swift; sourceTree = "<group>"; };
 		F3B783E726E6428C006768A8 /* SettingsRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
-		F3B783E826E6428C006768A8 /* ReportBugRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugRobot.swift; sourceTree = "<group>"; };
 		F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusRobot.swift; sourceTree = "<group>"; };
 		F3B783EB26E6428C006768A8 /* MapRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapRobot.swift; sourceTree = "<group>"; };
 		F3B783EC26E6428C006768A8 /* CountryListRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListRobot.swift; sourceTree = "<group>"; };
@@ -1338,8 +1329,6 @@
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
 				F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */,
-				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
-				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
 				E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */,
 				E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */,
@@ -2261,7 +2250,6 @@
 			isa = PBXGroup;
 			children = (
 				F377835F26E644BC00392958 /* SettingsTests.swift */,
-				F377836026E644BC00392958 /* ReportBugTests.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2327,7 +2315,6 @@
 			isa = PBXGroup;
 			children = (
 				F3B783E726E6428C006768A8 /* SettingsRobot.swift */,
-				F3B783E826E6428C006768A8 /* ReportBugRobot.swift */,
 				588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */,
 				57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */,
 				57E3439128E5A6780012B2DF /* AccountRobot.swift */,
@@ -2777,7 +2764,6 @@
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
 				D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */,
 				E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */,
-				D554789F22C601CE00AD3C5B /* ReportBugViewController.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
@@ -3360,7 +3346,6 @@
 				428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */,
 				D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
-				D554789E22C601CE00AD3C5B /* ReportBugViewController.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */,
@@ -3542,7 +3527,6 @@
 				E5B3049F28BF7C720093517A /* AnnouncementImageViewController.swift in Sources */,
 				D5136C85228592E80002C095 /* ProtonButton.swift in Sources */,
 				D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */,
-				D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */,
 				D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */,
 				F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01F27FDABFB00C3AA33 /* UINavigationController+Extensions.swift in Sources */,
@@ -3606,9 +3590,7 @@
 				661D36E22948A0FC00A7EBE3 /* ExternalAccountsCapabilityATests.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
-				F377836B26E644BC00392958 /* ReportBugTests.swift in Sources */,
 				B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */,
-				F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
 				37CC821528F4407C00230335 /* LoginExtAccountTests.swift in Sources */,
