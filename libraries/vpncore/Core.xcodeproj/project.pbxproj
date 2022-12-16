@@ -6,6 +6,20 @@
 	objectVersion = 54;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4C4BB727294CB450004D5A77 /* PullCredentials */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C4BB72B294CB450004D5A77 /* Build configuration list for PBXAggregateTarget "PullCredentials" */;
+			buildPhases = (
+				4C4BB72C294CB45D004D5A77 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = PullCredentials;
+			productName = PullCredentials;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0112A1878C3C8F142EEB7F /* Pods_Core_vpncore_macosTests.framework */; };
 		04F14CFDA91FF552B57D0677 /* Pods-Core-vpncore-ios-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */; };
@@ -613,6 +627,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4C4BB72D294CB951004D5A77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1B5F5CF21B68ABD00B558B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C4BB727294CB450004D5A77;
+			remoteInfo = PullCredentials;
+		};
+		4C4BB72F294CB957004D5A77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E1B5F5CF21B68ABD00B558B0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4C4BB727294CB450004D5A77;
+			remoteInfo = PullCredentials;
+		};
 		E1B5F5E321B68ABD00B558B0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E1B5F5CF21B68ABD00B558B0 /* Project object */;
@@ -2153,6 +2181,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4C4BB730294CB957004D5A77 /* PBXTargetDependency */,
 			);
 			name = "vpncore-ios";
 			packageProductDependencies = (
@@ -2208,6 +2237,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4C4BB72E294CB951004D5A77 /* PBXTargetDependency */,
 			);
 			name = "vpncore-macos";
 			packageProductDependencies = (
@@ -2256,6 +2286,9 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
+					4C4BB727294CB450004D5A77 = {
+						CreatedOnToolsVersion = 14.1;
+					};
 					E1B5F5D721B68ABD00B558B0 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
@@ -2309,6 +2342,7 @@
 				E1B5F5E021B68ABD00B558B0 /* vpncore-iosTests */,
 				E1B5F60B21B6960100B558B0 /* vpncore-macos */,
 				E1B5F61321B6960100B558B0 /* vpncore-macosTests */,
+				4C4BB727294CB450004D5A77 /* PullCredentials */,
 			);
 		};
 /* End PBXProject section */
@@ -2446,6 +2480,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${SRCROOT}/../../scripts/describe-revision.sh mac \"$SCRIPT_INPUT_FILE_0\"\n";
+		};
+		4C4BB72C294CB45D004D5A77 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/PullCredentials",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# $SRCROOT is in libraries/vpncore\nCREDENTIALS=\"$SRCROOT/../../scripts/credentials.sh\"\n\n$CREDENTIALS stash save \"Stashed before pull on $(date '+%Y-%m-%d %H:%M:%S')\"\n$CREDENTIALS xcodepull origin main\n\ntouch \"$SCRIPT_OUTPUT_FILE_0\"\n";
 		};
 		5CBAF5C8FCBB5210D099642F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3199,6 +3251,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4C4BB72E294CB951004D5A77 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C4BB727294CB450004D5A77 /* PullCredentials */;
+			targetProxy = 4C4BB72D294CB951004D5A77 /* PBXContainerItemProxy */;
+		};
+		4C4BB730294CB957004D5A77 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4C4BB727294CB450004D5A77 /* PullCredentials */;
+			targetProxy = 4C4BB72F294CB957004D5A77 /* PBXContainerItemProxy */;
+		};
 		E1B5F5E421B68ABD00B558B0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E1B5F5D721B68ABD00B558B0 /* vpncore-ios */;
@@ -3342,6 +3404,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4C4BB728294CB450004D5A77 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C4BB729294CB450004D5A77 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Staging;
+		};
+		4C4BB72A294CB450004D5A77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		E1B5F5EA21B68ABD00B558B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3958,6 +4044,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4C4BB72B294CB450004D5A77 /* Build configuration list for PBXAggregateTarget "PullCredentials" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C4BB728294CB450004D5A77 /* Debug */,
+				4C4BB729294CB450004D5A77 /* Staging */,
+				4C4BB72A294CB450004D5A77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E1B5F5D221B68ABD00B558B0 /* Build configuration list for PBXProject "Core" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

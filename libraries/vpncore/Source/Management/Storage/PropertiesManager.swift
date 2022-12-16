@@ -108,6 +108,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     #if os(macOS)
     var forceExtensionUpgrade: Bool { get set }
+    var connectedServerNameDoNotUse: String? { get set }
     #endif
     
     func logoutCleanup()
@@ -189,6 +190,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
         #if os(macOS)
         case forceExtensionUpgrade = "ForceExtensionUpgrade"
+        case connectedServerNameDoNotUse = "ConnectedServerNameDoNotUse"
         #endif
     }
 
@@ -280,15 +282,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var serverTypeToggle: ServerType {
         return secureCoreToggle ? .secureCore : .standard
     }
-    
-    public var reportBugEmail: String? {
-        get {
-            return storage.defaults.string(forKey: Keys.lastBugReportEmail.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.lastBugReportEmail.rawValue)
-        }
-    }
+
+    @StringProperty(.lastBugReportEmail) public var reportBugEmail: String?
     
     /// Distinguishes if kill switch should be disabled
     @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
@@ -301,14 +296,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @BoolProperty(.warnedTrialExpiring) public var warnedTrialExpiring: Bool
     @BoolProperty(.warnedTrialExpired) public var warnedTrialExpired: Bool
 
-    public var apiEndpoint: String? {
-        get {
-            return storage.defaults.string(forKey: Keys.apiEndpoint.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.apiEndpoint.rawValue)
-        }
-    }
+    @StringProperty(.apiEndpoint) public var apiEndpoint: String?
 
     @InitializedProperty(.openVpnConfig) public var openVpnConfig: OpenVpnConfig
     @InitializedProperty(.wireguardConfig) public var wireguardConfig: WireguardConfig
@@ -317,18 +305,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     #if os(macOS)
     @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
+
+    /// The name of the currently connected server. This is used by command line scripts. Don't use this in code.
+    ///
+    /// - Important: Really, don't use this. Anywhere.
+    @StringProperty(.connectedServerNameDoNotUse) public var connectedServerNameDoNotUse: String?
     #endif
 
     @InitializedProperty(.vpnProtocol, notifyChangesWith: PropertiesManager.vpnProtocolNotification)
     public var vpnProtocol: VpnProtocol
     
+    @StringProperty(.lastAppVersion) private var _lastAppVersion: String?
     public var lastAppVersion: String {
-        get {
-            return storage.defaults.string(forKey: Keys.lastAppVersion.rawValue) ?? "0.0.0"
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.lastAppVersion.rawValue)
-        }
+        get { _lastAppVersion ?? "0.0.0" }
+        set { _lastAppVersion = newValue }
     }
     
     public var lastTimeForeground: Date? {
@@ -398,14 +388,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
     @InitializedProperty(.partnerTypes) public var partnerTypes: [PartnerType]
 
-    public var streamingResourcesUrl: String? {
-        get {
-            return storage.defaults.string(forKey: Keys.streamingResourcesUrl.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.streamingResourcesUrl.rawValue)
-        }
-    }
+    @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
 
     public var connectionProtocol: ConnectionProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
@@ -572,6 +555,34 @@ public class BoolProperty: DefaultsWrapper {
     public var wrappedValue: Bool {
         get {
             return storage.defaults.bool(forKey: key.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: key.rawValue)
+            if let notification {
+                executeOnUIThread {
+                    NotificationCenter.default.post(name: notification, object: newValue)
+                }
+            }
+        }
+    }
+
+    init(_ key: PropertiesManager.Keys,
+         notifyChangesWith notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
+    }
+}
+
+@propertyWrapper
+public class StringProperty: DefaultsWrapper {
+    var storage: Storage!
+
+    let key: PropertiesManager.Keys
+    let notification: Notification.Name?
+
+    public var wrappedValue: String? {
+        get {
+            return storage.defaults.string(forKey: key.rawValue)
         }
         set {
             storage.setValue(newValue, forKey: key.rawValue)
