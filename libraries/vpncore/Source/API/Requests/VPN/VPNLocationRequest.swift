@@ -33,7 +33,7 @@ final class VPNLocationRequest: Request {
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
+        .userInitiated
     }
 }
 
