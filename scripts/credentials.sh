@@ -9,6 +9,7 @@
 # Then:
 # ./scripts/credentials.sh checkout
 
+SCRIPT_NAME="$0"
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 if [[ "$1" == "setup" ]]; then
@@ -45,8 +46,19 @@ if [[ "$1" == "setup" ]]; then
 
 	echo "Credentials repository setup successfully."
 	exit 0
+elif [[ "$1" == "xcodepull" ]]; then
+	shift # remove xcodepull from arguments
+
+	VPN_SERVER_NAME=$(git config --get vpn.internal || true)
+	CONNECTED_NAME=$(defaults read ch.protonvpn.mac ConnectedServerNameDoNotUse 2> /dev/null || true)
+
+	if [[ ! -z "$VPN_SERVER_NAME" ]] && [[ "$VPN_SERVER_NAME" != "$CONNECTED_NAME" ]]; then
+		exit 0
+	fi
+
+	exec "$0" pull "$@"
 fi
 
 CREDENTIALS_DIR=$(git config --get vpn.credsdir)
 
-git --git-dir="$CREDENTIALS_DIR" --work-tree="$SCRIPT_DIR/.." "$@"
+exec git --git-dir="$CREDENTIALS_DIR" --work-tree="$SCRIPT_DIR/.." "$@"
