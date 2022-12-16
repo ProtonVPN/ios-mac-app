@@ -2559,7 +2559,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		D5479537228EC81100639216 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2577,7 +2577,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		EA4D5A1ED7F878B6A9AFB23E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

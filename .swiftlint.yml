@@ -1,17 +1,24 @@
 disabled_rules: # rule identifiers to exclude from running
   - file_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#file-line-length
   - line_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#line-length
+  - type_name # https://github.com/realm/SwiftLint/blob/master/Rules.md#type-name
   - type_body_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#type-body-length
   - identifier_name # https://github.com/realm/SwiftLint/blob/master/Rules.md#identifier-name
+  - trailing_whitespace # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-whitespace
   - notification_center_detachment # https://github.com/realm/SwiftLint/blob/master/Rules.md#notification-center-detachment
   - trailing_comma # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-comma
   - multiline_arguments # https://github.com/realm/SwiftLint/blob/master/Rules.md#multiline-arguments
   - unused_closure_parameter # https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-closure-parameter
   - discouraged_optional_collection # https://github.com/realm/SwiftLint/blob/master/Rules.md#discouraged-optional-collection
   - force_cast # https://github.com/realm/SwiftLint/blob/master/Rules.md#force-cast
-  - redundant_string_enum_value # https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value
+  - force_try # https://realm.github.io/SwiftLint/force_try.html
   - no_fallthrough_only # https://github.com/realm/SwiftLint/blob/master/Rules.md#no-fallthrough-only
+  - private_over_fileprivate # https://github.com/realm/SwiftLint/blob/master/Rules.md#private_over_fileprivate
   - for_where # https://realm.github.io/SwiftLint/for_where.html
+  - large_tuple # https://realm.github.io/SwiftLint/large_tuple.html
+  - nesting # https://realm.github.io/SwiftLint/nesting.html
+  - redundant_string_enum_value # https://realm.github.io/SwiftLint/redundant_string_enum_value.html
+  - void_function_in_ternary # https://realm.github.io/SwiftLint/void_function_in_ternary.html
 
 opt_in_rules: # some rules are only opt-in
   - empty_count # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-count
@@ -34,28 +41,24 @@ opt_in_rules: # some rules are only opt-in
 
 # More rules can be found here: https://github.com/realm/SwiftLint/blob/master/Rules.md
 
-type_name:
-    min_length: 3
-    max_length: 42
-
-included: # paths to include during linting. `--path` is ignored if present.
-  - Sources
-excluded: # paths to ignore during linting. Takes precedence over `included`.
-  - Carthage
-  - Pods
+#included: # paths to include during linting. `--path` is ignored if present.
+#  - ProtonVPN
+#excluded: # paths to ignore during linting. Takes precedence over `included`.
+#  - Carthage
+#  - Pods
+#  - ProtonVPN/ObfuscatedConstants.swift
   
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji, sonarqube, markdown)
 
 custom_rules:
-  
   no_print:
     name: "Printing to console"
     message: "No direct printing to console is allowed. Please use `log` from vpncore library."
     regex: "(^\\s*print\\()|(NSLog)"
     match_kinds:
       - identifier
-  
+
   non_commented_localization:
     regex: 'NSLocalizedString\("[^"]+"\s*\)'
     message: "NSLocalizedString() should provide comment with a context of where translation is used to help translators."
-  
+    

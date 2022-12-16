@@ -3217,7 +3217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --config ../../.swiftlint.yml\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		D584998F25A3124B00CFAFDE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3855,8 +3855,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				EEB404D01F77F639006CF513 /* Base */,
-				E575975B2943310900E5F823 /* cs */,
-				E575975C2943310E00E5F823 /* ro */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
