@@ -20,7 +20,7 @@ import Foundation
 import VPNShared
 
 class SessionServiceMock: SessionService {
-    var sessionCookie: HTTPCookie? = nil
+    var sessionCookie: HTTPCookie?
     var accountHost: URL = URL(string: "https://accountHost.com")!
 
     var getSelectorCallback: (Result<String, Error>)?

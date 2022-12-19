@@ -75,9 +75,9 @@ final class TodayViewController: UIViewController {
     }
     
     private func updateUI(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
-                               ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
-                               connectionString: String = "", connectionLabelTint: UIColor = .normalTextColor(),
-                               iconTint: UIColor = .brandColor(), animate: Bool = false) {
+                          ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
+                          connectionString: String = "", connectionLabelTint: UIColor = .normalTextColor(),
+                          iconTint: UIColor = .brandColor(), animate: Bool = false) {
         ipLabel.isHidden = ipAddress == nil
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden

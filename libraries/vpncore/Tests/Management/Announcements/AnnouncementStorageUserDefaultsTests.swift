@@ -20,7 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
 import XCTest
 @testable import vpncore
 
@@ -72,7 +71,7 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
         
         storage.store([])
         
-        wait(for: [expectationNotificationFired], timeout:0.2)
+        wait(for: [expectationNotificationFired], timeout: 0.2)
         NotificationCenter.default.removeObserver(self)
     }
     

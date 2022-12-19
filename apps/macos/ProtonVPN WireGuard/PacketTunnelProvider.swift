@@ -41,7 +41,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }()
 
-    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this cyclomatic_complexity function_body_length
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 

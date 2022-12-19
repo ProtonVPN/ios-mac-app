@@ -35,6 +35,7 @@ class AlertTests: XCTestCase {
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
     
     override func setUp() {
+        super.setUp()
         windowService.displayCount = 0
     }
 
@@ -181,7 +182,6 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
         return TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 
-    
     func makeAppSessionManager() -> AppSessionManager {
         return AppSessionManagerMock()
     }
@@ -203,7 +203,7 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
     }
 }
 
-fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory & PropertiesManagerFactory {
+fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector {
         return UpdateFileSelectorMock()
     }

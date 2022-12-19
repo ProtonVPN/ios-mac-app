@@ -38,7 +38,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv7", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
         serverModel("serv8", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
         serverModel("serv9", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
-        ])
+    ])
     
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
@@ -95,6 +95,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     var usIndexSecureCore = 3
     
     override func setUp() {
+        super.setUp()
         ServerManagerImplementation.reset() // Use new server manager
         profileService = ProfileServiceMock() // Ensures dataSet isn't carried over from previously run tests
     }
@@ -136,7 +137,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     
     // MARK: - Private
     
-    private func serverModel(_ name: String, tier: Int, feature: ServerFeature, exitCountryCode: String, entryCountryCode: String) -> ServerModel{
+    private func serverModel(_ name: String, tier: Int, feature: ServerFeature, exitCountryCode: String, entryCountryCode: String) -> ServerModel {
         return ServerModel(
             id: "",
             name: name,

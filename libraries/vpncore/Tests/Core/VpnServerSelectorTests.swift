@@ -33,6 +33,7 @@ class VpnServerSelectorTests: XCTestCase {
     private var serversDE: [ServerModel]!
 
     override func setUpWithError() throws {
+        try super.setUpWithError()
         if grouping1 == nil {
             serversGB = [
                 getServerModel(id: "GB0", countryCode: "GB", tier: 3, score: 1),
@@ -45,12 +46,8 @@ class VpnServerSelectorTests: XCTestCase {
                 getServerModel(id: "DE1", countryCode: "DE", tier: 2, score: 4, feature: .tor),
                 getServerModel(id: "DE2", countryCode: "DE", tier: 1, score: 6, feature: .secureCore)
             ]
-            grouping1 = [(CountryModel(serverModel: serversGB[0]), serversGB), (CountryModel(serverModel: serversDE[0]), serversDE)];
+            grouping1 = [(CountryModel(serverModel: serversGB[0]), serversGB), (CountryModel(serverModel: serversDE[0]), serversDE)]
         }
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
     func testSelectsFastestOverall() throws {
@@ -122,7 +119,7 @@ class VpnServerSelectorTests: XCTestCase {
             getServerModel(id: "GB1", countryCode: "GB", tier: 2, score: 3, status: 0),
             getServerModel(id: "GB2", countryCode: "GB", tier: 1, score: 5, status: 0),
         ]
-        let grouping = [(CountryModel(serverModel: servers[0]), servers)];
+        let grouping = [(CountryModel(serverModel: servers[0]), servers)]
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         
@@ -144,7 +141,7 @@ class VpnServerSelectorTests: XCTestCase {
             getServerModel(id: "GB0", countryCode: "GB", tier: 3, score: 1),
             getServerModel(id: "GB1", countryCode: "GB", tier: 2, score: 3),
         ]
-        let grouping = [(CountryModel(serverModel: servers[0]), servers)];
+        let grouping = [(CountryModel(serverModel: servers[0]), servers)]
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         
@@ -184,8 +181,7 @@ class VpnServerSelectorTests: XCTestCase {
             getServerModel(id: "DE1", countryCode: "DE", tier: 1, score: 4),
             getServerModel(id: "DE2", countryCode: "DE", tier: 1, score: 6)
         ]
-        let grouping = [(CountryModel(serverModel: servers1[0]), servers1), (CountryModel(serverModel: servers2[0]), servers2)];
-        
+        let grouping = [(CountryModel(serverModel: servers1[0]), servers1), (CountryModel(serverModel: servers2[0]), servers2)]
         
         let currentUserTier = 3
         let type = ServerType.unspecified

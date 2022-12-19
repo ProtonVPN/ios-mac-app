@@ -40,7 +40,7 @@ autoreleasepool {
     SwiftyBeaver.self.addDestination(OSLogDestination())
 
     // We can't extract logs from OSLog on macos 10.15, so we have to save them to file
-    if #available(macOS 12, *) {} else {
+    if #unavailable(macOS 12) {
         SwiftyBeaver.self.addDestination(FileDestination(logFileURL: LogSettings.logFileUrl))
     }
     

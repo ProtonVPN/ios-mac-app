@@ -34,7 +34,7 @@ class AppStateTests: XCTestCase {
     var errorState: AppState!
     
     override func setUp() {
-        
+        super.setUp()
         descriptor = ServerDescriptor(username: "test_user", address: "test_password")
         
         connectedState = AppState.connected(descriptor)

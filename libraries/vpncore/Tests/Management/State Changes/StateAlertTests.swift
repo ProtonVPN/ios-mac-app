@@ -36,6 +36,7 @@ class StateAlertTests: XCTestCase {
     var appStateManager: AppStateManager!
     
     override func setUp() {
+        super.setUp()
         vpnManager = VpnManagerMock()
         alertService = CoreAlertServiceMock()
         timerFactory = TimerFactoryMock()
@@ -62,7 +63,7 @@ class StateAlertTests: XCTestCase {
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
-        XCTAssertTrue(alertService.alerts.count == 0)
+        XCTAssertTrue(alertService.alerts.isEmpty)
 
         let timeouts = (1...2).map { XCTestExpectation(description: "connection timeout \($0)") }
         timerFactory.runRepeatingTimers {
@@ -94,7 +95,7 @@ class StateAlertTests: XCTestCase {
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         
-        XCTAssertTrue(alertService.alerts.count == 0)
+        XCTAssertTrue(alertService.alerts.isEmpty)
     }
     
     lazy var connectionConfig: ConnectionConfiguration = {

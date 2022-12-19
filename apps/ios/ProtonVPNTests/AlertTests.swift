@@ -35,6 +35,7 @@ class AlertTests: XCTestCase {
     let alertService = IosAlertService(IosAlertServiceFactoryMock())
     
     override func setUp() {
+        super.setUp()
         windowService.displayCount = 0
     }
 
@@ -136,7 +137,7 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
     }
     
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        return TroubleshootCoordinatorMock();
+        return TroubleshootCoordinatorMock()
     }
 
     func makeSafariService() -> SafariServiceProtocol {

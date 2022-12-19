@@ -87,13 +87,13 @@ class ConnectionStatusRobot: CoreElements {
         
         @discardableResult
         func connectionStatusNotConnected() -> CountryListRobot {
-            staticText("Not Connected").wait(time:10).checkExists()
+            staticText("Not Connected").wait(time: 10).checkExists()
             return CountryListRobot()
         }
         
         @discardableResult
         func connectionStatusConnected<T: CoreElements>(robot _: T.Type) -> T {
-            button(tabQCActive).wait(time:10).checkExists()
+            button(tabQCActive).wait(time: 10).checkExists()
             return T()
         }
         

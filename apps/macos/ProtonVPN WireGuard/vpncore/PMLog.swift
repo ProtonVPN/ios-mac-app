@@ -44,5 +44,4 @@ public class PMLog {
         wg_log(.error, message: error.localizedDescription)
     }
     
-    
 }

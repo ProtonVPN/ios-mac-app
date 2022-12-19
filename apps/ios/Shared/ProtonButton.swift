@@ -92,7 +92,7 @@ class ProtonButton: UIButton {
     }
     
     func showLoading() {
-        if (activityIndicator == nil) {
+        if activityIndicator == nil {
             activityIndicator = createActivityIndicator()
         }
         

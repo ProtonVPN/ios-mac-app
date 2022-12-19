@@ -20,7 +20,7 @@ import Foundation
 import NetworkExtension
 
 class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
-    typealias VpnCredentialsConfiguratorMockCallback = ((VpnManagerConfiguration, NEVPNProtocol) -> ())
+    typealias VpnCredentialsConfiguratorMockCallback = ((VpnManagerConfiguration, NEVPNProtocol) -> Void)
 
     let vpnProtocol: VpnProtocol
     var didConfigure: VpnCredentialsConfiguratorMockCallback?

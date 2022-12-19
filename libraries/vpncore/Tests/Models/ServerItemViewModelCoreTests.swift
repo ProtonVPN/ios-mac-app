@@ -21,14 +21,6 @@ import XCTest
 
 final class ServerItemViewModelCoreTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testBasicServer() throws {
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server1,
                                           vpnGateway: VpnGatewayMock(),

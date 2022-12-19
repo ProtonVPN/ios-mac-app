@@ -27,33 +27,25 @@ import VPNShared
 import VPNSharedTesting
 
 class CountryAnnotationViewModelTests: XCTestCase {
-    
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
 
     func testUnderMaintenanceLogic() {
         XCTAssertFalse(self.viewModel(withServers: [
             serverModel(withStatus: 5),
             serverModel(withStatus: 50),
             serverModel(withStatus: 25),
-            ]).underMaintenance, "UnderMaintenance returned true while no server is under maintenance")
+        ]).underMaintenance, "UnderMaintenance returned true while no server is under maintenance")
         
         XCTAssertFalse(self.viewModel(withServers: [
             serverModel(withStatus: 5),
             serverModel(withStatus: 55),
             serverModel(withStatus: 0),
-            ]).underMaintenance, "UnderMaintenance returned true while at least one server is not under maintenance")
+        ]).underMaintenance, "UnderMaintenance returned true while at least one server is not under maintenance")
         
         XCTAssertTrue(self.viewModel(withServers: [
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
-            ]).underMaintenance, "UnderMaintenance returned false while all servers are under maintenance")
+        ]).underMaintenance, "UnderMaintenance returned false while all servers are under maintenance")
         
     }
 
@@ -91,7 +83,7 @@ class CountryAnnotationViewModelTests: XCTestCase {
         return viewModel
     }
     
-    private func serverModel(withStatus status: Int) -> ServerModel{
+    private func serverModel(withStatus status: Int) -> ServerModel {
         return ServerModel(
             id: "",
             name: "1",

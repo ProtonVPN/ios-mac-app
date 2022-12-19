@@ -30,7 +30,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     
     let siriHandlerViewModel: SiriHandlerViewModel
     
-    override init() {
+    override init() { // swiftlint:disable:this function_body_length
         let dependencyFactory = SiriIntentHandlerDependencyFactory()
         let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected)
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()),
@@ -161,7 +161,7 @@ fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factor
     }
 }
 
-fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory & NETunnelProviderManagerWrapperFactory {
+fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory, NETunnelProviderManagerWrapperFactory {
     func makeNewManager() -> NETunnelProviderManagerWrapper {
         NETunnelProviderManager()
     }
@@ -180,7 +180,7 @@ fileprivate class VPNWrapperFactory: NEVPNManagerWrapperFactory & NETunnelProvid
 fileprivate class SiriIntentHandlerDependencyFactory {
 }
 
-extension SiriIntentHandlerDependencyFactory: AppInfoFactory & CountryCodeProviderFactory {
+extension SiriIntentHandlerDependencyFactory: AppInfoFactory, CountryCodeProviderFactory {
     func makeAppInfo(context: AppContext) -> AppInfo {
         AppInfoImplementation(context: context)
     }

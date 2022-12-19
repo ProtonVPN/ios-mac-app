@@ -27,7 +27,7 @@ class ProtonVPNUITests: XCTestCase {
     let app = XCUIApplication()
     
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        super.setUp()
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
@@ -40,10 +40,6 @@ class ProtonVPNUITests: XCTestCase {
 
         window = XCUIApplication().windows["Proton VPN"]
         
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
     // MARK: - Helper methods
@@ -84,7 +80,7 @@ class ProtonVPNUITests: XCTestCase {
                 dismissDialogs()
         }
 
-        window.typeKey(",", modifierFlags:[.command]) // Settings…
+        window.typeKey(",", modifierFlags: [.command]) // Settings…
         
         let preferencesWindow = app.windows["Preferences"]
         let accountTabButton = app.tabGroups["Account"]
@@ -134,9 +130,7 @@ class ProtonVPNUITests: XCTestCase {
         let buttonQuickConnect = app.buttons["Quick Connect"]
         if buttonQuickConnect.waitForExistence(timeout: 4) {
             return
-        }
-      
-        else {
+        } else {
             loginRobot
                 .loginUser(credentials: credentials[2])
         }

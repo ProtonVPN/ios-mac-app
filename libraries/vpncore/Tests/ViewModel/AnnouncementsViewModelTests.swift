@@ -45,16 +45,15 @@ class AnnouncementsViewModelTests: XCTestCase {
     
     // public func open(announcement: Announcement)
     
-    
-    func testTakesDataFromTheStorage(){
-        XCTAssert(viewModel.items.count == 0)
+    func testTakesDataFromTheStorage() {
+        XCTAssert(viewModel.items.isEmpty)
         
         storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: .empty)])
         
         XCTAssert(viewModel.items.count == 1)
     }
     
-    func testRefreshesView(){
+    func testRefreshesView() {
         let expectationViewRefreshed = XCTestExpectation(description: "Views was asked to refresh itself")
         viewModel.refreshView = {
             expectationViewRefreshed.fulfill()
@@ -62,7 +61,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         
         storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: .default, offer: .empty)])
         
-        wait(for: [expectationViewRefreshed], timeout:0.2)
+        wait(for: [expectationViewRefreshed], timeout: 0.2)
     }
 }
 

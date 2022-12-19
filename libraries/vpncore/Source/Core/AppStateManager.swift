@@ -315,7 +315,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
-    
+
     public func activeConnection() -> ConnectionConfiguration? {
         guard let currentVpnProtocol = vpnManager.currentVpnProtocol else {
             return nil

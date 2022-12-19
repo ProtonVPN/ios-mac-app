@@ -107,7 +107,6 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
             .verify.domainsButtonIsNotShown()
     }
     
-    
     func testSignUpWithExternalAccountIsNotAvailable() {
         _ = MainRobot()
             .showSignup()

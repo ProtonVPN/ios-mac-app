@@ -26,7 +26,7 @@ class ElectronViewContainer: UIView {
     
     private let electron = UIView()
     
-    var padding = UIEdgeInsets.zero // TODO: use padding to indent all calculations from the edge of the image
+    var padding = UIEdgeInsets.zero // FUTUREDO: use padding to indent all calculations from the edge of the image
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

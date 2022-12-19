@@ -10,7 +10,6 @@ import pmtest
 
 fileprivate let HeadTitle = "Map"
 
-
 class MapRobot: CoreElements {
     
     func selectCountryAndConnect() -> ConnectionStatusRobot {

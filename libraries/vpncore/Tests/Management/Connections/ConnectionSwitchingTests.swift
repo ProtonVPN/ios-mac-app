@@ -24,7 +24,7 @@ import GoLibs
 @testable import vpncore
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {
-    func testFirstTimeConnectionWithSmartProtocol() {
+    func testFirstTimeConnectionWithSmartProtocol() { // swiftlint:disable:this function_body_length
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
             connectedDate: XCTestExpectation(description: "connected date"),
@@ -185,7 +185,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// IP. This updated server list has placed the server we just connected to under maintenance. On the next reconnect,
     /// we go ahead and make all protocols available again, and check to see that the server chosen is not the one we were
     /// just connected to (i.e., the one with the higher score).
-    func testFastestConnectionAndSmartProtocolFallbackAndDisconnectApiUsage() {
+    func testFastestConnectionAndSmartProtocolFallbackAndDisconnectApiUsage() { // swiftlint:disable:this function_body_length
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.availabilityCallback = { serverIp in
             // Force server2 wireguard server to be unavailable
             if serverIp == self.testData.server2.ips.first {
@@ -415,7 +415,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     }
 
     // Test that Smart Protocol doesn't use WireGuard TLS when it's disabled in feature flags.
-    func testWireGuardTlsFeatureFlagDisablement() {
+    func testWireGuardTlsFeatureFlagDisablement() { // swiftlint:disable:this function_body_length
         container.networkingDelegate.apiClientConfig = testData.clientConfigNoWireGuardTls
 
         let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
@@ -497,7 +497,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// Tests user connected to a plus server. Then the plan gets downgraded to free. Supposing the user then realizes
     /// the error of their ways and upgrades back to plus, the test will then exercise the app in the case where that
     /// same user then becomes delinquent on their plan payment.
-    func testUserPlanChangingThenBecomingDelinquentWithWireGuard() {
+    func testUserPlanChangingThenBecomingDelinquentWithWireGuard() { // swiftlint:disable:this function_body_length cyclomatic_complexity
         container.serverStorage.populateServers([testData.server1, testData.server3])
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)

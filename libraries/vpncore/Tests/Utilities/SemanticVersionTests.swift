@@ -25,7 +25,6 @@ import XCTest
 
 class SemanticVersionTests: XCTestCase {
     
-    
     func testParsesVersion() throws {
         XCTAssertEqual(try? SemanticVersion("1.2.3").major, 1)
         XCTAssertEqual(try? SemanticVersion("1.2.3").minor, 2)

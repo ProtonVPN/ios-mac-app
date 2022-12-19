@@ -34,7 +34,7 @@ class SignupTests: ProtonVPNUITests {
         logoutIfNeeded()
         // This method is asynchronous, but it still works, because it's enough time before the actual UI testing starts
         quarkCommands.unban { result in
-            print("Unban finished: \(result)")
+            print("Unban finished: \(result)") // swiftlint:disable:this no_print
         }
      }
     

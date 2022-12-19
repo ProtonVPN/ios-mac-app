@@ -43,7 +43,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         let refresher = AnnouncementRefresherImplementation(factory: factory)
         refresher.tryRefreshing()
         
-        wait(for: [expectationApiWasCalled], timeout:0.2)
+        wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
     
     func testDoNotRefreshTooOften() {
@@ -79,7 +79,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         refresher.tryRefreshing()
         refresher.tryRefreshing()
         
-        wait(for: [expectationApiWasCalled], timeout:0.2)
+        wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
     
     func testSavesNewAnnouncementsToStorage() {
@@ -134,7 +134,6 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
     
 }
 
-
 fileprivate class AnnouncementRefresherImplementationFactory: AnnouncementRefresherImplementation.Factory {
     
     public var coreApiService: CoreApiService
@@ -152,6 +151,5 @@ fileprivate class AnnouncementRefresherImplementationFactory: AnnouncementRefres
     func makeAnnouncementStorage() -> AnnouncementStorage {
         return announcementStorage
     }
-    
     
 }

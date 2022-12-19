@@ -31,10 +31,10 @@ class CreatingAccountRobot: CoreElements {
         
         @discardableResult
         func creatingAccountScreenIsShown() -> SummarySignupRobot {
-            staticText(titleId).wait(time:40).checkExists()
-            staticText(subtitle).wait(time:40).checkExists()
-            staticText(creatingAccount).wait(time:40).checkExists()
-            staticText(configuringAccess).wait(time:40).checkExists()
+            staticText(titleId).wait(time: 40).checkExists()
+            staticText(subtitle).wait(time: 40).checkExists()
+            staticText(creatingAccount).wait(time: 40).checkExists()
+            staticText(configuringAccess).wait(time: 40).checkExists()
             return SummarySignupRobot()
         }
     }

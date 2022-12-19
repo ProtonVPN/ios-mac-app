@@ -35,7 +35,7 @@ class MapRobot {
         return self
     }
     
-    func hideMapClick() ->  MapRobot {
+    func hideMapClick() -> MapRobot {
         app.buttons[hideMapButton].click()
         return self
     }

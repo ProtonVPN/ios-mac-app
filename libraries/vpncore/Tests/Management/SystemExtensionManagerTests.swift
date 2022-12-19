@@ -32,6 +32,7 @@ class SystemExtensionManagerTests: XCTestCase {
     var profileManager: ProfileManager!
 
     override func setUp() {
+        super.setUp()
         propertiesManager = PropertiesManagerMock()
         alertService = CoreAlertServiceMock()
         vpnKeychain = VpnKeychainMock(accountPlan: .free, maxTier: CoreAppConstants.VpnTiers.free)
@@ -44,6 +45,7 @@ class SystemExtensionManagerTests: XCTestCase {
     }
 
     override func tearDown() {
+        super.tearDown()
         propertiesManager = nil
         alertService = nil
         vpnKeychain = nil

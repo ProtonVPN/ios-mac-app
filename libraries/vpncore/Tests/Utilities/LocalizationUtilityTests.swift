@@ -24,10 +24,12 @@ class LocalizationUtilityTests: XCTestCase {
     let mockResolver = LocaleResolverMock()
 
     override func setUp() {
+        super.setUp()
         LocalizationUtility.localeResolver = mockResolver
     }
 
     override func tearDown() {
+        super.tearDown()
         LocalizationUtility.localeResolver = LocaleResolverImplementation()
     }
 

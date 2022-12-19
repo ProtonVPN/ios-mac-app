@@ -178,7 +178,7 @@ public class VpnApiService {
     /// If the user IP has changed since the last connection, refresh the server information. This is a subset of what
     /// is returned from the `vpnProperties` method in the `VpnProperties` object, so just return an anonymous tuple.
     public func refreshServerInfoIfIpChanged(lastKnownIp: String?, // swiftlint:disable:next large_tuple
-                                             completion: @escaping (Result<(serverModels: [ServerModel],
+                                             completion: @escaping (Result < (serverModels: [ServerModel],
                                                                             location: UserLocation?,
                                                                             streamingServices: VPNStreamingResponse?), Error>) -> Void) {
         let dispatchGroup = DispatchGroup()

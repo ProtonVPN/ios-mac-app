@@ -15,14 +15,12 @@ class LogSelectionViewModelTests: XCTestCase {
     let fileManager = FileManager()
     
     override func setUpWithError() throws {
+        try super.setUpWithError()
         viewModel = LogSelectionViewModel()
-    }
-
-    override func tearDownWithError() throws {
     }
     
     func testViewModelCreatesCells() throws {
-        XCTAssert(viewModel.tableViewData.count > 0)
+        XCTAssert(!viewModel.tableViewData.isEmpty)
     }
     
     func testHandlerOpensCorrectLog() throws {

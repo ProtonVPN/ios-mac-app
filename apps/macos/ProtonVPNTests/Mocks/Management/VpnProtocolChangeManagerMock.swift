@@ -32,4 +32,3 @@ class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
         completion(.success)
     }
 }
-
