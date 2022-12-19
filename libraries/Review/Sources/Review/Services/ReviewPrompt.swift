@@ -25,6 +25,13 @@ protocol ReviewPrompt: AnyObject {
 
 final class AppStoreReviewPrompt: ReviewPrompt {
     func show() {
+#if os(iOS)
+        /// The now deprecated implementation of `requestReview` didn't require a `windowScene` as a parameter, so we implemented it in a way where it's not that easy to retrieve.
+        if let windowScene = UIApplication.shared.windows.first?.windowScene {
+            SKStoreReviewController.requestReview(in: windowScene)
+        }
+#else
         SKStoreReviewController.requestReview()
+#endif
     }
 }
