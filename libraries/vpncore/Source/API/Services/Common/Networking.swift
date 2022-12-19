@@ -35,7 +35,6 @@ public protocol Networking: APIServiceDelegate {
 
     func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void)
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
-    func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
 }
@@ -77,59 +76,43 @@ public final class CoreNetworking: Networking {
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void) {
         let url = fullUrl(route)
-        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
-
-            if let error = error {
-                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
-                completion(.failure(error))
-                return
-            }
-
-            log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
-
-            if let data = data {
+        apiService.request(method: route.method,
+                           path: route.path,
+                           parameters: route.parameters,
+                           headers: route.header,
+                           authenticated: route.isAuth,
+                           autoRetry: route.autoRetry,
+                           customAuthCredential: route.authCredential,
+                           nonDefaultTimeout: nil,
+                           retryPolicy: route.retryPolicy) { (task, result) in
+            switch result {
+            case .success(let data):
+                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 var result = [String: AnyObject]()
                 for (key, value) in data {
                     result[key] = value as AnyObject
                 }
                 completion(.success(result))
-                return
-            }
-
-            completion(.success([:]))
-        }
-    }
-
-    public func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void) {
-        let url = fullUrl(route)
-        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
-
-        apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
-
-            if let error = error {
-                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+            case .failure(let error):
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.failure(error))
-                return
             }
-
-            log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
-            completion(.success)
         }
     }
 
     public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
         let url = fullUrl(route)
-        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        apiService.exec(route: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
+        apiService.perform(request: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
-                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.failure(error))
             case let .success(data):
-                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.success(data))
             }
         }
@@ -137,7 +120,7 @@ public final class CoreNetworking: Networking {
 
     public func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         // there is not Core support for getting response as string so use url session directly
-        // this should be fine as this is only intened to get VPN status
+        // this should be fine as this is only intended to get VPN status
 
         let url = route.url?.absoluteString ?? "empty"
         let method = route.httpMethod?.uppercased() ?? "GET"
@@ -164,19 +147,18 @@ public final class CoreNetworking: Networking {
 
     public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
         let url = fullUrl(route)
-        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
         let progress: ProgressCompletion = { (progress: Progress) -> Void in
-            log.debug("Upload progress \(progress.fractionCompleted) for \(url)", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+            log.debug("Upload progress \(progress.fractionCompleted) for \(url)", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
         }
-
-        apiService.upload(route: route, files: files, uploadProgress: progress) { (result: Result<T, ResponseError>) -> Void in
+        apiService.performUpload(request: route, files: files, uploadProgress: progress) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
-                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.failure(error.underlyingError ?? error))
             case let .success(data):
-                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
+                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.success(data))
             }
         }

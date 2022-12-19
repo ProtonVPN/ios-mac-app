@@ -95,6 +95,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             return .reasserting(ServerDescriptor(username: username, address: serverAddress))
         case .disconnecting:
             return .disconnecting(ServerDescriptor(username: username, address: serverAddress))
+        @unknown default:
+            return .invalid
         }
     }
 
