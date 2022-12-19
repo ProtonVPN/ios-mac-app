@@ -459,6 +459,7 @@
 		E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
 		E58EE0AA2907DF90003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
+		E5904FCB2949F8E100BA6D3B /* TelemetryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510E27D2948CFEA00AC1785 /* TelemetryService.swift */; };
 		E5ADAA8C2930F8BC004F105C /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E32930C5980044B592 /* AppStateManagerMock.swift */; };
 		E5ADAA8D2930F8BD004F105C /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E32930C5980044B592 /* AppStateManagerMock.swift */; };
 		E5CBA02128DB23D200EA1F25 /* OfferPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */; };
@@ -3008,6 +3009,7 @@
 				D5DCCACC252B4E0A004CB353 /* Announcement.swift in Sources */,
 				D5BCDC9725303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
 				4C14523B292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */,
+				E5904FCB2949F8E100BA6D3B /* TelemetryService.swift in Sources */,
 				E1616BD221C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
 				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3A3D6C927C015BE00B474D7 /* NATTypePropertyProviderMock.swift in Sources */,

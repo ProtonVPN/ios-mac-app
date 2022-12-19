@@ -30,3 +30,80 @@ enum TelemetryFeature: String, FeatureFlag {
 
     case telemetryOptIn = "TelemetryOptIn"
 }
+
+class TelemetryService {
+    public typealias Factory = NetworkingFactory
+
+    private let networking: Networking
+
+    let buffer: TelemetryBuffer = TelemetryBuffer()
+    lazy var telemetryAPI: TelemetryAPI = TelemetryAPI(networking: networking)
+
+    public convenience init(_ factory: Factory) {
+        self.init(networking: factory.makeNetworking())
+    }
+
+    init(networking: Networking) {
+        self.networking = networking
+    }
+
+    func report(event: ConnectionEvent) async {
+        guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
+
+        await buffer.scheduleEvent(event: event)
+
+        if buffer.shouldFlushEvents {
+            await telemetryAPI.flushEvents(buffer: buffer)
+            await buffer.removeSentEvents()
+        }
+    }
+}
+
+class TelemetryAPI {
+
+    private let networking: Networking
+
+    init(networking: Networking) {
+        self.networking = networking
+    }
+
+    func flushEvents(buffer: TelemetryBuffer) async {
+        let events = buffer.events
+        let request = TelemetryRequest(events)
+        do {
+            try await withCheckedThrowingContinuation { continuation in
+                networking.apiService.perform(request: request) { task, result in
+                    switch result {
+                    case .success:
+                        continuation.resume()
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+            await buffer.markEventsAsSent(events: events)
+        } catch {
+            // failed sending the events, do nothing
+        }
+    }
+}
+
+class TelemetryBuffer {
+
+    var shouldFlushEvents: Bool = false // decide based on the time since last flush and the amount of events generated
+
+    var events: [ConnectionEvent] = []
+
+    func scheduleEvent(event: ConnectionEvent) async {
+        // append to the list of events to send
+        // Q: How do we store/queue the events? Just on a file on disk?
+    }
+
+    func markEventsAsSent(events: [ConnectionEvent]) async {
+        // append to the list of events to send
+    }
+
+    func removeSentEvents() async {
+        // remove events marked as sent
+    }
+}
