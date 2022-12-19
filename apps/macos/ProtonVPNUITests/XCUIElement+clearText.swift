@@ -41,6 +41,10 @@ extension XCUIElement {
         let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
         
         self.typeText(deleteString)
-        self.typeText(text)
+        if text.isEmpty {
+            self.typeText(String(XCUIKeyboardKey.tab.rawValue))
+        } else {
+            self.typeText(text)
+        }
     }
 }
