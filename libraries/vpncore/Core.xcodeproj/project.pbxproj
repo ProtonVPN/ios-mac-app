@@ -471,6 +471,8 @@
 		E5CBA02B28DB242B00EA1F25 /* OfferFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02928DB242B00EA1F25 /* OfferFeature.swift */; };
 		E5CBA02D28DB243900EA1F25 /* OfferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02C28DB243900EA1F25 /* OfferButton.swift */; };
 		E5CBA02E28DB243900EA1F25 /* OfferButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CBA02C28DB243900EA1F25 /* OfferButton.swift */; };
+		E5CF14822948E83B00AF6912 /* TelemetryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14812948E83B00AF6912 /* TelemetryRequest.swift */; };
+		E5CF14832948E83B00AF6912 /* TelemetryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14812948E83B00AF6912 /* TelemetryRequest.swift */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
@@ -999,6 +1001,7 @@
 		E5CBA02628DB23FB00EA1F25 /* OfferPanel+Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfferPanel+Mode.swift"; sourceTree = "<group>"; };
 		E5CBA02928DB242B00EA1F25 /* OfferFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferFeature.swift; sourceTree = "<group>"; };
 		E5CBA02C28DB243900EA1F25 /* OfferButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferButton.swift; sourceTree = "<group>"; };
+		E5CF14812948E83B00AF6912 /* TelemetryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryRequest.swift; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
 		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1696,6 +1699,7 @@
 				423705E0262D9E8100A920CF /* VPNStreamingRequest.swift */,
 				E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */,
 				E53D7460291CF0CB0006E499 /* VPNPartnersRequest.swift */,
+				E5CF14812948E83B00AF6912 /* TelemetryRequest.swift */,
 			);
 			path = VPN;
 			sourceTree = "<group>";
@@ -2736,6 +2740,7 @@
 				F3653568263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
 				D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */,
 				E1616BF521C95BC400F42D79 /* ServerOffering.swift in Sources */,
+				E5CF14822948E83B00AF6912 /* TelemetryRequest.swift in Sources */,
 				E1B5F65A21B81E4800B558B0 /* CountryModel.swift in Sources */,
 				4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */,
 				4C83C46D2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */,
@@ -3027,6 +3032,7 @@
 				4242B0882465A4D10042145A /* UserProperties.swift in Sources */,
 				F31321A925E3AA7A006F414F /* DoH.swift in Sources */,
 				E1236C65224A6214002FD9A7 /* CodingErrors.swift in Sources */,
+				E5CF14832948E83B00AF6912 /* TelemetryRequest.swift in Sources */,
 				F3256ABC26B98CB3003F073C /* OpenVPNUDPAvailabilityChecker.swift in Sources */,
 				4243632126555D590027EAEE /* SessionsResponse.swift in Sources */,
 				E1616C1621CBF68B00F42D79 /* PropertiesManager.swift in Sources */,
