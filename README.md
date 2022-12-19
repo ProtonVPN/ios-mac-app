@@ -19,6 +19,12 @@ This app uses CocoaPods for most dependencies. Everything is inside this reposit
 - Clean build folder in Xcode (`Cmd+Shift+K`)
 - Build app twice
 
+### Code linting
+
+During development swiftlint is run on non-strict mode so it's easier to develop without worrying about code formatting. On CI, linting is strict and will fail on any warning. Before commiting code to this repository run the following script to add a pre-commit hook that will check all new/modified files in strict mode and stop you from committing code that won't make it through CI.
+
+`./scripts/pre_commit_lint.sh setup`
+
 ### Localization
 
 The app uses [SwiftGen](https://github.com/SwiftGen/SwiftGen) to generate the `Localizable.strings` file for accessing all the app strings stored in the standard `Localizable.strings` files. Just add a new string, build the project and `Localizable.strings` gets regenerated with the new string. The configuration can be found in `libraries/vpncore/swiftgen.yml`.
