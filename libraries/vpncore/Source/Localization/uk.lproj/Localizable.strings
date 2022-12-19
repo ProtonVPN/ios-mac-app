@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Неможливо проаналізувати кількість сеансів";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Перепрошуємо, щось пішло не так. Повторіть спробу входу.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Ваш обліковий запис Proton Mail вже налаштовано для VPN. Виконайте вхід з вашими обліковими даними.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "невдача";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Не вдалося отримати облікові дані VPN. Повторно виконайте вхід для виправлення проблеми.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Немає облікових даних VPN";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Найшвидший";

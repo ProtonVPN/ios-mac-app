@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Nelze analyzovat počet relací";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Je nám líto, ale něco se pokazilo. Přihlaste se prosím znovu.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Váš Proton Mail účet už je nastaven pro VPN. Prosím přihlaste se s vašimi současnými údaji.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "selhalo";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Nepodařilo se načíst pověřovací údaje VPN, přihlaste se prosím znovu pro vyřešení problému.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "VPN pověřovací údaje chybí";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Nejrychlejší";

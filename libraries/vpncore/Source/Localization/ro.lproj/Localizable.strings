@@ -410,7 +410,7 @@
 "_error_no_active_username" = "Conectați-vă la contul Proton Mail pentru care modificați tipul de abonament pentru a putea finaliza tranzacția.";
 
 /* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Migrarea la noul tip de abonament a reușit. Reporniți aplicația pentru a beneficia de noul plan de servicii.";
+"_error_no_new_subscription_in_successfull_response" = "Trecerea la noul tip de abonament a reușit. Reporniți aplicația pentru a beneficia de noul plan de servicii.";
 
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "Nu se pot prelua informațiile partenerului.";
@@ -429,6 +429,9 @@
 
 /* Parsing error */
 "_error_session_count_parser" = "Nu se poate prelua numărul de sesiuni";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Ceva nu a funcționat bine. Reconectați-vă.";
 
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Contul Proton Mail este deja configurat pentru VPN. Autentificați-vă cu datele de autentificare existente.";
@@ -520,12 +523,6 @@
 /* MacOS: connecting overlay */
 "_failed" = "eșuat";
 
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Nu s-au putut obține acreditările VPN,  reautentificați-vă pentru a rezolva problema.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Acreditările VPN lipsesc";
-
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Cel mai rapid";
 
@@ -581,13 +578,13 @@
 "_feature_tor_description" = "Direcționează traficul de internet prin rețeaua Tor. Mai lent, dar mai privat.";
 
 /* (No Comment) */
-"_features_title" = "Caracteristici";
+"_features_title" = "Funcții";
 
 /* (No Comment) */
 "_force_upgrade_message" = "Versiunea aplicației Proton VPN pe care o utilizați în prezent nu mai este suportată. Actualizați la cea mai nouă versiune.";
 
 /* (No Comment) */
-"_force_upgrade_title" = "Este necesară actualizarea aplicației";
+"_force_upgrade_title" = "Este necesară modernizarea aplicației";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Ați uitat parola?";
@@ -605,7 +602,7 @@
 "_free_servers" = "Servere gratuite";
 
 /* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "Migrați la %@ și continuați să beneficiați de aceste opțiuni:";
+"_free_trial_about_to_expire_description" = "Treceți la %@ și continuați să beneficiați de aceste funcții:";
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Probarea gratuită urmează să expire!";
@@ -995,7 +992,7 @@
 "_netshield_alert_reconnect_description_on" = "Conexiunea va fi repornită pentru a schimba modul NetShield.\nNotă: Dacă unele site-uri nu se încarcă, încercați să dezactivați NetShield.";
 
 /* (No Comment) */
-"_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și urmăritorii.";
+"_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și monitorizarea.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Blocare malware";
@@ -1154,7 +1151,7 @@
 "_plan_speed_medium" = "Viteză medie";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "După confirmarea achiziției unui plan cu plată, contul dvs. iTunes va fi debitat cu suma afișată, care include taxe și comisioane de platformă suplimentare (care nu sunt percepute direct de către Proton). După efectuarea achiziției, planul selectat va fi actualizat automat pentru o perioadă de un an, după care puteți reînnoi sau anula, fie online, fie prin intermediul aplicației noastre iOS.";
+"_plans_footer" = "După confirmarea achiziției unui plan cu plată, contul dvs. iTunes va fi debitat cu suma afișată, care include taxe și comisioane de platformă suplimentare (care nu sunt percepute direct de către Proton). După efectuarea achiziției, planul selectat va fi actualizat automat pentru o perioadă de un an, după care puteți reînnoi sau anula, fie online, fie prin intermediul aplicației iOS.";
 
 /* Plus word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "Plus";
@@ -1580,10 +1577,10 @@
 "_subscription_plan" = "Plan abonament";
 
 /* (No Comment) */
-"_subscription_upgrade_option3" = "Caracteristici avansate: NetShield, Secure Core, Tor, P2P";
+"_subscription_upgrade_option3" = "Funcții avansate: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
-"_subscription_upgrade_title" = "Reactivați planul superior pentru a vă bucura de toate caracteristicile:";
+"_subscription_upgrade_title" = "Remodernizați planul pentru a accesa toate funcțiile:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Planul actual va expira la %@.";
@@ -1776,7 +1773,7 @@
 /* Final text:
  
  We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "V-am oferit un %@ care include mai multe srevere și funcții adiționale. Perioada de probă a Proton VPN Plus se încheie peste 7 zile.";
+"_trial_popup_introduction" = "V-am oferit un %@ care include mai multe servere și funcții adiționale. Perioada de probă a Proton VPN Plus se încheie peste 7 zile.";
 
 /* (No Comment) */
 "_trial_popup_thanks" = "Vă mulțumim că folosiți Proton VPN!";
@@ -1917,49 +1914,49 @@
 "_update_required_update" = "Actualizare";
 
 /* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Upgrade";
+"_upgrade" = "Modernizare";
 
 /* (No Comment) */
-"_upgrade_again" = "UPGRADE DIN NOU";
+"_upgrade_again" = "REMODERNIZARE";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "pentru a utiliza Secure Core";
 
 /* MacOS: Button in Upgrade screen */
-"_upgrade_my_plan" = "Migrare la plan";
+"_upgrade_my_plan" = "Modernizare plan";
 
 /* Upgrade button in trial modals used in both iOS and MacOS */
-"_upgrade_now" = "Migrare acum";
+"_upgrade_now" = "Modernizare";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Ne pare rău, nu sunt disponibile servere în această țară pentru nivelul abonamentului actual. Dacă dorți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
+"_upgrade_plan_to_access_country" = "Ne pare rău, nu sunt disponibile servere în această țară pentru nivelul abonamentului actual. Dacă doriți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
 
 /* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "„Secure Core” este o funcție specială care necesită activarea planului Proton VPN Plus sau superior. Aceasta adaugă o protecție avansată împotriva monitorizării serverelor VPN.";
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core este o funcție specială care necesită activarea planului Proton VPN Plus sau superior. Aceasta adaugă o protecție avansată împotriva monitorizării serverelor VPN.";
 
 /* (No Comment) */
 "_upgrade_plan_to_access_secure_core_p2" = "Pentru a accesa Secure Core, consultați celelalte tipuri de abonamente care includ această funcție.";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_server" = "Ne pare rău, acest server nu este disponibil pentru nivelul abonamentului actual. Dacă dorți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
+"_upgrade_plan_to_access_server" = "Ne pare rău, acest server nu este disponibil pentru nivelul abonamentului actual. Dacă doriți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
-"_upgrade_required" = "Migrare necesară";
+"_upgrade_required" = "Modernizare necesară";
 
 /* (No Comment) */
-"_upgrade_required_securecore_description" = "Serverele Secure Core sunt disponibile în planul Plus. Faceți upgrade acum pentru a direcționa traficul prin servele noastre sigure aflate în țări care respectă intimitatea.";
+"_upgrade_required_securecore_description" = "Serverele Secure Core sunt disponibile în planul Plus. Treceți la alt plan acum pentru a direcționa traficul prin servele noastre sigure aflate în țări care vă respectă intimitatea.";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
-"_upgrade_subscription" = "Migrare abonament";
+"_upgrade_subscription" = "Modernizare abonament";
 
 /* Main mac app menu item */
-"_upgrade_to_plus" = "Migrare la Plus";
+"_upgrade_to_plus" = "Trecere la Plus";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_body" = "Abonamentul Proton VPN nu poate fi migrat din aplicație. Pentru aceasta vizitați account.protonvpn.com.";
+"_upgrade_unavailable_body" = "Abonamentul Proton VPN actual nu poate fi modernizat din aplicație. Pentru aceasta vizitați account.protonvpn.com.";
 
 /* Plan upgrade unavailable alert */
-"_upgrade_unavailable_title" = "Migrare indisponibilă în aplicație";
+"_upgrade_unavailable_title" = "Modernizare indisponibilă din aplicație";
 
 /* iOS: human verification option select button */
 "_use_captcha_verification" = "Verificați cu CAPTCHA";
@@ -2106,7 +2103,7 @@
 "login_unsupported_state" = "Metodă de autentificare nevalidă. Contactați asistența.";
 
 /* Description of user account update screen part 1 */
-"maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau faceți upgrade la %@.";
+"maximum_device_plan_limit_part_1" = "Deconectați un alt dispozitiv pentru a-l conecta pe acesta sau treceți la %@.";
 
 /* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
 "proton_website_unreachable" = "Site-ul Proton VPN ar putea fi temporar neaccesibil din cauza restricțiilor de rețea. Utilizați aplicația mobilă pentru a crea un cont Proton nou.";

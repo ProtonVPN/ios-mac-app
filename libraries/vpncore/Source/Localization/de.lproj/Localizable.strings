@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Sitzungszähler kann nicht verarbeitet werden";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Leider ist ein Problem aufgetreten. Bitte erneut anmelden.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Dein Proton Mail‐Konto ist bereits für VPN konfiguriert. Bitte melde dich mit deinen bestehenden Daten an.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "fehlgeschlagen";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Fehler beim Abrufen der VPN‐Zugangsdaten bitte melde dich erneut an, um das Problem zu lösen.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "VPN‐Anmeldedaten fehlen";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Schnellster Server";
