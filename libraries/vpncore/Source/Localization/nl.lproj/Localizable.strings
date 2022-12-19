@@ -412,6 +412,9 @@
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Uw abonnementsupgrade is succesvol. Herstart de app om gebruik te maken van uw nieuwe abonnement.";
 
+/* Error when try to parse the partner info */
+"_error_partner_info_parser" = "Kan de partnerinfo niet verwerken";
+
 /* In App Purchase error */
 "_error_purchased_plan_does_not_match_available" = "Wij konden het App Store product niet vergelijken met de producten op onze server. Neem contact op met ons ondersteuningsteam.";
 
@@ -426,6 +429,9 @@
 
 /* Parsing error */
 "_error_session_count_parser" = "Kan sessiecount niet verwerken";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Sorry, er ging iets mis. Probeer opnieuw in te loggen.";
 
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Uw Proton Mail-account is al geconfigureerd voor VPN. Log in met uw bestaande inloggegevens.";
@@ -517,12 +523,6 @@
 /* MacOS: connecting overlay */
 "_failed" = "mislukt";
 
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Fout bij het ophalen van VPN-inloggegevens, log opnieuw in om het probleem op te lossen.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "VPN-inloggegevens ontbreken";
-
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Snelste";
 
@@ -543,6 +543,12 @@
 
 /* iOS plan feature */
 "_feature_connections" = "Gelijktijdige VPN-verbindingen";
+
+/* (No Comment) */
+"_feature_free_servers" = "Gratis servers";
+
+/* (No Comment) */
+"_feature_free_servers_description" = "Veiligheid en privacy voor iedereen. Gratis servers hebben geen datalimiet, en we zullen uw browsersnelheid nooit met opzet vertragen.";
 
 /* (No Comment) */
 "_feature_p2p_description" = "Deze servers geven de beste prestaties voor BitTorrent en het delen van bestanden.";

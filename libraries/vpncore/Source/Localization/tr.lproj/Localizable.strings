@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Oturum sayısı işlenemedi";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Ne yazık ki bir şeyler ters gitti. Lütfen yeniden oturum açın.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Proton Mail hesabınız zaten VPN için yapılandırılmış. Lütfen geçerli kimlik doğrulama bilgilerinizle oturum açın.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "başarısız oldu";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "VPN kimlik doğrulama bilgileri alınamadı. Sorunu çözmek için yeniden oturum açın.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "VPN kimlik doğrulama bilgileri eksik";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "En hızlı";

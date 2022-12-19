@@ -517,12 +517,6 @@
 /* MacOS: connecting overlay */
 "_failed" = "falhou";
 
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Falha ao obter as credenciais VPN, por favor reinicie sessão para resolver o problema.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Credenciais VPN em falta";
-
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "A mais rápida";
 

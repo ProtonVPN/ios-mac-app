@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "امکان دریافت تعداد جلسه‌ها از سرور وجود ندارد";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "متاسفیم، مشکلی پیش آمد. لطفا دوباره وارد حساب شوید.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "حساب کاربری Proton Mail شما در حال حاضر برای استفاده از VPN پیکربندی و آماده شده است. لطفا با اطلاعات هویتی فعلی خود به آن وارد شوید.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "ناموفق";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "بازیابی اعتبار VPN موفق نبود، لطفا برای حل مشکل دوباره وارد شوید.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "اعتبار VPN یافت نشد";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "سریع‌ترین";

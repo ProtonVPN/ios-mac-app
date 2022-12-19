@@ -463,12 +463,6 @@
 /* MacOS: connecting overlay */
 "_failed" = "neuspješno";
 
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Neuspješno dohvaćanje VPN vjerodajnica. Prijavite se kako biste riješili problem.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Nedostaju VPN vjerodajnice";
-
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Najbrže";
 

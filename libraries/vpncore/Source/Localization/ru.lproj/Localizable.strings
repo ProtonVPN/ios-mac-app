@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Не могу выполнить разбор счетчика сеансов";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Что-то пошло не так. Попробуйте еще раз.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Ваш аккаунт Proton Mail уже настроен для VPN. Пожалуйста, войдите в систему с существующими учетными данными.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "сбой";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Не удалось получить учетные данные VPN, пожалуйста, войдите в систему, чтобы решить эту проблему.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Отсутствуют учетные данные VPN";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Быстрейший";

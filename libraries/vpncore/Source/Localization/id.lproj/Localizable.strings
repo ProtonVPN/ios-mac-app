@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Tidak dapat mengurai jumlah sesi";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Maaf, terdapat sesuatu yang salah. Silakan masuk kembali.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Akun Proton Mail Anda telah dikonfigurasi untuk penggunaan VPN. Silakan masuk dengan menggunakan info login Anda.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "gagal";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Gagal mengambil kredensial VPN, silakan masuk kembali untuk menyelesaikan masalah.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Kredensial VPN hilang";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Tercepat";

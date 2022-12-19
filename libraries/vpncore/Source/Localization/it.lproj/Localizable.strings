@@ -430,6 +430,9 @@
 /* Parsing error */
 "_error_session_count_parser" = "Impossibile analizzare il conteggio delle sessioni";
 
+/* Generic sign in error */
+"_error_sign_in_again" = "Scusa, qualcosa è andato storto. Accedi di nuovo.";
+
 /* (No Comment) */
 "_error_signup_using_protonmail_address" = "Il tuo account Proton Mail è già configurato per la VPN. Effettua il login con le credenziali esistenti.";
 
@@ -519,12 +522,6 @@
 
 /* MacOS: connecting overlay */
 "_failed" = "non riuscito";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_description" = "Impossibile recuperare le credenziali VPN, si prega di accedere nuovamente per risolvere il problema.";
-
-/* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Credenziali VPN mancanti";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Più veloce";
