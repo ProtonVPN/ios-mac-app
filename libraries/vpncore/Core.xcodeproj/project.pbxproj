@@ -480,6 +480,10 @@
 		E5E465742951AE8F00A4DE80 /* ConnectionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E465722951AE8F00A4DE80 /* ConnectionEvent.swift */; };
 		E5E465762951AEC000A4DE80 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E465752951AEC000A4DE80 /* Dimensions.swift */; };
 		E5E465772951AEC000A4DE80 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E465752951AEC000A4DE80 /* Dimensions.swift */; };
+		E5E465792951B1F500A4DE80 /* TelemetryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E465782951B1F300A4DE80 /* TelemetryMock.swift */; };
+		E5E4657A2951B1F500A4DE80 /* TelemetryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E465782951B1F300A4DE80 /* TelemetryMock.swift */; };
+		E5E4657C2951B43800A4DE80 /* TelemetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4657B2951B43800A4DE80 /* TelemetryTests.swift */; };
+		E5E4657D2951B43800A4DE80 /* TelemetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4657B2951B43800A4DE80 /* TelemetryTests.swift */; };
 		E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E5FFC89D2816C61500E355DA /* Countries+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC89B2816C61500E355DA /* Countries+Extension.swift */; };
 		E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
@@ -1012,6 +1016,8 @@
 		E5E4656F2951AE7D00A4DE80 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		E5E465722951AE8F00A4DE80 /* ConnectionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionEvent.swift; sourceTree = "<group>"; };
 		E5E465752951AEC000A4DE80 /* Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimensions.swift; sourceTree = "<group>"; };
+		E5E465782951B1F300A4DE80 /* TelemetryMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelemetryMock.swift; sourceTree = "<group>"; };
+		E5E4657B2951B43800A4DE80 /* TelemetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryTests.swift; sourceTree = "<group>"; };
 		E5FFC89B2816C61500E355DA /* Countries+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Countries+Extension.swift"; sourceTree = "<group>"; };
 		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
 		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1326,6 +1332,7 @@
 				F320563225E7D7CB00566DB7 /* FactoryMock.swift */,
 				C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */,
 				E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */,
+				E5E4657B2951B43800A4DE80 /* TelemetryTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1345,6 +1352,7 @@
 				4C263C39286F0D0E00F48974 /* LocalAgentConnectionMock.swift */,
 				E53406AA28E1BBD00078A7A3 /* ImageCacheMock.swift */,
 				E54474E32930C5980044B592 /* AppStateManagerMock.swift */,
+				E5E465782951B1F300A4DE80 /* TelemetryMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2964,7 +2972,9 @@
 				E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				D523F11624B759A5007DB086 /* StringUrl.swift in Sources */,
 				D59671DE253D5E3A0061A75F /* AnnouncementStorageMock.swift in Sources */,
+				E5E4657C2951B43800A4DE80 /* TelemetryTests.swift in Sources */,
 				D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
+				E5E465792951B1F500A4DE80 /* TelemetryMock.swift in Sources */,
 				E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				4C83C4642869ACB5000A3FB4 /* LocalizationUtilityTests.swift in Sources */,
 				D5967244253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
@@ -3235,6 +3245,7 @@
 				E54474E22930C4090044B592 /* ServerItemViewModelCoreTests.swift in Sources */,
 				F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */,
 				F307F7B627C38B98004FD4A7 /* NATTypePropertyProviderImplementationTests.swift in Sources */,
+				E5E4657A2951B1F500A4DE80 /* TelemetryMock.swift in Sources */,
 				E9037D31284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */,
 				D5D2957725A5D979000FBD74 /* UserTierProviderImplementationTests.swift in Sources */,
 				F307F7C027C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
@@ -3282,6 +3293,7 @@
 				66835CD1375221C55BF4610B /* Result+Extensions.swift in Sources */,
 				D578439B29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */,
 				C7F903A31EAFDB6A5376E625 /* ReportsBugResponse.swift in Sources */,
+				E5E4657D2951B43800A4DE80 /* TelemetryTests.swift in Sources */,
 				288E84E35E31849C5D750973 /* DoHHostsParsingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
