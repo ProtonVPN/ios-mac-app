@@ -37,7 +37,7 @@ class CreateProfileRobot: CoreElements {
             .chooseProtocol()
     }
     
-    func setProfileWithSameName(_ name: String, _ countryname: String)-> CreateProfileRobot {
+    func setProfileWithSameName(_ name: String, _ countryname: String) -> CreateProfileRobot {
         return enterProfileName(name)
             .selectCountry()
             .chooseCountry(" " + " " + countryname)
@@ -45,7 +45,7 @@ class CreateProfileRobot: CoreElements {
             .chooseServer()
     }
     
-    func editProfileDetails(_ newname: String, _ countryname: String, _ newcountryname: String)-> CreateProfileRobot {
+    func editProfileDetails(_ newname: String, _ countryname: String, _ newcountryname: String) -> CreateProfileRobot {
         return editProfileName(newname)
             .editCountry("  " + countryname)
             .chooseCountry(" " + " " + newcountryname)
@@ -64,12 +64,12 @@ class CreateProfileRobot: CoreElements {
             .defaultProfileON()
     }
     
-    func setSecureCoreProfile(_ name: String)-> CreateProfileRobot {
+    func setSecureCoreProfile(_ name: String) -> CreateProfileRobot {
         return enterProfileName(name)
             .secureCoreON()
     }
     
-    func setDefaultProfile(_ name: String, _ countryname: String)-> CreateProfileRobot {
+    func setDefaultProfile(_ name: String, _ countryname: String) -> CreateProfileRobot {
         return enterProfileName(name)
             .selectCountry()
             .chooseCountry(countryname)
@@ -144,7 +144,7 @@ class CreateProfileRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func profileWithSameName() -> CreateProfileRobot{
+        func profileWithSameName() -> CreateProfileRobot {
             staticText(profileSameName).checkExists()
             return CreateProfileRobot()
         }

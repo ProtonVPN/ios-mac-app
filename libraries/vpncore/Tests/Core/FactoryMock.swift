@@ -23,7 +23,7 @@
 import Foundation
 @testable import vpncore
 
-final class FactoryMock: CoreAlertServiceFactory & PropertiesManagerFactory & NetworkingFactory {
+final class FactoryMock: CoreAlertServiceFactory, PropertiesManagerFactory, NetworkingFactory {
     func makeNetworking() -> Networking {
         return NetworkingMock()
     }

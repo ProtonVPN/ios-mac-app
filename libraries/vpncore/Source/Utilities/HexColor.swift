@@ -23,24 +23,24 @@
 import UIKit
 
 extension UIColor {
-    
+
     public convenience init(red: Int, green: Int, blue: Int) {
         checkColors(red, green, blue)
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
     }
-    
+
     public convenience init(rgbHex: Int) {
         let components = rgbHex.rgbComponents
         self.init( red: components.r, green: components.g, blue: components.b )
     }
-    
+
     public var hexRepresentation: Int {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-        return convert2Hex(r, g, b, a)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return convert2Hex(red, green, blue, alpha)
     }
 }
 
@@ -48,24 +48,24 @@ extension UIColor {
 import Cocoa
 
 extension NSColor {
-    
+
     public convenience init(red: Int, green: Int, blue: Int) {
         checkColors(red, green, blue)
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
     }
-    
+
     public convenience init(rgbHex: Int) {
         let components = rgbHex.rgbComponents
         self.init( red: components.r, green: components.g, blue: components.b )
     }
-    
+
     public var hexRepresentation: Int {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        getRed(&r, green: &g, blue: &b, alpha: &a)
-        return convert2Hex(r, g, b, a)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return convert2Hex(red, green, blue, alpha)
     }
 }
 #endif
@@ -78,10 +78,10 @@ private func checkColors( _ red: Int, _ green: Int, _ blue: Int) {
     assert(blue >= 0 && blue <= 255, "Invalid blue component")
 }
 
-private func convert2Hex( _ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ a: CGFloat ) -> Int {
-    let red = Int((r * 255.0).rounded())
-    let green = Int((g * 255.0).rounded())
-    let blue = Int((b * 255.0).rounded())
+private func convert2Hex( _ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ alpha: CGFloat ) -> Int {
+    let red = Int((red * 255.0).rounded())
+    let green = Int((green * 255.0).rounded())
+    let blue = Int((blue * 255.0).rounded())
     let hex = (red << 16) | (green << 8) | (blue)
     return hex
 }

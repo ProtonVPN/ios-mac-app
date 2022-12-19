@@ -32,7 +32,7 @@ class ProtocolsListRobot: CoreElements {
     }
     
     /// Choose protocol from the protocol list
-    ///- Precondition: Default protocol is Smart
+    /// - Precondition: Default protocol is Smart
     func protocolOn(_ protocolVia: String) -> ProtocolsListRobot {
          cell(protocolVia).tap()
          return ProtocolsListRobot()

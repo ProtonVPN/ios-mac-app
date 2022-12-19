@@ -32,7 +32,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         container.propertiesManager.hasConnected = true
     }
 
-    func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() {
+    func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() { // swiftlint:disable:this function_body_length cyclomatic_complexity
         let expectations = (
             vpnManagerWireguardConnect: XCTestExpectation(description: "vpn manager wireguard connect"),
             wireguardTunnelStarted: XCTestExpectation(description: "wireguard tunnel started"),
@@ -69,7 +69,7 @@ class VpnManagerTests: BaseConnectionTestCase {
                                                ports: [15213],
                                                serverPublicKey: "serverPublicKey")
 
-        var dateConnectionEstablished: Date? = nil
+        var dateConnectionEstablished: Date?
 
         var connection: NEVPNConnectionMock?
         var tunnelManager: NETunnelProviderManagerMock?

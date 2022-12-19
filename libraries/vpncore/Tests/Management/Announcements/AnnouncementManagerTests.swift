@@ -28,6 +28,4 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         super.setUp()
     }
     
-    
-    
 }

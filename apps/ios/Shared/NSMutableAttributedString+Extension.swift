@@ -28,10 +28,10 @@ import UIKit
 extension NSMutableAttributedString {
     
     func addTextAttributes(withColor color: UIColor,
-                       font: UIFont,
-                       alignment: NSTextAlignment = .left,
-                       lineSpacing: CGFloat? = nil,
-                       lineBreakMode: NSLineBreakMode? = nil) {
+                           font: UIFont,
+                           alignment: NSTextAlignment = .left,
+                           lineSpacing: CGFloat? = nil,
+                           lineBreakMode: NSLineBreakMode? = nil) {
         
         let range = (self.string as NSString).range(of: self.string)
         

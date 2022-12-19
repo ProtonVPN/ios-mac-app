@@ -77,6 +77,7 @@ class LocalAgentConnectionMock: LocalAgentConnectionWrapper {
 class LocalAgentConnectionMockFactory: LocalAgentConnectionFactory {
     var connectionWasCreated: ((LocalAgentConnectionMock) -> Void)?
 
+    // swiftlint:disable function_parameter_count
     func makeLocalAgentConnection(clientCertPEM: String,
                                   clientKeyPEM: String,
                                   serverCAsPEM: String,
@@ -96,4 +97,5 @@ class LocalAgentConnectionMockFactory: LocalAgentConnectionFactory {
         connectionWasCreated?(result)
         return result
     }
+    // swiftlint:enable function_parameter_count
 }

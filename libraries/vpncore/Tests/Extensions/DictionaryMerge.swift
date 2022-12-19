@@ -26,10 +26,10 @@ class DictionaryMerge: XCTestCase {
 
     func testMerge() {
         let first = [
-            "key1" : "value1"
+            "key1": "value1"
         ]
         let second = [
-            "key2" : "value2"
+            "key2": "value2"
         ]
         let result = first + second
         
@@ -39,10 +39,10 @@ class DictionaryMerge: XCTestCase {
     
     func testRightValueOverwritesLeft() {
         let first = [
-            "key1" : "value1"
+            "key1": "value1"
         ]
         let second = [
-            "key1" : "value2"
+            "key1": "value2"
         ]
         
         let result = first + second

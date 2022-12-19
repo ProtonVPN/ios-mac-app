@@ -20,23 +20,23 @@ import UIKit
 import ProtonCore_UIFoundations
 
 final class AccountDetailsTableViewCell: UITableViewCell {
-    
+
     @IBOutlet private var initialsRect: UIView!
     @IBOutlet private var initialsText: UILabel!
     @IBOutlet private var username: UILabel!
     @IBOutlet private var plan: UILabel!
-    
+
     var completionHandler: (() -> Void)?
-    
+
     func select() {
         completionHandler?()
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
     }
-    
+
     func setupViews() {
         backgroundColor = .secondaryBackgroundColor()
         initialsRect.layer.cornerRadius = 8
@@ -46,7 +46,7 @@ final class AccountDetailsTableViewCell: UITableViewCell {
         plan.textColor = ColorProvider.TextWeak
         accessibilityIdentifier = "Account Details cell"
     }
-    
+
     func setup(initials: NSAttributedString,
                username: NSAttributedString,
                plan: NSAttributedString,

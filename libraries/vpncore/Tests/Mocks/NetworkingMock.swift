@@ -179,7 +179,7 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
 
     /// Any error returned via `Result.failure()` will be treated as a mock error, and thus part of the test.
     /// Any error thrown from this function will be treated as an unexpected error, and will thus fail the test.
-    func handleMockNetworkingRequestThrowingOnUnexpectedError(_ request: URLRequest) throws -> Result<Data, Error> {
+    func handleMockNetworkingRequestThrowingOnUnexpectedError(_ request: URLRequest) throws -> Result<Data, Error> { // swiftlint:disable:this function_body_length cyclomatic_complexity
         guard let path = request.url?.path else {
             throw UnexpectedError(description: "No path provided to URL request")
         }

@@ -37,7 +37,7 @@ fileprivate let locales: [String: LocaleWrapperMock] = [
         regionCodeDict: [
         "CH": "Suisse",
         "US": "Etats-Unis"
-    ])
+        ])
 ]
 
 class LocaleResolverMock: LocaleResolver {

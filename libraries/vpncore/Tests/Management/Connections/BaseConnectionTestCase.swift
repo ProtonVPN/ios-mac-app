@@ -38,8 +38,8 @@ class BaseConnectionTestCase: XCTestCase {
         needNewSession: Bool
     ) = (nil, true, false)
 
-    var didRequestCertRefresh: ((VPNConnectionFeatures?) -> ())?
-    var didPushNewSessionSelector: ((String) -> ())?
+    var didRequestCertRefresh: ((VPNConnectionFeatures?) -> Void)?
+    var didPushNewSessionSelector: ((String) -> Void)?
 
     var testData = MockTestData()
     var container: MockDependencyContainer!
@@ -58,6 +58,7 @@ class BaseConnectionTestCase: XCTestCase {
                                     profileId: nil)
 
     override func setUp() {
+        super.setUp()
         container = MockDependencyContainer()
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
@@ -72,6 +73,7 @@ class BaseConnectionTestCase: XCTestCase {
     }
 
     override func tearDown() {
+        super.tearDown()
         // Remove all notifications which these objects have subscribed to. We remove these on test teardown because
         // zombie objects keep responding to these notifications, supposedly even after they're deinited, and then end
         // up messing up subsequent test cases.
@@ -301,7 +303,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
                 let count = result.0[category]?.count ?? 0
                 let expectation = XCTestExpectation(description: "\(description): \(category.description) #\(count + 1)")
 
-                if count == 0 {
+                if count == 0 { // swiftlint:disable:this empty_count
                     result.0[category] = []
                 }
 

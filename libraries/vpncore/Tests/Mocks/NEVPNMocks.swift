@@ -230,7 +230,7 @@ class NEVPNConnectionMock: NEVPNConnectionWrapper {
 }
 
 class NETunnelProviderSessionMock: NEVPNConnectionMock, NETunnelProviderSessionWrapper {
-    var providerMessageSent: ((Data) -> Data?)? = nil
+    var providerMessageSent: ((Data) -> Data?)?
 
     func sendProviderMessage(_ messageData: Data, responseHandler: ((Data?) -> Void)?) throws {
         let response = providerMessageSent?(messageData)

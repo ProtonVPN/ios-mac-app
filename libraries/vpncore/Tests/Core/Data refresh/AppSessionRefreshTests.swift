@@ -38,6 +38,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
     let testData = MockTestData()
 
     override func setUp() {
+        super.setUp()
         alertService = CoreAlertServiceMock()
         propertiesManager = PropertiesManagerMock()
         serverStorage = ServerStorageMock(servers: [testData.server1, testData.server2, testData.server3])
@@ -53,6 +54,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
     }
 
     override func tearDown() {
+        super.tearDown()
         alertService = nil
         propertiesManager = nil
         serverStorage = nil
@@ -79,7 +81,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
         }
     }
 
-    func testRefreshTimer() {
+    func testRefreshTimer() { // swiftlint:disable:this function_body_length
         let expectations = (
             updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
             updateCredentials: (1...2).map { XCTestExpectation(description: "update vpn credentials #\($0)") },
@@ -173,7 +175,8 @@ class AppSessionRefreshTimerTests: XCTestCase {
     }
 }
 
-extension AppSessionRefreshTimerTests: AppSessionRefresherImplementation.Factory & AppSessionRefreshTimer.Factory {
+extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, ServerStorageFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator {
+
     func makeTimerFactory() -> TimerFactory {
         return timerFactory
     }

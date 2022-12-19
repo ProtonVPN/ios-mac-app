@@ -307,7 +307,7 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectionViaAllProtocolsWithKsOn() {
+    func testConnectionViaAllProtocolsWithKsOn() { // swiftlint:disable:this function_body_length
         
         let countryName = "Australia"
         let protocolViaWG = "WireGuard"

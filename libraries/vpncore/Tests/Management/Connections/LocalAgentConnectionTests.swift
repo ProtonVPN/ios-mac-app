@@ -108,8 +108,7 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
              simpleErrorCase(laConsts.errorCodeUserTorrentNotAllowed), [.vpnDisconnection]),
             (subcaseDescription("user bad behavior"),
              simpleErrorCase(laConsts.errorCodeUserBadBehavior), [.vpnDisconnection]),
-            (subcaseDescription(alertSubcases.failedCertRefresh),
-             { [unowned self] in
+            (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in
                  self.mockProviderState.forceResponse = .error(message: "Internal server error")
                  self.laError(self.laConsts.errorCodeCertificateExpired, nil)
              }, [.vpnDisconnection, .alertDisplayed])

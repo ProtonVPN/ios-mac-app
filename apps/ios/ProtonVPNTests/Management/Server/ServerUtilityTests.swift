@@ -25,14 +25,6 @@ import vpncore
 
 class ServerUtilityTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
     func testCountryIndex() {
         let serverModelUS = self.serverModel("US1", withCountryCode: "US")
         let serverModelGB = self.serverModel("GB1", withCountryCode: "GB")
@@ -66,7 +58,7 @@ class ServerUtilityTests: XCTestCase {
         return CountryModel(serverModel: server)
     }
     
-    private func serverModel(_ name: String, withCountryCode code: String) -> ServerModel{
+    private func serverModel(_ name: String, withCountryCode code: String) -> ServerModel {
         return ServerModel(
             id: "",
             name: name,

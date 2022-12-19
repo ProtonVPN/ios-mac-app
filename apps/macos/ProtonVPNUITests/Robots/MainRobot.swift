@@ -39,7 +39,7 @@ class MainRobot {
     }
     
     func openAppSettings() -> SettingsRobot {
-        window.typeKey(",", modifierFlags:[.command]) // Settings…
+        window.typeKey(",", modifierFlags: [.command]) // Settings…
         return SettingsRobot()
     }
     

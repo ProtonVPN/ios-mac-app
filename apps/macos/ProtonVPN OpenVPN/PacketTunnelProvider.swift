@@ -25,16 +25,16 @@ import NetworkExtension
 
 class PacketTunnelProvider: OpenVPNTunnelProvider {
         
-    open override func startTunnel(options: [String : NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
+    override open func startTunnel(options: [String: NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
         let keychain = Keychain(group: nil)
         do {
             if let user = protocolConfiguration.username {
                 let pass = try keychain.password(for: user)
                 self.credentials = OpenVPN.Credentials(user, pass)
-                NSLog("PacketTunnelProvider Credentials found")
+                NSLog("PacketTunnelProvider Credentials found") // swiftlint:disable:this no_print
             }
         } catch {
-            NSLog("PacketTunnelProvider can't read password from keychain \(error)")
+            NSLog("PacketTunnelProvider can't read password from keychain \(error)") // swiftlint:disable:this no_print
         }
         
         super.startTunnel(options: options, completionHandler: completionHandler)

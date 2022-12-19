@@ -20,7 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
 import XCTest
 @testable import vpncore
 
@@ -67,7 +66,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         manager = AnnouncementManagerImplementation(factory: AnnouncementStorageFactoryMock(storage))
     }
     
-    func testFetchesOnlyCurrentNotifications(){
+    func testFetchesOnlyCurrentNotifications() {
         let filtered = manager.fetchCurrentAnnouncementsFromStorage()
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer"))
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer-one-time"))

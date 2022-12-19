@@ -12,7 +12,7 @@ import XCTest
 fileprivate let headerTitle = "Settings"
 fileprivate let reportBugButton = "Report Bug"
 fileprivate let protocolButton = "Protocol"
-fileprivate let netshieldButton =  "NetShield"
+fileprivate let netshieldButton = "NetShield"
 fileprivate let killSwitchButton = "Kill switch"
 fileprivate let killSwitchAlert = "Turn kill switch on?"
 fileprivate let allowLanConnectionsButton = "Allow LAN connections"
@@ -39,8 +39,6 @@ class SettingsRobot: CoreElements {
         cell(netshieldButton).tap()
         return SettingsRobot()
     }
-
-
 
     func goToAccountDetail() -> AccountRobot {
         cell("Account Details cell").tap()

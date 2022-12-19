@@ -36,6 +36,7 @@ class MapViewModelTests: XCTestCase {
     var appStateManager: AppStateManager!
     
     override func setUp() {
+        super.setUp()
         ServerManagerImplementation.reset()
         serverStorage = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self)))
 

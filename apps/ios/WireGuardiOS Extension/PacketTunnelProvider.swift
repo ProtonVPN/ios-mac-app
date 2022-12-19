@@ -102,7 +102,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }()
 
-    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+    override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this function_body_length cyclomatic_complexity
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
@@ -217,6 +217,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
     func handleProviderMessage(_ message: WireguardProviderRequest,
                                completionHandler: ((WireguardProviderRequest.Response) -> Void)?) {
         switch message {
@@ -369,8 +370,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let urlRequest = URLRequest(url: url)
 
         let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
-            let responseData = data != nil ? String(data:data!, encoding: .utf8) : "nil"
-            log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data":"\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
+            let responseData = data != nil ? String(data: data!, encoding: .utf8) : "nil"
+            log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data": "\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
         }
         task.resume()
     }

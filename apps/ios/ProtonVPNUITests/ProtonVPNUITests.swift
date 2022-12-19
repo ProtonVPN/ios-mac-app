@@ -29,6 +29,7 @@ class ProtonVPNUITests: XCTestCase {
     var launchEnvironment: String?
 
     override func setUp() {
+        super.setUp()
         app.launchArguments += ["UITests"]
         app.launchArguments += ["-BlockOneTimeAnnouncement", "YES"]
         app.launchArguments += ["-BlockUpdatePrompt", "YES"]
@@ -45,16 +46,11 @@ class ProtonVPNUITests: XCTestCase {
             app.launchEnvironment[env] = "1"
         }
 
-        
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         app.launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
         
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
     // MARK: - Helper methods
@@ -89,7 +85,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     @discardableResult
-    func correctUserIsLogedIn(_ name: Credentials)-> MainRobot {
+    func correctUserIsLogedIn(_ name: Credentials) -> MainRobot {
         app.buttons["Quick Connect"].waitForExistence(timeout: 15)
         app.tabBars.buttons["Settings"].tap()
         XCTAssert(app.staticTexts[name.username].exists)
@@ -97,7 +93,7 @@ class ProtonVPNUITests: XCTestCase {
         return MainRobot()
     }
  
-     func openLoginScreen(){
+     func openLoginScreen() {
          let apiUrl = app.buttons["Use and continue"]
          apiUrl.tap()
          app.buttons["Sign in"].tap()
@@ -109,10 +105,9 @@ class ProtonVPNUITests: XCTestCase {
     
     func logInToProdIfNeeded() {
         let tabBarsQuery = app.tabBars
-        if tabBarsQuery.allElementsBoundByIndex.count > 0  {
+        if !tabBarsQuery.allElementsBoundByIndex.isEmpty {
             return
-        }
-        else {
+        } else {
             changeEnvToProdIfNeeded()
             openLoginScreen()
             loginAsPlusUser()
@@ -121,7 +116,7 @@ class ProtonVPNUITests: XCTestCase {
     
     func logoutIfNeeded() {
         let tabBarsQuery = app.tabBars
-        guard tabBarsQuery.allElementsBoundByIndex.count > 0 else {
+        guard !tabBarsQuery.allElementsBoundByIndex.isEmpty else {
             return
         }
         
@@ -150,8 +145,7 @@ class ProtonVPNUITests: XCTestCase {
         
         if env.waitForExistence(timeout: 10) {
             return
-        }
-        else {
+        } else {
             changeEnvToBlack()
             app.launch()
         }
@@ -160,10 +154,9 @@ class ProtonVPNUITests: XCTestCase {
     func changeEnvToProdIfNeeded() {
         let env = app.staticTexts["https://api.protonvpn.ch"]
         
-        if env.waitForExistence(timeout: 10){
+        if env.waitForExistence(timeout: 10) {
             return
-        }
-        else {
+        } else {
             changeEnvToProduction()
             app.launch()
         }
