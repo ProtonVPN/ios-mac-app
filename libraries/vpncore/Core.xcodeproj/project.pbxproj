@@ -424,6 +424,7 @@
 		E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E892B52369EDBE001A436E /* InfoPlist.strings */; };
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
+		E510E27E2948CFEB00AC1785 /* TelemetryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510E27D2948CFEA00AC1785 /* TelemetryService.swift */; };
 		E532A8B6292642CE00096D2D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */; };
 		E532A8B72926432900096D2D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */; };
 		E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */; };
@@ -973,6 +974,7 @@
 		E1E892B62369EDBE001A436E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E1E892B82369EDF7001A436E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
+		E510E27D2948CFEA00AC1785 /* TelemetryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryService.swift; sourceTree = "<group>"; };
 		E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionSet+Extension.swift"; sourceTree = "<group>"; };
 		E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageTests.swift; sourceTree = "<group>"; };
 		E53406A728E1B67A0078A7A3 /* AnnouncementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTests.swift; sourceTree = "<group>"; };
@@ -1712,6 +1714,7 @@
 				4242B06C2465A48B0042145A /* VpnApiService.swift */,
 				F31321A625E3AA7A006F414F /* DoH.swift */,
 				1FF46E08575622A159ABB005 /* SessionService.swift */,
+				E510E27D2948CFEA00AC1785 /* TelemetryService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2699,6 +2702,7 @@
 				E148AE6E21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				E9DC79B9262DBEDC001A0FC0 /* SmartProtocol.swift in Sources */,
 				D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */,
+				E510E27E2948CFEB00AC1785 /* TelemetryService.swift in Sources */,
 				E1B5F63B21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
 				F3B225B1281FCCD3008404E4 /* ForkSessionRequest.swift in Sources */,

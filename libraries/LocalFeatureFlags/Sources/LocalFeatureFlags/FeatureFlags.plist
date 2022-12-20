@@ -12,6 +12,11 @@
 		<key>PartnerLogicals</key>
 		<true/>
 	</dict>
+	<key>Telemetry</key>
+	<dict>
+		<key>TelemetryOptIn</key>
+		<false/>
+	</dict>
 	<key>Test</key>
 	<dict>
 		<key>NegativeFeatureFlag</key>
