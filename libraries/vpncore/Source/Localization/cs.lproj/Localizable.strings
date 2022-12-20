@@ -1601,7 +1601,7 @@
 "_subuser_alert_login_button" = "Přihlásit se znovu";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Děkujeme, že jste přešli na tarif Professional/Visionary";
+"_subuser_alert_title" = "Děkujeme, že jste přešli na tarif Business/Enterprise";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Úspěšně připojeno";
