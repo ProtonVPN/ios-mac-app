@@ -1601,7 +1601,7 @@
 "_subuser_alert_login_button" = "Opnieuw inloggen";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Bedankt om te upgraden naar Professional/Visionary";
+"_subuser_alert_title" = "Bedankt om te upgraden naar Business/Enterprise";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Succesvol verbonden";

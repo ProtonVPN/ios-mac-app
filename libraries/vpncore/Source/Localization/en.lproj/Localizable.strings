@@ -1841,7 +1841,7 @@
 
 // Subuser alert
 
-"_subuser_alert_title" = "Thanks for upgrading to Professional/Visionary";
+"_subuser_alert_title" = "Thanks for upgrading to Business/Enterprise";
 "_subuser_alert_description1" = "To start your journey in Proton VPN please assign VPN connections to your account or any other sub-account.";
 "_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
 "_subuser_alert_assign_connections_button" = "Assign VPN connections";

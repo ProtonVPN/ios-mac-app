@@ -1601,7 +1601,7 @@
 "_subuser_alert_login_button" = "Yeniden oturum aç";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Professional/Visionary tarifesine yükselttiğiniz için teşekkürler";
+"_subuser_alert_title" = "Business/Enterprise tarifesine yükselttiğiniz için teşekkürler";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Bağlantı kuruldu";
