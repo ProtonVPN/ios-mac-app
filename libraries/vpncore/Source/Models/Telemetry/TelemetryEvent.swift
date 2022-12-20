@@ -18,9 +18,9 @@
 
 import Foundation
 
-protocol Event {
+protocol TelemetryEvent {
     var measurementGroup: String { get }
-    var dimensions: Dimensions { get }
+    var dimensions: TelemetryDimensions { get }
 
     func toJSONDictionary() -> JSONDictionary
 }

@@ -20,9 +20,9 @@ import ProtonCore_Networking
 
 final class TelemetryRequest: Request {
 
-    let events: [Event]
+    let events: [TelemetryEvent]
 
-    init( _ events: [Event]) {
+    init( _ events: [TelemetryEvent]) {
         self.events = events
     }
 

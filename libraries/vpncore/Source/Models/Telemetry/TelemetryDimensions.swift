@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct Dimensions: Encodable {
+struct TelemetryDimensions: Encodable {
     let outcome: Outcome
     let userTier: UserTier
     let vpnStatus: VPNStatus
@@ -129,7 +129,7 @@ struct Dimensions: Encodable {
     }
 }
 
-extension Array where Element == Dimensions.ServerFeature {
+extension Array where Element == TelemetryDimensions.ServerFeature {
     var commaSeparatedList: String {
         "["
         + map { $0.rawValue }.joined(separator: ",")

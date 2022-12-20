@@ -18,12 +18,12 @@
 
 import Foundation
 
-struct ConnectionEvent: Encodable, Event {
+struct ConnectionEvent: Encodable, TelemetryEvent {
     var measurementGroup: String = "vpn.ios.connection"
     let event: ConnectionEventType
-    let dimensions: Dimensions
+    let dimensions: TelemetryDimensions
 
-    init(event: ConnectionEventType, dimensions: Dimensions) {
+    init(event: ConnectionEventType, dimensions: TelemetryDimensions) {
         self.event = event
         self.dimensions = dimensions
     }
