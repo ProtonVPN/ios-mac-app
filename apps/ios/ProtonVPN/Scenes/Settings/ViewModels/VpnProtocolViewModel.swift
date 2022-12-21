@@ -24,66 +24,43 @@ final class VpnProtocolViewModel {
     var protocolChangeConfirmation: ProtocolChangeConfirmation?
     var contentChanged: (() -> Void)?
     var selectionFinished: (() -> Void)?
-    
-    private var vpnProtocol: VpnProtocol = .ike
-    private var connectionProtocol: ConnectionProtocol
+
+    private var selectedProtocol: ConnectionProtocol
     private let featureFlags: FeatureFlags
     private let displaySmartProtocol: Bool
-    
+
     init(connectionProtocol: ConnectionProtocol, displaySmartProtocol: Bool = true, featureFlags: FeatureFlags) {
-        self.connectionProtocol = connectionProtocol
+        self.selectedProtocol = connectionProtocol
         self.featureFlags = featureFlags
         self.displaySmartProtocol = displaySmartProtocol
-        if case ConnectionProtocol.vpnProtocol(let vpnProtocol) = connectionProtocol {
-            self.vpnProtocol = vpnProtocol
-        }
     }
-    
+
     var tableViewData: [TableViewSection] {
         return [vpnProtocols]
     }
-    
-    private var vpnProtocols: TableViewSection {
-        var cells = [TableViewCellModel]()
-        
-        if displaySmartProtocol {
-            cells.append(.checkmarkStandard(title: LocalizedString.smartTitle, checked: connectionProtocol == .smartProtocol, handler: {
-                self.confirmNewConnectionProtocol(.smartProtocol)
-                return true
-            }))
-        }
-        
-        let smartDisabled = !displaySmartProtocol || connectionProtocol != .smartProtocol || !featureFlags.smartReconnect
 
-        var availableProtocols = VpnProtocol.allCases
+    private var availableConnectionProtocols: [ConnectionProtocol] {
+        let wireGuardTlsProtocols: [ConnectionProtocol] = [.tcp, .tls].map { .vpnProtocol(.wireGuard($0)) }
+        let wireGuardTlsEnabled = featureFlags.wireGuardTls || wireGuardTlsProtocols.contains(selectedProtocol)
 
-        let wireGuardTlsEnabled = featureFlags.wireGuardTls ||
-            (connectionProtocol == .vpnProtocol(.wireGuard(.tcp)) ||
-             connectionProtocol == .vpnProtocol(.wireGuard(.tls)))
-
-        if !wireGuardTlsEnabled {
-            availableProtocols.removeAll {
-                $0 == .wireGuard(.tcp) || $0 == .wireGuard(.tls)
-            }
-        }
-
-        let protocolCells: [TableViewCellModel] = availableProtocols.map {
-            (vpnProtocol: $0, title: $0.localizedString)
-        }.sorted { lhs, rhs in
-            VpnProtocol.uiOrder[lhs.vpnProtocol] < VpnProtocol.uiOrder[rhs.vpnProtocol]
-        }.map { item in
-            .checkmarkStandard(title: item.title,
-                               checked: vpnProtocol == item.vpnProtocol && smartDisabled) {
-                self.confirmNewConnectionProtocol(.vpnProtocol(item.vpnProtocol))
-                return true
-            }
-        }
-
-        cells.append(contentsOf: protocolCells)
-
-        return TableViewSection(title: "", showHeader: false, cells: cells)
+        return ConnectionProtocol.allCases
+            .removing(.smartProtocol, if: !displaySmartProtocol)
+            .removing(wireGuardTlsProtocols, if: !wireGuardTlsEnabled)
     }
-    
+
+    private var vpnProtocols: TableViewSection {
+        let protocolCells: [TableViewCellModel] = availableConnectionProtocols
+            .sorted(by: ConnectionProtocol.uiOrder)
+            .map { connectionProtocol in
+                .checkmarkStandard(title: connectionProtocol.localizedString, checked: connectionProtocol == selectedProtocol) {
+                    self.confirmNewConnectionProtocol(connectionProtocol)
+                    return true
+                }
+            }
+
+        return TableViewSection(title: "", showHeader: false, cells: protocolCells)
+    }
+
     private func confirmNewConnectionProtocol(_ connectionProtocol: ConnectionProtocol) {
         guard let protocolChangeConfirmation = protocolChangeConfirmation else {
             switchConnectionProtocol(to: connectionProtocol, reconnect: true)
@@ -103,11 +80,7 @@ final class VpnProtocolViewModel {
     }
 
     private func switchConnectionProtocol(to connectionProtocol: ConnectionProtocol, reconnect: Bool) {
-        if let vpnProtocol = connectionProtocol.vpnProtocol {
-            self.vpnProtocol = vpnProtocol
-        }
-
-        self.connectionProtocol = connectionProtocol
+        self.selectedProtocol = connectionProtocol
         self.protocolChanged?(connectionProtocol, reconnect)
         self.contentChanged?()
         self.selectionFinished?()

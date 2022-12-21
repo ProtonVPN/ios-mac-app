@@ -152,6 +152,10 @@
 		90400A48BBED6C2C09C2A90D /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */; };
 		963AC1AED691DDAF9BA69AC0 /* Bundle+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC60F8D6F15BEB1582DE310 /* Bundle+vpncore.swift */; };
 		A2F4E02AB3A069EBDBACBF1D /* String+Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F0015F0BEB0E5E1ADB08B /* String+Email.swift */; };
+		AD09EA482953396F00D4F6F2 /* Array+Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD09EA472953396F00D4F6F2 /* Array+Builder.swift */; };
+		AD3A999529534B82002805AE /* Array+Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD09EA472953396F00D4F6F2 /* Array+Builder.swift */; };
+		AD3A999729535952002805AE /* Array+BuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* Array+BuilderTests.swift */; };
+		AD3A999829535952002805AE /* Array+BuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* Array+BuilderTests.swift */; };
 		B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		B814D7396AC688F7877D3490 /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F973511943D701511CC59CC4 /* URL+String.swift */; };
@@ -791,6 +795,8 @@
 		9BC4350A67B269190E142741 /* Pods-Core-vpncore-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-ios.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-ios/Pods-Core-vpncore-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		9E67878BD1357CC3626EE946 /* Pods_Core_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsBugResponse.swift; sourceTree = "<group>"; };
+		AD09EA472953396F00D4F6F2 /* Array+Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Builder.swift"; sourceTree = "<group>"; };
+		AD3A999629535952002805AE /* Array+BuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+BuilderTests.swift"; sourceTree = "<group>"; };
 		AE26A503B6B1753094CB6F2E /* Pods-Core-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-iosTests-metadata.plist"; sourceTree = "<group>"; };
 		BC16534F9F2B242244E936EF /* Pods-Core-vpncore-macosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1362,6 +1368,7 @@
 			children = (
 				D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */,
 				4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */,
+				AD3A999629535952002805AE /* Array+BuilderTests.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1874,6 +1881,7 @@
 				E1616BFB21C95C5C00F42D79 /* Weak.swift */,
 				F3EF4ECB2670C22300109CA3 /* Threading.swift */,
 				251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */,
+				AD09EA472953396F00D4F6F2 /* Array+Builder.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2937,6 +2945,7 @@
 				B814D7396AC688F7877D3490 /* URL+String.swift in Sources */,
 				B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */,
 				DD0969B7000F4DC02C628AE6 /* NetShieldType+Extensions.swift in Sources */,
+				AD09EA482953396F00D4F6F2 /* Array+Builder.swift in Sources */,
 				403D438B4B6E524D1808DD5D /* LocalAgentFeatures+VpnConnectionFeatures.swift in Sources */,
 				E53D7461291CF0CB0006E499 /* VPNPartnersRequest.swift in Sources */,
 			);
@@ -2981,6 +2990,7 @@
 				4C0961FB285B503800556E07 /* VpnManagerTests.swift in Sources */,
 				4CFDF0BA287EE44100386626 /* MockTestData.swift in Sources */,
 				E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */,
+				AD3A999729535952002805AE /* Array+BuilderTests.swift in Sources */,
 				D578439A29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */,
 				E10155D4230988C600A4B5CB /* AppStateManagerImplementationTests.swift in Sources */,
 				4C66CA9D2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
@@ -3181,6 +3191,7 @@
 				F38F7BED27956674005B9EA2 /* CoreApiFeatureRespone.swift in Sources */,
 				D5DC543D252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
 				E1616B8221C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
+				AD3A999529534B82002805AE /* Array+Builder.swift in Sources */,
 				E9B98511284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */,
 				E1B5F67721B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
 				F314141427B1410A007424E9 /* PaidFeaturePropertyProvider.swift in Sources */,
@@ -3266,6 +3277,7 @@
 				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
 				4CB2A3D0289130D5002E839E /* SystemExtensionManagerMock.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
+				AD3A999829535952002805AE /* Array+BuilderTests.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
 				F3747C1A26D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,
 				D59671EB253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift in Sources */,

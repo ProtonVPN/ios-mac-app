@@ -58,7 +58,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var isSecureCore: Bool {
         return state == .secureCore
     }
-    private var vpnProtocol: VpnProtocol
+    private var selectedProtocol: ConnectionProtocol
     private var isDefaultProfile = false
     
     internal var userTier: Int = 0 // used by class extension
@@ -89,8 +89,7 @@ class CreateOrEditProfileViewModel: NSObject {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
-        
-        self.vpnProtocol = propertiesManager.vpnProtocol
+        self.selectedProtocol = propertiesManager.connectionProtocol
         
         self.colorPickerViewModel = ColorPickerViewModel()
         
@@ -182,7 +181,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))
+                              serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: selectedProtocol)
         
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
@@ -257,7 +256,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var protocolCell: TableViewCellModel {
-        return TableViewCellModel.pushKeyValue(key: LocalizedString.protocol, value: vpnProtocol.localizedString) { [weak self] in
+        return TableViewCellModel.pushKeyValue(key: LocalizedString.protocol, value: selectedProtocol.localizedString) { [weak self] in
             self?.pushProtocolViewController()
         }
     }
@@ -298,12 +297,7 @@ class CreateOrEditProfileViewModel: NSObject {
         selectedCountryGroup = countries.filter { $0.0.countryCode == profile.serverOffering.countryCode }.first
         selectedServerOffering = profile.serverOffering
 
-        switch profile.connectionProtocol {
-        case .smartProtocol:
-            self.vpnProtocol = propertiesManager.vpnProtocol
-        case let .vpnProtocol(vpnProtocol):
-            self.vpnProtocol = vpnProtocol
-        }
+        selectedProtocol = profile.connectionProtocol
     }
     
     private func toggleState(completion: @escaping (Bool) -> Void) {
@@ -379,11 +373,9 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private func pushProtocolViewController() {
-        let connectionProtocol = ConnectionProtocol.vpnProtocol(vpnProtocol)
-        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: connectionProtocol, displaySmartProtocol: false, featureFlags: propertiesManager.featureFlags)
+        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol, displaySmartProtocol: true, featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, _ in
-            guard let vpnProtocol = connectionProtocol.vpnProtocol else { return }
-            self.vpnProtocol = vpnProtocol
+            self.selectedProtocol = connectionProtocol
             self.saveButtonEnabled = true
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))

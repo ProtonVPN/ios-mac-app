@@ -231,9 +231,9 @@ final class CreateNewProfileViewController: NSViewController {
     private func refreshProtocolList(withSelectionAt selectedIndex: Int) {
         protocolList.removeAllItems()
         
-        for vpnProtocol in viewModel.availableVpnProtocols {
+        for connectionProtocol in viewModel.availableConnectionProtocols {
             let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.vpnProtocolString(for: vpnProtocol)
+            menuItem.attributedTitle = viewModel.protocolString(for: connectionProtocol)
             protocolList.menu?.addItem(menuItem)
         }
 
@@ -290,7 +290,7 @@ final class CreateNewProfileViewController: NSViewController {
         refreshProtocolList(withSelectionAt: originalIndex)
 
         sysexTourCancelled = { [weak self] in
-            guard let ikeIndex = self?.viewModel.vpnProtocolIndex(for: .ike) else {
+            guard let ikeIndex = self?.viewModel.protocolIndex(for: .vpnProtocol(.ike)) else {
                 return
             }
             self?.refreshProtocolList(withSelectionAt: ikeIndex)
@@ -305,7 +305,7 @@ final class CreateNewProfileViewController: NSViewController {
                     self?.refreshPendingEnablement()
                 }
             case .failed:
-                guard let ikeIndex = self?.viewModel.vpnProtocolIndex(for: .ike) else {
+                guard let ikeIndex = self?.viewModel.protocolIndex(for: .vpnProtocol(.ike)) else {
                     return
                 }
                 self?.refreshProtocolList(withSelectionAt: ikeIndex)
