@@ -75,36 +75,12 @@ final class ConnectionSettingsViewModel {
     // MARK: - Available protocols
 
     var availableConnectionProtocols: [ConnectionProtocol] {
-        let withoutWireGuardTls: [ConnectionProtocol] = [
-            .smartProtocol,
-            .vpnProtocol(.ike),
-            .vpnProtocol(.openVpn(.tcp)),
-            .vpnProtocol(.openVpn(.udp)),
-            .vpnProtocol(.wireGuard(.udp))
-        ]
+        let wireGuardTlsProtocols: [ConnectionProtocol] = [.tls, .tcp].map { .vpnProtocol(.wireGuard($0)) }
+        let wireGuardTlsDisabled = !propertiesManager.featureFlags.wireGuardTls
 
-        let wireGuardTlsEnabled = propertiesManager.featureFlags.wireGuardTls ||
-            propertiesManager.vpnProtocol == .wireGuard(.tcp) ||
-            propertiesManager.vpnProtocol == .wireGuard(.tls)
-
-        let protocols = wireGuardTlsEnabled
-            ? withoutWireGuardTls + [
-                .vpnProtocol(.wireGuard(.tcp)),
-                .vpnProtocol(.wireGuard(.tls))
-            ]
-            : withoutWireGuardTls
-        
-        return protocols.sorted { lhs, rhs in
-            // SmartProtocol is always first
-            guard let lProtocol = lhs.vpnProtocol else {
-                return true
-            }
-            guard let rProtocol = rhs.vpnProtocol else {
-                return false
-            }
-            // Otherwise sort according to VPN protocol
-            return VpnProtocol.uiOrder[lProtocol]! < VpnProtocol.uiOrder[rProtocol]!
-        }
+        return ConnectionProtocol.allCases
+            .removing(wireGuardTlsProtocols, if: wireGuardTlsDisabled)
+            .sorted(by: ConnectionProtocol.uiOrder)
     }
 
     // MARK: - Quick and auto connect for current user

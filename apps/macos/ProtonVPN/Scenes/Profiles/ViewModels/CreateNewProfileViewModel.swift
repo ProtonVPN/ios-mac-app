@@ -134,17 +134,11 @@ class CreateNewProfileViewModel {
             sIndex = defaultServerCount + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
         }
         state = ModelState(serverType: profile.serverType, editedProfile: profile)
-        let profileVpnProtocol: VpnProtocol
-        switch profile.connectionProtocol {
-        case .smartProtocol:
-            profileVpnProtocol = propertiesManager.vpnProtocol
-        case let .vpnProtocol(vpnProtocol):
-            profileVpnProtocol = vpnProtocol
-        }
+        let profileProtocolIndex = availableConnectionProtocols.firstIndex(of: profile.connectionProtocol) ?? 0
         let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
                                       typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex,
-                                      vpnProtocolIndex: availableVpnProtocols.index(of: profileVpnProtocol) ?? 0)
-        
+                                      vpnProtocolIndex: profileProtocolIndex)
+
         prefillContent?(info)
     }
     
@@ -185,7 +179,7 @@ class CreateNewProfileViewModel {
 
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
                               profileType: .user, serverType: serverType, serverOffering: serverOffering,
-                              name: name, connectionProtocol: .vpnProtocol(availableVpnProtocols[vpnProtocolIndex]))
+                              name: name, connectionProtocol: availableConnectionProtocols[vpnProtocolIndex])
 
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
 
@@ -220,24 +214,12 @@ class CreateNewProfileViewModel {
         return propertiesManager.featureFlags.netShield
     }
 
-    var availableVpnProtocols: [VpnProtocol] {
-        let withoutWireGuardTls: [VpnProtocol] = [
-            .ike,
-            .openVpn(.tcp),
-            .openVpn(.udp),
-            .wireGuard(.udp)
-        ]
-        
-        let protocols = propertiesManager.featureFlags.wireGuardTls
-            ? withoutWireGuardTls + [
-                .wireGuard(.tcp),
-                .wireGuard(.tls)
-            ]
-            : withoutWireGuardTls
-
-        return protocols.sorted {lhs, rhs in
-            VpnProtocol.uiOrder[lhs]! < VpnProtocol.uiOrder[rhs]!
-        }
+    var availableConnectionProtocols: [ConnectionProtocol] {
+        let wireGuardTlsProtocols: [ConnectionProtocol] = [.tls, .tcp].map { .vpnProtocol(.wireGuard($0)) }
+        let wireGuardTlsDisabled = !propertiesManager.featureFlags.wireGuardTls
+        return ConnectionProtocol.allCases
+            .removing(wireGuardTlsProtocols, if: wireGuardTlsDisabled)
+            .sorted(by: ConnectionProtocol.uiOrder)
     }
 
     func countryCount(for typeIndex: Int) -> Int {
@@ -266,12 +248,19 @@ class CreateNewProfileViewModel {
         return self.style(title, font: .themeFont(.heading4), alignment: .left)
     }
 
-    func vpnProtocolIndex(for vpnProtocol: VpnProtocol) -> Int? {
-        availableVpnProtocols.firstIndex(of: vpnProtocol)
+    func protocolIndex(for connectionProtocol: ConnectionProtocol) -> Int? {
+        availableConnectionProtocols.firstIndex(of: connectionProtocol)
     }
 
-    func vpnProtocolString(for vpnProtocol: VpnProtocol) -> NSAttributedString {
-        self.style(vpnProtocol.localizedString, font: .themeFont(.heading4), alignment: .left)
+    func protocolString(for connectionProtocol: ConnectionProtocol) -> NSAttributedString {
+        self.style(connectionProtocol.description, font: .themeFont(.heading4), alignment: .left)
+    }
+
+    func connectionProtocol(for index: Int) -> ConnectionProtocol? {
+        guard availableConnectionProtocols.indices.contains(index) else {
+            return nil
+        }
+        return availableConnectionProtocols[index]
     }
     
     func country(for typeIndex: Int, index countryIndex: Int) -> NSAttributedString {
@@ -306,20 +295,21 @@ class CreateNewProfileViewModel {
         return true
     }
 
-    func refreshSysexPending(for vpnProtocolIndex: Int) {
-        sysexPending = vpnProtocolIndex < availableVpnProtocols.count &&
-            availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension
+    func isSysexRequired(for protocolIndex: Int) -> Bool {
+        connectionProtocol(for: protocolIndex)?.requiresSystemExtension ?? false
     }
 
-    func shouldShowSysexProgress(for vpnProtocolIndex: Int) -> Bool {
-        vpnProtocolIndex < availableVpnProtocols.count &&
-        availableVpnProtocols[vpnProtocolIndex].requiresSystemExtension &&
-        sysexPending
+    func refreshSysexPending(for protocolIndex: Int) {
+        sysexPending = isSysexRequired(for: protocolIndex)
+    }
+
+    func shouldShowSysexProgress(for protocolIndex: Int) -> Bool {
+        isSysexRequired(for: protocolIndex) && sysexPending
     }
 
     func checkSysexInstallation(vpnProtocolIndex: Int, completion: @escaping (SystemExtensionResult) -> Void) {
-        let vpnProtocol = availableVpnProtocols[vpnProtocolIndex]
-        guard vpnProtocol.requiresSystemExtension else {
+        let vpnProtocol = connectionProtocol(for: vpnProtocolIndex)
+        guard let vpnProtocol = vpnProtocol, vpnProtocol.requiresSystemExtension else {
             return
         }
 

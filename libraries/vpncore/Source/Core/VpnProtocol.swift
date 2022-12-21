@@ -88,15 +88,21 @@ extension VpnProtocol { // Text for UI
     }
 }
 
-extension VpnProtocol { // Order of vpn protocols in UI
-    public static var uiOrder: [VpnProtocol: Int] = [
-        .wireGuard(.udp): 1,
-        .wireGuard(.tcp): 2,
-        .openVpn(.udp): 3,
-        .openVpn(.tcp): 4,
-        .ike: 5,
-        .wireGuard(.tls): 6,
+extension ConnectionProtocol { // Order of vpn protocols in UI
+    private static var uiRank: [ConnectionProtocol: Int] = [
+        .smartProtocol: 0,
+        .vpnProtocol(.wireGuard(.udp)): 1,
+        .vpnProtocol(.wireGuard(.tcp)): 2,
+        .vpnProtocol(.openVpn(.udp)): 3,
+        .vpnProtocol(.openVpn(.tcp)): 4,
+        .vpnProtocol(.ike): 5,
+        .vpnProtocol(.wireGuard(.tls)): 6
     ]
+
+    /// Defines an ordering of connection protocols as they should be displayed in the UI
+    public static func uiOrder(lhs: ConnectionProtocol, rhs: ConnectionProtocol) -> Bool {
+        uiRank[lhs] ?? 0 < uiRank[rhs] ?? 0
+    }
 }
 
 // MARK: - Codable
