@@ -1601,7 +1601,7 @@
 "_subuser_alert_login_button" = "Erneut anmelden";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Danke für das Upgrade auf Business/Enterprise";
+"_subuser_alert_title" = "Danke für das Upgrade auf Professional/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Erfolgreich verbunden";

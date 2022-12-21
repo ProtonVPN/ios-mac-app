@@ -1601,7 +1601,7 @@
 "_subuser_alert_login_button" = "Увійти знову";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Дякуємо за передплату Business/Enterprise";
+"_subuser_alert_title" = "Дякуємо за передплату Professional/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Успішно з'єднано";

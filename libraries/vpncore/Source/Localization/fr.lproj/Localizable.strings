@@ -1601,7 +1601,7 @@
 "_subuser_alert_login_button" = "Se reconnecter";
 
 /* Subuser alert */
-"_subuser_alert_title" = "Merci d'être passé à l’offre Business/Enterprise";
+"_subuser_alert_title" = "Merci d'être passé à l’offre Professional/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Connexion réussie";
