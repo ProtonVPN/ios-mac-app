@@ -68,7 +68,6 @@ final class CountryViewController: UIViewController {
         let countryName = viewModel.countryName
         let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager )
         let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
-        vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
     }
 
@@ -77,7 +76,6 @@ final class CountryViewController: UIViewController {
         let serversInformationStoryboard = UIStoryboard(name: ServersInformationViewController.identifier, bundle: nil)
         let vc = serversInformationStoryboard.instantiateViewController(withIdentifier: ServersInformationViewController.identifier) as! ServersInformationViewController
         vc.viewModel = viewModel.serversInformationViewModel()
-        vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
     }
 }
