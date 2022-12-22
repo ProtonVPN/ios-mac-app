@@ -20,14 +20,14 @@ import ProtonCore_Networking
 
 final class TelemetryRequest: Request {
 
-    let events: [TelemetryEvent]
+    let event: TelemetryEvent
 
-    init( _ events: [TelemetryEvent]) {
-        self.events = events
+    init( _ event: TelemetryEvent) {
+        self.event = event
     }
 
     var path: String {
-        return "/v1/stats"
+        return "data/v1/stats"
     }
 
     var method: HTTPMethod = .post
@@ -40,7 +40,7 @@ final class TelemetryRequest: Request {
         .background
     }
 
-    var parameters: [JSONDictionary]? {
-        events.map { $0.toJSONDictionary() }
+    var parameters: JSONDictionary? {
+        event.toJSONDictionary()
     }
 }
