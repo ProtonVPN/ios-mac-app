@@ -36,7 +36,6 @@ class TelemetryService {
 
     private let networking: Networking
 
-    let buffer: TelemetryBuffer = TelemetryBuffer()
     lazy var telemetryAPI: TelemetryAPI = TelemetryAPI(networking: networking)
 
     public convenience init(_ factory: Factory) {
@@ -49,13 +48,7 @@ class TelemetryService {
 
     func report(event: ConnectionEvent) async {
         guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
-
-        await buffer.scheduleEvent(event: event)
-
-        if buffer.shouldFlushEvents {
-            await telemetryAPI.flushEvents(buffer: buffer)
-            await buffer.removeSentEvents()
-        }
+        await telemetryAPI.flushEvent(event: event)
     }
 }
 
@@ -67,9 +60,8 @@ class TelemetryAPI {
         self.networking = networking
     }
 
-    func flushEvents(buffer: TelemetryBuffer) async {
-        let events = buffer.events
-        let request = TelemetryRequest(events)
+    func flushEvent(event: ConnectionEvent) async {
+        let request = TelemetryRequest(event)
         do {
             try await withCheckedThrowingContinuation { continuation in
                 networking.apiService.perform(request: request) { task, result in
@@ -81,29 +73,8 @@ class TelemetryAPI {
                     }
                 }
             }
-            await buffer.markEventsAsSent(events: events)
         } catch {
             // failed sending the events, do nothing
         }
-    }
-}
-
-class TelemetryBuffer {
-
-    var shouldFlushEvents: Bool = false // decide based on the time since last flush and the amount of events generated
-
-    var events: [ConnectionEvent] = []
-
-    func scheduleEvent(event: ConnectionEvent) async {
-        // append to the list of events to send
-        // Q: How do we store/queue the events? Just on a file on disk?
-    }
-
-    func markEventsAsSent(events: [ConnectionEvent]) async {
-        // append to the list of events to send
-    }
-
-    func removeSentEvents() async {
-        // remove events marked as sent
     }
 }
