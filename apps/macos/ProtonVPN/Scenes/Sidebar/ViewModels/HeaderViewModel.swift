@@ -267,7 +267,7 @@ final class HeaderViewModel {
         guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
-        let includeLoad = short ? "" : " \(LocalizedString.load)"
-        return ("\(server.load)%" + includeLoad).styled(font: .themeFont(.small), alignment: .right)
+        return (short ? "\(server.load)%" : " \(LocalizedString.serverLoadPercentage(server.load))")
+            .styled(font: .themeFont(.small), alignment: .right)
     }
 }

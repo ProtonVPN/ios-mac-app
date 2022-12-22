@@ -35,8 +35,8 @@ class ColoredLoadButton: NSButton {
     }
     
     override func viewWillDraw() {
-        let loadValueString = load != nil ? "\(load!)%" : LocalizedString.unavailable
-        toolTip = LocalizedString.load + " " + loadValueString
+        let loadValueString = load != nil ? "\(load!)" : LocalizedString.unavailable
+        toolTip = LocalizedString.serverLoadPercentage(loadValueString)
     }
     
     override func draw(_ dirtyRect: NSRect) {

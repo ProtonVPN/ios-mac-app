@@ -342,7 +342,6 @@
 		EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE7874A11F3B63C7001E261E /* WarningPopup.xib */; };
 		EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */; };
 		EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7874A61F3B8F6F001E261E /* FlagView.swift */; };
-		EE85D4F61F1A287F0060FDBF /* LoadIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE85D4F51F1A287F0060FDBF /* LoadIcon.swift */; };
 		EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */; };
 		EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE876E0D1F1381C100C9B9C2 /* Main.storyboard */; };
 		EE876E121F13859600C9B9C2 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE876E111F13859600C9B9C2 /* OverlayView.swift */; };
@@ -958,7 +957,6 @@
 		EE7874A11F3B63C7001E261E /* WarningPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WarningPopup.xib; sourceTree = "<group>"; };
 		EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarningPopupViewController.swift; sourceTree = "<group>"; };
 		EE7874A61F3B8F6F001E261E /* FlagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
-		EE85D4F51F1A287F0060FDBF /* LoadIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadIcon.swift; sourceTree = "<group>"; };
 		EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		EE876E0D1F1381C100C9B9C2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EE876E111F13859600C9B9C2 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
@@ -2602,7 +2600,6 @@
 				E1454CF1206FE2C300E6D396 /* HelpPopoverBackgroundView.swift */,
 				E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */,
 				4CE2F42127ECA7B000B21A00 /* GIFView.swift */,
-				EE85D4F51F1A287F0060FDBF /* LoadIcon.swift */,
 				E13464AA2033780300C0DB7D /* LoadCircle.swift */,
 				EE24A3A01F1BD75900B70949 /* ProfileCircle.swift */,
 				E13464D22035774200C0DB7D /* ShadowView.swift */,
@@ -3641,7 +3638,6 @@
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				0663E44D259E22CD0059E88D /* SystemExtensionGuideViewModel.swift in Sources */,
 				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,
-				EE85D4F61F1A287F0060FDBF /* LoadIcon.swift in Sources */,
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
 				EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */,
