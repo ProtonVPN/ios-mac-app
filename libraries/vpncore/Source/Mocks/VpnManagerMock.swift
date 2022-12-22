@@ -50,6 +50,7 @@ public class VpnManagerMock: VpnManagerProtocol {
     public func disconnect(completion: @escaping () -> Void) {}
     
     public func connectedDate(completion: @escaping (Date?) -> Void) {}
+    public func connectedDate() async -> Date? { return nil }
     
     public func refreshState() {}
 

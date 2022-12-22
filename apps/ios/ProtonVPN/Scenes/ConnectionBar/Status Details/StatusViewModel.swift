@@ -81,7 +81,9 @@ class StatusViewModel {
     init(factory: Factory) {
         self.factory = factory
         
-        updateConnectionDate()
+        Task {
+            await updateConnectionDate()
+        }
         startObserving()
         runTimer()
     }
@@ -283,14 +285,15 @@ class StatusViewModel {
     }
     
     @objc private func stateChanged() {
-        updateConnectionDate()
-    }
-    
-    private func updateConnectionDate() {
-        appStateManager.connectedDate { [weak self] (date) in
-            self?.connectedDate = date ?? Date()
-            self?.updateTimeCell()
+        Task {
+            await updateConnectionDate()
         }
+    }
+
+    @MainActor
+    private func updateConnectionDate() async {
+        self.connectedDate = await appStateManager.connectedDate()
+        self.updateTimeCell()
     }
     
     // MARK: - NetShield

@@ -23,8 +23,8 @@ import XCTest
 
 class TelemetryTests: XCTestCase {
     func testConnectionEventParameters() {
-        let request = TelemetryRequest([ConnectionEvent.connectionMock1])
-        guard let sut = request.parameters?.first as? [String: Any],
+        let request = TelemetryRequest(ConnectionEvent.connectionMock1)
+        guard let sut = request.parameters,
             let values = sut["Values"] as? [String: Any],
             let dimensions = sut["Dimensions"] as? [String: Any] else {
                 XCTFail()
@@ -33,7 +33,7 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.ios.connection")
         XCTAssertEqual(sut["Event"] as? String, "vpn_connection")
 
-        XCTAssertEqual(values["time_to_connection"] as? Int, 123)
+        XCTAssertEqual(values["time_to_connection"] as? Int, 123000)
         XCTAssertNil(values["session_length"])
 
         XCTAssertEqual(dimensions["outcome"] as? String, "success")
@@ -41,7 +41,7 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(dimensions["vpn_status"] as? String, "on")
         XCTAssertEqual(dimensions["vpn_trigger"] as? String, "country")
         XCTAssertEqual(dimensions["network_type"] as? String, "wifi")
-        XCTAssertEqual(dimensions["server_features"] as? String, "[free]")
+        XCTAssertEqual(dimensions["server_features"] as? String, "[]")
         XCTAssertEqual(dimensions["vpn_country"] as? String, "CHE")
         XCTAssertEqual(dimensions["user_country"] as? String, "FRA")
         XCTAssertEqual(dimensions["protocol"] as? String, "wireguard_tls")
@@ -51,8 +51,8 @@ class TelemetryTests: XCTestCase {
     }
 
     func testDisconnectionEventParameters() {
-        let request = TelemetryRequest([ConnectionEvent.disconnectionMock1])
-        guard let sut = request.parameters?.first as? [String: Any],
+        let request = TelemetryRequest(ConnectionEvent.disconnectionMock1)
+        guard let sut = request.parameters,
             let values = sut["Values"] as? [String: Any],
             let dimensions = sut["Dimensions"] as? [String: Any] else {
                 XCTFail()
@@ -62,14 +62,14 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(sut["Event"] as? String, "vpn_disconnection")
 
         XCTAssertNil(values["time_to_connection"])
-        XCTAssertEqual(values["session_length"] as? Int, 123)
+        XCTAssertEqual(values["session_length"] as? Int, 123000)
 
         XCTAssertEqual(dimensions["outcome"] as? String, "success")
         XCTAssertEqual(dimensions["user_tier"] as? String, "paid")
         XCTAssertEqual(dimensions["vpn_status"] as? String, "off")
         XCTAssertEqual(dimensions["vpn_trigger"] as? String, "server")
         XCTAssertEqual(dimensions["network_type"] as? String, "mobile")
-        XCTAssertEqual(dimensions["server_features"] as? String, "[p2p,tor]")
+        XCTAssertEqual(dimensions["server_features"] as? String, "[tor,p2p]")
         XCTAssertEqual(dimensions["vpn_country"] as? String, "POL")
         XCTAssertEqual(dimensions["user_country"] as? String, "BEL")
         XCTAssertEqual(dimensions["protocol"] as? String, "openvpn_udp")

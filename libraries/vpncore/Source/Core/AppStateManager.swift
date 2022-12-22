@@ -53,7 +53,7 @@ public protocol AppStateManager {
     func disconnect(completion: @escaping () -> Void)
     
     func refreshState()
-    func connectedDate(completion: @escaping (Date?) -> Void)
+    func connectedDate() async -> Date
     func activeConnection() -> ConnectionConfiguration?
 }
 
@@ -298,16 +298,15 @@ public class AppStateManagerImplementation: AppStateManager {
 
         vpnManager.disconnect(completion: completion)
     }
-    
-    public func connectedDate(completion: @escaping (Date?) -> Void) {
+
+    public func connectedDate() async -> Date {
         let savedDate = Date(timeIntervalSince1970: propertiesManager.lastConnectedTimeStamp)
-        vpnManager.connectedDate { [weak self] (date) in
-            if let connectionDate = date, connectionDate > savedDate {
-                self?.propertiesManager.lastConnectedTimeStamp = connectionDate.timeIntervalSince1970
-                completion(connectionDate)
-            } else {
-                completion(savedDate)
-            }
+        let date = await vpnManager.connectedDate()
+        if let connectionDate = date, connectionDate > savedDate {
+            propertiesManager.lastConnectedTimeStamp = connectionDate.timeIntervalSince1970
+            return connectionDate
+        } else {
+            return savedDate
         }
     }
 

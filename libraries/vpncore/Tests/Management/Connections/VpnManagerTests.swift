@@ -32,22 +32,18 @@ class VpnManagerTests: BaseConnectionTestCase {
         container.propertiesManager.hasConnected = true
     }
 
-    func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() { // swiftlint:disable:this function_body_length cyclomatic_complexity
+    func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() async { // swiftlint:disable:this function_body_length cyclomatic_complexity
         let expectations = (
             vpnManagerWireguardConnect: XCTestExpectation(description: "vpn manager wireguard connect"),
             wireguardTunnelStarted: XCTestExpectation(description: "wireguard tunnel started"),
-            wireguardConnectedDate: XCTestExpectation(description: "wireguard connected date"),
             wireguardOnDemandEnabled: XCTestExpectation(description: "wireguard on demand enabled"),
             openVpnTunnelStarted: XCTestExpectation(description: "openvpn tunnel started"),
             vpnManagerOpenVpnConnect: XCTestExpectation(description: "vpn manager openvpn connect"),
-            openVpnConnectedDate: XCTestExpectation(description: "openvpn connected date"),
             openVpnOnDemandEnabled: XCTestExpectation(description: "openvpn on demand enabled"),
             ikeTunnelStarted: XCTestExpectation(description: "ike tunnel started"),
             vpnManagerIkeConnect: XCTestExpectation(description: "vpn manager ike connect"),
-            ikeConnectedDate: XCTestExpectation(description: "ike connected date"),
             ikeOnDemandEnabled: XCTestExpectation(description: "ike on demand enabled"),
             ikeDisconnected: XCTestExpectation(description: "ike disconnected"),
-            disconnectedNilConnectedDate: XCTestExpectation(description: "disconnected calling connected date"),
             disconnectedOnDemandDisabled: XCTestExpectation(description: "on demand disabled after disconnect"),
             removedFromPreferences: XCTestExpectation(description: "remove configurations from prefs")
         )
@@ -130,19 +126,17 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
-        container.vpnManager.connectedDate(completion: { date in
-            XCTAssertNotNil(date)
-            XCTAssertEqual(date, dateConnectionEstablished)
-            expectations.wireguardConnectedDate.fulfill()
-        })
+
+        var date = await container.vpnManager.connectedDate()
+        XCTAssertNotNil(date)
+        XCTAssertEqual(date, dateConnectionEstablished)
 
         container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssert(enabled, "On demand should be enabled for wireguard")
             expectations.wireguardOnDemandEnabled.fulfill()
         }
 
-        wait(for: [expectations.wireguardConnectedDate,
-                   expectations.wireguardOnDemandEnabled], timeout: expectationTimeout)
+        wait(for: [expectations.wireguardOnDemandEnabled], timeout: expectationTimeout)
 
         container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
 
@@ -220,19 +214,16 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .openVpn(.tcp))
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "openVpnUser", address: "127.0.0.3")))
-        container.vpnManager.connectedDate(completion: { date in
-            XCTAssertNotNil(date)
-            XCTAssertEqual(date, dateConnectionEstablished)
-            expectations.openVpnConnectedDate.fulfill()
-        })
+        date = await container.vpnManager.connectedDate()
+        XCTAssertNotNil(date)
+        XCTAssertEqual(date, dateConnectionEstablished)
 
         container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssert(enabled, "On demand should be enabled for openvpn")
             expectations.openVpnOnDemandEnabled.fulfill()
         }
 
-        wait(for: [expectations.openVpnConnectedDate,
-                   expectations.openVpnOnDemandEnabled], timeout: expectationTimeout)
+        wait(for: [expectations.openVpnOnDemandEnabled], timeout: expectationTimeout)
 
         dateConnectionEstablished = nil
         var didDisconnectOpenVpn = false
@@ -303,11 +294,9 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.5")))
-        container.vpnManager.connectedDate(completion: { date in
-            XCTAssertNotNil(date)
-            XCTAssertEqual(date, dateConnectionEstablished)
-            expectations.ikeConnectedDate.fulfill()
-        })
+        date = await container.vpnManager.connectedDate()
+        XCTAssertNotNil(date)
+        XCTAssertEqual(date, dateConnectionEstablished)
 
         container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssert(self.container.propertiesManager.hasConnected)
@@ -315,8 +304,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             expectations.ikeOnDemandEnabled.fulfill()
         }
 
-        wait(for: [expectations.ikeConnectedDate,
-                   expectations.ikeOnDemandEnabled], timeout: expectationTimeout)
+        wait(for: [expectations.ikeOnDemandEnabled], timeout: expectationTimeout)
 
         container.vpnManager.disconnect {
             expectations.ikeDisconnected.fulfill()
@@ -326,18 +314,15 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.vpnManager.state, .disconnected)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
 
-        container.vpnManager.connectedDate { nilDate in
-            XCTAssertNil(nilDate)
-            expectations.disconnectedNilConnectedDate.fulfill()
-        }
+        let nilDate = await container.vpnManager.connectedDate()
+        XCTAssertNil(nilDate)
 
         container.vpnManager.isOnDemandEnabled { enabled in
             XCTAssertFalse(enabled, "On demand should be disabled after disconnect")
             expectations.disconnectedOnDemandDisabled.fulfill()
         }
 
-        wait(for: [expectations.disconnectedNilConnectedDate,
-                   expectations.disconnectedOnDemandDisabled], timeout: expectationTimeout)
+        wait(for: [expectations.disconnectedOnDemandDisabled], timeout: expectationTimeout)
 
         XCTAssertNotNil(NEVPNManagerMock.whatIsSavedToPreferences)
         XCTAssertFalse(container.neTunnelProviderFactory.tunnelProvidersInPreferences.isEmpty)
