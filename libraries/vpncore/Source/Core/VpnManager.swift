@@ -37,6 +37,7 @@ public protocol VpnManagerProtocol {
     func disconnectAnyExistingConnectionAndPrepareToConnect(with configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
     func disconnect(completion: @escaping () -> Void)
     func connectedDate(completion: @escaping (Date?) -> Void)
+    func connectedDate() async -> Date?
     func refreshState()
     func refreshManagers()
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
@@ -316,6 +317,14 @@ public class VpnManager: VpnManagerProtocol {
                 completion(vpnManager.vpnConnection.connectedDate)
             } else {
                 completion(nil)
+            }
+        }
+    }
+
+    public func connectedDate() async -> Date? {
+        return await withCheckedContinuation { continuation in
+            connectedDate { result in
+                continuation.resume(returning: result)
             }
         }
     }

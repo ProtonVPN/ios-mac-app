@@ -18,63 +18,165 @@
 
 import Foundation
 import LocalFeatureFlags
-
-enum TelemetryFeature: String, FeatureFlag {
-    var category: String {
-        "Telemetry"
-    }
-
-    var feature: String {
-        rawValue
-    }
-
-    case telemetryOptIn = "TelemetryOptIn"
-}
+import Reachability
 
 class TelemetryService {
-    public typealias Factory = NetworkingFactory
+    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory
 
-    private let networking: Networking
+    private let factory: Factory
+
+    private lazy var networking: Networking = factory.makeNetworking()
+    private let appStateManager: AppStateManager
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     lazy var telemetryAPI: TelemetryAPI = TelemetryAPI(networking: networking)
 
-    public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking())
+    private var lastConnectedDate: Date
+    private var startedConnectionDate: Date?
+    private var networkType: TelemetryDimensions.NetworkType = .unavailable
+    private var previousAppDisplayState: AppDisplayState = .disconnected
+
+    init(factory: Factory) async {
+        self.factory = factory
+        let appStateManager = factory.makeAppStateManager()
+        self.appStateManager = appStateManager
+        self.lastConnectedDate = await appStateManager.connectedDate()
+        startObserving()
     }
 
-    init(networking: Networking) {
-        self.networking = networking
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
-    func report(event: ConnectionEvent) async {
-        guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
-        await telemetryAPI.flushEvent(event: event)
-    }
-}
-
-class TelemetryAPI {
-
-    private let networking: Networking
-
-    init(networking: Networking) {
-        self.networking = networking
+    private func startObserving() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reachabilityChanged),
+                                               name: .reachabilityChanged,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectionChanged),
+                                               name: AppStateManagerNotification.displayStateChange,
+                                               object: nil)
     }
 
-    func flushEvent(event: ConnectionEvent) async {
-        let request = TelemetryRequest(event)
-        do {
-            try await withCheckedThrowingContinuation { continuation in
-                networking.apiService.perform(request: request) { task, result in
-                    switch result {
-                    case .success:
-                        continuation.resume()
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
-                    }
-                }
+    @objc private func reachabilityChanged(notification: Notification) {
+        guard notification.name == .reachabilityChanged,
+            let reachability = notification.object as? Reachability else {
+            return
+        }
+        log.debug(reachability.connection == .wifi ? "wifi" : "other")
+        switch reachability.connection {
+        case .unavailable, .none:
+            networkType = .unavailable
+        case .wifi:
+            networkType = .wifi
+        case .cellular:
+            networkType = .mobile
+        }
+    }
+
+    @objc private func connectionChanged(notification: Notification) {
+        guard notification.name == AppStateManagerNotification.displayStateChange,
+              let appDisplayState = notification.object as? AppDisplayState else {
+            return
+        }
+        defer {
+            previousAppDisplayState = appDisplayState
+        }
+        log.debug("pj connectionChanged: \(appDisplayState)")
+        var eventType: ConnectionEventType?
+        switch appDisplayState {
+        case .connected:
+            // Send the event only when we just connected (less than 1 second), not on app startup.
+            guard startedConnectionDate != nil else { return }
+            eventType = connectionEventType(state: appDisplayState)
+            startedConnectionDate = nil
+        case .connecting:
+            if startedConnectionDate == nil {
+                startedConnectionDate = Date()
             }
-        } catch {
-            // failed sending the events, do nothing
+        case .loadingConnectionInfo:
+            break
+        case .disconnecting:
+            startedConnectionDate = nil
+        case .disconnected:
+            startedConnectionDate = nil
+            // Send only when we had a connection
+            guard previousAppDisplayState == .connected else { return }
+            eventType = connectionEventType(state: appDisplayState)
+        }
+
+        guard let activeConnection = appStateManager.activeConnection(),
+              let port = activeConnection.ports.first,
+              let eventType else {
+            return
+        }
+
+        let cached = try? vpnKeychain.fetchCached()
+        let accountPlan = cached?.accountPlan ?? .free
+        /// `userTier` variable doesn't cover all possible cases yet
+        let userTier: TelemetryDimensions.UserTier
+        if cached?.maxTier == 3 {
+            userTier = .internal
+        } else {
+            userTier = [.free, .trial].contains(accountPlan) ? .free : .paid
+        }
+
+        let dimensions = TelemetryDimensions(outcome: .success,
+                                             userTier: userTier,
+                                             vpnStatus: previousAppDisplayState == .connected ? .on : .off,
+                                             vpnTrigger: .server,
+                                             networkType: networkType,
+                                             serverFeatures: activeConnection.server.feature,
+                                             vpnCountry: activeConnection.server.countryCode,
+                                             userCountry: propertiesManager.userLocation?.country ?? "",
+                                             protocol: activeConnection.vpnProtocol,
+                                             server: activeConnection.server.name,
+                                             port: String(port),
+                                             isp: propertiesManager.userLocation?.isp ?? "")
+
+        report(event: .init(event: eventType, dimensions: dimensions))
+    }
+
+    func connectionEventType(state: AppDisplayState) -> ConnectionEventType? {
+        switch state {
+        case .connected:
+            let timeInterval = timeToConnection()
+            startedConnectionDate = nil
+            return .vpnConnection(timeInterval)
+        case .disconnected:
+            return .vpnDisconnection(sessionLength())
+        default:
+            return nil
+        }
+    }
+
+    func timeToConnection() -> TimeInterval {
+        guard let startedConnectionDate else {
+            return 0
+        }
+        return Date().timeIntervalSince(startedConnectionDate)
+    }
+
+    func sessionLength() -> TimeInterval {
+        return Date().timeIntervalSince1970 - propertiesManager.lastConnectedTimeStamp
+    }
+
+    @objc private func stateChanged() {
+        Task { [unowned self] in
+            self.lastConnectedDate = await appStateManager.connectedDate()
+        }
+    }
+
+    func report(event: ConnectionEvent) {
+        guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
+        telemetryAPI.flushEvent(event: event)
+        switch event.event {
+        case .vpnConnection(let timeInterval):
+            log.debug("pj time_to_connection: \(timeInterval)")
+        case .vpnDisconnection(let timeInterval):
+            log.debug("pj session_ length: \(timeInterval)")
         }
     }
 }

@@ -91,8 +91,8 @@ final class ConnectionBarViewModel {
     }
 
     private func updateState(with state: AppState) {
-        appStateManager.connectedDate { [weak self] (date) in
-            self?.connectedDate = date ?? Date()
+        Task {
+            self.connectedDate = await appStateManager.connectedDate() 
         }
 
         switch state {

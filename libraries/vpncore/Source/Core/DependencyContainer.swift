@@ -96,8 +96,13 @@ open class Container: PropertiesToOverride {
         ServerStorageConcrete()
     }
 
+    private var telemetryService: TelemetryService?
+
     public init(_ config: Config) {
         self.config = config
+        Task {
+            self.telemetryService = await TelemetryService(factory: self)
+        }
     }
 
     func shouldHaveOverridden(caller: StaticString = #function) -> Never {

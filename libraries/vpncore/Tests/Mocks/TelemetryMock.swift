@@ -37,7 +37,7 @@ extension TelemetryDimensions {
                                                             vpnStatus: .on,
                                                             vpnTrigger: .country,
                                                             networkType: .wifi,
-                                                            serverFeatures: [.free],
+                                                            serverFeatures: .zero,
                                                             vpnCountry: "CHE",
                                                             userCountry: "FRA",
                                                             protocol: .wireGuard(.tls),

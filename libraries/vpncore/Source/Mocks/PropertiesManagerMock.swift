@@ -47,7 +47,11 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
 
     public var hasConnected: Bool = false {
         didSet {
-            NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
+            Task {
+                await MainActor.run {
+                    NotificationCenter.default.post(name: Self.hasConnectedNotification, object: hasConnected)
+                }
+            }
         }
     }
     public var blockOneTimeAnnouncement: Bool = false
@@ -169,7 +173,11 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public init() {}
     
     public func logoutCleanup() {
-        hasConnected = false
+        Task {
+            await MainActor.run {
+                hasConnected = false
+            }
+        }
         secureCoreToggle = false
         lastIkeConnection = nil
         lastOpenVpnConnection = nil

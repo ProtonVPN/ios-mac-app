@@ -48,3 +48,30 @@ public struct ServerFeature: OptionSet {
         self.rawValue = rawValue
     }
 }
+
+extension ServerFeature {
+    private var featureName: String {
+        switch self {
+        case .secureCore:
+            return "secureCore"
+        case .tor:
+            return "tor"
+        case .p2p:
+            return "p2p"
+        case .streaming:
+            return "streaming"
+        case .ipv6:
+            return "ipv6"
+        case .partner:
+            return "partnership"
+        default:
+            return ""
+        }
+    }
+
+    var commaSeparatedList: String {
+        "["
+        + elements().map { $0.featureName }.joined(separator: ",")
+        + "]"
+    }
+}

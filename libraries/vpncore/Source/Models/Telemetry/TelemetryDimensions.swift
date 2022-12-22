@@ -21,10 +21,10 @@ import Foundation
 struct TelemetryDimensions: Encodable {
     let outcome: Outcome
     let userTier: UserTier
-    let vpnStatus: VPNStatus
+    let vpnStatus: VPNStatus // This refers to whether a vpn connection is already ongoing when the connection action is triggered
     let vpnTrigger: VPNTrigger
     let networkType: NetworkType
-    let serverFeatures: [ServerFeature] // ordered comma-separated list
+    let serverFeatures: ServerFeature // ordered comma-separated list
     let vpnCountry: String // ['CHE', 'FRA', 'NLD', ... ]
     let userCountry: String // ['CHE', 'FRA', 'NLD', ... ]
     let `protocol`: VpnProtocol
@@ -118,21 +118,6 @@ struct TelemetryDimensions: Encodable {
     enum NetworkType: String, Encodable {
         case wifi
         case mobile
-    }
-
-    enum ServerFeature: String, Encodable {
-        case free
-        case p2p
-        case tor
-        case streaming
-        case partnership
-    }
-}
-
-extension Array where Element == TelemetryDimensions.ServerFeature {
-    var commaSeparatedList: String {
-        "["
-        + map { $0.rawValue }.joined(separator: ",")
-        + "]"
+        case unavailable
     }
 }

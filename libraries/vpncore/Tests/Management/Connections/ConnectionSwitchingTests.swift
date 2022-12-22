@@ -24,7 +24,8 @@ import GoLibs
 @testable import vpncore
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {
-    func testFirstTimeConnectionWithSmartProtocol() { // swiftlint:disable:this function_body_length
+
+    func testFirstTimeConnectionWithSmartProtocol() async {
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
             connectedDate: XCTestExpectation(description: "connected date"),
@@ -66,7 +67,9 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         safeMode: true,
                                         profileId: nil)
 
-        container.vpnGateway.connect(with: request)
+        await MainActor.run {
+            container.vpnGateway.connect(with: request)
+        }
 
         wait(for: [expectations.initialConnection, expectations.certRefresh], timeout: expectationTimeout)
 
@@ -78,11 +81,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(container.alertService.alerts.count, 1)
         XCTAssert(container.alertService.alerts.first is FirstTimeConnectingAlert)
 
-        container.vpnManager.connectedDate { date in
-            XCTAssertEqual(date, currentConnection?.connectedDate)
-            expectations.connectedDate.fulfill()
-        }
-        wait(for: [expectations.connectedDate], timeout: expectationTimeout)
+        let date = await container.vpnManager.connectedDate()
+        XCTAssertEqual(date, currentConnection?.connectedDate)
 
         container.vpnGateway.disconnect()
         wait(for: [expectations.disconnect], timeout: expectationTimeout)
