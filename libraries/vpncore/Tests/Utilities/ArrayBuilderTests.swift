@@ -72,4 +72,20 @@ class ArrayBuilderTests: XCTestCase {
         XCTAssertEqual(result, [2, 1], "Elements should be removed if the condition is true.")
     }
 
+    func testConditionalRemovingElemetsReturnsOriginalArrayWhenConditionFalse() {
+        let original = [2, 3, 1, 5]
+
+        let result = original.removing([1, 3], if: false)
+
+        XCTAssertEqual(result, original, "The original array should be returned when the condition is false.")
+    }
+
+    func testConditionalRemovingElemetsReturnsAlteredArrayWhenConditionTrue() {
+        let original = [2, 3, 1, 5]
+
+        let result = original.removing([1, 3], if: true)
+
+        XCTAssertEqual(result, [2, 5], "Elements should be removed if the condition is true.")
+    }
+
 }
