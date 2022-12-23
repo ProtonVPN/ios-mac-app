@@ -41,7 +41,7 @@ final class VpnProtocolViewModel {
 
     private var availableConnectionProtocols: [ConnectionProtocol] {
         let wireGuardTlsProtocols: [ConnectionProtocol] = [.tcp, .tls].map { .vpnProtocol(.wireGuard($0)) }
-        let wireGuardTlsEnabled = featureFlags.wireGuardTls || wireGuardTlsProtocols.contains(selectedProtocol)
+        let wireGuardTlsEnabled = featureFlags.wireGuardTls
 
         return ConnectionProtocol.allCases
             .removing(.smartProtocol, if: !displaySmartProtocol)
