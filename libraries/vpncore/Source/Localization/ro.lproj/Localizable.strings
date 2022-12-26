@@ -766,9 +766,6 @@
 /* Display less information */
 "_less_info" = "Mai puțin";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Încărcare";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Se încarcă informațiile conexiunii";
 
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "Reconectați-vă";
 
-/* Subuser alert */
-"_subuser_alert_title" = "Vă mulțumim pentru trecerea la planul Professional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conexiune reușită";
 
@@ -2006,11 +2000,17 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Conexiune VPN activă";
 
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "Protocol VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Protocolul VPN nu este disponibil pentru conexiunea selectată. Pentru conectare, schimbați protocolul sau serverul.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Dispozitivul a eșuat închiderea sesiunii VPN anterioare. Va trebui să reporniți dispozitivul înainte de a stabili o nouă conexiune VPN.";

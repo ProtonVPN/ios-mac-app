@@ -242,7 +242,7 @@
 "_data_disclaimer_device_details" = "Model urządzenia i wersja systemu operacyjnego";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_text" = "Proton VPN jest całkowicie zaangażowany w ochronę Twojej prywatności. Aby zapewnić bezpieczne i anonimowe korzystanie z aplikacji, naszym nadrzędnym celem jest gromadzenie jak najmniejszej ilości danych o użytkownikach, wyłącznie:\n\n%@ - w celach logowania, pomocy w odzyskiwaniu hasła lub przesyłania ważnych aktualizacji\n\n %@ - do powiadomień o awariach i błędach\n\nPoza tymi informacjami, aplikacja Proton VPN nie przetwarza żadnych danych o użytkownikach, ani nie rejestruje aktywności w sieci, które mogłyby pozwolić na ich zidentyfikowanie. Powyższe dane są przetrzymywane i przetwarzane wyłącznie przez wewnętrzny system Proton VPN, bez dostępu stron trzecich.";
+"_data_disclaimer_text" = "Proton VPN jest całkowicie zaangażowany w ochronę Twojej prywatności. Aby zapewnić bezpieczne i anonimowe korzystanie z aplikacji, naszym nadrzędnym celem jest gromadzenie jak najmniejszej ilości danych o użytkownikach, wyłącznie:\n\n%@ - w celach logowania, pomocy w odzyskiwaniu hasła lub przesyłania ważnych aktualizacji\n\n %@ - do powiadomień o awariach i błędach\n\nPoza tymi informacjami aplikacja Proton VPN nie przetwarza żadnych danych o użytkownikach ani nie rejestruje aktywności w sieci, które mogłyby pozwolić na ich zidentyfikowanie. Powyższe dane są przetrzymywane i przetwarzane wyłącznie przez wewnętrzny system Proton VPN, bez dostępu stron trzecich.";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Zadbaj o bezpieczeństwo w sieci";
@@ -765,9 +765,6 @@
 
 /* Display less information */
 "_less_info" = "Mniej informacji";
-
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Obciążenie";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Ładowanie informacji o połączeniu";
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "Zaloguj się ponownie";
 
-/* Subuser alert */
-"_subuser_alert_title" = "Dziękujemy za ulepszenie planu do wersji Professional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Połączono";
 
@@ -2006,11 +2000,17 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Połączenie VPN jest aktywne";
 
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "Protokół VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Protokół VPN nie jest dostępny dla wybranego połączenia. Aby połączyć się, zmień protokół lub serwer.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Twoje urządzenie nie zakończyło poprawnie poprzedniej sesji VPN. Musisz uruchomić ponownie urządzenie, zanim będziesz mógł nawiązać nowe połączenie.";

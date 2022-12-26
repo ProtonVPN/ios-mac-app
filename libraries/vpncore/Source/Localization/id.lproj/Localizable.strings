@@ -766,9 +766,6 @@
 /* Display less information */
 "_less_info" = "Lebih sedikit";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Beban";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Memuat informasi koneksi";
 
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "Masuk lagi";
 
-/* Subuser alert */
-"_subuser_alert_title" = "Terima kasih karena telah meningkatkan jenis akun Anda ke Professional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Berhasil Terhubung";
 
@@ -2006,11 +2000,17 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Sambungan VPN Aktif";
 
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "Protokol VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Protokol VPN ini tidak tersedia untuk sambungan yang Anda pilih. Untuk dapat tersambung, cobalah untuk mengubah protokol atau server.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Perangkat Anda gagal mengakhiri sesi VPN sebelumnya. Anda perlu memulai ulang perangkat Anda sebelum membuat sambungan VPN baru.";

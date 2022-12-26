@@ -601,9 +601,6 @@
 /* Display less information */
 "_less_info" = "Manje informacija";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Opterećenje";
-
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Siguran internet bilo gdje";
 
@@ -1583,7 +1580,7 @@
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Saznajte više";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN veza je aktivna";
 
 /* iOS Settings -> Protocol: screen title */
