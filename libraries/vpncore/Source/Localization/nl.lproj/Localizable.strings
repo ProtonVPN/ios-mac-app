@@ -766,9 +766,6 @@
 /* Display less information */
 "_less_info" = "Minder informatie";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Belast";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Verbindingsinformatie laden";
 
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "Opnieuw inloggen";
 
-/* Subuser alert */
-"_subuser_alert_title" = "Bedankt om te upgraden naar Professional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Succesvol verbonden";
 
@@ -2006,11 +2000,17 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN-verbinding actief";
 
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "VPN Protocol";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Het VPN-protocol is niet beschikbaar voor de geselecteerde verbinding. Selecteer een andere server of protocol om te verbinden.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Uw apparaat kon een eerdere VPN-sessie niet beëindigen. U moet uw apparaat herstarten voordat u een nieuwe VPN-verbinding kunt aanmaken.";

@@ -13,3 +13,6 @@
 /* MacOS: Settings -> General: name of field. */
 "_unprotected_network" = "Unprotected network notifications";
 
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+

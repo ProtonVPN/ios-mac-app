@@ -751,9 +751,6 @@
 /* Display less information */
 "_less_info" = "Menos informação";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Carregar";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "A carregar informação da ligação";
 
@@ -1943,7 +1940,7 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Ligação VPN activa";
 
 /* iOS Settings -> Protocol: screen title */

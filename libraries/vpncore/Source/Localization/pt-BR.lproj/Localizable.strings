@@ -766,9 +766,6 @@
 /* Display less information */
 "_less_info" = "Menos informações";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Carregar";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Carregando informações de conexão";
 
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "Iniciar sessão novamente";
 
-/* Subuser alert */
-"_subuser_alert_title" = "Obrigado por fazer upgrade para Professional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado com sucesso";
 
@@ -2006,11 +2000,17 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Conexão VPN ativa";
 
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "Protocolo da VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "O protocolo VPN não está disponível para a conexão selecionado. Para conectar, tente alterar o protocolo ou servidor.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Seu dispositivo não conseguiu encerrar a sessão da VPN anterior. Você precisará reiniciar seu dispositivo antes de estabelecer uma nova conexão VPN.";

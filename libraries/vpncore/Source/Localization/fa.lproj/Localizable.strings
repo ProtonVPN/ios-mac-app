@@ -766,9 +766,6 @@
 /* Display less information */
 "_less_info" = "اطلاعات کمتر";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "بارگذاری";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "در حال بارگذاری اطلاعات اتصال";
 
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "ورود دوباره";
 
-/* Subuser alert */
-"_subuser_alert_title" = "با تشکر از شما برای ارتقا به Profissional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "با موفقیت وصل شدید";
 
@@ -2006,7 +2000,7 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "شتاب دهنده VPN";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "اتصال VPN برقرار است";
 
 /* iOS Settings -> Protocol: screen title */

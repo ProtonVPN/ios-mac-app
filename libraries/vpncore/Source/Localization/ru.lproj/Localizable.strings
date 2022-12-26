@@ -766,9 +766,6 @@
 /* Display less information */
 "_less_info" = "Меньше информации";
 
-/* Server load. Used together with actual server load in percents. */
-"_load" = "Загрузить";
-
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Загрузка данных о подключении";
 
@@ -1600,9 +1597,6 @@
 /* (No Comment) */
 "_subuser_alert_login_button" = "Войти снова";
 
-/* Subuser alert */
-"_subuser_alert_title" = "Спасибо за улучшение до Professional/Visionary";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Успешное подключение";
 
@@ -2006,11 +2000,17 @@
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
 
-/* MacOS: alert before disconnection on SecureCore state change */
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN-подключение активно";
 
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "Протокол VPN";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "Выбранный вами протокол VPN недоступен для этого подключения. Чтобы подключиться, попробуйте изменить протокол или сервер.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Вашему устройству не удалось завершить предыдущий сеанс VPN. Вам нужно перезагрузить устройство, прежде чем вы сможете установить новое соединение с VPN.";
