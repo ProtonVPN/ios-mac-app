@@ -98,10 +98,10 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
         checkRefreshCertificateNow(features: features, completion: { result in
             if case let .failure(error) = result {
-                log.error("Encountered error \(error) while refreshing in background.")
+                log.error("Encountered error \(error) while refreshing in background.", category: .userCert)
                 return
             }
-            log.info("Background refresh of certificate completed successfully.")
+            log.info("Background refresh of certificate completed successfully.", category: .userCert)
         })
     }
 
@@ -119,7 +119,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             defer { self?.semaphore.signal() }
 
             if case let .failure(error) = result {
-                log.error("Could not start session due to error: \(error)")
+                log.error("Could not start session due to error: \(error)", category: .userCert)
                 completionHandler(result)
                 return
             }
@@ -136,33 +136,33 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     private func certificateDoesNeedRefreshing(features: VPNConnectionFeatures?) -> Bool {
         // If we're able to get a certificate from the keychain...
         guard let storedCert = vpnAuthenticationStorage.getStoredCertificate() else {
-            log.info("Could not find stored certificate, refreshing.")
+            log.info("Could not find stored certificate, refreshing.", category: .userCert)
             return true
         }
 
         if let features = features {
             // and we're also able to retrieve the features stored from the last request...
             guard let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures() else {
-                log.info("Could not find stored certificate features, refreshing.")
+                log.info("Could not find stored certificate features, refreshing.", category: .userCert)
                 return true
             }
 
             // and the features we stored from the last request are the same as the ones for this request...
             guard storedFeatures.equals(other: features, safeModeEnabled: true) else {
-                log.info("Features have been updated (or haven't been stored), refreshing.")
+                log.info("Features have been updated (or haven't been stored), refreshing.", category: .userCert)
                 return true
             }
         }
 
         // and the certificate isn't going to expire anytime soon, then...
         guard Date() < storedCert.refreshTime.addingTimeInterval(Self.intervals.refreshEarlierBy) else {
-            log.info("Certificate might expire soon or has already expired, refreshing.")
+            log.info("Certificate might expire soon or has already expired, refreshing.", category: .userCert)
             return true
         }
 
         // don't actually refresh the certificate, just leave it be.
         let interval = storedCert.refreshTime.timeIntervalSinceNow
-        log.info("Certificate seems up to date! Will need to refresh in \(interval.asColonSeparatedString)")
+        log.info("Certificate seems up to date! Will need to refresh in \(interval.asColonSeparatedString)", category: .userCert)
         return false
     }
 
@@ -220,11 +220,11 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
                 // This shouldn't happen from here; the caller should be managing the semaphore.
                 case .timedOut:
                     assertionFailure("Should not encounter \(certError) here; we aren't managing synchronization")
-                    log.error("Should not encounter \(certError) here; we aren't managing synchronization")
+                    log.error("Should not encounter \(certError) here; we aren't managing synchronization", category: .userCert)
                 // These errors should "never happen" in practice.
                 case .internalError:
                     assertionFailure("Encountered internal error: \(error)")
-                    log.error("Encountered internal error: \(error)")
+                    log.error("Encountered internal error: \(error)", category: .userCert)
                 }
 
                 completion(.failure(certError))

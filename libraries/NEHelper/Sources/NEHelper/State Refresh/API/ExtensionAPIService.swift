@@ -208,7 +208,7 @@ public final class ExtensionAPIService {
     private func request<R: APIRequest>(_ request: R,
                                         headers: [(APIHeader, String?)] = [],
                                         completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {
-        log.info("Proceeding with request at url \(request.endpointUrl)")
+        log.info("Proceeding with request at url \(request.endpointUrl)", category: .api)
         var urlRequest = makeUrlRequest(request)
 
         for (header, value) in headers {

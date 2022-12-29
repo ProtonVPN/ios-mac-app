@@ -247,10 +247,12 @@ class NWTCPDataTask: DataTaskProtocol {
         // the server's response data, assuming it is well-formed).
         let resolveRequest = { [weak self] (result: Result<(), Error>) in
             guard let self = self else {
+                log.warning("NWTCPConnection resolveRequest with released self called", category: .net)
                 return
             }
 
             guard !self.resolved, let connection = self.connection else {
+                log.warning("NWTCPConnection resolveRequest stopping", category: .net, metadata: ["resolved": "\(self.resolved)", "connection": "\(String(describing: self.connection))"])
                 return
             }
 
@@ -268,18 +270,20 @@ class NWTCPDataTask: DataTaskProtocol {
             Self.sendRequest(to: url,
                              data: requestData,
                              over: connection,
+                             uuid: self.taskId,
                              completionHandler: self.completionHandler)
         }
 
         // Look for changes in the NWTCPConnection's state, adding a timeout if we stay waiting in
         // `.connecting` or `.waiting` for too long.
-        self.observation = connection?.observeStateChange { [weak self] state in
+        self.observation = connection?.observeStateChange { [weak self, taskId] state in
             guard let self = self else {
+                log.warning("NWTCPConnection observeStateChange with released self called: \(state)", category: .net, metadata: ["id": "\(taskId)"])
                 return
             }
 
             self.queue.async {
-                log.info("Connection state for \(self.taskId): \(state)")
+                log.info("Connection state changed: \(state)", category: .net, metadata: ["id": "\(taskId)"])
 
                 switch state {
                 case .connected:
@@ -300,7 +304,8 @@ class NWTCPDataTask: DataTaskProtocol {
 
                     let timeoutDeadline = Date().addingTimeInterval(self.timeoutInterval)
                     self.timeoutTimer = self.timerFactory.scheduledTimer(runAt: timeoutDeadline, queue: self.queue) {
-                        log.info("Request timed out! Invoking timeout error.")
+                        log.info("Request timed out! Invoking timeout error.", category: .net, metadata: ["id": "\(self.taskId)"])
+                        self.connection?.cancel()
                         resolveRequest(.failure(POSIXError(.ETIMEDOUT)))
                     }
                 default:
@@ -339,6 +344,7 @@ class NWTCPDataTask: DataTaskProtocol {
     private static func sendRequest(to url: URL,
                                     data: Data,
                                     over connection: ConnectionTunnel,
+                                    uuid: UUID,
                                     completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
         // When the connection is ready, go ahead and send the request/process the response.
         connection.write(data) { error in
@@ -350,7 +356,7 @@ class NWTCPDataTask: DataTaskProtocol {
 
             connection.readMinimumLength(1, maximumLength: Self.maximumResponseSize) { responseData, error in
                 if let error = error {
-                    log.debug("Received error. State: \(connection.state)", category: .net)
+                    log.debug("Received error. State: \(connection.state)", category: .net, metadata: ["id": "\(uuid)"])
                     completionHandler(nil, nil, error)
                     return
                 }
