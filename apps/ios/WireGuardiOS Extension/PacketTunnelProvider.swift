@@ -198,7 +198,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
-    func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, completionHandler: @escaping (Error?) -> Void) {
+    func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this function_body_length
         guard let storedConfig = currentWireguardServer else {
             wg_log(.error, message: "Current wireguard server not set; not starting tunnel")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -387,6 +387,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             certificateRefreshManager.start {
                 completionHandler?(.ok(data: nil))
             }
+        case .getCurrentLogicalAndServerId:
+            let response = "\(self.connectedLogicalId ?? "");\(self.connectedIpId ?? "")"
+            wg_log(.info, message: "Handle message: getCurrentLogicalAndServerId (result: \(response))")
+            completionHandler?(.ok(data: response.data(using: .utf8)))
         }
     }
 

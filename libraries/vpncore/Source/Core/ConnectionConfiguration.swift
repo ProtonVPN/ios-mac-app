@@ -87,4 +87,14 @@ public struct ConnectionConfiguration: Codable {
                                 safeMode: safeMode,
                                 ports: ports)
     }
+
+    public func withChanged(server: ServerModel, ip: ServerIp) -> ConnectionConfiguration {
+        ConnectionConfiguration(server: server,
+                                serverIp: ip,
+                                vpnProtocol: vpnProtocol,
+                                netShieldType: netShieldType,
+                                natType: natType,
+                                safeMode: safeMode,
+                                ports: ports)
+    }
 }

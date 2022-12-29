@@ -68,7 +68,7 @@ public class VpnManager: VpnManagerProtocol {
     
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
     
-    private var currentVpnProtocolFactory: VpnProtocolFactory? {
+    var currentVpnProtocolFactory: VpnProtocolFactory? {
         guard let currentVpnProtocol = currentVpnProtocol else {
             return nil
         }
@@ -154,20 +154,22 @@ public class VpnManager: VpnManagerProtocol {
             }
         }
     }
+    let serverStorage: ServerStorage // Used to find new server/ip in case NE had to reconnect to another server
 
-    public typealias Factory = IkeProtocolFactoryCreator &
-        OpenVpnProtocolFactoryCreator &
-        WireguardProtocolFactoryCreator &
-        VpnAuthenticationFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
-        VpnStateConfigurationFactory &
-        CoreAlertServiceFactory &
-        VpnCredentialsConfiguratorFactoryCreator &
-        LocalAgentConnectionFactoryCreator &
-        NATTypePropertyProviderFactory &
-        NetShieldPropertyProviderFactory &
-        SafeModePropertyProviderFactory
+    public typealias Factory = IkeProtocolFactoryCreator
+        & OpenVpnProtocolFactoryCreator
+        & WireguardProtocolFactoryCreator
+        & VpnAuthenticationFactory
+        & VpnKeychainFactory
+        & PropertiesManagerFactory
+        & VpnStateConfigurationFactory
+        & CoreAlertServiceFactory
+        & VpnCredentialsConfiguratorFactoryCreator
+        & LocalAgentConnectionFactoryCreator
+        & NATTypePropertyProviderFactory
+        & NetShieldPropertyProviderFactory
+        & SafeModePropertyProviderFactory
+        & ServerStorageFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(ikeFactory: factory.makeIkeProtocolFactory(),
@@ -183,10 +185,11 @@ public class VpnManager: VpnManagerProtocol {
                   localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
                   natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
                   netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+                  safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
+                  serverStorage: factory.makeServerStorage())
     }
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, localAgentConnectionFactory: LocalAgentConnectionFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory, localAgentConnectionFactory: LocalAgentConnectionFactory, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, serverStorage: ServerStorage) {
         readyGroup?.enter()
 
         self.ikeProtocolFactory = ikeFactory
@@ -203,13 +206,16 @@ public class VpnManager: VpnManagerProtocol {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.serverStorage = serverStorage
         
         prepareManagers(forSetup: true)
     }
 
+    // App was moved to/from the background mode (iOS only)
     public func appBackgroundStateDidChange(isBackground: Bool) {
         connectionQueue.sync { [weak self] in
             self?.disconnectOnCertRefreshError = !isBackground
+            checkActiveServer()
         }
     }
     
@@ -650,8 +656,6 @@ public class VpnManager: VpnManagerProtocol {
             remoteVpnAuthentication.setConnectionProvider(provider: provider)
         }
     }
-    
-    // swiftlint:enable cyclomatic_complexity function_body_length
 
     /*
      *  Upon initiation of VPN manager, VPN configuration from manager needs

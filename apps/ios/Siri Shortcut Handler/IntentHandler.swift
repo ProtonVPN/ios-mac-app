@@ -76,7 +76,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     localAgentConnectionFactory: LocalAgentConnectionFactoryImplementation(),
                                     natTypePropertyProvider: natTypePropertyProvider,
                                     netShieldPropertyProvider: netShieldPropertyProvider,
-                                    safeModePropertyProvider: safeModePropertyProvider)
+                                    safeModePropertyProvider: safeModePropertyProvider,
+                                    serverStorage: ServerStorageConcrete())
 
         let countryCodeProvider = dependencyFactory.makeCountryCodeProvider()
         siriHandlerViewModel = SiriHandlerViewModel(networking: networking,

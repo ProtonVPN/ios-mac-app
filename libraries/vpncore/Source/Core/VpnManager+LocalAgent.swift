@@ -148,23 +148,41 @@ extension VpnManager {
         alertService?.push(alert: alert)
     }
 
-    func updateActiveConnection(closure: @escaping ((ConnectionConfiguration?) -> ConnectionConfiguration?)) {
-        switch currentVpnProtocol {
-        case .ike:
-            propertiesManager.lastIkeConnection = closure(propertiesManager.lastIkeConnection)
-        case .openVpn:
-            propertiesManager.lastOpenVpnConnection = closure(propertiesManager.lastOpenVpnConnection)
-        case .wireGuard:
-            propertiesManager.lastWireguardConnection = closure(propertiesManager.lastWireguardConnection)
-        case nil:
-            break
+    var lastConnectionConfiguration: ConnectionConfiguration? {
+        get {
+            switch currentVpnProtocol {
+            case .ike:
+                return propertiesManager.lastIkeConnection
+            case .openVpn:
+                return propertiesManager.lastOpenVpnConnection
+            case .wireGuard:
+                return propertiesManager.lastWireguardConnection
+            case nil:
+                return nil
+            }
         }
+        set {
+            switch currentVpnProtocol {
+            case .ike:
+                propertiesManager.lastIkeConnection = newValue
+            case .openVpn:
+                propertiesManager.lastOpenVpnConnection = newValue
+            case .wireGuard:
+                propertiesManager.lastWireguardConnection = newValue
+            case nil:
+                log.warning("Trying to set configuration without current protocol", category: .localAgent)
+            }
+        }
+    }
+
+    func updateActiveConnection(closure: @escaping ((ConnectionConfiguration?) -> ConnectionConfiguration?)) {
+        lastConnectionConfiguration = closure(lastConnectionConfiguration)
     }
 
     func updateActiveConnection(netShieldType: NetShieldType) {
         propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: netShieldType)
         updateActiveConnection {
-            log.info("Netshield type was \(String(describing: $0?.netShieldType)), updating to \(netShieldType).")
+            log.info("Netshield type was \(String(describing: $0?.netShieldType)), updating to \(netShieldType).", category: .connection)
             return $0?.withChanged(netShieldType: netShieldType)
         }
     }
@@ -172,7 +190,7 @@ extension VpnManager {
     func updateActiveConnection(natType: NATType) {
         propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(natType: natType)
         updateActiveConnection {
-            log.info("NAT type was \(String(describing: $0?.natType)), updating to \(natType).")
+            log.info("NAT type was \(String(describing: $0?.natType)), updating to \(natType).", category: .connection)
             return $0?.withChanged(natType: natType)
         }
     }
@@ -180,19 +198,72 @@ extension VpnManager {
     func updateActiveConnection(safeMode: Bool) {
         propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(safeMode: safeMode)
         updateActiveConnection {
-            log.info("Safe mode was \(String(describing: $0?.safeMode)), updating to \(safeMode).")
+            log.info("Safe mode was \(String(describing: $0?.safeMode)), updating to \(safeMode).", category: .connection)
             return $0?.withChanged(safeMode: safeMode)
         }
     }
 
     func updateActiveConnection(exitIp: String) {
         updateActiveConnection {
-            log.info("Server IP was \($0?.serverIp.exitIp ?? "(nil)"), updating to \(exitIp).")
+            log.info("Server IP was \($0?.serverIp.exitIp ?? "(nil)"), updating to \(exitIp).", category: .connection)
             return $0?.withChanged(exitIp: exitIp)
         }
     }
 
+    /// Updates last connection config that is used to display proper info in apps UI.
+    func updateActiveConnection(serverId: String, ipId: String) {
+        let servers = serverStorage.fetch()
+        guard let newServer = servers.first(where: { $0.id == serverId }) else {
+            log.warning("Server with such id not found", category: .connection, event: .error, metadata: ["serverId": "\(serverId)"])
+            return
+        }
+        guard let newIp = newServer.ips.first(where: { $0.id == ipId }) else {
+            log.warning("Server IP with such id not found", category: .connection, event: .error, metadata: ["ipId": "\(ipId)", "serverId": "\(serverId)"])
+            return
+        }
+        propertiesManager.lastPreparedServer = newServer
+        updateActiveConnection {
+            log.info("Server was \(String(describing: $0?.server.id)) with ip: \(String(describing: $0?.serverIp.id)), updating to \(String(describing: newServer.id)) with ip \(String(describing: newIp.id)).", category: .connection)
+            return $0?.withChanged(server: newServer, ip: newIp)
+        }
+    }
+
     // Danger: If you're adding another `updateActiveConnection` here, consider also updating `lastConnectionRequest`.
+
+    /// Asks NE for currently connected logical and ip ids. If these are not as expected last connection configuration is updated, so UI can show up-to-date info.
+    func checkActiveServer() {
+        log.debug("Checking if NE is still connected to the same server", category: .connection)
+        self.currentVpnProtocolFactory?.vpnProviderManager(for: .configuration, completion: { manager, error in
+            guard let manager = manager else {
+                log.error("No vpn manager found", category: .localAgent, event: .error)
+                return
+            }
+            let sender = manager.vpnConnection as? ProviderMessageSender
+            sender?.send(WireguardProviderRequest.getCurrentLogicalAndServerId) { result in
+                switch result {
+                case .success(let response):
+                    guard case .ok(let data) = response, let data = data, let ids = String(data: data, encoding: .utf8) else {
+                        log.error("Error while decoding getCurrentLogicalAndServerId response", category: .connection, event: .error)
+                        return
+                    }
+                    let id = ids.components(separatedBy: ";")
+
+                    guard self.lastConnectionConfiguration?.server.id != id[0], self.lastConnectionConfiguration?.serverIp.id != id[1] else {
+                        log.info("Current vpn server is as expected", category: .connection)
+                        return
+                    }
+
+                    self.updateActiveConnection(serverId: id[0], ipId: id[1])
+                    self.disconnectLocalAgent()
+                    self.connectLocalAgent()
+
+                case .failure(let error):
+                    log.error("Error while getting currently connected vpn server and ip: \(error)", category: .connection, event: .error)
+                }
+            }
+        })
+    }
+
 }
 
 extension VpnManager: LocalAgentDelegate {
@@ -251,9 +322,14 @@ extension VpnManager: LocalAgentDelegate {
 
         switch state {
         case .clientCertificateError:
-            // because the local agent shared library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
-            // instead use this state as the certificate expired error
+            // Because the local agent shared library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
+            // Instead use this state as the certificate expired error
             didReceiveError(error: LocalAgentError.certificateExpired)
+
+        case .serverCertificateError:
+            // Most probably NE has changed the server. Let's check if it is the case.
+            checkActiveServer()
+
         default:
             break
         }
