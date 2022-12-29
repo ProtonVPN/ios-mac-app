@@ -91,7 +91,8 @@ class MockDependencyContainer {
                                      localAgentConnectionFactory: localAgentConnectionFactory,
                                      natTypePropertyProvider: natProvider,
                                      netShieldPropertyProvider: netShieldProvider,
-                                     safeModePropertyProvider: safeModeProvider)
+                                     safeModePropertyProvider: safeModeProvider,
+                                     serverStorage: ServerStorageMock())
 
     lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain,
                                                                                alertService: alertService,

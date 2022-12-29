@@ -23,14 +23,14 @@ import XCTest
 class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
     var manager: ServerStatusRefreshManager!
 
-    var serverDidChange: ((ServerStatusRequest.Server) -> ())?
+    var serverDidChange: (([ServerStatusRequest.Logical]) -> ())?
 
     override func setUpWithError() throws {
         try super.setUpWithError()
 
         self.manager = ServerStatusRefreshManager(apiService: apiService,
                                                   timerFactory: timerFactory) { [unowned self] newServer in
-            serverDidChange?(newServer)
+            serverDidChange?([])
         }
     }
 
@@ -39,20 +39,15 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             managerStarted: XCTestExpectation(description: "Manager was started"),
             endpointHit: XCTestExpectation(description: "API returned no change in server")
         )
-
-        let currentServer = ServerStatusRequest.Server(entryIp: "entry ip", exitIp: "exit ip",
-                                                       domain: "domain", id: "serverid",
-                                                       status: 1, x25519PublicKey: "public key")
-
         serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([\.server: currentServer]),
+                                            result: .success([:]),
                                             expectationToFulfill: expectations.endpointHit)
 
         serverDidChange = { newServer in
             fatalError("Server did not change, so nothing should have happened")
         }
 
-        manager.updateConnectedServerId(currentServer.id)
+        manager.updateConnectedServerId(Self.currentServerId)
 
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()
@@ -68,25 +63,18 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             endpointHit: XCTestExpectation(description: "API returned no change in server"),
             callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
         )
-
-        let currentServer = ServerStatusRequest.Server(entryIp: "entry ip", exitIp: "exit ip",
-                                                       domain: "domain", id: "serverid",
-                                                       status: 0, x25519PublicKey: "public key")
-
-        let reconnectServer = ServerStatusRequest.Server(entryIp: "entry ip", exitIp: "exit ip",
-                                                         domain: "domain", id: "reconnectserverid",
-                                                         status: 1, x25519PublicKey: "public key")
-
+        
+        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id", status: 0, servers: [])
+        Self.currentServerId = originalServer.id
+        manager.updateConnectedServerId(Self.currentServerId)
+        
         serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([\.server: currentServer,
-                                                              \.reconnectTo: reconnectServer]),
+                                            result: .success([\.original: originalServer]),
                                             expectationToFulfill: expectations.endpointHit)
 
-        serverDidChange = { newServer in
+        serverDidChange = { newServers in
             expectations.callbackInvoked.fulfill()
         }
-
-        manager.updateConnectedServerId(currentServer.id)
 
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()

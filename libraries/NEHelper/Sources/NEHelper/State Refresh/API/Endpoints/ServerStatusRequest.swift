@@ -23,19 +23,32 @@ public final class ServerStatusRequest: APIRequest {
     let httpMethod = "GET"
     let hasBody = false
 
-    var endpointUrl: String { "vpn/servers/\(params.serverId)?WithReconnectAlternative" }
+    var endpointUrl: String { "vpn/logicals/\(params.logicalId)/alternatives" }
 
     public struct Params: Codable {
-        let serverId: String
+        let logicalId: String
     }
 
+    public struct Logical: Codable {
+        public let id: String
+        public let status: Int
+        public let servers: [Server]
+
+        enum CodingKeys: String, CodingKey {
+            case id = "ID"
+            case status = "Status"
+            case servers = "Servers"
+        }
+    }
+    
     public struct Server: Codable {
         public let entryIp: String
         public let exitIp: String
         public let domain: String
         public let id: String
         public let status: Int
-        public let x25519PublicKey: String
+        public let label: String
+        public let x25519PublicKey: String?
 
         enum CodingKeys: String, CodingKey {
             case entryIp = "EntryIP"
@@ -43,40 +56,24 @@ public final class ServerStatusRequest: APIRequest {
             case domain = "Domain"
             case id = "ID"
             case status = "Status"
+            case label = "Label"
             case x25519PublicKey = "X25519PublicKey"
+        }
+        
+        public var underMaintenance: Bool {
+            status == 0
         }
     }
 
-    public final class Response: Codable {
-        let server: Server
-        let reconnectTo: Server?
+    public struct Response: Codable {
+        let code: Int
+        let original: Logical
+        let alternatives: [Logical]
 
         enum CodingKeys: String, CodingKey {
-            case reconnectTo = "ReconnectTo"
-        }
-
-        public func encode(to encoder: Encoder) throws {
-            try server.encode(to: encoder)
-
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(reconnectTo, forKey: .reconnectTo)
-        }
-
-        public required init(from decoder: Decoder) throws {
-            self.server = try Server(from: decoder)
-
-            do {
-                let container = try decoder.container(keyedBy: CodingKeys.self)
-                self.reconnectTo = try container.decode(Server?.self, forKey: .reconnectTo)
-            } catch {
-                log.error("Could not decode ReconnectTo response: \(error)", category: .connection)
-                self.reconnectTo = nil
-            }
-        }
-
-        internal init(server: Server, reconnectTo: Server?){
-            self.server = server
-            self.reconnectTo = reconnectTo
+            case code = "Code"
+            case original = "Original"
+            case alternatives = "Alternatives"
         }
     }
 

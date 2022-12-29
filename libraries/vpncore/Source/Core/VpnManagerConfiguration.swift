@@ -48,6 +48,7 @@ public struct VpnManagerConfiguration {
     
     public let hostname: String
     public let serverId: String
+    public let ipId: String
     public let entryServerAddress: String
     public let exitServerAddress: String
     public let username: String
@@ -63,9 +64,10 @@ public struct VpnManagerConfiguration {
     public let natType: NATType
     public let safeMode: Bool?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, clientPrivateKey: String?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, ports: [Int], serverPublicKey: String?) {
+    public init(hostname: String, serverId: String, ipId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, clientPrivateKey: String?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, ports: [Int], serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
+        self.ipId = ipId
         self.entryServerAddress = entryServerAddress
         self.exitServerAddress = exitServerAddress
         self.username = username
@@ -122,6 +124,7 @@ public class VpnManagerConfigurationPreparer {
             
             return VpnManagerConfiguration(hostname: connectionConfig.serverIp.domain,
                                            serverId: connectionConfig.server.id,
+                                           ipId: connectionConfig.serverIp.id,
                                            entryServerAddress: entryServer,
                                            exitServerAddress: exitServer,
                                            username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),

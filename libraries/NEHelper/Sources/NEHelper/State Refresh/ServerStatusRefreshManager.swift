@@ -21,7 +21,7 @@ import Timer
 import VPNShared
 
 public final class ServerStatusRefreshManager: RefreshManager {
-    public typealias ServerStatusChangeCallback = (ServerStatusRequest.Server) -> Void
+    public typealias ServerStatusChangeCallback = ([ServerStatusRequest.Logical]) -> Void
 
     private let apiService: ExtensionAPIService
     /// - Important: should set/get this value on `workQueue`.
@@ -51,29 +51,32 @@ public final class ServerStatusRefreshManager: RefreshManager {
 
     override internal func work() {
         guard let serverId = currentServerId else {
-            log.info("No connected server id set; not refreshing server status.")
+            log.info("No connected server id set; not refreshing server status.", category: .connection)
             return
         }
 
-        apiService.refreshServerStatus(serverId: serverId,
+        apiService.refreshServerStatus(logicalId: serverId,
                                        refreshApiTokenIfNeeded: true) { [unowned self] result in
             workQueue.async { [unowned self] in
                 switch result {
-                case .success(let server):
-                    guard let server = server else {
+                case .success(let response):
+                    guard response.original.status == 0 else {
+                        log.info("Server is not in maintenance. No reconnection needed.", category: .connection)
                         return
                     }
+
+                    log.info("Server \(response.original.id) is in maintenance. Will reconnect to alternative server.", category: .connection)
 
                     // We could have disconnected since making the API request, so check if we're stopped.
                     guard case .running = state else {
-                        log.info("Not reconnecting to \(server.entryIp) - refresh manager was already stopped")
+                        log.info("Not reconnecting - refresh manager was already stopped", category: .connection)
                         return
                     }
 
-                    currentServerId = server.id
-                    serverStatusChangeCallback(server)
+                    serverStatusChangeCallback(response.alternatives)
+                    
                 case .failure(let error):
-                    log.error("Couldn't refresh server state: \(error)")
+                    log.error("Couldn't refresh server state: \(error)", category: .connection)
                 }
             }
         }

@@ -54,6 +54,7 @@ class VpnManagerTests: BaseConnectionTestCase {
 
         let wgConfig = VpnManagerConfiguration(hostname: "wireguard.protonvpn.ch",
                                                serverId: "abcde",
+                                               ipId: "fghij",
                                                entryServerAddress: "127.0.0.1",
                                                exitServerAddress: "127.0.0.2",
                                                username: "",
@@ -147,6 +148,7 @@ class VpnManagerTests: BaseConnectionTestCase {
 
         let ovpnConfig = VpnManagerConfiguration(hostname: "openvpn.protonvpn.ch",
                                                  serverId: "fghij",
+                                                 ipId: "klmnk",
                                                  entryServerAddress: "127.0.0.3",
                                                  exitServerAddress: "127.0.0.4",
                                                  username: "openVpnUser",
@@ -241,6 +243,7 @@ class VpnManagerTests: BaseConnectionTestCase {
 
         let ikeConfig = VpnManagerConfiguration(hostname: "ike.protonvpn.ch",
                                                 serverId: "klmnop",
+                                                ipId: "fghij",
                                                 entryServerAddress: "127.0.0.5",
                                                 exitServerAddress: "127.0.0.6",
                                                 username: "ikeUser",

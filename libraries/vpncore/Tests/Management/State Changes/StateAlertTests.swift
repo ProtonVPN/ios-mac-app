@@ -25,7 +25,7 @@ import TimerMock
 
 class StateAlertTests: XCTestCase {
 
-    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), clientPrivateKey: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [500], serverPublicKey: nil)
+    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", ipId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), clientPrivateKey: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, natType: .default, safeMode: true, ports: [500], serverPublicKey: nil)
     let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
     

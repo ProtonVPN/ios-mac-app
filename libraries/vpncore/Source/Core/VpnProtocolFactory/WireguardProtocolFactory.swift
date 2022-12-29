@@ -63,6 +63,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = configuration.entryServerAddress
         protocolConfiguration.connectedServerId = configuration.serverId
+        protocolConfiguration.connectedServerIpId = configuration.ipId
         return protocolConfiguration
     }
     
