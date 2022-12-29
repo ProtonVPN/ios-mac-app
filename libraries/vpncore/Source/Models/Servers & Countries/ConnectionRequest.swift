@@ -22,7 +22,7 @@
 import Foundation
 import VPNShared
 
-public enum ConnectionProtocol: Codable, Equatable, CustomStringConvertible, Hashable {
+public enum ConnectionProtocol: Codable, Equatable, Hashable, CaseIterable, CustomStringConvertible {
     case vpnProtocol(VpnProtocol)
     case smartProtocol
 
@@ -78,11 +78,16 @@ public enum ConnectionProtocol: Codable, Equatable, CustomStringConvertible, Has
             return LocalizedString.smartTitle
         }
     }
-}
 
-extension ConnectionProtocol: CaseIterable {
-    public static var allCases: [ConnectionProtocol] {
-        return [.smartProtocol] + VpnProtocol.allCases.map { .vpnProtocol($0) }
+    public static let allCases: [ConnectionProtocol] = [.smartProtocol] +
+        VpnProtocol.allCases.map(Self.vpnProtocol)
+
+    public static func uiSort(lhs: Self, rhs: Self) -> Bool {
+        guard let lhsProtocol = lhs.vpnProtocol, let rhsProtocol = rhs.vpnProtocol else {
+            return lhs == .smartProtocol && rhs != .smartProtocol // smart protocol gets sorted first
+        }
+
+        return VpnProtocol.uiSort(lhs: lhsProtocol, rhs: rhsProtocol)
     }
 }
 

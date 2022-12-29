@@ -24,12 +24,6 @@ import GSMessages
 import UIKit
 import vpncore
 
-fileprivate enum ModelState {
-    
-    case standard
-    case secureCore
-}
-
 class CreateOrEditProfileViewModel: NSObject {
     
     private let username: String?
@@ -44,7 +38,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
     
-    private var state: ModelState = .standard {
+    private var state: ServerType = .standard {
         didSet {
             saveButtonEnabled = true
         }
@@ -55,9 +49,6 @@ class CreateOrEditProfileViewModel: NSObject {
         return colorPickerViewModel.selectedColor
     }
     private var name: String = ""
-    private var isSecureCore: Bool {
-        return state == .secureCore
-    }
     private var selectedProtocol: ConnectionProtocol
     private var isDefaultProfile = false
     
@@ -76,7 +67,7 @@ class CreateOrEditProfileViewModel: NSObject {
     var editingExistingProfile: Bool {
         return editedProfile != nil
     }
-    
+
     init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.username = username
         self.editedProfile = profile
@@ -158,16 +149,8 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
         
-        let serverType: ServerType = isSecureCore ? .secureCore : .standard
-        let grouping = serverManager.grouping(for: serverType)
-        
-        let id: String
-        if let editedProfile = editedProfile {
-            id = editedProfile.id
-        } else {
-            id = String.randomString(length: Profile.idLength)
-        }
-        
+        let grouping = serverManager.grouping(for: state)
+
         let accessTier: Int
         switch serverOffering {
         case .fastest(let countryCode):
@@ -179,10 +162,17 @@ class CreateOrEditProfileViewModel: NSObject {
         case .custom(let serverWrapper):
             accessTier = serverWrapper.server.tier
         }
-        
-        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: selectedProtocol)
-        
+
+        let profileId: String = editedProfile?.id ?? .randomString(length: Profile.idLength)
+        let profile = Profile(id: profileId,
+                              accessTier: accessTier,
+                              profileIcon: .circle(color.hexRepresentation),
+                              profileType: .user,
+                              serverType: state,
+                              serverOffering: serverOffering,
+                              name: name,
+                              connectionProtocol: selectedProtocol)
+
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
         guard result == .success else {
@@ -221,7 +211,10 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var secureCoreCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: LocalizedString.featureSecureCore, on: { [unowned self] in self.isSecureCore }, enabled: true, handler: { [weak self] (_, callback) in
+        TableViewCellModel.toggle(title: LocalizedString.featureSecureCore,
+                                  on: { [unowned self] in self.state == .secureCore },
+                                  enabled: true,
+                                  handler: { [weak self] (_, callback) in
             self?.toggleState(completion: { [weak self] on in
                 callback(on)
                 self?.contentChanged?()
@@ -276,9 +269,14 @@ class CreateOrEditProfileViewModel: NSObject {
         didSet {
             selectedServerOffering = nil
             saveButtonEnabled = true
+
+            guard let row = countries.firstIndex(where: { $0.0 == selectedCountryGroup?.0 }) else {
+                return
+            }
+            countryGroup = countries[row]
         }
     }
-    
+
     private var selectedServerOffering: ServerOffering? {
         didSet {
             saveButtonEnabled = true
@@ -301,22 +299,22 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private func toggleState(completion: @escaping (Bool) -> Void) {
-        if case ModelState.standard = state {
+        if case .standard = state {
             guard userTier >= CoreAppConstants.VpnTiers.plus else {
                 alertService.push(alert: SecureCoreUpsellAlert())
                 return
             }
             
-            state = ModelState.secureCore
+            state = .secureCore
         } else {
-            state = ModelState.standard
+            state = .standard
         }
         
         // reset country and server selections
         selectedCountryGroup = nil
         selectedServerOffering = nil
         
-        completion(state == ModelState.secureCore)
+        completion(state == .secureCore)
     }
     
     private func toggleDefault() {
@@ -325,12 +323,48 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var countries: [CountryGroup] {
-        switch state {
-        case .standard:
-            return serverManager.grouping(for: .standard)
-        case .secureCore:
-            return serverManager.grouping(for: .secureCore)
+        serverManager.grouping(for: state)
+    }
+
+    var countryGroup: CountryGroup?
+
+    private var serversByTier: [(tier: Int, servers: [ServerModel])]? {
+        // Get newest data, because servers list may have been updated since selected group was set
+        guard let countryGroup else { return nil }
+
+        let serversAll = countryGroup.1
+
+        return CoreAppConstants.VpnTiers.allCases.compactMap { tier in
+            let servers = serversAll.filter { $0.tier == tier }
+            if servers.isEmpty {
+                return nil
+            }
+            return (tier, servers)
+        }.sorted(by: { (server1, server2) -> Bool in
+            if userTier >= server1.tier && userTier >= server2.tier ||
+                userTier < server1.tier && userTier < server2.tier { // sort within available then non-available groups
+                return server1.tier > server2.tier
+            } else {
+                return server1.tier < server2.tier
+            }
+        })
+    }
+
+    private func selectedServerOfferingSupports(connectionProtocol: ConnectionProtocol) -> Bool {
+        let servers: [ServerModel]?
+        switch selectedServerOffering {
+        case .custom(let serverWrapper):
+            servers = [serverWrapper.server]
+        case .fastest, .random:
+            servers = self.countryGroup?.1
+        case nil:
+            servers = nil
         }
+
+        return servers?.contains {
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        } != false
     }
     
     private func serverName(forServerOffering serverOffering: ServerOffering) -> NSAttributedString {
@@ -362,18 +396,45 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         let selectionViewController = profileService.makeSelectionViewController(dataSet: dataSet) { [weak self] selectedObject in
-            guard let selectedServerOffering = selectedObject as? ServerOffering else {
+            guard let `self`, let selectedServerOffering = selectedObject as? ServerOffering else {
                 return
             }
             
-            self?.selectedServerOffering = selectedServerOffering
+            self.selectedServerOffering = selectedServerOffering
+            self.resetProtocolIfNotSupportedBySelectedServerOffering()
         }
         
         pushHandler?(selectionViewController)
     }
+
+    private func resetProtocolIfNotSupportedBySelectedServerOffering() {
+        guard !self.selectedServerOfferingSupports(connectionProtocol: self.selectedProtocol) else {
+            return
+        }
+
+        let preferredProtocol = self.propertiesManager.connectionProtocol
+        if self.selectedProtocol != preferredProtocol,
+           self.selectedServerOfferingSupports(connectionProtocol: preferredProtocol) {
+            self.selectedProtocol = preferredProtocol
+        } else if let firstSupportedProtocol = ConnectionProtocol.allCases.first(where: {
+            self.selectedServerOfferingSupports(connectionProtocol: $0)
+        }) {
+            self.selectedProtocol = firstSupportedProtocol
+        } else {
+            assertionFailure("A server exists that doesn't support any connection protocols.")
+            self.selectedProtocol = .smartProtocol
+        }
+    }
     
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol, displaySmartProtocol: true, featureFlags: propertiesManager.featureFlags)
+        let supportedProtocols = ConnectionProtocol.allCases
+            .filter(selectedServerOfferingSupports(connectionProtocol:))
+
+        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: selectedProtocol,
+                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
+                                                        supportedProtocols: supportedProtocols,
+                                                        featureFlags: propertiesManager.featureFlags)
+
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol, _ in
             self.selectedProtocol = connectionProtocol
             self.saveButtonEnabled = true
@@ -431,46 +492,27 @@ extension CreateOrEditProfileViewModel {
     }
     
     private var serverSelectionDataSet: SelectionDataSet? {
-        // Get newest data, because servers list may have been updated since selected group was set
-        guard let row = countries.firstIndex(where: { $0.0 == selectedCountryGroup?.0 }) else {
-            return nil
-        }
-        let countryGroup = countries[row]
-        
-        let serversAll = countryGroup.1
-        var serversByTier: [(tier: Int, servers: [ServerModel])] = CoreAppConstants.VpnTiers.allCases.compactMap { tier in
-            let servers = serversAll.filter { $0.tier == tier }
-            if servers.isEmpty {
-                return nil
-            }
-            return (tier, servers)
-        }
-        serversByTier.sort(by: { (server1, server2) -> Bool in
-            if userTier >= server1.tier && userTier >= server2.tier ||
-                userTier < server1.tier && userTier < server2.tier { // sort within available then non-available groups
-                return server1.tier > server2.tier
-            } else {
-                return server1.tier < server2.tier
-            }
-        })
-        
+        guard let countryGroup, let serversByTier else { return nil }
+
         var selectedIndex: IndexPath?
-        
+
         var sections: [SelectionSection] = [
             SelectionSection(title: nil, cells: [
                 SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.0.countryCode)),
                 SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.0.countryCode)),
             ])
         ]
-        
+
         sections.append(contentsOf: serversByTier.map { serverGroup in
+            let rows: [SelectionRow] = serverGroup.servers.map {
+                .init(title: serverDescriptor(for: $0),
+                      object: ServerOffering.custom(ServerWrapper(server: $0)))
+            }
+
             return SelectionSection(title: CoreAppConstants.serverTierName(forTier: serverGroup.tier),
-                                    cells: serverGroup.servers.map { server in
-                                        return SelectionRow(title: serverDescriptor(for: server), object: ServerOffering.custom(ServerWrapper(server: server)))
-                                    }
-            )
+                                    cells: rows)
         })
-        
+
         if let selectedOffering = selectedServerOffering {
             var sectionIndex = 0
             outer: for section in sections {

@@ -28,15 +28,13 @@ enum LogicalFeature: String, FeatureFlag {
         "Logicals"
     }
 
-    var feature: String {
-        rawValue
-    }
-
     case partnerLogicals = "PartnerLogicals"
     case perProtocolEntries = "PerProtocolEntries"
 }
 
 final class VPNLogicalServicesRequest: Request {
+    private static let allVpnProtocols = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
+
     /// Truncated ip as seen from VPN API
     let ip: String?
 
@@ -49,19 +47,19 @@ final class VPNLogicalServicesRequest: Request {
     }
 
     var path: String {
-        var result = "/vpn/logicals" +
-            "?WithTranslations=true"
+        let path = URL(string: "/vpn/logicals")!
+
+        var queryItems: [URLQueryItem] = [.init(name: "WithTranslations", value: nil)]
 
         if isEnabled(LogicalFeature.partnerLogicals) {
-            result += "&WithPartnerLogicals=1"
+            queryItems.append(.init(name: "WithPartnerLogicals", value: "1"))
         }
 
         if isEnabled(LogicalFeature.perProtocolEntries) {
-            let protocols = VpnProtocol.apiDescriptionsToProtocols.keys.joined(separator: ",")
-            result += "&WithEntriesForProtocols=\(protocols)"
+            queryItems.append(.init(name: "WithEntriesForProtocols", value: Self.allVpnProtocols))
         }
 
-        return result
+        return path.appendingQueryItems(queryItems).absoluteString
     }
 
     var isAuth: Bool {
@@ -75,7 +73,7 @@ final class VPNLogicalServicesRequest: Request {
             result["x-pm-netzone"] = ip
         }
 
-        if isEnabled(LogicalFeature.perProtocolEntries), !countryCodes.isEmpty {
+        if !countryCodes.isEmpty {
             result["x-pm-country"] = countryCodes.joined(separator: ", ")
         }
 

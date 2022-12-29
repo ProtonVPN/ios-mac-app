@@ -25,21 +25,24 @@ import vpncore
 import VPNShared
 
 internal struct ModelState {
+    var serverType: ServerType
+    var countryIndex: Int?
+    var serverOffering: ServerOffering?
+    var connectionProtocol: ConnectionProtocol?
 
-    let serverType: ServerType
     let editedProfile: Profile?
+
+    static let `default` = Self(serverType: .standard, countryIndex: nil, serverOffering: nil, editedProfile: nil)
 }
 
-internal enum DefaultServerOffering {
-    
-    case fastest
-    case random
+internal enum DefaultServerOffering: Int, CaseIterable {
+    case fastest = 0
+    case random = 1
+
+    static let count = allCases.count
     
     var index: Int {
-        switch self {
-        case .fastest: return 0
-        case .random: return 1
-        }
+        rawValue
     }
 }
 
@@ -82,11 +85,10 @@ class CreateNewProfileViewModel {
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var sessionService: SessionService = factory.makeSessionService()
 
-    internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
 
     var sysexPending = false
-    private var state = ModelState(serverType: .standard, editedProfile: nil)
+    private var state: ModelState = .default
     internal var userTier: Int = 0
     
     init(editProfile: Notification.Name, factory: Factory) {
@@ -131,28 +133,35 @@ class CreateNewProfileViewModel {
             sIndex = DefaultServerOffering.random.index
         case .custom(let sWrapper):
             cIndex = ServerUtility.countryIndex(in: grouping, countryCode: sWrapper.server.countryCode) ?? 0
-            sIndex = defaultServerCount + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
+            sIndex = DefaultServerOffering.count + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
         }
-        state = ModelState(serverType: profile.serverType, editedProfile: profile)
-        let profileProtocolIndex = availableConnectionProtocols.firstIndex(of: profile.connectionProtocol) ?? 0
-        let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
-                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex,
-                                      vpnProtocolIndex: profileProtocolIndex)
 
-        prefillContent?(info)
+        state = ModelState(serverType: profile.serverType,
+                           countryIndex: cIndex,
+                           serverOffering: profile.serverOffering,
+                           editedProfile: profile)
+
+        // Important: we shouldn't use `availableProtocols` here, since we'll be saving the index to disk
+        // and it could change depending on the server configuration
+        let profileProtocolIndex = ConnectionProtocol.allCases.firstIndex(of: profile.connectionProtocol) ?? 0
+        prefillContent?(.init(name: profile.name,
+                              color: NSColor(rgbHex: color),
+                              typeIndex: tIndex,
+                              countryIndex: cIndex,
+                              serverIndex: sIndex,
+                              vpnProtocolIndex: profileProtocolIndex))
     }
     
     func cancelCreation() {
-        state = ModelState(serverType: .standard, editedProfile: nil)
+        state = .default
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
 
-    // swiftlint:disable function_parameter_count
-    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, vpnProtocolIndex: Int) {
-        let serverType = serverTypeFrom(index: typeIndex)
-        let grouping = serverManager.grouping(for: serverType)
+    func createProfile(name: String) {
+        let grouping = serverManager.grouping(for: state.serverType)
+        let countryIndex = state.countryIndex!
+        let serverOffering = state.serverOffering!
         let countryModel = ServerUtility.country(in: grouping, index: countryIndex)!
-        let countryCode = countryModel.countryCode
 
         let id: String
         if let editedProfile = state.editedProfile {
@@ -162,64 +171,43 @@ class CreateNewProfileViewModel {
         }
 
         let accessTier: Int
-        let serverOffering: ServerOffering
-
-        if serverIndex == DefaultServerOffering.fastest.index {
+        switch serverOffering {
+        case .fastest, .random:
             accessTier = countryModel.lowestTier
-            serverOffering = .fastest(countryCode)
-        } else if serverIndex == DefaultServerOffering.random.index {
-            accessTier = countryModel.lowestTier
-            serverOffering = .random(countryCode)
-        } else {
-            let adjustedServerIndex = serverIndex - defaultServerCount
-            let serverModel = ServerUtility.server(in: grouping, countryIndex: countryIndex, serverIndex: adjustedServerIndex)!
-            accessTier = serverModel.tier
-            serverOffering = .custom(ServerWrapper(server: serverModel))
+        case .custom(let wrapper):
+            accessTier = wrapper.server.tier
         }
 
-        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
-                              profileType: .user, serverType: serverType, serverOffering: serverOffering,
-                              name: name, connectionProtocol: availableConnectionProtocols[vpnProtocolIndex])
+        let profileIcon: ProfileIcon = .circle(colorPickerViewModel.selectedColor.hexRepresentation)
+        let profile = Profile(id: id,
+                              accessTier: accessTier,
+                              profileIcon: profileIcon,
+                              profileType: .user,
+                              serverType: state.serverType,
+                              serverOffering: serverOffering,
+                              name: name,
+                              connectionProtocol: state.connectionProtocol!)
 
-        let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
+        let result = state.editedProfile != nil ?
+            profileManager.updateProfile(profile) :
+            profileManager.createProfile(profile)
 
         switch result {
         case .success:
-            state = ModelState(serverType: .standard, editedProfile: nil)
+            state = .default
             NotificationCenter.default.post(name: sessionFinished, object: nil)
         case .nameInUse:
             contentWarning?(LocalizedString.profileNameNeedsToBeUnique)
         }
     }
-    // swiftlint:enable function_parameter_count
-    
-    private func serverTypeFrom(index: Int) -> ServerType {
-        switch index {
-        case 0:
-            return .standard
-        case 1:
-            return .secureCore
-        case 2:
-            return .p2p
-        default:
-            return .tor
-        }
-    }
-    
-    var typeCount: Int {
-        return 4
-    }
-    
+
     var isNetshieldEnabled: Bool {
         return propertiesManager.featureFlags.netShield
     }
 
-    var availableConnectionProtocols: [ConnectionProtocol] {
-        let wireGuardTlsProtocols: [ConnectionProtocol] = [.tls, .tcp].map { .vpnProtocol(.wireGuard($0)) }
-        let wireGuardTlsDisabled = !propertiesManager.featureFlags.wireGuardTls
-        return ConnectionProtocol.allCases
-            .removing(wireGuardTlsProtocols, if: wireGuardTlsDisabled)
-            .sorted(by: ConnectionProtocol.uiOrder)
+    var availableProtocols: [ConnectionProtocol] = []
+    var selectedProtocol: ConnectionProtocol? {
+        state.connectionProtocol
     }
 
     func countryCount(for typeIndex: Int) -> Int {
@@ -229,27 +217,24 @@ class CreateNewProfileViewModel {
 
     func serverCount(for typeIndex: Int, and countryIndex: Int) -> Int {
         let type = ProfileUtility.serverType(for: typeIndex)
-        return defaultServerCount + serverManager.grouping(for: type)[countryIndex].1.count
+        return DefaultServerOffering.count + serverManager.grouping(for: type)[countryIndex].1.count
     }
-    
-    func type(for index: Int) -> NSAttributedString {
-        let title: String
-        switch index {
-        case 0:
-            title = LocalizedString.standard
-        case 1:
-            title = LocalizedString.secureCore
-        case 2:
-            title = LocalizedString.p2p
-        default:
-            title = LocalizedString.tor
-        }
-        
-        return self.style(title, font: .themeFont(.heading4), alignment: .left)
+
+    func type(for index: Int) -> ServerType {
+        guard index < ServerType.humanReadableCases.count else { return .tor }
+        return ServerType.humanReadableCases[index]
+    }
+
+    func typeString(for index: Int) -> NSAttributedString {
+        return style(type(for: index).localizedString, font: .themeFont(.heading4), alignment: .left)
+    }
+
+    func updateType(for index: Int) {
+        state.serverType = type(for: index)
     }
 
     func protocolIndex(for connectionProtocol: ConnectionProtocol) -> Int? {
-        availableConnectionProtocols.firstIndex(of: connectionProtocol)
+        availableProtocols.firstIndex(of: connectionProtocol)
     }
 
     func protocolString(for connectionProtocol: ConnectionProtocol) -> NSAttributedString {
@@ -257,10 +242,52 @@ class CreateNewProfileViewModel {
     }
 
     func connectionProtocol(for index: Int) -> ConnectionProtocol? {
-        guard availableConnectionProtocols.indices.contains(index) else {
+        guard availableProtocols.indices.contains(index) else {
             return nil
         }
-        return availableConnectionProtocols[index]
+        return availableProtocols[index]
+    }
+
+    func updateAvailableProtocols() {
+        let selectedProtocol = state.connectionProtocol
+        var index: Int?
+        if let selectedProtocol {
+            index = availableProtocols.firstIndex(of: selectedProtocol)
+        }
+
+        availableProtocols = ConnectionProtocol.uiSortedCases
+            .filter {
+                guard selectedOfferingSupports(connectionProtocol: $0) else {
+                    return false
+                }
+
+                if !propertiesManager.featureFlags.wireGuardTls {
+                    switch $0.vpnProtocol {
+                    case .wireGuard(.tls), .wireGuard(.tcp):
+                        return false
+                    default:
+                        break
+                    }
+                }
+
+                return true
+            }
+
+        if let selectedProtocol, let index {
+            if let newIndex = availableProtocols.firstIndex(of: selectedProtocol) {
+                if index != newIndex {
+                    contentChanged?()
+                }
+            } else {
+                // new set of available protocols doesn't support the selected one
+                state.connectionProtocol = nil
+                contentChanged?()
+            }
+        }
+    }
+
+    func updateProtocol(_ connectionProtocol: ConnectionProtocol?) {
+        state.connectionProtocol = connectionProtocol
     }
     
     func country(for typeIndex: Int, index countryIndex: Int) -> NSAttributedString {
@@ -268,19 +295,94 @@ class CreateNewProfileViewModel {
         let country = serverManager.grouping(for: type)[countryIndex].0
         return countryDescriptor(for: country)
     }
-    
-    func server(for typeIndex: Int, and countryIndex: Int, index serverIndex: Int) -> NSAttributedString {
-        if serverIndex < defaultServerCount {
-            return defaultServerDescriptor(forIndex: serverIndex)
+
+    func updateCountry(for typeIndex: Int, index countryIndex: Int?) {
+        guard let countryIndex else {
+            state.countryIndex = nil
+            state.serverOffering = nil
+            return
         }
-        
+
         let type = ProfileUtility.serverType(for: typeIndex)
-        let adjustedServerIndex = serverIndex - defaultServerCount
-        
-        let server = serverManager.grouping(for: type)[countryIndex].1[adjustedServerIndex]
-        return serverDescriptor(for: server)
+        let grouping = serverManager.grouping(for: type)
+        guard let country = ServerUtility.country(in: grouping, index: countryIndex) else {
+            state.countryIndex = nil
+            state.serverOffering = nil
+            return
+        }
+
+        state.countryIndex = countryIndex
+
+        switch state.serverOffering {
+        case .fastest:
+            state.serverOffering = .fastest(country.countryCode)
+        case .random:
+            state.serverOffering = .random(country.countryCode)
+        case .custom:
+            state.serverOffering = nil
+        case nil:
+            break
+        }
+
+        if let connectionProtocol = state.connectionProtocol,
+           !selectedOfferingSupports(connectionProtocol: connectionProtocol) {
+            state.connectionProtocol = nil
+        }
     }
-    
+
+    func serverOffering(for typeIndex: Int, and countryIndex: Int, index serverIndex: Int) -> ServerOffering {
+        let type = ProfileUtility.serverType(for: typeIndex)
+        let country = serverManager.grouping(for: type)[countryIndex]
+
+        if let defaultOffering = DefaultServerOffering(rawValue: serverIndex) {
+            let countryCode = country.0.countryCode
+            switch defaultOffering {
+            case .fastest:
+                return .fastest(countryCode)
+            case .random:
+                return .random(countryCode)
+            }
+        }
+
+        let adjustedServerIndex = serverIndex - DefaultServerOffering.count
+        let server = country.1[adjustedServerIndex]
+        return .custom(.init(server: server))
+    }
+
+    func updateServer(for typeIndex: Int, and countryIndex: Int?, index serverIndex: Int?) {
+        guard let countryIndex, let serverIndex else {
+            state.serverOffering = nil
+            return
+        }
+        state.serverOffering = serverOffering(for: typeIndex, and: countryIndex, index: serverIndex)
+        updateAvailableProtocols()
+    }
+
+    func serverDescriptor(for typeIndex: Int, and countryIndex: Int, index serverIndex: Int) -> NSAttributedString {
+        return serverDescriptor(for: serverOffering(for: typeIndex, and: countryIndex, index: serverIndex))
+    }
+
+    func selectedOfferingSupports(connectionProtocol: ConnectionProtocol) -> Bool {
+        switch state.serverOffering {
+        case .fastest, .random:
+            guard let countryIndex = state.countryIndex,
+                  let servers = ServerUtility.servers(in: serverManager.grouping(for: state.serverType),
+                                                      countryIndex: countryIndex) else {
+                return true
+            }
+
+            return servers.contains {
+                $0.supports(connectionProtocol: connectionProtocol,
+                            smartProtocolConfig: propertiesManager.smartProtocolConfig)
+            }
+        case .custom(let wrapper):
+            return wrapper.server.supports(connectionProtocol: connectionProtocol,
+                                           smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        case nil:
+            return true
+        }
+    }
+
     func checkNetshieldOption( _ netshieldIndex: Int ) -> Bool {
         guard let netshieldType = NetShieldType(rawValue: netshieldIndex), !netshieldType.isUserTierTooLow(userTier) else {
             let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: { [weak self] in
@@ -334,5 +436,14 @@ extension CreateNewProfileViewModel: CustomStyleContext {
         case .border, .background:
             return .weak
         }
+    }
+}
+
+extension ConnectionProtocol {
+    static let uiSortedCases = allCases.sorted(by: uiSort)
+
+    init?(intValue: Int) {
+        guard intValue > 0, intValue < Self.uiSortedCases.count else { return nil }
+        self = Self.uiSortedCases[intValue]
     }
 }

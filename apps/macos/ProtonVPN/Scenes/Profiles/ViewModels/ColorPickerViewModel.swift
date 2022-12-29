@@ -41,6 +41,10 @@ class ColorPickerViewModel {
             colorSelected?()
         }
     }
+
+    var selectedColor: NSColor {
+        color(atIndex: selectedColorIndex)
+    }
     
     init() {
         colors = ProfileConstants.profileColors

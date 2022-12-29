@@ -80,7 +80,7 @@ final class ConnectionSettingsViewModel {
 
         return ConnectionProtocol.allCases
             .removing(wireGuardTlsProtocols, if: wireGuardTlsDisabled)
-            .sorted(by: ConnectionProtocol.uiOrder)
+            .sorted(by: ConnectionProtocol.uiSort)
     }
 
     // MARK: - Quick and auto connect for current user
