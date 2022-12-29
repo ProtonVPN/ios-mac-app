@@ -22,6 +22,7 @@
 
 import Foundation
 import Logging
+import VPNShared
 
 public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
     public let openVPN: Bool

@@ -115,6 +115,7 @@
 		D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */; };
 		D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */; };
 		D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */; };
+		D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D50B8020295DC3F900D85D29 /* NEHelper */; };
 		D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
@@ -1096,6 +1097,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D50B8021295DC3F900D85D29 /* NEHelper in Frameworks */,
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
 				E9D2553428E5B77500DEFFB5 /* PMLogger in Frameworks */,
 				D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */,
@@ -1616,16 +1618,7 @@
 			isa = PBXGroup;
 			children = (
 				E997994426A6F50F0083D61E /* Data+JSONDictionary.swift */,
-				E997994526A6F50F0083D61E /* Dictionary+Extension.swift */,
-				E997994626A6F50F0083D61E /* KeychainConstants.swift */,
-				E997994726A6F50F0083D61E /* CertificateConstants.swift */,
-				E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */,
-				E997994B26A6F50F0083D61E /* VpnCertificate.swift */,
-				E997994C26A6F50F0083D61E /* VpnKeys.swift */,
-				1A10940E60F666D60A950D73 /* VPNConnectionFeatures.swift */,
 				4CE4E1DA28EC52C500ABE85A /* WireguardConfig.swift */,
-				F314141027B12443007424E9 /* NATType.swift */,
-				C77BDD50C752FDC9115636D8 /* NetShieldType.swift */,
 			);
 			path = vpncore;
 			sourceTree = "<group>";
@@ -2788,6 +2781,7 @@
 			packageProductDependencies = (
 				D5CA559526A59A9A001E9284 /* WireGuardKit */,
 				E9D2553328E5B77500DEFFB5 /* PMLogger */,
+				D50B8020295DC3F900D85D29 /* NEHelper */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
@@ -3447,7 +3441,6 @@
 				E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */,
 				E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */,
 				4CE4E1DB28EC52C500ABE85A /* WireguardConfig.swift in Sources */,
-				E997995326A6F5840083D61E /* CertificateConstants.swift in Sources */,
 				4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */,
 				E99799BE26A6FFAC0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,
@@ -4796,6 +4789,10 @@
 		4CAFE13B292CE05A00AC9C37 /* LocalFeatureFlags */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LocalFeatureFlags;
+		};
+		D50B8020295DC3F900D85D29 /* NEHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NEHelper;
 		};
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;

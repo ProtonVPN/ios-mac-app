@@ -452,10 +452,6 @@ protocol DefaultsWrapper {
     var storage: Storage! { get set }
 }
 
-public protocol DefaultableProperty {
-    init()
-}
-
 /// Provides synchronized in-memory access to stored properties, using defaults as a backing store,
 /// for values from defaults that may not be set.
 @propertyWrapper
