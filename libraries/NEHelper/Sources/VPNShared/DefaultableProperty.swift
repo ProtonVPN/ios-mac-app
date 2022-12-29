@@ -1,5 +1,5 @@
 //
-//  Created on 30.03.2022.
+//  Created on 2022-12-29.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,20 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 
-public struct RatingSettings: Codable, Equatable, DefaultableProperty {
-    public let eligiblePlans: [String]
-    public let successConnections: Int
-    public let daysLastReviewPassed: Int
-    public let daysConnected: Int
-    public let daysFromFirstConnection: Int
-
-    public init() {
-        eligiblePlans = ["vpnplus"]
-        successConnections = 3
-        daysLastReviewPassed = 100
-        daysConnected = 3
-        daysFromFirstConnection = 14
-    }
+public protocol DefaultableProperty {
+    init()
 }

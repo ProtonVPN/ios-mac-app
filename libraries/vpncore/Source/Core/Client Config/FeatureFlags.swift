@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public struct FeatureFlags: Codable, DefaultableProperty {
     public let smartReconnect: Bool

@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let defaultUdpPorts: [Int]
