@@ -62,6 +62,17 @@ extension CreateNewProfileViewModel {
         }
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
+
+    internal func serverDescriptor(for serverOffering: ServerOffering) -> NSAttributedString {
+        switch serverOffering {
+        case .custom(let serverWrapper):
+            return serverDescriptor(for: serverWrapper.server)
+        case .fastest:
+            return defaultServerDescriptor(image: AppTheme.Icon.bolt, name: LocalizedString.fastest)
+        case .random:
+            return defaultServerDescriptor(image: AppTheme.Icon.arrowsSwapRight, name: LocalizedString.random)
+        }
+    }
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
@@ -109,20 +120,8 @@ extension CreateNewProfileViewModel {
             return NSAttributedString.concatenate(countryFlag, serverDescriptor)
         }
     }
-    
-    internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
-        let image: NSImage
-        let name: String
-        
-        switch index {
-        case DefaultServerOffering.fastest.index:
-            image = AppTheme.Icon.bolt
-            name = LocalizedString.fastest
-        default:
-            image = AppTheme.Icon.arrowsSwapRight
-            name = LocalizedString.random
-        }
-        
+
+    internal func defaultServerDescriptor(image: NSImage, name: String) -> NSAttributedString {
         let imageAttributedString = self.colorImage(image).asAttachment(size: .profileIconSize)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,

@@ -94,7 +94,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.protocolEntries = try (dic["EntryPerProtocol"] as? [String: JSONDictionary?])?
             .reduce([VpnProtocol: ProtocolEntry?]()) { partialResult, keyPair in
                 // Check if it's a vpn protocol that we recognize.
-                guard let vpnProtocol = VpnProtocol.apiDescriptionsToProtocols[keyPair.key] else {
+                guard let vpnProtocol = VpnProtocol(apiDescription: keyPair.key) else {
                     log.error("Unrecognized VPN protocol from API: \(keyPair.key)")
                     return partialResult
                 }
@@ -190,8 +190,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         }
         if let protocolEntries {
             result["EntryPerProtocol"] = protocolEntries.reduce(into: [:], { partialResult, keyPair in
-                guard let key = VpnProtocol.protocolsToApiDescriptions[keyPair.key] else { return }
-                partialResult[key] = keyPair.value?.asDict
+                partialResult[keyPair.key.apiDescription] = keyPair.value?.asDict
             })
         }
 

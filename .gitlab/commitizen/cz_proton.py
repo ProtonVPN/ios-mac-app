@@ -287,13 +287,7 @@ class ProtonCz(BaseCommitizen):
         Validates a list of commits against the configured commit validation schema.
         See the schema() and example() functions for examples.
         """
-        # collect the different prefix options into a regex
-        prefixes_regex = r"|".join(map(lambda prefix: prefix["value"], self.subject_prefixes))
-
-        subject_regex = (
-            f"({prefixes_regex})" # different prefixes
-            "(\(\S+\))?!?:(\s.*)" # scope & subject body
-        )
+        subject_regex = self.schema_pattern()
 
         displayed_msgs_content = []
         for commit in commits:
@@ -319,11 +313,15 @@ class ProtonCz(BaseCommitizen):
         """
         Define a regular expression that must match the commit message while linting.
         """
-        raise NotImplementedError(
-            "This implementation overrides a different method,"
-            "make sure you're using the correct fork: "
-            "https://github.com/protonjohn/commitizen@jkb/feature/custom-validation"
+        # collect the different prefix options into a regex
+        prefixes_regex = r"|".join(map(lambda prefix: prefix["value"], self.subject_prefixes))
+
+        subject_regex = (
+            f"({prefixes_regex})" # different prefixes
+            "(\(\S+\))?!?:(\s.*)" # scope & subject body
         )
+
+        return subject_regex
 
     def schema(self) -> str:
         return (

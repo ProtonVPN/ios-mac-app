@@ -200,23 +200,26 @@ final class CreateNewProfileViewController: NSViewController {
         footerView.layer?.backgroundColor = .cgColor(.background, .weak)
     }
     
-    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedProtocol: Int = 0) {
+    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedProtocol: ConnectionProtocol? = nil) {
         refreshTypeList(withSelectionAt: selectedType)
         refreshCountryList(for: selectedType, withSelectionAt: selectedCountry)
         refreshServerList(for: typeList.indexOfSelectedItem, and: selectedCountry, withSelectionAt: selectedServer)
-        refreshProtocolList(withSelectionAt: selectedProtocol)
+
+        refreshProtocolList(selecting: selectedProtocol ??
+                            viewModel.selectedProtocol)
     }
     
     private func refreshTypeList(withSelectionAt selectedIndex: Int) {
         typeList.removeAllItems()
         
-        let count = viewModel.typeCount
+        let count = ServerType.humanReadableCases.count
         for index in 0..<count {
             let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.type(for: index)
+            menuItem.attributedTitle = viewModel.typeString(for: index)
             typeList.menu?.addItem(menuItem)
         }
-        
+
+        viewModel.updateType(for: selectedIndex)
         typeList.select(typeList.menu?.item(at: selectedIndex))
     }
 
@@ -229,15 +232,33 @@ final class CreateNewProfileViewController: NSViewController {
     }
 
     private func refreshProtocolList(withSelectionAt selectedIndex: Int) {
+        var selectedIndex = selectedIndex
+        if selectedIndex < 0 || selectedIndex > viewModel.availableProtocols.count {
+            selectedIndex = 0
+        }
+        refreshProtocolList(selecting: viewModel.availableProtocols[selectedIndex])
+    }
+
+    private func refreshProtocolList(selecting connectionProtocol: ConnectionProtocol?) {
         protocolList.removeAllItems()
+
+        let availableProtocols = viewModel.availableProtocols
+        guard !availableProtocols.isEmpty else {
+            assertionFailure("A server exists that doesn't support any connection protocols.")
+            return
+        }
         
-        for connectionProtocol in viewModel.availableConnectionProtocols {
+        availableProtocols.forEach {
             let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.protocolString(for: connectionProtocol)
+            menuItem.attributedTitle = viewModel.protocolString(for: $0)
             protocolList.menu?.addItem(menuItem)
+
+            if $0 == connectionProtocol {
+                protocolList.select(menuItem)
+            }
         }
 
-        protocolList.selectItem(at: selectedIndex)
+        viewModel.updateProtocol(connectionProtocol)
         refreshPendingEnablement()
     }
 
@@ -254,8 +275,11 @@ final class CreateNewProfileViewController: NSViewController {
             menuItem.attributedTitle = viewModel.country(for: typeIndex, index: index)
             countryList.menu?.addItem(menuItem)
         }
-        
+
         countryList.select(countryList.menu?.item(at: selectedIndex))
+
+        // account for placeholder menu item
+        viewModel.updateCountry(for: typeIndex, index: selectedIndex > 0 ? selectedIndex - 1 : nil)
     }
     
     private func refreshServerList(for typeIndex: Int, and countryIndex: Int, withSelectionAt selectedIndex: Int) {
@@ -270,11 +294,17 @@ final class CreateNewProfileViewController: NSViewController {
             let count = viewModel.serverCount(for: typeIndex, and: adjustedCountryIndex)
             for index in 0..<count {
                 let menuItem = NSMenuItem()
-                menuItem.attributedTitle = viewModel.server(for: typeIndex, and: adjustedCountryIndex, index: index)
+                menuItem.attributedTitle = viewModel.serverDescriptor(for: typeIndex,
+                                                                      and: adjustedCountryIndex,
+                                                                      index: index)
                 serverList.menu?.addItem(menuItem)
             }
         }
-        
+
+        // account for placeholder menu items
+        viewModel.updateServer(for: typeIndex,
+                               and: countryIndex > 0 ? countryIndex - 1 : nil,
+                               index: selectedIndex > 0 ? selectedIndex - 1 : nil)
         serverList.select(serverList.menu?.item(at: selectedIndex))
     }
     
@@ -352,7 +382,6 @@ final class CreateNewProfileViewController: NSViewController {
             errors += LocalizedString.profileNameIsTooLong
         }
         
-        let selectedType = typeList.indexOfSelectedItem
         let selectedCountryItem = countryList.indexOfSelectedItem
         let selectedServerItem = serverList.indexOfSelectedItem
         
@@ -365,18 +394,12 @@ final class CreateNewProfileViewController: NSViewController {
             errors += LocalizedString.serverSelectionIsRequired
         }
         
-        if !errors.isEmpty {
+        guard errors.isEmpty else {
             presentAlert(errors)
             return
         }
-        
-        let selectedCountry = selectedCountryItem - 1
-        let selectedServer = selectedServerItem - 1
-        let selectedColor = viewModel.colorPickerViewModel.color(atIndex: viewModel.colorPickerViewModel.selectedColorIndex)
-        
-        viewModel.createProfile(name: nameTextField.stringValue, color: selectedColor,
-                                typeIndex: selectedType, countryIndex: selectedCountry,
-                                serverIndex: selectedServer, vpnProtocolIndex: protocolList.indexOfSelectedItem)
+
+        viewModel.createProfile(name: nameTextField.stringValue)
     }
     
     private func appendedWithSeparator(string: String) -> String {
@@ -413,11 +436,13 @@ final class CreateNewProfileViewController: NSViewController {
         
         let adjustedCountryIndex = profileInformation.countryIndex + 1
         let adjustedServerIndex = profileInformation.serverIndex + 1
-        
+
+        let selectedProtocol = ConnectionProtocol(intValue: profileInformation.vpnProtocolIndex)
+
         populateLists(selectedType: profileInformation.typeIndex,
                       selectedCountry: adjustedCountryIndex,
                       selectedServer: adjustedServerIndex,
-                      selectedProtocol: profileInformation.vpnProtocolIndex)
+                      selectedProtocol: selectedProtocol)
     }
     
     private func contentChanged() {

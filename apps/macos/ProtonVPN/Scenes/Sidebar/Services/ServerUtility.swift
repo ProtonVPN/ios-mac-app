@@ -51,9 +51,16 @@ class ServerUtility {
     }
     
     static func server(in grouping: [CountryGroup], countryIndex: Int, serverIndex: Int) -> ServerModel? {
-        if countryIndex >= 0 && countryIndex < grouping.count,
-            serverIndex >= 0 && serverIndex < grouping[countryIndex].1.count {
-            return grouping[countryIndex].1[serverIndex]
+        if let servers = servers(in: grouping, countryIndex: countryIndex),
+            serverIndex >= 0 && serverIndex < servers.count {
+            return servers[serverIndex]
+        }
+        return nil
+    }
+
+    static func servers(in grouping: [CountryGroup], countryIndex: Int) -> [ServerModel]? {
+        if countryIndex >= 0 && countryIndex < grouping.count {
+            return grouping[countryIndex].1
         }
         return nil
     }

@@ -556,6 +556,7 @@ final class SettingsViewModel {
     
     private func pushProtocolViewController() {
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol,
+                                                        smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                                         featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChangeConfirmation = { [unowned self] newProtocol, completion in
             guard !self.appStateManager.state.isSafeToEnd,
