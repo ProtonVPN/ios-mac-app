@@ -42,6 +42,7 @@ public protocol ConnectionTunnel {
     func write(_: Data, completionHandler: @escaping (Error?) -> Void)
     func readMinimumLength(_: Int, maximumLength: Int, completionHandler: @escaping (Data?, Error?) -> Void)
     func writeClose()
+    func cancel()
 
     /// Observe changes in network connection state. Needed because `ConnectionTunnel` won't conform to `NSKeyValueObserving`,
     /// which is an "informal protocol" despite being present in Apple's official documentation:

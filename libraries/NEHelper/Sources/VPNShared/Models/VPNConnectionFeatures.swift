@@ -47,6 +47,14 @@ public struct VPNConnectionFeatures: Equatable {
         }
         return result
     }
+
+    public func copyWithChanged(bouncing: String?) -> Self {
+        return Self(netshield: netshield,
+                    vpnAccelerator: vpnAccelerator,
+                    bouncing: bouncing,
+                    natType: natType,
+                    safeMode: safeMode)
+    }
 }
 
 extension VPNConnectionFeatures: Codable {

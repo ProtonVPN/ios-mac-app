@@ -32,6 +32,7 @@ class ExtensionAPIServiceTestCase: XCTestCase {
     let expectationTimeout: TimeInterval = 10
 
     static let sessionSelector = "SELECTOR"
+    static var currentServerId = "server-id"
     static let sessionCookie = HTTPCookie(properties: [.name: "COOOKIEE",
                                                        .value: "OM NOM NOM NOM",
                                                        .version: 2,
@@ -88,7 +89,7 @@ class ExtensionAPIServiceTestCase: XCTestCase {
                 self.tokenRefreshCallback?(request, completionHandler)
             case "/auth/sessions/forks/\(Self.sessionSelector)":
                 self.sessionAuthCallback?(request, completionHandler)
-            case "/vpn/servers/serverid":
+            case "/vpn/logicals/\(Self.currentServerId)/alternatives":
                 self.serverStatusCallback?(request, completionHandler)
             case nil:
                 XCTFail("Received request with no path")
@@ -244,13 +245,11 @@ extension ServerStatusRequest: MockableRequest {
 }
 
 extension ServerStatusRequest.Response: MockableAPIResponse {
-    convenience init(fakeData: [PartialKeyPath<ServerStatusRequest.Response>: Any]) {
-        let server = fakeData[\.server] as? ServerStatusRequest.Server ??
-            .init(entryIp: "127.0.0.1", exitIp: "127.0.0.1",
-                  domain: "localhost", id: "12345",
-                  status: 1, x25519PublicKey: "public key")
-
-        self.init(server: server,
-                  reconnectTo: fakeData[\.reconnectTo] as? ServerStatusRequest.Server)
+    init(fakeData: [PartialKeyPath<ServerStatusRequest.Response>: Any]) {
+        let code = fakeData[\.code] as? Int ?? 1000
+        let original = fakeData[\.original] as? ServerStatusRequest.Logical ?? ServerStatusRequest.Logical(id: "id-1", status: 1, servers: [])
+        let alternatives = fakeData[\.alternatives] as? [ServerStatusRequest.Logical] ?? [ServerStatusRequest.Logical(id: "id-2", status: 1, servers: [])]
+        
+        self.init(code: code, original: original, alternatives: alternatives)
     }
 }

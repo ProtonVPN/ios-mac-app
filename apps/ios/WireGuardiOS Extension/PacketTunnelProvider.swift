@@ -22,9 +22,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
     private var killSwitchSettingObservation: NSKeyValueObservation!
+    private let vpnAuthenticationStorage: VpnAuthenticationKeychain
 
     private var currentWireguardServer: StoredWireguardConfig?
-    private var connectedServerId: String?
+    // Currently connected logical server id
+    private var connectedLogicalId: String?
+    // Currently connected server ip id
+    private var connectedIpId: String?
+    // If not nil, after the next connection new certificate with these features will be generated
+    private var newVpnCertificateFeatures: VPNConnectionFeatures?
 
     enum SocketType: String {
         case udp
@@ -49,14 +55,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override init() {
-        super.init()
-
         let storage = Storage()
 
-        let vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
-                                                                 storage: storage,
-                                                                 vpnKeysGenerator: ExtensionVPNKeysGenerator())
+        vpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup,
+                                                             storage: storage,
+                                                             vpnKeysGenerator: ExtensionVPNKeysGenerator())
         let authKeychain = AuthKeychain(context: .wireGuardExtension)
+
+        super.init()
 
         self.timerFactory = TimerFactoryImplementation()
 
@@ -83,7 +89,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                                                        keychain: authKeychain)
 
         serverStatusRefreshManager = ServerStatusRefreshManager(apiService: apiService,
-                                                                timerFactory: timerFactory) { [unowned self] newServer in
+                                                                timerFactory: timerFactory) { [unowned self] newServers in
+            guard let newServer = newServers.randomElement() else {
+                return
+            }
             self.restartTunnel(with: newServer)
         }
         setupLogging()
@@ -120,9 +129,18 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     private func connectionEstablished() {
-        certificateRefreshManager.start { }
+        if let newVpnCertificateFeatures = newVpnCertificateFeatures {
+            log.debug("Connection restarted with another server. Will regenerate certificate.")
+            certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { result in
+                log.info("New certificate (after reconnection) result: \(result)", category: .userCert)
+                self.newVpnCertificateFeatures = nil
+                self.certificateRefreshManager.start { }
+            }
+        } else { // New connection
+            certificateRefreshManager.start { }
+        }
 
-        guard let serverId = connectedServerId else {
+        guard let serverId = connectedLogicalId else {
             wg_log(.fault, message: "Server ID wasn't set on tunnel start. This should be an unreachable state")
             fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
         }
@@ -141,13 +159,20 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }()
 
-    func restartTunnel(with server: ServerStatusRequest.Server) {
+    func restartTunnel(with logical: ServerStatusRequest.Logical) {
+        log.info("Restarting tunnel with new logical server: \(logical.id)", category: .connection)
         guard let currentWireguardServer = currentWireguardServer else {
-            log.error("API said to reconnect, but we haven't connected to a server yet?")
+            log.error("API said to reconnect, but we haven't connected to a server yet?", category: .connection)
             return
         }
 
-        log.info("Stopping tunnel and reconnecting to \(server.domain)")
+        let availableServerIps = logical.servers.filter { !$0.underMaintenance }
+        guard let server = availableServerIps.randomElement() else {
+            log.error("No alternative server found for reconnection", category: .connection)
+            return
+        }
+
+        log.info("Stopping tunnel and reconnecting to \(server.domain)", category: .connection)
 
         stopTunnel(with: .superceded) {
             let errorNotifier = ErrorNotifier(activationAttemptId: nil)
@@ -156,14 +181,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 .withNewServerPublicKey(server.x25519PublicKey,
                                         andEntryServerAddress: server.entryIp)
 
-            self.connectedServerId = server.id
+            self.connectedLogicalId = logical.id
+            self.connectedIpId = server.id
+
+            // Update certificate features after connection is established
+            var currentFeatures = self.vpnAuthenticationStorage.getStoredCertificateFeatures()
+            self.newVpnCertificateFeatures = currentFeatures?.copyWithChanged(bouncing: server.label)
 
             self.startTunnelWithStoredConfig(errorNotifier: errorNotifier) { error in
                 if let error = error {
-                    log.error("Error restarting tunnel \(error)")
+                    log.error("Error restarting tunnel \(error)", category: .connection)
                 }
 
-                log.info("Reconnected successfully to \(server.domain)")
+                log.info("Reconnected successfully to \(server.domain) (\(server.id)", category: .connection)
             }
         }
     }
@@ -190,9 +220,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             wg_log(.info, message: "Error in \(#function) guard 3: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
-
-        connectedServerId = tunnelProviderProtocol?.connectedServerId
-        wg_log(.info, message: "Starting connection to server ID \(connectedServerId ?? "-")")
 
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socketType.rawValue) { adapterError in
@@ -260,6 +287,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
 
         currentWireguardServer = storedConfig
+
+        connectedLogicalId = tunnelProviderProtocol?.connectedServerId
+        connectedIpId = tunnelProviderProtocol?.connectedServerIpId
 
         startTunnelWithStoredConfig(errorNotifier: errorNotifier,
                                     completionHandler: completionHandler)

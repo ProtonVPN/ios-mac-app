@@ -486,9 +486,10 @@ public final class ExtensionAPIService {
     }
 
     // MARK: - Server status refresh
-    public func refreshServerStatus(serverId: String,
+
+    public func refreshServerStatus(logicalId: String,
                                     refreshApiTokenIfNeeded: Bool = false,
-                                    completionHandler: @escaping (Result<ServerStatusRequest.Server?, Error>) -> Void) {
+                                    completionHandler: @escaping (Result<ServerStatusRequest.Response, Error>) -> Void) {
         guard let (authCredentials, credentialContext) = fetchApiCredentials(allowUsingAppsCredentials: true) else {
             log.info("Can't load API credentials from keychain. Won't check server status.", category: .connection)
             sessionExpired = true
@@ -496,26 +497,19 @@ public final class ExtensionAPIService {
             return
         }
 
-        let serverStatusRequest = ServerStatusRequest(params: .init(serverId: serverId))
-
+        let serverStatusRequest = ServerStatusRequest(params: .init(logicalId: logicalId))
         request(serverStatusRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                                (.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
             case .success(let response):
-                guard response.server.status == 0, let reconnect = response.reconnectTo else {
-                    // if there's nothing to reconnect to, return success with nil.
-                    completionHandler(.success(nil))
-                    return
-                }
+                completionHandler(.success(response))
 
-                completionHandler(.success(reconnect))
-                return
             case .failure(let error):
                 self?.handleRequestError(error: error,
                                          handleTokenRefresh: refreshApiTokenIfNeeded,
                                          usingCredentialsFrom: credentialContext,
                                          retryBlock: {
-                    self?.refreshServerStatus(serverId: serverId,
+                    self?.refreshServerStatus(logicalId: logicalId,
                                               refreshApiTokenIfNeeded: false,
                                               completionHandler: completionHandler)
                 },

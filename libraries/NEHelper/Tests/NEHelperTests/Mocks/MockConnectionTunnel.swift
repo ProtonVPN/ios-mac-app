@@ -137,6 +137,10 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
         closedForWriting = true
     }
 
+    func cancel() {
+        closedForWriting = true
+    }
+
     func observeStateChange(withCallback callback: @escaping ((NWTCPConnectionState) -> ())) -> ObservationHandle {
         stateChangeCallback = callback
         factory?.stateObservingCallback(self)
