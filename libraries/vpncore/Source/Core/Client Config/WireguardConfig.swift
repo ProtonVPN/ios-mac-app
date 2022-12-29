@@ -36,7 +36,7 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public var allowedIPs: String {
         return "0.0.0.0/0"
     }
-    public var persistentKeepalive: Int? {
+    public var persistentKeepalive: Int? { // seconds
         return 25
     }
 
