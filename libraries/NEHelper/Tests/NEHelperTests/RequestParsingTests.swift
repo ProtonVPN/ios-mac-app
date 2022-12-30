@@ -51,7 +51,7 @@ class RequestParsingTests: XCTestCase {
     }
 
     func testValidHTTPResponseParsing() throws {
-        let url = URL(string: "https://www.protonvpn.ch")!
+        let url = URL(string: "https://www.proton.me")!
         let headers = [
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "text/html; charset=utf8",
@@ -127,7 +127,7 @@ class RequestParsingTests: XCTestCase {
            "cache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\n" +
            "expires: Fri, 04 May 1984 22:15:00 GMT\r\n" +
            "access: application/vnd.protonmail.api+json;apiversion=1\r\n" +
-           "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=protonvpn.ch; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
+           "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=proton.me; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
            "set-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\n" +
            "content-length: 97\r\n + " +
            "content-type: application/json\r\n" +
@@ -160,7 +160,7 @@ class RequestParsingTests: XCTestCase {
             "Content-Type": "text/html; charset=utf8",
             "Date": "Wed, 20 Apr 2022 16:20:00 GMT",
         ]
-        let url = URL(string: "https://api.protonvpn.ch/vpn")!
+        let url = URL(string: "https://vpn-api.proton.me/vpn")!
 
         // Test POST request with body
         do {

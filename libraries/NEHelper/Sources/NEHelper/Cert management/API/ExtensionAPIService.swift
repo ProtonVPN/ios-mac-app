@@ -138,7 +138,7 @@ public final class ExtensionAPIService {
         }
         #endif
 
-        return "https://api.protonvpn.ch"
+        return "https://vpn-api.proton.me"
     }
 
     /// Whether or not the current session is expired.
