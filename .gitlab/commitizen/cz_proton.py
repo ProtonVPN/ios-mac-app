@@ -4,6 +4,7 @@ from commitizen.cz.base import BaseCommitizen
 from commitizen import cmd, config
 from commitizen.cz.utils import required_validator, multiple_line_breaker
 from commitizen.cz.exceptions import CzException
+from commitizen.exceptions import InvalidCommitMessageError
 
 __all__ = ["ProtonCz"]
 
@@ -15,54 +16,56 @@ class ProtonCz(BaseCommitizen):
     conf = config.read_cfg()
     jira_prefix = conf.settings.get("jira_prefix")
 
+    subject_prefixes = [
+        {
+            "value": "fix",
+            "name": "fix: Introduces a bug fix. The next release will have an incremented patch version.",
+        },
+        {
+            "value": "feature",
+            "name": "feature: Introduces a new feature. The next release will have an incremented minor version.",
+        },
+        {
+            "value": "docs",
+            "name": "docs: Changes documentation only."
+        },
+        {
+            "value": "style",
+            "name": "style: Changes code formatting only: white-space, formatting, etc.",
+        },
+        {
+            "value": "refactor",
+            "name": "refactor: Changes code, but does not introduce a fix nor a feature."
+        },
+        {
+            "value": "perf",
+            "name": "perf: Introduces a performance improvement.",
+        },
+        {
+            "value": "test",
+            "name": "test: Adds one or more new tests, or fixes an existing one.",
+        },
+        {
+            "value": "build",
+            "name":  "build: Changes the build system or external dependencies, such as pods."
+        },
+        {
+            "value": "ci",
+            "name": "ci: Changes the Gitlab CI configuration.",
+        },
+        {
+            "value": "chore",
+            "name": "chore: Performs a routine task that isn't worth tracking, like a manual version bump.",
+        },
+    ]
+
     def questions(self) -> list:
         questions = [
             {
                 "type": "list",
                 "name": "prefix",
                 "message": "Select the type of change you are committing.",
-                "choices": [
-                    {
-                        "value": "fix",
-                        "name": "fix: Introduces a bug fix. The next release will have an incremented patch version.",
-                    },
-                    {
-                        "value": "feat",
-                        "name": "feat: Introduces a new feature. The next release will have an incremented minor version.",
-                    },
-                    {
-                        "value": "docs",
-                        "name": "docs: Changes documentation only."
-                    },
-                    {
-                        "value": "style",
-                        "name": "style: Changes code formatting only: white-space, formatting, etc.",
-                    },
-                    {
-                        "value": "refactor",
-                        "name": "refactor: Changes code, but does not introduce a fix nor a feature."
-                    },
-                    {
-                        "value": "perf",
-                        "name": "perf: Introduces a performance improvement.",
-                    },
-                    {
-                        "value": "test",
-                        "name": "test: Adds one or more new tests, or fixes an existing one.",
-                    },
-                    {
-                        "value": "build",
-                        "name":  "build: Changes the build system or external dependencies, such as pods."
-                    },
-                    {
-                        "value": "ci",
-                        "name": "ci: Changes the Gitlab CI configuration.",
-                    },
-                    {
-                        "value": "chore",
-                        "name": "chore: Performs a routine task that isn't worth tracking, like a manual version bump.",
-                    },
-                ],
+                "choices": self.subject_prefixes,
             },
             {
                 "type": "input",
@@ -236,24 +239,88 @@ class ProtonCz(BaseCommitizen):
 
         return f"{header}{body}{trailer}".strip()
 
+    def jiraid_is_in_body(self, body, jiraid):
+        for paragraph in body:
+            if f"Jira-Id: {jiraid}" in paragraph:
+                return True
+        return False
+
+    def validate_commit_message(self, subject_regex, commit, allow_abort):
+        """
+        Validates that a commit message has a subject that matches the given regex,
+        and make sure that it has any jira ids that are mentioned in the branch name.
+        """
+        if not commit.message:
+            if not allow_abort:
+                raise InvalidCommitMessageError("Commit message shouldn't be empty")
+            return True
+        if (
+            commit.message.startswith("Merge")
+            or commit.message.startswith("Revert")
+            or commit.message.startswith("Pull request")
+            or commit.message.startswith("fixup!")
+            or commit.message.startswith("squash!")
+        ):
+            return True
+
+        paragraphs = commit.message.split("\n\n")
+        subject = paragraphs[0]
+        if not re.match(subject_regex, subject):
+            raise InvalidCommitMessageError(f"Subject should match regex: {subject_regex}")
+
+        if "\n" in subject:
+            raise InvalidCommitMessageError(f"Subject and body should be separated by a single empty line.")
+
+        jiraids = self.get_jira_ids_from_env_or_branch()
+        body = paragraphs[1:]
+        missing_jiraids = ", ".join([f"Jira-Id: {jiraid}" for jiraid in jiraids if not self.jiraid_is_in_body(body, jiraid)])
+        if missing_jiraids:
+            raise InvalidCommitMessageError(f"Body is missing git trailers: {missing_jiraids}")
+
+        return True
+
+    def validate_commits(self, commits, allow_abort):
+        """
+        Validates a list of commits against the configured commit validation schema.
+        See the schema() and example() functions for examples.
+        """
+        # collect the different prefix options into a regex
+        prefixes_regex = r"|".join(map(lambda prefix: prefix["value"], self.subject_prefixes))
+
+        subject_regex = (
+            f"({prefixes_regex})" # different prefixes
+            "(\(\S+\))?!?:(\s.*)" # scope & subject body
+        )
+
+        displayed_msgs_content = []
+        for commit in commits:
+            try:
+                self.validate_commit_message(subject_regex, commit, allow_abort)
+            except InvalidCommitMessageError as e: 
+                displayed_msgs_content.append(
+                    f"commit {commit.rev}\n"
+                    f"Author: {commit.author} <{commit.author_email}>\n\n"
+                    f"{commit.message}\n\n"
+                    f"This message did not pass commit validation. {e.message}\n"
+                )
+
+        if displayed_msgs_content:
+            displayed_msgs = "\n".join(displayed_msgs_content)
+            raise InvalidCommitMessageError(
+                f"{displayed_msgs}\n"
+                "Please enter a commit message in the commitizen format.\n"
+            )
+
+
     def schema_pattern(self) -> str:
         """
         Define a regular expression that must match the commit message while linting.
         """
-
-        regex = (
-            r"(fix|feat|docs|style|refactor|perf|test|build|ci|chore|revert)" # prefix
-            r"(\(\S+\))?!?:(\s.*)"     # scope and subject
-            r"([\r\n][\r\n](.*)){0,1}" # commit body
-            r"([\r\n][\r\n](.*\n)*)*"  # zero or more commit trailers
+        raise NotImplementedError(
+            "This implementation overrides a different method,"
+            "make sure you're using the correct fork: "
+            "https://github.com/protonjohn/commitizen@jkb/feature/custom-validation"
         )
-
-        # If the branch mentions a jira id, the commit body should include it
-        jiraids = self.get_jira_ids_from_env_or_branch()
-        if jiraids:
-            regex += "[\r\n]".join([f"(Jira-Id: {jiraid})" for jiraid in jiraids])
-
-        return regex
 
     def schema(self) -> str:
         return (

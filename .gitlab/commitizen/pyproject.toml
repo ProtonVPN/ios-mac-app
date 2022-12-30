@@ -6,5 +6,5 @@ authors = [
     { name = "John Biggs", email = "john.biggs@proton.ch" }
 ]
 dependencies = [
-    "commitizen"
+    "commitizen @ git+https://github.com/protonjohn/commitizen@jkb/feature/custom-validation"
 ]
