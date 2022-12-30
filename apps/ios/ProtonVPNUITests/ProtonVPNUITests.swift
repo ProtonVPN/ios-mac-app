@@ -152,7 +152,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func changeEnvToProdIfNeeded() {
-        let env = app.staticTexts["https://api.protonvpn.ch"]
+        let env = app.staticTexts["https://vpn-api.proton.me"]
         
         if env.waitForExistence(timeout: 10) {
             return

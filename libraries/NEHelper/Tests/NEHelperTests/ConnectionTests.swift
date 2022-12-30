@@ -52,7 +52,7 @@ class NWTCPConnectionTests: XCTestCase {
     }
 
     func testBasicConnection() {
-        var urlRequest = URLRequest(url: URL(string: "https://api.protonvpn.ch/vpn")!)
+        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn")!)
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
         urlRequest.httpMethod = "GET"
@@ -131,7 +131,7 @@ class NWTCPConnectionTests: XCTestCase {
             secondDataTask: XCTestExpectation(description: "Second data task callback should be invoked")
         )
 
-        let apiUrl = URL(string: "https://api.protonvpn.ch/vpn")!
+        let apiUrl = URL(string: "https://vpn-api.proton.me/vpn")!
         var urlRequest = URLRequest(url: apiUrl)
         urlRequest.addValue("Foo", forHTTPHeaderField: "X-Testing-Header")
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
@@ -202,6 +202,7 @@ class NWTCPConnectionTests: XCTestCase {
             tunnel.state = .disconnected
             expectations.read.fulfill()
 
+            // Session-Id 'Yma8R9WZUcufgnz4wI1LIAAAAQM' comes from here
             return RequestParsingTests.actual400ErrorResponse
         }
 
@@ -225,7 +226,7 @@ class NWTCPConnectionTests: XCTestCase {
         XCTAssert(cookies.contains(where: {
             $0.name == "Session-Id" &&
             $0.value == "Yma8R9WZUcufgnz4wI1LIAAAAQM" &&
-            $0.domain == ".protonvpn.ch" &&
+            $0.domain == ".proton.me" &&
             $0.path == "/" &&
             $0.isHTTPOnly &&
             $0.isSecure
@@ -250,7 +251,7 @@ class NWTCPConnectionTests: XCTestCase {
     }
 
     func testConnectionTimeout() {
-        var urlRequest = URLRequest(url: URL(string: "https://api.protonvpn.ch/vpn")!)
+        var urlRequest = URLRequest(url: URL(string: "https://vpn-api.proton.me/vpn")!)
         urlRequest.httpMethod = "GET"
 
         let stateChangeExpectation = XCTestExpectation(description: "Expected to observe state changes")
