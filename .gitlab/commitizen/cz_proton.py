@@ -245,7 +245,7 @@ class ProtonCz(BaseCommitizen):
             r"(fix|feat|docs|style|refactor|perf|test|build|ci|chore|revert)" # prefix
             r"(\(\S+\))?!?:(\s.*)"     # scope and subject
             r"([\r\n][\r\n](.*)){0,1}" # commit body
-            r"([\r\n][\r\n](.*\n)*)"    # one or more commit trailers
+            r"([\r\n][\r\n](.*\n)*)*"  # zero or more commit trailers
         )
 
         # If the branch mentions a jira id, the commit body should include it
