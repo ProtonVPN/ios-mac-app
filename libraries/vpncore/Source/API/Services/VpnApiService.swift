@@ -34,9 +34,7 @@ extension Container: VpnApiServiceFactory {
 }
 
 public class VpnApiService {
-    public typealias Factory = NetworkingFactory &
-        VpnKeychainFactory &
-        CountryCodeProviderFactory
+    public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory
 
     private let networking: Networking
     private let vpnKeychain: VpnKeychainProtocol
@@ -53,199 +51,59 @@ public class VpnApiService {
                   vpnKeychain: factory.makeVpnKeychain(),
                   countryCodeProvider: factory.makeCountryCodeProvider())
     }
-    
-    // swiftlint:disable function_body_length cyclomatic_complexity
-    public func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
-        let dispatchGroup = DispatchGroup()
-        
-        var rCredentials: VpnCredentials?
-        var rServerModels: [ServerModel]?
-        var rStreamingServices: VPNStreamingResponse?
-        var rPartnersServices: VPNPartnersResponse?
-        var rLocation: UserLocation?
-        var rClientConfig: ClientConfig?
-        var rError: Error?
 
-        let failureClosure: ErrorCallback = { error in
-            rError = error
-            dispatchGroup.leave()
-        }
-        
-        let silentFailureClosure: ErrorCallback = { _ in
-            dispatchGroup.leave()
-        }
-        
-        let ipResolvedClosure = { [unowned self] (location: UserLocation?) in
-            rLocation = location
-
-            var shortenedIp: String?
-            if let ip = location?.ip {
-                shortenedIp = truncatedIp(ip)
-            }
-            
-            serverInfo(ip: shortenedIp) { result in
-                switch result {
-                case let .success(serverModels):
-                    rServerModels = serverModels
-                    dispatchGroup.leave() // leave: A
-                case let .failure(error):
-                    failureClosure(error) // leave: A
-                }
-            }
-
-            clientConfig(for: shortenedIp) { result in
-                switch result {
-                case let .success(config):
-                    rClientConfig = config
-                    dispatchGroup.leave() // leave: B
-                case let .failure(error):
-                    failureClosure(error) // leave: B
-                }
-            }
-        }
-        
-        // Only retrieve IP address when not connected to VPN
-
-        dispatchGroup.enter() // enter: A
-        dispatchGroup.enter() // enter: B
-        if isDisconnected {
-            // Just use last known IP if getting new one failed
-            userLocation { result in
-                switch result {
-                case let .success(location):
-                    ipResolvedClosure(location)
-                case .failure:
-                    ipResolvedClosure(lastKnownLocation)
-                }
-            }
-        } else {
-            ipResolvedClosure(lastKnownLocation)
-        }
-
-        dispatchGroup.enter() // enter: C
-        clientCredentials { result in
-            switch result {
-            case let .success(credentials):
-                rCredentials = credentials
-                dispatchGroup.leave() // leave: C
-            case let .failure(error):
-                silentFailureClosure(error) // leave: C
-            }
-        }
-
-        dispatchGroup.enter() // enter: D
-        virtualServices { result in
-            switch result {
-            case let .success(response):
-                rStreamingServices = response
-                dispatchGroup.leave() // leave: D
-            case let .failure(error):
-                silentFailureClosure(error) // leave: D
-            }
-        }
-
-        dispatchGroup.enter() // enter: E
-        partnersServices { result in
-            switch result {
-            case let .success(response):
-                rPartnersServices = response
-                dispatchGroup.leave() // leave: E
-            case let .failure(error):
-                silentFailureClosure(error) // leave: E
-            }
-        }
-
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            if let overrides = rClientConfig?.featureFlags.localOverrides {
-                setLocalFeatureFlagOverrides(overrides)
-            }
-
-            if let servers = rServerModels {
-                completion(.success(VpnProperties(serverModels: servers,
-                                                  vpnCredentials: rCredentials,
-                                                  location: rLocation,
-                                                  clientConfig: rClientConfig,
-                                                  streamingResponse: rStreamingServices,
-                                                  partnersResponse: rPartnersServices)))
-            } else if let error = rError {
-                completion(.failure(error))
-            } else {
-                completion(.failure(ProtonVpnError.vpnProperties))
+    public func vpnProperties(isDisconnected: Bool,
+                              lastKnownLocation: UserLocation?,
+                              completion: @MainActor @escaping (Result<VpnProperties, Error>) -> Void) {
+        Task {
+            do {
+                let prop = try await vpnProperties(isDisconnected: isDisconnected, lastKnownLocation: lastKnownLocation)
+                await completion(.success(prop))
+            } catch {
+                await completion(.failure(error))
             }
         }
     }
 
+    public func vpnProperties(isDisconnected: Bool, lastKnownLocation: UserLocation?) async throws -> VpnProperties {
+
+        // Only retrieve IP address when not connected to VPN
+        async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
+
+        return await VpnProperties(serverModels: try serverInfo(ip: asyncLocation?.ip),
+                                   vpnCredentials: try? clientCredentials(),
+                                   location: asyncLocation,
+                                   clientConfig: try? clientConfig(for: asyncLocation?.ip),
+                                   streamingResponse: try? virtualServices(),
+                                   partnersResponse: try? partnersServices())
+    }
+
+    public func refreshServerInfoIfIpChanged(lastKnownIp: String?) async throws -> (serverModels: [ServerModel],
+                                                                                    location: UserLocation?,
+                                                                                    streamingServices: VPNStreamingResponse?) {
+        async let asyncLocation = userLocation()
+
+        return await (serverModels: try serverInfo(ip: asyncLocation?.ip),
+                      location: asyncLocation,
+                      streamingServices: try? virtualServices())
+    }
+
+    // swiftlint:disable:next large_tuple
     /// If the user IP has changed since the last connection, refresh the server information. This is a subset of what
     /// is returned from the `vpnProperties` method in the `VpnProperties` object, so just return an anonymous tuple.
-    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, // swiftlint:disable:next large_tuple
-                                             completion: @escaping (Result < (serverModels: [ServerModel],
-                                                                            location: UserLocation?,
-                                                                            streamingServices: VPNStreamingResponse?), Error>) -> Void) {
-        let dispatchGroup = DispatchGroup()
-        
-        var rServerModels: [ServerModel]?
-        var rStreamingServices: VPNStreamingResponse?
-        var rLocation: UserLocation?
-        var rError: Error?
-
-        let failureClosure: ErrorCallback = { error in
-            rError = error
-            dispatchGroup.leave()
-        }
-        
-        let ipResolvedClosure = { [weak self] (location: UserLocation) in
-            rLocation = location
-            
-            // Only update servers if the user's IP has changed
-            guard lastKnownIp != rLocation?.ip else {
-                dispatchGroup.leave()
-                return
-            }
-
-            self?.serverInfo(ip: rLocation?.ip) { result in
-                switch result {
-                case let .success(serverModels):
-                    rServerModels = serverModels
-                    dispatchGroup.leave()
-                case let .failure(error):
-                    failureClosure(error)
-                }
-            }
-            
-            dispatchGroup.enter()
-            self?.virtualServices { result in
-                switch result {
-                case let .success(response):
-                    rStreamingServices = response
-                    dispatchGroup.leave()
-                case let .failure(error):
-                    failureClosure(error)
-                }
-            }
-        }
-
-        dispatchGroup.enter()
-        userLocation { result in
-            switch result {
-            case let .success(location):
-                ipResolvedClosure(location)
-            case let.failure(error):
-                failureClosure(error)
-            }
-        }
-
-        dispatchGroup.notify(queue: DispatchQueue.main) {
-            if let servers = rServerModels {
-                completion(.success((servers, rLocation, rStreamingServices)))
-            } else if let error = rError {
+    public func refreshServerInfoIfIpChanged(lastKnownIp: String?,
+                                             completion: @escaping (Result <(serverModels: [ServerModel],
+                                                                             location: UserLocation?,
+                                                                             streamingServices: VPNStreamingResponse?), Error>) -> Void) {
+        Task {
+            do {
+                let prop = try await refreshServerInfoIfIpChanged(lastKnownIp: lastKnownIp)
+                completion(.success(prop))
+            } catch {
                 completion(.failure(error))
-            } else {
-                completion(.failure(ProtonVpnError.vpnProperties))
             }
         }
     }
-    
-    // swiftlint:enable function_body_length
 
     public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
         networking.request(VPNClientCredentialsRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
@@ -270,9 +128,10 @@ public class VpnApiService {
             }
         }
     }
-    
+
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(ip shortenedIp: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
+    public func serverInfo(ip: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
+        let shortenedIp = truncatedIp(ip)
         let countryCodes = countryCodeProvider.countryCodes
 
         networking.request(VPNLogicalServicesRequest(ip: shortenedIp, countryCodes: countryCodes)) { (result: Result<VPNShared.JSONDictionary, Error>) in
@@ -299,7 +158,14 @@ public class VpnApiService {
             }
         }
     }
-    
+
+    public func serverInfo(ip: String?) async throws -> [ServerModel] {
+        let shortenedIp = truncatedIp(ip)
+        return try await withCheckedThrowingContinuation { continuation in
+            serverInfo(ip: shortenedIp, completion: continuation.resume(with:))
+        }
+    }
+
     public func serverState(serverId id: String, completion: @escaping (Result<VpnServerState, Error>) -> Void) {
         networking.request(VPNServerRequest(id)) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
@@ -316,7 +182,20 @@ public class VpnApiService {
             }
         }
     }
-    
+
+    public func userLocation() async -> UserLocation? {
+        return await withCheckedContinuation { continuation in
+            userLocation { result in
+                switch result {
+                case .success(let success):
+                    continuation.resume(with: .success(success))
+                case .failure:
+                    continuation.resume(with: .success(nil))
+                }
+            }
+        }
+    }
+
     public func userLocation(completion: @escaping (Result<UserLocation, Error>) -> Void) {
         networking.request(VPNLocationRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
@@ -391,6 +270,10 @@ public class VpnApiService {
                     // this strategy is decapitalizing first letter of response's labels to get appropriate name
                     decoder.keyDecodingStrategy = .decapitaliseFirstLetter
                     let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
+
+                    if let overrides = clientConfigResponse.clientConfig.featureFlags.localOverrides {
+                        setLocalFeatureFlagOverrides(overrides)
+                    }
                     completion(.success(clientConfigResponse.clientConfig))
 
                 } catch {
@@ -404,17 +287,34 @@ public class VpnApiService {
         }
     }
 
-    public func virtualServices(completion: @escaping (Result<VPNStreamingResponse, Error>) -> Void) {
-        networking.request(VPNStreamingRequest(), completion: completion)
+    public func clientCredentials() async throws -> VpnCredentials? {
+        try await withCheckedThrowingContinuation { continuation in
+            clientCredentials(completion: continuation.resume(with:))
+        }
     }
 
-    public func partnersServices(completion: @escaping (Result<VPNPartnersResponse, Error>) -> Void) {
-        networking.request(VPNPartnersRequest(), completion: completion)
+    public func clientConfig(for shortenedIp: String?) async throws -> ClientConfig? {
+        try await withCheckedThrowingContinuation { continuation in
+            clientConfig(for: shortenedIp, completion: continuation.resume(with:))
+        }
     }
-    
+
+    public func virtualServices() async throws -> VPNStreamingResponse? {
+        try await withCheckedThrowingContinuation { continuation in
+            networking.request(VPNStreamingRequest(), completion: continuation.resume(with:))
+        }
+    }
+
+    public func partnersServices() async throws -> VPNPartnersResponse? {
+        try await withCheckedThrowingContinuation { continuation in
+            networking.request(VPNPartnersRequest(), completion: continuation.resume(with:))
+        }
+    }
+
     // MARK: - Private
-    
-    private func truncatedIp(_ ip: String) -> String {
+
+    private func truncatedIp(_ ip: String?) -> String? {
+        guard let ip else { return nil }
         // Remove the last octet
         if let index = ip.lastIndex(of: ".") { // IPv4
             return ip.replacingCharacters(in: index..<ip.endIndex, with: ".0")
