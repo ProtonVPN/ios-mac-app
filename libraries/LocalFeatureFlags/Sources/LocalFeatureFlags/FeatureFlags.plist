@@ -24,5 +24,10 @@
 		<key>PositiveFeatureFlag</key>
 		<true/>
 	</dict>
+	<key>VPN</key>
+	<dict>
+		<key>ReconnectionInMaintenance</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

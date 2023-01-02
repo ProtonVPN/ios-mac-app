@@ -22,6 +22,7 @@
 
 import Foundation
 import VPNShared
+import LocalFeatureFlags
 
 private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
 
@@ -211,7 +212,7 @@ extension VpnManager {
     }
 
     /// Updates last connection config that is used to display proper info in apps UI.
-    func updateActiveConnection(serverId: String, ipId: String) {
+    private func updateActiveConnection(serverId: String, ipId: String) {
         let servers = serverStorage.fetch()
         guard let newServer = servers.first(where: { $0.id == serverId }) else {
             log.warning("Server with such id not found", category: .connection, event: .error, metadata: ["serverId": "\(serverId)"])
@@ -232,6 +233,7 @@ extension VpnManager {
 
     /// Asks NE for currently connected logical and ip ids. If these are not as expected last connection configuration is updated, so UI can show up-to-date info.
     func checkActiveServer() {
+        guard isEnabled(VpnReconnectionFeatureFlag()) else { return }
         log.debug("Checking if NE is still connected to the same server", category: .connection)
         self.currentVpnProtocolFactory?.vpnProviderManager(for: .configuration, completion: { manager, error in
             guard let manager = manager else {
@@ -408,4 +410,11 @@ extension VpnManager: LocalAgentDelegate {
         log.debug("NAT type was set to \(natTypePropertyProvider.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
         natTypePropertyProvider.natType = natType
     }
+}
+
+/// Enables checking server for maintenance and reconnecting to another server if that is the case
+/// Delete after the feature if fully well tested. Please also delete `reconnectionEnabled` from `extension NETunnelProviderProtocol`.
+struct VpnReconnectionFeatureFlag: FeatureFlag {
+    let category = "VPN"
+    let feature = "ReconnectionInMaintenance"
 }
