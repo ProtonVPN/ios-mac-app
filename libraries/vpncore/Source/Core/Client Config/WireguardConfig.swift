@@ -42,13 +42,23 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     }
 
     init(defaultUdpPorts: [Int]? = nil, defaultTcpPorts: [Int]? = nil, defaultTlsPorts: [Int]? = nil) {
-        self.defaultUdpPorts = defaultUdpPorts ?? [51820]
-        self.defaultTcpPorts = defaultTcpPorts ?? [443]
-        self.defaultTlsPorts = defaultTlsPorts ?? [443]
+        self.defaultUdpPorts = defaultUdpPorts.unwrappedOr(defaultValue: [51820])
+        self.defaultTcpPorts = defaultTcpPorts.unwrappedOr(defaultValue: [443])
+        self.defaultTlsPorts = defaultTlsPorts.unwrappedOr(defaultValue: [443])
     }
 
     public init() {
         self.init(defaultUdpPorts: nil, defaultTcpPorts: nil, defaultTlsPorts: nil)
+    }
+}
+
+private extension Optional where Wrapped: Collection, Wrapped.Element == Int {
+    /// Return default value in case array is nil or empty
+    func unwrappedOr(defaultValue: [Int]) -> [Int] {
+        guard let `self` = self, !self.isEmpty else {
+            return defaultValue
+        }
+        return self as! [Int]
     }
 }
 
