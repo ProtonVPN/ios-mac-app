@@ -207,7 +207,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
 
-        guard let socketType = socketType else {
+        guard let socketType else {
             wg_log(.info, message: "Error in \(#function) guard 2: missing socket type")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
