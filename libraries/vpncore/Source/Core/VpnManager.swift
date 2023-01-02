@@ -21,6 +21,7 @@
 
 import NetworkExtension
 import VPNShared
+import LocalFeatureFlags
 
 public protocol VpnManagerProtocol {
 
@@ -436,6 +437,8 @@ public class VpnManager: VpnManagerProtocol {
         if case .wireGuard(let type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
             (configuration as? NETunnelProviderProtocol)?.wgProtocol = type.rawValue
         }
+
+        (configuration as? NETunnelProviderProtocol)?.reconnectionEnabled = isEnabled(VpnReconnectionFeatureFlag())
 
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]

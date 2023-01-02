@@ -50,6 +50,7 @@ public final class ServerStatusRefreshManager: RefreshManager {
     }
 
     override internal func work() {
+        log.warning("ServerStatusRefreshManager")
         guard let serverId = currentServerId else {
             log.info("No connected server id set; not refreshing server status.", category: .connection)
             return

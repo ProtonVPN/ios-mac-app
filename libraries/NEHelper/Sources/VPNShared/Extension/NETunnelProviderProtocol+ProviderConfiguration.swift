@@ -22,6 +22,7 @@ import NetworkExtension
 extension NETunnelProviderProtocol {
     static let connectedServerIdKey = "PVPNServerID"
     static let connectedServerIpIdKey = "PVPNServerIpID"
+    static let reconnectionEnabledKey = "ReconnectionEnabled"
     static let uidKey = "UID"
     static let wgProtocolKey = "wg-protocol"
 
@@ -68,6 +69,16 @@ extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[Self.wgProtocolKey] = newValue
+        }
+    }
+
+    public var reconnectionEnabled: Bool? {
+        get {
+            providerConfiguration?[Self.reconnectionEnabledKey] as? Bool
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[Self.reconnectionEnabledKey] = newValue
         }
     }
 }

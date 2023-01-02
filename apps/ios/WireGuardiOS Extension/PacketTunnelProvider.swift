@@ -145,8 +145,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
         }
 
-        serverStatusRefreshManager.updateConnectedServerId(serverId)
-        serverStatusRefreshManager.start { }
+        if tunnelProviderProtocol?.reconnectionEnabled == true {
+            serverStatusRefreshManager.updateConnectedServerId(serverId)
+            serverStatusRefreshManager.start { }
+        }
 
         #if CHECK_CONNECTIVITY
         self.startTestingConnectivity()
@@ -416,8 +418,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         #endif
 
         certificateRefreshManager.start {
-            self.serverStatusRefreshManager.start {
-
+            if self.tunnelProviderProtocol?.reconnectionEnabled == true {
+                self.serverStatusRefreshManager.start { }
             }
         }
     }
