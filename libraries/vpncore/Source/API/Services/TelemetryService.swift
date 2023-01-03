@@ -17,50 +17,74 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Combine
 import LocalFeatureFlags
 import Reachability
 
-class TelemetryService {
+public protocol TelemetryServiceFactory {
+    func makeTelemetryService() async -> TelemetryService
+}
+
+public class TelemetryService {
     public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory
 
     private let factory: Factory
 
     private lazy var networking: Networking = factory.makeNetworking()
-    private let appStateManager: AppStateManager
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     lazy var telemetryAPI: TelemetryAPI = TelemetryAPI(networking: networking)
 
-    private var lastConnectedDate: Date
+    private var lastConnectedDate = Date()
     private var startedConnectionDate: Date?
     private var networkType: TelemetryDimensions.NetworkType = .unavailable
     private var previousAppDisplayState: AppDisplayState = .disconnected
 
+    var cancellables = Set<AnyCancellable>()
+
     init(factory: Factory) async {
         self.factory = factory
-        let appStateManager = factory.makeAppStateManager()
-        self.appStateManager = appStateManager
         self.lastConnectedDate = await appStateManager.connectedDate()
         startObserving()
     }
 
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-
     private func startObserving() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(reachabilityChanged),
-                                               name: .reachabilityChanged,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(connectionChanged),
-                                               name: AppStateManagerNotification.displayStateChange,
-                                               object: nil)
+        if #available(iOS 15, macOS 12, *) {
+            observeWithAsyncSequence()
+        } else {
+            observeWithCombine()
+        }
     }
 
-    @objc private func reachabilityChanged(notification: Notification) {
+    @available(iOS 15, macOS 12, *)
+    private func observeWithAsyncSequence() {
+        Task {
+            for await notification in NotificationCenter.default.notifications(named: .reachabilityChanged) {
+                reachabilityChanged(notification)
+            }
+        }
+        Task {
+            for await notification in NotificationCenter.default.notifications(named: AppStateManagerNotification.displayStateChange) {
+                connectionChanged(notification)
+            }
+        }
+    }
+
+    private func observeWithCombine() {
+        NotificationCenter.default
+            .publisher(for: .reachabilityChanged)
+            .sink(receiveValue: reachabilityChanged)
+            .store(in: &cancellables)
+
+        NotificationCenter.default
+            .publisher(for: AppStateManagerNotification.displayStateChange)
+            .sink(receiveValue: connectionChanged)
+            .store(in: &cancellables)
+    }
+
+    private func reachabilityChanged(_ notification: Notification) {
         guard notification.name == .reachabilityChanged,
             let reachability = notification.object as? Reachability else {
             return
@@ -75,7 +99,7 @@ class TelemetryService {
         }
     }
 
-    @objc private func connectionChanged(notification: Notification) {
+    private func connectionChanged(_ notification: Notification) {
         guard notification.name == AppStateManagerNotification.displayStateChange,
               let appDisplayState = notification.object as? AppDisplayState else {
             return
@@ -157,7 +181,10 @@ class TelemetryService {
     }
 
     private func sessionLength() -> TimeInterval {
-        return Date().timeIntervalSince1970 - propertiesManager.lastConnectedTimeStamp
+        guard propertiesManager.lastConnectedTimeStamp > 0 else {
+            return 0
+        }
+        return  Date().timeIntervalSince1970 - propertiesManager.lastConnectedTimeStamp
     }
 
     @objc private func stateChanged() {

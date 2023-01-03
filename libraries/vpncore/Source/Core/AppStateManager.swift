@@ -96,13 +96,9 @@ public class AppStateManagerImplementation: AppStateManager {
                 return
             }
 
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
-
+            DispatchQueue.main.async { [displayState] in
                 NotificationCenter.default.post(name: AppStateManagerNotification.displayStateChange,
-                                                object: self.displayState)
+                                                object: displayState)
             }
         }
     }

@@ -89,6 +89,7 @@ public struct TelemetryDimensions: Encodable {
     enum Outcome: String, Encodable {
         case success
         case failure
+        case aborted
     }
 
     enum UserTier: String, Encodable {

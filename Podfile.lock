@@ -326,7 +326,7 @@ DEPENDENCIES:
   - SwiftGen (~> 6.5)
   - SwiftLint (= 0.48.0)
   - SwiftOTP
-  - TrustKit (from `https://github.com/ProtonMail/TrustKit`, branch `release/1.0.3`)
+  - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `d107d7cc825f38ae2d6dc7c54af71d58145c3506`, branch `release/1.0.3`)
   - "TunnelKit (from `git@gitlab.protontech.ch:apple/vpn/tunnelkit.git`, branch `develop`)"
 
 SPEC REPOS:
@@ -445,6 +445,7 @@ EXTERNAL SOURCES:
     :tag: 3.25.0
   TrustKit:
     :branch: release/1.0.3
+    :commit: d107d7cc825f38ae2d6dc7c54af71d58145c3506
     :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
     :branch: develop
@@ -604,6 +605,6 @@ SPEC CHECKSUMS:
   TrustKit: f830ff5af0a8cbad5178aef1d0951389b096d312
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 3cf7e1abd03c1016cb7362d4a01148b951152932
+PODFILE CHECKSUM: c9d9e0b6e816e9f3e7eefb627c08ff3a61e6dc1e
 
 COCOAPODS: 1.11.3
