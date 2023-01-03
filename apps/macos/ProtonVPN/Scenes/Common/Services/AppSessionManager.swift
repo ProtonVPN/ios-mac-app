@@ -142,58 +142,52 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
     
     private func retrieveProperties(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        let isDisconnected = appStateManager.state.isDisconnected
-        let lastKnownLocation = propertiesManager.userLocation
-        Task {
-            do {
-                let result = try await vpnApiService.vpnProperties(isDisconnected: isDisconnected, lastKnownLocation: lastKnownLocation)
-                await processVPNPropertiesResult(.success(result), success: success, failure: failure)
-            } catch {
-                await processVPNPropertiesResult(.failure(error), success: success, failure: failure)
-            }
-        }
-    }
+        vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
+                                    lastKnownLocation: propertiesManager.userLocation) { [weak self] result in
+            switch result {
+            case let .success(properties):
+                guard let self = self else {
+                    return
+                }
 
-    @MainActor
-    private func processVPNPropertiesResult(_ result: Result<VpnProperties, Error>, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        switch result {
-        case let .success(properties):
-            if let credentials = properties.vpnCredentials {
-                self.vpnKeychain.store(vpnCredentials: credentials)
-            }
-            self.serverStorage.store(properties.serverModels)
+                if let credentials = properties.vpnCredentials {
+                    self.vpnKeychain.store(vpnCredentials: credentials)
+                }
+                self.serverStorage.store(properties.serverModels)
 
-            if self.appStateManager.state.isDisconnected {
-                self.propertiesManager.userLocation = properties.location
-            }
-            self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
-            self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
-            self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
-            self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-            self.propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
-            self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
-            self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
-            self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
-            self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
-            if self.propertiesManager.featureFlags.pollNotificationAPI {
-                self.announcementRefresher.tryRefreshing()
-            }
+                if self.appStateManager.state.isDisconnected {
+                    self.propertiesManager.userLocation = properties.location
+                }
+                self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+                self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
+                self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
+                self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+                self.propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
+                self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
+                self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
+                self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
+                self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
+                if self.propertiesManager.featureFlags.pollNotificationAPI {
+                    self.announcementRefresher.tryRefreshing()
+                }
 
-            self.resolveActiveSession(success: success, failure: { error in
-                self.logOutCleanup()
-                failure(error)
-            })
-        case let .failure(error):
-            log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
-            guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
-                  self.propertiesManager.userLocation?.ip != nil,
-                  !(error is KeychainError) else {
+                self.resolveActiveSession(success: success, failure: { error in
+                    self.logOutCleanup()
+                    failure(error)
+                })
+            case let .failure(error):
+                log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
+                guard let self = self, // only fail if there is a major reason
+                      !self.serverStorage.fetch().isEmpty,
+                      self.propertiesManager.userLocation?.ip != nil,
+                      !(error is KeychainError) else {
 
-                failure(error)
-                return
+                    failure(error)
+                    return
+                }
+
+                success()
             }
-
-            success()
         }
     }
     
