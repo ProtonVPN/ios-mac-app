@@ -91,6 +91,12 @@ open class Container: PropertiesToOverride {
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
+    private lazy var _telemetryServiceTask: Task<TelemetryService, Never> = {
+        Task {
+            await TelemetryService(factory: self)
+        }
+    }()
+
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {
         ServerStorageConcrete()
@@ -101,7 +107,9 @@ open class Container: PropertiesToOverride {
     public init(_ config: Config) {
         self.config = config
         Task {
-            self.telemetryService = await TelemetryService(factory: self)
+            // We need to initialise the TelemetryService somewhere because no other part of the code uses it directly.
+            // TelemetryService listens to notifications and sends telemetry events based on that.
+            self.telemetryService = await makeTelemetryService()
         }
     }
 
@@ -461,5 +469,11 @@ extension Container: DynamicBugReportStorageFactory {
 extension Container: SiriHelperFactory {
     public func makeSiriHelper() -> SiriHelperProtocol {
         SiriHelper()
+    }
+}
+
+extension Container: TelemetryServiceFactory {
+    public func makeTelemetryService() async -> TelemetryService {
+        return await _telemetryServiceTask.value
     }
 }
