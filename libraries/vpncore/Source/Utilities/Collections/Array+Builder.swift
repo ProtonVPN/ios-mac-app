@@ -45,11 +45,21 @@ extension Array where Element: Equatable {
         return self
     }
 
-    /// Returns a copy of this array, conditoinally removing any occurrences of elements contained in `elements`.
+    /// Returns a copy of this array, conditionally removing any occurrences of elements contained in `elements`.
     public func removing(_ elements: any Collection<Element>, if condition: Bool) -> [Element] {
         if condition {
             return self.removing(elements)
         }
         return self
+    }
+}
+
+extension Array {
+
+    /// Returns a copy of this array, appending the contents of the argument.
+    public func appending(_ other: Self) -> Self {
+        var copy = self
+        copy.append(contentsOf: other)
+        return copy
     }
 }
