@@ -189,6 +189,7 @@ public class VpnKeychain: VpnKeychainProtocol {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
 
+            // If current item is the same as the one we want to write, just skip it
             guard let secItemDict = secItem as? [String: AnyObject],
                 let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
                   data == oldPasswordData else {
