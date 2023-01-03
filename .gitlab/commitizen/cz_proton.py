@@ -272,6 +272,9 @@ class ProtonCz(BaseCommitizen):
             raise InvalidCommitMessageError(f"Subject and body should be separated by a single empty line.")
 
         jiraids = self.get_jira_ids_from_env_or_branch()
+        if jiraids is None:
+            return True
+
         body = paragraphs[1:]
         missing_jiraids = ", ".join([f"Jira-Id: {jiraid}" for jiraid in jiraids if not self.jiraid_is_in_body(body, jiraid)])
         if missing_jiraids:
