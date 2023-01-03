@@ -157,6 +157,16 @@
 		AD3A999529534B82002805AE /* Array+Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD09EA472953396F00D4F6F2 /* Array+Builder.swift */; };
 		AD3A999729535952002805AE /* ArrayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* ArrayBuilderTests.swift */; };
 		AD3A999829535952002805AE /* ArrayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* ArrayBuilderTests.swift */; };
+		ADEB719B29644CE9000B82CE /* UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719A29644CE9000B82CE /* UniquelyMergeable.swift */; };
+		ADEB719C29644CE9000B82CE /* UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719A29644CE9000B82CE /* UniquelyMergeable.swift */; };
+		ADEB719E29646999000B82CE /* Dictionary+UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719D29646999000B82CE /* Dictionary+UniquelyMergeable.swift */; };
+		ADEB719F29646999000B82CE /* Dictionary+UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719D29646999000B82CE /* Dictionary+UniquelyMergeable.swift */; };
+		ADEB71A12964870B000B82CE /* Array+UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB71A02964870B000B82CE /* Array+UniquelyMergeable.swift */; };
+		ADEB71A22964870B000B82CE /* Array+UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB71A02964870B000B82CE /* Array+UniquelyMergeable.swift */; };
+		ADEB71AA296493E8000B82CE /* UniquelyMergeableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB71A729648AEC000B82CE /* UniquelyMergeableArrayTests.swift */; };
+		ADEB71AB296493E8000B82CE /* UniquelyMergeableArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB71A729648AEC000B82CE /* UniquelyMergeableArrayTests.swift */; };
+		ADEB71AD2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB71AC2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift */; };
+		ADEB71AE2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB71AC2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift */; };
 		B462E62171534FB8B0E39654 /* NetShieldType+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D30B2B54E22870DA56088C /* NetShieldType+Extensions.swift */; };
 		B5A5BE6A7BE692D89848FC78 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */; };
 		B814D7396AC688F7877D3490 /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = F973511943D701511CC59CC4 /* URL+String.swift */; };
@@ -804,6 +814,11 @@
 		A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsBugResponse.swift; sourceTree = "<group>"; };
 		AD09EA472953396F00D4F6F2 /* Array+Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Builder.swift"; sourceTree = "<group>"; };
 		AD3A999629535952002805AE /* ArrayBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayBuilderTests.swift; sourceTree = "<group>"; };
+		ADEB719A29644CE9000B82CE /* UniquelyMergeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquelyMergeable.swift; sourceTree = "<group>"; };
+		ADEB719D29646999000B82CE /* Dictionary+UniquelyMergeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+UniquelyMergeable.swift"; sourceTree = "<group>"; };
+		ADEB71A02964870B000B82CE /* Array+UniquelyMergeable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+UniquelyMergeable.swift"; sourceTree = "<group>"; };
+		ADEB71A729648AEC000B82CE /* UniquelyMergeableArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquelyMergeableArrayTests.swift; sourceTree = "<group>"; };
+		ADEB71AC2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniquelyMergeableDictionaryTests.swift; sourceTree = "<group>"; };
 		AE26A503B6B1753094CB6F2E /* Pods-Core-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-iosTests-metadata.plist"; sourceTree = "<group>"; };
 		BC16534F9F2B242244E936EF /* Pods-Core-vpncore-macosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1256,6 +1271,27 @@
 			path = DependencyWrappers;
 			sourceTree = "<group>";
 		};
+		ADEB719929644CD4000B82CE /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				AD09EA472953396F00D4F6F2 /* Array+Builder.swift */,
+				ADEB719A29644CE9000B82CE /* UniquelyMergeable.swift */,
+				ADEB71A02964870B000B82CE /* Array+UniquelyMergeable.swift */,
+				ADEB719D29646999000B82CE /* Dictionary+UniquelyMergeable.swift */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
+		ADEB71A629648ABA000B82CE /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				AD3A999629535952002805AE /* ArrayBuilderTests.swift */,
+				ADEB71A729648AEC000B82CE /* UniquelyMergeableArrayTests.swift */,
+				ADEB71AC2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift */,
+			);
+			path = Collections;
+			sourceTree = "<group>";
+		};
 		C13CF157E79D07C8924BAB1F /* Reports */ = {
 			isa = PBXGroup;
 			children = (
@@ -1376,9 +1412,9 @@
 		D5D2946025A45B8F000FBD74 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				ADEB71A629648ABA000B82CE /* Collections */,
 				D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */,
 				4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */,
-				AD3A999629535952002805AE /* ArrayBuilderTests.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1882,6 +1918,7 @@
 		F36ECB692610A8AC0089B898 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				ADEB719929644CD4000B82CE /* Collections */,
 				F36ECB6C2610A8D60089B898 /* Siri */,
 				F36ECB6B2610A8C90089B898 /* Versioning */,
 				E96B765D27AC00B300079B04 /* Updates */,
@@ -1893,7 +1930,6 @@
 				E1616BFB21C95C5C00F42D79 /* Weak.swift */,
 				F3EF4ECB2670C22300109CA3 /* Threading.swift */,
 				251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */,
-				AD09EA472953396F00D4F6F2 /* Array+Builder.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2783,6 +2819,7 @@
 				E9550E152850DE7B00616DB5 /* Bundle+isTestflightBeta.swift in Sources */,
 				E5CBA02A28DB242B00EA1F25 /* OfferFeature.swift in Sources */,
 				D5966F3B2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
+				ADEB719E29646999000B82CE /* Dictionary+UniquelyMergeable.swift in Sources */,
 				E129C6C222A90E6500D8437E /* VpnGatewayMock.swift in Sources */,
 				D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */,
 				E1616BD721C7DF8800F42D79 /* VpnKeychain.swift in Sources */,
@@ -2837,6 +2874,7 @@
 				F307F7B827C3C205004FD4A7 /* SafeModePropertyProviderMock.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				4C14523A292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */,
+				ADEB719B29644CE9000B82CE /* UniquelyMergeable.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
 				E9B98510284907060012EF32 /* LogFilesTemporaryStorage.swift in Sources */,
@@ -2874,6 +2912,7 @@
 				E9DC79C1262DBF01001A0FC0 /* SmartProtocolAvailabilityChecker.swift in Sources */,
 				F31321A725E3AA7A006F414F /* DoH.swift in Sources */,
 				4C096204285B648900556E07 /* SessionServiceMock.swift in Sources */,
+				ADEB71A12964870B000B82CE /* Array+UniquelyMergeable.swift in Sources */,
 				E1616C0321C95DB500F42D79 /* ProfileStorage.swift in Sources */,
 				F38432F3281ACDFF00850EAA /* PaidFeaturePropertyProviderFactoryMock.swift in Sources */,
 				423705E1262D9E8100A920CF /* VPNStreamingRequest.swift in Sources */,
@@ -2980,6 +3019,7 @@
 				E53406AB28E1BBD00078A7A3 /* ImageCacheMock.swift in Sources */,
 				4C83C4722869FCAD000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */,
 				D59671FD253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
+				ADEB71AA296493E8000B82CE /* UniquelyMergeableArrayTests.swift in Sources */,
 				D59671CE253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
 				D55D791A2498F65B009669E0 /* StringCleanup.swift in Sources */,
 				E58EE0AA2907DF90003006F5 /* PlanSessionTests.swift in Sources */,
@@ -3002,6 +3042,7 @@
 				4C83C4642869ACB5000A3FB4 /* LocalizationUtilityTests.swift in Sources */,
 				D5967244253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4C0961FB285B503800556E07 /* VpnManagerTests.swift in Sources */,
+				ADEB71AD2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift in Sources */,
 				4CFDF0BA287EE44100386626 /* MockTestData.swift in Sources */,
 				E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */,
 				AD3A999729535952002805AE /* ArrayBuilderTests.swift in Sources */,
@@ -3055,6 +3096,7 @@
 				E976FB292791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */,
 				D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */,
+				ADEB719F29646999000B82CE /* Dictionary+UniquelyMergeable.swift in Sources */,
 				E15367E722663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
 				E129C6CC22A9205700D8437E /* VpnManagerMock.swift in Sources */,
 				D5A8811E22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
@@ -3080,6 +3122,7 @@
 				4CF40B9A2833B29900C3C501 /* SessionService.swift in Sources */,
 				E54474DF292FC2600044B592 /* ServerItemViewModelCore.swift in Sources */,
 				D5DCCAC2252B4BAF004CB353 /* CoreApiService.swift in Sources */,
+				ADEB719C29644CE9000B82CE /* UniquelyMergeable.swift in Sources */,
 				F3256AC126B98EF4003F073C /* WireguardUDPAvailabilityChecker.swift in Sources */,
 				E1B5F66621B81EE100B558B0 /* ServerIp.swift in Sources */,
 				D57A65702485330700079E82 /* VpnServerSelector.swift in Sources */,
@@ -3120,6 +3163,7 @@
 				D5D2954725A5BDF6000FBD74 /* UserTierProvider.swift in Sources */,
 				E976FB2C2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */,
 				E1B5F65B21B81E4800B558B0 /* CountryModel.swift in Sources */,
+				ADEB71A22964870B000B82CE /* Array+UniquelyMergeable.swift in Sources */,
 				42370608262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
 				F38BB44E265B893F00329619 /* LocalAgentError.swift in Sources */,
 				E1616B8C21C7ACC300F42D79 /* AccountPlan.swift in Sources */,
@@ -3277,6 +3321,7 @@
 				E9037D31284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */,
 				D5D2957725A5D979000FBD74 /* UserTierProviderImplementationTests.swift in Sources */,
 				F307F7C027C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
+				ADEB71AB296493E8000B82CE /* UniquelyMergeableArrayTests.swift in Sources */,
 				4C263C3F286F0E7700F48974 /* LocalAgentConnectionMock.swift in Sources */,
 				4C83C4682869ACC5000A3FB4 /* LocaleResolverMock.swift in Sources */,
 				4C83C46B2869C830000A3FB4 /* BaseConnectionTestCase.swift in Sources */,
@@ -3311,6 +3356,7 @@
 				4C14523E292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */,
 				E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */,
 				4CFDF0C1287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
+				ADEB71AE2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift in Sources */,
 				F327A99F28217AB000848E42 /* CodableExtensionsTests.swift in Sources */,
 				E19CE84F22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
 				4CFDF0BE287EE4F300386626 /* ConnectionSwitchingTests.swift in Sources */,

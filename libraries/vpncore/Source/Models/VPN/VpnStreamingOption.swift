@@ -22,7 +22,7 @@
 
 import Foundation
 
-public struct VpnStreamingOption: Codable {
+public struct VpnStreamingOption: Codable, Hashable {
     public var name: String
     public var icon: String
 }

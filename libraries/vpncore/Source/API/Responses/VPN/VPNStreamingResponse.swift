@@ -25,11 +25,24 @@ import VPNShared
 
 public typealias StreamingDictServices = [String: [String: [VpnStreamingOption]]]
 
-extension StreamingDictServices: DefaultableProperty {
-}
+extension StreamingDictServices: DefaultableProperty { }
 
 public struct VPNStreamingResponse: Codable {
     public let code: Int
     public let resourceBaseURL: String
     public let streamingServices: StreamingDictServices
+
+    init(code: Int, resourceBaseURL: String, streamingServices: StreamingDictServices) {
+        self.code = code
+        self.resourceBaseURL = resourceBaseURL
+        self.streamingServices = streamingServices
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        code = try container.decode(Int.self, forKey: .code)
+        resourceBaseURL = try container.decode(String.self, forKey: .resourceBaseURL)
+        streamingServices = try container.decode(StreamingDictServices.self, forKey: .streamingServices)
+            .flattened(removing: "*")
+    }
 }
