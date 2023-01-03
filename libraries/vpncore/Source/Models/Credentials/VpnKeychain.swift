@@ -42,11 +42,6 @@ public protocol VpnKeychainProtocol {
     func fetchWireguardConfigurationReference() throws -> Data
     func fetchWireguardConfiguration() throws -> String?
     func clear()
-    
-    // Dealing with old vpn password entry.
-    // These can be deleted after all users have iOS version > 1.3.2 and MacOs app version > 1.5.5
-    func hasOldVpnPassword() -> Bool
-    func clearOldVpnPassword() throws
 }
 
 extension VpnKeychainProtocol {
@@ -57,6 +52,12 @@ extension VpnKeychainProtocol {
 
 public protocol VpnKeychainFactory {
     func makeVpnKeychain() -> VpnKeychainProtocol
+}
+
+internal enum KeychainEnvironment {
+    static var secItemAdd = SecItemAdd
+    static var secItemDelete = SecItemDelete
+    static var secItemCopyMatching = SecItemCopyMatching
 }
 
 public class VpnKeychain: VpnKeychainProtocol {
@@ -163,7 +164,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         query[kSecReturnPersistentRef as AnyHashable] = kCFBooleanTrue
         
         var secItem: AnyObject?
-        let result = SecItemCopyMatching(query as CFDictionary, &secItem)
+        let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
         if result != errSecSuccess {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
@@ -183,7 +184,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             query[kSecReturnData as AnyHashable] = kCFBooleanTrue
 
             var secItem: AnyObject?
-            let result = SecItemCopyMatching(query as CFDictionary, &secItem)
+            let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
             if result != errSecSuccess {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
@@ -201,7 +202,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             var query = formBaseQuery(forKey: key)
             query[kSecValueData as AnyHashable] = data
 
-            let result = SecItemAdd(query as CFDictionary, nil)
+            let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
             if result != errSecSuccess {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
@@ -215,7 +216,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     private func clearPassword(forKey key: String) throws {
         let query = formBaseQuery(forKey: key)
         
-        let result = SecItemDelete(query as CFDictionary)
+        let result = KeychainEnvironment.secItemDelete(query as CFDictionary)
         if result != errSecSuccess {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
@@ -231,35 +232,6 @@ public class VpnKeychain: VpnKeychainProtocol {
         ] as [AnyHashable: Any]
     }
     
-    // MARK: -
-    // Dealing with old vpn password entry.
-    // These can be deleted after all users have iOS version > 1.3.2 and MacOs app version > 1.5.5
-    
-    public func hasOldVpnPassword() -> Bool {
-        var query = formBaseQuery(forKey: StorageKey.openVpnPassword_old)
-        query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
-        query[kSecReturnPersistentRef as AnyHashable] = kCFBooleanTrue
-        query[kSecAttrAccessible as AnyHashable] = kSecAttrAccessibleAlwaysThisDeviceOnly
-        
-        var secItem: AnyObject?
-        let result = SecItemCopyMatching(query as CFDictionary, &secItem)
-        if result != errSecSuccess {
-            return false
-        }
-
-        return secItem != nil && secItem is Data
-    }
-    
-    public func clearOldVpnPassword() throws {
-        var query = formBaseQuery(forKey: StorageKey.openVpnPassword_old)
-        query[kSecAttrAccessible as AnyHashable] = kSecAttrAccessibleAlwaysThisDeviceOnly
-        
-        let result = SecItemDelete(query as CFDictionary)
-        if result != errSecSuccess {
-            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
-        }
-    }
-    
     // MARK: - Certificates
     
     public func getServerCertificate() throws -> SecCertificate {
@@ -267,7 +239,7 @@ public class VpnKeychain: VpnKeychainProtocol {
                                     kSecAttrLabel as String: StorageKey.serverCertificate,
                                     kSecReturnRef as String: kCFBooleanTrue as Any]
         var item: CFTypeRef?
-        let result = SecItemCopyMatching(query as CFDictionary, &item)
+        let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &item)
         guard result == errSecSuccess else {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
@@ -284,7 +256,7 @@ public class VpnKeychain: VpnKeychainProtocol {
                                     kSecValueRef as String: certificate,
                                     kSecAttrLabel as String: StorageKey.serverCertificate]
         
-        let result = SecItemAdd(query as CFDictionary, nil)
+        let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
         guard result == errSecSuccess else {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
@@ -294,7 +266,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
                                     kSecAttrLabel as String: StorageKey.serverCertificate,
                                     kSecReturnRef as String: kCFBooleanTrue as Any]
-        SecItemDelete(query as CFDictionary)
+        _ = KeychainEnvironment.secItemDelete(query as CFDictionary)
     }
     
     // MARK: - Wireguard
@@ -316,7 +288,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         query[kSecReturnData as AnyHashable] = true
         
         var secItem: AnyObject?
-        let result = SecItemCopyMatching(query as CFDictionary, &secItem)
+        let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
         if result != errSecSuccess {
             log.error("Keychain error", metadata: ["SecItemCopyMatching": "\(result)"])
             return nil
