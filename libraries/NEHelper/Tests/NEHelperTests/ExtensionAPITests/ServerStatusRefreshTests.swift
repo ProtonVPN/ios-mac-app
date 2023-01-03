@@ -85,4 +85,60 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
                    expectations.endpointHit,
                    expectations.callbackInvoked], timeout: expectationTimeout)
     }
+
+    func testResponseParseError() {
+        let expectations = (
+            managerStarted: XCTestExpectation(description: "Manager was started"),
+            firstError: XCTestExpectation(description: "API returned wrong json"),
+            secondRequestSucceed: XCTestExpectation(description: "API returned proper response on the second try")
+        )
+        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
+                                            result: .failure(ExtensionAPIServiceError.parseError(nil)),
+                                            expectationToFulfill: expectations.firstError)
+
+        serverDidChange = { newServer in
+            fatalError("Server did not change, so nothing should have happened")
+        }
+
+        manager.updateConnectedServerId(Self.currentServerId)
+
+        manager.start { [unowned self] in
+            expectations.managerStarted.fulfill()
+            timerFactory.runRepeatingTimers {
+                self.serverStatusCallback = self.mockEndpoint(ServerStatusRequest.self,
+                                                              result: .success([:]),
+                                                              expectationToFulfill: expectations.secondRequestSucceed)
+                self.timerFactory.runRepeatingTimers {}
+            }
+        }
+
+        wait(for: [expectations.managerStarted, expectations.firstError, expectations.secondRequestSucceed], timeout: expectationTimeout)
+    }
+
+    func testServerMaintenanceFlag() {
+        let serverInMaintenance = ServerStatusRequest.Server.mock(status: 0)
+        let serverNotInMaintenance = ServerStatusRequest.Server.mock(status: 1)
+        XCTAssertTrue(serverInMaintenance.underMaintenance)
+        XCTAssertFalse(serverNotInMaintenance.underMaintenance)
+    }
+}
+
+extension ServerStatusRequest.Server {
+    static func mock(entryIp: String = "1.2.3.4",
+                     exitIp: String = "5.6.7.8",
+                     domain: String = "vpn.domain",
+                     id: String = "server-id-123",
+                     status: Int = 0,
+                     label: String = "label",
+                     x25519PublicKey: String? = nil
+    ) -> ServerStatusRequest.Server {
+        ServerStatusRequest.Server(entryIp: entryIp,
+                                   exitIp: exitIp,
+                                   domain: domain,
+                                   id: id,
+                                   status: status,
+                                   label: label,
+                                   x25519PublicKey: x25519PublicKey
+        )
+    }
 }
