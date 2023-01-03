@@ -29,8 +29,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     private var connectedLogicalId: String?
     // Currently connected server ip id
     private var connectedIpId: String?
-    // If not nil, after the next connection new certificate with these features will be generated
-    private var newVpnCertificateFeatures: VPNConnectionFeatures?
 
     enum SocketType: String {
         case udp
@@ -128,12 +126,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                                 timerFactory: timerFactory)
     }
 
-    private func connectionEstablished() {
+    private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
         if let newVpnCertificateFeatures = newVpnCertificateFeatures {
             log.debug("Connection restarted with another server. Will regenerate certificate.")
             certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { result in
                 log.info("New certificate (after reconnection) result: \(result)", category: .userCert)
-                self.newVpnCertificateFeatures = nil
                 self.certificateRefreshManager.start { }
             }
         } else { // New connection
@@ -188,9 +185,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
             // Update certificate features after connection is established
             var currentFeatures = self.vpnAuthenticationStorage.getStoredCertificateFeatures()
-            self.newVpnCertificateFeatures = currentFeatures?.copyWithChanged(bouncing: server.label)
+            let newVpnCertificateFeatures = currentFeatures?.copyWithChanged(bouncing: server.label)
 
-            self.startTunnelWithStoredConfig(errorNotifier: errorNotifier) { error in
+            self.startTunnelWithStoredConfig(errorNotifier: errorNotifier, newVpnCertificateFeatures: newVpnCertificateFeatures) { error in
                 if let error = error {
                     log.error("Error restarting tunnel \(error)", category: .connection)
                 }
@@ -200,7 +197,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
-    func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this function_body_length
+    /// Actually start a tunnel
+    /// - Parameter newVpnCertificateFeatures: If not nil, will generate new certificate after connecting to the server and before starting certificate
+    /// refresh manager. On new connection nil should be used not to regenerate current certificate.
+    private func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, newVpnCertificateFeatures: VPNConnectionFeatures?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this function_body_length
         guard let storedConfig = currentWireguardServer else {
             wg_log(.error, message: "Current wireguard server not set; not starting tunnel")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -230,7 +230,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
                 completionHandler(nil)
-                self.connectionEstablished()
+                self.connectionEstablished(newVpnCertificateFeatures: newVpnCertificateFeatures)
                 return
             }
 
@@ -294,6 +294,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
 
         startTunnelWithStoredConfig(errorNotifier: errorNotifier,
+                                    newVpnCertificateFeatures: nil,
                                     completionHandler: completionHandler)
     }
 
