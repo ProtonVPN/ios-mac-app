@@ -45,7 +45,7 @@ class StatusMenuCountryItemViewModel {
     
     func connect() {
         log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(countryGroup.0.countryCode) serverType: \(type)", category: .connectionConnect, event: .trigger)
-        vpnGateway.connectTo(country: countryGroup.0.countryCode, ofType: type)
+        vpnGateway.connectTo(country: countryGroup.0.countryCode, ofType: type, trigger: .country)
     }
     
     // MARK: - Private

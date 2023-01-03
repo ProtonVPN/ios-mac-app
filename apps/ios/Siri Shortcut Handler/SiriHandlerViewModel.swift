@@ -133,7 +133,7 @@ class SiriHandlerViewModel {
         // Without refresh, from time to time it doesn't see newest default profile
         profileManager.refreshProfiles()
         
-        propertiesManager.lastConnectionRequest = vpnGateway.quickConnectConnectionRequest()
+        propertiesManager.lastConnectionRequest = vpnGateway.quickConnectConnectionRequest(trigger: .quick)
         
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
         completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))

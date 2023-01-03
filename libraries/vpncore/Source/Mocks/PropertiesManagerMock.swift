@@ -173,11 +173,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public init() {}
     
     public func logoutCleanup() {
-        Task {
-            await MainActor.run {
-                hasConnected = false
-            }
-        }
+        hasConnected = false
         secureCoreToggle = false
         lastIkeConnection = nil
         lastOpenVpnConnection = nil

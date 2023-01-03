@@ -63,7 +63,7 @@ class TabBarViewModel {
         log.debug("Connect requested by clicking on Quick connect", category: .connectionConnect, event: .trigger)
         
         if vpnGateway.connection == .disconnected || vpnGateway.connection == .disconnecting {
-            vpnGateway.quickConnect()
+            vpnGateway.quickConnect(trigger: .quick)
             connectionStatusService.presentStatusViewController()
             
         } else if vpnGateway.connection == .connecting {

@@ -60,7 +60,7 @@ public class MaintenanceManagerHelper {
 
             log.info("The currently connected server will be going to maintenance soon, reconnecting", category: .connectionConnect)
             self?.alertService.push(alert: VpnServerOnMaintenanceAlert())
-            self?.vpnGateWay.quickConnect()
+            self?.vpnGateWay.quickConnect(trigger: .auto)
         }, failure: { error in
             log.error("Checking for server maintenance failed", category: .app, metadata: ["error": "\(error)"])
         })

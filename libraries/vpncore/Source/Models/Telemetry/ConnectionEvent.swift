@@ -53,8 +53,8 @@ struct ConnectionEvent: Encodable, TelemetryEvent {
 // swiftlint:disable nesting
 
 enum ConnectionEventType: Encodable {
-    case vpnConnection(TimeInterval) // timeToConnection
-    case vpnDisconnection(TimeInterval) // sessionLength
+    case vpnConnection(timeToConnection: TimeInterval)
+    case vpnDisconnection(sessionLength: TimeInterval)
 
     var rawValue: String {
         switch self {

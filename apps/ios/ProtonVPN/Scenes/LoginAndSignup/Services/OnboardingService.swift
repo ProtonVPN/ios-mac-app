@@ -110,7 +110,7 @@ extension OnboardingModuleService: OnboardingCoordinatorDelegate {
 
         if requiresConnection {
             log.debug("Doing quick connect required by finished onboarding", category: .app)
-            vpnGateway.quickConnect()
+            vpnGateway.quickConnect(trigger: .auto)
         }
     }
 
@@ -118,6 +118,6 @@ extension OnboardingModuleService: OnboardingCoordinatorDelegate {
         log.debug("Onboarding requested VPN connection", category: .app)
         self.completion = completion
 
-        vpnGateway.quickConnect()
+        vpnGateway.quickConnect(trigger: .auto)
     }
 }

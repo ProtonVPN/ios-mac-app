@@ -109,7 +109,7 @@ class CountryItemViewModel {
         } else {
             let serverType = ServerType.standard
             log.debug("Connect requested by selecting country in the list. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-            vpnGateway.connectTo(country: countryCode, ofType: serverType)
+            vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .country)
         }
     }
     

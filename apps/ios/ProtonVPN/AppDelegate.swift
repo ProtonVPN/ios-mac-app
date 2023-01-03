@@ -165,7 +165,7 @@ fileprivate extension AppDelegate {
             
         case URLConstants.deepLinkConnectAction:
             // Extensions requesting a connection should set a connection request first
-            navigationService.vpnGateway.quickConnect()
+            navigationService.vpnGateway.quickConnect(trigger: .widget)
             NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
             navigationService.presentStatusViewController()
             
@@ -234,7 +234,7 @@ fileprivate extension AppDelegate {
             let lastTime = propertiesManager.lastTimeForeground
             
             if lastTime == nil || lastTime!.timeIntervalSinceNow > AppConstants.Time.timeForForegroundStuck {
-                self.container.makeVpnGateway().quickConnect()
+                self.container.makeVpnGateway().quickConnect(trigger: .quick)
             }
                 
             propertiesManager.lastTimeForeground = nil

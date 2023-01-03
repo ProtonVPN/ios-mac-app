@@ -65,7 +65,6 @@ class TelemetryService {
             let reachability = notification.object as? Reachability else {
             return
         }
-        log.debug(reachability.connection == .wifi ? "wifi" : "other")
         switch reachability.connection {
         case .unavailable, .none:
             networkType = .unavailable
@@ -84,11 +83,9 @@ class TelemetryService {
         defer {
             previousAppDisplayState = appDisplayState
         }
-        log.debug("pj connectionChanged: \(appDisplayState)")
         var eventType: ConnectionEventType?
         switch appDisplayState {
         case .connected:
-            // Send the event only when we just connected (less than 1 second), not on app startup.
             guard startedConnectionDate != nil else { return }
             eventType = connectionEventType(state: appDisplayState)
             startedConnectionDate = nil
@@ -113,20 +110,10 @@ class TelemetryService {
             return
         }
 
-        let cached = try? vpnKeychain.fetchCached()
-        let accountPlan = cached?.accountPlan ?? .free
-        /// `userTier` variable doesn't cover all possible cases yet
-        let userTier: TelemetryDimensions.UserTier
-        if cached?.maxTier == 3 {
-            userTier = .internal
-        } else {
-            userTier = [.free, .trial].contains(accountPlan) ? .free : .paid
-        }
-
         let dimensions = TelemetryDimensions(outcome: .success,
-                                             userTier: userTier,
+                                             userTier: userTier(),
                                              vpnStatus: previousAppDisplayState == .connected ? .on : .off,
-                                             vpnTrigger: .server,
+                                             vpnTrigger: propertiesManager.lastConnectionRequest?.trigger,
                                              networkType: networkType,
                                              serverFeatures: activeConnection.server.feature,
                                              vpnCountry: activeConnection.server.countryCode,
@@ -139,27 +126,37 @@ class TelemetryService {
         report(event: .init(event: eventType, dimensions: dimensions))
     }
 
-    func connectionEventType(state: AppDisplayState) -> ConnectionEventType? {
+    private func userTier() -> TelemetryDimensions.UserTier {
+        let cached = try? vpnKeychain.fetchCached()
+        let accountPlan = cached?.accountPlan ?? .free
+        if cached?.maxTier == 3 {
+            return .internal
+        } else {
+            return [.free, .trial].contains(accountPlan) ? .free : .paid
+        }
+    }
+
+    private func connectionEventType(state: AppDisplayState) -> ConnectionEventType? {
         switch state {
         case .connected:
             let timeInterval = timeToConnection()
             startedConnectionDate = nil
-            return .vpnConnection(timeInterval)
+            return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
-            return .vpnDisconnection(sessionLength())
+            return .vpnDisconnection(sessionLength: sessionLength())
         default:
             return nil
         }
     }
 
-    func timeToConnection() -> TimeInterval {
+    private func timeToConnection() -> TimeInterval {
         guard let startedConnectionDate else {
             return 0
         }
         return Date().timeIntervalSince(startedConnectionDate)
     }
 
-    func sessionLength() -> TimeInterval {
+    private func sessionLength() -> TimeInterval {
         return Date().timeIntervalSince1970 - propertiesManager.lastConnectedTimeStamp
     }
 
@@ -169,14 +166,8 @@ class TelemetryService {
         }
     }
 
-    func report(event: ConnectionEvent) {
+    private func report(event: ConnectionEvent) {
         guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
         telemetryAPI.flushEvent(event: event)
-        switch event.event {
-        case .vpnConnection(let timeInterval):
-            log.debug("pj time_to_connection: \(timeInterval)")
-        case .vpnDisconnection(let timeInterval):
-            log.debug("pj session_ length: \(timeInterval)")
-        }
     }
 }

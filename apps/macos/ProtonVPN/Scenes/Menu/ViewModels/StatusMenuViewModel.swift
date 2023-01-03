@@ -155,7 +155,7 @@ final class StatusMenuViewModel {
             vpnGateway.disconnect()
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
-            vpnGateway.quickConnect()
+            vpnGateway.quickConnect(trigger: .tray)
         }
     }
 

@@ -193,7 +193,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
                 vpnGateway.stopConnecting(userInitiated: true)
             } else {
                 log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
-                vpnGateway.connectTo(country: countryCode, ofType: serverType)
+                vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .map)
                 connectionStatusService.presentStatusViewController()
             }
         }

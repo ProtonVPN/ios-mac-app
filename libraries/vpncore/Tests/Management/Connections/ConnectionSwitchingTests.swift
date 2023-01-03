@@ -65,7 +65,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
-                                        profileId: nil)
+                                        profileId: nil,
+                                        trigger: .country)
 
         await MainActor.run {
             container.vpnGateway.connect(with: request)
@@ -115,7 +116,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
-                                        profileId: nil)
+                                        profileId: nil,
+                                        trigger: .country)
 
         let tunnelProviderExpectation = XCTestExpectation()
 
@@ -149,7 +151,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
-                                        profileId: nil)
+                                        profileId: nil,
+                                        trigger: .country)
 
         let stateChangedToErrorExpectation = XCTestExpectation()
         let stateChangeNotification = AppStateManagerNotification.stateChange
@@ -221,7 +224,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
-                                        profileId: nil)
+                                        profileId: nil,
+                                        trigger: .country)
 
         var tunnelProviderExpectation = expectations.initialConnection
 
@@ -463,7 +467,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
-                                        profileId: nil)
+                                        profileId: nil,
+                                        trigger: .country)
 
         retrieveAndSetVpnProperties()
         container.vpnGateway.connect(with: request)
@@ -544,7 +549,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         netShieldType: .level1,
                                         natType: .moderateNAT,
                                         safeMode: true,
-                                        profileId: nil)
+                                        profileId: nil,
+                                        trigger: .country)
 
         var (nConnections,
              nDisconnections,

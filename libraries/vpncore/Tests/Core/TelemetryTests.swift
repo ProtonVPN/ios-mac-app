@@ -25,11 +25,11 @@ class TelemetryTests: XCTestCase {
     func testConnectionEventParameters() {
         let request = TelemetryRequest(ConnectionEvent.connectionMock1)
         guard let sut = request.parameters,
-            let values = sut["Values"] as? [String: Any],
-            let dimensions = sut["Dimensions"] as? [String: Any] else {
-                XCTFail()
-                return
-            }
+              let values = sut["Values"] as? [String: Any],
+              let dimensions = sut["Dimensions"] as? [String: Any] else {
+            XCTFail("Parameters not in the expected type")
+            return
+        }
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.ios.connection")
         XCTAssertEqual(sut["Event"] as? String, "vpn_connection")
 
@@ -53,11 +53,11 @@ class TelemetryTests: XCTestCase {
     func testDisconnectionEventParameters() {
         let request = TelemetryRequest(ConnectionEvent.disconnectionMock1)
         guard let sut = request.parameters,
-            let values = sut["Values"] as? [String: Any],
-            let dimensions = sut["Dimensions"] as? [String: Any] else {
-                XCTFail()
-                return
-            }
+              let values = sut["Values"] as? [String: Any],
+              let dimensions = sut["Dimensions"] as? [String: Any] else {
+            XCTFail("Parameters not in the expected type")
+            return
+        }
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.ios.connection")
         XCTAssertEqual(sut["Event"] as? String, "vpn_disconnection")
 

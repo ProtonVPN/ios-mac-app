@@ -55,7 +55,8 @@ class BaseConnectionTestCase: XCTestCase {
                                     netShieldType: .level1,
                                     natType: .moderateNAT,
                                     safeMode: true,
-                                    profileId: nil)
+                                    profileId: nil,
+                                    trigger: nil)
 
     override func setUp() {
         super.setUp()
