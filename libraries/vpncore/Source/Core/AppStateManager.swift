@@ -208,11 +208,6 @@ public class AppStateManagerImplementation: AppStateManager {
         
         prepareServerCertificate()
         
-        if vpnKeychain.hasOldVpnPassword() {
-            try? vpnKeychain.clearOldVpnPassword()
-            alertService?.push(alert: FirstTimeConnectingAlert())
-        }
-        
         if case VpnState.disconnecting = vpnState {
             stuckDisconnecting = true
         }
