@@ -18,11 +18,11 @@
 
 import Foundation
 
-struct TelemetryDimensions: Encodable {
+public struct TelemetryDimensions: Encodable {
     let outcome: Outcome
     let userTier: UserTier
     let vpnStatus: VPNStatus // This refers to whether a vpn connection is already ongoing when the connection action is triggered
-    let vpnTrigger: VPNTrigger
+    let vpnTrigger: VPNTrigger?
     let networkType: NetworkType
     let serverFeatures: ServerFeature // ordered comma-separated list
     let vpnCountry: String // ['CHE', 'FRA', 'NLD', ... ]
@@ -32,7 +32,7 @@ struct TelemetryDimensions: Encodable {
     let port: String // 3360, max 25 char
     let isp: String // max 25 char
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(outcome, forKey: .outcome)
         try container.encode(userTier, forKey: .userTier)
@@ -103,9 +103,10 @@ struct TelemetryDimensions: Encodable {
         case off
     }
 
-    enum VPNTrigger: String, Encodable {
+    public enum VPNTrigger: String, Encodable {
         case quick
         case country
+        case city
         case server
         case profile
         case map

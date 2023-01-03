@@ -241,7 +241,7 @@ extension AppDelegate {
             }
             
             appStateManager.disconnect {
-                self.container.makeVpnGateway().quickConnect()
+                self.container.makeVpnGateway().quickConnect(trigger: .auto)
             }
         }
     }

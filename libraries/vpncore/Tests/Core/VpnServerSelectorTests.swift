@@ -53,7 +53,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testSelectsFastestOverall() throws {
         let currentUserTier = 3
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type,
                                          userTier: currentUserTier,
@@ -67,7 +67,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testSelectsFastestInCountry() throws {
         let currentUserTier = 3
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .fastest), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .fastest), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversDE[0], selector.selectServer(connectionRequest: connectionRequest))
@@ -76,7 +76,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testSelectsFastestInAvailableTier() throws {
         let currentUserTier = 1
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversGB[2], selector.selectServer(connectionRequest: connectionRequest))
@@ -85,7 +85,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testSelectsFastestInAvailableTierByCountry() throws {
         let currentUserTier = 1
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .fastest), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .fastest), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversDE[2], selector.selectServer(connectionRequest: connectionRequest))
@@ -94,7 +94,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testSelectsServer() throws {
         let currentUserTier = 3
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .server(getServerModel(id: "DE2", countryCode: "DE", tier: 1, score: 6))), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .server(getServerModel(id: "DE2", countryCode: "DE", tier: 1, score: 6))), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(serversDE[2].id, selector.selectServer(connectionRequest: connectionRequest)?.id)
@@ -103,7 +103,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testReturnsNilForEmptyCountry() throws {
         let currentUserTier = 3
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("FR", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("FR", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(nil, selector.selectServer(connectionRequest: connectionRequest))
@@ -112,7 +112,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testDoesntReturnServerUnderMaintenance() throws {
         let currentUserTier = 3
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("GB", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("GB", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let servers = [
             getServerModel(id: "GB0", countryCode: "GB", tier: 3, score: 1, status: 0), // status - 0, in maintenance
@@ -135,7 +135,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testDoesntReturnServersOfHigherTiers() throws {
         let currentUserTier = 1
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("GB", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("GB", .random), connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let servers = [
             getServerModel(id: "GB0", countryCode: "GB", tier: 3, score: 1),
@@ -157,7 +157,7 @@ class VpnServerSelectorTests: XCTestCase {
     func testChangesActiveServerType() throws {
         let currentUserTier = 1
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .secureCore, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .secureCore, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping1, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         var currentServerType = ServerType.unspecified
@@ -185,7 +185,7 @@ class VpnServerSelectorTests: XCTestCase {
         
         let currentUserTier = 3
         let type = ServerType.unspecified
-        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+        let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .fastest, connectionProtocol: Self.connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: nil)
         
         let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: grouping, connectionProtocol: Self.connectionProtocol, smartProtocolConfig: Self.smartProtocolConfig, appStateGetter: Self.appStateGetter)
         XCTAssertEqual(servers2[0], selector.selectServer(connectionRequest: connectionRequest))

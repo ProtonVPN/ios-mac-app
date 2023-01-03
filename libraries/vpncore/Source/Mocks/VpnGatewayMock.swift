@@ -64,15 +64,15 @@ public class VpnGatewayMock: VpnGatewayProtocol {
 
     }
     
-    public func quickConnect() {
+    public func quickConnect(trigger: TelemetryDimensions.VPNTrigger) {
         
     }
     
-    public func quickConnectConnectionRequest() -> ConnectionRequest {
-        return ConnectionRequest(serverType: .standard, connectionType: .fastest, connectionProtocol: .smartProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil)
+    public func quickConnectConnectionRequest(trigger: TelemetryDimensions.VPNTrigger) -> ConnectionRequest {
+        return ConnectionRequest(serverType: .standard, connectionType: .fastest, connectionProtocol: .smartProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, trigger: trigger)
     }
     
-    public func connectTo(country countryCode: String, ofType serverType: ServerType) {
+    public func connectTo(country countryCode: String, ofType serverType: ServerType, trigger: TelemetryDimensions.VPNTrigger) {
         
     }
     

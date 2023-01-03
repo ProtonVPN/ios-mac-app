@@ -36,11 +36,6 @@ class TelemetryAPI {
             case .failure(let error):
                 log.debug("Failed to send a Telemetry event with error: \(error.localizedDescription)")
             }
-
-            if let parameters = request.parameters as? [String: Any] {
-                let pretty = parameters.json(prettyPrinted: true)
-                log.debug("Telemetry event:\n\(pretty)")
-            }
         }
     }
 }

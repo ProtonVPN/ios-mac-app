@@ -20,9 +20,9 @@ import Foundation
 @testable import vpncore
 
 extension ConnectionEvent {
-    static let connectionMock1 = ConnectionEvent(event: .vpnConnection(123),
+    static let connectionMock1 = ConnectionEvent(event: .vpnConnection(timeToConnection: 123),
                                                  dimensions: .connectionSuccessMock1)
-    static let disconnectionMock1 = ConnectionEvent(event: .vpnDisconnection(123),
+    static let disconnectionMock1 = ConnectionEvent(event: .vpnDisconnection(sessionLength: 123),
                                                     dimensions: .disconnectionSuccessMock1)
 }
 

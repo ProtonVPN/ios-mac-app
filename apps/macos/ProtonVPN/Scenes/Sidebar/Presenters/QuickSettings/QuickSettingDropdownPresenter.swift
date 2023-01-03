@@ -80,13 +80,13 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         guard vpnGateway.connection == .connected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         guard let countryCode = appStateManager.activeConnection()?.server.countryCode else {
-            vpnGateway.quickConnect()
+            vpnGateway.quickConnect(trigger: .auto)
             return
         }
-        vpnGateway.connectTo(country: countryCode, ofType: .unspecified)
+        vpnGateway.connectTo(country: countryCode, ofType: .unspecified, trigger: .country)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             guard self.vpnGateway.connection == .connected else { return }
-            self.vpnGateway.quickConnect()
+            self.vpnGateway.quickConnect(trigger: .country)
         }
     }
 

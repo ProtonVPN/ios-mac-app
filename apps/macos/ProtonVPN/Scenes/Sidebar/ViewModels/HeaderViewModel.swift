@@ -117,7 +117,7 @@ final class HeaderViewModel {
             vpnGateway.disconnect()
         } else {
             log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
-            vpnGateway.quickConnect()
+            vpnGateway.quickConnect(trigger: .quick)
         }
     }
     
