@@ -27,7 +27,7 @@ final class TelemetryRequest: Request {
     }
 
     var path: String {
-        return "data/v1/stats"
+        return "/data/v1/stats"
     }
 
     var method: HTTPMethod = .post
@@ -37,10 +37,10 @@ final class TelemetryRequest: Request {
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
+        .userInitiated // do not repeat, it can cause the events to be delivered out-of order
     }
 
-    var parameters: JSONDictionary? {
+    var parameters: [String: Any]? {
         event.toJSONDictionary()
     }
 }

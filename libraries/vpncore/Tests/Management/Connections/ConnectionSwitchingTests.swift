@@ -155,8 +155,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                                         trigger: .country)
 
         let stateChangedToErrorExpectation = XCTestExpectation()
-        let stateChangeNotification = AppStateManagerNotification.stateChange
-        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else {
                 XCTFail("Did not send app state as part of notification")
                 return
@@ -170,7 +169,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
 
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
+        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
         container.vpnGateway.connect(with: request)
@@ -292,8 +291,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         var observedState: AppState?
         var hasReconnected = false
-        let stateChangeNotification = AppStateManagerNotification.stateChange
-        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else {
                 XCTFail("Did not send app state as part of notification")
                 return
@@ -311,7 +309,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
             observedState = appState
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
+        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
 
         // reconnect with netshield settings change
         container.vpnGateway.reconnect(with: NATType.strictNAT)
@@ -556,9 +554,8 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
              nDisconnections,
              nAppStateConnectTransitions) = (0, 0, 0)
 
-        let stateChangeNotification = AppStateManagerNotification.stateChange
         var observedStates: [AppState] = []
-        let observer = NotificationCenter.default.addObserver(forName: stateChangeNotification, object: nil, queue: nil) { notification in
+        let observer = NotificationCenter.default.addObserver(forName: .AppStateManager.stateChange, object: nil, queue: nil) { notification in
             guard let appState = notification.object as? AppState else { return }
             defer { observedStates.append(appState) }
             // debounce multiple "connected" notifications... we should probably fix that
@@ -575,7 +572,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
                 nAppStateConnectTransitions += 1
             }
         }
-        defer { NotificationCenter.default.removeObserver(observer, name: stateChangeNotification, object: nil) }
+        defer { NotificationCenter.default.removeObserver(observer, name: .AppStateManager.stateChange, object: nil) }
 
         var observedStatuses: [NEVPNStatus] = []
         var currentManager: NETunnelProviderManagerMock?
