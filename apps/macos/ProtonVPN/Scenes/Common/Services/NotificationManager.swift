@@ -45,7 +45,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         setNonTransientState(state: appStateManager.state)
         NSUserNotificationCenter.default.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged),
-                                               name: AppStateManagerNotification.stateChange, object: nil)
+                                               name: .AppStateManager.stateChange, object: nil)
     }
     
     @objc private func appStateChanged(_ notification: Notification) {

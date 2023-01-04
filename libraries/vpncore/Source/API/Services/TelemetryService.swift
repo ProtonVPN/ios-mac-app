@@ -21,6 +21,16 @@ import Combine
 import LocalFeatureFlags
 import Reachability
 
+public enum UserInitiatedVPNChange {
+    case connect
+    case disconnect
+    case abort
+}
+
+public extension Notification.Name {
+    static let userInitiatedVPNChange = Notification.Name("UserInitiatedVPNChange")
+}
+
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService
 }
@@ -66,8 +76,13 @@ public class TelemetryService {
             }
         }
         Task {
-            for await notification in NotificationCenter.default.notifications(named: AppStateManagerNotification.displayStateChange) {
+            for await notification in NotificationCenter.default.notifications(named: .AppStateManager.displayStateChange) {
                 connectionChanged(notification)
+            }
+        }
+        Task {
+            for await notification in NotificationCenter.default.notifications(named: .userInitiatedVPNChange) {
+                userInitiatedVPNChange(notification)
             }
         }
     }
@@ -79,8 +94,13 @@ public class TelemetryService {
             .store(in: &cancellables)
 
         NotificationCenter.default
-            .publisher(for: AppStateManagerNotification.displayStateChange)
+            .publisher(for: .AppStateManager.displayStateChange)
             .sink(receiveValue: connectionChanged)
+            .store(in: &cancellables)
+
+        NotificationCenter.default
+            .publisher(for: .userInitiatedVPNChange)
+            .sink(receiveValue: userInitiatedVPNChange)
             .store(in: &cancellables)
     }
 
@@ -99,8 +119,18 @@ public class TelemetryService {
         }
     }
 
+    var userInitiatedVPNChange: UserInitiatedVPNChange?
+
+    private func userInitiatedVPNChange(_ notification: Notification) {
+        guard notification.name == .userInitiatedVPNChange,
+              let change = notification.object as? UserInitiatedVPNChange else {
+            return
+        }
+        self.userInitiatedVPNChange = change
+    }
+
     private func connectionChanged(_ notification: Notification) {
-        guard notification.name == AppStateManagerNotification.displayStateChange,
+        guard notification.name == .AppStateManager.displayStateChange,
               let appDisplayState = notification.object as? AppDisplayState else {
             return
         }
@@ -108,6 +138,7 @@ public class TelemetryService {
             previousAppDisplayState = appDisplayState
         }
         var eventType: ConnectionEventType?
+        var outcome: TelemetryDimensions.Outcome = .success
         switch appDisplayState {
         case .connected:
             guard startedConnectionDate != nil else { return }
@@ -123,8 +154,12 @@ public class TelemetryService {
             startedConnectionDate = nil
         case .disconnected:
             startedConnectionDate = nil
-            // Send only when we had a connection
-            guard previousAppDisplayState == .connected else { return }
+            if previousAppDisplayState == .connected {
+                outcome = userInitiatedVPNChange == .disconnect ? .success : .failure
+            } else {
+                outcome = userInitiatedVPNChange == .abort ? .aborted : .failure
+            }
+            userInitiatedVPNChange = nil
             eventType = connectionEventType(state: appDisplayState)
         }
 
@@ -134,7 +169,7 @@ public class TelemetryService {
             return
         }
 
-        let dimensions = TelemetryDimensions(outcome: .success,
+        let dimensions = TelemetryDimensions(outcome: outcome,
                                              userTier: userTier(),
                                              vpnStatus: previousAppDisplayState == .connected ? .on : .off,
                                              vpnTrigger: propertiesManager.lastConnectionRequest?.trigger,
@@ -167,7 +202,11 @@ public class TelemetryService {
             startedConnectionDate = nil
             return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
-            return .vpnDisconnection(sessionLength: sessionLength())
+            if previousAppDisplayState == .connected {
+                return .vpnDisconnection(sessionLength: sessionLength())
+            } else {
+                return .vpnConnection(timeToConnection: 0)
+            }
         default:
             return nil
         }

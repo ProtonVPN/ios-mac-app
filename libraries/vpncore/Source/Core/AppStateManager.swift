@@ -57,9 +57,11 @@ public protocol AppStateManager {
     func activeConnection() -> ConnectionConfiguration?
 }
 
-public struct AppStateManagerNotification {
-    public static var stateChange: Notification.Name = Notification.Name("AppStateManagerStateChange")
-    public static var displayStateChange: Notification.Name = Notification.Name("AppStateManagerDisplayStateChange")
+public extension Notification.Name {
+    struct AppStateManager {
+        public static var stateChange: Notification.Name = Notification.Name("AppStateManagerStateChange")
+        public static var displayStateChange: Notification.Name = Notification.Name("AppStateManagerDisplayStateChange")
+    }
 }
 
 public class AppStateManagerImplementation: AppStateManager {
@@ -97,7 +99,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
 
             DispatchQueue.main.async { [displayState] in
-                NotificationCenter.default.post(name: AppStateManagerNotification.displayStateChange,
+                NotificationCenter.default.post(name: .AppStateManager.displayStateChange,
                                                 object: displayState)
             }
         }
@@ -591,7 +593,7 @@ public class AppStateManagerImplementation: AppStateManager {
                 return
             }
             
-            NotificationCenter.default.post(name: AppStateManagerNotification.stateChange, object: self.state)
+            NotificationCenter.default.post(name: .AppStateManager.stateChange, object: self.state)
         }
     }
     

@@ -63,15 +63,18 @@ class TabBarViewModel {
         log.debug("Connect requested by clicking on Quick connect", category: .connectionConnect, event: .trigger)
         
         if vpnGateway.connection == .disconnected || vpnGateway.connection == .disconnecting {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             vpnGateway.quickConnect(trigger: .quick)
             connectionStatusService.presentStatusViewController()
             
         } else if vpnGateway.connection == .connecting {
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
             vpnGateway.stopConnecting(userInitiated: true)
             
         } else {
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect)
             vpnGateway.disconnect()
         }
     }
@@ -101,6 +104,6 @@ class TabBarViewModel {
     // MARK: - Private
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: AppStateManagerNotification.displayStateChange, object: nil)
+                                               name: .AppStateManager.displayStateChange, object: nil)
     }
 }
