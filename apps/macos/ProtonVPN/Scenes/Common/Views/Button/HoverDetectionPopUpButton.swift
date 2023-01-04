@@ -40,3 +40,26 @@ class HoverDetectionPopUpButton: NSPopUpButton {
         removeCursorRect(bounds, cursor: .pointingHand)
     }
 }
+
+extension HoverDetectionPopUpButton {
+    func push(items: [PopUpButtonItemViewModel], clear: Bool = true) {
+        if clear {
+            removeAllItems()
+        }
+
+        for item in items {
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = item.title
+            menuItem.representedObject = item
+
+            menu?.addItem(menuItem)
+            if item.checked {
+                select(menuItem)
+            }
+        }
+    }
+
+    var selectedViewModel: PopUpButtonItemViewModel? {
+        menu?.item(at: indexOfSelectedItem)?.representedObject as? PopUpButtonItemViewModel
+    }
+}

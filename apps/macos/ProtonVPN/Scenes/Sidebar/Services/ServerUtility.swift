@@ -31,6 +31,14 @@ class ServerUtility {
         }
         return nil
     }
+
+    static func countryGroup(in grouping: [CountryGroup], index: Int) -> CountryGroup? {
+        if index >= 0 && index < grouping.count {
+            return grouping[index]
+        }
+
+        return nil
+    }
     
     static func country(in grouping: [CountryGroup], index: Int) -> CountryModel? {
         if index >= 0 && index < grouping.count {

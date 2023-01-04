@@ -45,7 +45,7 @@ public struct ServerWrapper {
     }
 }
 
-public enum ServerOffering {
+public enum ServerOffering: Equatable {
     
     /** Country code or undefined */
     case fastest(String?)
@@ -113,6 +113,25 @@ public enum ServerOffering {
         }
         aCoder.encode(data, forKey: CoderKey.serverOffering)
     }
+
+    public func supports(connectionProtocol: ConnectionProtocol,
+                         withCountryGroup grouping: CountryGroup?,
+                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+        switch self {
+        case .fastest(let countryCode), .random(let countryCode):
+            guard let grouping else {
+                return true
+            }
+            assert(grouping.0.countryCode == countryCode, "Mismatched grouping while checking server protocol support")
+            return grouping.1.contains {
+                $0.supports(connectionProtocol: connectionProtocol,
+                            smartProtocolConfig: smartProtocolConfig)
+            }
+        case .custom(let wrapper):
+            return wrapper.server.supports(connectionProtocol: connectionProtocol,
+                                           smartProtocolConfig: smartProtocolConfig)
+        }
+    }
     
     // MARK: - Static functions
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
@@ -122,7 +141,7 @@ public enum ServerOffering {
         } else if case ServerOffering.random(let lcc) = lhs, case ServerOffering.random(let rcc) = rhs {
             equal = lcc == rcc
         } else if case ServerOffering.custom(let lsw) = lhs, case ServerOffering.custom(let rsw) = rhs {
-            equal = lsw == rsw
+            equal = lsw.server.id == rsw.server.id
         }
         return equal
     }

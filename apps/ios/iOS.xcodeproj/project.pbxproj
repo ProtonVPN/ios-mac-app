@@ -393,8 +393,6 @@
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
-		E556352F2912AD1B007288E7 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
-		E55635302912AD1B007288E7 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };

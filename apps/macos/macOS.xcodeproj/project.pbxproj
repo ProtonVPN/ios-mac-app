@@ -75,6 +75,8 @@
 		4C8641E327DE18A600EEFB1D /* String+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */; };
 		4C8641E527DE2ED900EEFB1D /* NSImage+AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */; };
 		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
+		4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */; };
+		4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */; };
 		4CAFE13C292CE05B00AC9C37 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAFE13B292CE05A00AC9C37 /* LocalFeatureFlags */; };
 		4CB2A3D3289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
 		4CB2A3D4289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
@@ -335,7 +337,6 @@
 		EE69C8D91F5D9EB300C3065C /* LoginWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE69C8D81F5D9EB300C3065C /* LoginWindowController.swift */; };
 		EE69C8DB1F5D9F8500C3065C /* SidebarWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE69C8DA1F5D9F8500C3065C /* SidebarWindowController.swift */; };
 		EE6E61D81F4C4F5300638F9B /* ExpandCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */; };
-		EE7041701F239DB4008BC5AD /* PrefillInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */; };
 		EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */; };
 		EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */; };
 		EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */; };
@@ -618,6 +619,8 @@
 		4C8641E227DE18A600EEFB1D /* String+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/String+AppTheme.swift"; sourceTree = "<group>"; };
 		4C8641E427DE2ED900EEFB1D /* NSImage+AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "NSImage+AppTheme.swift"; path = "../../../../macos/ProtonVPN/Extensions/AppTheme/NSImage+AppTheme.swift"; sourceTree = "<group>"; };
 		4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionIntercepts.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/ConnectionIntercepts.swift; sourceTree = "<group>"; };
+		4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpButtonItemViewModel.swift; sourceTree = "<group>"; };
+		4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreWarningViewModel.swift; sourceTree = "<group>"; };
 		4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExtensionInfo.swift; path = ../../../libraries/vpncore/Source/Management/SystemExtensions/ExtensionInfo.swift; sourceTree = "<group>"; };
 		4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NET2WarningPopupViewController.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/ViewControllers/NET2WarningPopupViewController.swift; sourceTree = "<group>"; };
 		4CE2F42127ECA7B000B21A00 /* GIFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GIFView.swift; path = ../../../../../../macos/ProtonVPN/Scenes/Common/Views/Custom/GIFView.swift; sourceTree = "<group>"; };
@@ -951,7 +954,6 @@
 		EE69C8D81F5D9EB300C3065C /* LoginWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWindowController.swift; sourceTree = "<group>"; };
 		EE69C8DA1F5D9F8500C3065C /* SidebarWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarWindowController.swift; sourceTree = "<group>"; };
 		EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandCellButton.swift; sourceTree = "<group>"; };
-		EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefillInformation.swift; sourceTree = "<group>"; };
 		EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
 		EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewModel.swift; sourceTree = "<group>"; };
@@ -2141,8 +2143,8 @@
 				EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */,
 				EE78749E1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift */,
 				EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */,
-				EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */,
 				EE4E7E041F62B27A000F7D5E /* ProfilesContainerViewModel.swift */,
+				4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2533,6 +2535,7 @@
 				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
 				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
 				42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */,
+				4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3529,6 +3532,7 @@
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
+				4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */,
 				E9E5F98427C667170068309F /* AppCertificateRefreshManager.swift in Sources */,
 				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
 				F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */,
@@ -3558,6 +3562,7 @@
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
 				D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
+				4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
 				42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
@@ -3591,7 +3596,6 @@
 				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
 				4C8641DF27DE0F6C00EEFB1D /* NSColor+AppTheme.swift in Sources */,
-				EE7041701F239DB4008BC5AD /* PrefillInformation.swift in Sources */,
 				EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */,
 				EEB493CF1F20EA3400A979DC /* VerticalScrollView.swift in Sources */,
 				EE69C8DB1F5D9F8500C3065C /* SidebarWindowController.swift in Sources */,

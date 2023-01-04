@@ -351,20 +351,9 @@ class CreateOrEditProfileViewModel: NSObject {
     }
 
     private func selectedServerOfferingSupports(connectionProtocol: ConnectionProtocol) -> Bool {
-        let servers: [ServerModel]?
-        switch selectedServerOffering {
-        case .custom(let serverWrapper):
-            servers = [serverWrapper.server]
-        case .fastest, .random:
-            servers = self.countryGroup?.1
-        case nil:
-            servers = nil
-        }
-
-        return servers?.contains {
-            $0.supports(connectionProtocol: connectionProtocol,
-                        smartProtocolConfig: propertiesManager.smartProtocolConfig)
-        } != false
+        selectedServerOffering?.supports(connectionProtocol: connectionProtocol,
+                                         withCountryGroup: self.countryGroup,
+                                         smartProtocolConfig: propertiesManager.smartProtocolConfig) != false
     }
     
     private func serverName(forServerOffering serverOffering: ServerOffering) -> NSAttributedString {

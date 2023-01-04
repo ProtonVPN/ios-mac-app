@@ -63,8 +63,6 @@ final class CreateNewProfileViewController: NSViewController {
             countryList.indexOfSelectedItem != 0
     }
 
-    private var sysexTourCancelled: (() -> Void)?
-    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -87,8 +85,7 @@ final class CreateNewProfileViewController: NSViewController {
         setupProtocolSection()
         setupWarningSection()
         setupFooterView()
-        
-        populateLists()
+
         startObserving()
     }
     
@@ -128,6 +125,7 @@ final class CreateNewProfileViewController: NSViewController {
         protocolList.isBordered = false
         protocolList.target = self
         protocolList.action = #selector(protocolSelected)
+        protocolList.push(items: viewModel.protocolMenuItems)
 
         protocolEnablementProgress.isDisplayedWhenStopped = false
         protocolEnablementProgress.appearance = NSAppearance(named: .darkAqua)
@@ -149,7 +147,9 @@ final class CreateNewProfileViewController: NSViewController {
         typeList.isBordered = false
         typeList.target = self
         typeList.action = #selector(typeSelected)
-        
+        typeList.setAccessibilityIdentifier("ServerTypeList")
+        typeList.push(items: viewModel.serverTypeMenuItems)
+
         typeListHorizontalLine.fillColor = viewModel.color(.border)
     }
     
@@ -160,6 +160,7 @@ final class CreateNewProfileViewController: NSViewController {
         countryList.target = self
         countryList.action = #selector(countrySelected)
         countryList.setAccessibilityIdentifier("CountryList")
+        countryList.push(items: viewModel.countryMenuItems)
 
         countryListHorizontalLine.fillColor = viewModel.color(.border)
     }
@@ -171,6 +172,7 @@ final class CreateNewProfileViewController: NSViewController {
         serverList.target = self
         serverList.action = #selector(serverSelected)
         serverList.setAccessibilityIdentifier("ServerList")
+        serverList.push(items: viewModel.serverMenuItems)
 
         serverListHorizontalLine.fillColor = viewModel.color(.border)
     }
@@ -199,215 +201,44 @@ final class CreateNewProfileViewController: NSViewController {
         footerView.wantsLayer = true
         footerView.layer?.backgroundColor = .cgColor(.background, .weak)
     }
-    
-    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedProtocol: ConnectionProtocol? = nil) {
-        refreshTypeList(withSelectionAt: selectedType)
-        refreshCountryList(for: selectedType, withSelectionAt: selectedCountry)
-        refreshServerList(for: typeList.indexOfSelectedItem, and: selectedCountry, withSelectionAt: selectedServer)
 
-        refreshProtocolList(selecting: selectedProtocol ??
-                            viewModel.selectedProtocol)
-    }
-    
-    private func refreshTypeList(withSelectionAt selectedIndex: Int) {
-        typeList.removeAllItems()
-        
-        let count = ServerType.humanReadableCases.count
-        for index in 0..<count {
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.typeString(for: index)
-            typeList.menu?.addItem(menuItem)
-        }
-
-        viewModel.updateType(for: selectedIndex)
-        typeList.select(typeList.menu?.item(at: selectedIndex))
-    }
-
-    private func refreshPendingEnablement() {
-        if viewModel.shouldShowSysexProgress(for: protocolList.indexOfSelectedItem) {
-            protocolEnablementProgress.startAnimation(nil)
-        } else {
-            protocolEnablementProgress.stopAnimation(nil)
-        }
-    }
-
-    private func refreshProtocolList(withSelectionAt selectedIndex: Int) {
-        var selectedIndex = selectedIndex
-        if selectedIndex < 0 || selectedIndex > viewModel.availableProtocols.count {
-            selectedIndex = 0
-        }
-        refreshProtocolList(selecting: viewModel.availableProtocols[selectedIndex])
-    }
-
-    private func refreshProtocolList(selecting connectionProtocol: ConnectionProtocol?) {
-        protocolList.removeAllItems()
-
-        let availableProtocols = viewModel.availableProtocols
-        guard !availableProtocols.isEmpty else {
-            assertionFailure("A server exists that doesn't support any connection protocols.")
-            return
-        }
-        
-        availableProtocols.forEach {
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.protocolString(for: $0)
-            protocolList.menu?.addItem(menuItem)
-
-            if $0 == connectionProtocol {
-                protocolList.select(menuItem)
-            }
-        }
-
-        viewModel.updateProtocol(connectionProtocol)
-        refreshPendingEnablement()
-    }
-
-    private func refreshCountryList(for typeIndex: Int, withSelectionAt selectedIndex: Int) {
-        countryList.removeAllItems()
-        
-        let placeholderItem = NSMenuItem()
-        placeholderItem.attributedTitle = viewModel.style(LocalizedString.selectCountry, font: .themeFont(.heading4), alignment: .left)
-        countryList.menu?.addItem(placeholderItem)
-        
-        let count = viewModel.countryCount(for: typeIndex)
-        for index in 0..<count {
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.country(for: typeIndex, index: index)
-            countryList.menu?.addItem(menuItem)
-        }
-
-        countryList.select(countryList.menu?.item(at: selectedIndex))
-
-        // account for placeholder menu item
-        viewModel.updateCountry(for: typeIndex, index: selectedIndex > 0 ? selectedIndex - 1 : nil)
-    }
-    
-    private func refreshServerList(for typeIndex: Int, and countryIndex: Int, withSelectionAt selectedIndex: Int) {
-        serverList.removeAllItems()
-        
-        let placeholderItem = NSMenuItem()
-        placeholderItem.attributedTitle = viewModel.style(LocalizedString.selectServer, font: .themeFont(.heading4), alignment: .left)
-        serverList.menu?.addItem(placeholderItem)
-        
-        if countryIndex > 0 {
-            let adjustedCountryIndex = countryIndex - 1
-            let count = viewModel.serverCount(for: typeIndex, and: adjustedCountryIndex)
-            for index in 0..<count {
-                let menuItem = NSMenuItem()
-                menuItem.attributedTitle = viewModel.serverDescriptor(for: typeIndex,
-                                                                      and: adjustedCountryIndex,
-                                                                      index: index)
-                serverList.menu?.addItem(menuItem)
-            }
-        }
-
-        // account for placeholder menu items
-        viewModel.updateServer(for: typeIndex,
-                               and: countryIndex > 0 ? countryIndex - 1 : nil,
-                               index: selectedIndex > 0 ? selectedIndex - 1 : nil)
-        serverList.select(serverList.menu?.item(at: selectedIndex))
-    }
-    
     @objc private func typeSelected() {
-        refreshTypeList(withSelectionAt: typeList.indexOfSelectedItem)
-        refreshCountryList(for: typeList.indexOfSelectedItem, withSelectionAt: 0)
-        refreshServerList(for: typeList.indexOfSelectedItem, and: countryList.indexOfSelectedItem, withSelectionAt: 0)
+        typeList.selectedViewModel?.handler()
+    }
+
+    @objc private func countrySelected() {
+        countryList.selectedViewModel?.handler()
+    }
+
+    @objc private func serverSelected() {
+        serverList.selectedViewModel?.handler()
     }
 
     @objc private func protocolSelected() {
-        let originalIndex = protocolList.indexOfSelectedItem
-        viewModel.refreshSysexPending(for: originalIndex)
-        refreshProtocolList(withSelectionAt: originalIndex)
-
-        sysexTourCancelled = { [weak self] in
-            guard let ikeIndex = self?.viewModel.protocolIndex(for: .vpnProtocol(.ike)) else {
-                return
-            }
-            self?.refreshProtocolList(withSelectionAt: ikeIndex)
-        }
-
-        viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem) { [weak self] result in
-            switch result {
-            case .installed:
-                if self?.protocolList.indexOfSelectedItem != originalIndex {
-                    self?.refreshProtocolList(withSelectionAt: originalIndex)
-                } else {
-                    self?.refreshPendingEnablement()
-                }
-            case .failed:
-                guard let ikeIndex = self?.viewModel.protocolIndex(for: .vpnProtocol(.ike)) else {
-                    return
-                }
-                self?.refreshProtocolList(withSelectionAt: ikeIndex)
-            default:
-                self?.refreshPendingEnablement()
-            }
-        }
+        protocolList.selectedViewModel?.handler()
     }
 
     @objc private func tourCancelled() {
-        sysexTourCancelled?()
+        viewModel.sysexTourCancelled?()
     }
-    
-    @objc private func countrySelected() {
-        refreshCountryList(for: typeList.indexOfSelectedItem, withSelectionAt: countryList.indexOfSelectedItem)
-        refreshServerList(for: typeList.indexOfSelectedItem, and: countryList.indexOfSelectedItem, withSelectionAt: 0)
-    }
-    
-    @objc private func serverSelected() {
-        refreshServerList(for: typeList.indexOfSelectedItem, and: countryList.indexOfSelectedItem, withSelectionAt: serverList.indexOfSelectedItem)
-    }
-    
+
     @objc private func cancelButtonAction() {
         if isSessionUnderway {
             let viewModel = WarningPopupViewModel(title: LocalizedString.createNewProfile,
                                                   description: LocalizedString.currentSelectionWillBeLost) { [weak self] in
-                self?.viewModel.cancelCreation()
+                self?.viewModel.clearContent()
             }
             presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
             return
         }
-        viewModel.cancelCreation()
+        viewModel.clearContent()
     }
     
     @objc private func saveButtonAction() {
-        var errors = ""
-        
-        if nameTextField.stringValue.isEmpty {
-            errors = appendedWithSeparator(string: errors)
-            errors += LocalizedString.profileNameIsRequired
-        }
-        if nameTextField.stringValue.count > 25 {
-            errors = appendedWithSeparator(string: errors)
-            errors += LocalizedString.profileNameIsTooLong
-        }
-        
-        let selectedCountryItem = countryList.indexOfSelectedItem
-        let selectedServerItem = serverList.indexOfSelectedItem
-        
-        if selectedCountryItem == 0 {
-            errors = appendedWithSeparator(string: errors)
-            errors += LocalizedString.countrySelectionIsRequired
-        }
-        if selectedServerItem == 0 {
-            errors = appendedWithSeparator(string: errors)
-            errors += LocalizedString.serverSelectionIsRequired
-        }
-        
-        guard errors.isEmpty else {
-            presentAlert(errors)
-            return
-        }
+        viewModel.profileName = nameTextField.stringValue
+        viewModel.save()
+    }
 
-        viewModel.createProfile(name: nameTextField.stringValue)
-    }
-    
-    private func appendedWithSeparator(string: String) -> String {
-        guard !string.isEmpty else { return string }
-        
-        return string + ", "
-    }
-    
     private func presentAlert(_ message: String) {
         warningLabel.attributedStringValue = message.styled(.danger, font: .themeFont(.heading4))
         warningLabel.isHidden = false
@@ -415,50 +246,60 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func startObserving() {
-        viewModel.prefillContent = { [weak self] information in self?.prefillContent(information) }
-        viewModel.contentChanged = { [weak self] in self?.contentChanged() }
+        viewModel.menuContentChanged = { [weak self] keyPaths in self?.menuContentChanged(keyPaths: keyPaths) }
+        viewModel.prefillContent = { [weak self] in self?.prefillContent() }
         viewModel.contentWarning = { [weak self] message in self?.presentAlert(message) }
         viewModel.secureCoreWarning = { [weak self] in self?.secureCoreWarning() }
+        viewModel.protocolPending = { [weak self] pending in
+            if pending {
+                self?.protocolEnablementProgress.startAnimation(nil)
+            } else {
+                self?.protocolEnablementProgress.stopAnimation(nil)
+            }
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(clearContent),
                                                name: viewModel.sessionFinished, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled),
                                                name: SystemExtensionManager.userCancelledTour, object: nil)
     }
     
-    private func prefillContent(_ profileInformation: PrefillInformation) {
+    private func prefillContent() {
         clearContent()
-        prefill(with: profileInformation)
-    }
-    
-    private func prefill(with profileInformation: PrefillInformation) {
-        nameTextField.stringValue = profileInformation.name
-        viewModel.colorPickerViewModel.select(color: profileInformation.color)
-        
-        let adjustedCountryIndex = profileInformation.countryIndex + 1
-        let adjustedServerIndex = profileInformation.serverIndex + 1
 
-        let selectedProtocol = ConnectionProtocol(intValue: profileInformation.vpnProtocolIndex)
-
-        populateLists(selectedType: profileInformation.typeIndex,
-                      selectedCountry: adjustedCountryIndex,
-                      selectedServer: adjustedServerIndex,
-                      selectedProtocol: selectedProtocol)
+        if let profileName = viewModel.profileName {
+            nameTextField.stringValue = profileName
+        }
     }
-    
-    private func contentChanged() {
-        populateLists()
+
+    private func menuContentChanged(keyPaths: CreateNewProfileViewModel.MenuContentUpdate) {
+        for update in keyPaths {
+            let list: HoverDetectionPopUpButton
+            switch update {
+            case \.serverTypeMenuItems:
+                list = typeList
+            case \.countryMenuItems:
+                list = countryList
+            case \.serverMenuItems:
+                list = serverList
+            case \.protocolMenuItems:
+                list = protocolList
+            default:
+                assertionFailure("Unhandled content update with key path \(update)")
+                continue
+            }
+
+            list.push(items: viewModel[keyPath: update])
+        }
     }
     
     @objc private func clearContent() {
         nameTextField.stringValue = ""
-        viewModel.colorPickerViewModel.selectRandom()
-        populateLists()
         warningLabel.isHidden = true
         warningLabelHorizontalLine.isHidden = true
     }
     
     private func secureCoreWarning() {
-        presentAsModalWindow(viewModel.createSecureCoreWarningViewController())
+        presentAsModalWindow(SecureCoreWarningViewController(viewModel: viewModel.secureCoreWarningViewModel))
     }
 }
 
