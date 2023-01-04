@@ -29,14 +29,14 @@ final class SecureCoreWarningViewController: NSViewController {
     @IBOutlet weak var upgradeButton: PrimaryActionButton!
     @IBOutlet weak var learnMoreButton: InteractiveActionButton!
 
-    private let sessionService: SessionService
+    private let viewModel: SecureCoreWarningViewModel
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init(sessionService: SessionService) {
-        self.sessionService = sessionService
+    required init(viewModel: SecureCoreWarningViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: NSNib.Name("SecureCoreWarning"), bundle: nil)
     }
     
@@ -74,14 +74,13 @@ final class SecureCoreWarningViewController: NSViewController {
     
     @objc private func upgradeButtonAction() {
         Task {
-            let url = await sessionService.getPlanSession(mode: .upgrade)
-            SafariService.openLink(url: url)
+            await viewModel.upgradeButtonPressed()
         }
         dismiss(nil)
     }
     
     @objc private func learnMoreButtonAction() {
-        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMore)
+        viewModel.learnMoreButtonPressed()
         dismiss(nil)
     }
 }

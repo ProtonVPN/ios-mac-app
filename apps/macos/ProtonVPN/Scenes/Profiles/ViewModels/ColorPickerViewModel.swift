@@ -55,19 +55,13 @@ class ColorPickerViewModel {
         selectedColorIndex = colors.randomIndex
     }
     
-    func select(color newColor: NSColor?) {
-        guard let newColor = newColor else {
-            selectRandom()
-            return
-        }
-        
-        for (index, color) in colors.enumerated() where color == newColor {
-            selectedColorIndex = index
-            break
+    func select(rgbHex: Int) {
+        if let newIndex = colors.firstIndex(where: { $0.hexRepresentation == rgbHex }) {
+            selectedColorIndex = newIndex
         }
     }
     
-    func select(color index: Int) {
+    func select(index: Int) {
         if index >= 0 && index < colorCount {
             selectedColorIndex = index
         }

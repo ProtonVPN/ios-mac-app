@@ -41,7 +41,7 @@ extension CreateNewProfileViewModel {
         let imageAttributedString = flagString(country.countryCode)
         let countryString = "  " + country.country
         let nameAttributedString: NSAttributedString
-        if country.lowestTier <= userTier {
+        if userTierSupports(country: country) {
             nameAttributedString = NSMutableAttributedString(
                 string: countryString,
                 attributes: [
@@ -98,7 +98,7 @@ extension CreateNewProfileViewModel {
             let countryFlag = flagString(server.countryCode)
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
-            if server.tier <= userTier {
+            if userTierSupports(server: server) {
                 serverDescriptor = NSMutableAttributedString(
                     string: serverString,
                     attributes: [

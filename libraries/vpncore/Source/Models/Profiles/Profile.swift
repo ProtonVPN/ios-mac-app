@@ -88,7 +88,7 @@ public class Profile: NSObject, NSCoding {
         self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType,
                   serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: connectionProtocol)
     }
-    
+
     // MARK: - NSCoding
     private struct CoderKey {
         static let id = "id"
