@@ -231,7 +231,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appStateChanged),
-                                               name: AppStateManagerNotification.stateChange,
+                                               name: .AppStateManager.stateChange,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(userPlanChanged),
@@ -388,6 +388,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func stopConnecting(userInitiated: Bool) {
+        NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
         log.info("Connecting cancelled, userInitiated: \(userInitiated)", category: .connectionConnect)
         connectionPreparer = nil
         appStateManager.cancelConnectionAttempt()

@@ -114,7 +114,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         self.loading(show: false)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(appStateChanged),
-                                               name: AppStateManagerNotification.stateChange,
+                                               name: .AppStateManager.stateChange,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(windowDidResize(_:)),

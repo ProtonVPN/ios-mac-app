@@ -107,7 +107,7 @@ public class DoHVPN: DoH, ServerConfig {
         self.appState = appState
         super.init()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: AppStateManagerNotification.stateChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: .AppStateManager.stateChange, object: nil)
 
         status = alternativeRouting ? .on : .off
     }
