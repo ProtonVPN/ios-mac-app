@@ -91,11 +91,9 @@ open class Container: PropertiesToOverride {
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
-    private lazy var _telemetryServiceTask: Task<TelemetryService, Never> = {
-        Task {
-            await TelemetryService(factory: self)
-        }
-    }()
+    private lazy var _telemetryServiceTask = Task {
+        await TelemetryService(factory: self)
+    }
 
     // Transient instances - get allocated as many times as they're referenced
     private var serverStorage: ServerStorage {

@@ -65,6 +65,8 @@ public final class CoreNetworking: Networking {
         self.doh = doh
         self.authKeychain = authKeychain
 
+        Self.setupTrustKit()
+
         apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "")
         apiService.authDelegate = self
         apiService.serviceDelegate = self
@@ -72,6 +74,19 @@ public final class CoreNetworking: Networking {
         apiService.humanDelegate = delegate
 
         delegate.set(apiService: apiService)
+    }
+
+    private static func setupTrustKit() {
+        // FUTUREDO: When we adopt a Core version >= 3.25.1, move to TrustKitWrapper
+        #if TLS_PIN_DISABLE
+        PMAPIService.trustKit = nil
+        PMAPIService.noTrustKit = true
+        #else
+        let config = TrustKitWrapper.configuration(hardfail: true)
+        let instance = TrustKit(configuration: config)
+        PMAPIService.trustKit = instance
+        PMAPIService.noTrustKit = false
+        #endif
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<VPNShared.JSONDictionary, Error>) -> Void) {

@@ -246,17 +246,6 @@ extension AppDelegate {
     private func setupCoreIntegration() {
         ColorProvider.brand = .vpn
 
-        // FUTUREDO: When we adopt a Core version >= 3.25.1, move to TrustKitWrapper
-        #if TLS_PIN_DISABLE
-        PMAPIService.trustKit = nil
-        PMAPIService.noTrustKit = true
-        #else
-        let config = TrustKitWrapper.configuration(hardfail: true)
-        let instance = TrustKit(configuration: config)
-        PMAPIService.trustKit = instance
-        PMAPIService.noTrustKit = false
-        #endif
-
         ProtonCore_Log.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:

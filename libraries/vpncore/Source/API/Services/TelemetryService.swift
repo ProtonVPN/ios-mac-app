@@ -47,7 +47,6 @@ public class TelemetryService {
 
     lazy var telemetryAPI: TelemetryAPI = TelemetryAPI(networking: networking)
 
-    private var lastConnectedDate = Date()
     private var startedConnectionDate: Date?
     private var networkType: TelemetryDimensions.NetworkType = .unavailable
     private var previousAppDisplayState: AppDisplayState = .disconnected
@@ -56,38 +55,10 @@ public class TelemetryService {
 
     init(factory: Factory) async {
         self.factory = factory
-        self.lastConnectedDate = await appStateManager.connectedDate()
         startObserving()
     }
 
     private func startObserving() {
-        if #available(iOS 15, macOS 12, *) {
-            observeWithAsyncSequence()
-        } else {
-            observeWithCombine()
-        }
-    }
-
-    @available(iOS 15, macOS 12, *)
-    private func observeWithAsyncSequence() {
-        Task {
-            for await notification in NotificationCenter.default.notifications(named: .reachabilityChanged) {
-                reachabilityChanged(notification)
-            }
-        }
-        Task {
-            for await notification in NotificationCenter.default.notifications(named: .AppStateManager.displayStateChange) {
-                connectionChanged(notification)
-            }
-        }
-        Task {
-            for await notification in NotificationCenter.default.notifications(named: .userInitiatedVPNChange) {
-                userInitiatedVPNChange(notification)
-            }
-        }
-    }
-
-    private func observeWithCombine() {
         NotificationCenter.default
             .publisher(for: .reachabilityChanged)
             .sink(receiveValue: reachabilityChanged)
@@ -224,12 +195,6 @@ public class TelemetryService {
             return 0
         }
         return  Date().timeIntervalSince1970 - propertiesManager.lastConnectedTimeStamp
-    }
-
-    @objc private func stateChanged() {
-        Task { [unowned self] in
-            self.lastConnectedDate = await appStateManager.connectedDate()
-        }
     }
 
     private func report(event: ConnectionEvent) {

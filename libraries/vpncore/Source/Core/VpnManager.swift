@@ -289,7 +289,8 @@ public class VpnManager: VpnManagerProtocol {
             completionHandler?(successful ? nil : error)
         }
     }
-    
+
+    @available(*, deprecated, renamed: "connectedDate()")
     public func connectedDate(completion: @escaping (Date?) -> Void) {
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             completion(nil)
@@ -323,9 +324,7 @@ public class VpnManager: VpnManagerProtocol {
 
     public func connectedDate() async -> Date? {
         return await withCheckedContinuation { continuation in
-            connectedDate { result in
-                continuation.resume(returning: result)
-            }
+            connectedDate(completion: continuation.resume)
         }
     }
     
