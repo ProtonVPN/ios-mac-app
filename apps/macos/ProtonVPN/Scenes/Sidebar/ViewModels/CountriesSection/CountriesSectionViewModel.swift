@@ -354,7 +354,7 @@ class CountriesSectionViewModel {
     }
     
     private func insertServers( _ index: Int, countryGroup: CountryGroup ) -> Int {
-        guard let cells = self.servers[countryGroup.0.countryCode] else { return 0 }
+        guard let cells = self.servers[countryGroup.country.countryCode] else { return 0 }
         data.insert(contentsOf: cells, at: index)
         return cells.count
     }

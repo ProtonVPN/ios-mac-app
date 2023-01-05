@@ -21,7 +21,7 @@
 
 import Foundation
 
-public typealias CountryGroup = (CountryModel, [ServerModel])
+public typealias CountryGroup = (country: CountryModel, servers: [ServerModel])
 
 public protocol ServerManager: AnyObject {
     var contentChanged: Notification.Name { get }
@@ -196,10 +196,10 @@ public class ServerManagerImplementation: ServerManager {
     private func sort(countryGroups: [CountryGroup]) -> [CountryGroup] {
         var sortedCountryGroups: [CountryGroup] = []
         for countryGroup in countryGroups {
-            let (availableServers, unavailableServers) = countryGroup.1.filter2 { $0.tier <= self.userTier }
+            let (availableServers, unavailableServers) = countryGroup.servers.filter2 { $0.tier <= self.userTier }
             let sortedServers = availableServers.sorted { $0.tier > $1.tier } +
                                 unavailableServers.sorted { $0.tier < $1.tier }
-            sortedCountryGroups.append(CountryGroup(countryGroup.0, sortedServers))
+            sortedCountryGroups.append(CountryGroup(countryGroup.country, sortedServers))
         }
         return sortedCountryGroups
     }
