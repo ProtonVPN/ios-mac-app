@@ -26,7 +26,7 @@ import Foundation
 public class AppStateManagerMock: AppStateManager {
     public var displayState: AppDisplayState = .disconnected {
         didSet {
-            NotificationCenter.default.post(name: .AppStateManager.displayStateChange, object: state)
+            NotificationCenter.default.post(name: .AppStateManager.displayStateChange, object: displayState)
         }
     }
 
@@ -35,6 +35,8 @@ public class AppStateManagerMock: AppStateManager {
             NotificationCenter.default.post(name: .AppStateManager.stateChange, object: state)
         }
     }
+
+    public var mockActiveConnection: ConnectionConfiguration?
     
     public var onVpnStateChanged: ((VpnState) -> Void)?
     
@@ -79,7 +81,7 @@ public class AppStateManagerMock: AppStateManager {
     }
     
     public func activeConnection() -> ConnectionConfiguration? {
-        return nil
+        return mockActiveConnection
     }
     
 }

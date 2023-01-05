@@ -50,7 +50,7 @@ class StateAlertTests: XCTestCase {
         
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
-        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
@@ -61,7 +61,7 @@ class StateAlertTests: XCTestCase {
         
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
-        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
         
         XCTAssertTrue(alertService.alerts.isEmpty)
 
@@ -84,7 +84,7 @@ class StateAlertTests: XCTestCase {
     func testFirstTimeConnectingAlert() {
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
-        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
         
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is FirstTimeConnectingAlert)
@@ -93,15 +93,70 @@ class StateAlertTests: XCTestCase {
     func testNormalConnectingNoAlerts() {
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
-        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
+        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
         
         XCTAssertTrue(alertService.alerts.isEmpty)
     }
-    
-    lazy var connectionConfig: ConnectionConfiguration = {
-        let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil)
-        let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike, netShieldType: .off, natType: .default, safeMode: true, ports: [500])
-    }()
-    
+}
+
+extension ConnectionConfiguration {
+    static var connectionConfig: ConnectionConfiguration {
+        let server = ServerModel(id: "",
+                                 name: "",
+                                 domain: "",
+                                 load: 0,
+                                 entryCountryCode: "",
+                                 exitCountryCode: "",
+                                 tier: 1,
+                                 feature: .zero,
+                                 city: nil,
+                                 ips: [ServerIp](),
+                                 score: 0.0,
+                                 status: 0,
+                                 location: ServerLocation(lat: 0, long: 0),
+                                 hostCountry: nil,
+                                 translatedCity: nil)
+        let serverIp = ServerIp(id: "",
+                                entryIp: "",
+                                exitIp: "",
+                                domain: "",
+                                status: 0)
+        return ConnectionConfiguration(server: server,
+                                       serverIp: serverIp,
+                                       vpnProtocol: .ike,
+                                       netShieldType: .off,
+                                       natType: .default,
+                                       safeMode: true,
+                                       ports: [500])
+    }
+
+    static var connectionConfig2: ConnectionConfiguration {
+        let server = ServerModel(id: "",
+                                 name: "",
+                                 domain: "",
+                                 load: 0,
+                                 entryCountryCode: "CZ",
+                                 exitCountryCode: "PL",
+                                 tier: 1,
+                                 feature: .zero,
+                                 city: nil,
+                                 ips: [ServerIp](),
+                                 score: 0.0,
+                                 status: 0,
+                                 location: ServerLocation(lat: 0, long: 0),
+                                 hostCountry: nil,
+                                 translatedCity: nil)
+        let serverIp = ServerIp(id: "",
+                                entryIp: "",
+                                exitIp: "",
+                                domain: "",
+                                status: 0)
+        return ConnectionConfiguration(server: server,
+                                       serverIp: serverIp,
+                                       vpnProtocol: .ike,
+                                       netShieldType: .off,
+                                       natType: .default,
+                                       safeMode: true,
+                                       ports: [500])
+    }
 }

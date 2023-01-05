@@ -32,7 +32,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         container.propertiesManager.hasConnected = true
     }
 
-    func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() async { // swiftlint:disable:this function_body_length cyclomatic_complexity
+    func testRotatingConnectionsBetweenWireguardOpenVpnAndIke() async throws { // swiftlint:disable:this function_body_length cyclomatic_complexity
         let expectations = (
             vpnManagerWireguardConnect: XCTestExpectation(description: "vpn manager wireguard connect"),
             wireguardTunnelStarted: XCTestExpectation(description: "wireguard tunnel started"),
@@ -127,8 +127,8 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 1)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.1")))
 
-        var date = await container.vpnManager.connectedDate()
-        XCTAssertNotNil(date)
+        var connectedDate = await container.vpnManager.connectedDate()
+        var date = try XCTUnwrap(connectedDate)
         XCTAssertEqual(date, dateConnectionEstablished)
 
         container.vpnManager.isOnDemandEnabled { enabled in
@@ -214,7 +214,8 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .openVpn(.tcp))
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "openVpnUser", address: "127.0.0.3")))
-        date = await container.vpnManager.connectedDate()
+        connectedDate = await container.vpnManager.connectedDate()
+        date = try XCTUnwrap(connectedDate)
         XCTAssertNotNil(date)
         XCTAssertEqual(date, dateConnectionEstablished)
 
@@ -294,7 +295,8 @@ class VpnManagerTests: BaseConnectionTestCase {
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
         XCTAssertEqual(container.neTunnelProviderFactory.tunnelProviderPreferencesData.count, 2)
         XCTAssertEqual(container.vpnManager.state, .connected(.init(username: "", address: "127.0.0.5")))
-        date = await container.vpnManager.connectedDate()
+        connectedDate = await container.vpnManager.connectedDate()
+        date = try XCTUnwrap(connectedDate)
         XCTAssertNotNil(date)
         XCTAssertEqual(date, dateConnectionEstablished)
 

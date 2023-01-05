@@ -92,7 +92,7 @@ open class Container: PropertiesToOverride {
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
     private lazy var _telemetryServiceTask = Task {
-        await TelemetryService(factory: self)
+        await TelemetryService(factory: self, timer: ConnectionTimer())
     }
 
     // Transient instances - get allocated as many times as they're referenced
@@ -473,5 +473,11 @@ extension Container: SiriHelperFactory {
 extension Container: TelemetryServiceFactory {
     public func makeTelemetryService() async -> TelemetryService {
         return await _telemetryServiceTask.value
+    }
+}
+
+extension Container: TelemetryAPIFactory {
+    public func makeTelemetryAPI(networking: Networking) -> TelemetryAPI {
+        TelemetryAPIImplementation(networking: networking)
     }
 }

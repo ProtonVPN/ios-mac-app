@@ -116,7 +116,7 @@ class ServerManagerTests: XCTestCase {
         }
     }
 
-    func testLogicalThatOnlySupportsOneProtocol() {
+    func testLogicalThatOnlySupportsOneProtocol() throws {
         let serverManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: serverStorage)
 
         let grouping = serverManager.grouping(for: .tor)
@@ -124,10 +124,8 @@ class ServerManagerTests: XCTestCase {
         var unsupportedProtocols = VpnProtocol.allCases
         unsupportedProtocols.removeAll(where: { $0 == .wireGuard(.udp) })
 
-        guard let serverModel = findServerModel(groupings: grouping,
-                                                withServerIpNamed: "JP#8") else {
-            return
-        }
+        let serverModel = try XCTUnwrap(findServerModel(groupings: grouping,
+                                                        withServerIpNamed: "JP#8"))
 
         XCTAssert(serverModel.supports(vpnProtocol: .wireGuard(.udp)))
 
@@ -136,22 +134,20 @@ class ServerManagerTests: XCTestCase {
         }
     }
 
-    func testLogicalThatSupportsAllProtocolsButHasServerIpEntrySupportingSubset() {
+    func testLogicalThatSupportsAllProtocolsButHasServerIpEntrySupportingSubset() throws {
         let serverManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: serverStorage)
 
         let grouping = serverManager.grouping(for: .secureCore)
 
-        guard let serverModel = findServerModel(groupings: grouping,
-                                                withServerIpNamed: "CH-CA#5") else {
-            return
-        }
+        let serverModel = try XCTUnwrap(findServerModel(groupings: grouping,
+                                                        withServerIpNamed: "CH-CA#5"))
 
         for vpnProtocol in VpnProtocol.allCases {
             XCTAssert(serverModel.supports(vpnProtocol: vpnProtocol))
         }
     }
 
-    func testLogicalThatSupportsSubsetOfProtocols() {
+    func testLogicalThatSupportsSubsetOfProtocols() throws {
         let serverManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: serverStorage)
 
         let grouping = serverManager.grouping(for: .p2p)
@@ -159,10 +155,8 @@ class ServerManagerTests: XCTestCase {
         var unsupportedProtocols = VpnProtocol.allCases
         unsupportedProtocols.removeAll(where: { $0 == .wireGuard(.tcp) || $0 == .openVpn(.udp) })
 
-        guard let serverModel = findServerModel(groupings: grouping,
-                                                withServerIpNamed: "JP#7") else {
-            return
-        }
+        let serverModel = try XCTUnwrap(findServerModel(groupings: grouping,
+                                                        withServerIpNamed: "JP#7"))
 
         XCTAssert(serverModel.supports(vpnProtocol: .wireGuard(.tcp)))
         XCTAssertEqual(serverModel.ips.first!.entryIp(using: .wireGuard(.tcp)),
