@@ -178,7 +178,7 @@ class ServerManagerTests: XCTestCase {
 
     func findServerModel(groupings: [CountryGroup], withServerIpNamed name: String) -> ServerModel? {
         for grouping in groupings {
-            for serverModel in grouping.1 {
+            for serverModel in grouping.servers {
                 if serverModel.name == name {
                     return serverModel
                 }

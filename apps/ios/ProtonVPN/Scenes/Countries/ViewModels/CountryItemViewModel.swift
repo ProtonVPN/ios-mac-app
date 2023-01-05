@@ -213,8 +213,8 @@ class CountryItemViewModel {
 
     // MARK: Init routine
     init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol, planService: PlanService) {
-        self.countryModel = countryGroup.0
-        self.serverModels = countryGroup.1
+        self.countryModel = countryGroup.country
+        self.serverModels = countryGroup.servers
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService

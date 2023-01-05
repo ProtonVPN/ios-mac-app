@@ -129,7 +129,7 @@ class CreateNewProfileViewModel {
                handler: { [weak self] in self?.update(countryIndex: nil) })] +
         // Countries by index in their grouping
         serverManager.grouping(for: state.serverType).enumerated().map { (index, grouping) in
-                .init(title: countryDescriptor(for: grouping.0),
+                .init(title: countryDescriptor(for: grouping.country),
                       checked: state.countryIndex == index,
                       handler: { [weak self] in self?.update(countryIndex: index) })
         }
@@ -374,7 +374,7 @@ class CreateNewProfileViewModel {
         let accessTier: Int
         switch serverOffering {
         case .fastest, .random:
-            accessTier = selectedCountryGroup.0.lowestTier
+            accessTier = selectedCountryGroup.country.lowestTier
         case .custom(let wrapper):
             accessTier = wrapper.server.tier
         }

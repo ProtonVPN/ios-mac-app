@@ -332,7 +332,7 @@ class CreateOrEditProfileViewModel: NSObject {
         // Get newest data, because servers list may have been updated since selected group was set
         guard let countryGroup else { return nil }
 
-        let serversAll = countryGroup.1
+        let serversAll = countryGroup.servers
 
         return CoreAppConstants.VpnTiers.allCases.compactMap { tier in
             let servers = serversAll.filter { $0.tier == tier }
@@ -437,7 +437,7 @@ extension CreateOrEditProfileViewModel {
     
     private var countrySelectionDataSet: SelectionDataSet {
         let rows: [SelectionRow] = countries.map({ countryGroup in
-            return SelectionRow(title: countryDescriptor(for: countryGroup.0), object: countryGroup)
+            return SelectionRow(title: countryDescriptor(for: countryGroup.country), object: countryGroup)
         })
                 
         let sections: [SelectionSection]
@@ -487,8 +487,8 @@ extension CreateOrEditProfileViewModel {
 
         var sections: [SelectionSection] = [
             SelectionSection(title: nil, cells: [
-                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.0.countryCode)),
-                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.0.countryCode)),
+                SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.country.countryCode)),
+                SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.country.countryCode)),
             ])
         ]
 

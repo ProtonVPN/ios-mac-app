@@ -67,13 +67,13 @@ class VpnServerSelector {
             guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
                 return nil
             }
-            sortedServers = countryGroup.1.sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
+            sortedServers = countryGroup.servers.sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
             forSpecificCountry = true
         case let .city(country: countryCode, city: city):
             guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
                 return nil
             }
-            sortedServers = countryGroup.1.filter({ $0.city == city }).sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
+            sortedServers = countryGroup.servers.filter({ $0.city == city }).sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
             forSpecificCountry = false
         default:
             sortedServers = serverGrouping

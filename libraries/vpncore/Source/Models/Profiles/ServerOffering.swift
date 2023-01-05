@@ -122,8 +122,8 @@ public enum ServerOffering: Equatable {
             guard let grouping else {
                 return true
             }
-            assert(grouping.0.countryCode == countryCode, "Mismatched grouping while checking server protocol support")
-            return grouping.1.contains {
+            assert(grouping.country.countryCode == countryCode, "Mismatched grouping while checking server protocol support")
+            return grouping.servers.contains {
                 $0.supports(connectionProtocol: connectionProtocol,
                             smartProtocolConfig: smartProtocolConfig)
             }

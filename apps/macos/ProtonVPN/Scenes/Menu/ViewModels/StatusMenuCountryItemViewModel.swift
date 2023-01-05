@@ -30,7 +30,7 @@ class StatusMenuCountryItemViewModel {
     private let vpnGateway: VpnGatewayProtocol
     
     var flag: NSImage {
-        return AppTheme.Icon.flag(countryCode: countryGroup.0.countryCode) ?? NSImage()
+        return AppTheme.Icon.flag(countryCode: countryGroup.country.countryCode) ?? NSImage()
     }
     
     var description: NSAttributedString {
@@ -44,8 +44,8 @@ class StatusMenuCountryItemViewModel {
     }
     
     func connect() {
-        log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(countryGroup.0.countryCode) serverType: \(type)", category: .connectionConnect, event: .trigger)
-        vpnGateway.connectTo(country: countryGroup.0.countryCode, ofType: type, trigger: .country)
+        log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(countryGroup.country.countryCode) serverType: \(type)", category: .connectionConnect, event: .trigger)
+        vpnGateway.connectTo(country: countryGroup.country.countryCode, ofType: type, trigger: .country)
     }
     
     // MARK: - Private
@@ -55,10 +55,10 @@ class StatusMenuCountryItemViewModel {
 
         if type == .secureCore {
             let secureCoreIcon = AppTheme.Icon.chevronsRight.asAttachment(style: [.interactive, .strong], size: .square(16), centeredVerticallyForFont: font)
-            let code = (" " + countryGroup.0.countryCode).styled(font: font)
+            let code = (" " + countryGroup.country.countryCode).styled(font: font)
             label = NSAttributedString.concatenate(secureCoreIcon, code)
         } else {
-            label = countryGroup.0.countryCode.styled(font: font)
+            label = countryGroup.country.countryCode.styled(font: font)
         }
         return label
     }
