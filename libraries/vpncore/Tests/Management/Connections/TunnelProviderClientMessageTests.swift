@@ -82,7 +82,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         disconnectSynchronously()
     }
 
-    func testTooManyCertRefreshRequests() {
+    func testTooManyCertRefreshRequests() throws {
         container.vpnAuthenticationStorage.cert = nil
         let refreshInterval: TimeInterval = .minutes(2)
         mockProviderState.forceResponse = .errorTooManyCertRequests(retryAfter: Int(refreshInterval))
@@ -94,10 +94,9 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
 
         awaitExpectations()
 
-        guard let alert = container.alertService.alerts.last as? TooManyCertificateRequestsAlert else {
-            XCTFail("Alert is not TooManyCertificateRequestsAlert")
-            return
-        }
+        let alert = try XCTUnwrap(container.alertService.alerts.last as? TooManyCertificateRequestsAlert,
+                                  "Alert is not TooManyCertificateRequestsAlert")
+
         XCTAssert(alert.message?.hasSuffix("2 minutes.") == true)
 
         disconnectSynchronously()

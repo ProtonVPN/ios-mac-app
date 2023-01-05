@@ -441,6 +441,10 @@
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E510E27E2948CFEB00AC1785 /* TelemetryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E510E27D2948CFEA00AC1785 /* TelemetryService.swift */; };
+		E52BFF282965AEB60055332D /* TelemetryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52BFF272965AEB60055332D /* TelemetryServiceTests.swift */; };
+		E52BFF292965AEB60055332D /* TelemetryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52BFF272965AEB60055332D /* TelemetryServiceTests.swift */; };
+		E52E8137296C5F45002AF127 /* ConnectionTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8136296C5F45002AF127 /* ConnectionTimer.swift */; };
+		E52E8138296C5F45002AF127 /* ConnectionTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8136296C5F45002AF127 /* ConnectionTimer.swift */; };
 		E532A8B6292642CE00096D2D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */; };
 		E532A8B72926432900096D2D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */; };
 		E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */; };
@@ -1016,6 +1020,8 @@
 		E1E892B82369EDF7001A436E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
 		E510E27D2948CFEA00AC1785 /* TelemetryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryService.swift; sourceTree = "<group>"; };
+		E52BFF272965AEB60055332D /* TelemetryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryServiceTests.swift; sourceTree = "<group>"; };
+		E52E8136296C5F45002AF127 /* ConnectionTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTimer.swift; sourceTree = "<group>"; };
 		E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionSet+Extension.swift"; sourceTree = "<group>"; };
 		E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageTests.swift; sourceTree = "<group>"; };
 		E53406A728E1B67A0078A7A3 /* AnnouncementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTests.swift; sourceTree = "<group>"; };
@@ -1385,6 +1391,7 @@
 				C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */,
 				E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */,
 				E5E4657B2951B43800A4DE80 /* TelemetryTests.swift */,
+				E52BFF272965AEB60055332D /* TelemetryServiceTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1802,6 +1809,7 @@
 				E510E27D2948CFEA00AC1785 /* TelemetryService.swift */,
 				E5E4657E29548D2200A4DE80 /* TelemetryAPI.swift */,
 				E5E4658129548D3400A4DE80 /* TelemetryFeature.swift */,
+				E52E8136296C5F45002AF127 /* ConnectionTimer.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2872,6 +2880,7 @@
 				E1B5F67921B824A500B558B0 /* Arithmetic.swift in Sources */,
 				E55046432849F45A00E4BFC2 /* Image+Flag.swift in Sources */,
 				F307F7B827C3C205004FD4A7 /* SafeModePropertyProviderMock.swift in Sources */,
+				E52E8137296C5F45002AF127 /* ConnectionTimer.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				4C14523A292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */,
 				ADEB719B29644CE9000B82CE /* UniquelyMergeable.swift in Sources */,
@@ -3057,6 +3066,7 @@
 				E19CE84E22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
 				D59671EA253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift in Sources */,
 				D5967208253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
+				E52BFF282965AEB60055332D /* TelemetryServiceTests.swift in Sources */,
 				D5ADFBD023A0D09600C28CFF /* URLArrayTests.swift in Sources */,
 				D5C204242486646F004FB58B /* VpnServerSelectorTests.swift in Sources */,
 				08D99AC826BEE6B2BC66F9C5 /* Result+Extensions.swift in Sources */,
@@ -3187,6 +3197,7 @@
 				E129C6C322A90E6600D8437E /* AlertServiceMock.swift in Sources */,
 				E1B5F67021B8205100B558B0 /* ServerLocation.swift in Sources */,
 				4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */,
+				E52E8138296C5F45002AF127 /* ConnectionTimer.swift in Sources */,
 				E151126C22F07D3100C9A41F /* VpnManagerConfiguration.swift in Sources */,
 				E1B5F63421B6B19200B558B0 /* VpnState.swift in Sources */,
 				E129C6C422A90E6600D8437E /* PropertiesManagerMock.swift in Sources */,
@@ -3328,6 +3339,7 @@
 				4C83C4732869FCAF000A3FB4 /* AvailabilityCheckerResolverMock.swift in Sources */,
 				E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				D5D2958225A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift in Sources */,
+				E52BFF292965AEB60055332D /* TelemetryServiceTests.swift in Sources */,
 				D5967209253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
 				E53406A328E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */,
 				D5D2946325A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,

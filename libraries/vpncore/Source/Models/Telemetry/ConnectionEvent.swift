@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct ConnectionEvent: Encodable, TelemetryEvent {
+public struct ConnectionEvent: Encodable, TelemetryEvent {
     var measurementGroup: String = "vpn.ios.connection"
     let event: ConnectionEventType
     let dimensions: TelemetryDimensions
@@ -28,7 +28,7 @@ struct ConnectionEvent: Encodable, TelemetryEvent {
         self.dimensions = dimensions
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(measurementGroup, forKey: .measurementGroup)
         try container.encode(event.rawValue, forKey: .event)

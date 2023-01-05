@@ -19,7 +19,15 @@
 import Foundation
 import ProtonCore_Utilities
 
-class TelemetryAPI {
+public protocol TelemetryAPI {
+    func flushEvent(event: ConnectionEvent)
+}
+
+public protocol TelemetryAPIFactory {
+    func makeTelemetryAPI(networking: Networking) -> TelemetryAPI
+}
+
+class TelemetryAPIImplementation: TelemetryAPI {
 
     private let networking: Networking
 
@@ -29,6 +37,16 @@ class TelemetryAPI {
 
     func flushEvent(event: ConnectionEvent) {
         let request = TelemetryRequest(event)
+        switch event.event {
+        case .vpnConnection(let timeInterval):
+            log.debug("pj vpnConnection")
+            log.debug("pj outcome: \(event.dimensions.outcome)")
+            log.debug("pj time_to_connection: \(timeInterval)")
+        case .vpnDisconnection(let timeInterval):
+            log.debug("pj vpnDisconnection")
+            log.debug("pj outcome: \(event.dimensions.outcome)")
+            log.debug("pj session_length: \(timeInterval)")
+        }
         networking.apiService.perform(request: request) { task, result in
             switch result {
             case .success:
