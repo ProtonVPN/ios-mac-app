@@ -201,10 +201,10 @@ class ProtonCz(BaseCommitizen):
 
         return jiraids
 
-    def get_jira_ids_string_from_env_or_branch(self):
+    def get_jira_ids_string_from_env_or_branch(self) -> str:
         jiraids = self.get_jira_ids_from_env_or_branch()
         if not jiraids:
-            return None
+            return ""
 
         return ", ".join(jiraids)
 
