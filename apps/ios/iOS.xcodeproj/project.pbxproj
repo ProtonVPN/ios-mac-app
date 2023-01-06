@@ -4583,7 +4583,7 @@
 				OTHER_LDFLAGS = "";
 				PATH = "$PATH:/opt/homebrew/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WG_BUILD_PATH = "${BUILD_DIR}/../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
+				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
 			name = Staging;
 		};
@@ -4600,7 +4600,7 @@
 				OTHER_LDFLAGS = "";
 				PATH = "$PATH:/opt/homebrew/bin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				WG_BUILD_PATH = "${BUILD_DIR}/../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
+				WG_BUILD_PATH = "${BUILD_DIR}/../../../../../SourcePackages/checkouts/wireguard-apple/Sources/WireGuardKitGo";
 			};
 			name = Release;
 		};
