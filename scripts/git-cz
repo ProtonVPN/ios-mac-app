@@ -27,9 +27,25 @@ function usage() {
 function lint_for_ci() {
   local commit_from="$CI_COMMIT_BEFORE_SHA"
   local commit_to="$CI_COMMIT_SHA"
+  local null_sha="0000000000000000000000000000000000000000"
+
+  if [ -z "$commit_to" ]; then
+    echo "No value defined for \$CI_COMMIT_SHA; skipping."
+    exit 0
+  fi
 
   if [ ! -z "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then
     commit_from="$CI_MERGE_REQUEST_DIFF_BASE_SHA"
+  fi
+
+  if [ -z "$commit_from" ] || [ "$commit_from" == "$null_sha" ]; then
+    commit_from="origin/develop"
+  fi
+
+  # Check if $commit_from actually comes before $commit_to.
+  if ! git merge-base --is-ancestor "$commit_from" "$commit_to"; then
+    echo "$commit_from is not an ancestor of $commit_to; skipping commit linting phase."
+    exit 0
   fi
 
   local commit_range="${commit_from}..${commit_to}"
