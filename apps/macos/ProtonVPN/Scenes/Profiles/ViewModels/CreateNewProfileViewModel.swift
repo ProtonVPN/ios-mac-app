@@ -276,6 +276,7 @@ class CreateNewProfileViewModel {
         let resetProtocol = { [weak self] in
             guard let `self` else { return }
             self.state = self.state.updating(connectionProtocol: .vpnProtocol(.ike))
+            self.protocolPending?(false)
         }
 
         protocolPending?(true)
