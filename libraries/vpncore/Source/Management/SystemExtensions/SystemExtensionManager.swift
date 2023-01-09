@@ -37,6 +37,7 @@ public enum SystemExtensionType: String, CaseIterable {
     }
 }
 
+/// Represents the result of checking/installing system extensions.
 public typealias SystemExtensionResult = Result<SystemExtensionInstallationSuccess, SystemExtensionInstallationFailure>
 
 public enum SystemExtensionInstallationSuccess {
@@ -49,8 +50,11 @@ public enum SystemExtensionInstallationSuccess {
 }
 
 public enum SystemExtensionInstallationFailure: Error {
+    /// Installation of extensions requires user approval, but the system extension tour was not shown.
     case tourSkipped
+    /// Installation of extensions requires user approval, but the system extension was cancelled by the user.
     case tourCancelled
+    /// An error occurred while performing the installation
     case installationError(internalError: Error)
 }
 
@@ -79,7 +83,6 @@ public class SystemExtensionManager: NSObject {
                 accumulator = .success(didRequireUserApproval ? .installed : .upgraded)
             case .failed(let error):
                 accumulator = .failure(.installationError(internalError: error))
-                break
             default:
                 assertionFailure("\(type.rawValue) had unexpected final state \(installationResult)")
             }
@@ -194,6 +197,12 @@ public class SystemExtensionManager: NSObject {
     /// - The user is logged in
     /// - The default connection protocol requires a system extension, OR
     /// - The user has created a custom profile containing a protocol requiring a system extension
+    ///
+    /// - Parameters:
+    ///   - userInitiated: Whether this request was initiated by the user or not
+    ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
+    ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
+    ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
     public func checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: Bool,
                                                           shouldStartTour: Bool,
                                                           actionHandler: @escaping (SystemExtensionResult) -> Void) {
@@ -211,6 +220,11 @@ public class SystemExtensionManager: NSObject {
 
     /// Installs all extensions. This will result in system extension dialogs appearing if the user has
     /// not approved any on the system yet.
+    ///
+    /// - Parameters:
+    ///   - userInitiated: Whether this request was initiated by the user or not
+    ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required
+    ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
     public func installOrUpdateExtensionsIfNeeded(userInitiated: Bool,
                                                   shouldStartTour: Bool,
                                                   actionHandler: @escaping (SystemExtensionResult) -> Void) {
