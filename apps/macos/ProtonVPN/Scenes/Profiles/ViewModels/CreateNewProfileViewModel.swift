@@ -180,7 +180,7 @@ class CreateNewProfileViewModel {
 
             return .init(title: menuStyle(item.localizedString),
                          checked: item == state.connectionProtocol,
-                         handler: { [weak self] in self?.update(connectionProtocol: item) })
+                         handler: { [weak self] in self?.update(connectionProtocol: item, userInitiated: true) })
         }
     }
 
@@ -224,6 +224,7 @@ class CreateNewProfileViewModel {
                                                selector: #selector(editProfile(_:)),
                                                name: editProfile,
                                                object: nil)
+        checkSystemExtensionOrResetProtocol(newProtocol: propertiesManager.connectionProtocol, shouldStartTour: false)
     }
 
     // MARK: Updating state
@@ -252,8 +253,8 @@ class CreateNewProfileViewModel {
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
-    private func update(connectionProtocol: ConnectionProtocol?) {
-        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol)
+    private func update(connectionProtocol: ConnectionProtocol?, userInitiated: Bool) {
+        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: userInitiated)
 
         state = state.updating(connectionProtocol: connectionProtocol)
     }
@@ -268,7 +269,7 @@ class CreateNewProfileViewModel {
 
     // MARK: System extensions
 
-    private func checkSystemExtensionOrResetProtocol(newProtocol: ConnectionProtocol?) {
+    private func checkSystemExtensionOrResetProtocol(newProtocol: ConnectionProtocol?, shouldStartTour: Bool) {
         guard newProtocol?.requiresSystemExtension == true else {
             return
         }
@@ -282,17 +283,17 @@ class CreateNewProfileViewModel {
         protocolPending?(true)
         sysexTourCancelled = resetProtocol
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: shouldStartTour) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` else { return }
 
                 self.protocolPending?(false)
                 switch result {
-                case .failed:
+                case .failure:
                     // In the future, we should tell the user when we're setting the protocol because
                     // we aren't in the /Applications folder.
                     resetProtocol()
-                default:
+                case .success:
                     break
                 }
             }

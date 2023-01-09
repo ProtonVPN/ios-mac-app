@@ -132,7 +132,7 @@ final class LoginViewModel {
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: { [weak self] in
                     self?.silentlyCheckForUpdates()
 
-                    self?.sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, actionHandler: { _ in })
+                    self?.sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true, actionHandler: { _ in })
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })

@@ -30,22 +30,28 @@ public protocol SystemExtensionManagerFactory {
 public enum SystemExtensionType: String, CaseIterable {
     case openVPN = "ch.protonvpn.mac.OpenVPN-Extension"
     case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
-    
+
     public var machServiceName: String {
         let teamId = Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String
         return "\(teamId)group.\(rawValue)"
     }
 }
 
-public enum SystemExtensionResult {
+public typealias SystemExtensionResult = Result<SystemExtensionInstallationSuccess, SystemExtensionInstallationFailure>
+
+public enum SystemExtensionInstallationSuccess {
     /// The extension was not previously on the system, and has been installed.
     case installed
     /// An earlier version of the extension was installed, and has now been upgraded.
     case upgraded
     /// The same version of the extension was installed, and no action was taken.
     case alreadyThere
-    /// An error occurred while trying to perform the installation or upgrade.
-    case failed(Error)
+}
+
+public enum SystemExtensionInstallationFailure: Error {
+    case tourSkipped
+    case tourCancelled
+    case installationError(internalError: Error)
 }
 
 public class SystemExtensionManager: NSObject {
@@ -61,6 +67,24 @@ public class SystemExtensionManager: NSObject {
     private let factory: Factory
 
     private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
+
+    private func reduce(installationResults: InstallationState, didRequireUserApproval: Bool) -> SystemExtensionResult {
+        return installationResults.reduce(into: .success(.alreadyThere)) { (accumulator, sysexInstallationResult) in
+            if case .failure = accumulator { return }
+            let (type, installationResult) = sysexInstallationResult
+            switch installationResult {
+            case .cancelled, .superseded:
+                break
+            case .succeeded:
+                accumulator = .success(didRequireUserApproval ? .installed : .upgraded)
+            case .failed(let error):
+                accumulator = .failure(.installationError(internalError: error))
+                break
+            default:
+                assertionFailure("\(type.rawValue) had unexpected final state \(installationResult)")
+            }
+        }
+    }
 
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     fileprivate lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -157,7 +181,7 @@ public class SystemExtensionManager: NSObject {
 
         installStatesKnown.notify(queue: SystemExtensionManager.requestQueue) {
             guard extensionsRequiringApproval > 0 else { return }
-            
+
             userActionRequiredHandler(extensionsRequiringApproval)
         }
 
@@ -171,6 +195,7 @@ public class SystemExtensionManager: NSObject {
     /// - The default connection protocol requires a system extension, OR
     /// - The user has created a custom profile containing a protocol requiring a system extension
     public func checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: Bool,
+                                                          shouldStartTour: Bool,
                                                           actionHandler: @escaping (SystemExtensionResult) -> Void) {
         // do not check if the user is not logged in to avoid showing the installation prompt on the
         // login screen on first start
@@ -181,18 +206,24 @@ public class SystemExtensionManager: NSObject {
             return
         }
 
-        installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated, actionHandler: actionHandler)
+        installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated, shouldStartTour: shouldStartTour, actionHandler: actionHandler)
     }
 
     /// Installs all extensions. This will result in system extension dialogs appearing if the user has
     /// not approved any on the system yet.
     public func installOrUpdateExtensionsIfNeeded(userInitiated: Bool,
+                                                  shouldStartTour: Bool,
                                                   actionHandler: @escaping (SystemExtensionResult) -> Void) {
         var didRequireUserApproval = false
 
         submitInstallationRequests(userInitiated: userInitiated,
             userActionRequiredHandler: { [unowned self] numberOfExtensionsToApprove in
             didRequireUserApproval = true
+
+            guard shouldStartTour else {
+                actionHandler(.failure(.tourSkipped))
+                return
+            }
 
             let tour = SystemExtensionTourAlert(extensionsCount: numberOfExtensionsToApprove,
                                                 userWasShownTourBefore: userClosedTour,
@@ -203,34 +234,18 @@ public class SystemExtensionManager: NSObject {
                 // will keep us from spamming it)
                 self.userClosedTour = true
                 DispatchQueue.main.async {
+                    actionHandler(.failure(.tourCancelled))
                     NotificationCenter.default.post(name: Self.userCancelledTour, object: nil)
                 }
             })
 
             self.alertService.push(alert: tour)
         }, installationFinishedHandler: { installationResults in
-            var result: SystemExtensionResult = .alreadyThere
-
-            for (type, finalState) in installationResults {
-                switch finalState {
-                case .cancelled, .superseded:
-                    continue
-                case .succeeded:
-                    result = didRequireUserApproval ? .installed : .upgraded
-                case .failed(let error):
-                    result = .failed(error)
-                default:
-                    assertionFailure("\(type.rawValue) had unexpected final state \(finalState)")
-                }
-
-                if case .failed = result {
-                    break
-                }
-            }
+            let result = self.reduce(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
 
             DispatchQueue.main.async {
                 actionHandler(result)
-                guard case .alreadyThere = result else {
+                guard case .success(.alreadyThere) = result else {
                     NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: userInitiated)
                     return
                 }

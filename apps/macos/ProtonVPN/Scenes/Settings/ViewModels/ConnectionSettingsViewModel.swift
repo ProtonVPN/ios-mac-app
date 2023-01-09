@@ -280,11 +280,11 @@ final class ConnectionSettingsViewModel {
     }
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<(), Error>) -> Void) {
-        self.sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { [weak self] result in
+        self.sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { [weak self] result in
             self?.sysexPending = false
 
             switch result {
-            case .installed, .upgraded, .alreadyThere:
+            case .success:
                 self?.propertiesManager.smartProtocol = true
 
                 switch then {
@@ -302,7 +302,7 @@ final class ConnectionSettingsViewModel {
                              category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
                     completion(.success)
                 }
-            case let .failed(error):
+            case let .failure(error):
                 completion(.failure(error))
             }
 

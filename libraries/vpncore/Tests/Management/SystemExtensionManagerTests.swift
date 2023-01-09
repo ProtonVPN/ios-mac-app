@@ -63,7 +63,7 @@ class SystemExtensionManagerTests: XCTestCase {
             approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -78,7 +78,7 @@ class SystemExtensionManagerTests: XCTestCase {
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
-        guard case .installed = result else {
+        guard case .success(.installed) = result else {
             XCTFail("Expected system extensions to install successfully but got \(String(describing: result))")
             return
         }
@@ -103,7 +103,7 @@ class SystemExtensionManagerTests: XCTestCase {
             approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { result in
             installResult = result
             installFinished.fulfill()
         }
@@ -119,13 +119,13 @@ class SystemExtensionManagerTests: XCTestCase {
             var cancelResult: SystemExtensionResult?
             let installCancelled = XCTestExpectation(description: "Cancel install attempt #\(attempt)")
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { result in
                 cancelResult = result
                 installCancelled.fulfill()
             }
             wait(for: [installCancelled], timeout: expectationTimeout)
 
-            guard case .alreadyThere = cancelResult else {
+            guard case .success(.alreadyThere) = cancelResult else {
                 XCTFail("Expected second request to be cancelled, but got \(String(describing: cancelResult)) instead")
                 return
             }
@@ -143,7 +143,7 @@ class SystemExtensionManagerTests: XCTestCase {
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
-        guard case .installed = installResult else {
+        guard case .success(.installed) = installResult else {
             XCTFail("Expected system extensions to install successfully but got \(String(describing: installResult))")
             return
         }
@@ -173,7 +173,7 @@ class SystemExtensionManagerTests: XCTestCase {
         }
 
         var result: SystemExtensionResult?
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -188,7 +188,7 @@ class SystemExtensionManagerTests: XCTestCase {
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
-        guard case .installed = result else {
+        guard case .success(.installed) = result else {
             XCTFail("Expected system extensions to install successfully but got \(String(describing: result))")
             return
         }
@@ -214,14 +214,14 @@ class SystemExtensionManagerTests: XCTestCase {
             XCTFail("Shouldn't need to request for approval, extensions are being upgraded")
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
-        guard case .upgraded = result else {
+        guard case .success(.upgraded) = result else {
             XCTFail("Expected system extensions to upgrade but got \(String(describing: result))")
             return
         }
@@ -257,7 +257,7 @@ class SystemExtensionManagerTests: XCTestCase {
             requestPending.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -270,12 +270,33 @@ class SystemExtensionManagerTests: XCTestCase {
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
-        guard case let .failed(error) = result,
+        guard case let .failure(.installationError(internalError: error)) = result,
               let sysextError = error as? OSSystemExtensionError,
               sysextError.code == .unsupportedParentBundleLocation else {
             XCTFail("Installation should have failed with parent bundle error, got: \(String(describing: result))")
             return
         }
+    }
+
+    func testTourSkippedWhenShouldStartTourIsFalse() {
+        let installFinished = XCTestExpectation(description: "Finish install")
+        var result: SystemExtensionResult?
+
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: false) { installResult in
+            result = installResult
+            installFinished.fulfill()
+        }
+
+        XCTAssertEqual(alertService.alerts.count, 0, "No alerts should be shown when 'shouldStartTour' is false")
+
+        wait(for: [installFinished], timeout: expectationTimeout)
+
+        guard case .failure(.tourSkipped) = result else {
+            XCTFail("Expected tour skipped but got: \(String(describing: result))")
+            return
+        }
+
+        XCTAssertEqual(sysextManager.installedExtensions.count, 0, "No extensions should be installed when tour was skipped")
     }
 }
 
