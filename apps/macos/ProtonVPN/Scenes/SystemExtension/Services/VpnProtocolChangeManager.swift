@@ -124,13 +124,13 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated, shouldStartTour: true) { result in
             switch result {
-            case .installed, .upgraded, .alreadyThere:
+            case .success:
                 self.propertiesManager.vpnProtocol = vpnProtocol
                 performSwitchAction()
                 completion(.success)
-            case .failed(let error):
+            case .failure(let error):
                 log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)", category: .connectionConnect)
                 completion(.failure(error))
             }

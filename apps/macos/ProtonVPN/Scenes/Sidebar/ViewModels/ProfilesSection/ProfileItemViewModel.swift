@@ -91,11 +91,11 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { result in
             switch result {
-            case .installed, .upgraded, .alreadyThere:
+            case .success:
                 performConnection()
-            case let .failed(error):
+            case let .failure(error):
                 log.error("Error installing sysex when profile was selected: \(String(describing: error))")
             }
         }

@@ -87,7 +87,6 @@ final class CreateNewProfileViewController: NSViewController {
         setupFooterView()
 
         startObserving()
-        protocolSelected()
     }
     
     override func viewWillDisappear() {

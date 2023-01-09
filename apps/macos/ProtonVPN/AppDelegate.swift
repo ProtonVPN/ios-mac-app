@@ -85,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
 
             self.container.makeSystemExtensionManager()
-                .checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: false, actionHandler: { _ in })
+                .checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: false, shouldStartTour: true, actionHandler: { _ in })
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
