@@ -78,6 +78,10 @@ final class ConnectionSettingsViewModel {
         self.factory = factory
         self.sysexPending = true
         self.selectedProtocol = .smartProtocol
+        self.selectedProtocol = propertiesManager.smartProtocol
+            ? .smartProtocol
+            : .vpnProtocol(propertiesManager.vpnProtocol)
+
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
