@@ -53,19 +53,37 @@ final class ConnectionSettingsViewModel {
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
 
-    private var sysexPending = false
+    var selectedProtocol: ConnectionProtocol {
+        didSet {
+            if selectedProtocol != oldValue {
+                reloadNeeded?()
+            }
+        }
+    }
+
+    var sysexPending: Bool {
+        didSet {
+            protocolPendingChanged?(sysexPending)
+        }
+    }
+
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
     }
 
     var reloadNeeded: (() -> Void)?
+    var protocolPendingChanged: ((Bool) -> Void)?
     
     init(factory: Factory) {
         self.factory = factory
+        self.sysexPending = true
+        self.selectedProtocol = .smartProtocol
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).excludeLocalNetworksNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(tourCancelled), name: SystemExtensionManager.userCancelledTour, object: nil)
+
+        checkSysexOrResetProtocol(selectedProtocol)
     }
     
     deinit {
@@ -117,7 +135,7 @@ final class ConnectionSettingsViewModel {
         guard let autoConnect = autoConnect, autoConnect.enabled else { return 0 }
         
         guard let profileId = autoConnect.profileId else { return 1 }
-        let index = profileManager.allProfiles.index {
+        let index = profileManager.allProfiles.firstIndex {
             $0.id == profileId
         }
 
@@ -129,18 +147,12 @@ final class ConnectionSettingsViewModel {
     
     var quickConnectProfileIndex: Int {
         guard let profileId = quickConnect else { return 0 }
-        let index = profileManager.allProfiles.index {
+        let index = profileManager.allProfiles.firstIndex {
             $0.id == profileId
         }
         
         guard let profileIndex = index, profileIndex < quickConnectItemCount else { return 0 }
         return profileIndex
-    }
-    
-    var protocolProfileIndex: Int {
-        return propertiesManager.smartProtocol 
-            ? protocolIndex(for: .smartProtocol)
-            : protocolIndex(for: .vpnProtocol(propertiesManager.vpnProtocol))
     }
 
     var allowLAN: Bool {
@@ -197,7 +209,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func protocolIndex(for vpnProtocol: ConnectionProtocol) -> Int {
-        guard let result = availableConnectionProtocols.index(of: vpnProtocol) else {
+        guard let result = availableConnectionProtocols.firstIndex(of: vpnProtocol) else {
             assertionFailure("Protocol \(vpnProtocol) was not in available protocols list")
             return 0
         }
@@ -222,15 +234,16 @@ final class ConnectionSettingsViewModel {
     }
 
     func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<(), Error>) -> Void) {
+        sysexPending = true
         switch connectionProtocol {
         case .smartProtocol:
             self.confirmEnableSmartProtocol(completion)
         case .vpnProtocol(let transportProtocol):
             vpnProtocolChangeManager.change(toProtocol: transportProtocol, userInitiated: true) { [weak self] result in
                 self?.sysexPending = false
-
                 if case .success = result {
                     self?.propertiesManager.smartProtocol = false
+                    self?.selectedProtocol = connectionProtocol
                 }
                 completion(result)
             }
@@ -280,12 +293,13 @@ final class ConnectionSettingsViewModel {
     }
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<(), Error>) -> Void) {
-        self.sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { [weak self] result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { [weak self] result in
             self?.sysexPending = false
 
             switch result {
             case .success:
                 self?.propertiesManager.smartProtocol = true
+                self?.selectedProtocol = .smartProtocol
 
                 switch then {
                 case .disconnect:
@@ -308,6 +322,17 @@ final class ConnectionSettingsViewModel {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                 self?.reloadNeeded?()
+            }
+        }
+    }
+
+    private func checkSysexOrResetProtocol(_ protocol: ConnectionProtocol) {
+        self.sysexPending = true
+        sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: false, shouldStartTour: false) { [weak self] result in
+            guard let self else { return }
+            self.sysexPending = false
+            if case .failure = result {
+                self.selectedProtocol = .vpnProtocol(.ike)
             }
         }
     }
