@@ -79,6 +79,7 @@ class CreateNewProfileViewModel {
     private var profileId: String?
     private var state: ModelState {
         didSet {
+            checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
             if let contentUpdate = oldValue.menuContentUpdate(forNewValue: state) {
                 menuContentChanged?(contentUpdate)
             }
@@ -180,7 +181,7 @@ class CreateNewProfileViewModel {
 
             return .init(title: menuStyle(item.localizedString),
                          checked: item == state.connectionProtocol,
-                         handler: { [weak self] in self?.update(connectionProtocol: item, userInitiated: true) })
+                         handler: { [weak self] in self?.update(connectionProtocol: item) })
         }
     }
 
@@ -218,13 +219,15 @@ class CreateNewProfileViewModel {
         self.state = .default
             .updating(connectionProtocol: propertiesManager.connectionProtocol)
 
+        // Check is required here, as the didSet check is not invoked when assigning inside the constructor
+        checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: false)
+
         setupUserTier()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(editProfile(_:)),
                                                name: editProfile,
                                                object: nil)
-        checkSystemExtensionOrResetProtocol(newProtocol: propertiesManager.connectionProtocol, shouldStartTour: false)
     }
 
     // MARK: Updating state
@@ -253,8 +256,9 @@ class CreateNewProfileViewModel {
                                smartProtocolConfig: propertiesManager.smartProtocolConfig)
     }
 
-    private func update(connectionProtocol: ConnectionProtocol?, userInitiated: Bool) {
-        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: userInitiated)
+    /// Starts the system extension tour if system extensions are required for `connection protocol` but are not enabled
+    private func update(connectionProtocol: ConnectionProtocol?) {
+        checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
 
         state = state.updating(connectionProtocol: connectionProtocol)
     }
