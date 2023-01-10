@@ -42,6 +42,7 @@ protocol TelemetryTimer {
     func markConnectionStoped()
     func connectionDuration() -> TimeInterval?
     func timeToConnect() -> TimeInterval?
+    func timeConnecting() -> TimeInterval?
 }
 
 public class TelemetryService {
@@ -56,7 +57,7 @@ public class TelemetryService {
     private lazy var telemetryAPI: TelemetryAPI = factory.makeTelemetryAPI(networking: networking)
 
     private var networkType: TelemetryDimensions.NetworkType = .unavailable
-    private var previousAppDisplayState: AppDisplayState = .disconnected
+    private var previousConnectionStatus: ConnectionStatus = .disconnected
     private var userInitiatedVPNChange: UserInitiatedVPNChange?
 
     private var cancellables = Set<AnyCancellable>()
@@ -79,14 +80,9 @@ public class TelemetryService {
             .store(in: &cancellables)
 
         NotificationCenter.default
-            .publisher(for: .AppStateManager.displayStateChange)
-            .sink(receiveValue: appStateManagerConnectionChanged)
+            .publisher(for: VpnGateway.connectionChanged)
+            .sink(receiveValue: vpnGatewayConnectionChanged)
             .store(in: &cancellables)
-
-//        NotificationCenter.default
-//            .publisher(for: VpnGateway.connectionChanged)
-//            .sink(receiveValue: vpnGatewayConnectionChanged)
-//            .store(in: &cancellables)
 
         NotificationCenter.default
             .publisher(for: .userInitiatedVPNChange)
@@ -117,47 +113,54 @@ public class TelemetryService {
         self.userInitiatedVPNChange = change
     }
 
-//    private func vpnGatewayConnectionChanged(_ notification: Notification) {
-//        guard notification.name == VpnGateway.connectionChanged,
-//              let connectionStatus = notification.object as? ConnectionStatus else {
-//            return
-//        }
-//    }
-
-    private func appStateManagerConnectionChanged(_ notification: Notification) {
-        guard notification.name == .AppStateManager.displayStateChange,
-              let appDisplayState = notification.object as? AppDisplayState else {
+    private func vpnGatewayConnectionChanged(_ notification: Notification) {
+        guard notification.name == VpnGateway.connectionChanged,
+              let connectionStatus = notification.object as? ConnectionStatus else {
             return
         }
         defer {
-            previousAppDisplayState = appDisplayState
+            if [.connected, .disconnected, .connecting].contains(connectionStatus) {
+                previousConnectionStatus = connectionStatus
+            }
         }
         var eventType: ConnectionEventType?
-        switch appDisplayState {
+        switch connectionStatus {
         case .connected:
             timer.markFinishedConnecting()
-            eventType = connectionEventType(state: appDisplayState)
+            eventType = connectionEventType(state: connectionStatus)
         case .connecting:
             timer.markStartedConnecting()
         case .disconnected:
             timer.markConnectionStoped()
-            eventType = connectionEventType(state: appDisplayState)
-        case .loadingConnectionInfo, .disconnecting:
+            eventType = connectionEventType(state: connectionStatus)
+        case .disconnecting:
             return
         }
-        collectDimensionsAndReport(outcome: connectionOutcome(appDisplayState), eventType: eventType)
+        collectDimensionsAndReport(outcome: connectionOutcome(connectionStatus), eventType: eventType)
     }
 
-    private func connectionOutcome(_ appDisplayState: AppDisplayState) -> TelemetryDimensions.Outcome {
+    private func connectionOutcome(_ state: ConnectionStatus) -> TelemetryDimensions.Outcome {
         defer {
             userInitiatedVPNChange = nil
         }
-        if appDisplayState == .connected {
+        switch state {
+        case .disconnected:
+            if [.connected, .connecting].contains(previousConnectionStatus) {
+                guard let userInitiatedVPNChange else { return .failure }
+                switch userInitiatedVPNChange {
+                case .connect:
+                    return .failure
+                case .disconnect:
+                    return .success
+                case .abort:
+                    return .aborted
+                }
+            }
             return .success
-        } else if previousAppDisplayState == .connected {
-            return userInitiatedVPNChange == .disconnect ? .success : .failure
-        } else {
-            return userInitiatedVPNChange == .abort ? .aborted : .failure
+        case .connected:
+            return .success
+        case .disconnecting, .connecting:
+            return .failure
         }
     }
 
@@ -167,9 +170,10 @@ public class TelemetryService {
               let eventType else {
             return
         }
+        userInitiatedVPNChange = nil
         let dimensions = TelemetryDimensions(outcome: outcome,
                                              userTier: userTier(),
-                                             vpnStatus: previousAppDisplayState == .connected ? .on : .off,
+                                             vpnStatus: previousConnectionStatus == .connected ? .on : .off,
                                              vpnTrigger: propertiesManager.lastConnectionRequest?.trigger,
                                              networkType: networkType,
                                              serverFeatures: activeConnection.server.feature,
@@ -193,24 +197,25 @@ public class TelemetryService {
         }
     }
 
-    private func connectionEventType(state: AppDisplayState) -> ConnectionEventType? {
+    private func connectionEventType(state: ConnectionStatus) -> ConnectionEventType? {
         switch state {
         case .connected:
             guard let timeInterval = timer.timeToConnect() else { return nil }
             return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
-            if previousAppDisplayState == .connected {
+            if previousConnectionStatus == .connected {
                 return .vpnDisconnection(sessionLength: timer.connectionDuration() ?? 0)
-            } else {
-                return .vpnDisconnection(sessionLength: 0)
+            } else if previousConnectionStatus == .connecting {
+                return .vpnConnection(timeToConnection: timer.timeConnecting() ?? 0)
             }
+            return nil
         default:
             return nil
         }
     }
 
     private func report(event: ConnectionEvent) {
-//        guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
+        guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
         telemetryAPI.flushEvent(event: event)
     }
 }

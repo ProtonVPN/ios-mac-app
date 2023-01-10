@@ -21,8 +21,8 @@ import Foundation
 class ConnectionTimer: TelemetryTimer {
 
     private var startedConnectingDate: Date?
-    private var stoppedConnectionDate: Date?
     private var startedConnectionDate: Date?
+    private var stoppedConnectionDate: Date?
 
     func updateConnectionStarted(timeInterval: TimeInterval) {
         startedConnectionDate = Date(timeIntervalSince1970: timeInterval)
@@ -34,11 +34,11 @@ class ConnectionTimer: TelemetryTimer {
     }
 
     func markFinishedConnecting() {
-        guard startedConnectionDate == nil else { return }
         startedConnectionDate = Date()
     }
 
     func markConnectionStoped() {
+        guard stoppedConnectionDate == nil else { return }
         stoppedConnectionDate = Date()
     }
 
@@ -53,8 +53,15 @@ class ConnectionTimer: TelemetryTimer {
     func timeToConnect() -> TimeInterval? {
         guard let startedConnectingDate,
               let startedConnectionDate else { return nil }
-
         self.startedConnectingDate = nil
+        self.stoppedConnectionDate = nil
         return startedConnectionDate.timeIntervalSince(startedConnectingDate)
+    }
+
+    func timeConnecting() -> TimeInterval? {
+        guard let startedConnectingDate else { return nil }
+        self.startedConnectingDate = nil
+        self.stoppedConnectionDate = nil
+        return Date().timeIntervalSince(startedConnectingDate)
     }
 }

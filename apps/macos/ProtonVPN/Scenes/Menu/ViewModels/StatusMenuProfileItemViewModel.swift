@@ -51,6 +51,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     
     func connectAction() {
         if canConnect {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             log.debug("Profile in status menu selected. Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(profile: profile)
         }

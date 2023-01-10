@@ -70,6 +70,10 @@ class TelemetryTimerMock: TelemetryTimer {
     func timeToConnect() -> TimeInterval? {
         reportedTimeToConnect
     }
+
+    func timeConnecting() -> TimeInterval? {
+        return nil
+    }
 }
 
 class TelemetryServiceTests: XCTestCase {
@@ -78,6 +82,8 @@ class TelemetryServiceTests: XCTestCase {
     var service: TelemetryService!
     var appStateManager: AppStateManagerMock!
     var timer: TelemetryTimerMock!
+
+    let vpnGateway = VpnGatewayMock()
 
     override static func setUp() {
         super.setUp()
@@ -98,10 +104,10 @@ class TelemetryServiceTests: XCTestCase {
     }
 
     func testReportsConnectionEvent() async throws {
-        appStateManager.displayState = .connecting
+        vpnGateway.connection = .connecting
         XCTAssertNil(container.telemetryApiMock.lastEvent)
         timer.reportedTimeToConnect = 0.5
-        appStateManager.displayState = .connected
+        vpnGateway.connection = .connected
         guard let lastEvent = container.telemetryApiMock.lastEvent,
               case .vpnConnection(timeToConnection: let timeToConnection) = lastEvent.event else {
             XCTFail("Expected a vpnConnection event")
@@ -123,9 +129,9 @@ class TelemetryServiceTests: XCTestCase {
     }
 
     func testReportsDisconnectionEvent() async throws {
-        appStateManager.displayState = .connected
+        vpnGateway.connection = .connected
         timer.reportedConnectionDuration = 15.1
-        appStateManager.displayState = .disconnected
+        vpnGateway.connection = .disconnected
         guard let lastEvent = container.telemetryApiMock.lastEvent,
               case .vpnDisconnection(sessionLength: let sessionLength) = lastEvent.event else {
             XCTFail("Expected a vpnConnection event")
