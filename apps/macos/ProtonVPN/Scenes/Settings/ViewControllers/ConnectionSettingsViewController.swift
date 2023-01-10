@@ -50,7 +50,14 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.reloadNeeded = { [weak self] in
-            self?.reloadView()
+            DispatchQueue.main.async {
+                self?.reloadView()
+            }
+        }
+        viewModel.protocolPendingChanged = { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.refreshPendingEnablement()
+            }
         }
         reloadView()
     }
@@ -94,7 +101,13 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             return menuItem
         }
 
-        let model = SettingsDropDownView.ViewModel(labelText: LocalizedString.protocol, toolTip: LocalizedString.smartProtocolDescription, progressIndicatorToolTip: LocalizedString.sysexSettingsDescription, menuItems: menuItems, selectedIndex: viewModel.protocolProfileIndex)
+        let model = SettingsDropDownView.ViewModel(
+            labelText: LocalizedString.protocol,
+            toolTip: LocalizedString.smartProtocolDescription,
+            progressIndicatorToolTip: LocalizedString.sysexSettingsDescription,
+            menuItems: menuItems,
+            selectedIndex: viewModel.protocolIndex(for: viewModel.selectedProtocol)
+        )
 
         protocolView.setupItem(model: model, target: self, action: #selector(protocolItemSelected))
 
@@ -163,9 +176,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         guard let protocolItem = viewModel.protocolItem(for: protocolView.indexOfSelectedItem()) else {
             return
         }
-
-        viewModel.refreshSysexPending(for: protocolItem)
-        refreshPendingEnablement()
 
         viewModel.setProtocol(protocolItem) { [weak self] result in
             executeOnUIThread {
