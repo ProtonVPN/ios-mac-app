@@ -19,11 +19,17 @@
 import Foundation
 import SwiftyBeaver
 import os.log
+import Logging
 
 extension PacketTunnelProvider {
     func setupLogging() {
         let log = SwiftyBeaver.self
         log.addDestination(OSLogDestination())
+
+        // Our logger
+        LoggingSystem.bootstrap { _ in
+            return OVPNLogHandler(formatter: OVPNLogFormatter())
+        }
     }
 
 }
