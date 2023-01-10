@@ -43,7 +43,11 @@ public class VpnGatewayMock: VpnGatewayProtocol {
         propertiesManager.secureCoreToggle = activeServerType == .secureCore
     }
     
-    public var connection: ConnectionStatus
+    public var connection: ConnectionStatus {
+        didSet {
+            NotificationCenter.default.post(name: VpnGateway.connectionChanged, object: connection)
+        }
+    }
     public var activeIp: String?
     public var activeServer: ServerModel?
     public var lastConnectionRequest: ConnectionRequest?

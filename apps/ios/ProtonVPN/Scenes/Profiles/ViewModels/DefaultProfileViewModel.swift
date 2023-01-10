@@ -117,12 +117,15 @@ class DefaultProfileViewModel {
         log.debug("Connect requested by selecting default profile.", category: .connectionConnect, event: .trigger)
         
         if isConnecting {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
             log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else if isConnected {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect)
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             log.debug("Will connect to \(profile.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(profile: profile)
             connectionStatusService.presentStatusViewController()

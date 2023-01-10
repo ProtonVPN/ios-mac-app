@@ -82,6 +82,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
                 return
             }
 
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
             log.debug("Will connect to profile: \(self.profile.logDescription)", category: .connectionConnect, event: .trigger)
             self.vpnGateway.connectTo(profile: self.profile)
         }

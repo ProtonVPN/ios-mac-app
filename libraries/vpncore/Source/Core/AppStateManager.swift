@@ -221,6 +221,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     public func cancelConnectionAttempt(completion: @escaping () -> Void) {
+        NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
         state = .aborted(userInitiated: true)
         attemptingConnection = false
         cancelTimeout()
