@@ -123,6 +123,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         // set afterwards, since this property's storage is backed by the same dictionary.
         neProtocol.connectedServerId = configuration.serverId
         neProtocol.connectedServerIpId = configuration.ipId
+        neProtocol.featureFlagOverrides = propertiesManager.featureFlags.localOverrides
 
         return neProtocol
     }
