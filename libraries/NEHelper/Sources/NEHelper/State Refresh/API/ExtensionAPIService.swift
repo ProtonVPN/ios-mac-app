@@ -24,6 +24,11 @@ import VPNShared
 import UIKit
 #endif
 
+public protocol ExtensionAPIServiceDelegate: AnyObject {
+    var dataTaskFactory: DataTaskFactory! { get }
+    var transport: WireGuardTransport? { get }
+}
+
 public final class ExtensionAPIService {
     /// Intervals are in seconds unless otherwise specified.
     public struct Intervals {
@@ -119,10 +124,9 @@ public final class ExtensionAPIService {
         }
     }
 
-    public init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, atlasSecret: String, dataTaskFactoryGetter: @escaping (() -> DataTaskFactory)) {
+    public init(storage: Storage, timerFactory: TimerFactory, keychain: AuthKeychainHandle, appInfo: AppInfo, atlasSecret: String) {
         self.appInfo = appInfo
         self.storage = storage
-        self.dataTaskFactoryGetter = dataTaskFactoryGetter
         self.timerFactory = timerFactory
         self.keychain = keychain
         self.atlasSecret = atlasSecret
@@ -142,19 +146,21 @@ public final class ExtensionAPIService {
     }
 
     /// Whether or not the current session is expired.
-    public private(set) var sessionExpired = false
+    internal var sessionExpired = false
     private var userInitiatedRequestHasNotYetBeenMade = true
     private var usingMainAppSessionUntilForkReceived = false
     private var mainAppSessionHasExpired = false
 
+    public weak var delegate: ExtensionAPIServiceDelegate?
+
     private let apiEndpointStorageKey = "ApiEndpoint"
     private let storage: Storage
-    private let dataTaskFactoryGetter: (() -> DataTaskFactory)
     private let timerFactory: TimerFactory
     private let keychain: AuthKeychainHandle
     private let appInfo: AppInfo
 
-    var dataTaskFactory: DataTaskFactory { dataTaskFactoryGetter() }
+    var dataTaskFactory: DataTaskFactory { delegate!.dataTaskFactory }
+    var transport: WireGuardTransport? { delegate!.transport }
 
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 
@@ -497,7 +503,7 @@ public final class ExtensionAPIService {
             return
         }
 
-        let serverStatusRequest = ServerStatusRequest(params: .init(logicalId: logicalId))
+        let serverStatusRequest = ServerStatusRequest(params: .init(logicalId: logicalId, transport: transport))
         request(serverStatusRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                                (.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {

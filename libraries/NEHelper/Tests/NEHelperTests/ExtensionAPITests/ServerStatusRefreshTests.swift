@@ -18,6 +18,7 @@
 
 import Foundation
 import XCTest
+import VPNShared
 @testable import NEHelper
 
 class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
@@ -27,11 +28,9 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-
         self.manager = ServerStatusRefreshManager(apiService: apiService,
-                                                  timerFactory: timerFactory) { [unowned self] newServer in
-            serverDidChange?([])
-        }
+                                                  timerFactory: timerFactory)
+        self.manager.delegate = self
     }
 
     func testServerStatusNotUnderMaintenance() {
@@ -130,7 +129,8 @@ extension ServerStatusRequest.Server {
                      id: String = "server-id-123",
                      status: Int = 0,
                      label: String = "label",
-                     x25519PublicKey: String? = nil
+                     x25519PublicKey: String? = nil,
+                     protocolEntries: PerProtocolEntries? = nil
     ) -> ServerStatusRequest.Server {
         ServerStatusRequest.Server(entryIp: entryIp,
                                    exitIp: exitIp,
@@ -138,7 +138,14 @@ extension ServerStatusRequest.Server {
                                    id: id,
                                    status: status,
                                    label: label,
-                                   x25519PublicKey: x25519PublicKey
+                                   x25519PublicKey: x25519PublicKey,
+                                   protocolEntries: protocolEntries
         )
+    }
+}
+
+extension ServerStatusRefreshTests: ServerStatusRefreshDelegate {
+    func reconnect(toAnyOf alternatives: [ServerStatusRequest.Logical]) {
+        serverDidChange?(alternatives)
     }
 }
