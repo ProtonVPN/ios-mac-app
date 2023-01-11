@@ -31,12 +31,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     // Currently connected server ip id
     private var connectedIpId: String?
 
-    enum SocketType: String {
-        case udp
-        case tcp
-        case tls
-    }
-
     var tunnelProviderProtocol: NETunnelProviderProtocol? {
         guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
             return nil
@@ -45,12 +39,17 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         return tunnelProviderProtocol
     }
 
-    var socketType: SocketType? {
-        guard let rawValue = tunnelProviderProtocol?.wgProtocol as? String else {
+    var socketType: String? {
+        tunnelProviderProtocol?.wgProtocol as? String
+    }
+
+    var vpnProtocol: VpnProtocol? {
+        guard let socketType else {
             return nil
         }
 
-        return SocketType(rawValue: rawValue) ?? .udp
+        let transport = WireGuardTransport(rawValue: socketType) ?? .udp
+        return .wireGuard(transport)
     }
 
     override init() {
@@ -161,13 +160,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     func restartTunnel(with logical: ServerStatusRequest.Logical) {
         log.info("Restarting tunnel with new logical server: \(logical.id)", category: .connection)
-        guard let currentWireguardServer = currentWireguardServer else {
+        guard let currentWireguardServer, let vpnProtocol else {
             log.error("API said to reconnect, but we haven't connected to a server yet?", category: .connection)
             return
         }
 
-        let availableServerIps = logical.servers.filter { !$0.underMaintenance }
-        guard let server = availableServerIps.randomElement() else {
+        let availableServerIps = logical.servers.filter { !$0.underMaintenance && $0.supports(vpnProtocol: vpnProtocol) }
+        guard let server = availableServerIps.randomElement(), let entryIp = server.entryIp(using: vpnProtocol) else {
             log.error("No alternative server found for reconnection", category: .connection)
             return
         }
@@ -179,7 +178,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
             self.currentWireguardServer = currentWireguardServer
                 .withNewServerPublicKey(server.x25519PublicKey,
-                                        andEntryServerAddress: server.entryIp)
+                                        andEntryServerAddress: entryIp)
 
             self.connectedLogicalId = logical.id
             self.connectedIpId = server.id
@@ -225,7 +224,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
 
         // Start the tunnel
-        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socketType.rawValue) { adapterError in
+        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socketType) { adapterError in
             guard let adapterError = adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")

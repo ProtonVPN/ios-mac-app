@@ -24,18 +24,7 @@ import ProtonCore_Networking
 import LocalFeatureFlags
 import VPNShared
 
-enum LogicalFeature: String, FeatureFlag {
-    var category: String {
-        "Logicals"
-    }
-
-    case partnerLogicals = "PartnerLogicals"
-    case perProtocolEntries = "PerProtocolEntries"
-}
-
 final class VPNLogicalServicesRequest: Request {
-    private static let allVpnProtocols = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
-
     /// Truncated ip as seen from VPN API
     let ip: String?
 
@@ -50,14 +39,13 @@ final class VPNLogicalServicesRequest: Request {
     var path: String {
         let path = URL(string: "/vpn/logicals")!
 
-        var queryItems: [URLQueryItem] = [.init(name: "WithTranslations", value: nil)]
-
-        if isEnabled(LogicalFeature.partnerLogicals) {
-            queryItems.append(.init(name: "WithPartnerLogicals", value: "1"))
-        }
+        var queryItems: [URLQueryItem] = [
+            .init(name: "WithTranslations", value: nil),
+            .init(name: "WithPartnerLogicals", value: "1"),
+        ]
 
         if isEnabled(LogicalFeature.perProtocolEntries) {
-            queryItems.append(.init(name: "WithEntriesForProtocols", value: Self.allVpnProtocols))
+            queryItems.append(.init(name: "WithEntriesForProtocols", value: VpnProtocol.apiDescriptions))
         }
 
         return path.appendingQueryItems(queryItems).absoluteString
