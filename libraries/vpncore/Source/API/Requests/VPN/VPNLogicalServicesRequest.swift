@@ -25,6 +25,8 @@ import LocalFeatureFlags
 import VPNShared
 
 final class VPNLogicalServicesRequest: Request {
+    private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
+
     /// Truncated ip as seen from VPN API
     let ip: String?
 
@@ -45,7 +47,7 @@ final class VPNLogicalServicesRequest: Request {
         ]
 
         if isEnabled(LogicalFeature.perProtocolEntries) {
-            queryItems.append(.init(name: "WithEntriesForProtocols", value: VpnProtocol.apiDescriptions))
+            queryItems.append(.init(name: "WithEntriesForProtocols", value: Self.protocolDescriptions))
         }
 
         return path.appendingQueryItems(queryItems).absoluteString

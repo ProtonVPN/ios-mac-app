@@ -28,8 +28,8 @@ public final class ServerStatusRequest: APIRequest {
     var endpointUrl: String {
         var result = "vpn/logicals/\(params.logicalId)/alternatives"
 
-        if isEnabled(LogicalFeature.perProtocolEntries) {
-            result.append("?WithEntriesForProtocols=\(VpnProtocol.apiDescriptions)")
+        if isEnabled(LogicalFeature.perProtocolEntries), let transport = params.transport {
+            result.append("?WithEntriesForProtocols=\(VpnProtocol.wireGuard(transport).apiDescription)")
         }
 
         return result
@@ -37,6 +37,7 @@ public final class ServerStatusRequest: APIRequest {
 
     public struct Params: Codable {
         let logicalId: String
+        let transport: WireGuardTransport?
     }
 
     public struct Logical: Codable {

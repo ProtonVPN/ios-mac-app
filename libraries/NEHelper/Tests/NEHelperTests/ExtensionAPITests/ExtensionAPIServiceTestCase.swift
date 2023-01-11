@@ -26,7 +26,7 @@ import TimerMock
 /// Base class for tests that exercise the ExtensionAPIService object.
 /// This object is used in network extensions for things like refreshing the connection's certificate
 /// and checking the maintenance status of servers.
-class ExtensionAPIServiceTestCase: XCTestCase {
+class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     typealias MockEndpointBlock = ((URLRequest, @escaping MockDataTask.CompletionCallback) -> ())
 
     let expectationTimeout: TimeInterval = 10
@@ -57,12 +57,18 @@ class ExtensionAPIServiceTestCase: XCTestCase {
     var serverStatusCallback: MockEndpointBlock?
 
     var keychain: MockAuthKeychain!
-    var dataTaskFactory: MockDataTaskFactory!
+    var mockDataTaskFactory: MockDataTaskFactory!
     var authenticationStorage: MockVpnAuthenticationStorage!
     var timerFactory: TimerFactoryMock!
     var apiService: ExtensionAPIService!
 
     let testQueue = DispatchQueue(label: "ch.protonvpn.tests.certificaterefresh")
+
+    // ExtensionAPIServiceDelegate
+    let transport: WireGuardTransport? = .udp
+    var dataTaskFactory: DataTaskFactory! {
+        mockDataTaskFactory
+    }
 
     struct MockAPIEndpointError: Error {
         let httpError: APIHTTPErrorCode
@@ -81,7 +87,7 @@ class ExtensionAPIServiceTestCase: XCTestCase {
     }
 
     override func setUpWithError() throws {
-        dataTaskFactory = MockDataTaskFactory { session, request, completionHandler in
+        mockDataTaskFactory = MockDataTaskFactory { session, request, completionHandler in
             switch request.url?.path {
             case "/vpn/v1/certificate":
                 self.certRefreshCallback?(request, completionHandler)
@@ -122,8 +128,9 @@ class ExtensionAPIServiceTestCase: XCTestCase {
                                          timerFactory: timerFactory,
                                          keychain: keychain,
                                          appInfo: AppInfoImplementation(context: .wireGuardExtension),
-                                         atlasSecret: "",
-                                         dataTaskFactoryGetter: { [unowned self] in self.dataTaskFactory })
+                                         atlasSecret: "")
+
+        apiService.delegate = self
     }
 
     /// Generate an "endpoint" closure that can mock various API responses or error cases.

@@ -16,9 +16,8 @@ import NEHelper
 import VPNShared
 import LocalFeatureFlags
 
-class PacketTunnelProvider: NEPacketTunnelProvider {
+class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
-    private var dataTaskFactory: DataTaskFactory!
     private var appInfo: AppInfo = AppInfoImplementation(context: .wireGuardExtension)
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
@@ -39,17 +38,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         return tunnelProviderProtocol
     }
 
-    var socketType: String? {
-        tunnelProviderProtocol?.wgProtocol as? String
-    }
+    public var dataTaskFactory: DataTaskFactory!
 
-    var vpnProtocol: VpnProtocol? {
-        guard let socketType else {
+    public var transport: WireGuardTransport? {
+        guard let socketType = self.tunnelProviderProtocol?.wgProtocol else {
             return nil
         }
 
-        let transport = WireGuardTransport(rawValue: socketType) ?? .udp
-        return .wireGuard(transport)
+        return WireGuardTransport(rawValue: socketType) ?? .udp
     }
 
     override init() {
@@ -64,8 +60,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
         self.timerFactory = TimerFactoryImplementation()
 
-        let dataTaskFactoryGetter = { [unowned self] in dataTaskFactory! }
-
         if #available(iOSApplicationExtension 14.0, *) {
             killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
                 wg_log(.info, message: "Kill Switch configuration changed.")
@@ -78,8 +72,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                              timerFactory: timerFactory,
                                              keychain: authKeychain,
                                              appInfo: appInfo,
-                                             atlasSecret: ObfuscatedConstants.atlasSecret,
-                                             dataTaskFactoryGetter: dataTaskFactoryGetter)
+                                             atlasSecret: ObfuscatedConstants.atlasSecret)
 
         certificateRefreshManager = ExtensionCertificateRefreshManager(apiService: apiService,
                                                                        timerFactory: timerFactory,
@@ -87,12 +80,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                                                        keychain: authKeychain)
 
         serverStatusRefreshManager = ServerStatusRefreshManager(apiService: apiService,
-                                                                timerFactory: timerFactory) { [unowned self] newServers in
-            guard let newServer = newServers.randomElement() else {
-                return
-            }
-            self.restartTunnel(with: newServer)
-        }
+                                                                timerFactory: timerFactory)
+
+        apiService.delegate = self
+        serverStatusRefreshManager.delegate = self
         setupLogging()
     }
     
@@ -160,13 +151,18 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     func restartTunnel(with logical: ServerStatusRequest.Logical) {
         log.info("Restarting tunnel with new logical server: \(logical.id)", category: .connection)
-        guard let currentWireguardServer, let vpnProtocol else {
+        guard let currentWireguardServer, let transport else {
             log.error("API said to reconnect, but we haven't connected to a server yet?", category: .connection)
             return
         }
 
-        let availableServerIps = logical.servers.filter { !$0.underMaintenance && $0.supports(vpnProtocol: vpnProtocol) }
-        guard let server = availableServerIps.randomElement(), let entryIp = server.entryIp(using: vpnProtocol) else {
+        guard let (server, entryIp) = logical.servers
+            .filter({ !$0.underMaintenance })
+            .compactMap({ (server: ServerStatusRequest.Server) -> (ServerStatusRequest.Server, String)? in
+                guard let entryIp = server.entryIp(using: .wireGuard(transport)) else { return nil }
+                return (server, entryIp)
+            })
+            .randomElement() else {
             log.error("No alternative server found for reconnection", category: .connection)
             return
         }
@@ -209,7 +205,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
 
-        guard let socketType else {
+        guard let transport else {
             wg_log(.info, message: "Error in \(#function) guard 2: missing socket type")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -224,7 +220,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
 
         // Start the tunnel
-        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socketType) { adapterError in
+        adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
             guard let adapterError = adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
@@ -504,6 +500,16 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
 #endif
     
+}
+
+extension PacketTunnelProvider: ServerStatusRefreshDelegate {
+    func reconnect(toAnyOf alternatives: [ServerStatusRequest.Logical]) {
+        guard let newServer = alternatives.randomElement() else {
+            log.error("Was told to reconnect, but alternatives were empty", category: .connection)
+            return
+        }
+        self.restartTunnel(with: newServer)
+    }
 }
 
 extension WireGuardLogLevel {

@@ -20,26 +20,26 @@ import Foundation
 import Timer
 import VPNShared
 
+public protocol ServerStatusRefreshDelegate: AnyObject {
+    func reconnect(toAnyOf alternatives: [ServerStatusRequest.Logical])
+}
+
 public final class ServerStatusRefreshManager: RefreshManager {
-    public typealias ServerStatusChangeCallback = ([ServerStatusRequest.Logical]) -> Void
+    public weak var delegate: ServerStatusRefreshDelegate?
 
     private let apiService: ExtensionAPIService
     /// - Important: should set/get this value on `workQueue`.
     private var currentServerId: String?
-    private let serverStatusChangeCallback: ServerStatusChangeCallback
 
     override public var timerRefreshInterval: TimeInterval {
         5 * 60 // 5 minutes
     }
 
     public init(apiService: ExtensionAPIService,
-                timerFactory: TimerFactory,
-                serverStatusChangeCallback: @escaping ServerStatusChangeCallback) {
+                timerFactory: TimerFactory) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.server-status-refresh")
 
         self.apiService = apiService
-        self.serverStatusChangeCallback = serverStatusChangeCallback
-
         super.init(timerFactory: timerFactory, workQueue: workQueue)
     }
 
@@ -74,7 +74,7 @@ public final class ServerStatusRefreshManager: RefreshManager {
                         return
                     }
 
-                    serverStatusChangeCallback(response.alternatives)
+                    self.delegate?.reconnect(toAnyOf: response.alternatives)
                     
                 case .failure(let error):
                     log.error("Couldn't refresh server state: \(error)", category: .connection)
