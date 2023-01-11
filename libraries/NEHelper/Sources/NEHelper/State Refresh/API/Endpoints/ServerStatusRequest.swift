@@ -18,13 +18,22 @@
 
 import Foundation
 import VPNShared
+import LocalFeatureFlags
 
 public final class ServerStatusRequest: APIRequest {
     let params: Params
     let httpMethod = "GET"
     let hasBody = false
 
-    var endpointUrl: String { "vpn/logicals/\(params.logicalId)/alternatives" }
+    var endpointUrl: String {
+        var result = "vpn/logicals/\(params.logicalId)/alternatives"
+
+        if isEnabled(LogicalFeature.perProtocolEntries) {
+            result.append("?WithEntriesForProtocols=\(VpnProtocol.apiDescriptions)")
+        }
+
+        return result
+    }
 
     public struct Params: Codable {
         let logicalId: String
@@ -65,6 +74,14 @@ public final class ServerStatusRequest: APIRequest {
         
         public var underMaintenance: Bool {
             status == 0
+        }
+
+        public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
+            protocolEntries?.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
+        }
+
+        public func supports(vpnProtocol: VpnProtocol) -> Bool {
+            entryIp(using: vpnProtocol) != nil
         }
     }
 

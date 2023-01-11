@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Timer"),
         .package(path: "../PMLogger"),
+        .package(path: "../LocalFeatureFlags"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "3.2.1"),
     ],
     targets: [
@@ -26,6 +27,7 @@ let package = Package(
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "PMLogger", package: "PMLogger"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
+                .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
             ]
         ),
         .testTarget(
@@ -42,6 +44,7 @@ let package = Package(
             name: "NEHelper",
             dependencies: [
                 .product(name: "Timer", package: "Timer"),
+                .product(name: "LocalFeatureFlags", package: "LocalFeatureFlags"),
                 "VPNShared",
             ]
         ),

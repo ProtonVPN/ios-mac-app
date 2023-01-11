@@ -55,6 +55,8 @@ extension VpnProtocol {
 
 // MARK: - API description
 extension VpnProtocol {
+    public static let apiDescriptions = Self.allCases.map(\.apiDescription).joined(separator: ",")
+
     public var apiDescription: String {
         switch self {
         case .ike:
