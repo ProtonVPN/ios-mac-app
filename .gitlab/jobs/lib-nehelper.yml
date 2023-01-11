@@ -2,7 +2,7 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
   
 
-neheper_unit_tests:
+nehelper_unit_tests:
   extends:
     - .mr_job_template
     - .ios_job_template
