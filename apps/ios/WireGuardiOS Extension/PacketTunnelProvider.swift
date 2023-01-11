@@ -14,6 +14,7 @@ import Logging
 import Timer
 import NEHelper
 import VPNShared
+import LocalFeatureFlags
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     private var timerFactory: TimerFactory!
@@ -292,6 +293,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
         connectedLogicalId = tunnelProviderProtocol?.connectedServerId
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
+        setLocalFeatureFlagOverrides(tunnelProviderProtocol?.featureFlagOverrides)
 
         startTunnelWithStoredConfig(errorNotifier: errorNotifier,
                                     newVpnCertificateFeatures: nil,

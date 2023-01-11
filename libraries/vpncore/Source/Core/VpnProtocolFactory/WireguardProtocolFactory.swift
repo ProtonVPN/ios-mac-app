@@ -64,6 +64,8 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.serverAddress = configuration.entryServerAddress
         protocolConfiguration.connectedServerId = configuration.serverId
         protocolConfiguration.connectedServerIpId = configuration.ipId
+        protocolConfiguration.featureFlagOverrides = propertiesManager.featureFlags.localOverrides
+
         return protocolConfiguration
     }
     

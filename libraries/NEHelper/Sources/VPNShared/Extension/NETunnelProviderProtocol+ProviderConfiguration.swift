@@ -25,6 +25,7 @@ extension NETunnelProviderProtocol {
     static let reconnectionEnabledKey = "ReconnectionEnabled"
     static let uidKey = "UID"
     static let wgProtocolKey = "wg-protocol"
+    static let featureFlagOverridesKey = "FeatureFlagOverrides"
 
     private func ensureProviderConfig() {
         guard providerConfiguration == nil else { return }
@@ -79,6 +80,16 @@ extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[Self.reconnectionEnabledKey] = newValue
+        }
+    }
+
+    public var featureFlagOverrides: [String: [String: Bool]]? {
+        get {
+            providerConfiguration?[Self.featureFlagOverridesKey] as? [String: [String: Bool]]
+        }
+        set {
+            ensureProviderConfig()
+            providerConfiguration?[Self.featureFlagOverridesKey] = newValue
         }
     }
 }
