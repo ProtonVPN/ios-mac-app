@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 

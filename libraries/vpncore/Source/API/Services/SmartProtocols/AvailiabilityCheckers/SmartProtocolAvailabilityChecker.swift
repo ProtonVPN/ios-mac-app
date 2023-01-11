@@ -22,6 +22,7 @@
 
 import Foundation
 import GoLibs
+import VPNShared
 
 public enum SmartProtocolAvailabilityCheckerResult {
     case unavailable
@@ -52,7 +53,7 @@ extension SmartProtocolAvailabilityChecker {
         log.debug("Checking \(protocolName) availability for \(server)", category: .connectionConnect, event: .scan)
 
         // Ports can be overridden for a given protocol and server
-        let ports = server.overridePorts(using: vpnProtocol) ?? ports
+        let ports = server.protocolEntries?.overridePorts(using: vpnProtocol) ?? ports
 
         DispatchQueue.global().async {
             let group = DispatchGroup()
@@ -88,7 +89,7 @@ extension SmartProtocolAvailabilityChecker {
             let lockQueue = DispatchQueue(label: "ch.proton.port_checker.\(self.protocolName)")
             var portAlreadyFound = false // Prevents several calls to completion closure
 
-            let ports = server.overridePorts(using: vpnProtocol) ?? defaultPorts
+            let ports = server.protocolEntries?.overridePorts(using: vpnProtocol) ?? defaultPorts
             for port in ports.shuffled() {
                 group.enter()
                 self.ping(protocolName: self.protocolName, server: server, port: port, timeout: self.timeout) { success in

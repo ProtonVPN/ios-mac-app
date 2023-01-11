@@ -23,6 +23,7 @@
 import CommonCrypto
 import Foundation
 import Network
+import VPNShared
 
 final class OpenVPNTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     let vpnProtocol: VpnProtocol = .openVpn(.tcp)

@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var activeConnectionChangedNotification: Notification.Name = Notification.Name("activeConnectionChanged")

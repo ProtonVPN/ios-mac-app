@@ -232,9 +232,3 @@ class RequestParsingTests: XCTestCase {
         }
     }
 }
-
-private extension String {
-    func prepending(_ s: String) -> String {
-        return s + self
-    }
-}

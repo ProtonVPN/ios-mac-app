@@ -19,6 +19,7 @@
 import Foundation
 import NetworkExtension
 import TimerMock
+import VPNShared
 import VPNSharedTesting
 
 @testable import vpncore

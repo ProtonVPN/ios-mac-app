@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 @testable import ProtonVPN
 @testable import vpncore
 

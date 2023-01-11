@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 enum SmartProtocolProtocol {
     case ikev2

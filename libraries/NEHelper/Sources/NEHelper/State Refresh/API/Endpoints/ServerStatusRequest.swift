@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared
 
 public final class ServerStatusRequest: APIRequest {
     let params: Params
@@ -49,6 +50,7 @@ public final class ServerStatusRequest: APIRequest {
         public let status: Int
         public let label: String
         public let x25519PublicKey: String?
+        public let protocolEntries: PerProtocolEntries?
 
         enum CodingKeys: String, CodingKey {
             case entryIp = "EntryIP"
@@ -58,6 +60,7 @@ public final class ServerStatusRequest: APIRequest {
             case status = "Status"
             case label = "Label"
             case x25519PublicKey = "X25519PublicKey"
+            case protocolEntries = "EntryPerProtocol"
         }
         
         public var underMaintenance: Bool {

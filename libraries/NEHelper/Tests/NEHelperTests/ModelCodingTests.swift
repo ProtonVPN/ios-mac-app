@@ -99,7 +99,12 @@ private let alternativesJson = """
                     "Generation": 0,
                     "Status": 1,
                     "ServicesDown": 0,
-                    "ServicesDownReason": null
+                    "ServicesDownReason": null,
+                    "EntryPerProtocol": {
+                        "WireGuardTLS": {
+                            "IPv4": "1.1.1.2"
+                        }
+                    }
                 }
             ],
             "Load": 0
@@ -144,7 +149,13 @@ private let alternativesJson = """
                     "Generation": 0,
                     "Status": 0,
                     "ServicesDown": 0,
-                    "ServicesDownReason": null
+                    "ServicesDownReason": null,
+                    "EntryPerProtocol": {
+                        "OpenVPNUDP": {
+                            "IPv4": "1.1.1.2",
+                            "Ports": [8080, 8081]
+                        }
+                    }
                 },
                 {
                     "EntryIP": "89.39.107.201",
@@ -189,7 +200,13 @@ private let alternativesJson = """
                     "Generation": 0,
                     "Status": 0,
                     "ServicesDown": 0,
-                    "ServicesDownReason": null
+                    "ServicesDownReason": null,
+                    "EntryPerProtocol": {
+                        "WireGuardUDP": {
+                            "IPv4": null,
+                            "Ports": null
+                        }
+                    }
                 },
                 {
                     "EntryIP": "108.59.0.38",

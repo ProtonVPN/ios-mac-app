@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import VPNShared
 
 public protocol VpnCredentialsConfiguratorFactoryCreator {
     func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory

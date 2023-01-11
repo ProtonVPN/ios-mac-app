@@ -1,10 +1,7 @@
 //
-//  VpnFeatureChangeState.swift
-//  ProtonVPN - Created on 2020-10-21.
+//  Created on 11.01.23.
 //
-//  Copyright (c) 2021 Proton Technologies AG
-//
-//  This file is part of ProtonVPN.
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,26 +15,15 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-//
 
 import Foundation
-import VPNShared
 
-public enum VpnFeatureChangeState {
-    case withConnectionUpdate
-    case withReconnect
-    case immediately
-}
+public extension String {
+    func prepending(_ s: String) -> String {
+        return s + self
+    }
 
-extension VpnFeatureChangeState {
-    public init(state: VpnState, vpnProtocol: VpnProtocol?) {
-        switch state {
-        case .connected where vpnProtocol?.authenticationType == .certificate:
-            self = .withConnectionUpdate
-        case .connected, .connecting:
-            self = .withReconnect
-        default:
-            self = .immediately
-        }
+    func appending(_ s: String) -> String {
+        return self + s
     }
 }
