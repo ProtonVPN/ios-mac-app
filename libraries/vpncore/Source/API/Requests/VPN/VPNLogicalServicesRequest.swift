@@ -22,6 +22,7 @@
 
 import ProtonCore_Networking
 import LocalFeatureFlags
+import VPNShared
 
 enum LogicalFeature: String, FeatureFlag {
     var category: String {

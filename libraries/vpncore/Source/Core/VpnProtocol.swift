@@ -10,35 +10,10 @@
 import Foundation
 import VPNShared
 
-public enum VpnProtocol: CaseIterable {
-    public static let allCases: [VpnProtocol] = [.ike]
-        + OpenVpnTransport.allCases.map(Self.openVpn)
-        + WireGuardTransport.allCases.map(Self.wireGuard)
-
-    case ike
-    case openVpn(OpenVpnTransport)
-    case wireGuard(WireGuardTransport)
-}
-
 extension VpnProtocol: DefaultableProperty {
     public init() {
-        self = DefaultConstants.vpnProtocol
+        self = .defaultValue
     }
-}
-
-public enum OpenVpnTransport: String, Codable, CaseIterable {
-    case tcp = "tcp"
-    case udp = "udp"
-
-    private static var defaultValue = OpenVpnTransport.tcp
-}
-
-public enum WireGuardTransport: String, Codable, Equatable, CaseIterable {
-    case udp = "udp"
-    case tcp = "tcp"
-    case tls = "tls"
-
-    private static var defaultValue = WireGuardTransport.udp
 }
 
 // MARK: -
@@ -183,38 +158,6 @@ extension VpnProtocol {
     }
 }
 
-// MARK: API description
-extension VpnProtocol {
-    public var apiDescription: String {
-        switch self {
-        case .ike:
-            return "IKEv2"
-        case .openVpn(let transport):
-            return "OpenVPN" + transport.rawValue.uppercased()
-        case .wireGuard(let transport):
-            return "WireGuard" + transport.rawValue.uppercased()
-        }
-    }
-
-    public init?(apiDescription: String) {
-        switch apiDescription {
-        case "IKEv2":
-            self = .ike
-        case "OpenVPNUDP":
-            self = .openVpn(.udp)
-        case "OpenVPNTCP":
-            self = .openVpn(.tcp)
-        case "WireGuardUDP":
-            self = .wireGuard(.udp)
-        case "WireGuardTCP":
-            self = .wireGuard(.tcp)
-        case "WireGuardTLS":
-            self = .wireGuard(.tls)
-        default:
-            return nil
-        }
-    }
-}
 
 extension OpenVpnTransport {
 
@@ -285,8 +228,6 @@ extension WireGuardTransport {
         aCoder.encode(data, forKey: CoderKey.transportProtocol)
     }
 }
-
-extension VpnProtocol: Equatable, Hashable {}
 
 // MARK: - MacOS
 

@@ -113,7 +113,7 @@ public class Profile: NSObject, NSCoding {
         }
 
         let connectionProtocolCodingValue = aDecoder.decodeInteger(forKey: CoderKey.connectionProtocol)
-        self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType, serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: ConnectionProtocol.from(codingValue: connectionProtocolCodingValue) ?? .vpnProtocol(DefaultConstants.vpnProtocol))
+        self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType, serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: ConnectionProtocol.from(codingValue: connectionProtocolCodingValue) ?? .vpnProtocol(.defaultValue))
     }
     
     public func encode(with aCoder: NSCoder) {

@@ -18,6 +18,7 @@
 
 import Foundation
 import NetworkExtension
+import VPNShared
 
 class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
     typealias VpnCredentialsConfiguratorMockCallback = ((VpnManagerConfiguration, NEVPNProtocol) -> Void)

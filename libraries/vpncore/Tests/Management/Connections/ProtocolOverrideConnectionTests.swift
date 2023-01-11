@@ -19,6 +19,7 @@
 import Foundation
 import XCTest
 import NetworkExtension
+import VPNShared
 
 import vpncore
 

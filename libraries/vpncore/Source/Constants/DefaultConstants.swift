@@ -23,13 +23,3 @@
 struct DefaultConstants {
     static let ikeV2Ports = [500]
 }
-
-#if os(iOS)
-extension DefaultConstants {
-    static let vpnProtocol: VpnProtocol = .openVpn(.udp)
-}
-#else
-extension DefaultConstants {
-    static let vpnProtocol: VpnProtocol = .ike
-}
-#endif

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import VPNShared
 
 class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     let transport: WireGuardTransport

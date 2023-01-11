@@ -22,6 +22,7 @@
 
 import Foundation
 import Network
+import VPNShared
 
 final class IKEv2AvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     let vpnProtocol: VpnProtocol = .ike

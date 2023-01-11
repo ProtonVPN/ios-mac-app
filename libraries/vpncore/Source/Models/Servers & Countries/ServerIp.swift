@@ -30,24 +30,10 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
     public let label: String?
     public let x25519PublicKey: String?
-
-    /// API overrides for connection parameters when using a certain protocol.
-    ///
-    /// Given an entry `e` exists for a protocol `p` on `ServerIp` object `s`:
-    /// 1. If `e.ipv4` is `nil`, `s` only supports `p`, and must use `s.entryIp` when connecting.
-    /// 2. If `e.ipv4` is not `nil`, `s` supports all protocols. Client must use `e.ipv4` when connecting with `p`.
-    /// 3. If `e.ports` is non-empty, client must choose from these ports when connecting, instead of ports from config.
-    public let protocolEntries: [VpnProtocol: ProtocolEntry?]?
-
-    public struct ProtocolEntry: Codable {
-        public let ipv4: String?
-        public let ports: [Int]?
-    }
+    public let protocolEntries: PerProtocolEntries?
     
     override public var description: String {
-        let entryOverrides: String = protocolEntries?.reduce(", with overrides for:\n", { partialResult, entry in
-            partialResult + "\t\(entry.key.localizedString) => \(entry.value?.description ?? "(nil)")\n"
-        }) ?? "\n"
+        let entryOverrides = protocolEntries?.description.prepending(", with overrides for:\n") ?? "\n"
 
         return  "ID      = \(id)\n" +
                 "EntryIP = \(entryIp ?? "(nil)")\(entryOverrides)" +
@@ -65,7 +51,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
                 status: Int,
                 label: String? = nil,
                 x25519PublicKey: String? = nil,
-                protocolEntries: [VpnProtocol: ProtocolEntry?]? = nil) {
+                protocolEntries: PerProtocolEntries? = nil) {
         self.id = id
         self.entryIp = entryIp
         self.exitIp = exitIp
@@ -85,60 +71,16 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.entryIp = dic.string("EntryIP")
         self.label = dic.string("Label")
         self.x25519PublicKey = dic["X25519PublicKey"] as? String
-
-        // looks like:
-        // "EntryPerProtocol": {
-        //     "WireGuardTLS": {"IPv4": "5.6.7.8"},
-        //     "OpenVPNTCP": {"Ports": [22, 23]}
-        //  }
-        self.protocolEntries = try (dic["EntryPerProtocol"] as? [String: JSONDictionary?])?
-            .reduce([VpnProtocol: ProtocolEntry?]()) { partialResult, keyPair in
-                // Check if it's a vpn protocol that we recognize.
-                guard let vpnProtocol = VpnProtocol(apiDescription: keyPair.key) else {
-                    log.error("Unrecognized VPN protocol from API: \(keyPair.key)")
-                    return partialResult
-                }
-
-                // API is allowed to include entries without overriding anything (see `protocolEntries` documentation)
-                var protocolEntry: ProtocolEntry?
-                if let protocolEntryDict = keyPair.value {
-                    protocolEntry = try .init(dic: protocolEntryDict)
-                }
-
-                return partialResult.merging([vpnProtocol: protocolEntry]) { l, r in r }
-            }
-
+        self.protocolEntries = PerProtocolEntries(dic: dic)
         super.init()
     }
 
-    /// Determine the appropriate entry IP to use for the given `ServerIp` object and
-    /// protocol, according to the `entryIp` and `protocolEntries` properties.
-    /// - Warning: The `entryIp` property is nullable, be careful when changing this function.
     public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
-        // Check to see if the given server IP contains a per-protocol override.
-        guard let override = protocolEntries?.first(where: { $0.key == vpnProtocol }) else {
-            // An override does not exist on the server IP for the current protocol.
-            // If the server IP contains an override where an IP address is nil, then it means that this server IP only
-            // supports protocols for which there is an entry in the overrides list. Thus, if this guard fails, then on
-            // this server IP there is no entry IP that supports `vpnProtocol`.
-            guard protocolEntries?.contains(where: { $0.value?.ipv4 == nil }) != true else {
-                return nil
-            }
-
-            // An override doesn't exist, and no overrides are present that have a null entry IP.
-            // This is the default case, return the normal entry IP.
+        guard let protocolEntries else {
             return entryIp
         }
 
-        // An override for the given protocol exists, but doesn't define an IP address. This means
-        // that the ServerIp in question supports this protocol, but should connect with `entryIp`.
-        guard let ip = override.value?.ipv4 else {
-            return entryIp
-        }
-
-        // An override for the given protocol exists, and the IP address is defined. Return this
-        // overridden IP address.
-        return ip
+        return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
 
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
@@ -154,7 +96,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         }
 
         // Skip the loop if there are no overrides.
-        guard protocolEntries?.isEmpty == false else {
+        guard protocolEntries?.isEmpty != true else {
             return true
         }
 
@@ -164,10 +106,6 @@ public class ServerIp: NSObject, NSCoding, Codable {
             }
         }
         return false
-    }
-
-    public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
-        protocolEntries?[vpnProtocol]??.ports
     }
 
     /// Used for testing purposes.
@@ -189,9 +127,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
             result["EntryIP"] = entryIp
         }
         if let protocolEntries {
-            result["EntryPerProtocol"] = protocolEntries.reduce(into: [:], { partialResult, keyPair in
-                partialResult[keyPair.key.apiDescription] = keyPair.value?.asDict
-            })
+            result["EntryPerProtocol"] = protocolEntries.asDict
         }
 
         return result
@@ -219,7 +155,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         let status = aDecoder.decodeInteger(forKey: CoderKey.status.rawValue)
         let label = aDecoder.decodeObject(forKey: CoderKey.label.rawValue) as? String
         let x25519PublicKey = aDecoder.decodeObject(forKey: CoderKey.x25519PublicKey.rawValue) as? String
-        let protocolEntries = aDecoder.decodeObject(forKey: CoderKey.protocolEntries.rawValue) as? [VpnProtocol: ProtocolEntry]
+        let protocolEntries = aDecoder.decodeObject(forKey: CoderKey.protocolEntries.rawValue) as? PerProtocolEntries
 
         self.init(id: id,
                   entryIp: entryIp,
@@ -264,8 +200,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         let status = try container.decode(Int.self, forKey: .status)
         let label = try container.decodeIfPresent(String.self, forKey: .label)
         let x25519PublicKey = try container.decodeIfPresent(String.self, forKey: .x25519PublicKey)
-        let protocolEntries = try container.decodeIfPresent([VpnProtocol: ProtocolEntry].self,
-                                                            forKey: .protocolEntries)
+        let protocolEntries = try container.decodeIfPresent(PerProtocolEntries.self, forKey: .protocolEntries)
         
         self.init(id: id,
                   entryIp: entryIp,
@@ -291,10 +226,30 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
 }
 
-extension ServerIp.ProtocolEntry {
-    public init(dic: JSONDictionary) throws {
-        self.ipv4 = dic.string("IPv4")
-        self.ports = dic.intArray(key: "Ports")
+extension PerProtocolEntries {
+    // looks like:
+    // "EntryPerProtocol": {
+    //     "WireGuardTLS": {"IPv4": "5.6.7.8"},
+    //     "OpenVPNTCP": {"Ports": [22, 23]}
+    //  }
+    public init?(dic: JSONDictionary) {
+        guard let entries = dic["EntryPerProtocol"] as? [String: JSONDictionary] else {
+            return nil
+        }
+
+        self = .init(rawValue: entries.mapValues(ServerProtocolEntry.init(dic:)))
+    }
+
+    public var asDict: JSONDictionary {
+        rawValue.reduce(into: [:]) { partialResult, keyPair in
+            partialResult[keyPair.key] = keyPair.value?.asDict as? AnyObject
+        }
+    }
+}
+
+extension ServerProtocolEntry {
+    public init?(dic: JSONDictionary) {
+        self.init(ipv4: dic.string("IPv4"), ports: dic.intArray(key: "Ports"))
     }
 
     public var asDict: JSONDictionary {
@@ -305,26 +260,6 @@ extension ServerIp.ProtocolEntry {
 
         if let ports {
             result["Ports"] = ports as AnyObject
-        }
-
-        return result
-    }
-}
-
-extension ServerIp.ProtocolEntry: CustomStringConvertible {
-    public var description: String {
-        var result = ""
-
-        if let ipv4 {
-            result += "\(ipv4)"
-        }
-
-        if let ports, !ports.isEmpty {
-            if ports.count == 1, let first = ports.first {
-                result += ":\(first)"
-            } else {
-                result += ":{\(ports.map(String.init).joined(separator: ", "))}"
-            }
         }
 
         return result

@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import VPNShared
 
 final class OpenVPNUDPAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     let vpnProtocol: VpnProtocol = .openVpn(.udp)

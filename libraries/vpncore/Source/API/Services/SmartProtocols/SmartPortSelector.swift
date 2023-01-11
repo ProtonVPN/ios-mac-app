@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import VPNShared
 
 typealias SmartPortSelectorCompletion = ([Int]) -> Void
 
@@ -31,7 +32,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
     }
     
     func determineBestPort(for vpnProtocol: VpnProtocol, on serverIp: ServerIp, completion: @escaping SmartPortSelectorCompletion) {
-        let portOverrides = serverIp.overridePorts(using: vpnProtocol)
+        let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
         switch vpnProtocol {
         case .wireGuard(let transportProtocol): // Ping all the ports to determine which are available
