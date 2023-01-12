@@ -43,7 +43,8 @@ extension TelemetryDimensions {
                                                             protocol: .wireGuard(.tls),
                                                             server: "#IT1",
                                                             port: "1234",
-                                                            isp: "Play")
+                                                            isp: "Play",
+                                                            isServerFree: false)
     
     static let disconnectionSuccessMock1 = TelemetryDimensions(outcome: .success,
                                                                userTier: .paid,
@@ -56,5 +57,6 @@ extension TelemetryDimensions {
                                                                protocol: .openVpn(.udp),
                                                                server: "#PL1",
                                                                port: "5678",
-                                                               isp: "Netia")
+                                                               isp: "Netia",
+                                                               isServerFree: true)
 }

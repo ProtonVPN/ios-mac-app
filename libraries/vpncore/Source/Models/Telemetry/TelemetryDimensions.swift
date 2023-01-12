@@ -31,6 +31,7 @@ public struct TelemetryDimensions: Encodable {
     let server: String // "#IT1"
     let port: String // 3360, max 25 char
     let isp: String // max 25 char
+    let isServerFree: Bool // only used for adding "free" to the serverFeatures
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -39,7 +40,8 @@ public struct TelemetryDimensions: Encodable {
         try container.encode(vpnStatus, forKey: .vpnStatus)
         try container.encode(vpnTrigger, forKey: .vpnTrigger)
         try container.encode(networkType, forKey: .networkType)
-        try container.encode(serverFeatures.commaSeparatedList, forKey: .serverFeatures)
+        let serverFeatures = serverFeatures.commaSeparatedList(isFree: isServerFree)
+        try container.encode(serverFeatures, forKey: .serverFeatures)
         try container.encode(vpnCountry, forKey: .vpnCountry)
         try container.encode(userCountry, forKey: .userCountry)
         try container.encode(protocolString(`protocol`), forKey: .`protocol`)

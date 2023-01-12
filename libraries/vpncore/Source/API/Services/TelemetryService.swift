@@ -182,7 +182,8 @@ public class TelemetryService {
                                              protocol: activeConnection.vpnProtocol,
                                              server: activeConnection.server.name,
                                              port: String(port),
-                                             isp: propertiesManager.userLocation?.isp ?? "")
+                                             isp: propertiesManager.userLocation?.isp ?? "",
+                                             isServerFree: activeConnection.server.isFree)
 
         report(event: .init(event: eventType, dimensions: dimensions))
     }
