@@ -37,7 +37,7 @@ enum PlistError: String, Error, CustomStringConvertible {
 @main
 struct EmbedPlistData: BuildToolPlugin {
     private static let featureFlagsPlist = "FeatureFlags.plist"
-    private static let featureFlagsSwift = "FeatureFlagsData.swift"
+    private static let featureFlagsSwift = "FeatureFlags.swift"
     private static let featureFlagsTarget = "LocalFeatureFlags"
 
     private func plistPath(plistDir: Path) throws -> Path {
@@ -62,60 +62,22 @@ struct EmbedPlistData: BuildToolPlugin {
 
     func createBuildCommands(context: PackagePlugin.PluginContext, target: PackagePlugin.Target) async throws -> [PackagePlugin.Command] {
 
-        let outputPath = context.pluginWorkDirectory.appending(subpath: Self.featureFlagsSwift)
         let plistPath = try plistPath(context: context)
+        let outputPath = context.pluginWorkDirectory.appending(subpath: Self.featureFlagsSwift)
 
         return [
             .buildCommand(displayName: "Embed local feature flags",
-                          executable: try context.tool(named: "plutil").path,
+                          executable: try context.tool(named: "plistutil").path,
                           arguments: [
-                             "-convert",
-                             "swift",
-                             "-o",
-                             outputPath.string,
-                             plistPath.string,
+                            "convert",
+                            "--format",
+                            "swift",
+                            "-o",
+                            outputPath.string,
+                            plistPath.string,
                           ],
                           inputFiles: [plistPath],
                           outputFiles: [outputPath]),
         ]
     }
 }
-
-#if canImport(XcodeProjectPlugin)
-import XcodeProjectPlugin
-
-extension EmbedPlistData: XcodeBuildToolPlugin {
-    private func plistPath(context: XcodePluginContext) throws -> Path {
-        guard let plistDir = context.xcodeProject
-            .targets
-            .first(where: { $0.displayName == Self.featureFlagsTarget })?
-            .inputFiles
-            .first(where: { $0.path.lastComponent == Self.featureFlagsPlist })?
-            .path
-            .removingLastComponent() else {
-            throw PlistError.noTarget
-        }
-
-        return try plistPath(plistDir: plistDir)
-    }
-
-    func createBuildCommands(context: XcodePluginContext, target: XcodeTarget) throws -> [Command] {
-        let outputPath = context.pluginWorkDirectory.appending(subpath: Self.featureFlagsSwift)
-        let plistPath = try plistPath(context: context)
-
-        return [
-            .buildCommand(displayName: "Embed local feature flags",
-                          executable: try context.tool(named: "plutil").path,
-                          arguments: [
-                            "-convert",
-                             "swift",
-                             "-o",
-                             outputPath.string,
-                             plistPath.string,
-                          ],
-                          inputFiles: [plistPath],
-                          outputFiles: [outputPath])
-        ]
-    }
-}
-#endif

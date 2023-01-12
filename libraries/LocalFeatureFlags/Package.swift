@@ -10,10 +10,9 @@ let package = Package(
         .library(
             name: "LocalFeatureFlags",
             targets: ["LocalFeatureFlags"]),
-        .plugin(name: "EmbedPlistData", targets: ["EmbedPlistData"])
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
+        .package(url: "https://github.com/protonjohn/plistutil", from: "0.0.2")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -24,9 +23,13 @@ let package = Package(
         .testTarget(
             name: "LocalFeatureFlagsTests",
             dependencies: ["LocalFeatureFlags"]),
-        .plugin(name: "FeatureFlagger", capability: .command(intent: .custom(verb: "ff",
-                                                                             description: "Toggle feature flags in plist entries."),
-                                                             permissions: [.writeToPackageDirectory(reason: "To modify the feature flags plist file.")])),
-        .plugin(name: "EmbedPlistData", capability: .buildTool())
+        .plugin(name: "FeatureFlagger",
+                capability: .command(intent: .custom(verb: "ff",
+                                                     description: "Toggle feature flags in plist entries."),
+                                     permissions: [.writeToPackageDirectory(reason: "To modify the feature flags plist file.")]),
+                dependencies: [.product(name: "plistutil", package: "PlistUtil")]),
+        .plugin(name: "EmbedPlistData",
+                capability: .buildTool(),
+                dependencies: [.product(name: "plistutil", package: "PlistUtil")])
     ]
 )

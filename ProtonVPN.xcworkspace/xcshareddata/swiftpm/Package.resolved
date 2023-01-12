@@ -11,6 +11,24 @@
         }
       },
       {
+        "package": "PlistUtil",
+        "repositoryURL": "https://github.com/protonjohn/plistutil",
+        "state": {
+          "branch": null,
+          "revision": "9b085081f65a8b03c08d1a59f8afd500265de3a6",
+          "version": "0.0.2"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "fddd1c00396eed152c45a46bea9f47b98e59301d",
+          "version": "1.2.0"
+        }
+      },
+      {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {

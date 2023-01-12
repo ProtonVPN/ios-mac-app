@@ -23,7 +23,7 @@ public func setLocalFeatureFlagOverrides(_ dict: [String: Any]?) {
 /// - Note: `FeatureFlags` is generated from `FeatureFlags.plist` using the `plutil` tool.
 public func isEnabled(_ flag: FeatureFlag) -> Bool {
     isOverridden(category: flag.category, feature: flag.feature) ??
-        isEnabled(dict: FeatureFlags, category: flag.category, feature: flag.feature) ??
+        isEnabled(dict: featureFlags, category: flag.category, feature: flag.feature) ??
         false
 }
 
