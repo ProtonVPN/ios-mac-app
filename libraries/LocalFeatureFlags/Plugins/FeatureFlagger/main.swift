@@ -19,24 +19,35 @@
 import Foundation
 import PackagePlugin
 
-enum Action: String {
+enum Action: String, CaseIterable {
     case enable
     case disable
-}
+    case embed
 
-extension FileHandle: TextOutputStream {
-    public func write(_ string: String) {
-        guard let data = string.data(using: .utf8) else { return }
-        try? write(contentsOf: data)
+    var argumentsCount: Int {
+        switch self {
+        case .enable, .disable:
+            return 2
+        case .embed:
+            return 1
+        }
+    }
+
+    var usage: String {
+        switch self {
+        case .enable:
+            return "enable <category> <name>: enable feature by category and name"
+        case .disable:
+            return "disable <category> <name>: disable feature by category and name"
+        case .embed:
+            return "embed <path>: create file containing feature flag swift dictionary literal at path"
+        }
     }
 }
 
 enum PlistError: String, Error, CustomStringConvertible {
     case noTarget = "No such target directory exists."
     case noPlistInside = "The target directory exists, but does not contain a 'FeatureFlags.plist'."
-    case noPlist = "Could not get contents of the feature flags plist."
-    case badFormat = "Plist was not the correct format."
-    case couldntWrite = "Could not open plist file for writing."
 
     var description: String {
         rawValue
@@ -46,99 +57,91 @@ enum PlistError: String, Error, CustomStringConvertible {
 @main
 struct FeatureFlagger: CommandPlugin {
     static let featureFlagsPlist = "FeatureFlags.plist"
+    static let featureFlagsDict = "FeatureFlags.swift"
 
-    func plistContents(context: PluginContext) -> (Path, [String: Any])? {
-        var stderr = FileHandle.standardError
-        let plistPath: Path
-
-        do {
-            guard let plistDir = try context.package.targets(named: ["LocalFeatureFlags"]).first?.directory else {
-                throw PlistError.noTarget
-            }
-
-            guard try FileManager.default.contentsOfDirectory(atPath: plistDir.string).contains(where: { $0 == Self.featureFlagsPlist }) else {
-                throw PlistError.noPlistInside
-            }
-
-            plistPath = plistDir.appending(subpath: Self.featureFlagsPlist)
-
-            guard let contents = FileManager.default.contents(atPath: plistPath.string) else {
-                throw PlistError.noPlist
-            }
-
-            var format: PropertyListSerialization.PropertyListFormat = .xml
-            guard let plist = try PropertyListSerialization.propertyList(from: contents, format: &format) as? [String: Any] else {
-                throw PlistError.badFormat
-            }
-
-            return (plistPath, plist)
-        } catch {
-            print("Could not find FeatureFlags plist file:", String(describing: error), to: &stderr)
-            return nil
+    func findPlist(context: PluginContext) throws -> Path {
+        guard let plistDir = try context.package.targets(named: ["LocalFeatureFlags"]).first?.directory else {
+            throw PlistError.noTarget
         }
+
+        guard try FileManager.default.contentsOfDirectory(atPath: plistDir.string).contains(where: { $0 == Self.featureFlagsPlist }) else {
+            throw PlistError.noPlistInside
+        }
+
+        return plistDir.appending(subpath: Self.featureFlagsPlist)
+    }
+
+    func usage(message: String? = nil) {
+        let usage = """
+        ff <command>: manipulate local feature flags
+
+        Commands:
+        \(Action.allCases.map(\.usage).joined(separator: "\n"))
+        """
+
+        if let message {
+            print(message)
+        }
+        print(usage)
     }
 
     func performCommand(context: PluginContext, arguments: [String]) async throws {
-        var stderr = FileHandle.standardError
+        guard let actionString = arguments.first, let action = Action(rawValue: actionString) else {
+            usage(message: "Action should be one of 'enable', 'disable', or 'embed'.")
+            return
+        }
 
         // enable "VPN" "TurboEncabulator"
-        guard arguments.count == 3 else {
-            print("Should pass either 'enable' or 'disable', the category, and the feature name.", to: &stderr)
+        // disable "VPN" "TestingFeature"
+        // embed /Users/dave/FeatureFlags.swift
+        guard arguments.count-1 == action.argumentsCount else {
+            usage(message: "Wrong number of arguments for command '\(action.rawValue)'")
             return
         }
 
-        let (category, feature) = (arguments[1], arguments[2])
+        let plistPath = try findPlist(context: context)
 
-        guard let action = Action(rawValue: arguments[0]) else {
-            print("Action should be one of 'enable' or 'disable'.", to: &stderr)
-            return
-        }
-
-        guard let (plistPath, plist) = plistContents(context: context) else {
-            return
-        }
-
-        var output = plist
-
-        if output[category] == nil {
-            output[category] = [String: Any]()
-        }
-
-        guard var categoryDict = output[category] as? [String: Any] else {
-            print("Category dictionary for '\(category)' is not the correct format.", to: &stderr)
-            return
-        }
-
+        let toolArgs: [String]
         switch action {
         case .enable:
-            categoryDict[feature] = true
-            output[category] = categoryDict
-
+            toolArgs = [
+                "insert",
+                "--type",
+                "bool",
+                "--key",
+                arguments[1],
+                "--key",
+                arguments[2],
+                "--value",
+                "true",
+                plistPath.string
+            ]
         case .disable:
-            if categoryDict[feature] != nil {
-                categoryDict.removeValue(forKey: feature)
-
-                if categoryDict.isEmpty {
-                    output[category] = nil
-                } else {
-                    output[category] = categoryDict
-                }
-            }
+            toolArgs = [
+                "remove",
+                "--key",
+                arguments[1],
+                "--key",
+                arguments[2],
+                plistPath.string
+            ]
+        case .embed:
+            toolArgs = [
+                "convert",
+                "--format",
+                "swift",
+                "-o",
+                arguments[1],
+                plistPath.string,
+            ]
         }
 
-        do {
-            let data = try PropertyListSerialization.data(fromPropertyList: output,
-                                                          format: .xml,
-                                                          options: 0)
+        let tool = try context.tool(named: "plistutil")
+        let url = URL(string: "file://\(tool.path.string)")
 
-            try FileManager.default.removeItem(atPath: plistPath.string)
-
-            FileManager.default.createFile(atPath: plistPath.string,
-                                           contents: data)
-        } catch {
-            print("Could not serialize feature flag data:",
-                  String(describing: error),
-                  to: &stderr)
-        }
+        let process = Process()
+        process.executableURL = url
+        process.arguments = toolArgs
+        try process.run()
     }
 }

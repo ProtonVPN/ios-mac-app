@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "plistutil",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/protonjohn/plistutil",
+      "state" : {
+        "revision" : "f2e83dd80136c0f37817514573dd173bd1ac4556",
+        "version" : "0.0.1"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "fddd1c00396eed152c45a46bea9f47b98e59301d",
+        "version" : "1.2.0"
+      }
+    }
+  ],
+  "version" : 2
+}
