@@ -273,11 +273,13 @@ class WindowServiceImplementation: WindowService {
         }
     }
     
-    func closeActiveWindows(except: [NSWindowController.Type]) {
-        activeWindowControllers
-            .filter { vc in !except.contains { type in vc.isKind(of: type) } }
-            .forEach { $0.close() }
-        activeWindowControllers = []
+    func closeActiveWindows(except windowTypesToKeepOpen: [NSWindowController.Type]) {
+        let controllersToClose = activeWindowControllers.filter { wc in
+            !windowTypesToKeepOpen.contains { type in wc.isKind(of: type) }
+        }
+
+        controllersToClose.forEach { $0.close() }
+        activeWindowControllers = activeWindowControllers.subtracting(controllersToClose)
     }
     
     func presentKeyModal(viewController: NSViewController) {
