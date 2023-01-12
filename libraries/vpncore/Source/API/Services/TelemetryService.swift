@@ -129,6 +129,8 @@ public class TelemetryService {
             timer.markFinishedConnecting()
             eventType = connectionEventType(state: connectionStatus)
         case .connecting:
+            timer.markConnectionStoped()
+            eventType = connectionEventType(state: connectionStatus)
             timer.markStartedConnecting()
         case .disconnected:
             timer.markConnectionStoped()
@@ -159,7 +161,12 @@ public class TelemetryService {
             return .success
         case .connected:
             return .success
-        case .disconnecting, .connecting:
+        case .connecting:
+            if previousConnectionStatus == .connected {
+                return .success
+            }
+            return .failure
+        case .disconnecting:
             return .failure
         }
     }
@@ -208,6 +215,11 @@ public class TelemetryService {
                 return .vpnDisconnection(sessionLength: timer.connectionDuration() ?? 0)
             } else if previousConnectionStatus == .connecting {
                 return .vpnConnection(timeToConnection: timer.timeConnecting() ?? 0)
+            }
+            return nil
+        case .connecting:
+            if previousConnectionStatus == .connected {
+                return .vpnDisconnection(sessionLength: timer.connectionDuration() ?? 0)
             }
             return nil
         default:
