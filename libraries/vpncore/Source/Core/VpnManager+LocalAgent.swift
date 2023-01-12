@@ -329,8 +329,11 @@ extension VpnManager: LocalAgentDelegate {
             didReceiveError(error: LocalAgentError.certificateExpired)
 
         case .serverCertificateError:
-            // Most probably NE has changed the server. Let's check if it is the case.
+            #if os(iOS)
+            // Most probably NE has changed the server. Let's check if it is the case
+            // (currently only iOS NE can change server).
             checkActiveServer()
+            #endif
 
         default:
             break
