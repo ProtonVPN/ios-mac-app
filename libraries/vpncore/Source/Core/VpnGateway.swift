@@ -348,7 +348,7 @@ public class VpnGateway: VpnGatewayProtocol {
         siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         propertiesManager.lastConnectionRequest = request
         
-        guard let request = request else {
+        guard let request else {
             gatherParametersAndConnect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, natType: natType, safeMode: safeMode)
             return
         }
@@ -446,7 +446,7 @@ public class VpnGateway: VpnGatewayProtocol {
     /// configuration of the hardware, the options specified in `VpnConnectionInterceptPolicyItem` may change this configuration fetched
     /// from settings, possibly according to alerts displayed to the user whether they want to proceed with their normal settings.
     private func gatherParametersAndConnect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?) {
-        guard let server = server else {
+        guard let server else {
             return
         }
 

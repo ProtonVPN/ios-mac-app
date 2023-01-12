@@ -69,7 +69,7 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(dimensions["vpn_status"] as? String, "off")
         XCTAssertEqual(dimensions["vpn_trigger"] as? String, "server")
         XCTAssertEqual(dimensions["network_type"] as? String, "mobile")
-        XCTAssertEqual(dimensions["server_features"] as? String, "[tor,p2p]")
+        XCTAssertEqual(dimensions["server_features"] as? String, "[free,tor,p2p]")
         XCTAssertEqual(dimensions["vpn_country"] as? String, "POL")
         XCTAssertEqual(dimensions["user_country"] as? String, "BEL")
         XCTAssertEqual(dimensions["protocol"] as? String, "openvpn_udp")

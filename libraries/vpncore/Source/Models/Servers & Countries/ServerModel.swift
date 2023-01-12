@@ -68,7 +68,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public lazy var isFree: Bool = {
-        return name.lowercased().contains("free")
+        tier == 0
     }()
 
     /// The server name, split into the name prefix and sequence number (if it exists).

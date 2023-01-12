@@ -69,9 +69,13 @@ extension ServerFeature {
         }
     }
 
-    var commaSeparatedList: String {
-        "["
-        + elements().map { $0.featureName }.joined(separator: ",")
+    func commaSeparatedList(isFree: Bool) -> String {
+        var featureNames = elements().map { $0.featureName }
+        if isFree {
+            featureNames.insert("free", at: 0)
+        }
+        return "["
+        + featureNames.joined(separator: ",")
         + "]"
     }
 }
