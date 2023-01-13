@@ -59,7 +59,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
 class TelemetryTimerMock: TelemetryTimer {
     var reportedConnectionDuration: TimeInterval = 0
     var reportedTimeToConnect: TimeInterval = 0
-    func updateConnectionStarted(timeInterval: TimeInterval) { }
+    func updateConnectionStarted(_ date: Date) { }
     func markStartedConnecting() { }
     func markFinishedConnecting() { }
     func markConnectionStoped() { }
