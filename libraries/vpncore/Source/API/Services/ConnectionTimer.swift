@@ -24,8 +24,8 @@ class ConnectionTimer: TelemetryTimer {
     private var startedConnectionDate: Date?
     private var stoppedConnectionDate: Date?
 
-    func updateConnectionStarted(timeInterval: TimeInterval) {
-        startedConnectionDate = Date(timeIntervalSince1970: timeInterval)
+    func updateConnectionStarted(_ date: Date) {
+        startedConnectionDate = date
     }
 
     func markStartedConnecting() {
