@@ -58,6 +58,7 @@ public class TelemetryService {
 
     private var networkType: TelemetryDimensions.NetworkType = .unavailable
     private var previousConnectionStatus: ConnectionStatus = .disconnected
+    private var previousConnectionConfiguration: ConnectionConfiguration?
     private var userInitiatedVPNChange: UserInitiatedVPNChange?
 
     private var cancellables = Set<AnyCancellable>()
@@ -170,9 +171,17 @@ public class TelemetryService {
     }
 
     private func collectDimensionsAndReport(outcome: TelemetryDimensions.Outcome, eventType: ConnectionEventType?) {
-        guard let activeConnection = appStateManager.activeConnection(),
-              let port = activeConnection.ports.first,
-              let eventType else {
+        guard let eventType else { return }
+        let connection: ConnectionConfiguration
+        switch eventType {
+        case .vpnConnection:
+            guard let activeConnection = appStateManager.activeConnection() else { return }
+            connection = activeConnection
+        case .vpnDisconnection:
+            guard let previousConnectionConfiguration else { return }
+            connection = previousConnectionConfiguration
+        }
+        guard let port = connection.ports.first else {
             return
         }
         userInitiatedVPNChange = nil
@@ -181,14 +190,16 @@ public class TelemetryService {
                                              vpnStatus: previousConnectionStatus == .connected ? .on : .off,
                                              vpnTrigger: propertiesManager.lastConnectionRequest?.trigger,
                                              networkType: networkType,
-                                             serverFeatures: activeConnection.server.feature,
-                                             vpnCountry: activeConnection.server.countryCode,
+                                             serverFeatures: connection.server.feature,
+                                             vpnCountry: connection.server.countryCode,
                                              userCountry: propertiesManager.userLocation?.country ?? "",
-                                             protocol: activeConnection.vpnProtocol,
-                                             server: activeConnection.server.name,
+                                             protocol: connection.vpnProtocol,
+                                             server: connection.server.name,
                                              port: String(port),
                                              isp: propertiesManager.userLocation?.isp ?? "",
-                                             isServerFree: activeConnection.server.isFree)
+                                             isServerFree: connection.server.isFree)
+
+        previousConnectionConfiguration = appStateManager.activeConnection()
 
         report(event: .init(event: eventType, dimensions: dimensions))
     }
