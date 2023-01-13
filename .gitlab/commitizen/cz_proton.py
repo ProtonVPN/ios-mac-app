@@ -10,9 +10,9 @@ __all__ = ["ProtonCz"]
 
 class ProtonCz(BaseCommitizen):
     jira_regex = "[A-Z]{2,10}-[0-9]{2,5}"
-    # Match the beginning of the string, or any character that isn't a dash, number, or uppercase letter, followed by between 2 and 5 numbers.
+    # Match the beginning of the string, or any character that isn't a dash, dot, number, or uppercase letter, followed by between 2 and 5 numbers.
     # If `jira_prefix` is specified in config, this value will be prepended to the captured numbers and the result will be interpreted as a jira id.
-    nums_regex = "(^|[^\-0-9A-Z])([0-9]{2,5})"
+    nums_regex = "(^|[^\.\-0-9A-Z])([0-9]{3,5})"
     conf = config.read_cfg()
     jira_prefix = conf.settings.get("jira_prefix")
 
