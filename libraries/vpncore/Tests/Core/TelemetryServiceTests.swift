@@ -23,9 +23,9 @@ import XCTest
 @testable import vpncore
 
 class TelemetryAPIImplementationMock: TelemetryAPI {
-    var lastEvent: ConnectionEvent?
+    var events = [ConnectionEvent]()
     func flushEvent(event: ConnectionEvent) {
-        lastEvent = event
+        events.append(event)
     }
 }
 
@@ -63,16 +63,16 @@ class TelemetryTimerMock: TelemetryTimer {
     func markStartedConnecting() { }
     func markFinishedConnecting() { }
     func markConnectionStoped() { }
-    func connectionDuration() -> TimeInterval? {
+    var connectionDuration: TimeInterval? {
         reportedConnectionDuration
     }
 
-    func timeToConnect() -> TimeInterval? {
+    var timeToConnect: TimeInterval? {
         reportedTimeToConnect
     }
 
-    func timeConnecting() -> TimeInterval? {
-        return nil
+    var timeConnecting: TimeInterval? {
+        nil
     }
 }
 
@@ -105,10 +105,10 @@ class TelemetryServiceTests: XCTestCase {
 
     func testReportsConnectionEvent() async throws {
         vpnGateway.connection = .connecting
-        XCTAssertNil(container.telemetryApiMock.lastEvent)
+        XCTAssert(container.telemetryApiMock.events.isEmpty)
         timer.reportedTimeToConnect = 0.5
         vpnGateway.connection = .connected
-        guard let lastEvent = container.telemetryApiMock.lastEvent,
+        guard let lastEvent = container.telemetryApiMock.events.last,
               case .vpnConnection(timeToConnection: let timeToConnection) = lastEvent.event else {
             XCTFail("Expected a vpnConnection event")
             return
@@ -132,7 +132,7 @@ class TelemetryServiceTests: XCTestCase {
         vpnGateway.connection = .connected
         timer.reportedConnectionDuration = 15.1
         vpnGateway.connection = .disconnected
-        guard let lastEvent = container.telemetryApiMock.lastEvent,
+        guard let lastEvent = container.telemetryApiMock.events.last,
               case .vpnDisconnection(sessionLength: let sessionLength) = lastEvent.event else {
             XCTFail("Expected a vpnConnection event")
             return
@@ -149,5 +149,18 @@ class TelemetryServiceTests: XCTestCase {
         XCTAssertEqual(lastEvent.dimensions.server, "")
         XCTAssertEqual(lastEvent.dimensions.port, "500")
         XCTAssertEqual(lastEvent.dimensions.isp, "")
+    }
+
+    func testDuplicateNotificationDoNotGenerateMultipleEvents() {
+        vpnGateway.connection = .connecting
+        XCTAssert(container.telemetryApiMock.events.isEmpty)
+        vpnGateway.connection = .connected
+        XCTAssertEqual(container.telemetryApiMock.events.count, 1)
+        vpnGateway.connection = .connected
+        XCTAssertEqual(container.telemetryApiMock.events.count, 1)
+        vpnGateway.connection = .disconnected
+        XCTAssertEqual(container.telemetryApiMock.events.count, 2)
+        vpnGateway.connection = .disconnected
+        XCTAssertEqual(container.telemetryApiMock.events.count, 2)
     }
 }
