@@ -40,9 +40,9 @@ protocol TelemetryTimer {
     func markStartedConnecting()
     func markFinishedConnecting()
     func markConnectionStoped()
-    func connectionDuration() -> TimeInterval?
-    func timeToConnect() -> TimeInterval?
-    func timeConnecting() -> TimeInterval?
+    var connectionDuration: TimeInterval? { get }
+    var timeToConnect: TimeInterval? { get }
+    var timeConnecting: TimeInterval? { get }
 }
 
 public class TelemetryService {
@@ -217,18 +217,18 @@ public class TelemetryService {
     private func connectionEventType(state: ConnectionStatus) -> ConnectionEventType? {
         switch state {
         case .connected:
-            guard let timeInterval = timer.timeToConnect() else { return nil }
+            guard let timeInterval = timer.timeToConnect else { return nil }
             return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
             if previousConnectionStatus == .connected {
-                return .vpnDisconnection(sessionLength: timer.connectionDuration() ?? 0)
+                return .vpnDisconnection(sessionLength: timer.connectionDuration ?? 0)
             } else if previousConnectionStatus == .connecting {
-                return .vpnConnection(timeToConnection: timer.timeConnecting() ?? 0)
+                return .vpnConnection(timeToConnection: timer.timeConnecting ?? 0)
             }
             return nil
         case .connecting:
             if previousConnectionStatus == .connected {
-                return .vpnDisconnection(sessionLength: timer.connectionDuration() ?? 0)
+                return .vpnDisconnection(sessionLength: timer.connectionDuration ?? 0)
             }
             return nil
         default:
