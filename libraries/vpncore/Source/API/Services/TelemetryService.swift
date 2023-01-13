@@ -81,6 +81,8 @@ public class TelemetryService {
 
         NotificationCenter.default
             .publisher(for: VpnGateway.connectionChanged)
+            .compactMap { $0.object as? ConnectionStatus }
+            .removeDuplicates()
             .sink(receiveValue: vpnGatewayConnectionChanged)
             .store(in: &cancellables)
 
@@ -113,11 +115,7 @@ public class TelemetryService {
         self.userInitiatedVPNChange = change
     }
 
-    private func vpnGatewayConnectionChanged(_ notification: Notification) {
-        guard notification.name == VpnGateway.connectionChanged,
-              let connectionStatus = notification.object as? ConnectionStatus else {
-            return
-        }
+    private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {
         defer {
             if [.connected, .disconnected, .connecting].contains(connectionStatus) {
                 previousConnectionStatus = connectionStatus
