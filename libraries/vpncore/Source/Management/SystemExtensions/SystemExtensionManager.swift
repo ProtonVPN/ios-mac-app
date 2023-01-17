@@ -97,6 +97,7 @@ public class SystemExtensionManager: NSObject {
     fileprivate var outstandingRequests: Set<SystemExtensionRequest> = []
 
     private var userClosedTour = false
+    private var successAlreadyAlerted = false
 
     private var userIsLoggedIn: Bool {
         vpnKeychain.userIsLoggedIn
@@ -261,6 +262,11 @@ public class SystemExtensionManager: NSObject {
                 actionHandler(result)
                 guard case .success(.alreadyThere) = result else {
                     NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: userInitiated)
+                    if userInitiated && !self.successAlreadyAlerted {
+                        // Use successAlreadyAlerted flag to prevent duplicate success alerts
+                        self.successAlreadyAlerted = true
+                        self.alertService.push(alert: SysexEnabledAlert())
+                    }
                     return
                 }
             }
