@@ -20,9 +20,9 @@ import ProtonCore_Networking
 
 final class TelemetryRequest: Request {
 
-    let event: TelemetryEvent
+    let event: JSONDictionary
 
-    init( _ event: TelemetryEvent) {
+    init( _ event: JSONDictionary) {
         self.event = event
     }
 
@@ -41,6 +41,6 @@ final class TelemetryRequest: Request {
     }
 
     var parameters: [String: Any]? {
-        event.toJSONDictionary()
+        event
     }
 }

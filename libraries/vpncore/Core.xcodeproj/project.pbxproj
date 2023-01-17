@@ -475,6 +475,10 @@
 		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
+		E576863E2976F31E0014F944 /* TelemetryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E576863D2976F31E0014F944 /* TelemetryBuffer.swift */; };
+		E576863F2976F31F0014F944 /* TelemetryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E576863D2976F31E0014F944 /* TelemetryBuffer.swift */; };
+		E5768641297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
+		E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E58EE0A42907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
@@ -1039,6 +1043,8 @@
 		E54474E32930C5980044B592 /* AppStateManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
+		E576863D2976F31E0014F944 /* TelemetryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBuffer.swift; sourceTree = "<group>"; };
+		E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryConnectionNotifier.swift; sourceTree = "<group>"; };
 		E58EE0A32907DEBF003006F5 /* PlanSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSession.swift; sourceTree = "<group>"; };
 		E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSessionTests.swift; sourceTree = "<group>"; };
 		E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferPanel.swift; sourceTree = "<group>"; };
@@ -1809,6 +1815,8 @@
 				E510E27D2948CFEA00AC1785 /* TelemetryService.swift */,
 				E5E4657E29548D2200A4DE80 /* TelemetryAPI.swift */,
 				E5E4658129548D3400A4DE80 /* TelemetryFeature.swift */,
+				E576863D2976F31E0014F944 /* TelemetryBuffer.swift */,
+				E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */,
 				E52E8136296C5F45002AF127 /* ConnectionTimer.swift */,
 			);
 			path = Services;
@@ -2850,6 +2858,7 @@
 				42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */,
 				D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
+				E576863E2976F31E0014F944 /* TelemetryBuffer.swift in Sources */,
 				F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				E1616C0921C95E1800F42D79 /* ProfileConstants.swift in Sources */,
 				D523F11124B7543C007DB086 /* String+Url.swift in Sources */,
@@ -2950,6 +2959,7 @@
 				D5DCCAB7252B4AEB004CB353 /* CoreNewsRequest.swift in Sources */,
 				E5FFC89C2816C61500E355DA /* Countries+Extension.swift in Sources */,
 				F38F7BEC27956674005B9EA2 /* CoreApiFeatureRespone.swift in Sources */,
+				E5768641297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */,
 				E1616B8121C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
 				E1B5F67621B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
 				E148AE6521C29A20007AB65A /* ProtonApiError.swift in Sources */,
@@ -3177,6 +3187,7 @@
 				42370608262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
 				F38BB44E265B893F00329619 /* LocalAgentError.swift in Sources */,
 				E1616B8C21C7ACC300F42D79 /* AccountPlan.swift in Sources */,
+				E576863F2976F31F0014F944 /* TelemetryBuffer.swift in Sources */,
 				E148AE5F21C28CF4007AB65A /* AlertService.swift in Sources */,
 				4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				4C6C4705283FA0230064DEC9 /* VpnAuthenticationMock.swift in Sources */,
@@ -3308,6 +3319,7 @@
 				EC6B47126B111E78B21B786F /* Bundle+vpncore.swift in Sources */,
 				6B98DC90360CC2606595D272 /* URLArray+Extension.swift in Sources */,
 				D5AC963B288038A500398A83 /* WireguardTCPAvailabilityChecker.swift in Sources */,
+				E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */,
 				4C1ECBB828912FC200820068 /* SystemExtensionManager.swift in Sources */,
 				F3E5787227CCCE91000E48E3 /* AvailableDomainResponse.swift in Sources */,
 				F397EA5F280561400072D511 /* CouponViewModel.swift in Sources */,

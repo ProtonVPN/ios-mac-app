@@ -74,7 +74,7 @@ class TabBarViewModel {
             
         } else {
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.quick))
             vpnGateway.disconnect()
         }
     }

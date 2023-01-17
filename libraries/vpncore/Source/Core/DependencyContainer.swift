@@ -92,7 +92,7 @@ open class Container: PropertiesToOverride {
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
     private lazy var _telemetryServiceTask = Task {
-        await TelemetryService(factory: self, timer: ConnectionTimer())
+        await TelemetryServiceImplementation(factory: self, timer: ConnectionTimer())
     }
 
     // Transient instances - get allocated as many times as they're referenced

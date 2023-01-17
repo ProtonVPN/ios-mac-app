@@ -34,6 +34,34 @@ public struct TelemetryDimensions: Encodable {
     let isp: String // max 25 char
     let isServerFree: Bool // only used for adding "free" to the serverFeatures
 
+    init(outcome: Outcome,
+         userTier: UserTier,
+         vpnStatus: VPNStatus,
+         vpnTrigger: VPNTrigger?,
+         networkType: NetworkType,
+         serverFeatures: ServerFeature,
+         vpnCountry: String,
+         userCountry: String,
+         `protocol`: VpnProtocol,
+         server: String,
+         port: String,
+         isp: String,
+         isServerFree: Bool) {
+        self.outcome = outcome
+        self.userTier = userTier
+        self.vpnStatus = vpnStatus
+        self.vpnTrigger = vpnTrigger
+        self.networkType = networkType
+        self.serverFeatures = serverFeatures
+        self.vpnCountry = vpnCountry
+        self.userCountry = userCountry
+        self.`protocol` = `protocol`
+        self.server = server
+        self.port = port
+        self.isp = isp
+        self.isServerFree = isServerFree
+    }
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(outcome, forKey: .outcome)
@@ -120,9 +148,9 @@ public struct TelemetryDimensions: Encodable {
         case newConnection = "new_connection"
     }
 
-    enum NetworkType: String, Encodable {
+    public enum NetworkType: String, Encodable {
         case wifi
         case mobile
-        case unavailable
+        case other
     }
 }

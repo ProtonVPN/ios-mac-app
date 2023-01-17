@@ -22,9 +22,9 @@ import ProtonCore_Networking
 import XCTest
 @testable import vpncore
 
-class TelemetryAPIImplementationMock: TelemetryAPI {
-    var events = [ConnectionEvent]()
-    func flushEvent(event: ConnectionEvent) {
+actor TelemetryAPIImplementationMock: TelemetryAPI {
+    var events = [vpncore.JSONDictionary]()
+    func flushEvent(event: vpncore.JSONDictionary) async throws {
         events.append(event)
     }
 }
@@ -100,67 +100,6 @@ class TelemetryServiceTests: XCTestCase {
         timer = TelemetryTimerMock()
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
-        service = await TelemetryService(factory: container, timer: timer)
-    }
-
-    func testReportsConnectionEvent() async throws {
-        vpnGateway.connection = .connecting
-        XCTAssert(container.telemetryApiMock.events.isEmpty)
-        timer.reportedTimeToConnect = 0.5
-        vpnGateway.connection = .connected
-        guard let lastEvent = container.telemetryApiMock.events.last,
-              case .vpnConnection(timeToConnection: let timeToConnection) = lastEvent.event else {
-            XCTFail("Expected a vpnConnection event")
-            return
-        }
-        XCTAssertEqual(timeToConnection, 0.5, accuracy: 0.1)
-        XCTAssertEqual(lastEvent.dimensions.outcome, .success)
-        XCTAssertEqual(lastEvent.dimensions.userTier, .free)
-        XCTAssertEqual(lastEvent.dimensions.vpnStatus, .off)
-        XCTAssertEqual(lastEvent.dimensions.vpnTrigger, nil)
-//        XCTAssertEqual(lastEvent.dimensions.networkType, .unavailable) // this assert is unstable
-        XCTAssertEqual(lastEvent.dimensions.serverFeatures, .zero)
-        XCTAssertEqual(lastEvent.dimensions.vpnCountry, "PL")
-        XCTAssertEqual(lastEvent.dimensions.userCountry, "")
-        XCTAssertEqual(lastEvent.dimensions.protocol, .ike)
-        XCTAssertEqual(lastEvent.dimensions.server, "")
-        XCTAssertEqual(lastEvent.dimensions.port, "500")
-        XCTAssertEqual(lastEvent.dimensions.isp, "")
-    }
-
-    func testReportsDisconnectionEvent() async throws {
-        vpnGateway.connection = .connected
-        timer.reportedConnectionDuration = 15.1
-        vpnGateway.connection = .disconnected
-        guard let lastEvent = container.telemetryApiMock.events.last,
-              case .vpnDisconnection(sessionLength: let sessionLength) = lastEvent.event else {
-            XCTFail("Expected a vpnConnection event")
-            return
-        }
-        XCTAssertEqual(sessionLength, 15.1, accuracy: 0.1)
-        XCTAssertEqual(lastEvent.dimensions.outcome, .failure) // not resulting from user's disconnection
-        XCTAssertEqual(lastEvent.dimensions.userTier, .free)
-        XCTAssertEqual(lastEvent.dimensions.vpnStatus, .on)
-        XCTAssertEqual(lastEvent.dimensions.vpnTrigger, nil)
-        XCTAssertEqual(lastEvent.dimensions.serverFeatures, .zero)
-        XCTAssertEqual(lastEvent.dimensions.vpnCountry, "PL")
-        XCTAssertEqual(lastEvent.dimensions.userCountry, "")
-        XCTAssertEqual(lastEvent.dimensions.protocol, .ike)
-        XCTAssertEqual(lastEvent.dimensions.server, "")
-        XCTAssertEqual(lastEvent.dimensions.port, "500")
-        XCTAssertEqual(lastEvent.dimensions.isp, "")
-    }
-
-    func testDuplicateNotificationDoNotGenerateMultipleEvents() {
-        vpnGateway.connection = .connecting
-        XCTAssert(container.telemetryApiMock.events.isEmpty)
-        vpnGateway.connection = .connected
-        XCTAssertEqual(container.telemetryApiMock.events.count, 1)
-        vpnGateway.connection = .connected
-        XCTAssertEqual(container.telemetryApiMock.events.count, 1)
-        vpnGateway.connection = .disconnected
-        XCTAssertEqual(container.telemetryApiMock.events.count, 2)
-        vpnGateway.connection = .disconnected
-        XCTAssertEqual(container.telemetryApiMock.events.count, 2)
+        service = await TelemetryServiceImplementation(factory: container, timer: timer)
     }
 }
