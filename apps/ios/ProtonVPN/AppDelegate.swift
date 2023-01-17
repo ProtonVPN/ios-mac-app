@@ -172,6 +172,7 @@ fileprivate extension AppDelegate {
             navigationService.presentStatusViewController()
             
         case URLConstants.deepLinkDisconnectAction:
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.widget))
             navigationService.vpnGateway.disconnect {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)

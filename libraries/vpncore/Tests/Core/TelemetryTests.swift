@@ -23,7 +23,7 @@ import XCTest
 
 class TelemetryTests: XCTestCase {
     func testConnectionEventParameters() {
-        let request = TelemetryRequest(ConnectionEvent.connectionMock1)
+        let request = TelemetryRequest(ConnectionEvent.connectionMock1.toJSONDictionary())
         guard let sut = request.parameters,
               let values = sut["Values"] as? [String: Any],
               let dimensions = sut["Dimensions"] as? [String: Any] else {
@@ -51,7 +51,7 @@ class TelemetryTests: XCTestCase {
     }
 
     func testDisconnectionEventParameters() {
-        let request = TelemetryRequest(ConnectionEvent.disconnectionMock1)
+        let request = TelemetryRequest(ConnectionEvent.disconnectionMock1.toJSONDictionary())
         guard let sut = request.parameters,
               let values = sut["Values"] as? [String: Any],
               let dimensions = sut["Dimensions"] as? [String: Any] else {

@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol TelemetryEvent {
+public protocol TelemetryEvent: Encodable {
     var measurementGroup: String { get }
     var dimensions: TelemetryDimensions { get }
 

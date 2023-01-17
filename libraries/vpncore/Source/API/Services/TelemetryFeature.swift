@@ -29,4 +29,5 @@ enum TelemetryFeature: String, FeatureFlag {
     }
 
     case telemetryOptIn = "TelemetryOptIn"
+    case useBuffer = "TelemetryBuffer"
 }

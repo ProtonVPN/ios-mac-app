@@ -113,7 +113,7 @@ final class HeaderViewModel {
     
     func quickConnectAction() {
         if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.quick))
             log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else {

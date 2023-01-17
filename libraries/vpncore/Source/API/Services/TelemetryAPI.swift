@@ -20,7 +20,7 @@ import Foundation
 import ProtonCore_Utilities
 
 public protocol TelemetryAPI {
-    func flushEvent(event: ConnectionEvent)
+    func flushEvent(event: JSONDictionary) async throws
 }
 
 public protocol TelemetryAPIFactory {
@@ -35,14 +35,18 @@ class TelemetryAPIImplementation: TelemetryAPI {
         self.networking = networking
     }
 
-    func flushEvent(event: ConnectionEvent) {
+    func flushEvent(event: JSONDictionary) async throws {
         let request = TelemetryRequest(event)
-        networking.apiService.perform(request: request) { task, result in
-            switch result {
-            case .success:
-                log.debug("Telemetry event was sent")
-            case .failure(let error):
-                log.debug("Failed to send a Telemetry event with error: \(error.localizedDescription)")
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
+            self.networking.apiService.perform(request: request) { task, result in
+                switch result {
+                case .success:
+                    continuation.resume()
+                    log.debug("Telemetry event was sent")
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                    log.debug("Failed to send a Telemetry event with error: \(error.localizedDescription)")
+                }
             }
         }
     }

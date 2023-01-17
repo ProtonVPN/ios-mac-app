@@ -43,6 +43,7 @@ extension Logger {
         case sysex // System Extension
         case review
         case core
+        case telemetry
     }
 
     public enum Event: String {

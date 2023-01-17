@@ -133,7 +133,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             planService.presentPlanSelection()
         } else if isConnected {
-            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.server))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {

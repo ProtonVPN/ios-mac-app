@@ -18,12 +18,12 @@
 
 import Foundation
 
-public struct ConnectionEvent: Encodable, TelemetryEvent {
-    var measurementGroup: String = "vpn.ios.connection"
+public struct ConnectionEvent: TelemetryEvent {
+    public var measurementGroup: String = "vpn.ios.connection"
     let event: ConnectionEventType
-    let dimensions: TelemetryDimensions
+    public let dimensions: TelemetryDimensions
 
-    init(event: ConnectionEventType, dimensions: TelemetryDimensions) {
+    public init(event: ConnectionEventType, dimensions: TelemetryDimensions) {
         self.event = event
         self.dimensions = dimensions
     }
@@ -43,7 +43,7 @@ public struct ConnectionEvent: Encodable, TelemetryEvent {
         case dimensions = "Dimensions"
     }
 
-    func toJSONDictionary() -> JSONDictionary {
+    public func toJSONDictionary() -> JSONDictionary {
         guard let encoded = try? JSONEncoder().encode(self),
               let dict = encoded.jsonDictionary else { return [:] }
         return dict
@@ -52,7 +52,7 @@ public struct ConnectionEvent: Encodable, TelemetryEvent {
 
 // swiftlint:disable nesting
 
-enum ConnectionEventType: Encodable {
+public enum ConnectionEventType: Codable {
     case vpnConnection(timeToConnection: TimeInterval)
     case vpnDisconnection(sessionLength: TimeInterval)
 
