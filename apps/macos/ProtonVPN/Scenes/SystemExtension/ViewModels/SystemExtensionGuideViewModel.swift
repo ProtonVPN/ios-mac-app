@@ -109,10 +109,6 @@ class SystemExtensionGuideViewModel: NSObject {
     private func finish(_ notification: Notification) {
         finishedTour = true
         close?()
-
-        if let userInitiated = notification.object as? Bool, userInitiated {
-            alertService.push(alert: SysexEnabledAlert())
-        }
     }
 }
 
