@@ -90,6 +90,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
             }
+
+            self.container.applicationDidFinishedLoading()
         }
 
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))

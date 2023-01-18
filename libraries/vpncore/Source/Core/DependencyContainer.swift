@@ -104,6 +104,11 @@ open class Container: PropertiesToOverride {
 
     public init(_ config: Config) {
         self.config = config
+    }
+
+    /// Call this method from `application(didFinishLaunchingWithOptions)` of the app.
+    /// It does preparation work needed at the start of the app, but which can't be done in `init` because it's too early.
+    public func applicationDidFinishedLoading() {
         Task {
             // We need to initialise the TelemetryService somewhere because no other part of the code uses it directly.
             // TelemetryService listens to notifications and sends telemetry events based on that.

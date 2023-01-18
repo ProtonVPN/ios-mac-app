@@ -78,6 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
                 
         _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
+
+        container.applicationDidFinishedLoading()
         return true
     }
         
