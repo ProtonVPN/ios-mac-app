@@ -84,7 +84,7 @@ final class CoreLoginService {
     }
 
     private func makeLoginInterface() -> LoginAndSignupInterface {
-        let signupParameters = SignupParameters(passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
+        let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
         let signupAvailability = SignupAvailability.available(parameters: signupParameters)
         let login = LoginAndSignup(appName: "Proton VPN",
                                    clientApp: .vpn,
