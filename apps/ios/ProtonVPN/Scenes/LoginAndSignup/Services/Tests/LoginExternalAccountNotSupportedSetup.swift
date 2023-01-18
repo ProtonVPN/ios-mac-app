@@ -32,7 +32,7 @@ final class LoginExternalAccountNotSupportedSetup {
         HTTPStubs.setEnabled(true)
 
         // get code stub
-        weak var usersStub = stub(condition: pathEndsWith("auth") && isMethodPOST()) { _ in
+        weak var usersStub = stub(condition: pathEndsWith("auth/v4") && isMethodPOST()) { _ in
             let body = loginResponse.data(using: String.Encoding.utf8) ?? Data()
             let headers = ["Content-Type": "application/json;charset=utf-8"]
             return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)

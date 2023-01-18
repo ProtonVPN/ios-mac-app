@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.25.3'
+  '3.26.1'
 end
 
 def openvpn
@@ -64,7 +64,7 @@ def vpn_core
     pod "ProtonCore-Authentication/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
     pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
     pod "ProtonCore-Payments/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
-    pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
 
     # Third party pods
     sd_web_image
@@ -110,22 +110,21 @@ target 'ProtonVPN' do
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-Login/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
-  pod "ProtonCore-LoginUI-V5/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-LoginUI/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-CoreTranslation-V5', :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-Authentication-KeyGeneration/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-FeatureSwitch', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-HumanVerification-V5', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-HumanVerification', :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-Payments/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
-  pod "ProtonCore-PaymentsUI-V5/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-PaymentsUI/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-APIClient', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-Hash', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-ForceUpgrade-V5', :git => proton_core_path, :tag => proton_core_version
-  pod "ProtonCore-AccountDeletion-V5/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
+  pod "ProtonCore-AccountDeletion/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-TroubleShooting', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
@@ -142,7 +141,7 @@ target 'ProtonVPN' do
   end
 
   target 'ProtonVPNTests' do
-    pod 'ProtonCore-ForceUpgrade-V5', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
     inherit! :search_paths
   end
   
@@ -175,7 +174,7 @@ target 'ProtonVPN-mac' do
 
   vpn_core
   
-  pod 'ProtonCore-UIFoundations-V5', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-Login/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-GoLibs/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
 
