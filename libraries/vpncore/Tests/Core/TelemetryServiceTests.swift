@@ -87,7 +87,8 @@ class TelemetryServiceTests: XCTestCase {
 
     override static func setUp() {
         super.setUp()
-        setLocalFeatureFlagOverrides(["Telemetry": ["TelemetryOptIn": true]])
+        setLocalFeatureFlagOverrides([TelemetryFeature.telemetryOptIn.category: [TelemetryFeature.telemetryOptIn.feature: true,
+                                                                                 TelemetryFeature.useBuffer.feature: true]])
     }
 
     override static func tearDown() {
@@ -100,6 +101,6 @@ class TelemetryServiceTests: XCTestCase {
         timer = TelemetryTimerMock()
         appStateManager.mockActiveConnection = ConnectionConfiguration.connectionConfig2
         container = TelemetryMockFactory(appStateManager: appStateManager)
-        service = await TelemetryServiceImplementation(factory: container, timer: timer)
+        service = await TelemetryServiceImplementation(factory: container, timer: timer, buffer: .init(retrievingFromStorage: true))
     }
 }
