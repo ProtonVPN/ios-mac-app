@@ -128,13 +128,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             certificateRefreshManager.start { }
         }
 
-        guard let serverId = connectedLogicalId else {
+        guard let connectedLogicalId, let connectedIpId else {
             wg_log(.fault, message: "Server ID wasn't set on tunnel start. This should be an unreachable state")
             fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
         }
 
         if tunnelProviderProtocol?.reconnectionEnabled == true {
-            serverStatusRefreshManager.updateConnectedServerId(serverId)
+            serverStatusRefreshManager.updateConnectedIds(logicalId: connectedLogicalId, serverId: connectedIpId)
             serverStatusRefreshManager.start { }
         }
 
@@ -286,7 +286,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         currentWireguardServer = storedConfig
 
-        connectedLogicalId = tunnelProviderProtocol?.connectedServerId
+        connectedLogicalId = tunnelProviderProtocol?.connectedLogicalId
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
         setLocalFeatureFlagOverrides(tunnelProviderProtocol?.featureFlagOverrides)
 

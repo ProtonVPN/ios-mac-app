@@ -45,6 +45,10 @@ public final class ServerStatusRequest: APIRequest {
         public let status: Int
         public let servers: [Server]
 
+        public var underMaintenance: Bool {
+            status == 0
+        }
+
         enum CodingKeys: String, CodingKey {
             case id = "ID"
             case status = "Status"
