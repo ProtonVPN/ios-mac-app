@@ -20,7 +20,7 @@ import Foundation
 import NetworkExtension
 
 extension NETunnelProviderProtocol {
-    static let connectedServerIdKey = "PVPNServerID"
+    static let connectedLogicalIdKey = "PVPNLogicalID"
     static let connectedServerIpIdKey = "PVPNServerIpID"
     static let reconnectionEnabledKey = "ReconnectionEnabled"
     static let uidKey = "UID"
@@ -33,13 +33,14 @@ extension NETunnelProviderProtocol {
         providerConfiguration = [:]
     }
 
-    public var connectedServerId: String? {
+    public var connectedLogicalId: String? {
         get {
-            providerConfiguration?[Self.connectedServerIdKey] as? String
+            providerConfiguration?[Self.connectedLogicalIdKey] as? String ??
+                providerConfiguration?["PVPNServerID"] as? String // old name for the key
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.connectedServerIdKey] = newValue
+            providerConfiguration?[Self.connectedLogicalIdKey] = newValue
         }
     }
 

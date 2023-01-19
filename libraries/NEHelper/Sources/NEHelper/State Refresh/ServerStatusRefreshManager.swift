@@ -29,6 +29,8 @@ public final class ServerStatusRefreshManager: RefreshManager {
 
     private let apiService: ExtensionAPIService
     /// - Important: should set/get this value on `workQueue`.
+    private var currentLogicalId: String?
+    /// - Important: should set/get this value on `workQueue`.
     private var currentServerId: String?
 
     override public var timerRefreshInterval: TimeInterval {
@@ -43,39 +45,46 @@ public final class ServerStatusRefreshManager: RefreshManager {
         super.init(timerFactory: timerFactory, workQueue: workQueue)
     }
 
-    public func updateConnectedServerId(_ serverId: String) {
+    public func updateConnectedIds(logicalId: String, serverId: String) {
         workQueue.async { [unowned self] in
+            currentLogicalId = logicalId
             currentServerId = serverId
         }
     }
 
     override internal func work() {
         log.warning("ServerStatusRefreshManager")
-        guard let serverId = currentServerId else {
+        guard let currentLogicalId, let currentServerId else {
             log.info("No connected server id set; not refreshing server status.", category: .connection)
             return
         }
 
-        apiService.refreshServerStatus(logicalId: serverId,
+        apiService.refreshServerStatus(logicalId: currentLogicalId,
                                        refreshApiTokenIfNeeded: true) { [unowned self] result in
             workQueue.async { [unowned self] in
                 switch result {
                 case .success(let response):
-                    guard response.original.status == 0 else {
-                        log.info("Server is not in maintenance. No reconnection needed.", category: .connection)
-                        return
-                    }
-
-                    log.info("Server \(response.original.id) is in maintenance. Will reconnect to alternative server.", category: .connection)
-
                     // We could have disconnected since making the API request, so check if we're stopped.
                     guard case .running = state else {
                         log.info("Not reconnecting - refresh manager was already stopped", category: .connection)
                         return
                     }
 
-                    self.delegate?.reconnect(toAnyOf: response.alternatives)
-                    
+                    if response.original.underMaintenance {
+                        log.info("Server \(response.original.id) is in maintenance. Will reconnect to alternative server.", category: .connection)
+                        self.delegate?.reconnect(toAnyOf: response.alternatives)
+                    } else if let server = response.original.servers.first(where: { $0.id == currentServerId }) {
+                        guard server.underMaintenance else {
+                            log.info("Server \(currentServerId) is still live. No reconnection needed.", category: .connection)
+                            return
+                        }
+
+                        log.info("Server ID \(currentServerId) in logical \(currentLogicalId) is in maintenance. Will reconnect to logical.", category: .connection)
+                        self.delegate?.reconnect(toAnyOf: [response.original])
+                    } else {
+                        log.info("Server ID \(currentServerId) in logical \(currentLogicalId) has disappeared. Will reconnect to logical.", category: .connection)
+                        self.delegate?.reconnect(toAnyOf: [response.original])
+                    }
                 case .failure(let error):
                     log.error("Couldn't refresh server state: \(error)", category: .connection)
                 }

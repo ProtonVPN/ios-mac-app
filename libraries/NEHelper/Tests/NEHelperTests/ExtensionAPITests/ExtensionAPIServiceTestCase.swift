@@ -32,7 +32,8 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     let expectationTimeout: TimeInterval = 10
 
     static let sessionSelector = "SELECTOR"
-    static var currentServerId = "server-id"
+    static var currentLogicalId = "logical-id"
+    static var currentServerIpId = "server-ip-id"
     static let sessionCookie = HTTPCookie(properties: [.name: "COOOKIEE",
                                                        .value: "OM NOM NOM NOM",
                                                        .version: 2,
@@ -95,7 +96,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                 self.tokenRefreshCallback?(request, completionHandler)
             case "/auth/sessions/forks/\(Self.sessionSelector)":
                 self.sessionAuthCallback?(request, completionHandler)
-            case "/vpn/logicals/\(Self.currentServerId)/alternatives":
+            case "/vpn/logicals/\(Self.currentLogicalId)/alternatives":
                 self.serverStatusCallback?(request, completionHandler)
             case nil:
                 XCTFail("Received request with no path")
@@ -254,8 +255,8 @@ extension ServerStatusRequest: MockableRequest {
 extension ServerStatusRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<ServerStatusRequest.Response>: Any]) {
         let code = fakeData[\.code] as? Int ?? 1000
-        let original = fakeData[\.original] as? ServerStatusRequest.Logical ?? ServerStatusRequest.Logical(id: "id-1", status: 1, servers: [])
-        let alternatives = fakeData[\.alternatives] as? [ServerStatusRequest.Logical] ?? [ServerStatusRequest.Logical(id: "id-2", status: 1, servers: [])]
+        let original = fakeData[\.original] as? ServerStatusRequest.Logical ?? ServerStatusRequest.Logical(id: "logical-id", status: 1, servers: [.mock(id: "server-ip-id", status: 1)])
+        let alternatives = fakeData[\.alternatives] as? [ServerStatusRequest.Logical] ?? [ServerStatusRequest.Logical(id: "other-logical-id", status: 1, servers: [.mock(id: "other-server-id", status: 1)])]
         
         self.init(code: code, original: original, alternatives: alternatives)
     }

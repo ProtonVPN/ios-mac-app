@@ -38,15 +38,22 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             managerStarted: XCTestExpectation(description: "Manager was started"),
             endpointHit: XCTestExpectation(description: "API returned no change in server")
         )
+
+        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
+                                                         status: 1,
+                                                         servers: [.mock(id: "original-serverip-id", status: 1)])
+        Self.currentLogicalId = originalServer.id
+        Self.currentServerIpId = originalServer.servers.first!.id
+
         serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
-                                            result: .success([:]),
+                                            result: .success([\.original: originalServer]),
                                             expectationToFulfill: expectations.endpointHit)
 
         serverDidChange = { newServer in
             fatalError("Server did not change, so nothing should have happened")
         }
 
-        manager.updateConnectedServerId(Self.currentServerId)
+        manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()
@@ -56,22 +63,102 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
         wait(for: [expectations.managerStarted, expectations.endpointHit], timeout: expectationTimeout)
     }
 
-    func testServerStatusUnderMaintenanceGetsCallback() {
+    func testLogicalStatusUnderMaintenanceGetsCallback() {
         let expectations = (
             managerStarted: XCTestExpectation(description: "Manager was started"),
             endpointHit: XCTestExpectation(description: "API returned no change in server"),
             callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
         )
         
-        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id", status: 0, servers: [])
-        Self.currentServerId = originalServer.id
-        manager.updateConnectedServerId(Self.currentServerId)
+        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
+                                                         status: 0,
+                                                         servers: [.mock(id: "original-serverip-id", status: 1)])
+        Self.currentLogicalId = originalServer.id
+        Self.currentServerIpId = originalServer.servers.first!.id
+        manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
         
         serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
                                             result: .success([\.original: originalServer]),
                                             expectationToFulfill: expectations.endpointHit)
 
         serverDidChange = { newServers in
+            XCTAssertEqual(newServers.count, 1)
+            XCTAssertEqual(newServers.first?.id, "other-logical-id")
+            expectations.callbackInvoked.fulfill()
+        }
+
+        manager.start { [unowned self] in
+            expectations.managerStarted.fulfill()
+            timerFactory.runRepeatingTimers {}
+        }
+
+        wait(for: [expectations.managerStarted,
+                   expectations.endpointHit,
+                   expectations.callbackInvoked], timeout: expectationTimeout)
+    }
+
+    func testServerIpStatusUnderMaintenanceGetsCallback() {
+        let expectations = (
+            managerStarted: XCTestExpectation(description: "Manager was started"),
+            endpointHit: XCTestExpectation(description: "API returned no change in server"),
+            callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
+        )
+
+        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
+                                                         status: 1,
+                                                         servers: [.mock(id: "original-serverip-id", status: 0),
+                                                                   .mock(id: "new-serverip-id", status: 1)])
+        Self.currentLogicalId = originalServer.id
+        Self.currentServerIpId = originalServer.servers.first!.id
+        manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
+
+        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
+                                            result: .success([\.original: originalServer]),
+                                            expectationToFulfill: expectations.endpointHit)
+
+        serverDidChange = { newServers in
+            XCTAssertEqual(newServers.count, 1)
+            XCTAssertEqual(newServers.first?.id, Self.currentLogicalId)
+            XCTAssertEqual(newServers.first?.servers.count, 2)
+            expectations.callbackInvoked.fulfill()
+        }
+
+        manager.start { [unowned self] in
+            expectations.managerStarted.fulfill()
+            timerFactory.runRepeatingTimers {}
+        }
+
+        wait(for: [expectations.managerStarted,
+                   expectations.endpointHit,
+                   expectations.callbackInvoked], timeout: expectationTimeout)
+    }
+
+    func testServerIpGoingAwayGetsCallback() {
+        let expectations = (
+            managerStarted: XCTestExpectation(description: "Manager was started"),
+            endpointHit: XCTestExpectation(description: "API returned no change in server"),
+            callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
+        )
+
+        let newIp = "123.123.123.0"
+
+        Self.currentServerIpId = "original-serverip-id"
+        let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
+                                                         status: 1,
+                                                         servers: [.mock(entryIp: newIp,
+                                                                         id: "different-serverip-id",
+                                                                         status: 1)])
+        Self.currentLogicalId = originalServer.id
+        manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
+
+        serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
+                                            result: .success([\.original: originalServer]),
+                                            expectationToFulfill: expectations.endpointHit)
+
+        serverDidChange = { newServers in
+            XCTAssertEqual(newServers.count, 1)
+            XCTAssertEqual(newServers.first?.id, Self.currentLogicalId)
+            XCTAssertEqual(newServers.first?.servers.first?.entryIp, newIp)
             expectations.callbackInvoked.fulfill()
         }
 
@@ -99,13 +186,18 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             fatalError("Server did not change, so nothing should have happened")
         }
 
-        manager.updateConnectedServerId(Self.currentServerId)
+        manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
 
         manager.start { [unowned self] in
             expectations.managerStarted.fulfill()
             timerFactory.runRepeatingTimers {
+                let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
+                                                                 status: 1,
+                                                                 servers: [.mock(id: "original-serverip-id", status: 1)])
+                Self.currentLogicalId = originalServer.id
+                Self.currentServerIpId = originalServer.servers.first!.id
                 self.serverStatusCallback = self.mockEndpoint(ServerStatusRequest.self,
-                                                              result: .success([:]),
+                                                              result: .success([\.original: originalServer]),
                                                               expectationToFulfill: expectations.secondRequestSucceed)
                 self.timerFactory.runRepeatingTimers {}
             }
