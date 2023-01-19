@@ -76,12 +76,16 @@ public class TelemetryServiceImplementation: TelemetryService {
 
     private let connectionNotifier: TelemetryConnectionNotifier
     private let timer: TelemetryTimer
-    private let buffer = TelemetryBuffer()
+    private let buffer: TelemetryBuffer
 
-    init(factory: Factory, timer: TelemetryTimer, connectionNotifier: TelemetryConnectionNotifier = .init()) async {
+    init(factory: Factory,
+         timer: TelemetryTimer,
+         connectionNotifier: TelemetryConnectionNotifier = .init(),
+         buffer: TelemetryBuffer) async {
         self.factory = factory
         self.timer = timer
         self.connectionNotifier = connectionNotifier
+        self.buffer = buffer
         self.connectionNotifier.telemetryService = self
         await timer.updateConnectionStarted(appStateManager.connectedDate())
     }
@@ -233,6 +237,8 @@ public class TelemetryServiceImplementation: TelemetryService {
         }
     }
 
+    /// This should be the single point of reporting telemetry events. Before we do anything with the event,
+    /// we need to check if the user agreed to collecting telemetry data.
     private func report(event: TelemetryEvent) {
         guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
         Task {
@@ -240,6 +246,11 @@ public class TelemetryServiceImplementation: TelemetryService {
         }
     }
 
+    /// We'll first check if we should save the events to storage in case that the network call fails.
+    /// If we shouldn't, then we'll just try sending the event and fail quietly if the call fails.
+    /// Otherwise we check if the buffer is not empty, if it isn't, save to to the end of the queue
+    /// and try sending all the buffered events immediately after that.
+    /// If the buffer is empty, try to send the event to out API, if it fails, save it to the buffer.
     private func sendEvent(_ event: TelemetryEvent) async {
         guard isEnabled(TelemetryFeature.useBuffer) else {
             try? await telemetryAPI.flushEvent(event: event.toJSONDictionary())
@@ -258,10 +269,11 @@ public class TelemetryServiceImplementation: TelemetryService {
         }
     }
 
+    /// Save the event to local storage
     private func scheduleEvent(_ event: TelemetryEvent) async {
         do {
             let data = try encoder.encode(event)
-            await buffer.save(event: .init(data))
+            await buffer.save(event: .init(data, id: UUID()))
             log.debug("Telemetry event scheduled:\n\(String(data: data, encoding: .utf8)!)")
         } catch {
             log.warning("Failed to serialize telemetry event: \(event)", category: .telemetry)

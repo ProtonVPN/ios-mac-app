@@ -30,7 +30,11 @@ class TelemetryTests: XCTestCase {
             XCTFail("Parameters not in the expected type")
             return
         }
+#if os(macOS)
+        XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.mac.connection")
+#else
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.ios.connection")
+#endif
         XCTAssertEqual(sut["Event"] as? String, "vpn_connection")
 
         XCTAssertEqual(values["time_to_connection"] as? Int, 123000)
@@ -58,7 +62,11 @@ class TelemetryTests: XCTestCase {
             XCTFail("Parameters not in the expected type")
             return
         }
+#if os(macOS)
+        XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.mac.connection")
+#else
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.ios.connection")
+#endif
         XCTAssertEqual(sut["Event"] as? String, "vpn_disconnection")
 
         XCTAssertNil(values["time_to_connection"])
