@@ -63,7 +63,7 @@ class SystemExtensionManagerTests: XCTestCase {
             approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -103,7 +103,7 @@ class SystemExtensionManagerTests: XCTestCase {
             approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { result in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
             installResult = result
             installFinished.fulfill()
         }
@@ -119,7 +119,7 @@ class SystemExtensionManagerTests: XCTestCase {
             var cancelResult: SystemExtensionResult?
             let installCancelled = XCTestExpectation(description: "Cancel install attempt #\(attempt)")
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { result in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
                 cancelResult = result
                 installCancelled.fulfill()
             }
@@ -173,7 +173,7 @@ class SystemExtensionManagerTests: XCTestCase {
         }
 
         var result: SystemExtensionResult?
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -214,7 +214,7 @@ class SystemExtensionManagerTests: XCTestCase {
             XCTFail("Shouldn't need to request for approval, extensions are being upgraded")
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -257,7 +257,7 @@ class SystemExtensionManagerTests: XCTestCase {
             requestPending.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
         }
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
             result = installResult
             installFinished.fulfill()
         }
@@ -282,7 +282,7 @@ class SystemExtensionManagerTests: XCTestCase {
         let installFinished = XCTestExpectation(description: "Finish install")
         var result: SystemExtensionResult?
 
-        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: false) { installResult in
+        sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { installResult in
             result = installResult
             installFinished.fulfill()
         }

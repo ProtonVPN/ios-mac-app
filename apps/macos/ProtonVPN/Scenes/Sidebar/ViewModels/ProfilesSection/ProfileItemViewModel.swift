@@ -92,7 +92,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
             switch result {
             case .success:
                 performConnection()

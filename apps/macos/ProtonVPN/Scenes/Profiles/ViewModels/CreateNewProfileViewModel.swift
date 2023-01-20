@@ -287,7 +287,7 @@ class CreateNewProfileViewModel {
         protocolPending?(true)
         sysexTourCancelled = resetProtocol
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: shouldStartTour) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` else { return }
 

@@ -125,7 +125,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated, shouldStartTour: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
             switch result {
             case .success:
                 self.propertiesManager.vpnProtocol = vpnProtocol

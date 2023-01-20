@@ -297,7 +297,7 @@ final class ConnectionSettingsViewModel {
     }
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<(), Error>) -> Void) {
-        sysexManager.installOrUpdateExtensionsIfNeeded(userInitiated: true, shouldStartTour: true) { [weak self] result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { [weak self] result in
             self?.sysexPending = false
 
             switch result {
@@ -332,7 +332,7 @@ final class ConnectionSettingsViewModel {
 
     private func checkSysexOrResetProtocol(_ protocol: ConnectionProtocol) {
         self.sysexPending = true
-        sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: false, shouldStartTour: false) { [weak self] result in
+        sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }
             self.sysexPending = false
             if case .failure = result {
