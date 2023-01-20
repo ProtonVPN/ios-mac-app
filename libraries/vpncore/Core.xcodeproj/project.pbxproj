@@ -479,6 +479,8 @@
 		E566D9E2297A796B00C2F857 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E566D9E1297A796B00C2F857 /* Dependencies */; };
 		E566D9E6297A9A3300C2F857 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9E3297A97BD00C2F857 /* DataManager.swift */; };
 		E566D9E7297A9A3600C2F857 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9E3297A97BD00C2F857 /* DataManager.swift */; };
+		E566D9EC297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */; };
+		E566D9ED297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */; };
 		E5728D3A27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E5728D3B27E1EF5000DF5DCE /* ImageAlias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */; };
 		E576863E2976F31E0014F944 /* TelemetryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E576863D2976F31E0014F944 /* TelemetryBuffer.swift */; };
@@ -1050,6 +1052,7 @@
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBufferTests.swift; sourceTree = "<group>"; };
 		E566D9E3297A97BD00C2F857 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryRequestMultiple.swift; sourceTree = "<group>"; };
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
 		E576863D2976F31E0014F944 /* TelemetryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBuffer.swift; sourceTree = "<group>"; };
 		E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryConnectionNotifier.swift; sourceTree = "<group>"; };
@@ -1805,6 +1808,7 @@
 				E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */,
 				E53D7460291CF0CB0006E499 /* VPNPartnersRequest.swift */,
 				E5CF14812948E83B00AF6912 /* TelemetryRequest.swift */,
+				E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */,
 			);
 			path = VPN;
 			sourceTree = "<group>";
@@ -2936,6 +2940,7 @@
 				E1616B8821C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				4242B0742465A48B0042145A /* VpnApiService.swift in Sources */,
 				E1B5F63E21B6B5E000B558B0 /* VpnManager.swift in Sources */,
+				E566D9EC297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */,
 				D5DC52C3252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				E5ADAA8D2930F8BD004F105C /* AppStateManagerMock.swift in Sources */,
 				F365355B2638522E001B7E88 /* LocalAgentState.swift in Sources */,
@@ -3168,6 +3173,7 @@
 				D57A65702485330700079E82 /* VpnServerSelector.swift in Sources */,
 				E9DC7A0B262DBFAB001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
 				F365355826384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
+				E566D9ED297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */,
 				D5EA845828C8F73E00C8EB7D /* WGiOSLogContent.swift in Sources */,
 				E129C6D722A9488900D8437E /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				4C1ECBAE28912EAD00820068 /* ExtensionInfo.swift in Sources */,

@@ -30,7 +30,7 @@ extension DataManager: DependencyKey {
             try Data(contentsOf: url)
         },
         save: { data, url in
-            try data.write(to: url)
+            try data.write(to: url, options: .atomic)
         }
     )
 }

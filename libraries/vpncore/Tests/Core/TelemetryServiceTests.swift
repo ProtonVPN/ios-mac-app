@@ -23,8 +23,12 @@ import XCTest
 @testable import vpncore
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
-    var events = [vpncore.JSONDictionary]()
-    func flushEvent(event: vpncore.JSONDictionary) async throws {
+    func flushEvents(events: [String: Any]) async throws {
+
+    }
+
+    var events = [[String: Any]]()
+    func flushEvent(event: [String: Any]) async throws {
         events.append(event)
     }
 }

@@ -19,7 +19,6 @@
 import Foundation
 
 public protocol TelemetryEvent: Encodable {
-    var measurementGroup: String { get }
     var dimensions: TelemetryDimensions { get }
 
     func toJSONDictionary() -> JSONDictionary
