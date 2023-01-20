@@ -140,12 +140,10 @@ public class SystemExtensionManager: NSObject {
 
     /// Submit installation requests for all extensions.
     ///
-    /// - Parameter userInitiated: Whether or not this request was initiated by the user (e.g., through connecting)
     /// - Parameter userActionRequiredHandler: Called with the number of extensions that require user approval.
     ///             This callback will *not* be called if no extensions require approval.
     /// - Parameter installationFinishedHandler: Called when installation is finished, regardless of success.
-    private func submitInstallationRequests(userInitiated: Bool,
-                                            userActionRequiredHandler: @escaping ((Int) -> Void),
+    private func submitInstallationRequests(userActionRequiredHandler: @escaping ((Int) -> Void),
                                             installationFinishedHandler: @escaping ((InstallationState) -> Void)) {
         let queue = DispatchQueue(label: "ch.protonvpn.sysext.status.\(UUID().uuidString)")
         var states: InstallationState = [:]
@@ -200,12 +198,10 @@ public class SystemExtensionManager: NSObject {
     /// - The user has created a custom profile containing a protocol requiring a system extension
     ///
     /// - Parameters:
-    ///   - userInitiated: Whether this request was initiated by the user or not
     ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
     ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
     ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
-    public func checkAndInstallOrUpdateExtensionsIfNeeded(userInitiated: Bool,
-                                                          shouldStartTour: Bool,
+    public func checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: Bool,
                                                           actionHandler: @escaping (SystemExtensionResult) -> Void) {
         // do not check if the user is not logged in to avoid showing the installation prompt on the
         // login screen on first start
@@ -216,23 +212,21 @@ public class SystemExtensionManager: NSObject {
             return
         }
 
-        installOrUpdateExtensionsIfNeeded(userInitiated: userInitiated, shouldStartTour: shouldStartTour, actionHandler: actionHandler)
+        installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, actionHandler: actionHandler)
     }
 
     /// Installs all extensions. This will result in system extension dialogs appearing if the user has
     /// not approved any on the system yet.
     ///
     /// - Parameters:
-    ///   - userInitiated: Whether this request was initiated by the user or not
-    ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required
+    ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
+    ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
     ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
-    public func installOrUpdateExtensionsIfNeeded(userInitiated: Bool,
-                                                  shouldStartTour: Bool,
+    public func installOrUpdateExtensionsIfNeeded(shouldStartTour: Bool,
                                                   actionHandler: @escaping (SystemExtensionResult) -> Void) {
         var didRequireUserApproval = false
 
-        submitInstallationRequests(userInitiated: userInitiated,
-            userActionRequiredHandler: { [unowned self] numberOfExtensionsToApprove in
+        submitInstallationRequests(userActionRequiredHandler: { [unowned self] numberOfExtensionsToApprove in
             didRequireUserApproval = true
 
             guard shouldStartTour else {
@@ -261,8 +255,8 @@ public class SystemExtensionManager: NSObject {
             DispatchQueue.main.async {
                 actionHandler(result)
                 guard case .success(.alreadyThere) = result else {
-                    NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: userInitiated)
-                    if userInitiated && !self.successAlreadyAlerted {
+                    NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: didRequireUserApproval)
+                    if didRequireUserApproval && !self.successAlreadyAlerted {
                         // Use successAlreadyAlerted flag to prevent duplicate success alerts
                         self.successAlreadyAlerted = true
                         self.alertService.push(alert: SysexEnabledAlert())
