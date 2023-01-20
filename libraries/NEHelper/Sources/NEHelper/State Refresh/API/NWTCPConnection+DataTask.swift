@@ -112,6 +112,7 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     let timeoutInterval: TimeInterval
 
     private var tasks: [UUID: NWTCPDataTask] = [:]
+    private let tasksQueue = DispatchQueue(label: "ch.protonvpn.wireguard.connection_factory.tasks_queue")
 
     public init(provider: ConnectionTunnelFactory, timerFactory: TimerFactory, connectionTimeoutInterval: TimeInterval = 10) {
         self.provider = provider
@@ -148,10 +149,17 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
                 self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
             }
 
+            self?.tasksQueue.async {
+                // We're going away, but we don't care if deallocation is synchronous or not
+                self?.tasks.removeValue(forKey: id)
+            }
             completionHandler(data, response, error)
-            self?.tasks.removeValue(forKey: id)
         })
-        tasks[id] = task
+
+        // This needs to be synchronous so we don't go away immediately after returning
+        tasksQueue.sync {
+            tasks[id] = task
+        }
         return task
     }
 }

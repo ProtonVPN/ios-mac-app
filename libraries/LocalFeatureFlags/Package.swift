@@ -12,7 +12,7 @@ let package = Package(
             targets: ["LocalFeatureFlags"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/protonjohn/plistutil", from: "0.0.2")
+        .package(url: "https://github.com/protonjohn/plistutil", exact: "0.0.2")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
