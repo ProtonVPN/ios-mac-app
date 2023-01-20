@@ -1,7 +1,7 @@
 //
-//  Created on 13/12/2022.
+//  Created on 23/01/2023.
 //
-//  Copyright (c) 2022 Proton AG
+//  Copyright (c) 2023 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,16 @@
 
 import ProtonCore_Networking
 
-final class TelemetryRequest: Request {
+final class TelemetryRequestMultiple: Request {
 
-    let event: [String: Any]
+    let events: [String: Any]
 
-    init( _ event: [String: Any]) {
-        self.event = event
+    init( _ events: [String: Any]) {
+        self.events = events
     }
 
     var path: String {
-        return "/data/v1/stats"
+        return "/data/v1/stats/multiple"
     }
 
     var method: HTTPMethod = .post
@@ -37,10 +37,10 @@ final class TelemetryRequest: Request {
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .userInitiated // do not repeat, it can cause the events to be delivered out-of order
+        .background // We can repeat this one as we're sending all available events in the same request
     }
 
     var parameters: [String: Any]? {
-        event
+        events
     }
 }

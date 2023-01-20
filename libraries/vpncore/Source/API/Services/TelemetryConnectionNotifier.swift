@@ -74,6 +74,8 @@ public class TelemetryConnectionNotifier {
     }
 
     private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {
-        telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
+        Task {
+            await telemetryService?.vpnGatewayConnectionChanged(connectionStatus)
+        }
     }
 }

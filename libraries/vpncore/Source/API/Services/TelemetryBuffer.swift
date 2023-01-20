@@ -23,6 +23,11 @@ actor TelemetryBuffer {
     struct Constants {
         static let maxStoredEvents = 100
         static let maxStorageDuration: TimeInterval = .days(7)
+#if os(iOS)
+        static let measurementGroup: String = "vpn.ios.connection"
+#else
+        static let measurementGroup: String = "vpn.mac.connection"
+#endif
     }
     @Dependency(\.dataManager) var dataManager
     @Dependency(\.date) var date
@@ -42,8 +47,30 @@ actor TelemetryBuffer {
         discardOutdatedEvents()
     }
 
+    func scheduledEvents(_ events: ([String: Any]) async throws -> Void) async {
+        let tempEvents = self.events
+        do {
+            let all = allEvents()
+            self.events = []
+            try await events(all)
+            saveToStorage()
+        } catch {
+            log.warning("Failed to send scheduled telemetry events: \(error)", category: .telemetry)
+            // we can get a telemetry event in the meantime, append to the existing (most likely empty) array
+            self.events = tempEvents.appending(self.events)
+        }
+    }
+
     func oldestEvent() -> BufferedEvent? {
         events.first
+    }
+
+    func allEvents() -> [String: Any] {
+        let events = events.compactMap {
+            try? JSONSerialization.jsonObject(with: $0.data) as? JSONDictionary
+        }
+        return ["MeasurementGroup": Constants.measurementGroup,
+                "EventInfo": events]
     }
 
     func discardOutdatedEvents() {
