@@ -69,7 +69,7 @@ public final class CoreNetworking: Networking {
 
         Self.setupTrustKit()
 
-        apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "")
+        apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "", challengeParametersProvider: .empty)
         apiService.authDelegate = self
         apiService.serviceDelegate = self
         apiService.forceUpgradeDelegate = delegate
@@ -221,7 +221,10 @@ extension CoreNetworking: APIServiceDelegate {
 
 // MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
-  
+    public func eraseUnauthSessionCredentials(sessionUID: String) {
+        return // empty for now
+    }
+
     public func credential(sessionUID: String) -> Credential? {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
         return .init(authCredential)
