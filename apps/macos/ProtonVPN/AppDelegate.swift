@@ -84,8 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            self.container.makeSystemExtensionManager()
-                .checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, actionHandler: { _ in })
+            self.checkSysexAndRevertProtocolIfNotEnabled()
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
@@ -165,6 +164,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             DispatchQueue.main.async {
                 completion()
+            }
+        }
+    }
+
+    private func checkSysexAndRevertProtocolIfNotEnabled() {
+        let isSysexRequired = propertiesManager.smartProtocol || propertiesManager.vpnProtocol.requiresSystemExtension
+        let sysexManager = container.makeSystemExtensionManager()
+
+        sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+            if case .failure(let error) = result, isSysexRequired {
+                log.warning("Sysex installation failed with error: \(error), reverting to IKEv2", category: .sysex)
+                self.propertiesManager.smartProtocol = false
+                self.propertiesManager.vpnProtocol = .ike
             }
         }
     }
