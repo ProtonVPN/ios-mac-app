@@ -84,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            self.checkSysexAndRevertProtocolIfNotEnabled()
+            self.checkSysexAndAdjustDefaultProtocol()
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
                 self.navigationService.launched()
@@ -168,19 +168,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func checkSysexAndRevertProtocolIfNotEnabled() {
+    private func checkSysexAndAdjustDefaultProtocol() {
         let isSysexRequired = propertiesManager.smartProtocol || propertiesManager.vpnProtocol.requiresSystemExtension
         let sysexManager = container.makeSystemExtensionManager()
 
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
-            if case .failure(let error) = result, isSysexRequired {
-                log.warning("Sysex installation failed with error: \(error), reverting to IKEv2", category: .sysex)
+            if case .success(.installed) = result {
+                log.info("Sysex installation successful, enabling smart protocol", category: .sysex)
+                self.propertiesManager.smartProtocol = true
+            } else if case .failure = result, isSysexRequired {
+                // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
+                log.warning("Current protocol requires sysex (not installed), reverting to IKEv2", category: .sysex)
                 self.propertiesManager.smartProtocol = false
                 self.propertiesManager.vpnProtocol = .ike
             }
         }
     }
-    
+
     private func restartApp() {
         log.info("Restart app", category: .os)
         let appPath = Bundle.main.bundleURL.absoluteString
