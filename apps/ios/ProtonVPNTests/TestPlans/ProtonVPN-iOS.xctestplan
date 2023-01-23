@@ -1,0 +1,42 @@
+{
+  "configurations" : [
+    {
+      "id" : "AC2710D2-2ECD-4706-9ADF-3D70C8B8E37B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:iOS.xcodeproj",
+          "identifier" : "791DE5D8208DDA3000A29EA5",
+          "name" : "ProtonVPN"
+        }
+      ]
+    },
+    "language" : "en",
+    "region" : "US",
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:iOS.xcodeproj",
+      "identifier" : "791DE5D8208DDA3000A29EA5",
+      "name" : "ProtonVPN"
+    }
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "ProtonVPNUITests"
+      ],
+      "target" : {
+        "containerPath" : "container:iOS.xcodeproj",
+        "identifier" : "791DE5EE208DDA3200A29EA5",
+        "name" : "ProtonVPNTests"
+      }
+    }
+  ],
+  "version" : 1
+}
