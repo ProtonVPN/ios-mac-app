@@ -1,5 +1,5 @@
 //
-//  Created on 11.01.23.
+//  Created on 2023-01-05.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -17,21 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import LocalFeatureFlags
 
-public enum LogicalFeature: String, FeatureFlag {
-    public var category: String {
-        "Logicals"
-    }
-
-    case perProtocolEntries = "PerProtocolEntries"
-}
-
-public enum OpenVPNFeature: String, FeatureFlag {
-    public var category: String {
-        "OpenVPN"
-    }
-
-    // OpenVPN certificate based authentication. Remove in 2024.
-    case iosCertificates = "IOS-Certificates"
+class ObfuscatedConstants {
+    static let atlasSecret: String = ""
 }

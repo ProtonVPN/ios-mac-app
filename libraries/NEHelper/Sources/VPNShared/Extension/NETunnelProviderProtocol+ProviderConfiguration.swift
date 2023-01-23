@@ -20,12 +20,15 @@ import Foundation
 import NetworkExtension
 
 extension NETunnelProviderProtocol {
-    static let connectedLogicalIdKey = "PVPNLogicalID"
-    static let connectedServerIpIdKey = "PVPNServerIpID"
-    static let reconnectionEnabledKey = "ReconnectionEnabled"
-    static let uidKey = "UID"
-    static let wgProtocolKey = "wg-protocol"
-    static let featureFlagOverridesKey = "FeatureFlagOverrides"
+
+    fileprivate enum CustomKeys: String, CaseIterable {
+        case connectedLogicalIdKey = "PVPNLogicalID"
+        case connectedServerIpIdKey = "PVPNServerIpID"
+        case reconnectionEnabledKey = "ReconnectionEnabled"
+        case uidKey = "UID"
+        case wgProtocolKey = "wg-protocol"
+        case featureFlagOverridesKey = "FeatureFlagOverrides"
+    }
 
     private func ensureProviderConfig() {
         guard providerConfiguration == nil else { return }
@@ -35,62 +38,97 @@ extension NETunnelProviderProtocol {
 
     public var connectedLogicalId: String? {
         get {
-            providerConfiguration?[Self.connectedLogicalIdKey] as? String ??
-                providerConfiguration?["PVPNServerID"] as? String // old name for the key
+            providerConfiguration?[.connectedLogicalIdKey] as? String ??
+            providerConfiguration?["PVPNServerID"] as? String // old name for the key
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.connectedLogicalIdKey] = newValue
+            providerConfiguration?[.connectedLogicalIdKey] = newValue
         }
     }
 
     public var connectedServerIpId: String? {
         get {
-            providerConfiguration?[Self.connectedServerIpIdKey] as? String
+            providerConfiguration?[.connectedServerIpIdKey] as? String
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.connectedServerIpIdKey] = newValue
+            providerConfiguration?[.connectedServerIpIdKey] = newValue
         }
     }
 
     public var appUid: uid_t? {
         get {
-            providerConfiguration?[Self.uidKey] as? uid_t
+            providerConfiguration?[.uidKey] as? uid_t
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.uidKey] = newValue
+            providerConfiguration?[.uidKey] = newValue
         }
     }
 
     public var wgProtocol: String? {
         get {
-            providerConfiguration?[Self.wgProtocolKey] as? String
+            providerConfiguration?[.wgProtocolKey] as? String
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.wgProtocolKey] = newValue
+            providerConfiguration?[.wgProtocolKey] = newValue
         }
     }
 
     public var reconnectionEnabled: Bool? {
         get {
-            providerConfiguration?[Self.reconnectionEnabledKey] as? Bool
+            providerConfiguration?[.reconnectionEnabledKey] as? Bool
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.reconnectionEnabledKey] = newValue
+            providerConfiguration?[.reconnectionEnabledKey] = newValue
         }
     }
 
     public var featureFlagOverrides: [String: [String: Bool]]? {
         get {
-            providerConfiguration?[Self.featureFlagOverridesKey] as? [String: [String: Bool]]
+            providerConfiguration?[.featureFlagOverridesKey] as? [String: [String: Bool]]
         }
         set {
             ensureProviderConfig()
-            providerConfiguration?[Self.featureFlagOverridesKey] = newValue
+            providerConfiguration?[.featureFlagOverridesKey] = newValue
+        }
+    }
+
+    // MARK: - 
+
+    public func backupCustomSettings() -> [String: Any] {
+        ensureProviderConfig()
+
+        var custom = [String: Any]()
+        for key in CustomKeys.allCases {
+            if providerConfiguration!.keys.contains(key.rawValue) {
+                custom[key.rawValue] = providerConfiguration![key.rawValue]
+            }
+        }
+        return custom
+    }
+
+    public func restoreCustomSettingsFrom(backup: [String: Any]) {
+        ensureProviderConfig()
+
+        for key in CustomKeys.allCases {
+            if backup.keys.contains(key.rawValue) {
+                providerConfiguration![key.rawValue] = backup[key.rawValue]
+            }
+        }
+    }
+}
+
+fileprivate extension Dictionary<String, Any> {
+    subscript(_ customKey: NETunnelProviderProtocol.CustomKeys) -> Any? {
+        get {
+            self[customKey.rawValue]
+        }
+        set {
+            self[customKey.rawValue] = newValue
         }
     }
 }

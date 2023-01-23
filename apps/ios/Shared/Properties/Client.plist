@@ -8,5 +8,7 @@
 	<string>31e7dcced342f546df6edc7146577090</string>
 	<key>WireGuardId</key>
 	<string>ios-wireguardextension</string>
+	<key>OpenVpnId</key>
+	<string>ios-openvpnextension</string>
 </dict>
 </plist>

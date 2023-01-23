@@ -12,6 +12,11 @@
 		<key>PartnerLogicals</key>
 		<true/>
 	</dict>
+	<key>OpenVPN</key>
+	<dict>
+		<key>IOS-Certificates</key>
+		<true/>
+	</dict>
 	<key>Telemetry</key>
 	<dict>
 		<key>TelemetryOptIn</key>

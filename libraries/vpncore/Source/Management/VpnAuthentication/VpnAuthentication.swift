@@ -94,7 +94,7 @@ public final class VpnAuthenticationManager {
     }
 
     @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification) {
-        log.info("User plan downgraded or delinquent, deleting keys and certificate and getting one ones", category: .userCert)
+        log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
 
         // certificate refresh requests might be in progress so first cancel all fo them
         queue.cancelAllOperations()
@@ -312,7 +312,8 @@ public final class VpnAuthenticationRemoteClient {
         // If we get a success condition, we should look at the session cookie, because the network extension is going
         // to need to send it to the server to avoid getting a 422. Sending a session cookie is required if the two
         // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.
-        // The network extension will always send requests from behind the tunnel.
+        // The network extension will always send requests from behind the tunnel (except when it can't, because of the
+        // Apple's "killswitch").
         let sessionId = sessionService.sessionCookie
         let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: sessionId)
 
