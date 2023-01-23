@@ -69,6 +69,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    @MainActor var appState: AppState { appStateManager.state }
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
@@ -92,180 +93,173 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         planService.updateCountriesCount()
     }
-    
-    // MARK: - Beginning of the log in logic.
+
+    // MARK: public log in interface (completion handlers)
+
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        guard authKeychain.fetch() != nil else {
-            completion(.failure(ProtonVpnErrorConst.userCredentialsMissing))
-            return
-        }
-        
-        let failureWrapper = { error in
-            DispatchQueue.main.async { completion(.failure(error)) }
-        }
-        
-        retrieveProperties(success: { [weak self] in
-            self?.finishLogin(success: {
-                completion(.success)
-            }, failure: failureWrapper)
-        }, failure: failureWrapper)
+        executeOnMainThread(attemptSilentLogIn, success: { completion(.success) }, failure: { completion(.failure($0)) })
     }
 
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        guard loggedIn else {
-            success()
-            return
-        }
-
-        self.vpnAuthentication.refreshCertificates { result in
-            switch result {
-            case .success:
-                success()
-            case let .failure(error):
-                failure(error)
-            }
-        }
+        executeOnMainThread(refreshVpnAuthCertificate, success: success, failure: failure)
     }
 
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        let closure = { try await self.finishLogin(authCredentials: authCredentials) }
+        executeOnMainThread(closure, success: success, failure: failure)
+    }
+
+    // MARK: private log in implementation (async)
+
+    private func attemptSilentLogIn() async throws {
+        if authKeychain.fetch() == nil {
+            throw ProtonVpnErrorConst.userCredentialsMissing
+        }
+
+        try await retrieveProperties()
+        try await finishLogin()
+    }
+
+    private func finishLogin() async throws {
+        try await refreshVpnAuthCertificate()
+        setAndNotify(for: .established, reason: nil)
+        profileManager.refreshProfiles()
+        appCertificateRefreshManager.planNextRefresh()
+    }
+
+    private func refreshVpnAuthCertificate() async throws {
+        if !loggedIn {
+            return
+        }
+
+        _ = try await withCheckedThrowingContinuation { [weak self] continuation in
+            self?.vpnAuthentication.refreshCertificates { result in continuation.resume(with: result) }
+        }
+    }
+
+    private func finishLogin(authCredentials: AuthCredentials) async throws {
         do {
             try authKeychain.store(authCredentials)
         } catch {
-            DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
+            throw ProtonVpnError.keychainWriteFailed
+        }
+
+        try await retrieveProperties()
+        try checkForSubuserWithoutSessions()
+        try await finishLogin()
+    }
+    
+    private func checkForSubuserWithoutSessions() throws {
+        if let credentials = try? self.vpnKeychain.fetchCached(), credentials.isSubuserWithoutSessions {
+            log.error("User with insufficient sessions detected. Throwing an error insted of login.", category: .app)
+            logOutCleanup()
+            throw ProtonVpnError.subuserWithoutSessions
+        }
+    }
+
+    private func retrieveProperties() async throws {
+        guard let properties = try await getVPNProperties() else {
             return
         }
-        retrieveProperties(success: { [weak self] in
-            self?.checkForSubuserWithoutSessions(success: { [weak self] in
-                self?.finishLogin(success: success, failure: failure)
-            }, failure: failure)
-        }, failure: failure)
-    }
-    
-    private func retrieveProperties(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
-                                    lastKnownLocation: propertiesManager.userLocation) { [weak self] result in
-            switch result {
-            case let .success(properties):
-                guard let self = self else {
-                    return
-                }
 
-                if let credentials = properties.vpnCredentials {
-                    self.vpnKeychain.store(vpnCredentials: credentials)
-                }
-                self.serverStorage.store(properties.serverModels)
+        if let credentials = properties.vpnCredentials {
+            vpnKeychain.store(vpnCredentials: credentials)
+        }
+        self.serverStorage.store(properties.serverModels)
 
-                if self.appStateManager.state.isDisconnected {
-                    self.propertiesManager.userLocation = properties.location
-                }
-                self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
-                self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
-                self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
-                self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-                self.propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
-                self.propertiesManager.userRole = properties.userRole
-                self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
-                self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
-                self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
-                self.propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
-                if self.propertiesManager.featureFlags.pollNotificationAPI {
-                    self.announcementRefresher.tryRefreshing()
-                }
+        if await appState.isDisconnected {
+            propertiesManager.userLocation = properties.location
+        }
+        propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+        propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
+        propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
+        propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+        propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
+        propertiesManager.userRole = properties.userRole
+        propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
+        propertiesManager.featureFlags = properties.clientConfig.featureFlags
+        propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
+        propertiesManager.ratingSettings = properties.clientConfig.ratingSettings
+        if propertiesManager.featureFlags.pollNotificationAPI {
+            DispatchQueue.main.async { self.announcementRefresher.tryRefreshing() }
+        }
 
-                self.resolveActiveSession(success: success, failure: { error in
-                    self.logOutCleanup()
-                    failure(error)
-                })
-            case let .failure(error):
-                log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
-                guard let self = self, // only fail if there is a major reason
-                      !self.serverStorage.fetch().isEmpty,
-                      self.propertiesManager.userLocation?.ip != nil,
-                      !(error is KeychainError) else {
-
-                    failure(error)
-                    return
-                }
-
-                success()
-            }
+        do {
+            try await resolveActiveSession()
+        } catch {
+            logOutCleanup()
+            throw error
         }
     }
     
-    private func finishLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        refreshVpnAuthCertificate(success: { [weak self] in
-            self?.setAndNotify(for: .established, reason: nil)
-            self?.profileManager.refreshProfiles()
-            self?.appCertificateRefreshManager.planNextRefresh()
-            success()
+    private func getVPNProperties() async throws -> VpnProperties? {
+        let isDisconnected = await appState.isDisconnected
+        let location = propertiesManager.userLocation
             
-        }, failure: { error in
-            failure(error)
-        })
+        do {
+            return try await vpnApiService.vpnProperties(isDisconnected: isDisconnected, lastKnownLocation: location)
+        } catch {
+            log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
+            if serverStorage.fetch().isEmpty, self.propertiesManager.userLocation?.ip == nil, (error is KeychainError) {
+                // only throw if there is a major reason
+                throw error
+            }
+        }
+        return nil
     }
     
-    private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-
+    private func resolveActiveSession() async throws {
         DispatchQueue.main.async { [weak self] in
             self?.navService?.sessionRefreshed()
         }
 
-        guard appStateManager.state.isConnected else {
-            success()
+        if await !appState.isConnected {
             return
         }
-        
-        guard let activeUsername = appStateManager.state.descriptor?.username else {
-            failure(ProtonVpnError.fetchSession)
+
+        guard let activeUsername = await appState.descriptor?.username else {
+            throw ProtonVpnError.fetchSession
+        }
+
+        guard let vpnCredentials = try? vpnKeychain.fetch() else {
+            alertService.push(alert: CannotAccessVpnCredentialsAlert())
+            throw ProtonVpnError.fetchSession
+        }
+
+        if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
+            == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
             return
         }
-        
-        do {
-            let vpnCredentials = try vpnKeychain.fetch()
-            
-            if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
-                == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
-                success()
-                return
-            }
-                        
-            alertService.push(alert: ActiveSessionWarningAlert(confirmHandler: { [weak self] in
+
+        try await confirmAndDisconnectActiveSession()
+    }
+
+    private func confirmAndDisconnectActiveSession() async throws {
+        try await withCheckedThrowingContinuation { continuation in
+            let alert = ActiveSessionWarningAlert(confirmHandler: { [weak self] in
                 guard let self = self else {
                     return
                 }
 
                 if self.appStateManager.state.isConnected {
-                    self.appStateManager.disconnect { success() }
+                    self.appStateManager.disconnect { continuation.resume() }
                     return
                 }
 
-                success()
+                continuation.resume()
             }, cancelHandler: {
-                failure(ProtonVpnErrorConst.vpnSessionInProgress)
-            }))
-        } catch {
-            failure(ProtonVpnError.fetchSession)
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-            return
+                continuation.resume(throwing: ProtonVpnErrorConst.vpnSessionInProgress)
+            })
+            self.alertService.push(alert: alert)
         }
-    }
-    
-    private func checkForSubuserWithoutSessions(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        guard let credentials = try? self.vpnKeychain.fetchCached() else {
-            success()
-            return
-        }
-        guard credentials.isSubuserWithoutSessions else {
-            success()
-            return
-        }
-        
-        log.error("User with insufficient sessions detected. Throwing an error insted of login.", category: .app)
-        logOutCleanup()
-        failure(ProtonVpnError.subuserWithoutSessions)
     }
     
     // MARK: - Log out
+        
+    func logOut() {
+        logOut(force: false, reason: nil)
+    }
+    
     func logOut(force: Bool, reason: String?) {
         loggedIn = false
         
@@ -277,10 +271,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             })
             alertService.push(alert: logoutAlert)
         }
-    }
-    
-    func logOut() {
-        logOut(force: false, reason: nil)
     }
     
     private func confirmLogout(reason: String?) {
@@ -312,26 +302,28 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             group.leave()
         }
         _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
-        
+
         propertiesManager.logoutCleanup()
     }
+
     // End of the logout logic
     // MARK: -
-    
+
     private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
 
         sessionStatus = state
-        
-        var object: Any?
+
         if state == .established {
             loggedIn = true
-            object = factory.makeVpnGateway()
-            
-            // No need to connect twice
-            propertiesManager.hasConnected = true
+            DispatchQueue.main.async {
+                let gateway = self.factory.makeVpnGateway()
 
-            postNotification(name: sessionChanged, object: object)
+                // No need to connect twice
+                self.propertiesManager.hasConnected = true
+
+                self.postNotification(name: self.sessionChanged, object: gateway)
+            }
         } else if state == .notEstablished {
             postNotification(name: sessionChanged, object: reason)
         }
@@ -344,6 +336,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             NotificationCenter.default.post(name: name, object: object)
         }
     }
+
     // MARK: - AppDelegate quit behaviour
     
     func replyToApplicationShouldTerminate() {
@@ -374,5 +367,20 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         
         let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
         alertService.push(alert: alert)
+    }
+
+    private func executeOnMainThread(
+        _ closure: @escaping () async throws -> Void,
+        success: @escaping () -> Void,
+        failure: @escaping (Error) -> Void
+    ) {
+        Task { @MainActor in
+            do {
+                try await closure()
+                success()
+            } catch {
+                failure(error)
+            }
+        }
     }
 }
