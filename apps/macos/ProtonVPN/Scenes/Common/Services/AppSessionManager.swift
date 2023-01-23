@@ -36,15 +36,15 @@ protocol AppSessionManagerFactory {
 protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
-    
+
     var sessionChanged: Notification.Name { get }
-    
+
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
     func logOut()
-    
+
     func replyToApplicationShouldTerminate()
 }
 
@@ -67,7 +67,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         PlanServiceFactory &
                         AuthKeychainHandleFactory
     private let factory: Factory
-    
+
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @MainActor var appState: AppState { appStateManager.state }
     private var navService: NavigationService? {
@@ -85,7 +85,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished
-    
+
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
@@ -148,7 +148,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         try checkForSubuserWithoutSessions()
         try await finishLogin()
     }
-    
+
     private func checkForSubuserWithoutSessions() throws {
         if let credentials = try? self.vpnKeychain.fetchCached(), credentials.isSubuserWithoutSessions {
             log.error("User with insufficient sessions detected. Throwing an error insted of login.", category: .app)
@@ -191,11 +191,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             throw error
         }
     }
-    
+
     private func getVPNProperties() async throws -> VpnProperties? {
         let isDisconnected = await appState.isDisconnected
         let location = propertiesManager.userLocation
-            
+
         do {
             return try await vpnApiService.vpnProperties(isDisconnected: isDisconnected, lastKnownLocation: location)
         } catch {
@@ -207,7 +207,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
         return nil
     }
-    
+
     private func resolveActiveSession() async throws {
         DispatchQueue.main.async { [weak self] in
             self?.navService?.sessionRefreshed()
@@ -253,16 +253,16 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             self.alertService.push(alert: alert)
         }
     }
-    
+
     // MARK: - Log out
-        
+
     func logOut() {
         logOut(force: false, reason: nil)
     }
-    
+
     func logOut(force: Bool, reason: String?) {
         loggedIn = false
-        
+
         if force || !appStateManager.state.isConnected {
             confirmLogout(reason: reason)
         } else {
@@ -272,7 +272,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             alertService.push(alert: logoutAlert)
         }
     }
-    
+
     private func confirmLogout(reason: String?) {
         switch appStateManager.state {
         case .connecting:
@@ -281,16 +281,16 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             appStateManager.disconnect { [logoutRoutine] in logoutRoutine(reason) }
         }
     }
-    
+
     private func logoutRoutine(reason: String?) {
         setAndNotify(for: .notEstablished, reason: reason)
         logOutCleanup()
     }
-    
+
     private func logOutCleanup() {
         refreshTimer.stop()
         loggedIn = false
-        
+
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
@@ -327,7 +327,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         } else if state == .notEstablished {
             postNotification(name: sessionChanged, object: reason)
         }
-        
+
         refreshTimer.start()
     }
 
@@ -338,7 +338,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: - AppDelegate quit behaviour
-    
+
     func replyToApplicationShouldTerminate() {
         if propertiesManager.uninstallSysexesOnTerminate {
             _ = sysexManager.uninstallAll(userInitiated: false)
@@ -348,7 +348,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             NSApp.reply(toApplicationShouldTerminate: true)
             return
         }
-        
+
         let confirmationClosure: () -> Void = { [weak self] in
             self?.appStateManager.disconnect {
                 DispatchQueue.main.async {
@@ -362,9 +362,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             confirmationClosure()
             return
         }
-        
+
         let cancelationClosure: () -> Void = { NSApp.reply(toApplicationShouldTerminate: false) }
-        
+
         let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
         alertService.push(alert: alert)
     }
