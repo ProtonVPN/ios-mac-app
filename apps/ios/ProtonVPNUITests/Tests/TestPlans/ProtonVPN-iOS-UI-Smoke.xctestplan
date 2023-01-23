@@ -9,18 +9,32 @@
     }
   ],
   "defaultOptions" : {
-    "language" : "en"
+    "language" : "en",
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:iOS.xcodeproj",
+      "identifier" : "791DE5D8208DDA3000A29EA5",
+      "name" : "ProtonVPN"
+    },
+    "testRepetitionMode" : "retryOnFailure"
   },
   "testTargets" : [
     {
       "skippedTests" : [
         "ConnectionTests",
+        "ExternalAccountsCapabilityATests\/testSignInWithUsernameAccountWorks()",
+        "ExternalAccountsCapabilityATests\/testSignUpWithExternalAccountIsNotAvailable()",
+        "ExternalAccountsCapabilityATests\/testSignUpWithInternalAccountIsNotAvailable()",
+        "ExternalAccountsCapabilityATests\/testSignUpWithUsernameAccountWorks()",
         "LoginTests\/testLoginWithCorrectCredentials_C101()",
         "LoginTests\/testLoginWithIncorrectCredentials_C100()",
         "OldLoginTests",
+        "PlanTests",
+        "ProfilesTests",
+        "SettingsTests",
         "SignUpTests",
         "SignupTests\/testSignupExistingExternalAccount()",
         "SignupTests\/testSignupNewExternalAccountSuccess()",
+        "TokenRefreshTests",
         "UnloggedUserTests"
       ],
       "target" : {
