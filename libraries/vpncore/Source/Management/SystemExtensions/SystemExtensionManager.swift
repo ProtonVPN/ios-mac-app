@@ -97,7 +97,6 @@ public class SystemExtensionManager: NSObject {
     fileprivate var outstandingRequests: Set<SystemExtensionRequest> = []
 
     private var userClosedTour = false
-    private var successAlreadyAlerted = false
 
     private var userIsLoggedIn: Bool {
         vpnKeychain.userIsLoggedIn
@@ -251,17 +250,13 @@ public class SystemExtensionManager: NSObject {
             self.alertService.push(alert: tour)
         }, installationFinishedHandler: { installationResults in
             let result = self.reduce(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
+            log.debug("Finished installation with result: \(result)", category: .sysex)
 
             DispatchQueue.main.async {
                 actionHandler(result)
-                guard case .success(.alreadyThere) = result else {
+                if case .success(.installed) = result {
                     NotificationCenter.default.post(name: Self.allExtensionsInstalled, object: didRequireUserApproval)
-                    if didRequireUserApproval && !self.successAlreadyAlerted {
-                        // Use successAlreadyAlerted flag to prevent duplicate success alerts
-                        self.successAlreadyAlerted = true
-                        self.alertService.push(alert: SysexEnabledAlert())
-                    }
-                    return
+                    self.alertService.push(alert: SysexEnabledAlert())
                 }
             }
         })
