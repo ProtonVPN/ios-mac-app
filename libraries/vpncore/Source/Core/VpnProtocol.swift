@@ -9,6 +9,7 @@
 
 import Foundation
 import VPNShared
+import LocalFeatureFlags
 
 extension VpnProtocol: DefaultableProperty {
     public init() {
@@ -28,7 +29,11 @@ extension VpnProtocol { // Authentication
     public var authenticationType: AuthenticationType {
         switch self {
         case .ike: return .credentials
-        case .openVpn: return .credentials
+        case .openVpn:
+            guard isEnabled(OpenVPNFeature.iosCertificates) else {
+                return .credentials
+            }
+            return .certificate
         case .wireGuard: return .certificate
         }
     }
@@ -157,7 +162,6 @@ extension VpnProtocol {
         aCoder.encode(data, forKey: CoderKey.vpnProtocol)
     }
 }
-
 
 extension OpenVpnTransport {
 

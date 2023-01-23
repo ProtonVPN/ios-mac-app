@@ -10,15 +10,36 @@ import Foundation
 import NetworkExtension
 import vpncore
 import TunnelKit
+import LocalFeatureFlags
+import VPNShared
 
 final class OVPNiOSCredentialsConfigurator: VpnCredentialsConfigurator {
-    
+
+    private let vpnAuthentication: VpnAuthentication
+
+    init(vpnAuthentication: VpnAuthentication) {
+        self.vpnAuthentication = vpnAuthentication
+    }
+
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
-        protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
-                
-        let storage = TunnelKit.Keychain(group: AppConstants.AppGroups.main)
-        try? storage.set(password: configuration.password, for: configuration.username, context: AppConstants.NetworkExtensions.openVpn)
-        
+        guard isEnabled(OpenVPNFeature.iosCertificates) else { // Old flow
+            protocolConfig.username = configuration.username
+            let storage = TunnelKit.Keychain(group: AppConstants.AppGroups.main)
+            try? storage.set(password: configuration.password, for: configuration.username, context: AppConstants.NetworkExtensions.openVpn)
+            completionHandler(protocolConfig)
+            return
+        }
+
+        // Username is needed to detect connections started from another user (see
+        // `AppSessionManager.resolveActiveSession`). OpenVPN NE deletes this field before passing
+        // it down to TunnelKit (this is not back propagated to the app though, so we can still use
+        // it here).
+        protocolConfig.username = configuration.username
+
+        // Make sure clients private key is in the keychain. It is necessary to ask
+        // API for a new certificate before connection can be established.
+        _ = self.vpnAuthentication.loadClientPrivateKey()
+
         completionHandler(protocolConfig)
     }
     

@@ -26,3 +26,12 @@ public enum LogicalFeature: String, FeatureFlag {
 
     case perProtocolEntries = "PerProtocolEntries"
 }
+
+public enum OpenVPNFeature: String, FeatureFlag {
+    public var category: String {
+        "OpenVPN"
+    }
+
+    // OpenVPN certificate based authentication. Remove in 2024.
+    case iosCertificates = "IOS-Certificates"
+}
