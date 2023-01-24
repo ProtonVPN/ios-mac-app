@@ -32,6 +32,22 @@ public func executeOnUIThread(closure: @escaping () -> Void) {
     }
 }
 
+/// Utility function for bridging completion handler functions with separate success and failure callbacks, with async,
+/// throwing functions.
+public func executeOnUIThread<T>(
+    _ closure: @escaping () async throws -> T,
+    success: @escaping (T) -> Void,
+    failure: @escaping (Error) -> Void
+) {
+    Task { @MainActor in
+        do {
+            success(try await closure())
+        } catch {
+            failure(error)
+        }
+    }
+}
+
 public func dispatchAssert(condition: DispatchPredicate) {
     #if DEBUG
     dispatchPrecondition(condition: condition)
