@@ -30,10 +30,14 @@ extension VpnProtocol { // Authentication
         switch self {
         case .ike: return .credentials
         case .openVpn:
+            #if os(macOS)
+            return .credentials
+            #else
             guard isEnabled(OpenVPNFeature.iosCertificates) else {
                 return .credentials
             }
             return .certificate
+            #endif
         case .wireGuard: return .certificate
         }
     }
