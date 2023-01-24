@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "01BB2DA4-9C88-4EF1-BA14-F0A890230C51",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:macOS.xcodeproj",
+      "identifier" : "EED534801EEC112000013607",
+      "name" : "ProtonVPN-mac"
+    },
+    "testRepetitionMode" : "retryOnFailure",
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:macOS.xcodeproj",
+        "identifier" : "D5911705229F9574005829DA",
+        "name" : "ProtonVPNmacOSUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

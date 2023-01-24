@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "1E1A16B7-699A-44A4-813D-6CF4D62041E7",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:macOS.xcodeproj",
+          "identifier" : "EED534801EEC112000013607",
+          "name" : "ProtonVPN-mac"
+        }
+      ]
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:macOS.xcodeproj",
+      "identifier" : "EED534801EEC112000013607",
+      "name" : "ProtonVPN-mac"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:macOS.xcodeproj",
+        "identifier" : "E15B754C20FA83CB0022C406",
+        "name" : "ProtonVPNmacOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}

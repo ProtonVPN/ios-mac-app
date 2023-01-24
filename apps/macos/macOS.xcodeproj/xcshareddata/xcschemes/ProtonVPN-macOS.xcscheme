@@ -47,6 +47,18 @@
             ReferencedContainer = "container:macOS.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:ProtonVPN-macOS-Unit-All.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:ProtonVPN-macOS-UI-All.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:ProtonVPN-macOS-UI-Smoke.xctestplan">
+         </TestPlanReference>
+      </TestPlans>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -59,7 +71,7 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D5911705229F9574005829DA"
