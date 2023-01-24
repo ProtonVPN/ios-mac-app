@@ -54,10 +54,10 @@
             reference = "container:ProtonVPNTests/TestPlans/ProtonVPN-iOS.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:ProtonVPNUITests/Tests/TestPlans/ProtonVPN-iOS-UI-Smoke.xctestplan">
+            reference = "container:TestPlans/ProtonVPN-iOS-UI-Smoke.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:ProtonVPNUITests/Tests/TestPlans/ProtonVPN-iOS-UI-All.xctestplan"
+            reference = "container:TestPlans/ProtonVPN-iOS-UI-All.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -77,6 +77,16 @@
                   Identifier = "ProtonVPNUITests">
                </Test>
             </SkippedTests>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "791DE5EE208DDA3200A29EA5"
+               BuildableName = "ProtonVPNTests.xctest"
+               BlueprintName = "ProtonVPNTests"
+               ReferencedContainer = "container:iOS.xcodeproj">
+            </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
