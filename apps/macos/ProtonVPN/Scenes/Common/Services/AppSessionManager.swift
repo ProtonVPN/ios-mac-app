@@ -97,16 +97,19 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // MARK: public log in interface (completion handlers)
 
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        executeOnMainThread(attemptSilentLogIn, success: { completion(.success) }, failure: { completion(.failure($0)) })
+        // Invoke private, async implementation
+        executeOnUIThread(attemptSilentLogIn, success: { completion(.success) }, failure: { completion(.failure($0)) })
     }
 
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        executeOnMainThread(refreshVpnAuthCertificate, success: success, failure: failure)
+        // Invoke private, async implementation
+        executeOnUIThread(refreshVpnAuthCertificate, success: success, failure: failure)
     }
 
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         let closure = { try await self.finishLogin(authCredentials: authCredentials) }
-        executeOnMainThread(closure, success: success, failure: failure)
+        // Invoke private, async implementation
+        executeOnUIThread(closure, success: success, failure: failure)
     }
 
     // MARK: private log in implementation (async)
@@ -367,20 +370,5 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
         alertService.push(alert: alert)
-    }
-
-    private func executeOnMainThread(
-        _ closure: @escaping () async throws -> Void,
-        success: @escaping () -> Void,
-        failure: @escaping (Error) -> Void
-    ) {
-        Task { @MainActor in
-            do {
-                try await closure()
-                success()
-            } catch {
-                failure(error)
-            }
-        }
     }
 }
