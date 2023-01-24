@@ -51,13 +51,13 @@
       </CodeCoverageTargets>
       <TestPlans>
          <TestPlanReference
-            reference = "container:ProtonVPNTests/TestPlans/ProtonVPN-iOS.xctestplan">
-         </TestPlanReference>
-         <TestPlanReference
             reference = "container:TestPlans/ProtonVPN-iOS-UI-Smoke.xctestplan">
          </TestPlanReference>
          <TestPlanReference
-            reference = "container:TestPlans/ProtonVPN-iOS-UI-All.xctestplan"
+            reference = "container:TestPlans/ProtonVPN-iOS-UI-All.xctestplan">
+         </TestPlanReference>
+         <TestPlanReference
+            reference = "container:TestPlans/ProtonVPN-iOS-Unit-All.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
