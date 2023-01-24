@@ -2,7 +2,7 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
     
 
-ios_unit_tests:
+ios_unit_tests_all:
   extends:
     - .mr_job_template
     - .ios_job_template
@@ -27,9 +27,28 @@ ios_unit_tests:
         - fastlane/test_output/report.junit
 
 
-ios_ui_tests:
+ios_ui_tests_smoke:
   extends:
     - .mr_job_template
+    - .ios_job_template
+  stage: apps_ui_tests
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
+    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
+    - fastlane ios_app_ui_test_smoke
+    - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+    - rm apps/ios/ProtonVPNUITests/credentials_bf22.plist
+  when: manual
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit
+
+ios_ui_tests_all:
+  extends:
     - .ios_job_template
   stage: apps_ui_tests
   script:
@@ -41,7 +60,10 @@ ios_ui_tests:
   after_script:
     - xcrun simctl delete $CI_JOB_ID
     - rm apps/ios/ProtonVPNUITests/credentials_bf22.plist
-  when: manual
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
+    - when: manual
   artifacts:
     reports:
       junit:
