@@ -775,7 +775,7 @@
 		B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsRobot.swift; sourceTree = "<group>"; };
 		B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySignupRobot.swift; sourceTree = "<group>"; };
 		B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatingAccountRobot.swift; sourceTree = "<group>"; };
-		B2E466D2297E98070026ED26 /* ProtonVPN-iOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS.xctestplan"; sourceTree = "<group>"; };
+		B2E466D2297E98070026ED26 /* ProtonVPN-iOS-Unit-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-Unit-All.xctestplan"; sourceTree = "<group>"; };
 		B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-iOS-UI-All.xctestplan"; sourceTree = "<group>"; };
 		B2FCF5432940E91300EAC786 /* TokenRefreshTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshTests.swift; sourceTree = "<group>"; };
 		B894556AA20FC55FB37D0FF9 /* Pods-NetworkExtensionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetworkExtensionTests.debug.xcconfig"; path = "Target Support Files/Pods-NetworkExtensionTests/Pods-NetworkExtensionTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1262,6 +1262,7 @@
 				E148AE4121C141B0007AB65A /* Quick Connect Widget */,
 				D55455402280280B006574F9 /* Siri Shortcut Handler */,
 				E1F2621521D0E13C003A4401 /* Shared */,
+				B2E466D1297E8F2D0026ED26 /* TestPlans */,
 				791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7E229BBD870087B63A /* ProtonVPNUITests */,
 				E9445D6026528A790075FD31 /* WireGuardiOS Extension */,
@@ -1304,7 +1305,6 @@
 		791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
-				B2E466D1297E8F2D0026ED26 /* TestPlans */,
 				D550A1A425651B5000FE2D54 /* Extensions */,
 				E129C6D122A9325D00D8437E /* JSON */,
 				D5136C17228591750002C095 /* Mocks */,
@@ -1505,7 +1505,9 @@
 		B2E466D1297E8F2D0026ED26 /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				B2E466D2297E98070026ED26 /* ProtonVPN-iOS.xctestplan */,
+				B2E466D2297E98070026ED26 /* ProtonVPN-iOS-Unit-All.xctestplan */,
+				F377836426E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan */,
+				B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
@@ -2280,8 +2282,6 @@
 		F377836326E644BC00392958 /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				F377836426E644BC00392958 /* ProtonVPN-iOS-UI-Smoke.xctestplan */,
-				B2E466D3297E985E0026ED26 /* ProtonVPN-iOS-UI-All.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
