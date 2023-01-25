@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_DataModel
 import VPNShared
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
@@ -145,6 +146,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     }
     public var streamingServices: StreamingDictServices = [:]
     public var partnerTypes: [PartnerType] = []
+    public var user: User?
     public var excludeLocalNetworks: Bool = true {
         didSet {
             NotificationCenter.default.post(name: Self.excludeLocalNetworksNotification, object: excludeLocalNetworks)

@@ -205,7 +205,9 @@ extension CoreLoginService: LoginErrorPresenter {
     func willPresentError(error: LoginError, from: UIViewController) -> Bool {
         switch error {
         case .generic(_, _, ProtonVpnError.subuserWithoutSessions):
-            alertService.push(alert: SubuserWithoutConnectionsAlert())
+            let userRole = propertiesManager.user?.role ?? 0
+            let role = SubuserWithoutConnectionsAlert.Role(rawValue: userRole) ?? .noOrganization
+            alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
             return true
         case let .generic(_, code: _, originalError: originalError):
 

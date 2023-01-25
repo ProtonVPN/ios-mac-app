@@ -22,11 +22,10 @@ import XCTest
 fileprivate let fieldUsername = "UsernameTextField"
 fileprivate let fieldPassword = "PasswordTextField"
 fileprivate let loginButton = "LoginButton"
-fileprivate let modalTitle = "Thanks for upgrading to Professional/Visionary"
-fileprivate let modalSubtitle = "To start your journey in Proton VPN please assign VPN connections to your account or any other sub-account."
-fileprivate let modalText = "This step will take just a few minutes. After that you will be able to log in and protect all your devices."
+fileprivate let modalTitle = "Thanks for upgrading to Business/Visionary"
+fileprivate let modalSubtitle = "description1Label"
 fileprivate let loginAgainButton = "Login again"
-fileprivate let assignConnectionButton = "Assign VPN connections"
+fileprivate let assignConnectionButton = "Enable VPN connections"
 
 class LoginRobot {
     
@@ -137,9 +136,7 @@ class LoginRobot {
         func checkModalIsShown() -> LoginRobot {
             XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: 5))
             XCTAssert(app.staticTexts[modalSubtitle].waitForExistence(timeout: 5))
-            XCTAssert(app.staticTexts[modalText].waitForExistence(timeout: 5))
             XCTAssert(app.buttons[loginAgainButton].isEnabled)
-            XCTAssert(app.buttons[assignConnectionButton].isEnabled)
             return LoginRobot()
         }
     }

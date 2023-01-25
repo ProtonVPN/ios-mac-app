@@ -20,6 +20,8 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import ProtonCore_Networking
+import ProtonCore_Authentication
+import ProtonCore_DataModel
 import VPNShared
 import LocalFeatureFlags
 
@@ -75,7 +77,8 @@ public class VpnApiService {
                                    location: asyncLocation,
                                    clientConfig: try? clientConfig(for: asyncLocation?.ip),
                                    streamingResponse: try? virtualServices(),
-                                   partnersResponse: try? partnersServices())
+                                   partnersResponse: try? partnersServices(),
+                                   user: try? userInfo())
     }
 
     public func refreshServerInfoIfIpChanged(lastKnownIp: String?) async throws -> (serverModels: [ServerModel],
@@ -308,6 +311,12 @@ public class VpnApiService {
     public func partnersServices() async throws -> VPNPartnersResponse? {
         try await withCheckedThrowingContinuation { continuation in
             networking.request(VPNPartnersRequest(), completion: continuation.resume(with:))
+        }
+    }
+
+    public func userInfo() async throws -> User? {
+        try await withCheckedThrowingContinuation { continuation in
+            Authenticator(api: networking.apiService).getUserInfo(completion: continuation.resume(with:))
         }
     }
 

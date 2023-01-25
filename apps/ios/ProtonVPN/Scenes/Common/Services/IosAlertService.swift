@@ -332,6 +332,7 @@ extension IosAlertService: CoreAlertService {
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
         let storyboard = UIStoryboard(name: "SubuserAlertViewController", bundle: Bundle.main)
         guard let controller = storyboard.instantiateInitialViewController() as? SubuserAlertViewController else { return }
+        controller.role = alert.role
         controller.safariServiceFactory = factory
         windowService.present(modal: controller)
     }

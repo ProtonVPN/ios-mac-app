@@ -71,7 +71,7 @@ class ProtonVPNUITests: XCTestCase {
         _ = waitForElementToDisappear(app.otherElements["loader"])
                      
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
-             waitForExpectations(timeout: 10, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
              
         dismissDialogs()
         dismissPopups()

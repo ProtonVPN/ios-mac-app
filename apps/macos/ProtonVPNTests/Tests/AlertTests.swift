@@ -141,7 +141,7 @@ fileprivate class WindowServiceMock: WindowService {
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
     }
     
-    func openSubuserAlertWindow() {
+    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
     }
 
     func windowCloseRequested(_ sender: WindowController) {

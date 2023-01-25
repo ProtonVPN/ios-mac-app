@@ -350,7 +350,7 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
-        windowService.openSubuserAlertWindow()
+        windowService.openSubuserAlertWindow(alert: alert)
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {

@@ -10,6 +10,7 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
+import ProtonCore_Foundations
 import XCTest
 import VPNShared
 @testable import vpncore
@@ -20,7 +21,9 @@ final class NetworkingMock {
     var apiURLString = ""
 
     var apiService: PMAPIService {
-        fatalError()
+        PMAPIService.createAPIService(doh: DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected),
+                                      sessionUID: "UID",
+                                      challengeParametersProvider: ChallengeParametersProvider.empty)
     }
 
     var requestCallback: ((URLRequest) -> Result<Data, Error>)?

@@ -48,7 +48,7 @@ protocol WindowService: WindowControllerDelegate {
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol)
-    func openSubuserAlertWindow()
+    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
     
     func bringWindowsToForeground() -> Bool
     func closeActiveWindows(except: [NSWindowController.Type])
@@ -242,8 +242,9 @@ class WindowServiceImplementation: WindowService {
         windowController.showWindow(self)
     }
     
-    func openSubuserAlertWindow() {
+    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
         let controller = SubuserMacAlertViewController()
+        controller.role = alert.role
         controller.safariServiceFactory = factory
         let windowController = SubuserAlertWindowController(viewController: controller)
         windowController.delegate = self
