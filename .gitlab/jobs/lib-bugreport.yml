@@ -5,7 +5,7 @@ bugreport_unit_tests:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: core_unit_tests
+  stage: unit_tests
   script:
     - cd libraries/BugReport/
     - swift test --enable-code-coverage
@@ -25,9 +25,9 @@ bugreport_unit_tests:
 
 ios_bugreport_ui_tests:
   extends:
-    - .mr_job_template
+    - .ui_full_tests_template
     - .ios_job_template
-  stage: apps_ui_tests
+  stage: ui_full_tests
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_bugreport_ui_test
@@ -41,8 +41,10 @@ ios_bugreport_ui_tests:
 
 
 macos_bugreport_ui_tests:
-  extends: .mac_job_template
-  stage: apps_ui_tests
+  extends:
+    - .ui_full_tests_template
+    - .mac_job_template
+  stage: ui_full_tests
   script:
     - fastlane macos_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1

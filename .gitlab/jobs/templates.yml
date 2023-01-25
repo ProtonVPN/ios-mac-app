@@ -6,10 +6,25 @@
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - if: $CI_COMMIT_TAG
       when: always
+    - when: manual
+
+.ui_full_tests_template:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+      allow_failure: true # the pipeline continues running even if the manual job is not run
+    - when: manual
+
+.ui_smoke_tests_template:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - when: manual
 
 # Template for iOS jobs.

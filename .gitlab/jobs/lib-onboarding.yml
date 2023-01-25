@@ -4,9 +4,9 @@
 
 onboarding_ui_tests:
   extends:
-    - .mr_job_template
+    - .ui_full_tests_template
     - .ios_job_template
-  stage: apps_ui_tests
+  stage: ui_full_tests
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane onboarding_test

@@ -6,7 +6,7 @@ nehelper_unit_tests:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: core_unit_tests
+  stage: unit_tests
   script:
     - cd libraries/NEHelper/
     - swift test --enable-code-coverage

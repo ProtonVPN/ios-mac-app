@@ -62,4 +62,21 @@
    <FileRef
       location = "group:apps/macos/macOS.xcodeproj">
    </FileRef>
+   <Group
+      location = "container:"
+      name = "Scripts">
+      <Group
+         location = "container:"
+         name = "gitlab">
+         <FileRef
+            location = "group:.gitlab/jobs">
+         </FileRef>
+      </Group>
+      <FileRef
+         location = "group:fastlane">
+      </FileRef>
+      <FileRef
+         location = "group:scripts">
+      </FileRef>
+   </Group>
 </Workspace>

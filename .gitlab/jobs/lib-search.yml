@@ -5,7 +5,7 @@ search_ios_unit_tests:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: core_unit_tests
+  stage: unit_tests
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_search_test

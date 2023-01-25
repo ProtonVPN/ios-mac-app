@@ -1,8 +1,8 @@
 stages:  
   - linting
-  - core_unit_tests
-  - apps_unit_tests
-  - apps_ui_tests
+  - unit_tests
+  - ui_smoke_tests
+  - ui_full_tests
   - bot
   - release
 
@@ -41,6 +41,8 @@ commit_quality:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       when: always
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
     - when: manual
@@ -63,6 +65,8 @@ code_quality:
     - scripts/code_quality.sh
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always
     - if: $CI_COMMIT_BRANCH == "develop"
       when: always
