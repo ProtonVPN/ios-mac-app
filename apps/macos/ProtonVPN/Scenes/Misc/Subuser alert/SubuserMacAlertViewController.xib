@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,11 +27,11 @@
                     <rect key="frame" x="80" y="0.0" width="410" height="622"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9cM-vB-OgS">
-                            <rect key="frame" x="136" y="375" width="139" height="167"/>
+                            <rect key="frame" x="145" y="393" width="120" height="149"/>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="alert-pro-account" id="VGD-BG-z7x"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ij0-OK-XFk">
-                            <rect key="frame" x="-2" y="259" width="414" height="76"/>
+                            <rect key="frame" x="-2" y="277" width="414" height="76"/>
                             <textFieldCell key="cell" alignment="center" title="_Thanks for upgrading to Professional / Visionary_" id="jzi-4b-Hzh">
                                 <font key="font" metaFont="system" size="32"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -38,7 +39,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rd1-qZ-ZMc">
-                            <rect key="frame" x="-2" y="194" width="414" height="57"/>
+                            <rect key="frame" x="-2" y="212" width="414" height="57"/>
                             <textFieldCell key="cell" alignment="center" title="_To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account._" id="2O3-Tf-nVU">
                                 <font key="font" metaFont="system" size="16"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -46,18 +47,18 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38P-5J-hGx">
-                            <rect key="frame" x="-2" y="144" width="414" height="34"/>
+                            <rect key="frame" x="-2" y="162" width="414" height="34"/>
                             <textFieldCell key="cell" alignment="center" title="_This step will take just a few minutes. After that you will be able to log in and protect all your devices._" id="GEG-GC-fd8">
                                 <font key="font" metaFont="system" size="14"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="BpP-nj-n5T" userLabel="Buttons">
-                            <rect key="frame" x="0.0" y="72" width="410" height="40"/>
+                        <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vWi-8k-5JB">
+                            <rect key="frame" x="0.0" y="72" width="410" height="58"/>
                             <subviews>
                                 <button horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4d-TP-Rdq" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                    <rect key="frame" x="0.0" y="9" width="89" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="RF8-XQ-Lli"/>
                                     </constraints>
@@ -75,7 +76,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xt5-gO-TXQ" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="106" y="0.0" width="304" height="40"/>
+                                    <rect key="frame" x="105" y="9" width="305" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="jGQ-0T-vhZ"/>
                                     </constraints>
@@ -93,32 +94,31 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="xt5-gO-TXQ" firstAttribute="top" secondItem="BpP-nj-n5T" secondAttribute="top" id="6aG-Vo-rU2"/>
-                                <constraint firstItem="xt5-gO-TXQ" firstAttribute="leading" secondItem="F4d-TP-Rdq" secondAttribute="trailing" constant="16" id="Fpc-s0-onV"/>
-                                <constraint firstAttribute="bottom" secondItem="F4d-TP-Rdq" secondAttribute="bottom" id="MUq-ic-Xpm"/>
-                                <constraint firstAttribute="bottom" secondItem="xt5-gO-TXQ" secondAttribute="bottom" id="MdR-DE-Ijv"/>
-                                <constraint firstAttribute="trailing" secondItem="xt5-gO-TXQ" secondAttribute="trailing" id="hn3-Bb-tkq"/>
-                                <constraint firstItem="F4d-TP-Rdq" firstAttribute="top" secondItem="BpP-nj-n5T" secondAttribute="top" id="m0B-4u-2ZK"/>
-                                <constraint firstItem="F4d-TP-Rdq" firstAttribute="leading" secondItem="BpP-nj-n5T" secondAttribute="leading" id="v2B-IE-y0X"/>
-                            </constraints>
-                        </customView>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="9cM-vB-OgS" firstAttribute="top" secondItem="zpx-6v-mfZ" secondAttribute="top" constant="80" id="2Eb-S9-dYx"/>
+                        <constraint firstItem="vWi-8k-5JB" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="2pX-9g-YYf"/>
                         <constraint firstItem="rd1-qZ-ZMc" firstAttribute="top" secondItem="ij0-OK-XFk" secondAttribute="bottom" constant="8" id="3sW-Yg-Ocp"/>
-                        <constraint firstAttribute="bottom" secondItem="BpP-nj-n5T" secondAttribute="bottom" constant="72" id="ARp-A4-8xC"/>
+                        <constraint firstAttribute="bottom" secondItem="vWi-8k-5JB" secondAttribute="bottom" constant="72" id="6Wx-mG-pju"/>
                         <constraint firstItem="ij0-OK-XFk" firstAttribute="top" secondItem="9cM-vB-OgS" secondAttribute="bottom" constant="40" id="Afr-uw-4On"/>
                         <constraint firstItem="ij0-OK-XFk" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="DFU-6r-av6"/>
                         <constraint firstItem="38P-5J-hGx" firstAttribute="top" secondItem="rd1-qZ-ZMc" secondAttribute="bottom" constant="16" id="DhG-HK-QBp"/>
                         <constraint firstItem="38P-5J-hGx" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="GNk-KK-FFa"/>
                         <constraint firstAttribute="trailing" secondItem="rd1-qZ-ZMc" secondAttribute="trailing" id="GWB-f5-0eA"/>
-                        <constraint firstItem="BpP-nj-n5T" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="LIN-Vd-V25"/>
+                        <constraint firstItem="vWi-8k-5JB" firstAttribute="top" secondItem="38P-5J-hGx" secondAttribute="bottom" constant="32" id="PQa-YI-kXL"/>
                         <constraint firstAttribute="trailing" secondItem="ij0-OK-XFk" secondAttribute="trailing" id="QdB-yF-mYf"/>
                         <constraint firstAttribute="trailing" secondItem="38P-5J-hGx" secondAttribute="trailing" id="QlO-Nf-tEa"/>
+                        <constraint firstAttribute="trailing" secondItem="vWi-8k-5JB" secondAttribute="trailing" id="Xga-ZA-cHo"/>
                         <constraint firstItem="9cM-vB-OgS" firstAttribute="centerX" secondItem="zpx-6v-mfZ" secondAttribute="centerX" id="ZU7-qv-YYh"/>
-                        <constraint firstAttribute="trailing" secondItem="BpP-nj-n5T" secondAttribute="trailing" id="ecA-Il-Rhu"/>
-                        <constraint firstItem="BpP-nj-n5T" firstAttribute="top" secondItem="38P-5J-hGx" secondAttribute="bottom" constant="32" id="mZH-7A-cil"/>
                         <constraint firstItem="rd1-qZ-ZMc" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="mq5-aI-PDu"/>
                         <constraint firstAttribute="width" constant="410" id="wJe-Xv-2lS"/>
                     </constraints>
@@ -134,6 +134,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="alert-pro-account" width="139" height="149"/>
+        <image name="alert-pro-account" width="120" height="149"/>
     </resources>
 </document>

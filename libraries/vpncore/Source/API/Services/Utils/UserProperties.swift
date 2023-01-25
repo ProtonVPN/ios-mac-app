@@ -35,10 +35,10 @@ public struct UserProperties {
     
     public var description: String {
         return
-            "Username: \(username)\n" +
-                "ModulusID: \(modulusID)\n" +
-                "Salt: \(salt)\n" +
-                "Verifier: \(verifier)\n" +
+        "Username: \(username)\n" +
+        "ModulusID: \(modulusID)\n" +
+        "Salt: \(salt)\n" +
+        "Verifier: \(verifier)\n" +
         "HasAppleToken: \(appleToken == nil ? "No" : "Yes")\n"
     }
     

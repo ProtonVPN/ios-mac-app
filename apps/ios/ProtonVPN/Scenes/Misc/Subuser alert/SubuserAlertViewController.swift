@@ -28,6 +28,8 @@ class SubuserAlertViewController: UIViewController {
     @IBOutlet private weak var description2Label: UILabel!
     @IBOutlet private weak var assignConnectionsButton: ProtonButton!
     @IBOutlet private weak var loginButton: ProtonButton!
+
+    var role: SubuserWithoutConnectionsAlert.Role = .noOrganization
     
     public var safariServiceFactory: SafariServiceFactory?
     
@@ -35,13 +37,23 @@ class SubuserAlertViewController: UIViewController {
         super.viewDidLoad()
         setupTranslations()
         setupViews()
+        description1Label.accessibilityIdentifier = "subuserAlertDescription1"
+        description2Label.accessibilityIdentifier = "subuserAlertDescription2"
     }
     
     private func setupTranslations() {
         titleLabel.text = LocalizedString.subuserAlertTitle
-        description1Label.text = LocalizedString.subuserAlertDescription1
-        description2Label.text = LocalizedString.subuserAlertDescription2
-        assignConnectionsButton.setTitle(LocalizedString.subuserAlertAssignConnectionsButton, for: .normal)
+        if role == .organizationAdmin {
+            assignConnectionsButton.setTitle(LocalizedString.subuserAlertEnableConnectionsButton, for: .normal)
+            assignConnectionsButton.isHidden = false
+            description1Label.text = LocalizedString.subuserAlertDescription1
+            description2Label.text = LocalizedString.subuserAlertDescription2
+        } else {
+            assignConnectionsButton.isHidden = true
+            description1Label.text = LocalizedString.subuserAlertDescription3
+            description2Label.isHidden = true
+        }
+
         loginButton.setTitle(LocalizedString.subuserAlertLoginButton, for: .normal)
     }
     

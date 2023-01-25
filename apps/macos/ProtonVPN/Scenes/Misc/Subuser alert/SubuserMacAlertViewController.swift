@@ -31,6 +31,7 @@ final class SubuserMacAlertViewController: NSViewController {
     
     public var safariServiceFactory: SafariServiceFactory?
     private lazy var safariService = safariServiceFactory?.makeSafariService()
+    var role: SubuserWithoutConnectionsAlert.Role = .noOrganization
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -44,6 +45,8 @@ final class SubuserMacAlertViewController: NSViewController {
         super.viewDidLoad()
         setupTranslations()
         setupViews()
+        description1Label.setAccessibilityLabel("description1Label")
+        description2Label.setAccessibilityLabel("description2Label")
     }
     
     override func viewWillAppear() {
@@ -53,9 +56,17 @@ final class SubuserMacAlertViewController: NSViewController {
     
     private func setupTranslations() {
         titleView.stringValue = LocalizedString.subuserAlertTitle
-        description1Label.stringValue = LocalizedString.subuserAlertDescription1
-        description2Label.stringValue = LocalizedString.subuserAlertDescription2
-        assignConnectionsButton.title = LocalizedString.subuserAlertAssignConnectionsButton
+
+        if role == .organizationAdmin {
+            assignConnectionsButton.title = LocalizedString.subuserAlertEnableConnectionsButton
+            assignConnectionsButton.isHidden = false
+            description1Label.stringValue = LocalizedString.subuserAlertDescription1
+            description2Label.stringValue = LocalizedString.subuserAlertDescription2
+        } else {
+            assignConnectionsButton.isHidden = true
+            description1Label.stringValue = LocalizedString.subuserAlertDescription3
+            description2Label.isHidden = true
+        }
         loginButton.title = LocalizedString.subuserAlertLoginButton
     }
     
@@ -80,5 +91,4 @@ final class SubuserMacAlertViewController: NSViewController {
     @IBAction func loginTapped(_ sender: NSButton) {
         view.window?.close()
     }
-    
 }

@@ -18,9 +18,9 @@ fileprivate let helpButtonId = "LoginViewController.helpButton"
 fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account password."
 fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
 fileprivate let errorBannerMessage = "Email address already used."
-fileprivate let assignConnectionErrorBannerMessage = "To start your journey in Proton VPN please assign VPN connections to your account or any other sub-account."
+fileprivate let assignConnectionErrorBannerMessage = "subuserAlertDescription1"
 fileprivate let okButton = "OK"
-fileprivate let assignVPNConnectionButton = "Assign VPN connections"
+fileprivate let assignVPNConnectionButton = "Enable VPN connections"
 fileprivate let loginButton = "Login again"
 
 class LoginRobot: CoreElements {
@@ -103,7 +103,6 @@ class LoginRobot: CoreElements {
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
             staticText(assignConnectionErrorBannerMessage).wait().checkExists()
-            button(assignVPNConnectionButton).wait().checkExists()
             button(loginButton).wait().checkExists().tap()
             return LoginRobot()
         }
