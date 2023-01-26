@@ -217,7 +217,9 @@ public class VpnManager: VpnManagerProtocol {
     public func appBackgroundStateDidChange(isBackground: Bool) {
         connectionQueue.sync { [weak self] in
             self?.disconnectOnCertRefreshError = !isBackground
-            checkActiveServer()
+            if !isBackground {
+                checkActiveServer()
+            }
         }
     }
     
