@@ -25,17 +25,13 @@ public protocol FileLogHandlerDelegate: AnyObject {
 }
 
 // swiftlint:disable no_print
-public class FileLogHandler: LogHandler {
+public final class FileLogHandler: ParentLogHandler {
     
     /// After log file size reaches 50kb in size it is moved to archive and new log file is created
     public var maxFileSize = 1024 * 50
     
     /// Maximum number of log files that were rotated. This number doesn't include the main log file where app is writing it's logs.
     public var maxArchivedFilesCount = 1
-    
-    public let formatter: PMLogFormatter
-    public var logLevel: Logging.Logger.Level = .trace
-    public var metadata = Logging.Logger.Metadata()
     
     public weak var delegate: FileLogHandlerDelegate?
     
@@ -53,8 +49,8 @@ public class FileLogHandler: LogHandler {
     
     public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter(), fileManager: FileManagerWrapper = FileManager.default) {
         self.fileUrl = fileUrl
-        self.formatter = formatter
         self.fileManager = fileManager
+        super.init(formatter: formatter)
     }
     
     deinit {
@@ -197,17 +193,6 @@ public class FileLogHandler: LogHandler {
         } catch {
             debugLog("🔴🔴 Error while removing old logfiles: \(error)")
             throw error
-        }
-    }
-    
-    // MARK: - Metadata
-    
-    public subscript(metadataKey key: String) -> Logging.Logger.Metadata.Value? {
-        get {
-            return metadata[key]
-        }
-        set(newValue) {
-            metadata[key] = newValue
         }
     }
     

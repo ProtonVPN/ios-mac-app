@@ -27,36 +27,14 @@ let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.WG.logger")
 /// Log handler that uses SwiftyBeaver library, which is baked into TrustKit and must be used in OpenVPN extension.
 /// By forwaring log messages to SwiftyBeaver we can leverage already working infrastructure (saving logs to file,
 /// sending this data back to the epp, etc.).
-public struct OVPNLogHandler: LogHandler {
-    public let formatter: PMLogFormatter
-    public var logLevel: Logging.Logger.Level = .trace
-    public var metadata = Logging.Logger.Metadata()
+public final class OVPNLogHandler: ParentLogHandler {
+
     private let osLogSettings = OSLog(subsystem: "PROTON-OVPN", category: "OpenVPN")
-
-    public init(formatter: PMLogFormatter) {
-        self.formatter = formatter
-    }
-
-    public subscript(metadataKey key: String) -> Logging.Logger.Metadata.Value? {
-        get {
-            return metadata[key]
-        }
-        set(newValue) {
-            metadata[key] = newValue
-        }
-    }
 
     public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) { // swiftlint:disable:this function_parameter_count
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
         let log = SwiftyBeaver.self
         log.custom(level: level.sbLevel, message: text)
-    }
-
-    private func convert(metadata: Logging.Logger.Metadata?) -> [String: String] {
-        let fullMetadata = (metadata != nil) ? self.metadata.merging(metadata!, uniquingKeysWith: { _, new in new }) : self.metadata
-        return fullMetadata.reduce(into: [String: String](), { result, element in
-            result[element.key] = element.value.description
-        })
     }
 }
 
