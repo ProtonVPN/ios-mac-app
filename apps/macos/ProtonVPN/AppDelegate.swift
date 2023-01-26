@@ -211,7 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupLogsForApp() {
         LoggingSystem.bootstrap {_ in
             return MultiplexLogHandler([
-                OSLogHandler(),
+                OSLogHandler(formatter: OSLogFormatter()),
                 FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename))
             ])
         }

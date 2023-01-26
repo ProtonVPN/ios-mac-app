@@ -18,8 +18,8 @@
 
 import Logging
 
-extension Logging.Logger.Level {
-    public var emoji: String {
+public extension Logging.Logger.Level {
+    var emoji: String {
         switch self {
         case .trace:
             return "⚪"
