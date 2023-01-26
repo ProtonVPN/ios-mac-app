@@ -42,8 +42,8 @@ ios_bugreport_ui_tests:
 
 macos_bugreport_ui_tests:
   extends:
-    - .ui_full_tests_template
     - .mac_job_template
+    - .ui_full_tests_template
   stage: ui_full_tests
   script:
     - fastlane macos_bugreport_ui_test
