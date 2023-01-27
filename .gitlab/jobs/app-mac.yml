@@ -36,6 +36,8 @@ test:ui:app:macos:all:
   needs:
     - job: test:unit:app:macos
       artifacts: false
+    - job: deploy:review
+      artifacts: true
   script:
     - fastlane macos_app_ui_test_all
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
@@ -58,6 +60,8 @@ test:ui:app:macos:smoke:
   needs:
     - job: test:unit:app:macos
       artifacts: false
+    - job: deploy:review
+      artifacts: true
   script:
     - fastlane macos_app_ui_test_smoke
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app

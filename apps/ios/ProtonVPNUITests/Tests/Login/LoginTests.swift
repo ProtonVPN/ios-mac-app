@@ -10,7 +10,7 @@ import Foundation
 import ProtonCore_TestingToolkit
 
 class LoginTests: ProtonVPNUITests {
-    
+
     let mainRobot = MainRobot()
     let loginRobot = LoginRobot()
     let needHelpRobot = NeedHelpRobot()
@@ -24,31 +24,31 @@ class LoginTests: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-    
+
     func testLoginWithIncorrectCredentials() {
-        
+
         let username = "wrong_username"
         let userpassword = "wrong_password"
-            
+
         loginRobot
             .loginWrongUser(username, userpassword)
             .signIn(robot: LoginRobot.self)
             .verify.incorrectCredentialsErrorDialog()
     }
-    
+
     func testLoginWithCorrectCredentials() {
-        
+
         let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-        
+
         for credential in credentials {
             login(withCredentials: credential)
             logoutIfNeeded()
             openLoginScreen()
         }
     }
-    
+
     func testLoginAsSubuserWithNoConnectionsAssigned () {
-        
+
         let subusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "subusercredentials", withExtension: "plist")!)
 
         loginRobot
@@ -57,14 +57,14 @@ class LoginTests: ProtonVPNUITests {
             .verify.assignVPNConnectionErrorIsShown()
             .verify.loginScreenIsShown()
     }
-    
+
     func testLoginWithTwoPassUser() {
         loginAsTwoPassUser()
     }
-    
+
     func testLoginAsTwoFa() {
         let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
-        
+
         loginRobot
             .loginAsUser(twofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
@@ -72,11 +72,11 @@ class LoginTests: ProtonVPNUITests {
             .confirm2FA(robot: MainRobot.self)
         correctUserIsLoggedIn(twofausercredentials[0])
     }
-    
+
     func testLoginWithTwoPassAnd2FAUser() {
-        
+
         let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
-        
+
         loginRobot
             .loginAsUser(twopasstwofausercredentials[0])
             .signIn(robot: TwoFaRobot.self)
@@ -84,9 +84,9 @@ class LoginTests: ProtonVPNUITests {
             .confirm2FA(robot: MainRobot.self)
         correctUserIsLoggedIn(twopasstwofausercredentials[0])
     }
-    
+
     func testNeedHelpClosed() {
-        
+
         loginRobot
             .needHelp()
             .needHelpOptionsDisplayed()

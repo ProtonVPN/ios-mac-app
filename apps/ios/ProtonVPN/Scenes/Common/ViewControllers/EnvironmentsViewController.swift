@@ -28,6 +28,7 @@ final class EnvironmentsViewController: UIViewController {
 
         title = "Endpoint"
         environmentLabel.text = propertiesManager.apiEndpoint ?? doh.liveURL
+        customEnvironmentTextField.accessibilityIdentifier = "customEnvironmentTextField"
         customEnvironmentTextField.delegate = self
     }
 

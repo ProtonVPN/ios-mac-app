@@ -3,8 +3,15 @@ stages:
   - github
   - linting
   - test
+  - deploy
   - test_ui
   - distribute
+  - unit_tests
+  - ui_smoke_tests
+  - ui_full_tests
+  - cleanup
+  - bot
+  - release
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -13,7 +20,22 @@ variables:
   # We use this variable when we run publish-github jobs
   RELEASE_GITHUB_REPOSITORY: git@github.com:ProtonVPN/ios-mac-app.git
 
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" || 
+          $CI_PIPELINE_SOURCE == "schedule"
+      variables:
+        # also deploy on MRs and schedules
+        ATLAS_DEPLOY_ENV: "true"
+    - if: $CI_COMMIT_BRANCH == "develop" || 
+          $CI_COMMIT_TAG
+      # run tests only, no deployment
+
 include:
+  - project: 'proton/devops/atlas-deploy'
+    ref: main
+    file: '/scenarios/pipeline-env.yml'
+
   - project: 'translations/generator'
     ref: master
     file: '/jobs/sync-crowdin.gitlab-ci.yml'
@@ -39,13 +61,6 @@ linting:commit-quality:
     - scripts/git-cz setup
     - scripts/git-cz lintci
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - when: manual
 
 # Runs a script that goes through all out apps and lib folders and lints them if .swiftlint file is available.
 #
@@ -64,16 +79,6 @@ linting:code-quality:
   script:    
     - scripts/code_quality.sh
   rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-      when: always
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: always
-    - if: $CI_COMMIT_BRANCH == "develop"
-      when: always
-    - if: $CI_COMMIT_TAG
-      when: always
-    - when: manual
-
 
 # Reenable when/if we have a license
 #sonarqube-check:

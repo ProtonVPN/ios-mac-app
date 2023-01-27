@@ -38,6 +38,8 @@ test:ui:app:ios:smoke:
   needs:
     - job: test:unit:app:ios
       artifacts: false
+    - job: deploy:review
+      artifacts: true
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -65,6 +67,8 @@ test:ui:app:ios:all:
   needs:
     - job: test:unit:app:ios
       artifacts: false
+    - job: deploy:review
+      artifacts: true
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../

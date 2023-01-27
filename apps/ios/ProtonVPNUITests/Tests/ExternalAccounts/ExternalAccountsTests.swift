@@ -32,7 +32,24 @@ final class ExternalAccountsTests: ProtonVPNUITests {
         useAndContinueTap()
     }
 
-    var environment: Environment { .black }
+    lazy var environment: Environment = {
+        guard let url = URL(string: dynamicDomain) else {
+            return .black
+        }
+        if #available(iOS 16, *) {
+            if let host = url.host() {
+                return .custom(host)
+            }
+        } else {
+            if let host = url.host {
+                return .custom(host)
+            }
+        }
+        return .black
+    }()
+
+    let signInTimeout: TimeInterval = 90
+    let signUpTimeout: TimeInterval = 180
     
 //    Sign-in:
 //    Sign-in with internal account works
@@ -130,7 +147,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
                 verificationCode: "666666",
                 retRobot: CreatingAccountRobot.self)
             .verify.creatingAccountScreenIsShown()
-            .verify.summaryScreenIsShown()
+            .verify.summaryScreenIsShown(time: signUpTimeout)
 
         _ = skipOnboarding()
 
@@ -159,7 +176,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
                 retRobot: CreatingAccountRobot.self
             )
             .verify.creatingAccountScreenIsShown()
-            .verify.summaryScreenIsShown()
+            .verify.summaryScreenIsShown(time: signUpTimeout)
 
         _ = skipOnboarding()
 

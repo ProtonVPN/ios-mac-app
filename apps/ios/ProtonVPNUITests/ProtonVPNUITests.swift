@@ -23,7 +23,7 @@
 import fusion
 import XCTest
 
-class ProtonVPNUITests: XCTestCase {
+class ProtonVPNUITests: CoreTestCase {
 
     let app = XCUIApplication()
     var launchEnvironment: String?
@@ -51,8 +51,15 @@ class ProtonVPNUITests: XCTestCase {
         app.launch()
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-        
     }
+
+    let dynamicDomain: String = {
+        if let domain = ProcessInfo.processInfo.environment["DYNAMIC_DOMAIN"], !domain.isEmpty {
+            return "https://" + domain + "/api"
+        } else {
+            return ObfuscatedConstants.blackDefaultHost + ObfuscatedConstants.blackDefaultPath
+        }
+    }()
 
     // MARK: - Helper methods
     
@@ -96,22 +103,21 @@ class ProtonVPNUITests: XCTestCase {
         }
         if app.buttons["Settings"].waitForExistence(timeout: 1) {
             app.tabBars.buttons["Settings"].tap()
+            staticText(name.plan).checkExists()
+            staticText(name.username).checkExists()
+        } else {
+            XCTFail("Settings button never appeared")
         }
-        XCTAssert(app.staticTexts[name.username].exists)
-        XCTAssert(app.staticTexts[name.plan].exists)
         return MainRobot()
     }
  
      func openLoginScreen() {
-         let apiUrl = app.buttons["Use and continue"]
-         apiUrl.tap()
-         app.buttons["Sign in"].tap()
+         useAndContinueTap()
+         button("Sign in").tap()
     }
     
     func useAndContinueTap() {
-        let button = app.buttons["Use and continue"]
-        _ = button.waitForExistence(timeout: 10)
-        button.tap()
+        button("Use and continue").tap()
     }
     
     func logInToProdIfNeeded() {
@@ -139,47 +145,40 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func changeEnvToBlack() {
-        let textFielfs = app.textFields["https://"]
-        textFielfs.tap()
-        textFielfs.typeText(ObfuscatedConstants.blackDefaultHostWithoutHttps + ObfuscatedConstants.blackDefaultPath)
-        app.buttons["Change and kill the app"].tap()
-        app.buttons["OK"].tap()
+        textField("customEnvironmentTextField").waitForHittable().tap().clearText().typeText(dynamicDomain)
+
+        button("Change and kill the app").tap()
+        button("OK").tap()
      }
     
     func changeEnvToProduction() {
-        let resetToProd = app.buttons["Reset to production and kill the app"]
-        resetToProd.tap()
-        app.buttons["OK"].tap()
+        button("Reset to production and kill the app").tap()
+        button("OK").tap()
      }
     
     func changeEnvToBlackIfNeeded() {
-        let env = app.staticTexts[ObfuscatedConstants.blackDefaultHost + ObfuscatedConstants.blackDefaultPath]
-        
-        if env.waitForExistence(timeout: 10) {
+        if staticText(dynamicDomain).wait().exists() {
             return
         } else {
             changeEnvToBlack()
-            app.launch()
+            device().foregroundApp(.launch)
         }
     }
     
     func changeEnvToProdIfNeeded() {
-        let env = app.staticTexts["https://vpn-api.proton.me"]
-        
-        if env.waitForExistence(timeout: 10) {
+        if staticText("https://vpn-api.proton.me").wait().exists() {
             return
         } else {
             changeEnvToProduction()
-            app.launch()
+            device().foregroundApp(.launch)
         }
     }
     
     func skipOnboarding() -> OnboardingRobot {
         
         onboardingRobot.skipOnboarding()
-        let elementClose = app.buttons["CloseButton"]
-        
-        if elementClose.exists {
+
+        if button("CloseButton").exists() {
             return onboardingRobot
                 .closeOnboardingScreen()
                 .skipOnboarding()

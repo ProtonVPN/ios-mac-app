@@ -4,7 +4,13 @@
       "id" : "2C3D2EC8-80D0-4B2B-B122-BBC091E28BE4",
       "name" : "Configuration 1",
       "options" : {
-        "testRepetitionMode" : "none"
+        "environmentVariableEntries" : [
+          {
+            "key" : "DYNAMIC_DOMAIN",
+            "value" : "$(DYNAMIC_DOMAIN)"
+          }
+        ],
+        "testRepetitionMode" : "retryOnFailure"
       }
     }
   ],
