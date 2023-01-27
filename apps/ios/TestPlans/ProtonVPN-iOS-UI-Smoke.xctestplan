@@ -4,7 +4,13 @@
       "id" : "A2DF8CAF-50FD-4713-9C95-5ECC362BFAF8",
       "name" : "Tests running on simulator",
       "options" : {
-
+        "environmentVariableEntries" : [
+          {
+            "key" : "DYNAMIC_DOMAIN",
+            "value" : "$(DYNAMIC_DOMAIN)"
+          }
+        ],
+        "testRepetitionMode" : "retryOnFailure"
       }
     }
   ],
@@ -29,6 +35,8 @@
         "ExternalAccountsCapabilityBTests\/testSignInWithUsernameAccountWorks()",
         "ExternalAccountsCapabilityBTests\/testSignUpWithExternalAccountWorks()",
         "ExternalAccountsCapabilityBTests\/testSignUpWithInternalAccountIsNotAvailable()",
+        "ExternalAccountsTests\/testSignInWithInternalAccountWorks()",
+        "ExternalAccountsTests\/testSignUpWithInternalAccountWorks()",
         "LoginTests\/testLoginWithCorrectCredentials_C101()",
         "LoginTests\/testLoginWithIncorrectCredentials_C100()",
         "OldLoginTests",
@@ -37,6 +45,7 @@
         "SettingsTests",
         "SignUpTests",
         "SignupTests\/testSignupExistingInternalAccount()",
+        "SignupTests\/testSignupNewExternalAccountSuccess()",
         "SignupTests\/testSignupNewInternalAccountUpgradePlans()",
         "TokenRefreshTests",
         "UnloggedUserTests"

@@ -31,9 +31,9 @@ class SummarySignupRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func summaryScreenIsShown() -> OnboardingRobot {
-            staticText(summaryTitle).wait(time: 120).checkExists()
-            staticText(summaryDescription).wait(time: 120).checkExists()
+        func summaryScreenIsShown(time: TimeInterval = 120) -> OnboardingRobot {
+            staticText(summaryTitle).wait(time: time).checkExists()
+            staticText(summaryDescription).wait(time: time).checkExists()
             return OnboardingRobot()
         }
     }
