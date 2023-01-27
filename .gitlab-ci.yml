@@ -5,13 +5,8 @@ stages:
   - test
   - deploy
   - test_ui
-  - distribute
-  - unit_tests
-  - ui_smoke_tests
-  - ui_full_tests
   - cleanup
-  - bot
-  - release
+  - distribute
 
 variables:
   LC_ALL: "en_US.UTF-8"

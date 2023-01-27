@@ -7,9 +7,6 @@ test:unit:app:ios:
     - .mr_job_template
     - .ios_job_template
   stage: test
-  needs:
-    - job: linting:code-quality
-      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -35,11 +32,6 @@ test:ui:app:ios:smoke:
     - .ios_job_template
     - .ui_smoke_tests_template
   stage: test_ui
-  needs:
-    - job: test:unit:app:ios
-      artifacts: false
-    - job: deploy:review
-      artifacts: true
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -64,11 +56,6 @@ test:ui:app:ios:all:
     - .ios_job_template
     - .ui_full_tests_template
   stage: test_ui
-  needs:
-    - job: test:unit:app:ios
-      artifacts: false
-    - job: deploy:review
-      artifacts: true
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
