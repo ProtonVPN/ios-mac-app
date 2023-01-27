@@ -38,6 +38,16 @@ public enum ConnectionProtocol: Codable, Equatable, Hashable, CaseIterable, Cust
         return vpnProtocol
     }
 
+    public var shouldBeEnabledByDefault: Bool {
+        guard self == .smartProtocol else { return false }
+        #if os(macOS)
+            /// On MacOS, the user must approve system extensions before Smart Protocol can be used
+            return false
+        #else
+            return true
+        #endif
+    }
+
     #if os(macOS)
     public var requiresSystemExtension: Bool {
         guard self != .smartProtocol else {
