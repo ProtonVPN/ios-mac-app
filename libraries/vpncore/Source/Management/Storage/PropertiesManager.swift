@@ -406,7 +406,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         storage.defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
-            Keys.smartProtocol.rawValue: false,
+            Keys.smartProtocol.rawValue: ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault,
             Keys.discourageSecureCore.rawValue: true
         ])
 
