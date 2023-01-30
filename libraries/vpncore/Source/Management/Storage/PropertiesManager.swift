@@ -53,7 +53,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
     var lastWireguardConnection: ConnectionConfiguration? { get set }
     var lastPreparedServer: ServerModel? { get set }
-    var lastConnectedTimeStamp: Double { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
 
     func getLastAccountPlan(for username: String) -> AccountPlan?
@@ -134,7 +133,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case lastOpenVpnConnection = "LastOpenVPNConnection"
         case lastWireguardConnection = "LastWireguardConnection"
         case lastPreparingServer = "LastPreparingServer"
-        case lastConnectedTimeStamp = "LastConnectedTimeStamp"
         case lastConnectionRequest = "LastConnectionRequest"
         case lastUserAccountPlan = "LastUserAccountPlan"
         case quickConnectProfile = "QuickConnect_"
@@ -249,16 +247,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var lastWireguardConnection: ConnectionConfiguration?
 
     @Property(.lastPreparingServer) public var lastPreparedServer: ServerModel?
-
-    public var lastConnectedTimeStamp: Double {
-        get {
-            return storage.defaults.double(forKey: Keys.lastConnectedTimeStamp.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: Keys.lastConnectedTimeStamp.rawValue)
-        }
-    }
-
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
 
     public func getLastAccountPlan(for username: String) -> AccountPlan? {
@@ -423,7 +411,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         lastWireguardConnection = nil
-        lastConnectedTimeStamp = -1
         trialWelcomed = false
         warnedTrialExpiring = false
         warnedTrialExpired = false

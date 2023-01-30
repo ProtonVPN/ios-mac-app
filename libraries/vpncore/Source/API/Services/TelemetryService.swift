@@ -35,7 +35,7 @@ public protocol TelemetryServiceFactory {
 }
 
 protocol TelemetryTimer {
-    func updateConnectionStarted(_ date: Date)
+    func updateConnectionStarted(_ date: Date?)
     func markStartedConnecting()
     func markFinishedConnecting()
     func markConnectionStoped()

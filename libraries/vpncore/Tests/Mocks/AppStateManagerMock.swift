@@ -76,7 +76,7 @@ public class AppStateManagerMock: AppStateManager {
     
     public func connectedDate(completion: @escaping (Date?) -> Void) {}
 
-    public func connectedDate() async -> Date {
+    public func connectedDate() async -> Date? {
         return Date()
     }
     
