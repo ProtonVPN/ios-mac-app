@@ -292,7 +292,7 @@ class StatusViewModel {
 
     @MainActor
     private func updateConnectionDate() async {
-        self.connectedDate = await appStateManager.connectedDate()
+        self.connectedDate = (await appStateManager.connectedDate()) ?? Date()
         self.updateTimeCell()
     }
     

@@ -62,7 +62,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastOpenVpnConnection: ConnectionConfiguration?
     public var lastWireguardConnection: ConnectionConfiguration?
     public var lastPreparedServer: ServerModel?
-    public var lastConnectedTimeStamp: Double = 0
     public var lastConnectionRequest: ConnectionRequest?
 
     var lastUserAccountPlan: AccountPlan?
@@ -180,7 +179,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         secureCoreToggle = false
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
-        lastConnectedTimeStamp = -1
         reportBugEmail = nil
     }
     

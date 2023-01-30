@@ -44,9 +44,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
     func makeNetworking() -> Networking { NetworkingMock() }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        let mock = PropertiesManagerMock()
-        mock.lastConnectedTimeStamp = Date().timeIntervalSince1970 - 10
-        return mock
+        PropertiesManagerMock()
     }
 
     func makeAppStateManager() -> AppStateManager {
@@ -63,7 +61,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
 class TelemetryTimerMock: TelemetryTimer {
     var reportedConnectionDuration: TimeInterval = 0
     var reportedTimeToConnect: TimeInterval = 0
-    func updateConnectionStarted(_ date: Date) { }
+    func updateConnectionStarted(_ date: Date?) { }
     func markStartedConnecting() { }
     func markFinishedConnecting() { }
     func markConnectionStoped() { }
