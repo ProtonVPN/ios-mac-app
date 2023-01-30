@@ -151,7 +151,8 @@ class CountriesSectionViewController: NSViewController {
         clearSearchBtn.target = self
         clearSearchBtn.action = #selector(clearSearch)
         clearSearchBtn.image = AppTheme.Icon.crossCircleFilled.colored(.hint)
-        clearSearchBtn.cell?.setAccessibilityElement(false)
+        // The line below was commented out to fix UI tests
+        // clearSearchBtn.cell?.setAccessibilityElement(false)
 
         searchTextField.focusDelegate = self
         searchTextField.delegate = self
