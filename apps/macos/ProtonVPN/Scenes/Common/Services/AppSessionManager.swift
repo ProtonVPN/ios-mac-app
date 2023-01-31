@@ -70,11 +70,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @MainActor var appState: AppState { appStateManager.state }
-    private var navService: NavigationService? {
-        return factory.makeNavigationService()
-    }
+    private var navService: NavigationService? { return factory.makeNavigationService() }
 
-    private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
+    private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -84,7 +82,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
-    var sessionStatus: SessionStatus = .notEstablished
+    var sessionStatus: SessionStatus = .notEstablished {
+        didSet { loggedIn = sessionStatus == .established }
+    }
 
     init(factory: Factory) {
         self.factory = factory
@@ -97,35 +97,50 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     // MARK: public log in interface (completion handlers)
 
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
-        // Invoke private, async implementation
-        executeOnUIThread(attemptSilentLogIn, success: { completion(.success) }, failure: { completion(.failure($0)) })
+        // Invoke async implementation
+        executeOnUIThread(attemptLogin, success: { completion(.success) }, failure: { completion(.failure($0)) })
     }
 
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        // Invoke private, async implementation
+        // Invoke async implementation
         executeOnUIThread(refreshVpnAuthCertificate, success: success, failure: failure)
     }
 
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        let closure = { try await self.finishLogin(authCredentials: authCredentials) }
-        // Invoke private, async implementation
-        executeOnUIThread(closure, success: success, failure: failure)
+        // Invoke async implementation
+        executeOnUIThread({ try await self.attemptLogin(with: authCredentials) }, success: success, failure: failure)
     }
 
     // MARK: private log in implementation (async)
 
-    private func attemptSilentLogIn() async throws {
+    private func attemptLogin() async throws {
         if authKeychain.fetch() == nil {
             throw ProtonVpnErrorConst.userCredentialsMissing
         }
-
-        try await retrieveProperties()
         try await finishLogin()
     }
 
+    private func attemptLogin(with authCredentials: AuthCredentials) async throws {
+        do {
+            try authKeychain.store(authCredentials)
+        } catch {
+            throw ProtonVpnError.keychainWriteFailed
+        }
+
+        try await finishLogin()
+    }
+
+    @MainActor
     private func finishLogin() async throws {
+        try await retrieveProperties()
+        try checkForSubuserWithoutSessions()
         try await refreshVpnAuthCertificate()
-        setAndNotify(for: .established, reason: nil)
+
+        sessionStatus = .established
+        propertiesManager.hasConnected = true
+        postNotification(name: sessionChanged, object: self.factory.makeVpnGateway())
+
+        appSessionRefreshTimer.start()
         profileManager.refreshProfiles()
         appCertificateRefreshManager.planNextRefresh()
     }
@@ -138,18 +153,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         _ = try await withCheckedThrowingContinuation { [weak self] continuation in
             self?.vpnAuthentication.refreshCertificates { result in continuation.resume(with: result) }
         }
-    }
-
-    private func finishLogin(authCredentials: AuthCredentials) async throws {
-        do {
-            try authKeychain.store(authCredentials)
-        } catch {
-            throw ProtonVpnError.keychainWriteFailed
-        }
-
-        try await retrieveProperties()
-        try checkForSubuserWithoutSessions()
-        try await finishLogin()
     }
 
     private func checkForSubuserWithoutSessions() throws {
@@ -264,8 +267,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func logOut(force: Bool, reason: String?) {
-        loggedIn = false
-
         if force || !appStateManager.state.isConnected {
             confirmLogout(reason: reason)
         } else {
@@ -286,13 +287,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func logoutRoutine(reason: String?) {
-        setAndNotify(for: .notEstablished, reason: reason)
+        sessionStatus = .notEstablished
+        postNotification(name: sessionChanged, object: reason)
+        appSessionRefreshTimer.start()
         logOutCleanup()
     }
 
     private func logOutCleanup() {
-        refreshTimer.stop()
-        loggedIn = false
+        appSessionRefreshTimer.stop()
 
         authKeychain.clear()
         vpnKeychain.clear()
@@ -310,29 +312,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // End of the logout logic
-    // MARK: -
-
-    private func setAndNotify(for state: SessionStatus, reason: String?) {
-        guard !loggedIn else { return }
-
-        sessionStatus = state
-
-        if state == .established {
-            loggedIn = true
-            DispatchQueue.main.async {
-                let gateway = self.factory.makeVpnGateway()
-
-                // No need to connect twice
-                self.propertiesManager.hasConnected = true
-
-                self.postNotification(name: self.sessionChanged, object: gateway)
-            }
-        } else if state == .notEstablished {
-            postNotification(name: sessionChanged, object: reason)
-        }
-
-        refreshTimer.start()
-    }
 
     private func postNotification(name: Notification.Name, object: Any?) {
         DispatchQueue.main.async {

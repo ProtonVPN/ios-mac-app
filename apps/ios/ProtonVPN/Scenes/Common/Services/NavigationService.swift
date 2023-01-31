@@ -179,11 +179,7 @@ final class NavigationService {
         guard appSessionManager.sessionStatus == .notEstablished else {
             return
         }
-        guard let reasonForSessionChange = notification.object as? String else {
-            presentWelcome(initialError: nil)
-            return
-        }
-
+        let reasonForSessionChange = notification.object as? String
         presentWelcome(initialError: reasonForSessionChange)
     }
     
