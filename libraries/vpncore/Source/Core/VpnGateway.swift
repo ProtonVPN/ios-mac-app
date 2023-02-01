@@ -224,6 +224,9 @@ public class VpnGateway: VpnGatewayProtocol {
         self.connection = ConnectionStatus.forAppState(state)
         self.interceptPolicies = vpnInterceptPolicies
         self.serverStorage = serverStorage
+        /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
+        /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
+        postConnectionInformation()
 
         if case .connected = state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)

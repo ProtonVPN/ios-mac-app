@@ -147,6 +147,7 @@ public struct ConnectionRequest {
         case vpnProtocol
         case natType
         case safeMode
+        case trigger
     }
 }
 
@@ -173,7 +174,7 @@ extension ConnectionRequest: Codable {
         }
 
         safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
-        trigger = nil
+        trigger = try container.decodeIfPresent(TelemetryDimensions.VPNTrigger.self, forKey: .trigger)
     }
 }
 
