@@ -65,16 +65,16 @@ class TelemetryTimerMock: TelemetryTimer {
     func markStartedConnecting() { }
     func markFinishedConnecting() { }
     func markConnectionStoped() { }
-    var connectionDuration: TimeInterval? {
+    var connectionDuration: TimeInterval {
         reportedConnectionDuration
     }
 
-    var timeToConnect: TimeInterval? {
+    var timeToConnect: TimeInterval {
         reportedTimeToConnect
     }
 
-    var timeConnecting: TimeInterval? {
-        nil
+    var timeConnecting: TimeInterval {
+        0
     }
 }
 

@@ -135,7 +135,7 @@ public struct TelemetryDimensions: Encodable {
         case off
     }
 
-    public enum VPNTrigger: String, Encodable {
+    public enum VPNTrigger: String, Codable {
         case quick
         case country
         case city

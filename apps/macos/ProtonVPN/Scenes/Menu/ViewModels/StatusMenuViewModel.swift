@@ -152,6 +152,7 @@ final class StatusMenuViewModel {
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.tray))
             vpnGateway.disconnect()
         } else {
             log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)

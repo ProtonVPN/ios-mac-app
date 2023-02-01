@@ -25,7 +25,7 @@ class ConnectionTimer: TelemetryTimer {
     private var stoppedConnectionDate: Date?
 
     func updateConnectionStarted(_ date: Date?) {
-        startedConnectionDate = date
+        startedConnectionDate = date ?? startedConnectionDate
     }
 
     func markStartedConnecting() {
@@ -40,20 +40,26 @@ class ConnectionTimer: TelemetryTimer {
         stoppedConnectionDate = Date()
     }
 
-    var connectionDuration: TimeInterval? {
-        guard let startedConnectionDate,
-              let stoppedConnectionDate else { return nil }
-        return stoppedConnectionDate.timeIntervalSince(startedConnectionDate)
+    var connectionDuration: TimeInterval {
+        get throws {
+            guard let startedConnectionDate else { throw "Missing startedConnectionDate" }
+            guard let stoppedConnectionDate else { throw "Missing stoppedConnectionDate" }
+            return stoppedConnectionDate.timeIntervalSince(startedConnectionDate)
+        }
     }
 
-    var timeToConnect: TimeInterval? {
-        guard let startedConnectingDate,
-              let startedConnectionDate else { return nil }
-        return startedConnectionDate.timeIntervalSince(startedConnectingDate)
+    var timeToConnect: TimeInterval {
+        get throws {
+            guard let startedConnectingDate else { throw "Missing startedConnectingDate" }
+            guard let startedConnectionDate else { throw "Missing startedConnectionDate" }
+            return startedConnectionDate.timeIntervalSince(startedConnectingDate)
+        }
     }
 
-    var timeConnecting: TimeInterval? {
-        guard let startedConnectingDate else { return nil }
-        return Date().timeIntervalSince(startedConnectingDate)
+    var timeConnecting: TimeInterval {
+        get throws {
+            guard let startedConnectingDate else { throw "Missing startedConnectingDate" }
+            return Date().timeIntervalSince(startedConnectingDate)
+        }
     }
 }

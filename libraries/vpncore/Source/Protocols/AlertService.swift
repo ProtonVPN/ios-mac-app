@@ -301,7 +301,10 @@ public class SecureCoreToggleDisconnectAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }    
 }
@@ -314,7 +317,10 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: dismiss))
     }
 }
@@ -352,7 +358,10 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
@@ -366,7 +375,10 @@ public class ReconnectOnActionAlert: SystemAlert {
     
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         title = actionTitle
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
@@ -379,7 +391,10 @@ public class TurnOnKillSwitchAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
 }
@@ -395,7 +410,10 @@ public class AllowLANConnectionsAlert: SystemAlert {
         if connected {
             message! += "\n\n" + LocalizedString.allowLanNote
         }
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
 }
@@ -426,7 +444,10 @@ public class LogoutWarningAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+            NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.logout)
+            confirmHandler()
+        }))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
     }
 }
