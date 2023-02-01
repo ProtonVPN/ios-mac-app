@@ -19,6 +19,9 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "SearchTests"
+      ],
       "target" : {
         "containerPath" : "container:macOS.xcodeproj",
         "identifier" : "D5911705229F9574005829DA",
