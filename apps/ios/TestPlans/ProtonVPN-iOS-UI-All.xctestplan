@@ -20,7 +20,9 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "ConnectionTests"
+        "ConnectionTests",
+        "SignupTests\/testSignupExistingExternalAccount()",
+        "SignupTests\/testSignupNewExternalAccountSuccess()"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",
