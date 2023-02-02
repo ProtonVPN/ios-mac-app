@@ -267,23 +267,26 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func logOut(force: Bool, reason: String?) {
-        if force || !appStateManager.state.isConnected {
-            confirmLogout(reason: reason)
-        } else {
-            let logoutAlert = LogoutWarningLongAlert(confirmHandler: { [confirmLogout] in
-                confirmLogout(reason)
-            })
-            alertService.push(alert: logoutAlert)
+        switch appStateManager.state {
+        case .connected:
+            confirmLogout(force: force) {
+                self.appStateManager.disconnect { self.logoutRoutine(reason: reason) }
+            }
+        case .connecting:
+            appStateManager.cancelConnectionAttempt { self.logoutRoutine(reason: reason) }
+        default:
+            logoutRoutine(reason: reason)
         }
     }
 
-    private func confirmLogout(reason: String?) {
-        switch appStateManager.state {
-        case .connecting:
-            appStateManager.cancelConnectionAttempt { [logoutRoutine] in logoutRoutine(reason) }
-        default:
-            appStateManager.disconnect { [logoutRoutine] in logoutRoutine(reason) }
+    private func confirmLogout(force: Bool, completion: @escaping () -> Void) {
+        if force {
+            completion()
+            return
         }
+
+        let logoutAlert = LogoutWarningLongAlert(confirmHandler: { completion() })
+        alertService.push(alert: logoutAlert)
     }
 
     private func logoutRoutine(reason: String?) {
