@@ -53,7 +53,8 @@ final class ViewController: UIViewController {
                                                                                               numberOfServers: 1300,
                                                                                               numberOfFreeServers: 23,
                                                                                               numberOfFreeCountries: 3,
-                                                                                              numberOfCountries: 61)))
+                                                                                              numberOfCountries: 61),
+                                                                         telemetryEnabled: true))
         coordinator.delegate = self
         let vc = coordinator.start()
         present(vc, animated: true, completion: nil)
@@ -61,6 +62,14 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: OnboardingCoordinatorDelegate {
+    func preferenceChangeUsageData(telemetryUsageData: Bool) {
+
+    }
+
+    func preferenceChangeCrashReports(telemetryCrashReports: Bool) {
+
+    }
+
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion) {
         let planPurchaseViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlanPurchase") as! PlanPurchaseViewController
         planPurchaseViewController.completion = completion

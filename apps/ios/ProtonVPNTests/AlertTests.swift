@@ -23,6 +23,7 @@
 import XCTest
 import GSMessages
 import PMLogger
+import Onboarding
 @testable import vpncore
 @testable import ProtonVPN
 
@@ -165,6 +166,10 @@ fileprivate class SettingsServiceMock: SettingsService {
     
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
         return nil
+    }
+
+    func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
+        return TelemetrySettingsViewController(preferenceChangeUsageData: { _ in }, preferenceChangeCrashReports: { _ in })
     }
     
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {

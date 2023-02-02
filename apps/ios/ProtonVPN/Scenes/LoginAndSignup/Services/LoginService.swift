@@ -28,7 +28,7 @@ enum SilentLoginResult {
 
 protocol LoginServiceDelegate: AnyObject {
     func userDidLogIn()
-    func userDidSignUp(onboardingShowFirstConnection: Bool)
+    func userDidSignUp()
 }
 
 protocol LoginService: AnyObject {
@@ -68,8 +68,6 @@ final class CoreLoginService {
 
     weak var delegate: LoginServiceDelegate?
 
-    var onboardingShowFirstConnection = true
-
     init(factory: Factory) {
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
@@ -102,23 +100,7 @@ final class CoreLoginService {
         WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to use the login data to log in the app
             let authCredentials = AuthCredentials(data)
-            self?.appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.coreApiService.getApiFeature(feature: .onboardingShowFirstConnection) { (result: Result<Bool, Error>) in
-                        switch result {
-                        case let .success(flag):
-                            self?.onboardingShowFirstConnection = flag
-                            completion(.success(()))
-                        case let .failure(error):
-                            log.error("Failed to get onboardingShowFirstConnection flag, using default value", category: .app, metadata: ["error": "\(error)"])
-                            completion(.success(()))
-                        }
-                    }
-                case let .failure(error):
-                    completion(.failure(error))
-                }
-            }
+            self?.appSessionManager.finishLogin(authCredentials: authCredentials, completion: completion)
         }
     }
 
@@ -147,7 +129,7 @@ final class CoreLoginService {
             delegate?.userDidLogIn()
             loginInterface = makeLoginInterface()
         case .signupStateChanged(.signupFinished):
-            delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
+            delegate?.userDidSignUp()
             loginInterface = makeLoginInterface()
         case .loginStateChanged(.dataIsAvailable(let loginData)), .signupStateChanged(.dataIsAvailable(let loginData)):
             log.debug("Login or signup process in progress", category: .app)

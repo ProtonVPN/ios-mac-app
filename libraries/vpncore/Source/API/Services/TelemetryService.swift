@@ -264,6 +264,7 @@ public class TelemetryServiceImplementation: TelemetryService {
     /// we need to check if the user agreed to collecting telemetry data.
     private func report(event: TelemetryEvent) {
         guard LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) else { return }
+        guard propertiesManager.telemetryUsageData else { return }
         Task {
             await sendEvent(event)
         }

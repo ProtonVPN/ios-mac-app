@@ -26,6 +26,7 @@ import vpncore
 import SwiftUI
 import BugReport
 import VPNShared
+import Onboarding
 
 // MARK: Country Service
 
@@ -54,6 +55,7 @@ protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
+    func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeBatteryUsageViewController() -> BatteryUsageViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
@@ -165,6 +167,7 @@ final class NavigationService {
                 self?.presentWelcome(initialError: nil)
             }
         }
+        _ = onboardingService // initialize colors in Onboarding module
     }
 
     func presentWelcome(initialError: String?) {
@@ -316,9 +319,18 @@ extension NavigationService: SettingsService {
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {
         return WidgetSettingsViewController(viewModel: WidgetSettingsViewModel())
     }
+
+    func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
+        TelemetrySettingsViewController(
+            preferenceChangeUsageData: { [weak self] isOn in self?.propertiesManager.telemetryUsageData = isOn },
+            preferenceChangeCrashReports: { [weak self] isOn in self?.propertiesManager.telemetryCrashReports = isOn },
+            usageStatisticsOn: propertiesManager.telemetryUsageData,
+            crashReportsOn: propertiesManager.telemetryCrashReports,
+            title: LocalizedString.usageStatistics
+        )
+    }
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        
         return LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
     }
     
@@ -388,8 +400,8 @@ extension NavigationService: LoginServiceDelegate {
         presentMainInterface()
     }
 
-    func userDidSignUp(onboardingShowFirstConnection: Bool) {
-        onboardingService.showOnboarding(showFirstConnection: onboardingShowFirstConnection)
+    func userDidSignUp() {
+        onboardingService.showOnboarding()
     }
 }
 
