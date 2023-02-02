@@ -111,7 +111,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // MARK: - Beginning of the login logic.
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         guard authKeychain.fetch() != nil else {
-            completion(.failure(ProtonVpnErrorConst.userCredentialsMissing))
+            completion(.failure(ProtonVpnError.userCredentialsMissing))
             return
         }
 
