@@ -18,10 +18,8 @@
 
 import Foundation
 import SystemExtensions
-import XCTest
-@testable import vpncore
 
-class SystemExtensionManagerMock: SystemExtensionManager {
+public class SystemExtensionManagerMock: SystemExtensionManager {
     var pendingRequests: [(SystemExtensionRequest, ExtensionInfo)] = []
     var installedExtensions: [ExtensionInfo] = []
 
@@ -114,7 +112,7 @@ class SystemExtensionManagerMock: SystemExtensionManager {
         }
 
         guard let info = info else {
-            XCTFail("Attempted to approve a request that wasn't in pending requests")
+            assertionFailure("Attempted to approve a request that wasn't in pending requests")
             return
         }
 

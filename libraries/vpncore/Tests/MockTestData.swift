@@ -17,10 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-@testable import vpncore
 
-struct MockTestData {
-    struct VPNLocationResponse: Codable, Equatable {
+public struct MockTestData {
+    public struct VPNLocationResponse: Codable, Equatable {
         let ip: String
         let country: String
         let isp: String
@@ -32,7 +31,9 @@ struct MockTestData {
         }
     }
 
-    var vpnLocation = VPNLocationResponse(ip: "123.123.123.123", country: "USA", isp: "GreedyCorp, Inc.")
+    public init() { }
+
+    public var vpnLocation = VPNLocationResponse(ip: "123.123.123.123", country: "USA", isp: "GreedyCorp, Inc.")
 
     /// free server with relatively high latency score and not under maintenance.
     var server1 = ServerModel(id: "abcd",
@@ -230,7 +231,7 @@ struct MockTestData {
                               hostCountry: "Switzerland",
                               translatedCity: nil)
 
-    var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
+    public var defaultClientConfig = ClientConfig(openVPNConfig: .init(defaultTcpPorts: [1234, 5678],
                                                                 defaultUdpPorts: [2345, 6789]),
                                            featureFlags: .allEnabled,
                                            serverRefreshInterval: 2 * 60,
@@ -281,4 +282,17 @@ extension FeatureFlags {
                                                   promoCode: true,
                                                   wireGuardTls: false,
                                                   localOverrides: nil)
+}
+
+extension PartnerType {
+    static func onePartner(logicalIDs: [String] = ["abcde"]) -> PartnerType {
+        let partner = Partner(name: "Deutsche Welle",
+                              description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
+                              iconURL: URL(string: "https://proton.me/favicon.ico"),
+                              logicalIDs: logicalIDs)
+        return .init(type: "News",
+                     description: "descr",
+                     iconURL: URL(string: "https://proton.me/favicon.ico"),
+                     partners: [partner])
+    }
 }

@@ -122,7 +122,6 @@
 		4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAEC3C286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift */; };
 		4CAD2FC827F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
 		4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAD2FC727F2FDC100C78905 /* VpnConnectionIntercept.swift */; };
-		4CB2A3D0289130D5002E839E /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
 		4CB2A3D7289131F5002E839E /* ExtensionInfo+Comparable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */; };
 		4CC20AD12869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
 		4CC20AD22869A6410051BC80 /* LocaleWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC20AD02869A6410051BC80 /* LocaleWrapper.swift */; };
@@ -133,8 +132,6 @@
 		4CF40B9C2833B3F600C3C501 /* ForkSessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B225B5281FCE96008404E4 /* ForkSessionResponse.swift */; };
 		4CFDF0B7287EE37500386626 /* MockDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B6287EE37500386626 /* MockDependencyContainer.swift */; };
 		4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B6287EE37500386626 /* MockDependencyContainer.swift */; };
-		4CFDF0BA287EE44100386626 /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
-		4CFDF0BB287EE44100386626 /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
 		4CFDF0BD287EE4F300386626 /* ConnectionSwitchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0BC287EE4F300386626 /* ConnectionSwitchingTests.swift */; };
 		4CFDF0BE287EE4F300386626 /* ConnectionSwitchingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0BC287EE4F300386626 /* ConnectionSwitchingTests.swift */; };
 		4CFDF0C0287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0BF287EE55B00386626 /* LocalAgentConnectionTests.swift */; };
@@ -157,6 +154,11 @@
 		AD3A999529534B82002805AE /* Array+Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD09EA472953396F00D4F6F2 /* Array+Builder.swift */; };
 		AD3A999729535952002805AE /* ArrayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* ArrayBuilderTests.swift */; };
 		AD3A999829535952002805AE /* ArrayBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3A999629535952002805AE /* ArrayBuilderTests.swift */; };
+		AD41A854298A83590003393D /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
+		AD41A859298ACED40003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
+		AD41A85A298ACED50003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
+		AD41A85C298AD26C0003393D /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
+		AD41A85D298AD26D0003393D /* MockTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFDF0B9287EE44100386626 /* MockTestData.swift */; };
 		ADEB719B29644CE9000B82CE /* UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719A29644CE9000B82CE /* UniquelyMergeable.swift */; };
 		ADEB719C29644CE9000B82CE /* UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719A29644CE9000B82CE /* UniquelyMergeable.swift */; };
 		ADEB719E29646999000B82CE /* Dictionary+UniquelyMergeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEB719D29646999000B82CE /* Dictionary+UniquelyMergeable.swift */; };
@@ -629,8 +631,6 @@
 		F365356A263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3653567263856BB001B7E88 /* LocalAgent+Certs.swift */; };
 		F3747BF026D3B93300EF2F00 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BEF26D3B93300EF2F00 /* Networking.swift */; };
 		F3747BF226D3B93300EF2F00 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BEF26D3B93300EF2F00 /* Networking.swift */; };
-		F3747C1926D63CCD00EF2F00 /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
-		F3747C1A26D63CCD00EF2F00 /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
 		F38432F3281ACDFF00850EAA /* PaidFeaturePropertyProviderFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3D6CB27C0162A00B474D7 /* PaidFeaturePropertyProviderFactoryMock.swift */; };
 		F38432F4281ACE0000850EAA /* PaidFeaturePropertyProviderFactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A3D6CB27C0162A00B474D7 /* PaidFeaturePropertyProviderFactoryMock.swift */; };
 		F38432F5281ACE1400850EAA /* UserTierProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */; };
@@ -2862,6 +2862,7 @@
 				D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */,
 				E1616BD721C7DF8800F42D79 /* VpnKeychain.swift in Sources */,
 				E15367E022662E65009BB1D2 /* VpnConnectionPreparer.swift in Sources */,
+				AD41A85D298AD26D0003393D /* MockTestData.swift in Sources */,
 				F3653568263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
 				D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */,
 				E1616BF521C95BC400F42D79 /* ServerOffering.swift in Sources */,
@@ -2971,6 +2972,7 @@
 				E976FB2B2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */,
 				E53D745B291CEDB00006E499 /* VPNPartnersResponse.swift in Sources */,
 				D5EA845728C8F73E00C8EB7D /* WGiOSLogContent.swift in Sources */,
+				AD41A859298ACED40003393D /* NetworkingMock.swift in Sources */,
 				E1616BF221C95BBE00F42D79 /* ProfileType.swift in Sources */,
 				F330F00C27FC812700C3AA33 /* PromoCodeRequest.swift in Sources */,
 				E13791B82313D3B300D7B1FA /* ConnectionConfiguration.swift in Sources */,
@@ -3053,7 +3055,6 @@
 				D5D2958125A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift in Sources */,
 				F307F7B527C38B98004FD4A7 /* NATTypePropertyProviderImplementationTests.swift in Sources */,
 				E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */,
-				F3747C1926D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,
 				F307F7BE27C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
 				4C263C3E286F0E7600F48974 /* LocalAgentConnectionMock.swift in Sources */,
 				4C83C4672869ACC5000A3FB4 /* LocaleResolverMock.swift in Sources */,
@@ -3085,7 +3086,6 @@
 				D5967244253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4C0961FB285B503800556E07 /* VpnManagerTests.swift in Sources */,
 				ADEB71AD2964957C000B82CE /* UniquelyMergeableDictionaryTests.swift in Sources */,
-				4CFDF0BA287EE44100386626 /* MockTestData.swift in Sources */,
 				E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */,
 				AD3A999729535952002805AE /* ArrayBuilderTests.swift in Sources */,
 				D578439A29001BA0007E3FC6 /* CoreVPNKeysGeneratorTests.swift in Sources */,
@@ -3119,6 +3119,7 @@
 				D5566E1028DAFF10007CB88F /* Log.swift in Sources */,
 				E5CBA02828DB23FB00EA1F25 /* OfferPanel+Mode.swift in Sources */,
 				F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
+				AD41A85A298ACED50003393D /* NetworkingMock.swift in Sources */,
 				F330F00D27FC812900C3AA33 /* PromoCodeRequest.swift in Sources */,
 				E53D745C291CEDB00006E499 /* VPNPartnersResponse.swift in Sources */,
 				F3A3D6DA27C0174C00B474D7 /* NetShieldPropertyProviderMock.swift in Sources */,
@@ -3223,6 +3224,7 @@
 				E1616BFA21C95C3000F42D79 /* ServerManager.swift in Sources */,
 				F3256AC626B993C2003F073C /* SmartProtocol+Priority.swift in Sources */,
 				E1616C0A21C95E1800F42D79 /* ProfileConstants.swift in Sources */,
+				AD41A85C298AD26C0003393D /* MockTestData.swift in Sources */,
 				F365355326383DDC001B7E88 /* LocalAgent.swift in Sources */,
 				F3021D8225E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */,
@@ -3326,6 +3328,7 @@
 				D5DCCADE252B5C2B004CB353 /* GetApiNotificationsResponse.swift in Sources */,
 				E1B5F64221B6B86200B558B0 /* CoreAppConstants.swift in Sources */,
 				F327A99B2821763B00848E42 /* Codable+Default.swift in Sources */,
+				AD41A854298A83590003393D /* SystemExtensionManagerMock.swift in Sources */,
 				D5D2948925A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
 				E129C6C822A9101B00D8437E /* ServerStorageMock.swift in Sources */,
@@ -3387,11 +3390,9 @@
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
 				4CAAEC3E286F383B0029F13A /* NEVPNStatus+CustomStringConvertible.swift in Sources */,
 				4C1C2F3028805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
-				4CB2A3D0289130D5002E839E /* SystemExtensionManagerMock.swift in Sources */,
 				4CFDF0B8287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				AD3A999829535952002805AE /* ArrayBuilderTests.swift in Sources */,
 				D59671CF253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
-				F3747C1A26D63CCD00EF2F00 /* NetworkingMock.swift in Sources */,
 				D59671EB253D70D40061A75F /* AnnouncementRefresherImplementationTests.swift in Sources */,
 				E10155D3230988C500A4B5CB /* AppStateManagerImplementationTests.swift in Sources */,
 				E1B5F62721B6A24D00B558B0 /* AppStateTests.swift in Sources */,
@@ -3400,7 +3401,6 @@
 				E53406A928E1B67A0078A7A3 /* AnnouncementTests.swift in Sources */,
 				4C0961FC285B503900556E07 /* VpnManagerTests.swift in Sources */,
 				E53406AC28E1BBD00078A7A3 /* ImageCacheMock.swift in Sources */,
-				4CFDF0BB287EE44100386626 /* MockTestData.swift in Sources */,
 				E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				4C66CA9E2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				4C14523E292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */,

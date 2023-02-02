@@ -11,22 +11,22 @@ import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
 import ProtonCore_Foundations
-import XCTest
 import VPNShared
-@testable import vpncore
 
-final class NetworkingMock {
-    weak var delegate: NetworkingMockDelegate?
+public final class NetworkingMock {
+    public weak var delegate: NetworkingMockDelegate?
 
     var apiURLString = ""
 
-    var apiService: PMAPIService {
+    public var apiService: PMAPIService {
         PMAPIService.createAPIService(doh: DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false, appState: .disconnected),
                                       sessionUID: "UID",
                                       challengeParametersProvider: ChallengeParametersProvider.empty)
     }
 
-    var requestCallback: ((URLRequest) -> Result<Data, Error>)?
+    public var requestCallback: ((URLRequest) -> Result<Data, Error>)?
+
+    public init() { }
 
     func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         if let delegate = delegate {
@@ -55,7 +55,7 @@ final class NetworkingMock {
 }
 
 extension NetworkingMock: Networking {
-    func request(_ route: Request, completion: @escaping (Result<VPNShared.JSONDictionary, Error>) -> Void) {
+    public func request(_ route: Request, completion: @escaping (Result<VPNShared.JSONDictionary, Error>) -> Void) {
         request(route) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):
@@ -82,7 +82,7 @@ extension NetworkingMock: Networking {
         }
     }
 
-    func request(_ route: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
+    public func request(_ route: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
         request(route) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):
@@ -97,7 +97,7 @@ extension NetworkingMock: Networking {
         }
     }
 
-    func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+    public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
         request(route) { (result: Result<Data, Error>) in
             switch result {
             case let .success(data):
@@ -116,7 +116,7 @@ extension NetworkingMock: Networking {
     }
 
     // the files argument is ignored for now...
-    func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+    public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
         request(route, completion: completion)
     }
 }
@@ -143,11 +143,11 @@ extension NetworkingMock: APIServiceDelegate {
     public func onDohTroubleshot() { }
 }
 
-protocol NetworkingMockDelegate: AnyObject {
+public protocol NetworkingMockDelegate: AnyObject {
     func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error>
 }
 
-class FullNetworkingMockDelegate: NetworkingMockDelegate {
+public class FullNetworkingMockDelegate: NetworkingMockDelegate {
     enum MockEndpoint: String {
         case vpn = "/vpn"
         case status = "/vpn_status"
@@ -163,19 +163,21 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
         let description: String
     }
 
-    var apiServerList: [ServerModel] = []
-    var apiServerLoads: [ContinuousServerProperties] = []
-    var apiCredentials: VpnCredentials?
-    var apiVpnLocation: MockTestData.VPNLocationResponse?
-    var apiClientConfig: ClientConfig?
+    public var apiServerList: [ServerModel] = []
+    public var apiServerLoads: [ContinuousServerProperties] = []
+    public var apiCredentials: VpnCredentials?
+    public var apiVpnLocation: MockTestData.VPNLocationResponse?
+    public var apiClientConfig: ClientConfig?
 
     var didHitRoute: ((MockEndpoint) -> Void)?
 
-    func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error> {
+    public init() { }
+
+    public func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error> {
         do {
             return try handleMockNetworkingRequestThrowingOnUnexpectedError(request)
         } catch {
-            XCTFail("Unexpected error occurred: \(error)")
+            assertionFailure("Unexpected error occurred: \(error)")
             return .failure(error)
         }
     }
@@ -252,7 +254,7 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
 
     func verifyClientIPIsMasked(request: URLRequest) -> Bool {
         guard let ip = request.headers["x-pm-netzone"] else {
-            XCTFail("Didn't include IP in request dictionary?")
+            assertionFailure("Didn't include IP in request dictionary?")
             return false
         }
 
@@ -262,7 +264,7 @@ class FullNetworkingMockDelegate: NetworkingMockDelegate {
                       ipDigits + dot + zero // e.g., 123.123.123.0
 
         guard ip.hasMatches(for: pattern) else {
-            XCTFail("'\(ip)' does not match regex \(pattern), is it being masked properly?")
+            assertionFailure("'\(ip)' does not match regex \(pattern), is it being masked properly?")
             return false
         }
         return true

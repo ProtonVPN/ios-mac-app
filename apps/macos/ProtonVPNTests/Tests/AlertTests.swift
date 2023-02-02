@@ -230,7 +230,7 @@ fileprivate class NotificationManagerMock: NotificationManagerProtocol {
     func displayServerGoingOnMaintenance() { }
 }
 
-fileprivate class PlanServiceMock: PlanService {
+class PlanServiceMock: PlanService {
     var countriesCount: Int = 59
 
     func updateCountriesCount() { }
