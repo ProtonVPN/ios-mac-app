@@ -24,9 +24,6 @@ import Foundation
 public class ErrorCode {
     
     public static let descriptionUnavailable = 1
-    public static let userHasNoVpnAccess = 10
-    public static let userHasNotSignedUp = 11
-    public static let userIsOnWaitlist = 12
     public static let vpnSessionInProgress = 20
     public static let vpnStuckDisconnecting = 21
     public static let userCredentialsMissing = 30

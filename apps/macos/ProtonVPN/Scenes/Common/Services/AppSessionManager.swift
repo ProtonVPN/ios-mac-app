@@ -115,7 +115,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func attemptLogin() async throws {
         if authKeychain.fetch() == nil {
-            throw ProtonVpnErrorConst.userCredentialsMissing
+            throw ProtonVpnError.userCredentialsMissing
         }
         try await finishLogin()
     }
@@ -254,7 +254,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
                 continuation.resume()
             }, cancelHandler: {
-                continuation.resume(throwing: ProtonVpnErrorConst.vpnSessionInProgress)
+                continuation.resume(throwing: ProtonVpnError.vpnSessionInProgress)
             })
             self.alertService.push(alert: alert)
         }

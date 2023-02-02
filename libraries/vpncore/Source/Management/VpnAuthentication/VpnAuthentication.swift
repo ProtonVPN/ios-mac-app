@@ -133,7 +133,7 @@ public final class VpnAuthenticationManager {
             return
         }
 
-        completion(.failure(ProtonVpnErrorConst.vpnCredentialsMissing))
+        completion(.failure(ProtonVpnError.vpnCredentialsMissing))
     }
 }
 
@@ -163,7 +163,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
 
     public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
         Self.loadAuthenticationDataBase(storage: storage, safeModePropertyProvider: safeModePropertyProvider, features: features) { result in
-            guard case let .failure(error) = result, (error as NSError) == ProtonVpnErrorConst.vpnCredentialsMissing else {
+            guard case .failure(ProtonVpnError.vpnCredentialsMissing) = result else {
                 completion(result)
                 return
             }
@@ -240,7 +240,7 @@ public final class VpnAuthenticationRemoteClient {
                     // Extension has updated the certificate and placed it in the keychain. Let's fetch it on our end.
                     guard let keys = self?.authenticationStorage.getStoredKeys(),
                           let certificate = self?.authenticationStorage.getStoredCertificate() else {
-                        completionHandler(.failure(ProtonVpnErrorConst.userCredentialsMissing))
+                        completionHandler(.failure(ProtonVpnError.userCredentialsMissing))
                         return
                     }
                     
@@ -282,7 +282,7 @@ public final class VpnAuthenticationRemoteClient {
                 return
             }
             guard retryingForExpiredSessions else {
-                completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
+                completionHandler(.failure(ProtonVpnError.userCredentialsExpired))
                 return
             }
             self?.promptExtensionForCertificateRefresh(features: features,
@@ -331,7 +331,7 @@ public final class VpnAuthenticationRemoteClient {
                     // We should only ever expect these responses for cert refreshes, not for this entry point.
                     // If we're hitting this, something is very wrong.
                     assertionFailure("Received \(response) after trying to renew session?")
-                    completionHandler(.failure(ProtonVpnErrorConst.userCredentialsExpired))
+                    completionHandler(.failure(ProtonVpnError.userCredentialsExpired))
                 }
             case .failure(let error):
                 completionHandler(.failure(error))
@@ -386,7 +386,7 @@ extension VpnAuthenticationRemoteClient: VpnAuthentication {
         VpnAuthenticationManager.loadAuthenticationDataBase(storage: authenticationStorage,
                                                             safeModePropertyProvider: safeModePropertyProvider,
                                                             features: features) { result in
-            guard case let .failure(error) = result, (error as NSError) == ProtonVpnErrorConst.vpnCredentialsMissing else {
+            guard case .failure(ProtonVpnError.vpnCredentialsMissing) = result else {
                 completion(result)
                 return
             }

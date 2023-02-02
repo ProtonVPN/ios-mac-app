@@ -95,7 +95,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             log.error("Keychain (vpn) read error", metadata: ["error": "\(error)"])
         }
         
-        let error = ProtonVpnErrorConst.vpnCredentialsMissing
+        let error = ProtonVpnError.vpnCredentialsMissing
         log.error("Error while fetching open vpn credentials from the keychain", metadata: ["error": "\(error)"])
         throw error
     }
@@ -110,7 +110,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             return password
         } catch let error {
             log.error("Error while fetching open vpn password from the keychain", metadata: ["error": "\(error)"])
-            throw ProtonVpnErrorConst.vpnCredentialsMissing
+            throw ProtonVpnError.vpnCredentialsMissing
         }
     }
     
@@ -172,7 +172,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         if let item = secItem as? Data {
             return item
         } else {
-            throw ProtonVpnErrorConst.vpnCredentialsMissing
+            throw ProtonVpnError.vpnCredentialsMissing
         }
     }
 
