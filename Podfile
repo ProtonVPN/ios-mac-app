@@ -198,6 +198,13 @@ target 'ProtonVPNmacOSTests' do
   vpn_core
 end
 
+target 'ProtonVPNmacOSUITests' do
+  project 'apps/macos/macOS.xcodeproj'
+  inherit! :search_paths
+  pod 'ProtonCore-QuarkCommands', :git => proton_core_path, :tag => proton_core_version
+  pod 'SwiftOTP'
+end
+
 # Other
 
 post_install do |installer|
