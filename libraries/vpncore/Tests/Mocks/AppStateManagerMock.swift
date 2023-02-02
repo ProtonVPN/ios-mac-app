@@ -54,7 +54,8 @@ public class AppStateManagerMock: AppStateManager {
     }
     
     public func cancelConnectionAttempt(completion: @escaping () -> Void) {
-        
+        state = .disconnected
+        completion()
     }
     
     public func prepareToConnect() {
@@ -70,7 +71,8 @@ public class AppStateManagerMock: AppStateManager {
     }
     
     public func disconnect(completion: @escaping () -> Void) {
-        
+        state = .disconnected
+        completion()
     }
     
     public func refreshState() {
