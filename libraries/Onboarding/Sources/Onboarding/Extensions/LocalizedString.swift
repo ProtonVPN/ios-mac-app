@@ -28,6 +28,10 @@ public enum LocalizedString {
   public static var onboardingConnectedTitle: String { return LocalizedString.tr("Localizable", "onboarding_connected_title") }
   /// Continue
   public static var onboardingContinue: String { return LocalizedString.tr("Localizable", "onboarding_continue") }
+  /// Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.
+  public static var onboardingCrashReportsDescription: String { return LocalizedString.tr("Localizable", "onboarding_crash_reports_description") }
+  /// Share anonymous crash reports
+  public static var onboardingCrashReportsTitle: String { return LocalizedString.tr("Localizable", "onboarding_crash_reports_title") }
   /// Done
   public static var onboardingDone: String { return LocalizedString.tr("Localizable", "onboarding_done") }
   /// Connect now
@@ -40,6 +44,10 @@ public enum LocalizedString {
   }
   /// Establish your first connection
   public static var onboardingEstablishTitle: String { return LocalizedString.tr("Localizable", "onboarding_establish_title") }
+  /// These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.
+  public static var onboardingFooter: String { return LocalizedString.tr("Localizable", "onboarding_footer") }
+  /// Learn more
+  public static var onboardingFooterLearnMore: String { return LocalizedString.tr("Localizable", "onboarding_footer_learn_more") }
   /// Get Plus
   public static var onboardingGetPlus: String { return LocalizedString.tr("Localizable", "onboarding_get_plus") }
   /// Block malware, ads, and trackers in browser and in all apps.
@@ -64,7 +72,9 @@ public enum LocalizedString {
   public static var onboardingSkip: String { return LocalizedString.tr("Localizable", "onboarding_skip") }
   /// Take a tour
   public static var onboardingTakeTour: String { return LocalizedString.tr("Localizable", "onboarding_take_tour") }
-  /// Secure access your favourite content from other countries, now also on AndroidTV.
+  /// Help us fight censorship
+  public static var onboardingTelemetryTitle: String { return LocalizedString.tr("Localizable", "onboarding_telemetry_title") }
+  /// Secure access to your favorite content from other countries — Now available on Android TV.
   public static var onboardingUnblockstreamingSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_subtitle") }
   /// Unblock streaming
   public static var onboardingUnblockstreamingTitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_title") }
@@ -76,6 +86,10 @@ public enum LocalizedString {
   public static func onboardingUpsellTitle(_ p1: Int, _ p2: Int) -> String {
     return LocalizedString.tr("Localizable", "onboarding_upsell_title", p1, p2)
   }
+  /// Usage data helps us overcome VPN blocks and improve app performance.
+  public static var onboardingUsageStatsDescription: String { return LocalizedString.tr("Localizable", "onboarding_usage_stats_description") }
+  /// Share anonymous usage statistics
+  public static var onboardingUsageStatsTitle: String { return LocalizedString.tr("Localizable", "onboarding_usage_stats_title") }
   /// Learn how to get the most out of Proton VPN in just a few seconds
   public static var onboardingWelcomeSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_welcome_subtitle") }
   /// Welcome to Proton VPN

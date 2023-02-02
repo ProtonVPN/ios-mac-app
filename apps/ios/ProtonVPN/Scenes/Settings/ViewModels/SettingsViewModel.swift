@@ -24,6 +24,7 @@ import UIKit
 import vpncore
 import ProtonCore_UIFoundations
 import VPNShared
+import LocalFeatureFlags
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
@@ -94,6 +95,9 @@ final class SettingsViewModel {
         
         if let connectionSection = connectionSection {
             sections.append(connectionSection)
+        }
+        if LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) {
+            sections.append(usageStatisticsSection)
         }
         sections.append(extensionsSection)
         if let batterySection = batterySection {
@@ -495,6 +499,17 @@ final class SettingsViewModel {
         
         return TableViewSection(title: LocalizedString.extensions, cells: cells)
     }
+
+    private var usageStatisticsSection: TableViewSection {
+        let cells: [TableViewCellModel] = [
+            .pushStandard(title: LocalizedString.usageStatistics,
+                          handler: { [pushUsageStatisticsViewController] in
+                              pushUsageStatisticsViewController()
+                          })
+        ]
+
+        return TableViewSection(title: "", cells: cells)
+    }
     
     private var batterySection: TableViewSection? {
         switch propertiesManager.connectionProtocol {
@@ -607,9 +622,13 @@ final class SettingsViewModel {
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }
-    
+
     private func pushExtensionsViewController() {
         pushHandler?(settingsService.makeExtensionsSettingsViewController())
+    }
+
+    private func pushUsageStatisticsViewController() {
+        pushHandler?(settingsService.makeTelemetrySettingsViewController())
     }
     
     private func pushBatteryViewController() {

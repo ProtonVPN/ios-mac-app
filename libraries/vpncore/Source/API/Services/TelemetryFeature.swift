@@ -19,12 +19,12 @@
 import Foundation
 import LocalFeatureFlags
 
-enum TelemetryFeature: String, FeatureFlag {
-    var category: String {
+public enum TelemetryFeature: String, FeatureFlag {
+    public var category: String {
         "Telemetry"
     }
 
-    var feature: String {
+    public var feature: String {
         rawValue
     }
 

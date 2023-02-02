@@ -197,16 +197,32 @@ class StatusViewModel {
     }
     
     // MARK: - Save as Profile
+
+    private func connectionRequest(for profile: Profile) -> ConnectionRequest {
+        profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                                  withDefaultNATType: natTypePropertyProvider.natType,
+                                  withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                                  trigger: nil)
+    }
     
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
         // same condition as on the Profiles screen to be consistent
-        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType, withDefaultSafeMode: safeModePropertyProvider.safeMode, trigger: nil) == vpnGateway.lastConnectionRequest }) != nil {
-            cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .notificationErrorColor(), handler: { [deleteProfile] in
+        let contains = profileManager.customProfiles.contains { profile in
+            connectionRequest(for: profile) == vpnGateway.lastConnectionRequest
+        }
+        if contains {
+            cell = .button(title: LocalizedString.deleteProfile,
+                           accessibilityIdentifier: "Delete Profile",
+                           color: .notificationErrorColor(),
+                           handler: { [deleteProfile] in
                 deleteProfile()
             })
         } else {
-            cell = .button(title: LocalizedString.saveAsProfile, accessibilityIdentifier: "Save as Profile", color: .normalTextColor(), handler: { [saveAsProfile] in
+            cell = .button(title: LocalizedString.saveAsProfile,
+                           accessibilityIdentifier: "Save as Profile",
+                           color: .normalTextColor(),
+                           handler: { [saveAsProfile] in
                 saveAsProfile()
             })
         }

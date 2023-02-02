@@ -28,6 +28,8 @@ public protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish(requiresConnection: Bool)
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion)
+    func preferenceChangeUsageData(telemetryUsageData: Bool)
+    func preferenceChangeCrashReports(telemetryCrashReports: Bool)
 }
 
 public final class OnboardingCoordinator {
@@ -70,6 +72,16 @@ public final class OnboardingCoordinator {
         let tourViewController = storyboard.instantiate(controllerType: TourViewController.self)
         tourViewController.delegate = self
         navigationController.pushViewController(tourViewController, animated: true)
+    }
+
+    private func showTelemetry(preferenceChangeUsageData: @escaping (Bool) -> Void,
+                               preferenceCrashReports: @escaping (Bool) -> Void,
+                               completion: @escaping () -> Void) {
+        let telemetryViewController = TelemetryViewController()
+        telemetryViewController.completion = completion
+        telemetryViewController.preferenceChangeUsageData = preferenceChangeUsageData
+        telemetryViewController.preferenceChangeCrashReports = preferenceCrashReports
+        navigationController.pushViewController(telemetryViewController, animated: true)
     }
 
     private func showNoLogs() {
@@ -154,7 +166,18 @@ extension OnboardingCoordinator: WelcomeViewControllerDelegate {
 
 extension OnboardingCoordinator: TourViewControllerDelegate {
     func userDidRequestSkipTour() {
-        showNoLogs()
+        guard configuration.telemetryEnabled else {
+            showNoLogs()
+            return
+        }
+        showTelemetry(preferenceChangeUsageData: { usageData in
+            self.delegate?.preferenceChangeUsageData(telemetryUsageData: usageData)
+        },
+                      preferenceCrashReports: { crashReports in
+            self.delegate?.preferenceChangeCrashReports(telemetryCrashReports: crashReports)
+        }, completion: { [weak self] in
+            self?.showNoLogs()
+        })
     }
 }
 

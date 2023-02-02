@@ -25,3 +25,10 @@
 "onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
 "onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
 "onboarding_continue" = "Continue";
+"onboarding_telemetry_title" = "Help us fight censorship";
+"onboarding_usage_stats_title" = "Share anonymous usage statistics";
+"onboarding_usage_stats_description" = "Usage data helps us overcome VPN blocks and improve app performance.";
+"onboarding_crash_reports_title" = "Share anonymous crash reports";
+"onboarding_crash_reports_description" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+"onboarding_footer" = "These statistics do not contain your IP address, and they cannot be used to identify you. We'll never share them with third parties.";
+"onboarding_footer_learn_more" = "Learn more";

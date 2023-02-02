@@ -20,6 +20,7 @@ import Foundation
 import Onboarding
 import UIKit
 import vpncore
+import LocalFeatureFlags
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
@@ -32,7 +33,7 @@ protocol OnboardingServiceDelegate: AnyObject {
 protocol OnboardingService: AnyObject {
     var delegate: OnboardingServiceDelegate? { get set }
 
-    func showOnboarding(showFirstConnection: Bool)
+    func showOnboarding()
 }
 
 final class OnboardingModuleService {
@@ -40,11 +41,13 @@ final class OnboardingModuleService {
         & VpnGatewayFactory
         & AppStateManagerFactory
         & PlanServiceFactory
+        & PropertiesManagerFactory
 
     private let windowService: WindowService
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let planService: PlanService
+    private let propertiesManager: PropertiesManagerProtocol
 
     private var onboardingCoordinator: OnboardingCoordinator?
     private var completion: OnboardingConnectionRequestCompletion?
@@ -56,6 +59,12 @@ final class OnboardingModuleService {
         vpnGateway = factory.makeVpnGateway()
         appStateManager = factory.makeAppStateManager()
         planService = factory.makePlanService()
+        propertiesManager = factory.makePropertiesManager()
+
+        let telemetry = LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
+        let onboardingConfiguration = Configuration(telemetryEnabled: telemetry)
+        onboardingCoordinator = OnboardingCoordinator(configuration: onboardingConfiguration)
+        onboardingCoordinator?.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: .AppStateManager.displayStateChange, object: nil)
     }
@@ -81,17 +90,22 @@ final class OnboardingModuleService {
 }
 
 extension OnboardingModuleService: OnboardingService {
-    func showOnboarding(showFirstConnection: Bool) {
-        log.debug("Starting onboarding \(showFirstConnection ? "A" : "B")", category: .app)
-
-        onboardingCoordinator = OnboardingCoordinator(configuration: Configuration(showFirstConnection: showFirstConnection))
-        onboardingCoordinator?.delegate = self
+    func showOnboarding() {
+        log.debug("Starting onboarding", category: .app)
         let viewController = onboardingCoordinator!.start()
         windowService.show(viewController: viewController)
     }
 }
 
 extension OnboardingModuleService: OnboardingCoordinatorDelegate {
+    func preferenceChangeUsageData(telemetryUsageData: Bool) {
+        propertiesManager.telemetryUsageData = telemetryUsageData
+    }
+
+    func preferenceChangeCrashReports(telemetryCrashReports: Bool) {
+        propertiesManager.telemetryCrashReports = telemetryCrashReports
+    }
+
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion) {
         planService.createPlusPlanUI { result in
             switch result {

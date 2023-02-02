@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 public struct Colors {
     public let background: UIColor
@@ -64,9 +65,28 @@ public struct Constants {
 public struct Configuration {
     let colors: Colors
     let constants: Constants
+    let telemetryEnabled: Bool
 
-    public init(colors: Colors, constants: Constants) {
+    public init(colors: Colors,
+                constants: Constants,
+                telemetryEnabled: Bool) {
         self.colors = colors
         self.constants = constants
+        self.telemetryEnabled = telemetryEnabled
     }
 }
+
+extension UIColor {
+    var suColor: Color { Color(self) }
+}
+
+let previewColors = Colors(background: UIColor(red: 28/255, green: 27/255, blue: 35/255, alpha: 1),
+                           text: .white,
+                           textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
+                           brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
+                           weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
+                           activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1),
+                           secondaryBackground: UIColor(red: 41/255, green: 39/255, blue: 50/255, alpha: 1),
+                           textInverted: .black,
+                           notification: .white,
+                           weakInteraction: UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1))

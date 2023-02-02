@@ -65,6 +65,9 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
+
+    var telemetryUsageData: Bool { get set }
+    var telemetryCrashReports: Bool { get set }
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -188,6 +191,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case wireguardConfig = "WireguardConfig"
         case smartProtocolConfig = "SmartProtocolConfig"
         case ratingSettings = "RatingSettings"
+
+        case telemetryUsageData = "TelemetryUsageData"
+        case telemetryCrashReports = "TelemetryCrashReports"
 
         #if os(macOS)
         case forceExtensionUpgrade = "ForceExtensionUpgrade"
@@ -347,6 +353,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.killSwitch, notifyChangesWith: PropertiesManager.killSwitchNotification)
     public var killSwitch: Bool
+
+    @BoolProperty(.telemetryUsageData)
+    public var telemetryUsageData: Bool
+
+    @BoolProperty(.telemetryCrashReports)
+    public var telemetryCrashReports: Bool
 
     public var excludeLocalNetworks: Bool {
         get {

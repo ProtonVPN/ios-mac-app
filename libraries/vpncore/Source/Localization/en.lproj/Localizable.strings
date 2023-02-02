@@ -1437,6 +1437,9 @@
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS Widget";
 
+/* Menu point in settings screen */
+"_usage_statistics" = "Usage statistics";
+
 /* iOS widget: text for not-logged-in user */
 "_log_in_to_use_widget" = "Please log in to get started";
 "_vpnstatus_not_loggedin" = "You are not logged in to Proton VPN. Open the Proton VPN app and sign in.";

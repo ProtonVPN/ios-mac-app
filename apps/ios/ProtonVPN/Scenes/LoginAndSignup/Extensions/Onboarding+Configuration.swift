@@ -19,9 +19,25 @@
 import Foundation
 import Onboarding
 import vpncore
+import LocalFeatureFlags
 
 extension Configuration {
-    init(showFirstConnection: Bool) {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), textAccent: .textAccent(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .brandLighten20Color(), secondaryBackground: .secondaryBackgroundColor(), textInverted: .backgroundColor(), notification: .normalTextColor(), weakInteraction: .weakInteractionColor()), constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount, numberOfServers: AccountPlan.plus.serversCount, numberOfFreeServers: AccountPlan.free.serversCount, numberOfFreeCountries: AccountPlan.free.countriesCount, numberOfCountries: AccountPlan.plus.countriesCount))
+    init(telemetryEnabled: Bool) {
+        self.init(colors: Colors(background: .backgroundColor(),
+                                 text: .normalTextColor(),
+                                 textAccent: .textAccent(),
+                                 brand: .brandColor(),
+                                 weakText: .weakTextColor(),
+                                 activeBrandButton: .brandLighten20Color(),
+                                 secondaryBackground: .secondaryBackgroundColor(),
+                                 textInverted: .backgroundColor(),
+                                 notification: .normalTextColor(),
+                                 weakInteraction: .weakInteractionColor()),
+                  constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount,
+                                       numberOfServers: AccountPlan.plus.serversCount,
+                                       numberOfFreeServers: AccountPlan.free.serversCount,
+                                       numberOfFreeCountries: AccountPlan.free.countriesCount,
+                                       numberOfCountries: AccountPlan.plus.countriesCount),
+                  telemetryEnabled: telemetryEnabled)
     }
 }

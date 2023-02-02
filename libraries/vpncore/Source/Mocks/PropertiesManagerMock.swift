@@ -160,7 +160,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var connectionProtocol: ConnectionProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
-    
+
+    public var telemetryUsageData: Bool = true
+    public var telemetryCrashReports: Bool = true
+
     private var customBools: [String: Bool] = [:]
     private var defaultCustomBoolValue = false
     
@@ -180,6 +183,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         reportBugEmail = nil
+        telemetryUsageData = false
+        telemetryCrashReports = false
     }
     
     public func logCurrentState() {
