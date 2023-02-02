@@ -237,17 +237,16 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testLogoutCancelledWhenConnectedAndLogoutAlertCancelled() {
         login()
+        appStateManager.state = .connected(.init(username: "", address: ""))
 
         let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
-        appStateManager.state = .connected(.init(username: "", address: ""))
 
         alertService.logoutAlertAdded = { alert in
             alert.triggerHandler(forFirstActionOfType: .cancel)
             logoutAlertExpectation.fulfill()
         }
         manager.logOut() // logOut runs asynchronously but has no completion handler
-        wait(for: [logoutAlertExpectation, logoutFinishExpectation], timeout: asyncTimeout)
+        wait(for: [logoutAlertExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn, "Expected logOut to be cancelled when the logout is not confirmed")
         XCTAssertTrue(appStateManager.state.isConnected, "Logout should not stop the active connection if cancelled")
     }
@@ -278,7 +277,7 @@ class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     private let alertService: CoreAlertService
     private let appStateManager: AppStateManager
 
-    func makeNavigationService() -> NavigationService { NavigationService(container) }
+    func makeNavigationService() -> NavigationService { NavigationServiceMock(container) }
     func makePlanService() -> PlanService { PlanServiceMock() }
     func makeAuthKeychainHandle() -> AuthKeychainHandle { authKeychain }
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { container.makeAppCertificateRefreshManager() }
@@ -335,4 +334,8 @@ private extension SystemAlert {
     func triggerHandler(forFirstActionOfType type: PrimaryActionType) {
         actions.first { $0.style == type }?.handler?()
     }
+}
+
+class NavigationServiceMock: NavigationService {
+    override func sessionRefreshed() { }
 }
