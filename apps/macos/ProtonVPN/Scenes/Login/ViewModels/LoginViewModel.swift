@@ -97,7 +97,12 @@ final class LoginViewModel {
                 self?.silentlyCheckForUpdates()
             case let .failure(error):
                 self?.specialErrorCaseNotification(error)
-                self?.logInFailure?((error as NSError) == ProtonVpnErrorConst.userCredentialsMissing ? nil : error.localizedDescription)
+
+                if case ProtonVpnError.userCredentialsMissing = error {
+                    self?.logInFailure?(nil)
+                    return
+                }
+                self?.logInFailure?(error.localizedDescription)
             }
         }
     }

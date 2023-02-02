@@ -42,9 +42,15 @@ public enum ProtonVpnError: LocalizedError {
     case removeVpnProfileFailed
     case tlsInitialisation
     case tlsServerVerification
+    case vpnSessionInProgress
     
     // Keychain
     case keychainWriteFailed
+
+    // Credentials
+    case userCredentialsMissing
+    case userCredentialsExpired
+    case vpnCredentialsMissing
     
     // User
     case subuserWithoutSessions
@@ -75,28 +81,18 @@ public enum ProtonVpnError: LocalizedError {
             return LocalizedString.errorTlsInitialisation
         case .tlsServerVerification:
             return LocalizedString.errorTlsServerVerification
+        case .vpnSessionInProgress:
+            return LocalizedString.errorVpnSessionIsActive
         case .keychainWriteFailed:
             return LocalizedString.errorKeychainWrite
         case .subuserWithoutSessions:
             return LocalizedString.subuserAlertDescription1
+        case .userCredentialsMissing:
+            return LocalizedString.errorUserCredentialsMissing
+        case .userCredentialsExpired:
+            return LocalizedString.errorUserCredentialsExpired
+        case .vpnCredentialsMissing:
+            return LocalizedString.errorVpnCredentialsMissing
         }
     }
-}
-
-public class ProtonVpnErrorConst {
-    
-    public static let vpnSessionInProgress = NSError(code: ErrorCode.vpnSessionInProgress,
-                                              localizedDescription: LocalizedString.errorVpnSessionIsActive)
-    public static let userHasNoVpnAccess = NSError(code: ErrorCode.userHasNoVpnAccess,
-                                            localizedDescription: LocalizedString.errorUserHasNoVpnAccess)
-    public static let userHasNotSignedUp = NSError(code: ErrorCode.userHasNotSignedUp,
-                                            localizedDescription: LocalizedString.errorUserHasNotSignedUp)
-    public static let userIsOnWaitlist = NSError(code: ErrorCode.userIsOnWaitlist,
-                                          localizedDescription: LocalizedString.errorUserIsOnWaitlist)
-    public static let userCredentialsMissing = NSError(code: ErrorCode.userCredentialsMissing,
-                                                localizedDescription: LocalizedString.errorUserCredentialsMissing)
-    public static let userCredentialsExpired = NSError(code: ErrorCode.userCredentialsExpired,
-                                                localizedDescription: LocalizedString.errorUserCredentialsExpired)
-    public static let vpnCredentialsMissing = NSError(code: ErrorCode.vpnCredentialsMissing,
-                                               localizedDescription: LocalizedString.errorVpnCredentialsMissing)
 }
