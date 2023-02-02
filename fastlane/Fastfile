@@ -16,6 +16,10 @@
 $derived_data_path = "DerivedData"
 $keychain_name = ENV["CI_KEYCHAIN_NAME"]
 
+# Prevents timeouts during builds. More info: https://github.com/fastlane/fastlane/issues/10131
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
+ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
+
 desc "Run all Core iOS tests"
 lane :ios_core_test do
   simulator_name = ENV["CI_JOB_ID"]
