@@ -110,16 +110,3 @@ final class ServerItemViewModelCoreTests: XCTestCase {
         XCTAssertTrue(sut.partners.isEmpty)
     }
 }
-
-extension PartnerType {
-    static func onePartner(logicalIDs: [String] = ["abcde"]) -> PartnerType {
-        let partner = Partner(name: "Deutsche Welle",
-                              description: "Deutsche Welle, abbreviated to DW, is a German public, state-owned international broadcaster funded by the German federal tax budget.",
-                              iconURL: URL(string: "https://proton.me/favicon.ico"),
-                              logicalIDs: logicalIDs)
-        return .init(type: "News",
-                     description: "descr",
-                     iconURL: URL(string: "https://proton.me/favicon.ico"),
-                     partners: [partner])
-    }
-}

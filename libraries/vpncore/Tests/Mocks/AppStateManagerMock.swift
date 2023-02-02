@@ -24,6 +24,9 @@ import Foundation
 
 // Please update as/when needed
 public class AppStateManagerMock: AppStateManager {
+
+    public init() { }
+
     public var displayState: AppDisplayState = .disconnected {
         didSet {
             NotificationCenter.default.post(name: .AppStateManager.displayStateChange, object: displayState)

@@ -20,8 +20,7 @@ import Foundation
 import XCTest
 import NetworkExtension
 import VPNShared
-
-import vpncore
+@testable import vpncore
 
 /// - Note: To be implemented with remainder of protocol overrides feature.
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
