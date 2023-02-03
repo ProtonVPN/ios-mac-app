@@ -94,10 +94,10 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testSuccessfulLoginWithAuthCredentialsLogsIn() throws {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
 
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         manager.finishLogin(
             authCredentials: testAuthCredentials,
             success: {
@@ -114,11 +114,11 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testSuccessfulSilentLoginLogsIn() throws {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
 
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         manager.attemptSilentLogIn { result in
             loginExpectation.fulfill()
 
@@ -133,10 +133,10 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testSilentLoginWithMissingCredentialsFails() throws {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
 
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         manager.attemptSilentLogIn { result in
             loginExpectation.fulfill()
 
@@ -151,12 +151,12 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLoginSubuserWithoutSessionsFails() throws {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         vpnKeychain.credentials = subuserCredentials
         XCTAssertTrue(try vpnKeychain.fetchCached().isSubuserWithoutSessions, "Expected cached credentials to represent subuser without sessions")
 
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         manager.finishLogin(
             authCredentials: testAuthCredentials,
             success: {
@@ -178,14 +178,13 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     // MARK: Active VPN connection login tests
 
     func testConnectionDisconnectsWhenLoggingInDifferentUserAndAlertConfirmed() {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
         let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
-
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
             alert.triggerHandler(forFirstActionOfType: .confirmative)
@@ -202,14 +201,13 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testConnectionPersistsWhenLoggingInDifferentUserAndAlertCancelled() {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
         let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
         appStateManager.state = .connected(differentUserServerDescriptor)
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
-
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
         alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
             activeSessionAlertExpectation.fulfill()
             alert.triggerHandler(forFirstActionOfType: .cancel)
@@ -228,13 +226,12 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testConnectionPersistsWhenLoggingInSameUser() {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
         let sameUserServerDescriptor = ServerDescriptor(username: "username", address: "")
         appStateManager.state = .connected(sameUserServerDescriptor)
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = testAuthCredentials
-
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
 
         manager.attemptSilentLogIn(completion: { result in
             loginExpectation.fulfill()
@@ -252,61 +249,74 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
 
         manager.logOut() // logOut runs asynchronously but has no completion handler
+
         wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
         XCTAssertFalse(manager.loggedIn)
     }
 
     func testNoAlertShownOnLogoutWhenNotDisconnected() {
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
         login(with: testAuthCredentials)
         appStateManager.state = .disconnected
 
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
-
         manager.logOut() // logOut runs asynchronously but has no completion handler
+
         wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
         XCTAssertFalse(manager.loggedIn)
     }
 
     func testLogoutShowsNoAlertWhenConnecting() {
-        login(with: testAuthCredentials)
-
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        login(with: testAuthCredentials)
         appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
 
         manager.logOut() // logOut runs asynchronously but has no completion handler
+
+        wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
+        XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
+        XCTAssertTrue(appStateManager.state.isDisconnected, "Expected logOut to cancel the active connection attempt")
+    }
+
+    func testLogoutShowsNoAlertWhenConnectedButForceIsTrue() {
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        login(with: testAuthCredentials)
+        appStateManager.state = .connected(.init(username: "", address: ""))
+
+        manager.logOut(force: true, reason: "") // logOut runs asynchronously but has no completion handler
+
         wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
         XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
         XCTAssertTrue(appStateManager.state.isDisconnected, "Expected logOut to cancel the active connection attempt")
     }
 
     func testLogoutLogsOutWhenConnectedAndLogoutAlertConfirmed() {
-        login(with: testAuthCredentials)
-
         let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        login(with: testAuthCredentials)
         appStateManager.state = .connected(.init(username: "", address: ""))
-
         alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
             alert.triggerHandler(forFirstActionOfType: .confirmative)
             logoutAlertExpectation.fulfill()
         })
+
         manager.logOut() // logOut runs asynchronously but has no completion handler
+
         wait(for: [logoutAlertExpectation, logoutFinishExpectation], timeout: asyncTimeout)
         XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
         XCTAssertTrue(appStateManager.state.isDisconnected, "Expected logOut to disconnect the active connection")
     }
 
     func testLogoutCancelledWhenConnectedAndLogoutAlertCancelled() {
+        let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
         login(with: testAuthCredentials)
         appStateManager.state = .connected(.init(username: "", address: ""))
-
-        let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
-
         alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
             alert.triggerHandler(forFirstActionOfType: .cancel)
             logoutAlertExpectation.fulfill()
         })
+
         manager.logOut() // logOut runs asynchronously but has no completion handler
+
         wait(for: [logoutAlertExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn, "Expected logOut to be cancelled when the logout is not confirmed")
         XCTAssertTrue(appStateManager.state.isConnected, "Logout should not stop the active connection if cancelled")
@@ -316,12 +326,13 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     /// Convenience method for getting AppSessionManager into the logged in state
     func login(with authCredentials: AuthCredentials) {
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = authCredentials
-        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
 
         manager.attemptSilentLogIn(completion: { _ in loginExpectation.fulfill() })
+
         wait(for: [loginExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn)
     }
