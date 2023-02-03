@@ -19,8 +19,7 @@
 import Foundation
 import XCTest
 
-fileprivate let onboardingA = "StartAButton"
-fileprivate let onboardingB = "StartBButton"
+fileprivate let onboarding = "StartButton"
 fileprivate let takeATourButton = "TakeATourButton"
 fileprivate let welcomeTitle = "WelcomeTitle"
 fileprivate let welcomeDescription = "WelcomeSubtitle"
@@ -35,13 +34,8 @@ class OnboardingMainRobot {
         self.verify = Verify(app: app)
     }
     
-    func startOnboardingA() -> OnboardingMainRobot {
-        app.buttons[onboardingA].tap()
-        return OnboardingMainRobot(app: app)
-    }
-    
-    func startOnboardingB() -> OnboardingMainRobot {
-        app.buttons[onboardingB].tap()
+    func startOnboarding() -> OnboardingMainRobot {
+        app.buttons[onboarding].tap()
         return OnboardingMainRobot(app: app)
     }
     
@@ -67,9 +61,9 @@ class OnboardingMainRobot {
         }
         
         @discardableResult
-        func onboardingABScreen() -> OnboardingMainRobot {
-            XCTAssert(app.buttons[onboardingA].waitForExistence(timeout: 5))
-            XCTAssertTrue(app.buttons[onboardingA].exists)
+        func onboardingScreen() -> OnboardingMainRobot {
+            XCTAssert(app.buttons[onboarding].waitForExistence(timeout: 5))
+            XCTAssertTrue(app.buttons[onboarding].exists)
             return OnboardingMainRobot(app: app)
         }
     }

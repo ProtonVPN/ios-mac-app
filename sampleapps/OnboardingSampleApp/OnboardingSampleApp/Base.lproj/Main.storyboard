@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,26 +18,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7HQ-8o-y41">
-                                <rect key="frame" x="142" y="438" width="130" height="30"/>
+                                <rect key="frame" x="149" y="440" width="116" height="30"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Start onboarding A"/>
+                                <state key="normal" title="Start onboarding"/>
                                 <connections>
                                     <action selector="startATapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZkX-wQ-P9K"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZg-SG-xYD">
-                                <rect key="frame" x="142.5" y="484" width="129" height="30"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Start onboarding B"/>
-                                <connections>
-                                    <action selector="startBTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wr7-ln-9CR"/>
-                                </connections>
-                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5d4-Pr-WxZ">
-                                <rect key="frame" x="349" y="60" width="51" height="31"/>
+                                <rect key="frame" x="349" y="64" width="51" height="31"/>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Successful simulated VPN connection" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJ8-2g-bEY">
-                                <rect key="frame" x="16" y="65.5" width="325" height="20.5"/>
+                                <rect key="frame" x="16" y="69.5" width="325" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -48,18 +40,15 @@
                         <constraints>
                             <constraint firstItem="fJ8-2g-bEY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="55d-c9-TEI"/>
                             <constraint firstItem="fJ8-2g-bEY" firstAttribute="centerY" secondItem="5d4-Pr-WxZ" secondAttribute="centerY" id="6mE-UJ-dtK"/>
-                            <constraint firstItem="BZg-SG-xYD" firstAttribute="top" secondItem="7HQ-8o-y41" secondAttribute="bottom" constant="16" id="7xj-x3-IgV"/>
                             <constraint firstItem="7HQ-8o-y41" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Fnu-0r-F61"/>
                             <constraint firstItem="5d4-Pr-WxZ" firstAttribute="leading" secondItem="fJ8-2g-bEY" secondAttribute="trailing" constant="8" id="LaR-HZ-qbd"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5d4-Pr-WxZ" secondAttribute="trailing" constant="16" id="SSi-x0-Mwm"/>
                             <constraint firstItem="5d4-Pr-WxZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="WGa-Pa-CMu"/>
                             <constraint firstItem="7HQ-8o-y41" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aRR-KN-M8u"/>
-                            <constraint firstItem="BZg-SG-xYD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cC5-0j-7ZY"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="startAButton" destination="7HQ-8o-y41" id="OPn-GX-KLx"/>
-                        <outlet property="startBButton" destination="BZg-SG-xYD" id="Sk6-2U-Mx9"/>
                         <outlet property="vpnSuccessSwitch" destination="5d4-Pr-WxZ" id="uew-Ve-Lw6"/>
                     </connections>
                 </viewController>
@@ -76,7 +65,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpq-lY-C9y">
-                                <rect key="frame" x="154" y="438" width="106" height="30"/>
+                                <rect key="frame" x="154" y="440" width="106" height="30"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Plus purchased"/>
                                 <connections>

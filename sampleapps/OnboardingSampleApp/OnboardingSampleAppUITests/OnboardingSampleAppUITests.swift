@@ -36,9 +36,9 @@ final class OnboardingSampleAppUITests: XCTestCase {
 
     private lazy var onboardingMainRobot = OnboardingMainRobot(app: app)
 
-    func testStartOnboardingAConnectNowAndGetPlus() {
+    func testStartOnboardingConnectNowAndGetPlus() {
         onboardingMainRobot
-            .startOnboardingA()
+            .startOnboarding()
             .verify.welcomeScreenIsShown()
             .startUserOnboarding()
             .verify.onboardingFirstSlideIsShown()
@@ -57,12 +57,12 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .plusPlanIsPurchased()
             .verify.congratulationsScreenIsShown()
             .connectToAPlusServer()
-            .verify.onboardingABScreen()
+            .verify.onboardingScreen()
     }
 
-    func testStartOnboardingAConnectNowGetPlusAndSkipConnecting() {
+    func testStartOnboardingConnectNowGetPlusAndSkipConnecting() {
         onboardingMainRobot
-            .startOnboardingA()
+            .startOnboarding()
             .verify.welcomeScreenIsShown()
             .startUserOnboarding()
             .verify.onboardingFirstSlideIsShown()
@@ -81,12 +81,12 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .plusPlanIsPurchased()
             .verify.congratulationsScreenIsShown()
             .skip()
-            .verify.onboardingABScreen()
+            .verify.onboardingScreen()
     }
 
-    func testStartOnboardingAConnectNowFreePlan() {
+    func testStartOnboardingConnectNowFreePlan() {
         onboardingMainRobot
-            .startOnboardingA()
+            .startOnboarding()
             .verify.welcomeScreenIsShown()
             .startUserOnboarding()
             .verify.onboardingFirstSlideIsShown()
@@ -103,66 +103,6 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .nextStepA()
             .verify.accessAllCountriesScreenIsShown()
             .useFreePlanA()
-            .verify.onboardingABScreen()
-    }
-
-    func testStartOnboardingBConnectNowAndGetPlus() {
-        onboardingMainRobot
-            .startOnboardingB()
-            .verify.welcomeScreenIsShown()
-            .startUserOnboarding()
-            .verify.onboardingFirstSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.onboardingSecondSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.onboardingThirdSlideIsShown()
-            .nextStepB()
-            .verify.accessAllCountriesScreenIsShown()
-            .getPlus()
-            .plusPlanIsPurchased()
-            .verify.congratulationsScreenIsShown()
-            .connectToAPlusServer()
-            .verify.onboardingABScreen()
-    }
-
-    func testStartOnboardingBConnectNowGetPlusAndSkipConnecting() {
-        onboardingMainRobot
-            .startOnboardingB()
-            .verify.welcomeScreenIsShown()
-            .startUserOnboarding()
-            .verify.onboardingFirstSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.onboardingSecondSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.onboardingThirdSlideIsShown()
-            .nextStepB()
-            .verify.accessAllCountriesScreenIsShown()
-            .getPlus()
-            .plusPlanIsPurchased()
-            .verify.congratulationsScreenIsShown()
-            .skip()
-            .verify.onboardingABScreen()
-    }
-
-    func testStartOnboardingBConnectNowFreePlan() {
-        onboardingMainRobot
-            .startOnboardingB()
-            .verify.welcomeScreenIsShown()
-            .startUserOnboarding()
-            .verify.onboardingFirstSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.onboardingSecondSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.onboardingThirdSlideIsShown()
-            .nextStepB()
-            .verify.accessAllCountriesScreenIsShown()
-            .useFreePlanB()
-            .verify.onboardingFourSlideIsShown()
-            .nextOnboardingScreen()
-            .verify.establishConnectionScreenIsShown()
-            .connectNow()
-            .verify.connectionScreenIsShown()
-            .nextStepB()
-            .verify.onboardingABScreen()
+            .verify.onboardingScreen()
     }
 }

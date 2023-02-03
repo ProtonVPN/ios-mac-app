@@ -154,12 +154,7 @@ extension OnboardingCoordinator: WelcomeViewControllerDelegate {
 
 extension OnboardingCoordinator: TourViewControllerDelegate {
     func userDidRequestSkipTour() {
-        switch configuration.variant {
-        case .A:
-            showNoLogs()
-        case .B:
-            showUpsell()
-        }
+        showNoLogs()
     }
 }
 
@@ -167,13 +162,8 @@ extension OnboardingCoordinator: TourViewControllerDelegate {
 
 extension OnboardingCoordinator: ConnectedViewControllerDelegate {
     func userDidFinish() {
-        switch configuration.variant {
-        case .A:
-            onboardingFinished = true
-            showUpsell()
-        case .B:
-            delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
-        }
+        onboardingFinished = true
+        showUpsell()
     }
 }
 
@@ -204,18 +194,12 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
     public func shouldDismissUpsell() -> Bool {
-        switch configuration.variant {
-        case .A:
-            if onboardingFinished {
-                delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
-                return false
-            }
-
-            popOverNavigationController?.dismiss(animated: true, completion: nil)
-        case .B:
-            showNoLogs()
-            popOverNavigationController?.dismiss(animated: true, completion: nil)
+        if onboardingFinished {
+            delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
+            return false
         }
+
+        popOverNavigationController?.dismiss(animated: true, completion: nil)
         return false
     }
 

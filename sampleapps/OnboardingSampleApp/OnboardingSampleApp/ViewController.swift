@@ -30,19 +30,14 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
 
         vpnSuccessSwitch.accessibilityIdentifier = "VPNSuccessSwitch"
-        startAButton.accessibilityIdentifier = "StartAButton"
-        startBButton.accessibilityIdentifier = "StartBButton"
+        startAButton.accessibilityIdentifier = "StartButton"
     }
 
     @IBAction private func startATapped(_ sender: Any) {
-        startOnboarding(variant: .A)
+        startOnboarding()
     }
 
-    @IBAction private func startBTapped(_ sender: Any) {
-        startOnboarding(variant: .B)
-    }
-
-    private func startOnboarding(variant: OnboardingVariant) {
+    private func startOnboarding() {
         let colors = Colors(background: UIColor(red: 28/255, green: 27/255, blue: 35/255, alpha: 1),
                             text: .white,
                             textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
@@ -53,8 +48,13 @@ final class ViewController: UIViewController {
                             textInverted: .black,
                             notification: .white,
                             weakInteraction: UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1))
-        coordinator = OnboardingCoordinator(configuration: Configuration(variant: variant, colors: colors, constants: Constants(numberOfDevices: 10, numberOfServers: 1300, numberOfFreeServers: 23, numberOfFreeCountries: 3, numberOfCountries: 61)))
-coordinator.delegate = self
+        coordinator = OnboardingCoordinator(configuration: Configuration(colors: colors,
+                                                                         constants: Constants(numberOfDevices: 10,
+                                                                                              numberOfServers: 1300,
+                                                                                              numberOfFreeServers: 23,
+                                                                                              numberOfFreeCountries: 3,
+                                                                                              numberOfCountries: 61)))
+        coordinator.delegate = self
         let vc = coordinator.start()
         present(vc, animated: true, completion: nil)
     }
