@@ -62,13 +62,11 @@ public struct Constants {
 }
 
 public struct Configuration {
-    let variant: OnboardingVariant
     let colors: Colors
     let constants: Constants
 
-    public init(variant: OnboardingVariant, colors: Colors, constants: Constants) {
+    public init(colors: Colors, constants: Constants) {
         self.colors = colors
-        self.variant = variant
         self.constants = constants
     }
 }
