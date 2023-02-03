@@ -73,6 +73,7 @@ final class TwoFactorView: NSView {
         twoFactorTextField.font = .themeFont(.paragraph)
         twoFactorTextField.placeholderAttributedString = LocalizedString.twoFactorCode.styled(.weak, font: .themeFont(.small), alignment: .left)
         twoFactorTextField.usesSingleLineMode = true
+        twoFactorTextField.setAccessibilityIdentifier("twoFactorTextField")
 
         twoFactorButton.isEnabled = false
         twoFactorButton.target = self

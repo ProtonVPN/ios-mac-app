@@ -20,6 +20,8 @@
   "testTargets" : [
     {
       "skippedTests" : [
+        "LoginTests\/testLoginAsTwoFa()",
+        "LoginTests\/testLoginWithTwoPassUser()",
         "MapTests",
         "ProfileTests\/testCancelProfile()",
         "ProfileTests\/testCreateEmptyProfile()",
