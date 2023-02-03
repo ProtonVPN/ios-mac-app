@@ -82,30 +82,32 @@ class LoginTests: ProtonVPNUITests {
     }
     
     func testLoginWithTwoPassUser() {
-            loginAsTwoPassUser()
-        }
+        loginAsTwoPassUser()
+    }
         
-        func testLoginAsTwoFa() {
-            let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
-            
-            loginRobot
-                .loginUser(credentials: twofausercredentials[0])
-            twoFaRobot
-                .verify.twoFaAuthenticationIsShown()
-                .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
-            mainRobot
-                .verify.checkUserIsLoggedIn()
-        }
+    func testLoginAsTwoFa() {
         
-        func testLoginWithTwoPassAnd2FAUser() {
-            let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
+        let twofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twofausercredentials", withExtension: "plist")!)
             
-            loginRobot
-                .loginUser(credentials: twopasstwofausercredentials[0])
-            twoFaRobot
-                .verify.twoFaAuthenticationIsShown()
-                .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
-            mainRobot
-                .verify.checkUserIsLoggedIn()
-        }
+        loginRobot
+            .loginUser(credentials: twofausercredentials[0])
+        twoFaRobot
+            .verify.twoFaAuthenticationIsShown()
+            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+        mainRobot
+            .verify.checkUserIsLoggedIn()
+    }
+        
+    func testLoginWithTwoPassAnd2FAUser() {
+            
+        let twopasstwofausercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopasstwofausercredentials", withExtension: "plist")!)
+            
+        loginRobot
+            .loginUser(credentials: twopasstwofausercredentials[0])
+        twoFaRobot
+            .verify.twoFaAuthenticationIsShown()
+            .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+        mainRobot
+            .verify.checkUserIsLoggedIn()
+    }
 }

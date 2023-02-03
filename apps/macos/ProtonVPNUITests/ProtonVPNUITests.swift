@@ -48,7 +48,6 @@ class ProtonVPNUITests: XCTestCase {
     private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     private let twopassusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "twopassusercredentials", withExtension: "plist")!)
 
-      
     func loginAsFreeUser() {
         login(withCredentials: credentials[0])
     }
