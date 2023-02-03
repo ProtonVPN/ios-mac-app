@@ -175,6 +175,77 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         wait(for: [loginExpectation], timeout: asyncTimeout)
     }
 
+    // MARK: Active VPN connection login tests
+
+    func testConnectionDisconnectsWhenLoggingInDifferentUserAndAlertConfirmed() {
+        let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
+        appStateManager.state = .connected(differentUserServerDescriptor)
+        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        authKeychain.credentials = testAuthCredentials
+
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
+        alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
+            activeSessionAlertExpectation.fulfill()
+            alert.triggerHandler(forFirstActionOfType: .confirmative)
+        })
+
+        manager.attemptSilentLogIn(completion: { result in
+            loginExpectation.fulfill()
+            guard case .success = result else { return XCTFail("Expected success logging in, but got: \(result)") }
+        })
+
+        wait(for: [activeSessionAlertExpectation, loginExpectation], timeout: asyncTimeout)
+        XCTAssertTrue(manager.loggedIn)
+        XCTAssertTrue(appStateManager.state.isDisconnected)
+    }
+
+    func testConnectionPersistsWhenLoggingInDifferentUserAndAlertCancelled() {
+        let differentUserServerDescriptor = ServerDescriptor(username: "Alice", address: "")
+        appStateManager.state = .connected(differentUserServerDescriptor)
+        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        authKeychain.credentials = testAuthCredentials
+
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+        let activeSessionAlertExpectation = XCTestExpectation(description: "Active session alert should be shown")
+        alertService.addAlertHandler(for: ActiveSessionWarningAlert.self, handler: { alert in
+            activeSessionAlertExpectation.fulfill()
+            alert.triggerHandler(forFirstActionOfType: .cancel)
+        })
+
+        manager.attemptSilentLogIn(completion: { result in
+            loginExpectation.fulfill()
+            guard case .failure(ProtonVpnError.vpnSessionInProgress) = result else {
+                return XCTFail("Expected success logging in, but got: \(result)")
+            }
+        })
+
+        wait(for: [activeSessionAlertExpectation], timeout: asyncTimeout)
+        XCTAssertTrue(appStateManager.state.isConnected)
+        XCTAssertFalse(manager.loggedIn)
+    }
+
+    func testConnectionPersistsWhenLoggingInSameUser() {
+        let sameUserServerDescriptor = ServerDescriptor(username: "username", address: "")
+        appStateManager.state = .connected(sameUserServerDescriptor)
+        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        authKeychain.credentials = testAuthCredentials
+
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+
+        manager.attemptSilentLogIn(completion: { result in
+            loginExpectation.fulfill()
+            guard case .success = result else { return XCTFail("Expected success logging in, but got: \(result)") }
+        })
+
+        wait(for: [loginExpectation], timeout: asyncTimeout)
+        XCTAssertTrue(appStateManager.state.isConnected)
+        XCTAssertTrue(manager.loggedIn)
+    }
+
     // MARK: Logout tests
 
     func testNoAlertShownOnLogoutWhenNotLoggedIn() {
