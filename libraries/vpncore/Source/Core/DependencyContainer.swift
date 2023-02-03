@@ -21,6 +21,7 @@ import NetworkExtension
 import Timer
 import PMLogger
 import VPNShared
+import Dependencies
 
 typealias PropertiesToOverride = DoHVPNFactory &
                                 NetworkingDelegateFactory &
@@ -61,6 +62,8 @@ open class Container: PropertiesToOverride {
         }
     }
 
+    @Dependency(\.date) var date
+
     public let config: Config
 
     // Lazy instances - get allocated once, and stay allocated
@@ -92,9 +95,12 @@ open class Container: PropertiesToOverride {
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
     private lazy var _telemetryServiceTask = Task {
-        await TelemetryServiceImplementation(factory: self,
+        let buffer = await withDependencies(from: self) {
+            return await TelemetryBuffer(retrievingFromStorage: true)
+        }
+        return await TelemetryServiceImplementation(factory: self,
                                              timer: ConnectionTimer(),
-                                             buffer: await TelemetryBuffer(retrievingFromStorage: true))
+                                             buffer: buffer)
     }
 
     // Transient instances - get allocated as many times as they're referenced
