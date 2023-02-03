@@ -111,6 +111,9 @@
 		B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270C2D527BE952400EC7B53 /* SearchTests.swift */; };
 		B2AA47D027CE6FE40021E632 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AA47CF27CE6FE40021E632 /* MapTests.swift */; };
 		B2AA47D227CE6FF80021E632 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2AA47D127CE6FF80021E632 /* MapRobot.swift */; };
+		B2C6CF76298D3EFD0039BC90 /* TwoFaRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C6CF75298D3EFD0039BC90 /* TwoFaRobot.swift */; };
+		B2C6CF78298D3F370039BC90 /* GenerateTwoFaCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C6CF77298D3F370039BC90 /* GenerateTwoFaCode.swift */; };
+		B2C6CF7F298D42A10039BC90 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
 		BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */; };
 		C1D8B29C374D69FA4F2C6917 /* Pods_ProtonVPN_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C95ED982EF6ED3C236E5B89A /* Pods_ProtonVPN_OpenVPN.framework */; };
 		CCEFA9F416993B0624BEE7E5 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */; };
@@ -123,8 +126,12 @@
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
-		D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5204E6E22A1397F00FFAB99 /* credentials.plist */; };
 		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
+		D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DD2990ECEB00733E45 /* credentials.plist */; };
+		D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */; };
+		D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E1299124D800733E45 /* twofausercredentials.plist */; };
+		D54BB5E42991253600733E45 /* twopassusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E32991253600733E45 /* twopassusercredentials.plist */; };
+		D54BB5E629912D8100733E45 /* twopasstwofausercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54BB5E529912D8100733E45 /* twopasstwofausercredentials.plist */; };
 		D557D57E264AC337007E4396 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D557D540264AC337007E4396 /* Localizable.strings */; };
 		D557D57F264AC337007E4396 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D557D542264AC337007E4396 /* Localizable.stringsdict */; };
 		D557D580264AC337007E4396 /* Intents.strings in Resources */ = {isa = PBXBuildFile; fileRef = D557D544264AC337007E4396 /* Intents.strings */; };
@@ -239,7 +246,6 @@
 		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
-		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
 		E9200ED826612F4200BBAB9C /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
@@ -668,6 +674,8 @@
 		B270C2D727BE953100EC7B53 /* SearchRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRobot.swift; sourceTree = "<group>"; };
 		B2AA47CF27CE6FE40021E632 /* MapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTests.swift; path = ../../../../macos/ProtonVPNUITests/Tests/Components/MapTests.swift; sourceTree = "<group>"; };
 		B2AA47D127CE6FF80021E632 /* MapRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapRobot.swift; path = ../../../../macos/ProtonVPNUITests/Robots/Components/MapRobot.swift; sourceTree = "<group>"; };
+		B2C6CF75298D3EFD0039BC90 /* TwoFaRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoFaRobot.swift; sourceTree = "<group>"; };
+		B2C6CF77298D3F370039BC90 /* GenerateTwoFaCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateTwoFaCode.swift; sourceTree = "<group>"; };
 		B2E466D5298055380026ED26 /* ProtonVPN-macOS-Unit-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-macOS-Unit-All.xctestplan"; sourceTree = "<group>"; };
 		B2E466D6298055750026ED26 /* ProtonVPN-macOS-UI-All.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-macOS-UI-All.xctestplan"; sourceTree = "<group>"; };
 		B2E466D7298055920026ED26 /* ProtonVPN-macOS-UI-Smoke.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ProtonVPN-macOS-UI-Smoke.xctestplan"; sourceTree = "<group>"; };
@@ -682,11 +690,15 @@
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
-		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D53D133C2732A57200B9D740 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D53D133D2732A57800B9D740 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = tr; path = tr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D53D133E2732A57C00B9D740 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Intents.strings; sourceTree = "<group>"; };
 		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
+		D54BB5DD2990ECEB00733E45 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
+		D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
+		D54BB5E1299124D800733E45 /* twofausercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twofausercredentials.plist; sourceTree = "<group>"; };
+		D54BB5E32991253600733E45 /* twopassusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twopassusercredentials.plist; sourceTree = "<group>"; };
+		D54BB5E529912D8100733E45 /* twopasstwofausercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = twopasstwofausercredentials.plist; sourceTree = "<group>"; };
 		D557D541264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D557D543264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D557D545264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -852,11 +864,9 @@
 		E5EB08C8281FDF4800F29B20 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
-		E5F1137F28180D1F0014C219 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = /macos/ProtonVPN/Scenes/Login/ViewControllers/LoadingView.swift; sourceTree = "<absolute>"; };
 		E5FFC8992816AEFC00E355DA /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../macos/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
-		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E90F956527E09D6600A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		E90F956627E09DBB00A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E90F956727E09DD400A51A42 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -1361,6 +1371,7 @@
 			isa = PBXGroup;
 			children = (
 				B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */,
+				B2C6CF75298D3EFD0039BC90 /* TwoFaRobot.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1445,6 +1456,7 @@
 			isa = PBXGroup;
 			children = (
 				D5204E6C22A138C900FFAB99 /* Credentials.swift */,
+				B2C6CF77298D3F370039BC90 /* GenerateTwoFaCode.swift */,
 				B22F32F7278DC07800DBB8CA /* StringUtils.swift */,
 				E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */,
 			);
@@ -1515,8 +1527,11 @@
 				D5911708229F9574005829DA /* ProtonVPNUITests.swift */,
 				D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */,
 				D591170A229F9574005829DA /* Info.plist */,
-				D5204E6E22A1397F00FFAB99 /* credentials.plist */,
-				E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */,
+				D54BB5DD2990ECEB00733E45 /* credentials.plist */,
+				D54BB5E32991253600733E45 /* twopassusercredentials.plist */,
+				D54BB5E529912D8100733E45 /* twopasstwofausercredentials.plist */,
+				D54BB5E1299124D800733E45 /* twofausercredentials.plist */,
+				D54BB5DE2990ECEB00733E45 /* subusercredentials.plist */,
 			);
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
@@ -1567,14 +1582,6 @@
 				D549C8F5262EF4B900A0903F /* ViewModels */,
 			);
 			path = ProtonVPNTests;
-			sourceTree = "<group>";
-		};
-		E565986628200A5D004F2240 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E5F1137F28180D1F0014C219 /* LoadingView.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		E5E27AAE27C3741400C2B6C0 /* Upsell */ = {
@@ -1796,7 +1803,6 @@
 				EED534821EEC112000013607 /* Products */,
 				7461E535C10E886FBC226611 /* Frameworks */,
 				CF4CBD52B87483E7CE0F1406 /* Pods */,
-				E565986628200A5D004F2240 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2998,8 +3004,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */,
-				D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */,
+				D54BB5E42991253600733E45 /* twopassusercredentials.plist in Resources */,
+				D54BB5E629912D8100733E45 /* twopasstwofausercredentials.plist in Resources */,
+				D54BB5E02990ECEB00733E45 /* subusercredentials.plist in Resources */,
+				D54BB5E2299124D800733E45 /* twofausercredentials.plist in Resources */,
+				D54BB5DF2990ECEB00733E45 /* credentials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3465,9 +3474,12 @@
 				B270C2CC27BBAC7900EC7B53 /* QuickSettingsTests.swift in Sources */,
 				B270C2DA27BE9AD100EC7B53 /* SearchTests.swift in Sources */,
 				D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */,
+				B2C6CF78298D3F370039BC90 /* GenerateTwoFaCode.swift in Sources */,
+				B2C6CF7F298D42A10039BC90 /* ObfuscatedConstants.swift in Sources */,
 				B270C2CA27BBA9DD00EC7B53 /* QuickSettingsRobot.swift in Sources */,
 				B22F3302278DC70900DBB8CA /* ProfileRobot.swift in Sources */,
 				B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */,
+				B2C6CF76298D3EFD0039BC90 /* TwoFaRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

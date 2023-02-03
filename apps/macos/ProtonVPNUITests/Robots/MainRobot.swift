@@ -23,6 +23,7 @@ fileprivate let qcButton = "Quick Connect"
 fileprivate let preferencesTitle = "Preferences"
 fileprivate let menuItemReportAnIssue = "Report an Issue..."
 fileprivate let menuItemProfiles = "Overview"
+fileprivate let statusTitle = "You are not connected"
 
 class MainRobot {
 
@@ -56,6 +57,13 @@ class MainRobot {
         func checkSettingsModalIsClosed() -> SettingsRobot {
             XCTAssertFalse(app.buttons[preferencesTitle].exists)
             XCTAssertTrue(app.buttons[qcButton].exists)
+            return SettingsRobot()
+        }
+        
+        @discardableResult
+        func checkUserIsLoggedIn() -> SettingsRobot {
+            XCTAssert(app.staticTexts[statusTitle].waitForExistence(timeout: 10))
+            XCTAssert(app.buttons[qcButton].waitForExistence(timeout: 10))
             return SettingsRobot()
         }
     }
