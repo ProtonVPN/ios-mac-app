@@ -268,7 +268,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
 class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
-    @Dependency(\.date) var clock
+    @Dependency(\.date) var date
 
     private let container = DependencyContainer()
     private let vpnAPIService: VpnApiService
