@@ -219,7 +219,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             self?.navService?.sessionRefreshed()
         }
 
-        if await !appState.isConnected {
+        guard await appState.isConnected else {
             return
         }
 
@@ -269,7 +269,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     func logOut(force: Bool, reason: String?) {
         switch appStateManager.state {
         case .connected:
-            confirmLogout(force: force) {
+            confirmLogout(showAlert: !force) {
                 self.appStateManager.disconnect { self.logoutRoutine(reason: reason) }
             }
         case .connecting:
@@ -279,8 +279,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         }
     }
 
-    private func confirmLogout(force: Bool, completion: @escaping () -> Void) {
-        if force {
+    private func confirmLogout(showAlert: Bool, completion: @escaping () -> Void) {
+        guard showAlert else {
             completion()
             return
         }
