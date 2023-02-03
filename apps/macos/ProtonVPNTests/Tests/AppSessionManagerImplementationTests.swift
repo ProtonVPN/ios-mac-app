@@ -23,21 +23,20 @@ import Dependencies
 @testable import ProtonVPN
 
 fileprivate let testData = MockTestData()
-fileprivate let testDate = Date(timeIntervalSinceReferenceDate: 8000000000)
-fileprivate let mockCredentials = AuthCredentials(username: "", accessToken: "", refreshToken: "", sessionId: "", userId: "", expiration: testDate, scopes: [])
-fileprivate let vpnCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
-fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: testDate, accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil)
+fileprivate let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", expiration: Date(), scopes: [])
+fileprivate let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil)
 
 final class AppSessionManagerImplementationTests: XCTestCase {
 
+    fileprivate var alertService: AppSessionManagerAlertServiceMock!
+    fileprivate var authKeychain: AuthKeychainHandleMock!
     var propertiesManager: PropertiesManagerMock!
     var serverStorage: ServerStorageMock!
     var networking: NetworkingMock!
     var networkingDelegate: FullNetworkingMockDelegate!
     var manager: AppSessionManagerImplementation!
-    var authKeychain: AuthKeychainHandleMock!
     var vpnKeychain: VpnKeychainMock!
-    var alertService: AppSessionManagerAlertServiceMock!
     var appStateManager: AppStateManagerMock!
 
     let asyncTimeout: TimeInterval = 1
@@ -88,7 +87,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate = nil
     }
 
-    // MARK: Login tests
+    // MARK: Basic login tests
 
     func testLoggedInFalseBeforeLogin() throws {
         XCTAssertFalse(manager.loggedIn)
@@ -100,7 +99,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         manager.finishLogin(
-            authCredentials: mockCredentials,
+            authCredentials: testAuthCredentials,
             success: {
                 loginExpectation.fulfill()
                 XCTAssertTrue(self.manager.loggedIn)
@@ -117,7 +116,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     func testSuccessfulSilentLoginLogsIn() throws {
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        authKeychain.credentials = mockCredentials
+        authKeychain.credentials = testAuthCredentials
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out while logging in")
         manager.attemptSilentLogIn { result in
@@ -159,7 +158,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out")
         manager.finishLogin(
-            authCredentials: mockCredentials,
+            authCredentials: testAuthCredentials,
             success: {
                 loginExpectation.fulfill()
                 XCTFail("Expected \(ProtonVpnError.subuserWithoutSessions) but sucessfully logged in instead.")
@@ -180,9 +179,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testNoAlertShownOnLogoutWhenNotLoggedIn() {
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
-        alertService.logoutAlertAdded = { alert in
-            XCTFail("Logout confirmation alert should not be displayed if the user is not logged in")
-        }
 
         manager.logOut() // logOut runs asynchronously but has no completion handler
         wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
@@ -190,13 +186,10 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testNoAlertShownOnLogoutWhenNotDisconnected() {
-        login()
+        login(with: testAuthCredentials)
         appStateManager.state = .disconnected
 
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
-        alertService.logoutAlertAdded = { alert in
-            XCTFail("Logout confirmation alert should not be displayed if the user is not logged in")
-        }
 
         manager.logOut() // logOut runs asynchronously but has no completion handler
         wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
@@ -204,14 +197,11 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLogoutShowsNoAlertWhenConnecting() {
-        login()
+        login(with: testAuthCredentials)
 
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
         appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
 
-        alertService.logoutAlertAdded = { alert in
-            XCTFail("Logout confirmation alert should not be displayed if there is no active connection")
-        }
         manager.logOut() // logOut runs asynchronously but has no completion handler
         wait(for: [logoutFinishExpectation], timeout: asyncTimeout)
         XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
@@ -219,16 +209,16 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLogoutLogsOutWhenConnectedAndLogoutAlertConfirmed() {
-        login()
+        login(with: testAuthCredentials)
 
         let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
         let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
         appStateManager.state = .connected(.init(username: "", address: ""))
 
-        alertService.logoutAlertAdded = { alert in
+        alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
             alert.triggerHandler(forFirstActionOfType: .confirmative)
             logoutAlertExpectation.fulfill()
-        }
+        })
         manager.logOut() // logOut runs asynchronously but has no completion handler
         wait(for: [logoutAlertExpectation, logoutFinishExpectation], timeout: asyncTimeout)
         XCTAssertFalse(manager.loggedIn, "Expected logOut to successfully log the user out")
@@ -236,15 +226,15 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLogoutCancelledWhenConnectedAndLogoutAlertCancelled() {
-        login()
+        login(with: testAuthCredentials)
         appStateManager.state = .connected(.init(username: "", address: ""))
 
         let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
 
-        alertService.logoutAlertAdded = { alert in
+        alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
             alert.triggerHandler(forFirstActionOfType: .cancel)
             logoutAlertExpectation.fulfill()
-        }
+        })
         manager.logOut() // logOut runs asynchronously but has no completion handler
         wait(for: [logoutAlertExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn, "Expected logOut to be cancelled when the logout is not confirmed")
@@ -254,10 +244,10 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     // MARK: Helpers
 
     /// Convenience method for getting AppSessionManager into the logged in state
-    func login() {
+    func login(with authCredentials: AuthCredentials) {
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
-        authKeychain.credentials = mockCredentials
+        authKeychain.credentials = authCredentials
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
 
         manager.attemptSilentLogIn(completion: { _ in loginExpectation.fulfill() })
@@ -266,7 +256,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 }
 
-class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
+fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
     @Dependency(\.date) var date
 
@@ -310,7 +300,7 @@ class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
 }
 
-class AuthKeychainHandleMock: AuthKeychainHandle {
+fileprivate class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
 
     func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws { }
@@ -318,24 +308,29 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
     func clear() { }
 }
 
-class AppSessionManagerAlertServiceMock: CoreAlertService {
-    var logoutAlertAdded: ((LogoutWarningLongAlert) -> Void)?
+fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
+    private var alertHandlers: [(alertType: SystemAlert.Type, handler: (SystemAlert) -> Void)] = []
 
     init() {}
 
+    func addAlertHandler(for alertType: SystemAlert.Type, handler: @escaping (SystemAlert) -> Void) {
+        alertHandlers.append((alertType, handler))
+    }
+
     func push(alert: SystemAlert) {
-        if let logoutAlert = alert as? LogoutWarningLongAlert {
-            logoutAlertAdded?(logoutAlert)
+        guard let alertHandler = alertHandlers.first(where: { type(of: alert) == $0.alertType }) else {
+            return XCTFail("Unexpected alert was shown: \(alert)")
         }
+        alertHandler.handler(alert)
     }
 }
 
-private extension SystemAlert {
+fileprivate extension SystemAlert {
     func triggerHandler(forFirstActionOfType type: PrimaryActionType) {
         actions.first { $0.style == type }?.handler?()
     }
 }
 
-class NavigationServiceMock: NavigationService {
+fileprivate class NavigationServiceMock: NavigationService {
     override func sessionRefreshed() { }
 }
