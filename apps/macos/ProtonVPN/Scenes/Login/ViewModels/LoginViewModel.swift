@@ -186,7 +186,7 @@ final class LoginViewModel {
             alertService.push(alert: alert)
             logInFailure?(nil)
         } else if case ProtonVpnError.subuserWithoutSessions = error {
-            let userRole = propertiesManager.user?.role ?? 0
+            let userRole = propertiesManager.userRole ?? 0
             let role = SubuserWithoutConnectionsAlert.Role(rawValue: userRole) ?? .noOrganization
             alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
             isTwoFactorStep = false
