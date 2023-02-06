@@ -87,6 +87,10 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
         setupLogging()
         setLocalFeatureFlagOverrides(tunnelProviderProtocol?.featureFlagOverrides)
 
+        #if FREQUENT_AUTH_CERT_REFRESH
+        CertificateConstants.certificateDuration = "11 minutes"
+        #endif
+
         guard isEnabled(OpenVPNFeature.iosCertificates) else {
             return
         }
