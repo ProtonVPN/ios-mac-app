@@ -163,7 +163,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                 self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
                 self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
                 self.propertiesManager.partnerTypes = properties.partnersResponse?.partnerTypes ?? []
-                self.propertiesManager.user = properties.user
+                self.propertiesManager.userRole = properties.userRole
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
                 self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval

@@ -96,7 +96,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var streamingServices: StreamingDictServices { get set }
     var partnerTypes: [PartnerType] { get set }
-    var user: User? { get set }
+    var userRole: Int? { get set }
     var streamingResourcesUrl: String? { get set }
 
     var connectionProtocol: ConnectionProtocol { get }
@@ -182,7 +182,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case smartProtocol = "smartProtocol"
         case streamingServices = "streamingServices"
         case partnerTypes = "partnerTypes"
-        case user = "user"
+        case userRole = "userRole"
         case streamingResourcesUrl = "streamingResourcesUrl"
 
         case wireguardConfig = "WireguardConfig"
@@ -378,7 +378,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
     @InitializedProperty(.partnerTypes) public var partnerTypes: [PartnerType]
-    @Property(.user) public var user: User?
+    @Property(.userRole) public var userRole: Int?
 
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
 
