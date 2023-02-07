@@ -321,11 +321,16 @@ extension NavigationService: SettingsService {
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        TelemetrySettingsViewController(
-            preferenceChangeUsageData: { [weak self] isOn in self?.propertiesManager.telemetryUsageData = isOn },
-            preferenceChangeCrashReports: { [weak self] isOn in self?.propertiesManager.telemetryCrashReports = isOn },
-            usageStatisticsOn: propertiesManager.telemetryUsageData,
-            crashReportsOn: propertiesManager.telemetryCrashReports,
+        let username = authKeychain.fetch()?.username ?? ""
+        return TelemetrySettingsViewController(
+            preferenceChangeUsageData: { [weak self] isOn in
+                self?.propertiesManager.setTelemetryUsageData(for: username, enabled: isOn)
+            },
+            preferenceChangeCrashReports: { [weak self] isOn in
+                self?.propertiesManager.setTelemetryCrashReports(for: username, enabled: isOn)
+            },
+            usageStatisticsOn: propertiesManager.getTelemetryUsageData(for: username),
+            crashReportsOn: propertiesManager.getTelemetryCrashReports(for: username),
             title: LocalizedString.usageStatistics
         )
     }
