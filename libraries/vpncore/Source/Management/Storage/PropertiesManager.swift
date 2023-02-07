@@ -66,8 +66,10 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
 
-    var telemetryUsageData: Bool { get set }
-    var telemetryCrashReports: Bool { get set }
+    func getTelemetryUsageData(for username: String) -> Bool?
+    func getTelemetryCrashReports(for username: String) -> Bool?
+    func setTelemetryUsageData(for username: String, enabled: Bool)
+    func setTelemetryCrashReports(for username: String, enabled: Bool)
     
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
@@ -236,6 +238,22 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
+    public func getTelemetryUsageData(for username: String) -> Bool? {
+        storage.defaults.bool(forKey: Keys.telemetryUsageData.rawValue + username)
+    }
+
+    public func setTelemetryUsageData(for username: String, enabled: Bool) {
+        storage.setValue(enabled, forKey: Keys.telemetryUsageData.rawValue + username)
+    }
+
+    public func getTelemetryCrashReports(for username: String) -> Bool? {
+        storage.defaults.bool(forKey: Keys.telemetryCrashReports.rawValue + username)
+    }
+
+    public func setTelemetryCrashReports(for username: String, enabled: Bool) {
+        storage.setValue(enabled, forKey: Keys.telemetryCrashReports.rawValue + username)
+    }
+
     // Use to do first time connecting stuff if needed
     @BoolProperty(.connectOnDemand, notifyChangesWith: PropertiesManager.hasConnectedNotification)
     
@@ -353,12 +371,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.killSwitch, notifyChangesWith: PropertiesManager.killSwitchNotification)
     public var killSwitch: Bool
-
-    @BoolProperty(.telemetryUsageData)
-    public var telemetryUsageData: Bool
-
-    @BoolProperty(.telemetryCrashReports)
-    public var telemetryCrashReports: Bool
 
     public var excludeLocalNetworks: Bool {
         get {

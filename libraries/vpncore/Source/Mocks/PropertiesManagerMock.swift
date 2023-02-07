@@ -161,8 +161,10 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
 
-    public var telemetryUsageData: Bool = true
-    public var telemetryCrashReports: Bool = true
+    public func getTelemetryUsageData(for username: String) -> Bool? { return nil }
+    public func getTelemetryCrashReports(for username: String) -> Bool? { return nil }
+    public func setTelemetryUsageData(for username: String, enabled: Bool) { }
+    public func setTelemetryCrashReports(for username: String, enabled: Bool) { }
 
     private var customBools: [String: Bool] = [:]
     private var defaultCustomBoolValue = false
@@ -183,8 +185,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
         reportBugEmail = nil
-        telemetryUsageData = false
-        telemetryCrashReports = false
     }
     
     public func logCurrentState() {

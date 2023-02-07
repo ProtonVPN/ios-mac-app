@@ -19,6 +19,7 @@
 import Foundation
 import LocalFeatureFlags
 import ProtonCore_Networking
+import VPNShared
 import XCTest
 @testable import vpncore
 
@@ -33,8 +34,7 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 }
 
-class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, PropertiesManagerFactory, VpnKeychainFactory, TelemetryAPIFactory {
-
+class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, PropertiesManagerFactory, VpnKeychainFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
     lazy var telemetryApiMock = TelemetryAPIImplementationMock()
 
     func makeTelemetryAPI(networking: Networking) -> TelemetryAPI { telemetryApiMock }
@@ -49,6 +49,10 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
 
     func makeAppStateManager() -> AppStateManager {
         return appStateManager
+    }
+    
+    func makeAuthKeychainHandle() -> AuthKeychainHandle {
+        AuthKeychain(context: .mainApp)
     }
 
     let appStateManager: AppStateManager

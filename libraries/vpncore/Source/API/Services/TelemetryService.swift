@@ -19,6 +19,7 @@
 import Foundation
 import LocalFeatureFlags
 import Reachability
+import VPNShared
 
 public enum UserInitiatedVPNChange {
     case connect
@@ -54,7 +55,7 @@ public protocol TelemetryService: AnyObject {
 
 public class TelemetryServiceImplementation: TelemetryService {
 
-    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory
+    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory & AuthKeychainHandleFactory
 
     private let factory: Factory
 
@@ -62,6 +63,7 @@ public class TelemetryServiceImplementation: TelemetryService {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var telemetryAPI: TelemetryAPI = factory.makeTelemetryAPI(networking: networking)
 
     private var networkType: TelemetryDimensions.NetworkType = .other
@@ -264,7 +266,8 @@ public class TelemetryServiceImplementation: TelemetryService {
     /// we need to check if the user agreed to collecting telemetry data.
     private func report(event: TelemetryEvent) {
         guard LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) else { return }
-        guard propertiesManager.telemetryUsageData else { return }
+        guard let username = authKeychain.fetch()?.username,
+              propertiesManager.getTelemetryUsageData(for: username) == true else { return }
         Task {
             await sendEvent(event)
         }
