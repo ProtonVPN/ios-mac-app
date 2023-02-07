@@ -19,24 +19,12 @@
 import Foundation
 
 public enum UserAccountUpdateViewModel {
-    case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: Server, toServer: Server)
+    case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))
     case subscriptionDowngraded(numberOfCountries: Int, numberOfDevices: Int)
-    case pendingInvoicesReconnecting(fromServer: Server, toServer: Server)
+    case pendingInvoicesReconnecting(fromServer: (String, Image), toServer: (String, Image))
     case pendingInvoices
     case reachedDeviceLimit
     case reachedDevicePlanLimit(planName: String, numberOfDevices: Int)
-}
-
-extension UserAccountUpdateViewModel {
-    public struct Server {
-        public let name: String
-        public let flag: Image
-
-        public init(name: String, flag: Image) {
-            self.name = name
-            self.flag = flag
-        }
-    }
 }
 
 extension UserAccountUpdateViewModel {
@@ -120,7 +108,7 @@ extension UserAccountUpdateViewModel {
         Asset.checkmarkCircle.image
     }
 
-    public var fromServer: Server? {
+    public var fromServer: (String, Image)? {
         switch self {
         case .pendingInvoicesReconnecting(let fromServer, _):
             return fromServer
@@ -131,7 +119,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var toServer: Server? {
+    public var toServer: (String, Image)? {
         switch self {
         case .pendingInvoicesReconnecting(_, let toServer):
             return toServer

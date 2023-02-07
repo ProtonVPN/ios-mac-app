@@ -233,7 +233,7 @@ extension VpnManager {
 
     /// Asks NE for currently connected logical and ip ids. If these are not as expected last connection configuration is updated, so UI can show up-to-date info.
     func checkActiveServer() {
-        guard isEnabled(VpnReconnectionFeatureFlag()) else { return }
+        guard LocalFeatureFlags.isEnabled(VpnReconnectionFeatureFlag()) else { return }
         guard case .connected = state else { return }
         log.debug("Checking if NE is still connected to the same server", category: .connection)
         self.currentVpnProtocolFactory?.vpnProviderManager(for: .configuration, completion: { manager, error in

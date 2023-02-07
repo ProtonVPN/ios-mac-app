@@ -46,7 +46,7 @@ final class VPNLogicalServicesRequest: Request {
             .init(name: "WithPartnerLogicals", value: "1"),
         ]
 
-        if isEnabled(LogicalFeature.perProtocolEntries) {
+        if LocalFeatureFlags.isEnabled(LogicalFeature.perProtocolEntries) {
             queryItems.append(.init(name: "WithEntriesForProtocols", value: Self.protocolDescriptions))
         }
 

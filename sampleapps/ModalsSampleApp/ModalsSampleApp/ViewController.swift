@@ -40,8 +40,8 @@ class ViewController: UITableViewController {
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
         (.pendingInvoices, "Pending Invoices")]
 
-    static let fromServer = UserAccountUpdateViewModel.Server(name: "US-CA#63", flag: UIImage(named: "Flag")!)
-    static let toServer = UserAccountUpdateViewModel.Server(name: "US-CA#78", flag: UIImage(named: "Flag")!)
+    static let fromServer = ("US-CA#63", UIImage(named: "Flag")!)
+    static let toServer = ("US-CA#78", UIImage(named: "Flag")!)
 
     let modalsFactory = ModalsFactory(colors: Colors())
 
