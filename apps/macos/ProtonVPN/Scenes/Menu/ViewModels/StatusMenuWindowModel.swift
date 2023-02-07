@@ -62,6 +62,7 @@ class StatusMenuWindowModel {
     }
     
     var statusIcon: StatusIcon {
+        guard isSessionEstablished else { return .disconnected }
         switch vpnGateway.connection {
         case .connected:
             return .connected
@@ -73,6 +74,7 @@ class StatusMenuWindowModel {
     }
 
     var appIcon: AppIcon {
+        guard isSessionEstablished else { return .disconnected }
         switch vpnGateway.connection {
         case .connected:
             return .active

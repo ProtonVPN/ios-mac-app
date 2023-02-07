@@ -222,7 +222,6 @@ final class HeaderViewController: NSViewController {
         let margins = loadLineHorizontalConstraints.reduce(0.0) { $0 + $1.constant }
         let width = margins + ipLabel.intrinsicContentSize.width + loadLabel.intrinsicContentSize.width + loadIcon.frame.width
         
-        debugPrint(margins, ipLabel.intrinsicContentSize.width, loadLabel.intrinsicContentSize.width, loadIcon.frame.width, width, self.view.frame.width)
         if width + 10 > self.view.frame.width {
             return .short
         }
