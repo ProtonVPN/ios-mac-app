@@ -31,8 +31,9 @@ class ProfileTests: ProtonVPNUITests {
         
         let name = StringUtils().randomAlphanumericString(length: 8)
         let country = "￼  Austria"
-        
-        logInIfNeeded()
+
+        logoutIfNeeded()
+        loginAsPlusUser()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -56,7 +57,8 @@ class ProfileTests: ProtonVPNUITests {
         
         let country = "￼  Austria"
 
-        logInIfNeeded()
+        logoutIfNeeded()
+        loginAsPlusUser()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -74,7 +76,8 @@ class ProfileTests: ProtonVPNUITests {
         let name = StringUtils().randomAlphanumericString(length: 8)
         let country = "￼  Austria"
 
-        logInIfNeeded()
+        logoutIfNeeded()
+        loginAsPlusUser()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
@@ -96,7 +99,8 @@ class ProfileTests: ProtonVPNUITests {
         let autoConnectDisabled = "￼  Disabled"
         let qcFastest = "￼  Fastest"
 
-        logInIfNeeded()
+        logoutIfNeeded()
+        loginAsPlusUser()
         mainRobot
             .openProfiles()
             .verify.checkProfileOverViewIsOpen()
