@@ -84,7 +84,7 @@ final class SettingsViewModel {
         
         startObserving()
     }
-    
+
     var tableViewData: [TableViewSection] {
         var sections: [TableViewSection] = []
         

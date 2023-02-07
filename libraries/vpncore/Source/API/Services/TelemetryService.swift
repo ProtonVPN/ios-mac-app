@@ -263,7 +263,7 @@ public class TelemetryServiceImplementation: TelemetryService {
     /// This should be the single point of reporting telemetry events. Before we do anything with the event,
     /// we need to check if the user agreed to collecting telemetry data.
     private func report(event: TelemetryEvent) {
-        guard isEnabled(TelemetryFeature.telemetryOptIn) else { return }
+        guard LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) else { return }
         Task {
             await sendEvent(event)
         }
@@ -275,7 +275,7 @@ public class TelemetryServiceImplementation: TelemetryService {
     /// and try sending all the buffered events immediately after that.
     /// If the buffer is empty, try to send the event to out API, if it fails, save it to the buffer.
     private func sendEvent(_ event: TelemetryEvent) async {
-        guard isEnabled(TelemetryFeature.useBuffer) else {
+        guard LocalFeatureFlags.isEnabled(TelemetryFeature.useBuffer) else {
             try? await telemetryAPI.flushEvent(event: event.toJSONDictionary())
             return
         }

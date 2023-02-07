@@ -244,7 +244,7 @@ extension ConnectionDetailsMessage {
 
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
     func didReceiveConnectionDetails(details: LocalAgentConnectionDetails) {
-        guard isEnabled(LocalAgentFeature.connectionDetails) else { return }
+        guard LocalFeatureFlags.isEnabled(LocalAgentFeature.connectionDetails) else { return }
 
         let detailsMessage = ConnectionDetailsMessage(details: details)
         delegate?.didReceiveConnectionDetails(detailsMessage)

@@ -77,7 +77,6 @@
 		4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BE3AD27C77FC700F50123 /* ConnectionIntercepts.swift */; };
 		4CA7BA4F2965788B0001C7E7 /* PopUpButtonItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA4E2965788B0001C7E7 /* PopUpButtonItemViewModel.swift */; };
 		4CA7BA512965E0040001C7E7 /* SecureCoreWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BA502965E0040001C7E7 /* SecureCoreWarningViewModel.swift */; };
-		4CAFE13C292CE05B00AC9C37 /* LocalFeatureFlags in Frameworks */ = {isa = PBXBuildFile; productRef = 4CAFE13B292CE05A00AC9C37 /* LocalFeatureFlags */; };
 		4CB2A3D3289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
 		4CB2A3D4289131BA002E839E /* ExtensionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2A3D2289131BA002E839E /* ExtensionInfo.swift */; };
 		4CB7E00427F1DB2200657A99 /* NET2WarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7E00327F1DB2200657A99 /* NET2WarningPopupViewController.swift */; };
@@ -1140,7 +1139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
-				4CAFE13C292CE05B00AC9C37 /* LocalFeatureFlags in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
 				E53D64C3281169880060C463 /* Modals-macOS in Frameworks */,
@@ -2872,7 +2870,6 @@
 			packageProductDependencies = (
 				E53D64C2281169880060C463 /* Modals-macOS */,
 				D5F65F9D28A14E190062CF85 /* Timer */,
-				4CAFE13B292CE05A00AC9C37 /* LocalFeatureFlags */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -4881,10 +4878,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4CAFE13B292CE05A00AC9C37 /* LocalFeatureFlags */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LocalFeatureFlags;
-		};
 		D50B8020295DC3F900D85D29 /* NEHelper */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NEHelper;

@@ -357,8 +357,7 @@ extension IosAlertService: UpsellViewControllerDelegate {
 }
 
 fileprivate extension ReconnectInfo {
-    func servers() -> (from: UserAccountUpdateViewModel.Server, to: UserAccountUpdateViewModel.Server) {
-        (UserAccountUpdateViewModel.Server(name: fromServer.name, flag: fromServer.image),
-         UserAccountUpdateViewModel.Server(name: toServer.name, flag: toServer.image))
+    func servers() -> (from: (String, Image), to: (String, Image)) {
+        ((fromServer.name, fromServer.image), (toServer.name, toServer.image))
     }
 }
