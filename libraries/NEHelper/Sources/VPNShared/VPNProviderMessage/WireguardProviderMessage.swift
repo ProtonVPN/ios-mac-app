@@ -34,6 +34,11 @@ public enum WireguardProviderRequest: ProviderRequest {
         case currentLogicalAndServerId = 106
     }
 
+    private enum Keys: String {
+        case selector
+        case sessionCookie
+    }
+
     /// Return the current WireGuard tunnel configuration string.
     case getRuntimeTunnelConfiguration
     /// Flush extension's logs to its log file.
@@ -113,27 +118,26 @@ public enum WireguardProviderRequest: ProviderRequest {
     }
 
     private func encodeApiSelector(selector: String, sessionCookie: HTTPCookie?) -> Data {
-        let selectorData = selector.data(using: .utf8) ?? Data()
-        assert(selectorData.count < UInt8.max, "Selector too large to fit in serialized data")
+        let cookieDict = sessionCookie?.asDict ?? [:]
 
-        let cookieData = sessionCookie?.asProviderMessageData ?? Data()
-        assert(cookieData.count < UInt8.max, "Session cookie too large to fit in serialized data")
+        let dict: JSONDictionary = [
+            Keys.selector.rawValue: selector as AnyObject,
+            Keys.sessionCookie.rawValue: cookieDict as AnyObject
+        ]
 
-        let data = datagram(.setApiSelector) +
-            Data([UInt8(selectorData.count)]) + selectorData +
-            Data([UInt8(cookieData.count)]) + cookieData
+        let data = datagram(.setApiSelector) + ((try? JSONSerialization.data(withJSONObject: dict)) ?? Data())
         return data
     }
 
     private static func decodeApiSelector(_ data: Data) throws -> Self {
         guard let messageData = Self.messageData(rawData: data),
-              let (selectorData, remainder) = Self.delineatedData(rawData: messageData),
-              let selector = String(data: selectorData, encoding: .utf8),
-              let (sessionCookieData, _) = Self.delineatedData(rawData: remainder) else {
+              let dict = (try? JSONSerialization.jsonObject(with: messageData)) as? JSONDictionary,
+              let selector = dict[Keys.selector.rawValue] as? String,
+              let sessionCookieDict = dict[Keys.sessionCookie.rawValue] as? JSONDictionary else {
             throw ProviderMessageError.decodingError
         }
 
-        let sessionCookie = HTTPCookie.fromProviderMessageData(sessionCookieData)
+        let sessionCookie = HTTPCookie.fromJSONDictionary(sessionCookieDict)
         return .setApiSelector(selector, withSessionCookie: sessionCookie)
     }
 
@@ -235,26 +239,6 @@ public enum WireguardProviderRequest: ProviderRequest {
         }
         return rawData[1...]
     }
-
-    /// Some data is serialized by using a byte to describe the length of a block of data,
-    /// followed by that block of data. This function reads one byte and returns the block
-    /// of data contained in `rawData`, along with the remaining data in `rawData` if any
-    /// is left.
-    private static func delineatedData(rawData: Data) -> (item: Data, remaining: Data)? {
-        guard let blockCount = rawData.first else {
-            return nil
-        }
-
-        guard blockCount <= rawData.count - 1 else {
-            assertionFailure("Data is badly structured: block size is greater than data count")
-            return nil
-        }
-
-        let block = rawData.advanced(by: 1)
-        let item = block[..<blockCount]
-        let remaining = block[blockCount...]
-        return (item, remaining)
-    }
 }
 
 private extension HTTPCookiePropertyKey {
@@ -264,7 +248,7 @@ private extension HTTPCookiePropertyKey {
 }
 
 private extension HTTPCookie {
-    var asProviderMessageData: Data? {
+    var asDict: JSONDictionary? {
         guard let properties = properties else { return nil }
 
         let dict: JSONDictionary = properties.reduce(into: [:], { partialResult, kvPair in
@@ -275,14 +259,10 @@ private extension HTTPCookie {
             }
         })
 
-        return try? JSONSerialization.data(withJSONObject: dict, options: [])
+        return dict
     }
 
-    static func fromProviderMessageData(_ data: Data) -> HTTPCookie? {
-        guard !data.isEmpty, let dict = data.jsonDictionary else {
-            return nil
-        }
-
+    static func fromJSONDictionary(_ dict: JSONDictionary) -> HTTPCookie? {
         let cookieProperties: [HTTPCookiePropertyKey: Any] = dict.reduce(into: [:]) { partialResult, kvPair in
             let propertyKey = HTTPCookiePropertyKey(kvPair.key)
             if propertyKey.hasDateRepresentation, let value = kvPair.value as? Int {
