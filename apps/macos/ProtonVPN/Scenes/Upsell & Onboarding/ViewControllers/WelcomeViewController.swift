@@ -24,21 +24,32 @@ import Cocoa
 import vpncore
 
 class WelcomeViewController: NSViewController {
+
+    fileprivate enum Switch: Int {
+        case usageData
+        case crashReports
+    }
     
     @IBOutlet weak var mapView: NSImageView!
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var descriptionLabel: NSTextField!
     @IBOutlet weak var noThanksButton: NSButton!
     @IBOutlet weak var takeTourButton: UpsellPrimaryActionButton!
-    
+    @IBOutlet weak var usageStatisticsLabel: NSTextField!
+    @IBOutlet weak var crashReportsLabel: NSTextField!
+    @IBOutlet weak var usageStatisticsButton: SwitchButton!
+    @IBOutlet weak var crashReportsButton: SwitchButton!
+
     let navService: NavigationService
+    let telemetrySettings: TelemetrySettings
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(navService: NavigationService) {
+    init(navService: NavigationService, telemetrySettings: TelemetrySettings) {
         self.navService = navService
+        self.telemetrySettings = telemetrySettings
         super.init(nibName: NSNib.Name("Welcome"), bundle: nil)
     }
     
@@ -65,6 +76,20 @@ class WelcomeViewController: NSViewController {
         
         noThanksButton.title = LocalizedString.noThanks
         takeTourButton.title = LocalizedString.takeTour
+
+        usageStatisticsButton.delegate = self
+        crashReportsButton.delegate = self
+
+        // By default, set the telemetry to true
+        telemetrySettings.updateTelemetryCrashReports(isOn: true)
+        telemetrySettings.updateTelemetryUsageData(isOn: true)
+
+        usageStatisticsButton.buttonView?.tag = Switch.usageData.rawValue
+        usageStatisticsButton.setState(.on)
+        usageStatisticsButton.maskColor = .cgColor(.background, .weak)
+        crashReportsButton.buttonView?.tag = Switch.crashReports.rawValue
+        crashReportsButton.setState(.on)
+        crashReportsButton.maskColor = .cgColor(.background, .weak)
     }
     
     override func viewWillAppear() {
@@ -79,5 +104,23 @@ class WelcomeViewController: NSViewController {
     @IBAction func takeTour(_ sender: Any) {
         dismiss(nil)
         navService.presentGuidedTour()
+    }
+}
+extension WelcomeViewController: SwitchButtonDelegate {
+    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
+        completion(true)
+    }
+
+    func switchButtonClicked(_ button: NSButton) {
+        Task {
+            switch button.tag {
+            case Switch.crashReports.rawValue:
+                telemetrySettings.updateTelemetryCrashReports(isOn: button.state == .on)
+            case Switch.usageData.rawValue:
+                telemetrySettings.updateTelemetryUsageData(isOn: button.state == .on)
+            default:
+                break
+            }
+        }
     }
 }

@@ -24,6 +24,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     @IBOutlet private weak var alternativeRoutingView: SettingsTickboxView!
     @IBOutlet private weak var natTypeView: SettingsTickboxView!
     @IBOutlet private weak var safeModeView: SettingsTickboxView!
+    @IBOutlet private weak var usageDataView: SettingsTickboxView!
+    @IBOutlet private weak var crashReportsView: SettingsTickboxView!
 
     private var viewModel: AdvancedSettingsViewModel
 
@@ -70,6 +72,26 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         natTypeView.setupItem(model: model, delegate: self)
     }
 
+    private func setupUsageDataTypeItem() {
+        usageDataView.isHidden = !viewModel.isTelemetryFeatureEnabled
+        let tooltip = LocalizedString.settingsMacUsageStatsTooltip
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.settingsMacUsageStatsTitle,
+                                                  buttonState: viewModel.usageData,
+                                                  toolTip: String(tooltip))
+
+        usageDataView.setupItem(model: model, delegate: self)
+    }
+
+    private func setupCrashReportsTypeItem() {
+        crashReportsView.isHidden = !viewModel.isTelemetryFeatureEnabled
+        let tooltip = LocalizedString.settingsMacCrashReportsTooltip
+        let model = SettingsTickboxView.ViewModel(labelText: LocalizedString.settingsMacCrashReportsTitle,
+                                                  buttonState: viewModel.crashReports,
+                                                  toolTip: String(tooltip))
+
+        crashReportsView.setupItem(model: model, delegate: self)
+    }
+
     private func setupSafeModeItem() {
         safeModeView.isHidden = !viewModel.isSafeModeFeatureEnabled
         let tooltip = LocalizedString.nonStandardPortsExplanation
@@ -89,6 +111,8 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         setupAlternativeRoutingItem()
         setupNatTypeItem()
         setupSafeModeItem()
+        setupUsageDataTypeItem()
+        setupCrashReportsTypeItem()
     }
 }
 
@@ -106,6 +130,10 @@ extension AdvancedSettingsViewController: TickboxViewDelegate {
         case alternativeRoutingView:
             viewModel.setAlternatveRouting(value == .on)
             setupAlternativeRoutingItem()
+        case usageDataView:
+            viewModel.usageData = value == .on
+        case crashReportsView:
+            viewModel.crashReports = value == .on
         default:
             break
         }

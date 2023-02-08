@@ -33,32 +33,33 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory = HelpMenuViewModelFactory
-        & PropertiesManagerFactory
-        & WindowServiceFactory
-        & VpnKeychainFactory
-        & VpnApiServiceFactory
-        & AppStateManagerFactory
-        & AppSessionManagerFactory
-        & CoreAlertServiceFactory
-        & ReportBugViewModelFactory
-        & NavigationServiceFactory
-        & UpdateManagerFactory
-        & ProfileManagerFactory
-        & SystemExtensionManagerFactory
-        & VpnGatewayFactory
-        & VpnProtocolChangeManagerFactory
-        & VpnManagerFactory
-        & VpnStateConfigurationFactory
-        & SystemExtensionManagerFactory
-        & LogFileManagerFactory
-        & UserTierProviderFactory
-        & NATTypePropertyProviderFactory
-        & SafeModePropertyProviderFactory
-        & ProtonReachabilityCheckerFactory
-        & NetworkingFactory
-        & CouponViewModelFactory
-        & SessionServiceFactory
-        & AuthKeychainHandleFactory
+    & PropertiesManagerFactory
+    & WindowServiceFactory
+    & VpnKeychainFactory
+    & VpnApiServiceFactory
+    & AppStateManagerFactory
+    & AppSessionManagerFactory
+    & CoreAlertServiceFactory
+    & ReportBugViewModelFactory
+    & NavigationServiceFactory
+    & UpdateManagerFactory
+    & ProfileManagerFactory
+    & SystemExtensionManagerFactory
+    & VpnGatewayFactory
+    & VpnProtocolChangeManagerFactory
+    & VpnManagerFactory
+    & VpnStateConfigurationFactory
+    & SystemExtensionManagerFactory
+    & LogFileManagerFactory
+    & UserTierProviderFactory
+    & NATTypePropertyProviderFactory
+    & SafeModePropertyProviderFactory
+    & ProtonReachabilityCheckerFactory
+    & NetworkingFactory
+    & CouponViewModelFactory
+    & SessionServiceFactory
+    & AuthKeychainHandleFactory
+    & TelemetrySettingsFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -71,6 +72,7 @@ class NavigationService {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     
     var appHasPresented = false
     var isSystemLoggingOff = false
@@ -199,7 +201,7 @@ extension NavigationService {
         NSWorkspace.shared.activateFileViewerSelecting([logFileManager.getFileUrl(named: filename)])
     }
     
-    func openSettings(to tab: SettingsTab) {        
+    func openSettings(to tab: SettingsTab) {
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
         windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab), accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(), propertiesManager: factory.makePropertiesManager(), sessionService: factory.makeSessionService(), authKeychain: factory.makeAuthKeychainHandle()), couponViewModel: factory.makeCouponViewModel())
@@ -294,7 +296,7 @@ extension NavigationService {
             return
         }
 
-        let welcomeViewController = WelcomeViewController(navService: self)
+        let welcomeViewController = WelcomeViewController(navService: self, telemetrySettings: telemetrySettings)
         windowService.presentKeyModal(viewController: welcomeViewController)
 
         Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)

@@ -56,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private var notificationManager: NotificationManagerProtocol!
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {        
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupCoreIntegration()
         setupLogsForApp()
         log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)

@@ -243,6 +243,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
     }
 
     public func setTelemetryUsageData(for username: String, enabled: Bool) {
+        if !enabled {
+            Task {
+                let buffer = await TelemetryBuffer(retrievingFromStorage: false)
+                await buffer.saveToStorage()
+            }
+        }
         storage.setValue(enabled, forKey: Keys.telemetryUsageData.rawValue + username)
     }
 

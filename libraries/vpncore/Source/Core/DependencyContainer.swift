@@ -94,6 +94,7 @@ open class Container: PropertiesToOverride {
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
 
+    private lazy var telemetrySettings: TelemetrySettings = makeTelemetrySettings()
     private lazy var _telemetryServiceTask = Task {
         let buffer = await withDependencies(from: self) {
             return await TelemetryBuffer(retrievingFromStorage: true)
@@ -486,6 +487,12 @@ extension Container: SiriHelperFactory {
 extension Container: TelemetryServiceFactory {
     public func makeTelemetryService() async -> TelemetryService {
         return await _telemetryServiceTask.value
+    }
+}
+
+extension Container: TelemetrySettingsFactory {
+    public func makeTelemetrySettings() -> TelemetrySettings {
+        return TelemetrySettings(self)
     }
 }
 
