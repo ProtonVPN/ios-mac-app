@@ -221,10 +221,48 @@ extension CoreNetworking: APIServiceDelegate {
 
 // MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
-    public func eraseUnauthSessionCredentials(sessionUID: String) {
-        return // empty for now
+    public var authSessionInvalidatedDelegateForLoginAndSignup: ProtonCore_Services.AuthSessionInvalidatedDelegate? {
+        get {
+            self
+        }
+        set(newValue) {
+            //
+        }
+    }
+    
+    public func onAdditionalCredentialsInfoObtained(sessionUID: String, password: String?, salt: String?, privateKey: String?) {
+        guard let authCredential = authCredential(sessionUID: sessionUID) else { return }
+        if let password = password {
+            authCredential.udpate(password: password)
+        }
+        // salt should be associated with a private key. so both need to be valid
+        if let salt = salt, let privateKey = privateKey {
+            authCredential.update(salt: salt, privateKey: privateKey)
+        }
+        do {
+            try authKeychain.store(AuthCredentials(.init(authCredential)))
+        } catch {
+            log.error("Failed to save updated credentials", category: .keychain, event: .change)
+        }
     }
 
+    public func onAuthenticatedSessionInvalidated(sessionUID: String) {
+        authKeychain.clear()
+        delegate.onLogout()
+    }
+
+    public func onUnauthenticatedSessionInvalidated(sessionUID: String) {
+        authKeychain.clear()
+    }
+
+    public func onSessionObtaining(credential: Credential) {
+        do {
+            try authKeychain.store(AuthCredentials(credential))
+        } catch {
+            log.error("Failed to save updated credentials", category: .keychain, event: .change)
+        }
+    }
+    
     public func credential(sessionUID: String) -> Credential? {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return nil }
         return .init(authCredential)
@@ -255,7 +293,8 @@ extension CoreNetworking: AuthDelegate {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
-
+    
+    @available(*, deprecated, message: "dont needed on 3.38.0")
     public func onRefresh(sessionUID: String, service: APIService, complete: @escaping AuthRefreshResultCompletion) {
         guard let credentials = authKeychain.fetch() else {
             log.error("Cannot refresh token when credentials are not available", category: .keychain, event: .change)
@@ -282,6 +321,12 @@ extension CoreNetworking: AuthDelegate {
             }
         }
     }
-
+    
     public func onForceUpgrade() { }
+}
+
+extension CoreNetworking: AuthSessionInvalidatedDelegate {
+    public func sessionWasInvalidated(for sessionUID: String, isAuthenticatedSession: Bool) {
+        //TODO
+    }
 }

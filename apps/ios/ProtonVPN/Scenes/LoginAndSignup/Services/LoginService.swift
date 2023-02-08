@@ -84,15 +84,13 @@ final class CoreLoginService {
     private func makeLoginInterface() -> LoginAndSignupInterface {
         let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
         let signupAvailability = SignupAvailability.available(parameters: signupParameters)
-        let login = LoginAndSignup(appName: "Proton VPN",
-                                   clientApp: .vpn,
-                                   doh: doh,
-                                   apiServiceDelegate: networking,
-                                   forceUpgradeDelegate: networkingDelegate,
-                                   minimumAccountType: AccountType.username,
-                                   isCloseButtonAvailable: false,
-                                   paymentsAvailability: PaymentsAvailability.notAvailable,
-                                   signupAvailability: signupAvailability)
+        let login = LoginAndSignup.init(appName: "Proton VPN",
+                                        clientApp: .vpn,
+                                        apiService: networking.apiService,
+                                        minimumAccountType: AccountType.username,
+                                        isCloseButtonAvailable: false,
+                                        paymentsAvailability: PaymentsAvailability.notAvailable,
+                                        signupAvailability: signupAvailability)
         return login
     }
 
