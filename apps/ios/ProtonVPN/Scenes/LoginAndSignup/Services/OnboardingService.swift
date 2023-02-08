@@ -42,15 +42,13 @@ final class OnboardingModuleService {
         & VpnGatewayFactory
         & AppStateManagerFactory
         & PlanServiceFactory
-        & PropertiesManagerFactory
-        & AuthKeychainHandleFactory
+        & TelemetrySettingsFactory
 
     private let windowService: WindowService
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let planService: PlanService
-    private let propertiesManager: PropertiesManagerProtocol
-    private let authKeychain: AuthKeychainHandle
+    private let telemetrySettings: TelemetrySettings
 
     private var onboardingCoordinator: OnboardingCoordinator?
     private var completion: OnboardingConnectionRequestCompletion?
@@ -62,8 +60,7 @@ final class OnboardingModuleService {
         vpnGateway = factory.makeVpnGateway()
         appStateManager = factory.makeAppStateManager()
         planService = factory.makePlanService()
-        propertiesManager = factory.makePropertiesManager()
-        authKeychain = factory.makeAuthKeychainHandle()
+        telemetrySettings = factory.makeTelemetrySettings()
 
         let telemetry = LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
         let onboardingConfiguration = Configuration(telemetryEnabled: telemetry)
@@ -103,13 +100,11 @@ extension OnboardingModuleService: OnboardingService {
 
 extension OnboardingModuleService: OnboardingCoordinatorDelegate {
     func preferenceChangeUsageData(telemetryUsageData: Bool) {
-        guard let username = authKeychain.fetch()?.username else { return }
-        propertiesManager.setTelemetryUsageData(for: username, enabled: telemetryUsageData)
+        telemetrySettings.updateTelemetryUsageData(isOn: telemetryUsageData)
     }
 
     func preferenceChangeCrashReports(telemetryCrashReports: Bool) {
-        guard let username = authKeychain.fetch()?.username else { return }
-        propertiesManager.setTelemetryCrashReports(for: username, enabled: telemetryCrashReports)
+        telemetrySettings.updateTelemetryCrashReports(isOn: telemetryCrashReports)
     }
 
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion) {

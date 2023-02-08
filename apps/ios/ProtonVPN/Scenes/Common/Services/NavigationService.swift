@@ -133,6 +133,8 @@ final class NavigationService {
 
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
 
+    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
+
     private lazy var connectionBarViewController = { 
         return makeConnectionBarViewController()
     }()
@@ -321,16 +323,15 @@ extension NavigationService: SettingsService {
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        let username = authKeychain.fetch()?.username ?? ""
         return TelemetrySettingsViewController(
             preferenceChangeUsageData: { [weak self] isOn in
-                self?.propertiesManager.setTelemetryUsageData(for: username, enabled: isOn)
+                self?.telemetrySettings.updateTelemetryUsageData(isOn: isOn)
             },
             preferenceChangeCrashReports: { [weak self] isOn in
-                self?.propertiesManager.setTelemetryCrashReports(for: username, enabled: isOn)
+                self?.telemetrySettings.updateTelemetryCrashReports(isOn: isOn)
             },
-            usageStatisticsOn: propertiesManager.getTelemetryUsageData(for: username),
-            crashReportsOn: propertiesManager.getTelemetryCrashReports(for: username),
+            usageStatisticsOn: telemetrySettings.telemetryUsageData,
+            crashReportsOn: telemetrySettings.telemetryCrashReports,
             title: LocalizedString.usageStatistics
         )
     }

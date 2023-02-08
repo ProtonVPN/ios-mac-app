@@ -900,46 +900,9 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "All servers are under maintenance. This usually means either there are technical difficulties on Proton VPN's side, or your network is limited.";
 
-"_trial_popup_title" = "Proton VPN Trial";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days.
- */
-"_trial_popup_introduction" = "We have given you a %@ which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days.";
-"_trial_popup_free_upgrade" = "free upgrade to Proton VPN Plus";
-"_trial_popup_call_to_upgrade" = "To have permanent access to Proton VPN Plus features, you can upgrade your plan.";
-"_trial_popup_thanks" = "Thank you for using Proton VPN!";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes
- */
-"_trial_popup_explanation" = "As a welcome gift, you have access to a %@, including advanced features for the first few days! Your welcome trial ends in";
-"_trial_popup_full_subscription" = "full Proton VPN subscription";
-"_trial_popup_enjoy" = "Enjoy the full benefits of secure internet anywhere with Proton VPN";
-
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Welcome on board";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "As a welcome gift you have access to a full Proton VPN subscription including advanced features for the first days!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Your trial ends in";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Proton VPN Plus trial expired";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Your 7 day free trial of Proton VPN Plus has expired. You can continue to use Proton VPN Free, but if you would like to support the project and have access to more countries and features, please upgrade to a paid plan.";
-
 "_p2p_forwarded_popup_body" = "Your connection has been automatically rerouted through another server because some servers do not support P2P traffic. This may reduce your connection speed. Please use servers with the P2P label to avoid rerouting.";
 "_p2p_forwarded_popup_body_p1" = "Your connection has been automatically rerouted through another server because certain servers do not support P2P traffic. This may reduce your connection speed. Please use servers with the";
 "_p2p_forwarded_popup_body_p2" = "icon to avoid traffic rerouting.";
-
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Connection error";
@@ -1863,6 +1826,22 @@
 "_moderate_nat_enable_title" = "Enable Moderate NAT";
 /* Title for alert shown when enabling Moderate NAT requires reconnection */
 "_moderate_nat_change_title" = "Enable Moderate NAT";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Learn more";
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance.";
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Share anonymous crash reports. This helps us fix bugs, detect firewalls, and avoid VPN blocks.";
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Share anonymous usage statistics";
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Usage data helps us overcome VPN blocks and improve app performance.";
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Share anonymous crash reports";
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Crash reports help us fix bugs, detect firewalls, and avoid VPN blocks.";
+
 
 /* Section title in Settings */
 "_advanced" = "Advanced";

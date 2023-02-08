@@ -37,6 +37,10 @@ public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService
 }
 
+public protocol TelemetrySettingsFactory {
+    func makeTelemetrySettings() -> TelemetrySettings
+}
+
 protocol TelemetryTimer {
     func updateConnectionStarted(_ date: Date?)
     func markStartedConnecting()

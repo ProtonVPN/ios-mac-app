@@ -475,6 +475,8 @@
 		E54474E22930C4090044B592 /* ServerItemViewModelCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54474E02930C4090044B592 /* ServerItemViewModelCoreTests.swift */; };
 		E55046432849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
 		E55046442849F45A00E4BFC2 /* Image+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55046422849F45A00E4BFC2 /* Image+Flag.swift */; };
+		E5608CC02994D94D00D11333 /* TelemetrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */; };
+		E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */; };
 		E566D9DC29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
 		E566D9DD29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */; };
 		E566D9E029796B2400C2F857 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = E566D9DF29796B2400C2F857 /* Dependencies */; };
@@ -1050,6 +1052,7 @@
 		E54474E02930C4090044B592 /* ServerItemViewModelCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerItemViewModelCoreTests.swift; sourceTree = "<group>"; };
 		E54474E32930C5980044B592 /* AppStateManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
+		E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetrySettings.swift; sourceTree = "<group>"; };
 		E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBufferTests.swift; sourceTree = "<group>"; };
 		E566D9E3297A97BD00C2F857 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryRequestMultiple.swift; sourceTree = "<group>"; };
@@ -1832,6 +1835,7 @@
 				E5E4658129548D3400A4DE80 /* TelemetryFeature.swift */,
 				E576863D2976F31E0014F944 /* TelemetryBuffer.swift */,
 				E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */,
+				E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */,
 				E52E8136296C5F45002AF127 /* ConnectionTimer.swift */,
 				E566D9E3297A97BD00C2F857 /* DataManager.swift */,
 			);
@@ -2941,6 +2945,7 @@
 				E1616B8821C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				4242B0742465A48B0042145A /* VpnApiService.swift in Sources */,
 				E1B5F63E21B6B5E000B558B0 /* VpnManager.swift in Sources */,
+				E5608CC02994D94D00D11333 /* TelemetrySettings.swift in Sources */,
 				E566D9EC297E7B0700C2F857 /* TelemetryRequestMultiple.swift in Sources */,
 				D5DC52C3252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				E5ADAA8D2930F8BD004F105C /* AppStateManagerMock.swift in Sources */,
@@ -3276,6 +3281,7 @@
 				E9DC79C5262DBF02001A0FC0 /* SmartProtocolAvailabilityChecker.swift in Sources */,
 				E1616B8921C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				E532A8B72926432900096D2D /* OptionSet+Extension.swift in Sources */,
+				E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */,
 				4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */,
 				E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */,
 				E1B5F63F21B6B5E000B558B0 /* VpnManager.swift in Sources */,

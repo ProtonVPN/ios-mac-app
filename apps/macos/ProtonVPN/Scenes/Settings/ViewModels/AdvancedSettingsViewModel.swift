@@ -18,6 +18,7 @@
 
 import vpncore
 import VPNShared
+import LocalFeatureFlags
 
 final class AdvancedSettingsViewModel {
     typealias Factory = PropertiesManagerFactory
@@ -27,6 +28,7 @@ final class AdvancedSettingsViewModel {
         & VpnStateConfigurationFactory
         & VpnGatewayFactory
         & VpnManagerFactory
+        & TelemetrySettingsFactory
     private let factory: Factory
 
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
@@ -36,6 +38,7 @@ final class AdvancedSettingsViewModel {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
+    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
 
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
@@ -61,6 +64,28 @@ final class AdvancedSettingsViewModel {
 
     var isNATTypeFeatureEnabled: Bool {
         return featureFlags.moderateNAT
+    }
+
+    var isTelemetryFeatureEnabled: Bool {
+        LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
+    }
+
+    var usageData: Bool {
+        get {
+            telemetrySettings.telemetryUsageData
+        }
+        set {
+            telemetrySettings.updateTelemetryUsageData(isOn: newValue)
+        }
+    }
+
+    var crashReports: Bool {
+        get {
+            telemetrySettings.telemetryCrashReports
+        }
+        set {
+            telemetrySettings.updateTelemetryCrashReports(isOn: newValue)
+        }
     }
 
     var natType: NATType {
