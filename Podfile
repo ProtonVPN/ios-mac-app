@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.26.2'
+  '3.28.0'
 end
 
 def openvpn

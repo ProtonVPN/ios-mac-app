@@ -2465,7 +2465,7 @@
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			packageReferences = (
-				E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
 			);
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
 			projectDirPath = "";
@@ -4290,7 +4290,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+		E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4351,12 +4351,12 @@
 		};
 		E566D9DF29796B2400C2F857 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
 			productName = Dependencies;
 		};
 		E566D9E1297A796B00C2F857 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
 			productName = Dependencies;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {
