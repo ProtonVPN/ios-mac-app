@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import LocalFeatureFlags
 
 class WelcomeViewController: NSViewController {
 
@@ -39,6 +40,8 @@ class WelcomeViewController: NSViewController {
     @IBOutlet weak var crashReportsLabel: NSTextField!
     @IBOutlet weak var usageStatisticsButton: SwitchButton!
     @IBOutlet weak var crashReportsButton: SwitchButton!
+    @IBOutlet weak var telemetryStackView: NSStackView!
+    @IBOutlet weak var learnMore: InteractiveActionButton!
 
     let navService: NavigationService
     let telemetrySettings: TelemetrySettings
@@ -64,6 +67,8 @@ class WelcomeViewController: NSViewController {
         }
         
         titleLabel.attributedStringValue = LocalizedString.welcomeTitle.styled(font: .themeFont(.title, bold: true))
+        usageStatisticsLabel.attributedStringValue = LocalizedString.onboardingMacUsageStats.styled(font: .themeFont(.small), alignment: .left)
+        crashReportsLabel.attributedStringValue = LocalizedString.onboardingMacCrashReports.styled(font: .themeFont(.small), alignment: .left)
         
         let description = NSMutableAttributedString(attributedString: LocalizedString.welcomeDescription.styled(font: .themeFont(.heading2)))
         let fullRange = (description.string as NSString).range(of: description.string)
@@ -76,6 +81,20 @@ class WelcomeViewController: NSViewController {
         
         noThanksButton.title = LocalizedString.noThanks
         takeTourButton.title = LocalizedString.takeTour
+
+        setupTelemetry()
+    }
+
+    func setupTelemetry() {
+        guard LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) else {
+            telemetryStackView.isHidden = true
+            return
+        }
+
+        learnMore.fontSize = .small
+        learnMore.title = LocalizedString.learnMore
+        learnMore.target = self
+        learnMore.action = #selector(learnMoreClicked)
 
         usageStatisticsButton.delegate = self
         crashReportsButton.delegate = self
@@ -90,6 +109,10 @@ class WelcomeViewController: NSViewController {
         crashReportsButton.buttonView?.tag = Switch.crashReports.rawValue
         crashReportsButton.setState(.on)
         crashReportsButton.maskColor = .cgColor(.background, .weak)
+    }
+
+    @objc func learnMoreClicked() {
+        SafariService().open(url: CoreAppConstants.ProtonVpnLinks.learnMoreTelemetry)
     }
     
     override func viewWillAppear() {
@@ -115,9 +138,9 @@ extension WelcomeViewController: SwitchButtonDelegate {
         Task {
             switch button.tag {
             case Switch.crashReports.rawValue:
-                telemetrySettings.updateTelemetryCrashReports(isOn: button.state == .on)
+                telemetrySettings.updateTelemetryCrashReports(isOn: crashReportsButton.currentButtonState == .on)
             case Switch.usageData.rawValue:
-                telemetrySettings.updateTelemetryUsageData(isOn: button.state == .on)
+                telemetrySettings.updateTelemetryUsageData(isOn: usageStatisticsButton.currentButtonState == .on)
             default:
                 break
             }
