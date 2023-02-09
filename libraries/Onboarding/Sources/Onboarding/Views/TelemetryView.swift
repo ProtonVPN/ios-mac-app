@@ -42,7 +42,7 @@ struct TelemetryView: View {
                     Spacer()
                     Image(uiImage: image!)
                     Text(LocalizedString.onboardingTelemetryTitle)
-                        .font(.system(size: 22,weight: .bold))
+                        .font(.system(size: 22, weight: .bold))
                         .foregroundColor(colors.text.suColor)
                         .padding()
                     

@@ -33,33 +33,33 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory = HelpMenuViewModelFactory
-    & PropertiesManagerFactory
-    & WindowServiceFactory
-    & VpnKeychainFactory
-    & VpnApiServiceFactory
-    & AppStateManagerFactory
-    & AppSessionManagerFactory
-    & CoreAlertServiceFactory
-    & ReportBugViewModelFactory
-    & NavigationServiceFactory
-    & UpdateManagerFactory
-    & ProfileManagerFactory
-    & SystemExtensionManagerFactory
-    & VpnGatewayFactory
-    & VpnProtocolChangeManagerFactory
-    & VpnManagerFactory
-    & VpnStateConfigurationFactory
-    & SystemExtensionManagerFactory
-    & LogFileManagerFactory
-    & UserTierProviderFactory
-    & NATTypePropertyProviderFactory
-    & SafeModePropertyProviderFactory
-    & ProtonReachabilityCheckerFactory
-    & NetworkingFactory
-    & CouponViewModelFactory
-    & SessionServiceFactory
-    & AuthKeychainHandleFactory
-    & TelemetrySettingsFactory
+        & PropertiesManagerFactory
+        & WindowServiceFactory
+        & VpnKeychainFactory
+        & VpnApiServiceFactory
+        & AppStateManagerFactory
+        & AppSessionManagerFactory
+        & CoreAlertServiceFactory
+        & ReportBugViewModelFactory
+        & NavigationServiceFactory
+        & UpdateManagerFactory
+        & ProfileManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnGatewayFactory
+        & VpnProtocolChangeManagerFactory
+        & VpnManagerFactory
+        & VpnStateConfigurationFactory
+        & SystemExtensionManagerFactory
+        & LogFileManagerFactory
+        & UserTierProviderFactory
+        & NATTypePropertyProviderFactory
+        & SafeModePropertyProviderFactory
+        & ProtonReachabilityCheckerFactory
+        & NetworkingFactory
+        & CouponViewModelFactory
+        & SessionServiceFactory
+        & AuthKeychainHandleFactory
+        & TelemetrySettingsFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()

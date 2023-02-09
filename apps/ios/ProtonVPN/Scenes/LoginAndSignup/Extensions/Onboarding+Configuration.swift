@@ -19,7 +19,6 @@
 import Foundation
 import Onboarding
 import vpncore
-import LocalFeatureFlags
 
 extension Configuration {
     init(telemetryEnabled: Bool) {
