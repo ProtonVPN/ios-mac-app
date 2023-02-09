@@ -187,11 +187,14 @@ class CountryAnnotationViewModel: AnnotationViewModel {
                 alertService.push(alert: MaintenanceAlert(countryName: labelString.string))
             } else if isConnected {
                 log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
+                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.disconnect(.map))
                 vpnGateway.disconnect()
             } else if isConnecting {
+                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.abort)
                 log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
                 vpnGateway.stopConnecting(userInitiated: true)
             } else {
+                NotificationCenter.default.post(name: .userInitiatedVPNChange, object: UserInitiatedVPNChange.connect)
                 log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
                 vpnGateway.connectTo(country: countryCode, ofType: serverType, trigger: .map)
                 connectionStatusService.presentStatusViewController()

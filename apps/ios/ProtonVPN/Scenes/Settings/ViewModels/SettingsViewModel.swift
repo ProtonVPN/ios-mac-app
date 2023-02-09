@@ -80,7 +80,7 @@ final class SettingsViewModel {
         self.vpnGateway = vpnGateway
 
         if appSessionManager.sessionStatus == .established {
-            sessionEstablished(vpnGateway: factory.makeVpnGateway())
+            sessionEstablished(vpnGateway: vpnGateway)
         }
         
         startObserving()

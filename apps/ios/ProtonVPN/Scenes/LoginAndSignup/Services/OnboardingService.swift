@@ -24,7 +24,7 @@ import LocalFeatureFlags
 import VPNShared
 
 protocol OnboardingServiceFactory: AnyObject {
-    func makeOnboardingService() -> OnboardingService
+    func makeOnboardingService(vpnGateway: VpnGatewayProtocol) -> OnboardingService
 }
 
 protocol OnboardingServiceDelegate: AnyObject {
@@ -55,12 +55,12 @@ final class OnboardingModuleService {
 
     weak var delegate: OnboardingServiceDelegate?
 
-    init(factory: Factory) {
+    init(factory: Factory, vpnGateway: VpnGatewayProtocol) {
         windowService = factory.makeWindowService()
-        vpnGateway = factory.makeVpnGateway()
         appStateManager = factory.makeAppStateManager()
         planService = factory.makePlanService()
         telemetrySettings = factory.makeTelemetrySettings()
+        self.vpnGateway = vpnGateway
 
         let telemetry = LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
         let onboardingConfiguration = Configuration(telemetryEnabled: telemetry)
