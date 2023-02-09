@@ -11,9 +11,11 @@
                 <outlet property="crashReportsButton" destination="xWf-lq-q2O" id="4MY-1Y-UKT"/>
                 <outlet property="crashReportsLabel" destination="7di-Vt-Zyq" id="SeK-kz-dRq"/>
                 <outlet property="descriptionLabel" destination="ZgO-cU-Lfg" id="ctj-5U-nad"/>
+                <outlet property="learnMore" destination="APs-Gh-8IG" id="AUd-K7-6Nc"/>
                 <outlet property="mapView" destination="5Kh-Ok-j2c" id="htz-ou-gLN"/>
                 <outlet property="noThanksButton" destination="cqF-tK-7IP" id="GIn-oy-oaj"/>
                 <outlet property="takeTourButton" destination="guH-vC-NAW" id="tbB-sR-EBr"/>
+                <outlet property="telemetryStackView" destination="Csr-RX-hFQ" id="WUd-cD-4Md"/>
                 <outlet property="titleLabel" destination="eNP-Q8-2Im" id="F9e-JY-jGE"/>
                 <outlet property="usageStatisticsButton" destination="kgn-lV-lbg" id="Ugu-hq-48y"/>
                 <outlet property="usageStatisticsLabel" destination="psN-rZ-28G" id="XLL-5o-sLc"/>
@@ -40,8 +42,8 @@
                 <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="32" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehJ-3I-wDU">
                     <rect key="frame" x="0.0" y="64" width="800" height="349"/>
                     <subviews>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eNP-Q8-2Im">
-                            <rect key="frame" x="339" y="349" width="122" height="0.0"/>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="eNP-Q8-2Im">
+                            <rect key="frame" x="339" y="333" width="122" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome on Board" id="slM-b4-SMt">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -49,7 +51,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZgO-cU-Lfg">
-                            <rect key="frame" x="363" y="301" width="75" height="16"/>
+                            <rect key="frame" x="363" y="285" width="75" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Take a tour" id="pDJ-Uj-JLu">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +59,7 @@
                             </textFieldCell>
                         </textField>
                         <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="34" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4I-2d-A6Y">
-                            <rect key="frame" x="239" y="229" width="322" height="40"/>
+                            <rect key="frame" x="239" y="213" width="322" height="40"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cqF-tK-7IP" customClass="CancellationButton" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="-7" y="-7" width="158" height="52"/>
@@ -108,29 +110,52 @@
                             </customSpacing>
                         </stackView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="GUY-ef-33c" userLabel="divider view">
-                            <rect key="frame" x="319" y="112" width="163" height="85"/>
+                            <rect key="frame" x="319" y="127" width="163" height="54"/>
                         </customView>
                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Csr-RX-hFQ">
-                            <rect key="frame" x="166" y="0.0" width="468" height="80"/>
+                            <rect key="frame" x="166" y="0.0" width="468" height="95"/>
                             <subviews>
-                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPq-Wr-j2v">
-                                    <rect key="frame" x="0.0" y="48" width="468" height="32"/>
+                                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xfs-oV-Ehr">
+                                    <rect key="frame" x="0.0" y="48" width="468" height="47"/>
                                     <subviews>
-                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="psN-rZ-28G">
-                                            <rect key="frame" x="-2" y="0.0" width="433" height="32"/>
-                                            <textFieldCell key="cell" selectable="YES" title="Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance. Learn more" id="9mN-bJ-vuH">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
-                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="kgn-lV-lbg" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="433" y="12" width="35" height="20"/>
+                                        <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPq-Wr-j2v">
+                                            <rect key="frame" x="0.0" y="15" width="468" height="32"/>
+                                            <subviews>
+                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="psN-rZ-28G">
+                                                    <rect key="frame" x="-2" y="0.0" width="433" height="32"/>
+                                                    <textFieldCell key="cell" selectable="YES" alignment="left" title="Share anonymous usage statistics. This helps us overcome VPN blocks and improve app performance. Learn more" id="9mN-bJ-vuH">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="kgn-lV-lbg" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                                    <rect key="frame" x="433" y="12" width="35" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="IA4-bi-H8j"/>
+                                                        <constraint firstAttribute="width" constant="35" id="cqx-eo-KOP"/>
+                                                    </constraints>
+                                                </customView>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="APs-Gh-8IG" userLabel="learnMoreButton" customClass="InteractiveActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="45" height="15"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="IA4-bi-H8j"/>
-                                                <constraint firstAttribute="width" constant="35" id="cqx-eo-KOP"/>
+                                                <constraint firstAttribute="height" constant="15" id="MLE-Ri-5pq"/>
                                             </constraints>
-                                        </customView>
+                                            <buttonCell key="cell" type="bevel" title="Button" bezelStyle="regularSquare" alignment="left" imageScaling="proportionallyDown" inset="2" id="wAt-6N-di5">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
                                     </subviews>
                                     <visibilityPriorities>
                                         <integer value="1000"/>
@@ -146,7 +171,7 @@
                                     <subviews>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7di-Vt-Zyq">
                                             <rect key="frame" x="-2" y="0.0" width="433" height="32"/>
-                                            <textFieldCell key="cell" selectable="YES" title="Share anonymous crash reports. This helps us fix bugs, detect firewalls, and avoid VPN blocks." id="9OV-TU-3Jo">
+                                            <textFieldCell key="cell" selectable="YES" alignment="left" title="Share anonymous crash reports. This helps us fix bugs, detect firewalls, and avoid VPN blocks." id="9OV-TU-3Jo">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -202,9 +227,9 @@
             <constraints>
                 <constraint firstItem="5Kh-Ok-j2c" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="-1" id="74d-9a-TtB"/>
                 <constraint firstAttribute="trailing" secondItem="5Kh-Ok-j2c" secondAttribute="trailing" id="DYc-r0-czD"/>
-                <constraint firstItem="ehJ-3I-wDU" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="128" id="Imd-f7-tWH"/>
+                <constraint firstItem="ehJ-3I-wDU" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" priority="999" constant="128" id="Imd-f7-tWH"/>
                 <constraint firstItem="2wQ-uI-vCR" firstAttribute="leading" secondItem="5Kh-Ok-j2c" secondAttribute="leading" id="LRX-9L-WKa"/>
-                <constraint firstAttribute="bottom" secondItem="ehJ-3I-wDU" secondAttribute="bottom" constant="64" id="Lhl-jL-ClL"/>
+                <constraint firstAttribute="bottom" secondItem="ehJ-3I-wDU" secondAttribute="bottom" priority="999" constant="64" id="Lhl-jL-ClL"/>
                 <constraint firstItem="2wQ-uI-vCR" firstAttribute="trailing" secondItem="5Kh-Ok-j2c" secondAttribute="trailing" id="Rka-7f-hEv"/>
                 <constraint firstItem="2wQ-uI-vCR" firstAttribute="top" secondItem="5Kh-Ok-j2c" secondAttribute="top" id="UUh-fM-RRr"/>
                 <constraint firstAttribute="bottom" secondItem="5Kh-Ok-j2c" secondAttribute="bottom" id="i9R-MW-lPB"/>
