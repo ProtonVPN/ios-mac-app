@@ -294,39 +294,14 @@ extension CoreNetworking: AuthDelegate {
         }
     }
     
-    @available(*, deprecated, message: "dont needed on 3.38.0")
-    public func onRefresh(sessionUID: String, service: APIService, complete: @escaping AuthRefreshResultCompletion) {
-        guard let credentials = authKeychain.fetch() else {
-            log.error("Cannot refresh token when credentials are not available", category: .keychain, event: .change)
-            complete(.failure(.notImplementedYet("Not logged in")))
-            return
-        }
-        guard credentials.sessionId == sessionUID else {
-            log.error("Asked for refreshing credentials of wrong session. It's a programmers error and should be investigated")
-            complete(.failure(.notImplementedYet("Wrong session")))
-            return
-        }
-
-        log.debug("Going to refresh the access token", category: .net)
-        let authenticator = Authenticator(api: apiService)
-        authenticator.refreshCredential(Credential(credentials)) { result in
-            switch result {
-            case .success(.ask2FA((let newCredential, _))), .success(.newCredential(let newCredential, _)), .success(.updatedCredential(let newCredential)):
-                log.debug("Access token refreshed successfully", category: .net)
-                complete(.success(newCredential))
-            case .failure(let error):
-                log.error("Updating access token failed", category: .net, event: .response, metadata: ["error": "\(error)"])
-                SentryHelper.log(error: error) // Log this temporarily to get a grasp at how ofter this happens. Can be removed after a few months.
-                complete(.failure(error))
-            }
-        }
-    }
-    
     public func onForceUpgrade() { }
 }
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {
     public func sessionWasInvalidated(for sessionUID: String, isAuthenticatedSession: Bool) {
-        //TODO
+        authKeychain.clear()
+        if isAuthenticatedSession {
+            delegate.onLogout()
+        }
     }
 }
