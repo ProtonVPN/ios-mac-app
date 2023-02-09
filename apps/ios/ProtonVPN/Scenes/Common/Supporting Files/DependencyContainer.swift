@@ -215,8 +215,8 @@ extension DependencyContainer: PlanServiceFactory {
 
 // MARK: OnboardingServiceFactory
 extension DependencyContainer: OnboardingServiceFactory {
-    func makeOnboardingService() -> OnboardingService {
-        return OnboardingModuleService(factory: self)
+    func makeOnboardingService(vpnGateway: VpnGatewayProtocol) -> OnboardingService {
+        return OnboardingModuleService(factory: self, vpnGateway: vpnGateway)
     }
 }
 

@@ -126,7 +126,7 @@ final class NavigationService {
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
     private lazy var onboardingService: OnboardingService = {
-        let onboardingService = factory.makeOnboardingService()
+        let onboardingService = factory.makeOnboardingService(vpnGateway: vpnGateway)
         onboardingService.delegate = self
         return onboardingService
     }()
