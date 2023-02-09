@@ -99,12 +99,11 @@ class WelcomeViewController: NSViewController {
         usageStatisticsButton.delegate = self
         crashReportsButton.delegate = self
 
-        // By default, set the telemetry to true
+        // Telemetry is off by default, crash report is on
         telemetrySettings.updateTelemetryCrashReports(isOn: true)
-        telemetrySettings.updateTelemetryUsageData(isOn: true)
 
         usageStatisticsButton.buttonView?.tag = Switch.usageData.rawValue
-        usageStatisticsButton.setState(.on)
+        usageStatisticsButton.setState(.off)
         usageStatisticsButton.maskColor = .cgColor(.background, .weak)
         crashReportsButton.buttonView?.tag = Switch.crashReports.rawValue
         crashReportsButton.setState(.on)

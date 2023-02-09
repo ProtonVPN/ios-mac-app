@@ -28,8 +28,7 @@ class TelemetryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // By default, set the telemetry to true
-        preferenceChangeUsageData(true)
+        // Telemetry is off by default, crash report is on
         preferenceChangeCrashReports(true)
 
         let telemetryView = TelemetryView(preferenceChangeUsageData: preferenceChangeUsageData,
