@@ -136,9 +136,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         try checkForSubuserWithoutSessions()
         try await refreshVpnAuthCertificate()
 
-        sessionStatus = .established
-        propertiesManager.hasConnected = true
-        postNotification(name: sessionChanged, object: self.factory.makeVpnGateway())
+        if sessionStatus == .notEstablished {
+            sessionStatus = .established
+            propertiesManager.hasConnected = true
+            postNotification(name: sessionChanged, object: self.factory.makeVpnGateway())
+        }
 
         appSessionRefreshTimer.start()
         profileManager.refreshProfiles()
