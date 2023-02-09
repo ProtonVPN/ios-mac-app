@@ -245,6 +245,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public func setTelemetryUsageData(for username: String, enabled: Bool) {
         if !enabled {
             Task {
+                // Add unit test for scenario where user disables telemetry and we need to clear the buffer.
                 let buffer = await TelemetryBuffer(retrievingFromStorage: false)
                 await buffer.saveToStorage()
             }

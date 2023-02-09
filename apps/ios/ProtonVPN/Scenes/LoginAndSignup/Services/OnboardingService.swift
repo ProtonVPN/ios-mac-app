@@ -50,7 +50,7 @@ final class OnboardingModuleService {
     private let planService: PlanService
     private let telemetrySettings: TelemetrySettings
 
-    private var onboardingCoordinator: OnboardingCoordinator?
+    private var onboardingCoordinator: OnboardingCoordinator
     private var completion: OnboardingConnectionRequestCompletion?
 
     weak var delegate: OnboardingServiceDelegate?
@@ -65,7 +65,7 @@ final class OnboardingModuleService {
         let telemetry = LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn)
         let onboardingConfiguration = Configuration(telemetryEnabled: telemetry)
         onboardingCoordinator = OnboardingCoordinator(configuration: onboardingConfiguration)
-        onboardingCoordinator?.delegate = self
+        onboardingCoordinator.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: .AppStateManager.displayStateChange, object: nil)
     }
@@ -93,7 +93,7 @@ final class OnboardingModuleService {
 extension OnboardingModuleService: OnboardingService {
     func showOnboarding() {
         log.debug("Starting onboarding", category: .app)
-        let viewController = onboardingCoordinator!.start()
+        let viewController = onboardingCoordinator.start()
         windowService.show(viewController: viewController)
     }
 }

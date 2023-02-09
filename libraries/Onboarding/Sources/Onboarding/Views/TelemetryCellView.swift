@@ -25,6 +25,8 @@ struct TelemetryCellView: View {
 
     @State var isOn: Bool
     var preferenceChange: (Bool) -> Void
+
+    let titlePadding: CGFloat = -4
     
     var colors: Colors = {
         Onboarding.colors
@@ -36,12 +38,13 @@ struct TelemetryCellView: View {
                 Text(title)
                     .font(.system(size: 17))
                     .foregroundColor(colors.text.suColor)
-                    .padding(.bottom, -4)
+                    .padding(.bottom, titlePadding)
                 Text(description)
+                    .fixedSize(horizontal: false, vertical: true) // fixes a problem where this text would get truncated on smaller devices
                     .font(.system(size: 13))
                     .foregroundColor(colors.weakText.suColor)
             }
-            .layoutPriority(1)
+            .layoutPriority(1) // This VStack should take as much space as it can
 
             Toggle(isOn: $isOn, label: { })
                 .toggleStyle(SwitchToggleStyle(tint: colors.brand.suColor))
