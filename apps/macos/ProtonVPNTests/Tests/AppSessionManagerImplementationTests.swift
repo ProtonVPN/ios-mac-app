@@ -175,6 +175,30 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         wait(for: [loginExpectation], timeout: asyncTimeout)
     }
 
+    func testLoginPostsSessionChangedNotification() throws {
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+
+        login(with: testAuthCredentials)
+
+        wait(for: [sessionChangedNotificationExpectation], timeout: asyncTimeout)
+    }
+
+    func testLoginDoesNotPostSessionChangedNotificationWhenAlreadyLoggedIn() throws {
+        networkingDelegate.apiVpnLocation = testData.vpnLocation
+        networkingDelegate.apiClientConfig = testData.defaultClientConfig
+        authKeychain.credentials = testAuthCredentials
+        manager.sessionStatus = .established
+
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged, object: manager)
+        sessionChangedNotificationExpectation.isInverted = true
+
+        manager.attemptSilentLogIn { result in
+            guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
+        }
+
+        wait(for: [sessionChangedNotificationExpectation], timeout: asyncTimeout)
+    }
+
     // MARK: Active VPN connection login tests
 
     func testConnectionDisconnectsWhenLoggingInDifferentUserAndAlertConfirmed() {
@@ -327,13 +351,15 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     /// Convenience method for getting AppSessionManager into the logged in state
     func login(with authCredentials: AuthCredentials) {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
         authKeychain.credentials = authCredentials
 
-        manager.attemptSilentLogIn(completion: { _ in loginExpectation.fulfill() })
+        manager.attemptSilentLogIn { _ in loginExpectation.fulfill() }
 
-        wait(for: [loginExpectation], timeout: asyncTimeout)
+        wait(for: [loginExpectation, sessionChangedNotificationExpectation], timeout: asyncTimeout)
         XCTAssertTrue(manager.loggedIn)
     }
 }
