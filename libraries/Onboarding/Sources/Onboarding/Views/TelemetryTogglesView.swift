@@ -35,7 +35,7 @@ struct TelemetryTogglesView: View {
             VStack(spacing: 0) {
                 TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
                                   description: LocalizedString.onboardingUsageStatsDescription,
-                                  isOn: usageStatisticsOn ?? true,
+                                  isOn: usageStatisticsOn ?? false,
                                   preferenceChange: preferenceChangeUsageData,
                                   colors: colors)
                 Divider()
