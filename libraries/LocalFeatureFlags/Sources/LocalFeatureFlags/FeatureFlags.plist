@@ -16,6 +16,8 @@
 	<dict>
 		<key>IOS-Certificates</key>
 		<true/>
+		<key>Mac-Certificates</key>
+		<true/>
 	</dict>
 	<key>Telemetry</key>
 	<dict>

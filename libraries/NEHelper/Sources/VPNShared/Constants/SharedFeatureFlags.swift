@@ -34,4 +34,8 @@ public enum OpenVPNFeature: String, FeatureFlag {
 
     // OpenVPN certificate based authentication. Remove in 2024.
     case iosCertificates = "IOS-Certificates"
+
+    // OpenVPN certificate based authentication on macOS. Remove in 2024.
+    case macCertificates = "Mac-Certificates"
+
 }

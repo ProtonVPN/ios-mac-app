@@ -13,9 +13,13 @@ import VPNShared
 final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
     
     private let propertiesManager: PropertiesManagerProtocol
+    private let vpnAuthentication: VpnAuthentication
+    private let appGroup: String
     
-    init(propertiesManager: PropertiesManagerProtocol) {
+    init(propertiesManager: PropertiesManagerProtocol, vpnAuthentication: VpnAuthentication, appGroup: String) {
         self.propertiesManager = propertiesManager
+        self.vpnAuthentication = vpnAuthentication
+        self.appGroup = appGroup
     }
     
     func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
@@ -23,7 +27,12 @@ final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         case .ike:
             return KeychainRefVpnCredentialsConfigurator()
         case .openVpn:
-            return OVPNCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.openVPN.machServiceName, logger: { log.debug("\($0)", category: .protocol) }))
+            return OVPNCredentialsConfigurator(
+                xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.openVPN.machServiceName,
+                                               logger: { log.debug("\($0)", category: .protocol) }),
+                vpnAuthentication: vpnAuthentication,
+                appGroup: appGroup
+            )
         case .wireGuard:
             return WGVpnCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { log.debug("\($0)", category: .protocol) }),
                                                 propertiesManager: propertiesManager)
