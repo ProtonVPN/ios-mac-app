@@ -189,14 +189,16 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         authKeychain.credentials = testAuthCredentials
         manager.sessionStatus = .established
 
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged, object: manager)
+        let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
         sessionChangedNotificationExpectation.isInverted = true
 
         manager.attemptSilentLogIn { result in
+            loginExpectation.fulfill()
             guard case .success = result else { return XCTFail("Should succeed silently logging in when already logged in") }
         }
 
-        wait(for: [sessionChangedNotificationExpectation], timeout: asyncTimeout)
+        wait(for: [loginExpectation, sessionChangedNotificationExpectation], timeout: asyncTimeout)
     }
 
     // MARK: Active VPN connection login tests
