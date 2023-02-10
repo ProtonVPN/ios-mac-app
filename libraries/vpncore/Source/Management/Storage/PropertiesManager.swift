@@ -66,8 +66,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var reportBugEmail: String? { get set }
     var discourageSecureCore: Bool { get set }
 
-    func getTelemetryUsageData(for username: String) -> Bool?
-    func getTelemetryCrashReports(for username: String) -> Bool?
+    func getTelemetryUsageData(for username: String?) -> Bool
+    func getTelemetryCrashReports(for username: String?) -> Bool
     func setTelemetryUsageData(for username: String, enabled: Bool)
     func setTelemetryCrashReports(for username: String, enabled: Bool)
     
@@ -238,8 +238,13 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    public func getTelemetryUsageData(for username: String) -> Bool? {
-        storage.defaults.bool(forKey: Keys.telemetryUsageData.rawValue + username)
+    public func getTelemetryUsageData(for username: String?) -> Bool {
+        guard let username,
+              let string = storage.defaults.string(forKey: Keys.telemetryUsageData.rawValue + username),
+              let usageData = Bool(string) else {
+            return false // default value for usage data if the user didn't get through the onboarding
+        }
+        return usageData
     }
 
     public func setTelemetryUsageData(for username: String, enabled: Bool) {
@@ -250,15 +255,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
                 await buffer.saveToStorage()
             }
         }
-        storage.setValue(enabled, forKey: Keys.telemetryUsageData.rawValue + username)
+        storage.setValue("\(enabled)", forKey: Keys.telemetryUsageData.rawValue + username)
     }
-
-    public func getTelemetryCrashReports(for username: String) -> Bool? {
-        storage.defaults.bool(forKey: Keys.telemetryCrashReports.rawValue + username)
+    
+    public func getTelemetryCrashReports(for username: String?) -> Bool {
+        guard let username,
+              let string = storage.defaults.string(forKey: Keys.telemetryCrashReports.rawValue + username),
+              let crashReports = Bool(string) else {
+            return true // default value for crash reports if the user didn't get through the onboarding
+        }
+        return crashReports
     }
 
     public func setTelemetryCrashReports(for username: String, enabled: Bool) {
-        storage.setValue(enabled, forKey: Keys.telemetryCrashReports.rawValue + username)
+        storage.setValue("\(enabled)", forKey: Keys.telemetryCrashReports.rawValue + username)
     }
 
     // Use to do first time connecting stuff if needed

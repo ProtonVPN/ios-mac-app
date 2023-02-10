@@ -34,12 +34,14 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 }
 
-class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, PropertiesManagerFactory, VpnKeychainFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
+class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, PropertiesManagerFactory, VpnKeychainFactory, TelemetrySettingsFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
     lazy var telemetryApiMock = TelemetryAPIImplementationMock()
 
     func makeTelemetryAPI(networking: Networking) -> TelemetryAPI { telemetryApiMock }
 
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock() }
+
+    func makeTelemetrySettings() -> TelemetrySettings { TelemetrySettings(self) }
 
     func makeNetworking() -> Networking { NetworkingMock() }
 
