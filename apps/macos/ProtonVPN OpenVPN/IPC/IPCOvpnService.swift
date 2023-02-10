@@ -15,7 +15,8 @@ class IPCOvpnService: XPCBaseService {
 }
 
 extension IPCOvpnService { // ProviderCommunication
-    
+
+    // Delete this method when `OpenVPNFeature.macCertificates` is deleted (so always true)
     override func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         let keychain = Keychain(group: nil)
         do {

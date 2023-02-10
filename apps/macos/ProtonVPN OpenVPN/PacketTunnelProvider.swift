@@ -22,19 +22,46 @@
 
 import TunnelKit
 import NetworkExtension
+import LocalFeatureFlags
+import VPNShared
+import SwiftyBeaver
+
+// Use the same logging system as TunnelKit underneath.
+// If more of our classes (form NEHelper lib) will be added, our custom logging
+// system should be used instead.
+fileprivate var log = SwiftyBeaver.self
 
 class PacketTunnelProvider: OpenVPNTunnelProvider {
+
+    // This method is overridden to remove username from VPN protocol config. 
+    override var protocolConfiguration: NEVPNProtocol {
+        guard isEnabled(OpenVPNFeature.macCertificates) else {
+            return super.protocolConfiguration
+        }
+
+        guard let tunnelProviderProtocol = super.protocolConfiguration as? NETunnelProviderProtocol else {
+            log.error("ProtocolConfiguration not set")
+            return super.protocolConfiguration
+        }
+
+        tunnelProviderProtocol.username = nil
+        tunnelProviderProtocol.passwordReference = nil
+
+        return tunnelProviderProtocol
+    }
         
     override open func startTunnel(options: [String: NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
-        let keychain = Keychain(group: nil)
-        do {
-            if let user = protocolConfiguration.username {
-                let pass = try keychain.password(for: user)
-                self.credentials = OpenVPN.Credentials(user, pass)
-                NSLog("PacketTunnelProvider Credentials found") // swiftlint:disable:this no_print
+        if !isEnabled(OpenVPNFeature.macCertificates) {
+            let keychain = Keychain(group: nil)
+            do {
+                if let user = protocolConfiguration.username {
+                    let pass = try keychain.password(for: user)
+                    self.credentials = OpenVPN.Credentials(user, pass)
+                    NSLog("PacketTunnelProvider Credentials found") // swiftlint:disable:this no_print
+                }
+            } catch {
+                NSLog("PacketTunnelProvider can't read password from keychain \(error)") // swiftlint:disable:this no_print
             }
-        } catch {
-            NSLog("PacketTunnelProvider can't read password from keychain \(error)") // swiftlint:disable:this no_print
         }
         
         super.startTunnel(options: options, completionHandler: completionHandler)

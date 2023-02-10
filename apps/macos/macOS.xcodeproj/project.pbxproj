@@ -146,6 +146,7 @@
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
 		D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DE76AA257635F70077C610 /* SwiftChecker.swift */; };
+		D5E02A7E2996378700362621 /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = D5E02A7D2996378700362621 /* NEHelper */; };
 		D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */; };
 		D5F65F9E28A14E190062CF85 /* Timer in Frameworks */ = {isa = PBXBuildFile; productRef = D5F65F9D28A14E190062CF85 /* Timer */; };
 		D5FD4B9F264BEF4E001F26CE /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = D557D587264AC344007E4396 /* ProtonVPN_ike_root.der */; };
@@ -1089,6 +1090,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5E02A7E2996378700362621 /* NEHelper in Frameworks */,
 				42EF09DC257A713F00E2EDCA /* NetworkExtension.framework in Frameworks */,
 				C1D8B29C374D69FA4F2C6917 /* Pods_ProtonVPN_OpenVPN.framework in Frameworks */,
 			);
@@ -2741,6 +2743,9 @@
 			dependencies = (
 			);
 			name = "ProtonVPN OpenVPN";
+			packageProductDependencies = (
+				D5E02A7D2996378700362621 /* NEHelper */,
+			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */;
 			productType = "com.apple.product-type.system-extension";
@@ -4892,6 +4897,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
+		};
+		D5E02A7D2996378700362621 /* NEHelper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NEHelper;
 		};
 		D5F65F9D28A14E190062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;

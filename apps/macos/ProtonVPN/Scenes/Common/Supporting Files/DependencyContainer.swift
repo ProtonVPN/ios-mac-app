@@ -121,7 +121,9 @@ final class DependencyContainer: Container {
 
     // MARK: VpnCredentialsConfiguratorFactoryCreator
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager())
+        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
+                                             vpnAuthentication: makeVpnAuthentication(),
+                                             appGroup: config.appGroup)
     }
 
     // MARK: VpnAuthentication

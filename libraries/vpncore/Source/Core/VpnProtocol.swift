@@ -31,7 +31,10 @@ extension VpnProtocol { // Authentication
         case .ike: return .credentials
         case .openVpn:
             #if os(macOS)
-            return .credentials
+            guard isEnabled(OpenVPNFeature.macCertificates) else {
+                return .credentials
+            }
+            return .certificate
             #else
             guard isEnabled(OpenVPNFeature.iosCertificates) else {
                 return .credentials
