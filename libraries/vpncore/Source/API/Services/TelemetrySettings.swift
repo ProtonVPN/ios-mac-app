@@ -32,11 +32,7 @@ public class TelemetrySettings {
     }
 
     public var telemetryUsageData: Bool {
-        guard let username = authKeychain.fetch()?.username,
-              let usageData = propertiesManager.getTelemetryUsageData(for: username) else {
-            return false
-        }
-        return usageData
+        propertiesManager.getTelemetryUsageData(for: authKeychain.fetch()?.username)
     }
 
     public func updateTelemetryUsageData(isOn: Bool) {
@@ -45,11 +41,7 @@ public class TelemetrySettings {
     }
 
     public var telemetryCrashReports: Bool {
-        guard let username = authKeychain.fetch()?.username,
-              let usageData = propertiesManager.getTelemetryCrashReports(for: username) else {
-            return false
-        }
-        return usageData
+        propertiesManager.getTelemetryCrashReports(for: authKeychain.fetch()?.username)
     }
 
     public func updateTelemetryCrashReports(isOn: Bool) {

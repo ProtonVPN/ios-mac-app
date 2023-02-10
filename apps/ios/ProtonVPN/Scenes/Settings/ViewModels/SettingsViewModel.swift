@@ -96,10 +96,10 @@ final class SettingsViewModel {
         if let connectionSection = connectionSection {
             sections.append(connectionSection)
         }
+        sections.append(extensionsSection)
         if LocalFeatureFlags.isEnabled(TelemetryFeature.telemetryOptIn) {
             sections.append(usageStatisticsSection)
         }
-        sections.append(extensionsSection)
         if let batterySection = batterySection {
             sections.append(batterySection)
         }

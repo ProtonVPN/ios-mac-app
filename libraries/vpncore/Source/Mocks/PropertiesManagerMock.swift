@@ -161,8 +161,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
 
-    public func getTelemetryUsageData(for username: String) -> Bool? { return nil }
-    public func getTelemetryCrashReports(for username: String) -> Bool? { return nil }
+    public func getTelemetryUsageData(for username: String?) -> Bool { return false }
+    public func getTelemetryCrashReports(for username: String?) -> Bool { return true }
     public func setTelemetryUsageData(for username: String, enabled: Bool) { }
     public func setTelemetryCrashReports(for username: String, enabled: Bool) { }
 
