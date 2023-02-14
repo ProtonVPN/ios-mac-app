@@ -62,4 +62,21 @@ extension Array {
         copy.append(contentsOf: other)
         return copy
     }
+
+    /// Returns a copy of this array, appending the contents of `other` if `condition` evaluates to true.
+    public func appending(_ other: Self, if condition: Bool) -> Self {
+        if condition {
+            return self.appending(other)
+        }
+        return self
+    }
+
+    /// Performance oriented overload of `appending`, which only computes the value of the `generator` closure if
+    /// `condition` evalutes to true.
+    public func appending(_ generator: () -> Self, if condition: Bool) -> Self {
+        if condition {
+            return self.appending(generator())
+        }
+        return self
+    }
 }

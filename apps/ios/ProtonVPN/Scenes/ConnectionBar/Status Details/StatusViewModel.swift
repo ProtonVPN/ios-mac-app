@@ -118,11 +118,8 @@ class StatusViewModel {
     }
     
     private var connectionStatusSection: TableViewSection {
-        var cells = [connectionStatusCell]
-
-        if propertiesManager.featureFlags.netShield {
-            cells = cells.appending(netShieldCells)
-        }
+        let cells = [connectionStatusCell]
+            .appending({ netShieldCells }, if: propertiesManager.featureFlags.netShield)
 
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }
@@ -361,7 +358,7 @@ class StatusViewModel {
             title: LocalizedString.netshieldUpsellTitle,
             subtitle: LocalizedString.netshieldUpsellSubtitle,
             image: UIImage(named: "netshield-small")!,
-            handler: { log.warning("Netshield upsell modal unimplemented") }
+            handler: { [weak self] in self?.alertService.push(alert: SecureCoreUpsellAlert()) }
         )
     }
     
