@@ -97,10 +97,6 @@ class StatusViewModel {
         var sections = [TableViewSection]()
         
         sections.append(connectionStatusSection)
-        
-        if propertiesManager.featureFlags.netShield {
-            sections.append(netShieldSection)
-        }
 
         switch appStateManager.displayState {
         case .connected:
@@ -122,22 +118,28 @@ class StatusViewModel {
     }
     
     private var connectionStatusSection: TableViewSection {
-        let cell: TableViewCellModel
+        var cells = [connectionStatusCell]
 
+        if propertiesManager.featureFlags.netShield {
+            cells = cells.appending(netShieldCells)
+        }
+
+        return TableViewSection(title: "", showHeader: false, cells: cells)
+    }
+
+    private var connectionStatusCell: TableViewCellModel {
         switch appStateManager.displayState {
         case .connected:
-            cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
+            return .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
         case .connecting:
-            cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            return .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .loadingConnectionInfo:
-            cell = .textWithActivityCell(title: LocalizedString.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
+            return .textWithActivityCell(title: LocalizedString.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
         case .disconnecting:
-            cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            return .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .disconnected:
-            cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
+            return .textWithActivityCell(title: LocalizedString.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
         }
-        
-        return TableViewSection(title: "", showHeader: false, cells: [cell])
     }
     
     private var connectionCountryString: String {
@@ -314,9 +316,9 @@ class StatusViewModel {
     
     // MARK: - NetShield
     
-    private var netShieldSection: TableViewSection {
+    private var netShieldCells: [TableViewCellModel] {
         guard netShieldPropertyProvider.isUserEligibleForNetShield else {
-            return netShieldUnavailableSection
+            return [netShieldUnavailableCell]
         }
         
         let isConnected: Bool
@@ -350,19 +352,17 @@ class StatusViewModel {
                 }))
             }
         }
-        
-        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
+
+        return cells
     }
     
-    private var netShieldUnavailableSection: TableViewSection {
-        let cell: TableViewCellModel = .pushImage(
+    private var netShieldUnavailableCell: TableViewCellModel {
+        return .pushImage(
             title: LocalizedString.netshieldUpsellTitle,
             subtitle: LocalizedString.netshieldUpsellSubtitle,
             image: UIImage(named: "netshield-small")!,
-            handler: { print("push upsell") }
+            handler: { log.warning("Netshield upsell modal unimplemented") }
         )
-        
-        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: [cell])
     }
     
     private func changeNetShield(to newValue: NetShieldType) {
