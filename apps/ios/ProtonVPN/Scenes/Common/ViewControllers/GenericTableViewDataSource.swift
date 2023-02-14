@@ -31,6 +31,7 @@ enum TableViewCellModel {
                             username: NSAttributedString,
                             plan: NSAttributedString,
                             handler: () -> Void)
+    case pushImage(title: String, subtitle: String, image: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
@@ -96,6 +97,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
+        tableView.register(ImageTableViewCell.nib, forCellReuseIdentifier: ImageTableViewCell.identifier)
     }
     
     public func update(rows: [IndexPath: TableViewCellModel]) {
@@ -171,6 +173,17 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.subtitleLabel.attributedText = value
             cell.completionHandler = handler
             
+            return cell
+        case .pushImage(title: let title, subtitle: let subtitle, image: let image, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier) as? ImageTableViewCell else {
+                return UITableViewCell()
+            }
+
+            cell.titleLabel.text = title
+            cell.subtitleLabel.text = subtitle
+            cell.customImageView.image = image
+            cell.completionHandler = handler
+
             return cell
         case .titleTextField(title: let title, textFieldText: let textFieldText, textFieldPlaceholder: let textFieldPlaceholder, textFieldDelegate: let delegate):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TitleTextFieldTableViewCell.identifier) as? TitleTextFieldTableViewCell else {
@@ -329,6 +342,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         case .textWithActivityCell:
             return -1 // allows for self sizing
         case .pushAccountDetails:
+            return -1
+        case .pushImage:
             return -1
         default:
             return UIConstants.cellHeight

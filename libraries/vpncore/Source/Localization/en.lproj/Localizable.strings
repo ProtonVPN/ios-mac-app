@@ -1536,6 +1536,12 @@
 
 // Netshield
 
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Browse ad-free with NetShield";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Block ads, trackers and malware on websites and apps";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 "_netshield_title_tooltip" = "Block advertisements, trackers and malware";
