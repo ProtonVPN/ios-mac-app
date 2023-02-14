@@ -121,7 +121,7 @@ class StatusViewModel {
         return sections
     }
     
-    private var connectionStatusSection: TableViewSection {        
+    private var connectionStatusSection: TableViewSection {
         let cell: TableViewCellModel
 
         switch appStateManager.displayState {
@@ -355,19 +355,14 @@ class StatusViewModel {
     }
     
     private var netShieldUnavailableSection: TableViewSection {
-        var cells = [TableViewCellModel]()
+        let cell: TableViewCellModel = .pushImage(
+            title: LocalizedString.netshieldUpsellTitle,
+            subtitle: LocalizedString.netshieldUpsellSubtitle,
+            image: UIImage(named: "netshield-small")!,
+            handler: { print("push upsell") }
+        )
         
-        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-            self?.alertService.push(alert: NetShieldUpsellAlert())
-        }))
-        
-        [NetShieldType.level1, NetShieldType.level2].forEach { type in
-            cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
-                self?.alertService.push(alert: NetShieldUpsellAlert())
-            }))
-        }
-        
-        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: [cell])
     }
     
     private func changeNetShield(to newValue: NetShieldType) {
