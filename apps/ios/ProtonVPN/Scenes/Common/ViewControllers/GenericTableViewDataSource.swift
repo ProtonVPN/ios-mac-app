@@ -355,7 +355,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         let cell = tableView.cellForRow(at: indexPath)
         
         switch cellModel {
-        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue, .attributedKeyValue:
+        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .pushImage, .invertedKeyValue, .attributedKeyValue:
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()

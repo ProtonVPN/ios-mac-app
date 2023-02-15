@@ -1270,6 +1270,8 @@
 				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
 				79DEE9082111A5E100C354EF /* TabBar.swift */,
+				AD6099FA299B2343007E46BC /* ImageTableViewCell.swift */,
+				AD609A02299B89C0007E46BC /* ImageTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1567,8 +1569,6 @@
 			children = (
 				792B58BF2150DEA3000BB3A3 /* StatusViewController.swift */,
 				792B58C12150E278000BB3A3 /* StatusViewModel.swift */,
-				AD6099FA299B2343007E46BC /* ImageTableViewCell.swift */,
-				AD609A02299B89C0007E46BC /* ImageTableViewCell.xib */,
 			);
 			path = "Status Details";
 			sourceTree = "<group>";

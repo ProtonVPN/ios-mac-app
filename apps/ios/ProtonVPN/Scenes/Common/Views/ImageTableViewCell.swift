@@ -19,32 +19,29 @@
 import UIKit
 import ProtonCore_UIFoundations
 
-final class ImageTableViewCell: UITableViewCell {
+/// A two-line, detail accessory cell with a large image at the leading edge.
+final class ImageTableViewCell: StandardTableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var customImageView: UIImageView!
-
-    var completionHandler: (() -> Void)?
-
-    func select() {
-        completionHandler?()
-    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
     }
 
-    func setupViews() {
+    override func setupViews(inverted: Bool = false) {
+        super.setupViews(inverted: inverted)
         backgroundColor = .secondaryBackgroundColor()
-        titleLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-        titleLabel.textColor = ColorProvider.TextNorm
-        subtitleLabel.textColor = ColorProvider.TextWeak
+        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
         subtitleLabel.numberOfLines = 0
     }
 
-    func setup(title: NSAttributedString, subtitle: NSAttributedString, image: UIImage, handler: @escaping () -> Void) {
+    func setup(
+        title: NSAttributedString,
+        subtitle: NSAttributedString,
+        image: UIImage,
+        handler: @escaping () -> Void
+    ) {
         self.titleLabel.attributedText = title
         self.subtitleLabel.attributedText = subtitle
         self.customImageView.image = image
