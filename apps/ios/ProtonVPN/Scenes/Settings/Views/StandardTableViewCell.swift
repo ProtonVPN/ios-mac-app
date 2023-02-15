@@ -48,7 +48,7 @@ class StandardTableViewCell: UITableViewCell {
         setupViews(inverted: true)
     }
     
-    private func setupViews(inverted: Bool = false) {
+    func setupViews(inverted: Bool = false) {
         backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         subtitleLabel.font = UIFont.systemFont(ofSize: 17)
