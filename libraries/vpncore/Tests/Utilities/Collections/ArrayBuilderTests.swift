@@ -72,7 +72,7 @@ class ArrayBuilderTests: XCTestCase {
         XCTAssertEqual(result, [2, 1], "Elements should be removed if the condition is true.")
     }
 
-    func testConditionalRemovingElemetsReturnsOriginalArrayWhenConditionFalse() {
+    func testConditionalRemovingElementsReturnsOriginalArrayWhenConditionFalse() {
         let original = [2, 3, 1, 5]
 
         let result = original.removing([1, 3], if: false)
@@ -80,7 +80,7 @@ class ArrayBuilderTests: XCTestCase {
         XCTAssertEqual(result, original, "The original array should be returned when the condition is false.")
     }
 
-    func testConditionalRemovingElemetsReturnsAlteredArrayWhenConditionTrue() {
+    func testConditionalRemovingElementsReturnsAlteredArrayWhenConditionTrue() {
         let original = [2, 3, 1, 5]
 
         let result = original.removing([1, 3], if: true)
@@ -88,4 +88,45 @@ class ArrayBuilderTests: XCTestCase {
         XCTAssertEqual(result, [2, 5], "Elements should be removed if the condition is true.")
     }
 
+    func testConditionalAppendingReturnsOriginalArrayWhenConditionFalse() {
+        let original = [2, 1, 5]
+
+        let result = original.appending([2, 9], if: false)
+
+        XCTAssertEqual(result, [2, 1, 5], "Elements should be not be appended if the condition is false.")
+    }
+
+    func testConditionalAppendingReturnsAlteredArrayWhenConditionTrue() {
+        let original = [2, 1, 5]
+
+        let result = original.appending([2, 9], if: true)
+
+        XCTAssertEqual(result, [2, 1, 5, 2, 9], "Elements should be appended if the condition is true.")
+    }
+
+    func testConditionalAppendingDoesNotExecuteClosureIfConditionFalse() {
+        let closureEvaluatedExpectation = XCTestExpectation(description: "Closure should not be executed unnecessarily")
+        closureEvaluatedExpectation.isInverted = true
+
+        let original = [2, 1, 5]
+        let closure: () -> [Int] = {
+            closureEvaluatedExpectation.fulfill()
+            return [2, 9]
+        }
+
+        let result = original.appending(closure, if: false)
+
+        XCTAssertEqual(result, [2, 1, 5], "Elements should not be appended if the condition is false.")
+    }
+
+    func testConditionalAppendingAppendsResultOfClosureWhenConditionTrue() {
+        let original = [2, 1, 5]
+        let closure: () -> [Int] = {
+            return [2, 9]
+        }
+
+        let result = original.appending(closure, if: true)
+
+        XCTAssertEqual(result, [2, 1, 5, 2, 9], "Elements should be appended if the condition is true.")
+    }
 }
