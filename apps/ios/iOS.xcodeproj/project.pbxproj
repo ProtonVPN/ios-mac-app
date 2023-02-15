@@ -139,6 +139,8 @@
 		AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */; };
 		AD6099FB299B2343007E46BC /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageTableViewCell.xib */; };
+		AD609A04299D1120007E46BC /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageTableViewCell.swift */; };
+		AD609A05299D1120007E46BC /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageTableViewCell.xib */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
@@ -2864,6 +2866,7 @@
 				E1FB547E230C001E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */,
 				E1D187F42301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
 				C3226764A143E60A9570365C /* Pods-ProtonVPNTests-metadata.plist in Resources */,
+				AD609A05299D1120007E46BC /* ImageTableViewCell.xib in Resources */,
 				86B07CD2711C002F53844E95 /* AnnouncementFeatureView.xib in Resources */,
 				ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */,
 			);
@@ -3503,6 +3506,7 @@
 				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
 				E185A866237157EC0039E625 /* TrackedAlertController.swift in Sources */,
 				D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */,
+				AD609A04299D1120007E46BC /* ImageTableViewCell.swift in Sources */,
 				D5136C30228592E80002C095 /* UIView+constraints.swift in Sources */,
 				D5136C31228592E80002C095 /* ServerUtility.swift in Sources */,
 				E16A7E702374C150008A0DA0 /* AlertTests.swift in Sources */,
