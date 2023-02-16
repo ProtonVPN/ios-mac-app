@@ -48,6 +48,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         return WireGuardTransport(rawValue: socketType) ?? .udp
     }
 
+    private var shouldStartServerRefreshOnWake: Bool {
+        tunnelProviderProtocol?.reconnectionEnabled == true && self.connectedIpId != nil && self.connectedLogicalId != nil
+    }
+
     override init() {
         let storage = Storage()
 
@@ -128,19 +132,20 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             certificateRefreshManager.start { }
         }
 
+        #if CHECK_CONNECTIVITY
+        self.startTestingConnectivity()
+        #endif
+
         guard let connectedLogicalId, let connectedIpId else {
-            wg_log(.fault, message: "Server ID wasn't set on tunnel start. This should be an unreachable state")
-            fatalError("Server ID wasn't set on tunnel start. This should be an unreachable state")
+            wg_log(.info, message: "Server ID wasn't set on tunnel start, likely updated while in the background. Won't start server status refresh manager.")
+            return
         }
 
+        wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
         if tunnelProviderProtocol?.reconnectionEnabled == true {
             serverStatusRefreshManager.updateConnectedIds(logicalId: connectedLogicalId, serverId: connectedIpId)
             serverStatusRefreshManager.start { }
         }
-
-        #if CHECK_CONNECTIVITY
-        self.startTestingConnectivity()
-        #endif
     }
 
     private lazy var adapter: WireGuardAdapter = {
@@ -196,7 +201,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     /// Actually start a tunnel
     /// - Parameter newVpnCertificateFeatures: If not nil, will generate new certificate after connecting to the server and before starting certificate
     /// refresh manager. On new connection nil should be used not to regenerate current certificate.
-    private func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, newVpnCertificateFeatures: VPNConnectionFeatures?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this function_body_length
+    private func startTunnelWithStoredConfig(errorNotifier: ErrorNotifier, newVpnCertificateFeatures: VPNConnectionFeatures?, completionHandler: @escaping (Error?) -> Void) {
         guard let storedConfig = currentWireguardServer else {
             wg_log(.error, message: "Current wireguard server not set; not starting tunnel")
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -219,6 +224,23 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             return
         }
 
+        startTunnelWithConfiguration(
+            tunnelConfiguration,
+            errorNotifier: errorNotifier,
+            newVpnCertificateFeatures: newVpnCertificateFeatures,
+            transport: transport,
+            completionHandler: completionHandler
+        )
+    }
+
+    private func startTunnelWithConfiguration(
+        _ tunnelConfiguration: TunnelConfiguration,
+        errorNotifier: ErrorNotifier,
+        newVpnCertificateFeatures: VPNConnectionFeatures?,
+        transport: WireGuardTransport?,
+        completionHandler: @escaping (Error?) -> Void) {
+
+        let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
             guard let adapterError = adapterError else {
@@ -277,10 +299,33 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly" : "app"))
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
-        guard let storedConfig = tunnelProviderProtocol?.asWireguardConfig() else {
+        guard let keychainConfigData = tunnelProviderProtocol?.keychainConfigData() else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             wg_log(.info, message: "Error in \(#function) guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+            return
+        }
+
+        guard let storedConfig = tunnelProviderProtocol?.storedWireguardConfigurationFromData(keychainConfigData) else {
+            wg_log(.info, message: "Parsable wireguard config not found in keychain, attempting to parse old format")
+            // We've been started in the background. None of the new properties for server
+            // status refresh will be available.
+
+            guard let tunnelConfig = tunnelProviderProtocol?.tunnelConfigFromOldData(keychainConfigData, called: nil) else {
+                errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+                completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
+                wg_log(.info, message: "Error in \(#function) guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+                return
+            }
+
+            wg_log(.info, message: "Starting tunnel with old configuration format.")
+            startTunnelWithConfiguration(
+                tunnelConfig,
+                errorNotifier: errorNotifier,
+                newVpnCertificateFeatures: nil,
+                transport: transport,
+                completionHandler: completionHandler
+            )
             return
         }
 
@@ -416,7 +461,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         #endif
 
         certificateRefreshManager.start {
-            if self.tunnelProviderProtocol?.reconnectionEnabled == true {
+            if self.shouldStartServerRefreshOnWake {
                 self.serverStatusRefreshManager.start { }
             }
         }
