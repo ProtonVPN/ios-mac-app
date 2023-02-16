@@ -37,6 +37,44 @@ extension NETunnelProviderProtocol {
         }
     }
 
+
+    #if os(macOS)
+    func asTunnelConfiguration(called name: String? = nil) -> TunnelConfiguration? {
+        if let data = Keychain.loadWgConfig() {
+            log.info("Loading config directly from keychain")
+            return tunnelConfigurationFromData(data, called: name)
+        }
+        if let passwordReference = passwordReference,
+           let data = Keychain.openReference(called: passwordReference) {
+            log.info("Loading config from keychain by reference")
+            return tunnelConfigurationFromData(data, called: name)
+        }
+        return nil
+    }
+
+    func tunnelConfigurationFromData(_ data: Data,
+                                     called name: String?) -> TunnelConfiguration? {
+        guard let storedConfig = storedWireguardConfigurationFromData(data) else {
+            log.info("Trying old WireGuard configuration format.")
+            return tunnelConfigFromOldData(data, called: name)
+        }
+
+        let wgConfig = storedConfig.asWireguardConfiguration()
+        return try? TunnelConfiguration(fromWgQuickConfig: wgConfig, called: name)
+    }
+    #endif
+
+    func keychainConfigData() -> Data? {
+        log.info("Loading config from keychain by reference")
+        
+        guard let passwordReference = passwordReference,
+           let data = Keychain.openReference(called: passwordReference) else {
+            return nil
+        }
+
+        return data
+    }
+
     func storedWireguardConfigurationFromData(_ data: Data) -> StoredWireguardConfig? {
         guard let version = StoredWireguardConfig.Version(rawValue: Int(data[0])) else {
             log.info("No known version found for StoredWireguardConfig")
@@ -61,46 +99,16 @@ extension NETunnelProviderProtocol {
         return storedConfig
     }
 
-    func tunnelConfigurationFromData(_ data: Data,
-                                     called name: String?) -> TunnelConfiguration? {
-        guard let storedConfig = storedWireguardConfigurationFromData(data) else {
-            log.info("Trying old WireGuard configuration format.")
-            guard let config = String(data: data, encoding: .utf8),
-                  config.starts(with: "[Interface]") else {
-                log.info("Stored WireGuard config is corrupted or of unknown format.")
-                return nil
-            }
-            return try? TunnelConfiguration(fromWgQuickConfig: config, called: name)
-        }
-
-        let wgConfig = storedConfig.asWireguardConfiguration()
-        return try? TunnelConfiguration(fromWgQuickConfig: wgConfig, called: name)
-    }
-
-    #if os(macOS)
-    func asTunnelConfiguration(called name: String? = nil) -> TunnelConfiguration? {
-        if let data = Keychain.loadWgConfig() {
-            log.info("Loading config directly from keychain")
-            return tunnelConfigurationFromData(data, called: name)
-        }
-        if let passwordReference = passwordReference,
-           let data = Keychain.openReference(called: passwordReference) {
-            log.info("Loading config from keychain by reference")
-            return tunnelConfigurationFromData(data, called: name)
-        }
-        return nil
-    }
-    #endif
-
-    func asWireguardConfig(called name: String? = nil) -> StoredWireguardConfig? {
-        log.info("Loading config from keychain by reference")
-        
-        guard let passwordReference = passwordReference,
-           let data = Keychain.openReference(called: passwordReference) else {
+    /// This is needed in case the user updates their app while connected, without
+    /// opening it and reconnecting.
+    func tunnelConfigFromOldData(_ data: Data,
+                                 called name: String?) -> TunnelConfiguration? {
+        guard let config = String(data: data, encoding: .utf8),
+            config.starts(with: "[Interface]") else {
+            log.info("Stored WireGuard config is corrupted or of unknown format.")
             return nil
         }
-
-        return storedWireguardConfigurationFromData(data)
+        return try? TunnelConfiguration(fromWgQuickConfig: config, called: name)
     }
 
     func destroyConfigurationReference() {
