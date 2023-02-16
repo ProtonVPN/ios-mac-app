@@ -55,7 +55,11 @@ class ProtonCz(BaseCommitizen):
         },
         {
             "value": "chore",
-            "name": "chore: Performs a routine task that isn't worth tracking, like a manual version bump.",
+            "name": "chore: Performs a routine task that isn't worth tracking",
+        },
+        {
+            "value": "release",
+            "name": "release: A manual software release commit that bumps one or more app versions."
         },
     ]
 
