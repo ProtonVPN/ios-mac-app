@@ -135,10 +135,10 @@ final class LoginViewModel {
         case let .success(status):
             switch status {
             case let .finished(data):
-                appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: { [weak self] in
-                    self?.silentlyCheckForUpdates()
-
-                    self?.sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, actionHandler: { _ in })
+                appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: {
+                    // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
+                    self.silentlyCheckForUpdates()
+                    self.sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true, actionHandler: { _ in })
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })

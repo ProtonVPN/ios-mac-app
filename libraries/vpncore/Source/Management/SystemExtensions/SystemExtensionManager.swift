@@ -204,10 +204,14 @@ public class SystemExtensionManager: NSObject {
                                                           actionHandler: @escaping (SystemExtensionResult) -> Void) {
         // do not check if the user is not logged in to avoid showing the installation prompt on the
         // login screen on first start
-        guard userIsLoggedIn else { return }
+        guard userIsLoggedIn else {
+            log.debug("Aborted sysex installation because user is not logged in", category: .sysex)
+            return
+        }
 
         guard propertiesManager.connectionProtocol.requiresSystemExtension ||
               profileManager.customProfiles.contains(where: { $0.connectionProtocol.requiresSystemExtension }) else {
+            log.debug("Aborted sysex installation because it is not required by profiles and settings", category: .sysex)
             return
         }
 
