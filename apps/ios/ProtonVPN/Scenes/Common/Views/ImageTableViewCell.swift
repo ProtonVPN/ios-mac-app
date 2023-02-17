@@ -1,5 +1,5 @@
 //
-//  Created on 14/02/2023.
+//  Created on 17/02/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -19,32 +19,42 @@
 import UIKit
 import ProtonCore_UIFoundations
 
-/// A two-line, detail accessory cell with a large image at the leading edge.
-final class ImageTableViewCell: StandardTableViewCell {
+/// A single line, disclosure accessory cell with a small image at the leading edge.
+class ImageTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var customImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var _imageView: UIImageView!
+
+    var completionHandler: (() -> Void)?
+
+    override var imageView: UIImageView? {
+        _imageView
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
     }
 
-    override func setupViews(inverted: Bool = false) {
-        super.setupViews(inverted: inverted)
-        backgroundColor = .secondaryBackgroundColor()
-        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        subtitleLabel.numberOfLines = 0
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        selectionStyle = .none
     }
 
-    func setup(
-        title: NSAttributedString,
-        subtitle: NSAttributedString,
-        image: UIImage,
-        handler: @escaping () -> Void
-    ) {
-        self.titleLabel.attributedText = title
-        self.subtitleLabel.attributedText = subtitle
-        self.customImageView.image = image
-        self.completionHandler = handler
+    func select() {
+        completionHandler?()
+    }
+
+    func setupViews() {
+        accessoryType = .disclosureIndicator
+        backgroundColor = .secondaryBackgroundColor()
+        titleLabel.font = .systemFont(ofSize: 17, weight: .regular)
+    }
+
+    func setup(title: NSAttributedString, image: UIImage, handler: @escaping () -> Void) {
+        titleLabel.attributedText = title
+        completionHandler = handler
+        imageView?.image = image
     }
 }
