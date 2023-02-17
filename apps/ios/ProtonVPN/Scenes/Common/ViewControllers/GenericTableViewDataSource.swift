@@ -31,7 +31,8 @@ enum TableViewCellModel {
                             username: NSAttributedString,
                             plan: NSAttributedString,
                             handler: () -> Void)
-    case pushImage(title: String, subtitle: String, image: UIImage, handler: () -> Void)
+    case image(title: String, image: UIImage, handler: () -> Void)
+    case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
@@ -98,6 +99,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
         tableView.register(ImageTableViewCell.nib, forCellReuseIdentifier: ImageTableViewCell.identifier)
+        tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
     }
     
     public func update(rows: [IndexPath: TableViewCellModel]) {
@@ -150,7 +152,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.titleLabel.text = title
             cell.subtitleLabel.text = nil
             cell.completionHandler = handler
-            
+
             return cell
         case .pushKeyValue(key: let key, value: let value, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
@@ -174,14 +176,24 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
             
             return cell
-        case .pushImage(title: let title, subtitle: let subtitle, image: let image, handler: let handler):
+        case .image(title: let title, image: let image, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier) as? ImageTableViewCell else {
                 return UITableViewCell()
             }
 
             cell.titleLabel.text = title
+            cell.imageView?.image = image
+            cell.completionHandler = handler
+
+            return cell
+        case .imageSubtitle(title: let title, subtitle: let subtitle, image: let image, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleTableViewCell.identifier) as? ImageSubtitleTableViewCell else {
+                return UITableViewCell()
+            }
+
+            cell.titleLabel.text = title
             cell.subtitleLabel.text = subtitle
-            cell.customImageView.image = image
+            cell.imageView?.image = image
             cell.completionHandler = handler
 
             return cell
@@ -343,19 +355,40 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return -1 // allows for self sizing
         case .pushAccountDetails:
             return -1
-        case .pushImage:
+        case .imageSubtitle:
             return -1
         default:
             return UIConstants.cellHeight
         }
     }
-    
+
+    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        let cellModel = sections[indexPath.section].cells[indexPath.row]
+        let cell = tableView.cellForRow(at: indexPath)
+
+        switch cellModel {
+        case .image:
+            guard let cell = cell as? ImageTableViewCell else { return }
+
+            cell.select()
+            onSelectionChange?()
+        case .imageSubtitle:
+            guard let cell = cell as? ImageSubtitleTableViewCell else { return }
+
+            cell.select()
+            onSelectionChange?()
+        default:
+            log.debug("Unhandled cell accessory selection: \(cellModel)", category: .ui)
+        }
+    }
+
+    // swiftlint:disable cyclomatic_complexity function_body_length
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
         
         switch cellModel {
-        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .pushImage, .invertedKeyValue, .attributedKeyValue:
+        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue, .attributedKeyValue:
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()
@@ -376,10 +409,22 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             
             cell.select()
             onSelectionChange?()
+
+        case .image:
+            guard let cell = cell as? ImageTableViewCell else { return }
+
+            cell.select()
+            onSelectionChange?()
+        case .imageSubtitle:
+            guard let cell = cell as? ImageSubtitleTableViewCell else { return }
+
+            cell.select()
+            onSelectionChange?()
         default:
             return
         }
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]

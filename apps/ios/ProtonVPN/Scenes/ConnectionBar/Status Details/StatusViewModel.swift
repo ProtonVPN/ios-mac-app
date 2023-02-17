@@ -354,7 +354,7 @@ class StatusViewModel {
     }
     
     private var netShieldUnavailableCell: TableViewCellModel {
-        return .pushImage(
+        return .imageSubtitle(
             title: LocalizedString.netshieldUpsellTitle,
             subtitle: LocalizedString.netshieldUpsellSubtitle,
             image: UIImage(named: "netshield-small")!,

@@ -1,5 +1,5 @@
 //
-//  Created on 17/02/2023.
+//  Created on 14/02/2023.
 //
 //  Copyright (c) 2023 Proton AG
 //
@@ -19,10 +19,11 @@
 import UIKit
 import ProtonCore_UIFoundations
 
-/// A single line, disclosure accessory cell with a small image at the leading edge.
-class ImageTableViewCell: UITableViewCell {
+/// A two-line, detail accessory cell with a large image at the leading edge.
+final class ImageSubtitleTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet private weak var _imageView: UIImageView!
 
     var completionHandler: (() -> Void)?
@@ -47,14 +48,17 @@ class ImageTableViewCell: UITableViewCell {
     }
 
     func setupViews() {
-        accessoryType = .disclosureIndicator
+        accessoryType = .detailButton
         backgroundColor = .secondaryBackgroundColor()
-        titleLabel.font = .systemFont(ofSize: 17, weight: .regular)
+        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
+        subtitleLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        subtitleLabel.numberOfLines = 0
     }
 
-    func setup(title: NSAttributedString, image: UIImage, handler: @escaping () -> Void) {
+    func setup(title: NSAttributedString, subtitle: NSAttributedString, image: UIImage, handler: @escaping () -> Void) {
         titleLabel.attributedText = title
-        completionHandler = handler
+        subtitleLabel.attributedText = subtitle
         imageView?.image = image
+        completionHandler = handler
     }
 }
