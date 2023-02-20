@@ -76,6 +76,7 @@ abstract_target 'Core' do
 
     target 'vpncore-ios' do       
         platform :ios, '14.0'
+        pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macos' do        
         platform :osx, '10.15'
