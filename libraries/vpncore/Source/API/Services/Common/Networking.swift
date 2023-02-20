@@ -11,6 +11,9 @@ import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
 import ProtonCore_Environment
+#if os(iOS)
+import ProtonCore_Challenge
+#endif
 import GoLibs
 import VPNShared
 import TrustKit
@@ -69,7 +72,13 @@ public final class CoreNetworking: Networking {
 
         Self.setupTrustKit()
 
-        apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "", challengeParametersProvider: .empty)
+        #if os(iOS)
+            apiService = PMAPIService(doh: doh,
+                                      sessionUID: authKeychain.fetch()?.sessionId ?? "",
+                                      challengeParametersProvider: .forAPIService(clientApp: .vpn, challenge: PMChallenge()))
+        #else
+            apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "", challengeParametersProvider: .empty)
+        #endif
         apiService.authDelegate = self
         apiService.serviceDelegate = self
         apiService.forceUpgradeDelegate = delegate
