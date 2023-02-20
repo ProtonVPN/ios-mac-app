@@ -34,7 +34,7 @@
 	<key>VPN</key>
 	<dict>
 		<key>ReconnectionInMaintenance</key>
-		<true/>
+		<false/>
 	</dict>
 </dict>
 </plist>

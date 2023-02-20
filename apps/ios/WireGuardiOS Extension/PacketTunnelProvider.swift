@@ -145,6 +145,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         if tunnelProviderProtocol?.reconnectionEnabled == true {
             serverStatusRefreshManager.updateConnectedIds(logicalId: connectedLogicalId, serverId: connectedIpId)
             serverStatusRefreshManager.start { }
+        } else {
+            log.debug("Maintenance check disabled", category: .connection)
         }
     }
 
