@@ -33,16 +33,20 @@ struct OnboardingButton: View {
 
     var body: some View {
         Spacer()
-        Button(LocalizedString.onboardingNext) {
+        Button {
             completion?()
+        } label: {
+            Text(LocalizedString.onboardingNext)
+                .foregroundColor(colors.text.suColor)
+                .font(.system(size: 17))
+                .padding(titlePadding)
+                .frame(minWidth: geometry.size.width - framePadding * 2)
+                .background(RoundedRectangle(cornerRadius: cornerRadius)
+                    .fill(colors.brand.suColor))
+                .contentShape(RoundedRectangle(cornerRadius: cornerRadius))
+                .padding(.bottom)
         }
-        .foregroundColor(colors.text.suColor)
-        .font(.system(size: 17))
-        .padding(titlePadding)
-        .frame(minWidth: geometry.size.width - framePadding * 2)
-        .background(RoundedRectangle(cornerRadius: cornerRadius)
-            .fill(colors.brand.suColor))
-        .padding(.bottom)
+
     }
 }
 
