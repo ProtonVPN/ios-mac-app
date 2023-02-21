@@ -232,30 +232,7 @@ final class SettingsViewModel {
         let netShieldAvailable = propertiesManager.featureFlags.netShield
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-
-                self.pushNetshieldSelectionViewController(selectedFeature: self.netShieldPropertyProvider.netShieldType, shouldSelectNewValue: { [weak self] type, approve in
-                    self?.vpnStateConfiguration.getInfo { [weak self] info in
-                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
-                        case .withConnectionUpdate:
-                            approve()
-                            self?.vpnManager.set(netShieldType: type)
-                        case .withReconnect:
-                            self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: { [weak self] in
-                                approve()
-                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
-                                self?.vpnGateway.reconnect(with: type)
-                                self?.connectionStatusService.presentStatusViewController()
-                            }))
-                        case .immediately:
-                            approve()
-                        }
-                    }
-                }, onFeatureChange: { [weak self] type in
-                    self?.netShieldPropertyProvider.netShieldType = type
-                })
+                self?.pushNetshieldSelectionViewController()
             }))
             cells.append(.tooltip(text: LocalizedString.netshieldTitleTooltip))
         }
@@ -639,14 +616,53 @@ final class SettingsViewModel {
         log.info("Build info: \(appInfo.debugInfoString)")
         pushHandler?(settingsService.makeLogSelectionViewController())
     }
-    
-    private func pushNetshieldSelectionViewController(selectedFeature: NetShieldType, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<NetShieldType>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<NetShieldType>.FeatureChangeCallback) {
-        pushHandler?(makePaidFeatureSelectionViewController(title: LocalizedString.netshieldTitle, allFeatures: NetShieldType.allCases, selectedFeature: selectedFeature, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange))
+
+    private func pushNetshieldSelectionViewController() {
+        let viewModel = NetShieldSelectionViewModel(
+            title: LocalizedString.netshieldTitle,
+            allFeatures: NetShieldType.allCases,
+            selectedFeature: netShieldPropertyProvider.netShieldType,
+            factory: factory,
+            shouldSelectNewValue: { [weak self] type, completion in
+                self?.shouldSelectNetShieldType(type, completion: completion)
+            },
+            onFeatureChange: { [weak self] type in
+                self?.netShieldPropertyProvider.netShieldType = type
+            }
+        )
+        pushHandler?(NetShieldSelectionViewController(viewModel: viewModel))
     }
 
-    private func makePaidFeatureSelectionViewController<T>(title: String, allFeatures: [T], selectedFeature: T, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<T>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<T>.FeatureChangeCallback) -> PaidFeatureSelectionViewController<T> where T: PaidFeature {
-        let viewModel = PaidFeatureSelectionViewModel(title: title, allFeatures: allFeatures, selectedFeature: selectedFeature, factory: factory, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange)
-        return PaidFeatureSelectionViewController(viewModel: viewModel)
+    private func shouldSelectNetShieldType(_ type: NetShieldType, completion: @escaping () -> Void) {
+        if type.isUserTierTooLow(userTier) {
+            alertService.push(alert: NetShieldUpsellAlert())
+            return
+        }
+        vpnStateConfiguration.getInfo { [weak self] info in
+            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+            case .withConnectionUpdate:
+                completion()
+                self?.vpnManager.set(netShieldType: type)
+            case .withReconnect:
+                self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: { [weak self] in
+                    completion()
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
+                    self?.vpnGateway.reconnect(with: type)
+                    self?.connectionStatusService.presentStatusViewController()
+                }))
+            case .immediately:
+                completion()
+            }
+        }
+    }
+
+    private var userTier: Int {
+        do {
+            return try vpnKeychain.fetchCached().maxTier
+        } catch {
+            log.warning("Failed to retrieve user tier, defaulting to free tier.", category: .keychain)
+            return CoreAppConstants.VpnTiers.free
+        }
     }
 
     private func reportBug() {

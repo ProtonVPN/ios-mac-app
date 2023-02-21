@@ -30,6 +30,7 @@ class UIConstants {
     static let connectionStatusCellHeight: CGFloat = 48
     static let cellHeight: CGFloat = 52.5
     static let headerHeight: CGFloat = 56
+    static let separatorHeight: CGFloat = 8
     static let countriesHeaderHeight: CGFloat = 40
     static let connectionBarHeight: CGFloat = 44
     
