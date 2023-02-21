@@ -33,7 +33,7 @@ final class TelemetryRequest: Request {
     var method: HTTPMethod = .post
 
     var isAuth: Bool {
-        return false
+        return true
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

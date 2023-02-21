@@ -165,15 +165,15 @@ public class TelemetryServiceImplementation: TelemetryService {
         }
     }
 
-    private func vpnTrigger(eventType: ConnectionEventType) -> TelemetryDimensions.VPNTrigger? {
+    private func vpnTrigger(eventType: ConnectionEventType) -> TelemetryDimensions.VPNTrigger {
         let lastConnectionTrigger = propertiesManager.lastConnectionRequest?.trigger
 
-        let newConnection: () -> TelemetryDimensions.VPNTrigger? = { [weak self] in
+        let newConnection: () -> TelemetryDimensions.VPNTrigger = { [weak self] in
             if self?.previousConnectionStatus == .connected,
                case .vpnDisconnection = eventType {
                 return .newConnection
             }
-            return lastConnectionTrigger
+            return lastConnectionTrigger ?? .auto
         }
 
         guard let userInitiatedVPNChange else {
@@ -185,7 +185,7 @@ public class TelemetryServiceImplementation: TelemetryService {
         case .disconnect(let trigger):
             return trigger
         case .abort:
-            return nil
+            return .auto
         case .settingsChange, .logout:
             return .auto
         }

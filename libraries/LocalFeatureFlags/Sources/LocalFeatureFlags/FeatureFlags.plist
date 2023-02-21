@@ -20,9 +20,9 @@
 	<key>Telemetry</key>
 	<dict>
 		<key>TelemetryOptIn</key>
-		<false/>
+		<true/>
 		<key>TelemetryBuffer</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>Test</key>
 	<dict>

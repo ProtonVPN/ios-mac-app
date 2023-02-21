@@ -20,7 +20,7 @@ import SwiftUI
 
 struct OnboardingFooter: View {
 
-    private let urlUsageStatistics = "https://protonvpn.com/support/anonymous-usage-statistics"
+    private let urlUsageStatistics = "https://protonvpn.com/support/share-usage-statistics"
 
     var colors: Colors = {
         Onboarding.colors

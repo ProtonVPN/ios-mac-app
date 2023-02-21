@@ -154,6 +154,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.summaryScreenIsShown()
             .skipOnboarding()
             .nextOnboardingStep()
+            .nextOnboardingStep()
             .skipOnboarding()
             .startUsingProtonVpn()
             .startUpgrade()
