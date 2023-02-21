@@ -138,7 +138,7 @@ final class LoginViewModel {
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: {
                     // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
                     self.silentlyCheckForUpdates()
-                    self.sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true, actionHandler: { _ in })
+                    self.checkSysexApprovalAndAdjustProtocol()
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })
@@ -151,6 +151,13 @@ final class LoginViewModel {
             }
         case let .failure(error):
             handleLoginError(error: error)
+        }
+    }
+
+    private func checkSysexApprovalAndAdjustProtocol() {
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+            guard case .success = result else { return }
+            self.propertiesManager.smartProtocol = true
         }
     }
 

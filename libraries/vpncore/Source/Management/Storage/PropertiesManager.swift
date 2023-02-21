@@ -457,7 +457,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpired = false
         reportBugEmail = nil
         alternativeRouting = true
-        smartProtocol = true
+        smartProtocol = ConnectionProtocol.smartProtocol.shouldBeEnabledByDefault
         excludeLocalNetworks = true
         killSwitch = false
     }
