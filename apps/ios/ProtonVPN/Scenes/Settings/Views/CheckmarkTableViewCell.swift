@@ -14,23 +14,34 @@ class CheckmarkTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
     var completionHandler: (() -> Bool)?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        backgroundColor = .secondaryBackgroundColor()
-        tintColor = .normalTextColor()
-        
-        label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .normalTextColor()
-        
-        accessoryType = .none
+
+    var isEnabled: Bool = true {
+        didSet {
+            setup(isEnabled: isEnabled)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         selectionStyle = .none
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        setup(isEnabled: isEnabled)
+    }
+
+    func setup(isEnabled: Bool) {
+        backgroundColor = .secondaryBackgroundColor()
+        tintColor = .normalTextColor()
+
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.textColor = .normalTextColor()
+        label.alpha = isEnabled ? 1.0 : 0.25
+
+        accessoryType = .none
     }
     
     func select() {

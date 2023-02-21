@@ -20,11 +20,11 @@ import Foundation
 import UIKit
 import vpncore
 
-final class PaidFeatureSelectionViewController<T>: UITableViewController where T: PaidFeature {
-    private let viewModel: PaidFeatureSelectionViewModel<T>
+final class NetShieldSelectionViewController: UITableViewController {
+    private let viewModel: NetShieldSelectionViewModel
     private var genericDataSource: GenericTableViewDataSource?
 
-    init(viewModel: PaidFeatureSelectionViewModel<T>) {
+    init(viewModel: NetShieldSelectionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -73,5 +73,9 @@ final class PaidFeatureSelectionViewController<T>: UITableViewController where T
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
+    }
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 8.0
     }
 }

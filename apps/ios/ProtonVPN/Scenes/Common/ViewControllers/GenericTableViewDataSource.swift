@@ -44,7 +44,7 @@ enum TableViewCellModel {
                                     controller: ButtonWithLoadingIndicatorController)
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)
-    case checkmarkStandard(title: String, checked: Bool, handler: () -> Bool)
+    case checkmarkStandard(title: String, checked: Bool, enabled: Bool = true, handler: () -> Bool)
     case colorPicker(viewModel: ColorPickerViewModel)
     case invertedKeyValue(key: String, value: String, handler: () -> Void)
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
@@ -62,17 +62,18 @@ struct TableViewSection {
     let title: String
     var cells: [TableViewCellModel]
     let showHeader: Bool
+    let showSeparator: Bool
     
-    init(title: String, showHeader: Bool = true, cells: [TableViewCellModel]) {
+    init(title: String, showHeader: Bool = true, showSeparator: Bool = false, cells: [TableViewCellModel]) {
         self.title = title
         self.cells = cells
         self.showHeader = showHeader
+        self.showSeparator = showSeparator
     }
     
     var headerHeight: CGFloat {
         return showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
     }
-    
 }
 
 // A generic data source for table views
@@ -260,10 +261,11 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.label.text = text
             
             return cell
-        case .checkmarkStandard(title: let title, checked: let checked, handler: let handler):
+        case .checkmarkStandard(title: let title, checked: let checked, let enabled, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CheckmarkTableViewCell.identifier) as? CheckmarkTableViewCell else {
                 return UITableViewCell()
             }
+            cell.isEnabled = enabled
             cell.accessibilityIdentifier = title
             cell.label.text = title
             if checked {
@@ -442,6 +444,10 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     // Prevents separators showing on the background (below the last row)
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if sections.indices.contains(section), sections[section].showSeparator {
+            return UIConstants.separatorHeight
+        }
+
         let sectionCount = numberOfSections(in: tableView)
         if section == sectionCount - 1 {
             return 0.1

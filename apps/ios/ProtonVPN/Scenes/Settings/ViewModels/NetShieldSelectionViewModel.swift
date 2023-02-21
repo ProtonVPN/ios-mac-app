@@ -21,38 +21,37 @@ import UIKit
 import vpncore
 import VPNShared
 
-final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
+final class NetShieldSelectionViewModel {
 
-    typealias Factory = VpnKeychainFactory & PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory
+    typealias Factory = VpnKeychainFactory & PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
     private var factory: Factory
 
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
-    var selectedFeature: T {
+    var selectedFeature: NetShieldType {
         didSet {
             onFeatureChange(selectedFeature)
             onFinish?()
         }
     }
 
-    let onFeatureChange: FeatureChangeCallback
-    typealias FeatureChangeCallback = ((T) -> Void)
+    let onFeatureChange: ((NetShieldType) -> Void)
 
-    let shouldSelectNewValue: ApproveCallback
-    typealias ApproveCallback = ((T, @escaping () -> Void) -> Void)
+    let shouldSelectNewValue: ((NetShieldType, @escaping () -> Void) -> Void)
 
     var onDataChange: (() -> Void)?
 
     /// Called when screen has to be closed
     var onFinish: (() -> Void)?
 
-    private let allFeatures: [T]
+    private let allFeatures: [NetShieldType]
 
     let title: String
 
-    public init(title: String, allFeatures: [T], selectedFeature: T, factory: Factory, shouldSelectNewValue: @escaping ApproveCallback, onFeatureChange: @escaping FeatureChangeCallback) {
+    public init(title: String, allFeatures: [NetShieldType], selectedFeature: NetShieldType, factory: Factory, shouldSelectNewValue: @escaping (NetShieldType, @escaping () -> Void) -> Void, onFeatureChange: @escaping (NetShieldType) -> Void) {
         self.factory = factory
         self.selectedFeature = selectedFeature
         self.shouldSelectNewValue = shouldSelectNewValue
@@ -64,25 +63,39 @@ final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
     }
 
     var tableViewData: [TableViewSection] {
-        let cells: [TableViewCellModel] = allFeatures.map { feature in
-            if feature.isUserTierTooLow(userTier) {
-                return .attributedKeyValue(key: feature.name.attributed(withColor: .normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-                    if feature is NetShieldType {
-                        self?.alertService.push(alert: NetShieldUpsellAlert())
-                    } else {
-                        self?.planService.presentPlanSelection()
-                    }
-                })
-            }
-            return .checkmarkStandard(title: feature.name, checked: feature == selectedFeature, handler: { [weak self] in
-                self?.userSelected(feature: feature)
-                return true
-            })
+        if netShieldPropertyProvider.isUserEligibleForNetShield {
+            return [netShieldSelectionSection]
         }
-        return [TableViewSection(title: "", showHeader: false, cells: cells)]
+        return [netShieldUpsellSection, netShieldSelectionSection]
     }
 
-    private func userSelected(feature: T) {
+    private var netShieldUpsellSection: TableViewSection {
+        let upsellCell = TableViewCellModel.imageSubtitle(
+            title: LocalizedString.netshieldUpsellTitle,
+            subtitle: LocalizedString.netshieldUpsellSubtitle,
+            image: UIImage(named: "netshield-small")!,
+            handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
+        )
+        return TableViewSection(title: "", showHeader: false, showSeparator: true, cells: [upsellCell])
+    }
+
+    private var netShieldSelectionSection: TableViewSection {
+        TableViewSection(title: "", showHeader: false, cells: allFeatures.map { cellModel(for: $0) })
+    }
+
+    private func cellModel(for netShieldType: NetShieldType) -> TableViewCellModel {
+        .checkmarkStandard(
+            title: netShieldType.name,
+            checked: netShieldType == selectedFeature,
+            enabled: !netShieldType.isUserTierTooLow(userTier),
+            handler: { [weak self] in
+                self?.userSelected(feature: netShieldType)
+                return true
+            }
+        )
+    }
+
+    private func userSelected(feature: NetShieldType) {
         onDataChange?() // Prevents two rows selected at a time
         shouldSelectNewValue(feature) {
             self.selectedFeature = feature
