@@ -41,7 +41,7 @@ public enum ConnectionProtocol: Codable, Equatable, Hashable, CaseIterable, Cust
     public var shouldBeEnabledByDefault: Bool {
         guard self == .smartProtocol else { return false }
         #if os(macOS)
-            /// On MacOS, the user must approve system extensions before Smart Protocol can be used
+            // On MacOS, the user must approve system extensions before Smart Protocol can be used
             return false
         #else
             return true
