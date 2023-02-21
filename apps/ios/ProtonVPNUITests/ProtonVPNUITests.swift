@@ -173,12 +173,13 @@ class ProtonVPNUITests: XCTestCase {
                 .skipOnboarding()
                 .startUsingProtonVpn()
         } else {
+
             return onboardingRobot
+                .nextOnboardingStep()
                 .nextOnboardingStep()
                 .skipOnboarding()
                 .startUsingProtonVpn()
                 .closeOnboardingScreen()
         }
-        return OnboardingRobot()
     }
 }

@@ -23,7 +23,7 @@ public struct TelemetryDimensions: Encodable {
     let outcome: Outcome
     let userTier: UserTier
     let vpnStatus: VPNStatus // This refers to whether a vpn connection is already ongoing when the connection action is triggered
-    let vpnTrigger: VPNTrigger?
+    let vpnTrigger: VPNTrigger
     let networkType: NetworkType
     let serverFeatures: ServerFeature // ordered comma-separated list
     let vpnCountry: String // ['CHE', 'FRA', 'NLD', ... ]
@@ -37,7 +37,7 @@ public struct TelemetryDimensions: Encodable {
     init(outcome: Outcome,
          userTier: UserTier,
          vpnStatus: VPNStatus,
-         vpnTrigger: VPNTrigger?,
+         vpnTrigger: VPNTrigger,
          networkType: NetworkType,
          serverFeatures: ServerFeature,
          vpnCountry: String,
