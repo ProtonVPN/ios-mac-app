@@ -1059,6 +1059,8 @@
 		E5728D3927E1EF5000DF5DCE /* ImageAlias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAlias.swift; sourceTree = "<group>"; };
 		E576863D2976F31E0014F944 /* TelemetryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBuffer.swift; sourceTree = "<group>"; };
 		E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryConnectionNotifier.swift; sourceTree = "<group>"; };
+		E5791B8E29A4FC2C001535B3 /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "Localization/be-BY.lproj/Intents.strings"; sourceTree = "<group>"; };
+		E5791B8F29A4FC69001535B3 /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "Localization/be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E58EE0A32907DEBF003006F5 /* PlanSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSession.swift; sourceTree = "<group>"; };
 		E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSessionTests.swift; sourceTree = "<group>"; };
 		E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferPanel.swift; sourceTree = "<group>"; };
@@ -2462,10 +2464,11 @@
 				"es-419",
 				ro,
 				cs,
+				"be-BY",
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			packageReferences = (
-				E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */,
+				E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 			);
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
 			projectDirPath = "";
@@ -3513,6 +3516,7 @@
 				E534EA492806B67000BCC9F6 /* es-419 */,
 				C30E4D2A2942700400971A2D /* ro */,
 				C3A69F222942702400BA8314 /* cs */,
+				E5791B8E29A4FC2C001535B3 /* be-BY */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
@@ -3561,6 +3565,7 @@
 				E534EA4A2806B68700BCC9F6 /* es-419 */,
 				C30E4D2B2942700400971A2D /* ro */,
 				C3A69F232942702400BA8314 /* cs */,
+				E5791B8F29A4FC69001535B3 /* be-BY */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -4290,7 +4295,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */ = {
+		E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
 			requirement = {
@@ -4351,12 +4356,12 @@
 		};
 		E566D9DF29796B2400C2F857 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
+			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
 		};
 		E566D9E1297A796B00C2F857 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies.git" */;
+			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {
