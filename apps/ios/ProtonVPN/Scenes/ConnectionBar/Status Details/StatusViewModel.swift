@@ -25,6 +25,7 @@ import GSMessages
 import vpncore
 import UIKit
 import VPNShared
+import LocalFeatureFlags
 
 class StatusViewModel {
     
@@ -65,6 +66,10 @@ class StatusViewModel {
         }
         return tier
     }
+
+    private var isNetShieldStatsEnabled: Bool { LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats) }
+    private var shouldShowNetShieldV1: Bool { propertiesManager.featureFlags.netShield && !isNetShieldStatsEnabled }
+    private var shouldShowNetShieldV2: Bool { propertiesManager.featureFlags.netShield && isNetShieldStatsEnabled }
     
     private var timer: Timer?
     private var connectedDate = Date()
@@ -94,9 +99,12 @@ class StatusViewModel {
     }
     
     var tableViewData: [TableViewSection] {
-        var sections = [TableViewSection]()
-        
-        sections.append(connectionStatusSection)
+        var sections = [connectionStatusSection]
+
+        if shouldShowNetShieldV1 {
+            // NetShieldV2 cells are displayed under the connection status section
+            sections.append(netShieldV1Section)
+        }
 
         switch appStateManager.displayState {
         case .connected:
@@ -119,7 +127,7 @@ class StatusViewModel {
     
     private var connectionStatusSection: TableViewSection {
         let cells = [connectionStatusCell]
-            .appending({ netShieldCells }, if: propertiesManager.featureFlags.netShield)
+            .appending({ netShieldV2Cells }, if: shouldShowNetShieldV2)
 
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }
@@ -312,12 +320,13 @@ class StatusViewModel {
     }
     
     // MARK: - NetShield
-    
-    private var netShieldCells: [TableViewCellModel] {
-        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
-            return [netShieldUnavailableCell]
-        }
-        
+
+    private var netShieldV1Section: TableViewSection {
+        let cells = netShieldPropertyProvider.isUserEligibleForNetShield ? netShieldV1Cells : netShieldV1UnavailableCells
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle, cells: cells)
+    }
+
+    private var netShieldV1Cells: [TableViewCellModel] {
         let isConnected: Bool
         switch appStateManager.state {
         case .connected:
@@ -328,13 +337,13 @@ class StatusViewModel {
         let activeConnection = appStateManager.activeConnection()
         let currentNetShieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
         let isNetShieldOn = currentNetShieldType != .off
-        
+
         var cells = [TableViewCellModel]()
-        
+
         cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
             self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off)
         }))
-        
+
         if isNetShieldOn {
             [NetShieldType.level1, NetShieldType.level2].forEach { type in
                 guard !type.isUserTierTooLow(userTier) else {
@@ -352,8 +361,32 @@ class StatusViewModel {
 
         return cells
     }
-    
-    private var netShieldUnavailableCell: TableViewCellModel {
+
+    private var netShieldV1UnavailableCells: [TableViewCellModel] {
+        var cells = [TableViewCellModel]()
+
+        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
+            self?.alertService.push(alert: NetShieldUpsellAlert())
+        }))
+
+        [NetShieldType.level1, NetShieldType.level2].forEach { type in
+            cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
+                self?.alertService.push(alert: NetShieldUpsellAlert())
+            }))
+        }
+
+        return cells
+    }
+
+    private var netShieldV2Cells: [TableViewCellModel] {
+        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
+            return [netShieldV2UpsellBannerCell]
+        }
+
+        return netShieldV1Cells // Temporarily show old netshield UI for premium users until VPNAPPL-1632 is merged
+    }
+
+    private var netShieldV2UpsellBannerCell: TableViewCellModel {
         return .imageSubtitle(
             title: LocalizedString.netshieldUpsellTitle,
             subtitle: LocalizedString.netshieldUpsellSubtitle,
