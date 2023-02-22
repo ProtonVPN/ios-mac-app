@@ -96,12 +96,9 @@ open class Container: PropertiesToOverride {
 
     private lazy var telemetrySettings: TelemetrySettings = makeTelemetrySettings()
     private lazy var _telemetryServiceTask = Task {
-        let buffer = await withDependencies(from: self) {
-            return await TelemetryBuffer(retrievingFromStorage: true)
-        }
-        return await TelemetryServiceImplementation(factory: self,
+        await TelemetryServiceImplementation(factory: self,
                                              timer: ConnectionTimer(),
-                                             buffer: buffer)
+                                             buffer: TelemetryBuffer(retrievingFromStorage: true))
     }
 
     // Transient instances - get allocated as many times as they're referenced
