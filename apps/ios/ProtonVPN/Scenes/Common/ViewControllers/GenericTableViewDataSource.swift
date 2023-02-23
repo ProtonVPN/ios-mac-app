@@ -268,12 +268,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.isEnabled = enabled
             cell.accessibilityIdentifier = title
             cell.label.text = title
-            if checked {
-                cell.accessoryType = .checkmark
-            } else {
-                cell.accessoryType = .none
-            }
-            
+            cell.accessoryType = checked ? .checkmark : .none
             cell.completionHandler = handler
             
             return cell
@@ -384,7 +379,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity function_body_length
+    // swiftlint:disable cyclomatic_complexity
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
@@ -426,7 +421,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return
         }
     }
-    // swiftlint:enable cyclomatic_complexity function_body_length
+    // swiftlint:enable cyclomatic_complexity
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
