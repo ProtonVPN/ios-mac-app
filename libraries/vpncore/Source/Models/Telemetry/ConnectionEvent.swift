@@ -19,11 +19,7 @@
 import Foundation
 
 public struct ConnectionEvent: TelemetryEvent {
-    #if os(iOS)
-    public var measurementGroup: String = "vpn.ios.connection"
-    #else
-    public var measurementGroup: String = "vpn.mac.connection"
-    #endif
+    public var measurementGroup: String = "vpn.any.connection"
     let event: ConnectionEventType
     public let dimensions: TelemetryDimensions
 
