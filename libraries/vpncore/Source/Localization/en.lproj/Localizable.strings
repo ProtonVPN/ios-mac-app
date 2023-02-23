@@ -1536,10 +1536,16 @@
 
 // Netshield
 
-/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to  */
+"_netshield_feature_description" = "Protect yourself from ads, malware, and trackers on websites and apps. If websites don't load, try disabling NetShield.\nLearn more";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Learn more";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
 "_netshield_upsell_title" = "Browse ad-free with NetShield";
 
-/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Block ads, trackers and malware on websites and apps";
 
 /* Settings -> Netshield: name of field. */

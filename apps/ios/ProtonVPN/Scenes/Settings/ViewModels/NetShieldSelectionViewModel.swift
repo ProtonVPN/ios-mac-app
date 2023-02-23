@@ -80,7 +80,17 @@ final class NetShieldSelectionViewModel {
     }
 
     private var netShieldSelectionSection: TableViewSection {
-        TableViewSection(title: "", showHeader: false, cells: allFeatures.map { cellModel(for: $0) })
+        let cells = allFeatures.map { cellModel(for: $0) }
+            .appending({ [netShieldDescriptionCell] }, if: netShieldPropertyProvider.isUserEligibleForNetShield)
+        return TableViewSection(title: "", showHeader: false, cells: cells)
+    }
+
+    private var netShieldDescriptionCell: TableViewCellModel {
+        let attributedFeatureDescription = LocalizedString.netshieldFeatureDescription
+            .attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
+        let cellText = NSMutableAttributedString(attributedString: attributedFeatureDescription)
+            .add(link: LocalizedString.netshieldFeatureDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.netshieldSupport)
+        return .attributedTooltip(text: cellText)
     }
 
     private func cellModel(for netShieldType: NetShieldType) -> TableViewCellModel {
