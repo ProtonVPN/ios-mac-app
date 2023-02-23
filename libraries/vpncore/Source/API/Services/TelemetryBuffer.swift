@@ -23,11 +23,7 @@ actor TelemetryBuffer {
     struct Constants {
         static let maxStoredEvents = 100
         static let maxStorageDuration: TimeInterval = .days(7)
-#if os(iOS)
-        static let measurementGroup: String = "vpn.ios.connection"
-#else
-        static let measurementGroup: String = "vpn.mac.connection"
-#endif
+        static let measurementGroup: String = "vpn.any.connection"
     }
     @Dependency(\.dataManager) var dataManager
     @Dependency(\.date) var date
