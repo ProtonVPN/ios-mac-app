@@ -111,4 +111,16 @@ final class TimerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         timer = nil
     }
+
+    func testTimerDoesntFireRightAfterCreation() throws {
+        let expectation = XCTestExpectation(description: "Timer closure was called")
+        expectation.isInverted = true
+
+        timer = factory.scheduledTimer(timeInterval: 11, repeats: true, queue: DispatchQueue.global()) {
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 0.1)
+        timer = nil
+    }
 }
