@@ -1,24 +1,36 @@
-"1l8xNj" = "Disconnect";
+/* (No Comment) */
+"1l8xNj" = "Отключиться";
 
-"2LMbbw" = "Connection Status";
+/* (No Comment) */
+"2LMbbw" = "Статус соединения";
 
-"8tZ81X" = "Quick Connect";
+/* (No Comment) */
+"8tZ81X" = "Быстрое подключение";
 
-"JOCERT" = "Get Proton VPN connection status";
+/* (No Comment) */
+"cQ4Mju" = "Отключиться";
 
+/* (No Comment) */
+"hIcJsr" = "Узнать состояние подключения к Proton VPN";
+
+/* (No Comment) */
+"jf696t" = "Подключиться к Proton VPN";
+
+/* (No Comment) */
+"JOCERT" = "Узнать состояние подключения к Proton VPN";
+
+/* (No Comment) */
+"ksQcRb" = "Отключиться от Proton VPN";
+
+/* (No Comment) */
 "NzUfmp" = "${status}";
 
-"Ya0ZRy" = "Quick Connect";
+/* (No Comment) */
+"ujOFps" = "Состояние";
 
+/* (No Comment) */
+"Ya0ZRy" = "Быстрое подключение";
+
+/* (No Comment) */
 "ZqjXZN" = "${status}";
-
-"cQ4Mju" = "Disconnect";
-
-"hIcJsr" = "Get Proton VPN connection status";
-
-"jf696t" = "Connect to Proton VPN";
-
-"ksQcRb" = "Disconnect from Proton VPN";
-
-"ujOFps" = "Status";
 

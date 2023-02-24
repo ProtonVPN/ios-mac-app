@@ -858,6 +858,12 @@
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
+		E564CD4A29A8FB07009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E564CD4B29A8FB0E009DDD1C /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E564CD4C29A8FB1A009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "be-BY"; path = "be-BY.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		E564CD4D29A8FB23009DDD1C /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = be; path = be.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		E564CD4E29A90AFB009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "be-BY.lproj/Intents.strings"; sourceTree = "<group>"; };
+		E564CD4F29A90B05009DDD1C /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/Intents.strings; sourceTree = "<group>"; };
 		E565986728200ADA004F2240 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/LoadingView.swift; sourceTree = "<group>"; };
 		E56598692820FECE004F2240 /* WarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = WarningView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.xib; sourceTree = "<group>"; };
 		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
@@ -3876,6 +3882,8 @@
 				E534EA4D2806B6DB00BCC9F6 /* es-419 */,
 				AD09EA41294346F500D4F6F2 /* ro */,
 				AD09EA42294346F800D4F6F2 /* cs */,
+				E564CD4A29A8FB07009DDD1C /* be-BY */,
+				E564CD4B29A8FB0E009DDD1C /* be */,
 			);
 			name = Localizable.strings;
 			path = Localization;
@@ -3905,6 +3913,8 @@
 				E534EA4E2806B6DE00BCC9F6 /* es-419 */,
 				AD09EA43294346FE00D4F6F2 /* ro */,
 				AD09EA442943470000D4F6F2 /* cs */,
+				E564CD4C29A8FB1A009DDD1C /* be-BY */,
+				E564CD4D29A8FB23009DDD1C /* be */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3935,6 +3945,8 @@
 				E534EA4F2806B6E200BCC9F6 /* es-419 */,
 				AD09EA452943470800D4F6F2 /* ro */,
 				AD09EA462943470A00D4F6F2 /* cs */,
+				E564CD4E29A90AFB009DDD1C /* be-BY */,
+				E564CD4F29A90B05009DDD1C /* be */,
 			);
 			name = Intents.strings;
 			path = Localization;

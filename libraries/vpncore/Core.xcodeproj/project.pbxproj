@@ -1053,6 +1053,8 @@
 		E54474E32930C5980044B592 /* AppStateManagerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E55046422849F45A00E4BFC2 /* Image+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Flag.swift"; sourceTree = "<group>"; };
 		E5608CBF2994D94C00D11333 /* TelemetrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetrySettings.swift; sourceTree = "<group>"; };
+		E564CD4929A8FAF9009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "Localization/be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E564CD5029A90B3C009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "be-BY"; path = "be-BY.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E566D9DB29796A2F00C2F857 /* TelemetryBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBufferTests.swift; sourceTree = "<group>"; };
 		E566D9E3297A97BD00C2F857 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		E566D9EB297E7B0700C2F857 /* TelemetryRequestMultiple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryRequestMultiple.swift; sourceTree = "<group>"; };
@@ -1060,7 +1062,6 @@
 		E576863D2976F31E0014F944 /* TelemetryBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryBuffer.swift; sourceTree = "<group>"; };
 		E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryConnectionNotifier.swift; sourceTree = "<group>"; };
 		E5791B8E29A4FC2C001535B3 /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "Localization/be-BY.lproj/Intents.strings"; sourceTree = "<group>"; };
-		E5791B8F29A4FC69001535B3 /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "Localization/be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E58EE0A32907DEBF003006F5 /* PlanSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSession.swift; sourceTree = "<group>"; };
 		E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSessionTests.swift; sourceTree = "<group>"; };
 		E5CBA02028DB23D200EA1F25 /* OfferPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferPanel.swift; sourceTree = "<group>"; };
@@ -3485,6 +3486,7 @@
 				E534EA4B2806B68D00BCC9F6 /* es-419 */,
 				C30E4D2C2942700400971A2D /* ro */,
 				C3A69F242942702400BA8314 /* cs */,
+				E564CD5029A90B3C009DDD1C /* be-BY */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3565,7 +3567,7 @@
 				E534EA4A2806B68700BCC9F6 /* es-419 */,
 				C30E4D2B2942700400971A2D /* ro */,
 				C3A69F232942702400BA8314 /* cs */,
-				E5791B8F29A4FC69001535B3 /* be-BY */,
+				E564CD4929A8FAF9009DDD1C /* be-BY */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
