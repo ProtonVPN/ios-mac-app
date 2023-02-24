@@ -69,7 +69,7 @@ public class RefreshManager {
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        timer = timerFactory.scheduledTimer(runAt: Date(),
+        timer = timerFactory.scheduledTimer(runAt: Date().addingTimeInterval(timerRefreshInterval),
                                             repeating: timerRefreshInterval,
                                             queue: workQueue) { [weak self] in
             self?.work()
