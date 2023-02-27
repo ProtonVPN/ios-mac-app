@@ -126,6 +126,23 @@ public protocol PropertiesManagerProtocol: AnyObject {
     func logCurrentState()
 }
 
+extension PropertiesManagerProtocol {
+    public var connectionProtocol: ConnectionProtocol {
+        get {
+            return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
+        }
+        set {
+            switch newValue {
+            case .smartProtocol:
+                smartProtocol = true
+            case .vpnProtocol(let newVpnProtocol):
+                smartProtocol = false
+                vpnProtocol = newVpnProtocol
+            }
+        }
+    }
+}
+
 public class PropertiesManager: PropertiesManagerProtocol {
     internal enum Keys: String, CaseIterable {
         
@@ -422,10 +439,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
     @Property(.userRole) public var userRole: Int?
 
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
-
-    public var connectionProtocol: ConnectionProtocol {
-        return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
-    }
     
     private let storage: Storage
         
