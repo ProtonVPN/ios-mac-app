@@ -79,6 +79,7 @@ final class LoginViewModel {
             case .success:
                 NSApp.setActivationPolicy(.accessory)
                 self?.silentlyCheckForUpdates()
+                self?.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
             case let .failure(error):
                 self?.specialErrorCaseNotification(error)
                 self?.navService.handleSilentLoginFailure()
@@ -96,6 +97,7 @@ final class LoginViewModel {
             switch result {
             case .success:
                 self?.silentlyCheckForUpdates()
+                self?.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: true)
             case let .failure(error):
                 self?.specialErrorCaseNotification(error)
 
@@ -138,7 +140,7 @@ final class LoginViewModel {
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: {
                     // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
                     self.silentlyCheckForUpdates()
-                    self.checkSysexApprovalAndAdjustProtocol()
+                    self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: true, shouldStartTour: true)
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
                 })
@@ -154,10 +156,24 @@ final class LoginViewModel {
         }
     }
 
-    private func checkSysexApprovalAndAdjustProtocol() {
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
-            guard case .success = result else { return }
-            self.propertiesManager.smartProtocol = true
+    /// Check sysex installation state. Fall back to IKE if sysex approval is missing but required by current protocol.
+    /// - Parameter shouldDefaultToSmartIfPossible: If system extensions are approved, sets default protocol to smart.
+    /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
+    private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour) { result in
+            switch result {
+            case .success:
+                if shouldDefaultToSmartIfPossible {
+                    self.propertiesManager.smartProtocol = true
+                }
+            case .failure:
+                let currentProtocol = self.propertiesManager.connectionProtocol
+                if currentProtocol.requiresSystemExtension {
+                    // Forcefully revert default protocol to IKE - current protocol is unusable
+                    log.warning("\(currentProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
+                    self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+                }
+            }
         }
     }
 
