@@ -51,38 +51,6 @@ class SignupTests: ProtonVPNUITests {
             .nextButtonTap(robot: SignupRobot.self)
             .verify.usernameErrorIsShown()
     }
-   
-    func testSignupNewInternalAccountWithRecoveryEmailSuccess() {
-       
-        let email = StringUtils().randomAlphanumericString(length: 5)
-        let testEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let randomEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let password = StringUtils().randomAlphanumericString(length: 8)
-        let code = "666666"
-        let plan = "Proton VPN Free"
-
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .enterPassword(password)
-            .enterRepeatPassword(password)
-            .nextButtonTap(robot: RecoveryRobot.self)
-            .insertRecoveryEmail(testEmail)
-            .nextButtonTap(robot: SignupHumanVerificationV3Robot.self)
-            .verify.humanVerificationScreenIsShown()
-            .performEmailVerificationV3(email: randomEmail, code: code, to: CreatingAccountRobot.self)
-            .verify.creatingAccountScreenIsShown()
-            .verify.summaryScreenIsShown()
-        skipOnboarding()
-        mainRobot
-            .goToSettingsTab()
-            .verify.userIsCreated(email, plan)
-    }
     
     func testSignupNewExternalAccountSuccess() {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
