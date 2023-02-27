@@ -74,15 +74,15 @@ final class LoginViewModel {
     
     func logInSilently() {
         logInInProgress?()
-        appSessionManager.attemptSilentLogIn { [weak self] result in
+        appSessionManager.attemptSilentLogIn { result in
             switch result {
             case .success:
                 NSApp.setActivationPolicy(.accessory)
-                self?.silentlyCheckForUpdates()
-                self?.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
+                self.silentlyCheckForUpdates()
+                self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
             case let .failure(error):
-                self?.specialErrorCaseNotification(error)
-                self?.navService.handleSilentLoginFailure()
+                self.specialErrorCaseNotification(error)
+                self.navService.handleSilentLoginFailure()
             }
         }
     }
@@ -93,19 +93,19 @@ final class LoginViewModel {
             return
         }
         logInInProgress?()
-        appSessionManager.attemptSilentLogIn { [weak self] result in
+        appSessionManager.attemptSilentLogIn { result in
             switch result {
             case .success:
-                self?.silentlyCheckForUpdates()
-                self?.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: true)
+                self.silentlyCheckForUpdates()
+                self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: true)
             case let .failure(error):
-                self?.specialErrorCaseNotification(error)
+                self.specialErrorCaseNotification(error)
 
                 if case ProtonVpnError.userCredentialsMissing = error {
-                    self?.logInFailure?(nil)
+                    self.logInFailure?(nil)
                     return
                 }
-                self?.logInFailure?(error.localizedDescription)
+                self.logInFailure?(error.localizedDescription)
             }
         }
     }
