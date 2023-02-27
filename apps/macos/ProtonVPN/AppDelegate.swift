@@ -84,6 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
+            // Check sysex approval and revert to IKE before login if necessary
             self.checkSysexAndAdjustDefaultProtocol()
 
             self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
@@ -169,18 +170,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func checkSysexAndAdjustDefaultProtocol() {
-        let isSysexRequired = propertiesManager.smartProtocol || propertiesManager.vpnProtocol.requiresSystemExtension
         let sysexManager = container.makeSystemExtensionManager()
+        let connectionProtocol = propertiesManager.connectionProtocol
 
-        sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
-            if case .success(.installed) = result {
-                log.info("Sysex installation successful, enabling smart protocol", category: .sysex)
-                self.propertiesManager.smartProtocol = true
-            } else if case .failure = result, isSysexRequired {
+        // Sysex tour is skipped in order to revert to IKE if necessary without waiting for user to cancel the tour
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: false) { result in
+            if case .failure = result, connectionProtocol.requiresSystemExtension {
                 // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
-                log.warning("Current protocol requires sysex (not installed), reverting to IKEv2", category: .sysex)
-                self.propertiesManager.smartProtocol = false
-                self.propertiesManager.vpnProtocol = .ike
+                log.warning("\(connectionProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
+                self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
             }
         }
     }
