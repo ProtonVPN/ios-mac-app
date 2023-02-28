@@ -21,7 +21,6 @@ import Cocoa
 import ProtonCore_UIFoundations
 
 private let CP = ColorProvider
-private let darkAqua = NSAppearance(named: .darkAqua)!
 private let offWhite = NSColor(red: 254,
                                green: 255,
                                blue: 255,
@@ -202,7 +201,7 @@ extension AppTheme.Context {
                 color = offWhite
             } else {
                 color = appearanceAwareColor(style: style)
-                    .using(appearance: darkAqua)
+                    .using(appearance: NSAppearance.current)
             }
 
             if isDisabled {
@@ -210,7 +209,7 @@ extension AppTheme.Context {
             }
         } else {
             color = appearanceAwareColor(style: style)
-                .using(appearance: darkAqua)
+                .using(appearance: NSAppearance.current)
         }
 
         return color

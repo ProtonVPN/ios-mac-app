@@ -38,7 +38,7 @@ struct OnboardingButton: View {
             completion?()
         } label: {
             Text(LocalizedString.onboardingNext)
-                .foregroundColor(colors.text.suColor)
+                .foregroundColor(colors.buttonTitle.suColor)
                 .font(.system(size: 17))
                 .padding(titlePadding)
                 .frame(minWidth: geometry.size.width - framePadding * 2)
