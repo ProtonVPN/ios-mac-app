@@ -44,6 +44,9 @@ final class StatusViewController: UIViewController {
             viewModel?.dismissStatusView = { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
+            viewModel?.pushHandler = { [weak self] viewController in
+                self?.pushViewController(viewController)
+            }
         }
     }
     
@@ -84,5 +87,9 @@ final class StatusViewController: UIViewController {
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
+    }
+
+    private func pushViewController(_ viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

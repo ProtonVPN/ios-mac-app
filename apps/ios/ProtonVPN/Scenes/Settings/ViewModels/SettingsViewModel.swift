@@ -623,35 +623,34 @@ final class SettingsViewModel {
             allFeatures: NetShieldType.allCases,
             selectedFeature: netShieldPropertyProvider.netShieldType,
             factory: factory,
-            shouldSelectNewValue: { [weak self] type, completion in
-                self?.shouldSelectNetShieldType(type, completion: completion)
-            },
-            onFeatureChange: { [weak self] type in
-                self?.netShieldPropertyProvider.netShieldType = type
-            }
+            onSelect: { [weak self] type, completion in self?.changeNetShieldType(to: type, completion: completion) }
         )
         pushHandler?(NetShieldSelectionViewController(viewModel: viewModel))
     }
 
-    private func shouldSelectNetShieldType(_ type: NetShieldType, completion: @escaping () -> Void) {
+    private func changeNetShieldType(to type: NetShieldType, completion: @escaping (Bool) -> Void) {
         if type.isUserTierTooLow(userTier) {
             alertService.push(alert: NetShieldUpsellAlert())
+            completion(false)
             return
         }
         vpnStateConfiguration.getInfo { [weak self] info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
-                completion()
+                self?.netShieldPropertyProvider.netShieldType = type
                 self?.vpnManager.set(netShieldType: type)
+                completion(true)
             case .withReconnect:
-                self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: { [weak self] in
-                    completion()
+                self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     self?.vpnGateway.reconnect(with: type)
                     self?.connectionStatusService.presentStatusViewController()
+                    self?.netShieldPropertyProvider.netShieldType = type
+                    completion(true)
                 }))
             case .immediately:
-                completion()
+                self?.netShieldPropertyProvider.netShieldType = type
+                completion(true)
             }
         }
     }

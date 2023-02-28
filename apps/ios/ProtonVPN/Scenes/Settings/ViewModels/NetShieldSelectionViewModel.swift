@@ -31,16 +31,9 @@ final class NetShieldSelectionViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
-    var selectedFeature: NetShieldType {
-        didSet {
-            onFeatureChange(selectedFeature)
-            onFinish?()
-        }
-    }
+    private var selectedFeature: NetShieldType
 
-    let onFeatureChange: ((NetShieldType) -> Void)
-
-    let shouldSelectNewValue: ((NetShieldType, @escaping () -> Void) -> Void)
+    let onSelect: ((NetShieldType, @escaping (Bool) -> Void) -> Void)
 
     var onDataChange: (() -> Void)?
 
@@ -51,13 +44,18 @@ final class NetShieldSelectionViewModel {
 
     let title: String
 
-    public init(title: String, allFeatures: [NetShieldType], selectedFeature: NetShieldType, factory: Factory, shouldSelectNewValue: @escaping (NetShieldType, @escaping () -> Void) -> Void, onFeatureChange: @escaping (NetShieldType) -> Void) {
+    public init(
+        title: String,
+        allFeatures: [NetShieldType],
+        selectedFeature: NetShieldType,
+        factory: Factory,
+        onSelect: @escaping (NetShieldType, @escaping (Bool) -> Void) -> Void
+    ) {
         self.factory = factory
-        self.selectedFeature = selectedFeature
-        self.shouldSelectNewValue = shouldSelectNewValue
-        self.onFeatureChange = onFeatureChange
+        self.onSelect = onSelect
         self.allFeatures = allFeatures
         self.title = title
+        self.selectedFeature = selectedFeature
 
         NotificationCenter.default.addObserver(self, selector: #selector(reload), name: factory.makeAppSessionManager().dataReloaded, object: nil)
     }
@@ -107,8 +105,11 @@ final class NetShieldSelectionViewModel {
 
     private func userSelected(feature: NetShieldType) {
         onDataChange?() // Prevents two rows selected at a time
-        shouldSelectNewValue(feature) {
-            self.selectedFeature = feature
+        onSelect(feature) { [weak self] shouldSelect in
+            if shouldSelect {
+                self?.selectedFeature = feature
+                self?.onFinish?()
+            }
         }
     }
 

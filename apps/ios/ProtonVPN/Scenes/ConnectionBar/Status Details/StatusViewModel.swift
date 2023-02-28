@@ -52,6 +52,7 @@ class StatusViewModel {
     var contentChanged: (() -> Void)?
     var rowsUpdated: (([IndexPath: TableViewCellModel]) -> Void)?
     var dismissStatusView: (() -> Void)?
+    var pushHandler: ((UIViewController) -> Void)?
     
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
@@ -297,6 +298,7 @@ class StatusViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: .AppStateManager.displayStateChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
     }
     
     private func stopObserving() {
@@ -341,7 +343,7 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
 
         cells.append(.toggle(title: LocalizedString.netshieldTitle, on: { isNetShieldOn }, enabled: true, handler: { (toggleOn, _) in
-            self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off)
+            self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
         }))
 
         if isNetShieldOn {
@@ -353,7 +355,7 @@ class StatusViewModel {
                     return
                 }
                 cells.append(.checkmarkStandard(title: type.name, checked: currentNetShieldType == type, handler: { [weak self] in
-                    self?.changeNetShield(to: type)
+                    self?.changeNetShield(to: type) { _ in }
                     return false
                 }))
             }
@@ -383,7 +385,7 @@ class StatusViewModel {
             return [netShieldV2UpsellBannerCell]
         }
 
-        return netShieldV1Cells // Temporarily show old netshield UI for premium users until VPNAPPL-1632 is merged
+        return [netShieldV2SelectionCell]
     }
 
     private var netShieldV2UpsellBannerCell: TableViewCellModel {
@@ -394,27 +396,54 @@ class StatusViewModel {
             handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
         )
     }
-    
-    private func changeNetShield(to newValue: NetShieldType) {
+
+    private var netShieldV2SelectionCell: TableViewCellModel {
+        let isConnected: Bool = appStateManager.state.isConnected
+
+        let activeConnection = appStateManager.activeConnection()
+        let currentNetShieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
+        let isNetShieldOn = currentNetShieldType != .off
+        let image = UIImage(named: isNetShieldOn ? "netshield-icon-filled" : "netshield-icon")!
+
+        return .image(title: LocalizedString.netshieldTitle, image: image, handler: { [weak self] in
+            self?.pushNetshieldSelectionViewController()
+        })
+    }
+
+    private func pushNetshieldSelectionViewController() {
+        let viewModel = NetShieldSelectionViewModel(
+            title: LocalizedString.netshieldTitle,
+            allFeatures: NetShieldType.allCases,
+            selectedFeature: netShieldPropertyProvider.netShieldType,
+            factory: factory,
+            onSelect: { [weak self] type, completion in self?.changeNetShield(to: type, completion: completion) }
+        )
+        pushHandler?(NetShieldSelectionViewController(viewModel: viewModel))
+    }
+
+    private func changeNetShield(to newValue: NetShieldType, completion: @escaping (Bool) -> Void) {
         vpnStateConfiguration.getInfo { info in
             switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
             case .withConnectionUpdate:
                 self.netShieldPropertyProvider.netShieldType = newValue
                 self.vpnManager.set(netShieldType: newValue)
                 self.contentChanged?()
+                completion(true)
             case .withReconnect:
                 self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
                     // Save to general settings
                     self.netShieldPropertyProvider.netShieldType = newValue
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     self.vpnGateway.reconnect(with: newValue)
-
+                    completion(true)
                 }, cancelHandler: {
                     self.contentChanged?()
+                    completion(false)
                 }))
             case .immediately:
                 self.netShieldPropertyProvider.netShieldType = newValue
                 self.contentChanged?()
+                completion(true)
             }
         }
     }
