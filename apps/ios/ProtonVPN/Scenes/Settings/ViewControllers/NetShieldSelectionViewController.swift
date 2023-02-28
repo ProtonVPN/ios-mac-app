@@ -74,8 +74,4 @@ final class NetShieldSelectionViewController: UITableViewController {
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }
-
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 8.0
-    }
 }

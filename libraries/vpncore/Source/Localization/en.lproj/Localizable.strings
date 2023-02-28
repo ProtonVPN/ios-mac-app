@@ -1536,7 +1536,7 @@
 
 // Netshield
 
-/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to  */
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
 "_netshield_feature_description" = "Protect yourself from ads, malware, and trackers on websites and apps. If websites don't load, try disabling NetShield.\nLearn more";
 
 /* Link with more info in the NetShield Feature description */
