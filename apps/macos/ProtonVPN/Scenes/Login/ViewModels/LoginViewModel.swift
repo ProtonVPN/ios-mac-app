@@ -79,6 +79,7 @@ final class LoginViewModel {
             case .success:
                 NSApp.setActivationPolicy(.accessory)
                 self.silentlyCheckForUpdates()
+                // Don't switch to smart protocol or show sysex tour if we are launching minimised
                 self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
             case let .failure(error):
                 self.specialErrorCaseNotification(error)
@@ -97,7 +98,8 @@ final class LoginViewModel {
             switch result {
             case .success:
                 self.silentlyCheckForUpdates()
-                self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: true)
+                // Don't switch to smart protocol or show sysex tour if we are logging in automatically
+                self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
             case let .failure(error):
                 self.specialErrorCaseNotification(error)
 
@@ -140,6 +142,7 @@ final class LoginViewModel {
                 appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: {
                     // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
                     self.silentlyCheckForUpdates()
+                    // On manual login, show sysex tour if needed and/or switch to smart protocol if possible
                     self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: true, shouldStartTour: true)
                 }, failure: { [weak self] error in
                     self?.handleError(error: error)
