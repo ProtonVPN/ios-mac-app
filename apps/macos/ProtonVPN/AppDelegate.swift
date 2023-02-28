@@ -170,12 +170,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func checkSysexAndAdjustDefaultProtocol() {
-        let sysexManager = container.makeSystemExtensionManager()
         let connectionProtocol = propertiesManager.connectionProtocol
+        guard connectionProtocol.requiresSystemExtension else {
+            // Only check for sysex approval if settings have been modified to where the current protocol requires it
+            // This prevents showing the scary 'System Extension Blocked' system dialog without sysex tour to explain it
+            return
+        }
 
         // Sysex tour is skipped in order to revert to IKE if necessary without waiting for user to cancel the tour
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: false) { result in
-            if case .failure = result, connectionProtocol.requiresSystemExtension {
+        container.makeSystemExtensionManager().installOrUpdateExtensionsIfNeeded(shouldStartTour: false) { result in
+            if case .failure = result {
                 // Either we lost sysex approval, or are upgrading from an earlier version which didn't have this check
                 log.warning("\(connectionProtocol) requires sysex (not installed), reverting to IKEv2", category: .sysex)
                 self.propertiesManager.connectionProtocol = .vpnProtocol(.ike)
