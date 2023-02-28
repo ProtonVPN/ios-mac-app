@@ -75,7 +75,8 @@ public final class SessionServiceImplementation: SessionService {
     public var sessionCookie: HTTPCookie? {
         guard let apiUrl = URL(string: doh.defaultHost) else { return nil }
 
-        return HTTPCookieStorage.shared
+        return networking.apiService.getSession()?
+            .sessionConfiguration.httpCookieStorage?
             .cookies(for: apiUrl)?
             .first(where: { $0.name == UserProperties.sessionIdCookieName })
     }
