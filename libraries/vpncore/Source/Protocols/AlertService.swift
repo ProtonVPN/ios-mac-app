@@ -99,7 +99,6 @@ public struct ReconnectInfo {
 }
 
 public protocol UserAccountUpdateAlert: SystemAlert {
-    var imageName: String? { get }
     var displayFeatures: Bool { get }
     var reconnectInfo: ReconnectInfo? { get set }
 }
@@ -647,7 +646,6 @@ public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
 
 public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var reconnectInfo: ReconnectInfo?
-    public var imageName: String? = "sessions_limit"
     public var displayFeatures: Bool = false
     public var title: String? = LocalizedString.maximumDeviceTitle
     public var message: String?

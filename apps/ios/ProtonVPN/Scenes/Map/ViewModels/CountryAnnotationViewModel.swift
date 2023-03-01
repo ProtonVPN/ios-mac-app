@@ -146,16 +146,16 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             case .idle:
                 return nil
             case .selected:
-                return UIImage(named: "locked")
+                return Asset.locked.image
             }
         } else if connectedUiState {
-            return UIImage(named: "connect")?.withRenderingMode(.alwaysTemplate)
+            return Asset.connect.image.withRenderingMode(.alwaysTemplate)
         } else {
             switch viewState {
             case .idle:
                 return nil
             case .selected:
-                return UIImage(named: "connect")?.withRenderingMode(.alwaysTemplate)
+                return Asset.connect.image.withRenderingMode(.alwaysTemplate)
             }
         }
     }
