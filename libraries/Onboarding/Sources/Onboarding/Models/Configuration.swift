@@ -22,6 +22,7 @@ import SwiftUI
 
 public struct Colors {
     public let background: UIColor
+    public let buttonTitle: UIColor
     public let text: UIColor
     public let brand: UIColor
     public let weakText: UIColor
@@ -32,8 +33,9 @@ public struct Colors {
     let textInverted: UIColor
     let notification: UIColor
 
-    public init(background: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor, weakInteraction: UIColor) {
+    public init(background: UIColor, buttonTitle: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor, weakInteraction: UIColor) {
         self.background = background
+        self.buttonTitle = buttonTitle
         self.text = text
         self.textAccent = textAccent
         self.brand = brand
@@ -81,6 +83,7 @@ extension UIColor {
 }
 
 let previewColors = Colors(background: UIColor(red: 28/255, green: 27/255, blue: 35/255, alpha: 1),
+                           buttonTitle: .white,
                            text: .white,
                            textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
                            brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),

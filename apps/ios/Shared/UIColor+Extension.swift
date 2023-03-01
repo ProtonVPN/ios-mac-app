@@ -96,6 +96,10 @@ extension UIColor {
         return ColorProvider.TextNorm
     }
 
+    class func buttonTitleColor() -> UIColor {
+        return ColorProvider.White
+    }
+
     class func iconWeak() -> UIColor {
         return ColorProvider.IconWeak
     }
