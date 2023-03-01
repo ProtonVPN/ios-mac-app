@@ -65,6 +65,8 @@ class LoginTests: ProtonVPNUITests {
             .loginAsSubuser(subusercredentials: subusercredentials[0])
             .verify.checkModalIsShown()
             .verify.checkLoginButtonIsEnabled()
+        dismissPopups()
+        loginRobot
             .clickLoginAgain()
             .verify.checkLoginButtonIsEnabled()
     }
