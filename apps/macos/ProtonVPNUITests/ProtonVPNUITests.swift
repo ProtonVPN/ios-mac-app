@@ -138,6 +138,14 @@ class ProtonVPNUITests: XCTestCase {
         } else {
             loginRobot
                 .loginUser(credentials: credentials[2])
+            
+            _ = waitForElementToDisappear(app.otherElements["loader"])
+                         
+            expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
+            waitForExpectations(timeout: 10, handler: nil)
+                 
+            dismissDialogs()
+            dismissPopups()
         }
     }
     
