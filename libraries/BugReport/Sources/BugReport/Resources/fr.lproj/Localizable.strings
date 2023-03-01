@@ -11,7 +11,7 @@
 "_br_2_footer" = "Cela n'a pas fonctionné ?";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
-"_br_2_subtitle" = "Ces conseils pourraient vous aider à résoudre votre problème plus rapidement.";
+"_br_2_subtitle" = "Ces conseils peuvent vous aider à résoudre votre problème plus rapidement.";
 
 /* ReportBug 2nd step (Quick fixes) title */
 "_br_2_title" = "Solutions rapides";
@@ -56,13 +56,13 @@
 "_br_success_title" = "Merci pour vos commentaires";
 
 /* ReportBugwindow title */
-"_br_window_title" = "Signaler un problème";
+"_br_window_title" = "Signaler un bug";
 
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Mettre à jour";
 
 /* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "Vous pourriez rencontrer des problèmes avec les anciennes versions de Proton VPN.";
+"_update_view_description" = "Il est possible de rencontrer des problèmes avec les anciennes versions de Proton VPN.";
 
 /* Title of the view nudging users to update before filling Bug Report */
 "_update_view_title" = "Mettre à jour Proton VPN";

@@ -142,7 +142,7 @@
 "_get_plus_for_feature" = "Get Proton VPN Plus to unlock this and other features.";
 
 /* Display more information */
-"_more_info" = "More info";
+"_more_info" = "Learn more";
 
 /* Display less information */
 "_less_info" = "Less info";
@@ -712,7 +712,7 @@
 
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operation cancelled";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We have not been able to verify that you are human. Please try again or purchase a premium plan.";
@@ -763,7 +763,7 @@
 "_ae_wrong_login_credentials" = "Wrong username or password";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain vpn information";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Can't parse the servers info";

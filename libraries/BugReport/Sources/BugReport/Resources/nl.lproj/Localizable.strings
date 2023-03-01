@@ -59,11 +59,11 @@
 "_br_window_title" = "Een probleem melden";
 
 /* Action button of the view nudging users to update before filling Bug Report */
-"_update_view_button" = "Update";
+"_update_view_button" = "Bijwerken";
 
 /* Description text of the view nudging users to update before filling Bug Report */
 "_update_view_description" = "U heeft meer kans op problemen op oudere versies van Proton VPN.";
 
 /* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "Update Proton VPN";
+"_update_view_title" = "Proton VPN bijwerken";
 

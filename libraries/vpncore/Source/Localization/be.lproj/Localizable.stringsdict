@@ -2,145 +2,145 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>_countries_count</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>%d+ стран</string>
-            <key>many</key>
-            <string>%d+ стран</string>
-            <key>one</key>
-            <string>%d страна</string>
-            <key>other</key>
-            <string>%d+ стран</string>
-        </dict>
-    </dict>
-    <key>_countries_count_plus</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>%d+ стран</string>
-            <key>many</key>
-            <string>%d+ стран</string>
-            <key>one</key>
-            <string>%d+ страна</string>
-            <key>other</key>
-            <string>%d+ стран</string>
-        </dict>
-    </dict>
-    <key>_plans_connections</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>%d подключений</string>
-            <key>many</key>
-            <string>%d подключений</string>
-            <key>one</key>
-            <string>%d подключение</string>
-            <key>other</key>
-            <string>%d подключений</string>
-        </dict>
-    </dict>
-    <key>_subscription_upgrade_option1</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>Сотни серверов в %d странах</string>
-            <key>many</key>
-            <string>Сотни серверов в %d странах</string>
-            <key>one</key>
-            <string>Сотни серверов в %d стране</string>
-            <key>other</key>
-            <string>Сотни серверов в %d странах</string>
-        </dict>
-    </dict>
-    <key>_subscription_upgrade_option2</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>Подключайте до %d устройств одновременно</string>
-            <key>many</key>
-            <string>Подключайте до %d устройств одновременно</string>
-            <key>one</key>
-            <string>Подключайте до %d устройства одновременно</string>
-            <key>other</key>
-            <string>Подключайте до %d устройств одновременно</string>
-        </dict>
-    </dict>
-    <key>_vpnauth_too_many_certs_retry_after</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string>%#@VARIABLE@</string>
-        <key>VARIABLE</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуты.</string>
-            <key>many</key>
-            <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
-            <key>one</key>
-            <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минуту.</string>
-            <key>other</key>
-            <string>Вы достигли максимального количества изменений настроек. Повторите попытку не менее чем через %d минут.</string>
-        </dict>
-    </dict>
-    <key>maximum_device_plan_limit_part_2</key>
-    <dict>
-        <key>NSStringLocalizedFormatKey</key>
-        <string> чтобы подключить до %#@num_devices@ одновременно.</string>
-        <key>num_devices</key>
-        <dict>
-            <key>NSStringFormatSpecTypeKey</key>
-            <string>NSStringPluralRuleType</string>
-            <key>NSStringFormatValueTypeKey</key>
-            <string>d</string>
-            <key>few</key>
-            <string>%d устройства</string>
-            <key>many</key>
-            <string>%d устройств</string>
-            <key>one</key>
-            <string>%d устройство</string>
-            <key>other</key>
-            <string>%d устройства</string>
-        </dict>
-    </dict>
+	<key>_countries_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d краіны</string>
+			<key>many</key>
+			<string>%d краін</string>
+			<key>one</key>
+			<string>%d краіна</string>
+			<key>other</key>
+			<string>%d краіны</string>
+		</dict>
+	</dict>
+	<key>_countries_count_plus</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Больш за %d краіны</string>
+			<key>many</key>
+			<string>Больш за %d краін</string>
+			<key>one</key>
+			<string>Больш за %d краіну</string>
+			<key>other</key>
+			<string>Больш за %d краіны</string>
+		</dict>
+	</dict>
+	<key>_plans_connections</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d злучэнні</string>
+			<key>many</key>
+			<string>%d злучэнняў</string>
+			<key>one</key>
+			<string>%d злучэнне</string>
+			<key>other</key>
+			<string>%d злучэнні</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option1</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Сотні сервераў у %d краінах</string>
+			<key>many</key>
+			<string>Сотні сервераў у %d краінах</string>
+			<key>one</key>
+			<string>Сотні сервераў у %d краіне</string>
+			<key>other</key>
+			<string>Сотні сервераў у %d краінах</string>
+		</dict>
+	</dict>
+	<key>_subscription_upgrade_option2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Падлучайце да %d прылад адначасова</string>
+			<key>many</key>
+			<string>Падлучайце да %d прылад адначасова</string>
+			<key>one</key>
+			<string>Падлучайце да %d прылады адначасова</string>
+			<key>other</key>
+			<string>Падлучайце да %d прылад адначасова</string>
+		</dict>
+	</dict>
+	<key>_vpnauth_too_many_certs_retry_after</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліны.</string>
+			<key>many</key>
+			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвілін.</string>
+			<key>one</key>
+			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліну.</string>
+			<key>other</key>
+			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліны.</string>
+		</dict>
+	</dict>
+	<key>maximum_device_plan_limit_part_2</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string> для адначасовага падлучэння да %#@num_devices@.</string>
+		<key>num_devices</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>%d прылады</string>
+			<key>many</key>
+			<string>%d прылад</string>
+			<key>one</key>
+			<string>%d прылада</string>
+			<key>other</key>
+			<string>%d прылады</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

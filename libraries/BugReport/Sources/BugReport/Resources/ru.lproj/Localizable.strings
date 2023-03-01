@@ -23,7 +23,7 @@
 "_br_3_button_sending" = "Отправка";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "Электронная почта";
+"_br_3_email" = "Эл. почта";
 
 /* ReportBug 3rd step (form) logs description */
 "_br_3_logs_description" = "Журнал - это тип файла, показывающий нам ваши действия, приведшие к появлению ошибки. Мы используем их только для того, чтобы помочь нашим инженерам исправить ошибки.";

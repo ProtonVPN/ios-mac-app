@@ -27,7 +27,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>%d+ negara</string>
+			<string>%d negara</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>
@@ -41,7 +41,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>%d sambungan</string>
+			<string>%d koneksi</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option1</key>
@@ -69,7 +69,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Hubungkan hingga %d perangkat dalam satu waktu</string>
+			<string>Sambungkan hingga %d perangkat secara bersamaan</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -83,7 +83,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>other</key>
-			<string>Anda telah mencapai batas jumlah perubahan yang diperkenankan. Silakan coba lagi dalam %d menit.</string>
+			<string>Anda telah mencapai jumlah maksimum perubahan pengaturan. Silakan coba lagi setelah setidaknya %d menit.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>

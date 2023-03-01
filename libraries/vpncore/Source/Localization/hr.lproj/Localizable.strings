@@ -37,6 +37,9 @@
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "Spustite do dna i pritisnite Uredi dugme.";
 
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Dodajte Proton VPN widget na popis aktivnih widgeta.";
+
 /* Plan information */
 "_adblocker_netshield_feature" = "Bloker oglasa (NetShield)";
 
@@ -47,10 +50,13 @@
 "_advanced_features" = "+ napredne značajke";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Neuspješno prikupljanje VPN informacija";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Pogrešno korisničko ime ili lozinka";
+
+/* Account plan description */
+"_all_countries" = "60+ država";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Svi poslužitelji u ovoj državi se održavaju. Spojite se u drugu državu.";
@@ -58,11 +64,20 @@
 /* Under maintenance alert */
 "_all_servers_in_profile_under_maintenance" = "Održavanje u tijeku za poslužitelja/e u profilima";
 
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Svi poslužitelji se održavaju. To obično znači da ili postoje tehničke poteškoće na strani Proton VPN-a ili je vaša mreža ograničena.";
+
 /* (No Comment) */
 "_allow" = "Dopusti";
 
 /* (No Comment) */
+"_allow_lan_description" = "Kako bi se omogućilo LAN pristup, kill switch mora biti isključen.\n\nNastaviti?";
+
+/* (No Comment) */
 "_allow_lan_info" = "Omogućuje zaobilaženje VPN-a i povezivanje s uređajima u vašoj lokalnoj mreži, poput vašeg pisača.";
+
+/* (No Comment) */
+"_allow_lan_note" = "Da biste promijenili promjene, vašu vezu je potrebno ponovo pokrenuti";
 
 /* (No Comment) */
 "_allow_lan_title" = "Dopusti LAN veze";
@@ -132,6 +147,9 @@
 
 /* Profile create/change form */
 "_color" = "Boja";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Najčešći problemi s prijavom";
 
 /* Common word */
 "_connect" = "Poveži";
@@ -223,6 +241,9 @@
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Korisničko ime, adresa e-pošte";
 
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+
 /* Common word */
 "_delete" = "Izbriši";
 
@@ -243,6 +264,9 @@
 
 /* (No Comment) */
 "_delinquent_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "Nakon što platite, moći ćete ponovo pristupiti premium značajkama. Za sada vas ponovno povezujemo s najbržim Free poslužiteljem koji je na raspolaganju.";
 
 /* (No Comment) */
 "_delinquent_title" = "Vaš VPN račun ima neplaćene fakture";
@@ -307,9 +331,6 @@
 /* Profile create/change form */
 "_enter_profile_name" = "Unesite naziv profila";
 
-/* iOS: placeholder for code in human verification code form */
-"_enter_verification_code" = "123 456";
-
 /* API error */
 "_error_api_offline" = "Proton VPN API je trenutno van mreže";
 
@@ -361,6 +382,9 @@
 /* (No Comment) */
 "_error_mitm_title" = "Nesigurna veza";
 
+/* (No Comment) */
+"_error_mitm_vpn_description" = "Provjera TLS certifikata nije uspjela pri pokušaju povezivanja s VPN poslužiteljem. Vaša se trenutna internetska veza može pratiti. Da bi vaši podaci bili sigurni, spriječavamo aplikaciju da pristupi ovom VPN poslužitelju.\nOdaberite drugi poslužitelj.";
+
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulus potpis je prazan";
 
@@ -404,7 +428,7 @@
 "_error_unknown_title" = "Nepoznata pogreška";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Radnja je otkazana";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Neuspješno stvaranje računa";
@@ -571,23 +595,56 @@
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "Vaša sigurnost je naš prioritet";
 
-/* iOS: Status view */
-"_ip" = "IP";
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
-"_ip_value" = "IP: %@";
-
 /* (No Comment) */
 "_ip_will_not_be_exposed" = "Vaša IP adresa neće biti izložena.";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill switch blokira sve veze";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Onemogući kill switch";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_foot" = "Zaustavite te aplikacije da biste riješili problem.\nDa biste nastavili pregledavati bez kill switcha, kliknite Nastavi.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Neke aplikacije, poput antivirusnih programa ili vatrozida, mogu se sukobiti s kill switchom, zbog čega ne funkcionira ispravno.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill switch radi s macOS vatrozidom.\nAko su s vatrozidom povezane druge aplikacije, one mogu ometati ProtonVPN-ov kill switch. Zaustavljanjem tih aplikacija možete vratiti pravila vatrozida postavljena od strane kill switcha.";
+
+/* MacOS: killswicth install error alert */
+"_kill_switch_helper_install_issue_popup_body" = "Došlo je do problema prilikom instaliranja ili ažuriranja kill switcha.\n\nDa biste pokušali ponovo, pritisnite POKUŠAJ PONOVNO.\n\nDa biste nastavili bez kill switcha, pritisnite ONEMOGUĆI.";
+
+/* MacOS: killswitch alert */
+"_kill_switch_helper_install_popup_body" = "Da biste omogućili kill switch, od vas će se možda tražiti da navedete lozinku korisničkog računa. Ako se pojavi zahtjev, unesite svoju %@ i prihvatite.\n\nOvaj zahtjev možete povremeno vidjeti kada aplikacija Proton VPN primi ažuriranja.";
+
+/* MacOS: updating helper alert */
+"_kill_switch_helper_update_popup_body" = "Najnovije ažuriranje koje ste preuzeli zahtijeva da navedete lozinku korisničkog računa. Kad se zahtjev pojavi, unesite svoju %@ i prihvatite.\n\nAko ne unesete svoju lozinku za Mac, kill switch će biti isključen.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Vaša će se internetska veza nastaviti čim se Proton VPN ponovno poveže s poslužiteljem.\nDa biste koristili internet bez VPN i kill switch zaštite, otkažite ponovno povezivanje s poslužiteljem.";
 
 /* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
 "_kill_switch_reconnection_bold1" = "bez";
 
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Kill switch zaštita";
+
 /* MacOS: connection screen - cancel button */
 "_kill_switch_reconnection_cancel" = "Otkaži ponovno povezivanje";
 
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill switch štiti vašu IP adresu";
+
 /* (No Comment) */
 "_ks_dont_ask" = "Ne pitaj ponovno";
+
+/* (No Comment) */
+"_ks_requires_swift5_popup_msg" = "Da biste omogućili kill switch, morate preuzeti i instalirati %@.\nMolimo instalirajte ga prije nego što omogućite kill switch.";
+
+/* (No Comment) */
+"_ks_requires_swift5_popup_msg2" = "Proton VPN nije mogao otkriti %@. Da biste omogućili kill switch, prvo instalirajte program.";
 
 /* (No Comment) */
 "_ks_swift5_lib_name" = "Swift 5 Runtime Support biblioteka";
@@ -621,6 +678,9 @@
 
 /* (No Comment) */
 "_locations_all" = "Sve lokacije";
+
+/* (No Comment) */
+"_locations_free" = "Free lokacije";
 
 /* (No Comment) */
 "_locations_plus" = "PLUS lokacije";
@@ -725,7 +785,7 @@
 "_moderate_nat_explanation_link" = "Saznajte više";
 
 /* Display more information */
-"_more_info" = "Više informacija";
+"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "Najpopularnije";
@@ -752,6 +812,9 @@
 "_ne_network_connection_lost" = "Veza s mrežom je izgubljena";
 
 /* Network error */
+"_ne_not_connected_to_the_internet" = "Nije spojen na internet";
+
+/* Network error */
 "_ne_request_timed_out" = "Mrežni zahtjev je istekao";
 
 /* Button on alert after a problem with internet connection */
@@ -767,13 +830,7 @@
 "_neagent_description" = "Od vas će se možda tražiti da upišete svoju %@\nza povezivanje s uslugom Proton VPN. Ako se ovaj zahtjev pojavi,\nunesite svoju %@ %@ i pritisnete '%@' %@.";
 
 /* Mac: neagent help screen */
-"_neagent_first_step" = "(1)";
-
-/* Mac: neagent help screen */
 "_neagent_password" = "lozinku korisničkog računa";
-
-/* Mac: neagent help screen */
-"_neagent_second_step" = "(2)";
 
 /* MacOS: button in login screen */
 "_need_help" = "Trebate pomoć?";
@@ -826,6 +883,9 @@
 /* iOS: connection bar; Main mac app menu item; */
 "_not_connected" = "Nije povezano";
 
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Nije moguće uspostaviti VPN vezu. Niste povezani s internetom.";
+
 /* (No Comment) */
 "_not_now" = "Ne sada";
 
@@ -837,9 +897,6 @@
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN zapisi";
-
-/* (No Comment) */
-"_openvpn" = "OpenVPN";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Pregled";
@@ -1007,6 +1064,15 @@
 "_quick_settings_get_plus" = "Nabavite Plus";
 
 /* (No Comment) */
+"_quick_settings_killSwitch_description" = "Onemogućuje internet ako VPN veza se prekine, kako bi se spriječilo slučajno curenje IP adrese.";
+
+/* (No Comment) */
+"_quick_settings_killSwitch_note" = "Ako se ne možete povezati s uređajima na lokalnoj mreži, pokušajte onemogućiti kill switch.";
+
+/* (No Comment) */
+"_quick_settings_netShield_description" = "Pretražujte internet bez oglasa i zlonamjernih programa.";
+
+/* (No Comment) */
 "_quick_settings_netShield_note" = "Ako se web stranice ne učitaju, pokušajte onemogućiti NetShield";
 
 /* (No Comment) */
@@ -1032,6 +1098,9 @@
 
 /* MacOS app tour: quick settings net shield */
 "_quick_settings_tour_feature_2" = "Pretražujte Internet slobodno od zlonamjernih programa i oglasa pomoću NetShield-a.";
+
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Spriječite da vaša IP adresa bude izložena uključivanjem kill switch.";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Brze postavke";
@@ -1089,6 +1158,9 @@
 
 /* Mag bug report: attach logs checkbox */
 "_report_attachments_checkbox" = "Uključi i zapisnike aplikacije i podatke o sustavu";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Prijavite problem";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Adresa e-pošte:";
@@ -1153,9 +1225,6 @@
 /* iOS: placeholder in phone country code selection screen */
 "_search_phone_country_code_placeholder" = "Traži državu";
 
-/* %@ is a country e.g. Secure Core Switzerland */
-"_secure_core_country" = "Secure Core %@";
-
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "Ultra sigurni poslužitelji\nkoje mi održavamo";
 
@@ -1192,6 +1261,9 @@
 /* iOS: text in human verification options screen */
 "_select_verification_option" = "Odaberite metodu potvrde za nastavak:";
 
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Za spriječavanje zlouporabe, morate provjeriti da ste čovjek.";
+
 /* Profile create/change form */
 "_server" = "Poslužitelj";
 
@@ -1200,6 +1272,9 @@
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Opterećenje poslužitelja:";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% opterećenja";
 
 /* (No Comment) */
 "_server_load_title" = "Opterećenje poslužitelja";
@@ -1221,6 +1296,9 @@
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_free" = "Sada ste se prijavili na Proton VPN Free plan. Za početak, besplatno uživajte u sedam dana našeg Proton VPN Plus plana.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Vaša kupovina je bila uspješna. Vaš Proton VPN Plus plan je sada aktivan.";
 
 /* Show/hide password switch */
 "_show" = "PRIKAŽI";
@@ -1245,9 +1323,6 @@
 
 /* (No Comment) */
 "_smart_routing_title" = "Pametno preusmjeravanje";
-
-/* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ brzina";
@@ -1310,9 +1385,6 @@
 "_subscription_will_renew" = "Trenutni plan će seautomatski obnoviti dana %@.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "Dodijeli VPN veze";
-
-/* (No Comment) */
 "_subuser_alert_login_button" = "Ponovna prijava";
 
 /* MacOS: connecting overlay */
@@ -1341,11 +1413,11 @@
 /* iOS: link inside text under sign-up form */
 "_terms_and_conditions" = "Odredbe i uvjeti";
 
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Koristeći Proton VPN, slažete se s našim\n %@ i %@";
+
 /* iOS: section header in countries list */
 "_test_servers" = "TEST poslužitelji";
-
-/* (No Comment) */
-"_tier_visionary" = "Visionary";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "isteklo vrijeme";
@@ -1353,46 +1425,11 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Prebacite se na OpenVPN i ponovno pokušajte";
 
+/* Description shown together with server info icon */
+"_tor_description" = "Connects to Tor network";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor poslužitelj";
-
-/* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Da biste imali stalni pristup Proton VPN Plus značajkama, možete nadograditi svoj plan.";
-
-/* (No Comment) */
-"_trial_popup_enjoy" = "Uživajte u svim prednostima sigurnog interneta bilo gdje uz Proton VPN";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "Kao poklon dobrodošlice, imate pristup %@, uključujući napredne značajke prvih nekoliko dana! Probni period dobrodošlice završava za";
-
-/* (No Comment) */
-"_trial_popup_free_upgrade" = "besplatno nadogradite na Proton VPN Plus";
-
-/* (No Comment) */
-"_trial_popup_full_subscription" = "potpuna Proton VPN pretplata";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Dali smo vam %@ koji uključuje više poslužitelja i dodatne značajke. Proton VPN Plus probno razdoblje završava za 7 dana.";
-
-/* (No Comment) */
-"_trial_popup_thanks" = "Hvala što koristite Proton VPN!";
-
-/* (No Comment) */
-"_trial_popup_title" = "Proton VPN probni period";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Kao poklon dobrodošlice imate pristup punoj Proton VPN pretplati, uključujući napredne značajke od prvog dana!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Vaš probni period istječe za";
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Dobro došli";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "U slučaju da su Protonove stranice blokirane, ova postavka omogućuje aplikaciji da isproba alternativno mrežno usmjeravanje do Protona, što može biti korisno u zaobilaženju vatrozida ili problema s mrežom. Preporučujemo da ovu postavku zadržite omogućenom radi veće pouzdanosti. Saznajte više";
@@ -1443,9 +1480,6 @@
 "_troubleshoot_item_proton_description" = "Provjerite Proton Status za uvid u status našeg sustava.";
 
 /* (No Comment) */
-"_troubleshoot_item_proton_link1" = "Proton Status";
-
-/* (No Comment) */
 "_troubleshoot_item_proton_title" = "Proton je van mreže";
 
 /* (No Comment) */
@@ -1459,6 +1493,15 @@
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Pokušaj ponovno";
+
+/* (No Comment) */
+"_try_again_without_killswitch" = "Onemogućite kill switch i pokušajte ponovno";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Aktiviranjem kill switcha, nećete moći pristupiti uređajima na lokalnoj mreži.\n\nNastaviti?";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Uključiti kill switch?";
 
 /* (No Comment) */
 "_turn_on" = "Uključi";
@@ -1577,6 +1620,9 @@
 /* (No Comment) */
 "_vpn_accelerator_change_title" = "Promjeni VPN Accelerator";
 
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN Accelerator omogućuje skup jedinstvenih tehnologija za poboljšanje performansi koje mogu povećati brzine VPN-a i do 400%%.\nSaznaj više";
+
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Saznajte više";
 
@@ -1601,6 +1647,9 @@
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Pogreška autentikacije";
 
+/* (No Comment) */
+"_vpnstatus_not_loggedin" = "Trenutno niste prijavljeni u ProtonVPN. Otvorite Proton VPN aplikaciju i prijavite se.";
+
 /* Used as a title in alerts/modals */
 "_warning" = "Upozorenje";
 
@@ -1619,8 +1668,11 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "DOBRO DOŠLI!";
 
-/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS Widget";
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Onemogući kill switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Prebacite se na OpenVPN";
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard zapisi";
@@ -1631,6 +1683,21 @@
 /* Button to apply coupon */
 "apply_coupon" = "Primijeni";
 
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Autenticiraj";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Kôd za oporavak";
+
 /* Title for the Two-factor authentication screen */
 "two_factor_authentication" = "Dvofaktorska autentikacija";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Kôd dvofaktorske autentikacije";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Koristi kôd za oporavak";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Koristi kôd dvofaktorske autentikacije";
 

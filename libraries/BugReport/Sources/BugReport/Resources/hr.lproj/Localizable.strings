@@ -28,6 +28,12 @@
 /* ReportBug success window: title text */
 "_br_success_title" = "Hvala vam na povratnim informacijama";
 
+/* ReportBugwindow title */
+"_br_window_title" = "Prijavite problem";
+
 /* Action button of the view nudging users to update before filling Bug Report */
 "_update_view_button" = "Ažuriraj";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Ažuriraj Proton VPN";
 
