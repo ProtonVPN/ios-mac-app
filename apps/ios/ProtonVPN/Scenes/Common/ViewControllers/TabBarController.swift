@@ -89,14 +89,14 @@ extension TabBarController: TabBarViewModelDelegate {
         quickConnectButtonConnecting = false
         self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         self.tabBar.items?[2].title = LocalizedString.disconnect
-        self.quickConnectButton.setImage(UIImage(named: "quick-connect-active-button"), for: .normal)
+        self.quickConnectButton.setImage(Asset.quickConnectActiveButton.image, for: .normal)
     }
     
     func connectingQuickConnect() {
         if !quickConnectButtonConnecting { // to avoid animation jumping, don't reset animation during multiple connecting stage calls
             self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .normal)
             self.tabBar.items?[2].title = LocalizedString.connecting
-            self.quickConnectButton.setImage(UIImage(named: "quick-connect-connecting-button"), for: .normal)
+            self.quickConnectButton.setImage(Asset.quickConnectConnectingButton.image, for: .normal)
         }
         
         quickConnectButtonConnecting = true
@@ -107,7 +107,7 @@ extension TabBarController: TabBarViewModelDelegate {
         guard self.tabBar.items?.count > 2 else { return }
         self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         self.tabBar.items?[2].title = LocalizedString.quickConnect
-        self.quickConnectButton.setImage(UIImage(named: "quick-connect-inactive-button"), for: .normal)
+        self.quickConnectButton.setImage(Asset.quickConnectInactiveButton.image, for: .normal)
     }
 }
 

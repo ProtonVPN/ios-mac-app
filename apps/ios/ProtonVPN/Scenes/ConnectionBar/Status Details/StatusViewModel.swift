@@ -390,7 +390,7 @@ class StatusViewModel {
         return .imageSubtitle(
             title: LocalizedString.netshieldUpsellTitle,
             subtitle: LocalizedString.netshieldUpsellSubtitle,
-            image: UIImage(named: "netshield-small")!,
+            image: Asset.netshieldSmall.image,
             handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
         )
     }
