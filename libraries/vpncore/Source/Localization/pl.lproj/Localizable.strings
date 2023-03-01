@@ -53,7 +53,7 @@
 "_advanced_features" = "+ zaawansowane funkcje";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Nie można uzyskać informacji o usłudze VPN";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nieprawidłowa nazwa użytkownika lub hasło";
@@ -343,9 +343,6 @@
 /* Profile create/change form */
 "_enter_profile_name" = "Wpisz nazwę profilu";
 
-/* iOS: placeholder for code in human verification code form */
-"_enter_verification_code" = "123 456";
-
 /* API error */
 "_error_api_offline" = "Interfejs API Proton VPN jest obecnie niedostępny";
 
@@ -458,7 +455,7 @@
 "_error_unknown_title" = "Wystąpił nieznany błąd";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operacja została anulowana";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Tworzenie konta nie powiodło się";
@@ -554,9 +551,6 @@
 "_feature_p2p_description" = "Te serwery zapewniają najlepszą wydajność dla protokołu BitTorrent i udostępniania plików.";
 
 /* iOS plan feature */
-"_feature_secure_core" = "Secure Core";
-
-/* iOS plan feature */
 "_feature_secure_streaming" = "Bezpieczny streaming";
 
 /* iOS plan feature */
@@ -641,16 +635,13 @@
 "_hide" = "UKRYJ";
 
 /* Value of speed in _speed */
-"_high" = "Duże";
+"_high" = "Wysoka";
 
 /* Value of speed in _speed */
 "_highest" = "Najwyższa";
 
 /* Button in Kill switch error alert */
 "_ignore" = "Ignoruj";
-
-/* iOS Settings -> Protocol: IKEv2 option */
-"_ikev2" = "IKEv2";
 
 /* Streaming & Features */
 "_information_title" = "Informacje";
@@ -866,7 +857,7 @@
 "_maybe_later" = "Może później";
 
 /* Value of speed in _speed */
-"_medium" = "Średnie";
+"_medium" = "Umiarkowana";
 
 /* Main mac app menu item */
 "_menu_about" = "O aplikacji Proton VPN";
@@ -914,7 +905,7 @@
 "_moderate_nat_title" = "Umiarkowany NAT";
 
 /* Display more information */
-"_more_info" = "Więcej informacji";
+"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "Najpopularniejszy";
@@ -959,13 +950,7 @@
 "_neagent_description" = "Możesz zostać poproszony o wpisanie swojego %@, \naby połączyć się z usługą Proton VPN. Jeśli ta prośba się pojawi,\nwpisz swoje %@ %@ i kliknij przycisk ‘%@’ %@.";
 
 /* Mac: neagent help screen */
-"_neagent_first_step" = "(1)";
-
-/* Mac: neagent help screen */
 "_neagent_password" = "hasła użytkownika";
-
-/* Mac: neagent help screen */
-"_neagent_second_step" = "(2)";
 
 /* MacOS: button in login screen */
 "_need_help" = "Potrzebujesz pomocy?";
@@ -1003,11 +988,14 @@
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Blokada reklam i złośliwego oprogramowania";
 
-/* Settings -> Netshield: name of field. */
-"_netshield_title" = "NetShield";
-
 /* (No Comment) */
 "_netshield_title_tooltip" = "Zablokuj reklamy, skrypty śledzące i złośliwe oprogramowanie";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Zablokuj reklamy, skrypty śledzące i złośliwe oprogramowanie na stronach internetowych oraz w aplikacjach";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Przeglądaj bez reklam dzięki funkcji NetShield";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Sieć jest nieosiągalna";
@@ -1057,20 +1045,20 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Under maintenance";
 
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Udostępnij anonimowe raporty o awariach. To pomaga nam naprawić błędy, wykryć zapory sieciowe i ominąć blokady VPN.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Udostępnij anonimowe statystyki użytkowania. To pomaga nam ominąć blokady VPN i poprawić wydajność aplikacji.";
+
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Pokaż Proton VPN, aby się zalogować...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Logi OpenVPN";
 
-/* (No Comment) */
-"_openvpn" = "OpenVPN";
-
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Podsumowanie";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_p2p" = "P2P";
 
 /* Description shown together with server info icon */
 "_p2p_description" = "Wspiera ruch P2P";
@@ -1150,9 +1138,6 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Po potwierdzeniu zakupu płatnego planu, Twoje konto iTunes zostanie obciążone podaną kwotą, zawierającą podatki i dodatkowe opłaty wewnętrzne platformy (nie są to opłaty pobierane bezpośrednio przez firmę Proton). Po dokonaniu zakupu, Twoje konto zostanie automatycznie zaktualizowane do wybranego planu na okres jednego roku. Po tym czasie możesz odnowić lub anulować subskrypcję za pomocą naszej strony lub aplikacji iOS.";
 
-/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
-
 /* Features of account plan */
 "_plus_plan_features" = "Serwery planu Plus\nSecure Core\nSerwery Tor";
 
@@ -1221,12 +1206,6 @@
 
 /* (No Comment) */
 "_protocol" = "Protokół";
-
-/* (No Comment) */
-"_protonvpn_macos" = "Proton VPN macOS";
-
-/* (No Comment) */
-"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Publiczny adres IP: %@";
@@ -1346,7 +1325,7 @@
 "_report_bug" = "Zgłoś problem";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi aplikacji Proton VPN\n• Logi protokołu OpenVPN\n• Logi protokołu WireGuard";
+"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1411,12 +1390,6 @@
 /* iOS: placeholder in phone country code selection screen */
 "_search_phone_country_code_placeholder" = "Szukaj kraju";
 
-/* Used in many places in MacOS app */
-"_secure_core" = "Secure Core";
-
-/* %@ is a country e.g. Secure Core Switzerland */
-"_secure_core_country" = "Secure Core %@";
-
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "Ultra bezpieczne serwery\nhostowane przez nas";
 
@@ -1465,6 +1438,9 @@
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Obciążenie serwera:";
 
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "Obciążenie %@%%";
+
 /* (No Comment) */
 "_server_load_title" = "Obciążenie serwera";
 
@@ -1479,6 +1455,21 @@
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "Ustawienia";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Udostępnij anonimowe raporty o awariach";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Raporty o awariach pomagają nam naprawić błędy, wykryć zapory sieciowe i ominąć blokady VPN.";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Dowiedz się więcej";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Udostępnij anonimowe statystyki użytkowania";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Dane użytkowania pomagają nam ominąć blokady VPN i poprawić wydajność aplikacji.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Konfiguracja zakończona";
@@ -1512,15 +1503,6 @@
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Ponowne połączenie jest wymagane";
-
-/* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Smart Protocol";
-
-/* (No Comment) */
-"_smart_routing_title" = "Smart Routing";
-
-/* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ prędkość";
@@ -1586,16 +1568,22 @@
 "_subscription_will_renew" = "Obecny plan zostanie automatycznie odnowiony w dniu %@.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "Przypisz połączenia VPN";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Przypisz połączenia VPN do swojego konta Proton VPN.";
+"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Ten krok zajmie tylko kilka minut. Po tym kroku, będziesz mógł zalogować się i chronić wszystkie swoje urządzenia.";
 
 /* (No Comment) */
+"_subuser_alert_description3" = "Brak włączonych połączeń VPN na koncie. Skontaktuj się ze swoim administratorem, aby rozpocząć korzystanie z Proton VPN.";
+
+/* (No Comment) */
+"_subuser_alert_enable_connections_button" = "Włącz połączenia VPN";
+
+/* (No Comment) */
 "_subuser_alert_login_button" = "Zaloguj się ponownie";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Dziękujemy za ulepszenie planu do wersji Business/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Połączono";
@@ -1689,9 +1677,6 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Otwórz przewodnik";
 
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
-"_tcp" = "TCP";
-
 /* iOS status view */
 "_technical_details" = "Szczegóły techniczne";
 
@@ -1707,12 +1692,6 @@
 /* (No Comment) */
 "_tier_free" = "Za darmo";
 
-/* (No Comment) */
-"_tier_plus" = "Plus";
-
-/* (No Comment) */
-"_tier_visionary" = "Visionary";
-
 /* MacOS: connecting overlay */
 "_timed_out" = "nie powiodło się. Upłynął limit czasu żądania";
 
@@ -1721,9 +1700,6 @@
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Zmień na OpenVPN i ponów próbę";
-
-/* iOS Settings -> Protocol -> WireGuard: TLS option */
-"_tls" = "TLS";
 
 /* (No Comment) */
 "_to_server_title" = "Do serwera:";
@@ -1736,53 +1712,6 @@
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Serwer Tor";
-
-/* (No Comment) */
-"_tor_title" = "Tor";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Twoja 7-dniowa wersja próbna planu Proton VPN Plus wygasła. Możesz nadal korzystać z planu Proton VPN Free. Ulepsz do płatnego planu, aby wesprzeć projekt oraz uzyskać dostęp do większej liczby krajów i funkcji.";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Okres próbny planu Proton VPN Plus wygasł";
-
-/* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Ulepsz swój plan, aby uzyskać stały dostęp do funkcji planu Proton VPN Plus.";
-
-/* (No Comment) */
-"_trial_popup_enjoy" = "Ciesz się wszystkimi zaletami bezpiecznego Internetu w każdym miejscu dzięki usłudze Proton VPN";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "W ramach prezentu powitalnego, w ciągu pierwszych dni otrzymujesz dostęp do %@ z zaawansowanymi funkcjami! Twój powitalny okres próbny kończy się za";
-
-/* (No Comment) */
-"_trial_popup_free_upgrade" = "darmowe ulepszenie do planu Proton VPN Plus";
-
-/* (No Comment) */
-"_trial_popup_full_subscription" = "pełnej subskrypcji Proton VPN";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Otrzymałeś %@, które zawiera więcej serwerów i dodatkowe funkcje. Twój okres próbny planu Proton VPN Plus kończy się za 7 dni.";
-
-/* (No Comment) */
-"_trial_popup_thanks" = "Dziękujemy za korzystanie z Proton VPN!";
-
-/* (No Comment) */
-"_trial_popup_title" = "Wersja próbna usługi Proton VPN";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "W ramach prezentu powitalnego, w ciągu pierwszych dni otrzymujesz dostęp do pełnej subskrypcji Proton VPN z zaawansowanymi funkcjami!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Twój okres próbny kończy się za";
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Witaj na pokładzie";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "W przypadku zablokowania dostępu do stron Proton, ta konfiguracja pozwoli aplikacji wypróbować alternatywne połączenia sieciowe, które mogą przywrócić ten dostęp. Ta funkcja może być przydatna podczas problemów z siecią lub w celu ominięcia zapór. Zalecamy włączenie tego ustawienia dla zapewnienia większej niezawodności. \nDowiedz się więcej";
@@ -1803,16 +1732,10 @@
 "_troubleshoot_item_gov_description" = "Twój kraj może blokować dostęp do usług Proton. Spróbuj połączyć się przez sieć Tor, aby uzyskać połączenie.";
 
 /* (No Comment) */
-"_troubleshoot_item_gov_link1" = "Tor";
-
-/* (No Comment) */
 "_troubleshoot_item_gov_title" = "Blokada rządowa";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_description" = "Spróbuj połączyć się z usługą Proton z innej sieci (lub z sieci Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_title" = "Problem z dostawcą Internetu (ISP)";
@@ -1831,9 +1754,6 @@
 
 /* (No Comment) */
 "_troubleshoot_item_other_link2" = "e-mail";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link3" = "Twitter";
 
 /* (No Comment) */
 "_troubleshoot_item_other_title" = "Nadal nie mogę znaleźć rozwiązania";
@@ -1870,9 +1790,6 @@
 
 /* (No Comment) */
 "_turn_on" = "Włącz";
-
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
-"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Niedostępny";
@@ -1952,14 +1869,14 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Aktualizacja w aplikacji jest niedostępna";
 
+/* Menu point in settings screen */
+"_usage_statistics" = "Statystyki użytkowania";
+
 /* iOS: human verification option select button */
 "_use_captcha_verification" = "Zweryfikuj za pomocą CAPTCHA";
 
 /* iOS: human verification option select button */
 "_use_other_email_address" = "Zweryfikuj za pomocą poczty e-mail";
-
-/* Profile create/change form */
-"_use_secure_core" = "Secure Core";
 
 /* (No Comment) */
 "_use_sms_verification" = "Zweryfikuj za pomocą wiadomości SMS";
@@ -1996,9 +1913,6 @@
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Dowiedz się więcej";
-
-/* (No Comment) */
-"_vpn_accelerator_title" = "VPN Accelerator";
 
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Połączenie VPN jest aktywne";
@@ -2069,9 +1983,6 @@
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widżet iOS";
 
-/* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Logi WireGuard";
 
@@ -2097,7 +2008,7 @@
 "login_fetch_vpn_data" = "Konfiguracja dostępu do usługi VPN";
 
 /* (No Comment) */
-"login_summary_button" = "Zacznij korzystać z aplikacji Proton VPN";
+"login_summary_button" = "Zacznij korzystać z Proton VPN";
 
 /* Error message shown when tryng to log in with an unsupported method */
 "login_unsupported_state" = "Metoda logowania jest nieprawidłowa. Skontaktuj się ze wsparciem.";

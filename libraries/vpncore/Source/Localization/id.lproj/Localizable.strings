@@ -14,7 +14,7 @@
 "_account_deletion_connection_warning" = "Dengan menghapus akun, sesi VPN Anda akan berakhir.";
 
 /* Alert title for account deletion error */
-"_account_deletion_error" = "Error";
+"_account_deletion_error" = "Kesalahan";
 
 /* MacOS: Settings -> Account: name of field. */
 "_account_plan" = "Jenis akun";
@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Berbagai fitur mutakhir";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Tidak dapat menerima informasi vpn";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nama pengguna atau kata sandi salah";
@@ -89,7 +89,7 @@
 "_already_have_account" = "Saya sudah memiliki akun";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "Always-on VPN";
+"_always_on_vpn" = "VPN selalu-nyala";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "VPN Selalu-Aktif membangun kembali sambungan aman VPN dengan segera dan otomatis. Demi keamanan Anda, fitur ini selalu aktif.";
@@ -343,9 +343,6 @@
 /* Profile create/change form */
 "_enter_profile_name" = "Masukkan Nama Profil";
 
-/* iOS: placeholder for code in human verification code form */
-"_enter_verification_code" = "123 456";
-
 /* API error */
 "_error_api_offline" = "API Proton VPN sedang offline";
 
@@ -458,7 +455,7 @@
 "_error_unknown_title" = "Kesalahan yang tidak diketahui";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operasi dibatalkan";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Pembuatan akun gagal";
@@ -554,9 +551,6 @@
 "_feature_p2p_description" = "Server-server berikut memberikan performa terbaik dalam hal BitTorrent dan file sharing.";
 
 /* iOS plan feature */
-"_feature_secure_core" = "Secure Core";
-
-/* iOS plan feature */
 "_feature_secure_streaming" = "Streaming Aman";
 
 /* iOS plan feature */
@@ -649,9 +643,6 @@
 /* Button in Kill switch error alert */
 "_ignore" = "Abaikan";
 
-/* iOS Settings -> Protocol: IKEv2 option */
-"_ikev2" = "IKEv2";
-
 /* Streaming & Features */
 "_information_title" = "Informasi";
 
@@ -681,9 +672,6 @@
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "Keamanan Anda adalah prioritas kami";
-
-/* iOS: Status view */
-"_ip" = "IP";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -914,7 +902,7 @@
 "_moderate_nat_title" = "NAT Moderat";
 
 /* Display more information */
-"_more_info" = "Info lebih banyak";
+"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "Terpopuler";
@@ -959,13 +947,7 @@
 "_neagent_description" = "Anda mungkin akan diminta untuk menyediakan %@\nagar Anda dapat terhubung ke layanan Proton VPN. Apabila permintaan ini muncul,\nmasukkan %@ %@ dan klik ‘%@’ %@.";
 
 /* Mac: neagent help screen */
-"_neagent_first_step" = "(1)";
-
-/* Mac: neagent help screen */
 "_neagent_password" = "kata sandi akun komputer";
-
-/* Mac: neagent help screen */
-"_neagent_second_step" = "(2)";
 
 /* MacOS: button in login screen */
 "_need_help" = "Butuh Bantuan?";
@@ -1003,11 +985,14 @@
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Pemblokir Malware & Iklan";
 
-/* Settings -> Netshield: name of field. */
-"_netshield_title" = "NetShield";
-
 /* (No Comment) */
 "_netshield_title_tooltip" = "Memblokir iklan, pelacak, dan malware";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Blokir iklan, pelacak, dan malware pada berbagai situs web dan aplikasi";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Jelajahi internet tanpa iklan dengan NetShield";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Jaringan Tidak Dapat Dijangkau";
@@ -1057,20 +1042,20 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Under maintenance";
 
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Bagikan laporan crash anonim. Laporan ini dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Bagikan statistik penggunaan anonim. Statistik ini dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
+
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Tampilkan Proton VPN untuk masuk...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Log OpenVPN";
 
-/* (No Comment) */
-"_openvpn" = "OpenVPN";
-
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Ikhtisar";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_p2p" = "P2P";
 
 /* Description shown together with server info icon */
 "_p2p_description" = "Mendukung lalu lintas P2P";
@@ -1098,9 +1083,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "Server P2P";
-
-/* (No Comment) */
-"_p2p_title" = "P2P/BitTorrent";
 
 /* Plan upgrade required alert */
 "_paid_required" = "Akun Proton VPN berbayar dibutuhkan";
@@ -1149,9 +1131,6 @@
 
 /* Text description in plan selection screen */
 "_plans_footer" = "Apabila paket pilihan Anda telah dikonfirmasi, akun iTunes Anda akan ditagih sesuai harga yang tertera, termasuk harga paket dan biaya transaksi aplikasi Apple (tidak ditarik oleh Proton). Usai pembayaran, Anda bisa segera menikmati paket yang dipilih selama 1 tahun. Setelah itu, Anda bisa memperpanjang atau membatalkan paket melalui web atau aplikasi kami di iOS.";
-
-/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Server Plus\nSecure Core\nServer Tor";
@@ -1222,17 +1201,11 @@
 /* (No Comment) */
 "_protocol" = "Protokol";
 
-/* (No Comment) */
-"_protonvpn_macos" = "Proton VPN macOS";
-
-/* (No Comment) */
-"_protonvpn_plus" = "Proton VPN Plus";
-
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP Publik";
 
 /* Several places in both iOS and Mac apps */
-"_quick_connect" = "Quick Connect";
+"_quick_connect" = "Sambungkan Cepat";
 
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "Tombol Sambung Cepat menyambungkan Anda ke profil yang terpilih";
@@ -1241,7 +1214,7 @@
 "_quick_connect_tour_description" = "Menghubungkan Anda ke server tercepat yang tersedia bagi Anda secara otomatis.";
 
 /* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Quick Connect";
+"_quick_connect_tour_title" = "Sambungkan Cepat";
 
 /* (No Comment) */
 "_quick_settings_get_plus" = "Pilih Plus";
@@ -1346,7 +1319,7 @@
 "_report_bug" = "Laporkan masalah";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas log Proton VPN\n• Berkas log Open VPN \n• Berkas log WireGuard";
+"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1411,12 +1384,6 @@
 /* iOS: placeholder in phone country code selection screen */
 "_search_phone_country_code_placeholder" = "Cari negara";
 
-/* Used in many places in MacOS app */
-"_secure_core" = "Secure Core";
-
-/* %@ is a country e.g. Secure Core Switzerland */
-"_secure_core_country" = "Secure Core %@";
-
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "Server ultra aman \nyang kami sediakan";
 
@@ -1465,6 +1432,9 @@
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Muatan Server:";
 
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "Muatan %@%%";
+
 /* (No Comment) */
 "_server_load_title" = "Beban Server";
 
@@ -1479,6 +1449,21 @@
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "Pengaturan";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Bagikan laporan crash anonim";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Laporan crash dapat membantu kami untuk memperbaiki bug, mendeteksi firewall, dan menangkal pemblokiran VPN.";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Pelajari lebih lanjut";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Bagikan statistik penggunaan anonim";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Data penggunaan dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Pengaturan Selesai";
@@ -1512,15 +1497,6 @@
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Penyambungan ulang dibutuhkan";
-
-/* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Smart Protocol";
-
-/* (No Comment) */
-"_smart_routing_title" = "Smart Routing";
-
-/* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ kecepatan";
@@ -1586,16 +1562,22 @@
 "_subscription_will_renew" = "Paket saat ini akan diperpanjang secara otomatis pada %@.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "Tetapkan koneksi VPN";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Untuk memulai perjalanan Anda di Proton VPN, harap tetapkan koneksi VPN ke akun Anda atau sub-akun lainnya.";
+"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Langkah ini akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
 
 /* (No Comment) */
+"_subuser_alert_description3" = "Akun ini sedang tidak memiliki koneksi VPN yang aktif. Untuk mulai menggunakan Proton VPN, silakan hubungi administrator Anda.";
+
+/* (No Comment) */
+"_subuser_alert_enable_connections_button" = "Aktifkan koneksi VPN";
+
+/* (No Comment) */
 "_subuser_alert_login_button" = "Masuk lagi";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Terima kasih karena telah meningkatkan ke Business/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Berhasil Terhubung";
@@ -1689,9 +1671,6 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Ikuti Tur";
 
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
-"_tcp" = "TCP";
-
 /* iOS status view */
 "_technical_details" = "Rincian Teknis";
 
@@ -1707,12 +1686,6 @@
 /* (No Comment) */
 "_tier_free" = "Gratis";
 
-/* (No Comment) */
-"_tier_plus" = "Plus";
-
-/* (No Comment) */
-"_tier_visionary" = "Visionary";
-
 /* MacOS: connecting overlay */
 "_timed_out" = "waktu habis";
 
@@ -1722,67 +1695,14 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba kembali";
 
-/* iOS Settings -> Protocol -> WireGuard: TLS option */
-"_tls" = "TLS";
-
 /* (No Comment) */
 "_to_server_title" = "Ke Server:";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
-
-/* (No Comment) */
-"_tor_title" = "Tor";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Masa uji coba gratis 7 hari Proton VPN Plus Anda telah berakhir. Anda akan tetap dapat menggunakan Proton VPN versi Gratis, namun apabila Anda ingin mendukung proyek ini dan mengakses lebih banyak negara dan berbagai fitur lainnya, silakan tingkatkan jenis akun Anda ke akun berbayar.";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Masa uji coba Proton VPN Plus telah berakhir";
-
-/* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Untuk dapat menikmati akses ke berbagai fitur Proton VPN Plus secara permanen, Anda dapat meningkatkan jenis akun Anda.";
-
-/* (No Comment) */
-"_trial_popup_enjoy" = "Nikmati manfaat yang menyeluruh dari internet yang aman di manapun dengan Proton VPN";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "Sebagai hadiah selamat datang, Anda mendapatkan akses ke %@, termasuk fitur lanjutan untuk beberapa hari pertama! Uji coba kedatangan Anda akan berakhir dalam";
-
-/* (No Comment) */
-"_trial_popup_free_upgrade" = "peningkatan ke Proton VPN Plus secara cuma-cuma";
-
-/* (No Comment) */
-"_trial_popup_full_subscription" = "langganan Proton VPN penuh";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Kami telah memberikan Anda %@ yang meliputi berbagai server dan fitur tambahan. Masa uji coba Proton VPN Plus Anda akan berakhir dalam 7 hari.";
-
-/* (No Comment) */
-"_trial_popup_thanks" = "Terima kasih telah menggunakan Proton VPN!";
-
-/* (No Comment) */
-"_trial_popup_title" = "Uji Coba Proton VPN";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Sebagai hadiah selamat datang, Anda memperoleh akses ke paket berlangganan Proton VPN penuh yang meliputi berbagai fitur tingkat lanjut untuk beberapa hari pertama!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Masa uji coba Anda akan berakhir dalam";
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Selamat bergabung";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "Jika situs Proton diblokir, pengaturan ini mengizinkan aplikasi mengalihkan akses ke jaringan alternatif untuk menjangkau Proton, yang akan berguna untuk melewati masalah jaringan atau firewall. Kami sarankan Anda membiarkan pengaturan ini demi menjamin keandalan lebih baik. \nPelajari lebih lanjut";
@@ -1803,16 +1723,10 @@
 "_troubleshoot_item_gov_description" = "Negara Anda mungkin memblokir akses ke Proton. Coba gunakan Tor untuk mengakses Proton.";
 
 /* (No Comment) */
-"_troubleshoot_item_gov_link1" = "Tor";
-
-/* (No Comment) */
 "_troubleshoot_item_gov_title" = "Pemblokiran pemerintah";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_description" = "Coba menyambung kembali ke Proton dari jaringan berbeda (atau Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_title" = "Masalah Penyedia Layanan Internet (ISP)";
@@ -1831,9 +1745,6 @@
 
 /* (No Comment) */
 "_troubleshoot_item_other_link2" = "email";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link3" = "Twitter";
 
 /* (No Comment) */
 "_troubleshoot_item_other_title" = "Masih belum menemukan solusi";
@@ -1870,9 +1781,6 @@
 
 /* (No Comment) */
 "_turn_on" = "Nyalakan";
-
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
-"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Tidak tersedia";
@@ -1952,14 +1860,14 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Peningkatan tidak tersedia di aplikasi";
 
+/* Menu point in settings screen */
+"_usage_statistics" = "Statistik penggunaan";
+
 /* iOS: human verification option select button */
 "_use_captcha_verification" = "Verifikasi dengan CAPTCHA";
 
 /* iOS: human verification option select button */
 "_use_other_email_address" = "Verifikasi dengan email";
-
-/* Profile create/change form */
-"_use_secure_core" = "Secure Core";
 
 /* (No Comment) */
 "_use_sms_verification" = "Verifikasi dengan SMS";
@@ -1977,10 +1885,10 @@
 "_version_current" = "Versi saat ini:";
 
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
-"_via" = "via";
+"_via" = "melalui";
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
-"_via_country" = "via %@";
+"_via_country" = "melalui %@";
 
 /* MacOS menu item; iOS setting screen item */
 "_view_logs" = "Lihat Log";
@@ -1996,9 +1904,6 @@
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Pelajari lebih lanjut";
-
-/* (No Comment) */
-"_vpn_accelerator_title" = "VPN Accelerator";
 
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "Sambungan VPN Aktif";
@@ -2069,14 +1974,8 @@
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";
 
-/* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Log WireGuard";
-
-/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
-"_wireguard_tls" = "Stealth";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Anda tidak terhubung";

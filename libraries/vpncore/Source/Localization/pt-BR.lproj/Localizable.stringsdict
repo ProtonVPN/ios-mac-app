@@ -77,9 +77,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Conecte até %d dispositivo ao mesmo tempo</string>
+			<string>Conecte até %d dispositivo em simultâneo.</string>
 			<key>other</key>
-			<string>Conecte até %d dispositivos ao mesmo tempo</string>
+			<string>Conecte até %d dispositivos em simultâneo.</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>

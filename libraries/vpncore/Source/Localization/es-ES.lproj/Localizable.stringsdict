@@ -12,14 +12,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d краіны</string>
-			<key>many</key>
-			<string>%d краін</string>
 			<key>one</key>
-			<string>%d краіна</string>
+			<string>%d país</string>
 			<key>other</key>
-			<string>%d краіны</string>
+			<string>%d países</string>
 		</dict>
 	</dict>
 	<key>_countries_count_plus</key>
@@ -32,14 +28,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>Больш за %d краіны</string>
-			<key>many</key>
-			<string>Больш за %d краін</string>
 			<key>one</key>
-			<string>Больш за %d краіну</string>
+			<string>%d+ país</string>
 			<key>other</key>
-			<string>Больш за %d краіны</string>
+			<string>%d+ países</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>
@@ -52,14 +44,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d злучэнні</string>
-			<key>many</key>
-			<string>%d злучэнняў</string>
 			<key>one</key>
-			<string>%d злучэнне</string>
+			<string>%d conexión</string>
 			<key>other</key>
-			<string>%d злучэнні</string>
+			<string>%d conexiones</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option1</key>
@@ -72,14 +60,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>Сотні сервераў у %d краінах</string>
-			<key>many</key>
-			<string>Сотні сервераў у %d краінах</string>
 			<key>one</key>
-			<string>Сотні сервераў у %d краіне</string>
+			<string>Cientos de servidores en %d país</string>
 			<key>other</key>
-			<string>Сотні сервераў у %d краінах</string>
+			<string>Cientos de servidores en %d países</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option2</key>
@@ -92,14 +76,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>Падлучайце да %d прылад адначасова</string>
-			<key>many</key>
-			<string>Падлучайце да %d прылад адначасова</string>
 			<key>one</key>
-			<string>Падлучайце да %d прылады адначасова</string>
+			<string>Conecta hasta %d dispositivo al mismo tiempo</string>
 			<key>other</key>
-			<string>Падлучайце да %d прылад адначасова</string>
+			<string>Conecta hasta %d dispositivos al mismo tiempo</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -112,34 +92,26 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліны.</string>
-			<key>many</key>
-			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвілін.</string>
 			<key>one</key>
-			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліну.</string>
+			<string>Has alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
 			<key>other</key>
-			<string>Вы змяняеце налады занадта часта. Паспрабуйце яшчэ раз праз %d хвіліны.</string>
+			<string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
 		</dict>
 	</dict>
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> для адначасовага падлучэння да %#@num_devices@.</string>
+		<string> para tener hasta %#@num_devices@ conectados al mismo tiempo.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d прылады</string>
-			<key>many</key>
-			<string>%d прылад</string>
 			<key>one</key>
-			<string>%d прылада</string>
+			<string>%d dispositivo</string>
 			<key>other</key>
-			<string>%d прылады</string>
+			<string>%d dispositivos</string>
 		</dict>
 	</dict>
 </dict>

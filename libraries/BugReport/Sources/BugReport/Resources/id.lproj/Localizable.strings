@@ -47,7 +47,7 @@
 "_br_failure_title" = "Laporan Anda tidak terkirim";
 
 /* ReportBug success window: button */
-"_br_success_button" = "Mengerti";
+"_br_success_button" = "Dimengerti";
 
 /* ReportBug success window: subtitle text */
 "_br_success_subtitle" = "Kami akan menghubungi Anda kembali sesegera mungkin.";

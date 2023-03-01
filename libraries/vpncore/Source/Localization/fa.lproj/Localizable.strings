@@ -53,7 +53,7 @@
 "_advanced_features" = "+ امکانات پیشرفته";
 
 /* API error */
-"_ae_vpn_info_not_received" = "امکان دریافت اطلاعات VPN وجود ندارد";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* API error */
 "_ae_wrong_login_credentials" = "نام کاربری یا رمزعبور اشتباه است";
@@ -458,7 +458,7 @@
 "_error_unknown_title" = "خطای ناشناخته";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "عملیات لغو شد";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "ساخت حساب کاربری ناموفق بود";
@@ -649,9 +649,6 @@
 /* Button in Kill switch error alert */
 "_ignore" = "نادیده انگاری";
 
-/* iOS Settings -> Protocol: IKEv2 option */
-"_ikev2" = "IKEv2";
-
 /* Streaming & Features */
 "_information_title" = "اطلاعات";
 
@@ -682,12 +679,6 @@
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "امنیت شما، اولویت ماست";
 
-/* iOS: Status view */
-"_ip" = "IP";
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
-"_ip_value" = "IP: %@";
-
 /* (No Comment) */
 "_ip_will_not_be_exposed" = "IP شما آشکار نخواهد شد.";
 
@@ -699,9 +690,6 @@
 
 /* Disconnect notification */
 "_kill_switch_blocking_connection" = "Kill Switch همه ارتباطات را مسدود کرده است";
-
-/* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "غیرفعال کردن Kill Switch";
@@ -914,7 +902,7 @@
 "_moderate_nat_title" = "تنظیم NAT متوسط";
 
 /* Display more information */
-"_more_info" = "اطلاعات بیشتر";
+"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "محبوب‌ترین‌";
@@ -959,9 +947,6 @@
 "_neagent_description" = "ممکن است از شما در مورد %@تان برای اتصال به سرویس Proton VPN پرسیده شود. اگر این درخواست ظاهر شد، %@ %@ خود را وارد کرده و سپس '%@' %@ را انتخاب کنید.";
 
 /* Mac: neagent help screen */
-"_neagent_first_step" = "(1)";
-
-/* Mac: neagent help screen */
 "_neagent_password" = "رمزعبور کامپیوتر";
 
 /* Mac: neagent help screen */
@@ -1002,9 +987,6 @@
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "مسدود کننده بدافزار & تبلیغات";
-
-/* Settings -> Netshield: name of field. */
-"_netshield_title" = "NetShield";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "مسدود کردن آگهی‌ها، ردیاب‌ها و بدافزارها";
@@ -1063,14 +1045,8 @@
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "لاگ‌های OpenVPN";
 
-/* (No Comment) */
-"_openvpn" = "OpenVPN";
-
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "نمای کلی";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_p2p" = "P2P";
 
 /* Description shown together with server info icon */
 "_p2p_description" = "پشتیبانی از ترافیک P2P";
@@ -1098,9 +1074,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "سرورهای P2P";
-
-/* (No Comment) */
-"_p2p_title" = "P2P/BitTorrent";
 
 /* Plan upgrade required alert */
 "_paid_required" = "نیاز به حساب Proton VPN غیررایگان";
@@ -1222,12 +1195,6 @@
 /* (No Comment) */
 "_protocol" = "پروتکل";
 
-/* (No Comment) */
-"_protonvpn_macos" = "Proton VPN macOS";
-
-/* (No Comment) */
-"_protonvpn_plus" = "Proton VPN Plus";
-
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP عمومی: %@";
 
@@ -1346,7 +1313,7 @@
 "_report_bug" = "گزارش اشکال";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "با ارائه اطلاعات زیر، تیم ما قادر به شناسایی مشکل شما و راه حلی احتمالی بهتر در زمانی کوتاهتر خواهد بود.:\n• ثبت وقایع برنامه Proton VPN\n• ثبت وقایع OpenVPN\n• ثبت وقایع WireGuard";
+"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "ایمیل:";
@@ -1414,9 +1381,6 @@
 /* Used in many places in MacOS app */
 "_secure_core" = "Secure core";
 
-/* %@ is a country e.g. Secure Core Switzerland */
-"_secure_core_country" = "Secure Core %@";
-
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "سرورهای فوق العاده ایمن که توسط ما میزبانی شده اند";
 
@@ -1464,6 +1428,9 @@
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "بار سرور:";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "بار ترافیکی %@%%";
 
 /* (No Comment) */
 "_server_load_title" = "بار ترافیکی سرور";
@@ -1586,12 +1553,6 @@
 "_subscription_will_renew" = "طرح فعلی بطور خودکار در %@ تمدید خواهد شد.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "اختصاص اتصالات VPN";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "برای آغاز سفر خود در Proton VPN لطفاً اتصال‌های VPN خود را به حساب کاربری خود یا هر حساب فرعی دیگری اختصاص دهید.";
-
-/* (No Comment) */
 "_subuser_alert_description2" = "این کار چند دقیقه طول می‌کشد. پس از آن شما قادر خواهید بود تا وارد شوید و از همهٔ دستگاه‌های خود حفاظت کنید.";
 
 /* (No Comment) */
@@ -1689,9 +1650,6 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "نمایش آموزش";
 
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
-"_tcp" = "TCP";
-
 /* iOS status view */
 "_technical_details" = "جزئیات فنی";
 
@@ -1722,67 +1680,14 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "به OpenVPN تغییر دهید و دوباره امتحان کنید";
 
-/* iOS Settings -> Protocol -> WireGuard: TLS option */
-"_tls" = "TLS";
-
 /* (No Comment) */
 "_to_server_title" = "به سرور:";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "سرور Tor";
-
-/* (No Comment) */
-"_tor_title" = "Tor";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "طرح ۷ روزه ProtonVPN آزمایشی شما منقضی شده است. شما می‌توانید همچنان از نسخه رایگان در ProtonVPN استفاده کنید، اما در صورتی که به حمایت از این پروژه و دسترسی به کشورها و امکانات بیشتر علاقه‌مند هستید، لطفا حساب خود را به یک طرح ویژه ارتقا دهید.";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "دوره آزمایشی Proton VPN Plus پایان یافت";
-
-/* (No Comment) */
-"_trial_popup_call_to_upgrade" = "برای دسترسی دایمی به طرح Plus در Proton VPN، می‌توانید حساب خود را ارتقا دهید.";
-
-/* (No Comment) */
-"_trial_popup_enjoy" = "با Proton VPN از همه مزایای اینترنت امن در همه جا بهره‌مند شوید";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "به عنوان هدیه، شما به یک دوره %@، که برای چند روز امکانات پیشرفته را در اختیار شما قرار می‌دهد دسترسی دارید! این دوره آزمایشی هدیه به پایان می‌رسد در";
-
-/* (No Comment) */
-"_trial_popup_free_upgrade" = "ارتقای رایگان به طرح Proton VPN پلاس";
-
-/* (No Comment) */
-"_trial_popup_full_subscription" = "اشتراک کامل Proton VPN";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "ما به شما یک %@ داده‌ایم که سرورها و امکانات بیشتر را شامل می‌شود. دوره آزمایشی Proton VPN پلاس ظرف ۷ روز به پایان می‌رسد.";
-
-/* (No Comment) */
-"_trial_popup_thanks" = "از شما به‌خاطر استفاده از Proton VPN سپاسگزاریم!";
-
-/* (No Comment) */
-"_trial_popup_title" = "طرح Proton VPN آزمایشی";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "یک هدیه خوش‌آمدگویی در اختیار شما گذاشته شده که اشتراک کامل Proton VPN با امکانات پیشرفته را برای چند روز شامل می‌شود!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "دوره آزمایشی شما به پایان می‌رسد در";
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "خوش آمدید";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "در حالتیکه سایتهای Proton مسدود هستند، این گزینه به برنامه امکان می‌دهد که مسیریابی جایگزین شبکه را به منظور دسترسی به Proton امتحان کند، که میتواند برای دور زدن دیوار آتشین یا اشکالات شبکه مفید باشد. ما پیشنهاد می‌کنیم که این دکمه را جهت قابلیت اطمینان بالاتر روشن نگه دارید. \nبیشتر بدانید";
@@ -1803,16 +1708,10 @@
 "_troubleshoot_item_gov_description" = "کشور شما ممکن است دسترسی به Proton را مسدود کرده باشد. سعی کنید برای دسترسی به Proton از Tor استفاده کنید.";
 
 /* (No Comment) */
-"_troubleshoot_item_gov_link1" = "Tor";
-
-/* (No Comment) */
 "_troubleshoot_item_gov_title" = "محدودیت حکومتی";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_description" = "سعی کنید از یک شبکه دیگر (یا Tor) به Proton متصل شوید.";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_title" = "مشکل ارائه‌دهندهً خدمات اینترنتی (ISP)";
@@ -1842,9 +1741,6 @@
 "_troubleshoot_item_proton_description" = "برای وضعیت سیستم ما  Proton Status را چک کنید.";
 
 /* (No Comment) */
-"_troubleshoot_item_proton_link1" = "Proton Status";
-
-/* (No Comment) */
 "_troubleshoot_item_proton_title" = "برنامه Proton کار نمی‌کند";
 
 /* (No Comment) */
@@ -1870,9 +1766,6 @@
 
 /* (No Comment) */
 "_turn_on" = "روشن";
-
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
-"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "غیرقابل دسترس";
@@ -2006,6 +1899,12 @@
 /* iOS Settings -> Protocol: screen title */
 "_vpn_protocol" = "پروتکل VPN";
 
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "پروتکل VPN برای اتصالی که شما انتخاب کردید در دسترس نیست. برای اتصال، سرور یا پروتکل دیگری را امتحان کنید.";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "VPN protocol not supported";
+
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "دستگاه شما نتوانست نشست VPN قبلی را خاتمه دهد. پیش از اینکه بتوانید یک اتصال VPN جدید برقرار کنید، باید دستگاه خود را ریست کنید.";
 
@@ -2062,9 +1961,6 @@
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "ویجت iOS";
-
-/* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard";
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "گزارش‌های WireGuard";

@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Pokročilé funkce";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Nelze získat informace o VPN";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Špatné uživatelské jméno nebo heslo";
@@ -343,9 +343,6 @@
 /* Profile create/change form */
 "_enter_profile_name" = "Zadejte název profilu";
 
-/* iOS: placeholder for code in human verification code form */
-"_enter_verification_code" = "123 456";
-
 /* API error */
 "_error_api_offline" = "Proton VPN API je nyní nedostupné";
 
@@ -458,7 +455,7 @@
 "_error_unknown_title" = "Neznámá chyba";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operace byla zrušena";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Vytvoření účtu selhalo";
@@ -554,9 +551,6 @@
 "_feature_p2p_description" = "Tyto servery poskytují nejvyšší výkony pro BitTorrent a sdílení souborů.";
 
 /* iOS plan feature */
-"_feature_secure_core" = "Secure Core";
-
-/* iOS plan feature */
 "_feature_secure_streaming" = "Bezpečné streamování";
 
 /* iOS plan feature */
@@ -649,9 +643,6 @@
 /* Button in Kill switch error alert */
 "_ignore" = "Ignorovat";
 
-/* iOS Settings -> Protocol: IKEv2 option */
-"_ikev2" = "IKEv2";
-
 /* Streaming & Features */
 "_information_title" = "Informace";
 
@@ -681,9 +672,6 @@
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "Vaše bezpečnost je naší prioritou";
-
-/* iOS: Status view */
-"_ip" = "IP";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -914,7 +902,7 @@
 "_moderate_nat_title" = "Moderate NAT";
 
 /* Display more information */
-"_more_info" = "Další informace";
+"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "Nejoblíbenější";
@@ -959,13 +947,7 @@
 "_neagent_description" = "Můžete být požádáni, abyste uvedli své %@\npro připojení ke službě Proton VPN. Pokud se tento požadavek objeví,\nzadejte své %@ %@ a klikněte na \"%@\" %@.";
 
 /* Mac: neagent help screen */
-"_neagent_first_step" = "(1)";
-
-/* Mac: neagent help screen */
 "_neagent_password" = "heslo účtu počítače";
-
-/* Mac: neagent help screen */
-"_neagent_second_step" = "(2)";
 
 /* MacOS: button in login screen */
 "_need_help" = "Potřebujete pomoc?";
@@ -1003,11 +985,14 @@
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Blokování malware & reklam";
 
-/* Settings -> Netshield: name of field. */
-"_netshield_title" = "NetShield";
-
 /* (No Comment) */
 "_netshield_title_tooltip" = "Blokovat reklamy, sledovací prvky a malware";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Blokujte reklamy, trackery a malware na webových stránkách a v aplikacích";
+
+/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Prohlížejte bez reklam s NetShield";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Síť je nedostupná";
@@ -1057,20 +1042,20 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Under maintenance";
 
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Sdílejte anonymní hlášení o pádech. To nám pomáhá opravovat chyby, detekovat firewally a vyhnout se blokování VPN.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Sdílejte anonymní statistiky o používání. To nám pomáhá obejít blokování VPN a vylepšit výkon aplikace.";
+
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Zobrazit Proton VPN pro přihlášení...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN logy";
 
-/* (No Comment) */
-"_openvpn" = "OpenVPN";
-
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Přehled";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_p2p" = "P2P";
 
 /* Description shown together with server info icon */
 "_p2p_description" = "Podporuje provoz P2P";
@@ -1098,9 +1083,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P servery";
-
-/* (No Comment) */
-"_p2p_title" = "P2P/BitTorrent";
 
 /* Plan upgrade required alert */
 "_paid_required" = "Je vyžadováno předplatné Proton VPN";
@@ -1149,9 +1131,6 @@
 
 /* Text description in plan selection screen */
 "_plans_footer" = "Po potvrzení nákupu placeného tarifu bude z vašeho účtu iTunes stržena zobrazená částka, která zahrnuje daně a další poplatky platformy (které nejsou účtovány přímo společností Proton). Po provedení nákupu budete automaticky převedeni na vybraný plán na dobu 1 roku, po jejímž uplynutí můžete prodloužit nebo zrušit jeho platnost, a to buď online, nebo prostřednictvím naší aplikace pro iOS.";
-
-/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
 
 /* Features of account plan */
 "_plus_plan_features" = "Servery Plus\nSecure Core\nServery Tor";
@@ -1221,12 +1200,6 @@
 
 /* (No Comment) */
 "_protocol" = "Protokol";
-
-/* (No Comment) */
-"_protonvpn_macos" = "Proton VPN macOS";
-
-/* (No Comment) */
-"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Veřejná IP: %@";
@@ -1346,7 +1319,7 @@
 "_report_bug" = "Nahlásit problém";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Pokud nám poskytnete následující údaje, náš tým dokáže identifikovat váš problém a najít možné řešení s vyšší pravděpodobností a v kratším čase:\n• logy Proton VPN\n• logy OpenVPN\n• logy WireGuard";
+"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1411,12 +1384,6 @@
 /* iOS: placeholder in phone country code selection screen */
 "_search_phone_country_code_placeholder" = "Vyhledat zemi";
 
-/* Used in many places in MacOS app */
-"_secure_core" = "Secure Core";
-
-/* %@ is a country e.g. Secure Core Switzerland */
-"_secure_core_country" = "Secure Core %@";
-
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "Ultra bezpečné servery\nhostované námi";
 
@@ -1465,6 +1432,9 @@
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Vytížení serveru:";
 
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% vytížení";
+
 /* (No Comment) */
 "_server_load_title" = "Vytížení serveru";
 
@@ -1479,6 +1449,21 @@
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "Nastavení";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Sdílet anonymní hlášení o pádech";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Hlášení o pádech nám pomáhají opravovat chyby, detekovat firewally a vyhýbat se blokování VPN.";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Více informací";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Sdílejte anonymní statistiky o používání";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Údaje o používání nám pomáhají obcházet blokování VPN a vylepšovat výkon aplikace.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Nastavení Dokončeno";
@@ -1512,15 +1497,6 @@
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Je nutné opětovné připojení";
-
-/* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Smart Protocol";
-
-/* (No Comment) */
-"_smart_routing_title" = "Smart Routing";
-
-/* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ rychlost";
@@ -1586,16 +1562,22 @@
 "_subscription_will_renew" = "Stávající tarif se automaticky obnoví %@.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "Přiřaďte VPN připojení";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Pro použití Proton VPN prosím přiřaďte VPN připojení k vašemu účtu nebo k podřízenému účtu.";
+"_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
 "_subuser_alert_description2" = "Tento krok zabere jen několik minut. Poté se budete moci přihlásit a chránit všechna svá zařízení.";
 
 /* (No Comment) */
+"_subuser_alert_description3" = "V současné době není pro tento účet povoleno žádné připojení VPN. Chcete-li začít používat Proton VPN, kontaktujte prosím svého správce.";
+
+/* (No Comment) */
+"_subuser_alert_enable_connections_button" = "Povolit VPN připojení";
+
+/* (No Comment) */
 "_subuser_alert_login_button" = "Přihlásit se znovu";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Děkujeme, že jste přešli na tarif Business/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Úspěšně připojeno";
@@ -1689,9 +1671,6 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Absolvujte prohlídku";
 
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
-"_tcp" = "TCP";
-
 /* iOS status view */
 "_technical_details" = "Technické detaily";
 
@@ -1707,12 +1686,6 @@
 /* (No Comment) */
 "_tier_free" = "Bezplatný";
 
-/* (No Comment) */
-"_tier_plus" = "Plus";
-
-/* (No Comment) */
-"_tier_visionary" = "Visionary";
-
 /* MacOS: connecting overlay */
 "_timed_out" = "časový limit vypršel";
 
@@ -1722,67 +1695,14 @@
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Přepnout na OpenVPN a opakovat";
 
-/* iOS Settings -> Protocol -> WireGuard: TLS option */
-"_tls" = "TLS";
-
 /* (No Comment) */
 "_to_server_title" = "K serveru:";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Server Tor";
-
-/* (No Comment) */
-"_tor_title" = "Tor";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Vaše 7denní bezplatná zkušební verze Proton VPN Plus vypršela. Můžete nadále používat bezplatnou Proton VPN, ale pokud chcete projekt podpořit a mít přístup k více zemím a funkcím, přejděte na placený tarif.";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Zkušební doba Proton VPN Plus vypršela";
-
-/* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Pro trvalý přístup k funkcím Proton VPN Plus navyšte prosím své předplatné.";
-
-/* (No Comment) */
-"_trial_popup_enjoy" = "Užívejte si všech výhod bezpečného internetu kdekoli s Proton VPN";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "Jako dárek na uvítanou máte v prvních dnech přístup k %@ včetně pokročilých funkcí! Vaše zkušební verze končí za";
-
-/* (No Comment) */
-"_trial_popup_free_upgrade" = "bezplatné navýšení na Proton VPN Plus";
-
-/* (No Comment) */
-"_trial_popup_full_subscription" = "úplné předplatné Proton VPN";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "Poskytli jsme vám %@, zahrnuje více serverů a dodatečné funkce. Zkušební verze Proton VPN Plus končí za 7 dní.";
-
-/* (No Comment) */
-"_trial_popup_thanks" = "Děkujeme, že používáte Proton VPN!";
-
-/* (No Comment) */
-"_trial_popup_title" = "Zkušební verze Proton VPN";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Jako dárek na uvítanou máte v prvních dnech přístup k plnému předplatnému Proton VPN včetně pokročilých funkcí!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Vaše zkušební období končí za";
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Vítejte na palubě";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "V případě, že jsou stránky Proton blokovány, toto nastavení umožňuje aplikaci vyzkoušet alternativní směrování sítě k dosažení Protonu, což může být užitečné pro obejití firewallů nebo problémů se sítí. Doporučujeme ponechat toto nastavení zapnuté pro větší spolehlivost. \nVíce informací";
@@ -1803,16 +1723,10 @@
 "_troubleshoot_item_gov_description" = "Vaše země možná blokuje přístup ke službě Proton. Zkuste pro přístup k Protonu použít Tor.";
 
 /* (No Comment) */
-"_troubleshoot_item_gov_link1" = "Tor";
-
-/* (No Comment) */
 "_troubleshoot_item_gov_title" = "Vládní blokování";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_description" = "Zkuste se připojit k Protonu z jiné sítě (nebo použijte Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_title" = "Problém s poskytovatelem internetových služeb (ISP)";
@@ -1870,9 +1784,6 @@
 
 /* (No Comment) */
 "_turn_on" = "Zapnout";
-
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
-"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Není k dispozici";
@@ -1952,14 +1863,14 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Navýšení není k dispozici v aplikaci";
 
+/* Menu point in settings screen */
+"_usage_statistics" = "Statistiky o používání";
+
 /* iOS: human verification option select button */
 "_use_captcha_verification" = "Ověřit pomocí CAPTCHA";
 
 /* iOS: human verification option select button */
 "_use_other_email_address" = "Ověřit přes e-mail";
-
-/* Profile create/change form */
-"_use_secure_core" = "Secure Core";
 
 /* (No Comment) */
 "_use_sms_verification" = "Ověřit pomocí SMS";
@@ -1996,9 +1907,6 @@
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Více informací";
-
-/* (No Comment) */
-"_vpn_accelerator_title" = "VPN Accelerator";
 
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN připojení je aktivní";
@@ -2067,10 +1975,7 @@
 "_wgks_title" = "Přepínač Kill Switch brání připojení VPN k internetu";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS Widget";
-
-/* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard";
+"_widget" = "iOS widget";
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard logy";

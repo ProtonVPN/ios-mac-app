@@ -1,83 +1,69 @@
-
-// Step 1
-
-/* ReportBugwindow title */
-"_br_window_title" = "Report an issue";
-
 /* ReportBug 1st step title */
-"_br_1_title" = "What's the issue?";
-
-
-// Step 2
-
-/* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Quick fixes";
-
-/* ReportBug 2nd step (Quick fixes) subtitle */
-"_br_2_subtitle" = "These tips could help to solve your issue faster.";
-
-/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
-"_br_2_footer" = "Didn't work?";
-
-/* ReportBug 2nd step (Quick fixes) button to go to the next step */
-"_br_2_button_next" = "Contact us";
+"_br_1_title" = "У чым ваша праблема?";
 
 /* ReportBug 2nd step (Quick fixes) cancel button */
-"_br_2_button_cancel" = "Cancel";
+"_br_2_button_cancel" = "Скасаваць";
 
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Звязацца з намі";
 
-// Step 3
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Не працуе?";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Гэтыя парады дапамогуць хутчэй вырашыць вашу праблему.";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Хуткія выпраўленні";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_send" = "Send report";
+"_br_3_button_send" = "Адправіць справаздачу";
 
 /* ReportBug 3rd step (form) send button */
-"_br_3_button_sending" = "Sending";
+"_br_3_button_sending" = "Адпраўка";
 
 /* ReportBug 3rd step (form) email field name */
-"_br_3_email" = "Email";
-
-/* ReportBug 3rd step (form) username field name */
-"_br_3_username" = "Username";
-
-/* ReportBug 3rd step (form) field to ask for includeing logs */
-"_br_3_logs_field" = "Send error logs";
+"_br_3_email" = "Электронная пошта";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "A log is a type of file that shows us the actions you took that led to an error. We’ll only ever use them to help our engineers fix bugs.";
+"_br_3_logs_description" = "Журнал - гэта тып файла, які паказвае нам дзеянні, якія былі зроблены вамі і прывялі да памылкі. Мы заўсёды выкарыстоўваем яго толькі для таго, каб дапамагчы нашым інжынерам выправіць памылкі.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully.";
+"_br_3_logs_disabled" = "Журнал з памылкамі дазваляе нам зразумець самую сутнасць вашай праблемы. Калі вы не ўключыце яго, то ў нас не будзе магчымасці даследаваць праблему цалкам.";
 
-// Success window
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Адправіць журнал з памылкай";
 
-/* ReportBug success window: title text */
-"_br_success_title" = "Thanks for your feedback";
-
-/* ReportBug success window: subtitle text */
-"_br_success_subtitle" = "We’ll get back to you as soon as we can.";
-
-/* ReportBug success window: button */
-"_br_success_button" = "Got it";
-
-// Failure window
-
-/* ReportBug success window: title text */
-"_br_failure_title" = "Your report wasn’t sent";
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Імя карыстальніка";
 
 /* ReportBug success window: retry button */
-"_br_failure_button_retry" = "Try again";
+"_br_failure_button_retry" = "Паспрабаваць яшчэ раз";
 
 /* ReportBug success window: troubleshoot button */
-"_br_failure_button_troubleshoot" = "Troubleshoot";
+"_br_failure_button_troubleshoot" = "Выпраўленне непаладак";
 
-// Update view
+/* ReportBug success window: title text */
+"_br_failure_title" = "Ваша справаздача не адпраўлена";
 
-/* Title of the view nudging users to update before filling Bug Report */
-"_update_view_title" = "Update Proton VPN";
+/* ReportBug success window: button */
+"_br_success_button" = "Зразумела";
 
-/* Description text of the view nudging users to update before filling Bug Report */
-"_update_view_description" = "You’re more likely to have issues on older versions of Proton VPN.";
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Мы звяжамся з вамі ў самы бліжэйшы час.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Дзякуй за ваш водгук";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Паведаміць пра праблему";
 
 /* Action button of the view nudging users to update before filling Bug Report */
-"_update_view_button" = "Update";
+"_update_view_button" = "Абнавіць";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Хутчэй за ўсё ў вас з'явяцца праблемы са старымі версіямі Proton VPN.";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Абнавіць Proton VPN";
+

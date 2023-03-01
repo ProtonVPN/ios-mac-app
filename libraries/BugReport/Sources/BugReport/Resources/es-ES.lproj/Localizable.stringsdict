@@ -12,8 +12,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
+			<key>one</key>
+			<string>Paso %d</string>
 			<key>other</key>
-			<string>Langkah %d</string>
+			<string>Paso %d</string>
 		</dict>
 		<key>STEPS</key>
 		<dict>
@@ -21,8 +23,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
+			<key>one</key>
+			<string>de %d</string>
 			<key>other</key>
-			<string>dari %d</string>
+			<string>de %d</string>
 		</dict>
 	</dict>
 </dict>

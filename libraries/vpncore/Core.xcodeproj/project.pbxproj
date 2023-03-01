@@ -860,6 +860,12 @@
 		C3A69F222942702400BA8314 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = Localization/cs.lproj/Intents.strings; sourceTree = "<group>"; };
 		C3A69F232942702400BA8314 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = Localization/cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C3A69F242942702400BA8314 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = cs; path = cs.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		C3C70DDB29AF6DEB00ADF9A9 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = Localization/be.lproj/Intents.strings; sourceTree = "<group>"; };
+		C3C70DDC29AF6DEB00ADF9A9 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = Localization/be.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C3C70DDD29AF6DEB00ADF9A9 /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = be; path = be.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		C3D66A5D29AF6DEE001C8CB0 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "Localization/es-ES.lproj/Intents.strings"; sourceTree = "<group>"; };
+		C3D66A5E29AF6DEE001C8CB0 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "Localization/es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C3D66A5F29AF6DEE001C8CB0 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-ES"; path = "es-ES.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoHHostsParsingTests.swift; sourceTree = "<group>"; };
 		CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLArray+Extension.swift"; sourceTree = "<group>"; };
 		D274E05ECAA25CC9D061FC43 /* PropertiesManager+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PropertiesManager+Log.swift"; sourceTree = "<group>"; };
@@ -2465,6 +2471,8 @@
 				ro,
 				cs,
 				"be-BY",
+				be,
+				"es-ES",
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			packageReferences = (
@@ -3487,6 +3495,8 @@
 				C30E4D2C2942700400971A2D /* ro */,
 				C3A69F242942702400BA8314 /* cs */,
 				E564CD5029A90B3C009DDD1C /* be-BY */,
+				C3C70DDD29AF6DEB00ADF9A9 /* be */,
+				C3D66A5F29AF6DEE001C8CB0 /* es-ES */,
 			);
 			name = Localizable.stringsdict;
 			path = Localization;
@@ -3518,6 +3528,8 @@
 				E534EA492806B67000BCC9F6 /* es-419 */,
 				C30E4D2A2942700400971A2D /* ro */,
 				C3A69F222942702400BA8314 /* cs */,
+				C3C70DDB29AF6DEB00ADF9A9 /* be */,
+				C3D66A5D29AF6DEE001C8CB0 /* es-ES */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
@@ -3567,6 +3579,8 @@
 				C30E4D2B2942700400971A2D /* ro */,
 				C3A69F232942702400BA8314 /* cs */,
 				E564CD4929A8FAF9009DDD1C /* be-BY */,
+				C3C70DDC29AF6DEB00ADF9A9 /* be */,
+				C3D66A5E29AF6DEE001C8CB0 /* es-ES */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

@@ -44,7 +44,7 @@
 "_activate_widget_step_3" = "Voeg de Proton VPN-widget toe aan de lijst met actieve widgets.";
 
 /* Plan information */
-"_adblocker_netshield_feature" = "Adblocker (NetShield)";
+"_adblocker_netshield_feature" = "Advertentieblokkering (NetShield)";
 
 /* Section title in Settings */
 "_advanced" = "Geavanceerd";
@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Geavanceerde mogelijkheden";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Niet in staat om VPN-informatie op te halen";
+"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Verkeerde gebruikersnaam of wachtwoord";
@@ -343,9 +343,6 @@
 /* Profile create/change form */
 "_enter_profile_name" = "Vul Profielnaam in";
 
-/* iOS: placeholder for code in human verification code form */
-"_enter_verification_code" = "123 456";
-
 /* API error */
 "_error_api_offline" = "De Proton VPN-API is momenteel offline";
 
@@ -458,7 +455,7 @@
 "_error_unknown_title" = "Onbekende fout";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Actie geannuleerd";
+"_error_user_cancelled" = "Operation canceled";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Account aanmaken is mislukt";
@@ -554,9 +551,6 @@
 "_feature_p2p_description" = "Deze servers geven de beste prestaties voor BitTorrent en het delen van bestanden.";
 
 /* iOS plan feature */
-"_feature_secure_core" = "Secure Core";
-
-/* iOS plan feature */
 "_feature_secure_streaming" = "Veilige Mediastreaming";
 
 /* iOS plan feature */
@@ -649,9 +643,6 @@
 /* Button in Kill switch error alert */
 "_ignore" = "Negeren";
 
-/* iOS Settings -> Protocol: IKEv2 option */
-"_ikev2" = "IKEv2";
-
 /* Streaming & Features */
 "_information_title" = "Informatie";
 
@@ -681,9 +672,6 @@
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "Uw veiligheid is onze prioriteit";
-
-/* iOS: Status view */
-"_ip" = "IP";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -754,9 +742,6 @@
 /* (No Comment) */
 "_ks_requires_swift5_popup_msg2" = "Proton VPN kon de %@ niet detecteren. Om de IP-beveiliging in te schakelen, installeer eerst de software.";
 
-/* (No Comment) */
-"_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
-
 /* MacOS: link in login screen */
 "_learn_more" = "Meer informatie";
 
@@ -818,7 +803,7 @@
 "_login" = "Log in";
 
 /* iOS logs screen title */
-"_logs" = "Logs";
+"_logs" = "Logboeken";
 
 /* Mac: neagent help screen */
 "_mac_password" = "Mac wachtwoord";
@@ -914,7 +899,7 @@
 "_moderate_nat_title" = "Gemiddelde NAT";
 
 /* Display more information */
-"_more_info" = "Meer informatie";
+"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "Meest populair";
@@ -959,13 +944,7 @@
 "_neagent_description" = "Er kan gevraagd worden naar uw %@\nom te verbinden met de Proton VPN-service. Als dit verzoekt verschijnt,\nvoer uw %@ %@ in en klik op '%@' %@.";
 
 /* Mac: neagent help screen */
-"_neagent_first_step" = "(1)";
-
-/* Mac: neagent help screen */
 "_neagent_password" = "wachtwoord van computeraccount";
-
-/* Mac: neagent help screen */
-"_neagent_second_step" = "(2)";
 
 /* MacOS: button in login screen */
 "_need_help" = "Hulp nodig?";
@@ -1002,9 +981,6 @@
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Malware & Adblocker";
-
-/* Settings -> Netshield: name of field. */
-"_netshield_title" = "NetShield";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "Blokkeer advertenties, trackers en malware";
@@ -1057,20 +1033,20 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Under maintenance";
 
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Anonieme crashrapporten delen. Dit helpt ons programmafouten op te lossen, firewalls te detecteren en VPN-blokkeringen te vermijden.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Anonieme gebruiksstatistieken delen. Dit helpt ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
+
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Toon Proton VPN om in te loggen...";
 
 /* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN Logs";
-
-/* (No Comment) */
-"_openvpn" = "OpenVPN";
+"_open_vpn_logs" = "OpenVPN logboeken";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Overzicht";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_p2p" = "P2P";
 
 /* Description shown together with server info icon */
 "_p2p_description" = "Ondersteunt P2P verkeer";
@@ -1098,9 +1074,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P-server";
-
-/* (No Comment) */
-"_p2p_title" = "P2P/BitTorrent";
 
 /* Plan upgrade required alert */
 "_paid_required" = "Betaald Proton VPN-abonnement vereist";
@@ -1150,17 +1123,14 @@
 /* Text description in plan selection screen */
 "_plans_footer" = "Bij de bevestiging van uw aankoop van een betaald abonnement wordt het getoonde bedrag, inclusief belastingen en extra platformkosten (die niet rechtstreeks door Proton in rekening worden gebracht), in rekening gebracht op uw iTunes account. Na de aankoop wordt u automatisch geüpgraded naar het geselecteerde abonnement voor een periode van 1 jaar, waarna u kunt verlengen of annuleren, online of via onze iOS app.";
 
-/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "Plus";
-
 /* Features of account plan */
-"_plus_plan_features" = "Plus Servers\nSecure Core\nTor Servers";
+"_plus_plan_features" = "Plus servers\nSecure Core\nTor servers";
 
 /* Plan upgrade required alert */
 "_plus_required" = "Plus of Visionary abonnement vereist";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "Plus Servers";
+"_plus_servers" = "Plus servers";
 
 /* MacOS: Settings screen title */
 "_preferences" = "Voorkeuren";
@@ -1221,12 +1191,6 @@
 
 /* (No Comment) */
 "_protocol" = "Protocol";
-
-/* (No Comment) */
-"_protonvpn_macos" = "Proton VPN macOS";
-
-/* (No Comment) */
-"_protonvpn_plus" = "Proton VPN Plus";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Openbaar IP: %@";
@@ -1346,7 +1310,7 @@
 "_report_bug" = "Een probleem melden";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Door de volgende details te verstrekken, kan ons team uw probleem identificeren en een mogelijke oplossing met hogere kansen en kortere tijd vinden:\n• Proton VPN app logs\n• OpenVPN logboeken\n• WireGuard logboeken";
+"_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mailadres:";
@@ -1361,7 +1325,7 @@
 "_report_field_steps" = "Wat zijn de exacte stappen die u hebt uitgevoerd?";
 
 /* iOS bug report: header before logs description */
-"_report_logs" = "VPN logs";
+"_report_logs" = "VPN-logboeken";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Deze optie inschakelen zorgt ervoor dat de VPN logs van uw client toegevoegd worden aan dit rapport";
@@ -1411,12 +1375,6 @@
 /* iOS: placeholder in phone country code selection screen */
 "_search_phone_country_code_placeholder" = "Zoek land";
 
-/* Used in many places in MacOS app */
-"_secure_core" = "Secure Core";
-
-/* %@ is a country e.g. Secure Core Switzerland */
-"_secure_core_country" = "Secure Core %@";
-
 /* MacOS: \Trial about to expire\ screen */
 "_secure_core_description" = "Ultra beveiligde servers\nbeheerd door ons";
 
@@ -1465,6 +1423,9 @@
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Serverbelasting:";
 
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% Belasting";
+
 /* (No Comment) */
 "_server_load_title" = "Serverbelasting";
 
@@ -1479,6 +1440,21 @@
 
 /* iOS: Settings screen title and tab title */
 "_settings" = "Instellingen";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Anonieme crashrapporten delen";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Crashrapporten helpen ons om programmafouten op te lossen, firewalls te detecteren en VPN-blokkeringen te vermijden.";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "Meer informatie";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Anonieme gebruiksstatistieken delen";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "Gebruiksgegevens helpen ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete" = "Installatie voltooid";
@@ -1513,14 +1489,8 @@
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Opnieuw verbinden vereist";
 
-/* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Smart Protocol";
-
 /* (No Comment) */
 "_smart_routing_title" = "Slimme routering";
-
-/* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ snelheid";
@@ -1586,16 +1556,16 @@
 "_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "VPN-verbindingen toewijzen";
-
-/* (No Comment) */
-"_subuser_alert_description1" = "Om uw reis met Proton VPN te beginnen wijst u VPN-verbindingen toe aan uw account of een ander sub-account.";
-
-/* (No Comment) */
 "_subuser_alert_description2" = "Deze stap duurt slechts een paar minuten. Daarna kunt u zich aanmelden en al uw apparaten beveiligen.";
 
 /* (No Comment) */
+"_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
+
+/* (No Comment) */
 "_subuser_alert_login_button" = "Opnieuw inloggen";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Bedankt voor de upgrade naar Business/Visionary";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Succesvol verbonden";
@@ -1689,9 +1659,6 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Neem een rondleiding";
 
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
-"_tcp" = "TCP";
-
 /* iOS status view */
 "_technical_details" = "Technische gegevens";
 
@@ -1702,16 +1669,10 @@
 "_terms_and_conditions_disclaimer" = "Door Proton VPN te gebruiken, gaat u akkoord met onze\n%@ en %@";
 
 /* iOS: section header in countries list */
-"_test_servers" = "TEST Servers";
+"_test_servers" = "TEST-servers";
 
 /* (No Comment) */
 "_tier_free" = "Gratis";
-
-/* (No Comment) */
-"_tier_plus" = "Plus";
-
-/* (No Comment) */
-"_tier_visionary" = "Visionary";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "verlopen";
@@ -1721,9 +1682,6 @@
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Overschakelen naar OpenVPN en probeer het opnieuw";
-
-/* iOS Settings -> Protocol -> WireGuard: TLS option */
-"_tls" = "TLS";
 
 /* (No Comment) */
 "_to_server_title" = "Naar Server:";
@@ -1736,53 +1694,6 @@
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_tor_server" = "Tor-Server";
-
-/* (No Comment) */
-"_tor_title" = "Tor";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Uw 7 dagen gratis proefperiode van Proton VPN Plus is verlopen. U kunt Proton VPN gratis blijven gebruiken, maar als u het project wilt steunen en toegang wilt hebben tot meer landen en functies, upgrade dan naar een betaald abonnement.";
-
-/* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "Proton VPN Plus proefperiode verlopen";
-
-/* (No Comment) */
-"_trial_popup_call_to_upgrade" = "Om permanent toegang te hebben tot Proton VPN Plus functies, kunt u uw abonnement upgraden.";
-
-/* (No Comment) */
-"_trial_popup_enjoy" = "Geniet van alle voordelen van veilig internet waar dan ook met Proton VPN";
-
-/* Final text:
- 
- As a welcome gift, you have access to a full Proton VPN subscription, including advanced features for the first few days! Your welcome trial ends in
- 1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "Als welkomstgeschenk, heeft u toegang tot een %@, inclusief geavanceerde functies in de eerste paar dagen! Uw proefperiode eindigt over";
-
-/* (No Comment) */
-"_trial_popup_free_upgrade" = "upgrade gratis naar Proton VPN Plus";
-
-/* (No Comment) */
-"_trial_popup_full_subscription" = "volledig Proton VPN abonnement";
-
-/* Final text:
- 
- We have given you a free upgrade to Proton VPN Plus, which includes more servers and additional features. Your Proton VPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "We hebben u een %@ gegeven met meer servers en extra functies. Uw Proton VPN Plus proefperiode eindigt over 7 dagen.";
-
-/* (No Comment) */
-"_trial_popup_thanks" = "Bedankt voor het gebruik van Proton VPN!";
-
-/* (No Comment) */
-"_trial_popup_title" = "Proton VPN Proefversie";
-
-/* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Als welkomstgeschenk heeft u de eerste dagen toegang tot een volledig Proton VPN-abonnement met geavanceerde functies!";
-
-/* iOS trial welcome screen */
-"_trial_welcome_ends_in_iOS" = "Uw proefperiode loopt af in";
-
-/* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Welkom aan boord";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "In het geval dat Proton-sites worden geblokkeerd, stelt deze instelling de app in staat om alternatieve netwerkroutering te proberen om Proton te bereiken, wat nuttig kan zijn voor het omzeilen van firewalls of netwerkproblemen. We raden aan deze instelling aan te houden voor een grotere betrouwbaarheid. Meer informatie";
@@ -1803,16 +1714,10 @@
 "_troubleshoot_item_gov_description" = "Uw land blokkeert mogelijk de toegang tot Proton. Probeer Tor te gebruiken om Proton te openen.";
 
 /* (No Comment) */
-"_troubleshoot_item_gov_link1" = "Tor";
-
-/* (No Comment) */
 "_troubleshoot_item_gov_title" = "Blokkade door overheidsinstanties";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_description" = "Probeer verbinding te maken met Proton vanuit een ander netwerk (of Tor).";
-
-/* (No Comment) */
-"_troubleshoot_item_isp_link1" = "Tor";
 
 /* (No Comment) */
 "_troubleshoot_item_isp_title" = "Probleem met Internet Service Provider (ISP)";
@@ -1831,9 +1736,6 @@
 
 /* (No Comment) */
 "_troubleshoot_item_other_link2" = "e-mail";
-
-/* (No Comment) */
-"_troubleshoot_item_other_link3" = "Twitter";
 
 /* (No Comment) */
 "_troubleshoot_item_other_title" = "Kan nog steeds geen oplossing vinden";
@@ -1870,9 +1772,6 @@
 
 /* (No Comment) */
 "_turn_on" = "Zet aan";
-
-/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
-"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Niet beschikbaar";
@@ -1952,14 +1851,14 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_title" = "Upgrade niet beschikbaar in App";
 
+/* Menu point in settings screen */
+"_usage_statistics" = "Gebruiksstatistieken";
+
 /* iOS: human verification option select button */
 "_use_captcha_verification" = "Verifieer met CAPTCHA";
 
 /* iOS: human verification option select button */
 "_use_other_email_address" = "Verifieer via e-mail";
-
-/* Profile create/change form */
-"_use_secure_core" = "Secure Core";
 
 /* (No Comment) */
 "_use_sms_verification" = "Verifiëren met sms";
@@ -1997,14 +1896,11 @@
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Meer informatie";
 
-/* (No Comment) */
-"_vpn_accelerator_title" = "VPN Accelerator";
-
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN-verbinding actief";
 
 /* iOS Settings -> Protocol: screen title */
-"_vpn_protocol" = "VPN Protocol";
+"_vpn_protocol" = "VPN-Protocol";
 
 /* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
 "_vpn_protocol_not_supported_text" = "Het VPN-protocol is niet beschikbaar voor de geselecteerde verbinding. Selecteer een andere server of protocol om te verbinden.";
@@ -2067,10 +1963,7 @@
 "_wgks_title" = "IP-beveiliging voorkomt de VPN om met het internet te verbinden";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
-"_widget" = "iOS Widget";
-
-/* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard";
+"_widget" = "iOS-Widget";
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard Logboeken";

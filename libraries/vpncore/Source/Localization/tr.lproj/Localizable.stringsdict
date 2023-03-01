@@ -77,9 +77,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Aynı anda %d aygıta kadar bağlanın</string>
+			<string>Aynı anda %d aygıta kadar bağlantı</string>
 			<key>other</key>
-			<string>Aynı anda %d aygıta kadar bağlanın</string>
+			<string>Aynı anda %d aygıta kadar bağlantı</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
