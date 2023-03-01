@@ -23,6 +23,7 @@ import vpncore
 extension Configuration {
     init(telemetryEnabled: Bool) {
         self.init(colors: Colors(background: .backgroundColor(),
+                                 buttonTitle: .buttonTitleColor(),
                                  text: .normalTextColor(),
                                  textAccent: .textAccent(),
                                  brand: .brandColor(),

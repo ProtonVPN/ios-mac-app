@@ -22,6 +22,7 @@ import Modals_iOS
 struct UpsellColors: ModalsColors {
     var background: UIColor
     var secondaryBackground: UIColor
+    var buttonTitle: UIColor
     var text: UIColor
     var textAccent: UIColor
     var brand: UIColor
@@ -31,6 +32,7 @@ struct UpsellColors: ModalsColors {
     init() {
         background = UIColor.backgroundColor()
         secondaryBackground = UIColor.secondaryBackgroundColor()
+        buttonTitle = UIColor.buttonTitleColor()
         text = UIColor.normalTextColor()
         textAccent = UIColor.textAccent()
         brand = UIColor.brandColor()

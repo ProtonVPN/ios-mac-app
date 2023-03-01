@@ -23,6 +23,7 @@ var colors: ModalsColors!
 public protocol ModalsColors {
     var background: UIColor { get }
     var secondaryBackground: UIColor { get }
+    var buttonTitle: UIColor { get }
     var text: UIColor { get }
     var textAccent: UIColor { get }
     var brand: UIColor { get }
@@ -33,15 +34,17 @@ public protocol ModalsColors {
 public struct Colors {
     public let background: UIColor
     public let secondaryBackground: UIColor
+    public let buttonTitle: UIColor
     public let text: UIColor
     public let textAccent: UIColor
     public let brand: UIColor
     public let weakText: UIColor
     public let weakInteraction: UIColor
 
-    public init(background: UIColor, secondaryBackground: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, weakInteraction: UIColor) {
+    public init(background: UIColor, secondaryBackground: UIColor, buttonTitle: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, weakInteraction: UIColor) {
         self.background = background
         self.secondaryBackground = secondaryBackground
+        self.buttonTitle = buttonTitle
         self.text = text
         self.textAccent = textAccent
         self.brand = brand
