@@ -61,6 +61,10 @@ class ProtonCz(BaseCommitizen):
             "value": "release",
             "name": "release: A manual software release commit that bumps one or more app versions."
         },
+        {
+            "value": "i18n",
+            "name": "i18n: Used by CI when importing translations into the code."
+        },
     ]
 
     def questions(self) -> list:
