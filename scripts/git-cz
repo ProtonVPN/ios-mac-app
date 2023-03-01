@@ -39,6 +39,11 @@ function lint_for_ci() {
   fi
 
   if [ -z "$commit_from" ] || [ "$commit_from" == "$null_sha" ]; then
+    if [ `git rev-parse --verify origin/develop` == $commit_to ]; then
+      echo "$commit_to is the same as origin/develop, so no commits to lint; skipping commit linting phase."
+      exit 0
+    fi
+
     commit_from="origin/develop"
   fi
 
