@@ -46,7 +46,7 @@ class SystemExtensionGuideViewModel: NSObject {
     struct Step {
         let title: String
         let description: String
-        let imageName: String
+        let image: Image
     }
     
     var steps: [Step] {
@@ -57,23 +57,23 @@ class SystemExtensionGuideViewModel: NSObject {
             let title = result[0].title
             result[0] = Step(title: title,
                              description: LocalizedString.sysexWizardStep1DescriptionGoToSystemPreferences,
-                             imageName: "1-step-security-prefs")
+                             image: Asset._1StepSecurityPrefs.image)
         }
         return result
     }
     
     private let stepsOne: [Step] = [
-        Step(title: LocalizedString.sysexWizardStep1Title1, description: LocalizedString.sysexWizardStep1Description1, imageName: "1-step-1"),
-        Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, imageName: "2-step"),
-        Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, imageName: "3-step"),
-        Step(title: LocalizedString.sysexWizardStep4Title1, description: LocalizedString.sysexWizardStep4Description1, imageName: "4-step-1"),
+        Step(title: LocalizedString.sysexWizardStep1Title1, description: LocalizedString.sysexWizardStep1Description1, image: Asset._1Step1.image),
+        Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, image: Asset._2Step.image),
+        Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, image: Asset._3Step.image),
+        Step(title: LocalizedString.sysexWizardStep4Title1, description: LocalizedString.sysexWizardStep4Description1, image: Asset._4Step1.image),
     ]
     private let stepsMany: [Step] = [
-        Step(title: LocalizedString.sysexWizardStep1Title, description: LocalizedString.sysexWizardStep1Description, imageName: "1-step"),
-        Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, imageName: "2-step"),
-        Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, imageName: "3-step"),
-        Step(title: LocalizedString.sysexWizardStep4Title, description: LocalizedString.sysexWizardStep4Description, imageName: "4-step"),
-        Step(title: LocalizedString.sysexWizardStep5Title, description: LocalizedString.sysexWizardStep5Description, imageName: "5-step"),
+        Step(title: LocalizedString.sysexWizardStep1Title, description: LocalizedString.sysexWizardStep1Description, image: Asset._1Step.image),
+        Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, image: Asset._2Step.image),
+        Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, image: Asset._3Step.image),
+        Step(title: LocalizedString.sysexWizardStep4Title, description: LocalizedString.sysexWizardStep4Description, image: Asset._4Step.image),
+        Step(title: LocalizedString.sysexWizardStep5Title, description: LocalizedString.sysexWizardStep5Description, image: Asset._5Step.image),
     ]
     private var currentStep = 0
     

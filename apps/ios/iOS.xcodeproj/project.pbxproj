@@ -413,6 +413,7 @@
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
+		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
@@ -3615,6 +3616,7 @@
 				D5A3D97427B2618B004EE255 /* iOSUpdateManager.swift in Sources */,
 				D5136C72228592E80002C095 /* SwitchTableViewCell.swift in Sources */,
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
+				E5772AE529B0C63F0076D824 /* Assets.swift in Sources */,
 				F31E0AEE2786DC8A0048FA38 /* OnboardingService.swift in Sources */,
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,

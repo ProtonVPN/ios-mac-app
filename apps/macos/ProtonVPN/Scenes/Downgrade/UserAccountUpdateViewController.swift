@@ -81,10 +81,13 @@ class UserAccountUpdateViewController: NSViewController {
         serversView.wantsLayer = true
         serversView.layer?.backgroundColor = .cgColor(.background, .weak)
         serversView.layer?.cornerRadius = 8
-        
-        imageView.isHidden = alert.imageName == nil
-        if let imageName = alert.imageName { imageView.image = NSImage(named: imageName) }
-        
+
+        if alert is MaxSessionsAlert {
+            imageView.image = Asset.sessionsLimit.image
+        } else {
+            imageView.isHidden = true
+        }
+
         titleLbl.stringValue = alert.title ?? ""
         descriptionLbl.stringValue = alert.message ?? ""
         fromToArrow.image = AppTheme.Icon.arrowRight.colored(.weak)

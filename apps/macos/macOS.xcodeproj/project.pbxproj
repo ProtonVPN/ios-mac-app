@@ -235,6 +235,7 @@
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
 		E53D64C3281169880060C463 /* Modals-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C2281169880060C463 /* Modals-macOS */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
+		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
 		E565986828200ADA004F2240 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986728200ADA004F2240 /* LoadingView.swift */; };
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
@@ -858,6 +859,8 @@
 		E534EA4E2806B6DE00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		E534EA4F2806B6E200BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
+		E551EB0629AF7B7B00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		E551EB0729AF7C1300B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E564CD4A29A8FB07009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "be-BY"; path = "be-BY.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E564CD4B29A8FB0E009DDD1C /* be */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = be; path = be.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E564CD4C29A8FB1A009DDD1C /* be-BY */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "be-BY"; path = "be-BY.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
@@ -1768,6 +1771,7 @@
 		EE5CF75F1F4D8C7E0002BBF3 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E551EB0729AF7C1300B6612D /* Assets.swift */,
 				EED534881EEC112000013607 /* Assets.xcassets */,
 			);
 			name = Assets;
@@ -1801,6 +1805,7 @@
 		EED534781EEC112000013607 = {
 			isa = PBXGroup;
 			children = (
+				E551EB0629AF7B7B00B6612D /* swiftgen.yml */,
 				F38BB451265C0D8F00329619 /* Config.xcconfig */,
 				EED534831EEC112000013607 /* ProtonVPN */,
 				EEB404C81F77F639006CF513 /* ProtonVPNStarter */,
@@ -3627,6 +3632,7 @@
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
 				E14475322093A52A00F4C641 /* NeagentHelpPopUpViewController.swift in Sources */,
 				4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */,
+				E551EB0829AF7C1300B6612D /* Assets.swift in Sources */,
 				EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */,
 				E192239F20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift in Sources */,
 				EE876E121F13859600C9B9C2 /* OverlayView.swift in Sources */,

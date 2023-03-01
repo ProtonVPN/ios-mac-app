@@ -71,7 +71,7 @@ final class CouponViewController: NSViewController {
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
 
-        tooltipTriangle.image = NSImage(named: "ReverseTriangle")?.colored(context: .background)
+        tooltipTriangle.image = Asset.reverseTriangle.image.colored(context: .background)
         applyButton.title = LocalizedString.applyCoupon
 
         textField.textColor = .color(.text)
