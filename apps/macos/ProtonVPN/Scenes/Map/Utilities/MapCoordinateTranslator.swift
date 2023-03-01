@@ -26,7 +26,7 @@ import CoreLocation
 struct MapCoordinateTranslator {
     
     // Unfortunately there seems to be a rendering bug with pdf here (around the edges of vectors, and is inconsistent)
-    static let mapImage = #imageLiteral(resourceName: "world-map")
+    static let mapImage = Asset.worldMap.image
     
     static func mapImageCoordinate(from coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
         

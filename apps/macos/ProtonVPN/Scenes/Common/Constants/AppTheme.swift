@@ -107,23 +107,23 @@ public enum AppTheme {
         }
 
         #if STAGING // use Debug icon for staging builds
-        static let appIconConnected = NSImage(named: "DynamicAppIconDebugConnected")!
-        static let appIconDisconnected = NSImage(named: "DynamicAppIconDebugDisconnected")!
+        static let appIconConnected = Asset.dynamicAppIconDebugConnected.image
+        static let appIconDisconnected = Asset.dynamicAppIconDebugDisconnected.image
         #else
-        static let appIconConnected = NSImage(named: "DynamicAppIconConnected")!
-        static let appIconDisconnected = NSImage(named: "DynamicAppIconDisconnected")!
+        static let appIconConnected = Asset.dynamicAppIconConnected.image
+        static let appIconDisconnected = Asset.dynamicAppIconDisconnected.image
         #endif
 
-        static let vpnConnected = NSImage(named: "connected")!
-        static let vpnNotConnected = NSImage(named: "disconnected")!
-        static let vpnConnecting = NSImage(named: "idle")!
-        static let vpnEmpty = NSImage(named: "empty_icon")!
+        static let vpnConnected = Asset.connected.image
+        static let vpnNotConnected = Asset.disconnected.image
+        static let vpnConnecting = Asset.idle.image
+        static let vpnEmpty = Asset.emptyIcon.image
 
-        static let vpnResultConnected = NSImage(named: "vpn-result-connected")!
-        static let vpnResultDisconnected = NSImage(named: "vpn-result-not-connected")!
-        static let vpnResultTimeout = NSImage(named: "vpn-result-warning")!
+        static let vpnResultConnected = Asset.vpnResultConnected.image
+        static let vpnResultDisconnected = Asset.vpnResultNotConnected.image
+        static let vpnResultTimeout = Asset.vpnResultWarning.image
 
-        static let vpnWordmarkAlwaysDark = NSImage(named: "vpn-wordmark-always-dark")!
+        static let vpnWordmarkAlwaysDark = Asset.vpnWordmarkAlwaysDark.image
     }
 }
 

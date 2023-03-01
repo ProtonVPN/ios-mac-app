@@ -132,21 +132,21 @@ final class SystemExtensionGuideViewController: NSViewController {
     // MARK: - ViewModel callbacks
     
     func render() {
-        // Making buttons invisible throug alpha so other views won't move as in case with changing isHidden
+        // Making buttons invisible through alpha so other views won't move as in case with changing isHidden
         nextBtn.alphaValue = viewModel.isNextButtonVisible ? 1.0 : 0.0
         previousBtn.alphaValue = viewModel.isPrevButtonVisible ? 1.0 : 0.0
         
         let fontSize: CGFloat = 14
-        let (curentIndex, step) = viewModel.step
+        let (currentIndex, step) = viewModel.step
         
         for (index, field) in titles.enumerated() {
-            field.font = index == curentIndex
+            field.font = index == currentIndex
                 ? NSFont.boldSystemFont(ofSize: fontSize)
                 : NSFont.systemFont(ofSize: fontSize)
-            field.superview?.alphaValue = index == curentIndex ? 1.0 : 0.3
+            field.superview?.alphaValue = index == currentIndex ? 1.0 : 0.3
         }
         
-        imageView.image = NSImage(named: step.imageName)
+        imageView.image = step.image
         imageDescription.hyperLink(originalText: step.description, hyperLink: LocalizedString.sysexWizardStep1DescriptionLink, urlString: SystemExtensionGuideViewModel.securityPreferencesUrlString)
     }
     
