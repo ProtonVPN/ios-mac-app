@@ -25,13 +25,13 @@ import UIKit
 enum TableViewCellModel {
     
     case pushStandard(title: String, handler: () -> Void)
-    case pushKeyValue(key: String, value: String, handler: () -> Void)
+    case pushKeyValue(key: String, value: String, icon: UIImage? = nil, handler: () -> Void)
     case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: () -> Void)
     case pushAccountDetails(initials: NSAttributedString,
                             username: NSAttributedString,
                             plan: NSAttributedString,
                             handler: () -> Void)
-    case image(title: String, image: UIImage, handler: () -> Void)
+    // case imageKeyValue(title: String, image: UIImage, handler: () -> Void)
     case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
@@ -99,7 +99,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
-        tableView.register(ImageTableViewCell.nib, forCellReuseIdentifier: ImageTableViewCell.identifier)
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
     }
     
@@ -155,11 +154,12 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
 
             return cell
-        case .pushKeyValue(key: let key, value: let value, handler: let handler):
+        case .pushKeyValue(key: let key, value: let value, icon: let icon, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
-            
+
+            cell.icon = icon
             cell.titleLabel.text = key
             cell.accessibilityIdentifier = key
             cell.subtitleLabel.text = value
@@ -177,16 +177,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
             
             return cell
-        case .image(title: let title, image: let image, handler: let handler):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTableViewCell.identifier) as? ImageTableViewCell else {
-                return UITableViewCell()
-            }
 
-            cell.titleLabel.text = title
-            cell.imageView?.image = image
-            cell.completionHandler = handler
-
-            return cell
         case .imageSubtitle(title: let title, subtitle: let subtitle, image: let image, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleTableViewCell.identifier) as? ImageSubtitleTableViewCell else {
                 return UITableViewCell()
@@ -364,11 +355,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         let cell = tableView.cellForRow(at: indexPath)
 
         switch cellModel {
-        case .image:
-            guard let cell = cell as? ImageTableViewCell else { return }
-
-            cell.select()
-            onSelectionChange?()
         case .imageSubtitle:
             guard let cell = cell as? ImageSubtitleTableViewCell else { return }
 
@@ -404,12 +390,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         case .pushAccountDetails:
             guard let cell = cell as? AccountDetailsTableViewCell else { return }
             
-            cell.select()
-            onSelectionChange?()
-
-        case .image:
-            guard let cell = cell as? ImageTableViewCell else { return }
-
             cell.select()
             onSelectionChange?()
         case .imageSubtitle:

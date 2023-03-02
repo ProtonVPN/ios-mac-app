@@ -26,6 +26,8 @@ class StandardTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var iconContainer: UIView!
+    @IBOutlet private weak var iconImageView: UIImageView!
     
     var completionHandler: (() -> Void)?
     
@@ -39,6 +41,13 @@ class StandardTableViewCell: UITableViewCell {
         
         selectionStyle = .none
     }
+
+    var icon: UIImage? {
+        didSet {
+            iconImageView.image = icon
+            iconContainer.isHidden = icon == nil
+        }
+    }
     
     func select() {
         completionHandler?()
@@ -48,11 +57,12 @@ class StandardTableViewCell: UITableViewCell {
         setupViews(inverted: true)
     }
     
-    func setupViews(inverted: Bool = false) {
+    func setupViews(inverted: Bool = false, icon: UIImage? = nil) {
         backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         subtitleLabel.font = UIFont.systemFont(ofSize: 17)
-        
+
+        self.icon = icon
         if !inverted {
             titleLabel.textColor = .normalTextColor()
             subtitleLabel.textColor = .weakTextColor()

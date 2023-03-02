@@ -404,9 +404,10 @@ class StatusViewModel {
         let activeConnection = appStateManager.activeConnection()
         let currentNetShieldType = (isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType) ?? .off
 
-        return .image(
-            title: LocalizedString.netshieldTitle,
-            image: currentNetShieldType.icon,
+        return .pushKeyValue(
+            key: LocalizedString.netshieldTitle,
+            value: currentNetShieldType == .off ? LocalizedString.netshieldOff : LocalizedString.netshieldOn,
+            icon: currentNetShieldType.icon,
             handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
         )
     }
