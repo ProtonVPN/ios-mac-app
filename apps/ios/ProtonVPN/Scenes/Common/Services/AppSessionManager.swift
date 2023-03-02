@@ -73,7 +73,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                         ProfileManagerFactory &
                         SearchStorageFactory &
                         ReviewFactory &
-                        AuthKeychainHandleFactory
+                        AuthKeychainHandleFactory &
+                        UnauthKeychainHandleFactory
 
     private let factory: Factory
     
@@ -91,6 +92,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     private lazy var review: Review = factory.makeReview()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -123,6 +125,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
         do {
             try authKeychain.store(authCredentials)
+            unauthKeychain.clear()
         } catch {
             DispatchQueue.main.async {
                 completion(.failure(ProtonVpnError.keychainWriteFailed))
@@ -399,7 +402,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private func logOutCleanup() {
         refreshTimer.stop()
         loggedIn = false
-        
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
@@ -416,6 +418,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
 
         propertiesManager.logoutCleanup()
+
+        networking.apiService.acquireSessionIfNeeded { _ in }
     }
     // End of the logout logic
     // MARK: -

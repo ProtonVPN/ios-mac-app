@@ -29,7 +29,7 @@ import VPNSharedTesting
 
 class MapViewModelTests: XCTestCase {
 
-    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain())
+    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(context: .mainApp), doh: .mock, authKeychain: MockAuthKeychain(), unauthKeychain: UnauthKeychainMock())
     lazy var vpnKeychain = VpnKeychainMock()
 
     var serverStorage: ServerStorage!

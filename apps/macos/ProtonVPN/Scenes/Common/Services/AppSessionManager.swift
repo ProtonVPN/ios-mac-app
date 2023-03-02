@@ -58,6 +58,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         ServerStorageFactory &
                         VpnGatewayFactory &
                         CoreAlertServiceFactory &
+                        NetworkingFactory &
                         AppSessionRefreshTimerFactory &
                         AnnouncementRefresherFactory &
                         VpnAuthenticationFactory &
@@ -65,13 +66,15 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
                         AppCertificateRefreshManagerFactory &
                         SystemExtensionManagerFactory &
                         PlanServiceFactory &
-                        AuthKeychainHandleFactory
+                        AuthKeychainHandleFactory &
+                        UnauthKeychainHandleFactory
     private let factory: Factory
 
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @MainActor var appState: AppState { appStateManager.state }
     private var navService: NavigationService? { return factory.makeNavigationService() }
 
+    private lazy var networking: Networking = factory.makeNetworking()
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
@@ -80,6 +83,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var appCertificateRefreshManager: AppCertificateRefreshManager = factory.makeAppCertificateRefreshManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
+    private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished {
@@ -123,6 +127,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func attemptLogin(with authCredentials: AuthCredentials) async throws {
         do {
             try authKeychain.store(authCredentials)
+            unauthKeychain.clear()
         } catch {
             throw ProtonVpnError.keychainWriteFailed
         }
@@ -314,6 +319,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         _ = group.wait(timeout: .now() + .seconds(vpnAuthenticationTimeoutInSeconds))
 
         propertiesManager.logoutCleanup()
+
+        networking.apiService.acquireSessionIfNeeded { _ in }
     }
 
     // End of the logout logic

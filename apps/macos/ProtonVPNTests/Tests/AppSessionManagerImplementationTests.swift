@@ -31,6 +31,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
+    fileprivate var unauthKeychain: UnauthKeychainMock!
     var propertiesManager: PropertiesManagerMock!
     var serverStorage: ServerStorageMock!
     var networking: NetworkingMock!
@@ -60,6 +61,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         networkingDelegate = FullNetworkingMockDelegate()
         networking.delegate = networkingDelegate
         authKeychain = AuthKeychainHandleMock()
+        unauthKeychain = UnauthKeychainMock()
         vpnKeychain = VpnKeychainMock()
         alertService = AppSessionManagerAlertServiceMock()
         appStateManager = AppStateManagerMock()
@@ -70,6 +72,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
             let factory = ManagerFactoryMock(
                 vpnAPIService: mockVPNAPIService,
                 authKeychain: authKeychain,
+                unauthKeychain: unauthKeychain,
                 vpnKeychain: vpnKeychain,
                 alertService: alertService,
                 appStateManager: appStateManager
@@ -373,6 +376,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     private let container = DependencyContainer()
     private let vpnAPIService: VpnApiService
     private let authKeychain: AuthKeychainHandle
+    private let unauthKeychain: UnauthKeychainHandle
     private let vpnKeychain: VpnKeychainProtocol
     private let alertService: CoreAlertService
     private let appStateManager: AppStateManager
@@ -380,6 +384,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeNavigationService() -> NavigationService { NavigationServiceMock(container) }
     func makePlanService() -> PlanService { PlanServiceMock() }
     func makeAuthKeychainHandle() -> AuthKeychainHandle { authKeychain }
+    func makeUnauthKeychainHandle() -> UnauthKeychainHandle { unauthKeychain }
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager { container.makeAppCertificateRefreshManager() }
     func makeAnnouncementRefresher() -> AnnouncementRefresher { container.makeAnnouncementRefresher() }
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer { container.makeAppSessionRefreshTimer() }
@@ -393,16 +398,19 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     func makeVpnGateway() -> VpnGatewayProtocol { VpnGatewayMock() }
     func makeVpnKeychain() -> VpnKeychainProtocol { vpnKeychain }
     func makeVpnApiService() -> vpncore.VpnApiService { vpnAPIService }
+    func makeNetworking() -> Networking { NetworkingMock() }
 
     init(
         vpnAPIService: VpnApiService,
         authKeychain: AuthKeychainHandle,
+        unauthKeychain: UnauthKeychainHandle,
         vpnKeychain: VpnKeychainProtocol,
         alertService: CoreAlertService,
         appStateManager: AppStateManager
     ) {
         self.vpnAPIService = vpnAPIService
         self.authKeychain = authKeychain
+        self.unauthKeychain = unauthKeychain
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
         self.appStateManager = appStateManager
