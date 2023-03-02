@@ -7,16 +7,19 @@
 //
 
 import Foundation
+import ProtonCore_Foundations
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
 import ProtonCore_Environment
+import ProtonCore_FeatureSwitch
 #if os(iOS)
 import ProtonCore_Challenge
 #endif
 import GoLibs
 import VPNShared
 import TrustKit
+import KeychainAccess
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -51,34 +54,51 @@ public final class CoreNetworking: Networking {
     private let appInfo: AppInfo
     private let doh: DoHVPN
     private let authKeychain: AuthKeychainHandle
+    private let unauthKeychain: UnauthKeychainHandle
 
     public typealias Factory = NetworkingDelegateFactory &
         AppInfoFactory &
         DoHVPNFactory &
-        AuthKeychainHandleFactory
+        AuthKeychainHandleFactory &
+        UnauthKeychainHandleFactory
 
     public convenience init(_ factory: Factory) {
         self.init(delegate: factory.makeNetworkingDelegate(),
                   appInfo: factory.makeAppInfo(),
                   doh: factory.makeDoHVPN(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+                  authKeychain: factory.makeAuthKeychainHandle(),
+                  unauthKeychain: factory.makeUnauthKeychainHandle())
     }
 
-    public init(delegate: NetworkingDelegate, appInfo: AppInfo, doh: DoHVPN, authKeychain: AuthKeychainHandle) {
+    public init(delegate: NetworkingDelegate,
+                appInfo: AppInfo,
+                doh: DoHVPN,
+                authKeychain: AuthKeychainHandle,
+                unauthKeychain: UnauthKeychainHandle) {
         self.delegate = delegate
         self.appInfo = appInfo
         self.doh = doh
         self.authKeychain = authKeychain
+        self.unauthKeychain = unauthKeychain
 
         Self.setupTrustKit()
 
         #if os(iOS)
-            apiService = PMAPIService(doh: doh,
-                                      sessionUID: authKeychain.fetch()?.sessionId ?? "",
-                                      challengeParametersProvider: .forAPIService(clientApp: .vpn, challenge: PMChallenge()))
+        let challengeParametersProvider: ChallengeParametersProvider = .forAPIService(clientApp: .vpn, challenge: PMChallenge())
         #else
-            apiService = PMAPIService(doh: doh, sessionUID: authKeychain.fetch()?.sessionId ?? "", challengeParametersProvider: .empty)
+        let challengeParametersProvider: ChallengeParametersProvider = .empty
         #endif
+
+        if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
+            apiService = PMAPIService.createAPIService(
+                doh: doh, sessionUID: sessionUID, challengeParametersProvider: challengeParametersProvider
+            )
+        } else {
+            apiService = PMAPIService.createAPIServiceWithoutSession(
+                doh: doh, challengeParametersProvider: challengeParametersProvider
+            )
+        }
+
         apiService.authDelegate = self
         apiService.serviceDelegate = self
         apiService.forceUpgradeDelegate = delegate
@@ -191,7 +211,7 @@ public final class CoreNetworking: Networking {
     }
 
     private func fullUrl(_ route: Request) -> String {
-        return "\(apiService.doh.getCurrentlyUsedHostUrl())\(route.path)"
+        return "\(apiService.dohInterface.getCurrentlyUsedHostUrl())\(route.path)"
     }
 }
 
@@ -231,42 +251,50 @@ extension CoreNetworking: APIServiceDelegate {
 // MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
     public var authSessionInvalidatedDelegateForLoginAndSignup: ProtonCore_Services.AuthSessionInvalidatedDelegate? {
-        get {
-            self
-        }
-        set(newValue) {
-            //
-        }
+        get { self }
+        set { /* intentionally ignored */ _ = newValue }
     }
     
     public func onAdditionalCredentialsInfoObtained(sessionUID: String, password: String?, salt: String?, privateKey: String?) {
         guard let authCredential = authCredential(sessionUID: sessionUID) else { return }
         if let password = password {
-            authCredential.udpate(password: password)
+            authCredential.update(password: password)
         }
         // salt should be associated with a private key. so both need to be valid
         if let salt = salt, let privateKey = privateKey {
             authCredential.update(salt: salt, privateKey: privateKey)
         }
         do {
-            try authKeychain.store(AuthCredentials(.init(authCredential)))
+            if authCredential.isForUnauthenticatedSession {
+                unauthKeychain.store(authCredential)
+            } else {
+                try authKeychain.store(AuthCredentials(.init(authCredential)))
+            }
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
 
     public func onAuthenticatedSessionInvalidated(sessionUID: String) {
+        // invalidating authenticated session should clear the unauth session as well,
+        // because we should fetch a new unauth session afterwards
+        unauthKeychain.clear()
         authKeychain.clear()
         delegate.onLogout()
     }
 
     public func onUnauthenticatedSessionInvalidated(sessionUID: String) {
-        authKeychain.clear()
+        unauthKeychain.clear()
     }
 
     public func onSessionObtaining(credential: Credential) {
         do {
-            try authKeychain.store(AuthCredentials(credential))
+            if credential.isForUnauthenticatedSession {
+                unauthKeychain.store(AuthCredential(credential))
+            } else {
+                try authKeychain.store(AuthCredentials(credential))
+                unauthKeychain.clear()
+            }
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
@@ -278,11 +306,15 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func authCredential(sessionUID: String) -> AuthCredential? {
-        guard let credentials = authKeychain.fetch() else {
+        if let authCredentials = authKeychain.fetch() {
+            // the app stores credentials in an old format for compatibility reasons, conversion is needed
+            return ProtonCore_Networking.AuthCredential(Credential(authCredentials))
+        } else if let unauthCredentials = unauthKeychain.fetch() {
+            return unauthCredentials
+        } else {
             return nil
         }
-        // the app stores credentials in an old format for compatibility reasons, conversion is needed
-        return ProtonCore_Networking.AuthCredential(Credential(credentials))
+
     }
 
     public func onLogout(sessionUID: String) {
@@ -291,15 +323,22 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onUpdate(credential: Credential, sessionUID: String) {
-        guard let credentials = authKeychain.fetch(),
-              credentials.sessionId == sessionUID else {
-            return
-        }
-
         do {
-            try authKeychain.store(credentials.updatedWithAuth(auth: credential))
+            if let authCredentials = authKeychain.fetch(),
+                authCredentials.sessionId == sessionUID {
+
+                try authKeychain.store(authCredentials.updatedWithAuth(auth: credential))
+
+            } else if let unauthCredential = unauthKeychain.fetch(),
+                      unauthCredential.sessionID == sessionUID {
+
+                unauthKeychain.store(unauthCredential)
+
+            }
         } catch {
+
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
+
         }
     }
     

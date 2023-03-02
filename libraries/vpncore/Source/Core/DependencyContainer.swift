@@ -71,6 +71,7 @@ open class Container: PropertiesToOverride {
     private lazy var propertiesManager: PropertiesManagerProtocol = PropertiesManager(storage: storage)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain(context: .mainApp)
+    private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain()
     private lazy var profileManager = ProfileManager(self)
     private lazy var networking = CoreNetworking(self)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
@@ -207,6 +208,12 @@ extension Container: VpnKeychainFactory {
 extension Container: AuthKeychainHandleFactory {
     public func makeAuthKeychainHandle() -> AuthKeychainHandle {
         authKeychain
+    }
+}
+
+extension Container: UnauthKeychainHandleFactory {
+    public func makeUnauthKeychainHandle() -> UnauthKeychainHandle {
+        unauthKeychain
     }
 }
 

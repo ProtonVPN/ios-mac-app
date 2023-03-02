@@ -142,6 +142,10 @@
 		50CF7392A9299102BB1EFB0E /* Pods-Core-vpncore-macos-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */; };
 		56336202EE4EE28969FD9250 /* CoreAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02FBA70177FC11A4749DBDD3 /* CoreAssets.xcassets */; };
 		5DD568B553917B3DDB7A6F7F /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */; };
+		660EABB529B23FAB00B4D815 /* UnauthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660EABB429B23FAB00B4D815 /* UnauthKeychain.swift */; };
+		660EABB629B23FAB00B4D815 /* UnauthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660EABB429B23FAB00B4D815 /* UnauthKeychain.swift */; };
+		660EABBA29B2498700B4D815 /* UnauthKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660EABB729B2497500B4D815 /* UnauthKeychainMock.swift */; };
+		660EABBB29B2498800B4D815 /* UnauthKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660EABB729B2497500B4D815 /* UnauthKeychainMock.swift */; };
 		66835CD1375221C55BF4610B /* Result+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251C64F2C8666DA65CC54F46 /* Result+Extensions.swift */; };
 		675EE43FCAE59E94E6D71E9C /* DoHHostsParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54CC1C043498935DE5D77B4 /* DoHHostsParsingTests.swift */; };
 		6B98DC90360CC2606595D272 /* URLArray+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */; };
@@ -793,6 +797,8 @@
 		6608F5592446D076005E4A2C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = el; path = el.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		6608F55A2446D076005E4A2C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = Localization/el.lproj/Intents.strings; sourceTree = "<group>"; };
 		6608F55B2446D076005E4A2C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = Localization/el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		660EABB429B23FAB00B4D815 /* UnauthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthKeychain.swift; sourceTree = "<group>"; };
+		660EABB729B2497500B4D815 /* UnauthKeychainMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthKeychainMock.swift; sourceTree = "<group>"; };
 		66303FDD2446D08200DA9781 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = hu; path = hu.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		66303FDE2446D08200DA9781 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = Localization/hu.lproj/Intents.strings; sourceTree = "<group>"; };
 		66303FDF2446D08200DA9781 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = Localization/hu.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1853,6 +1859,7 @@
 		F36ECB4B2610A81D0089B898 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				660EABB429B23FAB00B4D815 /* UnauthKeychain.swift */,
 				F3747BEF26D3B93300EF2F00 /* Networking.swift */,
 			);
 			path = Common;
@@ -1940,6 +1947,7 @@
 		F36ECB682610A8950089B898 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				660EABB729B2497500B4D815 /* UnauthKeychainMock.swift */,
 				4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */,
 				D5EF8F982293D4E400B713BD /* AlertServiceMock.swift */,
 				D59671DD253D5E3A0061A75F /* AnnouncementStorageMock.swift */,
@@ -2891,9 +2899,11 @@
 				E148AE5E21C28CF4007AB65A /* AlertService.swift in Sources */,
 				E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
 				F3021D7325E93E2A00EF73A1 /* TroubleshootItem.swift in Sources */,
+				660EABB529B23FAB00B4D815 /* UnauthKeychain.swift in Sources */,
 				E1616BF921C95C3000F42D79 /* ServerManager.swift in Sources */,
 				4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				E532A8B6292642CE00096D2D /* OptionSet+Extension.swift in Sources */,
+				660EABBA29B2498700B4D815 /* UnauthKeychainMock.swift in Sources */,
 				42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */,
 				D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
@@ -3145,6 +3155,7 @@
 				F34808AE266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */,
 				F3021D6B25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
 				D5DCCACC252B4E0A004CB353 /* Announcement.swift in Sources */,
+				660EABBB29B2498800B4D815 /* UnauthKeychainMock.swift in Sources */,
 				D5BCDC9725303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
 				4C14523B292CF9BF00DE9AC0 /* CountryCodeProvider.swift in Sources */,
 				E5904FCB2949F8E100BA6D3B /* TelemetryService.swift in Sources */,
@@ -3329,6 +3340,7 @@
 				E148AE6621C29A20007AB65A /* ProtonApiError.swift in Sources */,
 				F314140D27B11AAE007424E9 /* NATTypePropertyProvider.swift in Sources */,
 				4242B0842465A4D10042145A /* HumanVerificationToken.swift in Sources */,
+				660EABB629B23FAB00B4D815 /* UnauthKeychain.swift in Sources */,
 				E1D187F92302B0AA00C5F492 /* VpnProtocol.swift in Sources */,
 				4C4D898427BD0BE800548523 /* Array+Extension.swift in Sources */,
 				F3E5786F27CCCE4B000E48E3 /* AvailableDomainsRequest.swift in Sources */,

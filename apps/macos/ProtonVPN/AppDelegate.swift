@@ -32,6 +32,7 @@ import ProtonCore_Services
 import ProtonCore_Log
 import ProtonCore_UIFoundations
 import ProtonCore_Environment
+import ProtonCore_FeatureSwitch
 
 // Local dependencies
 import vpncore
@@ -278,6 +279,19 @@ extension AppDelegate {
             case .error, .fatal:
                 log.error("\(message)", category: .core)
             }
+        }
+
+        FeatureFactory.shared.enable(&.unauthSession)
+
+        #if DEBUG
+        // this flag is for tests — it should never be turned on in release builds
+        if ProcessInfo.processInfo.arguments.contains("enforceUnauthSessionStrictVerificationOnBackend") {
+            FeatureFactory.shared.enable(&.enforceUnauthSessionStrictVerificationOnBackend)
+        }
+        #endif
+
+        container.makeNetworking().apiService.acquireSessionIfNeeded { _ in
+            /* the result doesn't require any handling */
         }
     }
 }
