@@ -24,6 +24,7 @@ import Foundation
 import GSMessages
 import vpncore
 import UIKit
+import ProtonCore_UIFoundations
 import VPNShared
 import LocalFeatureFlags
 
@@ -401,13 +402,13 @@ class StatusViewModel {
         let isConnected: Bool = appStateManager.state.isConnected
 
         let activeConnection = appStateManager.activeConnection()
-        let currentNetShieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
-        let isNetShieldOn = currentNetShieldType != .off
-        let image = UIImage(named: isNetShieldOn ? "netshield-icon-filled" : "netshield-icon")!
+        let currentNetShieldType = (isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType) ?? .off
 
-        return .image(title: LocalizedString.netshieldTitle, image: image, handler: { [weak self] in
-            self?.pushNetshieldSelectionViewController()
-        })
+        return .image(
+            title: LocalizedString.netshieldTitle,
+            image: currentNetShieldType.icon,
+            handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
+        )
     }
 
     private func pushNetshieldSelectionViewController() {

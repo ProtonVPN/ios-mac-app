@@ -18,6 +18,7 @@
 
 import Foundation
 import VPNShared
+import ProtonCore_UIFoundations
 
 extension NetShieldType {
     
@@ -29,6 +30,14 @@ extension NetShieldType {
             return LocalizedString.netshieldLevel1
         case .level2:
             return LocalizedString.netshieldLevel2
+        }
+    }
+
+    public var icon: Image {
+        switch self {
+        case .off: return IconProvider.shield
+        case .level1: return IconProvider.shieldHalfFilled
+        case .level2: return IconProvider.shieldFilled
         }
     }
     
