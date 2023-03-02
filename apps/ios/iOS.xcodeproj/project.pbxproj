@@ -141,9 +141,6 @@
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD609A04299D1120007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A05299D1120007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
-		AD609A07299FBCBF007E46BC /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD609A06299FBCBF007E46BC /* ImageTableViewCell.swift */; };
-		AD609A08299FBCC6007E46BC /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD609A06299FBCBF007E46BC /* ImageTableViewCell.swift */; };
-		AD609A0A299FBCDE007E46BC /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A09299FBCDE007E46BC /* ImageTableViewCell.xib */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
@@ -784,8 +781,6 @@
 		A5BC5042F59FA7B3799466BE /* Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-ProtonVPNUITests/Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSubtitleTableViewCell.xib; sourceTree = "<group>"; };
-		AD609A06299FBCBF007E46BC /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
-		AD609A09299FBCDE007E46BC /* ImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
 		AEBAB5D5C383815028FB9B5F /* Pods-WireGuardNetworkExtensionTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.staging.xcconfig"; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -1281,8 +1276,6 @@
 				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
 				79DEE9082111A5E100C354EF /* TabBar.swift */,
-				AD609A06299FBCBF007E46BC /* ImageTableViewCell.swift */,
-				AD609A09299FBCDE007E46BC /* ImageTableViewCell.xib */,
 				AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */,
 				AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */,
 			);
@@ -2833,7 +2826,6 @@
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
 				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
 				42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */,
-				AD609A0A299FBCDE007E46BC /* ImageTableViewCell.xib in Resources */,
 				796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
@@ -3439,7 +3431,6 @@
 				793ECF412148EA0B00C186A7 /* ButtonTableViewCell.swift in Sources */,
 				79848BAC20D1B9DC00EF6F9F /* CountriesViewModel.swift in Sources */,
 				7950441721183E6E0022ED35 /* ColorPickerItem.swift in Sources */,
-				AD609A07299FBCBF007E46BC /* ImageTableViewCell.swift in Sources */,
 				79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */,
 				E17DB1B821592772006B3617 /* ProtonButton.swift in Sources */,
 				79312B7C2118852D00E79D09 /* DrillInTableViewCell.swift in Sources */,
@@ -3511,7 +3502,6 @@
 				D55F10F3297FD32200EAF2AB /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				E14CC341233E723600306EAD /* ProtocolServiceMock.swift in Sources */,
 				E1D187F523029CDE00C5F492 /* LogSelectionViewController.swift in Sources */,
-				AD609A08299FBCC6007E46BC /* ImageTableViewCell.swift in Sources */,
 				D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
 				F3082A7027E3206B001A83DF /* CityItemViewModel.swift in Sources */,

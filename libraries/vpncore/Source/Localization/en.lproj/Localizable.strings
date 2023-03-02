@@ -1552,8 +1552,11 @@
 "_netshield_title" = "NetShield";
 "_netshield_title_tooltip" = "Block advertisements, trackers and malware";
 
-/* Settings -> Netshield: Off */
+/* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Off";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "On";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Block malware";
