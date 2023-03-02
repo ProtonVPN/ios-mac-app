@@ -350,21 +350,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         }
     }
 
-    func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        let cellModel = sections[indexPath.section].cells[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath)
-
-        switch cellModel {
-        case .imageSubtitle:
-            guard let cell = cell as? ImageSubtitleTableViewCell else { return }
-
-            cell.select()
-            onSelectionChange?()
-        default:
-            log.debug("Unhandled cell accessory selection: \(cellModel)", category: .ui)
-        }
-    }
-
     // swiftlint:disable cyclomatic_complexity
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
