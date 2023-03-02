@@ -48,10 +48,11 @@ final class ImageSubtitleTableViewCell: UITableViewCell {
     }
 
     func setupViews() {
-        accessoryType = .detailButton
+        accessoryType = .disclosureIndicator
         backgroundColor = .secondaryBackgroundColor()
-        titleLabel.font = .systemFont(ofSize: 17, weight: .semibold)
-        subtitleLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        titleLabel.font = .systemFont(ofSize: 15, weight: .semibold)
+        subtitleLabel.font = .systemFont(ofSize: 13, weight: .regular)
+        subtitleLabel.textColor = .weakTextColor()
         subtitleLabel.numberOfLines = 0
     }
 
