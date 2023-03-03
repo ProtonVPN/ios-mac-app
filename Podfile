@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.28.0'
+  '3.28.3'
 end
 
 def openvpn
@@ -127,6 +127,7 @@ target 'ProtonVPN' do
   pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
   pod "ProtonCore-AccountDeletion/#{crypto_variant}", :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-TroubleShooting', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Observability', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
     openvpn
