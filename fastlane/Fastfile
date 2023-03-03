@@ -252,6 +252,8 @@ lane :ios_internal_beta do |options|
     build_number: ENV["NEW_BUILD_NUMBER"],
     xcodeproj: "./apps/ios/iOS.xcodeproj"
   )
+  # Prepare API key for contacting Apple APIs
+  get_app_store_api_key
 
   # Release build
   build_app(
@@ -343,4 +345,14 @@ def self.runMacOSTests(params)
     skip_testing: params[:skip_testing],
     testplan: params[:testplan]
   )  
+end
+
+def get_app_store_api_key
+  app_store_connect_api_key(
+    key_id: ENV["APPSTORE_API_KEY_ID"],
+    issuer_id: ENV["APPSTORE_API_KEY_ISSUER"],
+    key_content: ENV["APPSTORE_API_KEY"],
+    duration: 1200,
+    in_house: false
+  )
 end

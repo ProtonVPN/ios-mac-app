@@ -13,7 +13,7 @@ ios_testflight_internal:
     - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
     - fastlane create_ios_keychain
   script:
-    - fastlane sigh download_all --download_xcode_profiles
+    - fastlane sigh download_all --download_xcode_profiles --api_key_path $APPSTORE_API_KEY_JSON
     - export atlasSecret="static let atlasSecret = \"`(curl $ATLAS_TOKEN_URL)`\""
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
     - export NEW_BUILD_NUMBER=$(./scripts/generate_build_number.sh)
