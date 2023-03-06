@@ -71,7 +71,7 @@ final class NetShieldSelectionViewModel {
         let upsellCell = TableViewCellModel.imageSubtitle(
             title: LocalizedString.netshieldUpsellTitle,
             subtitle: LocalizedString.netshieldUpsellSubtitle,
-            image: UIImage(named: "netshield-small")!,
+            image: Asset.netshieldSmall.image,
             handler: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) }
         )
         return TableViewSection(title: "", showHeader: false, showSeparator: true, cells: [upsellCell])
