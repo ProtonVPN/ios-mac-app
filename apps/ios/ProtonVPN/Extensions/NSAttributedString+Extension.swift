@@ -32,6 +32,7 @@ extension NSAttributedString {
     }
 
     static func imageAttachment(named name: String, size: CGSize? = nil) -> NSAttributedString? {
+        // swiftlint:disable:next hardcoded_assets
         guard let image = UIImage(named: name.lowercased()) else {
             log.debug("Could not obtain image named for text attachment", category: .app)
             return nil
