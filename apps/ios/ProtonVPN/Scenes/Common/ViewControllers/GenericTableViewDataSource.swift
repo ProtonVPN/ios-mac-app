@@ -31,7 +31,6 @@ enum TableViewCellModel {
                             username: NSAttributedString,
                             plan: NSAttributedString,
                             handler: () -> Void)
-    // case imageKeyValue(title: String, image: UIImage, handler: () -> Void)
     case imageSubtitle(title: String, subtitle: String, image: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
