@@ -448,8 +448,6 @@ public class VpnManager: VpnManagerProtocol {
             (configuration as? NETunnelProviderProtocol)?.wgProtocol = type.rawValue
         }
 
-        (configuration as? NETunnelProviderProtocol)?.reconnectionEnabled = LocalFeatureFlags.isEnabled(VpnReconnectionFeatureFlag())
-
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
         vpnManager.isOnDemandEnabled = hasConnected

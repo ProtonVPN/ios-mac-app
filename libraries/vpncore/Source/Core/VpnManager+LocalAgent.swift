@@ -416,9 +416,5 @@ extension VpnManager: LocalAgentDelegate {
     }
 }
 
-/// Enables checking server for maintenance and reconnecting to another server if that is the case
-/// Delete after the feature if fully well tested. Please also delete `reconnectionEnabled` from `extension NETunnelProviderProtocol`.
-struct VpnReconnectionFeatureFlag: FeatureFlag {
-    let category = "VPN"
-    let feature = "ReconnectionInMaintenance"
-}
+// This lets us not depend on LocalFeatureFlags in VPNShared library
+extension VPNShared.VpnReconnectionFeatureFlag: FeatureFlag { }
