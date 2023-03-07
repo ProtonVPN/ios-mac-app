@@ -49,7 +49,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     private var shouldStartServerRefreshOnWake: Bool {
-        tunnelProviderProtocol?.reconnectionEnabled == true && self.connectedIpId != nil && self.connectedLogicalId != nil
+        isEnabled(VpnReconnectionFeatureFlag())
+        && self.connectedIpId != nil
+        && self.connectedLogicalId != nil
     }
 
     override init() {
@@ -142,7 +144,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         }
 
         wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
-        if tunnelProviderProtocol?.reconnectionEnabled == true {
+        if isEnabled(VpnReconnectionFeatureFlag()) {
             serverStatusRefreshManager.updateConnectedIds(logicalId: connectedLogicalId, serverId: connectedIpId)
             serverStatusRefreshManager.start { }
         } else {
@@ -569,3 +571,6 @@ extension WireGuardLogLevel {
         }
     }
 }
+
+// This lets us not depend on LocalFeatureFlags in VPNShared library
+extension VPNShared.VpnReconnectionFeatureFlag: FeatureFlag { }

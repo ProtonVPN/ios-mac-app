@@ -24,7 +24,6 @@ extension NETunnelProviderProtocol {
     fileprivate enum CustomKeys: String, CaseIterable {
         case connectedLogicalIdKey = "PVPNLogicalID"
         case connectedServerIpIdKey = "PVPNServerIpID"
-        case reconnectionEnabledKey = "ReconnectionEnabled"
         case uidKey = "UID"
         case wgProtocolKey = "wg-protocol"
         case featureFlagOverridesKey = "FeatureFlagOverrides"
@@ -74,16 +73,6 @@ extension NETunnelProviderProtocol {
         set {
             ensureProviderConfig()
             providerConfiguration?[.wgProtocolKey] = newValue
-        }
-    }
-
-    public var reconnectionEnabled: Bool? {
-        get {
-            providerConfiguration?[.reconnectionEnabledKey] as? Bool
-        }
-        set {
-            ensureProviderConfig()
-            providerConfiguration?[.reconnectionEnabledKey] = newValue
         }
     }
 
