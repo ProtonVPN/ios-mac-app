@@ -381,12 +381,16 @@ class StatusViewModel {
         return cells
     }
 
+    private var netShieldV2StatsCell: TableViewCellModel {
+        return .netShieldStats(viewModel: NetShieldStatsViewModel.enabled(adsBlocked: 40, trackersStopped: 23, dataSaved: 92455, paused: true))
+    }
+
     private var netShieldV2Cells: [TableViewCellModel] {
         guard netShieldPropertyProvider.isUserEligibleForNetShield else {
             return [netShieldV2UpsellBannerCell]
         }
 
-        return [netShieldV2SelectionCell]
+        return [netShieldV2SelectionCell, netShieldV2StatsCell]
     }
 
     private var netShieldV2UpsellBannerCell: TableViewCellModel {

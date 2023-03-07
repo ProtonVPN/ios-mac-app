@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21699.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="88" id="5au-CD-Ljs" userLabel="NetShield Stats Table View Cell" customClass="NetShieldStatsTableViewCell" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" layoutMarginsFollowReadableWidth="YES" tableViewCell="5au-CD-Ljs" id="Y8Y-Fm-KPZ">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DEA-pc-fMP">
+                        <rect key="frame" x="16" y="0.0" width="288" height="88"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="wIs-Fn-KbH" userLabel="Ads Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="18" width="85.333333333333329" height="52"/>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="xll-LN-3xi" userLabel="Trackers Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="101.33333333333334" y="18" width="85.333333333333343" height="52"/>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Vvm-3z-o49" userLabel="Data Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="202.66666666666666" y="18" width="85.333333333333343" height="52"/>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="DEA-pc-fMP" firstAttribute="top" secondItem="Y8Y-Fm-KPZ" secondAttribute="top" id="ATb-1P-s3R"/>
+                    <constraint firstItem="DEA-pc-fMP" firstAttribute="bottom" secondItem="Y8Y-Fm-KPZ" secondAttribute="bottom" id="PMx-qb-sSN"/>
+                    <constraint firstItem="DEA-pc-fMP" firstAttribute="trailing" secondItem="Y8Y-Fm-KPZ" secondAttribute="trailingMargin" id="nc6-FH-31i"/>
+                    <constraint firstItem="DEA-pc-fMP" firstAttribute="leading" secondItem="Y8Y-Fm-KPZ" secondAttribute="leadingMargin" id="zcB-HR-ZgL"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="adsStatView" destination="wIs-Fn-KbH" id="7Oh-aj-siW"/>
+                <outlet property="dataStatView" destination="Vvm-3z-o49" id="E0c-7d-6mM"/>
+                <outlet property="trackersStatView" destination="xll-LN-3xi" id="ilQ-3m-Ole"/>
+            </connections>
+            <point key="canvasLocation" x="52.671755725190835" y="35.211267605633807"/>
+        </tableViewCell>
+    </objects>
+</document>
