@@ -133,9 +133,9 @@ class LoginRobot {
         }
         
         @discardableResult
-        func checkModalIsShown() -> LoginRobot {
-            XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: 5))
-            XCTAssert(app.staticTexts[modalSubtitle].waitForExistence(timeout: 5))
+        func checkModalIsShown(timeout: TimeInterval = 5) -> LoginRobot {
+            XCTAssert(app.staticTexts[modalTitle].waitForExistence(timeout: timeout))
+            XCTAssert(app.staticTexts[modalSubtitle].waitForExistence(timeout: timeout))
             XCTAssert(app.buttons[loginAgainButton].isEnabled)
             return LoginRobot()
         }

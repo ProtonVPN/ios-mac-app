@@ -35,6 +35,7 @@ class ProtonVPNUITests: XCTestCase {
         app.launchArguments += ["-BlockUpdatePrompt", "YES"]
         app.launchArguments += ["-AppleLanguages", "(en)"]
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        app.launchArguments += ["enforceUnauthSessionStrictVerificationOnBackend"]
 
         setupSnapshot(app)
         
@@ -100,7 +101,9 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func useAndContinueTap() {
-        app.buttons["Use and continue"].tap()
+        let button = app.buttons["Use and continue"]
+        _ = button.waitForExistence(timeout: 10)
+        button.tap()
     }
     
     func logInToProdIfNeeded() {
