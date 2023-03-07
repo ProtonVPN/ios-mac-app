@@ -49,6 +49,7 @@ enum TableViewCellModel {
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
     case attributedTooltip(text: NSAttributedString)
+    case netShieldStats(viewModel: NetShieldStatsViewModel)
 }
 
 protocol ButtonWithLoadingIndicatorController: AnyObject {
@@ -99,6 +100,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
         tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
+        tableView.register(NetShieldStatsTableViewCell.nib, forCellReuseIdentifier: NetShieldStatsTableViewCell.identifier)
     }
     
     public func update(rows: [IndexPath: TableViewCellModel]) {
@@ -316,6 +318,14 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.setup(title: title, accessibilityIdentifier: accessibilityIdentifier, color: color, controller: controller)
             
             return cell
+        case let .netShieldStats(viewModel):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NetShieldStatsTableViewCell.identifier) as? NetShieldStatsTableViewCell else {
+                return UITableViewCell()
+            }
+
+            cell.setup(with: viewModel)
+
+            return cell
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
@@ -344,6 +354,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return -1
         case .imageSubtitle:
             return -1
+        case .netShieldStats:
+            return UITableView.automaticDimension
         default:
             return UIConstants.cellHeight
         }
@@ -370,7 +382,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             
             cell.select()
             onSelectionChange?()
-            
         case .pushAccountDetails:
             guard let cell = cell as? AccountDetailsTableViewCell else { return }
             

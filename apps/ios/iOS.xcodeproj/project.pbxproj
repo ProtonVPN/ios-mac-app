@@ -137,10 +137,14 @@
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		A65DEEFDAF891142D8D50986 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */; };
 		AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */; };
+		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
+		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
 		AD6099FB299B2343007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A03299B89C0007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		AD609A04299D1120007E46BC /* ImageSubtitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */; };
 		AD609A05299D1120007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
+		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
+		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
@@ -779,8 +783,12 @@
 		954D2A931124ECB13F5DE123 /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		A5BC5042F59FA7B3799466BE /* Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-ProtonVPNUITests/Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
+		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
 		AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSubtitleTableViewCell.swift; sourceTree = "<group>"; };
 		AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSubtitleTableViewCell.xib; sourceTree = "<group>"; };
+		ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsTableViewCell.xib; sourceTree = "<group>"; };
+		ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsTableViewCell.swift; sourceTree = "<group>"; };
 		AEBAB5D5C383815028FB9B5F /* Pods-WireGuardNetworkExtensionTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardNetworkExtensionTests.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardNetworkExtensionTests/Pods-WireGuardNetworkExtensionTests.staging.xcconfig"; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -1577,6 +1585,10 @@
 			children = (
 				792B58BF2150DEA3000BB3A3 /* StatusViewController.swift */,
 				792B58C12150E278000BB3A3 /* StatusViewModel.swift */,
+				ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */,
+				ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */,
+				AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */,
+				AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */,
 			);
 			path = "Status Details";
 			sourceTree = "<group>";
@@ -2847,10 +2859,12 @@
 				E986309A269835E500F56B87 /* Localizable.strings in Resources */,
 				791DE5E4208DDA3000A29EA5 /* Main.storyboard in Resources */,
 				E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */,
+				ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */,
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
 				D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */,
 				E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
+				AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
 				E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */,
@@ -3394,6 +3408,7 @@
 				E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */,
 				E1D21AB321831DA2000C389B /* AnnotationViewModel.swift in Sources */,
 				7904DA4520E57BA3008A4FCB /* ServerUtility.swift in Sources */,
+				ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */,
 				F3082A6F27E2293D001A83DF /* CityItemViewModel.swift in Sources */,
 				E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */,
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
@@ -3487,6 +3502,7 @@
 				D5F56899232620C600795953 /* DependencyContainer.swift in Sources */,
 				A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */,
 				223BDF9C51D60D8AD239D951 /* AnnouncementFeatureView.swift in Sources */,
+				AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */,
 				66E34BB427ABE30B002FC827 /* AccountDetailsTableViewCell.swift in Sources */,
 				140F5CD9C21275193C0773F6 /* RoundedCornersView.swift in Sources */,
 				DA0FAF1A5F1E32A1ABAEEA4C /* SubuserAlertViewController.swift in Sources */,
