@@ -20,6 +20,7 @@ import Foundation
 import VPNShared
 import Timer
 
+/// Parent class for managers that have to perform some tasks periodically.
 public class RefreshManager {
     internal let workQueue: DispatchQueue
     internal let timerFactory: TimerFactory
@@ -31,6 +32,7 @@ public class RefreshManager {
 
     public private(set) var state: State = .stopped
     private var timer: BackgroundTimer?
+    private var nextRunTime: Date?
 
     public var timerRefreshInterval: TimeInterval {
         fatalError("\(#function) should be overridden by child class")
@@ -57,19 +59,53 @@ public class RefreshManager {
         }
     }
 
+    /// Pause manager in case when phone goes to sleep.
+    ///
+    /// This saves the time when timer was planned to run so after manager is resumed
+    /// it can restart timer to be run at planned time. This way if sleep was longer
+    /// than interval, work will be done right after resuming instead of waiting for
+    /// one more `timerRefreshInterval`.
+    public func suspend(completion: @escaping (() -> Void)) {
+        workQueue.async { [weak self] in
+            self?.nextRunTime = self?.timer?.nextTime
+            self?.stopTimer()
+            self?.state = .stopped
+            completion()
+        }
+    }
+
+    public func resume(completion: @escaping (() -> Void)) {
+        workQueue.async { [weak self] in
+            self?.state = .running
+            self?.startTimer(firstRunAfter: self?.nextRunTime?.timeIntervalSinceNow)
+            log.debug("Timer for \(String(describing: self)) resumed. Next run planned at \(String(describing: self?.nextRunTime?.timeIntervalSinceNow))", category: .connection)
+            completion()
+        }
+    }
+
     /// - Invariant: Will be called on `workQueue`.
     internal func work() {
         fatalError("\(#function) should be overridden by child class")
     }
 
     // MARK: - Timer
+
+    /// Start a timer that runs with `timerRefreshInterval` interval
+    ///
+    /// - Parameter firstRunAfter: If nil, first invocation of `work` will be after `timerRefreshInterval`.
+    /// Otherwise first run of `work` will be performed after this number of seconds or now if value is negative.
+    ///
     /// - Note: Call this function on `workQueue`.
-    internal func startTimer() {
+    internal func startTimer(firstRunAfter: TimeInterval? = nil) {
         #if DEBUG
         dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        timer = timerFactory.scheduledTimer(runAt: Date().addingTimeInterval(timerRefreshInterval),
+        let firstRunAt = firstRunAfter != nil
+            ? Date().addingTimeInterval(min(firstRunAfter!, 0))
+            : Date().addingTimeInterval(timerRefreshInterval)
+
+        timer = timerFactory.scheduledTimer(runAt: firstRunAt,
                                             repeating: timerRefreshInterval,
                                             queue: workQueue) { [weak self] in
             self?.work()

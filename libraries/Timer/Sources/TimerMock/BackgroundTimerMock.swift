@@ -27,6 +27,8 @@ public class BackgroundTimerMock: BackgroundTimer {
 
     public var isValid: Bool = true
 
+    public var nextTime: Date { nextRunTime }
+
     public func invalidate() {
         isValid = false
     }

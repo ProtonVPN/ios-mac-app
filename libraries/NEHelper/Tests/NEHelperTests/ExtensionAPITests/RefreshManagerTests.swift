@@ -39,7 +39,38 @@ final class RefreshManagerTests: XCTestCase {
         wait(for: [expectationStart, expectationWork], timeout: 0.1)
     }
 
+    func testManagerCanBePausedAndResumed() throws {
+        let expectationStart = XCTestExpectation(description: "Timer was started")
+        let expectationWork = XCTestExpectation(description: "Timer work closure was called while it shouldn't")
+        expectationWork.isInverted = true
+
+        // Base for timeouts: make sure that we set proper wait times, that are
+        // either longer or shorter than refresh interval.
+        let waitIntervalBase = 0.01
+
+        let timerFactory = TimerFactoryImplementation()
+        let manager = TestRefreshManager(timerFactory: timerFactory, workQueue: DispatchQueue.main, interval: waitIntervalBase) {
+            expectationWork.fulfill()
+        }
+        manager.start {
+            expectationStart.fulfill()
+        }
+        manager.suspend {}
+        // At this time work should not have been called, because we have paused manager
+        wait(for: [expectationStart, expectationWork], timeout: waitIntervalBase * 2)
+
+        let expectationWorkDone = XCTestExpectation(description: "Timer work closure that should be called")
+        manager.workCallback = {
+            expectationWorkDone.fulfill()
+        }
+        manager.resume { }
+
+        // Now work should be done right after resume, as the time has passed, so we wait shorter than the interval
+        wait(for: [expectationWorkDone], timeout: waitIntervalBase / 10)
+    }
 }
+
+// MARK: - Mock
 
 private class TestRefreshManager: RefreshManager {
 
