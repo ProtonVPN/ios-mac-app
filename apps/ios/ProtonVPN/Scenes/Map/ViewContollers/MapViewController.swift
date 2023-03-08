@@ -54,6 +54,7 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.image = Asset.mainMap.image
         
         viewModel?.contentChanged = { [weak self] in self?.contentChanged() }
         viewModel?.connectionStateChanged = { [weak self] in
