@@ -643,10 +643,10 @@ final class SettingsViewModel {
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
+                    completion(true)
                     self?.vpnGateway.reconnect(with: type)
                     self?.connectionStatusService.presentStatusViewController()
                     self?.netShieldPropertyProvider.netShieldType = type
-                    completion(true)
                 }))
             case .immediately:
                 self?.netShieldPropertyProvider.netShieldType = type

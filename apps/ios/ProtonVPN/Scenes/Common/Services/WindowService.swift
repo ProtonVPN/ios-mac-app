@@ -140,6 +140,7 @@ class WindowServiceImplementation: WindowService {
         
         for existingController in navigationController.viewControllers {
             if object_getClassName(controller) == object_getClassName(existingController) {
+                navigationController.popToViewController(existingController, animated: true)
                 return // Don't add two controllers of the same class
             }
         }
