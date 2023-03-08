@@ -20,6 +20,7 @@ import Foundation
 
 public protocol BackgroundTimer {
     var isValid: Bool { get }
+    var nextTime: Date { get }
     mutating func invalidate()
 }
 
@@ -96,6 +97,10 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
     private let closure: () -> Void
 
     public var isValid: Bool
+    public var nextTime: Date
+
+    // Use this to inject mocked date during tests
+    public var currentDate: () -> Date = { Date() }
 
     init(runAt nextRunTime: Date,
          repeating: Double?,
@@ -113,9 +118,14 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
             timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow)
         }
 
+        nextTime = nextRunTime
         isValid = true
         timerSource.setEventHandler { [weak self] in
-            self?.closure()
+            guard let self else { return }
+            if let repeating {
+                self.nextTime = self.currentDate().addingTimeInterval(repeating)
+            }
+            self.closure()
         }
         timerSource.resume()
     }
