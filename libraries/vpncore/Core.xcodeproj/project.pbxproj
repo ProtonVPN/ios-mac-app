@@ -158,6 +158,10 @@
 		AD1DDFC329BF462500D14BE9 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC129BF462500D14BE9 /* DataManager.swift */; };
 		AD1DDFC529BF465C00D14BE9 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */; };
 		AD1DDFC629BF465C00D14BE9 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */; };
+		AD0397BE29B8A1D4000E1533 /* StrongNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0397BD29B8A1D4000E1533 /* StrongNotificationTests.swift */; };
+		AD0397BF29B8A1D4000E1533 /* StrongNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0397BD29B8A1D4000E1533 /* StrongNotificationTests.swift */; };
+		AD37FAC729B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
+		AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
 		AD41A854298A83590003393D /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
 		AD41A859298ACED40003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
 		AD41A85A298ACED50003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
@@ -826,6 +830,8 @@
 		A4BE0B5344CE1BA154F162A3 /* ReportsBugResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsBugResponse.swift; sourceTree = "<group>"; };
 		AD1DDFC129BF462500D14BE9 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		AD1DDFC429BF465C00D14BE9 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
+		AD0397BD29B8A1D4000E1533 /* StrongNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrongNotificationTests.swift; sourceTree = "<group>"; };
+		AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrongNotification.swift; sourceTree = "<group>"; };
 		AE26A503B6B1753094CB6F2E /* Pods-Core-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-iosTests-metadata.plist"; sourceTree = "<group>"; };
 		BC16534F9F2B242244E936EF /* Pods-Core-vpncore-macosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1427,6 +1433,7 @@
 			isa = PBXGroup;
 			children = (
 				D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */,
+				AD0397BD29B8A1D4000E1533 /* StrongNotificationTests.swift */,
 				4C83C4632869ACB5000A3FB4 /* LocalizationUtilityTests.swift */,
 			);
 			path = Utilities;
@@ -1943,6 +1950,7 @@
 				F36ECB6C2610A8D60089B898 /* Siri */,
 				F36ECB6B2610A8C90089B898 /* Versioning */,
 				E96B765D27AC00B300079B04 /* Updates */,
+				AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */,
 				E1B5F67821B824A500B558B0 /* Arithmetic.swift */,
 				E1616BEE21C951DB00F42D79 /* HexColor.swift */,
 				E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */,
@@ -2939,6 +2947,7 @@
 				D5DC52C3252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				E5ADAA8D2930F8BD004F105C /* AppStateManagerMock.swift in Sources */,
 				F365355B2638522E001B7E88 /* LocalAgentState.swift in Sources */,
+				AD37FAC729B89FF900D4DE4E /* StrongNotification.swift in Sources */,
 				E196BE4C23742116003E5832 /* Collection+Extension.swift in Sources */,
 				E5CBA02128DB23D200EA1F25 /* OfferPanel.swift in Sources */,
 				E1B5F68121B839A300B558B0 /* ServerStorage.swift in Sources */,
@@ -3067,6 +3076,7 @@
 				4C1C2F2F28805CDA00E3B0F8 /* TunnelProviderClientMessageTests.swift in Sources */,
 				E53406A828E1B67A0078A7A3 /* AnnouncementTests.swift in Sources */,
 				4CFDF0B7287EE37500386626 /* MockDependencyContainer.swift in Sources */,
+				AD0397BE29B8A1D4000E1533 /* StrongNotificationTests.swift in Sources */,
 				E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				D523F11624B759A5007DB086 /* StringUrl.swift in Sources */,
 				D59671DE253D5E3A0061A75F /* AnnouncementStorageMock.swift in Sources */,
@@ -3262,6 +3272,7 @@
 				4C83C46E2869F956000A3FB4 /* AvailabilityCheckerFactory.swift in Sources */,
 				4C096208285B6ABB00556E07 /* CredentialsConfiguratorMock.swift in Sources */,
 				E9DC79C5262DBF02001A0FC0 /* SmartProtocolAvailabilityChecker.swift in Sources */,
+				AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */,
 				E1616B8921C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				E532A8B72926432900096D2D /* OptionSet+Extension.swift in Sources */,
 				E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */,
@@ -3361,6 +3372,7 @@
 				F307F7B627C38B98004FD4A7 /* NATTypePropertyProviderImplementationTests.swift in Sources */,
 				E5E4657A2951B1F500A4DE80 /* TelemetryMock.swift in Sources */,
 				E9037D31284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */,
+				AD0397BF29B8A1D4000E1533 /* StrongNotificationTests.swift in Sources */,
 				D5D2957725A5D979000FBD74 /* UserTierProviderImplementationTests.swift in Sources */,
 				F307F7C027C3C55D004FD4A7 /* SafeModePropertyProviderImplementationTests.swift in Sources */,
 				4C263C3F286F0E7700F48974 /* LocalAgentConnectionMock.swift in Sources */,
