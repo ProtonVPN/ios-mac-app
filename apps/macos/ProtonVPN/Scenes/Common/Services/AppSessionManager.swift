@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import VPNShared
+import ProtonCore_Utilities
 
 enum SessionStatus {
     case notEstablished
@@ -36,8 +37,6 @@ protocol AppSessionManagerFactory {
 protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
-
-    var sessionChanged: Notification.Name { get }
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
@@ -85,7 +84,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var unauthKeychain: UnauthKeychainHandle = factory.makeUnauthKeychainHandle()
 
-    let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished {
         didSet { loggedIn = sessionStatus == .established }
     }
@@ -144,7 +142,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if sessionStatus == .notEstablished {
             sessionStatus = .established
             propertiesManager.hasConnected = true
-            postNotification(name: sessionChanged, object: self.factory.makeVpnGateway())
+            post(notification: SessionChanged(data: .left(self.factory.makeVpnGateway())))
         }
 
         appSessionRefreshTimer.start()
@@ -294,7 +292,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func logoutRoutine(reason: String?) {
         sessionStatus = .notEstablished
-        postNotification(name: sessionChanged, object: reason)
+        post(notification: SessionChanged(data: .right(reason)))
         appSessionRefreshTimer.start()
         logOutCleanup()
     }
@@ -321,9 +319,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // End of the logout logic
 
-    private func postNotification(name: Notification.Name, object: Any?) {
+    private func post(notification: any StrongNotification) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: name, object: object)
+            NotificationCenter.default.post(notification, object: self)
         }
     }
 
@@ -358,4 +356,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
         alertService.push(alert: alert)
     }
+}
+
+struct SessionChanged: StrongNotification {
+    static var name: Notification.Name { Notification.Name("AppSessionManagerSessionChanged") }
+    let data: Either<VpnGatewayProtocol, String?>
 }

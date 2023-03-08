@@ -180,7 +180,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLoginPostsSessionChangedNotification() throws {
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
 
         login(with: testAuthCredentials)
 
@@ -194,7 +194,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         manager.sessionStatus = .established
 
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
         sessionChangedNotificationExpectation.isInverted = true
 
         manager.attemptSilentLogIn { result in
@@ -276,7 +276,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     // MARK: Logout tests
 
     func testNoAlertShownOnLogoutWhenNotLoggedIn() {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
 
         manager.logOut() // logOut runs asynchronously but has no completion handler
 
@@ -285,7 +285,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testNoAlertShownOnLogoutWhenNotDisconnected() {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
         login(with: testAuthCredentials)
         appStateManager.state = .disconnected
 
@@ -296,7 +296,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLogoutShowsNoAlertWhenConnecting() {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
         login(with: testAuthCredentials)
         appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
 
@@ -308,7 +308,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 
     func testLogoutShowsNoAlertWhenConnectedButForceIsTrue() {
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
         login(with: testAuthCredentials)
         appStateManager.state = .connected(.init(username: "", address: ""))
 
@@ -321,7 +321,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 
     func testLogoutLogsOutWhenConnectedAndLogoutAlertConfirmed() {
         let logoutAlertExpectation = XCTestExpectation(description: "Manager should not time out when attempting a logout")
-        let logoutFinishExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let logoutFinishExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
         login(with: testAuthCredentials)
         appStateManager.state = .connected(.init(username: "", address: ""))
         alertService.addAlertHandler(for: LogoutWarningLongAlert.self, handler: { alert in
@@ -357,7 +357,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     /// Convenience method for getting AppSessionManager into the logged in state
     func login(with authCredentials: AuthCredentials) {
         let loginExpectation = XCTestExpectation(description: "Manager should not time out when attempting a login")
-        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: manager.sessionChanged)
+        let sessionChangedNotificationExpectation = XCTNSNotificationExpectation(name: SessionChanged.name, object: manager)
 
         networkingDelegate.apiVpnLocation = testData.vpnLocation
         networkingDelegate.apiClientConfig = testData.defaultClientConfig
