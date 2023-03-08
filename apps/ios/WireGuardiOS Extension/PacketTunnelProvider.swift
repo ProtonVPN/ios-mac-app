@@ -450,8 +450,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         self.stopTestingConnectivity()
         #endif
 
-        certificateRefreshManager.stop {
-            self.serverStatusRefreshManager.stop {
+        certificateRefreshManager.suspend {
+            self.serverStatusRefreshManager.suspend {
                 completionHandler()
             }
         }
@@ -464,9 +464,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         self.startTestingConnectivity()
         #endif
 
-        certificateRefreshManager.start {
+        certificateRefreshManager.resume {
             if self.shouldStartServerRefreshOnWake {
-                self.serverStatusRefreshManager.start { }
+                self.serverStatusRefreshManager.resume { }
             }
         }
     }
