@@ -123,4 +123,33 @@ final class TimerTests: XCTestCase {
         wait(for: [expectation], timeout: 0.1)
         timer = nil
     }
+
+    func testNextTimeIsSet() throws {
+        let nextRun = Date().addingTimeInterval(100.0)
+        timer = factory.scheduledTimer(runAt: nextRun, repeating: 1, queue: DispatchQueue.global()) {
+        }
+        XCTAssertNotNil(timer?.nextTime, "Next run time should be set")
+        XCTAssertEqual(timer?.nextTime, nextRun)
+        timer = nil
+    }
+
+    func testNextTimeIsUpdatedOnEachRun() throws {
+        let expectation = XCTestExpectation(description: "Timer closure was called")
+
+        let interval = 888.888
+        let firstRun = Date().addingTimeInterval(0.01)
+        let nextRunDate = Date(timeIntervalSinceNow: 11) // Any date object
+
+        timer = factory.scheduledTimer(runAt: firstRun, repeating: interval, queue: DispatchQueue.global()) {
+            XCTAssertEqual(self.timer?.nextTime, nextRunDate.addingTimeInterval(interval), "New nextTime has to be updated")
+            expectation.fulfill()
+        }
+        // Inject mocked date
+        (timer as! BackgroundTimerImplementation).currentDate = { nextRunDate }
+
+        XCTAssertEqual(timer?.nextTime, firstRun)
+
+        wait(for: [expectation], timeout: 0.1)
+        timer = nil
+    }
 }
