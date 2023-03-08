@@ -46,8 +46,7 @@ class ProtonVpnMenuViewModel {
         self.factory = factory
         self.appSessionManager = factory.makeAppSessionManager()
         self.navService = factory.makeNavigationService()
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged(_:)),
-                                               name: appSessionManager.sessionChanged, object: nil)
+        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
     }
     
     var isPreferencesEnabled: Bool {
@@ -83,7 +82,7 @@ class ProtonVpnMenuViewModel {
     }
     
     // MARK: - Private functions
-    @objc private func sessionChanged(_ notification: Notification) {
+    private func sessionChanged(data: SessionChanged.T) {
         contentChanged?()
     }
 }

@@ -95,12 +95,12 @@ class StatusMenuWindowModel {
     
     // MARK: - Private functions
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
-                                               name: appSessionManager.sessionChanged, object: nil)
+        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
     }
-    
-    @objc private func sessionChanged(_ notification: Notification) {
-        if isSessionEstablished, let vpnGateway = notification.object as? VpnGatewayProtocol {
+
+    private func sessionChanged(data: SessionChanged.T) {
+        if case .left(let vpnGateway) = data {
+            assert(isSessionEstablished, "Expected session to be established when receiving gateway")
             sessionEstablished(vpnGateway: vpnGateway)
         } else {
             sessionEnded()

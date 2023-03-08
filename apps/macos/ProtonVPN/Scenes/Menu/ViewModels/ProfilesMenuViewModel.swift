@@ -43,8 +43,7 @@ class ProfilesMenuViewModel {
         self.appSessionManager = appSessionManager
         self.navService = navService
         
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
-                                               name: appSessionManager.sessionChanged, object: nil)
+        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
     }
     
     var isOverviewEnabled: Bool {
@@ -64,7 +63,7 @@ class ProfilesMenuViewModel {
     }
     
     // MARK: - Private functions
-    @objc private func sessionChanged() {
+    private func sessionChanged(data: SessionChanged.T) {
         contentChanged?()
     }
 }

@@ -81,8 +81,7 @@ class NavigationService {
     }
     
     func launched() {
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged(_:)),
-                                               name: appSessionManager.sessionChanged, object: nil)
+        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(powerOff(_:)),
                                                           name: NSWorkspace.willPowerOffNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(sessionSwitchedOut(_:)), name: NSWorkspace.sessionDidResignActiveNotification, object: nil)
@@ -118,12 +117,13 @@ class NavigationService {
         vpnGateway.autoConnect()
     }
     
-    @objc private func sessionChanged(_ notification: Notification) {
+    private func sessionChanged(data: SessionChanged.T) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
-        
-        if appSessionManager.sessionStatus == .established, let vpnGateway = notification.object as? VpnGatewayProtocol {
+
+        switch data {
+        case .left(let vpnGateway):
+            assert(appSessionManager.sessionStatus == .established, "Expected session to be established when receiving gateway")
             self.vpnGateway = vpnGateway
-            
             switch appStateManager.state {
             case .disconnected, .aborted:
                 if let username = authKeychain.fetch()?.username, propertiesManager.getAutoConnect(for: username).enabled {
@@ -132,12 +132,12 @@ class NavigationService {
             default:
                 break
             }
-            
+
             if appHasPresented {
                 showSidebar()
             }
-        } else {
-            showLogIn(initialError: notification.object as? String)
+        case .right(let loginError):
+            showLogIn(initialError: loginError)
         }
     }
     
