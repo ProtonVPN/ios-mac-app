@@ -43,7 +43,7 @@ extension LocalAgentFeatures {
             return nil
         }
 
-        return getInt(key.rawValue)
+        return Int(getInt(key.rawValue))
     }
     
     func getBool(key: LocalAgentFeaturesKeys) -> Bool? {
@@ -67,7 +67,7 @@ extension LocalAgentFeatures {
     }
 
     func set(_ key: LocalAgentFeaturesKeys, value: Int) {
-        setInt(key.rawValue, value: value)
+        setInt(key.rawValue, value: Int64(value))
     }
 
     func set(_ key: LocalAgentFeaturesKeys, value: String) {

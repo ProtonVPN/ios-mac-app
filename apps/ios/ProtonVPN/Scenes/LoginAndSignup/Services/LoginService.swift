@@ -82,7 +82,7 @@ final class CoreLoginService {
     }
 
     private func makeLoginInterface() -> LoginAndSignupInterface {
-        let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
+        let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen, signupInitialMode: .external)
         let signupAvailability = SignupAvailability.available(parameters: signupParameters)
         let login = LoginAndSignup.init(appName: "Proton VPN",
                                         clientApp: .vpn,
@@ -132,7 +132,7 @@ final class CoreLoginService {
         case .loginStateChanged(.dataIsAvailable(let loginData)), .signupStateChanged(.dataIsAvailable(let loginData)):
             log.debug("Login or signup process in progress", category: .app)
             // Update the session id in the networking stack after login
-            networking.apiService.setSessionUID(uid: loginData.credential.UID)
+            networking.apiService.setSessionUID(uid: loginData.getCredential.UID)
         }
     }
 
