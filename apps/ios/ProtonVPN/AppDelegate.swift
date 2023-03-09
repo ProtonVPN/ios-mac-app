@@ -33,6 +33,7 @@ import ProtonCore_Log
 import ProtonCore_UIFoundations
 import ProtonCore_Environment
 import ProtonCore_FeatureSwitch
+import ProtonCore_Observability
 
 // Local dependencies
 import vpncore
@@ -259,6 +260,7 @@ extension AppDelegate {
         }
 
         FeatureFactory.shared.enable(&.unauthSession)
+        FeatureFactory.shared.enable(&.observability)
         FeatureFactory.shared.enable(&.externalSignup)
         
         #if DEBUG
@@ -267,9 +269,10 @@ extension AppDelegate {
             FeatureFactory.shared.enable(&.enforceUnauthSessionStrictVerificationOnBackend)
         }
         #endif
-
-        container.makeNetworking().apiService.acquireSessionIfNeeded { _ in
+        let apiService = container.makeNetworking().apiService
+        apiService.acquireSessionIfNeeded { _ in
             /* the result doesn't require any handling */
         }
+        ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
 }
