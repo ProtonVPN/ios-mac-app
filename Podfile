@@ -79,14 +79,14 @@ abstract_target 'Core' do
         pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macos' do        
-        platform :osx, '10.15'
+        platform :osx, '11.0'
     end
     target 'vpncore-iosTests' do
         platform :ios, '14.0'
         pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macosTests' do
-        platform :osx, '10.15'
+        platform :osx, '11.0'
         pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
 end
