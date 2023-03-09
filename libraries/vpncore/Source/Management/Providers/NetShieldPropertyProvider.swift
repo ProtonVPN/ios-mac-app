@@ -125,9 +125,6 @@ public enum NetShieldFeatureFlag: String, FeatureFlag {
     public var category: String {
         "NetShield"
     }
-    public var feature: String {
-        rawValue
-    }
 
     /// Controls the deployment of NetshieldV2, including updated NetShield UI
     case netShieldStats = "NetShieldStats"

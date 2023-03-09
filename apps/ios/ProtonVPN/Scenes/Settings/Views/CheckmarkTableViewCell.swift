@@ -35,7 +35,7 @@ class CheckmarkTableViewCell: UITableViewCell {
 
     func setup(isEnabled: Bool) {
         backgroundColor = .secondaryBackgroundColor()
-        tintColor = .normalTextColor()
+        tintColor = .iconAccent()
 
         label.font = UIFont.systemFont(ofSize: 17)
         label.textColor = .normalTextColor()

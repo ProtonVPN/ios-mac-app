@@ -69,10 +69,10 @@ class StatusViewModel {
         return tier
     }
 
-    private var isNetShieldStatsEnabled: Bool { LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats) }
+    private let isNetShieldStatsEnabled: Bool = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
     private var shouldShowNetShieldV1: Bool { propertiesManager.featureFlags.netShield && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { propertiesManager.featureFlags.netShield && isNetShieldStatsEnabled }
-    
+
     private var timer: Timer?
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
