@@ -139,7 +139,7 @@ final class LoginViewModel {
         case let .success(status):
             switch status {
             case let .finished(data):
-                appSessionManager.finishLogin(authCredentials: AuthCredentials(data.credential), success: {
+                appSessionManager.finishLogin(authCredentials: AuthCredentials(data.getCredential), success: {
                     // Strongly capture `self` in this closure to delay de-allocation until sysex tour is shown
                     self.silentlyCheckForUpdates()
                     // On manual login, show sysex tour if needed and/or switch to smart protocol if possible

@@ -283,7 +283,7 @@ extension AppDelegate {
         }
 
         FeatureFactory.shared.enable(&.unauthSession)
-
+        
         #if DEBUG
         // this flag is for tests — it should never be turned on in release builds
         if ProcessInfo.processInfo.arguments.contains("enforceUnauthSessionStrictVerificationOnBackend") {
