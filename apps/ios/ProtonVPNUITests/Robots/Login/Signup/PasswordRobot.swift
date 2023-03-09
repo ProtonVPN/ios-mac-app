@@ -6,7 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import pmtest
+import fusion
 
 fileprivate let accountVerificationTitle = "PasswordViewController.createPasswordTitleLabel"
 fileprivate let passwordNameTextFieldId = "PasswordViewController.passwordTextField.textField"

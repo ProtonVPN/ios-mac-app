@@ -6,7 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import pmtest
+import fusion
 
 fileprivate let profileSameName = "Profile with same name already exists"
 fileprivate let nameField = "Enter Profile Name"

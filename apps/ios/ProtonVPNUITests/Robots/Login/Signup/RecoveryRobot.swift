@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import pmtest
+import fusion
 import ProtonCore_TestingToolkit
 
 private let phoneTextFieldId = "RecoveryViewController.recoveryPhoneTextField.textField"

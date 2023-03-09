@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import pmtest
+import fusion
 
 fileprivate let establishConnectionTitle = "Establish your first connection"
 fileprivate let connectNowButton = "Connect now"

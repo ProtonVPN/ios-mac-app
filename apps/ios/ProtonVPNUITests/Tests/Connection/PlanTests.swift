@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-import pmtest
+import fusion
 
 class PlanTests: ProtonVPNUITests {
 

@@ -35,6 +35,16 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
 }
 
 extension iOSNetworkingDelegate {
+    var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate? {
+        get { humanVerify?.responseDelegateForLoginAndSignup }
+        set { humanVerify?.responseDelegateForLoginAndSignup = newValue }
+    }
+
+    var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate? {
+        get { humanVerify?.paymentDelegateForLoginAndSignup }
+        set { humanVerify?.paymentDelegateForLoginAndSignup = newValue }
+    }
+
     func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
         humanVerify?.onHumanVerify(parameters: parameters, currentURL: currentURL, completion: completion)
     }

@@ -13,6 +13,10 @@ import ProtonCore_Services
 
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {
+    // these belong to HumanVerifyDelegate
+    weak var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
+    weak var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
+
     private let alertService: CoreAlertService
 
     init(alertService: CoreAlertService) {
