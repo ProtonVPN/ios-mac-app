@@ -16,7 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import pmtest
+import fusion
 
 fileprivate let summaryTitle = "Welcome to Proton VPN"
 fileprivate let summaryDescription = "Learn how to get the most out of Proton VPN in just a few seconds"

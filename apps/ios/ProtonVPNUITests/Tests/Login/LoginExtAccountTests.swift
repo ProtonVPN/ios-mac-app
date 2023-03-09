@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import pmtest
+import fusion
 import ProtonCore_TestingToolkit
 
 @available(iOS 15.0, *)

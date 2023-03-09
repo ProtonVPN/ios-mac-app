@@ -6,7 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import pmtest
+import fusion
 import ProtonCore_Doh
 import ProtonCore_QuarkCommands
 import ProtonCore_TestingToolkit

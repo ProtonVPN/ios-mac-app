@@ -17,13 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import XCTest
-import pmtest
+import fusion
 import ProtonCore_TestingToolkit
 import ProtonCore_QuarkCommands
 import ProtonCore_CoreTranslation
 import ProtonCore_Environment
 
-final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
+final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
@@ -48,10 +48,13 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
         _ = MainRobot()
             .showLogin()
         
-        _ = ProtonCore_TestingToolkit.LoginRobot()
-            .fillUsername(username: randomUsername)
-            .fillpassword(password: randomPassword)
-            .signIn(robot: MainRobot.self)
+        _ = SigninExternalAccountsCapability()
+            .signInWithAccount(
+                userName: randomUsername,
+                password: randomPassword,
+                loginRobot: ProtonCore_TestingToolkit.LoginRobot(),
+                retRobot: MainRobot.self
+            )
         
         correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
@@ -67,10 +70,13 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
         _ = MainRobot()
             .showLogin()
         
-        _ = ProtonCore_TestingToolkit.LoginRobot()
-            .fillUsername(username: randomEmail)
-            .fillpassword(password: randomPassword)
-            .signIn(robot: MainRobot.self)
+        _ = SigninExternalAccountsCapability()
+            .signInWithAccount(
+                userName: randomEmail,
+                password: randomPassword,
+                loginRobot: ProtonCore_TestingToolkit.LoginRobot(),
+                retRobot: MainRobot.self
+            )
         
         correctUserIsLogedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
     }
@@ -85,72 +91,68 @@ final class ExternalAccountsCapabilityATests: ProtonVPNUITests {
 
         _ = MainRobot()
             .showLogin()
-        
-        _ = ProtonCore_TestingToolkit.LoginRobot()
-            .fillUsername(username: randomUsername)
-            .fillpassword(password: randomPassword)
-            .signIn(robot: MainRobot.self)
-        
+
+        _ = SigninExternalAccountsCapability()
+            .signInWithAccount(
+                userName: randomUsername,
+                password: randomPassword,
+                loginRobot: ProtonCore_TestingToolkit.LoginRobot(),
+                retRobot: MainRobot.self
+            )
+
         correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
     
 //    Sign-up:
 //    The UI for sign-up with internal account is not available
-//    The UI for sign-up with external account is not available
-//    Sign-up with username account works
-    
-    func testSignUpWithInternalAccountIsNotAvailable() {
+//    Sign-up with external account works
+//    The UI for sign-up with username account is not available
+    @MainActor
+    func testSignUpWithInternalAccountIsNotAvailable() async throws {
         _ = MainRobot()
             .showSignup()
-        
+
         ProtonCore_TestingToolkit.SignupRobot()
             .verify.domainsButtonIsNotShown()
-    }
-    
-    func testSignUpWithExternalAccountIsNotAvailable() {
-        _ = MainRobot()
-            .showSignup()
-        
-        ProtonCore_TestingToolkit.SignupRobot()
-            .verify.otherAccountExtButtonIsNotShown()
+            .verify.otherAccountButtonIsNotShown()
     }
 
     @MainActor
-    func testSignUpWithUsernameAccountWorks() async throws {
+    func testSignUpWithExternalAccountWorks() async throws {
         try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
-        
-        let randomUsername = StringUtils().randomAlphanumericString(length: 8)
-        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
-        
+        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+
         _ = MainRobot()
             .showSignup()
-        
-        let robot = ProtonCore_TestingToolkit.SignupRobot()
-            .verify.domainsButtonIsNotShown()
-            .verify.signupScreenIsShown()
-            .insertName(name: randomUsername)
-            .nextButtonTap(robot: ProtonCore_TestingToolkit.PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .insertPassword(password: randomPassword)
-            .insertRepeatPassword(password: randomPassword)
-            .nextButtonTap(robot: ProtonCore_TestingToolkit.RecoveryRobot.self)
-            .verify.recoveryScreenIsShown()
-            .insertRecoveryEmail(email: randomEmail)
-            .nextButtonTap(robot: SignupHumanVerificationV3Robot.self)
-            .verify.isHumanVerificationRequired()
-            
-        // workaround to have this test passing on the CI
-        SignupHumanVerificationV3Robot().button(CoreString._hv_email_method_name).wait(time: 5.0)
-        
-        _ = robot
-            .proceed(email: randomEmail, code: "666666", to: CreatingAccountRobot.self)
+
+        SignupExternalAccountsCapability()
+            .signUpWithExternalAccount(
+                signupRobot: ProtonCore_TestingToolkit.SignupRobot(),
+                userEmail: randomEmail,
+                password: randomPassword,
+                verificationCode: "666666",
+                retRobot: CreatingAccountRobot.self
+            )
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
+
         _ = skipOnboarding()
+
         MainRobot()
             .goToSettingsTab()
-            .verify.userIsCreated(randomUsername, "Proton VPN Free")
+            .verify.userIsCreated(randomEmail, "Proton VPN Free")
+    }
+
+    @MainActor
+    func testSignUpWithUsernameAccountIsNotAvailable() async throws {
+        _ = MainRobot()
+            .showSignup()
+
+        ProtonCore_TestingToolkit.SignupRobot()
+            .verify.domainsButtonIsNotShown()
+            .verify.otherAccountButtonIsNotShown()
     }
 }
 
