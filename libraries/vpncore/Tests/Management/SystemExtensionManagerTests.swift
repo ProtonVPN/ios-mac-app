@@ -74,7 +74,6 @@ class SystemExtensionManagerTests: XCTestCase {
             XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
             return
         }
-        XCTAssertEqual(alert.extensionsCount, 2, "Alert should have been for both extensions")
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
@@ -139,7 +138,6 @@ class SystemExtensionManagerTests: XCTestCase {
             XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
             return
         }
-        XCTAssertEqual(alert.extensionsCount, 2, "Alert should have been for both extensions")
 
         wait(for: [installFinished], timeout: expectationTimeout)
 
@@ -184,7 +182,6 @@ class SystemExtensionManagerTests: XCTestCase {
             XCTFail("Expected only alert to be SystemExtensionTourAlert: \(String(describing: alertService.alerts))")
             return
         }
-        XCTAssertEqual(alert.extensionsCount, 1, "Alert should have been for one extension")
 
         wait(for: [installFinished], timeout: expectationTimeout)
 

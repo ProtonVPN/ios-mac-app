@@ -269,10 +269,7 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SystemExtensionTourAlert) {
-        let viewModel = SystemExtensionGuideViewModel(extensionsCount: alert.extensionsCount,
-                                                      userWasShownTourBefore: alert.userWasShownTourBefore,
-                                                      alertService: self,
-                                                      propertiesManager: propertiesManager,
+        let viewModel = SystemExtensionGuideViewModel(userWasShownTourBefore: alert.userWasShownTourBefore,
                                                       cancelledHandler: alert.cancelHandler)
         windowService.openSystemExtensionGuideWindow(viewModel: viewModel)
     }

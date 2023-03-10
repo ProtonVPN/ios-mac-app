@@ -58,7 +58,8 @@ public class CoreAppConstants {
         public static let moderateNAT = "https://protonvpn.com/support/moderate-nat"
         public static let safeMode = "https://protonvpn.com/support/non-standard-ports"
         public static let loginProblems = "https://protonvpn.com/support/login-problems"
-        
+        public static let systemExtensionsInstallationHelp = "https://protonvpn.com/support/how-to-change-vpn-protocols/"
+
         public static let learnMoreSmartRouting = "https://protonvpn.com/support/smart-routing"
         public static let learnMoreStreaming = "https://protonvpn.com/support/streaming-guide/"
         public static let learnMoreP2p = "https://protonvpn.com/support/bittorrent-vpn/"

@@ -624,11 +624,9 @@ public class SystemExtensionTourAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     public var cancelHandler: () -> Void
-    public var extensionsCount: Int
     public var userWasShownTourBefore: Bool
     
-    public init(extensionsCount: Int, userWasShownTourBefore: Bool, cancelHandler: @escaping() -> Void) {
-        self.extensionsCount = extensionsCount
+    public init(userWasShownTourBefore: Bool, cancelHandler: @escaping() -> Void) {
         self.userWasShownTourBefore = userWasShownTourBefore
         self.cancelHandler = cancelHandler
     }

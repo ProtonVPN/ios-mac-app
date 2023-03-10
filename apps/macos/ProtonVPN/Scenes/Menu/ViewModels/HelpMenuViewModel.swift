@@ -47,9 +47,11 @@ class HelpMenuViewModel {
                         & LogContentProviderFactory
                         & AuthKeychainHandleFactory
                         & AppInfoFactory
+                        & WindowServiceFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -87,6 +89,12 @@ class HelpMenuViewModel {
             self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.wireGuardLogFilename)
             self.navService.openLogsFolder(filename: AppConstants.Filenames.wireGuardLogFilename)
         }
+    }
+
+    func systemExtensionTutorialAction() {
+        let viewModel = SystemExtensionGuideViewModel(userWasShownTourBefore: true,
+                                                      cancelledHandler: {})
+        windowService.openSystemExtensionGuideWindow(viewModel: viewModel)
     }
     
     func selectClearApplicationData() {

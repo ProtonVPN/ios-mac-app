@@ -177,6 +177,9 @@
 /* Main mac app menu item */
 "_clear_application_data" = "Clear Application Data";
 
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "System Extension Tutorial";
+
 /* MacOS: connecting overlay */
 "_preparing_connection" = "Checking server availability";
 
@@ -1629,6 +1632,21 @@
 
 // OpenVPN /  WireGuard / System Extensions
 
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "To use Proton VPN, you’ll need to enable **custom VPN protocols** on your Mac.";
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers.";
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "To continue, click **Open System Settings**, then follow the video instructions on this screen.";
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "To continue, click **Open Security Preferences**, then follow the video instructions on this screen.";
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Set up Proton VPN";
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "Open System Settings";
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Open Security Preferences";
+
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
 "_sysex_enabled_title" = "Configuration completed";
@@ -1636,62 +1654,6 @@
 
 "_sysex_cannot_enable" = "Cannot enable System Extension";
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall Proton VPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
-
-// System Extensions
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_window_title" = "Enabling custom protocols";
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_title" = "Enjoy the fastest connections by enabling custom protocols";
-/* System extension wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
-
-/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Open Security Preferences";
-
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
-"_sysex_wizard_step1_description_link" = "click here";
-
-/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Two dialogs will appear. Click on \"Open Security Preferences\".\nAlternatively, click here to open preferences.";
-
-/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Open Security Preferences";
-/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "A security dialog has appeared. Click on \"Open Security Preferences\".\nAlternatively, click here to open preferences.";
-/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
-"_sysex_wizard_step1_description_go_to_system_preferences" = "Open System Preferences: click here.\nThen, go to the \"Security & Privacy\" pane.";
-
-/* System extension wizard in mac: Step nr.2 title */
-"_sysex_wizard_step2_title" = "Unlock to make changes";
-/* System extension wizard in mac: Step nr.2 description */
-"_sysex_wizard_step2_description" = "Click the lock to make changes";
-
-/* System extension wizard in mac: Step nr.3 title */
-"_sysex_wizard_step3_title" = "Enter credentials";
-/* System extension wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
-
-/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
-"_sysex_wizard_step4_title" = "“Details...” button";
-/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Click the “Details...” button";
-
-/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "“Allow” button";
-/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Click the “Allow” button";
-
-/* System extension wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Selecting Proton VPN items";
-/* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Select both Proton VPN items to enable custom protocols and click “OK”";
-
-/* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "You’re now ready to use Proton VPN with the latest and fastest VPN technologies available!";
-
 
 // Cert based auth
 

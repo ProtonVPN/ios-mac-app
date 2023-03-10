@@ -31,6 +31,7 @@ class HelpMenuController: NSObject {
     @IBOutlet weak var logsOvpnItem: NSMenuItem!
     @IBOutlet weak var logsWGItem: NSMenuItem!
     @IBOutlet weak var helpItem: NSMenuItem!
+    @IBOutlet weak var systemExtensionTutorialItem: NSMenuItem!
     @IBOutlet weak var clearApplicationDataItem: NSMenuItem!
     
     private var viewModel: HelpMenuViewModel!
@@ -72,7 +73,11 @@ class HelpMenuController: NSObject {
         clearApplicationDataItem.isEnabled = true
         clearApplicationDataItem.target = self
         clearApplicationDataItem.action = #selector(clearApplicationDataItemAction)
-        
+
+        systemExtensionTutorialItem.title = LocalizedString.systemExtensionTutorialMenuItem
+        systemExtensionTutorialItem.target = self
+        systemExtensionTutorialItem.action = #selector(systemExtensionTutorialAction)
+
         helpItem.title = "Proton VPN " + LocalizedString.help
         helpItem.isEnabled = true
         helpItem.target = self
@@ -93,6 +98,10 @@ class HelpMenuController: NSObject {
     
     @objc private func openWGLogsAction() {
         viewModel.openWGVpnLogsFolderAction()
+    }
+
+    @objc private func systemExtensionTutorialAction() {
+        viewModel.systemExtensionTutorialAction()
     }
     
     @objc private func helpItemAction() {
