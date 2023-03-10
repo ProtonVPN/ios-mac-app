@@ -259,6 +259,7 @@ extension AppDelegate {
         }
 
         FeatureFactory.shared.enable(&.unauthSession)
+        FeatureFactory.shared.enable(&.externalSignup)
         
         #if DEBUG
         // this flag is for tests — it should never be turned on in release builds
