@@ -231,11 +231,11 @@ class WindowServiceImplementation: WindowService {
         activeWindowControllers.insert(windowController)
         windowController.showWindow(self)
     }
-    
+
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
+        guard #available(macOS 11.0, *) else { return }
         let controller = SystemExtensionGuideViewController(viewModel: viewModel)
         controller.windowService = self
-
         let windowController = SysexGuideWindowController(viewController: controller)
         windowController.delegate = controller
         activeWindowControllers.insert(windowController)

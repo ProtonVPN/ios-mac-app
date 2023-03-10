@@ -231,14 +231,11 @@ internal enum Asset {
   internal static let neagent = ImageAsset(name: "neagent")
   internal static let neagentIndicator1 = ImageAsset(name: "neagent_indicator_1")
   internal static let neagentIndicator2 = ImageAsset(name: "neagent_indicator_2")
-  internal static let qsDetailTriangle = ImageAsset(name: "qs_detail_triangle")
   internal static let reverseTriangle = ImageAsset(name: "ReverseTriangle")
   internal static let vpnResultConnected = ImageAsset(name: "vpn-result-connected")
   internal static let vpnResultNotConnected = ImageAsset(name: "vpn-result-not-connected")
   internal static let vpnResultWarning = ImageAsset(name: "vpn-result-warning")
   internal static let vpnWordmarkAlwaysDark = ImageAsset(name: "vpn-wordmark-always-dark")
-  internal static let arrowLeft = ImageAsset(name: "arrow-left")
-  internal static let welcomeMap = ImageAsset(name: "welcome-map")
   internal static let worldMap = ImageAsset(name: "world-map")
   internal static let connected = ImageAsset(name: "connected")
   internal static let disconnected = ImageAsset(name: "disconnected")
@@ -252,8 +249,6 @@ internal enum Asset {
   internal static let _4Step1 = ImageAsset(name: "4-step-1")
   internal static let _4Step = ImageAsset(name: "4-step")
   internal static let _5Step = ImageAsset(name: "5-step")
-  internal static let leftArrow = ImageAsset(name: "left-arrow")
-  internal static let rightArrow = ImageAsset(name: "right-arrow")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 

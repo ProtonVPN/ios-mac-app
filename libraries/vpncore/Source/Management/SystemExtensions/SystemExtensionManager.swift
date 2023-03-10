@@ -229,7 +229,7 @@ public class SystemExtensionManager: NSObject {
                                                   actionHandler: @escaping (SystemExtensionResult) -> Void) {
         var didRequireUserApproval = false
 
-        submitInstallationRequests(userActionRequiredHandler: { [unowned self] numberOfExtensionsToApprove in
+        submitInstallationRequests(userActionRequiredHandler: { [unowned self] _ in
             didRequireUserApproval = true
 
             guard shouldStartTour else {
@@ -237,8 +237,7 @@ public class SystemExtensionManager: NSObject {
                 return
             }
 
-            let tour = SystemExtensionTourAlert(extensionsCount: numberOfExtensionsToApprove,
-                                                userWasShownTourBefore: userClosedTour,
+            let tour = SystemExtensionTourAlert(userWasShownTourBefore: userClosedTour,
                                                 cancelHandler: { [unowned self] in
                 // We use userClosedTour to show the user the right "step" of the tour, since
                 // if they make the tour pop up a second time within the same lifetime of the app,

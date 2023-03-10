@@ -86,6 +86,9 @@
                                         <menuItem title="Clear All Data" id="OOQ-ac-X8f">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem title="System Extension Tutorial" id="cug-Q3-QKr">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem title="ProtonVPN Help" id="OK2-4f-4vJ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
@@ -135,6 +138,7 @@
                         <outlet property="logsOvpnItem" destination="Uqb-NT-4a9" id="ddG-5m-jkS"/>
                         <outlet property="logsWGItem" destination="mvz-nO-aHe" id="BZn-Im-Tml"/>
                         <outlet property="reportAnIssueItem" destination="a5J-cy-nfO" id="4BY-VB-g72"/>
+                        <outlet property="systemExtensionTutorialItem" destination="cug-Q3-QKr" id="9xr-gO-F6Q"/>
                     </connections>
                 </customObject>
                 <customObject id="zgJ-n0-DCA" customClass="StatusMenuWindowController" customModule="ProtonVPN" customModuleProvider="target"/>

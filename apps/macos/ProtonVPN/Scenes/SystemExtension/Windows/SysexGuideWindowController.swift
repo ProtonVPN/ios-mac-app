@@ -14,7 +14,7 @@ class SysexGuideWindowController: WindowController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewController: SystemExtensionGuideViewController) {
+    required init(viewController: NSViewController) {
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
         
@@ -26,7 +26,8 @@ class SysexGuideWindowController: WindowController {
         guard let window = window else {
             return
         }
-        
+
+        window.title = ""
         window.styleMask.remove(NSWindow.StyleMask.miniaturizable)
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.titlebarAppearsTransparent = true

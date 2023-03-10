@@ -19,15 +19,12 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
-  internal static let sessionsLimit = ImageAsset(name: "sessions_limit")
   internal static let closeNavBar = ImageAsset(name: "close-nav-bar")
   internal static let connect = ImageAsset(name: "connect")
   internal static let locked = ImageAsset(name: "locked")
   internal static let splashFooterIcon = ImageAsset(name: "SplashFooterIcon")
   internal static let splashIcon = ImageAsset(name: "SplashIcon")
   internal static let mainMap = ImageAsset(name: "main-map")
-  internal static let netshieldIconFilled = ImageAsset(name: "netshield-icon-filled")
-  internal static let netshieldIcon = ImageAsset(name: "netshield-icon")
   internal static let netshieldSmall = ImageAsset(name: "netshield-small")
   internal static let quickConnectActiveButton = ImageAsset(name: "quick-connect-active-button")
   internal static let quickConnectConnectingButton = ImageAsset(name: "quick-connect-connecting-button")
