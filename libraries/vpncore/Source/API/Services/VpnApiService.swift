@@ -36,22 +36,25 @@ extension Container: VpnApiServiceFactory {
 }
 
 public class VpnApiService {
-    public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory
+    public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory & AuthKeychainHandleFactory
 
     private let networking: Networking
     private let vpnKeychain: VpnKeychainProtocol
     private let countryCodeProvider: CountryCodeProvider
+    private let authKeychain: AuthKeychainHandle
 
-    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, countryCodeProvider: CountryCodeProvider) {
+    public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, countryCodeProvider: CountryCodeProvider, authKeychain: AuthKeychainHandle) {
         self.networking = networking
         self.vpnKeychain = vpnKeychain
         self.countryCodeProvider = countryCodeProvider
+        self.authKeychain = authKeychain
     }
 
     public convenience init(_ factory: Factory) {
         self.init(networking: factory.makeNetworking(),
                   vpnKeychain: factory.makeVpnKeychain(),
-                  countryCodeProvider: factory.makeCountryCodeProvider())
+                  countryCodeProvider: factory.makeCountryCodeProvider(),
+                  authKeychain: factory.makeAuthKeychainHandle())
     }
 
     public func vpnProperties(isDisconnected: Bool,
@@ -109,6 +112,10 @@ public class VpnApiService {
     }
 
     public func clientCredentials(completion: @escaping (Result<VpnCredentials, Error>) -> Void) {
+        guard authKeychain.fetch() != nil else {
+            completion(.failure(VpnApiServiceError.endpointRequiresAuthentication))
+            return
+        }
         networking.request(VPNClientCredentialsRequest()) { (result: Result<VPNShared.JSONDictionary, Error>) in
             switch result {
             case let .success(json):
