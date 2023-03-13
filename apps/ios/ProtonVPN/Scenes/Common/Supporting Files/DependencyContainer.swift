@@ -45,7 +45,8 @@ final class DependencyContainer: Container {
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self,
                                                            refreshIntervals: (AppConstants.Time.fullServerRefresh,
                                                                               AppConstants.Time.serverLoadsRefresh,
-                                                                              AppConstants.Time.userAccountRefresh))
+                                                                              AppConstants.Time.userAccountRefresh),
+                                                           canRefreshAccount: { self.makeAuthKeychainHandle().fetch() != nil })
 
     private lazy var vpnAuthentication: VpnAuthentication = {
         return VpnAuthenticationRemoteClient(self)

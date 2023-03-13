@@ -51,7 +51,8 @@ final class DependencyContainer: Container {
                                                            refreshIntervals: (AppConstants.Time.fullServerRefresh,
                                                                               AppConstants.Time.serverLoadsRefresh,
                                                                               AppConstants.Time.userAccountRefresh),
-                                                           canRefreshLoads: { return NSApp.isActive })
+                                                           canRefreshLoads: { return NSApp.isActive },
+                                                           canRefreshAccount: { self.makeAuthKeychainHandle().fetch() != nil })
 
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
