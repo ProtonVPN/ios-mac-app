@@ -39,7 +39,7 @@ public enum ParseError: LocalizedError {
     case verificationMethodsParse
     case createPaymentTokenParse
     case stringToDataConversion
-    
+
     public var localizedDescription: String {
         switch self {
         case .serverParse:
@@ -93,4 +93,8 @@ public class ApiError: NSError {
             return errorMessage ?? LocalizedString.errorInternalError
         }
     }
+}
+
+public enum VpnApiServiceError: Error {
+    case endpointRequiresAuthentication
 }
