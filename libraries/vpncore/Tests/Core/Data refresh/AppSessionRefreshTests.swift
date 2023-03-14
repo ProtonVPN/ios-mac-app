@@ -22,6 +22,7 @@ import XCTest
 import Timer
 import TimerMock
 import ProtonCore_TestingToolkit
+import VPNSharedTesting
 
 class AppSessionRefreshTimerTests: XCTestCase {
     var alertService: CoreAlertServiceMock!
@@ -34,6 +35,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
     var appSessionRefresher: BaseAppSessionRefresher!
     var timerFactory: TimerFactoryMock!
     var appSessionRefreshTimer: AppSessionRefreshTimer!
+    var authKeychain: MockAuthKeychain!
 
     let testData = MockTestData()
 
@@ -46,7 +48,8 @@ class AppSessionRefreshTimerTests: XCTestCase {
         networkingDelegate = FullNetworkingMockDelegate()
         networking.delegate = networkingDelegate
         vpnKeychain = VpnKeychainMock()
-        apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation())
+        authKeychain = MockAuthKeychain()
+        apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
         appSessionRefresher = BaseAppSessionRefresher(factory: self)
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimer(factory: self,
@@ -87,6 +90,7 @@ class AppSessionRefreshTimerTests: XCTestCase {
             updateCredentials: (1...2).map { XCTestExpectation(description: "update vpn credentials #\($0)") },
             displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
         )
+        authKeychain.setMockUsername("user")
 
         var (nServerUpdates, nCredUpdates) = (0, 0)
 
