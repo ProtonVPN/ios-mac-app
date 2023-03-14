@@ -27,23 +27,23 @@ class FileHandleMock: FileHandleWrapper {
         self.url = url
     }
 
-    @ThrowingFuncStub(FileHandleWrapper.seekToEndCustom, initialReturn: 0) var seekToEndCustomStub
-    func seekToEndCustom() throws -> UInt64 {
+    @ThrowingFuncStub(FileHandleWrapper.seekToEnd, initialReturn: 0) var seekToEndCustomStub
+    func seekToEnd() throws -> UInt64 {
         try seekToEndCustomStub()
     }
 
-    @ThrowingFuncStub(FileHandleWrapper.writeCustom) var writeCustomStub
-    func writeCustom(contentsOf data: Data) throws {
+    @ThrowingFuncStub(FileHandleWrapper.write) var writeCustomStub
+    func write(contentsOf data: Data) throws {
         try writeCustomStub(data)
     }
 
-    @ThrowingFuncStub(FileHandleWrapper.synchronizeCustom) var synchronizeCustomStub
-    func synchronizeCustom() throws {
+    @ThrowingFuncStub(FileHandleWrapper.synchronize) var synchronizeCustomStub
+    func synchronize() throws {
         try synchronizeCustomStub()
     }
 
-    @ThrowingFuncStub(FileHandleWrapper.closeCustom) var closeCustomStub
-    func closeCustom() throws {
+    @ThrowingFuncStub(FileHandleWrapper.close) var closeCustomStub
+    func close() throws {
         try closeCustomStub()
     }
 }

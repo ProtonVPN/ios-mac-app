@@ -21,10 +21,10 @@ import Foundation
 /// Wraps `FileHandle` to show what methods we are using and make it possible to mock them in tests
 public protocol FileHandleWrapper {
     init(forWritingTo url: URL) throws
-    func seekToEndCustom() throws -> UInt64
-    func writeCustom(contentsOf data: Data) throws
-    func synchronizeCustom() throws
-    func closeCustom() throws
+    func seekToEnd() throws -> UInt64
+    func write(contentsOf data: Data) throws
+    func synchronize() throws
+    func close() throws
 }
 
 extension FileHandle: FileHandleWrapper {
