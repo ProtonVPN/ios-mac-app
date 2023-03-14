@@ -86,7 +86,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
 
         let countryCodeProvider = dependencyFactory.makeCountryCodeProvider()
         siriHandlerViewModel = SiriHandlerViewModel(networking: networking,
-                                                    vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: countryCodeProvider),
+                                                    vpnApiService: VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: countryCodeProvider, authKeychain: authKeychain),
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,
                                                     authKeychain: authKeychain,

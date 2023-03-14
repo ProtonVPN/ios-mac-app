@@ -25,6 +25,7 @@ import GoLibs
 
 class ConnectionSwitchingTests: BaseConnectionTestCase {
 
+    // swiftlint:disable:next function_body_length
     func testFirstTimeConnectionWithSmartProtocol() async {
         let expectations = (
             initialConnection: XCTestExpectation(description: "initial connection"),
@@ -505,6 +506,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         container.vpnKeychain.setVpnCredentials(with: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
         container.propertiesManager.vpnProtocol = .wireGuard(.udp)
         container.propertiesManager.hasConnected = true
+        container.authKeychain.setMockUsername("user")
 
         let (totalConnections, totalDisconnections) = (4, 4)
         let expectations = (

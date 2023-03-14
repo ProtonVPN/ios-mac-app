@@ -50,7 +50,8 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         return VpnApiService(
             networking: networking,
             vpnKeychain: VpnKeychainMock(),
-            countryCodeProvider: CountryCodeProviderImplementation()
+            countryCodeProvider: CountryCodeProviderImplementation(),
+            authKeychain: authKeychain
         )
     }
 
