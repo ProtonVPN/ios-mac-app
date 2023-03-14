@@ -63,7 +63,7 @@ public final class FileLogHandler: ParentLogHandler {
         queue.async {
             if let data = (text + "\r\n").data(using: .utf8) {
                 do {
-                    try self.getFileHandleAtTheEndOfFile()?.writeCustom(contentsOf: data)
+                    try self.getFileHandleAtTheEndOfFile()?.write(contentsOf: data)
                     try self.rotate()
                 } catch {
 //                    SentryHelper.log(error: error)
@@ -108,8 +108,8 @@ public final class FileLogHandler: ParentLogHandler {
         guard let fileHandle = fileHandle else {
             return
         }
-        try fileHandle.synchronizeCustom()
-        try fileHandle.closeCustom()
+        try fileHandle.synchronize()
+        try fileHandle.close()
         
         self.fileHandle = nil
     }
@@ -123,7 +123,7 @@ public final class FileLogHandler: ParentLogHandler {
             }
         }
         do {
-            currentSize = try fileHandle?.seekToEndCustom() ?? 0
+            currentSize = try fileHandle?.seekToEnd() ?? 0
         } catch {
             currentSize = 0
         }
@@ -133,7 +133,7 @@ public final class FileLogHandler: ParentLogHandler {
     private func rotate() throws {
         if currentSize < 1 {
             do {
-                currentSize = try fileHandle?.seekToEndCustom() ?? 0
+                currentSize = try fileHandle?.seekToEnd() ?? 0
             } catch {
                 currentSize = 0
             }
