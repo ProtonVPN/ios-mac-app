@@ -149,6 +149,18 @@ class ProtonVPNUITests: XCTestCase {
         }
     }
     
+    // to remove created profiles
+    func clearAppData()  -> Bool {
+        let clearAppDataButton = app.menuBars.menuItems["Clear Application Data"]
+        let deleteButton = app.buttons["Delete"]
+        guard clearAppDataButton.exists, clearAppDataButton.isEnabled else {
+            return false
+        }
+        clearAppDataButton.click()
+        deleteButton.click()
+        return true
+    }
+    
     func waitForElementToDisappear(_ element: XCUIElement) -> Bool {
         let predicate = NSPredicate(format: "exists == false")
         let expectation = XCTNSPredicateExpectation(predicate: predicate,
