@@ -292,7 +292,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
         // Use shared defaults to get cert features that were set in the app
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
+        Storage.setSpecificDefaults(UserDefaults(suiteName: AppConstants.AppGroups.main)!, largeDataStorage: nil)
 
         setDataTaskFactoryAccordingToKillSwitchSettings()
 

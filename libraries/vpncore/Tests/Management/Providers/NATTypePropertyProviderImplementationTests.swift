@@ -29,7 +29,7 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
         super.setUp()
 
         testDefaults.removeObject(forKey: "NATType\(Self.username)")
-        Storage.setSpecificDefaults(defaults: testDefaults)
+        Storage.setSpecificDefaults(testDefaults, largeDataStorage: nil)
     }
 
     func testReturnsSettingFromProperties() throws {

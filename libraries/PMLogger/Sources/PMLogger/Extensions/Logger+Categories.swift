@@ -39,6 +39,7 @@ extension Logger {
         case settings
         case keychain = "secure_store"
         case iap = "in_app_purchase"
+        case persistence
         // Custom ios (please add to confluence)
         case sysex // System Extension
         case review

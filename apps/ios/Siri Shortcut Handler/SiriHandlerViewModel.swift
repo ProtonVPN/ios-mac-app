@@ -100,7 +100,8 @@ class SiriHandlerViewModel {
          serverStorage: ServerStorage,
          availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory) {
         setUpNSCoding(withModuleName: "ProtonVPN")
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
+        let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
+        Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
 
         self.doh = doh
         self.profileManager = profileManager

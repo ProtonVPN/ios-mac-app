@@ -61,6 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setupCoreIntegration()
         setupLogsForApp()
         log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
+        Storage.setSpecificDefaults(nil, largeDataStorage: FileStorage.cached)
         
         self.checkMigration()
         migrateIfNeeded {

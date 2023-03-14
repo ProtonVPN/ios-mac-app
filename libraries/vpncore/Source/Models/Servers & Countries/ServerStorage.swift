@@ -48,22 +48,25 @@ public class ServerStorageConcrete: ServerStorage {
     private static var age: TimeInterval?
     
     public var contentChanged = Notification.Name("ServerStorageContentChanged")
-    
+
     public init() {}
-    
+
     public func fetch() -> [ServerModel] {
         // Check if stored servers have been updated since last access,
         // so that widget can stay up to date of app server changes
         let age: TimeInterval = Storage.userDefaults().double(forKey: ageKey)
-        
+
         if ServerStorageConcrete.servers.isEmpty || ServerStorageConcrete.age == nil || age > (ServerStorageConcrete.age! + 1) {
             ServerStorageConcrete.age = age
             
             let version = Storage.userDefaults().integer(forKey: versionKey)
             if version == storageVersion {
-                if let data = Storage.userDefaults().data(forKey: storageKey),
-                   let servers = try? JSONDecoder().decode([ServerModel].self, from: data) {
+                do {
+                    let data = try Storage.largeDataStorage.getData(forKey: storageKey)
+                    let servers = try JSONDecoder().decode([ServerModel].self, from: data)
                     ServerStorageConcrete.servers = servers
+                } catch {
+                    log.error("Failed to load cached server list", category: .app, metadata: ["error": "\(error)"])
                 }
             }
         }
@@ -85,22 +88,22 @@ public class ServerStorageConcrete: ServerStorage {
         DispatchQueue.global(qos: .default).async { [versionKey, ageKey, storageKey, storageVersion] in
             do {
                 let age = Date().timeIntervalSince1970
-                let serversData = try JSONEncoder().encode(newServers.self)
-                
+                let serversData = try JSONEncoder().encode(newServers)
+
                 ServerStorageConcrete.age = age
                 ServerStorageConcrete.servers = newServers
-                
+
+                try Storage.largeDataStorage.store(serversData, forKey: storageKey)
                 Storage.userDefaults().set(storageVersion, forKey: versionKey)
                 Storage.userDefaults().set(age, forKey: ageKey)
-                Storage.userDefaults().set(serversData, forKey: storageKey)
                 Storage.userDefaults().synchronize()
-                
+
                 log.debug("Server list saved (count: \(newServers.count))", category: .app)
 
             } catch {
-                log.error("\(error)", category: .app)
+                log.error("Failed to save server list with error: \(error)", category: .app)
             }
-            
+
             DispatchQueue.main.async { NotificationCenter.default.post(name: self.contentChanged, object: newServers) }
         }
     }
