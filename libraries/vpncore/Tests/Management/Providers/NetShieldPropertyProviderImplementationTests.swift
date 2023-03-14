@@ -33,7 +33,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         super.setUp()
 
         testDefaults.removeObject(forKey: "NetShield\(Self.username)")
-        Storage.setSpecificDefaults(defaults: testDefaults)
+        Storage.setSpecificDefaults(testDefaults, largeDataStorage: nil)
     }
 
     func testReturnsSettingFromProperties() throws {

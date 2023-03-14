@@ -35,7 +35,8 @@ final class WidgetFactory {
     
     init() {
         setUpNSCoding(withModuleName: "ProtonVPN")
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: appGroup)!)
+        let sharedDefaults = UserDefaults(suiteName: AppConstants.AppGroups.main)!
+        Storage.setSpecificDefaults(sharedDefaults, largeDataStorage: FileStorage.cached)
     }
 
     func makeTodayViewModel() -> TodayViewModel {

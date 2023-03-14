@@ -29,7 +29,7 @@ final class SafeModePropertyProviderImplementationTests: XCTestCase {
         super.setUp()
 
         testDefaults.removeObject(forKey: "SafeMode\(Self.username)")
-        Storage.setSpecificDefaults(defaults: testDefaults)
+        Storage.setSpecificDefaults(testDefaults, largeDataStorage: nil)
     }
 
     func testReturnsSettingFromProperties() throws {

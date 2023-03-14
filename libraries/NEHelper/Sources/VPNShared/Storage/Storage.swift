@@ -27,26 +27,34 @@ public protocol StorageFactory {
 }
 
 public class Storage {
-    
     private static let migrationKey = "migratedTo"
-    
+
     private static let standardDefaults = UserDefaults.standard
     private static var specifiedDefaults: UserDefaults?
-    
-    public static func setSpecificDefaults(defaults: UserDefaults) {
-        if !defaults.bool(forKey: Storage.migrationKey) {
-            // Move any compatible data from old defaults to the new one
-            Storage.standardDefaults.dictionaryRepresentation().forEach { (key, value) in
-                defaults.set(value, forKey: key)
-            }
-            
-            defaults.setValue(true, forKey: Storage.migrationKey)
-            defaults.synchronize()
+    private static var specifiedLargeDataStorage: DataStorage?
+
+    /// Specify non-standard persistent storage implementations
+    ///
+    /// - Parameters:
+    ///   - defaults: Storage for primitives and small amounts of binary data. **On iOS, this must be a shared container
+    ///   suitable for IPC between the app and the Network Extension**
+    ///   - largeDataStorage: Storage implementation for large binary items. **This must not be nil when using a shared
+    ///   container for `defaults`**.
+    public static func setSpecificDefaults(_ specifiedDefaults: UserDefaults?, largeDataStorage: DataStorage?) {
+        if let specifiedDefaults {
+            Storage.specifiedDefaults = specifiedDefaults
+
+            migrate(from: standardDefaults, to: specifiedDefaults)
         }
-        
-        Storage.specifiedDefaults = defaults
+
+        if let largeDataStorage {
+            Storage.specifiedLargeDataStorage = largeDataStorage
+
+            migrate(from: specifiedDefaults ?? standardDefaults, to: largeDataStorage)
+        }
     }
-    
+
+    public var defaults: UserDefaults { Self.userDefaults() }
     public static func userDefaults() -> UserDefaults {
         if let specifiedDefaults = specifiedDefaults {
             return specifiedDefaults
@@ -55,11 +63,16 @@ public class Storage {
         }
     }
 
-    public init() { }
-    
-    public var defaults: UserDefaults {
-        return Self.userDefaults()
+    public var largeDataStorage: DataStorage { Self.largeDataStorage }
+    public static var largeDataStorage: DataStorage {
+        if let specifiedLargeDataStorage {
+            return specifiedLargeDataStorage
+        } else {
+            return Storage.userDefaults()
+        }
     }
+
+    public init() { }
     
     public func setValue(_ value: Any?, forKey key: String) {
         defaults.setValue(value, forKey: key)
@@ -69,16 +82,38 @@ public class Storage {
     public func getValue(forKey key: String) -> Any? {
         defaults.value(forKey: key)
     }
-    
-    public func setEncodableValue<Value>(_ value: Value?, forKey key: String) where Value: Encodable {
-        defaults.setValue(value != nil ? try? JSONEncoder().encode(value) : nil, forKey: key)
+
+    private func set(data: Data, forKey key: String, shouldUseFileStorage: Bool) throws {
+        if shouldUseFileStorage {
+            try largeDataStorage.store(data, forKey: key)
+        } else {
+            defaults.setValue(data, forKey: key)
+        }
+    }
+
+    private func getData(forKey key: String, shouldUseFileStorage: Bool) throws -> Data? {
+        shouldUseFileStorage ? try largeDataStorage.getData(forKey: key) : defaults.data(forKey: key)
     }
     
-    public func getDecodableValue<T>(_ type: T.Type, forKey key: String) -> T? where T: Decodable {
-        guard let data = defaults.data(forKey: key) else {
-            return nil
+    public func setEncodableValue<T>(_ value: T?, forKey key: String, shouldUseFileStorage: Bool = false) where T: Encodable {
+        do {
+            let data = try JSONEncoder().encode(value)
+            try set(data: data, forKey: key, shouldUseFileStorage: shouldUseFileStorage)
+        } catch {
+            log.error("Failed to store value for key \(key)", category: .persistence, metadata: ["error": "\(error)"])
         }
-        
+    }
+    
+    public func getDecodableValue<T>(_ type: T.Type, forKey key: String, shouldUseFileStorage: Bool = false) -> T? where T: Decodable {
+        var data: Data?
+        do {
+            data = try getData(forKey: key, shouldUseFileStorage: shouldUseFileStorage)
+        } catch {
+            log.error("Failed to retrieve value for key \(key)", category: .persistence, metadata: ["error": "\(error)"])
+        }
+
+        guard let data = data else { return nil }
+
         do {
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
@@ -96,8 +131,38 @@ public class Storage {
     public func contains(_ key: String) -> Bool {
         return defaults.object(forKey: key) != nil
     }
-    
+
     public func removeObject(forKey key: String) {
         defaults.removeObject(forKey: key)
+    }
+
+    private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
+        if !specifiedDefaults.bool(forKey: Storage.migrationKey) {
+            // Move any compatible data from old defaults to the new one
+            standardDefaults.dictionaryRepresentation().forEach { (key, value) in
+                specifiedDefaults.set(value, forKey: key)
+            }
+
+            specifiedDefaults.setValue(true, forKey: Storage.migrationKey)
+            specifiedDefaults.synchronize()
+        }
+    }
+
+    private static func migrate(from sharedDefaults: UserDefaults, to largeDataStorage: DataStorage) {
+        // Migrate values of large objects that may potentially cause issues if left in user defaults
+        let keysToMigrate = [
+            "servers" // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
+        ] // hardcoded in case the keys are changed in the future
+        keysToMigrate.forEach { key in
+            if let data = sharedDefaults.data(forKey: key) {
+                log.debug("Migrating value for key \(key)", category: .persistence)
+                sharedDefaults.removeObject(forKey: key)
+                do {
+                    try largeDataStorage.store(data, forKey: key)
+                } catch {
+                    log.error("Failed to migrate value for key \(key)", category: .persistence)
+                }
+            }
+        }
     }
 }
