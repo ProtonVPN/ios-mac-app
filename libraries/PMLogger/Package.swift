@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "PMLogger",
     platforms: [
-        .iOS(.v11),
-        .macOS(.v10_15)
+        .iOS(.v14),
+        .macOS(.v11)
     ],
     products: [
         .library(

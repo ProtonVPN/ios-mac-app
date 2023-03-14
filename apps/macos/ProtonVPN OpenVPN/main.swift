@@ -30,7 +30,7 @@ let ipc = IPCOvpnService(withExtension: IPCHelper.extensionMachServiceName(from:
         // On older systems logging to os_log will be performed through SwiftyBeaver
         os_log("%{public}s", log: OSLog(subsystem: "PROTON-OVPN", category: "OpenVPN"), type: .default, $0)
 
-    } else { // We can't extract logs from OSLog on macos 10.15
+    } else { // We can't extract logs from OSLog on macos 11
         SwiftyBeaver.self.debug($0, context: nil)
     }
 })
@@ -39,7 +39,7 @@ autoreleasepool {
     // Setup logging for NE
     SwiftyBeaver.self.addDestination(OSLogDestination())
 
-    // We can't extract logs from OSLog on macos 10.15, so we have to save them to file
+    // We can't extract logs from OSLog on macos 11, so we have to save them to file
     if #unavailable(macOS 12) {
         SwiftyBeaver.self.addDestination(FileDestination(logFileURL: LogSettings.logFileUrl))
     }

@@ -63,13 +63,6 @@ public final class FileLogHandler: ParentLogHandler {
         queue.async {
             if let data = (text + "\r\n").data(using: .utf8) {
                 do {
-                    // Avoid unnecessary free space check on newer systems, since checking free space on each
-                    // logging operation is expensive
-                    if #unavailable(macOS 10.15.4, iOS 13.4, tvOS 13.4, watchOS 6.2),
-                        try !self.freeSpaceAvailable() {
-                        throw POSIXError(.ENOSPC)
-                    }
-
                     try self.getFileHandleAtTheEndOfFile()?.writeCustom(contentsOf: data)
                     try self.rotate()
                 } catch {

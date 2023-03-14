@@ -73,10 +73,7 @@ extension IosAlertService: CoreAlertService {
             
         case is ExistingConnectionAlert:
             showDefaultSystemAlert(alert)
-            
-        case is FirstTimeConnectingAlert:
-            break // do nothing
-            
+
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)
             

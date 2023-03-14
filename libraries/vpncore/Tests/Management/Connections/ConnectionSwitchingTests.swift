@@ -80,8 +80,7 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         XCTAssertNotNil(currentManager?.protocolConfiguration?.serverAddress)
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server1.ips.first?.entryIp)
-        XCTAssertEqual(container.alertService.alerts.count, 1)
-        XCTAssert(container.alertService.alerts.first is FirstTimeConnectingAlert)
+        XCTAssertEqual(container.alertService.alerts.count, 0)
 
         let date = await container.vpnManager.connectedDate()
         XCTAssertEqual(date, currentConnection?.connectedDate)

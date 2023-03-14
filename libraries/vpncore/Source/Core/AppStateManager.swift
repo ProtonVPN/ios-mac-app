@@ -199,7 +199,7 @@ public class AppStateManagerImplementation: AppStateManager {
                 vpnStuck()
                 return
             default:
-                alertService?.push(alert: FirstTimeConnectingAlert())
+                break
             }
         }
         

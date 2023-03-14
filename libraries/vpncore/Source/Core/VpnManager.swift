@@ -439,7 +439,7 @@ public class VpnManager: VpnManagerProtocol {
         log.info("Configuring connection", category: .connectionConnect)
         
         // MARK: - KillSwitch configuration
-        if #available(iOS 14.2, macOS 10.15, *) {
+        if #available(iOS 14.2, *) {
             configuration.excludeLocalNetworks = propertiesManager.excludeLocalNetworks
         }
         configuration.includeAllNetworks = propertiesManager.killSwitch
@@ -469,7 +469,7 @@ public class VpnManager: VpnManagerProtocol {
         }
         
         // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
-        if #available(OSX 10.15, iOS 14, *), configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
+        if configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
             self.removeConfiguration(self.openVpnProtocolFactory, completionHandler: { _ in
                 self.removeConfiguration(self.wireguardProtocolFactory, completionHandler: { _ in
                     saveToPreferences()

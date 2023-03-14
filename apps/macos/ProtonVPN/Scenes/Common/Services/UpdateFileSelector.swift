@@ -55,12 +55,6 @@ public class UpdateFileSelectorImplementation: UpdateFileSelector {
         if let force = forceNECapableOS {
             return force ? "3" : "2"
         }
-        
-        if #available(OSX 10.15, *) {
-            return "3"
-        }
-        
-        // macOS 10.14 and older
-        return "2"
+        return "3"
     }
 }

@@ -240,10 +240,8 @@ final class SettingsViewModel {
         cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: { true }, enabled: false, handler: nil))
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
-        if #available(iOS 14, *) {
-            cells.append(.toggle(title: LocalizedString.killSwitch, on: { [unowned self] in self.propertiesManager.killSwitch }, enabled: true, handler: ksSwitchCallback()))
-            cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
-        }
+        cells.append(.toggle(title: LocalizedString.killSwitch, on: { [unowned self] in self.propertiesManager.killSwitch }, enabled: true, handler: ksSwitchCallback()))
+        cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
         
         return TableViewSection(title: LocalizedString.securityOptions, cells: cells)
     }

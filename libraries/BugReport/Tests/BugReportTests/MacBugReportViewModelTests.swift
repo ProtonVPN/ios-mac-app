@@ -19,7 +19,6 @@
 import XCTest
 @testable import BugReport
 
-@available(macOS 11.0, *)
 final class MacBugReportViewModelTests: XCTestCase {
         
     func testSequence() throws {
@@ -97,7 +96,6 @@ final class MacBugReportViewModelTests: XCTestCase {
 }
 
 // Compare Page enums without checking what's inside.
-@available(macOS 11.0, *)
 extension MacBugReportViewModel.Page: Equatable {
     static public func == (lhs: MacBugReportViewModel.Page, rhs: MacBugReportViewModel.Page) -> Bool {
         switch (lhs, rhs) {

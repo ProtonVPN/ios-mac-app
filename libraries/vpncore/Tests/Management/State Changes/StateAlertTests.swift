@@ -81,15 +81,6 @@ class StateAlertTests: XCTestCase {
         XCTAssertEqual(alertService.alerts.count, 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
-
-    func testFirstTimeConnectingAlert() {
-        propertiesManager.hasConnected = false
-        appStateManager.prepareToConnect()
-        appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
-        XCTAssertTrue(alertService.alerts.count == 1)
-        XCTAssertTrue(alertService.alerts.first is FirstTimeConnectingAlert)
-    }
     
     func testNormalConnectingNoAlerts() {
         propertiesManager.hasConnected = true

@@ -33,43 +33,6 @@ private extension VpnConnectionInterceptResult.InterceptParameters {
     }
 }
 
-/// WG + KS is not working on Catalina. Let's prevent users from having trouble by prompting them to disable either Wireguard or Kill Switch.
-/// If they're using a smart protocol, elide Wireguard from the array of protocols chosen.
-struct CatalinaKSIntercept: VpnConnectionInterceptPolicyItem {
-    let alertService: CoreAlertService
-
-    func shouldIntercept(_ connectionProtocol: ConnectionProtocol, isKillSwitchOn: Bool, completion: @escaping (VpnConnectionInterceptResult) -> Void) {
-        guard isKillSwitchOn, #available(macOS 10.15, *) else {
-            completion(.allow)
-            return
-        }
-        if #available(macOS 11, *) {
-            completion(.allow)
-            return
-        }
-
-        switch connectionProtocol {
-        // If WireGuard is selected, let's ask user to change it
-        case .vpnProtocol(.wireGuard):
-            log.debug("WireGuard + KillSwitch on Catalina detected. Asking user to change one or another.", category: .connectionConnect, event: .scan)
-
-            DispatchQueue.global(qos: .userInteractive).async {
-                alertService.push(alert: WireguardKSOnCatalinaAlert(killSwitchOffHandler: {
-                    completion(.intercept(.withoutUsingKillSwitch(with: connectionProtocol)))
-                }, openVpnHandler: {
-                    completion(.intercept(.switchingToOpenVpnTcp))
-                }))
-            }
-        // If SmartProtocol is used, let's make it smart enough to not select WireGuard if we know it won't work
-        case .smartProtocol:
-            log.debug("SmartProtocol + KillSwitch on Catalina detected. Disabling WireGuard in SmartProtocol.", category: .connectionConnect, event: .scan)
-            completion(.intercept(.usingSmartProtocolWithoutWireGuard))
-        default:
-            completion(.allow)
-        }
-    }
-}
-
 class ConnectionIntercepts {
     typealias Factory = CoreAlertServiceFactory
 
@@ -81,9 +44,5 @@ class ConnectionIntercepts {
 
     init(factory: Factory) {
         self.factory = factory
-
-        self.intercepts = [
-            CatalinaKSIntercept(alertService: alertService),
-        ]
     }
 }

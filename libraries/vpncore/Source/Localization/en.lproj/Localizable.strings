@@ -1765,11 +1765,6 @@
 "login_fetch_vpn_data" = "Configuring your VPN access";
 "login_summary_button" = "Start using Proton VPN";
 
-// Wireguard + KillSwitch alert on Catalina
-"_wgks_title" = "Kill switch is preventing the VPN to connect to internet";
-"_wgks_description" = "Kill switch is preventing the VPN to connect to the internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable kill switch.";
-"_wgks_ovpn" = "Switch to OpenVPN";
-
 // Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below
 "_wgks_ks_off" = "Disable kill switch";
 
