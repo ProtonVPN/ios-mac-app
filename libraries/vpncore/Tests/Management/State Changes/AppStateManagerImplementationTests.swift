@@ -179,14 +179,6 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-
-    func testFirstTimeConnecting() {
-        propertiesManager.hasConnected = false
-        prepareToConnect()
-        XCTAssert(alertService.alerts.first! is FirstTimeConnectingAlert)
-        startConnection()
-        successfullyConnect()
-    }
     
     func testConnectionFromInvalidOrDisconnected() {
         prepareToConnect()

@@ -172,8 +172,6 @@
 		E1420A73209B57B100697461 /* ConnectionSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1420A72209B57B100697461 /* ConnectionSettings.xib */; };
 		E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */; };
 		E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E142F24C20A9B45800029163 /* UpdateManager.swift */; };
-		E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */ = {isa = PBXBuildFile; fileRef = E144752F2093A10700F4C641 /* NeagentHelpPopUp.xib */; };
-		E14475322093A52A00F4C641 /* NeagentHelpPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14475312093A52A00F4C641 /* NeagentHelpPopUpViewController.swift */; };
 		E1454CED206FC6A900E6D396 /* HelpPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */; };
 		E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1454CEC206FC6A900E6D396 /* HelpPopover.xib */; };
 		E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */; };
@@ -795,8 +793,6 @@
 		E1420A72209B57B100697461 /* ConnectionSettings.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConnectionSettings.xib; sourceTree = "<group>"; };
 		E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionSettingsViewModel.swift; sourceTree = "<group>"; };
 		E142F24C20A9B45800029163 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
-		E144752F2093A10700F4C641 /* NeagentHelpPopUp.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NeagentHelpPopUp.xib; sourceTree = "<group>"; };
-		E14475312093A52A00F4C641 /* NeagentHelpPopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeagentHelpPopUpViewController.swift; sourceTree = "<group>"; };
 		E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPopoverViewController.swift; sourceTree = "<group>"; };
 		E1454CEC206FC6A900E6D396 /* HelpPopover.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HelpPopover.xib; sourceTree = "<group>"; };
 		E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpPopoverViewModel.swift; sourceTree = "<group>"; };
@@ -2577,8 +2573,6 @@
 				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
 				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
 				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
-				E144752F2093A10700F4C641 /* NeagentHelpPopUp.xib */,
-				E14475312093A52A00F4C641 /* NeagentHelpPopUpViewController.swift */,
 				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
 				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
 				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
@@ -3136,7 +3130,6 @@
 				42918CF9263836530065992E /* CountriesSectionHeaderView.xib in Resources */,
 				F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */,
 				E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */,
-				E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */,
 				EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */,
 				EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */,
 				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
@@ -3646,7 +3639,6 @@
 				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
 				F34AC17727F33E360007FF93 /* ProtonReachabilityChecker.swift in Sources */,
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
-				E14475322093A52A00F4C641 /* NeagentHelpPopUpViewController.swift in Sources */,
 				4C9BE3AE27C77FC700F50123 /* ConnectionIntercepts.swift in Sources */,
 				E551EB0829AF7C1300B6612D /* Assets.swift in Sources */,
 				EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */,
@@ -4011,7 +4003,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4047,7 +4039,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
@@ -4081,7 +4073,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
@@ -4197,7 +4189,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = macosx;
@@ -4236,7 +4228,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DSTAGING";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
@@ -4267,7 +4259,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4299,7 +4291,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4357,7 +4349,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4387,7 +4379,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -4482,7 +4474,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4517,7 +4509,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.WireGuard-Extension";
@@ -4551,7 +4543,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.WireGuard-Extension";
@@ -4581,7 +4573,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4610,7 +4602,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4674,7 +4666,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -4731,7 +4723,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				SDKROOT = macosx;
@@ -4771,7 +4763,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -4812,7 +4804,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;

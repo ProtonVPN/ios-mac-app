@@ -175,14 +175,6 @@ public class ExistingConnectionAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 }
 
-public class FirstTimeConnectingAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-}
-
 public class P2pBlockedAlert: SystemAlert {
     public var title: String? = LocalizedString.p2pDetectedPopupTitle
     public var message: String? = LocalizedString.p2pDetectedPopupBody
@@ -819,19 +811,6 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
         }
 
         message = LocalizedString.vpnauthTooManyCertsRetryAfter(minutesToWait)
-    }
-}
-
-public class WireguardKSOnCatalinaAlert: SystemAlert {
-    public var title: String? = LocalizedString.wgksTitle
-    public var message: String? = LocalizedString.wgksDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public init(killSwitchOffHandler: @escaping () -> Void, openVpnHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler))
-        actions.append(AlertAction(title: LocalizedString.wgksOvpn, style: .confirmative, handler: openVpnHandler))
     }
 }
 

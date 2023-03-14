@@ -73,13 +73,7 @@ extension MacAlertService: CoreAlertService {
             
         case is ExistingConnectionAlert:
             showDefaultSystemAlert(alert)
-            
-        case let firstTimeConnectingAlert as FirstTimeConnectingAlert:
-            // Neagent popup is no longer an issue in macOS 10.15+, so we don't need to show the help anymore
-            if #unavailable(OSX 10.15) {
-                show(firstTimeConnectingAlert)
-            }
-            
+
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)
             
@@ -211,9 +205,6 @@ extension MacAlertService: CoreAlertService {
             
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
-            
-        case is WireguardKSOnCatalinaAlert:
-            showDefaultSystemAlert(alert)
 
         case let neKST2Alert as NEKSOnT2Alert:
             show(neKST2Alert)
@@ -278,11 +269,6 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
         appSessionManager.logOut(force: true, reason: LocalizedString.errorSignInAgain)
-    }
-    
-    private func show(_ alert: FirstTimeConnectingAlert) {
-        let neagentViewController = NeagentHelpPopUpViewController()
-        windowService.presentKeyModal(viewController: neagentViewController)
     }
 
     private func show(_ alert: SystemExtensionTourAlert) {

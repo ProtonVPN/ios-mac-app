@@ -37,8 +37,8 @@ extension IPCOvpnService { // ProviderCommunication
 
     override func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
         guard #available(macOS 12.0, *) else {
-            // `OSLogStore(scope: .currentProcessIdentifier)` is not available on macOS 10.15, so we have to use logs from the file.
-            // This can be deleted when app no longer supports macOS 10.15.
+            // `OSLogStore(scope: .currentProcessIdentifier)` is not available on macOS 11, so we have to use logs from the file.
+            // This can be deleted when app no longer supports macOS 11.
             guard let logsContent = try? String(contentsOf: LogSettings.logFileUrl) else {
                 completionHandler(nil)
                 return
