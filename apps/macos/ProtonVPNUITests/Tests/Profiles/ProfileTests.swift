@@ -90,6 +90,7 @@ class ProfileTests: ProtonVPNUITests {
             .setProfileDetails(name, country)
             .saveProfile()
             .verify.checkErrorMessageSameNameExists()
+        clearAppData()
     }
     
     func testNewProfileAppearsInTheSettings() {
@@ -117,6 +118,7 @@ class ProfileTests: ProtonVPNUITests {
             .verify.checkProfileIsCreated("￼  " + name)
             .selectAutoConnect(autoConnectDisabled)
             .verify.checkProfileIsCreated("￼  " + name)
+        clearAppData()
     }
     
     func testQuickConnectToAServerViaUnavailableProfile() {
@@ -147,10 +149,6 @@ class ProfileTests: ProtonVPNUITests {
             .quickConnectToAServer()
             .verify.checkUpsellModalIsOpen()
             .closeUpsellModal()
-        mainRobot
-            .openAppSettings()
-            .connectionTabClick()
-            .selectQuickConnect("￼  " + name)
-            .selectProfile(qcFastest)
+        clearAppData()
     }
-}
+}	
