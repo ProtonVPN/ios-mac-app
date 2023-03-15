@@ -43,6 +43,9 @@ struct SystemExtensionTutorialView: View {
         VideoPlayer(player: videoTourModel.player)
             .cornerRadius(12)
             .onAppear(perform: videoTourModel.onAppear)
+            .onDisappear {
+                videoTourModel.player.pause()
+            }
     }
 
     var descriptionView: some View {

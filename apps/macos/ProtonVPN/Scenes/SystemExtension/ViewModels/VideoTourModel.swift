@@ -27,9 +27,9 @@ class VideoTourModel {
             switch self {
             case .systemExtension:
                 if VideoTourModel.isPreVentura {
-                    return "system-extension-video-tour-pre-ventura"
+                    return "https://protonvpn.com/download/resources/videos/monterey-os-final/monterey-os-final.m3u8"
                 } else {
-                    return "system-extension-video-tour"
+                    return "https://protonvpn.com/download/resources/videos/ventura-os-final/ventura-os-final.m3u8"
                 }
             }
         }
@@ -39,8 +39,7 @@ class VideoTourModel {
     private var cancellables = Set<AnyCancellable>()
 
     private lazy var urlAsset: AVURLAsset = {
-        let path = Bundle.main.path(forResource: videoFile.rawValue, ofType: "mp4")!
-        let videoUrl = URL(fileURLWithPath: path)
+        let videoUrl = URL(string: videoFile.rawValue)!
         return AVURLAsset(url: videoUrl)
     }()
 
