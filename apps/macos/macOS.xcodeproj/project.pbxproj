@@ -238,11 +238,9 @@
 		E565986A2820FECE004F2240 /* WarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E56598692820FECE004F2240 /* WarningView.xib */; };
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
-		E581CE0C29B0F09200DF9BFC /* system-extension-video-tour.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E581CE0B29B0F09200DF9BFC /* system-extension-video-tour.mp4 */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
 		E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
-		E5C4EF4129B9D1B70013ACB2 /* system-extension-video-tour-pre-ventura.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E5C4EF4029B9D1B70013ACB2 /* system-extension-video-tour-pre-ventura.mp4 */; };
 		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
 		E5E27AB027C3742C00C2B6C0 /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
@@ -874,11 +872,9 @@
 		E56598692820FECE004F2240 /* WarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = WarningView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.xib; sourceTree = "<group>"; };
 		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
 		E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionTutorialView.swift; sourceTree = "<group>"; };
-		E581CE0B29B0F09200DF9BFC /* system-extension-video-tour.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "system-extension-video-tour.mp4"; sourceTree = "<group>"; };
 		E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewController.swift; sourceTree = "<group>"; };
 		E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButtonStyle.swift; sourceTree = "<group>"; };
 		E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
-		E5C4EF4029B9D1B70013ACB2 /* system-extension-video-tour-pre-ventura.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "system-extension-video-tour-pre-ventura.mp4"; sourceTree = "<group>"; };
 		E5CCA11729B2057700BDE32B /* VideoTourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTourModel.swift; sourceTree = "<group>"; };
 		E5E27AAF27C3742C00C2B6C0 /* UpsellColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellColors.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
@@ -1857,8 +1853,6 @@
 		EED534831EEC112000013607 /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
-				E581CE0B29B0F09200DF9BFC /* system-extension-video-tour.mp4 */,
-				E5C4EF4029B9D1B70013ACB2 /* system-extension-video-tour-pre-ventura.mp4 */,
 				F36ECE312611E0530089B898 /* Extensions */,
 				F36ECDF62611D9B10089B898 /* Scenes */,
 				EE98CFD81F150639000D6688 /* Resources */,
@@ -3111,7 +3105,6 @@
 				D557D57E264AC337007E4396 /* Localizable.strings in Resources */,
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
-				E5C4EF4129B9D1B70013ACB2 /* system-extension-video-tour-pre-ventura.mp4 in Resources */,
 				E565986A2820FECE004F2240 /* WarningView.xib in Resources */,
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItem.xib in Resources */,
@@ -3143,7 +3136,6 @@
 				F315847727C793BE00D1F6CC /* AdvancedSettings.xib in Resources */,
 				E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */,
 				E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */,
-				E581CE0C29B0F09200DF9BFC /* system-extension-video-tour.mp4 in Resources */,
 				EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */,
 				EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */,
 				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
