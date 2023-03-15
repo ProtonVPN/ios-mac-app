@@ -55,11 +55,11 @@ struct SystemExtensionTutorialView: View {
                     .foregroundColor(.init(NSColor.color(.text)))
                 descriptionWithMarkdown(localised: LocalizedString.sysexDescription2)
                     .foregroundColor(.init(NSColor.color(.text)))
-                if VideoTourModel.isPreVentura {
-                    descriptionWithMarkdown(localised: LocalizedString.sysexDescription4)
+                if #available(macOS 13, *) {
+                    descriptionWithMarkdown(localised: LocalizedString.sysexDescription3)
                         .foregroundColor(.init(NSColor.color(.text)))
                 } else {
-                    descriptionWithMarkdown(localised: LocalizedString.sysexDescription3)
+                    descriptionWithMarkdown(localised: LocalizedString.sysexDescription4)
                         .foregroundColor(.init(NSColor.color(.text)))
                 }
             }
@@ -87,10 +87,10 @@ struct SystemExtensionTutorialView: View {
                 Button {
                     NSWorkspace.shared.open(URL(string: Self.securityPreferencesUrlString)!)
                 } label: {
-                    if VideoTourModel.isPreVentura {
-                        Text(LocalizedString.sysexOpenSecurityPreferences)
-                    } else {
+                    if #available(macOS 13, *) {
                         Text(LocalizedString.sysexOpenSystemSettings)
+                    } else {
+                        Text(LocalizedString.sysexOpenSecurityPreferences)
                     }
                 }
                 .buttonStyle(PrimaryButtonStyle())

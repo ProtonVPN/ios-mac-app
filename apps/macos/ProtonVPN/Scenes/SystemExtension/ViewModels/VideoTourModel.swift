@@ -26,10 +26,10 @@ class VideoTourModel {
         var rawValue: String {
             switch self {
             case .systemExtension:
-                if VideoTourModel.isPreVentura {
-                    return "https://protonvpn.com/download/resources/videos/monterey-os-final/monterey-os-final.m3u8"
-                } else {
+                if #available(macOS 13, *) {
                     return "https://protonvpn.com/download/resources/videos/ventura-os-final/ventura-os-final.m3u8"
+                } else {
+                    return "https://protonvpn.com/download/resources/videos/monterey-os-final/monterey-os-final.m3u8"
                 }
             }
         }
@@ -41,11 +41,6 @@ class VideoTourModel {
     private lazy var urlAsset: AVURLAsset = {
         let videoUrl = URL(string: videoFile.rawValue)!
         return AVURLAsset(url: videoUrl)
-    }()
-
-    static var isPreVentura: Bool = {
-        let systemVersion = ProcessInfo.processInfo.operatingSystemVersion
-        return systemVersion.majorVersion < 13
     }()
 
     lazy var size: CGSize = {
