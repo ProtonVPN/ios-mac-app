@@ -92,8 +92,7 @@ class HelpMenuViewModel {
     }
 
     func systemExtensionTutorialAction() {
-        let viewModel = SystemExtensionGuideViewModel(userWasShownTourBefore: true,
-                                                      cancelledHandler: {})
+        let viewModel = SystemExtensionGuideViewModel(cancelledHandler: {})
         windowService.openSystemExtensionGuideWindow(viewModel: viewModel)
     }
     

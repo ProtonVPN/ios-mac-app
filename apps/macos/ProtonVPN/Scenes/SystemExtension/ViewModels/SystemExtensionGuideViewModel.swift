@@ -30,29 +30,20 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     var finishedTour: Bool { get }
     /// Callback to allow window to close itself after all sysexes are installed
     var close: (() -> Void)? { get set }
-    var contentChanged: (() -> Void)? { get set }
 }
 
 class SystemExtensionGuideViewModel: NSObject {
 
     var finishedTour = false
-    let userWasShownTourBefore: Bool
     var cancelledHandler: () -> Void
 
-    var contentChanged: (() -> Void)?
     var close: (() -> Void)?
     
-    init(userWasShownTourBefore: Bool,
-         cancelledHandler: @escaping () -> Void) {
-        self.userWasShownTourBefore = userWasShownTourBefore
+    init(cancelledHandler: @escaping () -> Void) {
         self.cancelledHandler = cancelledHandler
     }
     
     // MARK: - Private
-    
-    private func updateView() {
-        contentChanged?()
-    }
     
     private func finish(_ notification: Notification) {
         finishedTour = true
@@ -66,8 +57,6 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     func viewWillAppear() {
         // Autoclose this window after installation finishes
         NotificationCenter.default.addObserver(forName: SystemExtensionManager.allExtensionsInstalled, object: nil, queue: nil, using: finish)
-
-        updateView()
     }
 
     func tourCancelled() {
