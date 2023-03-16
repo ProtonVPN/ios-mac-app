@@ -166,6 +166,10 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+    func makeNavigationService() -> ProtonVPN.NavigationService {
+        return navigationService
+    }
+
     func makeSessionService() -> SessionService {
         return sessionService
     }
