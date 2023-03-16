@@ -29,7 +29,7 @@ class SubuserAlertViewController: UIViewController {
     @IBOutlet private weak var assignConnectionsButton: ProtonButton!
     @IBOutlet private weak var loginButton: ProtonButton!
 
-    var role: SubuserWithoutConnectionsAlert.Role = .noOrganization
+    var role: UserRole = .noOrganization
     
     public var safariServiceFactory: SafariServiceFactory?
     

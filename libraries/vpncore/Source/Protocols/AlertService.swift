@@ -622,10 +622,8 @@ public class SystemExtensionTourAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     public var cancelHandler: () -> Void
-    public var userWasShownTourBefore: Bool
     
-    public init(userWasShownTourBefore: Bool, cancelHandler: @escaping() -> Void) {
-        self.userWasShownTourBefore = userWasShownTourBefore
+    public init(cancelHandler: @escaping() -> Void) {
         self.cancelHandler = cancelHandler
     }
 }

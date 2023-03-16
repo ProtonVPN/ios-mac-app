@@ -96,8 +96,6 @@ public class SystemExtensionManager: NSObject {
 
     fileprivate var outstandingRequests: Set<SystemExtensionRequest> = []
 
-    private var userClosedTour = false
-
     private var userIsLoggedIn: Bool {
         vpnKeychain.userIsLoggedIn
     }
@@ -237,13 +235,7 @@ public class SystemExtensionManager: NSObject {
                 return
             }
 
-            let tour = SystemExtensionTourAlert(userWasShownTourBefore: userClosedTour,
-                                                cancelHandler: { [unowned self] in
-                // We use userClosedTour to show the user the right "step" of the tour, since
-                // if they make the tour pop up a second time within the same lifetime of the app,
-                // they aren't likely to get another "System Extension Blocked" message (since macOS
-                // will keep us from spamming it)
-                self.userClosedTour = true
+            let tour = SystemExtensionTourAlert(cancelHandler: {
                 DispatchQueue.main.async {
                     actionHandler(.failure(.tourCancelled))
                     NotificationCenter.default.post(name: Self.userCancelledTour, object: nil)
