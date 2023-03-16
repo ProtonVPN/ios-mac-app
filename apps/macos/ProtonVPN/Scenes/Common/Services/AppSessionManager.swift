@@ -222,10 +222,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     private func resolveActiveSession() async throws {
-        DispatchQueue.main.async { [weak self] in
-            self?.navService?.sessionRefreshed()
-        }
-
         guard await appState.isConnected else {
             return
         }
