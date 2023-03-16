@@ -789,15 +789,9 @@ public class SubuserWithoutConnectionsAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public let role: Role
+    public let role: UserRole
 
-    public enum Role: Int {
-        case noOrganization = 0
-        case organizationMember = 1
-        case organizationAdmin = 2
-    }
-
-    public init(role: Role) {
+    public init(role: UserRole) {
         self.role = role
     }
 }

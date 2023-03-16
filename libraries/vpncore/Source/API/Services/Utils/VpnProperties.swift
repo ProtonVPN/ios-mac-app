@@ -30,7 +30,7 @@ public struct VpnProperties {
     public let vpnCredentials: VpnCredentials?
     public let location: UserLocation?
     public let clientConfig: ClientConfig
-    public let userRole: Int?
+    public let userRole: UserRole
 
     public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, location: UserLocation?, clientConfig: ClientConfig?, streamingResponse: VPNStreamingResponse?, partnersResponse: VPNPartnersResponse?, user: User?) {
         self.serverModels = serverModels
@@ -39,6 +39,6 @@ public struct VpnProperties {
         self.clientConfig = clientConfig ?? ClientConfig()
         self.streamingResponse = streamingResponse
         self.partnersResponse = partnersResponse
-        self.userRole = user?.role
+        self.userRole = .init(rawValue: user?.role ?? 0) ?? .noOrganization
     }
 }

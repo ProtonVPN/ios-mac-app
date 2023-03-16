@@ -101,7 +101,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
 
     var streamingServices: StreamingDictServices { get set }
     var partnerTypes: [PartnerType] { get set }
-    var userRole: Int? { get set }
+    var userRole: UserRole { get set }
     var streamingResourcesUrl: String? { get set }
 
     var connectionProtocol: ConnectionProtocol { get }
@@ -436,7 +436,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     @InitializedProperty(.streamingServices) public var streamingServices: StreamingDictServices
     @InitializedProperty(.partnerTypes) public var partnerTypes: [PartnerType]
-    @Property(.userRole) public var userRole: Int?
+    @InitializedProperty(.userRole) public var userRole: UserRole
 
     @StringProperty(.streamingResourcesUrl) public var streamingResourcesUrl: String?
     
@@ -489,6 +489,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public func setValue(_ value: Bool, forKey key: String) {
         storage.setValue(value, forKey: key)
+    }
+}
+
+public enum UserRole: Int, Codable, DefaultableProperty {
+    case noOrganization = 0
+    case organizationMember = 1
+    case organizationAdmin = 2
+
+    public init() {
+        self = .noOrganization
     }
 }
 

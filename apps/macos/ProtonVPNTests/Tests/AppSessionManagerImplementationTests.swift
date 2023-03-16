@@ -450,6 +450,4 @@ fileprivate extension SystemAlert {
     }
 }
 
-fileprivate class NavigationServiceMock: NavigationService {
-    override func sessionRefreshed() { }
-}
+fileprivate class NavigationServiceMock: NavigationService { }

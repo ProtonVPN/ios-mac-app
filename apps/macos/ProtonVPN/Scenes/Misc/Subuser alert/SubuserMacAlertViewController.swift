@@ -31,7 +31,7 @@ final class SubuserMacAlertViewController: NSViewController {
     
     public var safariServiceFactory: SafariServiceFactory?
     private lazy var safariService = safariServiceFactory?.makeSafariService()
-    var role: SubuserWithoutConnectionsAlert.Role = .noOrganization
+    var role: UserRole = .noOrganization
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")

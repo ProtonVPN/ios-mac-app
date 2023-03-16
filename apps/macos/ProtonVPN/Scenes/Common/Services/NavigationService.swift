@@ -288,7 +288,8 @@ extension NavigationService {
     }
 
     func showWelcomeDialog() {
-        guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed) else {
+        guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
+              propertiesManager.userRole == .noOrganization else {
             return
         }
 
