@@ -600,9 +600,7 @@ public class SysexEnabledAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
-    }
+    public init() { }
 }
 
 public class SysexInstallingErrorAlert: SystemAlert {

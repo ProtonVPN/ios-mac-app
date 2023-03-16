@@ -141,10 +141,6 @@ class NavigationService {
             showLogIn(initialError: notification.object as? String)
         }
     }
-
-    func sessionRefreshed() {
-        showWelcomeDialog()
-    }
     
     private func showLogIn(initialError: String? = nil) {
         appHasPresented = true
@@ -291,7 +287,7 @@ extension NavigationService {
         windowService.showTour()
     }
 
-    private func showWelcomeDialog() {
+    func showWelcomeDialog() {
         guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed) else {
             return
         }

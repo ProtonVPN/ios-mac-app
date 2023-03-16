@@ -28,7 +28,7 @@ import Modals_macOS
 
 final class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -39,6 +39,7 @@ final class MacAlertService {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var sessionService: SessionService = factory.makeSessionService()
+    private lazy var navigationService: NavigationService = factory.makeNavigationService()
     
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -160,8 +161,8 @@ extension MacAlertService: CoreAlertService {
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
             
-        case is SysexEnabledAlert:
-            showDefaultSystemAlert(alert)
+        case let sysexAlert as SysexEnabledAlert:
+            show(sysexAlert)
             
         case is SysexInstallingErrorAlert:
             showDefaultSystemAlert(alert)
@@ -243,6 +244,13 @@ extension MacAlertService: CoreAlertService {
     }
     
     // MARK: Custom Alerts
+
+    private func show(_ alert: SysexEnabledAlert) {
+        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
+            self?.navigationService.showWelcomeDialog()
+        }))
+        uiAlertService.displayAlert(alert)
+    }
     
     private func show(_ alert: AppUpdateRequiredAlert) {
         let supportAction = AlertAction(title: LocalizedString.updateRequiredSupport, style: .confirmative) {
