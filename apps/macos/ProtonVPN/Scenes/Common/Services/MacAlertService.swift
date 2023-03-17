@@ -25,10 +25,11 @@ import vpncore
 import AppKit
 import Modals
 import Modals_macOS
+import VPNShared
 
 final class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -40,6 +41,7 @@ final class MacAlertService {
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var sessionService: SessionService = factory.makeSessionService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
+    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -246,10 +248,15 @@ extension MacAlertService: CoreAlertService {
     // MARK: Custom Alerts
 
     private func show(_ alert: SysexEnabledAlert) {
-        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [weak self] in
-            self?.navigationService.showWelcomeDialog()
-        }))
-        uiAlertService.displayAlert(alert)
+        guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
+              propertiesManager.userRole == .noOrganization else {
+            return
+        }
+
+        let welcomeViewController = WelcomeViewController(windowService: windowService, telemetrySettings: telemetrySettings)
+        windowService.presentKeyModal(viewController: welcomeViewController)
+
+        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
     }
     
     private func show(_ alert: AppUpdateRequiredAlert) {

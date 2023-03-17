@@ -419,7 +419,7 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 
 }
 
-fileprivate class AuthKeychainHandleMock: AuthKeychainHandle {
+class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
 
     func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws { }
