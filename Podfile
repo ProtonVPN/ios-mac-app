@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.28.3'
+  '3.29.1'
 end
 
 def openvpn
@@ -20,7 +20,7 @@ def openvpn
 end
 
 def pm_automation
-  pod 'pmtest', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '56581413f76841d7f0d9f6ba555e03a6cc7b8d94'
+  pod 'fusion', :git => proton_url + ':tpe/apple-fusion.git', :commit => '1ba256d5'
 end
 
 def keychain_access
