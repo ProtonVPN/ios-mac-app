@@ -21,7 +21,7 @@ import VPNShared
 
 public class TelemetrySettings {
 
-    typealias Factory = PropertiesManagerFactory & AuthKeychainHandleFactory
+    public typealias Factory = PropertiesManagerFactory & AuthKeychainHandleFactory
     private let factory: Factory
 
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()

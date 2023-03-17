@@ -21,7 +21,7 @@
 //
 
 import XCTest
-import vpncore
+@testable import vpncore
 import VPNShared
 @testable import ProtonVPN
 
@@ -29,6 +29,7 @@ fileprivate let navigationService = NavigationService(DependencyContainer())
 fileprivate let windowService = WindowServiceMock()
 fileprivate let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
 fileprivate let sessionService = SessionServiceMock()
+fileprivate let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
 
@@ -104,6 +105,22 @@ fileprivate class SessionServiceMock: SessionService {
     }
 }
 
+class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
+    func makeAuthKeychainHandle() -> VPNShared.AuthKeychainHandle {
+        AuthKeychainHandleMock()
+    }
+
+    func makePropertiesManager() -> vpncore.PropertiesManagerProtocol {
+        PropertiesManagerMock()
+    }
+}
+
+fileprivate class TelemetrySettingsMock: TelemetrySettings {
+    init() {
+        super.init(TelemetrySettingsFactoryMock())
+    }
+}
+
 fileprivate class WindowServiceMock: WindowService {
     var displayCount = 0
     
@@ -166,6 +183,10 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+    func makeTelemetrySettings() -> vpncore.TelemetrySettings {
+        return telemetrySettings
+    }
+
     func makeNavigationService() -> ProtonVPN.NavigationService {
         return navigationService
     }

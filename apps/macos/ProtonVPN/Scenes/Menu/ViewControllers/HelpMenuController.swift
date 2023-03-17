@@ -74,28 +74,32 @@ class HelpMenuController: NSObject {
         clearApplicationDataItem.target = self
         clearApplicationDataItem.action = #selector(clearApplicationDataItemAction)
 
-        systemExtensionTutorialItem.title = LocalizedString.systemExtensionTutorialMenuItem
-        systemExtensionTutorialItem.target = self
-        systemExtensionTutorialItem.action = #selector(systemExtensionTutorialAction)
+        if #available(macOS 11, *) {
+            systemExtensionTutorialItem.title = LocalizedString.systemExtensionTutorialMenuItem
+            systemExtensionTutorialItem.target = self
+            systemExtensionTutorialItem.action = #selector(systemExtensionTutorialAction)
+        } else {
+            systemExtensionTutorialItem.isHidden = true
+        }
 
         helpItem.title = "Proton VPN " + LocalizedString.help
         helpItem.isEnabled = true
         helpItem.target = self
         helpItem.action = #selector(helpItemAction)
     }
-    
+
     @objc private func reportAnIssueItemAction() {
         viewModel.openReportBug()
     }
-    
+
     @objc private func logsAction() {
         viewModel.openLogsFolderAction()
     }
-    
+
     @objc private func openVpnLogsAction() {
         viewModel.openOpenVpnLogsFolderAction()
     }
-    
+
     @objc private func openWGLogsAction() {
         viewModel.openWGVpnLogsFolderAction()
     }
@@ -103,11 +107,11 @@ class HelpMenuController: NSObject {
     @objc private func systemExtensionTutorialAction() {
         viewModel.systemExtensionTutorialAction()
     }
-    
+
     @objc private func helpItemAction() {
         SafariService().open(url: CoreAppConstants.ProtonVpnLinks.support)
     }
-    
+
     @objc private func clearApplicationDataItemAction() {
         viewModel.selectClearApplicationData()
     }

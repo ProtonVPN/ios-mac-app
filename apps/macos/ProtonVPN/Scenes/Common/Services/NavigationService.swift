@@ -72,7 +72,6 @@ class NavigationService {
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
     
     var appHasPresented = false
     var isSystemLoggingOff = false
@@ -200,7 +199,13 @@ extension NavigationService {
     func openSettings(to tab: SettingsTab) {
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab), accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(), propertiesManager: factory.makePropertiesManager(), sessionService: factory.makeSessionService(), authKeychain: factory.makeAuthKeychainHandle()), couponViewModel: factory.makeCouponViewModel())
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory),
+                                         tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
+                                         accountViewModel: AccountViewModel(vpnKeychain: factory.makeVpnKeychain(),
+                                                                            propertiesManager: factory.makePropertiesManager(),
+                                                                            sessionService: factory.makeSessionService(),
+                                                                            authKeychain: factory.makeAuthKeychainHandle()),
+                                         couponViewModel: factory.makeCouponViewModel())
     }
     
     func logOutRequested() {
@@ -277,25 +282,5 @@ extension NavigationService {
         }
         
         return .terminateLater
-    }
-}
-
-// MARK: - Modals extension
-
-extension NavigationService {
-    func presentGuidedTour() {
-        windowService.showTour()
-    }
-
-    func showWelcomeDialog() {
-        guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
-              propertiesManager.userRole == .noOrganization else {
-            return
-        }
-
-        let welcomeViewController = WelcomeViewController(navService: self, telemetrySettings: telemetrySettings)
-        windowService.presentKeyModal(viewController: welcomeViewController)
-
-        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
     }
 }

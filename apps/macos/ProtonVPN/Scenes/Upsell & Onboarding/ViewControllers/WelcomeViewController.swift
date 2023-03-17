@@ -43,15 +43,15 @@ class WelcomeViewController: NSViewController {
     @IBOutlet weak var telemetryStackView: NSStackView!
     @IBOutlet weak var learnMore: InteractiveActionButton!
 
-    let navService: NavigationService
+    let windowService: WindowService
     let telemetrySettings: TelemetrySettings
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(navService: NavigationService, telemetrySettings: TelemetrySettings) {
-        self.navService = navService
+    init(windowService: WindowService, telemetrySettings: TelemetrySettings) {
+        self.windowService = windowService
         self.telemetrySettings = telemetrySettings
         super.init(nibName: NSNib.Name("Welcome"), bundle: nil)
     }
@@ -125,7 +125,7 @@ class WelcomeViewController: NSViewController {
     
     @IBAction func takeTour(_ sender: Any) {
         dismiss(nil)
-        navService.presentGuidedTour()
+        windowService.showTour()
     }
 }
 extension WelcomeViewController: SwitchButtonDelegate {
