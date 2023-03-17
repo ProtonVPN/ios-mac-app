@@ -8,6 +8,7 @@
 
 import fusion
 import ProtonCore_Doh
+import ProtonCore_Environment
 import ProtonCore_QuarkCommands
 import ProtonCore_TestingToolkit
 
@@ -37,21 +38,9 @@ class SignupTests: ProtonVPNUITests {
             print("Unban finished: \(result)") // swiftlint:disable:this no_print
         }
      }
-    
-    func testSignupExistingInternalAccount() {
-        
-        let email = "vpnfree"
-        
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: SignupRobot.self)
-            .verify.usernameErrorIsShown()
-    }
-    
+
+    /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
+    @MainActor
     func testSignupNewExternalAccountSuccess() {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
@@ -63,61 +52,15 @@ class SignupTests: ProtonVPNUITests {
         mainRobot
             .showSignup()
             .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: AccountVerificationRobot.self)
-            .verify.accountVerificationScreenIsShown()
-            .enterVerificationCode(code)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .enterPassword(password)
-            .enterRepeatPassword(password)
-            .nextButtonTap(robot: PaymentsRobot.self)
-            .verify.subscriptionScreenIsShown()
-    }
-    
-    func testSignupExistingExternalAccount() {
 
-        let email = "vpnfree@gmail.com"
-        let code = "666666"
-        
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: AccountVerificationRobot.self)
-            .verify.accountVerificationScreenIsShown()
-            .enterVerificationCode(code)
-            .nextButtonTap(robot: LoginRobot.self)
-            .verify.emailAddressAlreadyExists()
-            .verify.loginScreenIsShown()
-    }
-    
-    /// Test showing standard plan (not Black Friday 2022 plan) for upgrade after successful signup
-    func testSignupNewInternalAccountUpgradePlans() {
-       
-        let email = StringUtils().randomAlphanumericString(length: 5)
-        let testEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let randomEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let password = StringUtils().randomAlphanumericString(length: 8)
-        let code = "666666"
-
-        changeEnvToBlackIfNeeded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .enterPassword(password)
-            .enterRepeatPassword(password)
-            .nextButtonTap(robot: RecoveryRobot.self)
-            .insertRecoveryEmail(testEmail)
-            .nextButtonTap(robot: SignupHumanVerificationV3Robot.self)
-            .verify.humanVerificationScreenIsShown()
-            .performEmailVerificationV3(email: randomEmail, code: code, to: CreatingAccountRobot.self)
+        SignupExternalAccountsCapability()
+            .signUpWithExternalAccount(
+                signupRobot: ProtonCore_TestingToolkit.SignupRobot(),
+                userEmail: email,
+                password: password,
+                verificationCode: code,
+                retRobot: CreatingAccountRobot.self
+            )
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
             .skipOnboarding()
@@ -133,4 +76,30 @@ class SignupTests: ProtonVPNUITests {
             .verifyTableCellStaticText(cellName: "PlanCell.VPN_Plus", name: "$99.99")
     }
 
+    @MainActor
+    func testSignupExistingExternalAccount() async {
+
+        let email = "vpnfree@gmail.com"
+        let password = StringUtils().randomAlphanumericString(length: 8)
+        let code = "666666"
+
+        try? await QuarkCommands.createAsync(
+            account: .external(email: email, password: password),
+            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl()
+        )
+
+        changeEnvToBlackIfNeeded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+
+        ProtonCore_TestingToolkit.SignupRobot()
+            .insertExternalEmail(name: email)
+            .nextButtonTapToOwnershipHV()
+            .fillInTextField(code)
+            .tapOnVerifyCodeButton(to: LoginRobot.self)
+            .verify.emailAddressAlreadyExists()
+            .verify.loginScreenIsShown()
+    }
 }
