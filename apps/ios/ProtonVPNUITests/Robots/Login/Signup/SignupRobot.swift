@@ -28,11 +28,11 @@ class SignupRobot: CoreElements {
     }
     
     func enterEmail(_ email: String) -> SignupRobot {
-        return insertInternalEmail(email)
+        return insertExternalEmail(email)
     }
     
-    private func insertInternalEmail(_ email: String) -> SignupRobot {
-        textField(internalEmailTextFieldId).tap().typeText(email)
+    private func insertExternalEmail(_ email: String) -> SignupRobot {
+        textField(externalEmailTextFieldId).tap().typeText(email)
         return self
      }
     

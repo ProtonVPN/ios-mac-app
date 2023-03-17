@@ -32,8 +32,8 @@
         "ProfilesTests",
         "SettingsTests",
         "SignUpTests",
-        "SignupTests\/testSignupExistingExternalAccount()",
-        "SignupTests\/testSignupNewExternalAccountSuccess()",
+        "SignupTests\/testSignupExistingInternalAccount()",
+        "SignupTests\/testSignupNewInternalAccountUpgradePlans()",
         "TokenRefreshTests",
         "UnloggedUserTests"
       ],
