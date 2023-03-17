@@ -155,7 +155,7 @@ fileprivate class WindowServiceMock: WindowService {
     func closeActiveWindows(except: [NSWindowController.Type]) {
     }
 
-    func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
+    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
     }
     
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {

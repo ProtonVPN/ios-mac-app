@@ -28,10 +28,12 @@ class SystemExtensionGuideViewController: NSViewController {
 
     weak var windowService: WindowService?
 
-    var viewModel: SystemExtensionGuideViewModelProtocol
+    var finishedTour: Bool = false
 
-    init(viewModel: SystemExtensionGuideViewModelProtocol) {
-        self.viewModel = viewModel
+    var cancelledHandler: () -> Void
+
+    init(cancelledHandler: @escaping () -> Void) {
+        self.cancelledHandler = cancelledHandler
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,12 +54,13 @@ class SystemExtensionGuideViewController: NSViewController {
     }
 
     func allExtensionsInstalled(_ notification: Notification) {
+        finishedTour = true
         self.view.window?.close()
     }
 
     func userWillCloseWindow() {
-        if !viewModel.finishedTour {
-            viewModel.tourCancelled()
+        if !finishedTour {
+            cancelledHandler()
         }
     }
 }

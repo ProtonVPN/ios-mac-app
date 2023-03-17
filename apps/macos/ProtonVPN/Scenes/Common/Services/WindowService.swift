@@ -47,7 +47,7 @@ protocol WindowService: WindowControllerDelegate {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
-    func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol)
+    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
     
     func bringWindowsToForeground() -> Bool
@@ -232,9 +232,9 @@ class WindowServiceImplementation: WindowService {
         windowController.showWindow(self)
     }
 
-    func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
+    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
         guard #available(macOS 11.0, *) else { return }
-        let controller = SystemExtensionGuideViewController(viewModel: viewModel)
+        let controller = SystemExtensionGuideViewController(cancelledHandler: cancelledHandler)
         controller.windowService = self
         let windowController = SysexGuideWindowController(viewController: controller)
         windowController.delegate = controller
