@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */; };
-		0663E44D259E22CD0059E88D /* SystemExtensionGuideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0663E44C259E22CD0059E88D /* SystemExtensionGuideViewModel.swift */; };
 		09A7611B37870D3AFF300CF6 /* WireguardMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */; };
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		1AB2B04FC95F7F16FE21C0C5 /* Pods-ProtonVPN WireGuard-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED9AB4330114A9F0C8F8B1E5 /* Pods-ProtonVPN WireGuard-metadata.plist */; };
@@ -559,7 +558,6 @@
 
 /* Begin PBXFileReference section */
 		029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN_mac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0663E44C259E22CD0059E88D /* SystemExtensionGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewModel.swift; sourceTree = "<group>"; };
 		07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNmacOSTests-metadata.plist"; sourceTree = "<group>"; };
 		0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-mac-metadata.plist"; sourceTree = "<group>"; };
 		10FD08319E3414E8FB8C87CA /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2237,7 +2235,6 @@
 		F36ECE162611DDAB0089B898 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				0663E44C259E22CD0059E88D /* SystemExtensionGuideViewModel.swift */,
 				E5CCA11729B2057700BDE32B /* VideoTourModel.swift */,
 			);
 			path = ViewModels;
@@ -3764,7 +3761,6 @@
 				F320E03726F08DED00336F7A /* TourNumberRingView.swift in Sources */,
 				D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
-				0663E44D259E22CD0059E88D /* SystemExtensionGuideViewModel.swift in Sources */,
 				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
