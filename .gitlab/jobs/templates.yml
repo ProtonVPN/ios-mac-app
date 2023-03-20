@@ -52,6 +52,7 @@
     - !reference [.prepare_secrets, before_script] # Download obfuscated constants
   after_script:
     - ssh-add -D # Delete all ssh private keys
+  interruptible: true
   tags:
     - iOS_vpn
 
@@ -100,4 +101,4 @@
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_WireGuard_Development_PP.provisionprofile
     - fastlane delete_macos_keychain
     - ssh-add -D # Delete all ssh private keys
-    
+  interruptible: true
