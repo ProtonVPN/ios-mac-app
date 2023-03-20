@@ -31,9 +31,80 @@ public protocol ConnectionTunnelFactory {
 extension NEPacketTunnelProvider: ConnectionTunnelFactory {
     public func createTunnel(hostname: String, port: String, useTLS: Bool) -> ConnectionTunnel {
         let endpoint = NWHostEndpoint(hostname: hostname, port: port)
-        return createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: nil)
+
+        #if DEBUG
+        let delegate: NWTCPConnectionAuthenticationDelegate = self
+        #else
+        let delegate: NWTCPConnectionAuthenticationDelegate? = nil
+        #endif
+        return createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: delegate)
     }
 }
+
+#if DEBUG
+extension NEPacketTunnelProvider: NWTCPConnectionAuthenticationDelegate {
+    public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
+        return true
+    }
+
+    private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
+        let result = closure()
+        guard result == errSecSuccess else {
+            let userInfo: [String: Any]?
+            if let string = SecCopyErrorMessageString(result, nil) as? String {
+                userInfo = [ NSLocalizedDescriptionKey: string ]
+            } else {
+                userInfo = nil
+            }
+
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: userInfo)
+        }
+    }
+
+    /// This allows BTI to work on debug builds.
+    ///
+    /// - Warning: This overrides **all** TLS validation errors. It should **never** be enabled in production.
+    public func evaluateTrust(for connection: NWTCPConnection, peerCertificateChain: [Any], completionHandler completion: @escaping (SecTrust) -> Void) {
+        log.info("Debug: overriding trust for \(connection)")
+        var secTrust: SecTrust?
+
+        do {
+            // Create a trust object with the certificates from the chain.
+            try secEvaluate {
+                SecTrustCreateWithCertificates(
+                    peerCertificateChain as CFArray,
+                    nil,
+                    &secTrust
+                )
+            }
+
+            guard let secTrust else {
+                throw POSIXError(.ENOENT)
+            }
+
+            // Evaluate the trust. This is necessary to copy the exceptions out in the next step.
+            // We don't care about return values or errors here.
+            var error: CFError?
+            _ = SecTrustEvaluateWithError(secTrust, &error)
+
+            // Now that we've evaluated the trust, if we're on a test environment, the Security
+            // stack's head probably exploded and filled the SecTrust object with validation
+            // errors. Create exceptions for all of these errors and add them back to the trust
+            // object for re-evaluation.
+            let exceptions = SecTrustCopyExceptions(secTrust)
+            guard SecTrustSetExceptions(secTrust, exceptions) else {
+                throw POSIXError(.EPERM)
+            }
+        } catch {
+            log.error("Couldn't evaluate trust of \(connection): \(error)")
+        }
+
+        if let secTrust {
+            completion(secTrust)
+        }
+    }
+}
+#endif
 
 /// Wrapper protocol for `NWTCPConnectionTunnel`, providing most of the same properties and methods (besides `observeStateChange`).
 public protocol ConnectionTunnel {
@@ -54,7 +125,7 @@ public protocol ConnectionTunnel {
 /// `state`'s initial value.
 extension NWTCPConnection: ConnectionTunnel {
     public func observeStateChange(withCallback stateChangeCallback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
-        return self.observe(\.state, options: [.initial, .new]) { _, _ in stateChangeCallback(self.state) }
+        observe(\.state, options: [.initial, .new]) { _, _ in stateChangeCallback(self.state) }
     }
 }
 
@@ -315,7 +386,17 @@ class NWTCPDataTask: DataTaskProtocol {
                     self.timeoutTimer = self.timerFactory.scheduledTimer(runAt: timeoutDeadline, queue: self.queue) {
                         log.info("Request timed out! Invoking timeout error.", category: .net, metadata: ["id": "\(self.taskId)"])
                         self.connection?.cancel()
-                        resolveRequest(.failure(POSIXError(.ETIMEDOUT)))
+
+                        var userInfo: [String: Any] = [:]
+                        if let error = (self.connection as? NWTCPConnection)?.error {
+                            userInfo[NSUnderlyingErrorKey] = error
+                        }
+
+                        resolveRequest(.failure(NSError(
+                            domain: NSPOSIXErrorDomain,
+                            code: Int(ETIMEDOUT),
+                            userInfo: userInfo
+                        )) )
                     }
                 default:
                     break
