@@ -20,7 +20,7 @@
 //  along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
 
 public struct ProtonColorPalettemacOS {
-    static let instance = ProtonColorPalettemacOS()
+    public static let instance = ProtonColorPalettemacOS()
 
     private init() {}
     

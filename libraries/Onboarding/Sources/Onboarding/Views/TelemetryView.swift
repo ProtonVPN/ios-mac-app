@@ -62,8 +62,7 @@ struct TelemetryView: View {
 
 struct TelemetryView_Previews: PreviewProvider {
     static var previews: some View {
-        TelemetryView(colors: previewColors,
-                      preferenceChangeUsageData: { _ in },
+        TelemetryView(preferenceChangeUsageData: { _ in },
                       preferenceCrashReports: { _ in })
     }
 }

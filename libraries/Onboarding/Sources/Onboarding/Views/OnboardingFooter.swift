@@ -47,7 +47,7 @@ struct OnboardingFooter: View {
 
 struct OnboardingFooter_Previews: PreviewProvider {
     static var previews: some View {
-        OnboardingFooter(colors: previewColors)
+        OnboardingFooter()
             .previewLayout(.sizeThatFits)
     }
 }

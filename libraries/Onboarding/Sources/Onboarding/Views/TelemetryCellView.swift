@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 
 struct TelemetryCellView: View {
 
@@ -59,9 +60,8 @@ struct TelemetryCellView_Previews: PreviewProvider {
         TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
                           description: LocalizedString.onboardingUsageStatsDescription,
                           isOn: true,
-                          preferenceChange: { _ in },
-                          colors: previewColors)
+                          preferenceChange: { _ in })
         .previewLayout(.sizeThatFits)
-        .background(previewColors.secondaryBackground.suColor)
+        .background(ColorPaletteiOS.instance.BackgroundSecondary.suColor)
     }
 }

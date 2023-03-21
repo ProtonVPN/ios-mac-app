@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 
 struct OnboardingButton: View {
 
@@ -54,9 +55,9 @@ struct OnboardingButton_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             ZStack {
-                previewColors.background.suColor.ignoresSafeArea()
+                ColorPaletteiOS.instance.BackgroundNorm.suColor.ignoresSafeArea()
                 VStack() {
-                    OnboardingButton(geometry: geometry, colors: previewColors)
+                    OnboardingButton(geometry: geometry)
                 }
             }
         }

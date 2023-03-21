@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Theme
 
 public struct Colors {
     public let background: UIColor
@@ -33,18 +34,18 @@ public struct Colors {
     let textInverted: UIColor
     let notification: UIColor
 
-    public init(background: UIColor, buttonTitle: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor, weakInteraction: UIColor) {
-        self.background = background
-        self.buttonTitle = buttonTitle
-        self.text = text
-        self.textAccent = textAccent
-        self.brand = brand
-        self.weakText = weakText
-        self.activeBrandButton = activeBrandButton
-        self.secondaryBackground = secondaryBackground
-        self.textInverted = textInverted
-        self.notification = notification
-        self.weakInteraction = weakInteraction
+    public init() {
+        self.background = ColorPaletteiOS.instance.BackgroundNorm
+        self.buttonTitle = ColorPaletteiOS.instance.White
+        self.text = ColorPaletteiOS.instance.TextNorm
+        self.textAccent = ColorPaletteiOS.instance.TextAccent
+        self.brand = ColorPaletteiOS.instance.BrandNorm
+        self.weakText = ColorPaletteiOS.instance.TextWeak
+        self.activeBrandButton = ColorPaletteiOS.instance.BrandLighten20
+        self.secondaryBackground = ColorPaletteiOS.instance.BackgroundSecondary
+        self.textInverted = ColorPaletteiOS.instance.TextInverted
+        self.notification = ColorPaletteiOS.instance.NotificationNorm
+        self.weakInteraction = ColorPaletteiOS.instance.InteractionWeak
     }
 }
 
@@ -65,14 +66,11 @@ public struct Constants {
 }
 
 public struct Configuration {
-    let colors: Colors
     let constants: Constants
     let telemetryEnabled: Bool
 
-    public init(colors: Colors,
-                constants: Constants,
+    public init(constants: Constants,
                 telemetryEnabled: Bool) {
-        self.colors = colors
         self.constants = constants
         self.telemetryEnabled = telemetryEnabled
     }
@@ -81,15 +79,3 @@ public struct Configuration {
 extension UIColor {
     var suColor: Color { Color(self) }
 }
-
-let previewColors = Colors(background: UIColor(red: 28/255, green: 27/255, blue: 35/255, alpha: 1),
-                           buttonTitle: .white,
-                           text: .white,
-                           textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
-                           brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
-                           weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
-                           activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1),
-                           secondaryBackground: UIColor(red: 41/255, green: 39/255, blue: 50/255, alpha: 1),
-                           textInverted: .black,
-                           notification: .white,
-                           weakInteraction: UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1))

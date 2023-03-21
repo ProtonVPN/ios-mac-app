@@ -58,8 +58,7 @@ struct TelemetryTogglesView: View {
 
 struct TelemetryTogglesView_Previews: PreviewProvider {
     static var previews: some View {
-        TelemetryTogglesView(colors: previewColors,
-                             preferenceChangeUsageData: { _ in  },
+        TelemetryTogglesView(preferenceChangeUsageData: { _ in  },
                              preferenceCrashReports: { _ in  },
                              usageStatisticsOn: true,
                              crashReportsOn: false)
