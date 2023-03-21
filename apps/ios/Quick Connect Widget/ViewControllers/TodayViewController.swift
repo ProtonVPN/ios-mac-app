@@ -37,7 +37,6 @@ final class TodayViewController: UIViewController {
     private let viewModel: TodayViewModel
     
     required init?(coder aDecoder: NSCoder) {
-        ColorProvider.brand = .vpn
         viewModel = widgetFactory.makeTodayViewModel()
         super.init(coder: aDecoder)
         viewModel.delegate = self

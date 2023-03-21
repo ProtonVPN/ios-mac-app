@@ -49,7 +49,7 @@ public final class OnboardingCoordinator {
 
     public init(configuration: Configuration) {
         self.configuration = configuration
-        self.modals = ModalsFactory(colors: configuration.colors)
+        self.modals = ModalsFactory()
 
         colors = configuration.colors
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)

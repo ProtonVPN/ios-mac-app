@@ -24,6 +24,7 @@ import UIKit
 import GSMessages
 import vpncore
 import ProtonCore_UIFoundations
+import Theme
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()
@@ -185,7 +186,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
 
             completionHandler(true)
         }
-        action.backgroundColor = ColorProvider.NotificationError
+        action.backgroundColor = ColorPaletteiOS.instance.NotificationError
         return UISwipeActionsConfiguration(actions: [action])
     }
     

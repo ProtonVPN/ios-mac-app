@@ -43,7 +43,7 @@ class ViewController: UITableViewController {
     static let fromServer = ("US-CA#63", UIImage(named: "Flag")!)
     static let toServer = ("US-CA#78", UIImage(named: "Flag")!)
 
-    let modalsFactory = ModalsFactory(colors: Colors())
+    let modalsFactory = ModalsFactory()
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         3
