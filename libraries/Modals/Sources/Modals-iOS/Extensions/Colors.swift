@@ -17,8 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import Theme
 
-var colors: ModalsColors!
+var colors = Colors()
 
 public protocol ModalsColors {
     var background: UIColor { get }
@@ -41,15 +42,15 @@ public struct Colors {
     public let weakText: UIColor
     public let weakInteraction: UIColor
 
-    public init(background: UIColor, secondaryBackground: UIColor, buttonTitle: UIColor, text: UIColor, textAccent: UIColor, brand: UIColor, weakText: UIColor, weakInteraction: UIColor) {
-        self.background = background
-        self.secondaryBackground = secondaryBackground
-        self.buttonTitle = buttonTitle
-        self.text = text
-        self.textAccent = textAccent
-        self.brand = brand
-        self.weakText = weakText
-        self.weakInteraction = weakInteraction
+    public init() {
+        self.background = ColorPaletteiOS.instance.BackgroundNorm
+        self.secondaryBackground = ColorPaletteiOS.instance.BackgroundSecondary
+        self.buttonTitle = ColorPaletteiOS.instance.White
+        self.text = ColorPaletteiOS.instance.TextNorm
+        self.textAccent = ColorPaletteiOS.instance.TextAccent
+        self.brand = ColorPaletteiOS.instance.BrandNorm
+        self.weakText = ColorPaletteiOS.instance.TextWeak
+        self.weakInteraction = ColorPaletteiOS.instance.InteractionWeak
     }
 }
 

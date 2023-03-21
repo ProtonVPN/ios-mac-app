@@ -9,11 +9,10 @@ public struct ModalsFactory {
     private let discourageStoryboard: UIStoryboard
     private let userAccountUpdateStoryboard: UIStoryboard
 
-    public init(colors: ModalsColors) {
+    public init() {
         upsellStoryboard = UIStoryboard(name: "UpsellViewController", bundle: Bundle.module)
         discourageStoryboard = UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
         userAccountUpdateStoryboard = UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
-        Modals_iOS.colors = colors
     }
 
     public func upsellViewController(upsellType: UpsellType) -> UpsellViewController {

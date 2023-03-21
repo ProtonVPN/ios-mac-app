@@ -15,13 +15,15 @@ let package = Package(
     dependencies: [
         .package(name: "Overture",
                  url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
-        .package(path: "../Modals")
+        .package(path: "../Modals"),
+        .package(path: "../Theme")
     ],
     targets: [
         .target(
             name: "Onboarding",
             dependencies: ["Overture",
-                            .product(name: "Modals-iOS", package: "Modals")],
+                            .product(name: "Modals-iOS", package: "Modals"),
+                           "Theme"],
             resources: [
                 .process("Storyboard.storyboard"),
                 .process("Views/TourStepView.xib"),

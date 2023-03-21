@@ -248,8 +248,6 @@ fileprivate extension AppDelegate {
 
 extension AppDelegate {
     private func setupCoreIntegration() {
-        ColorProvider.brand = .vpn
-
         ProtonCore_Log.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:

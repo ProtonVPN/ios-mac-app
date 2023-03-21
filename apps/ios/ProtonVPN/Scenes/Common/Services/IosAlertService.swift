@@ -39,7 +39,7 @@ class IosAlertService {
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
 
     private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var modalsFactory: ModalsFactory = ModalsFactory(colors: UpsellColors())
+    private lazy var modalsFactory: ModalsFactory = ModalsFactory()
     
     init(_ factory: Factory) {
         self.factory = factory

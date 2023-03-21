@@ -417,6 +417,9 @@
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
+		E58634B329CA16C200E7C565 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E58634B229CA16C200E7C565 /* Theme */; };
+		E59227C829C8BDD70008A091 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E59227C729C8BDD70008A091 /* Theme */; };
+		E59227CA29C9AB450008A091 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E59227C929C9AB450008A091 /* Theme */; };
 		E593B97127BA7DC100AFCA8C /* UpsellColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593B97027BA7DC100AFCA8C /* UpsellColors.swift */; };
 		E59C7A9029229A940034E56F /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = D16ECAECC9861A6ED5EDA4F2 /* Modals */; };
 		E59C7A9129229A940034E56F /* NEHelper in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC3E67F6A25A4AD4DFCF448 /* NEHelper */; };
@@ -1101,6 +1104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59227C829C8BDD70008A091 /* Theme in Frameworks */,
 				F34AC17B27F439810007FF93 /* Review in Frameworks */,
 				D555C49F297FB961000593EF /* LocalFeatureFlags in Frameworks */,
 				D5D78E5528CF60A900B2A156 /* vpncore.framework in Frameworks */,
@@ -1119,6 +1123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E58634B329CA16C200E7C565 /* Theme in Frameworks */,
 				80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */,
 				D55F10F0297FD1DF00EAF2AB /* LocalFeatureFlags in Frameworks */,
 			);
@@ -1159,6 +1164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59227CA29C9AB450008A091 /* Theme in Frameworks */,
 				E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */,
 				D555C49D297EE245000593EF /* LocalFeatureFlags in Frameworks */,
 				E148AE5421C1684F007AB65A /* NetworkExtension.framework in Frameworks */,
@@ -2520,6 +2526,7 @@
 				F34AC17A27F439810007FF93 /* Review */,
 				E53D64C42811698F0060C463 /* Modals-iOS */,
 				D555C49E297FB961000593EF /* LocalFeatureFlags */,
+				E59227C729C8BDD70008A091 /* Theme */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2543,6 +2550,7 @@
 			name = ProtonVPNTests;
 			packageProductDependencies = (
 				D55F10EF297FD1DF00EAF2AB /* LocalFeatureFlags */,
+				E58634B229CA16C200E7C565 /* Theme */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
@@ -2635,6 +2643,7 @@
 			name = "Quick Connect Widget";
 			packageProductDependencies = (
 				D555C49C297EE245000593EF /* LocalFeatureFlags */,
+				E59227C929C9AB450008A091 /* Theme */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -5016,6 +5025,18 @@
 		E53D64C42811698F0060C463 /* Modals-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-iOS";
+		};
+		E58634B229CA16C200E7C565 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		E59227C729C8BDD70008A091 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		E59227C929C9AB450008A091 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
 		};
 		E98EE34D2671EDD200B86BA0 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;

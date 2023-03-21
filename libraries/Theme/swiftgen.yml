@@ -1,0 +1,7 @@
+xcassets:
+  inputs: Sources/Theme/Resources/Assets.xcassets
+  outputs:
+    templateName: swift5
+    output: Sources/Theme/Resources/Assets.swift
+    params:
+      publicAccess: true
