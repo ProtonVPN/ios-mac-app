@@ -51,7 +51,6 @@ public final class OnboardingCoordinator {
         self.configuration = configuration
         self.modals = ModalsFactory()
 
-        colors = configuration.colors
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
         navigationController = UINavigationController()
         navigationController.setNavigationBarHidden(true, animated: false)

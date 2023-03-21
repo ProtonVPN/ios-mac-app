@@ -20,7 +20,7 @@ import Foundation
 import Overture
 import UIKit
 
-var colors: Colors!
+var colors = Colors()
 
 let baseButtonStyle: (UIButton) -> Void = {
     $0.layer.cornerRadius = 8

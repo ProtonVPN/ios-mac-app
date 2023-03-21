@@ -23,21 +23,10 @@ import XCTest
 
 final class ModalsSampleAppTests: XCTestCase {
     func testUpsellViewControllerCreation() throws {
-        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .secureCore))
-        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .netShield))
-        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .allCountries(numberOfDevices: 12, numberOfServers: 23, numberOfCountries: 34)))
-        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .safeMode))
-        XCTAssertNotNil(ModalsFactory(colors: MockColors()).upsellViewController(upsellType: .moderateNAT))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .secureCore))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .netShield))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .allCountries(numberOfDevices: 12, numberOfServers: 23, numberOfCountries: 34)))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .safeMode))
+        XCTAssertNotNil(ModalsFactory().upsellViewController(upsellType: .moderateNAT))
     }
-}
-
-struct MockColors: ModalsColors {
-    let buttonTitle: UIColor = .white
-    var weakInteraction: UIColor = .white
-    let textAccent: UIColor = .white
-    let secondaryBackground: UIColor = .white
-    let background: UIColor = .white
-    let text: UIColor = .white
-    let brand: UIColor = .white
-    let weakText: UIColor = .white
 }

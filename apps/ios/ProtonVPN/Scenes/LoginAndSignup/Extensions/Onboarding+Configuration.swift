@@ -22,18 +22,7 @@ import vpncore
 
 extension Configuration {
     init(telemetryEnabled: Bool) {
-        self.init(colors: Colors(background: .backgroundColor(),
-                                 buttonTitle: .buttonTitleColor(),
-                                 text: .normalTextColor(),
-                                 textAccent: .textAccent(),
-                                 brand: .brandColor(),
-                                 weakText: .weakTextColor(),
-                                 activeBrandButton: .brandLighten20Color(),
-                                 secondaryBackground: .secondaryBackgroundColor(),
-                                 textInverted: .backgroundColor(),
-                                 notification: .normalTextColor(),
-                                 weakInteraction: .weakInteractionColor()),
-                  constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount,
+        self.init(constants: Constants(numberOfDevices: AccountPlan.plus.devicesCount,
                                        numberOfServers: AccountPlan.plus.serversCount,
                                        numberOfFreeServers: AccountPlan.free.serversCount,
                                        numberOfFreeCountries: AccountPlan.free.countriesCount,

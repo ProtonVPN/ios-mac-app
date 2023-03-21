@@ -230,7 +230,6 @@
 		D5136C7D228592E80002C095 /* InstructionStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */; };
 		D5136C7E228592E80002C095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */; };
 		D5136C7F228592E80002C095 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C559A320B1BD1600E6D3F6 /* WindowService.swift */; };
-		D5136C83228592E80002C095 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */; };
 		D5136C84228592E80002C095 /* UIKitString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */; };
 		D5136C85228592E80002C095 /* ProtonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DB1B721592772006B3617 /* ProtonButton.swift */; };
 		D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E169D52A21E5075100D35312 /* ElectronViewContainer.swift */; };
@@ -432,6 +431,7 @@
 		E5CF14862949E68700AF6912 /* QuarkCommands+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CF14852949E68700AF6912 /* QuarkCommands+Async.swift */; };
 		E5E7EFEE28B8EDA4005249D3 /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E7EFED28B8EDA4005249D3 /* AnnouncementImageViewController.swift */; };
 		E5E7EFF028B8EDEC005249D3 /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5E7EFEF28B8EDEC005249D3 /* AnnouncementImageViewController.xib */; };
+		E5F90B7229C9B5AB000509DF /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */; };
 		E5FA6F2827C7E12200E781FC /* SubuserAlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
@@ -3663,7 +3663,6 @@
 				D5136C922285A9190002C095 /* ServerUtilityTests.swift in Sources */,
 				F31E0AEF2786DC910048FA38 /* Onboarding+Configuration.swift in Sources */,
 				D5136C952285AEA10002C095 /* CountryItemViewModelTests.swift in Sources */,
-				D5136C83228592E80002C095 /* UIColor+Extension.swift in Sources */,
 				F316A07126DFB0B900669386 /* UserCachedStatus.swift in Sources */,
 				D5110852246150DF0018872A /* Date+Formatters.swift in Sources */,
 				D5136C84228592E80002C095 /* UIKitString+Extension.swift in Sources */,
@@ -3676,6 +3675,7 @@
 				F348C9D427D89ED700622584 /* CountriesViewController+Search.swift in Sources */,
 				F330F01F27FDABFB00C3AA33 /* UINavigationController+Extensions.swift in Sources */,
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
+				E5F90B7229C9B5AB000509DF /* UIColor+Extension.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
 				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
