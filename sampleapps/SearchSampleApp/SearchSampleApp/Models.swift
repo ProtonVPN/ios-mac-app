@@ -107,6 +107,22 @@ final class CountryItemViewModel: CountryViewModel {
 }
 
 final class ServerItemViewModel: ServerViewModel {
+    var isPartnerServer: Bool = false
+
+    var isTorAvailable: Bool = false
+
+    var isP2PAvailable: Bool = false
+
+    var isStreamingAvailable: Bool = false
+
+    var load: Int = 10
+
+    func partnersIcon(completion: @escaping (UIImage?) -> Void) {
+        completion(nil)
+    }
+
+    func cancelPartnersIconRequests() { }
+
     let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
 
     let description: String
