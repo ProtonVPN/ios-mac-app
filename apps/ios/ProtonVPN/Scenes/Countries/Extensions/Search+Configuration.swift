@@ -24,7 +24,7 @@ import VPNShared
 
 extension Configuration {
     init() {
-        self.init(colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), separator: .normalSeparatorColor(), secondaryBackground: .secondaryBackgroundColor(), iconWeak: .iconWeak()), constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
+        self.init(constants: Constants(numberOfCountries: AccountPlan.plus.countriesCount))
     }
 }
 

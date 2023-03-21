@@ -26,24 +26,10 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
 
     private var coordinator: SearchCoordinator = {
-        let colors =  Colors(background: UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1),
-                             text: .white,
-                             brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
-                             weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
-                             separator: UIColor(red: 0.918, green: 0.906, blue: 0.894, alpha: 1),
-                             secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1),
-                             iconWeak: UIColor(red: 167 / 255, green: 164 / 255, blue: 181 / 255, alpha: 1))
-        return SearchCoordinator(configuration: Configuration(colors: colors, constants: Constants(numberOfCountries: 61)), storage: Storage())
+        return SearchCoordinator(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
     }()
     private let modals: ModalsFactory = {
-        let colors = Colors(background: UIColor(red: 0.11, green: 0.106, blue: 0.141, alpha: 1),
-                            secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1),
-                            text: .white,
-                            textAccent: UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1),
-                            brand: UIColor(red: 0.427451, green: 0.290196, blue: 1, alpha: 1),
-                            weakText: UIColor(red: 0.654902, green: 0.643137, blue: 0.709804, alpha: 1),
-                            weakInteraction: UIColor(red: 59 / 255, green: 55 / 255, blue: 71 / 255, alpha: 1))
-        return ModalsFactory(colors: colors)
+        return ModalsFactory()
     }()
 
     override func viewDidLoad() {

@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Theme
 
 public struct Constants {
     let numberOfCountries: Int
@@ -36,23 +37,21 @@ public struct Colors {
     let secondaryBackground: UIColor
     let iconWeak: UIColor
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, separator: UIColor, secondaryBackground: UIColor, iconWeak: UIColor) {
-        self.background = background
-        self.text = text
-        self.brand = brand
-        self.weakText = weakText
-        self.separator = separator
-        self.secondaryBackground = secondaryBackground
-        self.iconWeak = iconWeak
+    public init() {
+        self.background = ColorPaletteiOS.instance.BackgroundNorm
+        self.text = ColorPaletteiOS.instance.TextNorm
+        self.brand = ColorPaletteiOS.instance.BrandNorm
+        self.weakText = ColorPaletteiOS.instance.TextWeak
+        self.separator = ColorPaletteiOS.instance.SeparatorNorm
+        self.secondaryBackground = ColorPaletteiOS.instance.BackgroundSecondary
+        self.iconWeak = ColorPaletteiOS.instance.IconWeak
     }
 }
 
 public struct Configuration {
-    let colors: Colors
     let constants: Constants
 
-    public init(colors: Colors, constants: Constants) {
-        self.colors = colors
+    public init(constants: Constants) {
         self.constants = constants
     }
 }

@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 import Overture
 
-var colors: Colors!
+var colors = Colors()
 
 let baseTextStyle: (UILabel) -> Void = {
     $0.font = .systemFont(ofSize: 17)

@@ -15,11 +15,12 @@ let package = Package(
     dependencies: [
         .package(name: "Overture",
                  url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
+        .package(path: "../Theme")
     ],
     targets: [
         .target(
             name: "Search",
-            dependencies: ["Overture"],
+            dependencies: ["Overture", "Theme"],
             resources: [
                 .process("Storyboard.storyboard"),
                 .process("Views/PlaceholderView.xib"),
