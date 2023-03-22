@@ -29,7 +29,7 @@ import VPNShared
 
 final class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory & PlanServiceFactory & SessionServiceFactory & NavigationServiceFactory & TelemetrySettingsFactory & VpnKeychainFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -42,6 +42,7 @@ final class MacAlertService {
     private lazy var sessionService: SessionService = factory.makeSessionService()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var telemetrySettings: TelemetrySettings = factory.makeTelemetrySettings()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -249,7 +250,8 @@ extension MacAlertService: CoreAlertService {
 
     private func show(_ alert: SysexEnabledAlert) {
         guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
-              propertiesManager.userRole == .noOrganization else {
+              let credentials = try? self.vpnKeychain.fetchCached(),
+              !credentials.isSubuserWithoutSessions else {
             return
         }
 
