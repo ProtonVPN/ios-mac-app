@@ -23,6 +23,7 @@
 import Foundation
 import Sparkle
 import vpncore
+import Cocoa
 
 protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager
@@ -100,7 +101,7 @@ class UpdateManager: NSObject {
             }
         }
         
-        silently ? updater?.updater?.checkForUpdatesInBackground() : updater?.checkForUpdates(self)
+        silently ? updater?.updater.checkForUpdatesInBackground() : updater?.checkForUpdates(self)
     }
     
     func startUpdate() {
@@ -114,7 +115,7 @@ class UpdateManager: NSObject {
             return nil
         }
         let currentVersion = self.currentVersion
-        for item in items where item.displayVersionString?.elementsEqual(currentVersion ?? "wrong-string") ?? false {
+        for item in items where item.displayVersionString.elementsEqual(currentVersion ?? "wrong-string") {
             return item
         }
         return nil
