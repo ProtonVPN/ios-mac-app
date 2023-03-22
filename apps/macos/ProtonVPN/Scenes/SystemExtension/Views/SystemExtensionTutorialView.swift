@@ -67,13 +67,7 @@ struct SystemExtensionTutorialView: View {
     }
 
     func descriptionWithMarkdown(localised: String) -> Text {
-        var localised = localised
-        if #available(macOS 12, *) {
-            return Text(try! AttributedString(markdown: localised))
-        } else {
-            localised.removeAll { $0 == "*" }
-        }
-        return Text(localised)
+        Text(try! AttributedString(markdown: localised))
     }
 
     var videoView: some View {

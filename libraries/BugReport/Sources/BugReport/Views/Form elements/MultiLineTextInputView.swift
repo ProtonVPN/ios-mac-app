@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// Multiline text input styled for usage in bug report form.
-@available(macOS 11, *)
 struct MultiLineTextInputView: View {
 
     var field: InputField
@@ -101,7 +100,6 @@ struct TextView: UIViewRepresentable {
 #elseif os(macOS)
 import AppKit
 
-@available(macOS 11, *)
 struct TextView: NSViewRepresentable {
 
     @Binding var text: String
@@ -189,7 +187,6 @@ struct TextView: NSViewRepresentable {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct MultiLineTextInputView_Previews: PreviewProvider {
     @State private static var text: String = ""
 

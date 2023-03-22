@@ -18,7 +18,6 @@
 
 import SwiftUI
 
-@available(macOS 11, *)
 struct UpdateAvailableView: View {
 
     @Binding var isActive: Bool
@@ -69,7 +68,6 @@ struct UpdateAvailableView: View {
     }
 }
 
-@available(macOS 11, *)
 struct UpdateAvailableView_Previews: PreviewProvider {
     @State private static var showUpdate = true
 

@@ -35,7 +35,6 @@ extension AnyTransition {
 }
 
 /// Makes navigation through bug report on mac similar to iOS NavogationView.
-@available(macOS 11, *)
 struct BugReportNavigationView: View {
 
     @StateObject var viewModel: MacBugReportViewModel
@@ -114,7 +113,6 @@ struct BugReportNavigationView: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct BugReportNavigationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {

@@ -21,12 +21,8 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if #available(iOS 15.0, *) { // Removes unnecessary padding at the top of tables
-            UITableView.appearance().sectionHeaderTopPadding = 0.0
-        }
+        UITableView.appearance().sectionHeaderTopPadding = 0.0
         return true
     }
 

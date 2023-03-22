@@ -55,7 +55,6 @@ struct StepProgress: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct StepProgress_Previews: PreviewProvider {
     static var previews: some View {
         StepProgress(step: 2, steps: 3, colorMain: .green, colorText: .purple, colorSecondary: .red)

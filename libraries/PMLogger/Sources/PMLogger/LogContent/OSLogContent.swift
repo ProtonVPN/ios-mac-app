@@ -20,7 +20,6 @@ import Foundation
 import OSLog
 
 /// Reads all available logs from OSLog subsystem
-@available(iOS 15, macOS 12, *)
 public class OSLogContent: LogContent {
     
     public init(){
@@ -49,7 +48,6 @@ public class OSLogContent: LogContent {
     }
 }
 
-@available(iOS 15, macOS 12, *)
 extension OSLogEntryLog.Level {
     var stringValue: String {
         switch self {

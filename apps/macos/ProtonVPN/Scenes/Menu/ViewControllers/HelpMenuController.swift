@@ -74,13 +74,9 @@ class HelpMenuController: NSObject {
         clearApplicationDataItem.target = self
         clearApplicationDataItem.action = #selector(clearApplicationDataItemAction)
 
-        if #available(macOS 11, *) {
-            systemExtensionTutorialItem.title = LocalizedString.systemExtensionTutorialMenuItem
-            systemExtensionTutorialItem.target = self
-            systemExtensionTutorialItem.action = #selector(systemExtensionTutorialAction)
-        } else {
-            systemExtensionTutorialItem.isHidden = true
-        }
+        systemExtensionTutorialItem.title = LocalizedString.systemExtensionTutorialMenuItem
+        systemExtensionTutorialItem.target = self
+        systemExtensionTutorialItem.action = #selector(systemExtensionTutorialAction)
 
         helpItem.title = "Proton VPN " + LocalizedString.help
         helpItem.isEnabled = true

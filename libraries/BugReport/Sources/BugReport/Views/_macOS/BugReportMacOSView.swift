@@ -21,7 +21,6 @@ import SwiftUI
 
 /// First step of Bug Report flow.
 /// Asks user to define problem category.
-@available(macOS 11, *)
 public struct BugReportMacOSView: View {
 
     var categories: [Category]
@@ -66,7 +65,6 @@ public struct BugReportMacOSView: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct BugReportView_Previews: PreviewProvider {
 
     static var previews: some View {
