@@ -142,7 +142,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if sessionStatus == .notEstablished {
             sessionStatus = .established
             propertiesManager.hasConnected = true
-            post(notification: SessionChanged(data: .left(self.factory.makeVpnGateway())))
+            post(notification: SessionChanged(data: .established(gateway: self.factory.makeVpnGateway())))
         }
 
         appSessionRefreshTimer.start()
@@ -292,7 +292,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func logoutRoutine(reason: String?) {
         sessionStatus = .notEstablished
-        post(notification: SessionChanged(data: .right(reason)))
+        post(notification: SessionChanged(data: .lost(reason: reason)))
         appSessionRefreshTimer.start()
         logOutCleanup()
     }
@@ -360,5 +360,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
 struct SessionChanged: StrongNotification {
     static var name: Notification.Name { Notification.Name("AppSessionManagerSessionChanged") }
-    let data: Either<VpnGatewayProtocol, String?>
+    let data: SessionChangeData
+
+    enum SessionChangeData {
+        case established(gateway: VpnGatewayProtocol)
+        case lost(reason: String?)
+    }
 }
