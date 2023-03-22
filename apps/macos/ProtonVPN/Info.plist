@@ -78,6 +78,8 @@
 	<string>SentryCrashExceptionApplication</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>https://protonvpn.com/download/macos-update2.xml</string>
 	<key>SUPublicDSAKeyFile</key>
