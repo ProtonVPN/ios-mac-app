@@ -183,6 +183,10 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+    func makeVpnKeychain() -> vpncore.VpnKeychainProtocol {
+        return VpnKeychainMock()
+    }
+
     func makeTelemetrySettings() -> vpncore.TelemetrySettings {
         return telemetrySettings
     }
