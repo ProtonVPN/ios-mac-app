@@ -198,7 +198,7 @@ extension AppTheme.Context {
         if self == .text {
             let isDisabled = style.contains([.transparent, .disabled])
 
-            if #available(macOS 12, *), style == .normal || isDisabled {
+            if style == .normal || isDisabled {
                 color = offWhite
             } else {
                 color = appearanceAwareColor(style: style)

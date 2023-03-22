@@ -10,7 +10,6 @@ import XCTest
 import fusion
 import ProtonCore_TestingToolkit
 
-@available(iOS 15.0, *)
 class LoginExtAccountTests: ProtonVPNUITests {
 
     let mainRobot = MainRobot()

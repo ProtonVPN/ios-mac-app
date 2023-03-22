@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// Toggle input styled for usage in bug report form.
-@available(macOS 11, *)
 struct SwitchInputView: View {
     var field: InputField
     @Binding var value: Bool
@@ -49,7 +48,6 @@ struct SwitchInputView: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct SwitchInputView_Previews: PreviewProvider {
     @State private static var text: Bool = true
 

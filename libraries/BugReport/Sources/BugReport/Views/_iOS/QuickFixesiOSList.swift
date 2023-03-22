@@ -20,7 +20,6 @@ import SwiftUI
 
 /// Second step of Report Bug flow.
 /// Suggests quick fixes to user and allows to procede to contact form.
-@available(macOS 11, *)
 struct QuickFixesiOSList: View {
 
     let category: Category
@@ -129,7 +128,6 @@ struct QuickFixesiOSList: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct QuickFixesList_Previews: PreviewProvider {
     static var previews: some View {
         let category = Category(label: "Browsing speed",

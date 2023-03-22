@@ -136,8 +136,6 @@
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
-		D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */; };
-		D5A8813D22CF28F5009B63D1 /* ReportBugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */; };
 		D5AC137A23794B2900244066 /* text-template.html in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137923794B2900244066 /* text-template.html */; };
 		D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */; };
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
@@ -746,8 +744,6 @@
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
-		D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
-		D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBugViewController.xib; sourceTree = "<group>"; };
 		D5AC137923794B2900244066 /* text-template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "text-template.html"; sourceTree = "<group>"; };
 		D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsWindowController.swift; sourceTree = "<group>"; };
 		D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsViewController.swift; sourceTree = "<group>"; };
@@ -2410,20 +2406,10 @@
 		F36ECE292611DFD70089B898 /* ReportBug */ = {
 			isa = PBXGroup;
 			children = (
-				F36ECE2A2611DFDE0089B898 /* ViewControllers */,
 				F36ECE3A2611E17B0089B898 /* Windows */,
 				E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */,
 			);
 			path = ReportBug;
-			sourceTree = "<group>";
-		};
-		F36ECE2A2611DFDE0089B898 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */,
-				D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		F36ECE312611E0530089B898 /* Extensions */ = {
@@ -3069,7 +3055,6 @@
 				D557D57F264AC337007E4396 /* Localizable.stringsdict in Resources */,
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
 				EE11F9251F39B3E6006C389C /* Header.xib in Resources */,
-				D5A8813D22CF28F5009B63D1 /* ReportBugViewController.xib in Resources */,
 				D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */,
 				EE24A3A91F1BDD3300B70949 /* ProfilesSection.xib in Resources */,
 				EE35FC411F1CC6FC00CFE26F /* SidebarTabBar.xib in Resources */,
@@ -3729,7 +3714,6 @@
 				E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */,
 				D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */,
 				F320E03726F08DED00336F7A /* TourNumberRingView.swift in Sources */,
-				D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,

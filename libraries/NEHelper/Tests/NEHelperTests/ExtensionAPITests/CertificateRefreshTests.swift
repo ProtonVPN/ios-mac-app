@@ -23,7 +23,6 @@ import TimerMock
 @testable import VPNShared
 @testable import VPNSharedTesting
 
-@available(iOS 15, macOS 12, *)
 class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     var manager: ExtensionCertificateRefreshManager!
 

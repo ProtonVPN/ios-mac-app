@@ -19,7 +19,6 @@
 import SwiftUI
 
 /// Single line text input styled for usage in bug report form.
-@available(macOS 11, *)
 struct SingleLineTextInputView: View {
     var field: InputField
     @Binding var value: String
@@ -54,7 +53,6 @@ struct SingleLineTextInputView: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct SingleLineTextInputView_Previews: PreviewProvider {
     @State private static var text: String = ""
 

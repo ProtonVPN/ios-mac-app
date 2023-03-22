@@ -27,9 +27,6 @@ struct LogSettings {
 
     // Settings for oslog
     static let osLog = OSLog(subsystem: osLogSubsystem, category: "OpenVPN")
-
-    // Can be deleted after we stop supporting macOS 11
-    static let logFileUrl = FileManager.default.temporaryDirectory.appendingPathComponent("OpenVPN.log")
 }
 
 class OSLogDestination: BaseDestination {

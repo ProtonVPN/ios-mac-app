@@ -47,9 +47,6 @@ public class IOSLogContentProvider: LogContentProvider {
             return AppLogContent(folder: folder)
 
         case .osLog:
-            guard #available(iOS 15, *) else {
-                return EmptyLogContent()
-            }
             return OSLogContent()
 
         case .openvpn:
@@ -85,9 +82,6 @@ public class MacOSLogContentProvider: LogContentProvider {
             return AppLogContent(folder: folder)
 
         case .osLog:
-            guard #available(macOS 12, *) else {
-                return EmptyLogContent()
-            }
             return OSLogContent()
 
         case .openvpn:

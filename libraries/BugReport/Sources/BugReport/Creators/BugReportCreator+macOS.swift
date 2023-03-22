@@ -22,17 +22,13 @@ import AppKit
 import SwiftUI
 
 public protocol BugReportCreator {
-    func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController?
+    func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController
 }
 
 public final class MacOSBugReportCreator: BugReportCreator {
     public init() { }
 
-    public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController? {
-        guard #available(macOS 11, *) else {
-            return nil
-        }
-
+    public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController {
         CurrentEnv.bugReportDelegate = delegate
 
         let viewModel = MacBugReportViewModel(model: delegate.model)

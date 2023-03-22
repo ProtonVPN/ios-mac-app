@@ -218,14 +218,12 @@ class WindowServiceImplementation: WindowService {
         let viewController: NSViewController
         let manager = factory.makeDynamicBugReportManager()
         
-        if #available(macOS 11, *), let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
-            manager.closeBugReportHandler = { [weak self] in
-                self?.closeWindow(withController: ReportBugWindowController.self)
-            }
-            viewController = vc
-        } else {
-            viewController = ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())
+        let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors())
+        manager.closeBugReportHandler = { [weak self] in
+            self?.closeWindow(withController: ReportBugWindowController.self)
         }
+        viewController = vc
+
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.insert(windowController)

@@ -20,7 +20,6 @@ import BugReport
 import SwiftUI
 import ProtonCore_UIFoundations
 
-@available(macOS 11, *)
 extension BugReport.Colors {
     public init() {
         self.init(primary: ColorProvider.Primary,

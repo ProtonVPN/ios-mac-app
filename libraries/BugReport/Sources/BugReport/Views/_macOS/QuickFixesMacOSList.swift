@@ -19,7 +19,6 @@
 #if os(macOS)
 import SwiftUI
 
-@available(macOS 11, *)
 struct QuickFixesMacOSList: View {
 
     let category: Category
@@ -110,7 +109,6 @@ struct QuickFixesMacOSList: View {
 
 // MARK: - Preview
 
-@available(macOS 11, *)
 struct QuickFixesMacOSList_Previews: PreviewProvider {
     static var previews: some View {
         let category = Category(label: "Browsing speed",

@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Onboarding",
     defaultLocalization: "en",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "Onboarding",
