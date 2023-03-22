@@ -121,7 +121,7 @@ class NavigationService {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
         switch data {
-        case .left(let vpnGateway):
+        case .established(let vpnGateway):
             assert(appSessionManager.sessionStatus == .established, "Expected session to be established when receiving gateway")
             self.vpnGateway = vpnGateway
             switch appStateManager.state {
@@ -136,7 +136,7 @@ class NavigationService {
             if appHasPresented {
                 showSidebar()
             }
-        case .right(let loginError):
+        case .lost(let loginError):
             showLogIn(initialError: loginError)
         }
     }
