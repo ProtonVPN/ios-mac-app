@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 protocol ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel
@@ -38,12 +39,14 @@ class ProfilesMenuViewModel {
     private let navService: NavigationService
     
     var contentChanged: (() -> Void)?
-    
+
+    private var notificationTokens: [NotificationToken] = []
+
     init(appSessionManager: AppSessionManager, navService: NavigationService) {
         self.appSessionManager = appSessionManager
         self.navService = navService
         
-        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
+        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }
     
     var isOverviewEnabled: Bool {

@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 protocol ProtonVpnMenuViewModelFactory {
     func makeProtonVpnMenuViewModel() -> ProtonVpnMenuViewModel
@@ -41,12 +42,14 @@ class ProtonVpnMenuViewModel {
     private let navService: NavigationService
     
     var contentChanged: (() -> Void)?
+
+    private var notificationTokens: [NotificationToken] = []
     
     init(factory: Factory) {
         self.factory = factory
         self.appSessionManager = factory.makeAppSessionManager()
         self.navService = factory.makeNavigationService()
-        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
+        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }
     
     var isPreferencesEnabled: Bool {

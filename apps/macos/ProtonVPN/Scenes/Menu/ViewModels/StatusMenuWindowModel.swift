@@ -42,6 +42,8 @@ class StatusMenuWindowModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     
     var contentChanged: (() -> Void)?
+
+    private var notificationTokens: [NotificationToken] = []
     
     init(factory: Factory) {
         self.factory = factory
@@ -95,7 +97,7 @@ class StatusMenuWindowModel {
     
     // MARK: - Private functions
     private func startObserving() {
-        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
+        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }
 
     private func sessionChanged(data: SessionChanged.T) {
