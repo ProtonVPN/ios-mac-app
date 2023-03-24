@@ -75,13 +75,15 @@ class NavigationService {
     
     var appHasPresented = false
     var isSystemLoggingOff = false
+
+    private var notificationTokens: [NotificationToken] = []
     
     init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
         self.factory = factory
     }
     
     func launched() {
-        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
+        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(powerOff(_:)),
                                                           name: NSWorkspace.willPowerOffNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(sessionSwitchedOut(_:)), name: NSWorkspace.sessionDidResignActiveNotification, object: nil)

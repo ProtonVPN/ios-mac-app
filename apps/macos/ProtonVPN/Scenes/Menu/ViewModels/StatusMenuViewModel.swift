@@ -65,6 +65,8 @@ final class StatusMenuViewModel {
 
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
+
+    private var notificationTokens: [NotificationToken] = []
     
     init(factory: Factory) {
         self.factory = factory
@@ -254,7 +256,7 @@ final class StatusMenuViewModel {
     
     // MARK: - Private functions
     private func startObserving() {
-        NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged)
+        notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
                                                name: type(of: propertiesManager).userIpNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataChange),
