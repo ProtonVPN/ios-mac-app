@@ -100,7 +100,9 @@ class StatusMenuWindowModel {
 
     private func sessionChanged(data: SessionChanged.T) {
         if case .established(let vpnGateway) = data {
-            assert(isSessionEstablished, "Expected session to be established when receiving gateway")
+            if !isSessionEstablished {
+                log.error("Expected session to be established when receiving gateway")
+            }
             sessionEstablished(vpnGateway: vpnGateway)
         } else {
             sessionEnded()

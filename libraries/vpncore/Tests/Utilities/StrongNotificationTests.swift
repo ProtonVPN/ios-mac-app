@@ -33,6 +33,22 @@ final class ProtonNotificationTests: XCTestCase {
 
     class TestObject { }
 
+    func testHandlerNotInvokedAfterTokenIsDeallocated() {
+        let handlerInvoked = XCTestExpectation(description: "Handler should not be invoked if token has been deallocated")
+        handlerInvoked.isInverted = true
+
+        let notification = TestNotification(data: "some notification data")
+
+        // token is returned and immediately deallocated
+        _ = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
+            handlerInvoked.fulfill()
+        }
+
+        NotificationCenter.default.post(notification, object: self)
+
+        wait(for: [handlerInvoked], timeout: 0.1)
+    }
+
     func testPostedNotificationCausesHandlerInvocationForCorrectObjects() {
         let anyInvocation = XCTestExpectation(description: "Handler should always be invoked when not constraining poster.")
         let posterInvocation = XCTestExpectation(description: "Handler should be invoked.")
@@ -44,16 +60,16 @@ final class ProtonNotificationTests: XCTestCase {
         let poster = TestObject()
         let other = TestObject()
 
-        NotificationCenter.default.addObserver(for: TestNotification.self, object: nil) { data in
+        let token1 = NotificationCenter.default.addObserver(for: TestNotification.self, object: nil) { data in
             anyInvocation.fulfill()
         }
 
-        NotificationCenter.default.addObserver(for: TestNotification.self, object: poster) { data in
+        let token2 = NotificationCenter.default.addObserver(for: TestNotification.self, object: poster) { data in
             XCTAssertEqual(notification.data, data)
             posterInvocation.fulfill()
         }
 
-        NotificationCenter.default.addObserver(for: TestNotification.self, object: other) { data in
+        let token3 = NotificationCenter.default.addObserver(for: TestNotification.self, object: other) { data in
             otherInvocation.fulfill()
         }
 
@@ -63,15 +79,18 @@ final class ProtonNotificationTests: XCTestCase {
     }
 
     func testHandlerNotInvokedWithBadData() {
-        let handlerInvocation = XCTestExpectation(description: "Handler should not be invoked for object with bad data.")
-        handlerInvocation.isInverted = true
+        let handlerInvocation = XCTestExpectation(description: "Assertion failure should be triggered missing data or type mistmatches")
+        handlerInvocation.expectedFulfillmentCount = 2
 
-        NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
-            handlerInvocation.fulfill()
+        Environment._assertionFailure = { _, _, _ in handlerInvocation.fulfill() }
+
+        let token = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
+            XCTFail("Handlers should not be invoked with missing or mismatched data: \(data)")
         }
 
         // post notification with data of incorrect type
-        NotificationCenter.default.post(name: TestNotification.name, object: self, userInfo: [NotificationCenter.dataKey: 123])
+        NotificationCenter.default.post(name: TestNotification.name, object: self, userInfo: [TestNotification.dataKey: 123])
+
         // post notification with missing data
         NotificationCenter.default.post(name: TestNotification.name, object: self, userInfo: [:])
 

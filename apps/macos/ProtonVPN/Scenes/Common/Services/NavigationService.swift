@@ -122,7 +122,9 @@ class NavigationService {
 
         switch data {
         case .established(let vpnGateway):
-            assert(appSessionManager.sessionStatus == .established, "Expected session to be established when receiving gateway")
+            if appSessionManager.sessionStatus != .established {
+                log.error("Expected session to be established when receiving gateway")
+            }
             self.vpnGateway = vpnGateway
             switch appStateManager.state {
             case .disconnected, .aborted:

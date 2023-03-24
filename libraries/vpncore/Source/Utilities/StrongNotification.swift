@@ -25,12 +25,30 @@ public protocol StrongNotification<T> {
     var data: T { get }
 }
 
+extension StrongNotification {
+    static var dataKey: String { "ch.protonvpn.notificationcenter.notificationdata" }
+}
+
+/// Wraps the observer token received from NotificationCenter and unregisters it when deallocated
+public final class NotificationToken {
+    private let notificationCenter: NotificationCenter
+    private let token: NSObjectProtocol
+
+    init(notificationCenter: NotificationCenter, token: NSObjectProtocol) {
+        self.notificationCenter = notificationCenter
+        self.token = token
+    }
+
+    deinit {
+        notificationCenter.removeObserver(token)
+    }
+}
+
 extension NotificationCenter {
 
-    static var dataKey = "ProtonNotificationData"
-
     public func post<T>(_ notification: some StrongNotification<T>, object: Any?) {
-        post(name: type(of: notification).name, object: object, userInfo: [Self.dataKey: notification.data])
+        let userInfo = [type(of: notification).dataKey: notification.data]
+        post(name: type(of: notification).name, object: object, userInfo: userInfo)
     }
 
     public func addObserver<Notification, T>(
@@ -38,14 +56,15 @@ extension NotificationCenter {
         queue: OperationQueue? = nil,
         object: Any?,
         handler: @escaping (T) -> Void
-    ) where Notification: StrongNotification<T> {
-        addObserver(forName: Notification.name, object: object, queue: queue) { notification in
-            guard let data = notification.userInfo?[Self.dataKey] as? T else {
-                log.error("Expected object of type \(T.self) stored under key: \(Self.dataKey)")
+    ) -> NotificationToken where Notification: StrongNotification<T> {
+        let token = addObserver(forName: Notification.name, object: object, queue: queue) { notification in
+            guard let data = notification.userInfo?[Notification.dataKey] as? T else {
+                Environment._assertionFailure("Expected object of type \(T.self) stored under key: \(Notification.dataKey)", #file, #line)
                 return
             }
 
             handler(data)
         }
+        return NotificationToken(notificationCenter: self, token: token)
     }
 }
