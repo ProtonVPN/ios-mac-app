@@ -21,6 +21,7 @@
 //
 
 import UIKit
+import vpncore
 
 enum TableViewCellModel {
     

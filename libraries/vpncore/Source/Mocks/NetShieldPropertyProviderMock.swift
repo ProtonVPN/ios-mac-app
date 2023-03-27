@@ -34,7 +34,7 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
         self.init(PaidFeaturePropertyProviderFactoryMock())
     }
 
-    public var netShieldType: NetShieldType = .off    
+    public var netShieldType: NetShieldType = .off
 
     public var isUserEligibleForNetShield: Bool = true
 

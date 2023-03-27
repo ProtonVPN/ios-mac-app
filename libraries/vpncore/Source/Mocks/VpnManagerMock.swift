@@ -23,7 +23,9 @@ import Foundation
 import VPNShared
 
 public class VpnManagerMock: VpnManagerProtocol {
-    
+
+    public var netShieldStats: NetShieldStats?
+
     private let serverDescriptor = ServerDescriptor(username: "", address: "")
     private var onDemand: Bool = false
     

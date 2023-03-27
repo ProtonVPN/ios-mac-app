@@ -27,6 +27,7 @@ protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
     func didReceiveError(code: Int)
     func didChangeState(state: LocalAgentState?)
     func didReceiveConnectionDetails(details: LocalAgentConnectionDetails)
+    func didReceiveFeatureStatistics(_ statistics: LocalAgentStringToValueMap)
 }
 
 final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClientProtocol {
@@ -68,6 +69,11 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
         if let details = status?.connectionDetails {
             vpncore.log.info("Local agent shared library received connection details: \(details)", category: .localAgent, event: .connect)
             delegate?.didReceiveConnectionDetails(details: details)
+        }
+
+        if let statistics = status?.featuresStatistics {
+            vpncore.log.info("Local agent shared library received statistics: \(statistics)", category: .localAgent, event: .stateChange)
+            delegate?.didReceiveFeatureStatistics(statistics)
         }
     }
 }

@@ -40,7 +40,7 @@ extension VpnManager {
                 }
 
                 self.disconnectLocalAgentNoSync()
-                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory)
+                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory, propertiesManager: self.propertiesManager)
                 self.localAgent?.delegate = self
                 self.localAgent?.connect(data: data, configuration: configuration)
             }
@@ -375,6 +375,10 @@ extension VpnManager: LocalAgentDelegate {
         if let exitIp = details.exitIp {
             self.updateActiveConnection(exitIp: String(describing: exitIp))
         }
+    }
+
+    func netShieldStatsChanged(to stats: NetShieldStats) {
+        netShieldStats = stats
     }
 
     private func didReceiveFeature(safeMode: Bool?) {
