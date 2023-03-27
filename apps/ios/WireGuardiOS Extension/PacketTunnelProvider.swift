@@ -66,11 +66,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         self.timerFactory = TimerFactoryImplementation()
 
-        if #available(iOSApplicationExtension 14.0, *) {
-            killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
-                wg_log(.info, message: "Kill Switch configuration changed.")
-                self.setDataTaskFactoryAccordingToKillSwitchSettings()
-            }
+        killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
+            wg_log(.info, message: "Kill Switch configuration changed.")
+            self.setDataTaskFactoryAccordingToKillSwitchSettings()
         }
         self.setDataTaskFactory(sendThroughTunnel: true)
 
@@ -101,11 +99,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     /// if the user is using KillSwitch (i.e., `includeAllNetworks`). Ironically, the best thing for
     /// this is to *not* send API requests through the VPN if the user has opted for KillSwitch.
     private func setDataTaskFactoryAccordingToKillSwitchSettings() {
-        guard #available(iOSApplicationExtension 14.0, *) else {
-            setDataTaskFactory(sendThroughTunnel: true)
-            return
-        }
-
         guard !self.protocolConfiguration.includeAllNetworks else {
             setDataTaskFactory(sendThroughTunnel: false)
             return

@@ -75,18 +75,18 @@ abstract_target 'Core' do
     vpn_core
 
     target 'vpncore-ios' do       
-        platform :ios, '14.0'
+        platform :ios, '15.0'
         pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macos' do        
-        platform :osx, '11.0'
+        platform :osx, '12.0'
     end
     target 'vpncore-iosTests' do
-        platform :ios, '14.0'
+        platform :ios, '15.0'
         pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
     target 'vpncore-macosTests' do
-        platform :osx, '11.0'
+        platform :osx, '12.0'
         pod 'ProtonCore-TestingToolkit/UnitTests/Core', :git => proton_core_path, :tag => proton_core_version
     end
 end
@@ -95,7 +95,7 @@ end
 
 target 'ProtonVPN' do
   project 'apps/ios/iOS.xcodeproj'
-  platform :ios, '14.0'
+  platform :ios, '15.0'
   use_frameworks!
 
   vpn_core
@@ -148,7 +148,7 @@ target 'ProtonVPN' do
   end
   
   target 'ProtonVPNUITests' do    
-    platform :ios, '14.0'
+    platform :ios, '15.0'
     pm_automation
     pod 'ProtonCore-QuarkCommands', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-TestingToolkit/UITests/HumanVerification', :git => proton_core_path, :tag => proton_core_version
@@ -163,7 +163,7 @@ end
 
 target 'WireGuardiOS Extension' do
   project 'apps/ios/iOS.xcodeproj'
-  platform :ios, '14.0'
+  platform :ios, '15.0'
   use_frameworks!
   
   keychain_access
@@ -219,7 +219,7 @@ post_install do |installer|
 
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
       
       # Reset deployment targets to use the one we have on the main project

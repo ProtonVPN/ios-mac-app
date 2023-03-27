@@ -23,7 +23,6 @@ import AVKit
 import ProtonCore_UIFoundations
 import vpncore
 
-@available(macOS 11.0, *)
 struct SystemExtensionTutorialView: View {
 
     static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.preference.security"

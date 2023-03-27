@@ -155,11 +155,6 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     /// if the user is using KillSwitch (i.e., `includeAllNetworks`). Ironically, the best thing for
     /// this is to *not* send API requests through the VPN if the user has opted for KillSwitch.
     private func setDataTaskFactoryAccordingToKillSwitchSettings() {
-        guard #available(iOSApplicationExtension 14.0, *) else {
-            setDataTaskFactory(sendThroughTunnel: true)
-            return
-        }
-
         guard !self.protocolConfiguration.includeAllNetworks else {
             setDataTaskFactory(sendThroughTunnel: false)
             return
@@ -182,11 +177,9 @@ class PacketTunnelProvider: OpenVPNTunnelProvider, ExtensionAPIServiceDelegate {
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
         setDataTaskFactoryAccordingToKillSwitchSettings()
 
-        if #available(iOSApplicationExtension 14.0, *) {
-            killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
-                log.debug("Kill Switch configuration changed.")
-                self.setDataTaskFactoryAccordingToKillSwitchSettings()
-            }
+        killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
+            log.debug("Kill Switch configuration changed.")
+            self.setDataTaskFactoryAccordingToKillSwitchSettings()
         }
 
         if let newVpnCertificateFeatures = newVpnCertificateFeatures {
