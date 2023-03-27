@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import vpncore
 
 class NetShieldStatsItemView: UIView {
     @IBOutlet weak var contentView: UIView!
@@ -48,19 +49,5 @@ class NetShieldStatsItemView: UIView {
 
         valueLabel.textColor = model.isEnabled ? .normalTextColor() : .iconHint()
         titleLabel.textColor = model.isEnabled ? .weakTextColor() : .iconHint()
-    }
-}
-
-struct NetShieldStatsItemModel {
-    let title: String
-    let value: String
-    let isEnabled: Bool
-
-    static func enabled(title: String, value: String) -> NetShieldStatsItemModel {
-        return Self(title: title, value: value, isEnabled: false)
-    }
-
-    static func disabled(title: String) -> NetShieldStatsItemModel {
-        return Self(title: title, value: "-", isEnabled: false)
     }
 }

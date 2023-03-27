@@ -26,6 +26,8 @@ import Reachability
 import VPNShared
 import Network
 import LocalFeatureFlags
+import Dependencies
+import Timer
 
 private enum LocalAgentFeature: String, FeatureFlag {
     var category: String { "LocalAgent" }
@@ -38,6 +40,7 @@ protocol LocalAgentDelegate: AnyObject {
     func didChangeState(state: LocalAgentState)
     func didReceiveFeatures(_ features: VPNConnectionFeatures)
     func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage)
+    func netShieldStatsChanged(to stats: NetShieldStats)
 }
 
 protocol LocalAgent {
@@ -51,21 +54,21 @@ protocol LocalAgent {
     func update(natType: NATType)
     func update(safeMode: Bool)
     func unjail()
+    func requestStatus(withStats shouldRequestStats: Bool)
 }
 
-struct ConnectionDetailsMessage {
-    let exitIp: IPAddress?
-    let deviceIp: IPAddress?
-    let deviceCountry: String?
+public struct NetShieldStatsNotification: StrongNotification {
+    public static var name: Notification.Name { Notification.Name("ch.protonvpn.localagent.netshieldstats") }
+    public var data: NetShieldStats
 }
 
 public protocol LocalAgentConnectionWrapper {
     var state: String { get }
     var status: LocalAgentStatusMessage? { get }
-
     func close()
     func setConnectivity(_: Bool)
     func setFeatures(_: LocalAgentFeatures?)
+    func sendGetStatus(_: Bool)
 }
 
 extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {
@@ -126,16 +129,26 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
 
 final class LocalAgentImplementation: LocalAgent {
     private static let localAgentHostname = "10.2.0.1:65432"
+    private static let refreshInterval: TimeInterval = 60.0
+    private static let refreshLeeway: DispatchTimeInterval = .seconds(5)
+    private static let statusRequestQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.netshield")
 
+    private var propertiesManager: PropertiesManagerProtocol
     private var agentConnectionFactory: LocalAgentConnectionFactory
+    @Dependency(\.timerFactory) var timerFactory
 
     private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
     private let reachability: Reachability?
 
     private var previousState: LocalAgentState?
+    private var statusTimer: BackgroundTimer?
 
-    init(factory: LocalAgentConnectionFactory) {
+    private lazy var isNetShieldStatsEnabled = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
+        && propertiesManager.featureFlags.netShieldStats
+
+    init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol) {
+        self.propertiesManager = propertiesManager
         reachability = try? Reachability()
         client = LocalAgentNativeClientImplementation()
         agentConnectionFactory = factory
@@ -180,6 +193,11 @@ final class LocalAgentImplementation: LocalAgent {
 
     func disconnect() {
         agent?.close()
+        netShieldStatsChanged(to: .zero)
+    }
+
+    func requestStatus(withStats shouldRequestStats: Bool) {
+        agent?.sendGetStatus(shouldRequestStats)
     }
 
     func update(netshield: NetShieldType) {
@@ -206,38 +224,43 @@ final class LocalAgentImplementation: LocalAgent {
         let features = LocalAgentNewFeatures()?.with(safeMode: safeMode)
         agent?.setFeatures(features)
     }
-}
 
-extension ConnectionDetailsMessage {
-    /// `LocalAgentConnectionDetails` is received with the `StatusUpdate` LocalAgent message.
-    ///
-    /// None of the fields of `LocalAgentConnectionDetails` are optional, so an empty string indicates a missing field.
-    /// This wrapper struct makes sure that the IPs are valid before doing anything with them.
-    init(details: LocalAgentConnectionDetails) {
-        if !details.serverIpv4.isEmpty, let ipv4 = IPv4Address(details.serverIpv4) {
-            self.exitIp = ipv4
-        } else if !details.serverIpv6.isEmpty, let ipv6 = IPv6Address(details.serverIpv6) {
-            self.exitIp = ipv6
-        } else {
-            self.exitIp = nil
+    private func toggleStatusMonitoringIfNecessary(forFeatures features: VPNConnectionFeatures) {
+        // If the server is reporting NetShield type as level2, we should be monitoring NetShieldStats
+        guard isNetShieldStatsEnabled else { return }
+
+        let shouldMonitorStats = features.netshield == .level2
+        log.debug("Should monitor stats: \(shouldMonitorStats)")
+        shouldMonitorStats ? startStatusMonitoringIfNecessary() : stopStatusMonitoringIfNecessary()
+    }
+
+    private func startStatusMonitoringIfNecessary() {
+        if let timer = statusTimer, timer.isValid {
+            log.debug("Not starting timer, a request is already scheduled for \(timer.nextTime)", category: .localAgent)
+            return
         }
-
-        if !details.deviceCountry.isEmpty {
-            self.deviceCountry = details.deviceCountry
-        } else {
-            self.deviceCountry = nil
+        log.debug("Starting status request background timer", category: .localAgent)
+        statusTimer = timerFactory.scheduledTimer(
+            runAt: Date(),
+            repeating: Self.refreshInterval,
+            leeway: Self.refreshLeeway,
+            queue: Self.statusRequestQueue
+        ) { [weak self] in
+            self?.requestStatus(withStats: true)
         }
+    }
 
-        if !details.deviceIp.isEmpty {
-            if let ipv4 = IPv4Address(details.deviceIp) {
-                self.deviceIp = ipv4
-            } else if let ipv6 = IPv6Address(details.deviceIp) {
-                self.deviceIp = ipv6
-            } else {
-                self.deviceIp = nil
-            }
-        } else {
-            self.deviceIp = nil
+    private func stopStatusMonitoringIfNecessary() {
+        let wasMonitoring = statusTimer?.isValid == true
+        log.debug("Stopping status monitoring. WasMonitoring: \(wasMonitoring)", category: .localAgent)
+        statusTimer?.invalidate()
+        statusTimer = nil
+    }
+
+    private func netShieldStatsChanged(to stats: NetShieldStats) {
+        DispatchQueue.main.async {
+            self.delegate?.netShieldStatsChanged(to: stats)
+            NotificationCenter.default.post(NetShieldStatsNotification(data: stats), object: self)
         }
     }
 }
@@ -248,6 +271,24 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
 
         let detailsMessage = ConnectionDetailsMessage(details: details)
         delegate?.didReceiveConnectionDetails(detailsMessage)
+    }
+
+    func didReceiveFeatureStatistics(_ dictionary: LocalAgentStringToValueMap) {
+        guard isNetShieldStatsEnabled else { return }
+
+        do {
+            let statistics = try FeatureStatisticsMessage(localAgentStatsDictionary: dictionary)
+
+            let stats = NetShieldStats(
+                adsBlocked: statistics.netShield.adsBlocked ?? 0,
+                malwareBlocked: statistics.netShield.malwareBlocked ?? 0,
+                trackersBlocked: statistics.netShield.trackersBlocked ?? 0,
+                bytesSaved: statistics.netShield.bytesSaved)
+
+            netShieldStatsChanged(to: stats)
+        } catch {
+            log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
+        }
     }
 
     func didReceiveError(code: Int) {
@@ -289,6 +330,8 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // in this state the local agent shared library reports features from previous connection
         if previousState == .connecting, state == .connected {
             log.debug("Not checking features right after connecting", category: .localAgent, event: .stateChange)
+            // Request status with feature statistics; the response will also contain the correct features too
+            startStatusMonitoringIfNecessary()
             return
         }
 
@@ -301,8 +344,20 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // it is up to the app to compare them and decide what to do
 
         if let vpnFeatures = features.vpnFeatures {
+            toggleStatusMonitoringIfNecessary(forFeatures: vpnFeatures)
             delegate?.didReceiveFeatures(vpnFeatures)
         }
         
+    }
+}
+
+public struct NetShieldStats {
+    public let adsBlocked: Int
+    public let malwareBlocked: Int
+    public let trackersBlocked: Int
+    public let bytesSaved: Int64
+
+    public static var zero: NetShieldStats {
+        return NetShieldStats(adsBlocked: 0, malwareBlocked: 0, trackersBlocked: 0, bytesSaved: 0)
     }
 }

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import UIKit
+import vpncore
 
 class NetShieldStatsTableViewCell: UITableViewCell {
     @IBOutlet private var adsStatView: NetShieldStatsItemView!
@@ -52,43 +52,4 @@ class NetShieldStatsTableViewCell: UITableViewCell {
         trackersStatView.setup(with: viewModel.trackersModel)
         dataStatView.setup(with: viewModel.dataModel)
     }
-
-}
-
-enum NetShieldStatsViewModel {
-    case disabled
-    case enabled(adsBlocked: Int, trackersStopped: Int, dataSaved: Int64, paused: Bool)
-
-    var adsModel: NetShieldStatsItemModel {
-        let title: String = "Ads\nblocked"
-
-        guard case .enabled(let adsBlocked, _, _, let paused) = self else {
-            return .disabled(title: title)
-        }
-
-        return .init(title: title, value: "\(adsBlocked)", isEnabled: !paused)
-    }
-
-    var trackersModel: NetShieldStatsItemModel {
-        let title: String = "Trackers\nstopped"
-
-        guard case .enabled(_, let trackersStopped, _, let paused) = self else {
-            return .disabled(title: title)
-        }
-
-        return .init(title: title, value: "\(trackersStopped)", isEnabled: !paused)
-    }
-
-    var dataModel: NetShieldStatsItemModel {
-        let title: String = "Data\nsaved"
-
-        guard case .enabled(_, _, let dataSaved, let paused) = self else {
-            return .disabled(title: title)
-        }
-
-        let value = ByteCountFormatter().string(fromByteCount: dataSaved)
-
-        return .init(title: title, value: value, isEnabled: !paused)
-    }
-
 }

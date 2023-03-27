@@ -27,6 +27,7 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     public let smartReconnect: Bool
     public let vpnAccelerator: Bool
     public let netShield: Bool
+    @Default<Bool> public var netShieldStats: Bool
     public let streamingServicesLogos: Bool
     public let portForwarding: Bool
     public let moderateNAT: Bool
@@ -38,10 +39,11 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     @Default<BoolDefaultTrue> public var wireGuardTls: Bool
     public var localOverrides: [String: [String: Bool]]?
 
-    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool, localOverrides: [String: [String: Bool]]?) {
+    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, netShieldStats: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool, safeMode: Bool, promoCode: Bool, wireGuardTls: Bool, localOverrides: [String: [String: Bool]]?) {
         self.smartReconnect = smartReconnect
         self.vpnAccelerator = vpnAccelerator
         self.netShield = netShield
+        self.netShieldStats = netShieldStats
         self.streamingServicesLogos = streamingServicesLogos
         self.portForwarding = portForwarding
         self.moderateNAT = moderateNAT
@@ -55,6 +57,6 @@ public struct FeatureFlags: Codable, DefaultableProperty {
     }
 
     public init() {
-        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, localOverrides: nil)
+        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, netShieldStats: false, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false, safeMode: false, promoCode: false, wireGuardTls: false, localOverrides: nil)
     }
 }

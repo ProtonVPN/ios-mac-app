@@ -69,11 +69,15 @@ class StatusViewModel {
         return tier
     }
 
-    private let isNetShieldStatsEnabled: Bool = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
-    private var shouldShowNetShieldV1: Bool { propertiesManager.featureFlags.netShield && !isNetShieldStatsEnabled }
-    private var shouldShowNetShieldV2: Bool { propertiesManager.featureFlags.netShield && isNetShieldStatsEnabled }
+    private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
+    private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
+    private lazy var isNetShieldEnabled: Bool = { propertiesManager.featureFlags.netShield }()
+    private lazy var isNetShieldStatsEnabled: Bool = {
+        LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats) && propertiesManager.featureFlags.netShieldStats
+    }()
 
     private var timer: Timer?
+    private var netShieldStats: NetShieldStats?
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
     private var currentTime: String {
@@ -84,13 +88,16 @@ class StatusViewModel {
         time = Date().timeIntervalSince(connectedDate)
         return time.asColonSeparatedString
     }
-    
+
+    private var notificationTokens: [NotificationToken] = []
+
     init(factory: Factory) {
         self.factory = factory
         
         Task {
             await updateConnectionDate()
         }
+        netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
         startObserving()
         runTimer()
     }
@@ -300,10 +307,16 @@ class StatusViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+
+        notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
+            self?.netShieldStats = stats
+            self?.contentChanged?()
+        })
     }
     
     private func stopObserving() {
         NotificationCenter.default.removeObserver(self)
+        notificationTokens = []
     }
     
     @objc private func connectionChanged() {
@@ -382,7 +395,21 @@ class StatusViewModel {
     }
 
     private var netShieldV2StatsCell: TableViewCellModel {
-        return .netShieldStats(viewModel: NetShieldStatsViewModel.enabled(adsBlocked: 40, trackersStopped: 23, dataSaved: 92455, paused: true))
+        .netShieldStats(viewModel: netShieldViewModel)
+    }
+
+    private var netShieldViewModel: NetShieldStatsViewModel {
+        // Show grayed out stats if disconnected, or netshield is turned off
+        let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
+
+        let stats = netShieldStats ?? .zero
+
+        return .enabled(
+            adsBlocked: stats.adsBlocked,
+            trackersStopped: stats.trackersBlocked,
+            bytesSaved: stats.bytesSaved,
+            paused: !isActive
+        )
     }
 
     private var netShieldV2Cells: [TableViewCellModel] {
