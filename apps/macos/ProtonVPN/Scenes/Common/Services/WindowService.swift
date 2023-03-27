@@ -233,7 +233,6 @@ class WindowServiceImplementation: WindowService {
     }
 
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
-        guard #available(macOS 11.0, *) else { return }
         let controller = SystemExtensionGuideViewController(cancelledHandler: cancelledHandler)
         controller.windowService = self
         let windowController = SysexGuideWindowController(viewController: controller)

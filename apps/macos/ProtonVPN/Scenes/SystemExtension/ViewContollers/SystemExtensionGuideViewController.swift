@@ -21,7 +21,6 @@ import Combine
 import SwiftUI
 import vpncore
 
-@available(macOS 11.0, *)
 class SystemExtensionGuideViewController: NSViewController {
 
     private var cancellables = Set<AnyCancellable>()
@@ -65,7 +64,6 @@ class SystemExtensionGuideViewController: NSViewController {
     }
 }
 
-@available(macOS 11.0, *)
 extension SystemExtensionGuideViewController: WindowControllerDelegate {
     func windowCloseRequested(_ sender: WindowController) {
         windowService?.windowCloseRequested(sender)

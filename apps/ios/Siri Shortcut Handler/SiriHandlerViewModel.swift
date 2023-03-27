@@ -25,7 +25,6 @@ import vpncore
 import Timer
 import VPNShared
 
-@available(iOSApplicationExtension 12.0, *)
 class SiriHandlerViewModel {
     
     private let networking: Networking
@@ -175,7 +174,6 @@ class SiriHandlerViewModel {
     
 }
 
-@available(iOSApplicationExtension 12.0, *)
 extension SiriHandlerViewModel: ExtensionAlertServiceDelegate {
     
     func actionErrorReceived() {}
