@@ -152,11 +152,16 @@ class ProtonCz(BaseCommitizen):
     def extract_jiraids(self, jiraidstr):
         """
         Extracts one or more Jira IDs from a string. If the `jira_prefix` value is set in the config, then this function will allow
-        "naked" IDs specified without a project prefix, and will interpret them as beginning with the `jira_prefix` config value.
+        "naked" IDs specified without a project prefix, and will interpret them as beginning with the `jira_prefix` config value, but
+        only if the branch name doesn't contain such a Jira prefix already.
         """
 
         jiraids = re.findall(self.jira_regex, jiraidstr)
         if isinstance(self.jira_prefix, str):
+            for component in jiraidstr.split("/"):
+                if component.startswith(self.jira_prefix):
+                    return jiraids
+
             # Get the first match group of each item and prepend with jira_prefix
             idnums = re.findall(self.nums_regex, jiraidstr)
             jiraids += map(lambda x: self.jira_prefix + "-" + x[1], idnums)
