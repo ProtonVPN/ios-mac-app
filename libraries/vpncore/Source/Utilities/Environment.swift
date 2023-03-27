@@ -19,7 +19,30 @@
 import Foundation
 
 /// Provides a way to test error paths that crash DEBUG builds by overriding the assertionFailure behaviour in tests.
-class Environment {
-    static var _assertionFailure = assertionFailure
-    static var _assert = assert
+public class Environment {
+    public private (set) static var _assertionFailure = assertionFailure
+    public private (set) static var _assert = assert
+
+    private static let environmentQueue = DispatchQueue(label: "ch.protonvpn.test.environment")
+
+    /// Executes the given closure, causing any `_assertionFailure` and failed `_assert` calls to call `errorBlock`.
+    ///
+    /// Use this to test error paths that should crash DEBUG builds. This runs synchronously on an `environmentQueue`
+    ///
+    /// - Important: Never use this outside of tests.
+    public static func execute(_ block: () -> Void, catchingAssertionFailuresWith errorBlock: @escaping () -> Void) {
+        environmentQueue.sync {
+            Self._assert = { condition, _, _, _ in
+                if !condition() {
+                    errorBlock()
+                }
+            }
+            Self._assertionFailure = { _, _, _ in errorBlock() }
+
+            block()
+
+            Self._assert = assert
+            Self._assertionFailure = assertionFailure
+        }
+    }
 }
