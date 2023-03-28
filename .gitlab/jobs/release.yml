@@ -77,5 +77,5 @@ mac_release_internal:
     - when: manual
   trigger:
     project: apple/vpn/mac-ci
-    branch: mac-v3
+    branch: mac-v4
     strategy: depend
