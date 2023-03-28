@@ -21,9 +21,20 @@ import GoLibs
 import XCTest
 import Dependencies
 import TimerMock
+import LocalFeatureFlags
 @testable import vpncore
 
 final class LocalAgentTests: XCTestCase {
+
+    override func setUp() {
+        super.setUp()
+        setLocalFeatureFlagOverrides(["NetShield": ["NetShieldStats": true]])
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        setLocalFeatureFlagOverrides(nil)
+    }
 
     func testStatsTimerStartedAfterFinishingConnecting() {
         let connectionFactory = LocalAgentConnectionMockFactory()

@@ -145,6 +145,9 @@
 		AD609A05299D1120007E46BC /* ImageSubtitleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */; };
 		ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADA7343629B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib */; };
 		ADA7343929B1896300CF8F77 /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
+		ADAC052A29D33D0500BB69EA /* StatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B58C12150E278000BB3A3 /* StatusViewModel.swift */; };
+		ADAC052B29D33D1500BB69EA /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
+		ADAC052C29D33D1500BB69EA /* NetShieldStatsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7343829B1896300CF8F77 /* NetShieldStatsTableViewCell.swift */; };
 		B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20C28F42799947A00157BD1 /* OnboardingRobot.swift */; };
 		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
@@ -191,7 +194,6 @@
 		D5136C4B228592E80002C095 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7980ECD520F70C0800D5432B /* TabBarViewModel.swift */; };
 		D5136C4C228592E80002C095 /* ConnectionBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791C54F4214A777500C6F337 /* ConnectionBarViewModel.swift */; };
 		D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */; };
-		D5136C4E228592E80002C095 /* StatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792B58C12150E278000BB3A3 /* StatusViewModel.swift */; };
 		D5136C53228592E80002C095 /* CountriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */; };
 		D5136C54228592E80002C095 /* CountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */; };
 		D5136C55228592E80002C095 /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */; };
@@ -3531,6 +3533,7 @@
 				E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
+				ADAC052A29D33D0500BB69EA /* StatusViewModel.swift in Sources */,
 				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
 				E185A866237157EC0039E625 /* TrackedAlertController.swift in Sources */,
 				D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */,
@@ -3564,6 +3567,7 @@
 				42066FDA263049C5001F86DB /* ServersStreamingFeaturesVC.swift in Sources */,
 				D5136C46228592E80002C095 /* WidgetSettingsViewController.swift in Sources */,
 				060D071725D34599002B98B8 /* AppSessionManager.swift in Sources */,
+				ADAC052B29D33D1500BB69EA /* NetShieldStatsItemView.swift in Sources */,
 				D5A8813122CE270A009B63D1 /* UIButton+Extension.swift in Sources */,
 				D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */,
 				D5136C4B228592E80002C095 /* TabBarViewModel.swift in Sources */,
@@ -3574,7 +3578,6 @@
 				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1D6CF6E22E0C99500B58E11 /* ObfuscatedConstants.swift in Sources */,
 				422395842446EF660089002F /* URLConstants.swift in Sources */,
-				D5136C4E228592E80002C095 /* StatusViewModel.swift in Sources */,
 				F3F36C4326D64DD8008AD48B /* EnvironmentsViewController.swift in Sources */,
 				E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
 				D56B68DB250617F000796E0C /* BatteryUsageViewController.swift in Sources */,
@@ -3631,6 +3634,7 @@
 				D5136C76228592E80002C095 /* DefaultProfileTableViewCell.swift in Sources */,
 				D5136C77228592E80002C095 /* AppVersionView.swift in Sources */,
 				D55B36CB2457FF0600D8B0B9 /* TroubleshootingCell.swift in Sources */,
+				ADAC052C29D33D1500BB69EA /* NetShieldStatsTableViewCell.swift in Sources */,
 				E197BD4422C0DFD6004E0FE7 /* PlanServiceMock.swift in Sources */,
 				42066FC826304914001F86DB /* ServersFeaturesInformationViewModel.swift in Sources */,
 				E1D187F22301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
