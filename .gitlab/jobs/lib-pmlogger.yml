@@ -7,6 +7,9 @@ test:unit:pmlogger:
     - .mr_job_template
     - .ios_job_template
   stage: test
+  needs:
+    - job: linting:code-quality
+      artifacts: false
   script:
     - cd libraries/PMLogger/
     - swift test --enable-code-coverage

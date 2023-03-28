@@ -7,6 +7,9 @@ test:unit:vpncore:ios:
     - .mr_job_template
     - .ios_job_template
   stage: test
+  needs:
+    - job: linting:code-quality
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
@@ -26,6 +29,9 @@ test:unit:vpncore:ios:
 test:unit:vpncore:macos:
   extends: .mac_job_template
   stage: test
+  needs:
+    - job: linting:code-quality
+      artifacts: false
   tags:
     - macOS_vpn
   script:

@@ -7,6 +7,9 @@ test:unit:nehelper:
     - .mr_job_template
     - .ios_job_template
   stage: test
+  needs:
+    - job: linting:code-quality
+      artifacts: false
   script:
     - cd libraries/NEHelper/
     - swift test --enable-code-coverage

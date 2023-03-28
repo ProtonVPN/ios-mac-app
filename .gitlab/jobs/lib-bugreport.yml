@@ -6,6 +6,9 @@ test:unit:bugreport:
     - .mr_job_template
     - .ios_job_template
   stage: test
+  needs:
+    - job: linting:code-quality
+      artifacts: false
   script:
     - cd libraries/BugReport/
     - swift test --enable-code-coverage
@@ -28,6 +31,9 @@ test:ui:bugreport:ios:
     - .ui_full_tests_template
     - .ios_job_template
   stage: test_ui
+  needs:
+    - job: test:unit:bugreport
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_bugreport_ui_test
@@ -45,6 +51,9 @@ test:ui:bugreport:macos:
     - .mac_job_template
     - .ui_full_tests_template
   stage: test_ui
+  needs:
+    - job: test:unit:bugreport
+      artifacts: false
   script:
     - fastlane macos_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1

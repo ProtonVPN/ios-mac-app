@@ -7,6 +7,9 @@ test:unit:modals:
     - .mr_job_template
     - .ios_job_template
   stage: test
+  needs:
+    - job: linting:code-quality
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
@@ -29,6 +32,9 @@ test:ui:modals:ios:
     - .mr_job_template
     - .ios_job_template
   stage: test_ui
+  needs:
+    - job: test:unit:modals
+      artifacts: false
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane modals_ios_test
