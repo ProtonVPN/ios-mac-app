@@ -165,6 +165,8 @@
 		AD37181329CB3BD5006615E2 /* NetShieldStatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */; };
 		AD37FAC729B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
 		AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */; };
+		AD3C485729D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */; };
+		AD3C485829D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */; };
 		AD41A854298A83590003393D /* SystemExtensionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1ECBAF28912F3800820068 /* SystemExtensionManagerMock.swift */; };
 		AD41A859298ACED40003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
 		AD41A85A298ACED50003393D /* NetworkingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C1826D63CCD00EF2F00 /* NetworkingMock.swift */; };
@@ -848,6 +850,7 @@
 		AD37180F29CB3404006615E2 /* NetShieldStatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsModel.swift; sourceTree = "<group>"; };
 		AD37181129CB353F006615E2 /* NetShieldStatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsViewModel.swift; sourceTree = "<group>"; };
 		AD37FAC629B89FF900D4DE4E /* StrongNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrongNotification.swift; sourceTree = "<group>"; };
+		AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalAgentTests.swift; sourceTree = "<group>"; };
 		AD582AE429CDCFD000168D70 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		ADBFE44D29CDA14D001A5446 /* LocalAgentMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentMessages.swift; sourceTree = "<group>"; };
 		ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timer+Dependencies.swift"; sourceTree = "<group>"; };
@@ -1339,6 +1342,15 @@
 			path = NetShield;
 			sourceTree = "<group>";
 		};
+		AD3C485529D2FBCC00A768D4 /* LocalAgent */ = {
+			isa = PBXGroup;
+			children = (
+				AD3C485629D2FBCC00A768D4 /* LocalAgentTests.swift */,
+			);
+			name = LocalAgent;
+			path = Tests/Management/LocalAgent;
+			sourceTree = SOURCE_ROOT;
+		};
 		C13CF157E79D07C8924BAB1F /* Reports */ = {
 			isa = PBXGroup;
 			children = (
@@ -1486,6 +1498,7 @@
 				4C1ECBB128912F8500820068 /* SystemExtensionManagerTests.swift */,
 				4C0961F8285B4FB800556E07 /* Connections */,
 				E9037D2E284F6F0B00151180 /* BugReport */,
+				AD3C485529D2FBCC00A768D4 /* LocalAgent */,
 				D5D2957425A5D95E000FBD74 /* Providers */,
 				D59671CC253D5D1E0061A75F /* Announcements */,
 				E19CE84C22C9FC69002595D0 /* State Changes */,
@@ -3136,6 +3149,7 @@
 				4C66CA9D2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				4CFDF0C0287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
 				F327A9A028217AB100848E42 /* CodableExtensionsTests.swift in Sources */,
+				AD3C485729D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */,
 				4C14523D292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */,
 				E1B5F60621B6953200B558B0 /* AppStateTests.swift in Sources */,
 				4CFDF0BD287EE4F300386626 /* ConnectionSwitchingTests.swift in Sources */,
@@ -3458,6 +3472,7 @@
 				E566D9DD29796A2F00C2F857 /* TelemetryBufferTests.swift in Sources */,
 				4CFDF0C1287EE55B00386626 /* LocalAgentConnectionTests.swift in Sources */,
 				F327A99F28217AB000848E42 /* CodableExtensionsTests.swift in Sources */,
+				AD3C485829D2FBCC00A768D4 /* LocalAgentTests.swift in Sources */,
 				E19CE84F22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
 				4CFDF0BE287EE4F300386626 /* ConnectionSwitchingTests.swift in Sources */,
 				D5967210253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,

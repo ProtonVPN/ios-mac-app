@@ -320,9 +320,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             
             return cell
         case let .netShieldStats(viewModel):
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: NetShieldStatsTableViewCell.identifier) as? NetShieldStatsTableViewCell else {
-                return UITableViewCell()
-            }
+            let reusableCell = tableView.dequeueReusableCell(withIdentifier: NetShieldStatsTableViewCell.identifier)
+            guard let cell = reusableCell as? NetShieldStatsTableViewCell else { return reusableCell ?? UITableViewCell() }
 
             cell.setup(with: viewModel)
 
