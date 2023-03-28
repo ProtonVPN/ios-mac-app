@@ -23,7 +23,7 @@ public enum NetShieldStatsViewModel {
     case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int64, paused: Bool)
 
     public var adsModel: NetShieldStatsItemModel {
-        let title: String = "Ads\nblocked"
+        let title: String = LocalizedString.netshieldStatsAdsBlocked
 
         guard case .enabled(let adsBlocked, _, _, let paused) = self else {
             return .disabled(title: title)
@@ -33,7 +33,7 @@ public enum NetShieldStatsViewModel {
     }
 
     public var trackersModel: NetShieldStatsItemModel {
-        let title: String = "Trackers\nstopped"
+        let title: String = LocalizedString.netshieldStatsTrackersStopped
 
         guard case .enabled(_, let trackersStopped, _, let paused) = self else {
             return .disabled(title: title)
@@ -43,7 +43,7 @@ public enum NetShieldStatsViewModel {
     }
 
     public var dataModel: NetShieldStatsItemModel {
-        let title: String = "Data\nsaved"
+        let title: String = LocalizedString.netshieldStatsDataSaved
 
         guard case .enabled(_, _, let dataSaved, let paused) = self else {
             return .disabled(title: title)

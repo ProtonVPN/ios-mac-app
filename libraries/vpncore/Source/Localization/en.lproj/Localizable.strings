@@ -1537,6 +1537,15 @@
 /* Battery usage More info button text */
 "_battery_more" = "Want to learn more?";
 
+// Netshield stats
+
+/* Netshield statistics, the title for the count of blocked advertisements. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n */
+"_netshield_stats_ads_blocked" = "Ads\nblocked";
+/* Netshield statistics, the title for the count of stopped trackers. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n */
+"_netshield_stats_trackers_stopped" = "Trackers\nstopped";
+/* Netshield statistics, the title for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n */
+"_netshield_stats_data_saved" = "Data\nsaved";
+
 // Netshield
 
 /* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
