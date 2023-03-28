@@ -16,31 +16,108 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import VPNShared
+import GoLibs
 import XCTest
+import Dependencies
+import TimerMock
+@testable import vpncore
 
 final class LocalAgentTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    func testStatsTimerStartedAfterFinishingConnecting() {
+        let connectionFactory = LocalAgentConnectionMockFactory()
+        var agent: LocalAgentConnectionMock?
+        connectionFactory.connectionWasCreated = { newAgent in agent = newAgent }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+        let timerFactory = TimerFactoryMock()
+        let timerWasScheduled = XCTestExpectation(description: "Stats timer should be scheduled after connecting")
+        timerFactory.timerWasAdded = { timerWasScheduled.fulfill() }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let localAgent = withDependencies {
+            $0.timerFactory = timerFactory
+        } operation: {
+            LocalAgentImplementation(factory: connectionFactory, propertiesManager: PropertiesManagerMock.with(netShieldStats: true))
         }
+
+        XCTAssert(timerFactory.scheduledWork.isEmpty, "Stats timer should not be started before connecting")
+
+        localAgent.connect(data: .mock, configuration: .mocked(withNetShieldType: .level2))
+        localAgent.didChangeState(state: .connecting)
+        localAgent.didChangeState(state: .connected)
+
+        wait(for: [timerWasScheduled], timeout: 0.1)
+        XCTAssert(localAgent.isMonitoringFeatureStatistics, "LocalAgent should monitor NetShield stats after connecting")
+
+        // LocalAgent should stop stats monitoring if NetShield level is not 2
+        agent!.status = LocalAgentStatusMessage().with(netShieldType: .level1)
+
+        localAgent.didChangeState(state: .connected) // simulate status (with stats) response, and level1 netshield
+
+        XCTAssert(!localAgent.isMonitoringFeatureStatistics, "LocalAgent should stop stats monitoring if NetShield level is not 2")
     }
 
+    func testStatsTimerNotBeStartedIfFeatureFlagIsOff() {
+        let connectionFactory = LocalAgentConnectionMockFactory()
+        let timerFactory = TimerFactoryMock()
+
+        let timerWasScheduled = XCTestExpectation(description: "Stats timer not be started if stats feature flag is false")
+        timerWasScheduled.isInverted = true
+
+        timerFactory.timerWasAdded = { timerWasScheduled.fulfill() }
+
+        let localAgent = withDependencies {
+            $0.timerFactory = timerFactory
+        } operation: {
+            LocalAgentImplementation(factory: connectionFactory, propertiesManager: PropertiesManagerMock.with(netShieldStats: false))
+        }
+
+        localAgent.connect(data: .mock, configuration: .mocked(withNetShieldType: .level2))
+        localAgent.didChangeState(state: .connecting)
+        localAgent.didChangeState(state: .connected)
+
+        wait(for: [timerWasScheduled], timeout: 0.1)
+    }
+}
+
+fileprivate extension LocalAgentStatusMessage {
+    func with(features: LocalAgentFeatures) -> Self {
+        self.features = features
+        return self
+    }
+
+    func with(netShieldType: NetShieldType) -> Self {
+        return self.with(features: (features ?? LocalAgentFeatures.base).with(netshield: .level1))
+    }
+}
+
+fileprivate extension LocalAgentFeatures {
+    static var base: LocalAgentFeatures {
+        LocalAgentFeatures()!
+            .with(netshield: .off)
+            .with(vpnAccelerator: false)
+            .with(natType: .moderateNAT)
+            .with(safeMode: false)
+    }
+}
+
+fileprivate extension VpnAuthenticationData {
+    static var mock: VpnAuthenticationData {
+        VpnAuthenticationData(clientKey: VpnKeys.mock().privateKey, clientCertificate: "")
+    }
+}
+
+fileprivate extension PropertiesManagerMock {
+    static func with(netShieldStats: Bool) -> PropertiesManagerMock {
+        let propertiesManager = PropertiesManagerMock()
+        propertiesManager.featureFlags.netShieldStats = netShieldStats
+        return propertiesManager
+    }
+}
+
+fileprivate extension LocalAgentConfiguration {
+    static func mocked(withNetShieldType netShieldType: NetShieldType) -> Self {
+        let features = VPNConnectionFeatures(netshield: netShieldType, vpnAccelerator: true, bouncing: "0", natType: .strictNAT, safeMode: false)
+        return LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
+    }
 }

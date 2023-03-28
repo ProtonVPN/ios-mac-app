@@ -144,6 +144,8 @@ final class LocalAgentImplementation: LocalAgent {
     private var previousState: LocalAgentState?
     private var statusTimer: BackgroundTimer?
 
+    var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
+
     private lazy var isNetShieldStatsEnabled = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
         && propertiesManager.featureFlags.netShieldStats
 
@@ -227,16 +229,19 @@ final class LocalAgentImplementation: LocalAgent {
 
     private func toggleStatusMonitoringIfNecessary(forFeatures features: VPNConnectionFeatures) {
         // If the server is reporting NetShield type as level2, we should be monitoring NetShieldStats
-        guard isNetShieldStatsEnabled else { return }
-
         let shouldMonitorStats = features.netshield == .level2
         log.debug("Should monitor stats: \(shouldMonitorStats)")
         shouldMonitorStats ? startStatusMonitoringIfNecessary() : stopStatusMonitoringIfNecessary()
     }
 
     private func startStatusMonitoringIfNecessary() {
+        guard isNetShieldStatsEnabled else {
+            log.debug("Not starting stats monitoring, feature flags are false", category: .localAgent)
+            return
+        }
+
         if let timer = statusTimer, timer.isValid {
-            log.debug("Not starting timer, a request is already scheduled for \(timer.nextTime)", category: .localAgent)
+            log.debug("Not starting timer, work is already scheduled for \(timer.nextTime)", category: .localAgent)
             return
         }
         log.debug("Starting status request background timer", category: .localAgent)
@@ -266,29 +271,22 @@ final class LocalAgentImplementation: LocalAgent {
 }
 
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
-    func didReceiveConnectionDetails(details: LocalAgentConnectionDetails) {
+    func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage) {
         guard LocalFeatureFlags.isEnabled(LocalAgentFeature.connectionDetails) else { return }
 
-        let detailsMessage = ConnectionDetailsMessage(details: details)
-        delegate?.didReceiveConnectionDetails(detailsMessage)
+        delegate?.didReceiveConnectionDetails(details)
     }
 
-    func didReceiveFeatureStatistics(_ dictionary: LocalAgentStringToValueMap) {
+    func didReceiveFeatureStatistics(_ statistics: FeatureStatisticsMessage) {
         guard isNetShieldStatsEnabled else { return }
 
-        do {
-            let statistics = try FeatureStatisticsMessage(localAgentStatsDictionary: dictionary)
+        let stats = NetShieldStats(
+            adsBlocked: statistics.netShield.adsBlocked ?? 0,
+            malwareBlocked: statistics.netShield.malwareBlocked ?? 0,
+            trackersBlocked: statistics.netShield.trackersBlocked ?? 0,
+            bytesSaved: statistics.netShield.bytesSaved)
 
-            let stats = NetShieldStats(
-                adsBlocked: statistics.netShield.adsBlocked ?? 0,
-                malwareBlocked: statistics.netShield.malwareBlocked ?? 0,
-                trackersBlocked: statistics.netShield.trackersBlocked ?? 0,
-                bytesSaved: statistics.netShield.bytesSaved)
-
-            netShieldStatsChanged(to: stats)
-        } catch {
-            log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
-        }
+        netShieldStatsChanged(to: stats)
     }
 
     func didReceiveError(code: Int) {

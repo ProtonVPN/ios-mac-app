@@ -26,8 +26,8 @@ import GoLibs
 protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
     func didReceiveError(code: Int)
     func didChangeState(state: LocalAgentState?)
-    func didReceiveConnectionDetails(details: LocalAgentConnectionDetails)
-    func didReceiveFeatureStatistics(_ statistics: LocalAgentStringToValueMap)
+    func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage)
+    func didReceiveFeatureStatistics(_ statistics: FeatureStatisticsMessage)
 }
 
 final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClientProtocol {
@@ -67,13 +67,28 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
 
     func onStatusUpdate(_ status: LocalAgentStatusMessage?) {
         if let details = status?.connectionDetails {
-            vpncore.log.info("Local agent shared library received connection details: \(details)", category: .localAgent, event: .connect)
-            delegate?.didReceiveConnectionDetails(details: details)
+            didReceive(connectionDetails: details)
         }
 
         if let statistics = status?.featuresStatistics {
-            vpncore.log.info("Local agent shared library received statistics: \(statistics)", category: .localAgent, event: .stateChange)
-            delegate?.didReceiveFeatureStatistics(statistics)
+            didReceive(statistics: statistics)
+        }
+    }
+
+    private func didReceive(connectionDetails: LocalAgentConnectionDetails) {
+        vpncore.log.info("Local agent shared library received connection details: \(connectionDetails)", category: .localAgent, event: .connect)
+        let detailsMessage = ConnectionDetailsMessage(details: connectionDetails)
+        delegate?.didReceiveConnectionDetails(detailsMessage)
+    }
+
+    private func didReceive(statistics: LocalAgentStringToValueMap) {
+        do {
+            let stats = try FeatureStatisticsMessage(localAgentStatsDictionary: statistics)
+            vpncore.log.info("Local agent shared library received statistics: \(stats)", category: .localAgent, event: .stateChange)
+            delegate?.didReceiveFeatureStatistics(stats)
+
+        } catch {
+            vpncore.log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
         }
     }
 }
