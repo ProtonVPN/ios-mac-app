@@ -2,10 +2,10 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
     
     
-macos_unit_tests:
+test:unit:app:macos:
   extends: .mac_job_template
   dependencies: []
-  stage: unit_tests
+  stage: test
   script:
     - fastlane macos_app_unit_test_all
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
@@ -24,12 +24,12 @@ macos_unit_tests:
       junit:
         - fastlane/test_output/report.junit
 
-macos_ui_tests_all:
+test:ui:app:macos:all:
   extends:
     - .mac_job_template
     - .ui_full_tests_template
   dependencies: []
-  stage: ui_full_tests
+  stage: test_ui
   script:
     - fastlane macos_app_ui_test_all
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
@@ -43,12 +43,12 @@ macos_ui_tests_all:
       junit:
         - fastlane/test_output/report.junit
 
-macos_ui_tests_smoke:
+test:ui:app:macos:smoke:
   extends:
     - .mac_job_template
     - .ui_smoke_tests_template
   dependencies: []
-  stage: ui_smoke_tests
+  stage: test_ui
   script:
     - fastlane macos_app_ui_test_smoke
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app

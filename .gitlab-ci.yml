@@ -1,10 +1,10 @@
-stages:  
+stages:
+  - i18n
+  - github
   - linting
-  - unit_tests
-  - ui_smoke_tests
-  - ui_full_tests
-  - bot
-  - release
+  - test
+  - test_ui
+  - distribute
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -25,13 +25,12 @@ include:
   - project: 'agarroux/publish-github'
     ref: feat/github-app
     file: '/jobs/release.gitlab-ci.yml'
-
-  - template: Code-Quality.gitlab-ci.yml
   
   # Include all jobs from all the files on `.gitlab/jobs/` folder
   - local: '.gitlab/jobs/*.yml'
 
-commit_quality:
+
+linting:commit-quality:
   stage: linting
   image: protonjohn/commitlint-docker:latest
   script:
@@ -51,7 +50,7 @@ commit_quality:
 #
 # More info on how it works:
 # https://blog.kulman.sk/using-swiftlint-for-gitlab-code-quality/
-code_quality:
+linting:code-quality:
   extends:
     - .mr_job_template
     - .ios_job_template

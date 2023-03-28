@@ -1,12 +1,12 @@
-# Jobs for linting/testing/etc. Timer library.
+# Jobs for linting/testing/etc. PMLogger library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
   
 
-pmlogger_unit_tests:
+test:unit:pmlogger:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: unit_tests
+  stage: test
   script:
     - cd libraries/PMLogger/
     - swift test --enable-code-coverage

@@ -1,12 +1,12 @@
-# Jobs for linting/testing/etc. BugReport library.
+# Jobs for linting/testing/etc. Modals library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
     
-modals_ios_unit_tests:
+test:unit:modals:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: unit_tests
+  stage: test
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_modals_test
@@ -24,11 +24,11 @@ modals_ios_unit_tests:
         path: fastlane/test_output/cobertura.xml
 
 
-modals_unit_tests:
+test:ui:modals:ios:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: unit_tests
+  stage: test_ui
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane modals_ios_test

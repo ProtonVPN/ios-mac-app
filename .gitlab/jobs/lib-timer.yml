@@ -2,11 +2,11 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
   
 
-timer_unit_tests:
+test:unit:timer:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: unit_tests
+  stage: test
   script:
     - cd libraries/Timer/
     - swift test --enable-code-coverage

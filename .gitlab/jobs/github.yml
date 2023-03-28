@@ -1,7 +1,7 @@
 # --- Open Source GitHub related tasks ---
-github-push-commits:
-  stage: bot
+github:mirror:commits:
   extends: .release-sync-commit-shared
+  stage: github
   variables:
     RELEASE_SYNC_TO_BRANCH: 'develop'
     RELEASE_SYNC_FROM_BRANCH: 'develop'
@@ -14,8 +14,9 @@ github-push-commits:
     variables:
       - $CI_COMMIT_TAG =~ /^(mac|ios)\/\d+\.\d+\.\d+$/
 
-github-push-tag:
+github:mirror:tag:
   extends: .release-sync-tags-shared
+  stage: github
   variables:
     RELEASE_SYNC_FROM_BRANCH: 'develop'
   only:

@@ -1,11 +1,11 @@
 # Jobs for linting/testing/etc. BugReport library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
-bugreport_unit_tests:
+test:unit:bugreport:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: unit_tests
+  stage: test
   script:
     - cd libraries/BugReport/
     - swift test --enable-code-coverage
@@ -23,11 +23,11 @@ bugreport_unit_tests:
         path: fastlane/test_output/BugReport.xml
 
 
-ios_bugreport_ui_tests:
+test:ui:bugreport:ios:
   extends:
     - .ui_full_tests_template
     - .ios_job_template
-  stage: ui_full_tests
+  stage: test_ui
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_bugreport_ui_test
@@ -40,11 +40,11 @@ ios_bugreport_ui_tests:
         - fastlane/test_output/report.junit
 
 
-macos_bugreport_ui_tests:
+test:ui:bugreport:macos:
   extends:
     - .mac_job_template
     - .ui_full_tests_template
-  stage: ui_full_tests
+  stage: test_ui
   script:
     - fastlane macos_bugreport_ui_test
     - scripts/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1

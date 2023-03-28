@@ -2,8 +2,8 @@
 
 # ------------------------------------------ iOS app ------------------------------------------
 
-ios_testflight_internal:
-  stage: release
+distribute:ios:testflight:alpha:
+  stage: distribute
   extends:
     - .ios_job_template
   before_script:
@@ -59,8 +59,8 @@ ios_testflight_internal:
 
 # ------------------------------------------ macOS app ------------------------------------------
 
-mac_release_internal:
-  stage: release
+distribute:mac:alpha:
+  stage: distribute
   variables:
     APP_BRANCH: $CI_COMMIT_BRANCH
   rules:

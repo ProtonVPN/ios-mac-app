@@ -1,12 +1,12 @@
-# Jobs for linting/testing/etc. BugReport library.
+# Jobs for linting/testing/etc. Onboarding library.
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
 
 
-onboarding_ui_tests:
+test:ui:onboarding:ios:
   extends:
     - .ui_full_tests_template
     - .ios_job_template
-  stage: ui_full_tests
+  stage: test_ui
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane onboarding_test

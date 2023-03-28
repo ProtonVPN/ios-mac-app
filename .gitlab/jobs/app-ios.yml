@@ -2,11 +2,11 @@
 # Stages and other useful stuff can be found in /.gitlab-ci.yml file
     
 
-ios_unit_tests_all:
+test:unit:app:ios:
   extends:
     - .mr_job_template
     - .ios_job_template
-  stage: unit_tests
+  stage: test
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -27,11 +27,11 @@ ios_unit_tests_all:
         - fastlane/test_output/report.junit
 
 
-ios_ui_tests_smoke:
+test:ui:app:ios:smoke:
   extends:
     - .ios_job_template
     - .ui_smoke_tests_template
-  stage: ui_smoke_tests
+  stage: test_ui
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
@@ -46,11 +46,11 @@ ios_ui_tests_smoke:
       junit:
         - fastlane/test_output/report.junit
 
-ios_ui_tests_all:
+test:ui:app:ios:all:
   extends:
     - .ios_job_template
     - .ui_full_tests_template
-  stage: ui_full_tests
+  stage: test_ui
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
