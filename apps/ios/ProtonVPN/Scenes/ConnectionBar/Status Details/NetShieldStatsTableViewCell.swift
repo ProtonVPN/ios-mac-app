@@ -24,18 +24,8 @@ class NetShieldStatsTableViewCell: UITableViewCell {
     @IBOutlet private var trackersStatView: NetShieldStatsItemView!
     @IBOutlet private var dataStatView: NetShieldStatsItemView!
 
-    var viewModel: NetShieldStatsViewModel = .disabled {
-        didSet {
-            setup(with: viewModel)
-        }
-    }
-
-    private var statViews: [NetShieldStatsItemView] { [adsStatView, trackersStatView, dataStatView] }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        selectionStyle = .none
     }
 
     override func awakeFromNib() {
@@ -44,6 +34,7 @@ class NetShieldStatsTableViewCell: UITableViewCell {
     }
 
     func setupViews() {
+        selectionStyle = .none
         backgroundColor = .secondaryBackgroundColor()
     }
 
