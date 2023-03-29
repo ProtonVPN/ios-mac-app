@@ -22,6 +22,8 @@
 
 import Cocoa
 import vpncore
+import Modals_macOS
+import SwiftUI
 
 protocol QuickSettingsDetailViewControllerProtocol: class {
     var arrowIV: NSImageView! { get }
@@ -54,6 +56,12 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     @IBOutlet var noteTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeBottomConstraint: NSLayoutConstraint!
+
+    @IBOutlet var netShieldStatsContainer: NSView! {
+        didSet {
+            setupNetShieldStatsContainer()
+        }
+    }
     
     let presenter: QuickSettingDropdownPresenterProtocol
     
@@ -65,6 +73,22 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setupNetShieldStatsContainer() {
+        guard let model = presenter.statsModel, #available(macOS 11.0, *) else {
+            netShieldStatsContainer?.removeFromSuperview()
+            return
+        }
+
+        _ = ModalsFactory(colors: UpsellColors()) // initialize colors in modals module. This will go away with our new theme module
+        let hostingView = NSHostingView(rootView: NetShieldStatsView(viewModel: model))
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        netShieldStatsContainer.addSubview(hostingView)
+        netShieldStatsContainer.topAnchor.constraint(equalTo: hostingView.topAnchor).isActive = true
+        netShieldStatsContainer.bottomAnchor.constraint(equalTo: hostingView.bottomAnchor).isActive = true
+        netShieldStatsContainer.leadingAnchor.constraint(equalTo: hostingView.leadingAnchor).isActive = true
+        netShieldStatsContainer.trailingAnchor.constraint(equalTo: hostingView.trailingAnchor).isActive = true
     }
         
     override func viewDidLoad() {

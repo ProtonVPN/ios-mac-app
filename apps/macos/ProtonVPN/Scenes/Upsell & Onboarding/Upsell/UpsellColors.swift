@@ -26,6 +26,9 @@ struct UpsellColors: ModalsColors {
     public let hoverBrand: NSColor
     public let weakText: NSColor
     public let linkNorm: NSColor
+    public let textHint: NSColor
+    public let backgroundHover: NSColor
+    public let backgroundWeak: NSColor
 
     public init() {
         background = .color(.background)
@@ -34,5 +37,8 @@ struct UpsellColors: ModalsColors {
         hoverBrand = .color(.icon, [.interactive, .hovered])
         weakText = .color(.text, .weak)
         linkNorm = .color(.text, [.interactive, .hint])
+        textHint = .color(.text, .hint)
+        backgroundHover = .color(.background, [.transparent, .hovered])
+        backgroundWeak = .color(.background, .weak)
     }
 }

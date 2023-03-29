@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import Modals_macOS
 import vpncore
 import AppKit
 import VPNShared
@@ -50,6 +51,22 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     init( _ factory: Factory ) {
         self.factory = factory
         super.init( factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
+    }
+
+    override var statsModel: NetShieldStatsViewModel? {
+        let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
+        return .init(adsStats: .init(value: "21",
+                              title: "Ads\nblocked",
+                              help: "Advertisement websites use cookies and trackers to target you.",
+                              isDisabled: !isActive),
+              trackersStats: .init(value: "14",
+                                   title: "Trackers\nstopped",
+                                   help: "Trackers are third-party websites that collect, store, and sell information about your web activity.",
+                                   isDisabled: !isActive),
+              dataStats: .init(value: "1.5 MB",
+                               title: "Data\nsaved",
+                               help: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                               isDisabled: !isActive))
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
