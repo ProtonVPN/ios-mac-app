@@ -21,6 +21,11 @@ import Foundation
 public enum NetShieldStatsViewModel {
 
     static let formatter = NetShieldStatsNumberFormatter()
+    static let byteCountFormatter = {
+        let formatter = ByteCountFormatter()
+        formatter.allowsNonnumericFormatting = false
+        return formatter
+    }()
 
     case disabled
     case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int64, paused: Bool)
@@ -52,7 +57,7 @@ public enum NetShieldStatsViewModel {
             return .disabled(title: title)
         }
 
-        let value = ByteCountFormatter().string(fromByteCount: dataSaved)
+        let value = Self.byteCountFormatter.string(fromByteCount: dataSaved)
 
         return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
     }
