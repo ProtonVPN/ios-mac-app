@@ -197,8 +197,9 @@ class CountriesSectionViewController: NSViewController {
             let vc = QuickSettingDetailViewController(presenter)
             vc.viewWillAppear()
             container?.addSubview(vc.view)
-            vc.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: container?.frame.size.height ?? 0)
-            vc.view.frame.origin = .zero
+            container?.heightAnchor.constraint(equalTo: vc.view.heightAnchor).isActive = true
+            container?.widthAnchor.constraint(equalTo: vc.view.widthAnchor).isActive = true
+            vc.view.translatesAutoresizingMaskIntoConstraints = false
             button?.toolTip = presenter.title
             button?.callback = { _ in self.didTapSettingButton(index) }
             button?.detailOpened = false
@@ -238,7 +239,7 @@ class CountriesSectionViewController: NSViewController {
         }
     }
     
-    private func didDisplayQuickSetting ( _ quickSettingItem: QuickSettingType? = nil, appear: Bool ) {
+    private func didDisplayQuickSetting(_ quickSettingItem: QuickSettingType? = nil, appear: Bool ) {
         
         let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
         let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
@@ -251,6 +252,17 @@ class CountriesSectionViewController: NSViewController {
         
         netShieldBtn.detailOpened = netShieldDisplay
         netshieldContainer.isHidden = !netShieldDisplay
+
+        let expectedHeight = 784.0 // determined experimentally, not worth finding a "right" solution given the imminent changes
+
+        if netShieldDisplay,
+           let window = view.window,
+           window.frame.height < expectedHeight {
+            var newFrame = window.frame
+            newFrame.size.height = expectedHeight
+            newFrame.origin.y -= expectedHeight - window.frame.height
+            view.window?.setFrame(newFrame, display: true)
+        }
         
         killSwitchBtn.detailOpened = killSwitchDisplay
         killSwitchContainer.isHidden = !killSwitchDisplay

@@ -231,6 +231,7 @@ internal enum Asset {
   internal static let neagent = ImageAsset(name: "neagent")
   internal static let neagentIndicator1 = ImageAsset(name: "neagent_indicator_1")
   internal static let neagentIndicator2 = ImageAsset(name: "neagent_indicator_2")
+  internal static let qsDetailTriangle = ImageAsset(name: "qs_detail_triangle")
   internal static let reverseTriangle = ImageAsset(name: "ReverseTriangle")
   internal static let vpnResultConnected = ImageAsset(name: "vpn-result-connected")
   internal static let vpnResultNotConnected = ImageAsset(name: "vpn-result-not-connected")

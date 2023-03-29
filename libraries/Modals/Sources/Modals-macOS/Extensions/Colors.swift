@@ -22,9 +22,12 @@ var colors: ModalsColors!
 
 public protocol ModalsColors {
     var background: NSColor { get }
+    var backgroundWeak: NSColor { get }
+    var backgroundHover: NSColor { get }
     var text: NSColor { get }
     var brand: NSColor { get }
     var hoverBrand: NSColor { get }
     var weakText: NSColor { get }
     var linkNorm: NSColor { get }
+    var textHint: NSColor { get }
 }

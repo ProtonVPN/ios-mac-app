@@ -79,13 +79,15 @@ extension ViewController: NSTableViewDataSource {
 }
 
 struct Colors: ModalsColors {
-
     var background: NSColor
     var text: NSColor
     var brand: NSColor
     var hoverBrand: NSColor
     var weakText: NSColor
     var linkNorm: NSColor
+    var backgroundWeak: NSColor
+    var backgroundHover: NSColor
+    var textHint: NSColor
 
     init() {
         background = NSColor(red: 28/255, green: 27/255, blue: 36/255, alpha: 1)
@@ -94,5 +96,8 @@ struct Colors: ModalsColors {
         hoverBrand = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
         weakText = NSColor(red: 167/255, green: 164/255, blue: 181/255, alpha: 1)
         linkNorm = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
+        backgroundWeak = .yellow
+        backgroundHover = .yellow
+        textHint = .yellow
     }
 }
