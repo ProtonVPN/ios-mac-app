@@ -19,6 +19,9 @@
 import Foundation
 
 public enum NetShieldStatsViewModel {
+
+    static let formatter = NetShieldStatsNumberFormatter()
+
     case disabled
     case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int64, paused: Bool)
 
@@ -28,8 +31,8 @@ public enum NetShieldStatsViewModel {
         guard case .enabled(let adsBlocked, _, _, let paused) = self else {
             return .disabled(title: title)
         }
-
-        return NetShieldStatsItemModel(title: title, value: "\(adsBlocked)", isEnabled: !paused)
+        let value = Self.formatter.string(from: adsBlocked)
+        return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
     }
 
     public var trackersModel: NetShieldStatsItemModel {
@@ -38,8 +41,8 @@ public enum NetShieldStatsViewModel {
         guard case .enabled(_, let trackersStopped, _, let paused) = self else {
             return .disabled(title: title)
         }
-
-        return NetShieldStatsItemModel(title: title, value: "\(trackersStopped)", isEnabled: !paused)
+        let value = Self.formatter.string(from: trackersStopped)
+        return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
     }
 
     public var dataModel: NetShieldStatsItemModel {
