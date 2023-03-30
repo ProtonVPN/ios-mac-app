@@ -72,7 +72,7 @@ public extension TimerFactory {
     }
 }
 
-public final class TimerFactoryImplementation: TimerFactory {
+public class TimerFactoryImplementation: TimerFactory {
     public func scheduledTimer(runAt nextRunTime: Date,
                                repeating: Double?,
                                leeway: DispatchTimeInterval?,
@@ -90,10 +90,11 @@ public final class TimerFactoryImplementation: TimerFactory {
     public init() { }
 }
 
-public final class BackgroundTimerImplementation: BackgroundTimer {
+public class BackgroundTimerImplementation: BackgroundTimer {
     private static let repeatingTimerLeeway: DispatchTimeInterval = .seconds(10)
 
-    private let timerSource: DispatchSourceTimer
+    let timerSource: DispatchSourceTimer
+    private var state: State = .suspended
     private let closure: () -> Void
 
     public var isValid: Bool
@@ -101,6 +102,12 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
 
     // Use this to inject mocked date during tests
     public var currentDate: () -> Date = { Date() }
+
+    /// Helps to balance calls to `DispatchSourceTimer.suspend` and `DispatchSourceTimer.resume` to prevent exceptions.
+    private enum State {
+        case resumed
+        case suspended
+    }
 
     init(runAt nextRunTime: Date,
          repeating: Double?,
@@ -127,10 +134,23 @@ public final class BackgroundTimerImplementation: BackgroundTimer {
             }
             self.closure()
         }
+        resume()
+    }
+
+    @objc func suspend() {
+        guard case .resumed = state else { return }
+        timerSource.suspend()
+        state = .suspended
+    }
+
+    @objc func resume() {
+        guard case .suspended = state else { return }
         timerSource.resume()
+        state = .resumed
     }
 
     public func invalidate() {
+        resume() // releasing a timer in the suspended state causes an exception
         timerSource.setEventHandler {}
         timerSource.cancel()
         isValid = false
