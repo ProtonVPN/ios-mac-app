@@ -86,7 +86,6 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
             let stats = try FeatureStatisticsMessage(localAgentStatsDictionary: statistics)
             vpncore.log.info("Local agent shared library received statistics: \(stats)", category: .localAgent, event: .stateChange)
             delegate?.didReceiveFeatureStatistics(stats)
-
         } catch {
             vpncore.log.error("Failed to decode feature stats", category: .localAgent, event: .error, metadata: ["error": "\(error)"])
         }

@@ -301,29 +301,35 @@ class StatusViewModel {
     // MARK: - Connection status changes
     
     private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: .AppStateManager.stateChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: .AppStateManager.displayStateChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: netShieldPropertyProvider).netShieldNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: natTypePropertyProvider).natTypeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+        let stateChangeToken = NotificationCenter.default.addObserver(for: .AppStateManager.stateChange, object: nil, handler: stateChanged)
 
-        notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
-            self?.netShieldStats = stats
-            self?.contentChanged?()
-        })
+        let connectionChangedTokens = [
+            VpnGateway.connectionChanged,
+            .AppStateManager.displayStateChange,
+            type(of: netShieldPropertyProvider).netShieldNotification,
+            type(of: natTypePropertyProvider).natTypeNotification,
+            type(of: vpnKeychain).vpnPlanChanged
+        ].map { NotificationCenter.default.addObserver(for: $0, object: nil, handler: connectionChanged) }
+
+        let netShieldToken = NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
+            DispatchQueue.main.async {
+                self?.netShieldStats = stats
+                self?.contentChanged?()
+            }
+        }
+
+        notificationTokens = connectionChangedTokens + [stateChangeToken, netShieldToken]
     }
     
     private func stopObserving() {
-        NotificationCenter.default.removeObserver(self)
         notificationTokens = []
     }
     
-    @objc private func connectionChanged() {
+    private func connectionChanged(notification: Notification) {
         contentChanged?()
     }
     
-    @objc private func stateChanged() {
+    private func stateChanged(notification: Notification) {
         Task {
             await updateConnectionDate()
         }
