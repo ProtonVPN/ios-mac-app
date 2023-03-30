@@ -46,6 +46,7 @@ final class LoginViewController: NSViewController {
               let view = nibObjects?.first(where: { $0 is TwoFactorView }) as? TwoFactorView else {
             fatalError()
         }
+        view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
