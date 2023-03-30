@@ -51,6 +51,25 @@ extension NotificationCenter {
         post(name: type(of: notification).name, object: object, userInfo: userInfo)
     }
 
+    public func addObserver(
+        for notificationName: Notification.Name,
+        queue: OperationQueue? = nil,
+        object: Any?,
+        handler: @escaping (Notification) -> Void
+    ) -> NotificationToken {
+        let token = addObserver(forName: notificationName, object: object, queue: queue, using: handler)
+        return NotificationToken(notificationCenter: self, token: token)
+    }
+
+    public func addObservers(
+        for notifications: [Notification.Name],
+        queue: OperationQueue? = nil,
+        object: Any?,
+        handler: @escaping (Notification) -> Void
+    ) -> [NotificationToken] {
+        return notifications.map { addObserver(for: $0, queue: queue, object: object, handler: handler) }
+    }
+
     public func addObserver<Notification, T>(
         for protonNotification: Notification.Type,
         queue: OperationQueue? = nil,

@@ -58,7 +58,7 @@ protocol LocalAgent {
 }
 
 public struct NetShieldStatsNotification: StrongNotification {
-    public static var name: Notification.Name { Notification.Name("ch.protonvpn.localagent.netshieldstats") }
+    public static var name = Notification.Name("ch.protonvpn.localagent.netshieldstats")
     public var data: NetShieldStats
 }
 
@@ -263,10 +263,8 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func netShieldStatsChanged(to stats: NetShieldStats) {
-        DispatchQueue.main.async {
-            self.delegate?.netShieldStatsChanged(to: stats)
-            NotificationCenter.default.post(NetShieldStatsNotification(data: stats), object: self)
-        }
+        self.delegate?.netShieldStatsChanged(to: stats)
+        NotificationCenter.default.post(NetShieldStatsNotification(data: stats), object: self)
     }
 }
 
