@@ -30,6 +30,6 @@ extension DependencyValues {
 }
 
 enum TimerFactoryKey: DependencyKey {
-    static let liveValue: TimerFactory = TimerFactoryImplementation()
+    static let liveValue: TimerFactory = ForegroundTimerFactoryImplementation()
     static let testValue: TimerFactory = TimerFactoryMock()
 }
