@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import Modals_macOS
 import SwiftUI
+import LocalFeatureFlags
 
 protocol QuickSettingsDetailViewControllerProtocol: class {
     var arrowIV: NSImageView! { get }
@@ -60,7 +61,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     @IBOutlet var netShieldStatsContainer: NSView! {
         didSet {
-            guard let netShieldPresenter = presenter as? NetshieldDropdownPresenter else {
+            let isNetShieldStatsEnabled = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
+            guard isNetShieldStatsEnabled,
+                  let netShieldPresenter = presenter as? NetshieldDropdownPresenter else {
                 netShieldStatsContainer?.removeFromSuperview()
                 return
             }

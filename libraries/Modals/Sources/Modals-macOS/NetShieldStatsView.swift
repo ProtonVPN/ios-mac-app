@@ -18,7 +18,6 @@
 
 import SwiftUI
 
-@available(macOS 11.0, *)
 public struct NetShieldStatsView: View {
 
     @ObservedObject public var viewModel: NetShieldStatsViewModel
@@ -38,7 +37,6 @@ public struct NetShieldStatsView: View {
     }
 }
 
-@available(macOS 11.0, *)
 struct StatsView: View {
     @State var isHovered = false
 
@@ -83,7 +81,6 @@ struct StatsView: View {
     }
 }
 
-@available(macOS 11.0, *)
 struct NetShieldStatsView_Previews: PreviewProvider {
     static var previews: some View {
         NetShieldStatsView(viewModel: .previewModel)

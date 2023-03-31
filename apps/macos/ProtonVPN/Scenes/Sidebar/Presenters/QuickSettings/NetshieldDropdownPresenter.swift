@@ -57,13 +57,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
 
         notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
-            self?.netShieldStats = stats
-            self?.contentChanged()
+            DispatchQueue.main.async {
+                self?.netShieldStats = stats
+                self?.contentChanged()
+            }
         })
-    }
-
-    deinit {
-        notificationTokens = []
     }
 
     var netShieldViewModel: vpncore.NetShieldStatsViewModel {
