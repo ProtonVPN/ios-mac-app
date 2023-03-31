@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import Timer
-@testable import TimerMock
 
 final class ForegroundTimerTests: XCTestCase {
 

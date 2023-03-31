@@ -17,13 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Modals
 
-public struct NetShieldStatsViewModel {
+public class NetShieldStatsViewModel: ObservableObject {
     public struct NetShieldStat {
-        let value: String
+        var value: String
         let title: String
         let help: String
-        let isDisabled: Bool
+        var isDisabled: Bool
 
         public init(value: String, title: String, help: String, isDisabled: Bool) {
             self.value = value
@@ -33,15 +34,40 @@ public struct NetShieldStatsViewModel {
         }
     }
 
-    let adsStats: NetShieldStat
-    let trackersStats: NetShieldStat
-    let dataStats: NetShieldStat
+    var adsStats: NetShieldStat
+    var trackersStats: NetShieldStat
+    var dataStats: NetShieldStat
 
-    public init(adsStats: NetShieldStat,
-                trackersStats: NetShieldStat,
-                dataStats: NetShieldStat) {
-        self.adsStats = adsStats
-        self.trackersStats = trackersStats
-        self.dataStats = dataStats
+    public init(adsStatsTitle: String, trackersStatsTitle: String, dataStatsTitle: String) {
+        self.adsStats = .init(value: "",
+                              title: adsStatsTitle,
+                              help: LocalizedString.netshieldStatsHintAds,
+                              isDisabled: true)
+        self.trackersStats = .init(value: "",
+                                   title: trackersStatsTitle,
+                                   help: LocalizedString.netshieldStatsHintTrackers,
+                                   isDisabled: true)
+        self.dataStats = .init(value: "",
+                               title: dataStatsTitle,
+                               help: LocalizedString.netshieldStatsHintData,
+                               isDisabled: true)
+    }
+
+    public func update(adsStats: (value: String, enabled: Bool),
+                       trackersStats: (value: String, enabled: Bool),
+                       dataStats: (value: String, enabled: Bool)) {
+        self.adsStats.value = adsStats.value
+        self.trackersStats.value = trackersStats.value
+        self.dataStats.value = dataStats.value
+        setEnabled(adsStats: adsStats.enabled, trackersStats: trackersStats.enabled, dataStats: dataStats.enabled)
+        DispatchQueue.main.async {
+            self.objectWillChange.send()
+        }
+    }
+
+    public func setEnabled(adsStats: Bool, trackersStats: Bool, dataStats: Bool) {
+        self.adsStats.isDisabled = !adsStats
+        self.trackersStats.isDisabled = !trackersStats
+        self.dataStats.isDisabled = !dataStats
     }
 }

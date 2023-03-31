@@ -35,6 +35,9 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+
+    private var netShieldStats: NetShieldStats?
+    private var notificationTokens: [NotificationToken] = []
     
     override var title: String! {
         return LocalizedString.netshieldTitle
@@ -51,22 +54,30 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     init( _ factory: Factory ) {
         self.factory = factory
         super.init( factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
+        netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
+
+        notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
+            self?.netShieldStats = stats
+            self?.contentChanged()
+        })
     }
 
-    override var statsModel: NetShieldStatsViewModel? {
+    deinit {
+        notificationTokens = []
+    }
+
+    var netShieldViewModel: vpncore.NetShieldStatsViewModel {
+        // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
-        return .init(adsStats: .init(value: "21",
-                              title: "Ads\nblocked",
-                              help: "Advertisement websites use cookies and trackers to target you.",
-                              isDisabled: !isActive),
-              trackersStats: .init(value: "14",
-                                   title: "Trackers\nstopped",
-                                   help: "Trackers are third-party websites that collect, store, and sell information about your web activity.",
-                                   isDisabled: !isActive),
-              dataStats: .init(value: "1.5 MB",
-                               title: "Data\nsaved",
-                               help: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                               isDisabled: !isActive))
+
+        let stats = netShieldStats ?? .zero
+
+        return .enabled(
+            adsBlocked: stats.adsBlocked,
+            trackersStopped: stats.trackersBlocked,
+            bytesSaved: stats.bytesSaved,
+            paused: !isActive
+        )
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
@@ -78,6 +89,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownUpgradeButton.isHidden = true
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small, italic: true), alignment: .left)
+    }
+
+    private func contentChanged() {
+        viewController?.updateNetshieldStats()
     }
     
     // MARK: - Private

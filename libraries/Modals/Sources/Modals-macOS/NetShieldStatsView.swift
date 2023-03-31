@@ -21,7 +21,7 @@ import SwiftUI
 @available(macOS 11.0, *)
 public struct NetShieldStatsView: View {
 
-    let viewModel: NetShieldStatsViewModel
+    @ObservedObject public var viewModel: NetShieldStatsViewModel
 
     public var body: some View {
         HStack(spacing: 0) {
@@ -45,7 +45,7 @@ struct StatsView: View {
     var statsViewHeight: CGFloat = 56
     var statsViewWidth: CGFloat = 80
 
-    var model: NetShieldStatsViewModel.NetShieldStat
+    let model: NetShieldStatsViewModel.NetShieldStat
 
     public var body: some View {
         VStack(alignment: .center) {
@@ -93,17 +93,8 @@ struct NetShieldStatsView_Previews: PreviewProvider {
 
 private extension NetShieldStatsViewModel {
     static var previewModel: NetShieldStatsViewModel = {
-        .init(adsStats: .init(value: "21",
-                              title: "Ads\nblocked",
-                              help: "Advertisement websites use cookies and trackers to target you.",
-                              isDisabled: false),
-              trackersStats: .init(value: "14",
-                                   title: "Trackers\nstopped",
-                                   help: "Trackers are third-party websites that collect, store, and sell information about your web activity.",
-                                   isDisabled: false),
-              dataStats: .init(value: "1.5 MB",
-                               title: "Data\nsaved",
-                               help: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                               isDisabled: true))
+        .init(adsStatsTitle: "Ads\nblocked",
+              trackersStatsTitle: "Trackers\nstopped",
+              dataStatsTitle: "Data\nsaved")
     }()
 }
