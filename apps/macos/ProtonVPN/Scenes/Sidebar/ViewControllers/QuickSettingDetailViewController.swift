@@ -34,8 +34,9 @@ protocol QuickSettingsDetailViewControllerProtocol: class {
     var dropdownLearnMore: InteractiveActionButton! { get }
     var dropdownUpgradeButton: PrimaryActionButton! { get }
     var dropdownNote: NSTextField! { get }
-    
+
     func reloadOptions()
+    func updateNetshieldStats()
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
@@ -59,11 +60,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     @IBOutlet var netShieldStatsContainer: NSView! {
         didSet {
-            setupNetShieldStatsContainer()
+            guard let netShieldPresenter = presenter as? NetshieldDropdownPresenter else {
+                netShieldStatsContainer?.removeFromSuperview()
+                return
+            }
+            setupNetShieldStatsContainer(presenter: netShieldPresenter)
         }
     }
     
     let presenter: QuickSettingDropdownPresenterProtocol
+
+    var netShieldStatsView: NetShieldStatsView?
     
     init(_ presenter: QuickSettingDropdownPresenterProtocol) {
         self.presenter = presenter
@@ -75,20 +82,26 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupNetShieldStatsContainer() {
-        guard let model = presenter.statsModel, #available(macOS 11.0, *) else {
-            netShieldStatsContainer?.removeFromSuperview()
-            return
-        }
-
+    func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
         _ = ModalsFactory(colors: UpsellColors()) // initialize colors in modals module. This will go away with our new theme module
-        let hostingView = NSHostingView(rootView: NetShieldStatsView(viewModel: model))
-        hostingView.translatesAutoresizingMaskIntoConstraints = false
+        let hostingView = statsView(netShieldViewModel: presenter.netShieldViewModel)
         netShieldStatsContainer.addSubview(hostingView)
         netShieldStatsContainer.topAnchor.constraint(equalTo: hostingView.topAnchor).isActive = true
         netShieldStatsContainer.bottomAnchor.constraint(equalTo: hostingView.bottomAnchor).isActive = true
         netShieldStatsContainer.leadingAnchor.constraint(equalTo: hostingView.leadingAnchor).isActive = true
         netShieldStatsContainer.trailingAnchor.constraint(equalTo: hostingView.trailingAnchor).isActive = true
+    }
+
+    func statsView(netShieldViewModel: vpncore.NetShieldStatsViewModel) -> NSHostingView<NetShieldStatsView> {
+        let viewModel = Modals_macOS.NetShieldStatsViewModel(adsStatsTitle: netShieldViewModel.adsModel.title,
+                                                             trackersStatsTitle: netShieldViewModel.trackersModel.title,
+                                                             dataStatsTitle: netShieldViewModel.dataModel.title)
+        let netShieldStatsView = NetShieldStatsView(viewModel: viewModel)
+        self.netShieldStatsView = netShieldStatsView
+        let view = NSHostingView(rootView: netShieldStatsView)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        updateNetshieldStats()
+        return view
     }
         
     override func viewDidLoad() {
@@ -126,9 +139,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
         reloadOptions()
     }
-        
+
     // MARK: - Utils
-    
+
+    func updateNetshieldStats() {
+        if let model = (presenter as? NetshieldDropdownPresenter)?.netShieldViewModel {
+            netShieldStatsView?.viewModel.update(adsStats: (model.adsModel.value, model.adsModel.isEnabled),
+                                                 trackersStats: (model.trackersModel.value, model.trackersModel.isEnabled),
+                                                 dataStats: (model.dataModel.value, model.dataModel.isEnabled))
+        }
+    }
+
     func reloadOptions() {
         var needsUpgrade = false
         let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { (index, presenter) in

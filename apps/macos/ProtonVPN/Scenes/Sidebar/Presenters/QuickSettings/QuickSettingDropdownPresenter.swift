@@ -22,7 +22,6 @@
 
 import Cocoa
 import vpncore
-import Modals_macOS
 
 protocol QuickSettingDropdownPresenterProtocol: class {
     
@@ -31,7 +30,7 @@ protocol QuickSettingDropdownPresenterProtocol: class {
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
     var options: [QuickSettingsDropdownOptionPresenter] { get }
     var dismiss: (() -> Void)? { get set }
-    var statsModel: NetShieldStatsViewModel? { get }
+
     func viewDidLoad()
     func displayReconnectionFeedback()
 }
@@ -62,8 +61,6 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
 
         NotificationCenter.default.addObserver(self, selector: #selector(vpnPlanChanged), name: VpnKeychain.vpnPlanChanged, object: nil)
     }
-
-    var statsModel: NetShieldStatsViewModel? { nil }
     
     var options: [QuickSettingsDropdownOptionPresenter] {
         return []

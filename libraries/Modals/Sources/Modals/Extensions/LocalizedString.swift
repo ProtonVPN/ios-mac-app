@@ -108,6 +108,12 @@ public enum LocalizedString {
   public static var modalsUpsellSecureCoreTitle: String { return LocalizedString.tr("Localizable", "modals_upsell_secure_core_title") }
   /// Not now
   public static var modalsUpsellStayFree: String { return LocalizedString.tr("Localizable", "modals_upsell_stay_free") }
+  /// Advertisement websites use cookies and trackers to target you.
+  public static var netshieldStatsHintAds: String { return LocalizedString.tr("Localizable", "netshield_stats_hint_ads") }
+  /// Estimated size of ads, trackers, and malware that NetShield has blocked.
+  public static var netshieldStatsHintData: String { return LocalizedString.tr("Localizable", "netshield_stats_hint_data") }
+  /// Trackers are third-party websites that collect, store, and sell information about your web activity.
+  public static var netshieldStatsHintTrackers: String { return LocalizedString.tr("Localizable", "netshield_stats_hint_trackers") }
   /// Got it
   public static var newPlansBrandGotIt: String { return LocalizedString.tr("Localizable", "new_plans_brand_got_it") }
   /// Introducing Proton’s refreshed look.

@@ -260,7 +260,7 @@ class CountriesSectionViewController: NSViewController {
            window.frame.height < expectedHeight {
             var newFrame = window.frame
             newFrame.size.height = expectedHeight
-            newFrame.origin.y -= expectedHeight - window.frame.height
+            newFrame.origin.y -= expectedHeight - window.frame.height // the window should gain size towards the bottom.
             view.window?.setFrame(newFrame, display: true)
         }
         
