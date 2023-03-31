@@ -65,7 +65,7 @@ public class NetShieldStatsViewModel: ObservableObject {
         }
     }
 
-    public func setEnabled(adsStats: Bool, trackersStats: Bool, dataStats: Bool) {
+    private func setEnabled(adsStats: Bool, trackersStats: Bool, dataStats: Bool) {
         self.adsStats.isDisabled = !adsStats
         self.trackersStats.isDisabled = !trackersStats
         self.dataStats.isDisabled = !dataStats
