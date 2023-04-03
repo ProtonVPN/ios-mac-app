@@ -19,6 +19,7 @@
 import Cocoa
 import BugReport
 
+// swiftlint:disable no_print
 class ViewController: NSViewController {
     
     private var bugReportDelegate: MockDelegate?
@@ -74,9 +75,7 @@ class ViewController: NSViewController {
 
     @IBAction func buttonClicked(_ sender: Any) {
         let bugReportCreator = MacOSBugReportCreator()
-        guard let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors) else {
-            return
-        }
+        let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors)
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.showWindow(self)
     }
