@@ -162,6 +162,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     deinit {
+        stopStatusMonitoringIfNecessary()
         reachability?.stopNotifier()
         agent?.close()
     }
@@ -194,7 +195,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     func disconnect() {
         agent?.close()
-        netShieldStatsChanged(to: .zero)
+        netShieldStatsChanged(to: .disabled)
     }
 
     func requestStatus(withStats shouldRequestStats: Bool) {
@@ -277,7 +278,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
     func didReceiveFeatureStatistics(_ statistics: FeatureStatisticsMessage) {
         guard isNetShieldStatsEnabled else { return }
 
-        let stats = NetShieldStats(
+        let stats: NetShieldStats = .enabled(
             adsBlocked: statistics.netShield.adsBlocked ?? 0,
             malwareBlocked: statistics.netShield.malwareBlocked ?? 0,
             trackersBlocked: statistics.netShield.trackersBlocked ?? 0,
@@ -346,13 +347,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
     }
 }
 
-public struct NetShieldStats {
-    public let adsBlocked: Int
-    public let malwareBlocked: Int
-    public let trackersBlocked: Int
-    public let bytesSaved: Int64
-
-    public static var zero: NetShieldStats {
-        return NetShieldStats(adsBlocked: 0, malwareBlocked: 0, trackersBlocked: 0, bytesSaved: 0)
-    }
+public enum NetShieldStats {
+    case disabled
+    case enabled(adsBlocked: Int, malwareBlocked: Int, trackersBlocked: Int, bytesSaved: Int64)
 }

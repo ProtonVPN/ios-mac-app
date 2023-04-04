@@ -28,15 +28,16 @@ import VPNShared
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory
+    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     
     private let factory: Factory
-    
+
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
-    private var netShieldStats: NetShieldStats?
+    public private (set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
+    private var netShieldStats: NetShieldStats = .disabled
     private var notificationTokens: [NotificationToken] = []
     
     override var title: String! {
@@ -68,14 +69,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
 
-        let stats = netShieldStats ?? .zero
+        guard case .enabled(let ads, _, let trackers, let bytes) = netShieldStats else {
+            return .disabled
+        }
 
-        return .enabled(
-            adsBlocked: stats.adsBlocked,
-            trackersStopped: stats.trackersBlocked,
-            bytesSaved: stats.bytesSaved,
-            paused: !isActive
-        )
+        return .enabled(adsBlocked: ads, trackersStopped: trackers, bytesSaved: bytes, paused: !isActive)
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {

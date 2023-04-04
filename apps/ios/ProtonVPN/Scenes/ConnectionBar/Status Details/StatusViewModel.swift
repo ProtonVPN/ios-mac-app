@@ -75,7 +75,7 @@ class StatusViewModel {
     private lazy var isNetShieldStatsEnabled: Bool = { propertiesManager.featureFlags.netShieldStats }()
 
     private var timer: Timer?
-    private var netShieldStats: NetShieldStats?
+    private var netShieldStats: NetShieldStats = .disabled
     private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
     private var currentTime: String {
@@ -403,17 +403,14 @@ class StatusViewModel {
     }
 
     private var netShieldViewModel: NetShieldStatsViewModel {
+        guard case .enabled(let ads, let trackers, _, let bytes) = netShieldStats else {
+            return .disabled
+        }
+
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
 
-        let stats = netShieldStats ?? .zero
-
-        return .enabled(
-            adsBlocked: stats.adsBlocked,
-            trackersStopped: stats.trackersBlocked,
-            bytesSaved: stats.bytesSaved,
-            paused: !isActive
-        )
+        return .enabled(adsBlocked: ads, trackersStopped: trackers, bytesSaved: bytes, paused: !isActive)
     }
 
     private var netShieldV2Cells: [TableViewCellModel] {

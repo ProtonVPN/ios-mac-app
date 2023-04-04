@@ -61,9 +61,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     @IBOutlet var netShieldStatsContainer: NSView! {
         didSet {
-            let isNetShieldStatsEnabled = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
-            guard isNetShieldStatsEnabled,
-                  let netShieldPresenter = presenter as? NetshieldDropdownPresenter else {
+            let netShieldPresenter = presenter as? NetshieldDropdownPresenter
+            guard let netShieldPresenter, netShieldPresenter.isNetShieldStatsEnabled else {
                 netShieldStatsContainer?.removeFromSuperview()
                 return
             }
