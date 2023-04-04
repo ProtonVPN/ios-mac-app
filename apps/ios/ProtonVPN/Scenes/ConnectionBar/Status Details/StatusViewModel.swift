@@ -72,9 +72,7 @@ class StatusViewModel {
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
     private var shouldShowNetShieldV2: Bool { isNetShieldEnabled && isNetShieldStatsEnabled }
     private lazy var isNetShieldEnabled: Bool = { propertiesManager.featureFlags.netShield }()
-    private lazy var isNetShieldStatsEnabled: Bool = {
-        LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats) && propertiesManager.featureFlags.netShieldStats
-    }()
+    private lazy var isNetShieldStatsEnabled: Bool = { propertiesManager.featureFlags.netShieldStats }()
 
     private var timer: Timer?
     private var netShieldStats: NetShieldStats?

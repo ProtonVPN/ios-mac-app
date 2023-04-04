@@ -130,13 +130,3 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         return .level1
     }
 }
-
-public enum NetShieldFeatureFlag: String, FeatureFlag {
-
-    public var category: String {
-        "NetShield"
-    }
-
-    /// Controls the deployment of NetshieldV2, including updated NetShield UI
-    case netShieldStats = "NetShieldStats"
-}
