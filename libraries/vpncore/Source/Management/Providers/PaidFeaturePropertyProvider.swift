@@ -26,7 +26,7 @@ public protocol PaidFeaturePropertyProvider: AnyObject {
 
     init(_ factory: Factory)
 
-    func resetForIneligibleUser()
+    func adjustAfterPlanChange(from oldTier: Int, to tier: Int)
 }
 
 extension PaidFeaturePropertyProvider {

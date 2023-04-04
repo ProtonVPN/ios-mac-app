@@ -97,15 +97,54 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)
         XCTAssert(NetShieldPropertyProviderImplementation(factory).isUserEligibleForNetShield == true)
     }
+
+    // MARK: - Plan Change tests
+
+    func testNetShieldSetToOffAfterDowngrade() {
+        let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.plus)
+        let factory = getFactory(netShieldType: .level2, userTierProvider: userTierProvider)
+        let provider = NetShieldPropertyProviderImplementation(factory)
+
+        userTierProvider.currentUserTier = CoreAppConstants.VpnTiers.basic
+        provider.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.plus, to: CoreAppConstants.VpnTiers.basic)
+        XCTAssertEqual(provider.netShieldType, .level2)
+
+        userTierProvider.currentUserTier = CoreAppConstants.VpnTiers.free
+        provider.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.plus, to: CoreAppConstants.VpnTiers.free)
+        XCTAssertEqual(provider.netShieldType, .off)
+    }
+
+    func testNetShieldSetToLevel1AfterUpgradeFromFree() {
+        let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.free)
+        let factory = getFactory(netShieldType: .off, userTierProvider: userTierProvider)
+        let provider = NetShieldPropertyProviderImplementation(factory)
+
+        userTierProvider.currentUserTier = CoreAppConstants.VpnTiers.basic
+        provider.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.free, to: CoreAppConstants.VpnTiers.basic)
+        XCTAssertEqual(provider.netShieldType, .level1)
+    }
+
+    func testNetShieldNotChangedFromLevel2OnUpgradeFromBasic() {
+        let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.basic)
+        let factory = getFactory(netShieldType: .level2, userTierProvider: userTierProvider)
+        let provider = NetShieldPropertyProviderImplementation(factory)
+
+        userTierProvider.currentUserTier = CoreAppConstants.VpnTiers.plus
+        provider.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.basic, to: CoreAppConstants.VpnTiers.plus)
+        XCTAssertEqual(provider.netShieldType, .level2)
+    }
     
     // MARK: -
-    
-    private func getFactory(netShieldType: NetShieldType?, tier: Int) -> PaidFeaturePropertyProviderFactoryMock {
+
+    private func getFactory(netShieldType: NetShieldType?, userTierProvider: UserTierProviderMock) -> PaidFeaturePropertyProviderFactoryMock {
         let propertiesManager = PropertiesManagerMock()
-        let userTierProvider = UserTierProviderMock(tier)
         let authKeychain = MockAuthKeychain(context: .mainApp)
         authKeychain.setMockUsername(Self.username)
         testDefaults.set(netShieldType?.rawValue, forKey: "NetShield\(Self.username)")
         return PaidFeaturePropertyProviderFactoryMock(propertiesManager: propertiesManager, userTierProviderMock: userTierProvider, authKeychainMock: authKeychain)
+    }
+
+    private func getFactory(netShieldType: NetShieldType?, tier: Int) -> PaidFeaturePropertyProviderFactoryMock {
+        getFactory(netShieldType: netShieldType, userTierProvider: UserTierProviderMock(tier))
     }
 }

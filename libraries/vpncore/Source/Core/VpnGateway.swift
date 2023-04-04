@@ -551,22 +551,20 @@ public class VpnGateway: VpnGatewayProtocol {
 fileprivate extension VpnGateway {
     @objc func userPlanChanged( _ notification: Notification ) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
+        let (oldTier, newTier) = (downgradeInfo.from.maxTier, downgradeInfo.to.maxTier)
 
-        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.plus {
+        if newTier < CoreAppConstants.VpnTiers.plus {
             propertiesManager.secureCoreToggle = false
         }
+
+        [netShieldPropertyProvider, natTypePropertyProvider, safeModePropertyProvider]
+            .forEach { $0.adjustAfterPlanChange(from: oldTier, to: newTier) }
         
-        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
-            netShieldPropertyProvider.resetForIneligibleUser()
-            natTypePropertyProvider.resetForIneligibleUser()
-            safeModePropertyProvider.resetForIneligibleUser()
-        }
-        
-        guard downgradeInfo.to.maxTier < downgradeInfo.from.maxTier else { return }
+        guard newTier < oldTier else { return }
         
         var reconnectInfo: ReconnectInfo?
         
-        if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
+        if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > newTier {
             reconnectInfo = reconnectServer(downgradeInfo, oldServer: server)
         }
 

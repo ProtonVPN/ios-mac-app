@@ -90,7 +90,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
         return propertiesManager.featureFlags.safeMode
     }
 
-    public func resetForIneligibleUser() {
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
         safeMode = true
     }
 }
