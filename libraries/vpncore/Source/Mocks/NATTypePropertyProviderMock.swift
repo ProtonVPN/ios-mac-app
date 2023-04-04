@@ -36,7 +36,9 @@ public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
 
     public var isUserEligibleForNATTypeChange = true
 
-    public func resetForIneligibleUser() {
-        natType = .default
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        if tier <= CoreAppConstants.VpnTiers.free {
+            natType = .default
+        }
     }
 }

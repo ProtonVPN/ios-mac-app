@@ -37,7 +37,9 @@ public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
 
     public var safeModeFeatureEnabled: Bool = true
 
-    public func resetForIneligibleUser() {
-        safeMode = true
+    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        if tier <= CoreAppConstants.VpnTiers.free {
+            safeMode = true
+        }
     }
 }
