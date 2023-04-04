@@ -146,8 +146,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
 
-    private lazy var isNetShieldStatsEnabled = LocalFeatureFlags.isEnabled(NetShieldFeatureFlag.netShieldStats)
-        && propertiesManager.featureFlags.netShieldStats
+    private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
 
     init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
