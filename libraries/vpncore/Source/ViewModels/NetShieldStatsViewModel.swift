@@ -27,6 +27,7 @@ public enum NetShieldStatsViewModel {
         return formatter
     }()
 
+    case disabled
     case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int64, paused: Bool)
 
     public var adsModel: NetShieldStatsItemModel {

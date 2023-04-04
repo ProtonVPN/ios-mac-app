@@ -32,7 +32,7 @@ public protocol VpnManagerProtocol {
     var isLocalAgentConnected: Bool? { get }
     var currentVpnProtocol: VpnProtocol? { get }
 
-    var netShieldStats: NetShieldStats? { get }
+    var netShieldStats: NetShieldStats { get }
 
     func appBackgroundStateDidChange(isBackground: Bool)
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
@@ -73,7 +73,7 @@ public class VpnManager: VpnManagerProtocol {
     
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
 
-    public internal (set) var netShieldStats: NetShieldStats?
+    public internal (set) var netShieldStats: NetShieldStats = .disabled
 
     // hacky way to initiase DependencyValues before we enter LocalAgentQueue to avoid deadlock during tests
     @Dependency(\.timerFactory) var timerFactory
