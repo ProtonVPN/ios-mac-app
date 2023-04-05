@@ -57,11 +57,22 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         super.init( factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
         netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
 
+        addNetShieldObservers()
+    }
+
+    func addNetShieldObservers() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self, object: nil) { [weak self] stats in
             DispatchQueue.main.async {
                 self?.netShieldStats = stats
                 self?.contentChanged()
             }
+        })
+
+        let netShieldNotification = NetShieldPropertyProviderImplementation.netShieldNotification.self
+
+        notificationTokens.append(NotificationCenter.default.addObserver(for: netShieldNotification,
+                                                                         object: nil) { [weak self] _ in
+            self?.contentChanged()
         })
     }
 
