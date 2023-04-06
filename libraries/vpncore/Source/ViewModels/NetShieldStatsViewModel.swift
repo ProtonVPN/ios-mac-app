@@ -28,7 +28,7 @@ public enum NetShieldStatsViewModel {
     }()
 
     case disabled
-    case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int64, paused: Bool)
+    case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int, paused: Bool)
 
     public var adsModel: NetShieldStatsItemModel {
         let title: String = LocalizedString.netshieldStatsAdsBlocked
@@ -57,7 +57,7 @@ public enum NetShieldStatsViewModel {
             return .disabled(title: title)
         }
 
-        let value = Self.byteCountFormatter.string(fromByteCount: dataSaved)
+        let value = Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved))
 
         return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
     }

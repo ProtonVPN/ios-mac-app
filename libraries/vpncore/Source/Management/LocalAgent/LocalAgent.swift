@@ -280,7 +280,6 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
 
         let stats: NetShieldStats = .enabled(
             adsBlocked: statistics.netShield.adsBlocked ?? 0,
-            malwareBlocked: statistics.netShield.malwareBlocked ?? 0,
             trackersBlocked: statistics.netShield.trackersBlocked ?? 0,
             bytesSaved: statistics.netShield.bytesSaved)
 
@@ -349,5 +348,5 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
 
 public enum NetShieldStats {
     case disabled
-    case enabled(adsBlocked: Int, malwareBlocked: Int, trackersBlocked: Int, bytesSaved: Int64)
+    case enabled(adsBlocked: Int, trackersBlocked: Int, bytesSaved: Int)
 }

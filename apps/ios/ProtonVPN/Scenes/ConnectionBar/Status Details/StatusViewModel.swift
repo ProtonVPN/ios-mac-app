@@ -403,7 +403,7 @@ class StatusViewModel {
     }
 
     private var netShieldViewModel: NetShieldStatsViewModel {
-        guard case .enabled(let ads, let trackers, _, let bytes) = netShieldStats else {
+        guard case .enabled(let ads, let trackers, let bytes) = netShieldStats else {
             return .disabled
         }
 
