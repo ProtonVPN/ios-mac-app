@@ -31,21 +31,19 @@ public enum NetShieldStatsViewModel {
     case enabled(adsBlocked: Int, trackersStopped: Int, bytesSaved: Int, paused: Bool)
 
     public var adsModel: NetShieldStatsItemModel {
-        let title: String = LocalizedString.netshieldStatsAdsBlocked
-
         guard case .enabled(let adsBlocked, _, _, let paused) = self else {
-            return .disabled(title: title)
+            return .disabled(title: LocalizedString.netshieldStatsAdsBlocked(0))
         }
+        let title: String = LocalizedString.netshieldStatsAdsBlocked(adsBlocked)
         let value = Self.formatter.string(from: adsBlocked)
         return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
     }
 
     public var trackersModel: NetShieldStatsItemModel {
-        let title: String = LocalizedString.netshieldStatsTrackersStopped
-
         guard case .enabled(_, let trackersStopped, _, let paused) = self else {
-            return .disabled(title: title)
+            return .disabled(title: LocalizedString.netshieldStatsTrackersStopped(0))
         }
+        let title: String = LocalizedString.netshieldStatsTrackersStopped(trackersStopped)
         let value = Self.formatter.string(from: trackersStopped)
         return NetShieldStatsItemModel(title: title, value: value, isEnabled: !paused)
     }
