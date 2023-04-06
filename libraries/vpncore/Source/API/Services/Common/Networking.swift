@@ -332,7 +332,7 @@ extension CoreNetworking: AuthDelegate {
             } else if let unauthCredential = unauthKeychain.fetch(),
                       unauthCredential.sessionID == sessionUID {
 
-                unauthKeychain.store(unauthCredential)
+                unauthKeychain.store(AuthCredential(credential))
 
             }
         } catch {
