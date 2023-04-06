@@ -91,6 +91,8 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
     }
 
     public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        safeMode = true
+        if tier <= CoreAppConstants.VpnTiers.free {
+            safeMode = true
+        }
     }
 }
