@@ -68,12 +68,11 @@ struct FeatureStatisticsMessage: Decodable {
         case netShield = "netshield-level"
     }
 
-    /// Only dataSaved
     struct NetShieldStats: Decodable {
         let malwareBlocked: Int?
         let adsBlocked: Int?
         let trackersBlocked: Int?
-        let bytesSaved: Int64 // The only field guaranteed to be present
+        let bytesSaved: Int // The only field guaranteed to be present
 
         // Unable to use non-literals like LocalAgentConsts().statsAdsKey as enum rawvalues.
         // We could maybe implement CodingKey using a struct, or not use Codable for this at all

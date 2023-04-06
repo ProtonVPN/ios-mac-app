@@ -80,7 +80,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         // Show grayed out stats if disconnected, or netshield is turned off
         let isActive = appStateManager.displayState == .connected && netShieldPropertyProvider.netShieldType == .level2
 
-        guard case .enabled(let ads, _, let trackers, let bytes) = netShieldStats else {
+        guard case .enabled(let ads, let trackers, let bytes) = netShieldStats else {
             return .disabled
         }
 
