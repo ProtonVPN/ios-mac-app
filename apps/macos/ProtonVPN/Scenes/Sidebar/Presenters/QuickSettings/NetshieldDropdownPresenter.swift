@@ -68,7 +68,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             }
         })
 
-        let netShieldNotification = NetShieldPropertyProviderImplementation.netShieldNotification.self
+        let netShieldNotification = NetShieldPropertyProviderImplementation.netShieldNotification
 
         notificationTokens.append(NotificationCenter.default.addObserver(for: netShieldNotification,
                                                                          object: nil) { [weak self] _ in
