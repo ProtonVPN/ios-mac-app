@@ -120,7 +120,8 @@ class VpnConnectionPreparer {
         }
 
         guard let serverIp = availableServerIps.randomElement() else {
-            serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .existingConnection)
+            log.error("\(connectionProtocol) with config \(smartProtocolConfig) is not supported by \(server)", category: .connectionConnect)
+            serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .protocolNotSupported)
             return nil
         }
 

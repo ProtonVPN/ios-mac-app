@@ -455,8 +455,11 @@ public class VpnGateway: VpnGatewayProtocol {
 
         var connectionProtocol = connectionProtocol
         let killSwitch = propertiesManager.killSwitch
+
+        // Don't try to connect using TCP or TLS if WireGuardTls feature flag is turned off
+        let isTlsEnabled = propertiesManager.featureFlags.wireGuardTls
         var smartProtocolConfig = propertiesManager.smartProtocolConfig
-            .configWithWireGuard(tlsEnabled: propertiesManager.featureFlags.wireGuardTls)
+            .configWithWireGuard(tcpEnabled: isTlsEnabled, tlsEnabled: isTlsEnabled)
 
         DispatchQueue.global(qos: .userInitiated).async {
             for policy in self.interceptPolicies {
@@ -511,7 +514,8 @@ public class VpnGateway: VpnGatewayProtocol {
         }
 
         if parameters.smartProtocolWithoutWireGuard {
-            smartProtocolConfig = smartProtocolConfig.configWithWireGuard(enabled: false)
+            smartProtocolConfig = smartProtocolConfig
+                .configWithWireGuard(udpEnabled: false, tcpEnabled: false, tlsEnabled: false)
         }
         if parameters.disableKillSwitch {
             self.propertiesManager.killSwitch = false
