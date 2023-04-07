@@ -48,7 +48,7 @@
 		57E3439028E576A70012B2DF /* SubscriptionsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3438F28E576A70012B2DF /* SubscriptionsRobot.swift */; };
 		57E3439228E5A6780012B2DF /* AccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E3439128E5A6780012B2DF /* AccountRobot.swift */; };
 		590028A871E7DBEB4E962B52 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */; };
-		661D36E22948A0FC00A7EBE3 /* ExternalAccountsCapabilityATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D36E12948A0FC00A7EBE3 /* ExternalAccountsCapabilityATests.swift */; };
+		661D36E22948A0FC00A7EBE3 /* ExternalAccountsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */; };
 		663F86952840DFDD009AABF6 /* SettingsAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB527ABEC45002FC827 /* SettingsAccountViewController.swift */; };
 		663F86962840DFE9009AABF6 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
 		663F86972840DFF4009AABF6 /* ButtonWithLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */; };
@@ -697,7 +697,7 @@
 		5D60C4144ED4B0B5FB054F50 /* Pods_ProtonVPNTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri_Shortcut_Handler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
-		661D36E12948A0FC00A7EBE3 /* ExternalAccountsCapabilityATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalAccountsCapabilityATests.swift; sourceTree = "<group>"; };
+		661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalAccountsTests.swift; sourceTree = "<group>"; };
 		66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsAccountViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/SettingsAccountViewModel.swift; sourceTree = "<group>"; };
 		66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AccountDetailsTableViewCell.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountDetailsTableViewCell.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -1247,7 +1247,7 @@
 		661D36E02948A0DE00A7EBE3 /* ExternalAccounts */ = {
 			isa = PBXGroup;
 			children = (
-				661D36E12948A0FC00A7EBE3 /* ExternalAccountsCapabilityATests.swift */,
+				661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */,
 			);
 			path = ExternalAccounts;
 			sourceTree = "<group>";
@@ -3723,7 +3723,7 @@
 				57E3438E28E573D60012B2DF /* PlanTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
 				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
-				661D36E22948A0FC00A7EBE3 /* ExternalAccountsCapabilityATests.swift in Sources */,
+				661D36E22948A0FC00A7EBE3 /* ExternalAccountsTests.swift in Sources */,
 				B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */,
 				B20C28F52799947A00157BD1 /* OnboardingRobot.swift in Sources */,
 				B2BCF09928B546200041A635 /* Generate2FACode.swift in Sources */,
