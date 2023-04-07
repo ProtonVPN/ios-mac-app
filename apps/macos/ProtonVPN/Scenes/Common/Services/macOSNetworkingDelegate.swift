@@ -38,6 +38,11 @@ extension macOSNetworkingDelegate {
         completion(.verification(header: [:], verificationCodeBlock: nil))
     }
 
+    func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? {
+        // we simulate the device not computing the pow
+        nil
+    }
+
     func getSupportURL() -> URL {
         return URL(string: CoreAppConstants.ProtonVpnLinks.support)!
     }
