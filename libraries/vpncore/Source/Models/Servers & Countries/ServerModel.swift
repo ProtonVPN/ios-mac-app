@@ -35,7 +35,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public private(set) var status: Int
     public let feature: ServerFeature
     public let city: String?
-    public var ips: [ServerIp] = []
+    public let ips: [ServerIp]
     public var location: ServerLocation
     public let hostCountry: String?
     public let translatedCity: String?
@@ -187,8 +187,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
         hostCountry = dic.string("HostCountry")
         translatedCity = dic["Translations"]?["City"] as? String
+        ips = try dic.jsonArrayOrThrow(key: "Servers").map { try ServerIp(dic: $0) }
         super.init()
-        try setupIps(fromArray: try dic.jsonArrayOrThrow(key: "Servers"))
     }
 
     /// Used for testing purposes.
@@ -247,14 +247,6 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
         
         return false
-    }
-    
-    private func setupIps(fromArray array: [JSONDictionary]) throws {
-        ips = []
-        try array.forEach {
-            let ip = try ServerIp(dic: $0)
-            ips.append(ip)
-        }
     }
 
     public func update(continuousProperties: ContinuousServerProperties) {
