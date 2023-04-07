@@ -23,7 +23,7 @@ import ProtonCore_QuarkCommands
 import ProtonCore_CoreTranslation
 import ProtonCore_Environment
 
-final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
+final class ExternalAccountsTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
@@ -31,6 +31,8 @@ final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
         changeEnvToBlackIfNeeded()
         useAndContinueTap()
     }
+
+    var environment: Environment { .black }
     
 //    Sign-in:
 //    Sign-in with internal account works
@@ -43,7 +45,7 @@ final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
 
         try await QuarkCommands.createAsync(account: .freeWithAddressAndKeys(username: randomUsername, password: randomPassword),
-                                            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
+                                            currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
 
         _ = MainRobot()
             .showLogin()
@@ -65,7 +67,7 @@ final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
 
         try await QuarkCommands.createAsync(account: .external(email: randomEmail, password: randomPassword),
-                                            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
+                                            currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
         
         _ = MainRobot()
             .showLogin()
@@ -87,7 +89,7 @@ final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
 
         try await QuarkCommands.createAsync(account: .freeNoAddressNoKeys(username: randomUsername, password: randomPassword),
-                                            currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
+                                            currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
 
         _ = MainRobot()
             .showLogin()
@@ -104,22 +106,43 @@ final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
     }
     
 //    Sign-up:
-//    The UI for sign-up with internal account is not available
+//    Sign-up with internal account works
 //    Sign-up with external account works
 //    The UI for sign-up with username account is not available
+
     @MainActor
-    func testSignUpWithInternalAccountIsNotAvailable() async throws {
+    func testSignUpWithInternalAccountWorks() async throws {
+        try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
+
+        let randomUsername = StringUtils().randomAlphanumericString(length: 8)
+        let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
+        let randomPassword = StringUtils().randomAlphanumericString(length: 8)
+
         _ = MainRobot()
             .showSignup()
 
-        ProtonCore_TestingToolkit.SignupRobot()
-            .verify.domainsButtonIsNotShown()
-            .verify.otherAccountButtonIsNotShown()
+        SignupExternalAccountsCapability()
+            .signUpWithInternalAccount(
+                signupRobot: ProtonCore_TestingToolkit.SignupRobot().otherAccountButtonTap(),
+                username: randomUsername,
+                password: randomPassword,
+                userEmail: randomEmail,
+                verificationCode: "666666",
+                retRobot: CreatingAccountRobot.self)
+            .verify.creatingAccountScreenIsShown()
+            .verify.summaryScreenIsShown()
+
+        _ = skipOnboarding()
+
+        MainRobot()
+            .goToSettingsTab()
+            .verify.userIsCreated(randomUsername, "Proton VPN Free")
+
     }
 
     @MainActor
     func testSignUpWithExternalAccountWorks() async throws {
-        try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: Environment.black.doh.getCurrentlyUsedHostUrl())
+        try await QuarkCommands.unbanAsync(currentlyUsedHostUrl: environment.doh.getCurrentlyUsedHostUrl())
 
         let randomEmail = "\(StringUtils().randomAlphanumericString(length: 8))@proton.uitests"
         let randomPassword = StringUtils().randomAlphanumericString(length: 8)
@@ -151,8 +174,8 @@ final class ExternalAccountsCapabilityBTests: ProtonVPNUITests {
             .showSignup()
 
         ProtonCore_TestingToolkit.SignupRobot()
-            .verify.domainsButtonIsNotShown()
-            .verify.otherAccountButtonIsNotShown()
+            .otherAccountButtonTap()
+            .verify.domainsButtonIsShown()
     }
 }
 
