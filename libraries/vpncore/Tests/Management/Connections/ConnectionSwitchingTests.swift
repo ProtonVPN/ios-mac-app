@@ -438,9 +438,9 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         let expectations = (
-            connection: (1...4).map { XCTestExpectation(description: "connection #\($0)") },
-            clientConfig: (1...4).map { XCTestExpectation(description: "fetch client config #\($0)") },
-            disconnect: (1...4).map { XCTestExpectation(description: "disconnect #\($0)") }
+            connection: (1...5).map { XCTestExpectation(description: "connection #\($0)") },
+            clientConfig: (1...5).map { XCTestExpectation(description: "fetch client config #\($0)") },
+            disconnect: (1...5).map { XCTestExpectation(description: "disconnect #\($0)") }
         )
         let protocolAlertExpectation = XCTestExpectation(description: "Protocol not supported alert should be shown")
         protocolAlertExpectation.expectedFulfillmentCount = 1
@@ -504,8 +504,25 @@ class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         step += 1
 
-        // Now enable the feature flag and try reconnecting with smart protocol. Resulting connection should be using
-        // wireguard with tls, when tcp is unavailable
+        // Enable feature flag, but disable TCP and TLS in API config. Connection should use another protocol again
+        container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
+            .with(smartProtocolConfig: .onlyIke)
+        retrieveAndSetVpnProperties()
+        XCTAssertEqual(self.container.propertiesManager.smartProtocolConfig, .onlyIke)
+
+        container.vpnGateway.connect(with: request)
+        wait(for: [expectations.connection[step], expectations.clientConfig[step]], timeout: expectationTimeout)
+
+        XCTAssertTrue(container.propertiesManager.featureFlags.wireGuardTls)
+        XCTAssertFalse(isConnectedUsingTcpOrTls())
+
+        container.vpnGateway.disconnect()
+        wait(for: [expectations.disconnect[step]], timeout: expectationTimeout)
+
+        step += 1
+
+        // Now enable the feature flag and protocols in smart config, and try reconnecting with smart protocol.
+        // Resulting connection should be using wireguard with tls, when tcp is unavailable
         container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tcp)]?.availabilityCallback = unavailableCallback
         retrieveAndSetVpnProperties()
