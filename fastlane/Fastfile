@@ -43,7 +43,6 @@ end
 desc "Run all iOS app unit tests"
 lane :ios_app_unit_test_all do
   runIOSTests(
-    skip_testing: "ProtonVPNUITests",
     testplan: "ProtonVPN-iOS-Unit-All"
   )
 end
@@ -51,7 +50,6 @@ end
 desc "Run all iOS app UI tests"
 lane :ios_app_ui_test_all do
     runIOSTests(
-      skip_testing: "ProtonVPNTests",
       testplan: "ProtonVPN-iOS-UI-Smoke"
     )
 end
@@ -59,7 +57,6 @@ end
 desc "Run only smoke iOS app UI tests"
 lane :ios_app_ui_test_smoke do
     runIOSTests(
-      skip_testing: "ProtonVPNTests",
       testplan: "ProtonVPN-iOS-UI-Smoke"
     )
 end
@@ -67,7 +64,6 @@ end
 desc "Run all macOS app unit tests"
 lane :macos_app_unit_test_all do 
   runMacOSTests(
-    skip_testing: "ProtonVPNmacOSUITests",
     testplan: "ProtonVPN-macOS-Unit-All"
   )
 end
@@ -75,7 +71,6 @@ end
 desc "Run all macOS app UI tests"
 lane :macos_app_ui_test_all do
   runMacOSTests(
-    skip_testing: "ProtonVPNmacOSTests",
     testplan: "ProtonVPN-macOS-UI-All"
   )
 end
@@ -83,7 +78,6 @@ end
 desc "Run only smoke macOS app UI tests"
 lane :macos_app_ui_test_smoke do
   runMacOSTests(
-    skip_testing: "ProtonVPNmacOSTests",
     testplan: "ProtonVPN-macOS-UI-Smoke"
   )
 end
@@ -329,7 +323,6 @@ def self.runIOSTests(params)
     result_bundle: true,
     skip_slack: true,
     devices: [simulator_name],
-    skip_testing: params[:skip_testing],
     testplan: params[:testplan]
   )
 end
@@ -342,7 +335,6 @@ def self.runMacOSTests(params)
     result_bundle: true,
     skip_slack: true,
     number_of_retries: 1,
-    skip_testing: params[:skip_testing],
     testplan: params[:testplan]
   )  
 end
