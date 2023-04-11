@@ -50,7 +50,7 @@ end
 desc "Run all iOS app UI tests"
 lane :ios_app_ui_test_all do
     runIOSTests(
-      testplan: "ProtonVPN-iOS-UI-Smoke"
+      testplan: "ProtonVPN-iOS-UI-All"
     )
 end
 
