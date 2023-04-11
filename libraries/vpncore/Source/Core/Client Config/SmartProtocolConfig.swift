@@ -61,8 +61,8 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
         case openVPN
         case iKEv2 = "IKEv2"
         case wireGuardUdp = "wireGuard"
-        case wireGuardTcp = "WireGuardTCP"
-        case wireGuardTls = "WireGuardTLS"
+        case wireGuardTcp = "wireGuardTCP"
+        case wireGuardTls = "wireGuardTLS"
     }
 
     public init(openVPN: Bool, iKEv2: Bool, wireGuardUdp: Bool, wireGuardTcp: Bool, wireGuardTls: Bool) {
