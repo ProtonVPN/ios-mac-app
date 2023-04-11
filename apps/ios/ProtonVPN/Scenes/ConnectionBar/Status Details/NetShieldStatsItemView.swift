@@ -45,7 +45,7 @@ class NetShieldStatsItemView: UIView {
 
     func setup(with model: NetShieldStatsItemModel) {
         valueLabel.text = model.value
-        titleLabel.text = model.title
+        titleLabel.text = model.title.replacingOccurrences(of: " ", with: "\n")
 
         valueLabel.textColor = model.isEnabled ? .normalTextColor() : .iconHint()
         titleLabel.textColor = model.isEnabled ? .weakTextColor() : .iconHint()

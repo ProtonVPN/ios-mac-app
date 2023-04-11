@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21699.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -16,17 +16,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DEA-pc-fMP">
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="DEA-pc-fMP">
                         <rect key="frame" x="16" y="0.0" width="288" height="88"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="wIs-Fn-KbH" userLabel="Ads Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="18" width="85.333333333333329" height="52"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="96" placeholderIntrinsicHeight="52" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="wIs-Fn-KbH" userLabel="Ads Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="18" width="96" height="52"/>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="xll-LN-3xi" userLabel="Trackers Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="101.33333333333334" y="18" width="85.333333333333343" height="52"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="96" placeholderIntrinsicHeight="52" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="xll-LN-3xi" userLabel="Trackers Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="96" y="18" width="96" height="52"/>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Vvm-3z-o49" userLabel="Data Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
-                                <rect key="frame" x="202.66666666666666" y="18" width="85.333333333333343" height="52"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="96" placeholderIntrinsicHeight="52" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Vvm-3z-o49" userLabel="Data Item" customClass="NetShieldStatsItemView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="192" y="18" width="96" height="52"/>
                             </stackView>
                         </subviews>
                     </stackView>
