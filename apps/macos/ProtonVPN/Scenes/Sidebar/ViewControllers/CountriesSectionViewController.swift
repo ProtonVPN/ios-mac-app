@@ -89,13 +89,16 @@ class CountriesSectionViewController: NSViewController {
     @IBOutlet weak var secureCoreContainer: NSBox!
     @IBOutlet weak var netshieldContainer: NSBox!
     @IBOutlet weak var killSwitchContainer: NSBox!
-        
+    @IBOutlet weak var netShieldStatsLabel: NSTextField?
+
     fileprivate let viewModel: CountriesSectionViewModel
     
     private var infoButtonRowSelected: Int?
     private var quickSettingDetailDisplayed = false
     
     weak var sidebarView: NSView?
+
+    private var notificationTokens: [NotificationToken] = []
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -113,19 +116,75 @@ class CountriesSectionViewController: NSViewController {
         setupSearchSection()
         setupTableView()
         setupQuickSettings()
+        setupNetShieldBadge()
+        addNetShieldObservers()
 
         secureCoreBtn.setAccessibilityChildren([secureCoreContainer])
         netShieldBtn.setAccessibilityChildren([netshieldContainer])
         killSwitchBtn.setAccessibilityChildren([killSwitchContainer])
-        
-        guard #available(OSX 11, *) else {
-            // quickfix for older versions than big sur
-            listLeadingConstraint.constant = 0
-            listTrailingConstraint.constant = 0
+    }
+
+    func setupNetShieldBadge() {
+        guard let netShieldPresenter = (viewModel.netShieldPresenter as? NetshieldDropdownPresenter) else {
             return
         }
+
+        guard netShieldPresenter.isNetShieldStatsEnabled else {
+            netShieldStatsLabel?.removeFromSuperview()
+            return
+        }
+        netShieldStatsLabel?.wantsLayer = true
+        netShieldStatsLabel?.layer?.cornerRadius = 4
+        netShieldStatsLabel?.backgroundColor = .color(.background)
+
+        DispatchQueue.main.async {
+            self.updateBadge()
+        }
     }
-    
+
+    func updateBadge() {
+        guard let presenter = viewModel.netShieldPresenter as? NetshieldDropdownPresenter else { return }
+
+        if presenter.appStateManager.displayState != .connected {
+            netShieldStatsLabel?.isHidden = true
+        } else {
+            netShieldStatsLabel?.isHidden = false
+        }
+
+        updateStats(stats: presenter.netShieldStats)
+        if presenter.netShieldPropertyProvider.netShieldType != .level2 {
+            updateStats(stats: .disabled)
+        }
+    }
+
+    func updateStats(stats: NetShieldStats) {
+        guard case .enabled(let ads, let trackers, _) = stats else {
+            netShieldStatsLabel?.isEnabled = false
+            return
+        }
+        netShieldStatsLabel?.isEnabled = true
+        let badge = (ads + trackers) >= 99 ? "99+" : "\(ads + trackers)"
+        netShieldStatsLabel?.stringValue = "\(badge)"
+    }
+
+    func addNetShieldObservers() {
+        notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self,
+                                                                         object: nil) { [weak self] stats in
+            DispatchQueue.main.async {
+                self?.updateBadge()
+            }
+        })
+        let netShieldNotification = NetShieldPropertyProviderImplementation.netShieldNotification
+        notificationTokens.append(NotificationCenter.default.addObserver(for: netShieldNotification,
+                                                                         object: nil) { [weak self] level in
+            DispatchQueue.main.async {
+                if (level.object as? NetShieldType) != .level2 {
+                    self?.updateStats(stats: .disabled)
+                }
+            }
+        })
+    }
+
     override func viewWillAppear() {
         super.viewWillAppear()
         didDisplayQuickSetting(appear: false)
