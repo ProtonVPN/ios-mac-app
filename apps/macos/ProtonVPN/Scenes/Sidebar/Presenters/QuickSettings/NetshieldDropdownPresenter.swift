@@ -32,12 +32,12 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
     private let factory: Factory
 
-    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
     public private (set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
-    private var netShieldStats: NetShieldStats = .disabled
+    var netShieldStats: NetShieldStats = .disabled
     private var notificationTokens: [NotificationToken] = []
     
     override var title: String! {

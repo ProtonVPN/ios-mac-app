@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +19,7 @@
                 <outlet property="netShieldBox" destination="AVF-NI-b29" id="fu0-ap-1bb"/>
                 <outlet property="netShieldBtn" destination="COp-Cy-iCa" id="NQi-fi-I3y"/>
                 <outlet property="netShieldSectionView" destination="Uag-7s-udL" id="82m-sY-u6Z"/>
+                <outlet property="netShieldStatsLabel" destination="3XG-4r-1Ju" id="xB9-JL-j1T"/>
                 <outlet property="netshieldContainer" destination="wdu-7r-MZX" id="JzR-yp-ZGs"/>
                 <outlet property="quickSettingsStack" destination="62O-3H-Vui" id="48B-PC-fbt"/>
                 <outlet property="searchBox" destination="qf9-9Y-IsT" id="4Z6-q8-u8I"/>
@@ -40,16 +43,16 @@
                     <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
                     <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="i8K-V1-h4p">
                         <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="cyQ-Pz-NoP">
-                                <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
+                                <rect key="frame" x="0.0" y="0.0" width="515" height="391"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="511" minWidth="40" maxWidth="1000" id="iP6-d7-OA7">
+                                    <tableColumn width="512" minWidth="40" maxWidth="1000" id="iP6-d7-OA7">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -62,11 +65,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="3UN-bf-YeF">
-                                                <rect key="frame" x="1" y="1" width="511" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="512" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="511" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="512" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="O64-lx-a5C">
                                                             <font key="font" metaFont="system"/>
@@ -153,11 +156,25 @@
                                         </buttonCell>
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
+                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
+                                        <rect key="frame" x="83" y="32" width="20" height="14"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="939-Qe-cvS"/>
+                                            <constraint firstAttribute="height" constant="14" id="qs5-Ea-M4k"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="12" drawsBackground="YES" id="PoR-cj-qt8">
+                                            <font key="font" metaFont="system" size="10"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" name="MobileBrandLighten20"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="COp-Cy-iCa" secondAttribute="trailing" constant="8" id="NC9-mc-lMp"/>
                                     <constraint firstItem="COp-Cy-iCa" firstAttribute="leading" secondItem="Uag-7s-udL" secondAttribute="leading" constant="8" id="XGh-3s-Qrm"/>
                                     <constraint firstAttribute="bottom" secondItem="COp-Cy-iCa" secondAttribute="bottom" constant="12" id="Xee-vf-to7"/>
+                                    <constraint firstItem="3XG-4r-1Ju" firstAttribute="centerX" secondItem="Uag-7s-udL" secondAttribute="centerX" constant="12" id="eY4-1F-hBy"/>
+                                    <constraint firstItem="3XG-4r-1Ju" firstAttribute="centerY" secondItem="Uag-7s-udL" secondAttribute="centerY" constant="-12" id="h7t-mw-m6C"/>
                                     <constraint firstItem="COp-Cy-iCa" firstAttribute="top" secondItem="Uag-7s-udL" secondAttribute="top" constant="4" id="i0O-tu-5G3"/>
                                 </constraints>
                             </view>
@@ -2234,5 +2251,8 @@ k4GTiQAAAAAAAAIBAAAAAAAAAGoAAAAAAAAAAAAAAAAAAJOMA
 </mutableData>
         </image>
         <image name="ic-cross-circle-filled" width="24" height="24"/>
+        <namedColor name="MobileBrandLighten20">
+            <color red="0.54117647058823526" green="0.43137254901960786" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
