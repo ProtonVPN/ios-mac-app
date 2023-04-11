@@ -240,16 +240,16 @@ public struct MockTestData {
                                            smartProtocolConfig: .init(),
                                            ratingSettings: .init())
 
-    lazy var clientConfigNoWireGuardTls = defaultClientConfig.withFeatureFlags(.wireGuardTlsDisabled)
+    lazy var clientConfigNoWireGuardTls = defaultClientConfig.with(featureFlags: .wireGuardTlsDisabled)
 }
 
 extension ClientConfig {
-    func withFeatureFlags(_ featureFlags: FeatureFlags) -> ClientConfig {
+    func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
         return ClientConfig(openVPNConfig: openVPNConfig,
-                            featureFlags: featureFlags,
+                            featureFlags: featureFlags ?? self.featureFlags,
                             serverRefreshInterval: serverRefreshInterval,
                             wireGuardConfig: wireGuardConfig,
-                            smartProtocolConfig: smartProtocolConfig,
+                            smartProtocolConfig: smartProtocolConfig ?? self.smartProtocolConfig,
                             ratingSettings: ratingSettings)
     }
 }
@@ -297,4 +297,8 @@ extension PartnerType {
                      iconURL: URL(string: "https://proton.me/favicon.ico"),
                      partners: [partner])
     }
+}
+
+extension SmartProtocolConfig {
+    static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuard: false, wireGuardTcp: true, wireGuardTls: true)
 }
