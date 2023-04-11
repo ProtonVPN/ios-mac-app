@@ -59,7 +59,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             fallbackCandidates.append((SmartProtocolProtocol.openVpnTcp, openVpnConfig.defaultTcpPorts))
         }
 
-        if smartProtocolConfig.wireGuard {
+        if smartProtocolConfig.wireGuardUdp {
             log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.wireguardUdp] = availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.udp))
         }

@@ -300,5 +300,5 @@ extension PartnerType {
 }
 
 extension SmartProtocolConfig {
-    static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuard: false, wireGuardTcp: true, wireGuardTls: true)
+    static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
 }
