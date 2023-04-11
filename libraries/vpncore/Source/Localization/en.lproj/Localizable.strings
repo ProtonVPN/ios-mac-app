@@ -205,6 +205,12 @@
 /* iOS status view */
 "_connected_to" = "Connected to";
 
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Connection timed out";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "timed out";
+
 /* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
 "_connected_to_vpn" = "Connected to %@";
 
@@ -241,9 +247,6 @@
 
 /* Connection error translation. iOS quick connect widget: text shown on error. */
 "_connection_failed" = "Connection Failed";
-
-/* MacOS: connecting overlay */
-"_timed_out" = "timed out";
 
 /* iOS status view */
 "_security" = "Security";

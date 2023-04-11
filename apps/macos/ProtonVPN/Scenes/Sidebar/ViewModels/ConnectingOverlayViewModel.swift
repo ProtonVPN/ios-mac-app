@@ -25,7 +25,7 @@ import AppKit
 import VPNShared
 import Logging
 
-protocol OverlayViewModelDelegate: class {
+protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()
 }
 
@@ -161,8 +161,8 @@ class ConnectingOverlayViewModel {
     
     private var timedOutSecondString: NSAttributedString {
         if !isIkeWithKsEnabled {
-            let boldString = LocalizedString.timedOut
-            let string = LocalizedString.connectingVpn(boldString)
+            let boldString = LocalizedString.connectionTimedOutBold
+            let string = LocalizedString.connectionTimedOut
             let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
             
             if let stringRange = string.range(of: boldString) {
@@ -172,9 +172,9 @@ class ConnectingOverlayViewModel {
             return attributedString
         }
         
-        let boldString = LocalizedString.timedOut
+        let boldString = LocalizedString.connectionTimedOutBold
         let description = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
-        let string = LocalizedString.connectingVpn(boldString) + description
+        let string = LocalizedString.connectionTimedOut + description
                 
         let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
