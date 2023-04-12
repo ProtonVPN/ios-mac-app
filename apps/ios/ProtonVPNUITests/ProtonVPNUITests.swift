@@ -88,7 +88,12 @@ class ProtonVPNUITests: XCTestCase {
     @discardableResult
     func correctUserIsLogedIn(_ name: Credentials) -> MainRobot {
         app.buttons["Quick Connect"].waitForExistence(timeout: 15)
-        app.tabBars.buttons["Settings"].tap()
+        if app.buttons["Not Now"].waitForExistence(timeout: 1) { // keychain sheet
+            app.buttons["Not Now"].tap()
+        }
+        if app.buttons["Settings"].waitForExistence(timeout: 1) {
+            app.tabBars.buttons["Settings"].tap()
+    }
         XCTAssert(app.staticTexts[name.username].exists)
         XCTAssert(app.staticTexts[name.plan].exists)
         return MainRobot()
@@ -119,6 +124,7 @@ class ProtonVPNUITests: XCTestCase {
     
     func logoutIfNeeded() {
         let tabBarsQuery = app.tabBars
+        _ = tabBarsQuery.element.waitForExistence(timeout: 1) // tests would reach this point when the tabbar is not yet available
         guard !tabBarsQuery.allElementsBoundByIndex.isEmpty else {
             return
         }
