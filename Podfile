@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '5.0.0'
+  '5.0.1'
 end
 
 def openvpn
@@ -36,7 +36,7 @@ def sd_web_image
 end
 
 def crypto_variant
-  "Crypto+VPN-Go1.15.15"
+  "Crypto+VPN-patched-Go1.20.2"
 end
 
 def vpn_core
