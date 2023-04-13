@@ -22,8 +22,8 @@ let package = Package(
         .target(
             name: "Onboarding",
             dependencies: ["Overture",
-                            .product(name: "Modals-iOS", package: "Modals"),
-                           "Theme"],
+                           .product(name: "Modals-iOS", package: "Modals"),
+                           .product(name: "Theme-iOS", package: "Theme")],
             resources: [
                 .process("Storyboard.storyboard"),
                 .process("Views/TourStepView.xib"),

@@ -18,7 +18,6 @@
 
 import Foundation
 import SwiftUI
-#if canImport(Cocoa)
 import Cocoa
 
 private let CP = ProtonColorPalettemacOS.instance
@@ -242,5 +241,3 @@ public extension CustomStyleContext {
         return .cgColor(context, self.customStyle(context: context))
     }
 }
-
-#endif

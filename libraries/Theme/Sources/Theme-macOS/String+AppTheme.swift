@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-#if canImport(Cocoa)
 import Cocoa
 
 public extension String {
@@ -49,5 +48,3 @@ public extension CustomStyleContext {
         text.styled(self.customStyle(context: context), context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode)
     }
 }
-
-#endif

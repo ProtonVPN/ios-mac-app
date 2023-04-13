@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-#if canImport(Cocoa)
 import Cocoa
 
 public extension NSFont {
@@ -38,5 +37,3 @@ public extension NSFont {
         }
     }
 }
-
-#endif

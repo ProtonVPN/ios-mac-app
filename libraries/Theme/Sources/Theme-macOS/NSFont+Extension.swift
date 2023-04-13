@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#if canImport(Cocoa)
 import Cocoa
 
 public extension NSFont {
@@ -47,5 +46,3 @@ public extension NSFont {
         return NSFont(descriptor: descriptor, size: 0) ?? self
     }
 }
-
-#endif
