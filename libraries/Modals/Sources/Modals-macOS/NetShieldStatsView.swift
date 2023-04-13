@@ -31,7 +31,7 @@ public struct NetShieldStatsView: View {
         }
         .padding(8)
         .background(RoundedRectangle(cornerRadius: 8)
-            .fill(Color(colors.backgroundWeak)))
+            .fill(Color.color(.background, .weak)))
     }
     public init(viewModel: NetShieldStatsViewModel) {
         self.viewModel = viewModel
@@ -69,16 +69,21 @@ struct StatsView: View {
         .help(model.help)
     }
 
+    let colors = ProtonColorPalettemacOS.instance
+
     func valueForegroundColor() -> Color {
-        model.isDisabled ? Color(colors.textHint) : .white
+        model.isDisabled ? .color(.text, .hint) : .white
     }
 
     func titleForegroundColor() -> Color {
-        Color(model.isDisabled ? colors.textHint : colors.weakText)
+        .color(.text, model.isDisabled ? .hint : .weak)
     }
 
     func backgroundColor() -> Color {
-        isHovered ? Color(colors.backgroundHover) : .clear
+        if isHovered {
+            return .color(.background, [.transparent, .hovered])
+        }
+        return .clear
     }
 }
 
@@ -91,8 +96,17 @@ struct NetShieldStatsView_Previews: PreviewProvider {
 
 private extension NetShieldStatsViewModel {
     static var previewModel: NetShieldStatsViewModel = {
-        .init(adsStatsTitle: "Ads\nblocked",
-              trackersStatsTitle: "Trackers\nstopped",
-              dataStatsTitle: "Data\nsaved")
+        .init(adsStats: .init(value: "12",
+                              title: "Ads\nblocked",
+                              help: "Some help",
+                              isDisabled: true),
+              trackersStats: .init(value: "23",
+                                   title: "Trackers\nstopped",
+                                   help: "Some help",
+                                   isDisabled: false),
+              dataStats: .init(value: "45.5 MB",
+                               title: "Data\nsaved",
+                               help: "Some help",
+                               isDisabled: false))
     }()
 }

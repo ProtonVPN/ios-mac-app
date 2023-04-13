@@ -26,6 +26,6 @@ extension NSWindow {
         titlebarAppearsTransparent = true
         titleVisibility = .hidden
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
-        backgroundColor = colors.background
+        backgroundColor = .color(.background)
     }
 }

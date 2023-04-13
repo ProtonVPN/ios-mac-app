@@ -310,8 +310,6 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(alert: UpsellAlert, upsellType: UpsellType) {
-        let factory = ModalsFactory(colors: UpsellColors())
-
         let upgradeAction: (() -> Void) = { [weak self] in
             Task { [weak self] in
                 guard let url = await self?.sessionService.getPlanSession(mode: .upgrade) else {
@@ -320,7 +318,7 @@ extension MacAlertService: CoreAlertService {
                 SafariService.openLink(url: url)
             }
         }
-        let upsellViewController = factory.upsellViewController(upsellType: upsellType, upgradeAction: upgradeAction, learnMoreAction: alert.learnMore)
+        let upsellViewController = ModalsFactory.upsellViewController(upsellType: upsellType, upgradeAction: upgradeAction, learnMoreAction: alert.learnMore)
         windowService.presentKeyModal(viewController: upsellViewController)
     }
 
@@ -345,9 +343,7 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: DiscourageSecureCoreAlert) {
-        let factory = ModalsFactory(colors: UpsellColors())
-
-        let viewController = factory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
+        let viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
         windowService.presentKeyModal(viewController: viewController)
     }
 
