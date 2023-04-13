@@ -23,6 +23,7 @@
 import Cocoa
 import MapKit
 import vpncore
+import Theme_macOS
 
 private let sqrt3 = sqrt(3)
 

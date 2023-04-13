@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme_macOS
 
 class ClearCancellationButton: HoverDetectionButton {
     override var title: String {

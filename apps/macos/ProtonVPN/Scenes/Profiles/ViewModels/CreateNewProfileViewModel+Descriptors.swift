@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import AppKit
+import Theme_macOS
 
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {

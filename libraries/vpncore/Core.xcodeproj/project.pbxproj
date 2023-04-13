@@ -456,8 +456,6 @@
 		E52BFF292965AEB60055332D /* TelemetryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52BFF272965AEB60055332D /* TelemetryServiceTests.swift */; };
 		E52E8137296C5F45002AF127 /* ConnectionTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8136296C5F45002AF127 /* ConnectionTimer.swift */; };
 		E52E8138296C5F45002AF127 /* ConnectionTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8136296C5F45002AF127 /* ConnectionTimer.swift */; };
-		E532A8B6292642CE00096D2D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */; };
-		E532A8B72926432900096D2D /* OptionSet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */; };
 		E53406A228E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */; };
 		E53406A328E1831E0078A7A3 /* FullScreenImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */; };
 		E53406A828E1B67A0078A7A3 /* AnnouncementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406A728E1B67A0078A7A3 /* AnnouncementTests.swift */; };
@@ -1057,7 +1055,6 @@
 		E510E27D2948CFEA00AC1785 /* TelemetryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryService.swift; sourceTree = "<group>"; };
 		E52BFF272965AEB60055332D /* TelemetryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelemetryServiceTests.swift; sourceTree = "<group>"; };
 		E52E8136296C5F45002AF127 /* ConnectionTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionTimer.swift; sourceTree = "<group>"; };
-		E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OptionSet+Extension.swift"; sourceTree = "<group>"; };
 		E53406A128E1831E0078A7A3 /* FullScreenImageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageTests.swift; sourceTree = "<group>"; };
 		E53406A728E1B67A0078A7A3 /* AnnouncementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementTests.swift; sourceTree = "<group>"; };
 		E53406AA28E1BBD00078A7A3 /* ImageCacheMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheMock.swift; sourceTree = "<group>"; };
@@ -1946,7 +1943,6 @@
 				F327A9992821763B00848E42 /* Codable+Default.swift */,
 				CD33754254B5A76ECA803E4F /* URLArray+Extension.swift */,
 				4CB2A3D5289131F5002E839E /* ExtensionInfo+Comparable.swift */,
-				E532A8B5292642CE00096D2D /* OptionSet+Extension.swift */,
 				E53C798C292E1A8200A59A1F /* CGFloat+Margin.swift */,
 				ADBFE45029CDAAE0001A5446 /* Timer+Dependencies.swift */,
 			);
@@ -2917,7 +2913,6 @@
 				660EABB529B23FAB00B4D815 /* UnauthKeychain.swift in Sources */,
 				E1616BF921C95C3000F42D79 /* ServerManager.swift in Sources */,
 				4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */,
-				E532A8B6292642CE00096D2D /* OptionSet+Extension.swift in Sources */,
 				660EABBA29B2498700B4D815 /* UnauthKeychainMock.swift in Sources */,
 				42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */,
@@ -3322,7 +3317,6 @@
 				E9DC79C5262DBF02001A0FC0 /* SmartProtocolAvailabilityChecker.swift in Sources */,
 				AD37FAC829B89FF900D4DE4E /* StrongNotification.swift in Sources */,
 				E1616B8921C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
-				E532A8B72926432900096D2D /* OptionSet+Extension.swift in Sources */,
 				E5608CC12994D94D00D11333 /* TelemetrySettings.swift in Sources */,
 				4CAD2FC927F2FDC100C78905 /* VpnConnectionIntercept.swift in Sources */,
 				E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */,

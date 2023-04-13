@@ -6,18 +6,34 @@ import PackageDescription
 let package = Package(
     name: "Theme",
     platforms: [
-        .iOS(.v14),
-        .macOS(.v10_15)],
+        .iOS(.v15),
+        .macOS(.v12)],
     products: [
         .library(
             name: "Theme",
-            targets: ["Theme"])
+            targets: ["Theme"]),
+        .library(
+            name: "Theme-macOS",
+            targets: ["Theme-macOS"]),
+        .library(
+            name: "Theme-iOS",
+            targets: ["Theme-iOS"])
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Theme",
             dependencies: [],
+            resources: []
+        ),
+        .target(
+            name: "Theme-iOS",
+            dependencies: ["Theme"],
+            resources: []
+        ),
+        .target(
+            name: "Theme-macOS",
+            dependencies: ["Theme"],
             resources: [
                 .process("Resources/Assets.xcassets")
             ]

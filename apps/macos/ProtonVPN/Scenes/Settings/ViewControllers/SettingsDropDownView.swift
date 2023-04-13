@@ -19,6 +19,7 @@
 import Foundation
 import Cocoa
 import AppKit
+import Theme
 
 class SettingsDropDownView: NSView {
 

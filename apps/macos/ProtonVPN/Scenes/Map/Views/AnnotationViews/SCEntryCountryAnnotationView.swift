@@ -23,6 +23,7 @@
 import Cocoa
 import MapKit
 import vpncore
+import Theme_macOS
 
 class SCEntryCountryAnnotationView: MapAnnotationView {
     private static let circleDiameter: CGFloat = 14

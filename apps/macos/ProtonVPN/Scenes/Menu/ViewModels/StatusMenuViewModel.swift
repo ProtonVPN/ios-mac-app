@@ -22,6 +22,7 @@
 
 import Cocoa
 import vpncore
+import Theme_macOS
 
 protocol StatusMenuViewModelFactory {
      func makeStatusMenuViewModel() -> StatusMenuViewModel

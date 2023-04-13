@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Foundation
+import Theme_macOS
 
 final class LoginViewController: NSViewController {
     
@@ -132,7 +133,7 @@ final class LoginViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        logoImage.image = AppTheme.Icon.vpnWordmarkAlwaysDark
+        logoImage.image = Theme_macOS.Asset.vpnWordmarkAlwaysDark.image
         logoImage.imageScaling = .scaleProportionallyUpOrDown
         setupOnboardingView()
         setupTwoFactorView()

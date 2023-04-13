@@ -17,9 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+#if canImport(Cocoa)
 import Cocoa
 
-extension String {
+public extension String {
     func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         var style = style
         if hover {
@@ -43,8 +44,10 @@ extension String {
     }
 }
 
-extension CustomStyleContext {
+public extension CustomStyleContext {
     func style(_ text: String, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         text.styled(self.customStyle(context: context), context: context, font: font, hover: hover, alignment: alignment, lineBreakMode: lineBreakMode)
     }
 }
+
+#endif

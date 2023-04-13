@@ -22,7 +22,7 @@
 
 import UIKit
 import vpncore
-import Theme
+import Theme_iOS
 
 extension UIColor {
     

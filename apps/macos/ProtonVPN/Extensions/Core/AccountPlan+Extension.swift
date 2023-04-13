@@ -22,6 +22,7 @@
 
 import vpncore
 import AppKit
+import Theme_macOS
 
 extension AccountPlan {
     var styleForUI: AppTheme.Style {

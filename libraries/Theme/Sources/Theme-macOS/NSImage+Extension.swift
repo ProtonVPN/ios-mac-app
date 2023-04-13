@@ -20,11 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#if canImport(Cocoa)
 import Cocoa
 import AppKit
-import ProtonCore_UIFoundations
 
-extension NSImage {
+public extension NSImage {
     func resize(newWidth width: Int, newHeight height: Int) -> NSImage {
         resizeWhilePreservingRatio(newWidth: CGFloat(width), newHeight: CGFloat(height))
     }
@@ -92,3 +92,11 @@ extension NSImage {
         return greyImage
     }
 }
+
+public extension NSImage {
+    var cgImage: CGImage? {
+        var rect = NSRect(origin: CGPoint(x: 0, y: 0), size: self.size)
+        return self.cgImage(forProposedRect: &rect, context: NSGraphicsContext.current, hints: nil)
+    }
+}
+#endif

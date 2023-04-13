@@ -22,6 +22,8 @@
 
 import Cocoa
 import vpncore
+import Theme
+import Theme_macOS
 
 enum ZoomType {
     case `in`

@@ -22,6 +22,7 @@
 
 import Cocoa
 import MapKit
+import Theme_macOS
 
 class MapSectionViewController: NSViewController {
     
@@ -46,7 +47,7 @@ class MapSectionViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        logoImageView.image = AppTheme.Icon.vpnWordmarkAlwaysDark
+        logoImageView.image = Theme_macOS.Asset.vpnWordmarkAlwaysDark.image
         view.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
         
         setupHeader()

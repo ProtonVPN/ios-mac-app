@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme_macOS
 
 class StatusWindow: NSPanel {
     
@@ -199,10 +200,10 @@ extension StatusIcon {
     var image: NSImage {
         var result: NSImage
         switch self {
-        case .connected: result = AppTheme.Icon.vpnConnected
-        case .disconnected: result = AppTheme.Icon.vpnNotConnected
-        case .connecting: result = AppTheme.Icon.vpnConnecting
-        case .unknown: result = AppTheme.Icon.vpnEmpty
+        case .connected: result = Theme_macOS.Asset.connected.image
+        case .disconnected: result = Theme_macOS.Asset.disconnected.image
+        case .connecting: result = Theme_macOS.Asset.idle.image
+        case .unknown: result = Theme_macOS.Asset.emptyIcon.image
         }
 
         result = result
@@ -213,12 +214,19 @@ extension StatusIcon {
 }
 
 extension AppIcon {
+#if STAGING // use Debug icon for staging builds
+    static let appIconConnected = Theme_macOS.Asset.dynamicAppIconDebugConnected.image
+    static let appIconDisconnected = Theme_macOS.Asset.dynamicAppIconDebugDisconnected.image
+#else
+    static let appIconConnected = Theme_macOS.Asset.dynamicAppIconConnected.image
+    static let appIconDisconnected = Theme_macOS.Asset.dynamicAppIconDisconnected.image
+#endif
     var image: NSImage {
         switch self {
         case .active:
-            return AppTheme.Icon.appIconConnected
+            return AppIcon.appIconConnected
         case .disconnected:
-            return AppTheme.Icon.appIconDisconnected
+            return AppIcon.appIconDisconnected
         }
     }
 }

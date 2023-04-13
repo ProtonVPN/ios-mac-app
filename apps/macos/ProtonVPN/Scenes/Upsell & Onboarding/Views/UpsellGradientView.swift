@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme
 
 class UpsellGradientView: NSView {
 

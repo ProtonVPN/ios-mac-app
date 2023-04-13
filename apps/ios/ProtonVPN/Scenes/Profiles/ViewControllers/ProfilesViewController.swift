@@ -24,7 +24,7 @@ import UIKit
 import GSMessages
 import vpncore
 import ProtonCore_UIFoundations
-import Theme
+import Theme_iOS
 
 protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()

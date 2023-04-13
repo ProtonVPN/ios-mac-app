@@ -23,6 +23,25 @@
 import Cocoa
 import vpncore
 import VPNShared
+import Theme_macOS
+
+import ProtonCore_UIFoundations
+
+extension AppTheme {
+    @dynamicMemberLookup
+    public enum Icon {
+        static subscript(dynamicMember keyPath: KeyPath<IconProviderBase, NSImage>) -> NSImage {
+            return IconProvider[keyPath: keyPath]
+        }
+
+        static func flag(countryCode: String, style: AppTheme.FlagStyle = .plain) -> NSImage? {
+            if style == .plain {
+                return IconProvider.flag(forCountryCode: countryCode)
+            }
+            return NSImage(named: style.imageName(countryCode: countryCode))
+        }
+    }
+}
 
 protocol HeaderViewModelDelegate: class {
     func bitrateUpdated(with attributedString: NSAttributedString)

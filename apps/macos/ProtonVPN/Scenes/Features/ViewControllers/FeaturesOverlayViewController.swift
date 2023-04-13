@@ -22,6 +22,8 @@
 
 import Cocoa
 import vpncore
+import Theme_macOS
+
 class FeaturesOverlayViewController: NSViewController {
 
     @IBOutlet private weak var featuresStackView: NSStackView!

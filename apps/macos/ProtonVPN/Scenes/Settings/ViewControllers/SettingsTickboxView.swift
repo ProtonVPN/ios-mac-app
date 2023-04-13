@@ -18,6 +18,7 @@
 
 import Foundation
 import AppKit
+import Theme_macOS
 
 protocol TickboxViewDelegate: class {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)
