@@ -9,8 +9,7 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-IOS_APP_VERSION = 4.2.1
-
+IOS_APP_VERSION = 5.0.0
 
 // Setup how logs are treated by os_log for different build configurations
 
