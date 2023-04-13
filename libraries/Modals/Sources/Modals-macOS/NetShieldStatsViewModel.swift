@@ -38,6 +38,12 @@ public class NetShieldStatsViewModel: ObservableObject {
     var trackersStats: NetShieldStat
     var dataStats: NetShieldStat
 
+    public init(adsStats: NetShieldStat, trackersStats: NetShieldStat, dataStats: NetShieldStat) {
+        self.adsStats = adsStats
+        self.trackersStats = trackersStats
+        self.dataStats = dataStats
+    }
+
     public init(adsStatsTitle: String, trackersStatsTitle: String, dataStatsTitle: String) {
         self.adsStats = .init(value: "",
                               title: adsStatsTitle,

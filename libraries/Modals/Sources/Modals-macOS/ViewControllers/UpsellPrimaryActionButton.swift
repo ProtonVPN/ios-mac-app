@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+import Theme
 
 final class UpsellPrimaryActionButton: HoverDetectionButton {
 
@@ -45,10 +46,12 @@ final class UpsellPrimaryActionButton: HoverDetectionButton {
     private func configureButton() {
         wantsLayer = true
         layer?.cornerRadius = 8
-        layer?.backgroundColor = isHovered ? colors.hoverBrand.cgColor : colors.brand.cgColor
+        layer?.backgroundColor = isHovered ? .cgColor(.icon, [.interactive, .hovered]) : .cgColor(.icon, .interactive)
     }
 
     private func configureTitle() {
-        attributedTitle = NSAttributedString(string: title, attributes: [.foregroundColor: colors.text, .font: NSFont.systemFont(ofSize: fontSize)])
+        attributedTitle = NSAttributedString(string: title,
+                                             attributes: [.foregroundColor: NSColor.color(.text),
+                                                .font: NSFont.systemFont(ofSize: fontSize)])
     }
 }

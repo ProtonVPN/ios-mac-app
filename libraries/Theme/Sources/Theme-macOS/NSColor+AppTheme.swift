@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import SwiftUI
 #if canImport(Cocoa)
 import Cocoa
 
@@ -211,6 +212,12 @@ public extension AppTheme.Context {
         }
 
         return color
+    }
+}
+
+public extension Color {
+    static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> Color {
+        return Color(context.color(style: style))
     }
 }
 

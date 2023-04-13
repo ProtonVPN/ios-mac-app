@@ -26,7 +26,7 @@ final class FeatureView: NSView {
 
     @IBOutlet private weak var titleLabel: NSTextField! {
         didSet {
-            titleLabel.textColor = colors.text
+            titleLabel.textColor = .color(.text)
         }
     }
     @IBOutlet weak var iconImageView: NSImageView!

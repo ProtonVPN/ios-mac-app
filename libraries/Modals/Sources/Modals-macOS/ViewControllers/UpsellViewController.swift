@@ -49,7 +49,7 @@ public final class UpsellViewController: NSViewController {
     override public func awakeFromNib() {
         super.awakeFromNib()
         view.wantsLayer = true
-        view.layer?.backgroundColor = colors.background.cgColor
+        view.layer?.backgroundColor = .cgColor(.background)
     }
 
     override public func viewDidLoad() {
@@ -61,11 +61,11 @@ public final class UpsellViewController: NSViewController {
     }
 
     func setupSubviews() {
-        titleLabel.textColor = colors.text
-        descriptionLabel.textColor = colors.text
+        titleLabel.textColor = .color(.text)
+        descriptionLabel.textColor = .color(.text)
 
         if case .allCountries = upsellType {
-            footerLabel.textColor = colors.weakText
+            footerLabel.textColor = .color(.text, .weak)
             footerLabel.font = .systemFont(ofSize: 12)
         } else {
             footerLabel.removeFromSuperview()
@@ -88,7 +88,9 @@ public final class UpsellViewController: NSViewController {
         imageView.image = upsellFeature.artImage
 
         if let learnMore = upsellFeature.learnMore {
-            learnMoreButton.attributedTitle = NSAttributedString(string: learnMore, attributes: [.foregroundColor: colors.brand, .font: NSFont.systemFont(ofSize: 12)])
+            learnMoreButton.attributedTitle = NSAttributedString(string: learnMore,
+                                                                 attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
+                                                                    .font: NSFont.systemFont(ofSize: 12)])
         } else {
             learnMoreButton.removeFromSuperview()
         }

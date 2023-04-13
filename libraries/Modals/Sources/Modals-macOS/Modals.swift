@@ -24,11 +24,7 @@ public struct ModalsFactory {
 
     // MARK: Properties
 
-    public init(colors: ModalsColors) {
-        Modals_macOS.colors = colors
-    }
-
-    public func upsellViewController(upsellType: UpsellType, upgradeAction: (() -> Void)?, learnMoreAction: (() -> Void)?) -> NSViewController {
+    static public func upsellViewController(upsellType: UpsellType, upgradeAction: (() -> Void)?, learnMoreAction: (() -> Void)?) -> NSViewController {
         let upsell = UpsellViewController()
         upsell.upsellType = upsellType
         upsell.upgradeAction = upgradeAction
@@ -36,7 +32,7 @@ public struct ModalsFactory {
         return upsell
     }
 
-    public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {
+    static public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {
         let discourageSecureCoreViewController = DiscourageSecureCoreViewController()
         discourageSecureCoreViewController.onDontShowAgain = onDontShowAgain
         discourageSecureCoreViewController.onActivate = onActivate

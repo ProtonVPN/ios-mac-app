@@ -46,7 +46,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
     override public func awakeFromNib() {
         super.awakeFromNib()
         view.wantsLayer = true
-        view.layer?.backgroundColor = colors.background.cgColor
+        view.layer?.backgroundColor = .cgColor(.background)
     }
 
     override public func viewDidLoad() {
@@ -57,15 +57,17 @@ final class DiscourageSecureCoreViewController: NSViewController {
     }
 
     func setupSubviews() {
-        titleLabel.textColor = colors.text
-        descriptionLabel.textColor = colors.text
+        titleLabel.textColor = .color(.text)
+        descriptionLabel.textColor = .color(.text)
     }
 
     func setupFeatures() {
         titleLabel.stringValue = feature.title
         descriptionLabel.stringValue = feature.subtitle
         imageView.image = feature.artImage
-        learnMoreButton.attributedTitle = NSAttributedString(string: feature.learnMore, attributes: [.foregroundColor: colors.brand, .font: NSFont.systemFont(ofSize: 12)])
+        learnMoreButton.attributedTitle = NSAttributedString(string: feature.learnMore,
+                                                             attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
+                                                                          .font: NSFont.systemFont(ofSize: 12)])
    }
 
     override public func viewWillAppear() {

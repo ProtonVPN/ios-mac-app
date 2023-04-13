@@ -86,7 +86,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     }
 
     func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
-        _ = ModalsFactory(colors: UpsellColors()) // initialize colors in modals module. This will go away with our new theme module
         let hostingView = statsView(netShieldViewModel: presenter.netShieldViewModel)
         netShieldStatsContainer.addSubview(hostingView)
         netShieldStatsContainer.topAnchor.constraint(equalTo: hostingView.topAnchor).isActive = true
