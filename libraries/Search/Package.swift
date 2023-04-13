@@ -20,7 +20,7 @@ let package = Package(
     targets: [
         .target(
             name: "Search",
-            dependencies: ["Overture", "Theme"],
+            dependencies: ["Overture", .product(name: "Theme-iOS", package: "Theme")],
             resources: [
                 .process("Storyboard.storyboard"),
                 .process("Views/PlaceholderView.xib"),

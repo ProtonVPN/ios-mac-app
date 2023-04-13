@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#if canImport(Cocoa)
 import Cocoa
 import AppKit
 
@@ -99,4 +98,3 @@ public extension NSImage {
         return self.cgImage(forProposedRect: &rect, context: NSGraphicsContext.current, hints: nil)
     }
 }
-#endif

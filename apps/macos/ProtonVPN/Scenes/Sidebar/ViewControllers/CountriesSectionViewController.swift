@@ -206,11 +206,10 @@ class CountriesSectionViewController: NSViewController {
 
     /// Appearance change doesn't get propagated normally, so we have to manually update the colors when user changes appearance
     func observeAppearance() {
-        observer = NSApp.observe(\.effectiveAppearance, options: [.new, .old, .initial, .prior]) { app, change in
-            if let newValue = change.newValue {
-                newValue.performAsCurrentDrawingAppearance {
-                    self.setupColors()
-                }
+        observer = NSApp.observe(\.effectiveAppearance, options: [.new, .old, .initial, .prior]) { [weak self] app, change in
+            guard let newValue = change.newValue else { return }
+            newValue.performAsCurrentDrawingAppearance {
+                self?.setupColors()
             }
         }
     }
