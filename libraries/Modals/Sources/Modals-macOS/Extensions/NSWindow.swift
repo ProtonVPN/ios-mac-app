@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
+import Theme_macOS
 
 extension NSWindow {
     func applyUpsellModalAppearance() {

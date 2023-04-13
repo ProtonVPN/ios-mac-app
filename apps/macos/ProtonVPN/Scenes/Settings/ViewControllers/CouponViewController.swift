@@ -18,6 +18,7 @@
 
 import Cocoa
 import vpncore
+import Theme_macOS
 
 protocol CouponViewControllerDelegate: AnyObject {
     func userDidCloseCouponViewController()

@@ -17,9 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+#if canImport(Cocoa)
 import Cocoa
 
-extension NSFont {
+public extension NSFont {
     static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false, italic: Bool = false) -> NSFont {
         return themeFont(literalSize: semanticSize.rawValue, bold: bold, italic: italic)
     }
@@ -37,3 +38,5 @@ extension NSFont {
         }
     }
 }
+
+#endif

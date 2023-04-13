@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import AppKit
 import VPNShared
+import Theme_macOS
 
 class QuickSettingsStack: NSStackView {
 
@@ -118,6 +119,7 @@ class CountriesSectionViewController: NSViewController {
         setupQuickSettings()
         setupNetShieldBadge()
         addNetShieldObservers()
+        observeAppearance()
 
         secureCoreBtn.setAccessibilityChildren([secureCoreContainer])
         netShieldBtn.setAccessibilityChildren([netshieldContainer])
@@ -198,18 +200,41 @@ class CountriesSectionViewController: NSViewController {
     
     private func setupView() {
         view.wantsLayer = true
+    }
+
+    var observer: Any?
+
+    /// Appearance change doesn't get propagated normally, so we have to manually update the colors when user changes appearance
+    func observeAppearance() {
+        observer = NSApp.observe(\.effectiveAppearance, options: [.new, .old, .initial, .prior]) { app, change in
+            if let newValue = change.newValue {
+                newValue.performAsCurrentDrawingAppearance {
+                    self.setupColors()
+                }
+            }
+        }
+    }
+
+    private func setupColors() {
         view.layer?.backgroundColor = .cgColor(.background, .weak)
+        bottomHorizontalLine.fillColor = .color(.border, .weak)
+        searchIcon.image = AppTheme.Icon.magnifier.colored(.hint)
+        clearSearchBtn.image = AppTheme.Icon.crossCircleFilled.colored(.hint)
+
+        searchBox.layer?.backgroundColor = .cgColor(.background)
+        searchBox.borderColor = .color(.border)
+
+        serverListTableView.backgroundColor = .color(.background, .weak)
+        serverListScrollView.backgroundColor = .color(.background, .weak)
+
+        controlTextDidEndEditing(.init(name: .init(rawValue: "")))
     }
         
     private func setupSearchSection() {
-        bottomHorizontalLine.fillColor = .color(.border, .weak)
-        
-        searchIcon.image = AppTheme.Icon.magnifier.colored(.hint)
         searchIcon.cell?.setAccessibilityElement(false)
         
         clearSearchBtn.target = self
         clearSearchBtn.action = #selector(clearSearch)
-        clearSearchBtn.image = AppTheme.Icon.crossCircleFilled.colored(.hint)
         // The line below was commented out to fix UI tests
         // clearSearchBtn.cell?.setAccessibilityElement(false)
 
@@ -219,8 +244,6 @@ class CountriesSectionViewController: NSViewController {
         searchTextField.focusRingType = .none
         searchTextField.style(placeholder: LocalizedString.searchForCountry, font: .themeFont(.heading4), alignment: .left)
         searchBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        searchBox.layer?.backgroundColor = .cgColor(.background)
-        searchBox.borderColor = .color(.border)
 
         searchTextField.setAccessibilityIdentifier("SearchTextField")
         clearSearchBtn.setAccessibilityIdentifier("ClearSearchButton")
@@ -232,12 +255,10 @@ class CountriesSectionViewController: NSViewController {
         serverListTableView.ignoresMultiClick = true
         serverListTableView.selectionHighlightStyle = .none
         serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
-        serverListTableView.backgroundColor = .color(.background, .weak)
         serverListTableView.register(Cell.country.nib, forIdentifier: Cell.country.identifier)
         serverListTableView.register(Cell.server.nib, forIdentifier: Cell.server.identifier)
         serverListTableView.register(Cell.header.nib, forIdentifier: Cell.header.identifier)
-        
-        serverListScrollView.backgroundColor = .color(.background, .weak)
+
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
         serverListScrollView.contentView.postsBoundsChangedNotifications = true
         
@@ -414,8 +435,10 @@ extension CountriesSectionViewController: NSTextFieldDelegate {
     }
 
     func controlTextDidEndEditing(_ obj: Notification) {
-        searchIcon.image = searchIcon.image?.colored(.weak)
-        searchBox.borderColor = .color(.border)
+        view.effectiveAppearance.performAsCurrentDrawingAppearance {
+            searchIcon.image = searchIcon.image?.colored(.weak)
+            searchBox.borderColor = .color(.border)
+        }
     }
 }
 
@@ -424,8 +447,10 @@ extension CountriesSectionViewController: TextFieldFocusDelegate {
     var shouldBecomeFirstResponder: Bool { false }
 
     func willReceiveFocus(_ textField: NSTextField) {
-        searchIcon.image = searchIcon.image?.colored(.normal)
-        searchBox.borderColor = .color(.border, [.interactive, .strong])
+        view.effectiveAppearance.performAsCurrentDrawingAppearance {
+            searchIcon.image = searchIcon.image?.colored(.normal)
+            searchBox.borderColor = .color(.border, [.interactive, .strong])
+        }
     }
 }
 

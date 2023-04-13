@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme_macOS
 
 class ExpandCellButton: HoverDetectionButton {
     override func awakeFromNib() {

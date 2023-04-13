@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme_macOS
 
 // MARK: - Used by TourNextButton and its TourNextButtonCell cell
 private let textOffset: CGFloat = 16

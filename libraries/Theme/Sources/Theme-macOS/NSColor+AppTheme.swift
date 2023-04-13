@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+#if canImport(Cocoa)
 import Cocoa
-import ProtonCore_UIFoundations
 
-private let CP = ColorProvider
+private let CP = ProtonColorPalettemacOS.instance
 private let offWhite = NSColor(red: 254,
                                green: 255,
                                blue: 255,
@@ -31,7 +31,7 @@ private extension AppTheme.Style {
         return [.danger, .warning, .success, .info]
     }
 
-    var interactiveColor: AppearanceAwareColor {
+    var interactiveColor: NSColor {
         assert(contains(.interactive))
         if contains(.weak) {
             if contains(.hovered) {
@@ -64,7 +64,7 @@ private extension AppTheme.Style {
         }
     }
 
-    var signalColor: AppearanceAwareColor {
+    var signalColor: NSColor {
         assert(!isDisjoint(with: .signalStyles))
         if contains(.danger) {
             if contains(.hovered) {
@@ -103,7 +103,7 @@ private extension AppTheme.Style {
         return CP.TextNorm
     }
 
-    var backgroundColor: AppearanceAwareColor {
+    var backgroundColor: NSColor {
         if contains(.transparent) {
             if contains(.hovered) {
                 return CP.InteractionDefaultHover
@@ -125,7 +125,7 @@ private extension AppTheme.Style {
         }
     }
 
-    var fieldColor: AppearanceAwareColor {
+    var fieldColor: NSColor {
         if contains(.hovered) {
             return CP.FieldHover
         } else if contains(.disabled) {
@@ -135,7 +135,7 @@ private extension AppTheme.Style {
         }
     }
 
-    var borderColor: AppearanceAwareColor {
+    var borderColor: NSColor {
         if contains(.inverted) {
             return CP.TextNorm
         } else if contains(.weak) {
@@ -145,7 +145,7 @@ private extension AppTheme.Style {
         }
     }
 
-    var textColor: AppearanceAwareColor {
+    var textColor: NSColor {
         if contains(.weak) {
             return CP.TextWeak
         } else if contains(.hint) {
@@ -159,13 +159,13 @@ private extension AppTheme.Style {
         }
     }
 
-    var iconColor: AppearanceAwareColor {
+    var iconColor: NSColor {
         return textColor
     }
 }
 
-extension AppTheme.Context {
-    private func appearanceAwareColor(style: AppTheme.Style) -> AppearanceAwareColor {
+public extension AppTheme.Context {
+    private func NSColor(style: AppTheme.Style) -> NSColor {
         if style.contains(.interactive) {
             return style.interactiveColor
         } else if !style.isDisjoint(with: .signalStyles) {
@@ -200,35 +200,33 @@ extension AppTheme.Context {
             if style == .normal || isDisabled {
                 color = offWhite
             } else {
-                color = appearanceAwareColor(style: style)
-                    .using(appearance: NSAppearance.current)
+                color = NSColor(style: style)
             }
 
             if isDisabled {
                 color = color.withAlphaComponent(0.5)
             }
         } else {
-            color = appearanceAwareColor(style: style)
-                .using(appearance: NSAppearance.current)
+            color = NSColor(style: style)
         }
 
         return color
     }
 }
 
-extension NSColor {
+public extension NSColor {
     static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> NSColor {
         return context.color(style: style)
     }
 }
 
-extension CGColor {
+public extension CGColor {
     static func cgColor(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> CGColor {
         return NSColor.color(context, style).cgColor
     }
 }
 
-extension CustomStyleContext {
+public extension CustomStyleContext {
     func color(_ context: AppTheme.Context) -> NSColor {
         return .color(context, self.customStyle(context: context))
     }
@@ -237,3 +235,5 @@ extension CustomStyleContext {
         return .cgColor(context, self.customStyle(context: context))
     }
 }
+
+#endif

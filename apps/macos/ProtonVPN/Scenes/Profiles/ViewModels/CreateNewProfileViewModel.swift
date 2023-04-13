@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import VPNShared
+import Theme_macOS
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel

@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import WebKit
+import Theme_macOS
 
 class AboutViewController: NSViewController {
     
@@ -85,7 +86,7 @@ class AboutViewController: NSViewController {
         versionString.append(currentVersion.styled(font: .themeFont(bold: true), alignment: .left))
         versionString.append(" (\(currentBuild))".styled(.weak, font: .themeFont(bold: true), alignment: .left))
 
-        imageHeader.image = AppTheme.Icon.vpnWordmarkAlwaysDark
+        imageHeader.image = Theme_macOS.Asset.vpnWordmarkAlwaysDark.image
         versionTitleLabel.attributedStringValue = LocalizedString.versionCurrent.styled(alignment: .left)
         versionLabel.attributedStringValue = versionString
                             

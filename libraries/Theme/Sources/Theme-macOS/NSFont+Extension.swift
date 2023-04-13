@@ -20,9 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+#if canImport(Cocoa)
 import Cocoa
 
-extension NSFont {
+public extension NSFont {
     
     static func italicSystem( ofSize size: CGFloat ) -> NSFont {
         return systemFont(ofSize: size).with(.italic)
@@ -46,3 +47,5 @@ extension NSFont {
         return NSFont(descriptor: descriptor, size: 0) ?? self
     }
 }
+
+#endif

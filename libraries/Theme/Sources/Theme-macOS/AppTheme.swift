@@ -17,9 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
 import AppKit
-import ProtonCore_UIFoundations
-import vpncore
+#endif
 
 public enum AppTheme {
     public enum Context: String {
@@ -73,7 +75,7 @@ public enum AppTheme {
     /// Constant button values, in pixels.
     public enum ButtonConstants {
         /// The standard radius of a button throughout the app.
-        static let cornerRadius: CGFloat = 8
+        public static let cornerRadius: CGFloat = 8
     }
 
     public enum IconSize {
@@ -81,49 +83,16 @@ public enum AppTheme {
         case square(Int)
         case rect(width: Int, height: Int)
 
-        static let profileIconSize: Self = .square(18)
+        public static let profileIconSize: Self = .square(18)
     }
 
     public enum FlagStyle: String {
         case plain
         case large
 
-        func imageName(countryCode: String) -> String {
+        public func imageName(countryCode: String) -> String {
             countryCode.lowercased() + "-\(self.rawValue)"
         }
-    }
-
-    @dynamicMemberLookup
-    public enum Icon {
-        static subscript(dynamicMember keyPath: KeyPath<IconProviderBase, NSImage>) -> NSImage {
-            return IconProvider[keyPath: keyPath]
-        }
-
-        static func flag(countryCode: String, style: FlagStyle = .plain) -> NSImage? {
-            if style == .plain {
-                return IconProvider.flag(forCountryCode: countryCode)
-            }
-            return NSImage(named: style.imageName(countryCode: countryCode))
-        }
-
-        #if STAGING // use Debug icon for staging builds
-        static let appIconConnected = Asset.dynamicAppIconDebugConnected.image
-        static let appIconDisconnected = Asset.dynamicAppIconDebugDisconnected.image
-        #else
-        static let appIconConnected = Asset.dynamicAppIconConnected.image
-        static let appIconDisconnected = Asset.dynamicAppIconDisconnected.image
-        #endif
-
-        static let vpnConnected = Asset.connected.image
-        static let vpnNotConnected = Asset.disconnected.image
-        static let vpnConnecting = Asset.idle.image
-        static let vpnEmpty = Asset.emptyIcon.image
-
-        static let vpnResultConnected = Asset.vpnResultConnected.image
-        static let vpnResultDisconnected = Asset.vpnResultNotConnected.image
-        static let vpnResultTimeout = Asset.vpnResultWarning.image
-
-        static let vpnWordmarkAlwaysDark = Asset.vpnWordmarkAlwaysDark.image
     }
 }
 

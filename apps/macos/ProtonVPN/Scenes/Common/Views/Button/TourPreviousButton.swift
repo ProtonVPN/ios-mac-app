@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme_macOS
 
 class TourPreviousButton: HoverDetectionButton {
 

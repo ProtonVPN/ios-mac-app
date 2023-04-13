@@ -26,6 +26,7 @@ import AppKit
 import Modals
 import Modals_macOS
 import VPNShared
+import Theme_macOS
 
 final class MacAlertService {
     
