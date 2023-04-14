@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 import AppKit
 import VPNShared
+import Theme
 import Theme_macOS
 
 class QuickSettingsStack: NSStackView {

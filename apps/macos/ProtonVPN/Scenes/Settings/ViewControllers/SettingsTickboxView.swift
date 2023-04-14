@@ -18,6 +18,7 @@
 
 import Foundation
 import AppKit
+import Theme
 import Theme_macOS
 
 protocol TickboxViewDelegate: class {

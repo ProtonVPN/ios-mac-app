@@ -24,12 +24,10 @@ import Modals_macOS
 class ModalsSampleMacOSAppTests: XCTestCase {
 
     func testCreatingUpsellViewControllers() throws {
-        let factory = ModalsFactory(colors: Colors())
-
-        XCTAssertNotNil(factory.upsellViewController(upsellType: .allCountries(numberOfDevices: 12, numberOfServers: 23, numberOfCountries: 45), upgradeAction: nil, learnMoreAction: nil))
-        XCTAssertNotNil(factory.upsellViewController(upsellType: .moderateNAT, upgradeAction: nil, learnMoreAction: nil))
-        XCTAssertNotNil(factory.upsellViewController(upsellType: .secureCore, upgradeAction: nil, learnMoreAction: nil))
-        XCTAssertNotNil(factory.upsellViewController(upsellType: .netShield, upgradeAction: nil, learnMoreAction: nil))
-        XCTAssertNotNil(factory.upsellViewController(upsellType: .safeMode, upgradeAction: nil, learnMoreAction: nil))
+        XCTAssertNotNil(ModalsFactory.upsellViewController(upsellType: .allCountries(numberOfDevices: 12, numberOfServers: 23, numberOfCountries: 45), upgradeAction: nil, learnMoreAction: nil))
+        XCTAssertNotNil(ModalsFactory.upsellViewController(upsellType: .moderateNAT, upgradeAction: nil, learnMoreAction: nil))
+        XCTAssertNotNil(ModalsFactory.upsellViewController(upsellType: .secureCore, upgradeAction: nil, learnMoreAction: nil))
+        XCTAssertNotNil(ModalsFactory.upsellViewController(upsellType: .netShield, upgradeAction: nil, learnMoreAction: nil))
+        XCTAssertNotNil(ModalsFactory.upsellViewController(upsellType: .safeMode, upgradeAction: nil, learnMoreAction: nil))
     }
 }

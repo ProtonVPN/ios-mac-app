@@ -264,7 +264,7 @@ class ConnectingOverlayViewModel {
             loadingView.animate(false)
             let connectedView = NSImageView(frame: frame)
             connectedView.imageScaling = .scaleNone
-            connectedView.image = Asset.vpnResultConnected.image
+            connectedView.image = Theme_macOS.Asset.vpnResultConnected.image
                 .resize(newWidth: Int(frame.size.width) - margin, newHeight: Int(frame.size.height) - margin)
             return connectedView
         case .error, .disconnected:

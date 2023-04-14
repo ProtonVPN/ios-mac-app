@@ -410,6 +410,7 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E509509429ED258500C0F935 /* Theme-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E509509329ED258500C0F935 /* Theme-iOS */; };
 		E532A8A7292520FC00096D2D /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
@@ -1116,6 +1117,7 @@
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
+				E509509429ED258500C0F935 /* Theme-iOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2527,6 +2529,7 @@
 				E53D64C42811698F0060C463 /* Modals-iOS */,
 				D555C49E297FB961000593EF /* LocalFeatureFlags */,
 				E59227C729C8BDD70008A091 /* Theme */,
+				E509509329ED258500C0F935 /* Theme-iOS */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -5021,6 +5024,10 @@
 		D5F65F9728A149BC0062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Timer;
+		};
+		E509509329ED258500C0F935 /* Theme-iOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Theme-iOS";
 		};
 		E53D64C42811698F0060C463 /* Modals-iOS */ = {
 			isa = XCSwiftPackageProductDependency;

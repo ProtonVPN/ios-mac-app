@@ -18,6 +18,7 @@
 
 import Foundation
 import Cocoa
+import Theme
 
 public extension NSFont {
     static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false, italic: Bool = false) -> NSFont {

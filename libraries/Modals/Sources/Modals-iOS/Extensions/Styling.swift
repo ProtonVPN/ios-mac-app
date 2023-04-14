@@ -19,28 +19,35 @@
 import Foundation
 import Overture
 import UIKit
+import Theme
+import Theme_iOS
 
 let baseButtonStyle: (UIButton) -> Void = {
     $0.layer.cornerRadius = 8
     $0.titleLabel?.font = .systemFont(ofSize: 17)
-    $0.setTitleColor(colors.buttonTitle, for: .normal)
+    $0.setTitleColor(.color(.text, .primary), for: .normal)
 }
 
 let brandStyle: (UIView) -> Void = {
-    $0.backgroundColor = colors.brand
+    $0.backgroundColor = .color(.background, .interactive)
 }
 
 let brandStyleOnTint: (UISwitch) -> Void = {
-    $0.onTintColor = colors.brand
+    $0.onTintColor = .color(.background, .interactive)
 }
 
 let labelStyle: (UILabel) -> Void = {
     $0.font = .systemFont(ofSize: 15, weight: .regular)
-    $0.textColor = colors.text
+    $0.textColor = .color(.text)
+}
+
+let smallLabelStyle: (UILabel) -> Void = {
+    $0.font = .systemFont(ofSize: 11, weight: .regular)
+    $0.textColor = .color(.text)
 }
 
 let baseViewStyle: (UIView) -> Void = {
-    $0.backgroundColor = colors.background
+    $0.backgroundColor = .color(.background)
 }
 
 let actionButtonStyle = concat(baseButtonStyle, brandStyle, and: {
@@ -49,7 +56,7 @@ let actionButtonStyle = concat(baseButtonStyle, brandStyle, and: {
 
 let textButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.font = .systemFont(ofSize: 17)
-    $0.setTitleColor(colors.textAccent, for: .normal)
+    $0.setTitleColor(.color(.text, .interactive), for: .normal)
 }
 
 let actionTextButtonStyle = concat(textButtonStyle, and: {
@@ -59,7 +66,7 @@ let actionTextButtonStyle = concat(textButtonStyle, and: {
 
 let baseTextStyle: (UILabel) -> Void = {
     $0.font = .systemFont(ofSize: 17)
-    $0.textColor = colors.text
+    $0.textColor = .color(.text)
     $0.numberOfLines = 0
 }
 
@@ -76,7 +83,7 @@ let subtitleStyle = concat(centeredTextStyle, and: {
 })
 
 let footerStyle = concat(baseTextStyle, and: {
-    $0.textColor = colors.weakText
+    $0.textColor = .color(.text, .weak)
     $0.font = .systemFont(ofSize: 13)
 })
 

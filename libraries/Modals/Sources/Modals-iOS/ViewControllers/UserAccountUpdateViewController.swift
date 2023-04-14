@@ -81,6 +81,11 @@ class UserAccountUpdateViewController: UIViewController {
         actionTextButtonStyle(secondActionBtn)
         baseTextStyle(featuresTitleLbl)
 
+        smallLabelStyle(fromServerTitleLbl)
+        labelStyle(fromServerLbl)
+        smallLabelStyle(toServerTitleLbl)
+        labelStyle(toServerLbl)
+
         featureTextStyle(feature1Lbl)
         featureTextStyle(feature2Lbl)
         featureTextStyle(feature3Lbl)
