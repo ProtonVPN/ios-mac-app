@@ -19,8 +19,10 @@
 import Foundation
 import SwiftUI
 import Cocoa
+import Theme
 
 private let CP = ProtonColorPalettemacOS.instance
+
 private let offWhite = NSColor(red: 254,
                                green: 255,
                                blue: 255,

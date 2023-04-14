@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import VPNShared
+import Theme
 import Theme_macOS
 
 final class ConnectionSettingsViewModel {

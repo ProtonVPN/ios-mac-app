@@ -18,6 +18,7 @@
 
 import Foundation
 import Cocoa
+import Theme
 
 public extension NSTextField {
     func style(placeholder: String? = nil, font: NSFont = .themeFont(), alignment: NSTextAlignment = .left) {

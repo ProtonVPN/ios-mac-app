@@ -186,7 +186,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
 
             completionHandler(true)
         }
-        action.backgroundColor = ColorPaletteiOS.instance.NotificationError
+        action.backgroundColor = .color(.background, .danger)
         return UISwipeActionsConfiguration(actions: [action])
     }
     

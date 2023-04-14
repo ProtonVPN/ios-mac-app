@@ -8,6 +8,9 @@
 #elseif os(tvOS) || os(watchOS)
   import UIKit
 #endif
+#if canImport(SwiftUI)
+  import SwiftUI
+#endif
 
 // Deprecated typealiases
 @available(*, deprecated, renamed: "ImageAsset.Image", message: "This typealias will be removed in SwiftGen 7.0")
@@ -20,10 +23,6 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 internal enum Asset {
   internal static let sessionsLimit = ImageAsset(name: "sessions_limit")
-  internal static let dynamicAppIconConnected = ImageAsset(name: "DynamicAppIconConnected")
-  internal static let dynamicAppIconDebugConnected = ImageAsset(name: "DynamicAppIconDebugConnected")
-  internal static let dynamicAppIconDebugDisconnected = ImageAsset(name: "DynamicAppIconDebugDisconnected")
-  internal static let dynamicAppIconDisconnected = ImageAsset(name: "DynamicAppIconDisconnected")
   internal static let adLarge = ImageAsset(name: "ad-large")
   internal static let aeLarge = ImageAsset(name: "ae-large")
   internal static let afLarge = ImageAsset(name: "af-large")
@@ -233,15 +232,7 @@ internal enum Asset {
   internal static let neagentIndicator2 = ImageAsset(name: "neagent_indicator_2")
   internal static let qsDetailTriangle = ImageAsset(name: "qs_detail_triangle")
   internal static let reverseTriangle = ImageAsset(name: "ReverseTriangle")
-  internal static let vpnResultConnected = ImageAsset(name: "vpn-result-connected")
-  internal static let vpnResultNotConnected = ImageAsset(name: "vpn-result-not-connected")
-  internal static let vpnResultWarning = ImageAsset(name: "vpn-result-warning")
-  internal static let vpnWordmarkAlwaysDark = ImageAsset(name: "vpn-wordmark-always-dark")
   internal static let worldMap = ImageAsset(name: "world-map")
-  internal static let connected = ImageAsset(name: "connected")
-  internal static let disconnected = ImageAsset(name: "disconnected")
-  internal static let emptyIcon = ImageAsset(name: "empty_icon")
-  internal static let idle = ImageAsset(name: "idle")
   internal static let _1Step1 = ImageAsset(name: "1-step-1")
   internal static let _1StepSecurityPrefs = ImageAsset(name: "1-step-security-prefs")
   internal static let _1Step = ImageAsset(name: "1-step")
@@ -291,6 +282,13 @@ internal struct ImageAsset {
     return result
   }
   #endif
+
+  #if canImport(SwiftUI)
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  internal var swiftUIImage: SwiftUI.Image {
+    SwiftUI.Image(asset: self)
+  }
+  #endif
 }
 
 internal extension ImageAsset.Image {
@@ -308,6 +306,26 @@ internal extension ImageAsset.Image {
     #endif
   }
 }
+
+#if canImport(SwiftUI)
+@available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+internal extension SwiftUI.Image {
+  init(asset: ImageAsset) {
+    let bundle = BundleToken.bundle
+    self.init(asset.name, bundle: bundle)
+  }
+
+  init(asset: ImageAsset, label: Text) {
+    let bundle = BundleToken.bundle
+    self.init(asset.name, bundle: bundle, label: label)
+  }
+
+  init(decorative asset: ImageAsset) {
+    let bundle = BundleToken.bundle
+    self.init(decorative: asset.name, bundle: bundle)
+  }
+}
+#endif
 
 // swiftlint:disable convenience_type
 private final class BundleToken {

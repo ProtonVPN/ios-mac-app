@@ -17,7 +17,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import AppKit
 
 public enum AppTheme {
     public enum Context: String {
@@ -39,6 +38,8 @@ public enum AppTheme {
         public static let inverted = Self(bitPosition: 4)
         public static let disabled = Self(bitPosition: 5)
         public static let transparent = Self(bitPosition: 6)
+        /// Static color, not changing together with appearance change. For text it's always white
+        public static let primary = Self(bitPosition: 7)
 
         // Action contexts
         public static let interactive = Self(bitPosition: 10)

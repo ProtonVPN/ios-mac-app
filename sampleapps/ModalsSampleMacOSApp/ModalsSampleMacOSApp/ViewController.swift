@@ -36,8 +36,6 @@ class ViewController: NSViewController {
                                                   (.upsell(.moderateNAT), "Moderate NAT"),
                                                   (.discourageSecureCore, "Discourage Secure Core")]
 
-    let factory = ModalsFactory(colors: Colors())
-
     @IBOutlet weak var tableView: NSTableView! {
         didSet {
             tableView.delegate = self
@@ -52,9 +50,9 @@ extension ViewController: NSTableViewDelegate {
         let viewController: NSViewController
         switch modal.type {
         case .upsell(let type):
-            viewController = factory.upsellViewController(upsellType: type, upgradeAction: { }, learnMoreAction: { })
+            viewController = ModalsFactory.upsellViewController(upsellType: type, upgradeAction: { }, learnMoreAction: { })
         case .discourageSecureCore:
-            viewController = factory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+            viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         }
 
         presentAsModalWindow(viewController)
@@ -75,29 +73,5 @@ extension ViewController: NSTableViewDataSource {
               return cell
             }
         return nil
-    }
-}
-
-struct Colors: ModalsColors {
-    var background: NSColor
-    var text: NSColor
-    var brand: NSColor
-    var hoverBrand: NSColor
-    var weakText: NSColor
-    var linkNorm: NSColor
-    var backgroundWeak: NSColor
-    var backgroundHover: NSColor
-    var textHint: NSColor
-
-    init() {
-        background = NSColor(red: 28/255, green: 27/255, blue: 36/255, alpha: 1)
-        text = .white
-        brand = NSColor(red: 109/255, green: 74/255, blue: 255/255, alpha: 1)
-        hoverBrand = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
-        weakText = NSColor(red: 167/255, green: 164/255, blue: 181/255, alpha: 1)
-        linkNorm = NSColor(red: 124/255, green: 92/255, blue: 255/255, alpha: 1)
-        backgroundWeak = .yellow
-        backgroundHover = .yellow
-        textHint = .yellow
     }
 }

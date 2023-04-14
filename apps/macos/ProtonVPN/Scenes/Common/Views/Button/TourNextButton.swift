@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import Theme
 import Theme_macOS
 
 // MARK: - Used by TourNextButton and its TourNextButtonCell cell

@@ -216,6 +216,8 @@
 		E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */; };
 		E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E509509629ED258F00C0F935 /* Theme-macOS in Frameworks */ = {isa = PBXBuildFile; productRef = E509509529ED258F00C0F935 /* Theme-macOS */; };
+		E509509829ED259600C0F935 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E509509729ED259600C0F935 /* Theme */; };
 		E50B623D28B4D2FE004D533B /* AnnouncementImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50B623C28B4D2FE004D533B /* AnnouncementImageViewController.swift */; };
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+forceClick.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+forceClick.swift */; };
@@ -231,6 +233,7 @@
 		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
 		E5C4EF3F29B882C10013ACB2 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */; };
 		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
+		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
 		E5EB08C4281FC4A700F29B20 /* TwoFactorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */; };
 		E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */; };
 		E5EB08CA281FDF4800F29B20 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E5EB08C8281FDF4800F29B20 /* LoadingView.xib */; };
@@ -843,6 +846,7 @@
 		E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButtonStyle.swift; sourceTree = "<group>"; };
 		E5C4EF3E29B882C10013ACB2 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		E5CCA11729B2057700BDE32B /* VideoTourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTourModel.swift; sourceTree = "<group>"; };
+		E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTheme+Icons.swift"; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
 		E5EB08C5281FD2B900F29B20 /* TwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TwoFactorView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.swift; sourceTree = "<group>"; };
 		E5EB08C8281FDF4800F29B20 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
@@ -1119,6 +1123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E509509829ED259600C0F935 /* Theme in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */,
@@ -1129,6 +1134,7 @@
 				E93533DB29CAEE2C005E3A59 /* Sparkle in Frameworks */,
 				D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */,
 				D5F65F9E28A14E190062CF85 /* Timer in Frameworks */,
+				E509509629ED258F00C0F935 /* Theme-macOS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2396,6 +2402,7 @@
 				42082650256BB78600A621EC /* NSView+Children.swift */,
 				F34AC17827F345BB0007FF93 /* NSProgressIndicator+Extensions.swift */,
 				4C7CADE3280060C90008778E /* CGMutablePath+Extension.swift */,
+				E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2826,6 +2833,8 @@
 				E53D64C2281169880060C463 /* Modals-macOS */,
 				D5F65F9D28A14E190062CF85 /* Timer */,
 				E93533DA29CAEE2C005E3A59 /* Sparkle */,
+				E509509529ED258F00C0F935 /* Theme-macOS */,
+				E509509729ED259600C0F935 /* Theme */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -3540,6 +3549,7 @@
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
 				42BEF97026319ADC009180A7 /* StreamingServicesOverlayViewController.swift in Sources */,
 				E180D16C2126FCF700F4D1C7 /* TourNextButton.swift in Sources */,
+				E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */,
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
 				EE5CF76E1F4DDB750002BBF3 /* ProfilesMenuController.swift in Sources */,
 				E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */,
@@ -4857,6 +4867,14 @@
 		D5F65F9D28A14E190062CF85 /* Timer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Timer;
+		};
+		E509509529ED258F00C0F935 /* Theme-macOS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "Theme-macOS";
+		};
+		E509509729ED259600C0F935 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
 		};
 		E53D64C2281169880060C463 /* Modals-macOS */ = {
 			isa = XCSwiftPackageProductDependency;

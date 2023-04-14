@@ -18,6 +18,7 @@
 
 import Foundation
 import Cocoa
+import Theme
 
 public extension String {
     func styled(_ style: AppTheme.Style = .normal, context: AppTheme.Context = .text, font: NSFont = .themeFont(), hover: Bool = false, alignment: NSTextAlignment = .center, lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {

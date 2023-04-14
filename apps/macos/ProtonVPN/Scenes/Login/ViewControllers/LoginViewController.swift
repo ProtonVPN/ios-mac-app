@@ -23,6 +23,7 @@
 import Cocoa
 import vpncore
 import Foundation
+import Theme
 import Theme_macOS
 
 final class LoginViewController: NSViewController {

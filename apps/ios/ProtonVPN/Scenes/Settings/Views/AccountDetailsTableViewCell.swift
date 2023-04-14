@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import Theme
 import Theme_iOS
 
 final class AccountDetailsTableViewCell: UITableViewCell {
@@ -41,9 +42,9 @@ final class AccountDetailsTableViewCell: UITableViewCell {
         backgroundColor = .secondaryBackgroundColor()
         initialsRect.layer.cornerRadius = 8
         initialsRect.backgroundColor = .brandColor()
-        initialsText.textColor = ColorPaletteiOS.instance.White
-        username.textColor = ColorPaletteiOS.instance.TextNorm
-        plan.textColor = ColorPaletteiOS.instance.TextWeak
+        initialsText.textColor = .color(.text, .primary)
+        username.textColor = .color(.text)
+        plan.textColor = .color(.text, .weak)
         accessibilityIdentifier = "Account Details cell"
     }
 

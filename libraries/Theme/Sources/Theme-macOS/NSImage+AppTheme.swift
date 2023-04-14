@@ -18,6 +18,7 @@
 
 import Foundation
 import Cocoa
+import Theme
 
 public extension NSImage {
     func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {

@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import AppKit
+import Theme
 import Theme_macOS
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
