@@ -2,6 +2,7 @@
 github:mirror:commits:
   extends: .release-sync-commit-shared
   stage: github
+  interruptible: true
   variables:
     RELEASE_SYNC_TO_BRANCH: 'develop'
     RELEASE_SYNC_FROM_BRANCH: 'develop'
@@ -17,6 +18,7 @@ github:mirror:commits:
 github:mirror:tag:
   extends: .release-sync-tags-shared
   stage: github
+  interruptible: true
   variables:
     RELEASE_SYNC_FROM_BRANCH: 'develop'
   only:

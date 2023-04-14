@@ -7,6 +7,7 @@ i18n-crowdin-upload:
       I18N_SYNC_CROWDIN_PROJECT: 'apple-vpn'
       I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals,libraries/Search'
   extends: .i18n-sync-crowdin-shared-apple
+  interruptible: true
   before_script:
     - sh scripts/adjust-for-strings-export.sh
     - !reference [.i18n-sync-crowdin-shared-apple, before_script]
@@ -17,6 +18,7 @@ i18n-crowdin-download:
       I18N_COMMIT_CROWDIN_PROJECT: 'apple-vpn'
       I18N_EXTRACT_FROM_DIRECTORIES: 'libraries/vpncore,libraries/BugReport,libraries/Onboarding,libraries/Modals,libraries/Search'
   extends: .i18n-commit-locales-shared-apple
+  interruptible: true
   before_script:
     - sh scripts/adjust-for-strings-export.sh
     - !reference [.i18n-commit-locales-shared-apple, before_script]

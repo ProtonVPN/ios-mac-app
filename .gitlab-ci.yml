@@ -33,6 +33,7 @@ include:
 linting:commit-quality:
   stage: linting
   image: protonjohn/commitlint-docker:latest
+  interruptible: true
   script:
     - export NO_VIRTUALENV="YES"
     - scripts/git-cz setup
