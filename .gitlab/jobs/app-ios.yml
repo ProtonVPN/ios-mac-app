@@ -52,7 +52,7 @@ test:ui:app:ios:smoke:
     when: always
     paths:
       - fastlane/test_output/
-    expire_in: 3 days
+    expire_in: 2 days
     reports:
       junit:
         - fastlane/test_output/report.junit
@@ -79,7 +79,7 @@ test:ui:app:ios:all:
     when: always
     paths:
       - fastlane/test_output/
-    expire_in: 3 days
+    expire_in: 2 days
     reports:
       junit:
         - fastlane/test_output/report.junit

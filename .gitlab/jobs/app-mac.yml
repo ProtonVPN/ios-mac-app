@@ -19,7 +19,7 @@ test:unit:app:macos:
     when: always
     paths:
       - fastlane/test_output/
-    expire_in: 3 days
+    expire_in: 2 days
     reports:
       coverage_report:
         coverage_format: cobertura
@@ -44,7 +44,7 @@ test:ui:app:macos:all:
     when: always
     paths:
       - fastlane/test_output/
-    expire_in: 3 days
+    expire_in: 2 days
     reports:
       junit:
         - fastlane/test_output/report.junit
@@ -66,7 +66,7 @@ test:ui:app:macos:smoke:
     when: always
     paths:
       - fastlane/test_output/
-    expire_in: 3 days
+    expire_in: 2 days
     reports:
       junit:
         - fastlane/test_output/report.junit
