@@ -40,7 +40,7 @@ test:ui:app:macos:all:
     - fastlane macos_app_ui_test_all
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
   artifacts:
-    name: "macos-uitests-$CI_COMMIT_TAG"
+    name: "macos-uitests-all-$CI_COMMIT_TAG"
     when: always
     paths:
       - fastlane/test_output/
@@ -62,7 +62,7 @@ test:ui:app:macos:smoke:
     - fastlane macos_app_ui_test_smoke
     - scripts/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
   artifacts:
-    name: "macos-uitests-$CI_COMMIT_TAG"
+    name: "macos-uitests-smoke-$CI_COMMIT_TAG"
     when: always
     paths:
       - fastlane/test_output/
