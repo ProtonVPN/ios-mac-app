@@ -40,7 +40,9 @@ extension VpnManager {
                 }
 
                 self.disconnectLocalAgentNoSync()
-                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory, propertiesManager: self.propertiesManager)
+                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory,
+                                                           propertiesManager: self.propertiesManager,
+                                                           netShieldPropertyProvider: self.netShieldPropertyProvider)
                 self.localAgent?.delegate = self
                 self.localAgent?.connect(data: data, configuration: configuration)
             }
