@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Dependencies
 
 struct BugReportEnvironment {
     public weak var bugReportDelegate: BugReportDelegate?
@@ -27,3 +28,106 @@ struct BugReportEnvironment {
 }
 
 var CurrentEnv = BugReportEnvironment()
+
+// Let's break down BugReportDelegate into pieces, so we can inject only parts of it
+// into reducers. This way we can always change actual implementation of a closure
+// and nothing will be changed in places where it is used.
+// This time I'm not refactoring `BugReportDelegate` into something more modern
+// (I could use async/await for example), just to show how we can integrate with
+// `vintage` parts of the code that we do not want to update at this moment.
+
+enum BugReportEnvironmentError: Error {
+    case delegateNotSet
+}
+
+// MARK: - Send bug report
+
+extension DependencyValues {
+  var sendBugReport: @Sendable (BugReportResult) async throws -> Bool {
+    get { self[SendBugReportKey.self] }
+    set { self[SendBugReportKey.self] = newValue }
+  }
+}
+
+private enum SendBugReportKey: DependencyKey {
+    static let liveValue: @Sendable (BugReportResult) async throws -> Bool = { bugReport in
+        guard let delegate = CurrentEnv.bugReportDelegate else {
+            throw BugReportEnvironmentError.delegateNotSet
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            delegate.send(form: bugReport, result: {
+                switch $0 {
+                case .success:
+                    continuation.resume(with: .success(true))
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            })
+        }
+    }
+
+    static let previewValue: @Sendable (BugReportResult) async throws -> Bool = { _ in
+        try await Task.sleep(nanoseconds: UInt64(1 * Double(NSEC_PER_SEC)))
+        throw BugReportEnvironmentError.delegateNotSet // Return error
+//        return true // Success
+    }
+}
+
+// MARK: - Troubleshooting
+
+extension DependencyValues {
+  var troubleshoot: @Sendable () -> Void {
+    get { self[TroubleShootingKey.self] }
+    set { self[TroubleShootingKey.self] = newValue }
+  }
+}
+
+private enum TroubleShootingKey: DependencyKey {
+    static let liveValue: @Sendable () -> Void = {
+        CurrentEnv.bugReportDelegate?.troubleshootingRequired()
+    }
+}
+
+// MARK: - Finish
+
+extension DependencyValues {
+  var finishBugReport: @Sendable () -> Void {
+    get { self[FinishBugReportKey.self] }
+    set { self[FinishBugReportKey.self] = newValue }
+  }
+}
+
+private enum FinishBugReportKey: DependencyKey {
+    static let liveValue: @Sendable () -> Void = {
+        CurrentEnv.bugReportDelegate?.finished()
+    }
+}
+
+// MARK: - Pre-filled values
+
+extension DependencyValues {
+  var preFilledEmail: @Sendable () -> String? {
+    get { self[PrefilledEmailKey.self] }
+    set { self[PrefilledEmailKey.self] = newValue }
+  }
+}
+
+private enum PrefilledEmailKey: DependencyKey {
+    static let liveValue: @Sendable () -> String? = {
+        CurrentEnv.bugReportDelegate?.prefilledEmail
+    }
+}
+
+extension DependencyValues {
+  var preFilledUsername: @Sendable () -> String? {
+    get { self[PrefilledUsernameKey.self] }
+    set { self[PrefilledUsernameKey.self] = newValue }
+  }
+}
+
+private enum PrefilledUsernameKey: DependencyKey {
+    static let liveValue: @Sendable () -> String? = {
+        CurrentEnv.bugReportDelegate?.prefilledUsername
+    }
+}

@@ -33,28 +33,36 @@ class ViewController: UIViewController {
         bugReportDelegate = MockBugReportDelegate(
             model: model,
             sendCallback: { form, result in
-                self.statusLabel.text = "Sent"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    if form.email == "success@email.com" {
-                        result(.success(Void()))
-                    } else {
-                        result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
+                DispatchQueue.main.async {
+                    self.statusLabel.text = "Sent"
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        if form.email == "success@email.com" {
+                            result(.success(Void()))
+                        } else {
+                            result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
+                        }
                     }
                 }
             }, finishedCallback: {
-                print("finishedCallback")
-                self.statusLabel.text = "Finished"
-                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    print("finishedCallback")
+                    self.statusLabel.text = "Finished"
+                    self.dismiss(animated: true, completion: nil)
+                }
                 
             }, troubleshootingCallback: {
-                print("troubleshootingCallback")
-                self.statusLabel.text = "Troubleshooting"
-                self.dismiss(animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    print("troubleshootingCallback")
+                    self.statusLabel.text = "Troubleshooting"
+                    self.dismiss(animated: true, completion: nil)
+                }
             }, updateAppCallback: {
-                print("updateAppCallback")
-                self.updateSwitch.isOn = false
-                self.updateSwitchChanged()
-                self.statusLabel.text = "Update"
+                DispatchQueue.main.async {
+                    print("updateAppCallback")
+                    self.updateSwitch.isOn = false
+                    self.updateSwitchChanged()
+                    self.statusLabel.text = "Update"
+                }
             })
     }
     

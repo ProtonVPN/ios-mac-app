@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct Category: Codable, Identifiable {
+struct Category: Codable, Identifiable, Equatable {
     public let id = UUID()
 
     let label: String
