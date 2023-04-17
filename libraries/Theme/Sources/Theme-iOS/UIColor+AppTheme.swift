@@ -21,8 +21,6 @@ import SwiftUI
 import UIKit
 import Theme
 
-private let CP = ColorPaletteiOS.instance
-
 private extension AppTheme.Style {
     static var notificationStyles: Self {
         return [.danger, .warning, .success, .info]
@@ -32,25 +30,25 @@ private extension AppTheme.Style {
         assert(contains(.interactive))
         if contains(.strong) {
             if contains(.active) {
-                return CP.InteractionStrongPressed
+                return Asset.mobileInteractionStrongPressed.color
             } else {
-                return CP.InteractionStrong
+                return Asset.mobileInteractionStrong.color
             }
         } else if contains(.weak) {
             if contains(.active) {
-                return CP.InteractionWeakPressed
+                return Asset.mobileInteractionWeakPressed.color
             } else if contains(.disabled) {
-                return CP.InteractionWeakDisabled
+                return Asset.mobileInteractionWeakDisabled.color
             } else {
-                return CP.InteractionWeak
+                return Asset.mobileInteractionWeak.color
             }
         } else {
             if contains(.active) {
-                return CP.InteractionNormPressed
+                return Asset.mobileInteractionNormPressed.color
             } else if contains(.disabled) {
-                return CP.InteractionNormDisabled
+                return Asset.mobileInteractionNormDisabled.color
             } else {
-                return CP.InteractionNorm
+                return Asset.mobileInteractionNorm.color
             }
         }
     }
@@ -58,43 +56,43 @@ private extension AppTheme.Style {
     var notificationColor: UIColor {
         assert(!isDisjoint(with: .notificationStyles))
         if contains(.danger) {
-            return CP.NotificationError
+            return Asset.mobileNotificationError.color
         } else if contains(.warning) {
-            return CP.NotificationWarning
+            return Asset.mobileNotificationWarning.color
         } else if contains(.success) {
-            return CP.NotificationSuccess
+            return Asset.mobileNotificationSuccess.color
         } else if contains(.info) {
-            return CP.NotificationNorm
+            return Asset.mobileNotificationNorm.color
         }
         assertionFailure("notification color not handled")
-        return CP.NotificationNorm
+        return Asset.mobileNotificationNorm.color
     }
 
     var backgroundColor: UIColor {
         if contains(.weak) {
-            return CP.BackgroundSecondary
+            return Asset.mobileBackgroundSecondary.color
         } else if contains(.strong) {
-            return CP.BackgroundDeep
+            return Asset.mobileBackgroundDeep.color
         } else {
-            return CP.BackgroundNorm
+            return Asset.mobileBackgroundNorm.color
         }
     }
 
     var textColor: UIColor {
         if contains(.primary) {
-            return CP.White
+            return Asset.white.color
         } else if contains(.weak) {
-            return CP.TextWeak
+            return Asset.mobileTextWeak.color
         } else if contains(.hint) {
-            return CP.TextHint
+            return Asset.mobileTextHint.color
         } else if contains(.disabled) {
-            return CP.TextDisabled
+            return Asset.mobileTextDisabled.color
         } else if contains(.inverted) {
-            return CP.TextInverted
+            return Asset.mobileTextInverted.color
         } else if contains(.interactive) {
-            return CP.TextAccent
+            return Asset.mobileTextAccent.color
         } else {
-            return CP.TextNorm
+            return Asset.mobileTextNorm.color
         }
     }
 

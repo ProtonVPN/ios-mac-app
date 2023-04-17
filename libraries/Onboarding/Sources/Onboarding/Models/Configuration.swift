@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import Theme
 import Theme_iOS
 
 public struct Colors {
@@ -35,17 +36,17 @@ public struct Colors {
     let notification: UIColor
 
     public init() {
-        self.background = ColorPaletteiOS.instance.BackgroundNorm
-        self.buttonTitle = ColorPaletteiOS.instance.White
-        self.text = ColorPaletteiOS.instance.TextNorm
-        self.textAccent = ColorPaletteiOS.instance.TextAccent
-        self.brand = ColorPaletteiOS.instance.BrandNorm
-        self.weakText = ColorPaletteiOS.instance.TextWeak
-        self.activeBrandButton = ColorPaletteiOS.instance.BrandLighten20
-        self.secondaryBackground = ColorPaletteiOS.instance.BackgroundSecondary
-        self.textInverted = ColorPaletteiOS.instance.TextInverted
-        self.notification = ColorPaletteiOS.instance.NotificationNorm
-        self.weakInteraction = ColorPaletteiOS.instance.InteractionWeak
+        self.background = .color(.background)
+        self.buttonTitle = .color(.text, .primary)
+        self.text = .color(.text)
+        self.textAccent = .color(.text, .interactive)
+        self.brand = Asset.mobileBrandNorm.color
+        self.weakText = .color(.text, .weak)
+        self.activeBrandButton = Asset.mobileBrandLighten20.color
+        self.secondaryBackground = .color(.background, .weak)
+        self.textInverted = .color(.text, .inverted)
+        self.notification = .color(.background, .info)
+        self.weakInteraction = .color(.background, [.interactive, .weak])
     }
 }
 

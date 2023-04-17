@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import Theme
 import Theme_iOS
 
 public struct Constants {
@@ -38,13 +39,13 @@ public struct Colors {
     let iconWeak: UIColor
 
     public init() {
-        self.background = ColorPaletteiOS.instance.BackgroundNorm
-        self.text = ColorPaletteiOS.instance.TextNorm
-        self.brand = ColorPaletteiOS.instance.BrandNorm
-        self.weakText = ColorPaletteiOS.instance.TextWeak
-        self.separator = ColorPaletteiOS.instance.SeparatorNorm
-        self.secondaryBackground = ColorPaletteiOS.instance.BackgroundSecondary
-        self.iconWeak = ColorPaletteiOS.instance.IconWeak
+        self.background = .color(.background)
+        self.text = .color(.text)
+        self.brand = .color(.background, .interactive)
+        self.weakText = .color(.text, .weak)
+        self.separator = .color(.border)
+        self.secondaryBackground = .color(.background, .weak)
+        self.iconWeak = .color(.icon, .weak)
     }
 }
 

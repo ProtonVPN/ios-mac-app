@@ -50,7 +50,8 @@ struct OnboardingButton_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             ZStack {
-                ColorPaletteiOS.instance.BackgroundNorm.suColor.ignoresSafeArea()
+                Color.color(.background)
+                    .ignoresSafeArea()
                 VStack() {
                     OnboardingButton(geometry: geometry)
                 }

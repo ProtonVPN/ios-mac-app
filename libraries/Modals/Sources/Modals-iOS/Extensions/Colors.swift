@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import UIKit
+import Theme
 import Theme_iOS
 
 var colors = Colors()
@@ -43,14 +44,14 @@ public struct Colors {
     public let weakInteraction: UIColor
 
     public init() {
-        self.background = ColorPaletteiOS.instance.BackgroundNorm
-        self.secondaryBackground = ColorPaletteiOS.instance.BackgroundSecondary
-        self.buttonTitle = ColorPaletteiOS.instance.White
-        self.text = ColorPaletteiOS.instance.TextNorm
-        self.textAccent = ColorPaletteiOS.instance.TextAccent
-        self.brand = ColorPaletteiOS.instance.BrandNorm
-        self.weakText = ColorPaletteiOS.instance.TextWeak
-        self.weakInteraction = ColorPaletteiOS.instance.InteractionWeak
+        self.background = .color(.background)
+        self.secondaryBackground = .color(.background, .weak)
+        self.buttonTitle = .color(.text, .primary)
+        self.text = .color(.text)
+        self.textAccent = Asset.mobileTextAccent.color
+        self.brand = Asset.mobileBrandNorm.color
+        self.weakText = .color(.text, .weak)
+        self.weakInteraction = .color(.background, [.interactive, .weak])
     }
 }
 
