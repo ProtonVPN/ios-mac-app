@@ -146,7 +146,7 @@ final class LocalAgentImplementation: LocalAgent {
     private var statusTimer: BackgroundTimer?
     private var notificationTokens = [NotificationToken]()
 
-    private var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
+    var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
     private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
 
     init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
