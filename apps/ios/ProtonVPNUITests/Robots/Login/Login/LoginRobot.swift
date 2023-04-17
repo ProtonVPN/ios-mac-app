@@ -21,7 +21,7 @@ fileprivate let errorBannerMessage = "Email address already used."
 fileprivate let assignConnectionErrorBannerMessage = "subuserAlertDescription1"
 fileprivate let okButton = "OK"
 fileprivate let assignVPNConnectionButton = "Enable VPN connections"
-fileprivate let loginButton = "Login again"
+fileprivate let loginButton = "Sign in again"
 
 class LoginRobot: CoreElements {
     

@@ -133,7 +133,7 @@ class ProtonVPNUITests: XCTestCase {
         }
         
         tabBarsQuery.buttons["Settings"].tap()
-        let logoutButton = app.buttons["Log Out"]
+        let logoutButton = app.buttons["Sign out"]
         app.swipeUp() // For iphone SE small screen
         logoutButton.tap()
     }

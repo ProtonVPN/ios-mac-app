@@ -123,7 +123,7 @@ class ProtonVPNUITests: XCTestCase {
     }
 
     func tryLoggingOut() -> Bool {
-        let logoutButton = app.menuBars.menuItems["Log Out"]
+        let logoutButton = app.menuBars.menuItems["Sign out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
             return false
         }
