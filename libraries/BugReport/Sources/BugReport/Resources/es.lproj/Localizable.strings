@@ -5,16 +5,16 @@
 "_br_2_button_cancel" = "Cancelar";
 
 /* ReportBug 2nd step (Quick fixes) button to go to the next step */
-"_br_2_button_next" = "Contacta con nosotros";
+"_br_2_button_next" = "Contáctanos";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
 "_br_2_footer" = "¿No ha funcionado?";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
-"_br_2_subtitle" = "Estos consejos podrían ayudarte a resolver tu poblema más rápidamente.";
+"_br_2_subtitle" = "Estos consejos podrían ayudarte a resolver tu problema más rápidamente.";
 
 /* ReportBug 2nd step (Quick fixes) title */
-"_br_2_title" = "Correcciones rápidas";
+"_br_2_title" = "Soluciones rápidas";
 
 /* ReportBug 3rd step (form) send button */
 "_br_3_button_send" = "Enviar informe";
@@ -26,10 +26,10 @@
 "_br_3_email" = "Correo electrónico";
 
 /* ReportBug 3rd step (form) logs description */
-"_br_3_logs_description" = "Un registro es un tipo de archivo que nos muestra las acciones que realizaste y que condujeron a un error. Solo los utilizaremos para ayudar a nuestros ingenieros a solucionar errores.";
+"_br_3_logs_description" = "Un registro es un tipo de archivo que nos muestra las acciones que has realizado y que te han conducido a un error. Solo los utilizaremos para ayudar a nuestros ingenieros a solucionar los errores.";
 
 /* ReportBug 3rd step (form): message shown if user disabled logs */
-"_br_3_logs_disabled" = "Los registros de errores nos ayudan a llegar al fondo de tu problema. Si no los incluyes, es posible que no podamos investigar a fondo.";
+"_br_3_logs_disabled" = "Los registros de errores nos ayudan a entender las razones de tu problema. Si no los incluyes, es posible que no podamos investigar completamente tu problema.";
 
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Enviar registros de errores";
@@ -44,7 +44,7 @@
 "_br_failure_button_troubleshoot" = "Resolución de problemas";
 
 /* ReportBug success window: title text */
-"_br_failure_title" = "Tu informe no pudo ser enviado";
+"_br_failure_title" = "No se ha enviado tu informe.";
 
 /* ReportBug success window: button */
 "_br_success_button" = "Entendido";

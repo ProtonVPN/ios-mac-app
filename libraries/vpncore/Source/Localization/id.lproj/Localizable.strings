@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Berbagai fitur mutakhir";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
+"_ae_vpn_info_not_received" = "Tidak dapat menerima informasi VPN";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nama pengguna atau kata sandi salah";
@@ -89,7 +89,7 @@
 "_already_have_account" = "Saya sudah memiliki akun";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN selalu-nyala";
+"_always_on_vpn" = "VPN always-on";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "VPN Selalu-Aktif membangun kembali sambungan aman VPN dengan segera dan otomatis. Demi keamanan Anda, fitur ini selalu aktif.";
@@ -192,6 +192,12 @@
 
 /* Profile create/change form */
 "_connection_settings" = "Pengaturan sambungan";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Koneksi terputus";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "terputus";
 
 /* Text addressing to contact costumer support on several sites of the app */
 "_contact_our_support" = "Hubungi layanan pelanggan kami";
@@ -319,6 +325,9 @@
 /* Common word */
 "_done" = "Selesai";
 
+/* (No Comment) */
+"_dw-partner-2022_partners_title" = "Mitra kami";
+
 /* MacOS: Settings -> General: name of field. */
 "_early_access" = "Akses Dini";
 
@@ -392,7 +401,7 @@
 "_error_loads" = "Tidak dapat memperbarui muatan server";
 
 /* (No Comment) */
-"_error_mitm_description" = "Sistem gagal memvalidasi sertifikat TLS pada saat mencoba terhubung ke API Proton VPN. Koneksi internet Anda mungkin sedang diawasi. Agar data Anda tetap aman, kami telah mencegah aplikasi yang bersangkutan untuk dapat mengakses API Proton.\nUntuk masuk atau mengakses akun Anda, berpindahlah ke jaringan baru dan cobalah untuk kembali terhubung.";
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Koneksi tidak aman";
@@ -404,7 +413,7 @@
 "_error_modulus_signature" = "Modulus tanda tangan kosong";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Mohon masuk dengan akun yang hendak Anda tingkatkan agar kami dapat menyelesaikan pembelian Anda.";
+"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Peningkatan paket langganan Anda berhasil. Silahkan luncurkan ulang aplikasi untuk mendapatkan manfaat dari paket layanan baru Anda.";
@@ -431,7 +440,7 @@
 "_error_sign_in_again" = "Maaf, terdapat sesuatu yang salah. Silakan masuk kembali.";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Akun Proton Mail Anda telah dikonfigurasi untuk penggunaan VPN. Silakan masuk dengan menggunakan info login Anda.";
+"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Tidak dapat mengurai info langganan";
@@ -455,16 +464,16 @@
 "_error_unknown_title" = "Kesalahan yang tidak diketahui";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operation canceled";
+"_error_user_cancelled" = "Operasi dibatalkan";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Pembuatan akun gagal";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Kredensial pengguna telah kedaluwarsa. Silakan masuk";
+"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Kredensial pengguna hilang. Tidak dapat masuk";
+"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Kami tidak dapat memverifikasi bahwa Anda manusia. Silahkan coba kembali atau beli paket premium.";
@@ -585,9 +594,6 @@
 
 /* MacOS: button in login screen */
 "_forgot_username" = "Lupa Nama Pengguna";
-
-/* Used instead of price for free plans. */
-"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 Negara";
@@ -788,19 +794,19 @@
 "_locations_plus" = "Lokasi Plus";
 
 /* iOS: Login button in several places */
-"_log_in" = "Masuk";
+"_log_in" = "Sign in";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Silakan masuk untuk memulai";
+"_log_in_to_use_widget" = "Please sign in to get started";
 
 /* iOS: button in settings screen */
-"_log_out" = "Keluar";
+"_log_out" = "Sign out";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Dengan keluar dari akun, sesi VPN Anda akan berakhir.";
+"_log_out_warning" = "Signing out will end your VPN session.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Dengan keluar dari aplikasi, koneksi VPN yang sedang aktif akan terputus. Apakah Anda ingin melanjutkan?";
+"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
 
 /* MacOS: Login button */
 "_login" = "Masuk";
@@ -869,7 +875,7 @@
 "_menu_hide_self" = "Sembunyikan Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Keluar";
+"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimalkan";
@@ -902,7 +908,7 @@
 "_moderate_nat_title" = "NAT Moderat";
 
 /* Display more information */
-"_more_info" = "Learn more";
+"_more_info" = "Pelajari lebih lanjut";
 
 /* Label in Plan information */
 "_most_popular" = "Terpopuler";
@@ -973,25 +979,37 @@
 /* (No Comment) */
 "_netshield_alert_upgrade_description" = "NetShield meningkatkan privasi Anda dengan memblokir iklan dan pelacak.";
 
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Lindungi diri Anda dari iklan, malware, dan pelacak pada berbagai situs web dan aplikasi. Apabila situs web yang ingin Anda kunjungi tidak termuat, cobalah untuk menonaktifkan NetShield.\nPelajari lebih lanjut";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Lebih lanjut";
+
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Blokir malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokir malware, iklan, & program pelacak";
 
-/* Settings -> Netshield: Off */
+/* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Nonaktifkan";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Aktif";
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Pemblokir Malware & Iklan";
 
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Data\ndisimpan";
+
 /* (No Comment) */
 "_netshield_title_tooltip" = "Memblokir iklan, pelacak, dan malware";
 
-/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Blokir iklan, pelacak, dan malware pada berbagai situs web dan aplikasi";
 
-/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
 "_netshield_upsell_title" = "Jelajahi internet tanpa iklan dengan NetShield";
 
 /* iOS: quick connect widget */
@@ -1049,7 +1067,7 @@
 "_onboarding_mac_usage_stats" = "Bagikan statistik penggunaan anonim. Statistik ini dapat membantu kami untuk menangkal pemblokiran VPN dan meningkatkan performa aplikasi.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Tampilkan Proton VPN untuk masuk...";
+"_open_app_to_log_in" = "Show Proton VPN to sign in...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Log OpenVPN";
@@ -1205,16 +1223,16 @@
 "_public_ip" = "IP Publik";
 
 /* Several places in both iOS and Mac apps */
-"_quick_connect" = "Sambungkan Cepat";
+"_quick_connect" = "Quick Connect";
 
 /* MacOS: Settings -> Connection: description. */
-"_quick_connect_tooltip" = "Tombol Sambung Cepat menyambungkan Anda ke profil yang terpilih";
+"_quick_connect_tooltip" = "Tombol Quick Connect akan menyambungkan Anda ke profil yang dipilih";
 
 /* MacOS app tour: quick connect description */
 "_quick_connect_tour_description" = "Menghubungkan Anda ke server tercepat yang tersedia bagi Anda secara otomatis.";
 
 /* MacOS app tour: quick connect title */
-"_quick_connect_tour_title" = "Sambungkan Cepat";
+"_quick_connect_tour_title" = "Quick Connect";
 
 /* (No Comment) */
 "_quick_settings_get_plus" = "Pilih Plus";
@@ -1223,7 +1241,7 @@
 "_quick_settings_killSwitch_description" = "Menonaktifkan internet Anda sepenuhnya apabila koneksi VPN terputus untuk mencegah kebocoran IP.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Apabila Anda tidak dapat tersambung ke perangkat lain yang terdapat pada jaringan lokal Anda, cobalah untuk nonaktifkan kill switch.";
+"_quick_settings_killSwitch_note" = "Apabila Anda tidak dapat tersambung ke perangkat lain yang terdapat pada jaringan lokal Anda, cobalah untuk menonaktifkan kill switch.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Jelajahi internet tanpa iklan dan malware.";
@@ -1301,7 +1319,7 @@
 "_release_date" = "Tanggal rilis:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Ingat Saya";
+"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "Laporkan";
@@ -1421,7 +1439,7 @@
 "_select_verification_option" = "Silakan pilih opsi verifikasi untuk melanjutkan:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Untuk mencegah penyalahgunaan, Anda harus memverifikasi bahwa Anda manusia.";
+"_select_verification_option_top_message" = "To continue, please verify that you are human.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1565,7 +1583,7 @@
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "Langkah ini akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "Akun ini sedang tidak memiliki koneksi VPN yang aktif. Untuk mulai menggunakan Proton VPN, silakan hubungi administrator Anda.";
@@ -1574,7 +1592,7 @@
 "_subuser_alert_enable_connections_button" = "Aktifkan koneksi VPN";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Masuk lagi";
+"_subuser_alert_login_button" = "Sign in again";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Terima kasih karena telah meningkatkan ke Business/Visionary";
@@ -1591,6 +1609,18 @@
 /* (No Comment) */
 "_sysex_cannot_enable" = "Tidak dapat mengaktifkan modul Ekstensi Sistem";
 
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "Untuk dapat menggunakan Proton VPN, Anda perlu untuk mengaktifkan **protokol VPN khusus** pada perangkat Mac Anda.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "Protokol khusus memungkinkan koneksi VPN yang lebih cepat dan aman. Di samping itu, protokol ini juga diperlukan untuk menghubungkan perangkat Anda ke sebagian besar server Proton VPN.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "Untuk melanjutkan, klik **Buka Pengaturan Sistem** dan ikuti instruksi yang tertera pada video yang muncul di layar ini.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "Untuk melanjutkan, klik **Buka Preferensi Keamanan** dan ikuti instruksi yang tertera pada video yang muncul di layar ini.";
+
 /* (No Comment) */
 "_sysex_enabled_description" = "Konfigurasi selesai. Anda kini dapat menjelajah internet lebih cepat dengan berbagai teknologi VPN terbaik.";
 
@@ -1600,70 +1630,20 @@
 /* (No Comment) */
 "_sysex_error_description" = "Terdapat kesalahan dalam proses instalasi modul System Extension.\nUntuk menyelesaikan masalah ini, instal ulang Proton VPN dan pastikan Proton VPN Anda terpasang pada folder Applications. Di samping itu, Anda juga dapat menghubungi layanan dukungan kami.";
 
-/* OpenVPN /  WireGuard / System Extensions */
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Buka Preferensi Keamanan";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "Buka Pengaturan Sistem";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Atur Proton VPN";
+
+/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
 
-/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Anda akan dihadapkan dengan dua kotak dialog. Klik \"Open Security Preferences\".\nSebagai alternatif, klik di sini untuk membuka menu preferensi.";
-
-/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Anda akan dihadapkan dengan dialog keamanan. Klik \"Open Security Preferences\".\nSebagai alternatif, klik di sini untuk membuka menu preferensi.";
-
-/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
-"_sysex_wizard_step1_description_go_to_system_preferences" = "Buka System Preferences: klik di sini.\nLalu, tuju panel \"Security & Privacy\".";
-
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
-"_sysex_wizard_step1_description_link" = "klik di sini";
-
-/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Buka Preferensi Keamanan";
-
-/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Buka Preferensi Keamanan";
-
-/* System extension wizard in mac: Step nr.2 description */
-"_sysex_wizard_step2_description" = "Klik gambar kunci untuk menerapkan perubahan";
-
-/* System extension wizard in mac: Step nr.2 title */
-"_sysex_wizard_step2_title" = "Buka kunci untuk menerapkan perubahan";
-
-/* System extension wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Masukkan kredensial macOS Anda untuk merampungkan proses otentikasi";
-
-/* System extension wizard in mac: Step nr.3 title */
-"_sysex_wizard_step3_title" = "Masukkan kredensial";
-
-/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Klik tombol \"Rincian...\"";
-
-/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Klik tombol \"Izinkan\"";
-
-/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
-"_sysex_wizard_step4_title" = "Tombol \"Rincian...\"";
-
-/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "Tombol \"Izinkan\"";
-
-/* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Pilih kedua item milik Proton VPN untuk mengaktifkan protokol khusus dan klik \"OK\" setelahnya";
-
-/* System extension wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Memilih item milik Proton VPN";
-
-/* System extension wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Untuk dapat melakukan tindakan ini, ikuti langkah-langkah berikut:";
-
-/* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "Anda kini telah siap untuk menggunakan Proton VPN yang didukung oleh berbagai teknologi VPN tercepat dan termutakhir saat ini!";
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_title" = "Nikmati koneksi tercepat dengan mengaktifkan protokol-protokol khusus";
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_window_title" = "Mengaktifkan protokol-protokol khusus";
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Tutorial Ekstensi Sistem";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Notifikasi Sistem";
@@ -1682,12 +1662,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "Server TEST";
-
-/* (No Comment) */
-"_tier_free" = "Gratis";
-
-/* MacOS: connecting overlay */
-"_timed_out" = "waktu habis";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Terdapat aplikasi lain yang diduga mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, berpindahlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
@@ -1816,7 +1790,7 @@
 "_update_required_update" = "Perbarui";
 
 /* Button in many places in both iOS and MacOS apps */
-"_upgrade" = "Tingkatkan Akun";
+"_upgrade" = "Tingkatkan";
 
 /* (No Comment) */
 "_upgrade_again" = "TINGKATKAN LAGI";
@@ -1936,13 +1910,13 @@
 "_vpnauth_too_many_certs_title" = "Kesalahan autentikasi";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "Anda belum masuk ke Proton VPN. Buka aplikasi Proton VPN dan masuk.";
+"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Peringatan";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Terdapat sesi Proton VPN milik pengguna lain yang sedang aktif pada perangkat ini. Apabila Anda masuk, sesi ini ini akan secara otomatis berakhir. Apakah Anda ingin melanjutkan?";
+"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.";
@@ -1959,17 +1933,8 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "SELAMAT DATANG!";
 
-/* (No Comment) */
-"_wgks_description" = "Kill switch mencegah VPN untuk dapat terhubung ke Internet. Hal ini kemungkinan disebabkan oleh sistem operasi Anda yang tidak kompatibel (macOS Catalina 10.15).\n\nUntuk dapat menyelesaikan masalah ini, perbarui sistem operasi Anda ke versi terbaru.\n\nDi samping itu, Anda juga dapat beralih ke protokol OpenVPN atau menonaktifkan kill switch.";
-
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Nonaktifkan kill switch";
-
-/* (No Comment) */
-"_wgks_ovpn" = "Beralih ke OpenVPN";
-
-/* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill switch mencegah VPN untuk dapat terhubung ke internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";
@@ -1984,7 +1949,7 @@
 "apply_coupon" = "Terapkan";
 
 /* Button to confirm two-factor or recovery code in login */
-"authenticate" = "Otentikasi";
+"authenticate" = "Autentikasi";
 
 /* Banner shown after coupon is applied */
 "coupon_applied" = "Kupon telah berhasil digunakan.";

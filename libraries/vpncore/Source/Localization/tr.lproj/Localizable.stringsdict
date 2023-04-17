@@ -34,6 +34,42 @@
 			<string>%d+ ülke</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Engellenen
+reklam</string>
+			<key>other</key>
+			<string>Engellenen
+reklam</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Durdurulan
+izleyici</string>
+			<key>other</key>
+			<string>Durdurulan
+izleyici</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

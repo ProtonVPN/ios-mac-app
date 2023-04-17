@@ -34,6 +34,42 @@
 			<string>+%d países</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Ad
+blocked</string>
+			<key>other</key>
+			<string>Ads
+blocked</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Tracker
+stopped</string>
+			<key>other</key>
+			<string>Trackers
+stopped</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

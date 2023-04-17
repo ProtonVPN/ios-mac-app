@@ -30,6 +30,36 @@
 			<string>%d negara</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Iklan
+diblokir</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>other</key>
+			<string>Pelacak
+dihentikan</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

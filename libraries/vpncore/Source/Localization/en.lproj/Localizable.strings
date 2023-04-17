@@ -106,13 +106,13 @@
 "_vpn_protocol_not_supported_text" = "The VPN protocol is not available for the connection you have selected. To connect, try changing the protocol or server.";
 
 /* iOS: button in settings screen */
-"_log_out" = "Log Out";
+"_log_out" = "Sign out";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Logging out will end your VPN session.";
+"_log_out_warning" = "Signing out will end your VPN session.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Logging out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Changing protocols will end your current VPN session.";
@@ -267,7 +267,7 @@
 "_technical_details" = "Technical Details";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to log in...";
+"_open_app_to_log_in" = "Show Proton VPN to sign in...";
 
 /* Main mac app menu item */
 "_upgrade_to_plus" = "Upgrade to Plus";
@@ -333,10 +333,10 @@
 "_login" = "Sign in";
 
 /* iOS: Login button in several places */
-"_log_in" = "Log In";
+"_log_in" = "Sign in";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Remember Login";
+"_remember_login" = "Remember sign in";
 
 /* MacOS: label in login and settings screens */
 "_start_on_boot" = "Start on Boot";
@@ -363,7 +363,7 @@
 "_sign_up" = "Sign Up";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the log in process will cause the current session to end. Do you want to continue?";
+"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* iOS: placeholder for email field in signup and email verification screens */
 "_enter_email_address" = "Enter email address";
@@ -690,10 +690,10 @@
 "_error_vpn_session_is_active" = "Proton VPN session is active";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to login";
+"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please log in";
+"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
 
 /* VPN credentials can't be loaded error */
 "_error_vpn_credentials_missing" = "VPN credentials are missing from the keychain";
@@ -869,7 +869,7 @@
 "_protonvpn_macos" = "Proton VPN macOS";
 
 "_error_mitm_title" = "Insecure connection";
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
 "_error_mitm_vpn_description" = "The TLS certificate validation failed when trying to connect to the VPN server. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.";
 
 
@@ -1311,8 +1311,8 @@
 "_usage_statistics" = "Usage statistics";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please log in to get started";
-"_vpnstatus_not_loggedin" = "You are not logged in to Proton VPN. Open the Proton VPN app and sign in.";
+"_log_in_to_use_widget" = "Please sign in to get started";
+"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
 
 // Report bug
 
@@ -1379,7 +1379,7 @@
 "_menu_show_all" = "Show All";
 
 /* Main mac app menu item */
-"_menu_logout" = "Log Out";
+"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_quit" = "Quit Proton VPN";
@@ -1690,10 +1690,10 @@
 
 "_subuser_alert_title" = "Thanks for upgrading to Business/Visionary";
 "_subuser_alert_description1" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
 "_subuser_alert_description3" = "There is currently no VPN connection enabled for this account. To start your journey with Proton VPN please contact your administrator.";
 "_subuser_alert_enable_connections_button" = "Enable VPN connections";
-"_subuser_alert_login_button" = "Login again";
+"_subuser_alert_login_button" = "Sign in again";
 
 // Moderate NAT
 

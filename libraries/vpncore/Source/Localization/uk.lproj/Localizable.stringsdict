@@ -42,6 +42,58 @@
 			<string>%d+ країн</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Оголошення
+заблоковано</string>
+			<key>many</key>
+			<string>Оголошень
+заблоковано</string>
+			<key>one</key>
+			<string>Оголошення
+заблоковано</string>
+			<key>other</key>
+			<string>Оголошень
+заблоковано</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Елементи
+стеження
+зупинено</string>
+			<key>many</key>
+			<string>Елементів
+стеження
+зупинено</string>
+			<key>one</key>
+			<string>Елемент
+стеження
+зупинено</string>
+			<key>other</key>
+			<string>Елементів
+стеження
+зупинено</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
