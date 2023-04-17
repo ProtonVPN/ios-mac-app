@@ -14,11 +14,16 @@ let package = Package(
             name: "BugReport",
             targets: ["BugReport"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(name: "swift-composable-architecture",
+                 url: "https://github.com/pointfreeco/swift-composable-architecture",
+                 branch: "prerelease/1.0"
+                )
+    ],
     targets: [
         .target(
             name: "BugReport",
-            dependencies: [],
+            dependencies: [.product(name: "ComposableArchitecture", package: "swift-composable-architecture")],
             resources: [
                 .process("Resources")
             ]

@@ -27,7 +27,7 @@ struct StepProgress: View {
     let colorText: Color
     let colorSecondary: Color
 
-    var barHeight: CGFloat = 2
+    var barHeight: CGFloat = 4
     var font: Font = .system(size: 11)
 
     var body: some View {
@@ -43,6 +43,7 @@ struct StepProgress: View {
                 }
             }
             .frame(height: barHeight)
+            .cornerRadius(16)
 
             Text(LocalizedString.stepOf(Int(step), Int(steps)))
                 .font(font)
@@ -50,6 +51,7 @@ struct StepProgress: View {
                 .padding(.horizontal)
 
         }
+        .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
     }
 }
 

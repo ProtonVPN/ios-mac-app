@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct Suggestion: Codable, Identifiable {
+struct Suggestion: Codable, Identifiable, Equatable {
     public let id = UUID()
 
     let text: String

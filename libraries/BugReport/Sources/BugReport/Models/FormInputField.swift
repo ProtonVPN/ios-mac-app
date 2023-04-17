@@ -19,7 +19,7 @@
 import Foundation
 
 /// Struct for holding InputField that defines the field in the form and resulting value that can be changed by the user.
-struct FormInputField {
+struct FormInputField: Equatable {
     let inputField: InputField
     var stringValue: String = ""
     var boolValue: Bool = false

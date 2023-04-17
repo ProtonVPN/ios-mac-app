@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import ComposableArchitecture
 
 public protocol BugReportCreator {
     func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> UIViewController?
@@ -39,7 +40,9 @@ public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:
         delegate.checkUpdateAvailability()
 
         let controller = UIHostingController(
-            rootView: BugReportiOSView()
+            rootView: WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: delegate.model.categories),
+                                                     reducer: WhatsTheIssueFeature()._printChanges()
+                                                    )) //BugReportiOSView()
                 .environment(\.colors, colors)
                 .preferredColorScheme(.dark)
         )
