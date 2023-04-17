@@ -42,6 +42,54 @@
 			<string>%d+ zemí</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Reklamy
+zablokovány</string>
+			<key>many</key>
+			<string>Reklam
+zablokováno</string>
+			<key>one</key>
+			<string>Reklama
+zablokována</string>
+			<key>other</key>
+			<string>Reklam
+zablokováno</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>Sledovací prvky
+zastaveny</string>
+			<key>many</key>
+			<string>Sledovacích prvků
+zastaveno</string>
+			<key>one</key>
+			<string>Sledovací prvek
+zastaven</string>
+			<key>other</key>
+			<string>Sledovacích prvků
+zastaveno</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>

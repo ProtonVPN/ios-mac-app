@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Funcții avansate";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
+"_ae_vpn_info_not_received" = "Nu s-au putut obține informații VPN";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Nume de utilizator sau parolă incorecte";
@@ -193,6 +193,12 @@
 /* Profile create/change form */
 "_connection_settings" = "Setări conexiune";
 
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "Conexiunea a expirat";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "expirată";
+
 /* Text addressing to contact costumer support on several sites of the app */
 "_contact_our_support" = "Contactați asistența";
 
@@ -319,6 +325,9 @@
 /* Common word */
 "_done" = "Gata";
 
+/* (No Comment) */
+"_dw-partner-2022_partners_title" = "Partenerii noștri";
+
 /* MacOS: Settings -> General: name of field. */
 "_early_access" = "Acces timpuriu";
 
@@ -392,7 +401,7 @@
 "_error_loads" = "Nu se poate actualiza încărcarea serverelor";
 
 /* (No Comment) */
-"_error_mitm_description" = "Validarea certificatului TLS a eșuat când s-a încercat conectarea la API-ul Proton VPN. Conexiunea la internet vă poate fi monitorizată. Pentru a vă păstra securitatea datelor, împiedicăm aplicația să acceseze API-ul Proton VPN.\nPentru a vă conecta și accesa contul, comutați la o rețea nouă și încercați să vă reconectați.";
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Conexiune nesigură";
@@ -404,7 +413,7 @@
 "_error_modulus_signature" = "Semnătura modulului este goală";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Conectați-vă la contul Proton Mail pentru care modificați tipul de abonament pentru a putea finaliza tranzacția.";
+"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Trecerea la noul tip de abonament a reușit. Reporniți aplicația pentru a beneficia de noul plan de servicii.";
@@ -431,7 +440,7 @@
 "_error_sign_in_again" = "Ceva nu a funcționat bine. Reconectați-vă.";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Contul Proton Mail este deja configurat pentru VPN. Autentificați-vă cu datele de autentificare existente.";
+"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Nu se pot prelua informațiile abonamentului";
@@ -455,16 +464,16 @@
 "_error_unknown_title" = "Eroare necunoscută";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operation canceled";
+"_error_user_cancelled" = "Operație anulată";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Crearea contului a eșuat";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Acreditările utilizatorului au expirat. Reautentificați-vă.";
+"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Acreditările utilizatorului lipsesc. Nu se poate autentifica.";
+"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nu am reușit să verificăm dacă sunteți o persoană. Reîncercați sau achiziționați un abonament premium.";
@@ -585,9 +594,6 @@
 
 /* MacOS: button in login screen */
 "_forgot_username" = "Utilizator uitat";
-
-/* Used instead of price for free plans. */
-"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 țări";
@@ -788,19 +794,19 @@
 "_locations_plus" = "Locuri Plus";
 
 /* iOS: Login button in several places */
-"_log_in" = "Autentificare";
+"_log_in" = "Sign in";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Autentificați-vă pentru a începe";
+"_log_in_to_use_widget" = "Please sign in to get started";
 
 /* iOS: button in settings screen */
-"_log_out" = "Deconectare";
+"_log_out" = "Sign out";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Deconectarea va încheia sesiunea de VPN.";
+"_log_out_warning" = "Signing out will end your VPN session.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Deconectântu-vă din aplicație veți deconecta conexiunea VPN activă. Doriți să continuați?";
+"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
 
 /* MacOS: Login button */
 "_login" = "Conectare";
@@ -869,7 +875,7 @@
 "_menu_hide_self" = "Ascundere Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Deconectare";
+"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Micșorare";
@@ -902,7 +908,7 @@
 "_moderate_nat_title" = "NAT moderat";
 
 /* Display more information */
-"_more_info" = "Learn more";
+"_more_info" = "Detalii";
 
 /* Label in Plan information */
 "_most_popular" = "Cel mai popular";
@@ -973,25 +979,37 @@
 /* (No Comment) */
 "_netshield_alert_upgrade_description" = "NetShield vă mărește intimitatea blocând reclamele și monitorizarea.";
 
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Protejați-vă de reclame, programe malițioase și urmărirea de pe paginile web și din aplicații. Dacă paginile web nu se încarcă, încercați cu NetShield dezactivat.\nDetalii.";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Detalii";
+
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Blocare malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blocare malware, reclame și urmăritori";
 
-/* Settings -> Netshield: Off */
+/* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Oprit";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Activat";
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Blocare malware și reclame";
 
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Date\nsalvate";
+
 /* (No Comment) */
 "_netshield_title_tooltip" = "Blocare reclame, urmăritori și malware";
 
-/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell subtitle */
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
 "_netshield_upsell_subtitle" = "Blocați reclame, urmăritori și malware pe pagini web și aplicații";
 
-/* Settings -> Netshield and Countries -> Connection: Netshield Upsell cell title */
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
 "_netshield_upsell_title" = "Navigați fără reclame cu NetShield";
 
 /* iOS: quick connect widget */
@@ -1049,7 +1067,7 @@
 "_onboarding_mac_usage_stats" = "Partajare anonimă statistici de utilizare. Asta ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Afișare Proton VPN pentru conectare...";
+"_open_app_to_log_in" = "Show Proton VPN to sign in...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Jurnale OpenVPN";
@@ -1083,9 +1101,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "Servere P2P";
-
-/* (No Comment) */
-"_p2p_title" = "P2P / BitTorrent";
 
 /* Plan upgrade required alert */
 "_paid_required" = "E necesar un plan Proton VPN cu plată";
@@ -1204,9 +1219,6 @@
 /* (No Comment) */
 "_protocol" = "Protocol";
 
-/* (No Comment) */
-"_protonvpn_plus" = "Proton VPN PLus";
-
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP public: %@";
 
@@ -1307,7 +1319,7 @@
 "_release_date" = "Dată de lansare:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Memorare autentificare";
+"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "Raportare";
@@ -1427,7 +1439,7 @@
 "_select_verification_option" = "Selectați o opțiune de verificare pentru continuare:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Pentru a preveni abuzurile trebuie să dovediți că sunteți o persoană.";
+"_select_verification_option_top_message" = "To continue, please verify that you are human.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1571,7 +1583,7 @@
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "Acest pas va dura doar câteva minute. După aceasta veți putea să vă conectați și să vă protejați toate dispozitivele.";
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "Momentan nu există nici o conexiune VPN activată pentru acest cont. Pentru a începe să utilizați Proton VPN contactați-vă administratorul contului.";
@@ -1580,7 +1592,7 @@
 "_subuser_alert_enable_connections_button" = "Activare conexiuni VPN";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Reconectați-vă";
+"_subuser_alert_login_button" = "Sign in again";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Vă mulțumim că ați trecut la planul Business / Visionary";
@@ -1597,6 +1609,18 @@
 /* (No Comment) */
 "_sysex_cannot_enable" = "Nu se poate activa extensia de sistem.";
 
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "Pentru a utiliza Proton VPN, trebuie să activați **protocoale personale VPN** în Mac.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "Protocoalele personale permit conexiuni mai rapide și mai sigure și va trebui să le activați pentru a vă conecta la majoritatea serverelor Proton.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "Pentru a continua, faceți clic pe **Deschidere setări sistem**, apoi urmați instrucțiunile video de pe acest ecran.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "Pentru a continua, faceți clic pe **Deschidere preferințe securitate**, apoi urmați instrucțiunile video de pe acest ecran.";
+
 /* (No Comment) */
 "_sysex_enabled_description" = "Configurare finalizată. Acum puteți naviga pe internet mai rapid cu cele mai bune tehnologii VPN.";
 
@@ -1606,70 +1630,20 @@
 /* (No Comment) */
 "_sysex_error_description" = "A apărut o eroare la instalarea extensiei de sistem.\nReinstalați Proton VPN și asigurați-vă că se află în folderul „Aplicații”, pentru a rezolva problema. Alternativ, contactați asistența noastră tehnică.";
 
-/* OpenVPN /  WireGuard / System Extensions */
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Deschidere preferințe securitate";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "Deschidere setări sistem";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Setare Proton VPN";
+
+/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN necesită încărcarea unei extensii de sistem pentru a beneficia de Smart Protocol, OpenVPN sau WireGuard.";
 
-/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Vor apărea două dialoguri. Faceți clic pe „Deschidere preferințe securitate”.\nSau, faceți clic aici pentru a deschide preferințele.";
-
-/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "A apărut un dialog de securitate. Faceți clic pe „Deschidere preferințe securitate”.\nSau, faceți clic aici pentru a deschide preferințele.";
-
-/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
-"_sysex_wizard_step1_description_go_to_system_preferences" = "Deschidere preferințe securitate: clic aici.\nApoi, accesați panoul „Securitate și intimitate”.";
-
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
-"_sysex_wizard_step1_description_link" = "apăsați aici";
-
-/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Deschidere preferințe securitate";
-
-/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Deschidere preferințe securitate";
-
-/* System extension wizard in mac: Step nr.2 description */
-"_sysex_wizard_step2_description" = "Apăsați pe lacăt pentru a modifica";
-
-/* System extension wizard in mac: Step nr.2 title */
-"_sysex_wizard_step2_title" = "Deblocați pentru a modifica";
-
-/* System extension wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Introduceți acreditările macOS pentru autentificare";
-
-/* System extension wizard in mac: Step nr.3 title */
-"_sysex_wizard_step3_title" = "Introducere acreditări";
-
-/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Apăsați pe butonul „Detalii...”";
-
-/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Apăsați pe butonul „Permitere”";
-
-/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
-"_sysex_wizard_step4_title" = "Buton „Detalii...”";
-
-/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "Buton „Permitere”";
-
-/* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Selectați ambele elemente ale Proton VPN pentru a activa protocoalele personale și apăsați pe «OK».";
-
-/* System extension wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Selectare elemente Proton VPN";
-
-/* System extension wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Pentru a face asta, urmați pașii de mai jos:";
-
-/* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "Acum puteți folosi Proton VPN cu cele mai noi și mai rapide tehnologii VPN disponibile!";
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_title" = "Bucurați-vă de cele mai rapide conexiuni activând protocoalele personale";
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_window_title" = "Activare protocoale personale";
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Tutorial extensie de sistem";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Notificări de sistem";
@@ -1689,12 +1663,6 @@
 /* iOS: section header in countries list */
 "_test_servers" = "Servere de test";
 
-/* (No Comment) */
-"_tier_free" = "Gratis";
-
-/* MacOS: connecting overlay */
-"_timed_out" = "expirată";
-
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Altă aplicație ar putea interfera cu blocarea conexiunii. Pentru a rezolva această problemă, comutați la protocolul OpenVPN sau dezactivați blocarea conexiunii.";
 
@@ -1703,9 +1671,6 @@
 
 /* (No Comment) */
 "_to_server_title" = "Către serverul:";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";
@@ -1945,13 +1910,13 @@
 "_vpnauth_too_many_certs_title" = "Eroare autentificare";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "Nu v-ați autentificat în Proton VPN. Deschideți aplicația Proton VPN și autentificați-vă.";
+"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Avertizare";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Este activă o altă sesiune Proton VPN pe acest dispozitiv. Continuând procesul de autentificare va cauza închiderea sesiunii curente. Doriți să continuați?";
+"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN elvețian de mare viteză care vă protejează confidențialitatea prin criptarea conexiunii la internet.";
@@ -1968,17 +1933,8 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "BINE AȚI VENIT!";
 
-/* (No Comment) */
-"_wgks_description" = "Funcția de blocare a accesului blochează conectarea VPN-ului la internet. Aceasta s-ar putea datora unei incompatibilități a sistemului de operare (macOS Catalina 10.15).\n\nPentru a rezolva această problemă, actualizați sistemul de operare la ultima versiune.\n\nAlterantiv, puteți comuta la protocolul OpenVPN sau să dezactivați blocarea conexiunii.";
-
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Dezactivare blocare conexiune";
-
-/* (No Comment) */
-"_wgks_ovpn" = "Comutare la OpenVPN";
-
-/* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Blocarea conexiunii nu permite conectarea VPN-ului la internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";

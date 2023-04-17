@@ -34,6 +34,42 @@
 			<string>%d+ países</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>anuncio
+bloqueado</string>
+			<key>other</key>
+			<string>anuncios
+bloqueados</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>rastreador
+detenido</string>
+			<key>other</key>
+			<string>rastreadores
+detenidos</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -77,9 +113,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Conectar hasta %d dispositivo al mismo tiempo</string>
+			<string>Conecta hasta %d dispositivo al mismo tiempo</string>
 			<key>other</key>
-			<string>Conectar hasta %d dispositivos al mismo tiempo</string>
+			<string>Conecta hasta %d dispositivos al mismo tiempo</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -93,7 +129,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
+			<string>Has alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
 			<key>other</key>
 			<string>Ha alcanzado el número máximo de cambios de configuración. Por favor, inténtalo de nuevo después de al menos %d minutos.</string>
 		</dict>

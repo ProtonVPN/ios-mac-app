@@ -50,9 +50,6 @@
 "_advanced_features" = "+ napredne značajke";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
-
-/* API error */
 "_ae_wrong_login_credentials" = "Pogrešno korisničko ime ili lozinka";
 
 /* Account plan description */
@@ -389,7 +386,7 @@
 "_error_modulus_signature" = "Modulus potpis je prazan";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Prijavite se s računom za koji nadograđujete plan usluga kako bismo mogli dovršiti kupnju.";
+"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Nadogradnja pretplate bila je uspješna. Ponovo pokrenite aplikaciju da biste iskoristili svoj novi plan usluga.";
@@ -427,17 +424,14 @@
 /* General title for several error alerts */
 "_error_unknown_title" = "Nepoznata pogreška";
 
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operation canceled";
-
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Neuspješno stvaranje računa";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Korisnički podaci su istekli. Prijavite se";
+"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Korisnički podaci nedostaju. Neuspješna prijava";
+"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nismo uspjeli potvrditi da ste čovjek. Pokušajte ponovo ili kupite Premium plan.";
@@ -686,19 +680,19 @@
 "_locations_plus" = "PLUS lokacije";
 
 /* iOS: Login button in several places */
-"_log_in" = "Prijava";
+"_log_in" = "Sign in";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Prijavite se i započnite";
+"_log_in_to_use_widget" = "Please sign in to get started";
 
 /* iOS: button in settings screen */
-"_log_out" = "Odjava";
+"_log_out" = "Sign out";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Odjavljivanjem će te prekinuti sve VPN sesije.";
+"_log_out_warning" = "Signing out will end your VPN session.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Odjavom iz aplikacije odspojiti će se aktivna VPN veza. Želite li nastaviti?";
+"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
 
 /* MacOS: Login button */
 "_login" = "Prijavite se";
@@ -764,7 +758,7 @@
 "_menu_hide_self" = "Sakrij Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Odjava";
+"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimiziraj";
@@ -783,9 +777,6 @@
 
 /* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
 "_moderate_nat_explanation_link" = "Saznajte više";
-
-/* Display more information */
-"_more_info" = "Learn more";
 
 /* Label in Plan information */
 "_most_popular" = "Najpopularnije";
@@ -850,7 +841,7 @@
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokiraj zlonamjerne programe, oglase i pratitelje";
 
-/* Settings -> Netshield: Off */
+/* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Isključeno";
 
 /* (No Comment) */
@@ -893,7 +884,7 @@
 "_ok" = "U redu";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Prikaži Proton VPN za prijavu...";
+"_open_app_to_log_in" = "Show Proton VPN to sign in...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN zapisi";
@@ -1145,7 +1136,7 @@
 "_release_date" = "Datum izdavanja:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Zapamti prijavu";
+"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "Prijavi";
@@ -1262,7 +1253,7 @@
 "_select_verification_option" = "Odaberite metodu potvrde za nastavak:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Za spriječavanje zlouporabe, morate provjeriti da ste čovjek.";
+"_select_verification_option_top_message" = "To continue, please verify that you are human.";
 
 /* Profile create/change form */
 "_server" = "Poslužitelj";
@@ -1317,12 +1308,6 @@
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Nužno je ponovno povezivanje";
-
-/* Title for Smart Protocol in Settings */
-"_smart_protocol_title" = "Pametni protokol";
-
-/* (No Comment) */
-"_smart_routing_title" = "Pametno preusmjeravanje";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ brzina";
@@ -1385,7 +1370,7 @@
 "_subscription_will_renew" = "Trenutni plan će seautomatski obnoviti dana %@.";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Ponovna prijava";
+"_subuser_alert_login_button" = "Sign in again";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Uspješno povezivanje";
@@ -1395,11 +1380,6 @@
 
 /* (No Comment) */
 "_switch_side_button_on" = "UKLJUČENO";
-
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
-"_sysex_wizard_step1_description_link" = "kliknite ovdje";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Obavijesti sustava";
@@ -1418,9 +1398,6 @@
 
 /* iOS: section header in countries list */
 "_test_servers" = "TEST poslužitelji";
-
-/* MacOS: connecting overlay */
-"_timed_out" = "isteklo vrijeme";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Prebacite se na OpenVPN i ponovno pokušajte";
@@ -1648,13 +1625,13 @@
 "_vpnauth_too_many_certs_title" = "Pogreška autentikacije";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "Trenutno niste prijavljeni u ProtonVPN. Otvorite Proton VPN aplikaciju i prijavite se.";
+"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Upozorenje";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Na ovom je uređaju aktivna sesija drugog korisnika Proton VPN. Ako nastavite s procesom prijave, to će sesija završiti. Želite li nastaviti?";
+"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Hvala što koristite Proton VPN. Brzo istražite\nglavne značajke aplikacije.";
@@ -1670,9 +1647,6 @@
 
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Onemogući kill switch";
-
-/* (No Comment) */
-"_wgks_ovpn" = "Prebacite se na OpenVPN";
 
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard zapisi";

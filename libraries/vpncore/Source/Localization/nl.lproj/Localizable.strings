@@ -53,7 +53,7 @@
 "_advanced_features" = "+ Geavanceerde mogelijkheden";
 
 /* API error */
-"_ae_vpn_info_not_received" = "Unable to obtain VPN information";
+"_ae_vpn_info_not_received" = "Niet in staat om VPN-informatie op te halen";
 
 /* API error */
 "_ae_wrong_login_credentials" = "Verkeerde gebruikersnaam of wachtwoord";
@@ -319,6 +319,9 @@
 /* Common word */
 "_done" = "Klaar";
 
+/* (No Comment) */
+"_dw-partner-2022_partners_title" = "Onze partners";
+
 /* MacOS: Settings -> General: name of field. */
 "_early_access" = "Vroegtijdige Toegang";
 
@@ -392,7 +395,7 @@
 "_error_loads" = "Kan serverloads niet bijwerken";
 
 /* (No Comment) */
-"_error_mitm_description" = "De validatie van het TLS-certificaat is mislukt bij het maken van een verbinding met de Proton VPN-API. Uw huidige internetverbinding kan worden gecontroleerd. Om uw gegevens veilig te houden, voorkomen wij dat de app toegang krijgt tot de Proton VPN-API.\nOm in te loggen of toegang te krijgen tot uw account, schakelt u over naar een nieuw netwerk en probeert u opnieuw verbinding te maken.";
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Onveilige verbinding";
@@ -404,7 +407,7 @@
 "_error_modulus_signature" = "Modulushandtekening is leeg";
 
 /* In App Purchase error */
-"_error_no_active_username" = "Log in op het ProtonMail-account waarop u het abonnement aan het upgraden bent, zodat we uw aankoop kunnen voltooien.";
+"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
 
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Uw abonnementsupgrade is succesvol. Herstart de app om gebruik te maken van uw nieuwe abonnement.";
@@ -431,7 +434,7 @@
 "_error_sign_in_again" = "Sorry, er ging iets mis. Probeer opnieuw in te loggen.";
 
 /* (No Comment) */
-"_error_signup_using_protonmail_address" = "Uw Proton Mail-account is al geconfigureerd voor VPN. Log in met uw bestaande inloggegevens.";
+"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Kan de abonnementsinformatie niet verwerken";
@@ -455,16 +458,16 @@
 "_error_unknown_title" = "Onbekende fout";
 
 /* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operation canceled";
+"_error_user_cancelled" = "Handeling geannuleerd";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Account aanmaken is mislukt";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "Gebruikersgegevens zijn verlopen. Log in";
+"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "Gebruikersgegevens ontbreken. Kan niet inloggen";
+"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We hebben niet kunnen verifiëren of u menselijk bent. Probeer het opnieuw of koop een premium-abonnement.";
@@ -585,9 +588,6 @@
 
 /* MacOS: button in login screen */
 "_forgot_username" = "Gebruikersnaam vergeten";
-
-/* Used instead of price for free plans. */
-"_free" = "Gratis";
 
 /* Account plan description */
 "_free_countries" = "3 Landen";
@@ -785,19 +785,19 @@
 "_locations_plus" = "Plus Locaties";
 
 /* iOS: Login button in several places */
-"_log_in" = "Aanmelden";
+"_log_in" = "Sign in";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Meld aan om te beginnen";
+"_log_in_to_use_widget" = "Please sign in to get started";
 
 /* iOS: button in settings screen */
-"_log_out" = "Afmelden";
+"_log_out" = "Sign out";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Afmelden zal uw VPN-sessie beëindigen.";
+"_log_out_warning" = "Signing out will end your VPN session.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Uitloggen van de applicatie zal de actieve VPN-verbinding verbreken. Wilt u doorgaan?";
+"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
 
 /* MacOS: Login button */
 "_login" = "Log in";
@@ -866,7 +866,7 @@
 "_menu_hide_self" = "Verberg Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Afmelden";
+"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimaliseren";
@@ -899,7 +899,7 @@
 "_moderate_nat_title" = "Gemiddelde NAT";
 
 /* Display more information */
-"_more_info" = "Learn more";
+"_more_info" = "Meer informatie";
 
 /* Label in Plan information */
 "_most_popular" = "Meest populair";
@@ -970,20 +970,35 @@
 /* (No Comment) */
 "_netshield_alert_upgrade_description" = "NetShield verhoogt uw privacy door advertenties en trackers te blokkeren.";
 
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Bescherm uzelf van advertenties, malware en trackers op websites en apps. Probeer NetShield uit te schakelen wanneer websites niet laden.\nMeer informatie";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "Meer informatie";
+
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Blokkeer malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
 "_netshield_level2" = "Blokkeer malware, advertenties & trackers";
 
-/* Settings -> Netshield: Off */
+/* Settings -> Netshield, Status -> NetShield: Off */
 "_netshield_off" = "Uit";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Aan";
 
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "Malware & Adblocker";
 
 /* (No Comment) */
 "_netshield_title_tooltip" = "Blokkeer advertenties, trackers en malware";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Blokkeer advertenties, trackers en malware op websites en apps";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Browse advertentie-vrij met NetShield";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Netwerk onbereikbaar";
@@ -1040,7 +1055,7 @@
 "_onboarding_mac_usage_stats" = "Anonieme gebruiksstatistieken delen. Dit helpt ons om VPN-blokkering te omzeilen en de prestaties van de app te verbeteren.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Toon Proton VPN om in te loggen...";
+"_open_app_to_log_in" = "Show Proton VPN to sign in...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN logboeken";
@@ -1292,7 +1307,7 @@
 "_release_date" = "Verschijningsdatum:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Aangemeld blijven";
+"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "Melden";
@@ -1412,7 +1427,7 @@
 "_select_verification_option" = "Selecteer een verificatie-optie om door te gaan:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Om misbruik te voorkomen, moet u verifiëren dat u een natuurlijk persoon bent.";
+"_select_verification_option_top_message" = "To continue, please verify that you are human.";
 
 /* Profile create/change form */
 "_server" = "Server";
@@ -1489,9 +1504,6 @@
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Opnieuw verbinden vereist";
 
-/* (No Comment) */
-"_smart_routing_title" = "Slimme routering";
-
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ snelheid";
 
@@ -1556,13 +1568,13 @@
 "_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "Deze stap duurt slechts een paar minuten. Daarna kunt u zich aanmelden en al uw apparaten beveiligen.";
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
 
 /* (No Comment) */
 "_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Opnieuw inloggen";
+"_subuser_alert_login_button" = "Sign in again";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Bedankt voor de upgrade naar Business/Visionary";
@@ -1588,70 +1600,14 @@
 /* (No Comment) */
 "_sysex_error_description" = "Er is een fout opgetreden tijdens de installatie van Systeemuitbreiding.\nInstalleer Proton VPN opnieuw en zorg ervoor dat het zich in de map Toepassingen bevindt om dit probleem op te lossen. U kunt ook contact opnemen met onze ondersteuning.";
 
-/* OpenVPN /  WireGuard / System Extensions */
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Open Veiligheid Voorkeuren";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "Open Systeeminstellingen";
+
+/* (No Comment) */
 "_sysex_settings_description" = "Proton VPN vereist het laden van een Systeem Extensie om gebruik te maken van Smart Protocol, OpenVPN en WireGuard.";
-
-/* System extension wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Er verschijnen twee dialoogvensters. Klik op \"Open Beveiligingsvoorkeuren\".\nU kunt ook hier klikken om de voorkeuren te openen.";
-
-/* System extension wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Een beveiligingsdialoogvenster is verschenen. Klik op \"Open Beveiligingsvoorkeuren\".\nU kunt ook hier klikken om de voorkeuren te openen.";
-
-/* System extension wizard in mac: Step nr.1 description (for case when the system has already shown 'Open Security Preferences', and won't show this dialog again) */
-"_sysex_wizard_step1_description_go_to_system_preferences" = "Open Systeemvoorkeuren: klik hier.\nGa dan naar het paneel \"Beveiliging & Privacy\".";
-
-/* System extension wizard in mac: Step nr.1 text that will have a link to System Preferences system app.
-   The string must occur _only once_ in both the `_sysex_wizard_step1_description' and
-   `_sysex_wizard_step1_description_1' localized strings. */
-"_sysex_wizard_step1_description_link" = "klik hier";
-
-/* System extension wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Open Veiligheid Voorkeuren";
-
-/* System extension wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Open Veiligheid Voorkeuren";
-
-/* System extension wizard in mac: Step nr.2 description */
-"_sysex_wizard_step2_description" = "Klik op het slotje om wijzigingen aan te brengen";
-
-/* System extension wizard in mac: Step nr.2 title */
-"_sysex_wizard_step2_title" = "Ontgrendelen om veranderingen aan te brengen";
-
-/* System extension wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Voer uw macOS-gegevens in om te verifiëren";
-
-/* System extension wizard in mac: Step nr.3 title */
-"_sysex_wizard_step3_title" = "Inloggegevens invoeren";
-
-/* System extension wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Klik op de knop \"Details...\"";
-
-/* System extension wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Klik op de knop \"Toestaan\"";
-
-/* System extension wizard in mac: Step nr.4 title (for case with more than one system extension) */
-"_sysex_wizard_step4_title" = "Knop \"Details...\"";
-
-/* System extension wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "Knop \"Toestaan\"";
-
-/* System extension wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Selecteer beide Proton VPN items om aangepaste protocollen in te schakelen en klik op \"OK\"";
-
-/* System extension wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Het kiezen van Proton VPN items";
-
-/* System extension wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Volg de onderstaande stappen om dit te doen:";
-
-/* System extension wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "U bent nu klaar om Proton VPN te gebruiken met de nieuwste en snelste VPN-technologieën die beschikbaar zijn!";
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_title" = "Geniet van de snelste verbindingen door aangepaste protocollen in te schakelen";
-
-/* System extension wizard in mac: Main title */
-"_sysex_wizard_window_title" = "Aangepaste protocollen inschakelen";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Systeemnotificaties";
@@ -1671,12 +1627,6 @@
 /* iOS: section header in countries list */
 "_test_servers" = "TEST-servers";
 
-/* (No Comment) */
-"_tier_free" = "Gratis";
-
-/* MacOS: connecting overlay */
-"_timed_out" = "verlopen";
-
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Een andere toepassing kan interfereren met de IP-beveiliging. Om dit probleem op te lossen, schakelt u over naar het OpenVPN-protocol of schakelt u de IP-beveiliging uit en probeert u het opnieuw.";
 
@@ -1685,9 +1635,6 @@
 
 /* (No Comment) */
 "_to_server_title" = "Naar Server:";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";
@@ -1927,13 +1874,13 @@
 "_vpnauth_too_many_certs_title" = "Authenticatiefout";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "U bent niet ingelogd bij Proton VPN. Open de Proton VPN-app en log in.";
+"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Waarschuwing";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Een Proton VPN-sessie van een andere gebruiker is actief op dit apparaat. Door in te loggen zal de huidige sessie beëindigd worden. Wilt u doorgaan?";
+"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "Zeer snelle Zwitserse VPN die uw privacy bewaakt door uw internetverbinding te versleutelen.";
@@ -1950,17 +1897,8 @@
 /* MacOS welcome screen: title */
 "_welcome_title" = "WELKOM AAN BOORD!";
 
-/* (No Comment) */
-"_wgks_description" = "IP-beveiliging voorkomt de VPN om met het internet te verbinden. Dit wordt mogelijks veroorzaakt wegens een incompatibiliteit met uw besturingssysteem (macOS Catalina 10.15).\n\nUpdate uw besturingssysteem naar de meest recente versie om dit probleem op te lossen.\n\nAlternatief, kan u wisselen naar het OpenVPN-protocol of kunt u de IP-beveiliging uitschakelen.";
-
 /* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
 "_wgks_ks_off" = "Schakel IP-beveiliging uit";
-
-/* (No Comment) */
-"_wgks_ovpn" = "Wissel naar OpenVPN";
-
-/* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "IP-beveiliging voorkomt de VPN om met het internet te verbinden";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS-Widget";

@@ -7,11 +7,11 @@
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Please provide the following details so that our team can help you faster:\n• Proton VPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "To continue, please verify that you are human.";
+
 /* (No Comment) */
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
-
-/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
-"_tor" = "Tor";
 
 /* Description shown together with server info icon */
 "_tor_description" = "Connects to Tor network";

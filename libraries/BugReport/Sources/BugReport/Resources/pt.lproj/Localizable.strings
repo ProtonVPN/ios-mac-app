@@ -1,6 +1,9 @@
 /* ReportBug 1st step title */
 "_br_1_title" = "Qual é o problema?";
 
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Cancelar";
+
 /* ReportBug 2nd step (Quick fixes) subtitle */
 "_br_2_subtitle" = "Estas dicas poderão ajudá-lo a resolver mais rapidamente o seu problema.";
 
@@ -13,6 +16,15 @@
 /* ReportBug 3rd step (form) field to ask for includeing logs */
 "_br_3_logs_field" = "Enviar diários de erro";
 
+/* ReportBug success window: button */
+"_br_success_button" = "Entendido";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Agradecemos os seus comentários";
+
 /* ReportBugwindow title */
 "_br_window_title" = "Reportar um problema";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Atualizar";
 

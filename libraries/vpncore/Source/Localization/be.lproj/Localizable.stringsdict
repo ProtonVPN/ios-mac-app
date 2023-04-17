@@ -42,6 +42,58 @@
 			<string>Больш за %d краіны</string>
 		</dict>
 	</dict>
+	<key>_netshield_stats_ads_blocked</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>рэкламы
+заблакіраваны</string>
+			<key>many</key>
+			<string>рэклам
+заблакіраваны</string>
+			<key>one</key>
+			<string>рэклама
+заблакіравана</string>
+			<key>other</key>
+			<string>рэкламы
+заблакіраваны</string>
+		</dict>
+	</dict>
+	<key>_netshield_stats_trackers_stopped</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@VARIABLE@</string>
+		<key>VARIABLE</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>few</key>
+			<string>праграмы
+сачэння
+спынены</string>
+			<key>many</key>
+			<string>праграм
+сачэння
+спынены</string>
+			<key>one</key>
+			<string>праграма
+сачэння
+спынена</string>
+			<key>other</key>
+			<string>праграмы
+сачэння
+спынены</string>
+		</dict>
+	</dict>
 	<key>_plans_connections</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
@@ -53,13 +105,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d злучэнні</string>
+			<string>%d падключэнні</string>
 			<key>many</key>
-			<string>%d злучэнняў</string>
+			<string>%d падключэнняў</string>
 			<key>one</key>
-			<string>%d злучэнне</string>
+			<string>%d падключэнне</string>
 			<key>other</key>
-			<string>%d злучэнні</string>
+			<string>%d падключэнні</string>
 		</dict>
 	</dict>
 	<key>_subscription_upgrade_option1</key>
@@ -93,13 +145,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Падлучайце да %d прылад адначасова</string>
+			<string>Падключайце да %d прылад адначасова</string>
 			<key>many</key>
-			<string>Падлучайце да %d прылад адначасова</string>
+			<string>Падключайце да %d прылад адначасова</string>
 			<key>one</key>
-			<string>Падлучайце да %d прылады адначасова</string>
+			<string>Падключайце да %d прылады адначасова</string>
 			<key>other</key>
-			<string>Падлучайце да %d прылад адначасова</string>
+			<string>Падключайце да %d прылад адначасова</string>
 		</dict>
 	</dict>
 	<key>_vpnauth_too_many_certs_retry_after</key>
@@ -125,7 +177,7 @@
 	<key>maximum_device_plan_limit_part_2</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string> для адначасовага падлучэння да %#@num_devices@.</string>
+		<string> для адначасовага падключэння да %#@num_devices@.</string>
 		<key>num_devices</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
