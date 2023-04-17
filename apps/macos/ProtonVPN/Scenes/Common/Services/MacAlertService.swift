@@ -169,10 +169,7 @@ extension MacAlertService: CoreAlertService {
             
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
-            
-        case let verificationAlert as UserVerificationAlert:
-            show(verificationAlert)
-            
+
         case is UserAccountUpdateAlert:
             showDefaultSystemAlert(alert)
 
@@ -310,12 +307,7 @@ extension MacAlertService: CoreAlertService {
         connectionTroubleshootingAlert.viewModel = factory.makeTroubleshootViewModel()
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert)
     }
-    
-    private func show( _ alert: UserVerificationAlert) {
-        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
-        showDefaultSystemAlert(alert)
-    }
-    
+
     private func show(alert: UpsellAlert, upsellType: UpsellType) {
         let factory = ModalsFactory(colors: UpsellColors())
 

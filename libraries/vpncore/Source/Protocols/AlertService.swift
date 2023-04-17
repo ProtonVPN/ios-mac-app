@@ -475,23 +475,6 @@ public class UnknownErrortAlert: SystemAlert {
     }
 }
 
-public class UserVerificationAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    
-    public let error: Error
-    
-    public init(error: Error) {
-        self.error = error
-        #if os(macOS)
-        self.message = error.localizedDescription
-        #endif
-    }
-}
-
 public class ReportBugAlert: SystemAlert {
     public var title: String? = LocalizedString.errorUnknownTitle
     public var message: String?
