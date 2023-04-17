@@ -70,7 +70,7 @@ class LoginTests: ProtonVPNUITests {
             .signIn(robot: TwoFaRobot.self)
             .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
             .confirm2FA(robot: MainRobot.self)
-        correctUserIsLogedIn(twofausercredentials[0])
+        correctUserIsLoggedIn(twofausercredentials[0])
     }
     
     func testLoginWithTwoPassAnd2FAUser() {
@@ -82,7 +82,7 @@ class LoginTests: ProtonVPNUITests {
             .signIn(robot: TwoFaRobot.self)
             .fillTwoFACode(code: generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
             .confirm2FA(robot: MainRobot.self)
-        correctUserIsLogedIn(twopasstwofausercredentials[0])
+        correctUserIsLoggedIn(twopasstwofausercredentials[0])
     }
     
     func testNeedHelpClosed() {

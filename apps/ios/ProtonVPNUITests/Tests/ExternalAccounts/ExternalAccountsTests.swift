@@ -58,7 +58,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
                 retRobot: MainRobot.self
             )
         
-        correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
+        correctUserIsLoggedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
 
     @MainActor
@@ -80,7 +80,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
                 retRobot: MainRobot.self
             )
         
-        correctUserIsLogedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
+        correctUserIsLoggedIn(.init(username: randomEmail, password: randomPassword, plan: "Proton VPN Free"))
     }
 
     @MainActor
@@ -102,7 +102,7 @@ final class ExternalAccountsTests: ProtonVPNUITests {
                 retRobot: MainRobot.self
             )
 
-        correctUserIsLogedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
+        correctUserIsLoggedIn(.init(username: randomUsername, password: randomPassword, plan: "Proton VPN Free"))
     }
     
 //    Sign-up:
