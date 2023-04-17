@@ -133,8 +133,9 @@ final class LocalAgentImplementation: LocalAgent {
     private static let refreshLeeway: DispatchTimeInterval = .seconds(5)
     private static let statusRequestQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.netshield")
 
-    private var propertiesManager: PropertiesManagerProtocol
-    private var agentConnectionFactory: LocalAgentConnectionFactory
+    private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let propertiesManager: PropertiesManagerProtocol
+    private let agentConnectionFactory: LocalAgentConnectionFactory
     @Dependency(\.timerFactory) var timerFactory
 
     private var agent: LocalAgentConnectionWrapper?
@@ -143,13 +144,14 @@ final class LocalAgentImplementation: LocalAgent {
 
     private var previousState: LocalAgentState?
     private var statusTimer: BackgroundTimer?
+    private var notificationTokens = [NotificationToken]()
 
-    var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
-
+    private var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
     private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
 
-    init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol) {
+    init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.propertiesManager = propertiesManager
+        self.netShieldPropertyProvider = netShieldPropertyProvider
         reachability = try? Reachability()
         client = LocalAgentNativeClientImplementation()
         agentConnectionFactory = factory
@@ -159,6 +161,15 @@ final class LocalAgentImplementation: LocalAgent {
 
         // giving the agent a hint when connectivity is restored in case it is stuck in a back off
         reachability?.whenReachable = { [weak self] _ in self?.agent?.setConnectivity(true) }
+
+        startObservingNetShieldCriteria()
+    }
+
+    private func startObservingNetShieldCriteria() {
+        let notifications = [type(of: netShieldPropertyProvider).netShieldNotification, type(of: propertiesManager).featureFlagsNotification]
+        notificationTokens = NotificationCenter.default.addObservers(for: notifications, object: nil) { [weak self] _ in
+            self?.toggleStatusMonitoringIfNecessary()
+        }
     }
 
     deinit {
@@ -227,16 +238,15 @@ final class LocalAgentImplementation: LocalAgent {
         agent?.setFeatures(features)
     }
 
-    private func toggleStatusMonitoringIfNecessary(forFeatures features: VPNConnectionFeatures) {
-        // If the server is reporting NetShield type as level2, we should be monitoring NetShieldStats
-        let shouldMonitorStats = features.netshield == .level2
-        log.debug("Should monitor stats: \(shouldMonitorStats)")
+    private func toggleStatusMonitoringIfNecessary() {
+        let shouldMonitorStats = netShieldPropertyProvider.netShieldType == .level2
+        log.debug("NetShield level: \(netShieldPropertyProvider.netShieldType), should monitor stats: \(shouldMonitorStats)", category: .localAgent)
         shouldMonitorStats ? startStatusMonitoringIfNecessary() : stopStatusMonitoringIfNecessary()
     }
 
     private func startStatusMonitoringIfNecessary() {
         guard isNetShieldStatsEnabled else {
-            log.debug("Not starting stats monitoring, feature flags are false", category: .localAgent)
+            log.debug("Not starting stats monitoring, feature flag is false", category: .localAgent)
             return
         }
 
@@ -325,8 +335,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // in this state the local agent shared library reports features from previous connection
         if previousState == .connecting, state == .connected {
             log.debug("Not checking features right after connecting", category: .localAgent, event: .stateChange)
-            // Request status with feature statistics; the response will also contain the correct features too
-            startStatusMonitoringIfNecessary()
+            toggleStatusMonitoringIfNecessary()
             return
         }
 
@@ -339,7 +348,6 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // it is up to the app to compare them and decide what to do
 
         if let vpnFeatures = features.vpnFeatures {
-            toggleStatusMonitoringIfNecessary(forFeatures: vpnFeatures)
             delegate?.didReceiveFeatures(vpnFeatures)
         }
         
