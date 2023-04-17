@@ -541,8 +541,6 @@
 		E9037D30284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
 		E9037D31284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */; };
 		E93120F428DB2EE600C1C2FE /* PMLogger in Frameworks */ = {isa = PBXBuildFile; productRef = E93120F328DB2EE600C1C2FE /* PMLogger */; };
-		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
-		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E939EEE827954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
 		E939EEE927954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
 		E939EEEB27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
@@ -1104,7 +1102,6 @@
 		E9037D2F284F6F2D00151180 /* LogFilesTemporaryStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFilesTemporaryStorageTests.swift; sourceTree = "<group>"; };
 		E92CCE3027D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = Localization/uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E92CCE3127D88E3400A6A476 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = uk; path = uk.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
 		E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportStorage.swift; sourceTree = "<group>"; };
 		E939EEEA27955317006E4305 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		E939EEF1279561B1006E4305 /* BugReport */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BugReport; path = ../BugReport; sourceTree = "<group>"; };
@@ -1644,17 +1641,8 @@
 		E935183D2617535600AB4C7C /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E935183E2617536E00AB4C7C /* Alerts */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		E935183E2617536E00AB4C7C /* Alerts */ = {
-			isa = PBXGroup;
-			children = (
-				E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */,
-			);
-			path = Alerts;
 			sourceTree = "<group>";
 		};
 		E939EEE627954D4D006E4305 /* BugReport */ = {
@@ -3132,7 +3120,6 @@
 				E53406A828E1B67A0078A7A3 /* AnnouncementTests.swift in Sources */,
 				4CFDF0B7287EE37500386626 /* MockDependencyContainer.swift in Sources */,
 				AD0397BE29B8A1D4000E1533 /* StrongNotificationTests.swift in Sources */,
-				E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				D523F11624B759A5007DB086 /* StringUrl.swift in Sources */,
 				D59671DE253D5E3A0061A75F /* AnnouncementStorageMock.swift in Sources */,
 				E5E4657C2951B43800A4DE80 /* TelemetryTests.swift in Sources */,
@@ -3465,7 +3452,6 @@
 				E53406A928E1B67A0078A7A3 /* AnnouncementTests.swift in Sources */,
 				4C0961FC285B503900556E07 /* VpnManagerTests.swift in Sources */,
 				E53406AC28E1BBD00078A7A3 /* ImageCacheMock.swift in Sources */,
-				E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				4C66CA9E2881B2CE00F8CBA1 /* AppSessionRefreshTests.swift in Sources */,
 				4C14523E292D11A100DE9AC0 /* ProtocolOverrideConnectionTests.swift in Sources */,
 				E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */,

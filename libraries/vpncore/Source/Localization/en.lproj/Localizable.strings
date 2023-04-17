@@ -690,15 +690,6 @@
 "_error_vpn_session_is_active" = "Proton VPN session is active";
 
 /* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Your account does not have VPN Access. Please contact your Account Administrator";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "You have not yet signed up for Proton VPN";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "You are currently in the Waitlist and your account is not yet ready";
-
-/* VPN credentials can't be loaded error */
 "_error_user_credentials_missing" = "User credentials are missing. Unable to login";
 
 /* VPN credentials can't be loaded error */
@@ -712,13 +703,6 @@
 "_error_field_required" = "This field is required";
 "_error_field_email_wrong_format" = "The email address is not in the right format";
 "_error_field_passwords_dont_match" = "Passwords do not match";
-
-/* Form validation error */
-"_error_field_unknown" = "Please check this field";
-
-
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operation canceled";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "We have not been able to verify that you are human. Please try again or purchase a premium plan.";
@@ -798,50 +782,16 @@
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Can't parse verfication methods";
 
-/* Username unavailable error */
-"_error_username_unavailable" = "Username already taken";
-
 /* Keychain error */
 "_error_keychain_fetch" = "Keychain error.";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Account creation failed";
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please log in with your existing credentials.";
 
 // Unknown error
 
 /* General title for several error alerts */
 "_error_unknown_title" = "Unknown error";
-
-// IAP errors
-
-/* In App Purchase error */
-"_error_unavailable_product" = "Failed to get list of available products from App Store.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "App Store receipt lost. Please contact support if your plan was not activated.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "A purchase was started with a different Proton VPN username.";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "We were not available to match App Store product with products on our server. Please contact support.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "Purchases are not available in the beta version of the iOS app. You have not been charged.";
-"_error_credit_applied" = "Contact support@protonvpn.com to complete your purchase.";
-
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store could not process your purchase.";
-
-/* In App Purchase error */
-"_error_no_active_username" = "Please login with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Your subscription upgrade was successful. Please relaunch the app to benefit from your new service plan.";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Wrong payment token status. Please relaunch the app. If error persists, contact support.";
 
 // Alerts
 
@@ -868,12 +818,7 @@
 "_server_under_maintenance" = "Server under maintenance";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Sorry, no servers available for your subscription tier in this country right now. If you would like to access more servers, consider upgrading your subscription.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Sorry, this server is not available for your subscription tier. If you would like to access more servers, consider upgrading your subscription.";
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core is a premium feature which requires Proton VPN Plus or higher. Secure Core adds advanced protection against VPN server monitoring.";
-"_upgrade_plan_to_access_secure_core_p2" = "To access Secure Core, check out our other subscription plans which include this feature.";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
@@ -887,10 +832,6 @@
 "_maintenance_on_server_detected_title" = "The VPN server is on maintenance";
 "_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
 "_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
-
-
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Change protocol";
 
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
@@ -923,7 +864,6 @@
 "_update_required_support" = "Contact support";
 /* Primary button title in the App update required alert  */
 "_update_required_update" = "Update";
-"_invalid_refresh_token" = "Session expired";
 "_invalid_refresh_token_please_login" = "It's been a while since you last used the Proton VPN app. Please log back in.";
 
 "_protonvpn_macos" = "Proton VPN macOS";
@@ -968,13 +908,6 @@
 /* Button in several different alerts */
 "_got_it" = "Got it!";
 
-
-/* Plan upgrade required alert */
-"_paid_required" = "Paid Proton VPN plan required";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Plus or Visionary subscription required";
-
 /* If the app cannot upgrade the user's plan and they must go to the website to uprade it */
 
 /* Plan upgrade unavailable alert */
@@ -999,38 +932,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Disable Kill switch";
-
-
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "A kill switch error has been detected";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with kill switch, making it not functioning properly.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch works with the macOS Firewall.\nIf there are other apps associated with the Firewall, they may interfere with Proton VPN's kill switch. Terminating those apps can restore the Firewall rules set by kill switch.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Terminate those apps to fix the problem.\nTo keep browsing without kill switch, click Continue.";
-
-/* %@ is 'Mac password' */
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "To enable kill switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the Proton VPN app receives updates.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "The most recent update you downloaded requires you to provide your computer account password. When the request appears, please enter your %@ and accept.\n\nIf you do not enter your Mac password, kill switch will be turned off.";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "There was a problem installing or updating kill switch.\n\nTo try again, click RETRY.\n\nTo continue without kill switch, click DISABLE.";
-
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Firewall detected";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN uses a packet filter firewall to implement a kill switch. By enabling kill switch, you will overwrite your device's current firewall settings. If you rely on this firewall configuration, you should not use kill switch.\n\nTo use kill switch and overwrite your current firewall settings, select CONTINUE.\n\nTo turn off kill switch and continue using your current firewall, select CANCEL.";
 
 // Settings
 
