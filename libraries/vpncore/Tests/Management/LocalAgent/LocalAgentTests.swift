@@ -38,77 +38,70 @@ final class LocalAgentTests: XCTestCase {
 
     func testStatsTimerStartedAfterFinishingConnecting() {
         let connectionFactory = LocalAgentConnectionMockFactory()
-        var agent: LocalAgentConnectionMock?
-        connectionFactory.connectionWasCreated = { newAgent in agent = newAgent }
+        let propertiesManager = PropertiesManagerMock()
+        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
+
+        propertiesManager.setNetShieldStats(to: true)
+        netShieldPropertyProvider.netShieldType = .level2
 
         let timerFactory = TimerFactoryMock()
         let timerWasScheduled = XCTestExpectation(description: "Stats timer should be scheduled after connecting")
-        timerFactory.timerWasAdded = { timerWasScheduled.fulfill() }
 
         let localAgent = withDependencies {
             $0.timerFactory = timerFactory
         } operation: {
-            LocalAgentImplementation(factory: connectionFactory, propertiesManager: PropertiesManagerMock.with(netShieldStats: true))
+            LocalAgentImplementation(factory: connectionFactory,
+                                     propertiesManager: propertiesManager,
+                                     netShieldPropertyProvider: netShieldPropertyProvider)
         }
 
         XCTAssert(timerFactory.scheduledWork.isEmpty, "Stats timer should not be started before connecting")
 
-        localAgent.connect(data: .mock, configuration: .mocked(withNetShieldType: .level2))
+        localAgent.connect(data: .mock, configuration: .mocked(withFeatures: .base))
         localAgent.didChangeState(state: .connecting)
         localAgent.didChangeState(state: .connected)
 
-        wait(for: [timerWasScheduled], timeout: 0.1)
         XCTAssert(localAgent.isMonitoringFeatureStatistics, "LocalAgent should monitor NetShield stats after connecting")
-
-        // LocalAgent should stop stats monitoring if NetShield level is not 2
-        agent!.status = LocalAgentStatusMessage().with(netShieldType: .level1)
-
-        localAgent.didChangeState(state: .connected) // simulate status (with stats) response, and level1 netshield
-
-        XCTAssert(!localAgent.isMonitoringFeatureStatistics, "LocalAgent should stop stats monitoring if NetShield level is not 2")
     }
 
-    func testStatsTimerNotBeStartedIfFeatureFlagIsOff() {
+    /// Stats monitoring should not be started until the NetShieldStats feature flag is enabled AND NetShield level is 2
+    func testStatsTimerNotStartedUntilCriteriaIsMet() {
         let connectionFactory = LocalAgentConnectionMockFactory()
         let timerFactory = TimerFactoryMock()
+        let propertiesManager = PropertiesManagerMock()
+        let netShieldPropertyProvider = NetShieldPropertyProviderMock()
 
-        let timerWasScheduled = XCTestExpectation(description: "Stats timer not be started if stats feature flag is false")
-        timerWasScheduled.isInverted = true
-
-        timerFactory.timerWasAdded = { timerWasScheduled.fulfill() }
+        timerFactory.timerWasAdded = { XCTFail("Stats timer should not be started until criteria has been met") }
 
         let localAgent = withDependencies {
             $0.timerFactory = timerFactory
         } operation: {
-            LocalAgentImplementation(factory: connectionFactory, propertiesManager: PropertiesManagerMock.with(netShieldStats: false))
+            LocalAgentImplementation(factory: connectionFactory,
+                                     propertiesManager: propertiesManager,
+                                     netShieldPropertyProvider: netShieldPropertyProvider)
         }
 
-        localAgent.connect(data: .mock, configuration: .mocked(withNetShieldType: .level2))
+        localAgent.connect(data: .mock, configuration: .mocked(withFeatures: .base))
         localAgent.didChangeState(state: .connecting)
         localAgent.didChangeState(state: .connected)
 
-        wait(for: [timerWasScheduled], timeout: 0.1)
-    }
-}
+        propertiesManager.setNetShieldStats(to: false)
+        netShieldPropertyProvider.netShieldType = .level1
+        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false and level is not 2")
 
-fileprivate extension LocalAgentStatusMessage {
-    func with(features: LocalAgentFeatures) -> Self {
-        self.features = features
-        return self
-    }
+        propertiesManager.setNetShieldStats(to: true)
+        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when NetShield level is not 2")
 
-    func with(netShieldType: NetShieldType) -> Self {
-        return self.with(features: (features ?? LocalAgentFeatures.base).with(netshield: .level1))
-    }
-}
+        propertiesManager.setNetShieldStats(to: false)
+        netShieldPropertyProvider.netShieldType = .level2
+        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false")
 
-fileprivate extension LocalAgentFeatures {
-    static var base: LocalAgentFeatures {
-        LocalAgentFeatures()!
-            .with(netshield: .off)
-            .with(vpnAccelerator: false)
-            .with(natType: .moderateNAT)
-            .with(safeMode: false)
+        timerFactory.timerWasAdded = { }
+        propertiesManager.setNetShieldStats(to: true)
+        XCTAssertTrue(localAgent.isMonitoringFeatureStatistics, "Should monitor stats when FF is true and level is 2")
+
+        netShieldPropertyProvider.netShieldType = .level1
+        XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should stop monitoring stats when level is no longer 2")
     }
 }
 
@@ -118,17 +111,36 @@ fileprivate extension VpnAuthenticationData {
     }
 }
 
-fileprivate extension PropertiesManagerMock {
-    static func with(netShieldStats: Bool) -> PropertiesManagerMock {
-        let propertiesManager = PropertiesManagerMock()
-        propertiesManager.featureFlags.netShieldStats = netShieldStats
-        return propertiesManager
+fileprivate extension VPNConnectionFeatures {
+    static var base: Self {
+        return VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .strictNAT, safeMode: false)
+    }
+
+    func withNetShieldLevel(_ level: NetShieldType) -> Self {
+        return VPNConnectionFeatures(netshield: level,
+                                     vpnAccelerator: self.vpnAccelerator,
+                                     bouncing: self.bouncing,
+                                     natType: self.natType,
+                                     safeMode: self.safeMode)
     }
 }
 
 fileprivate extension LocalAgentConfiguration {
+    static func mocked(withFeatures features: VPNConnectionFeatures) -> Self {
+        return LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
+    }
+
     static func mocked(withNetShieldType netShieldType: NetShieldType) -> Self {
         let features = VPNConnectionFeatures(netshield: netShieldType, vpnAccelerator: true, bouncing: "0", natType: .strictNAT, safeMode: false)
-        return LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
+        return .mocked(withFeatures: features)
+    }
+}
+
+fileprivate extension PropertiesManagerProtocol {
+    func setNetShieldStats(to enabled: Bool) {
+        // Assign to `featureFlags` to trigger the notification
+        var featureFlagsCopy = featureFlags
+        featureFlagsCopy.netShieldStats = enabled
+        featureFlags = featureFlagsCopy
     }
 }

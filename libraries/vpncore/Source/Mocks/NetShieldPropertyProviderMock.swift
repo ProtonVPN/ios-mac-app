@@ -34,7 +34,11 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
         self.init(PaidFeaturePropertyProviderFactoryMock())
     }
 
-    public var netShieldType: NetShieldType = .off
+    public var netShieldType: NetShieldType = .off {
+        didSet {
+            NotificationCenter.default.post(name: Self.netShieldNotification, object: self)
+        }
+    }
 
     public var isUserEligibleForNetShield: Bool = true
 
