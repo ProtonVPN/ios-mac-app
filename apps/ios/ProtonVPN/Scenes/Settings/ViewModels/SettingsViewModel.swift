@@ -514,7 +514,7 @@ final class SettingsViewModel {
             .button(title: LocalizedString.reportBug, accessibilityIdentifier: "Report Bug", color: .normalTextColor(), handler: { [reportBug] in
                 reportBug()
             }),
-            .button(title: LocalizedString.logOut, accessibilityIdentifier: "Log Out", color: .notificationErrorColor(), handler: { [logOut] in
+            .button(title: LocalizedString.logOut, accessibilityIdentifier: "Sign out", color: .notificationErrorColor(), handler: { [logOut] in
                 logOut()
             })
         ]

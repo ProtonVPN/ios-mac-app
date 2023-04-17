@@ -24,7 +24,7 @@ fileprivate let fieldPassword = "PasswordTextField"
 fileprivate let loginButton = "LoginButton"
 fileprivate let modalTitle = "Thanks for upgrading to Business/Visionary"
 fileprivate let modalSubtitle = "description1Label"
-fileprivate let loginAgainButton = "Login again"
+fileprivate let loginAgainButton = "Sign in again"
 fileprivate let assignConnectionButton = "Enable VPN connections"
 
 class LoginRobot {
@@ -62,7 +62,7 @@ class LoginRobot {
         
     @discardableResult
     func withEmptyUsername(_ password: String) -> LoginRobot {
-        return typePassword(password: password)
+        return typeOnlyPassword(password: password)
             .signIn()
     }
         
