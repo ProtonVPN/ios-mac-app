@@ -70,7 +70,16 @@
     # App saves several items in the keychain. Let's delete them all.
     - for i in `seq 8`; do security delete-generic-password -s "ProtonVPN" || true; done
     - for i in `seq 2`; do security delete-generic-password -s "ProtonVPN-Server-Password" || true; done
-        
+
+# Script for deleting all keychains that may be left from older jobs.
+# Sometimes jobs leave orphaned keychains. When such a keychain is present, XCode asks for a password
+# when it tries to sign the app. This script deletes all the keychains that may be left by other jobs.
+# Usage in before_script, script, after_script: `!reference [.mac_clean_macos_keychain, before_script]`
+.mac_clean_macos_keychain:
+  before_script:
+    # Delete old keychains
+    - security list-keychains | grep -E "\/[0-9]{7,8}-db" | xargs security delete-keychain || true
+
 # Template for macOS jobs. These require having proper development certificates and provisioning
 # profiles installed.
 .mac_job_template:
@@ -79,6 +88,7 @@
     - macOS_vpn
   before_script:
     - !reference [.mac_clean_app_keychain, before_script]
+    - !reference [.mac_clean_macos_keychain, before_script]
     - !reference [.prepare_secrets, before_script] # Download obfuscated constants
     - cd apps/macos/ProtonVPN/ && ../../../scripts/prepare_obfuscated_constants.sh && cd ../../../
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
