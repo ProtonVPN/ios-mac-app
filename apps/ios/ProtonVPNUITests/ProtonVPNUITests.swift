@@ -87,13 +87,12 @@ class ProtonVPNUITests: XCTestCase {
     
     @discardableResult
     func correctUserIsLoggedIn(_ name: Credentials) -> MainRobot {
-        guard app.buttons["Quick Connect"].waitForExistence(timeout: 60) else {
+        if app.buttons["Not Now"].waitForExistence(timeout: 60) { // keychain sheet
+            app.buttons["Not Now"].tap()
+        }
+        guard app.buttons["Quick Connect"].waitForExistence(timeout: 5) else {
             XCTFail("Quick connect button never appeared.")
             return MainRobot()
-        }
-
-        if app.buttons["Not Now"].waitForExistence(timeout: 1) { // keychain sheet
-            app.buttons["Not Now"].tap()
         }
         if app.buttons["Settings"].waitForExistence(timeout: 1) {
             app.tabBars.buttons["Settings"].tap()
