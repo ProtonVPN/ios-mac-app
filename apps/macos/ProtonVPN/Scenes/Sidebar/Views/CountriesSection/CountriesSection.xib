@@ -159,7 +159,7 @@
                                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
                                         <rect key="frame" x="83" y="32" width="20" height="14"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="939-Qe-cvS"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="939-Qe-cvS"/>
                                             <constraint firstAttribute="height" constant="14" id="qs5-Ea-M4k"/>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="12" drawsBackground="YES" id="PoR-cj-qt8">
