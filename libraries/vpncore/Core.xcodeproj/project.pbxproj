@@ -501,6 +501,8 @@
 		E576863F2976F31F0014F944 /* TelemetryBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E576863D2976F31E0014F944 /* TelemetryBuffer.swift */; };
 		E5768641297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
 		E5768642297822F90014F944 /* TelemetryConnectionNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5768640297822F90014F944 /* TelemetryConnectionNotifier.swift */; };
+		E5813B5029EE9C6C00549AA8 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E5813B4F29EE9C6C00549AA8 /* Theme */; };
+		E5813B5229EE9C7500549AA8 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E5813B5129EE9C7500549AA8 /* Theme */; };
 		E58EE0A42907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A52907DEBF003006F5 /* PlanSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A32907DEBF003006F5 /* PlanSession.swift */; };
 		E58EE0A92907DF8F003006F5 /* PlanSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58EE0A62907DF8C003006F5 /* PlanSessionTests.swift */; };
@@ -1181,6 +1183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5813B5029EE9C6C00549AA8 /* Theme in Frameworks */,
 				D578439128FE6A95007E3FC6 /* NEHelper in Frameworks */,
 				D578439028FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
 				D578438F28FE6A95007E3FC6 /* VPNShared in Frameworks */,
@@ -1210,6 +1213,7 @@
 			files = (
 				D578439328FE6A95007E3FC6 /* VPNSharedTesting in Frameworks */,
 				D578439228FE6A95007E3FC6 /* VPNShared in Frameworks */,
+				E5813B5229EE9C7500549AA8 /* Theme in Frameworks */,
 				C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */,
 				E566D9E2297A796B00C2F857 /* Dependencies in Frameworks */,
 				E53D64C1281169550060C463 /* Modals in Frameworks */,
@@ -2348,6 +2352,7 @@
 				D0AAC5A8DEABE73F456752F4 /* NEHelper */,
 				4C4F5F10292BECCE00BBD5AF /* LocalFeatureFlags */,
 				E566D9DF29796B2400C2F857 /* Dependencies */,
+				E5813B4F29EE9C6C00549AA8 /* Theme */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2404,6 +2409,7 @@
 				4F037C4B0FA455B80D281721 /* VPNSharedTesting */,
 				4C4F5F12292BECD200BBD5AF /* LocalFeatureFlags */,
 				E566D9E1297A796B00C2F857 /* Dependencies */,
+				E5813B5129EE9C7500549AA8 /* Theme */,
 			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
@@ -4404,6 +4410,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E566D9DE29796B2400C2F857 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
+		};
+		E5813B4F29EE9C6C00549AA8 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		E5813B5129EE9C7500549AA8 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
 		};
 		E93120F328DB2EE600C1C2FE /* PMLogger */ = {
 			isa = XCSwiftPackageProductDependency;

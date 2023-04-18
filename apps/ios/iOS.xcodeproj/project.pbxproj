@@ -415,6 +415,9 @@
 		E532A8AD29252FFD00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E532A8B12925663B00096D2D /* InformationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */; };
 		E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E53D64C42811698F0060C463 /* Modals-iOS */; };
+		E547D2F529EE9F67008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F429EE9F67008FB760 /* Theme */; };
+		E547D2F729EE9F8B008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F629EE9F8B008FB760 /* Theme */; };
+		E547D2F929EE9F98008FB760 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F829EE9F98008FB760 /* Modals */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E58634B329CA16C200E7C565 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E58634B229CA16C200E7C565 /* Theme */; };
@@ -1113,6 +1116,7 @@
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
+				E547D2F929EE9F98008FB760 /* Modals in Frameworks */,
 				E53D64C52811698F0060C463 /* Modals-iOS in Frameworks */,
 				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
@@ -1166,6 +1170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E547D2F529EE9F67008FB760 /* Theme in Frameworks */,
 				E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */,
 				D555C49D297EE245000593EF /* LocalFeatureFlags in Frameworks */,
 				E148AE5421C1684F007AB65A /* NetworkExtension.framework in Frameworks */,
@@ -1179,6 +1184,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E547D2F729EE9F8B008FB760 /* Theme in Frameworks */,
 				E59C7A9129229A940034E56F /* NEHelper in Frameworks */,
 				E59C7A9029229A940034E56F /* Modals in Frameworks */,
 				D5057D2B28EEF212003CF725 /* WireGuardKit in Frameworks */,
@@ -2530,6 +2536,7 @@
 				D555C49E297FB961000593EF /* LocalFeatureFlags */,
 				E59227C729C8BDD70008A091 /* Theme */,
 				E509509329ED258500C0F935 /* Theme-iOS */,
+				E547D2F829EE9F98008FB760 /* Modals */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2647,6 +2654,7 @@
 			packageProductDependencies = (
 				D555C49C297EE245000593EF /* LocalFeatureFlags */,
 				E5CEF62C29E823B200945415 /* Theme-iOS */,
+				E547D2F429EE9F67008FB760 /* Theme */,
 			);
 			productName = "Quick Connect Widget";
 			productReference = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */;
@@ -2676,6 +2684,7 @@
 				D5A3C34728D376CB00D69CD5 /* PMLogger */,
 				D16ECAECC9861A6ED5EDA4F2 /* Modals */,
 				2DC3E67F6A25A4AD4DFCF448 /* NEHelper */,
+				E547D2F629EE9F8B008FB760 /* Theme */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -5032,6 +5041,18 @@
 		E53D64C42811698F0060C463 /* Modals-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "Modals-iOS";
+		};
+		E547D2F429EE9F67008FB760 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		E547D2F629EE9F8B008FB760 /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		E547D2F829EE9F98008FB760 /* Modals */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Modals;
 		};
 		E58634B229CA16C200E7C565 /* Theme */ = {
 			isa = XCSwiftPackageProductDependency;
