@@ -45,13 +45,13 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         }
     }
     
-    func testWhenNothingIsSetReturnsLevel1ForPaidUsers() throws {
+    func testWhenNothingIsSetReturnsLevel2ForPaidUsers() throws {
         var factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level1)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level2)
         factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level1)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level2)
         factory = getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)
-        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level1)
+        XCTAssertEqual(NetShieldPropertyProviderImplementation(factory).netShieldType, NetShieldType.level2)
     }
     
     func testWhenNothingIsSetReturnsOffForFreeUsers() throws {
@@ -114,14 +114,14 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
         XCTAssertEqual(provider.netShieldType, .off)
     }
 
-    func testNetShieldSetToLevel1AfterUpgradeFromFree() {
+    func testNetShieldSetToLevel2AfterUpgradeFromFree() {
         let userTierProvider = UserTierProviderMock(CoreAppConstants.VpnTiers.free)
         let factory = getFactory(netShieldType: .off, userTierProvider: userTierProvider)
         let provider = NetShieldPropertyProviderImplementation(factory)
 
         userTierProvider.currentUserTier = CoreAppConstants.VpnTiers.basic
         provider.adjustAfterPlanChange(from: CoreAppConstants.VpnTiers.free, to: CoreAppConstants.VpnTiers.basic)
-        XCTAssertEqual(provider.netShieldType, .level1)
+        XCTAssertEqual(provider.netShieldType, .level2)
     }
 
     func testNetShieldNotChangedFromLevel2OnUpgradeFromBasic() {

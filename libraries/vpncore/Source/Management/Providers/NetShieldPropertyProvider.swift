@@ -95,7 +95,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         if tier <= CoreAppConstants.VpnTiers.free {
             netShieldType = .off
         }
-        // On upgrade from a free plan, switch NetShield to the default value for the new tier
+        // On upgrade from the free plan, switch NetShield to the default value for the new tier
         if tier > oldTier && oldTier <= CoreAppConstants.VpnTiers.free {
             netShieldType = Self.defaultNetShieldType(for: tier)
         }
@@ -123,10 +123,10 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
     }
 
     private static func defaultNetShieldType(for userTier: Int) -> NetShieldType {
-        // Select default value: off for free users, f1 for paying users.
+        // Select default value: off for free users, level2 for paying users.
         if userTier <= CoreAppConstants.VpnTiers.free {
             return .off
         }
-        return .level1
+        return .level2
     }
 }
