@@ -14,7 +14,6 @@
       "identifier" : "EED534801EEC112000013607",
       "name" : "ProtonVPN-mac"
     },
-    "testRepetitionMode" : "retryOnFailure",
     "testTimeoutsEnabled" : true
   },
   "testTargets" : [
