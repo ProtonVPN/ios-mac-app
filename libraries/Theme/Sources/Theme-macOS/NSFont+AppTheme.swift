@@ -21,18 +21,14 @@ import Cocoa
 import Theme
 
 public extension NSFont {
-    static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false, italic: Bool = false) -> NSFont {
-        return themeFont(literalSize: semanticSize.rawValue, bold: bold, italic: italic)
+    static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false) -> NSFont {
+        return themeFont(literalSize: semanticSize.rawValue, bold: bold)
     }
 
-    static func themeFont(literalSize: Double, bold: Bool = false, italic: Bool = false) -> NSFont {
+    static func themeFont(literalSize: Double, bold: Bool = false) -> NSFont {
         let result = systemFont(ofSize: literalSize)
-        if bold && italic {
-            return result.with(.bold, .italic)
-        } else if bold {
+        if bold {
             return result.with(.bold)
-        } else if italic {
-            return result.with(.italic)
         } else {
             return result
         }

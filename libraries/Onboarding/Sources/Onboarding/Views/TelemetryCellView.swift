@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 import Theme_iOS
 
 struct TelemetryCellView: View {
@@ -27,28 +28,22 @@ struct TelemetryCellView: View {
     @State var isOn: Bool
     var preferenceChange: (Bool) -> Void
 
-    let titlePadding: CGFloat = -4
-    
-    var colors: Colors = {
-        Onboarding.colors
-    }()
-
     var body: some View {
         HStack(alignment: .top) {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 Text(title)
-                    .font(.system(size: 17))
-                    .foregroundColor(colors.text.suColor)
-                    .padding(.bottom, titlePadding)
+                    .themeFont(.body1())
+                    .foregroundColor(Color.color(.text))
+                    .padding(.bottom, .themeSpacing4)
                 Text(description)
+                    .themeFont(.caption())
                     .fixedSize(horizontal: false, vertical: true) // fixes a problem where this text would get truncated on smaller devices
-                    .font(.system(size: 13))
-                    .foregroundColor(colors.weakText.suColor)
+                    .foregroundColor(Color.color(.text, .weak))
             }
             .layoutPriority(1) // This VStack should take as much space as it can
 
             Toggle(isOn: $isOn, label: { })
-                .toggleStyle(SwitchToggleStyle(tint: colors.brand.suColor))
+                .toggleStyle(SwitchToggleStyle(tint: Color.color(.icon, .interactive)))
                 .onChange(of: isOn, perform: preferenceChange) // Update the state of this preference
         }
         .padding()
@@ -62,6 +57,6 @@ struct TelemetryCellView_Previews: PreviewProvider {
                           isOn: true,
                           preferenceChange: { _ in })
         .previewLayout(.sizeThatFits)
-        .background(ColorPaletteiOS.instance.BackgroundSecondary.suColor)
+        .background(Color.color(.background))
     }
 }

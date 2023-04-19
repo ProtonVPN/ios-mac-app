@@ -40,7 +40,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .foregroundColor(.init(NSColor.color(.text)))
             .font(.system(size: 16))
             .frame(width: 235, height: 46)
-            .background(RoundedRectangle(cornerRadius: 8)
+            .background(RoundedRectangle(cornerRadius: .themeRadius8)
                 .fill(backgroundColor(isPressed: configuration.isPressed)))
             .onHover { isHovered = $0 }
     }

@@ -55,7 +55,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small, italic: true), alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         viewController?.dropdownUpgradeButton.isHidden = true
         if propertiesManager.featureFlags.netShield {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7

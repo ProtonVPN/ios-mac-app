@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 import Theme_macOS
 
 public struct NetShieldStatsView: View {
@@ -30,7 +31,7 @@ public struct NetShieldStatsView: View {
             StatsView(model: viewModel.dataStats)
         }
         .padding(8)
-        .background(RoundedRectangle(cornerRadius: 8)
+        .background(RoundedRectangle(cornerRadius: .themeRadius8)
             .fill(Color.color(.background, .weak)))
     }
     public init(viewModel: NetShieldStatsViewModel) {
@@ -49,13 +50,13 @@ struct StatsView: View {
     public var body: some View {
         VStack(alignment: .center) {
             Text(model.value)
+                .themeFont(.title3(emphasised: true))
                 .foregroundColor(valueForegroundColor())
-                .font(.system(size: 16))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             Text(model.title)
+                .themeFont(.footnote())
                 .foregroundColor(titleForegroundColor())
-                .font(.system(size: 12))
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
                 .minimumScaleFactor(0.6)
@@ -63,20 +64,20 @@ struct StatsView: View {
         .frame(width: statsViewWidth, height: statsViewHeight)
         .onHover { isHovered = $0 }
         .background(
-            RoundedRectangle(cornerRadius: 4)
+            RoundedRectangle(cornerRadius: .themeRadius4)
                 .fill(backgroundColor())
         )
         .help(model.help)
     }
 
-    let colors = ProtonColorPalettemacOS.instance
-
     func valueForegroundColor() -> Color {
-        model.isDisabled ? .color(.text, .hint) : .white
+        .color(.text,
+               model.isDisabled ? .hint : .normal)
     }
 
     func titleForegroundColor() -> Color {
-        .color(.text, model.isDisabled ? .hint : .weak)
+        .color(.text,
+               model.isDisabled ? .hint : .weak)
     }
 
     func backgroundColor() -> Color {
@@ -90,6 +91,7 @@ struct StatsView: View {
 struct NetShieldStatsView_Previews: PreviewProvider {
     static var previews: some View {
         NetShieldStatsView(viewModel: .previewModel)
+            .background(Color.color(.background))
             .previewLayout(.sizeThatFits)
     }
 }
