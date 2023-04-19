@@ -14,8 +14,7 @@
       "containerPath" : "container:iOS.xcodeproj",
       "identifier" : "791DE5D8208DDA3000A29EA5",
       "name" : "ProtonVPN"
-    },
-    "testRepetitionMode" : "retryOnFailure"
+    }
   },
   "testTargets" : [
     {
