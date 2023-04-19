@@ -322,6 +322,7 @@ def self.runIOSTests(params)
     clean: true,
     result_bundle: true,
     skip_slack: true,
+    number_of_retries: 2,
     devices: [simulator_name],
     testplan: params[:testplan]
   )
