@@ -95,7 +95,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         super.viewDidLoad()
         viewController?.dropdownUpgradeButton.isHidden = true
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small, italic: true), alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
     }
 
     private func contentChanged() {

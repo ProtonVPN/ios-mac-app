@@ -195,15 +195,10 @@ public extension AppTheme.Context {
 
         var color: NSColor
 
-        // Hack: workaround to get macOS 12 to display white text in dropdowns (VPNAPPL-1010)
         if self == .text {
             let isDisabled = style.contains([.transparent, .disabled])
 
-            if style == .normal || isDisabled {
-                color = offWhite
-            } else {
-                color = NSColor(style: style)
-            }
+            color = NSColor(style: style)
 
             if isDisabled {
                 color = color.withAlphaComponent(0.5)

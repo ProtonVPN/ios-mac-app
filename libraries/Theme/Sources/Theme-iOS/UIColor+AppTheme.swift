@@ -91,6 +91,8 @@ private extension AppTheme.Style {
             return CP.TextDisabled
         } else if contains(.inverted) {
             return CP.TextInverted
+        } else if contains(.interactive) {
+            return CP.TextAccent
         } else {
             return CP.TextNorm
         }
@@ -116,7 +118,9 @@ public extension AppTheme.Context {
             return style.textColor
         case .icon:
             return style.iconColor
-        case .border, .field: // not for iOS
+        case .border:
+            return Asset.mobileSeparatorNorm.color
+        case .field: // not for iOS
             return .cyan
         }
     }

@@ -56,6 +56,23 @@ public enum AppTheme {
         }
     }
 
+    public enum CornerRadius: CGFloat {
+        case radius4 = 4
+        case radius8 = 8
+        case radius12 = 12
+        case radius16 = 16
+    }
+
+    public enum Spacing: CGFloat {
+        case spacing4 = 4
+        case spacing8 = 8
+        case spacing12 = 12
+        case spacing16 = 16
+        case spacing24 = 24
+        case spacing32 = 32
+        case spacing64 = 64
+    }
+
     public enum FontSize: Double {
         case title = 48
 

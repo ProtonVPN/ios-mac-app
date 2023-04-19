@@ -17,15 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme_iOS
 
 struct TelemetryView: View {
 
     @State var image = UIImage(named: "telemetry-illustration",
                                in: .module,
                                compatibleWith: nil)
-    var colors: Colors = {
-        Onboarding.colors
-    }()
 
     var preferenceChangeUsageData: ((Bool) -> Void)
     var preferenceCrashReports: ((Bool) -> Void)
@@ -37,23 +35,21 @@ struct TelemetryView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                colors.background.suColor.ignoresSafeArea()
+                Color.color(.background, .strong).ignoresSafeArea()
                 VStack() {
                     Spacer()
                     Image(uiImage: image!)
                     Text(LocalizedString.onboardingTelemetryTitle)
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(colors.text.suColor)
+                        .themeFont(.headline)
+                        .foregroundColor(Color.color(.text))
                         .padding()
-                    
-                    TelemetryTogglesView(colors: colors,
-                                         preferenceChangeUsageData: preferenceChangeUsageData,
+
+                    TelemetryTogglesView(preferenceChangeUsageData: preferenceChangeUsageData,
                                          preferenceCrashReports: preferenceCrashReports,
                                          usageStatisticsOn: usageStatisticsOn,
                                          crashReportsOn: crashReportsOn)
                     OnboardingButton(completion: completion,
-                                     geometry: geometry,
-                                     colors: colors)
+                                     geometry: geometry)
                 }
             }
         }

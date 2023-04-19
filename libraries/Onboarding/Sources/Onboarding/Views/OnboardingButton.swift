@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
+import Theme
 import Theme_iOS
 
 struct OnboardingButton: View {
@@ -24,13 +25,7 @@ struct OnboardingButton: View {
     var completion: (() -> Void)?
     var geometry: GeometryProxy
 
-    let cornerRadius: CGFloat = 8
-    let titlePadding: CGFloat = 14
-    let framePadding: CGFloat = 16
-
-    var colors: Colors = {
-        Onboarding.colors
-    }()
+    let framePadding: CGFloat = .themeSpacing16
 
     var body: some View {
         Spacer()
@@ -38,13 +33,13 @@ struct OnboardingButton: View {
             completion?()
         } label: {
             Text(LocalizedString.onboardingNext)
-                .foregroundColor(colors.buttonTitle.suColor)
-                .font(.system(size: 17))
-                .padding(titlePadding)
-                .frame(minWidth: geometry.size.width - framePadding * 2)
-                .background(RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(colors.brand.suColor))
-                .contentShape(RoundedRectangle(cornerRadius: cornerRadius))
+                .foregroundColor(Color.color(.text, .primary))
+                .themeFont(.body1())
+                .frame(minWidth: geometry.size.width - framePadding * 2,
+                       minHeight: 48)
+                .background(RoundedRectangle(cornerRadius: .themeRadius8)
+                    .fill(Color.color(.background, .interactive)))
+                .contentShape(RoundedRectangle(cornerRadius: .themeRadius8))
                 .padding(.bottom)
         }
 

@@ -23,16 +23,7 @@
 import Cocoa
 import Theme
 
-public extension NSFont {
-    
-    static func italicSystem( ofSize size: CGFloat ) -> NSFont {
-        return systemFont(ofSize: size).with(.italic)
-    }
-    
-    static func boldItalicSystem( ofSize size: CGFloat ) -> NSFont {
-        return systemFont(ofSize: size).with(.italic, .bold)
-    }
-    
+extension NSFont {
     func with(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
         let descriptor = self.fontDescriptor.withSymbolicTraits(
             NSFontDescriptor.SymbolicTraits(traits).union(self.fontDescriptor.symbolicTraits)

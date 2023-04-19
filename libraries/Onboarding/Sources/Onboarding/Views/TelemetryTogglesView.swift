@@ -20,10 +20,6 @@ import SwiftUI
 
 struct TelemetryTogglesView: View {
 
-    var colors: Colors = {
-        Onboarding.colors
-    }()
-
     var preferenceChangeUsageData: ((Bool) -> Void) = { _ in }
     var preferenceCrashReports: ((Bool) -> Void) = { _ in }
 
@@ -36,22 +32,17 @@ struct TelemetryTogglesView: View {
                 TelemetryCellView(title: LocalizedString.onboardingUsageStatsTitle,
                                   description: LocalizedString.onboardingUsageStatsDescription,
                                   isOn: usageStatisticsOn ?? false,
-                                  preferenceChange: preferenceChangeUsageData,
-                                  colors: colors)
+                                  preferenceChange: preferenceChangeUsageData)
                 Divider()
-                    .background(colors.weakInteraction.suColor)
+                    .background(Color.color(.border))
                     .padding(.leading)
                 TelemetryCellView(title: LocalizedString.onboardingCrashReportsTitle,
                                   description: LocalizedString.onboardingCrashReportsDescription,
                                   isOn: crashReportsOn ?? true,
-                                  preferenceChange: preferenceCrashReports,
-                                  colors: colors)
-                Divider()
-                    .background(colors.weakInteraction.suColor)
-                    .padding(.leading)
+                                  preferenceChange: preferenceCrashReports)
             }
-            .background(colors.secondaryBackground.suColor)
-            OnboardingFooter(colors: colors)
+            .background(Color.color(.background))
+            OnboardingFooter()
         }
     }
 }

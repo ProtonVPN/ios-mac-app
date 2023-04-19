@@ -58,7 +58,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsSecureCoreDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsSecureCoreNote.styled(.weak, font: .themeFont(.small, italic: true), alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsSecureCoreNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         if propertiesManager.featureFlags.netShield {
             viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 3) + 7
         } else {
