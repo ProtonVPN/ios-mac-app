@@ -33,17 +33,17 @@ struct TelemetryCellView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(title)
                     .themeFont(.body1())
-                    .foregroundColor(Color.color(.text))
+                    .foregroundColor(Color(.text))
                     .padding(.bottom, .themeSpacing4)
                 Text(description)
                     .themeFont(.caption())
                     .fixedSize(horizontal: false, vertical: true) // fixes a problem where this text would get truncated on smaller devices
-                    .foregroundColor(Color.color(.text, .weak))
+                    .foregroundColor(Color(.text, .weak))
             }
             .layoutPriority(1) // This VStack should take as much space as it can
 
             Toggle(isOn: $isOn, label: { })
-                .toggleStyle(SwitchToggleStyle(tint: Color.color(.icon, .interactive)))
+                .toggleStyle(SwitchToggleStyle(tint: Color(.icon, .interactive)))
                 .onChange(of: isOn, perform: preferenceChange) // Update the state of this preference
         }
         .padding()
@@ -57,6 +57,6 @@ struct TelemetryCellView_Previews: PreviewProvider {
                           isOn: true,
                           preferenceChange: { _ in })
         .previewLayout(.sizeThatFits)
-        .background(Color.color(.background))
+        .background(Color(.background))
     }
 }

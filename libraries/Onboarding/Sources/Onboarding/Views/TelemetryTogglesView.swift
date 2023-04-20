@@ -34,14 +34,14 @@ struct TelemetryTogglesView: View {
                                   isOn: usageStatisticsOn ?? false,
                                   preferenceChange: preferenceChangeUsageData)
                 Divider()
-                    .background(Color.color(.border))
+                    .background(Color(.border))
                     .padding(.leading)
                 TelemetryCellView(title: LocalizedString.onboardingCrashReportsTitle,
                                   description: LocalizedString.onboardingCrashReportsDescription,
                                   isOn: crashReportsOn ?? true,
                                   preferenceChange: preferenceCrashReports)
             }
-            .background(Color.color(.background))
+            .background(Color(.background))
             OnboardingFooter()
         }
     }

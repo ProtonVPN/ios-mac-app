@@ -139,8 +139,8 @@ public extension AppTheme.Context {
 }
 
 public extension Color {
-    static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> Color {
-        return Color(context.color(style: style))
+    init(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) {
+        self.init(context.color(style: style))
     }
 }
 

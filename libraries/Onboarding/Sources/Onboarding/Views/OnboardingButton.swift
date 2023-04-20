@@ -33,12 +33,12 @@ struct OnboardingButton: View {
             completion?()
         } label: {
             Text(LocalizedString.onboardingNext)
-                .foregroundColor(Color.color(.text, .primary))
+                .foregroundColor(Color(.text, .primary))
                 .themeFont(.body1())
                 .frame(minWidth: geometry.size.width - framePadding * 2,
                        minHeight: 48)
                 .background(RoundedRectangle(cornerRadius: .themeRadius8)
-                    .fill(Color.color(.background, .interactive)))
+                    .fill(Color(.background, .interactive)))
                 .contentShape(RoundedRectangle(cornerRadius: .themeRadius8))
                 .padding(.bottom)
         }
@@ -50,7 +50,7 @@ struct OnboardingButton_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.color(.background)
+                Color(.background)
                     .ignoresSafeArea()
                 VStack() {
                     OnboardingButton(geometry: geometry)

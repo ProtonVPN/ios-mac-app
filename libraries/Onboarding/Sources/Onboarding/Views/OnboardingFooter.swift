@@ -26,12 +26,12 @@ struct OnboardingFooter: View {
     var body: some View {
         // Find a way to combine the learn more text and the footer text into one localized string. We only have one localization that reads right-to-left at the moment, but there will probably be more in the future.
         (Text(LocalizedString.onboardingFooter + " ") + Text(LocalizedString.onboardingFooterLearnMore)
-            .foregroundColor(Color.color(.text, .interactive))
+            .foregroundColor(Color(.text, .interactive))
         )
         .themeFont(.caption())
         .padding()
-        .background(Color.color(.background, .strong))
-        .foregroundColor(Color.color(.text, .weak))
+        .background(Color(.background, .strong))
+        .foregroundColor(Color(.text, .weak))
         .onTapGesture {
             guard let url = URL(string: urlUsageStatistics),
                   UIApplication.shared.canOpenURL(url) else {

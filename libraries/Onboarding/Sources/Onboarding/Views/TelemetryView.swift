@@ -35,13 +35,13 @@ struct TelemetryView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Color.color(.background, .strong).ignoresSafeArea()
+                Color(.background, .strong).ignoresSafeArea()
                 VStack() {
                     Spacer()
                     Image(uiImage: image!)
                     Text(LocalizedString.onboardingTelemetryTitle)
                         .themeFont(.headline)
-                        .foregroundColor(Color.color(.text))
+                        .foregroundColor(Color(.text))
                         .padding()
 
                     TelemetryTogglesView(preferenceChangeUsageData: preferenceChangeUsageData,
