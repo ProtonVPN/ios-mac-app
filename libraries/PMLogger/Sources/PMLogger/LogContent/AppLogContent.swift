@@ -23,6 +23,7 @@ public class AppLogContent: LogContent {
 
     private let folder: URL
     private let filenameWithoutExtension: String = "ProtonVPN"
+    private let fileManager = FileManager.default
 
     public init(folder: URL) {
         self.folder = folder
@@ -31,6 +32,7 @@ public class AppLogContent: LogContent {
     private var urls: [URL] {
         let files = try? FileManager.default.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
             .filter { $0.pathComponents.last?.hasMatches(for: "\(filenameWithoutExtension)(.\\d+_[\\d\\w\\-]+)?.log") ?? false }
+            .sorted(by: fileManager.fileCreationDateSort)
         return files ?? []
     }
 
