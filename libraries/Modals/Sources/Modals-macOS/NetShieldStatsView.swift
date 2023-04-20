@@ -32,7 +32,7 @@ public struct NetShieldStatsView: View {
         }
         .padding(8)
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
-            .fill(Color.color(.background, .weak)))
+            .fill(Color(.background, .weak)))
     }
     public init(viewModel: NetShieldStatsViewModel) {
         self.viewModel = viewModel
@@ -71,18 +71,18 @@ struct StatsView: View {
     }
 
     func valueForegroundColor() -> Color {
-        .color(.text,
-               model.isDisabled ? .hint : .normal)
+        Color(.text,
+              model.isDisabled ? .hint : .normal)
     }
 
     func titleForegroundColor() -> Color {
-        .color(.text,
-               model.isDisabled ? .hint : .weak)
+        Color(.text,
+              model.isDisabled ? .hint : .weak)
     }
 
     func backgroundColor() -> Color {
         if isHovered {
-            return .color(.background, [.transparent, .hovered])
+            return Color(.background, [.transparent, .hovered])
         }
         return .clear
     }
@@ -91,7 +91,7 @@ struct StatsView: View {
 struct NetShieldStatsView_Previews: PreviewProvider {
     static var previews: some View {
         NetShieldStatsView(viewModel: .previewModel)
-            .background(Color.color(.background))
+            .background(Color(.background))
             .previewLayout(.sizeThatFits)
     }
 }

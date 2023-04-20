@@ -23,11 +23,6 @@ import Theme
 
 private let CP = ProtonColorPalettemacOS.instance
 
-private let offWhite = NSColor(red: 254,
-                               green: 255,
-                               blue: 255,
-                               alpha: 1.0)
-
 private extension AppTheme.Style {
     static var signalStyles: Self {
         return [.danger, .warning, .success, .info]
@@ -212,8 +207,8 @@ public extension AppTheme.Context {
 }
 
 public extension Color {
-    static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> Color {
-        return Color(context.color(style: style))
+    init(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) {
+        self.init(context.color(style: style))
     }
 }
 
