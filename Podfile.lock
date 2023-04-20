@@ -108,26 +108,11 @@ PODS:
   - "ProtonCore-GoLibs/Crypto+VPN-patched-Go1.20.2 (5.2.0)":
     - ProtonCore-DataModel (= 5.2.0)
   - ProtonCore-Hash (5.2.0)
-  - ProtonCore-HumanVerification (5.2.0):
-    - ProtonCore-APIClient (= 5.2.0)
-    - ProtonCore-CoreTranslation (= 5.2.0)
-    - ProtonCore-Foundations (= 5.2.0)
-    - ProtonCore-HumanVerification/ErrorWarningEmittingDefaultSubspec (= 5.2.0)
-    - ProtonCore-Observability (= 5.2.0)
-    - ProtonCore-UIFoundations (= 5.2.0)
-    - ProtonCore-Utilities (= 5.2.0)
   - "ProtonCore-HumanVerification/Crypto+VPN-patched-Go1.20.2 (5.2.0)":
     - ProtonCore-APIClient (= 5.2.0)
     - ProtonCore-CoreTranslation (= 5.2.0)
     - ProtonCore-Foundations (= 5.2.0)
     - "ProtonCore-GoLibs/Crypto+VPN-patched-Go1.20.2 (= 5.2.0)"
-    - ProtonCore-Observability (= 5.2.0)
-    - ProtonCore-UIFoundations (= 5.2.0)
-    - ProtonCore-Utilities (= 5.2.0)
-  - ProtonCore-HumanVerification/ErrorWarningEmittingDefaultSubspec (5.2.0):
-    - ProtonCore-APIClient (= 5.2.0)
-    - ProtonCore-CoreTranslation (= 5.2.0)
-    - ProtonCore-Foundations (= 5.2.0)
     - ProtonCore-Observability (= 5.2.0)
     - ProtonCore-UIFoundations (= 5.2.0)
     - ProtonCore-Utilities (= 5.2.0)
@@ -285,7 +270,7 @@ DEPENDENCIES:
   - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
   - "ProtonCore-GoLibs/Crypto+VPN-patched-Go1.20.2 (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
   - "ProtonCore-Hash (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
-  - "ProtonCore-HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
+  - "ProtonCore-HumanVerification/Crypto+VPN-patched-Go1.20.2 (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
   - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
   - "ProtonCore-Login/Crypto+VPN-patched-Go1.20.2 (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
   - "ProtonCore-LoginUI/Crypto+VPN-patched-Go1.20.2 (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `5.2.0`)"
@@ -590,6 +575,6 @@ SPEC CHECKSUMS:
   TrustKit: f830ff5af0a8cbad5178aef1d0951389b096d312
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 6b4367d43f2fe9b6ee6f09e7cf7a70e788782d98
+PODFILE CHECKSUM: bb643b03c9e58057a6b969f35e3b8d7c24d281f6
 
 COCOAPODS: 1.12.0
