@@ -24,9 +24,9 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let closeNavBar = ImageAsset(name: "close-nav-bar")
   internal static let connect = ImageAsset(name: "connect")
+  internal static let launchScreenVPNBackground = ImageAsset(name: "LaunchScreenVPNBackground")
+  internal static let launchScreenVPNLogo = ImageAsset(name: "LaunchScreenVPNLogo")
   internal static let locked = ImageAsset(name: "locked")
-  internal static let splashFooterIcon = ImageAsset(name: "SplashFooterIcon")
-  internal static let splashIcon = ImageAsset(name: "SplashIcon")
   internal static let mainMap = ImageAsset(name: "main-map")
   internal static let netshieldSmall = ImageAsset(name: "netshield-small")
   internal static let quickConnectActiveButton = ImageAsset(name: "quick-connect-active-button")
