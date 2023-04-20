@@ -104,7 +104,7 @@ public class Storage {
         }
     }
     
-    public func getDecodableValue<T>(_ type: T.Type, forKey key: String, shouldUseFileStorage: Bool = false) -> T? where T: Decodable {
+    public func getDecodableValue<T>(_ type: T.Type, forKey key: String, shouldUseFileStorage: Bool = false, caller: StaticString = #function) -> T? where T: Decodable {
         var data: Data?
         do {
             data = try getData(forKey: key, shouldUseFileStorage: shouldUseFileStorage)
@@ -117,13 +117,27 @@ public class Storage {
         do {
             return try JSONDecoder().decode(T.self, from: data)
         } catch {
-            log.warning("Can't decode value from JSON", category: .settings, metadata: ["error": "\(error)"])
+            log.warning(
+                "Can't decode \(type) from JSON in \(caller)",
+                category: .settings,
+                metadata: [
+                    "error": "\(error)",
+                    "data": "\(String(data: data, encoding: .utf8) ?? "(nil)")"
+                ]
+            )
         }
         // Backup for data saved in older app versions (ios: <=2.7.1, macos: <=2.2.2)
         do {
             return try PropertyListDecoder().decode(T.self, from: data)
         } catch {
-            log.warning("Can't decode value from PropertyList", category: .settings, metadata: ["error": "\(error)"])
+            log.warning(
+                "Can't decode \(type) from PropertyList in \(caller)",
+                category: .settings,
+                metadata: [
+                    "error": "\(error)",
+                    "data": "\(String(data: data, encoding: .utf8) ?? "(nil)")"
+                ]
+            )
         }
         return nil
     }
