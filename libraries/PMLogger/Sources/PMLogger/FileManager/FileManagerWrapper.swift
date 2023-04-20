@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import os.log
 
 /// Wraps `FileManager` to show what methods we are using and make it possible to mock them in tests
 public protocol FileManagerWrapper {
@@ -34,6 +35,38 @@ public protocol FileManagerWrapper {
 
     // Lets us use `FileHandleWrapper` instead of `FileHandler` directly, so it can also be mocked.
     func createFileHandle(forWritingTo url: URL) throws -> FileHandleWrapper
+
+    func fileCreationDateSort(lhs: URL, rhs: URL) -> Bool
+    func creationDate(of url: URL) -> Date?
+}
+
+extension FileManagerWrapper {
+    public func fileCreationDateSort(lhs: URL, rhs: URL) -> Bool {
+        creationDate(of: lhs)?.timeIntervalSince1970 ?? 0 < creationDate(of: rhs)?.timeIntervalSince1970 ?? 0
+    }
+
+    public func creationDate(of url: URL) -> Date? {
+        let attributes: [FileAttributeKey: Any]
+        do {
+            attributes = try attributesOfItem(atPath: url.path)
+        } catch {
+            os_log("Failed to get attributes of file at %{public}s with error %{public}s",
+                   log: OSLog(subsystem: "PMLogger", category: "FileManager"),
+                   type: OSLogType.error,
+                   url.path,
+                   error as CVarArg)
+            return nil
+        }
+
+        guard let date = attributes[.creationDate] as? Date else {
+            os_log("Attributes of file at %{public}s do not contain creation date",
+                   log: OSLog(subsystem: "PMLogger", category: "FileManager"),
+                   type: OSLogType.error,
+                   url.path)
+            return nil
+        }
+        return date
+    }
 }
 
 extension FileManager: FileManagerWrapper {
