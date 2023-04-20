@@ -29,7 +29,7 @@ public final class FileLogHandler: ParentLogHandler {
     
     /// After log file size reaches 50kb in size it is moved to archive and new log file is created
     public var maxFileSize = 1024 * 50
-    
+
     /// Maximum number of log files that were rotated. This number doesn't include the main log file where app is writing it's logs.
     public var maxArchivedFilesCount = 1
     
@@ -39,8 +39,7 @@ public final class FileLogHandler: ParentLogHandler {
     private var fileHandle: FileHandleWrapper?
     private var currentSize: UInt64 = 0
     private var fileManager: FileManagerWrapper
-    private let minimumFreeSpaceForLogging = 16 * 1024
-    
+
     private var logsDirectory: URL {
         return fileUrl.deletingLastPathComponent()
     }
@@ -71,20 +70,6 @@ public final class FileLogHandler: ParentLogHandler {
                 }
             }
         }
-    }
-
-    // MARK: - File System
-
-    /// Check if free space is available on older systems before writing log data.
-    ///
-    /// See `writeCustom` implementation: the old implementation of `FileHandle.write` does not catch
-    /// exceptions. Logging to a full filesystem on those implementations would cause the app to crash.
-    private func freeSpaceAvailable() throws -> Bool {
-        let attributes = try FileManager.default.attributesOfItem(atPath: self.fileUrl.path)
-        if let freeSpace = attributes[.systemFreeSize] as? Int, freeSpace < self.minimumFreeSpaceForLogging {
-            return false
-        }
-        return true
     }
     
     // MARK: - File
