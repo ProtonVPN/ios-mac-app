@@ -157,11 +157,7 @@ public final class FileLogHandler: ParentLogHandler {
                 return
             }
             
-            let sortedFiles = try oldFiles.sorted {
-                let date1 = try self.fileManager.attributesOfItem(atPath: $0.path)[.creationDate] as? Date
-                let date2 = try self.fileManager.attributesOfItem(atPath: $1.path)[.creationDate] as? Date
-                return date1!.timeIntervalSince1970 < date2!.timeIntervalSince1970
-            }
+            let sortedFiles = oldFiles.sorted(by: fileManager.fileCreationDateSort)
             
             for i in 0 ..< sortedFiles.count - maxArchivedFilesCount {
                 try fileManager.removeItem(at: sortedFiles[i])
