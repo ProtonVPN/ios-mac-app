@@ -44,7 +44,7 @@ public final class FileLogHandler: ParentLogHandler {
         return fileUrl.deletingLastPathComponent()
     }
     
-    private var queue: DispatchQueue = DispatchQueue.init(label: "FileLogHandler", qos: .background)
+    private static let queue: DispatchQueue = DispatchQueue.init(label: "FileLogHandler", qos: .background)
     
     public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter(), fileManager: FileManagerWrapper = FileManager.default) {
         self.fileUrl = fileUrl
@@ -59,13 +59,12 @@ public final class FileLogHandler: ParentLogHandler {
     override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
            
-        queue.async {
+        Self.queue.async {
             if let data = (text + "\r\n").data(using: .utf8) {
                 do {
                     try self.getFileHandleAtTheEndOfFile()?.write(contentsOf: data)
                     try self.rotate()
                 } catch {
-//                    SentryHelper.log(error: error)
                     self.debugLog("🔴🔴 Error writing to file: \(error)")
                 }
             }
