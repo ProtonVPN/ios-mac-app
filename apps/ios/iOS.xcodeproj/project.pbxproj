@@ -52,7 +52,6 @@
 		663F86952840DFDD009AABF6 /* SettingsAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB527ABEC45002FC827 /* SettingsAccountViewController.swift */; };
 		663F86962840DFE9009AABF6 /* AccountDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */; };
 		663F86972840DFF4009AABF6 /* ButtonWithLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */; };
-		667D0DEB29F14EF800412DEB /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667D0DEA29F14EF800412DEB /* VPNLaunchScreen.storyboard */; };
 		66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */; };
 		66E34BB027ABCD39002FC827 /* SettingsAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */; };
 		66E34BB227ABD8F7002FC827 /* AccountDetailsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */; };
@@ -419,6 +418,7 @@
 		E547D2F529EE9F67008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F429EE9F67008FB760 /* Theme */; };
 		E547D2F729EE9F8B008FB760 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F629EE9F8B008FB760 /* Theme */; };
 		E547D2F929EE9F98008FB760 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E547D2F829EE9F98008FB760 /* Modals */; };
+		E548A2BF29F2A04100B8116A /* VPNLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E548A2BE29F2A04100B8116A /* VPNLaunchScreen.storyboard */; };
 		E551EB0529AF583D00B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E5772AE529B0C63F0076D824 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0429AF583D00B6612D /* Assets.swift */; };
 		E58634B329CA16C200E7C565 /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E58634B229CA16C200E7C565 /* Theme */; };
@@ -706,7 +706,6 @@
 		5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri_Shortcut_Handler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		626EBF8E3BDF0DC2F71393A2 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		661D36E12948A0FC00A7EBE3 /* ExternalAccountsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalAccountsTests.swift; sourceTree = "<group>"; };
-		667D0DEA29F14EF800412DEB /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = VPNLaunchScreen.storyboard; path = "../../../../../Pods/ProtonCore-UIFoundations/libraries/UIFoundations/LaunchScreens/VPNLaunchScreen.storyboard"; sourceTree = "<group>"; };
 		66E34BAE27ABCD2C002FC827 /* SettingsAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsAccountViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/SettingsAccountViewModel.swift; sourceTree = "<group>"; };
 		66E34BB127ABD8F7002FC827 /* AccountDetailsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AccountDetailsTableViewCell.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.xib; sourceTree = "<group>"; };
 		66E34BB327ABE30B002FC827 /* AccountDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountDetailsTableViewCell.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/AccountDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -962,6 +961,7 @@
 		E534EA432806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Intents.strings"; sourceTree = "<group>"; };
 		E534EA442806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E534EA452806B36B00BCC9F6 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-419"; path = "es-419.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		E548A2BE29F2A04100B8116A /* VPNLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VPNLaunchScreen.storyboard; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		E57597552943256E00E5F823 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -2269,7 +2269,7 @@
 		F36ECCC62611C7F10089B898 /* Launch */ = {
 			isa = PBXGroup;
 			children = (
-				667D0DEA29F14EF800412DEB /* VPNLaunchScreen.storyboard */,
+				E548A2BE29F2A04100B8116A /* VPNLaunchScreen.storyboard */,
 				79FD80E321108030003B16E2 /* ViewControllers */,
 				791DE5E7208DDA3200A29EA5 /* LaunchScreen.storyboard */,
 			);
@@ -2879,7 +2879,7 @@
 				79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */,
 				E98630A226987C6B00F56B87 /* ProtonVPN_ike_root.der in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
-				667D0DEB29F14EF800412DEB /* VPNLaunchScreen.storyboard in Resources */,
+				E548A2BF29F2A04100B8116A /* VPNLaunchScreen.storyboard in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
 				E986309C269835E500F56B87 /* Intents.strings in Resources */,
