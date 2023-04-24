@@ -151,10 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        LoggingSystem.bootstrap { label in
-            print("Initialising logging for \(label)") // swiftlint:disable:next no_print
-            return multiplexLogHandler
-        }
+        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
     }
 }
 
