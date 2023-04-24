@@ -27,8 +27,8 @@ public protocol FileLogHandlerDelegate: AnyObject {
 // swiftlint:disable no_print
 public final class FileLogHandler: ParentLogHandler {
     
-    /// After log file size reaches 50kb in size it is moved to archive and new log file is created
-    public var maxFileSize = 1024 * 50
+    /// After log file size reaches 100 KiB in size it is moved to archive and new log file is created
+    public var maxFileSize = 1024 * 100
 
     /// Maximum number of log files that were rotated. This number doesn't include the main log file where app is writing it's logs.
     public var maxArchivedFilesCount = 1
