@@ -355,9 +355,6 @@
 /* API error */
 "_error_api_offline" = "Proton VPN API şu anda çevrimdışı";
 
-/* (No Comment) */
-"_error_credit_applied" = "Siparişinizi tamamlamak için support@protonvpn.com adresine yazın.";
-
 /* Error decoding an object */
 "_error_decode" = "Sınıftaki arşivlenmiş verilerin kodu çözülemedi: %@";
 
@@ -379,9 +376,6 @@
 /* Form validation error */
 "_error_field_required" = "Bu alan zorunludur";
 
-/* Form validation error */
-"_error_field_unknown" = "Lütfen bu alanı denetleyin";
-
 /* Error when generate srp clint */
 "_error_generate_srp" = "SRP oluşturulamadı";
 
@@ -401,7 +395,7 @@
 "_error_loads" = "Sunucu yükleri güncellenemedi";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "Proton VPN API hizmeti ile bağlantı kurulmaya çalışılırken TLS sertifikası doğrulanamadı. Geçerli internet bağlantınız izlenebilir. Verilerinizi güvende tutmak için, uygulamanın Proton VPN API hizmetine erişmesini engelliyoruz.\nOturum açmak veya hesabınıza erişmek için başka bir ağa geçin ve yeniden bağlanmayı deneyin.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Güvenli olmayan bağlantı";
@@ -412,23 +406,8 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modül imzası boş";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Abonelik yükseltme işleminiz tamamlandı. Lütfen yeni hizmet tarifenizden yararlanmak için uygulamayı yeniden başlatın.";
-
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "İş ortağı bilgileri işlenemedi";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "App Store ürününü sunucumuzdaki ürünlerle eşleştiremedik. Lütfen destek ekibiyle görüşün.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "App Store alındısı kayboldu. Tarifeniz etkinleştirilmediyse destek ekibi ile görüşün.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "iOS uygulamasının beta sürümünden satın alma yapılamaz. Ödeme alınmadı.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Sunucu bilgileri işlenemedi";
@@ -439,9 +418,6 @@
 /* Generic sign in error */
 "_error_sign_in_again" = "Ne yazık ki bir şeyler ters gitti. Lütfen yeniden oturum açın.";
 
-/* (No Comment) */
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
-
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Abonelik bilgileri işlenemedi";
 
@@ -451,44 +427,20 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Sunucu sertifikası doğrulanamadı.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store siparişinizi işleyemedi.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "Farklı bir Proton VPN kullanıcı adıyla bir satın alma işlemi başlatıldı.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "App Store üzerinden kullanılabilecek ürünlerin listesi alınamadı.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "Bilinmeyen hata";
-
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "İşlem iptal edildi";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Hesap açılamadı";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
+"_error_user_credentials_expired" = "Kullanıcı kimlik doğrulama bilgilerinin geçerlilik süresi dolmuş. Lütfen oturum açın";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
+"_error_user_credentials_missing" = "Kullanıcı kimlik doğrulama bilgileri eksik. Oturum açılamadı";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "İnsan olduğunuzu doğrulayamadık. Lütfen yeniden deneyin ya da ücretli bir tarifeye geçin.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Hesabınızın VPN erişimi yok. Lütfen hesap yöneticinizle görüşün";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Henüz bir Proton VPN hesabı açmadınız";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Şu anda bekleme listesindesiniz ve hesabınız henüz hazır değil";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "Bu kullanıcı adını başkası kullanıyor";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Doğrulama yöntemleri işlenemedi";
@@ -501,15 +453,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Proton VPN oturumu etkin";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Ödeme kodu durumu yanlış. Lütfen uygulamayı yeniden başlatın. Sorun sürerse, destek ekibimiz ile görüşün.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN, bağlantı kesici için paket süzen bir güvenlik duvarı kullanır. Bağlantı kesiciyi etkinleştirdiğinizde, aygıtınızın var olan güvenlik duvarı ayarlarının üzerine yazacaksınız. Bu güvenlik duvarı yapılandırmasına güveniyorsanız, bağlantı kesiciyi kullanmamalısınız.\n\nBağlantı kesiciyi kullanmak ve var olan güvenlik duvarı ayarlarınızın üzerine yazmak için İlerle üzerine tıklayın.\n\nBağlantı kesiciyi kapatmak ve var olan güvenlik duvarınızı kullanmayı sürdürmek için İptal üzerine tıklayın.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Güvenlik duvarı algılandı";
 
 /* Existing connection alert */
 "_existing_session" = "Sunucu kullanılamıyor";
@@ -656,9 +599,6 @@
 "_initializing_connection" = "Bağlantı hazırlanıyor...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "Oturumun geçerlilik süresi dolmuş";
-
-/* (No Comment) */
 "_invalid_refresh_token_please_login" = "Proton VPN uygulamasını son kullandığınızdan bu yana epey zaman geçmiş. Lütfen yeniden oturum açın.";
 
 /* iOS onboarding texts */
@@ -699,27 +639,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Bağlantı kesiciyi devre dışı bırak";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Sorunu çözmek için bu uygulamaları sonlandırın.\nBağlantı kesiciyi kapatarak gezinmeyi sürdürmek için İlerle üzerine tıklayın.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Antivirüs veya güvenlik duvarı gibi bazı uygulamalar, bağlantı kesici ile çakışarak düzgün çalışmamasına neden olabilir.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Bağlantı kesici, macOS güvenlik duvarı ile çalışır.\nGüvenlik duvarıyla ilişkili başka uygulamalar varsa, bunlar Proton VPN bağlantı kesiciye müdahale edebilir.\nBu uygulamaları sonlandırmak, bağlantı kesici tarafından ayarlanan güvenlik duvarı kurallarını geri yükleyebilir.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "Bir bağlantı kesici sorunu algılandı";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Bağlantı kesici kurulurken veya güncellenirken bir sorun çıktı.\n\nYeniden denemek için Yeniden dene üzerine tıklayın.\n\nBağlantı kesiciyi kapatarak ilerlemek için Devre dışı bırak üzerine tıklayın.";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Bağlantı kesici özelliğini etkinleştirmek için, bilgisayar hesabı parolanızı yazmanız istenebilir. Bir istek görüntülenirse, %@ yazın ve kabul edin.\n\nAra sıra Proton VPN uygulaması güncellendikçe bu isteği yeniden görebilirsiniz.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "İndirdiğiniz son güncelleme için bilgisayar hesabı parolanızı yazmanız gerekiyor. İstek göründüğünde, lütfen %@ yazın ve kabul edin.\n\nMac parolanızı yazmazsanız, bağlantı kesici kapatılır.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Proton VPN sunucu ile yeniden bağlantı kurduğunda internet bağlantınız açılacak.\nVPN ve bağlantı kesici koruması olmadan internet kullanmak için, yeniden bağlanmayı iptal edin.";
@@ -794,19 +713,19 @@
 "_locations_plus" = "Plus konumları";
 
 /* iOS: Login button in several places */
-"_log_in" = "Sign in";
+"_log_in" = "Oturum aç";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
+"_log_in_to_use_widget" = "Lütfen başlamak için oturum açın";
 
 /* iOS: button in settings screen */
-"_log_out" = "Sign out";
+"_log_out" = "Oturumu kapat";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
+"_log_out_warning" = "Oturumu kapatmak VPN oturumunuzu sonlandıracak.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_log_out_warning_long" = "Uygulama oturumunu kapatmak, etkin VPN bağlantısını kesecek. İlerlemek istiyor musunuz?";
 
 /* MacOS: Login button */
 "_login" = "Oturum aç";
@@ -875,7 +794,7 @@
 "_menu_hide_self" = "Proton VPN uygulamasını gizle";
 
 /* Main mac app menu item */
-"_menu_logout" = "Sign out";
+"_menu_logout" = "Oturumu kapat";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Küçült";
@@ -1067,7 +986,7 @@
 "_onboarding_mac_usage_stats" = "Anonim kullanım istatistiklerini paylaşın. Bu istatistikler, VPN engellemelerini aşmamıza ve uygulamayı geliştirmemize yardımcı olur.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
+"_open_app_to_log_in" = "Oturum açmak için Proton VPN uygulamasını aç...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN günlük kayıtları";
@@ -1101,9 +1020,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P sunucuları";
-
-/* Plan upgrade required alert */
-"_paid_required" = "Ücretli Proton VPN tarifesi gerekli";
 
 /* Used in sign-in, sign-up */
 "_password" = "Parola";
@@ -1152,9 +1068,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus sunucuları\nSecure Core\nTor sunucuları";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Plus veya Visionary aboneliği gerekli";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Plus sunucuları";
@@ -1297,9 +1210,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Önerilen";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "İletişim kuralını değiştir";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Bu değişikliğin uygulanması için bağlantınızın yeniden başlatılması gerekiyor.";
 
@@ -1319,7 +1229,7 @@
 "_release_date" = "Yayınlanma tarihi:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
+"_remember_login" = "Bilgilerimi hatırla";
 
 /* Button in Kill switch error alert */
 "_report" = "Bildir";
@@ -1583,7 +1493,7 @@
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
+"_subuser_alert_description2" = "Bu adım birkaç dakika sürecek. Bundan sonra oturum açabilir ve tüm aygıtlarınızı koruyabilirsiniz.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "Şu anda bu hesap için herhangi bir VPN bağlantısı etkinleştirilmemiş. Proton VPN yolcuğunuza başlamak için yöneticinizle görüşün.";
@@ -1592,7 +1502,7 @@
 "_subuser_alert_enable_connections_button" = "VPN bağlantılarını etkinleştir";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Yeniden oturum aç";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Business/Visionary tarifesine yükselttiğiniz için teşekkürler";
@@ -1805,15 +1715,6 @@
 "_upgrade_now" = "Şimdi yükselt";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Ne yazık ki, şu anda bu ülkede abonelik düzeyinize uygun bir sunucu yok. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi düşünün.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core özelliği Proton VPN Plus veya üzerindeki tarifelerle kullanılabilen ücretli bir özelliktir. Secure Core, VPN sunucularının izlemesine karşı gelişmiş koruma sağlar.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Secure Core kullanmak için, bu özelliğin bulunduğu diğer abonelik tarifelerimize bakın.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Ne yazık ki, bu sunucu abonelik tarifeniz ile kullanılamıyor. Daha fazla sunucuya erişmek istiyorsanız, abonelik tarifenizi yükseltmeyi düşünün.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1910,13 +1811,13 @@
 "_vpnauth_too_many_certs_title" = "Kimlik doğrulama hatası";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
+"_vpnstatus_not_loggedin" = "Proton VPN oturumu açmamışsınız. Proton VPN uygulamasını açıp oturum açın.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Uyarı";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
+"_warning_vpn_session_is_active" = "Bu aygıtta başka bir kullanıcının Proton VPN oturumu etkin. Oturum açma işlemine ilerlemek geçerli oturumun kapatılmasına neden olacak. İlerlemek istiyor musunuz?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "İnternet bağlantınızı şifreleyerek gizliliğinizi koruyan yüksek hızlı İsviçre'li VPN.";

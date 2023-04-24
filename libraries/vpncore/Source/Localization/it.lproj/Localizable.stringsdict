@@ -45,11 +45,11 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Ad
-blocked</string>
+			<string>annuncio
+bloccato</string>
 			<key>other</key>
-			<string>Ads
-blocked</string>
+			<string>annunci
+bloccati</string>
 		</dict>
 	</dict>
 	<key>_netshield_stats_trackers_stopped</key>
@@ -63,11 +63,11 @@ blocked</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>Tracker
-stopped</string>
+			<string>tracker
+fermato</string>
 			<key>other</key>
-			<string>Trackers
-stopped</string>
+			<string>tracker
+fermati</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>

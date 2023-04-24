@@ -343,9 +343,6 @@
 /* API error */
 "_error_api_offline" = "در حال حاضر API برای Proton VPN آفلاین است";
 
-/* (No Comment) */
-"_error_credit_applied" = "برای تکمیل خرید خود با support@protonvpn.com تماس بگیرید.";
-
 /* Error decoding an object */
 "_error_decode" = "کد گشایی اطلاعات آرشیو شده در کلاس %@ ناموفق بود";
 
@@ -367,9 +364,6 @@
 /* Form validation error */
 "_error_field_required" = "این قسمت الزامی است";
 
-/* Form validation error */
-"_error_field_unknown" = "لطفاً این قسمت را بررسی کنید";
-
 /* Error when generate srp clint */
 "_error_generate_srp" = "تولید SRP انجام نشد";
 
@@ -389,9 +383,6 @@
 "_error_loads" = "وضعیت بار بر روی سرور به‌روز نشد";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
-
-/* (No Comment) */
 "_error_mitm_title" = "اتصال نا امن";
 
 /* (No Comment) */
@@ -400,23 +391,8 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "امضا یا کلید خصوصی ماژول خالی است";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "ارتقای اشتراک شما با موفقیت انجام شد. لطفا اپلیکیشن را بسته و دوباره باز کنید تا از مزایای سرویس پولی‌ای که انتخاب کرده‌اید بهره‌مند شوید.";
-
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "امکان تجزیه اطلاعات طرفِ شراکت وجود ندارد";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "ما جهت همخوانی محصول App Store با محصولات موجود در سرورمان در دسترس نبودیم. لطفاً با پشتیبانی تماس بگیرید.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "رسید App Store گم شد. اگر طرح شما فعال نشده لطفاً با پشتیبانی تماس بگیرید.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "خریدها در نسخه بتای اپ در iOS در دسترس نیستند. پولی از حساب شما کسر نشده است.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "امکان دریافت اطلاعات از سرور وجود ندارد";
@@ -427,9 +403,6 @@
 /* Generic sign in error */
 "_error_sign_in_again" = "متاسفیم، مشکلی پیش آمد. لطفا دوباره وارد حساب شوید.";
 
-/* (No Comment) */
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
-
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "امکان دریافت اطلاعات مربوط به اشتراک حساب وجود ندارد";
 
@@ -439,41 +412,14 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "گواهی سرور نميتواند تایید شود.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "پردازش خرید شما از سوی App Store ناموفق بود.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "خریدی با یک نام کاربری متفاوت در Proton VPN آغاز شده است.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "دریافت لیست محصولات موجود از App Store ناموفق بود.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "خطای ناشناخته";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "ساخت حساب کاربری ناموفق بود";
 
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "ما نتوانستیم تایید کنیم که شما انسان هستید. لطفاً دوباره سعی کنید یا یک طرح ویژه خریداری کنید.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "حساب کاربری شما به VPN دسترسی ندارد. لطفاً با مدیر حساب خود تماس بگیرید";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "شما هنوز در Proton VPN ثبت‌نام نکرده‌اید";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "شما در حال حاضر در لیست انتظار هستید و حساب کاربری شما هنوز آماده نشده است";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "نام کاربری پیشتر انتخاب شده است";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "روش‌های تایید بی‌نتیجه‌اند";
@@ -486,15 +432,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "نشست Proton VPN فعال است";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "وضعیت اشتباه توکن پرداخت. لطفاً اپ را دوباره راه‌ بیاندازید. اگر خطا پافشاری کرد، با پشتیبانی تماس بگیرید.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "برنامه ProtonVPN برای اجرا ویژگی Kill Switch از فایروال خود برای فیلتر کردن بسته‌های دریافتی بهره می‌برد. با فعال‌سازی Kill Switch، تنظیمات این فایروال بر روی دستگاه شما بازنگاری می‌شود. اگر شما به پیکربندی فایروال فعلی خود اطمینان دارید، بهتر است از قابلیت Kill Switch استفاده نکنید.\n\nبرای استفاده از Kill Switch و بازنگاری اطلاعات بر روی تنظیمات فعلی فایروال، کلید 'ادامه' را فشار دهید.\n\nبرای خاموش کردن Kill Switch و ادامه با فایروال فعلی، گزینه 'لغو' را انتخاب کنید.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "دیوار آتش تشخیص داده شد";
 
 /* Existing connection alert */
 "_existing_session" = "سرور در دسترس نیست";
@@ -641,9 +578,6 @@
 "_initializing_connection" = "در حال آماده‌سازی ارتباط...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "نشست منقضی شده";
-
-/* (No Comment) */
 "_invalid_refresh_token_please_login" = "از آخرین باری که از Proton VPN استفاده کرده‌اید مدتی گذشته است. لطفا دوباره وارد شوید.";
 
 /* iOS onboarding texts */
@@ -678,27 +612,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "غیرفعال کردن Kill Switch";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "از آن برنامه ها خارج شوید تا مشکل حل شود.\nبرای وبگردی بدون کلید قطع دکمه ادامه را بزنید.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "برخی از برنامه ها مانند آنتی ویروس ها یا فایروال ممکن است با kill switch تداخل داشته باشند، که باعث عدم عملکرد صحیح آن میشود.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch با وایروال macOS کار می‌کند. اگر برنامه‌های دیگری وجود دارند که با فایروال در ارتباط هستند، آنها ممکن است که با kill switch برنامه Proton VPN تداخل کنند. پایان دادن به آن برنامه‌ها می‌تواند قوانین فایروال ایجاد شده توسط Kill Switch را دوباره برقرار کند.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "یک خطا در عملکرد Kill Switch شناسایی شد";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "مشکلی در نصب یا به‌روزرسانی Kill Switch به وجود آمد.\n\nبرای دوباره امتحان‌کردن، 'تلاش مجدد' را انتخاب کنید.\n\nبرای ادامه کار بدون Kill Switch، گزینه 'غیرفعال‌سازی' را انتخاب کنید.";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "برای فعال‌سازی Kill Switch، ممکن است از شما برای ارائه رمز کامپیوتر خود سوال شود. اگر این درخواست ظاهر شد، %@ خود را وارد کرده و شرایط را قبول کنید.\n\nاحتمالا در آینده هم گاهی این درخواست را به هنگام به‌روزرسانی ProtonVPN مشاهده می‌کنید.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "آخرین بروزرسانی که دانلود کرده اید به رمز کامپیوتر شما نیاز دارد. به هنگام ظاهر شدن این درخواست، لطفا %@ خود را وارد کنید و شرایط را قبول کنید. \nاگر رمز مک خود را وارد نکنید، kill switch خاموش خواهد شد.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "ارتباط اینترنت شما به محض اتصال مجدد ProtonVPN به یک سرور دوباره از سر گرفته خواهد شد.\nبرای استفاده از اینترنت بدون VPN و Kill Switch, اتصال دوباره به سرور را لغو کنید.";
@@ -772,21 +685,6 @@
 /* (No Comment) */
 "_locations_plus" = "مکان‌های PLUS";
 
-/* iOS: Login button in several places */
-"_log_in" = "Sign in";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
-
-/* iOS: button in settings screen */
-"_log_out" = "Sign out";
-
-/* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
-
-/* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
-
 /* MacOS: Login button */
 "_login" = "ورود";
 
@@ -852,9 +750,6 @@
 
 /* Main mac app menu item */
 "_menu_hide_self" = "پنهان‌سازی Proton VPN";
-
-/* Main mac app menu item */
-"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "کوچک‌سازی";
@@ -1018,9 +913,6 @@
 /* MacOS: voice over indication for a country or server on maintenance */
 "_on_maintenance" = "Under maintenance";
 
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
-
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "لاگ‌های OpenVPN";
 
@@ -1053,9 +945,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "سرورهای P2P";
-
-/* Plan upgrade required alert */
-"_paid_required" = "نیاز به حساب Proton VPN غیررایگان";
 
 /* Used in sign-in, sign-up */
 "_password" = "رمزعبور";
@@ -1104,9 +993,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "سرورهای پلاس\nقابلیت Secure Core\nسرورهای Tor";
-
-/* Plan upgrade required alert */
-"_plus_required" = "اشتراک Plus یا Visionary مورد نیاز است";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "سرورهای پلاس";
@@ -1249,9 +1135,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "توصیه شده";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "تغییر پروتکل";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "برای اعمال این تغییر، اتصال شما نیاز به راه‌اندازی مجدد دارد.";
 
@@ -1269,9 +1152,6 @@
 
 /* MacOS: About window */
 "_release_date" = "تاریخ انتشار:";
-
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "گزارش";
@@ -1516,12 +1396,6 @@
 /* (No Comment) */
 "_subscription_will_renew" = "طرح فعلی بطور خودکار در %@ تمدید خواهد شد.";
 
-/* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
-
-/* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "با موفقیت وصل شدید";
 
@@ -1703,15 +1577,6 @@
 "_upgrade_now" = "اکنون ارتقا دهید";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "متأسفیم، با توجه به اشتراک شما هیچ سرور آزادی در این کشور در دسترس نیست. برای دسترسی به سرورهای بیشتر، می‌توانید اشتراک خود را ارتقا دهید.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "قابلیت Secure Core یک قابلیت ویژه است که نیاز به اشتراک Proton VPN پلاس یا بالاتر دارد. Secure Core حفاظت پیشرفته را در برابر شنود سرورهای VPN فراهم می‌کند.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "برای دسترسی به هسته امن باید اشتراکی خریداری کنید که این قابلیت را دربر بگیرد.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "متأسفیم، این سرور برای حساب شما در دسترس نیست. اگر مایلید به سرورهای بیشتری دسترسی پیدا کنید، حساب خود را ارتقا دهید.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1804,14 +1669,8 @@
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "خطای احراز هویت";
 
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
-
 /* Used as a title in alerts/modals */
 "_warning" = "هشدار";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN پرسرعت سوئیسی که بوسیله رمزگذاری ارتباط اینترنت شما از حریم خصوصیتان محافظت میکند.";

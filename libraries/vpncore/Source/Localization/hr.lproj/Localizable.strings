@@ -331,9 +331,6 @@
 /* API error */
 "_error_api_offline" = "Proton VPN API je trenutno van mreže";
 
-/* (No Comment) */
-"_error_credit_applied" = "Kontaktirajte support@protonvpn.com da biste dovršili kupovinu.";
-
 /* Error decoding an object */
 "_error_decode" = "Neuspješno dešifriranje arhiviranih podataka u klasi: %@";
 
@@ -354,9 +351,6 @@
 
 /* Form validation error */
 "_error_field_required" = "Ovo polje je obavezno";
-
-/* Form validation error */
-"_error_field_unknown" = "Provjerite ovo polje";
 
 /* Error when generate srp clint */
 "_error_generate_srp" = "Neuspješno stvaranje SRP-a";
@@ -385,21 +379,6 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Modulus potpis je prazan";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Nadogradnja pretplate bila je uspješna. Ponovo pokrenite aplikaciju da biste iskoristili svoj novi plan usluga.";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Nismo uspjeli upariti proizvod s App Store-a s proizvodima na našem poslužitelju. Molimo kontaktirajte podršku.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "Račun od App Storea je izgubljen. Kontaktirajte podršku ako vaš plan nije bio aktiviran.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "Kupnje nisu dostupne u beta verziji iOS aplikacije. Nismo vam naplatili.";
-
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Neuspješno prikazivanje podataka o poslužitelju";
 
@@ -415,38 +394,14 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Certifikat poslužitelja ne može biti potvrđen.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store nije uspio obraditi vašu kupnju.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "Nije moguće dohvatiti popis dostupnih proizvoda iz App Storea.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "Nepoznata pogreška";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Neuspješno stvaranje računa";
 
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
-
-/* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
-
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nismo uspjeli potvrditi da ste čovjek. Pokušajte ponovo ili kupite Premium plan.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Vaš račun nema VPN pristup. Molimo kontaktirajte svog administratora računa";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Niste se registrirani na Proton VPN-u";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Trenutno ste na listi čekanja i vaš račun još nije spreman";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "Korisničko ime je zauzeto";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Neuspješno prikazivanje metoda potvrde";
@@ -459,12 +414,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Proton VPN sesija je aktivna";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Pogrešan status tokena plaćanja. Ponovo pokrenite aplikaciju. Ako pogreška i dalje postoji, obratite se službi za podršku.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Vatrozid je otkriven";
 
 /* Existing connection alert */
 "_existing_session" = "Poslužitelj nije dostupan";
@@ -577,9 +526,6 @@
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Pokretanje veze...";
 
-/* (No Comment) */
-"_invalid_refresh_token" = "Sesija je istekla";
-
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Pobijedite cenzuru i regionalna ograničenja. Nemamo oglase, nemamo ograničenja propusnosti i ne prodajemo vaše podatke.";
 
@@ -597,24 +543,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Onemogući kill switch";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Zaustavite te aplikacije da biste riješili problem.\nDa biste nastavili pregledavati bez kill switcha, kliknite Nastavi.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Neke aplikacije, poput antivirusnih programa ili vatrozida, mogu se sukobiti s kill switchom, zbog čega ne funkcionira ispravno.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill switch radi s macOS vatrozidom.\nAko su s vatrozidom povezane druge aplikacije, one mogu ometati ProtonVPN-ov kill switch. Zaustavljanjem tih aplikacija možete vratiti pravila vatrozida postavljena od strane kill switcha.";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Došlo je do problema prilikom instaliranja ili ažuriranja kill switcha.\n\nDa biste pokušali ponovo, pritisnite POKUŠAJ PONOVNO.\n\nDa biste nastavili bez kill switcha, pritisnite ONEMOGUĆI.";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Da biste omogućili kill switch, od vas će se možda tražiti da navedete lozinku korisničkog računa. Ako se pojavi zahtjev, unesite svoju %@ i prihvatite.\n\nOvaj zahtjev možete povremeno vidjeti kada aplikacija Proton VPN primi ažuriranja.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Najnovije ažuriranje koje ste preuzeli zahtijeva da navedete lozinku korisničkog računa. Kad se zahtjev pojavi, unesite svoju %@ i prihvatite.\n\nAko ne unesete svoju lozinku za Mac, kill switch će biti isključen.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Vaša će se internetska veza nastaviti čim se Proton VPN ponovno poveže s poslužiteljem.\nDa biste koristili internet bez VPN i kill switch zaštite, otkažite ponovno povezivanje s poslužiteljem.";
@@ -679,21 +607,6 @@
 /* (No Comment) */
 "_locations_plus" = "PLUS lokacije";
 
-/* iOS: Login button in several places */
-"_log_in" = "Sign in";
-
-/* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
-
-/* iOS: button in settings screen */
-"_log_out" = "Sign out";
-
-/* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
-
-/* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
-
 /* MacOS: Login button */
 "_login" = "Prijavite se";
 
@@ -756,9 +669,6 @@
 
 /* Main mac app menu item */
 "_menu_hide_self" = "Sakrij Proton VPN";
-
-/* Main mac app menu item */
-"_menu_logout" = "Sign out";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Minimiziraj";
@@ -883,9 +793,6 @@
 /* Common word */
 "_ok" = "U redu";
 
-/* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
-
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "OpenVPN zapisi";
 
@@ -918,9 +825,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "P2P poslužitelji";
-
-/* Plan upgrade required alert */
-"_paid_required" = "Potreban plaćeni Proton VPN plan";
 
 /* Used in sign-in, sign-up */
 "_password" = "Lozinka";
@@ -969,9 +873,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "Plus poslužitelji\nSecure Core\nTor poslužitelji";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Plus ili Visionary pretplata je potrebna";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Plus poslužitelji";
@@ -1114,9 +1015,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Preporučeno";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Promjena protokola";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Da biste promijenili promjene, vašu vezu je potrebno ponovo pokrenuti.";
 
@@ -1134,9 +1032,6 @@
 
 /* MacOS: About window */
 "_release_date" = "Datum izdavanja:";
-
-/* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
 
 /* Button in Kill switch error alert */
 "_report" = "Prijavi";
@@ -1369,9 +1264,6 @@
 /* (No Comment) */
 "_subscription_will_renew" = "Trenutni plan će seautomatski obnoviti dana %@.";
 
-/* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
-
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Uspješno povezivanje";
 
@@ -1532,15 +1424,6 @@
 "_upgrade_now" = "Nadogradi sada";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Nažalost nema dostupnih poslužitelja u ovoj državi za vašu vrstu pretplate. Ako želite pristupiti više poslužitelja, razmislite o nadogradnji svoje pretplate.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core je premium značajka za koju je potreban Proton VPN Plus ili više. Secure Core dodaje naprednu zaštitu od nadzora VPN poslužitelja.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Da biste koristili Secure Core, pogledajte ostale planove pretplate koji uključuju tu značajku.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Nažalost ovaj poslužitelj nije dostupan za vašu vrstu pretplate. Ako želite pristupiti više poslužitelja, razmislite o nadogradnji svoje pretplate.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1624,14 +1507,8 @@
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Pogreška autentikacije";
 
-/* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
-
 /* Used as a title in alerts/modals */
 "_warning" = "Upozorenje";
-
-/* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Hvala što koristite Proton VPN. Brzo istražite\nglavne značajke aplikacije.";

@@ -53,17 +53,13 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Ads
-blocked</string>
+			<string>Рекламы заблокировано</string>
 			<key>many</key>
-			<string>Ads
-blocked</string>
+			<string>Реклам заблокировано</string>
 			<key>one</key>
-			<string>Ad
-blocked</string>
+			<string>Реклама заблокирована</string>
 			<key>other</key>
-			<string>Ads
-blocked</string>
+			<string>Реклам заблокировано</string>
 		</dict>
 	</dict>
 	<key>_netshield_stats_trackers_stopped</key>
@@ -77,17 +73,13 @@ blocked</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>Trackers
-stopped</string>
+			<string>Трекера остановлено</string>
 			<key>many</key>
-			<string>Trackers
-stopped</string>
+			<string>Трекеров остановлено</string>
 			<key>one</key>
-			<string>Tracker
-stopped</string>
+			<string>Трекер остановлен</string>
 			<key>other</key>
-			<string>Trackers
-stopped</string>
+			<string>Трекеров остановлено</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>

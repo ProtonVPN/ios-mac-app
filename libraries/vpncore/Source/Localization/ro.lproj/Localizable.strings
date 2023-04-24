@@ -355,9 +355,6 @@
 /* API error */
 "_error_api_offline" = "API-ul Proton VPN este în prezent oprit.";
 
-/* (No Comment) */
-"_error_credit_applied" = "Contactați support@protonvpn.com pentru a finaliza achiziția.";
-
 /* Error decoding an object */
 "_error_decode" = "Decodarea datelor arhivate a eșuat în clasa: %@";
 
@@ -379,9 +376,6 @@
 /* Form validation error */
 "_error_field_required" = "Acest câmp este obligatoriu";
 
-/* Form validation error */
-"_error_field_unknown" = "Verificați acest câmp";
-
 /* Error when generate srp clint */
 "_error_generate_srp" = "Generare SRP eșuată";
 
@@ -401,7 +395,7 @@
 "_error_loads" = "Nu se poate actualiza încărcarea serverelor";
 
 /* (No Comment) */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the Proton VPN API. Your current internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the Proton VPN API.\nTo sign in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "Validarea certificatului TLS a eșuat când s-a încercat conectarea la API-ul Proton VPN. Conexiunea la internet vă poate fi monitorizată. Pentru a vă păstra securitatea datelor, împiedicăm aplicația să acceseze API-ul Proton VPN.\nPentru a vă conecta și accesa contul, comutați la o rețea nouă și încercați să vă reconectați.";
 
 /* (No Comment) */
 "_error_mitm_title" = "Conexiune nesigură";
@@ -412,23 +406,8 @@
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Semnătura modulului este goală";
 
-/* In App Purchase error */
-"_error_no_active_username" = "Please sign in with the account you're upgrading the service plan for so we can complete your purchase.";
-
-/* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "Trecerea la noul tip de abonament a reușit. Reporniți aplicația pentru a beneficia de noul plan de servicii.";
-
 /* Error when try to parse the partner info */
 "_error_partner_info_parser" = "Nu se pot prelua informațiile partenerului.";
-
-/* In App Purchase error */
-"_error_purchased_plan_does_not_match_available" = "Nu s-a putut asocia produsul din App Store cu produsele de pe serverul nostru. Contactați asistența.";
-
-/* In App Purchase error */
-"_error_receipt_lost" = "Chitanța din App Store s-a pierdut. Contactați asistența dacă planul nu a fost activat.";
-
-/* In App Purchase error */
-"_error_sandbox_receipt" = "Achizițiile nu sunt disponibile în versiunea beta a aplicației iOS. Taxarea nu se aplică.";
 
 /* Error when try to parse the server info */
 "_error_server_info_parser" = "Nu se pot prelua informațiile serverelor";
@@ -439,9 +418,6 @@
 /* Generic sign in error */
 "_error_sign_in_again" = "Ceva nu a funcționat bine. Reconectați-vă.";
 
-/* (No Comment) */
-"_error_signup_using_protonmail_address" = "Your Proton Mail account is already configured for VPN. Please sign in with your existing credentials.";
-
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Nu se pot prelua informațiile abonamentului";
 
@@ -451,44 +427,20 @@
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Certificatul serverului nu poate fi verificat.";
 
-/* In App Purchase error */
-"_error_transaction_failed_by_unknown_reason" = "App Store nu a putut procesa achiziția.";
-
-/* In App Purchase error */
-"_error_transaction_of_other_user" = "A fost inițiată o achiziție cu un alt utilizator Proton VPN.";
-
-/* In App Purchase error */
-"_error_unavailable_product" = "Eșuare obținere listă de produse din App Store.";
-
 /* General title for several error alerts */
 "_error_unknown_title" = "Eroare necunoscută";
-
-/* user cancelled human validation procedure */
-"_error_user_cancelled" = "Operație anulată";
 
 /* Error when the app fails to create a user */
 "_error_user_creation" = "Crearea contului a eșuat";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_expired" = "User credentials have expired. Please sign in";
+"_error_user_credentials_expired" = "Acreditările utilizatorului au expirat. Reautentificați-vă.";
 
 /* VPN credentials can't be loaded error */
-"_error_user_credentials_missing" = "User credentials are missing. Unable to sign in";
+"_error_user_credentials_missing" = "Acreditările utilizatorului lipsesc. Nu se poate autentifica.";
 
 /* Human validation failed */
 "_error_user_failed_human_validation" = "Nu am reușit să verificăm dacă sunteți o persoană. Reîncercați sau achiziționați un abonament premium.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_no_vpn_access" = "Contul nu are acces la VPN. Contactați administratorul contului.";
-
-/* VPN credentials can't be loaded error */
-"_error_user_has_not_signed_up" = "Încă nu v-ați înscris în Proton VPN";
-
-/* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Sunteți în lista de așteptare, iar contul încă nu este gata.";
-
-/* Username unavailable error */
-"_error_username_unavailable" = "Nume de utilizator deja folosit";
 
 /* Error when try to parse verification methods */
 "_error_verification_methods_parser" = "Nu se pot analiza metodele de verificare";
@@ -501,15 +453,6 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sesiunea Proton VPN este activă";
-
-/* In App Purchase error */
-"_error_wrong_payment_token_status" = "Status token de plată greșit. Reporniți aplicația. Dacă eroarea persistă, contactați asistența.";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "Proton VPN folosește un paravan de protecție cu filtrare de pachete pentru a implementa oprirea accesului la internet în cazul deconectării de la servere. Prin activarea blocării accesului la internet, veți suprascrie setările curente ale paravanului de protecție. Dacă vă bazați pe configurația actuală a paravanului de protecție, nu ar trebui să utilizați opțiunea de blocare.\n\nPentru a utiliza blocarea accesului la internet și pentru a suprascrie setările actuale ale paravanului de protecție, selectați «CONTINUARE».\n\nPentru a opri blocarea accesului la internet și pentru a continua să utilizați paravanul de protecţie actual, selectați «RENUNȚARE».";
-
-/* MacOS: Existing firewall alert */
-"_existing_firewall_popup_title" = "Paravan de proptecție detectat";
 
 /* Existing connection alert */
 "_existing_session" = "Server indisponibil";
@@ -656,9 +599,6 @@
 "_initializing_connection" = "Se inițializează...";
 
 /* (No Comment) */
-"_invalid_refresh_token" = "Sesiune expirată";
-
-/* (No Comment) */
 "_invalid_refresh_token_please_login" = "A trecut ceva de când ați utilizat aplicația Proton VPN. Reautentificați-vă.";
 
 /* iOS onboarding texts */
@@ -699,27 +639,6 @@
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Dezactivare blocare conexiune";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Terminați acele aplicații pentru a fixa problema.\nPentru a naviga în continuare fără blocarea conexiunii, faceți clic pe «Continuare».";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Unele aplicații, ca antivirușii și paravanele de foc, ar putea intra în conflict cu blocarea conexiunii, făcând-o să nu funcționeze adecvat.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Blocarea conexiunii funcționează cu paravanul de protecție din macOS.\nDacă sunt alte aplicații asociate cu paravanul de protecție, ar putea interfera cu blocarea conexiunii din Proton VPN. Închizând acele aplicații se pot restaura regulile paravanului de protecție setate de blocarea conexiunii.";
-
-/* MacOS: killswitch error alert */
-"_kill_switch_error_title" = "A fost detectată o eroare la blocarea conexiunii";
-
-/* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "A apărut o eroare la instalarea sau actualizarea blocării conexiunii.\n\nPentru a reîncerca, apăsați pe «RELUARE».\n\nPentru continuare fără blocarea conexiunii, faceți clic pe «DEZACTIVARE».";
-
-/* MacOS: killswitch alert */
-"_kill_switch_helper_install_popup_body" = "Pentru a activa blocarea conexiunii, vi s-ar putea solicita să furnizați parola contului calculatorului. Dacă apare o solicitare, introduceți %@ și acceptați.\n\nS-ar putea să vedeți această solicitare din nou ocazional când aplicația Proton VPN primește actualizări.";
-
-/* MacOS: updating helper alert */
-"_kill_switch_helper_update_popup_body" = "Cea mai nouă actualizare descărcată necesită să furnizați parola contului calculatorului. Când va apărea solicitarea, introduceți %@ și acceptați.\n\nDacă nu introduceți parola de acces, blocarea conexiunii va fi dezactivată.";
 
 /* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
 "_kill_switch_reconnection" = "Conexiunea la internet se va relua imediat ce Proton VPN se reconectează la server.\nPentru a folosi internetul fără VPN and protecția de blocare a conexiunii, anulați reconectarea la server.";
@@ -794,19 +713,19 @@
 "_locations_plus" = "Locuri Plus";
 
 /* iOS: Login button in several places */
-"_log_in" = "Sign in";
+"_log_in" = "Conectare";
 
 /* iOS widget: text for not-logged-in user */
-"_log_in_to_use_widget" = "Please sign in to get started";
+"_log_in_to_use_widget" = "Conectați-vă pentru a începe";
 
 /* iOS: button in settings screen */
-"_log_out" = "Sign out";
+"_log_out" = "Deconectare";
 
 /* iOS: Logout alert */
-"_log_out_warning" = "Signing out will end your VPN session.";
+"_log_out_warning" = "Deconectarea va încheia sesiunea VPN.";
 
 /* MacOS: Logout alert */
-"_log_out_warning_long" = "Signing out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_log_out_warning_long" = "Deconectându-vă din aplicație veți deconecta conexiunea VPN activă. Doriți să continuați?";
 
 /* MacOS: Login button */
 "_login" = "Conectare";
@@ -875,7 +794,7 @@
 "_menu_hide_self" = "Ascundere Proton VPN";
 
 /* Main mac app menu item */
-"_menu_logout" = "Sign out";
+"_menu_logout" = "Deconectare";
 
 /* Main mac app menu item */
 "_menu_minimize" = "Micșorare";
@@ -1067,7 +986,7 @@
 "_onboarding_mac_usage_stats" = "Partajare anonimă statistici de utilizare. Asta ne ajută să depășim blocările VPN-ului și să îmbunătățim performanța aplicației.";
 
 /* Main mac app menu item */
-"_open_app_to_log_in" = "Show Proton VPN to sign in...";
+"_open_app_to_log_in" = "Afișare Proton VPN pentru conectare...";
 
 /* iOS Settings: OpenVPN logs row */
 "_open_vpn_logs" = "Jurnale OpenVPN";
@@ -1101,9 +1020,6 @@
 
 /* MacOS: Used ir trial welcome and trial expired screens */
 "_p2p_servers" = "Servere P2P";
-
-/* Plan upgrade required alert */
-"_paid_required" = "E necesar un plan Proton VPN cu plată";
 
 /* Used in sign-in, sign-up */
 "_password" = "Parola";
@@ -1152,9 +1068,6 @@
 
 /* Features of account plan */
 "_plus_plan_features" = "Servere Plus\nSecure Core\nServere Tor";
-
-/* Plan upgrade required alert */
-"_plus_required" = "Este necesar abonamentul Plus";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "Servere Plus";
@@ -1297,9 +1210,6 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Recomandat";
 
-/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Schimbare protocol";
-
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Conexiunea trebuie repornită pentru a se aplica această modificare.";
 
@@ -1319,7 +1229,7 @@
 "_release_date" = "Dată de lansare:";
 
 /* MacOS: label in login and settings screens */
-"_remember_login" = "Remember sign in";
+"_remember_login" = "Memorare autentificare";
 
 /* Button in Kill switch error alert */
 "_report" = "Raportare";
@@ -1583,7 +1493,7 @@
 "_subuser_alert_description1" = "To continue to Proton VPN, please enable VPN connections. You'll also need to do this for any users in your organization.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
+"_subuser_alert_description2" = "Acest pas va dura doar câteva minute. După aceea, veți putea să vă conectați și să vă protejați toate dispozitivele.";
 
 /* (No Comment) */
 "_subuser_alert_description3" = "Momentan nu există nici o conexiune VPN activată pentru acest cont. Pentru a începe să utilizați Proton VPN contactați-vă administratorul contului.";
@@ -1592,7 +1502,7 @@
 "_subuser_alert_enable_connections_button" = "Activare conexiuni VPN";
 
 /* (No Comment) */
-"_subuser_alert_login_button" = "Sign in again";
+"_subuser_alert_login_button" = "Reconectați-vă";
 
 /* Subuser alert */
 "_subuser_alert_title" = "Vă mulțumim că ați trecut la planul Business / Visionary";
@@ -1805,15 +1715,6 @@
 "_upgrade_now" = "Modernizare";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Ne pare rău, nu sunt disponibile servere în această țară pentru nivelul abonamentului actual. Dacă doriți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core este o funcție specială care necesită activarea planului Proton VPN Plus sau superior. Aceasta adaugă o protecție avansată împotriva monitorizării serverelor VPN.";
-
-/* (No Comment) */
-"_upgrade_plan_to_access_secure_core_p2" = "Pentru a accesa Secure Core, consultați celelalte tipuri de abonamente care includ această funcție.";
-
-/* macOS: plan upgrade required alert */
 "_upgrade_plan_to_access_server" = "Ne pare rău, acest server nu este disponibil pentru nivelul abonamentului actual. Dacă doriți să accesați mai multe servere, considerați trecerea la alt tip de abonament.";
 
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
@@ -1910,13 +1811,13 @@
 "_vpnauth_too_many_certs_title" = "Eroare autentificare";
 
 /* (No Comment) */
-"_vpnstatus_not_loggedin" = "You are not signed in to Proton VPN. Open the Proton VPN app and sign in.";
+"_vpnstatus_not_loggedin" = "Nu v-ați conectat la Proton VPN. Deschideți aplicația Proton VPN și conectați-vă.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Avertizare";
 
 /* MacOS: alert shown during login if already connected to VPN */
-"_warning_vpn_session_is_active" = "Another user's Proton VPN session is active on this device. Continuing with the sign in will cause the current session to end. Do you want to continue?";
+"_warning_vpn_session_is_active" = "Este activă o altă sesiune Proton VPN pe acest dispozitiv. Continuând procesul de autentificare va cauza închiderea sesiunii curente. Doriți să continuați?";
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "VPN elvețian de mare viteză care vă protejează confidențialitatea prin criptarea conexiunii la internet.";
