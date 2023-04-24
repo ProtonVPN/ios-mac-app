@@ -20,6 +20,9 @@ import Foundation
 import Logging
 
 /// Parent class for all our log formatters. Should not be used as-is but rather as a parent class for other handlers.
+///
+/// - Important: The documentation states that LogHandler implementations must be structs (VPNAPPL-1753).
+/// If something strange is going on, check that it's not because this, and concrete log handlers, are classes.
 open class ParentLogHandler: LogHandler {
 
     public var formatter: PMLogFormatter
